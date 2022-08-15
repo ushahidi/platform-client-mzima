@@ -1,1 +1,20 @@
-<p>login works!</p>
+<h3>Log in</h3>
+<div class="modal-body">
+  <mat-form-field appearance="fill">
+    <mat-label>user.email</mat-label>
+    <input matInput placeholder="pat@example.com" [formControl]="email" required />
+    <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>user.password</mat-label>
+    <input matInput placeholder="pat@example.com" [formControl]="password" required />
+    <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+  </mat-form-field>
+</div>
+
+<div class="modal-actions">
+  <div class="form-field">
+    <button mat-stroked-button (click)="cancel()">Cancel</button>
+    <button mat-stroked-button color="primary" (click)="login()">Login</button>
+  </div>
+</div>
