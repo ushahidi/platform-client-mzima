@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+
 import { LoginComponent } from '../../../auth/login/login.component';
 import { RegisterComponent } from '../../../auth/register/register.component';
 import { CollectionsComponent } from '../../../data/collections/collections.component';
@@ -10,7 +11,7 @@ import { CollectionsComponent } from '../../../data/collections/collections.comp
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
-  public isLogin = false;
+  public isLogin = true;
   public menu = [
     { label: 'Maps', router: 'map', icon: 'location_on', visible: true },
     { label: 'Data', router: 'data', icon: 'storage', visible: true },

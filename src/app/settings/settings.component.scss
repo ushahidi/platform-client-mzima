@@ -1,0 +1,61 @@
+.settings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+
+  &:after {
+    content: '';
+    flex-basis: 330px;
+    padding: 20px;
+  }
+}
+
+.single-menu {
+  flex-basis: 330px;
+  margin-bottom: 15px;
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+
+  & .item-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 50px;
+    width: 100%;
+    max-height: 50px;
+    height: 100%;
+    margin-right: 30px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    padding: 3px;
+  }
+}
+
+.mat-icon {
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.listing-item {
+  &-title {
+    text-transform: capitalize;
+    font-size: 22px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    color: #373e46;
+  }
+
+  &-secondary {
+    font-style: italic;
+    font-size: 0.857142857em;
+    color: #373e46;
+  }
+}
