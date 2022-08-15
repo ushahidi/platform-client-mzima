@@ -1,14 +1,16 @@
 <div class="sidebar">
   <div>
-    <div
-      *ngFor="let item of menu"
-      class="sidebar-icon-wrapper"
-      [routerLink]="item.router"
-      routerLinkActive="active"
-    >
-      <mat-icon>{{ item.icon }}</mat-icon>
-      <label class="sidebar-icon-label">{{ item.label }}</label>
-    </div>
+    <ng-container *ngFor="let item of menu">
+      <div
+        *ngIf="item.visible"
+        class="sidebar-icon-wrapper"
+        [routerLink]="item.router"
+        routerLinkActive="active"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <label class="sidebar-icon-label">{{ item.label }}</label>
+      </div>
+    </ng-container>
   </div>
   <div>
     <ng-container *ngFor="let item of userMenu">

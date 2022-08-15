@@ -12,10 +12,10 @@ import { CollectionsComponent } from '../../../data/collections/collections.comp
 export class SidebarComponent {
   public isLogin = false;
   public menu = [
-    { label: 'Maps', router: 'map', icon: 'location_on' },
-    { label: 'Data', router: 'data', icon: 'storage' },
-    { label: 'Activity', router: 'activity', icon: 'monitoring' },
-    { label: 'Settings', router: 'settings', icon: 'settings' },
+    { label: 'Maps', router: 'map', icon: 'location_on', visible: true },
+    { label: 'Data', router: 'data', icon: 'storage', visible: true },
+    { label: 'Activity', router: 'activity', icon: 'monitoring', visible: true },
+    { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isLogin },
   ];
   public userMenu = [
     { label: '', icon: 'apps', visible: true, action: () => this.openCollections() },
