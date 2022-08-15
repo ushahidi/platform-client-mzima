@@ -5,10 +5,11 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MaterialModule } from './material.module';
 import { LogoComponent } from './components/logo/logo.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const components = [SidebarComponent, ToolbarComponent, LogoComponent];
 
-const modules = [MaterialModule];
+const modules = [MaterialModule, ReactiveFormsModule];
 
 @NgModule({
   declarations: [...components],
