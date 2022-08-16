@@ -1,8 +1,24 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
+    "paths": {
+      "@data": [
+        "src/app/data"
+      ],
+      "@auth": [
+        "src/app/auth"
+      ],
+      "@models": [
+        "src/app/core/interfaces"
+      ],
+      "@services": [
+        "src/app/core/services"
+      ],
+      "@constants": [
+        "src/app/core/constants"
+      ],
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -21,7 +37,8 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "strictPropertyInitialization": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

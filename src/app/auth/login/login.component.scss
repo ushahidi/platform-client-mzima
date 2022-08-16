@@ -1,0 +1,24 @@
+.modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  &-cancel {
+    border: none;
+    margin-right: 10px;
+    background: none;
+  }
+  &-login {
+    background: #ffc334;
+    color: #2b323a;
+    &:disabled {
+      opacity: 0.5;
+      background: none;
+    }
+  }
+}
+
+.modal-actions {
+  margin-top: 20px;
+}

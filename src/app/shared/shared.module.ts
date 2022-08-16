@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -10,7 +11,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 
 const components = [SidebarComponent, ToolbarComponent, LogoComponent, BreadcrumbComponent];
 
-const modules = [MaterialModule];
+const modules = [MaterialModule, ReactiveFormsModule];
 
 @NgModule({
   declarations: [...components],
