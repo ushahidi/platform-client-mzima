@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../auth.service';
 
@@ -9,29 +9,41 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  email = new FormControl('procoders@ushahidi.com', [Validators.required, Validators.email]);
-  password = new FormControl('TestUser123', [Validators.required]);
+  public form: FormGroup = this.formBuilder.group({
+    email: ['procoders@ushahidi.com', [Validators.required, Validators.email]],
+    password: ['TestUser123', [Validators.required]],
+  });
 
   constructor(
     private authService: AuthService,
+    private formBuilder: FormBuilder,
     private matDialogRef: MatDialogRef<LoginComponent>,
   ) {}
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
+  getErrorMessage(field: string) {
+    if (this.form.controls[field].hasError('required')) {
       return 'You must enter a value';
     }
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.form.controls['email'].hasError('email') ? 'Not a valid email' : '';
   }
 
-  cancel() {}
+  cancel() {
+    this.matDialogRef.close('cancel');
+  }
 
   login() {
-    if (this.email.value && this.password.value)
-      this.authService.login(this.email.value, this.password.value).subscribe((what) => {
-        console.log('111111', what);
-        this.matDialogRef.close(what);
+    this.form.disable();
+    this.authService
+      .login(this.form.controls['email'].value, this.form.controls['password'].value)
+      .subscribe({
+        next: (response) => {
+          console.log('111111', response);
+          this.matDialogRef.close(response);
+        },
+        error: () => {
+          this.form.enable();
+        },
       });
   }
 }
