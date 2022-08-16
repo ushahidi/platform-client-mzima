@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SessionService } from 'src/app/core/services';
 import { LoginComponent } from '../../../auth/login/login.component';
 import { RegisterComponent } from '../../../auth/register/register.component';
+import { MenuInterface, UserMenuInterface } from '../../../core/interfaces';
 import { CollectionsComponent } from '../../../data/collections/collections.component';
 
 @Component({
@@ -12,8 +13,8 @@ import { CollectionsComponent } from '../../../data/collections/collections.comp
 })
 export class SidebarComponent implements OnInit {
   public isLogin = false;
-  public menu: any[] = [];
-  public userMenu: any[] = [];
+  public menu: MenuInterface[] = [];
+  public userMenu: UserMenuInterface[] = [];
 
   constructor(public dialog: MatDialog, private session: SessionService) {}
 
@@ -44,7 +45,7 @@ export class SidebarComponent implements OnInit {
 
   private openLogin(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
-      width: '350px',
+      width: '480px',
     });
 
     dialogRef.afterClosed().subscribe({

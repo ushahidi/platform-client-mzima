@@ -1,20 +1,30 @@
-<h3>Log in</h3>
-<div class="modal-body">
+<h2>Log in</h2>
+
+<form class="modal-body" (ngSubmit)="login()" [formGroup]="form" novalidate>
   <mat-form-field appearance="fill">
     <mat-label>user.email</mat-label>
-    <input matInput placeholder="pat@example.com" [formControl]="email" required />
-    <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+    <input matInput placeholder="pat@example.com" formControlName="email" required />
+    <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
   </mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>user.password</mat-label>
-    <input matInput placeholder="pat@example.com" [formControl]="password" required />
-    <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+    <input matInput placeholder="pat@example.com" formControlName="password" required />
+    <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
   </mat-form-field>
-</div>
 
-<div class="modal-actions">
-  <div class="form-field">
-    <button mat-stroked-button (click)="cancel()">Cancel</button>
-    <button mat-stroked-button color="primary" (click)="login()">Login</button>
+  <div class="modal-actions form-field">
+    <button mat-stroked-button type="button" class="button-cancel" (click)="cancel()">
+      Cancel
+    </button>
+    <button
+      mat-stroked-button
+      color="primary"
+      type="submit"
+      class="button-login"
+      [disabled]="form.invalid || form.disabled"
+    >
+      Login
+    </button>
   </div>
-</div>
+</form>
