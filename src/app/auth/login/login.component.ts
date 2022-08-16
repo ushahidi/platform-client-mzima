@@ -33,17 +33,15 @@ export class LoginComponent {
   }
 
   login() {
+    const { email, password } = this.form.value;
     this.form.disable();
-    this.authService
-      .login(this.form.controls['email'].value, this.form.controls['password'].value)
-      .subscribe({
-        next: (response) => {
-          console.log('111111', response);
-          this.matDialogRef.close(response);
-        },
-        error: () => {
-          this.form.enable();
-        },
-      });
+    this.authService.login(email, password).subscribe({
+      next: (response) => {
+        this.matDialogRef.close(response);
+      },
+      error: () => {
+        this.form.enable();
+      },
+    });
   }
 }

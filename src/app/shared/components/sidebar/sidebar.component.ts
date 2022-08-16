@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { SessionService } from 'src/app/core/services';
-import { LoginComponent } from '../../../auth/login/login.component';
-import { RegisterComponent } from '../../../auth/register/register.component';
-import { MenuInterface, UserMenuInterface } from '../../../core/interfaces';
-import { CollectionsComponent } from '../../../data/collections/collections.component';
+import { SessionService } from '@services';
+import { LoginComponent, RegisterComponent } from '@auth';
+import { MenuInterface, UserMenuInterface } from '@models';
+import { CollectionsComponent } from '@data';
 
 @Component({
   selector: 'app-sidebar',
