@@ -1,1 +1,11 @@
-<p>settings works!</p>
+<div class="settings">
+  <div *ngFor="let item of settingsItems" [routerLink]="item.router" class="single-menu">
+    <div class="item-icon-wrapper">
+      <mat-icon class="item-icon">{{ item.icon }}</mat-icon>
+    </div>
+    <div class="menu-content">
+      <h2 class="listing-item-title">{{ item.title }}</h2>
+      <p class="listing-item-secondary">{{ item.description }}</p>
+    </div>
+  </div>
+</div>
