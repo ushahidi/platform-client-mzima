@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BreadcrumbInterface } from '../../../core/interfaces/breadcrumb.interface';
-import { BreadcrumbService } from '../../../core/services/breadcrumb.service';
+import { BreadcrumbInterface } from '@models';
+import { BreadcrumbService } from '@services';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -12,6 +12,6 @@ export class BreadcrumbComponent {
   breadcrumbs$: Observable<BreadcrumbInterface[]>;
 
   constructor(private readonly breadcrumbService: BreadcrumbService) {
-    this.breadcrumbs$ = breadcrumbService.breadcrumbs$;
+    this.breadcrumbs$ = this.breadcrumbService.breadcrumbs$;
   }
 }
