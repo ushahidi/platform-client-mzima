@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SessionService } from '../core/services';
+import { SessionService } from '@services';
 
 @Component({
   selector: 'app-data',
