@@ -1,0 +1,40 @@
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+
+  li {
+    display: inline;
+    cursor: pointer;
+    padding: 5px 0;
+
+    & .mat-icon {
+      width: 20px;
+      height: 20px;
+      color: #ffc334;
+      padding-right: 5px;
+    }
+
+    &:before {
+      content: '>';
+      margin: 0 6px;
+    }
+
+    &:first-child {
+      padding-left: 0;
+
+      &:before {
+        content: '';
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    &:last-child {
+      display: none;
+      padding-right: 0;
+    }
+  }
+}

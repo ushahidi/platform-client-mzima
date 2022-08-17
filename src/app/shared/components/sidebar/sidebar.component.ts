@@ -1,44 +1,65 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginComponent } from '../../../auth/login/login.component';
-import { RegisterComponent } from '../../../auth/register/register.component';
-import { CollectionsComponent } from '../../../data/collections/collections.component';
+import { SessionService } from '@services';
+import { LoginComponent, RegisterComponent } from '@auth';
+import { MenuInterface, UserMenuInterface } from '@models';
+import { CollectionsComponent } from '@data';
+import { AuthService } from '@services';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent {
-  public isLogin = false;
-  public menu = [
-    { label: 'Maps', router: 'map', icon: 'location_on', visible: true },
-    { label: 'Data', router: 'data', icon: 'storage', visible: true },
-    { label: 'Activity', router: 'activity', icon: 'monitoring', visible: true },
-    { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isLogin },
-  ];
-  public userMenu = [
-    { label: '', icon: 'apps', visible: true, action: () => this.openCollections() },
-    { label: 'Log in', icon: 'login', visible: !this.isLogin, action: () => this.openLogin() },
-    { label: 'Log out', icon: 'logout', visible: this.isLogin, action: () => this.logout() },
-    {
-      label: 'Sign up',
-      icon: 'person_add',
-      visible: !this.isLogin,
-      action: () => this.openRegister(),
-    },
-  ];
+export class SidebarComponent implements OnInit {
+  isLoggedIn = false;
+  public menu: MenuInterface[] = [];
+  public userMenu: UserMenuInterface[] = [];
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private sessionService: SessionService,
+    private authService: AuthService,
+  ) {}
+
+  ngOnInit() {
+    this.sessionService.currentUserData$.subscribe((userData) => {
+      this.isLoggedIn = !!userData.userId;
+    });
+    this.initMenu();
+  }
+
+  private initMenu() {
+    this.menu = [
+      { label: 'Maps', router: 'map', icon: 'location_on', visible: true },
+      { label: 'Data', router: 'data', icon: 'storage', visible: true },
+      { label: 'Activity', router: 'activity', icon: 'monitoring', visible: true },
+      { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isLoggedIn },
+    ];
+    this.userMenu = [
+      { label: '', icon: 'apps', visible: true, action: () => this.openCollections() },
+      { label: 'Log in', icon: 'login', visible: !this.isLoggedIn, action: () => this.openLogin() },
+      { label: 'Log out', icon: 'logout', visible: this.isLoggedIn, action: () => this.logout() },
+      {
+        label: 'Sign up',
+        icon: 'person_add',
+        visible: !this.isLoggedIn,
+        action: () => this.openRegister(),
+      },
+    ];
+  }
 
   private openLogin(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
-      width: '250px',
+      width: '480px',
     });
 
     dialogRef.afterClosed().subscribe({
       next: (response) => {
-        response ? console.log(response) : null;
+        if (response) {
+          console.log('After login User info: ', response);
+          this.initMenu();
+        }
       },
     });
   }
@@ -67,5 +88,8 @@ export class SidebarComponent {
     });
   }
 
-  private logout() {}
+  private logout() {
+    this.authService.logout();
+    this.initMenu(); // Somehow refresh menu
+  }
 }
