@@ -1,2 +1,6 @@
 <p>data works!</p>
-<pre>{{ sessionService.getSessionData() | json }}</pre>
+<pre>{{ sessionService.currentUserData$ | async | json }}</pre>
+<h2>Site</h2>
+<pre>{{ sessionService.getConfigurations('site') | json }}</pre>
+<h2>Features</h2>
+<pre>{{ sessionService.getConfigurations('features') | json }}</pre>
