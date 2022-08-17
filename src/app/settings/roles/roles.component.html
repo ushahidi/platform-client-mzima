@@ -1,1 +1,3 @@
-<p>roles works!</p>
+<div *ngFor="let role of (roleList$ | async)?.results" [routerLink]="[role.id]">
+  {{ role.display_name }}
+</div>

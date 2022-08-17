@@ -1,6 +1,8 @@
+import { environment } from '@environments';
+
 (window as any).ushahidi = (window as any).ushahidi || {};
 
-const BACKEND_URL = 'https://tuxpiper.api.ushahidi.io/';
+const BACKEND_URL = environment.backend_url;
 
 const backendUrl = ((window as any).ushahidi.backendUrl = (
     (window as any).ushahidi.backendUrl || BACKEND_URL
@@ -39,14 +41,12 @@ export const CONST = {
   INTERCOM_APP_ID: intercomAppId,
   APP_STORE_ID: appStoreId,
   VERIFIER: verifier,
-  DEFAULT_LOCALE: 'en_US',
-  OAUTH_CLIENT_ID: 'ushahidiui',
-  OAUTH_CLIENT_SECRET: '35e7f0bca957836d05ca0492211b0ac707671261',
+  DEFAULT_LOCALE: environment.default_locale,
+  OAUTH_CLIENT_ID: environment.oauth_client_id,
+  OAUTH_CLIENT_SECRET: environment.oauth_client_secret,
   CLAIMED_ANONYMOUS_SCOPES: claimedAnonymousScopes,
   CLAIMED_USER_SCOPES: ['*'],
-  MAPBOX_API_KEY:
-    (window as any).ushahidi.mapboxApiKey ||
-    'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
+  MAPBOX_API_KEY: (window as any).ushahidi.mapboxApiKey || environment.mapbox_api_key,
   USH_DISABLE_CHECKS: ushDisableChecks,
   TOS_RELEASE_DATE: new Date((window as any).ushahidi.tosReleaseDate).toJSON()
     ? new Date((window as any).ushahidi.tosReleaseDate)
