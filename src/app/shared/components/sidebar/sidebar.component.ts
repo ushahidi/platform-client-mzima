@@ -4,6 +4,7 @@ import { SessionService } from '@services';
 import { LoginComponent, RegisterComponent } from '@auth';
 import { MenuInterface, UserMenuInterface } from '@models';
 import { CollectionsComponent } from '@data';
+import { AuthService } from '@services';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,10 +16,14 @@ export class SidebarComponent implements OnInit {
   public menu: MenuInterface[] = [];
   public userMenu: UserMenuInterface[] = [];
 
-  constructor(public dialog: MatDialog, private session: SessionService) {}
+  constructor(
+    private dialog: MatDialog,
+    private sessionService: SessionService,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit() {
-    this.session.currentUserData$.subscribe((userData) => {
+    this.sessionService.currentUserData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
     });
     this.initMenu();
@@ -84,8 +89,7 @@ export class SidebarComponent implements OnInit {
   }
 
   private logout() {
-    this.session.clearSessionData();
-    this.session.clearUserData();
+    this.authService.logout();
     this.initMenu(); // Somehow refresh menu
   }
 }

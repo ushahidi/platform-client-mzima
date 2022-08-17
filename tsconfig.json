@@ -18,6 +18,12 @@
       "@constants": [
         "src/app/core/constants"
       ],
+      "@guards": [
+        "src/app/core/guards"
+      ],
+      "@environments": [
+        "src/environments"
+      ],
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

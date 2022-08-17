@@ -3,19 +3,21 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import {
+  SidebarComponent,
+  ToolbarComponent,
+  LogoComponent,
+  BreadcrumbComponent,
+} from './components';
 import { MaterialModule } from './material.module';
-import { LogoComponent } from './components/logo/logo.component';
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 const components = [SidebarComponent, ToolbarComponent, LogoComponent, BreadcrumbComponent];
 
-const modules = [MaterialModule, ReactiveFormsModule];
+const modules = [CommonModule, MaterialModule, ReactiveFormsModule, RouterModule];
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, ...modules, RouterModule],
+  imports: [...modules],
   exports: [...components, ...modules],
 })
 export class SharedModule {}
