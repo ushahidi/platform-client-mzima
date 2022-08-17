@@ -6,7 +6,7 @@ import { CanActivate } from '@angular/router';
 })
 export class AdminGuard implements CanActivate {
   canActivate(): boolean {
-    const role = localStorage.getItem('role');
+    const role = localStorage.getItem('USH_role');
     return role === 'admin';
   }
 }
