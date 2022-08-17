@@ -1,5 +1,5 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, FactoryProvider, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +10,25 @@ import { HttpsInterceptor } from './core/interceptors/https-interceptor';
 import { SharedModule } from './shared';
 import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { ConfigService } from './core/services/config.service';
+import { catchError, of } from 'rxjs';
+
+function loadConfigFactory(configService: ConfigService) {
+  return () =>
+    configService.initAllConfigurations().pipe(
+      catchError((err) => {
+        console.log('Handle 401 in error handler, ', err);
+        return of({});
+      }),
+    );
+}
+
+export const loadConfigProvider: FactoryProvider = {
+  provide: APP_INITIALIZER,
+  useFactory: loadConfigFactory,
+  deps: [ConfigService],
+  multi: true,
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +46,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
       useClass: AuthInterceptor,
       multi: true,
     },
+    loadConfigProvider,
     { provide: ErrorHandler, useClass: ErrorsHandler },
     { provide: HTTP_INTERCEPTORS, useClass: HttpsInterceptor, multi: true },
   ],
