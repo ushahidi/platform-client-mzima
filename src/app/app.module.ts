@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorsHandler } from './core/handlers/errors-handler';
 import { HttpsInterceptor } from './core/interceptors/https-interceptor';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './shared';
 import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 

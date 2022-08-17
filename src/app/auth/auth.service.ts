@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { mergeMap, tap } from 'rxjs';
-import { CONST } from '../core/constants';
-import { SessionService } from '../core/services';
+import { CONST } from '@constants';
+import { SessionService } from '@services';
 
 interface AuthResponse {
   access_token: string;
