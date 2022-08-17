@@ -6,3 +6,4 @@ export { ConfigService } from './config.service';
 export { ResourceService } from './resource.service';
 export { PermissionsService } from './permissions.service';
 export { RolesService } from './roles.service';
+export { AuthService } from './auth.service';

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   backend_url: 'https://tuxpiper.api.ushahidi.io/',
-  api_url: 'https://tuxpiper.api.ushahidi.io/api/v3/',
+  api_v3: '/api/v3/',
   mapbox_api_key:
     'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
   default_locale: 'en_US',
