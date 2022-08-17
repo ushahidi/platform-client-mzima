@@ -5,7 +5,7 @@ import { SessionService } from '../services';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private session: SessionService) {}
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const authToken = this.session.getSessionDataEntry('accessToken');
+    const authToken = this.session.currentAuthToken;
     if (authToken) {
       req = req.clone({
         setHeaders: {
