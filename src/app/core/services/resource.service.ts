@@ -7,7 +7,7 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export abstract class ResourceService<T> {
-  private readonly apiUrl = environment.api_url + this.getResourceUrl();
+  private readonly apiUrl = environment.backend_url + this.getApiVersions() + this.getResourceUrl();
   private readonly options = {};
 
   protected constructor(protected httpClient: HttpClient) {
@@ -18,6 +18,8 @@ export abstract class ResourceService<T> {
       }),
     };
   }
+
+  abstract getApiVersions(): string;
 
   abstract getResourceUrl(): string;
 
@@ -37,9 +39,10 @@ export abstract class ResourceService<T> {
       .pipe(map((list) => list.map((item) => this.fromServerModel(item))));
   }
 
-  get(): Observable<T> {
+  get(url?: string): Observable<T> {
+    const apiUrl = url ? `${this.apiUrl}/${url}` : this.apiUrl;
     return this.httpClient
-      .get<T>(`${this.apiUrl}`, this.options)
+      .get<T>(`${apiUrl}`, this.options)
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
@@ -51,13 +54,13 @@ export abstract class ResourceService<T> {
 
   post(resource: T): Observable<any> {
     return this.httpClient
-      .post(`${this.apiUrl}`, this.options, this.toServerModel(resource))
+      .post(`${this.apiUrl}`, this.toServerModel(resource), this.options)
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
   update(resource: T) {
     return this.httpClient
-      .put(`${this.apiUrl}`, this.options, this.toServerModel(resource))
+      .put(`${this.apiUrl}`, this.toServerModel(resource), this.options)
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
