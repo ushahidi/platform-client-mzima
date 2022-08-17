@@ -1,1 +1,1 @@
-export * from './admin.guard';
+export { AdminGuard } from './admin.guard';
