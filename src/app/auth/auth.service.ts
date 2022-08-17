@@ -43,16 +43,20 @@ export class AuthService {
       .pipe(
         mergeMap((authResponse) => {
           const accessToken = authResponse.access_token;
-          this.sessionService.setSessionDataEntry('accessToken', accessToken);
+
           if (authResponse.expires_in) {
-            this.sessionService.setSessionDataEntry(
-              'accessTokenExpires',
-              Math.floor(Date.now() / 1000) + authResponse.expires_in,
-            );
+            this.sessionService.setSessionData({
+              accessToken,
+              accessTokenExpires: Math.floor(Date.now() / 1000) + authResponse.expires_in,
+              grantType: 'password',
+            });
           } else if (authResponse.expires) {
-            this.sessionService.setSessionDataEntry('accessTokenExpires', authResponse.expires);
+            this.sessionService.setSessionData({
+              accessToken,
+              accessTokenExpires: authResponse.expires,
+              grantType: 'password',
+            });
           }
-          this.sessionService.setSessionDataEntry('grantType', 'password');
 
           return this.getCurrentUser();
         }),
@@ -62,7 +66,7 @@ export class AuthService {
   getCurrentUser() {
     return this.http.get<any>(`${CONST.API_URL}/users/me`).pipe(
       tap((userData) => {
-        this.sessionService.setSessionDataEntries({
+        this.sessionService.setCurrentUser({
           userId: userData.id,
           realname: userData.realname,
           email: userData.email,
