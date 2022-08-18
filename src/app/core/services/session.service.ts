@@ -7,6 +7,7 @@ import {
   UserInterface,
 } from '@models';
 import { BehaviorSubject } from 'rxjs';
+import { CONST } from '@constants';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +54,7 @@ export class SessionService {
   }
 
   localStorageNameMapper(key: string) {
-    return `USH_${key}`;
+    return `${CONST.LOCAL_STORAGE_PREFIX}${key}`;
   }
 
   getConfigurations(type: keyof SessionConfigInterface) {

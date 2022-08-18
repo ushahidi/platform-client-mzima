@@ -52,4 +52,5 @@ export const CONST = {
     ? new Date((window as any).ushahidi.tosReleaseDate)
     : false, // Date in UTC
   EXPORT_POLLING_INTERVAL: (window as any).ushahidi.export_polling_interval || 30000,
+  LOCAL_STORAGE_PREFIX: 'USH_',
 };

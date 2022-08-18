@@ -21,6 +21,9 @@
       "@guards": [
         "src/app/core/guards"
       ],
+      "@helpers": [
+        "src/app/core/helpers"
+      ],
       "@environments": [
         "src/environments"
       ],

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { SessionService } from '@services';
+import { SessionService, AuthService } from '@services';
 import { LoginComponent, RegisterComponent } from '@auth';
 import { MenuInterface, UserMenuInterface } from '@models';
 import { CollectionsComponent } from '@data';
-import { AuthService } from '@services';
+import { takeUntilDestroy$ } from '@helpers';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,6 +15,7 @@ export class SidebarComponent implements OnInit {
   isLoggedIn = false;
   public menu: MenuInterface[] = [];
   public userMenu: UserMenuInterface[] = [];
+  userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
 
   constructor(
     private dialog: MatDialog,
@@ -23,7 +24,7 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.sessionService.currentUserData$.subscribe((userData) => {
+    this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
     });
     this.initMenu();
