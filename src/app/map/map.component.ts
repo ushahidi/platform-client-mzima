@@ -7,6 +7,9 @@ import {
   LatLngBounds,
   FeatureGroup,
   Content,
+  MarkerClusterGroup,
+  MarkerClusterGroupOptions,
+  MapOptions,
 } from 'leaflet';
 import { PostsService } from '@services';
 import { GeoJsonPostsResponse } from '@models';
@@ -22,36 +25,39 @@ import { ViewContainerRef } from '@angular/core';
 export class MapComponent implements OnInit {
   postsCollection: GeoJsonPostsResponse;
   mapLayers: any[] = [];
+  markerClusterData = new MarkerClusterGroup();
+  markerClusterOptions: MarkerClusterGroupOptions = { animate: true, maxClusterRadius: 50 };
   mapFitToBounds: LatLngBounds;
   fitBoundsOptions: FitBoundsOptions = {
     animate: true,
   };
-  public leafletOptions = {
+
+  public leafletOptions: MapOptions = {
     layers: [
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
+
         attribution: 'Coool',
       }),
     ],
+    zoomControl: true,
     zoom: 5,
+    maxBounds: [
+      [-90, -360],
+      [90, 360],
+    ],
     center: latLng(46.879966, -121.726909),
   };
 
   constructor(private postsService: PostsService, private view: ViewContainerRef) {}
 
   ngOnInit() {
-    const comp = this.view.createComponent(PostPopupComponent);
-
+    const that = this;
     this.postsService.getGeojson().subscribe((posts) => {
-      const test = geoJSON(posts, {
+      const geoPosts = geoJSON(posts, {
         pointToLayer: mapHelper.pointToLayer,
         onEachFeature(feature, layer) {
           layer.on('click', () => {
-            // Grab the layer that was actually clicked on
-            // var layer: Layer = e.layer;
-
-            // If we somehow got the feature group: grab the first child
-            // because the FeatureGroup doesn't get added to the map when clustering
             if (layer instanceof FeatureGroup) {
               layer = layer.getLayers()[0];
             }
@@ -59,22 +65,29 @@ export class MapComponent implements OnInit {
             if (layer.getPopup()) {
               layer.openPopup();
             } else {
-              comp.setInput('data', feature.properties);
-              comp.changeDetectorRef.detectChanges();
+              const comp = that.view.createComponent(PostPopupComponent);
+              that.postsService.getById(feature.properties.id).subscribe({
+                next: (post) => {
+                  comp.setInput('data', post);
+                  comp.changeDetectorRef.detectChanges();
 
-              const popup: Content = comp.location.nativeElement;
-              layer.bindPopup(popup, {
-                maxWidth: 600,
-                maxHeight: 400,
-                className: 'pl-popup',
+                  const popup: Content = comp.location.nativeElement;
+
+                  layer.bindPopup(popup, {
+                    maxWidth: 600,
+                    maxHeight: 400,
+                    className: 'pl-popup',
+                  });
+                  layer.openPopup();
+                },
               });
-              layer.openPopup();
             }
           });
         },
       });
-      this.mapLayers.push(test);
-      this.mapFitToBounds = test.getBounds();
+      this.markerClusterData.addLayer(geoPosts);
+      this.mapLayers.push(this.markerClusterData);
+      this.mapFitToBounds = geoPosts.getBounds();
     });
   }
 }

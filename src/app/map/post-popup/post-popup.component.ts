@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { PostPropertiesInterface } from '@models';
 
 @Component({
   selector: 'app-post-popup',
@@ -6,7 +7,7 @@ import { Component, Input, OnChanges } from '@angular/core';
   styleUrls: ['./post-popup.component.scss'],
 })
 export class PostPopupComponent implements OnChanges {
-  @Input() data: any;
+  @Input() data: PostPropertiesInterface;
 
   ngOnChanges(changes: any) {
     console.log('ngOnChanges> ', changes);
