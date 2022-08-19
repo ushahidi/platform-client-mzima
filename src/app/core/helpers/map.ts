@@ -1,3 +1,4 @@
+import { CONST } from '@constants';
 import { divIcon, marker } from 'leaflet';
 
 export const pointIcon = (color: string, size?: any, className?: string) => {
@@ -25,4 +26,37 @@ export const pointToLayer = (feature: any, latlng: any) => {
   return marker(latlng, {
     icon: pointIcon(feature.properties['marker-color']),
   });
+};
+
+export const mapboxStaticTiles = (name: string, mapid: string) => {
+  return {
+    name,
+    url: 'https://api.mapbox.com/styles/v1/{mapid}/tiles/{z}/{x}/{y}?access_token={apikey}',
+    layerOptions: {
+      apikey: CONST.MAPBOX_API_KEY,
+      tileSize: 512,
+      maxZoom: 18,
+      zoomOffset: -1,
+      mapid: mapid,
+      attribution:
+        '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
+    },
+  };
+};
+
+export const getMapLayers = () => {
+  return {
+    baselayers: {
+      satellite: mapboxStaticTiles('Satellite', 'mapbox/satellite-v9'),
+      streets: mapboxStaticTiles('Streets', 'mapbox/streets-v11'),
+      hOSM: {
+        name: 'Humanitarian',
+        url: '//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+        layerOptions: {
+          attribution:
+            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>',
+        },
+      },
+    },
+  };
 };

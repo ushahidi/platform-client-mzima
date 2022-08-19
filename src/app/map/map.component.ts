@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  latLng,
+  control,
   tileLayer,
   geoJSON,
   FitBoundsOptions,
@@ -10,9 +10,10 @@ import {
   MarkerClusterGroup,
   MarkerClusterGroupOptions,
   MapOptions,
+  Map,
 } from 'leaflet';
-import { PostsService } from '@services';
-import { GeoJsonPostsResponse } from '@models';
+import { ConfigService, PostsService } from '@services';
+import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
 import { mapHelper } from '@helpers';
 import { PostPopupComponent } from './post-popup/post-popup.component';
 import { ViewContainerRef } from '@angular/core';
@@ -25,6 +26,8 @@ import { ViewContainerRef } from '@angular/core';
 export class MapComponent implements OnInit {
   postsCollection: GeoJsonPostsResponse;
   mapLayers: any[] = [];
+  mapReady = false;
+  mapConfig: MapConfigInterface;
   markerClusterData = new MarkerClusterGroup();
   markerClusterOptions: MarkerClusterGroupOptions = { animate: true, maxClusterRadius: 50 };
   mapFitToBounds: LatLngBounds;
@@ -32,26 +35,41 @@ export class MapComponent implements OnInit {
     animate: true,
   };
 
-  public leafletOptions: MapOptions = {
-    layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
+  public leafletOptions: MapOptions;
 
-        attribution: 'Coool',
-      }),
-    ],
-    zoomControl: true,
-    zoom: 5,
-    maxBounds: [
-      [-90, -360],
-      [90, 360],
-    ],
-    center: latLng(46.879966, -121.726909),
-  };
-
-  constructor(private postsService: PostsService, private view: ViewContainerRef) {}
+  constructor(
+    private postsService: PostsService,
+    private view: ViewContainerRef,
+    private configService: ConfigService,
+  ) {}
 
   ngOnInit() {
+    this.configService.getMap().subscribe({
+      next: (mapConfig) => {
+        this.mapConfig = mapConfig;
+
+        const currentLayer = mapHelper.getMapLayers().baselayers[mapConfig.default_view.baselayer];
+
+        this.leafletOptions = {
+          scrollWheelZoom: true,
+          zoomControl: false,
+          layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+          center: [mapConfig.default_view.lat, mapConfig.default_view.lon],
+          zoom: mapConfig.default_view.zoom,
+        };
+        this.markerClusterOptions.maxClusterRadius = mapConfig.cluster_radius;
+
+        this.mapReady = true;
+        this.getPostsGeoJson();
+      },
+    });
+  }
+
+  onMapReady(map: Map) {
+    control.zoom({ position: 'bottomleft' }).addTo(map);
+  }
+
+  getPostsGeoJson() {
     const that = this;
     this.postsService.getGeojson().subscribe((posts) => {
       const geoPosts = geoJSON(posts, {
@@ -85,8 +103,14 @@ export class MapComponent implements OnInit {
           });
         },
       });
-      this.markerClusterData.addLayer(geoPosts);
-      this.mapLayers.push(this.markerClusterData);
+
+      if (this.mapConfig.clustering) {
+        this.markerClusterData.addLayer(geoPosts);
+        this.mapLayers.push(this.markerClusterData);
+      } else {
+        this.mapLayers.push(geoPosts);
+      }
+
       this.mapFitToBounds = geoPosts.getBounds();
     });
   }
