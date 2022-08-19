@@ -32,7 +32,7 @@ export class ConfigService extends ResourceService<any> {
   getFeatures(): Observable<any> {
     return super.get('features').pipe(
       tap((data) => {
-        this.sessionService.setConfigurations('site', data);
+        this.sessionService.setConfigurations('features', data);
       }),
     );
   }
