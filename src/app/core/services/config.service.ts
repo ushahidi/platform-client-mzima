@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments';
+import { MapConfigInterface } from '@models';
 import { mergeMap, Observable, tap } from 'rxjs';
 import { ResourceService } from './resource.service';
 import { SessionService } from './session.service';
@@ -35,6 +36,10 @@ export class ConfigService extends ResourceService<any> {
         this.sessionService.setConfigurations('features', data);
       }),
     );
+  }
+
+  getMap(): Observable<MapConfigInterface> {
+    return super.get('map');
   }
 
   initAllConfigurations() {
