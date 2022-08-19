@@ -21,6 +21,10 @@ export class PostsService extends ResourceService<any> {
     return 'posts';
   }
 
+  override getById(id: string | number): Observable<any> {
+    return super.getById(id);
+  }
+
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
     const test = {
       has_location: 'mapped',

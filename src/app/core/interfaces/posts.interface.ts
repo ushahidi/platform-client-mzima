@@ -13,3 +13,14 @@ export interface GeoJsonFilter {
   orderby: string;
   reactToFilters: boolean;
 }
+
+export interface PostPropertiesInterface {
+  id: number;
+  content: string;
+  title: string;
+  post_date: Date;
+  created: Date;
+  color: string;
+  type: string;
+  slug: string;
+}
