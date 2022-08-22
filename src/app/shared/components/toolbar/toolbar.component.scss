@@ -4,6 +4,7 @@
     position: absolute;
     left: 24px;
     top: 40px;
+    z-index: 500;
 
     &-button {
       width: 54px;
@@ -33,10 +34,10 @@
   mat-toolbar {
     background-color: #373e46;
     height: 68px;
+    padding-left: 100px;
+    justify-content: space-between;
 
     .box {
-      margin-left: 100px;
-
       .input-wrapper {
         position: relative;
         display: flex;
