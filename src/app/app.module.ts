@@ -1,17 +1,19 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, ErrorHandler, FactoryProvider, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from './shared';
 import { ErrorsHandler } from './core/handlers/errors-handler';
 import { HttpsInterceptor } from './core/interceptors/https-interceptor';
-import { SharedModule } from './shared';
 import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
-import { ConfigService } from './core/services/config.service';
+import { ConfigService } from '@services';
 import { catchError, of } from 'rxjs';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { ActivityModule } from './activity';
+import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 
 function loadConfigFactory(configService: ConfigService) {
   return () =>
@@ -36,9 +38,13 @@ export const loadConfigProvider: FactoryProvider = {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ActivityModule,
+    LeafletModule,
+    LeafletMarkerClusterModule,
     AuthModule,
     HttpClientModule,
     SharedModule,
+    LeafletModule,
   ],
   providers: [
     {
