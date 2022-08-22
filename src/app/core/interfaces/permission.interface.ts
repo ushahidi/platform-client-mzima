@@ -13,8 +13,6 @@ export interface PermissionResponse {
 
 export interface PermissionResult {
   allowed_privileges: string[];
-  0: string;
-  1: string;
   description: string;
   id: number;
   name: string;

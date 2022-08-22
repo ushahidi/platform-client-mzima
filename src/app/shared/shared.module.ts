@@ -10,13 +10,14 @@ import {
   BreadcrumbComponent,
 } from './components';
 import { MaterialModule } from './material.module';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 const components = [SidebarComponent, ToolbarComponent, LogoComponent, BreadcrumbComponent];
 
 const modules = [CommonModule, MaterialModule, ReactiveFormsModule, RouterModule];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, DialogComponent],
   imports: [...modules],
   exports: [...components, ...modules],
 })

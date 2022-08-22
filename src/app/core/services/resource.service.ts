@@ -58,9 +58,9 @@ export abstract class ResourceService<T> {
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
-  update(resource: T) {
+  update(id: string | number, resource: T) {
     return this.httpClient
-      .put(`${this.apiUrl}`, this.toServerModel(resource), this.options)
+      .put(`${this.apiUrl}/${id}`, this.toServerModel(resource), this.options)
       .pipe(map((json) => this.fromServerModel(json)));
   }
 

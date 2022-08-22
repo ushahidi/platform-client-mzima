@@ -25,7 +25,15 @@ export class RolesService extends ResourceService<RoleResult> {
     return super.get();
   }
 
-  override getById(id: string | number): Observable<RoleResult> {
+  override getById(id: string): Observable<RoleResult> {
     return super.getById(id);
+  }
+
+  override update(id: string | number, role: RoleResult): Observable<RoleResult> {
+    return super.update(id, role);
+  }
+
+  override delete(id: string | number): Observable<any> {
+    return super.delete(id);
   }
 }
