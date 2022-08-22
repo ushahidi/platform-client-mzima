@@ -4,8 +4,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <app-toolbar></app-toolbar>
-    <div class="content-wrapper">
-      <app-breadcrumb></app-breadcrumb>
+    <div class="content-wrapper" [ngClass]="{ 'content-wrapper--no-offset': true }">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

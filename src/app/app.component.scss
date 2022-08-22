@@ -9,5 +9,7 @@ mat-sidenav {
 }
 
 .content-wrapper {
-  padding: 30px 20px;
+  &:not(.content-wrapper--no-offset) {
+    padding: 30px 20px;
+  }
 }
