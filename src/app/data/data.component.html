@@ -33,7 +33,7 @@
           [style.background-color]="element.status !== 'draft' ? '#eee' : '#ffc334'"
           [style.color]="element.status !== 'draft' ? '#666' : 'initial'"
         >
-          {{ element.status !== 'draft' ? element.status : 'Under review' }}
+          {{ element.status !== 'draft' ? (element.status | titlecase) : 'Under review' }}
         </p>
       </td>
     </ng-container>
