@@ -92,7 +92,8 @@ export class MapComponent implements OnInit {
                   const popup: Content = comp.location.nativeElement;
 
                   layer.bindPopup(popup, {
-                    maxWidth: 600,
+                    maxWidth: 360,
+                    minWidth: 360,
                     maxHeight: 200,
                     closeButton: false,
                     className: 'pl-popup',
