@@ -93,7 +93,8 @@ export class MapComponent implements OnInit {
 
                   layer.bindPopup(popup, {
                     maxWidth: 600,
-                    maxHeight: 400,
+                    maxHeight: 200,
+                    closeButton: false,
                     className: 'pl-popup',
                   });
                   layer.openPopup();
