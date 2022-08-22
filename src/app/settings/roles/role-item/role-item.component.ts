@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { PermissionResult, RoleResult } from '@models';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { combineLatest } from 'rxjs';
+import { RoleResult } from '@models';
 import { PermissionsService, RolesService } from '@services';
+import { DialogComponent } from '../../../shared/components';
 
 @Component({
   selector: 'app-role-item',
@@ -10,66 +13,136 @@ import { PermissionsService, RolesService } from '@services';
   styleUrls: ['./role-item.component.scss'],
 })
 export class RoleItemComponent implements OnInit {
-  private data: RoleResult;
-  public form: FormGroup;
-  private permissions: PermissionResult;
+  public permissionsList: any[] = [];
+  public role: RoleResult;
+
+  public form: FormGroup = this.fb.group({
+    display_name: ['', [Validators.required]],
+    description: [''],
+    permissions: this.fb.array([]),
+    allowed_privileges: this.fb.array([]),
+    id: ['', [Validators.required]],
+    name: ['', [Validators.required]],
+    protected: ['', [Validators.required]],
+    url: ['', [Validators.required]],
+  });
 
   constructor(
+    private dialog: MatDialog,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private router: Router,
+    private fb: FormBuilder,
     private rolesService: RolesService,
     private permissionsService: PermissionsService,
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe({
-      next: (params) => {
-        this.getRoleById(Number(params['id']));
-      },
-    });
-    this.getPermissions();
-    this.initForm();
-  }
+    const roleId = this.route.snapshot.paramMap.get('id') || '';
+    const role$ = this.rolesService.getById(roleId);
+    const permissions$ = this.permissionsService.get();
+    combineLatest([role$, permissions$]).subscribe({
+      next: ([role, permissions]) => {
+        this.role = role;
+        this.permissionsList = permissions.results.map((el: any) => {
+          return {
+            name: el.name,
+            checked: false,
+          };
+        });
+        this.fillInForm(role);
 
-  getRoleById(id: number) {
-    this.rolesService.getById(id).subscribe({
-      next: (response) => {
-        this.data = response;
-        console.log(this.data);
+        for (const privileges of role.allowed_privileges) {
+          this.addData(privileges, this.privilegesControl);
+        }
+
+        for (const permission of role.permissions) {
+          this.addData(permission, this.permissionsControl);
+
+          this.permissionsList.reduce((acc, el: any) => {
+            return el.name === permission ? [...acc, (el.checked = true)] : [...acc, el];
+          }, []);
+        }
       },
       error: (err) => console.log(err),
     });
   }
 
-  getPermissions() {
-    this.permissionsService.get().subscribe({
-      next: (response) => (this.permissions = response),
-      error: (err) => console.log(err),
+  private fillInForm(role: RoleResult) {
+    this.form.patchValue({
+      id: role.id,
+      display_name: role.display_name,
+      description: role.description,
+      name: role.name,
+      protected: role.protected,
+      url: role.url,
     });
   }
 
-  initForm() {
-    this.form = this.formBuilder.group({
-      display_name: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      permissions: this.formBuilder.array([]),
-      allowed_privileges: ['', [Validators.required]],
-      id: ['', [Validators.required]],
-      name: ['', [Validators.required]],
-      protected: ['', [Validators.required]],
-      url: ['', [Validators.required]],
-    });
+  private addData(value: string, collections: FormArray) {
+    if (!collections.value.includes(value)) {
+      collections.push(this.fb.control(value));
+    }
   }
 
-  get permissionsValue() {
+  private get permissionsControl() {
     return this.form.controls['permissions'] as FormArray;
   }
 
-  cancel(): void {}
+  private get privilegesControl() {
+    return this.form.controls['allowed_privileges'] as FormArray;
+  }
 
-  save(): void {}
+  public onCheckChange(event: any, field: string) {
+    const formArray: FormArray = this.form.get(field) as FormArray;
+    if (event.checked) {
+      formArray.push(new FormControl(event.source.value));
+    } else {
+      let i: number = 0;
+      formArray.controls.forEach((ctrl: any) => {
+        if (ctrl.value == event.source.value) {
+          formArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
 
-  getErrorMessage(field: string) {
-    return field;
+  public openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '480px',
+      data: {
+        title: this.role.display_name + ' role will be deleted!',
+        body: '<p>This action cannot be undone.</p><p>Are you sure?</p>',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (response) => {
+        if (response?.confirm) {
+          this.delete();
+        }
+      },
+    });
+  }
+
+  public cancel(): void {
+    this.router.navigate(['settings/roles']);
+  }
+
+  public save(): void {
+    console.log(this.role.id, this.form.value);
+    // this.rolesService.update(this.role.id, this.form.value).subscribe({
+    //   next: (response) => console.log(response),
+    //   error: (err) => console.log(err),
+    // });
+  }
+
+  public delete() {
+    console.log('delete');
+    // this.rolesService.delete(this.role.id).subscribe({
+    //   next: (response) => console.log(response),
+    //   error: (err) => console.log(err),
+    // });
   }
 }

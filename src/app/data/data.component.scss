@@ -1,0 +1,23 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  td p {
+    margin: 0;
+  }
+  td .label {
+    font-size: 0.857142857rem;
+    margin-top: 4px;
+    margin-right: 10px;
+    margin-left: 10px;
+    line-height: 13.5px;
+    font-weight: 600;
+    width: fit-content;
+    padding: 7px;
+    border-radius: 15px;
+  }
+}
+
+tr.mat-row {
+  height: 68px;
+}

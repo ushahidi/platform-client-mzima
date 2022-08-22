@@ -16,8 +16,7 @@ export class BreadcrumbService {
       const root = router.routerState.snapshot.root;
       const breadcrumbs: Breadcrumb[] = [];
       this.addBreadcrumb(root, [], breadcrumbs);
-
-      this._breadcrumbs$.next(breadcrumbs);
+      this._breadcrumbs$.next(this.getUniqueListBy(breadcrumbs));
     });
   }
 
@@ -43,5 +42,9 @@ export class BreadcrumbService {
 
   private getLabel(data: Data) {
     return typeof data['breadcrumb'] === 'function' ? data['breadcrumb'](data) : data['breadcrumb'];
+  }
+
+  getUniqueListBy(arr: any[]) {
+    return [...new Map(arr.map((v) => [JSON.stringify(v), v])).values()];
   }
 }

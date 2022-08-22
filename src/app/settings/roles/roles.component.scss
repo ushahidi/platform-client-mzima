@@ -1,0 +1,59 @@
+.section {
+  &-title {
+    font-size: 36px;
+  }
+}
+
+.roles-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 992px) {
+    flex-direction: column;
+  }
+}
+
+.roles-item {
+  box-shadow: 0 10px 25px rgb(0 0 0 / 10%);
+  border-radius: 10px;
+  padding: 40px 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  justify-content: center;
+  flex-basis: 250px;
+  margin-right: 20px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @media (max-width: 992px) {
+    flex-basis: 160px;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 575px) {
+    width: 100%;
+  }
+
+  & .item-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    padding: 3px;
+    margin-bottom: 20px;
+  }
+}
+
+.roles-name {
+  font-size: 18px;
+  font-weight: 600;
+}
