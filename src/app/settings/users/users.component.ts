@@ -13,7 +13,6 @@ import { Observable } from 'rxjs';
 })
 export class UsersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  public userList: UserResult[];
   displayedColumns: string[] = ['select', 'avatar', 'realname', 'email', 'role'];
   dataSource: MatTableDataSource<UserResult>;
   selection = new SelectionModel<UserResult>(true, []);
@@ -29,9 +28,7 @@ export class UsersComponent implements OnInit {
   public ngOnInit() {
     this.userService.getUsers().subscribe({
       next: (response) => {
-        // console.log(response.results);
-        this.userList = response.results;
-        this.dataSource = new MatTableDataSource<UserResult>(this.userList);
+        this.dataSource = new MatTableDataSource<UserResult>(response.results);
         this.dataSource.paginator = this.paginator;
       },
     });
@@ -50,10 +47,8 @@ export class UsersComponent implements OnInit {
       : this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
-  public logSelection() {
+  public apply() {
+    console.log(this.selectedValue);
     console.log(this.selection.selected);
-    console.log(this.selection.selected.length);
   }
-
-  public apply() {}
 }

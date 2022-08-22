@@ -3,7 +3,7 @@
   <div class="form-group">
     <mat-form-field appearance="fill">
       <mat-label>Select role</mat-label>
-      <mat-select [(ngModel)]="selectedValue" name="food">
+      <mat-select [(ngModel)]="selectedValue" name="role">
         <mat-option
           *ngFor="let role of (roleResponse$ | async)?.results"
           [value]="role.display_name"
@@ -72,6 +72,3 @@
   </table>
   <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
 </div>
-<!--<div>-->
-<!--  <button mat-raised-button (click)="logSelection()">Console Log Selected</button>-->
-<!--</div>-->
