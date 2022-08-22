@@ -1,14 +1,7 @@
-export interface RoleResponse {
-  count: number;
-  curr: string;
-  limit: number | null;
-  next: string;
-  offset: number;
-  order: string;
-  orderby: string;
-  prev: string;
+import { ApiResponse } from './api-response.interface';
+
+export interface RoleResponse extends ApiResponse {
   results: RoleResult[];
-  total_count: number;
 }
 
 export interface RoleResult {

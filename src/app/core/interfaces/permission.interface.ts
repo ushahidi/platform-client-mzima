@@ -1,14 +1,7 @@
-export interface PermissionResponse {
-  count: number;
-  curr: string;
-  limit: number | null;
-  next: string;
-  offset: number;
-  order: string;
-  orderby: string;
-  prev: string;
+import { ApiResponse } from './api-response.interface';
+
+export interface PermissionResponse extends ApiResponse {
   results: PermissionResult[];
-  total_count: number;
 }
 
 export interface PermissionResult {

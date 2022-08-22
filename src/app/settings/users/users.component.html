@@ -1,1 +1,77 @@
-<p>users works!</p>
+<form *ngIf="selection.selected.length" (ngSubmit)="apply()" novalidate>
+  <h4>{{ selection.selected.length }} selected</h4>
+  <div class="form-group">
+    <mat-form-field appearance="fill">
+      <mat-label>Select role</mat-label>
+      <mat-select [(ngModel)]="selectedValue" name="food">
+        <mat-option
+          *ngFor="let role of (roleResponse$ | async)?.results"
+          [value]="role.display_name"
+        >
+          {{ role.display_name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-stroked-button color="primary" type="submit">Apply</button>
+  </div>
+</form>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="avatar">
+      <th mat-header-cell *matHeaderCellDef>Avatar</th>
+      <td mat-cell *matCellDef="let element">
+        <div class="avatar-wrapper">
+          <img
+            [src]="'https://www.gravatar.com/avatar/' + element.gravatar + '?d=retro'"
+            [alt]="element.realname"
+          />
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="realname">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.realname }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef>Role</th>
+      <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="selection.toggle(row)"
+    ></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+</div>
+<!--<div>-->
+<!--  <button mat-raised-button (click)="logSelection()">Console Log Selected</button>-->
+<!--</div>-->

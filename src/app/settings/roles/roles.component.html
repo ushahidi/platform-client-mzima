@@ -3,7 +3,7 @@
   <div class="roles-nav">
     <div
       class="roles-item"
-      *ngFor="let role of (roleList$ | async)?.results"
+      *ngFor="let role of (roleResponse$ | async)?.results"
       [routerLink]="[role.id]"
     >
       <div class="item-icon-wrapper">
