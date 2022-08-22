@@ -12,8 +12,8 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { ConfigService } from '@services';
 import { catchError, of } from 'rxjs';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { ActivityModule } from './activity';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import { ActivityModule } from './activity';
 
 function loadConfigFactory(configService: ConfigService) {
   return () =>

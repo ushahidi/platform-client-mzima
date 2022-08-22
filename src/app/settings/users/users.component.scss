@@ -1,0 +1,33 @@
+table {
+  width: 100%;
+}
+tr.mat-row {
+  height: 68px;
+}
+
+.avatar-wrapper {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+  }
+}
+
+.form {
+  &-group {
+    display: flex;
+    align-items: center;
+    height: 53px;
+
+    & mat-form-field {
+      margin-right: 10px;
+    }
+    & button {
+      margin-bottom: 1.34375em;
+      height: 100%;
+    }
+  }
+}

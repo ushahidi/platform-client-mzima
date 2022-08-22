@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RoleResponse } from '@models';
 import { Observable } from 'rxjs';
 import { RolesService } from '@services';
 
@@ -8,7 +9,7 @@ import { RolesService } from '@services';
   styleUrls: ['./roles.component.scss'],
 })
 export class RolesComponent implements OnInit {
-  public roleList$: Observable<any>;
+  public roleResponse$: Observable<RoleResponse>;
 
   constructor(private rolesService: RolesService) {}
 
@@ -17,6 +18,6 @@ export class RolesComponent implements OnInit {
   }
 
   private getRoles() {
-    this.roleList$ = this.rolesService.get();
+    this.roleResponse$ = this.rolesService.get();
   }
 }

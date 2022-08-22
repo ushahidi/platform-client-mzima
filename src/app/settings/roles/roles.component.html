@@ -1,3 +1,15 @@
-<div *ngFor="let role of (roleList$ | async)?.results" [routerLink]="[role.id]">
-  {{ role.display_name }}
-</div>
+<section class="section-title">
+  <h3 class="section-title">Roles</h3>
+  <div class="roles-nav">
+    <div
+      class="roles-item"
+      *ngFor="let role of (roleResponse$ | async)?.results"
+      [routerLink]="[role.id]"
+    >
+      <div class="item-icon-wrapper">
+        <mat-icon class="item-icon">home</mat-icon>
+      </div>
+      <span class="roles-name">{{ role.display_name }}</span>
+    </div>
+  </div>
+</section>

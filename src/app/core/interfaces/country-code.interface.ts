@@ -1,14 +1,7 @@
-export interface CountryCodeResponse {
-  count: number;
-  curr: string;
-  limit: number | null;
-  next: string;
-  offset: number;
-  order: string;
-  orderby: string;
-  prev: string;
+import { ApiResponse } from './api-response.interface';
+
+export interface CountryCodeResponse extends ApiResponse {
   results: CountryCodeResult[];
-  total_count: number;
 }
 
 export interface CountryCodeResult {

@@ -21,7 +21,7 @@ export class PermissionsService extends ResourceService<PermissionResult> {
     return 'permissions';
   }
 
-  override get(): Observable<PermissionResult> {
+  override get(): Observable<any> {
     return super.get();
   }
 }
