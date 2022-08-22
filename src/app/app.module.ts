@@ -14,6 +14,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { ConfigService } from '@services';
 import { catchError, of } from 'rxjs';
 import { ActivityModule } from './activity';
+import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 
 function loadConfigFactory(configService: ConfigService) {
   return () =>
@@ -40,6 +41,7 @@ export const loadConfigProvider: FactoryProvider = {
     BrowserAnimationsModule,
     ActivityModule,
     LeafletModule,
+    LeafletMarkerClusterModule,
     AuthModule,
     HttpClientModule,
     SharedModule,

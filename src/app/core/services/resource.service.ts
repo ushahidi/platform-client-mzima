@@ -39,10 +39,13 @@ export abstract class ResourceService<T> {
       .pipe(map((list) => list.map((item) => this.fromServerModel(item))));
   }
 
-  get(url?: string): Observable<T> {
+  get(url?: string, queryParams?: any): Observable<T> {
     const apiUrl = url ? `${this.apiUrl}/${url}` : this.apiUrl;
+    const options = queryParams
+      ? Object.assign({}, this.options, { params: queryParams })
+      : this.options;
     return this.httpClient
-      .get<T>(`${apiUrl}`, this.options)
+      .get<T>(`${apiUrl}`, options)
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
