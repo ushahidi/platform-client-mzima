@@ -1,0 +1,20 @@
+.map {
+  min-height: 400px;
+  margin: -30px -20px;
+  height: calc(100vh - 68px);
+}
+
+::ng-deep {
+  .pl-popup {
+    .leaflet-popup-content-wrapper {
+      border-radius: 4px;
+    }
+
+    .leaflet-popup-content {
+      margin: 0;
+      padding: 16px;
+      border: none;
+      border-radius: 2px;
+    }
+  }
+}
