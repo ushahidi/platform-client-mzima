@@ -1,1 +1,1 @@
-export * from './activity.module';
+export { ActivityModule } from './activity.module';
