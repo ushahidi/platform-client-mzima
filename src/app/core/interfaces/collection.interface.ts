@@ -11,10 +11,10 @@ export interface CollectionResult {
   featured: boolean;
   id: number;
   name: string;
-  role: string | null;
-  updated: string | null;
-  url: string | null;
-  user_id: string | null;
+  role?: string;
+  updated?: string;
+  url?: string;
+  user_id?: string;
   view: string;
-  view_options: string | null;
+  view_options?: string;
 }

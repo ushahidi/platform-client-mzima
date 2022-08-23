@@ -43,32 +43,32 @@ export interface PostApiResponse extends ApiResponse {
 
 export interface PostResult {
   allowed_privileges: String[];
-  author_email: string | null;
-  author_realname: string | null;
+  author_email?: string;
+  author_realname?: string;
   color: string;
   completed_stages: [];
-  contact: string | null;
+  contact?: string;
   content: string;
   created: string;
-  data_source_message_id: number | null;
+  data_source_message_id?: number;
   form: PostForm;
   id: number;
   locale: string;
-  lock: string | boolean | null;
-  message: string | null;
-  parent_id: number | null;
+  lock?: string | boolean;
+  message?: string;
+  parent_id?: number;
   post_date: string;
   published_to: [];
   sets: [];
   slug: string;
-  source: string | null;
+  source?: string;
   status: string;
   tags: PostTag[];
   title: string;
   type: string;
-  updated: string | null;
+  updated?: string;
   url: string;
-  user_id: number | null;
+  user_id?: number;
   values: {};
 }
 

@@ -8,7 +8,7 @@ import { ResourceService } from './resource.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CollectionsService extends ResourceService<any> {
+export class CollectionsService extends ResourceService<Collection> {
   constructor(protected override httpClient: HttpClient) {
     super(httpClient);
   }
