@@ -60,5 +60,8 @@
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "typescript": "~4.7.2"
+  },
+  "overrides": {
+    "autoprefixer": "10.4.5"
   }
 }

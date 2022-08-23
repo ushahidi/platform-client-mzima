@@ -9,3 +9,4 @@ export { RolesService } from './roles.service';
 export { PostsService } from './posts.service';
 export { AuthService } from './auth.service';
 export { UserService } from './user.service';
+export { CollectionsService } from './collections.service';

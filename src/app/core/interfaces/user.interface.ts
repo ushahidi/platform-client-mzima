@@ -13,8 +13,8 @@ export interface UserResult {
   gravatar: string;
   id: number;
   language: string;
-  last_attempt: string | null;
-  last_login: string | null;
+  last_attempt?: string;
+  last_login?: string;
   logins: number;
   realname: string;
   role: string;
@@ -26,9 +26,9 @@ interface UserContacts {
   can_notify: string;
   contact: string;
   created: string;
-  data_source: string | null;
+  data_source?: string;
   id: string;
   type: string;
-  updated: string | null;
+  updated?: string;
   user_id: string;
 }

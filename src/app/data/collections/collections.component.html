@@ -1,1 +1,20 @@
-<p>collections works!</p>
+<div class="collections">
+  <h2 class="mat-dialog-title">Collections</h2>
+  <form class="box">
+    <div class="input-wrapper">
+      <mat-icon>search</mat-icon>
+      <input type="text" placeholder="Search" />
+    </div>
+  </form>
+  <mat-dialog-content class="mat-typography">
+    <div *ngFor="let item of collectionList" class="item">
+      <div class="item-content">
+        <h3 class="item-title">{{ item.name }}</h3>
+        <span class="item-description">{{ item.description }}</span>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</div>

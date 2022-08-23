@@ -1,7 +1,7 @@
 export interface ApiResponse {
   count: number;
   curr: string;
-  limit: number | null;
+  limit?: number;
   next: string;
   offset: number;
   order: string;

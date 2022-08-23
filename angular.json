@@ -34,7 +34,11 @@
               "./node_modules/leaflet.markercluster/dist/MarkerCluster.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "leaflet",
+              "leaflet.markercluster"
+            ]
           },
           "configurations": {
             "production": {
