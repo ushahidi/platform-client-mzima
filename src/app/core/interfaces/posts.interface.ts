@@ -23,7 +23,7 @@ export interface PostPropertiesInterface {
   color: string;
   type: string;
   slug: string;
-  user: PostPropertiesUser;
+  user?: PostPropertiesUser;
   author_realname?: string;
   status?: string;
   contact?: any;

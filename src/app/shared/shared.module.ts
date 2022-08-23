@@ -8,10 +8,17 @@ import {
   ToolbarComponent,
   LogoComponent,
   BreadcrumbComponent,
+  SubmitPostButtonComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 
-const components = [SidebarComponent, ToolbarComponent, LogoComponent, BreadcrumbComponent];
+const components = [
+  SidebarComponent,
+  ToolbarComponent,
+  LogoComponent,
+  BreadcrumbComponent,
+  SubmitPostButtonComponent,
+];
 
 const modules = [CommonModule, MaterialModule, ReactiveFormsModule, RouterModule];
 

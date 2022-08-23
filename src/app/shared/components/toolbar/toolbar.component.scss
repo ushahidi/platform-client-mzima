@@ -1,36 +1,4 @@
 .toolbar {
-  .fab {
-    display: block;
-    position: absolute;
-    left: 24px;
-    top: 40px;
-    z-index: 500;
-
-    &-button {
-      width: 54px;
-      height: 54px;
-      border-radius: 100%;
-      border: none;
-      box-shadow: 0 0 6px rgb(0 0 0 / 12%), 0 6px 6px rgb(0 0 0 / 24%);
-    }
-  }
-
-  .button {
-    &-alpha {
-      color: #2b323a;
-      background-color: #ffc334;
-      transition: 0.3s;
-      &:hover {
-        color: #2b323a;
-        background-color: #ffb401;
-      }
-    }
-
-    &-plus {
-      font-weight: bold;
-    }
-  }
-
   mat-toolbar {
     background-color: #373e46;
     height: 68px;

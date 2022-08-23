@@ -1,4 +1,4 @@
-<div class="map-popup" [ngStyle]="{ '--color': data.color }">
+<div class="map-popup" *ngIf="data" [ngStyle]="{ '--color': data.color }">
   <span class="map-popup__border"></span>
 
   <div>

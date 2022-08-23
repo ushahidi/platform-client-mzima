@@ -34,10 +34,15 @@ export class PostsService extends ResourceService<any> {
       order_unlocked_on_top: true,
       orderby: 'created',
       reactToFilters: true,
-      // source: [
-      //   'sms', 'twitter', 'web', 'email', 'published', 'draft'
-      // ]
     };
     return super.get('geojson', filter || test);
+  }
+
+  public getAllowedSurveys() {
+    this.httpClient.get(`${environment.backend_url}api/v5/surveys/`).subscribe({
+      next: (surveys) => {
+        console.log('surveys: ', surveys);
+      },
+    });
   }
 }
