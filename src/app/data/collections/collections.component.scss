@@ -1,0 +1,57 @@
+.settings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+
+  &:after {
+    content: '';
+    flex-basis: 330px;
+  }
+}
+
+.item {
+  flex-basis: 330px;
+  margin-bottom: 15px;
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  mat-icon {
+    position: absolute;
+    left: 10px;
+    color: #444;
+  }
+
+  input {
+    padding: 10px 8px 10px 38px;
+    width: 100%;
+    max-width: 450px;
+    color: #444;
+  }
+
+  input::placeholder {
+    color: #444;
+  }
+
+  input:focus {
+    box-shadow: 0 0 2px 4px #ffc334, inset 0 1px 1px rgb(0 0 0 / 30%);
+    color: #222;
+    outline-color: #2b323a;
+    border: 1px solid #c8c8c8;
+    background-color: #fff;
+  }
+}
