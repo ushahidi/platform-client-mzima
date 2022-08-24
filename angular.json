@@ -37,7 +37,9 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "leaflet",
-              "leaflet.markercluster"
+              "leaflet.markercluster",
+              "clone-deep",
+              "dayjs"
             ]
           },
           "configurations": {

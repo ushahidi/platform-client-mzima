@@ -41,7 +41,11 @@ export class PostsService extends ResourceService<any> {
     return super.get('geojson', filter || test);
   }
 
-  getPosts(url: string, queryParams: any): Observable<PostApiResponse> {
+  public getPosts(url: string, queryParams: any): Observable<PostApiResponse> {
     return super.get(url, queryParams);
+  }
+
+  public getPostStatistics(queryParams: any) {
+    return super.get('stats', queryParams);
   }
 }
