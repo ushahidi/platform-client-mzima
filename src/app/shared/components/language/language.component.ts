@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { CONST } from '@constants';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,9 +10,10 @@ import { LanguageService } from '@services';
   styleUrls: ['./language.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class LanguageComponent implements OnInit {
+export class LanguageComponent {
+  private languageKey = `${CONST.LOCAL_STORAGE_PREFIX}language`;
   public languages = this.languageService.getLanguages();
-  public selectedLanguage = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}language`);
+  public selectedLanguage = localStorage.getItem(this.languageKey);
 
   constructor(
     private translate: TranslateService, //
@@ -20,21 +21,20 @@ export class LanguageComponent implements OnInit {
   ) {
     if (this.selectedLanguage === 'null' || this.selectedLanguage === null) {
       this.selectedLanguage = 'en';
-      localStorage.setItem(`${CONST.LOCAL_STORAGE_PREFIX}language`, this.selectedLanguage);
-      translate.setDefaultLang(this.selectedLanguage);
-      translate.use(this.selectedLanguage);
+      localStorage.setItem(this.languageKey, this.selectedLanguage);
+      this.setLanguage(this.selectedLanguage);
     } else {
-      translate.setDefaultLang(this.selectedLanguage);
-      translate.use(this.selectedLanguage);
+      this.setLanguage(this.selectedLanguage);
     }
   }
 
-  ngOnInit() {
-    console.log(this.languageService.getLanguages());
+  setLanguage(lang: string) {
+    this.translate.setDefaultLang(lang);
+    this.translate.use(lang);
   }
 
   changeLanguage(e: MatSelectChange) {
     this.translate.use(e.value);
-    localStorage.setItem(`${CONST.LOCAL_STORAGE_PREFIX}language`, e.value);
+    localStorage.setItem(this.languageKey, e.value);
   }
 }

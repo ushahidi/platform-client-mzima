@@ -12,7 +12,7 @@ import {
   FileUploaderComponent,
 } from './components';
 import { MaterialModule } from './material.module';
-import { DialogComponent } from './components/dialog/dialog.component';
+import { DialogComponent } from './components';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
