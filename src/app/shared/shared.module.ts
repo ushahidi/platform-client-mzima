@@ -17,8 +17,6 @@ import {
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
-import { LocationSelectComponent } from './components/location-select/location-select.component';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 const components = [
   SidebarComponent,
@@ -26,7 +24,6 @@ const components = [
   LogoComponent,
   BreadcrumbComponent,
   SubmitPostButtonComponent,
-  LocationSelectComponent,
 ];
 
 const modules = [
@@ -37,7 +34,6 @@ const modules = [
   NgxMatTimepickerModule,
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
-  LeafletModule,
 ];
 
 @NgModule({
