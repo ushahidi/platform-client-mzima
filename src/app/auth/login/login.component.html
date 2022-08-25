@@ -1,21 +1,31 @@
-<h2>Log in</h2>
+<h2>{{ 'nav.login' | translate }}</h2>
 
 <form class="modal-body" (ngSubmit)="login()" [formGroup]="form" novalidate>
   <mat-form-field appearance="fill">
-    <mat-label>user.email</mat-label>
+    <mat-label>
+      {{ 'user.email' | translate }}
+    </mat-label>
     <input matInput placeholder="pat@example.com" formControlName="email" required />
     <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>user.password</mat-label>
-    <input matInput placeholder="pat@example.com" formControlName="password" required />
+    <mat-label>
+      {{ 'user.password' | translate }}
+    </mat-label>
+    <input
+      matInput
+      placeholder="pat@example.com"
+      formControlName="password"
+      required
+      type="password"
+    />
     <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
   </mat-form-field>
 
   <div class="modal-actions form-field">
     <button mat-stroked-button type="button" class="button-cancel" (click)="cancel()">
-      Cancel
+      {{ 'app.cancel' | translate }}
     </button>
     <button
       mat-stroked-button
@@ -24,7 +34,7 @@
       class="button-login"
       [disabled]="form.invalid || form.disabled"
     >
-      Login
+      {{ 'nav.login' | translate }}
     </button>
   </div>
 </form>

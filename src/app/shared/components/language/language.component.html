@@ -1,0 +1,27 @@
+<div class="language">
+  <mat-form-field>
+    <mat-select [(value)]="selectedLanguage" (selectionChange)="changeLanguage($event)">
+      <mat-select-trigger>
+        <div class="flag-icon-wrapper">
+          <img
+            class="flag-icon"
+            [src]="'assets/images/flags/' + (selectedLanguage | lowercase) + '.svg'"
+            alt=""
+          />
+        </div>
+      </mat-select-trigger>
+      <mat-option *ngFor="let lang of languages" [value]="lang.code">
+        <div style="display: flex; align-items: center">
+          <div class="flag-icon-wrapper">
+            <img
+              class="flag-icon"
+              [src]="'assets/images/flags/' + (lang.code | lowercase) + '.svg'"
+              alt=""
+            />
+          </div>
+          <span style="font-size: 16px">{{ lang.name }}</span>
+        </div>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

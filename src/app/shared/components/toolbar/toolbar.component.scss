@@ -15,6 +15,11 @@
     }
   }
 
+  &-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
   .button {
     &-alpha {
       color: #2b323a;

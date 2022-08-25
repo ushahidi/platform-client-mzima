@@ -26,7 +26,7 @@
       ],
       "@environments": [
         "src/environments"
-      ],
+      ]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
