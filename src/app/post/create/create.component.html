@@ -1,5 +1,7 @@
-<form class="form" [ngStyle]="{ '--color': data?.result?.color }">
-  <ng-container *ngIf="fields; else spinner">
+<!-- FIXME: SOMEHOW I CANT ADD FORM TAG HERE -->
+
+<div class="form" [ngStyle]="{ '--color': data?.result?.color }">
+  <ng-container *ngIf="fields.length; else spinner">
     <div class="field" *ngFor="let field of fields">
       <h3>{{ field.label }} <span class="required" *ngIf="field.required">*</span></h3>
       <mat-label class="field__instruction" *ngIf="field.instructions">{{
@@ -122,7 +124,7 @@
       </ng-container>
     </div>
   </ng-container>
-</form>
+</div>
 
 <ng-template #spinner>
   <mat-spinner class="spinner"></mat-spinner>
