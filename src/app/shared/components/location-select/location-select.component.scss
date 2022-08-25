@@ -1,0 +1,46 @@
+.map-holder {
+  position: relative;
+  margin-bottom: 16px;
+
+  &:before {
+    content: '';
+    display: block;
+    padding-top: 60%;
+  }
+
+  .map {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 25;
+    position: absolute;
+  }
+}
+
+.instructions {
+  display: block;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.search-form {
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 50;
+  position: absolute;
+
+  .mat-input-element {
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 2px;
+    background: #fff;
+    box-sizing: border-box;
+    box-shadow: 0 0 2px rgb(0 0 0 / 12%), 0 2px 2px rgb(0 0 0 / 24%);
+  }
+}
+
+.mat-form-field {
+  width: 100%;
+}

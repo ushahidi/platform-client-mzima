@@ -24,9 +24,12 @@
       "@helpers": [
         "src/app/core/helpers"
       ],
+      "@post": [
+        "src/app/post"
+      ],
       "@environments": [
         "src/environments"
-      ],
+      ]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
