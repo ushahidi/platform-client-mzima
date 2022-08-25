@@ -8,3 +8,4 @@ export * from './auth-response.interface';
 export * from './posts.interface';
 export * from './user.interface';
 export * from './collection.interface';
+export * from './settings.interface';

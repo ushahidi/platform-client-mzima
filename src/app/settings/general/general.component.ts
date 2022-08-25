@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LanguageService, SessionService } from '@services';
+import { MatDialog } from '@angular/material/dialog';
+import { ApiKeyResult } from '@models';
+import { ApiKeyService, LanguageService, SessionService } from '@services';
+import { DialogComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-general',
@@ -18,11 +21,14 @@ export class GeneralComponent implements OnInit {
   });
 
   siteImage: string;
+  apiKey: ApiKeyResult;
 
   constructor(
     private sessionService: SessionService,
     private formBuilder: FormBuilder,
     public langService: LanguageService,
+    private dialog: MatDialog,
+    private apiKeyService: ApiKeyService,
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +42,10 @@ export class GeneralComponent implements OnInit {
       private: c.private,
       disable_registration: true,
     });
-    console.log('sessionService', c);
+    this.apiKeyService.get().subscribe((res) => {
+      // FIXME: results[0]
+      this.apiKey = res.results[0];
+    });
   }
 
   test(event: any) {
@@ -46,6 +55,27 @@ export class GeneralComponent implements OnInit {
 
   clearHeader() {
     this.siteImage = '';
+  }
+
+  generateApiKey() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '480px',
+      data: {
+        title: 'Are you sure?',
+        body: '<p>notify.api_key.change_question</p>',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (response) => {
+        if (response?.confirm) {
+          this.apiKeyService.update(this.apiKey.id, this.apiKey).subscribe((newKey) => {
+            console.log('SUCCESS', newKey);
+            this.apiKey = newKey;
+          });
+        }
+      },
+    });
   }
 
   save() {}

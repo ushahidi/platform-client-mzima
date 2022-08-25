@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import {
@@ -21,7 +21,7 @@ const components = [
   FileUploaderComponent,
 ];
 
-const modules = [CommonModule, MaterialModule, ReactiveFormsModule, RouterModule];
+const modules = [CommonModule, MaterialModule, ReactiveFormsModule, FormsModule, RouterModule];
 
 @NgModule({
   declarations: [...components, DialogComponent],
