@@ -1,0 +1,42 @@
+::ng-deep {
+  .mat-dialog-container {
+    position: relative;
+  }
+}
+
+.close-btn {
+  top: 16px;
+  right: 16px;
+  position: absolute;
+}
+
+.types-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.type-item {
+  margin: 0 -24px;
+  cursor: pointer;
+  padding: 8px 24px;
+  position: relative;
+  transition: opacity 0.35s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &__post-band {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    position: absolute;
+    background: var(--color);
+  }
+}
+
+.snipper {
+  margin: 64px auto;
+}

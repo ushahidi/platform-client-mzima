@@ -6,5 +6,6 @@ export * from './role.interface';
 export * from './permission.interface';
 export * from './auth-response.interface';
 export * from './posts.interface';
+export * from './surveys.interface';
 export * from './user.interface';
 export * from './collection.interface';

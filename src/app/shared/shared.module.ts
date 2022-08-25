@@ -8,10 +8,16 @@ import {
   ToolbarComponent,
   LogoComponent,
   BreadcrumbComponent,
+  SubmitPostButtonComponent,
   FileUploaderComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import { DialogComponent } from './components/dialog/dialog.component';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
 import { LanguageComponent } from './components/language/language.component';
 
 const components = [
@@ -20,13 +26,25 @@ const components = [
   LogoComponent,
   BreadcrumbComponent,
   FileUploaderComponent,
+  SubmitPostButtonComponent,
+  DialogComponent,
+  LanguageComponent,
 ];
 
-const modules = [CommonModule, MaterialModule, ReactiveFormsModule, RouterModule];
+const modules = [
+  CommonModule,
+  MaterialModule,
+  ReactiveFormsModule,
+  RouterModule,
+  NgxMatTimepickerModule,
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  FormsModule,
+];
 
 @NgModule({
-  declarations: [...components, DialogComponent, LanguageComponent],
-  imports: [...modules, FormsModule],
+  declarations: [...components],
+  imports: [...modules],
   exports: [...components, ...modules],
 })
 export class SharedModule {}
