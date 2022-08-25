@@ -1,1 +1,129 @@
-<p>general works!</p>
+<div class="content">
+  <h2>General</h2>
+  <form (ngSubmit)="save()" [formGroup]="generalForm" novalidate>
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label translate>settings.deployment_name</mat-label>
+        <input
+          matInput
+          placeholder="{{ 'settings.deployment_name' }}"
+          formControlName="name"
+          required
+        />
+        <mat-error *ngIf="generalForm.get('name')?.invalid">
+          {{ generalForm.get('name')?.errors | json }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label translate>settings.site_description</mat-label>
+        <textarea
+          matInput
+          placeholder="{{ 'settings.site_description' }}"
+          formControlName="description"
+          data-min-rows="1"
+          rows="1"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-label translate>settings.deployment_logo</mat-label>
+      <figure *ngIf="siteImage">
+        <img [src]="siteImage" class="postcard-image deployment-logo" alt="Deployment-logo" />
+        <button class="button-flat" (click)="clearHeader()" translate="settings.delete_logo">
+          settings.delete_logo
+        </button>
+      </figure>
+      <app-file-uploader (fileUpload)="test($event)"> </app-file-uploader>
+    </div>
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <p class="small" translate>settings.site_email_note</p>
+
+        <mat-label translate>settings.site_email</mat-label>
+        <input matInput placeholder="name@domain.com" formControlName="email" required />
+        <mat-error *ngIf="generalForm.get('email')?.invalid">
+          {{ generalForm.get('email')?.errors | json }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label translate>settings.site_language</mat-label>
+        <mat-select formControlName="language">
+          <mat-option *ngFor="let lang of langService.getLanguages()" [value]="lang.code">
+            {{ lang.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- FIXME: isPrivateEnabled -->
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label translate>settings.site_private</mat-label>
+        <input hidden="true" matInput />
+        <mat-checkbox formControlName="private"> </mat-checkbox>
+      </mat-form-field>
+      <p translate="settings.site_private_desc">
+        Enabling this option makes your deployment and it’s data only accessible to registered users
+        with the correct privileges, who must sign in for access.
+      </p>
+    </div>
+    <!-- FIXME: isDisableRegistrationEnabled -->
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label translate>settings.site_disable_registration</mat-label>
+        <input hidden="true" matInput />
+        <mat-checkbox formControlName="disable_registration"> </mat-checkbox>
+      </mat-form-field>
+      <p translate="settings.site_disable_registration_desc">
+        settings.site_disable_registration_desc
+      </p>
+    </div>
+  </form>
+</div>
+
+<!-- <div class="form-sheet">
+
+
+    <div class="form-field">
+      <label for="api-key" translate="settings.api_key">API Key</label>
+      <p translate="settings.api_key_desc">The API Key is unique to your deployment, it can be used to allow third party systems to interact with your Ushahidi deployment.</p>
+      <button id="api-key" type="button" class="button-beta" ng-click="generateApiKey()">
+        <svg class="iconic" role="img">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#key"></use>
+        </svg>
+        <span class="button-label hidden-when-small">
+          Generate API Key
+        </span>
+      </button>
+      <span id="api_key" class="bug">{{api_key.api_key}}</span>
+
+    </div>
+
+    <settings-map config="map"></settings-map>
+</div>
+
+<div class="form-sheet" ng-show="todo">
+
+    {# TODO: not yet implemented #}
+
+    <div class="form-sheet-summary">
+        <h3 class="form-sheet-title" translate>settings.deployment_delete_this</h3>
+    </div>
+
+    <div class="form-field">
+        <p translate>settings.deployment_delete_info</p>
+
+        <button class="button-destructive">
+            <svg class="iconic" role="img">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trash"></use>
+            </svg>
+            <span class="button-label" translate>settings.deployment_delete</span>
+        </button>
+    </div>
+</div>
+
+</div> -->
