@@ -1,0 +1,129 @@
+<form class="form" [ngStyle]="{ '--color': data?.result?.color }">
+  <ng-container *ngIf="fields; else spinner">
+    <div class="field" *ngFor="let field of fields">
+      <h3>{{ field.label }} <span class="required" *ngIf="field.required">*</span></h3>
+      <mat-label class="field__instruction" *ngIf="field.instructions">{{
+        field.instructions
+      }}</mat-label>
+
+      <ng-container
+        *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
+      >
+        <mat-form-field>
+          <input matInput [value]="field.default" />
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
+        <mat-form-field>
+          <textarea matInput [value]="field.default"></textarea>
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'tags'">
+        <div class="tag-item">
+          <mat-checkbox [checked]="field.all_selected" (change)="selectAll($event.checked, field)">
+            <i>Select All</i>
+          </mat-checkbox>
+        </div>
+
+        <ng-container *ngFor="let option of field.options">
+          <div class="tag-item" *ngIf="!option.parent_id" [ngStyle]="{ '--color': option.color }">
+            <mat-checkbox [checked]="option.value" [disabled]="!!option.children?.length">
+              {{ option.tag }}
+            </mat-checkbox>
+          </div>
+
+          <div class="tags__group" *ngIf="option.children?.length">
+            <ng-container *ngFor="let option of getOptionsByParentId(field, option.id)">
+              <div class="tag-item" [ngStyle]="{ '--color': option.color }">
+                <mat-checkbox
+                  [checked]="option.value"
+                  (change)="checkGroupIsChecked($event.checked, field, option)"
+                >
+                  {{ option.tag }}
+                </mat-checkbox>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'date'">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'datetime'">
+        <mat-form-field>
+          <input matInput [ngxMatDatetimePicker]="picker" />
+          <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'radio'">
+        <mat-radio-group [attr.aria-label]="field.label">
+          <div class="radio-button" *ngFor="let option of field.options">
+            <mat-radio-button [value]="option">
+              {{ option }}
+            </mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'checkbox'">
+        <div class="radio-button" *ngFor="let option of field.options">
+          <mat-checkbox>
+            {{ option }}
+          </mat-checkbox>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'select'">
+        <mat-form-field>
+          <mat-select>
+            <mat-option *ngFor="let option of field.options" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'number'">
+        <mat-form-field>
+          <input matInput [value]="field.default" type="number" />
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'upload'">
+        <button type="button" mat-raised-button (click)="fileInput.click()">Add photo</button>
+        <input hidden #fileInput type="file" id="file" />
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'video'">
+        <mat-form-field>
+          <input
+            matInput
+            [value]="field.default"
+            #videoInput
+            (change)="videoPreview.src = videoInput.value"
+          />
+        </mat-form-field>
+
+        <iframe width="560" height="315" #videoPreview></iframe>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'location'">
+        <app-location-select></app-location-select>
+      </ng-container>
+    </div>
+  </ng-container>
+</form>
+
+<ng-template #spinner>
+  <mat-spinner class="spinner"></mat-spinner>
+</ng-template>
