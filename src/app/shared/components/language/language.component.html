@@ -11,7 +11,7 @@
         </div>
       </mat-select-trigger>
       <mat-option *ngFor="let lang of languages" [value]="lang.code">
-        <div style="display: flex; align-items: center">
+        <div class="option-wrapper">
           <div class="flag-icon-wrapper">
             <img
               class="flag-icon"
@@ -19,7 +19,7 @@
               alt=""
             />
           </div>
-          <span style="font-size: 16px">{{ lang.name }}</span>
+          <span class="language-title">{{ lang.name }}</span>
         </div>
       </mat-option>
     </mat-select>
