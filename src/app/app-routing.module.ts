@@ -29,6 +29,10 @@ const routes: Routes = [
     canActivate: [AdminGuard],
     data: { breadcrumb: 'Settings' },
   },
+  {
+    path: 'post',
+    loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
+  },
 ];
 
 @NgModule({

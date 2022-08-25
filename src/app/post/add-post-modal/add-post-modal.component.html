@@ -1,0 +1,21 @@
+<button mat-icon-button mat-dialog-close class="close-btn" tabindex="-1">
+  <mat-icon class="fab-button__icon">close</mat-icon>
+</button>
+
+<strong mat-dialog-title>Submit a survey response</strong>
+
+<div mat-dialog-content>
+  <mat-spinner class="snipper" *ngIf="!types"></mat-spinner>
+  <ul role="list" class="types-list" *ngIf="!!types">
+    <li
+      role="listitem"
+      class="type-item"
+      *ngFor="let type of types"
+      [ngStyle]="{ '--color': type.color }"
+      [mat-dialog-close]="{ type: type.id }"
+    >
+      <span class="type-item__post-band"></span>
+      {{ type.name }}
+    </li>
+  </ul>
+</div>
