@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments';
 import { Observable, tap } from 'rxjs';
+import { UserResponse } from '../interfaces/user.interface';
 import { ResourceService } from './resource.service';
 import { SessionService } from './session.service';
 
@@ -9,7 +10,10 @@ import { SessionService } from './session.service';
   providedIn: 'root',
 })
 export class UserService extends ResourceService<any> {
-  constructor(protected override httpClient: HttpClient, private sessionService: SessionService) {
+  constructor(
+    protected override httpClient: HttpClient, //
+    private sessionService: SessionService,
+  ) {
     super(httpClient);
   }
 
@@ -46,5 +50,9 @@ export class UserService extends ResourceService<any> {
         );
       }),
     );
+  }
+
+  public getUsers(url?: string): Observable<UserResponse> {
+    return super.get(url);
   }
 }

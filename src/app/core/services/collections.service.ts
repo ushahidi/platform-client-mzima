@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments';
-import { PermissionResult } from '@models';
+import { Collection } from '@models';
 import { Observable } from 'rxjs';
 import { ResourceService } from './resource.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PermissionsService extends ResourceService<PermissionResult> {
+export class CollectionsService extends ResourceService<Collection> {
   constructor(protected override httpClient: HttpClient) {
     super(httpClient);
   }
@@ -18,10 +18,10 @@ export class PermissionsService extends ResourceService<PermissionResult> {
   }
 
   getResourceUrl(): string {
-    return 'permissions';
+    return 'collections';
   }
 
-  override get(): Observable<any> {
-    return super.get();
+  getCollections(url: string, queryParams: any): Observable<Collection> {
+    return super.get(url, queryParams);
   }
 }

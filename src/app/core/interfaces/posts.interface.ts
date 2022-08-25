@@ -1,3 +1,5 @@
+import { ApiResponse } from './api-response.interface';
+
 export interface GeoJsonPostsResponse {
   features: GeoJSON.Feature[];
   total: number;
@@ -34,4 +36,48 @@ export interface PostPropertiesUser {
   url: string;
   gravatar?: string;
   realname?: string;
+}
+export interface PostApiResponse extends ApiResponse {
+  results: PostResult[];
+}
+
+export interface PostResult {
+  allowed_privileges: String[];
+  author_email?: string;
+  author_realname?: string;
+  color: string;
+  completed_stages: [];
+  contact?: string;
+  content: string;
+  created: string;
+  data_source_message_id?: number;
+  form: PostForm;
+  id: number;
+  locale: string;
+  lock?: string | boolean;
+  message?: string;
+  parent_id?: number;
+  post_date: string;
+  published_to: [];
+  sets: [];
+  slug: string;
+  source?: string;
+  status: string;
+  tags: PostTag[];
+  title: string;
+  type: string;
+  updated?: string;
+  url: string;
+  user_id?: number;
+  values: {};
+}
+
+interface PostTag {
+  id: number;
+  url: string;
+}
+
+interface PostForm {
+  id: number;
+  url: string;
 }

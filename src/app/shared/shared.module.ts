@@ -11,6 +11,7 @@ import {
   SubmitPostButtonComponent,
 } from './components';
 import { MaterialModule } from './material.module';
+import { DialogComponent } from './components/dialog/dialog.component';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
@@ -40,7 +41,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, DialogComponent],
   imports: [...modules],
   exports: [...components, ...modules],
 })

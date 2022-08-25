@@ -6,14 +6,13 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared';
 import { ErrorsHandler } from './core/handlers/errors-handler';
-import { HttpsInterceptor } from './core/interceptors/https-interceptor';
+import { AuthInterceptor, HttpsInterceptor } from './core/interceptors';
 import { AuthModule } from './auth/auth.module';
-import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { ConfigService } from '@services';
 import { catchError, of } from 'rxjs';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { ActivityModule } from './activity';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import { ActivityModule } from './activity';
 
 function loadConfigFactory(configService: ConfigService) {
   return () =>

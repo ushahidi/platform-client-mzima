@@ -1,0 +1,74 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px;
+  box-shadow: 0 0 2px rgb(0 0 0 / 12%), 0 2px 2px rgb(0 0 0 / 24%);
+  background-color: #fafafa;
+  padding: 50px;
+  max-width: 600px;
+  margin-bottom: 30px;
+
+  &-field {
+    margin-bottom: 20px;
+    width: 100%;
+
+    & .legend {
+      font-weight: 600;
+      font-size: 1.142857143rem;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    & .mat-form-field {
+      width: 100%;
+    }
+
+    & a {
+      text-decoration: none;
+      border-bottom: 1px dotted #373e46;
+    }
+  }
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end;
+
+  .role-button {
+    text-transform: uppercase;
+    &:first-child {
+      margin-right: 10px;
+    }
+
+    & mat-icon {
+      margin-right: 10px;
+    }
+  }
+}
+
+.role-delete {
+  &-container {
+    border-radius: 2px;
+    box-shadow: 0 0 2px rgb(0 0 0 / 12%), 0 2px 2px rgb(0 0 0 / 24%);
+    background-color: #fafafa;
+    padding: 50px;
+    max-width: 600px;
+  }
+
+  &-title {
+    font-size: 1.714285714rem;
+    margin-bottom: 16px;
+  }
+
+  &-description {
+    margin-bottom: 30px;
+  }
+
+  &-button {
+    text-transform: uppercase;
+
+    & mat-icon {
+      margin-right: 10px;
+    }
+  }
+}

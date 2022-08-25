@@ -11,6 +11,7 @@ const routes: Routes = [
   {
     path: ':id',
     loadChildren: () => import('./role-item/role-item.module').then((m) => m.RoleItemModule),
+    data: { breadcrumb: '' },
   },
 ];
 
