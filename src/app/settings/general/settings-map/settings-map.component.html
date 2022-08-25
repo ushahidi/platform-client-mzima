@@ -1,75 +1,90 @@
 <div *ngIf="mapConfig">
   <div class="form-group">
-    <mat-label translate>settings.map_default_location</mat-label>
-    <div
-      id="settings-map"
-      style="height: 300px; width: 100%"
-      *ngIf="mapReady"
-      leaflet
-      [leafletOptions]="leafletOptions"
-      [leafletLayers]="mapLayers"
-      (leafletMapReady)="onMapReady($event)"
-    ></div>
+    <h3 translate>settings.map_default_location</h3>
+    <div class="map-holder">
+      <div
+        id="settings-map"
+        class="map"
+        *ngIf="mapReady"
+        leaflet
+        [leafletOptions]="leafletOptions"
+        [leafletLayers]="mapLayers"
+        (leafletMapReady)="onMapReady($event)"
+      ></div>
+    </div>
   </div>
 
-  <div class="form-group">
-    <mat-form-field appearance="fill">
-      <mat-label translate>settings.map_default_baselayer</mat-label>
-      <mat-select [(value)]="mapConfig.default_view.baselayer" (valueChange)="layerChange($event)">
-        <mat-option *ngFor="let layer of baseLayers" [value]="layer">
-          {{ layer }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+  <mat-grid-list cols="2" rowHeight="70" gutterSize="24">
+    <mat-grid-tile>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label translate>settings.map_default_latitude</mat-label>
+          <input
+            type="number"
+            matInput
+            [(ngModel)]="mapConfig.default_view.lat"
+            [max]="90"
+            [min]="-90"
+          />
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label translate>settings.map_default_longitude</mat-label>
+          <input
+            type="number"
+            matInput
+            [(ngModel)]="mapConfig.default_view.lon"
+            [max]="180"
+            [min]="-180"
+          />
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label translate>settings.map_default_baselayer</mat-label>
+          <mat-select
+            [(value)]="mapConfig.default_view.baselayer"
+            (valueChange)="layerChange($event)"
+          >
+            <mat-option *ngFor="let layer of baseLayers" [value]="layer">
+              {{ layer }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label translate>settings.map_default_zoom_level</mat-label>
+          <input
+            type="number"
+            matInput
+            [(ngModel)]="mapConfig.default_view.zoom"
+            [max]="maxZoom"
+            [min]="minZoom"
+          />
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 
   <div class="form-group">
-    <mat-form-field appearance="fill">
-      <mat-label translate>settings.map_default_latitude</mat-label>
-      <input
-        type="number"
-        matInput
-        [(ngModel)]="mapConfig.default_view.lat"
-        [max]="90"
-        [min]="-90"
-      />
-    </mat-form-field>
-  </div>
-  <div class="form-group">
-    <mat-form-field appearance="fill">
-      <mat-label translate>settings.map_default_longitude</mat-label>
-      <input
-        type="number"
-        matInput
-        [(ngModel)]="mapConfig.default_view.lon"
-        [max]="180"
-        [min]="-180"
-      />
-    </mat-form-field>
-  </div>
-  <div class="form-group">
-    <mat-form-field appearance="fill">
-      <mat-label translate>settings.map_default_zoom_level</mat-label>
-      <input
-        type="number"
-        matInput
-        [(ngModel)]="mapConfig.default_view.zoom"
-        [max]="maxZoom"
-        [min]="minZoom"
-      />
-    </mat-form-field>
-  </div>
-
-  <div class="form-group">
-    <mat-form-field appearance="fill">
-      <mat-label translate>settings.map_clustering</mat-label>
-      <input hidden="true" matInput />
-      <mat-checkbox
-        [checked]="mapConfig.clustering"
-        (change)="mapConfig.clustering = $event.checked"
-      >
-      </mat-checkbox>
-    </mat-form-field>
+    <mat-checkbox
+      translate
+      [checked]="mapConfig.clustering"
+      (change)="mapConfig.clustering = $event.checked"
+    >
+      settings.map_clustering
+    </mat-checkbox>
   </div>
 </div>
 

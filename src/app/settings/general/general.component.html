@@ -2,7 +2,7 @@
   <h2>General</h2>
   <form (ngSubmit)="save()" [formGroup]="generalForm" novalidate>
     <div class="form-group">
-      <mat-form-field appearance="fill">
+      <mat-form-field>
         <mat-label translate>settings.deployment_name</mat-label>
         <input
           matInput
@@ -16,7 +16,7 @@
       </mat-form-field>
     </div>
     <div class="form-group">
-      <mat-form-field appearance="fill">
+      <mat-form-field>
         <mat-label translate>settings.site_description</mat-label>
         <textarea
           matInput
@@ -28,28 +28,34 @@
       </mat-form-field>
     </div>
     <div class="form-group">
-      <mat-label translate>settings.deployment_logo</mat-label>
-      <figure *ngIf="siteImage">
-        <img [src]="siteImage" class="postcard-image deployment-logo" alt="Deployment-logo" />
-        <button class="button-flat" (click)="clearHeader()" translate="settings.delete_logo">
-          settings.delete_logo
-        </button>
+      <h3 translate>settings.deployment_logo</h3>
+      <figure class="logo" *ngIf="siteImage">
+        <img [src]="siteImage" alt="Deployment-logo" />
+        <app-file-uploader class="logo__uploader" (fileUpload)="test($event)"> </app-file-uploader>
+        <span class="logo__update-text">Update</span>
       </figure>
-      <app-file-uploader (fileUpload)="test($event)"> </app-file-uploader>
+
+      <button
+        color="warn"
+        mat-raised-button
+        (click)="clearHeader()"
+        translate="settings.delete_logo"
+      >
+        settings.delete_logo
+      </button>
     </div>
     <div class="form-group">
-      <mat-form-field appearance="fill">
-        <p class="small" translate>settings.site_email_note</p>
-
+      <mat-form-field>
         <mat-label translate>settings.site_email</mat-label>
         <input matInput placeholder="name@domain.com" formControlName="email" required />
         <mat-error *ngIf="generalForm.get('email')?.invalid">
           {{ generalForm.get('email')?.errors | json }}
         </mat-error>
       </mat-form-field>
+      <p class="small" translate>settings.site_email_note</p>
     </div>
     <div class="form-group">
-      <mat-form-field appearance="fill">
+      <mat-form-field>
         <mat-label translate>settings.site_language</mat-label>
         <mat-select formControlName="language">
           <mat-option *ngFor="let lang of langService.getLanguages()" [value]="lang.code">
@@ -61,42 +67,44 @@
 
     <!-- FIXME: isPrivateEnabled -->
     <div class="form-group">
-      <mat-form-field appearance="fill">
-        <mat-label translate>settings.site_private</mat-label>
-        <input hidden="true" matInput />
-        <mat-checkbox formControlName="private"> </mat-checkbox>
-      </mat-form-field>
-      <p translate="settings.site_private_desc">
+      <mat-checkbox translate formControlName="private"> settings.site_private </mat-checkbox>
+      <p class="small" translate="settings.site_private_desc">
         Enabling this option makes your deployment and it’s data only accessible to registered users
         with the correct privileges, who must sign in for access.
       </p>
     </div>
     <!-- FIXME: isDisableRegistrationEnabled -->
     <div class="form-group">
-      <mat-form-field appearance="fill">
-        <mat-label translate>settings.site_disable_registration</mat-label>
-        <input hidden="true" matInput />
-        <mat-checkbox formControlName="disable_registration"> </mat-checkbox>
-      </mat-form-field>
+      <mat-checkbox translate formControlName="disable_registration">
+        settings.site_disable_registration
+      </mat-checkbox>
       <p translate="settings.site_disable_registration_desc">
         settings.site_disable_registration_desc
       </p>
     </div>
   </form>
 
-  <div class="form-field danger" *ngIf="apiKey">
-    <label for="api-key" translate="settings.api_key">API Key</label>
+  <div class="form-group danger" *ngIf="apiKey">
+    <h3 for="api-key" translate="settings.api_key">API Key</h3>
     <p translate="settings.api_key_desc">
       The API Key is unique to your deployment, it can be used to allow third party systems to
       interact with your Ushahidi deployment.
     </p>
-    <button id="api-key" type="button" class="button-beta" (click)="generateApiKey()">
-      <svg class="iconic" role="img">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#key"></use>
-      </svg>
+    <button
+      id="api-key"
+      type="button"
+      mat-raised-button
+      class="button-beta"
+      (click)="generateApiKey()"
+    >
+      <mat-icon aria-hidden="false" aria-label="Generate API Key">
+        <svg class="iconic" role="img">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#key"></use>
+        </svg>
+      </mat-icon>
       <span class="button-label hidden-when-small"> Generate API Key </span>
     </button>
-    <span id="api_key" class="bug">{{ apiKey.api_key }}</span>
+    <span id="api_key" class="api-key">{{ apiKey.api_key }}</span>
   </div>
 
   <app-settings-map></app-settings-map>
