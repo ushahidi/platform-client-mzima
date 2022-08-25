@@ -1,1 +1,22 @@
-<p>bar-chart works!</p>
+<div class="chart-container">
+  <h3>Activity by volume</h3>
+  <mat-form-field appearance="fill">
+    <mat-label>Select filter</mat-label>
+    <mat-select [(ngModel)]="selectedFilter" (selectionChange)="change($event)" name="filter">
+      <mat-option *ngFor="let filter of filters" [value]="filter.value">
+        {{ filter.displayNane }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <ngx-charts-bar-vertical
+    [view]="[550, 300]"
+    [scheme]="colorScheme"
+    [results]="data"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [yAxisLabel]="'Post count'"
+  >
+  </ngx-charts-bar-vertical>
+</div>

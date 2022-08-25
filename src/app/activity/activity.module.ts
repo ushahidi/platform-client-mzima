@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MaterialModule } from '../shared';
 import { ActivityRoutingModule } from './activity-routing.module';
 import { ActivityTimelineComponent } from './activity-timeline/activity-timeline.component';
 import { ActivityComponent } from './activity.component';
@@ -17,6 +20,6 @@ import { TimeChartComponent } from './time-chart/time-chart.component';
     TargetedSurveyTableComponent,
     TimeChartComponent,
   ],
-  imports: [CommonModule, ActivityRoutingModule],
+  imports: [CommonModule, ActivityRoutingModule, NgxChartsModule, MaterialModule, FormsModule],
 })
 export class ActivityModule {}
