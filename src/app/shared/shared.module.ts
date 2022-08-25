@@ -8,11 +8,18 @@ import {
   ToolbarComponent,
   LogoComponent,
   BreadcrumbComponent,
+  FileUploaderComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import { DialogComponent } from './components/dialog/dialog.component';
 
-const components = [SidebarComponent, ToolbarComponent, LogoComponent, BreadcrumbComponent];
+const components = [
+  SidebarComponent,
+  ToolbarComponent,
+  LogoComponent,
+  BreadcrumbComponent,
+  FileUploaderComponent,
+];
 
 const modules = [CommonModule, MaterialModule, ReactiveFormsModule, RouterModule];
 
