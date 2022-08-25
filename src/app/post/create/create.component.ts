@@ -1,78 +1,80 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Event, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { SurveysService } from '@services';
+import { takeUntilDestroy$ } from '@helpers';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
 })
-export class CreateComponent {
-  constructor() {
+export class CreateComponent implements OnInit {
+  public data?: any;
+  public fields?: any[];
+  private routerEvents = this.router.events.pipe(takeUntilDestroy$());
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private surveysService: SurveysService,
+  ) {
     this.loadData();
   }
 
+  ngOnInit(): void {
+    this.routerEvents.subscribe({
+      next: (event: Event) => {
+        if (event instanceof NavigationStart) {
+          this.fields = undefined;
+        }
+
+        if (event instanceof NavigationEnd) {
+          this.loadData();
+        }
+      },
+    });
+  }
+
   private loadData() {
-    // let requests = [SurveysSdk.findSurveyTo($scope.formId, 'get_minimal_form')];
-    // return $q.all(requests).then(function (results) {
-    //     $scope.post.form = results[0];
-    //     $scope.post.post_content = results[0].tasks;
-    //     $scope.languages = {default: results[0].enabled_languages.default, active: results[0].enabled_languages.default,  available: [results[0].enabled_languages.default, ...results[0].enabled_languages.available]}
-    //     // Initialize values on new post
-    //     $scope.post.post_content.map(task => {
-    //         console.log('task: ', task);
-    //         task.fields.map (attr => {
-    //             // Create associated media entity
-    //             if (!attr.value) {
-    //                 attr.value = {};
-    //             }
-    //             if (attr.input === 'upload') {
-    //                 $scope.medias[attr.id] = {};
-    //             }
-    //             if (attr.type === 'decimal') {
-    //                 if (attr.value.value) {
-    //                     attr.value.value = parseFloat(attr.value.value);
-    //                 } else if (attr.default) {
-    //                     attr.value.value = parseFloat(attr.default);
-    //                 }
-    //             }
-    //             if (attr.type === 'int') {
-    //                 if (attr.value.value) {
-    //                     attr.value.value = parseInt(attr.value.value);
-    //                 } else if (attr.default) {
-    //                     attr.value.value = parseInt(attr.default);
-    //                 }
-    //             }
-    //             if (attr.input === 'datetime') {
-    //                 // Date picker requires date object
-    //                 // ensure that dates are preserved in UTC
-    //                 if (attr.value.value) {
-    //                     attr.value.value = dayjs(attr.value.value).toDate();
-    //                 } else if (attr.default) {
-    //                     attr.value.value = new Date(attr.default);
-    //                 } else {
-    //                     attr.value.value = attr.required ? dayjs(new Date()).toDate() : null;
-    //                 }
-    //             }
-    //             if (attr.input === 'date') {
-    //                 // We are only interested in year-month-day for date-fields
-    //                 if (attr.value.value) {
-    //                     attr.value.value = dayjs(attr.value.value).format('YYYY-MM-DD');
-    //                 } else if (attr.default) {
-    //                     try {
-    //                         let defaultValue = dayjs(new Date(attr.default));
-    //                         // Safeguarding against invalid default dates below. We should add validation in the survey setup instead
-    //                         if (defaultValue.isValid()) {
-    //                             attr.value.value = defaultValue.format('YYYY-MM-DD');
-    //                         }
-    //                     } catch (err) {
-    //                         // What do do if the default-value is in the wrong format?
-    //                     }
-    //                 }
-    //                 else {
-    //                     attr.value.value = attr.required ? dayjs(new Date()).format('YYYY-MM-DD') : null;
-    //                 }
-    //             }
-    //         });
-    //     });
-    // });
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) return;
+    this.surveysService.getById(id).subscribe({
+      next: (data) => {
+        console.log('data: ', data);
+
+        this.data = data;
+        this.fields = data.result.tasks[0].fields.sort((a: any, b: any) => a.priority - b.priority);
+
+        this.fields?.map((field: any) => {
+          if (field.type === 'tags') {
+            field.all_selected = false;
+            field.options.map((option: any) => {
+              option.value = false;
+            });
+          }
+        });
+      },
+    });
+  }
+
+  public getOptionsByParentId(field: any, parent_id: number): any[] {
+    return field.options.filter((option: any) => option.parent_id === parent_id);
+  }
+
+  public checkGroupIsChecked(value: boolean, field: any, option: any): void {
+    option.value = value;
+
+    if (
+      (value && field.options.find((o: any) => o.parent_id === option.parent_id && o.value)) ||
+      (!value && !field.options.find((o: any) => o.parent_id === option.parent_id && o.value))
+    ) {
+      field.options.find((o: any) => o.id === option.parent_id).value = value;
+    }
+  }
+
+  public selectAll(value: boolean, field: any): void {
+    field.options.map((option: any) => {
+      option.value = value;
+    });
   }
 }

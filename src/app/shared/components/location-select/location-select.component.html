@@ -1,0 +1,35 @@
+<div class="map-holder">
+  <div
+    leaflet
+    class="map"
+    *ngIf="mapReady"
+    [leafletLayers]="mapLayers"
+    [leafletOptions]="leafletOptions"
+    [leafletFitBounds]="mapFitToBounds"
+    (leafletMapReady)="onMapReady($event)"
+    [leafletFitBoundsOptions]="fitBoundsOptions"
+  ></div>
+
+  <form class="search-form" appearance="fill">
+    <input matInput placeholder="Search for addresses, place names, or coordinates..." />
+  </form>
+</div>
+
+<span class="instructions"
+  >You can search or click the area of map where you want to place the marker.</span
+>
+<mat-grid-list cols="2" gutterSize="32" rowHeight="58">
+  <mat-grid-tile>
+    <mat-form-field>
+      <mat-label>Lat</mat-label>
+      <input matInput />
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-form-field>
+      <mat-label>Long</mat-label>
+      <input matInput />
+    </mat-form-field>
+  </mat-grid-tile>
+</mat-grid-list>

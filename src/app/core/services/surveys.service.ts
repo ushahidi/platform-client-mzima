@@ -23,4 +23,8 @@ export class SurveysService extends ResourceService<any> {
   override get(): Observable<any> {
     return super.get();
   }
+
+  override getById(id: string | number): Observable<any> {
+    return super.getById(id);
+  }
 }
