@@ -31,18 +31,18 @@
       <h3 translate>settings.deployment_logo</h3>
       <figure class="logo" *ngIf="siteImage">
         <img [src]="siteImage" alt="Deployment-logo" />
-        <app-file-uploader class="logo__uploader" (fileUpload)="fileUploaded($event)">
-        </app-file-uploader>
-        <span class="logo__update-text">Update</span>
       </figure>
-
       <button
+        *ngIf="siteImage"
         color="warn"
         mat-raised-button
         (click)="clearHeader()"
         translate="settings.delete_logo"
-      >
-        settings.delete_logo
+      ></button>
+      <button color="primary" mat-raised-button>
+        Update
+        <app-file-uploader class="logo__uploader" (fileUpload)="fileUploaded($event)">
+        </app-file-uploader>
       </button>
     </div>
     <div class="form-group">
@@ -68,7 +68,9 @@
 
     <!-- FIXME: isPrivateEnabled -->
     <div class="form-group">
-      <mat-checkbox translate formControlName="private"> settings.site_private </mat-checkbox>
+      <mat-checkbox formControlName="private">{{
+        'settings.site_private' | translate
+      }}</mat-checkbox>
       <p class="small" translate="settings.site_private_desc">
         Enabling this option makes your deployment and it’s data only accessible to registered users
         with the correct privileges, who must sign in for access.
@@ -77,11 +79,9 @@
     <!-- FIXME: isDisableRegistrationEnabled -->
     <div class="form-group">
       <mat-checkbox translate formControlName="disable_registration">
-        settings.site_disable_registration
+        {{ 'settings.site_disable_registration' | translate }}
       </mat-checkbox>
-      <p translate="settings.site_disable_registration_desc">
-        settings.site_disable_registration_desc
-      </p>
+      <p translate="settings.site_disable_registration_desc"></p>
     </div>
   </form>
 

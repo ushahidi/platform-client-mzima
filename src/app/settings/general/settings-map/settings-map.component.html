@@ -78,12 +78,8 @@
   </mat-grid-list>
 
   <div class="form-group">
-    <mat-checkbox
-      translate
-      [checked]="mapConfig.clustering"
-      (change)="mapConfig.clustering = $event.checked"
-    >
-      settings.map_clustering
+    <mat-checkbox [checked]="mapConfig.clustering" (change)="mapConfig.clustering = $event.checked">
+      {{ 'settings.map_clustering' | translate }}
     </mat-checkbox>
   </div>
 </div>

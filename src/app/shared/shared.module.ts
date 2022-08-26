@@ -19,6 +19,7 @@ import {
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 import { LanguageComponent } from './components/language/language.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const components = [
   SidebarComponent,
@@ -42,6 +43,7 @@ const modules = [
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
   FormsModule,
+  TranslateModule,
 ];
 
 @NgModule({
