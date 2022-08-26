@@ -19,6 +19,8 @@ import {
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 import { LanguageComponent } from './components/language/language.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 
 const components = [
   SidebarComponent,
@@ -29,6 +31,8 @@ const components = [
   SubmitPostButtonComponent,
   DialogComponent,
   LanguageComponent,
+  SpinnerComponent,
+  ConfirmModalComponent,
 ];
 
 const modules = [

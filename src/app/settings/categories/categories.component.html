@@ -1,1 +1,67 @@
-<p>categories works!</p>
+<div class="page-content mat-elevation-z8">
+  <div class="selected-filters">
+    <h2 *ngIf="selectedCategories.length">{{ selectedCategories.length }} selected</h2>
+    <button
+      mat-mini-fab
+      color="primary"
+      (click)="createNewCategory()"
+      *ngIf="!selectedCategories.length"
+      aria-label="Add new category"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="selected-filters__controls">
+      <button mat-raised-button (click)="deselectAll()" *ngIf="selectedCategories.length">
+        Deselect
+      </button>
+      <button
+        mat-raised-button
+        (click)="selectAll()"
+        *ngIf="selectedCategories.length !== categories?.length"
+      >
+        Select All
+      </button>
+      <button
+        mat-mini-fab
+        color="accent"
+        (click)="deleteSelectedCategories()"
+        *ngIf="selectedCategories.length"
+        aria-label="Delete selected categories"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+  <ul *ngIf="categories; else spinner" class="categories-list">
+    <ng-container *ngFor="let category of categories">
+      <li *ngIf="!category.parent_id" class="categories-list__item">
+        <app-category-item
+          #categoryItem
+          [category]="category"
+          (deleted)="deleteCategory($event)"
+          (selected)="selectCategory($event)"
+        >
+        </app-category-item>
+
+        <ul *ngIf="category.children?.length" class="categories-list categories-list--lvl2">
+          <li
+            class="categories-list__item"
+            *ngFor="let category of getChildCategories(category.id)"
+          >
+            <app-category-item
+              #categoryItem
+              [category]="category"
+              (deleted)="deleteCategory($event)"
+              (selected)="selectCategory($event)"
+            >
+            </app-category-item>
+          </li>
+        </ul>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+
+<ng-template #spinner>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>
