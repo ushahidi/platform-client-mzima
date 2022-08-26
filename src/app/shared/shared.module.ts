@@ -8,16 +8,17 @@ import {
   ToolbarComponent,
   LogoComponent,
   BreadcrumbComponent,
-  FileUploaderComponent,
   SubmitPostButtonComponent,
+  FileUploaderComponent,
 } from './components';
 import { MaterialModule } from './material.module';
-import { DialogComponent } from './components/dialog/dialog.component';
+import { DialogComponent } from './components';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
+import { LanguageComponent } from './components/language/language.component';
 
 const components = [
   SidebarComponent,
@@ -27,6 +28,8 @@ const components = [
   BreadcrumbComponent,
   FileUploaderComponent,
   SubmitPostButtonComponent,
+  DialogComponent,
+  LanguageComponent,
 ];
 
 const modules = [
@@ -38,6 +41,7 @@ const modules = [
   NgxMatTimepickerModule,
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
+  FormsModule,
 ];
 
 @NgModule({

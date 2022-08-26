@@ -25,6 +25,8 @@
     "@angular/router": "^14.1.3",
     "@asymmetrik/ngx-leaflet": "^14.0.1",
     "@asymmetrik/ngx-leaflet-markercluster": "^14.0.1",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "@swimlane/ngx-charts": "^20.1.0",
     "@types/leaflet.markercluster": "^1.5.1",
     "dayjs": "^1.11.5",

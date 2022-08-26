@@ -1,4 +1,9 @@
 .toolbar {
+  &-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
   mat-toolbar {
     background-color: #373e46;
     height: 68px;

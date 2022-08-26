@@ -13,3 +13,4 @@ export { CollectionsService } from './collections.service';
 export { LanguageService } from './language.service';
 export { ApiKeyService } from './api-key.service';
 export { SurveysService } from './surveys.service';
+export { LanguageService } from './language.service';
