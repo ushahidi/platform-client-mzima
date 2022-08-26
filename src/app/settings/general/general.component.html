@@ -31,7 +31,8 @@
       <h3 translate>settings.deployment_logo</h3>
       <figure class="logo" *ngIf="siteImage">
         <img [src]="siteImage" alt="Deployment-logo" />
-        <app-file-uploader class="logo__uploader" (fileUpload)="test($event)"> </app-file-uploader>
+        <app-file-uploader class="logo__uploader" (fileUpload)="fileUploaded($event)">
+        </app-file-uploader>
         <span class="logo__update-text">Update</span>
       </figure>
 

@@ -48,8 +48,7 @@ export class GeneralComponent implements OnInit {
     });
   }
 
-  test(event: any) {
-    console.log('eeeee', event);
+  fileUploaded(event: any) {
     this.siteImage = event.dataURI;
   }
 
@@ -70,7 +69,6 @@ export class GeneralComponent implements OnInit {
       next: (response) => {
         if (response?.confirm) {
           this.apiKeyService.update(this.apiKey.id, this.apiKey).subscribe((newKey) => {
-            console.log('SUCCESS', newKey);
             this.apiKey = newKey;
           });
         }
