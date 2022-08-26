@@ -12,7 +12,6 @@ import { ConfigService } from '@services';
 import { catchError, of } from 'rxjs';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
-import { ActivityModule } from './activity';
 
 function loadConfigFactory(configService: ConfigService) {
   return () =>
@@ -37,13 +36,11 @@ export const loadConfigProvider: FactoryProvider = {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ActivityModule,
     LeafletModule,
     LeafletMarkerClusterModule,
     AuthModule,
     HttpClientModule,
     SharedModule,
-    LeafletModule,
   ],
   providers: [
     {
