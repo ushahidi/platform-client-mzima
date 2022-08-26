@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiKeyResult } from '@models';
+import { TranslateService } from '@ngx-translate/core';
 import { ApiKeyService, LanguageService, SessionService } from '@services';
 import { DialogComponent } from 'src/app/shared/components';
 
@@ -27,6 +28,7 @@ export class GeneralComponent implements OnInit {
     private sessionService: SessionService,
     private formBuilder: FormBuilder,
     public langService: LanguageService,
+    private translate: TranslateService,
     private dialog: MatDialog,
     private apiKeyService: ApiKeyService,
   ) {}
@@ -45,6 +47,9 @@ export class GeneralComponent implements OnInit {
     this.apiKeyService.get().subscribe((res) => {
       // FIXME: results[0]
       this.apiKey = res.results[0];
+    });
+    this.translate.onLangChange.subscribe((newLang) => {
+      this.generalForm.controls['language'].setValue(newLang.lang);
     });
   }
 

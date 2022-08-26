@@ -71,10 +71,7 @@
       <mat-checkbox formControlName="private">{{
         'settings.site_private' | translate
       }}</mat-checkbox>
-      <p class="small" translate="settings.site_private_desc">
-        Enabling this option makes your deployment and it’s data only accessible to registered users
-        with the correct privileges, who must sign in for access.
-      </p>
+      <p class="small" translate>settings.site_private_desc</p>
     </div>
     <!-- FIXME: isDisableRegistrationEnabled -->
     <div class="form-group">
@@ -86,11 +83,8 @@
   </form>
 
   <div class="form-group danger" *ngIf="apiKey">
-    <h3 for="api-key" translate="settings.api_key">API Key</h3>
-    <p translate="settings.api_key_desc">
-      The API Key is unique to your deployment, it can be used to allow third party systems to
-      interact with your Ushahidi deployment.
-    </p>
+    <h3 for="api-key" translate>API Key</h3>
+    <p translate>settings.api_key_desc</p>
     <button
       id="api-key"
       type="button"
