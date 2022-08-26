@@ -1,10 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiKeyResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { ApiKeyService, LanguageService, SessionService } from '@services';
+import {
+  ApiKeyService,
+  ConfigService,
+  LanguageService,
+  MediaService,
+  SessionService,
+} from '@services';
+import { mergeMap } from 'rxjs';
 import { DialogComponent } from 'src/app/shared/components';
+import { SettingsMapComponent } from './settings-map/settings-map.component';
 
 @Component({
   selector: 'app-general',
@@ -12,6 +20,7 @@ import { DialogComponent } from 'src/app/shared/components';
   styleUrls: ['./general.component.scss'],
 })
 export class GeneralComponent implements OnInit {
+  @ViewChild('mapSettings') mapSettings: SettingsMapComponent;
   public generalForm: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required]],
     description: ['', []],
@@ -21,12 +30,17 @@ export class GeneralComponent implements OnInit {
     disable_registration: [false, []],
   });
 
+  siteConfig: any;
   siteImage: string;
   apiKey: ApiKeyResult;
+  isSaving = false;
+  uploadedFile: any = { deleted: false };
 
   constructor(
     private sessionService: SessionService,
     private formBuilder: FormBuilder,
+    private mediaService: MediaService,
+    private configService: ConfigService,
     public langService: LanguageService,
     private translate: TranslateService,
     private dialog: MatDialog,
@@ -34,14 +48,14 @@ export class GeneralComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const c: any = this.sessionService.getConfigurations('site');
-    this.siteImage = c.image_header;
+    this.siteConfig = this.sessionService.getConfigurations('site');
+    this.siteImage = this.siteConfig.image_header;
     this.generalForm.setValue({
-      name: c.name,
-      description: c.description,
-      email: c.email,
-      language: c.language,
-      private: c.private,
+      name: this.siteConfig.name,
+      description: this.siteConfig.description,
+      email: this.siteConfig.email,
+      language: this.siteConfig.language,
+      private: this.siteConfig.private,
       disable_registration: true,
     });
     this.apiKeyService.get().subscribe((res) => {
@@ -55,10 +69,12 @@ export class GeneralComponent implements OnInit {
 
   fileUploaded(event: any) {
     this.siteImage = event.dataURI;
+    this.uploadedFile = event;
   }
 
   clearHeader() {
     this.siteImage = '';
+    this.uploadedFile = { deleted: true };
   }
 
   generateApiKey() {
@@ -81,5 +97,44 @@ export class GeneralComponent implements OnInit {
     });
   }
 
-  save() {}
+  uploadHeaderImage() {}
+
+  save() {
+    this.isSaving = true;
+    if (this.uploadedFile.deleted) {
+      this.siteConfig.image_header = '';
+      this.updateSettings().subscribe({
+        complete: () => {
+          this.isSaving = false;
+        },
+      });
+    } else {
+      this.mediaService
+        .uploadFile(this.uploadedFile.file)
+        .pipe(
+          mergeMap((newImage: any) => {
+            console.log('newImage.newImage', newImage);
+            this.siteConfig.image_header = newImage.original_file_url;
+            return this.updateSettings();
+          }),
+        )
+        .subscribe({
+          complete: () => {
+            this.isSaving = false;
+          },
+        });
+    }
+  }
+
+  private updateSettings() {
+    const siteConfig = Object.assign({}, this.generalForm.value, {
+      image_header: this.siteConfig.image_header,
+    });
+    return this.configService.update('site', siteConfig).pipe(
+      mergeMap((updatedSite) => {
+        this.sessionService.setConfigurations('site', updatedSite);
+        return this.configService.update('map', this.mapSettings.mapConfig);
+      }),
+    );
+  }
 }

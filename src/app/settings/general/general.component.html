@@ -102,7 +102,12 @@
     <span id="api_key" class="api-key">{{ apiKey.api_key }}</span>
   </div>
 
-  <app-settings-map></app-settings-map>
+  <app-settings-map #mapSettings></app-settings-map>
+
+  <div class="actions">
+    <button type="button" mat-raised-button routerLink="/settings">Cancel</button>
+    <button type="button" color="primary" mat-raised-button (click)="save()">Save</button>
+  </div>
 </div>
 
 <!-- SPRITES FIXME -->
