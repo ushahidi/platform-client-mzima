@@ -20,13 +20,9 @@ export class SubmitPostButtonComponent {
 
     dialogRef.afterClosed().subscribe({
       next: (response) => {
-        console.log('response', response);
         if (response?.type) {
           this.router.navigate(['/post/create', response.type]);
         }
-      },
-      error: (err) => {
-        console.log('WHAT TEH ,', err);
       },
     });
   }

@@ -113,7 +113,6 @@ export class GeneralComponent implements OnInit {
         .uploadFile(this.uploadedFile.file)
         .pipe(
           mergeMap((newImage: any) => {
-            console.log('newImage.newImage', newImage);
             this.siteConfig.image_header = newImage.original_file_url;
             return this.updateSettings();
           }),

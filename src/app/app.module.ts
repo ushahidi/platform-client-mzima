@@ -20,8 +20,7 @@ import { ActivityModule } from './activity';
 function loadConfigFactory(configService: ConfigService) {
   return () =>
     configService.initAllConfigurations().pipe(
-      catchError((err) => {
-        console.log('Handle 401 in error handler, ', err);
+      catchError(() => {
         return of({});
       }),
     );
