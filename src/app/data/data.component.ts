@@ -45,8 +45,6 @@ export class DataComponent implements OnInit, AfterViewInit {
   }
 
   getPosts() {
-    console.log('offset', this.params.offset);
-
     this.postsService.getPosts('', this.params).subscribe({
       next: (response) => {
         this.length = response.total_count;
@@ -56,7 +54,6 @@ export class DataComponent implements OnInit, AfterViewInit {
   }
 
   handlePageEvent(event: PageEvent) {
-    console.log(event);
     this.pageSize = event.pageSize;
     if (event.pageIndex > this.pageIndex) {
       this.params.offset = this.pageSize + this.params.offset;

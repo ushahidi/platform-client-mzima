@@ -9,4 +9,5 @@ export * from './posts.interface';
 export * from './surveys.interface';
 export * from './user.interface';
 export * from './collection.interface';
+export * from './settings.interface';
 export * from './env.interface';

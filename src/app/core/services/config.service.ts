@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MapConfigInterface } from '@models';
-import { mergeMap, Observable, tap } from 'rxjs';
+import { lastValueFrom, mergeMap, Observable, tap } from 'rxjs';
 import { SessionService } from './session.service';
 import { EnvService } from './env.service';
 
@@ -26,7 +26,7 @@ export class ConfigService {
   getSite(): Observable<any> {
     return this.httpClient
       .get(
-        this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl() + '/site',
+        `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/site`,
       )
       .pipe(
         tap((data) => {
@@ -38,10 +38,9 @@ export class ConfigService {
   getFeatures(): Observable<any> {
     return this.httpClient
       .get(
-        this.env.environment.backend_url +
-          this.getApiVersions() +
-          this.getResourceUrl() +
-          '/features',
+        `${
+          this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
+        }/features`,
       )
       .pipe(
         tap((data) => {
@@ -52,15 +51,24 @@ export class ConfigService {
 
   getMap(): Observable<MapConfigInterface> {
     return this.httpClient.get<MapConfigInterface>(
-      this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl() + '/map',
+      `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/map`,
+    );
+  }
+
+  update(id: string | number, resource: any) {
+    return this.httpClient.put(
+      `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/${id}`,
+      resource,
     );
   }
 
   initAllConfigurations() {
-    return this.getSite().pipe(
-      mergeMap(() => {
-        return this.getFeatures();
-      }),
+    return lastValueFrom(
+      this.getSite().pipe(
+        mergeMap(() => {
+          return lastValueFrom(this.getFeatures());
+        }),
+      ),
     );
   }
 }

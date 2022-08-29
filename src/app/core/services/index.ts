@@ -10,6 +10,8 @@ export { PostsService } from './posts.service';
 export { AuthService } from './auth.service';
 export { UsersService } from './users.service';
 export { CollectionsService } from './collections.service';
+export { ApiKeyService } from './api-key.service';
 export { SurveysService } from './surveys.service';
 export { EnvService } from './env.service';
 export { LanguageService } from './language.service';
+export { MediaService } from './media.service';
