@@ -1,1 +1,72 @@
-<p>user-settings works!</p>
+<div class="form-sheet">
+  <div class="form-sheet-summary">
+    <div class="form-sheet-title-wrapper">
+      <div class="logo-wrapper">
+        <img
+          src="assets/images/logo-hdx.png"
+          alt="Humanitarian Data Exchange logotype"
+          class="field-logo"
+        />
+      </div>
+      <h2 class="form-sheet-title">{{ 'settings.settings_list.user_settings' | translate }}</h2>
+    </div>
+    <p>{{ 'settings.user_settings.user_settings_desc_1' | translate }}</p>
+    <p>{{ 'settings.user_settings.user_settings_desc_2' | translate }}</p>
+    <p>{{ 'settings.user_settings.user_settings_desc_3' | translate }}</p>
+    <a href="https://data.humdata.org/faq" class="link-blue" target="_blank">
+      <mat-icon class="link-blue-icon">link</mat-icon>
+      View the guide to your API key
+    </a>
+  </div>
+</div>
+
+<form class="form" [formGroup]="form" novalidate>
+  <div class="form-field">
+    <p class="form-label">{{ 'settings.user_settings.hdx_maintainer_id' | translate }}</p>
+    <p class="form-description">{{ 'settings.user_settings.profile_page' | translate }}</p>
+    <mat-form-field appearance="fill">
+      <mat-label>
+        {{ 'settings.user_settings.hdx_maintainer_id' | translate }}
+      </mat-label>
+      <input
+        matInput
+        placeholder="Please enter maintainer id"
+        formControlName="hdx_maintainer_id"
+        required
+      />
+      <mat-error *ngIf="form.get('hdx_maintainer_id')?.invalid">{{
+        'settings.user_settings.valid_user' | translate
+      }}</mat-error>
+    </mat-form-field>
+    <button
+      type="button"
+      class="fab-button"
+      (click)="saveMaintainerId()"
+      [disabled]="form.get('hdx_maintainer_id')?.invalid"
+    >
+      {{ 'app.save' | translate | uppercase }}
+    </button>
+  </div>
+
+  <div class="form-field">
+    <p class="form-label">{{ 'settings.user_settings.api_key' | translate }}</p>
+    <p class="form-description">{{ 'settings.user_settings.profile_page' | translate }}</p>
+    <mat-form-field appearance="fill">
+      <mat-label>
+        {{ 'settings.user_settings.api_key' | translate }}
+      </mat-label>
+      <input matInput placeholder="Please enter API key" formControlName="hdx_api_key" required />
+      <mat-error *ngIf="form.get('hdx_api_key')?.invalid">{{
+        'settings.user_settings.valid_key' | translate
+      }}</mat-error>
+    </mat-form-field>
+    <button
+      type="button"
+      class="fab-button"
+      (click)="saveApiKey()"
+      [disabled]="form.get('hdx_api_key')?.invalid"
+    >
+      {{ 'app.save' | translate | uppercase }}
+    </button>
+  </div>
+</form>

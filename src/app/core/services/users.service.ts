@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments';
 import { Observable, tap } from 'rxjs';
-import { UserResponse } from '../interfaces/user.interface';
+import { UserResponse } from '@models';
 import { ResourceService } from './resource.service';
 import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService extends ResourceService<any> {
+export class UsersService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient, //
     private sessionService: SessionService,
@@ -54,5 +54,15 @@ export class UserService extends ResourceService<any> {
 
   public getUsers(url?: string): Observable<UserResponse> {
     return super.get(url);
+  }
+
+  public getUserSettings(id: string) {
+    const url = `${id}/settings`;
+    return super.get(url);
+  }
+
+  public updateUserSettings(id: string, params: any) {
+    const config = 'settings';
+    return super.update(id, params, config);
   }
 }

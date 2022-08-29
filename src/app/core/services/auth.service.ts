@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { mergeMap, Observable } from 'rxjs';
 import { CONST } from '@constants';
 import { ResourceService, SessionService } from '@services';
-import { UserService } from './user.service';
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class AuthService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
     private sessionService: SessionService,
-    private userService: UserService,
+    private userService: UsersService,
   ) {
     super(httpClient);
   }

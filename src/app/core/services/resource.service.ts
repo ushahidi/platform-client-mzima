@@ -61,9 +61,10 @@ export abstract class ResourceService<T> {
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
-  update(id: string | number, resource: T) {
+  update(id: string | number, resource: T, config?: string) {
+    const apiUrl = config ? `${this.apiUrl}/${id}/${config}` : `${this.apiUrl}/${id}`;
     return this.httpClient
-      .put(`${this.apiUrl}/${id}`, this.toServerModel(resource), this.options)
+      .put(apiUrl, this.toServerModel(resource), this.options)
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
