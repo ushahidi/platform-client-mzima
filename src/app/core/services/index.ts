@@ -8,7 +8,7 @@ export { PermissionsService } from './permissions.service';
 export { RolesService } from './roles.service';
 export { PostsService } from './posts.service';
 export { AuthService } from './auth.service';
-export { UserService } from './user.service';
+export { UsersService } from './users.service';
 export { CollectionsService } from './collections.service';
 export { ApiKeyService } from './api-key.service';
 export { SurveysService } from './surveys.service';
