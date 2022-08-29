@@ -3,7 +3,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { PostsService } from '@services';
 import { LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 import { Color } from '@swimlane/ngx-charts/lib/utils/color-sets';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'app-activity-timeline',
