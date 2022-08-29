@@ -1,4 +1,4 @@
-import { CONST } from '@constants';
+import { EnvService } from '@services';
 import { divIcon, marker } from 'leaflet';
 
 export const pointIcon = (color: string, size?: any, className?: string) => {
@@ -33,7 +33,7 @@ export const mapboxStaticTiles = (name: string, mapid: string) => {
     name,
     url: 'https://api.mapbox.com/styles/v1/{mapid}/tiles/{z}/{x}/{y}?access_token={apikey}',
     layerOptions: {
-      apikey: CONST.MAPBOX_API_KEY,
+      apikey: EnvService.ENV.mapbox_api_key,
       tileSize: 512,
       maxZoom: 18,
       zoomOffset: -1,

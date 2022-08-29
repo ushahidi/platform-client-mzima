@@ -11,4 +11,5 @@ export { AuthService } from './auth.service';
 export { UsersService } from './users.service';
 export { CollectionsService } from './collections.service';
 export { SurveysService } from './surveys.service';
+export { EnvService } from './env.service';
 export { LanguageService } from './language.service';

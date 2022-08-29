@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { mergeMap, Observable } from 'rxjs';
 import { CONST } from '@constants';
-import { ResourceService, SessionService } from '@services';
+import { EnvService, ResourceService, SessionService } from '@services';
 import { UsersService } from './users.service';
 
 @Injectable({
@@ -11,10 +11,11 @@ import { UsersService } from './users.service';
 export class AuthService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
+    protected override env: EnvService,
     private sessionService: SessionService,
     private userService: UsersService,
   ) {
-    super(httpClient);
+    super(httpClient, env);
   }
 
   getApiVersions(): string {
@@ -30,8 +31,8 @@ export class AuthService extends ResourceService<any> {
       username: username,
       password: password,
       grant_type: 'password',
-      client_id: CONST.OAUTH_CLIENT_ID,
-      client_secret: CONST.OAUTH_CLIENT_SECRET,
+      client_id: this.env.environment.oauth_client_id,
+      client_secret: this.env.environment.oauth_client_secret,
       scope: CONST.CLAIMED_USER_SCOPES.join(' '),
     };
     return super.post(payload).pipe(

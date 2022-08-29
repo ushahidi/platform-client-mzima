@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '@environments';
 import { Observable, tap } from 'rxjs';
+import { EnvService } from './env.service';
 import { UserResponse } from '@models';
 import { ResourceService } from './resource.service';
 import { SessionService } from './session.service';
@@ -12,13 +12,14 @@ import { SessionService } from './session.service';
 export class UsersService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient, //
+    protected override env: EnvService,
     private sessionService: SessionService,
   ) {
-    super(httpClient);
+    super(httpClient, env);
   }
 
   getApiVersions(): string {
-    return environment.api_v3;
+    return this.env.environment.api_v3;
   }
 
   getResourceUrl(): string {

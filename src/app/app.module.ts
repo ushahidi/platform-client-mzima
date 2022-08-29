@@ -11,26 +11,30 @@ import { SharedModule } from './shared';
 import { ErrorsHandler } from './core/handlers/errors-handler';
 import { AuthInterceptor, HttpsInterceptor } from './core/interceptors';
 import { AuthModule } from './auth/auth.module';
-import { ConfigService } from '@services';
+import { ConfigService, EnvService } from '@services';
 import { catchError, of } from 'rxjs';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
-import { ActivityModule } from './activity';
 
-function loadConfigFactory(configService: ConfigService) {
+function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
-    configService.initAllConfigurations().pipe(
-      catchError((err) => {
-        console.log('Handle 401 in error handler, ', err);
-        return of({});
-      }),
-    );
+    envService.initEnv().then(() => {
+      return configService
+        .initAllConfigurations()
+        .pipe(
+          catchError((err) => {
+            console.log('Handle 401 in error handler, ', err);
+            return of({});
+          }),
+        )
+        .subscribe();
+    });
 }
 
 export const loadConfigProvider: FactoryProvider = {
   provide: APP_INITIALIZER,
   useFactory: loadConfigFactory,
-  deps: [ConfigService],
+  deps: [EnvService, ConfigService],
   multi: true,
 };
 
@@ -44,13 +48,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ActivityModule,
     LeafletModule,
     LeafletMarkerClusterModule,
     AuthModule,
-    HttpClientModule,
     SharedModule,
-    LeafletModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
