@@ -1,18 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '@environments';
+import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiKeyService extends ResourceService<any> {
-  constructor(protected override httpClient: HttpClient) {
-    super(httpClient);
+  constructor(protected override httpClient: HttpClient, protected override env: EnvService) {
+    super(httpClient, env);
   }
 
   getApiVersions(): string {
-    return environment.api_v3;
+    return this.env.environment.api_v3;
   }
 
   getResourceUrl(): string {
