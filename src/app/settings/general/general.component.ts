@@ -50,7 +50,7 @@ export class GeneralComponent implements OnInit {
   ngOnInit(): void {
     this.siteConfig = this.sessionService.getConfigurations('site');
     this.siteImage = this.siteConfig.image_header;
-    this.generalForm.setValue({
+    this.generalForm.patchValue({
       name: this.siteConfig.name,
       description: this.siteConfig.description,
       email: this.siteConfig.email,
@@ -108,7 +108,7 @@ export class GeneralComponent implements OnInit {
           this.isSaving = false;
         },
       });
-    } else {
+    } else if (this.uploadedFile.file) {
       this.mediaService
         .uploadFile(this.uploadedFile.file)
         .pipe(
@@ -122,6 +122,12 @@ export class GeneralComponent implements OnInit {
             this.isSaving = false;
           },
         });
+    } else {
+      this.updateSettings().subscribe({
+        complete: () => {
+          this.isSaving = false;
+        },
+      });
     }
   }
 

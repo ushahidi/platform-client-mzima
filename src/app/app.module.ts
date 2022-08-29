@@ -12,22 +12,13 @@ import { ErrorsHandler } from './core/handlers/errors-handler';
 import { AuthInterceptor, HttpsInterceptor } from './core/interceptors';
 import { AuthModule } from './auth/auth.module';
 import { ConfigService, EnvService } from '@services';
-import { catchError, of } from 'rxjs';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
     envService.initEnv().then(() => {
-      return configService
-        .initAllConfigurations()
-        .pipe(
-          catchError((err) => {
-            console.log('Handle 401 in error handler, ', err);
-            return of({});
-          }),
-        )
-        .subscribe();
+      return configService.initAllConfigurations();
     });
 }
 
