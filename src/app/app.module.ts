@@ -13,34 +13,25 @@ import { catchError, of } from 'rxjs';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 
-function loadConfigFactory(configService: ConfigService) {
+function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
-    configService
-      .initAllConfigurations()
-      .pipe(
-        catchError((err) => {
-          console.log('Handle 401 in error handler, ', err);
-          return of({});
-        }),
-      )
-      .subscribe();
+    envService.initEnv().then(() => {
+      return configService
+        .initAllConfigurations()
+        .pipe(
+          catchError((err) => {
+            console.log('Handle 401 in error handler, ', err);
+            return of({});
+          }),
+        )
+        .subscribe();
+    });
 }
-
-function loadEnvFactory(envService: EnvService) {
-  return () => envService.initEnv();
-}
-
-export const loadEnvProvider: FactoryProvider = {
-  provide: APP_INITIALIZER,
-  useFactory: loadEnvFactory,
-  deps: [EnvService],
-  multi: true,
-};
 
 export const loadConfigProvider: FactoryProvider = {
   provide: APP_INITIALIZER,
   useFactory: loadConfigFactory,
-  deps: [ConfigService],
+  deps: [EnvService, ConfigService],
   multi: true,
 };
 
@@ -62,7 +53,6 @@ export const loadConfigProvider: FactoryProvider = {
       useClass: AuthInterceptor,
       multi: true,
     },
-    loadEnvProvider,
     loadConfigProvider,
     { provide: ErrorHandler, useClass: ErrorsHandler },
     { provide: HTTP_INTERCEPTORS, useClass: HttpsInterceptor, multi: true },
