@@ -1,6 +1,9 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { APP_INITIALIZER, ErrorHandler, FactoryProvider, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,6 +38,10 @@ export const loadConfigProvider: FactoryProvider = {
   multi: true,
 };
 
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, './assets/locales/', '.json');
+}
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -44,8 +51,16 @@ export const loadConfigProvider: FactoryProvider = {
     LeafletModule,
     LeafletMarkerClusterModule,
     AuthModule,
-    HttpClientModule,
     SharedModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+    FormsModule,
   ],
   providers: [
     {
