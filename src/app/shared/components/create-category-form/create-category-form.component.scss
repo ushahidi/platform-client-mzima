@@ -1,0 +1,58 @@
+.create-form {
+  &__topbar {
+    display: flex;
+    margin: 0 -8px;
+    align-items: center;
+    justify-content: space-between;
+
+    .mat-button-base {
+      margin: 0 8px;
+      min-width: 100px;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    margin: 0 -8px;
+    padding-top: 16px;
+    align-items: center;
+    justify-content: flex-end;
+
+    .mat-button-base {
+      margin: 0 8px;
+      min-width: 100px;
+    }
+  }
+}
+
+.form-group {
+  margin-bottom: 16px;
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .mat-hint {
+    margin-bottom: 12px;
+  }
+}
+
+.radio-buttons {
+  &__options {
+    display: block;
+    margin-top: 16px;
+    padding-left: 16px;
+  }
+
+  &::ng-deep {
+    .mat-radio-label-content {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+
+  .mat-icon {
+    margin-right: 8px;
+  }
+}

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CategoryInterface } from 'src/app/core/interfaces/categories.interface';
+import { CategoryInterface } from '@models';
 import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
 
 @Component({

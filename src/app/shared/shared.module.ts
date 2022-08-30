@@ -21,6 +21,7 @@ import {
 import { LanguageComponent } from './components/language/language.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const components = [
   SidebarComponent,
@@ -44,6 +45,7 @@ const modules = [
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
   FormsModule,
+  TranslateModule,
 ];
 
 @NgModule({

@@ -1,4 +1,8 @@
-<div class="category-item" [ngClass]="{ 'category-item--selected': isSelected }">
+<div
+  class="category-item"
+  [routerLink]="category.id.toString()"
+  [ngClass]="{ 'category-item--selected': isSelected }"
+>
   <mat-checkbox
     [(ngModel)]="isSelected"
     (change)="selectCategory()"

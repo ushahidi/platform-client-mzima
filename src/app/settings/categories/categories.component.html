@@ -4,9 +4,9 @@
     <button
       mat-mini-fab
       color="primary"
-      (click)="createNewCategory()"
-      *ngIf="!selectedCategories.length"
+      routerLink="create"
       aria-label="Add new category"
+      *ngIf="!selectedCategories.length"
     >
       <mat-icon>add</mat-icon>
     </button>

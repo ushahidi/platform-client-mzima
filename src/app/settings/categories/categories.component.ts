@@ -1,5 +1,5 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
-import { CategoryInterface } from 'src/app/core/interfaces/categories.interface';
+import { CategoryInterface } from '@models';
 import { CategoriesService } from 'src/app/core/services/categories.service';
 import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
 import { CategoryItemComponent } from 'src/app/shared/components/category-item/category-item.component';

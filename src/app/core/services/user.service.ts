@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments';
 import { Observable, tap } from 'rxjs';
-import { UserResponse } from '../interfaces/user.interface';
+import { UserResponse } from '@models';
 import { ResourceService } from './resource.service';
 import { SessionService } from './session.service';
 
