@@ -1,21 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '@environments';
 import { MapConfigInterface } from '@models';
-import { mergeMap, Observable, tap } from 'rxjs';
-import { ResourceService } from './resource.service';
+import { lastValueFrom, mergeMap, Observable, tap } from 'rxjs';
 import { SessionService } from './session.service';
+import { EnvService } from './env.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ConfigService extends ResourceService<any> {
-  constructor(protected override httpClient: HttpClient, private sessionService: SessionService) {
-    super(httpClient);
-  }
+export class ConfigService {
+  constructor(
+    protected httpClient: HttpClient,
+    private env: EnvService,
+    private sessionService: SessionService,
+  ) {}
 
   getApiVersions(): string {
-    return environment.api_v3;
+    return this.env.environment.api_v3;
   }
 
   getResourceUrl(): string {
@@ -23,30 +24,51 @@ export class ConfigService extends ResourceService<any> {
   }
 
   getSite(): Observable<any> {
-    return super.get('site').pipe(
-      tap((data) => {
-        this.sessionService.setConfigurations('site', data);
-      }),
-    );
+    return this.httpClient
+      .get(
+        `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/site`,
+      )
+      .pipe(
+        tap((data) => {
+          this.sessionService.setConfigurations('site', data);
+        }),
+      );
   }
 
   getFeatures(): Observable<any> {
-    return super.get('features').pipe(
-      tap((data) => {
-        this.sessionService.setConfigurations('features', data);
-      }),
-    );
+    return this.httpClient
+      .get(
+        `${
+          this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
+        }/features`,
+      )
+      .pipe(
+        tap((data) => {
+          this.sessionService.setConfigurations('features', data);
+        }),
+      );
   }
 
   getMap(): Observable<MapConfigInterface> {
-    return super.get('map');
+    return this.httpClient.get<MapConfigInterface>(
+      `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/map`,
+    );
+  }
+
+  update(id: string | number, resource: any) {
+    return this.httpClient.put(
+      `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/${id}`,
+      resource,
+    );
   }
 
   initAllConfigurations() {
-    return this.getSite().pipe(
-      mergeMap(() => {
-        return this.getFeatures();
-      }),
+    return lastValueFrom(
+      this.getSite().pipe(
+        mergeMap(() => {
+          return lastValueFrom(this.getFeatures());
+        }),
+      ),
     );
   }
 }

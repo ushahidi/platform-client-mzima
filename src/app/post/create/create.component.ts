@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Event, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SurveysService } from '@services';
-import { takeUntilDestroy$ } from '@helpers';
 
 @Component({
   selector: 'app-create',
@@ -9,50 +8,34 @@ import { takeUntilDestroy$ } from '@helpers';
   styleUrls: ['./create.component.scss'],
 })
 export class CreateComponent implements OnInit {
-  public data?: any;
-  public fields?: any[];
-  private routerEvents = this.router.events.pipe(takeUntilDestroy$());
+  public data: any;
+  public fields: any[] = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private surveysService: SurveysService,
-  ) {
-    this.loadData();
-  }
+  constructor(private route: ActivatedRoute, private surveysService: SurveysService) {}
 
   ngOnInit(): void {
-    this.routerEvents.subscribe({
-      next: (event: Event) => {
-        if (event instanceof NavigationStart) {
-          this.fields = undefined;
-        }
-
-        if (event instanceof NavigationEnd) {
-          this.loadData();
-        }
-      },
+    this.route.paramMap.subscribe((params) => {
+      this.loadData(params.get('id'));
     });
   }
 
-  private loadData() {
-    const id = this.route.snapshot.paramMap.get('id');
+  private loadData(id?: string | null) {
     if (!id) return;
     this.surveysService.getById(id).subscribe({
       next: (data) => {
-        console.log('data: ', data);
-
         this.data = data;
-        this.fields = data.result.tasks[0].fields.sort((a: any, b: any) => a.priority - b.priority);
-
-        this.fields?.map((field: any) => {
-          if (field.type === 'tags') {
-            field.all_selected = false;
-            field.options.map((option: any) => {
-              option.value = false;
-            });
-          }
-        });
+        const tmpFields = data.result.tasks[0].fields
+          .sort((a: any, b: any) => a.priority - b.priority)
+          .map((field: any) => {
+            if (field.type === 'tags') {
+              field.all_selected = false;
+              field.options.map((option: any) => {
+                return (option.value = false);
+              });
+            }
+            return field;
+          });
+        this.fields = tmpFields;
       },
     });
   }

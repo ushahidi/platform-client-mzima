@@ -1,16 +1,17 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '@environments';
 import { map, Observable } from 'rxjs';
+import { EnvService } from './env.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export abstract class ResourceService<T> {
-  private readonly apiUrl = environment.backend_url + this.getApiVersions() + this.getResourceUrl();
+  private readonly apiUrl =
+    this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl();
   private readonly options = {};
 
-  protected constructor(protected httpClient: HttpClient) {
+  protected constructor(protected httpClient: HttpClient, protected env: EnvService) {
     this.options = {
       responseType: 'json',
       headers: new HttpHeaders({
@@ -61,9 +62,10 @@ export abstract class ResourceService<T> {
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
-  update(id: string | number, resource: T) {
+  update(id: string | number, resource: T, config?: string) {
+    const apiUrl = config ? `${this.apiUrl}/${id}/${config}` : `${this.apiUrl}/${id}`;
     return this.httpClient
-      .put(`${this.apiUrl}/${id}`, this.toServerModel(resource), this.options)
+      .put(apiUrl, this.toServerModel(resource), this.options)
       .pipe(map((json) => this.fromServerModel(json)));
   }
 

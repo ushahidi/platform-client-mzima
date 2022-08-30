@@ -1,0 +1,27 @@
+.map-holder {
+  position: relative;
+  margin-bottom: 24px;
+
+  &:before {
+    content: '';
+    display: block;
+    padding-top: 60%;
+  }
+}
+
+.map {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 16px;
+}

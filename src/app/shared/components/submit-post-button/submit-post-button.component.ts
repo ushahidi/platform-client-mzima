@@ -21,7 +21,7 @@ export class SubmitPostButtonComponent {
     dialogRef.afterClosed().subscribe({
       next: (response) => {
         if (response?.type) {
-          this.router.navigate(['post/create', response.type]);
+          this.router.navigate(['/post/create', response.type]);
         }
       },
     });

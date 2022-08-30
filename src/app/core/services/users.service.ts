@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '@environments';
 import { Observable, tap } from 'rxjs';
+import { EnvService } from './env.service';
 import { UserResponse } from '@models';
 import { ResourceService } from './resource.service';
 import { SessionService } from './session.service';
@@ -9,16 +9,17 @@ import { SessionService } from './session.service';
 @Injectable({
   providedIn: 'root',
 })
-export class UserService extends ResourceService<any> {
+export class UsersService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient, //
+    protected override env: EnvService,
     private sessionService: SessionService,
   ) {
-    super(httpClient);
+    super(httpClient, env);
   }
 
   getApiVersions(): string {
-    return environment.api_v3;
+    return this.env.environment.api_v3;
   }
 
   getResourceUrl(): string {
@@ -54,5 +55,15 @@ export class UserService extends ResourceService<any> {
 
   public getUsers(url?: string): Observable<UserResponse> {
     return super.get(url);
+  }
+
+  public getUserSettings(id: string) {
+    const url = `${id}/settings`;
+    return super.get(url);
+  }
+
+  public updateUserSettings(id: string, params: any) {
+    const config = 'settings';
+    return super.update(id, params, config);
   }
 }

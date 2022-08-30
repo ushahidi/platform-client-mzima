@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { RoleResponse, UserResult } from '@models';
-import { RolesService, UserService } from '@services';
+import { RolesService, UsersService } from '@services';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
   selectedValue: string;
 
   constructor(
-    private userService: UserService, //
+    private userService: UsersService, //
     private rolesService: RolesService,
   ) {}
 

@@ -1,14 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PermissionResult } from '@models';
-import { Observable } from 'rxjs';
 import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PermissionsService extends ResourceService<PermissionResult> {
+export class ApiKeyService extends ResourceService<any> {
   constructor(protected override httpClient: HttpClient, protected override env: EnvService) {
     super(httpClient, env);
   }
@@ -18,10 +16,6 @@ export class PermissionsService extends ResourceService<PermissionResult> {
   }
 
   getResourceUrl(): string {
-    return 'permissions';
-  }
-
-  override get(): Observable<any> {
-    return super.get();
+    return 'apikeys';
   }
 }

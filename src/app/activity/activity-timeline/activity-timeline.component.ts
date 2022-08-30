@@ -3,7 +3,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { PostsService } from '@services';
 import { LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 import { Color } from '@swimlane/ngx-charts/lib/utils/color-sets';
-import { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'app-activity-timeline',
@@ -59,7 +59,7 @@ export class ActivityTimelineComponent implements OnInit {
             series = [
               ...series,
               {
-                name: new Dayjs(new Date(elValue.label * 1000)).format('D MMM YY'),
+                name: dayjs(new Date(elValue.label * 1000)).format('D MMM YY'),
                 value: this.cumulativeTotal ? elValue.cumulative_total : elValue.total,
               },
             ];

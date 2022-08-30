@@ -8,33 +8,32 @@ import { Component } from '@angular/core';
 export class SettingsComponent {
   public settingsItems = [
     {
-      title: 'General',
-      description: "Change your deployment's name, description, logo, and other details.",
+      title: 'settings.settings_list.general',
+      description: 'settings.settings_list.general_desc',
       icon: 'home',
       router: 'general',
     },
     {
-      title: 'Surveys',
-      description: 'Create and configure the surveys your deployment collects.',
+      title: 'settings.settings_list.surveys',
+      description: 'settings.settings_list.surveys_desc',
       icon: 'home',
       router: 'surveys',
     },
     {
-      title: 'Data Sources',
-      description:
-        'Configure email, SMS, and social media channels that help your deployment collect survey data.',
+      title: 'settings.settings_list.data_sources',
+      description: 'settings.settings_list.data_sources_desc',
       icon: 'home',
       router: 'data-sources',
     },
     {
-      title: 'Import',
-      description: 'Upload survey data to your deployment from a CSV file.',
+      title: 'settings.settings_list.import',
+      description: 'settings.settings_list.import_desc',
       icon: 'home',
       router: 'data-data-import',
     },
     {
-      title: 'Donation',
-      description: 'Create and manage the donations people can make towards your organisation.',
+      title: 'settings.settings_list.donation',
+      description: 'settings.settings_list.donation_desc',
       icon: 'home',
       router: 'donation',
     },
@@ -53,28 +52,26 @@ export class SettingsComponent {
       router: 'data-export',
     },
     {
-      title: 'Users',
-      description: 'Create and manage the people that contribute to your deployment.',
+      title: 'settings.settings_list.user_settings',
+      description: 'settings.settings_list.user_settings_desc',
       icon: 'home',
       router: 'users',
     },
     {
-      title: 'Roles',
-      description: 'Create and manage the type of permissions your users have on your deployment.',
+      title: 'settings.settings_list.roles',
+      description: 'settings.settings_list.roles_desc',
       icon: 'home',
       router: 'roles',
     },
     {
-      title: 'Categories',
-      description:
-        'Create and manage the categories people can put posts into for improved organization.',
+      title: 'settings.settings_list.categories',
+      description: 'settings.settings_list.categories_desc',
       icon: 'home',
       router: 'categories',
     },
     {
-      title: 'Webhooks',
-      description:
-        'Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.',
+      title: 'settings.settings_list.webhooks',
+      description: 'settings.settings_list.webhooks_desc',
       icon: 'home',
       router: 'webhooks',
     },

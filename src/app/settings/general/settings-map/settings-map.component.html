@@ -1,0 +1,105 @@
+<div *ngIf="mapConfig">
+  <div class="form-group">
+    <h3 translate>settings.map_default_location</h3>
+    <div class="map-holder">
+      <div
+        id="settings-map"
+        class="map"
+        *ngIf="mapReady"
+        leaflet
+        [leafletOptions]="leafletOptions"
+        [leafletLayers]="mapLayers"
+        (leafletMapReady)="onMapReady($event)"
+      ></div>
+    </div>
+  </div>
+
+  <mat-grid-list cols="2" rowHeight="70" gutterSize="24">
+    <mat-grid-tile>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label translate>settings.map_default_latitude</mat-label>
+          <input
+            type="number"
+            matInput
+            [(ngModel)]="mapConfig.default_view.lat"
+            [max]="90"
+            [min]="-90"
+          />
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label translate>settings.map_default_longitude</mat-label>
+          <input
+            type="number"
+            matInput
+            [(ngModel)]="mapConfig.default_view.lon"
+            [max]="180"
+            [min]="-180"
+          />
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label translate>settings.map_default_baselayer</mat-label>
+          <mat-select
+            [(value)]="mapConfig.default_view.baselayer"
+            (valueChange)="layerChange($event)"
+          >
+            <mat-option *ngFor="let layer of baseLayers" [value]="layer">
+              {{ layer }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label translate>settings.map_default_zoom_level</mat-label>
+          <input
+            type="number"
+            matInput
+            [(ngModel)]="mapConfig.default_view.zoom"
+            [max]="maxZoom"
+            [min]="minZoom"
+          />
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="form-group">
+    <mat-checkbox [checked]="mapConfig.clustering" (change)="mapConfig.clustering = $event.checked">
+      {{ 'settings.map_clustering' | translate }}
+    </mat-checkbox>
+  </div>
+</div>
+
+<!--
+<div>
+
+
+    <div class="form-field" ng-show="locationPrecisionEnabled">
+        <label class="input-label" for="map-settings-obfuscation">
+            <span translate>
+                settings.map_location_precision
+            </span>
+        </label>
+        <p>
+            <span translate>
+                settings.map_precise_to
+            </span>
+            {{ current_precision }}km
+        </p>
+        <input id="map-settings-obfuscation" type="number" min="{{minObfuscation}}" ng-change="updatePrecision()" max="{{maxObfuscation}}" required class="form-control" ng-model="config.location_precision" ng-pattern="onlyNumbers" ng-change="updateMapPreview()" />
+    </div>
+</div> -->
