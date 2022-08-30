@@ -65,7 +65,7 @@ export class SessionService {
     type: keyof SessionConfigInterface,
     data: FeaturesConfigInterface | SiteConfigInterface,
   ) {
-    this.currentConfig[type] = data;
+    this.currentConfig[type] = data as any;
   }
 
   loadSessionDataFromLocalStorage() {

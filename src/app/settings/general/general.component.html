@@ -29,21 +29,13 @@
     </div>
     <div class="form-group">
       <h3 translate>settings.deployment_logo</h3>
-      <figure class="logo" *ngIf="siteImage">
-        <img [src]="siteImage" alt="Deployment-logo" />
-      </figure>
-      <button
-        *ngIf="siteImage"
-        color="warn"
-        mat-raised-button
-        (click)="clearHeader()"
-        translate="settings.delete_logo"
-      ></button>
-      <button color="primary" mat-raised-button>
-        Update
-        <app-file-uploader class="logo__uploader" (fileUpload)="fileUploaded($event)">
-        </app-file-uploader>
-      </button>
+      <app-file-uploader
+        class="logo__uploader"
+        [imageSrc]="siteConfig.image_header"
+        (fileUpload)="fileUploaded($event)"
+        (delete)="headerImageDeleted()"
+      >
+      </app-file-uploader>
     </div>
     <div class="form-group">
       <mat-form-field>

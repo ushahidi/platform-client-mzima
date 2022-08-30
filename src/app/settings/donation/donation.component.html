@@ -1,1 +1,76 @@
-<p>donation works!</p>
+<div class="content">
+  <h2>Setup Donation</h2>
+  <form (ngSubmit)="save()" [formGroup]="donationForm" novalidate>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label translate>settings.donation.title.label</mat-label>
+        <input
+          matInput
+          placeholder="{{ 'settings.donation.title.placeholder' }}"
+          formControlName="title"
+          required
+        />
+        <mat-error *ngIf="donationForm.get('title')?.invalid">
+          {{ donationForm.get('title')?.errors | json }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label translate>Describe your donation</mat-label>
+        <textarea
+          matInput
+          placeholder="{{ 'settings.site_description' }}"
+          formControlName="description"
+          data-min-rows="1"
+          rows="1"
+        ></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="images">
+      <div class="image" *ngFor="let image of donationConfig.images">
+        <figure class="logo">
+          <img [src]="image.original_file_url" alt="Donation-image" />
+        </figure>
+        <button
+          color="warn"
+          mat-raised-button
+          (click)="deleteImage(image.id)"
+          translate="settings.delete"
+        ></button>
+      </div>
+    </div>
+    <button color="primary" mat-raised-button>
+      Upload
+      <input name="file" type="file" (change)="uploadFile($event)" />
+    </button>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label translate>Donation Wallet</mat-label>
+        <input
+          matInput
+          placeholder="{{ 'settings.donation.title.placeholder' }}"
+          formControlName="wallet"
+        />
+      </mat-form-field>
+      <p>
+        Please make sure you have your wallet set up on
+        <a target="_blank" href="https://uphold.com">uphold.com</a>
+        to set web monetization. If you don't have a wallet already please click
+        <a target="_blank" href="https://wallet.uphold.com/signup">here</a> to create one.
+      </p>
+    </div>
+  </form>
+
+  <mat-slide-toggle class="example-margin" color="primary" [checked]="donationConfig.enabled">
+    Enable Monetization
+  </mat-slide-toggle>
+
+  <div class="actions">
+    <button type="button" mat-raised-button routerLink="/settings">Cancel</button>
+    <button type="button" color="primary" mat-raised-button (click)="save()">Save</button>
+  </div>
+</div>

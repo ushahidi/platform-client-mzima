@@ -9,7 +9,6 @@ import {
   LogoComponent,
   BreadcrumbComponent,
   SubmitPostButtonComponent,
-  FileUploaderComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import { DialogComponent } from './components';
@@ -27,7 +26,6 @@ const components = [
   LogoComponent,
   DialogComponent,
   BreadcrumbComponent,
-  FileUploaderComponent,
   SubmitPostButtonComponent,
   DialogComponent,
   LanguageComponent,

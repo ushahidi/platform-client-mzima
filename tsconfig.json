@@ -24,6 +24,9 @@
       "@helpers": [
         "src/app/core/helpers"
       ],
+      "@shared": [
+        "src/app/shared"
+      ],
       "@post": [
         "src/app/post"
       ]

@@ -4,9 +4,11 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared';
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings.component';
+import { FileUploaderComponent } from './components';
 
 @NgModule({
-  declarations: [SettingsComponent],
+  declarations: [SettingsComponent, FileUploaderComponent],
   imports: [CommonModule, SharedModule, SettingsRoutingModule],
+  exports: [FileUploaderComponent],
 })
 export class SettingsModule {}
