@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DonationConfigInterface, SiteConfigInterface } from '@models';
 import { ConfigService, MediaService, NotificationService, SessionService } from '@services';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-donation',
@@ -36,10 +37,6 @@ export class DonationComponent implements OnInit {
     });
   }
 
-  fileUploaded($event: any, id: any) {
-    console.log('HAPPENED', $event, id);
-  }
-
   deleteImage(id: number) {
     this.donationConfig.images = this.donationConfig.images.filter((image) => image.id !== id);
   }
@@ -70,8 +67,6 @@ export class DonationComponent implements OnInit {
     const donation: DonationConfigInterface = Object.assign({}, this.donationForm.value, {
       images: this.donationConfig.images,
     });
-    this.configService.update('site', { donation }).subscribe((what) => {
-      console.log('configService', what);
-    });
+    this.configService.update('site', { donation }).pipe(tap());
   }
 }

@@ -9,6 +9,7 @@ import {
   LogoComponent,
   BreadcrumbComponent,
   SubmitPostButtonComponent,
+  DonationButtonComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import { DialogComponent } from './components';
@@ -29,6 +30,7 @@ const components = [
   SubmitPostButtonComponent,
   DialogComponent,
   LanguageComponent,
+  DonationButtonComponent,
 ];
 
 const modules = [
