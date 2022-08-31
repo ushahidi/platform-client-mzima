@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CategoryInterface } from '@models';
+import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
 
 @Component({
@@ -13,7 +14,10 @@ export class CategoryItemComponent {
   @Output() deleted = new EventEmitter<{ id: number }>();
   public isSelected: boolean;
 
-  constructor(private confirmModalService: ConfirmModalService) {}
+  constructor(
+    private confirmModalService: ConfirmModalService,
+    private translate: TranslateService,
+  ) {}
 
   public getLanguage(lang: string): string {
     return lang;
@@ -21,9 +25,8 @@ export class CategoryItemComponent {
 
   public async deleteCategory(id: number): Promise<void> {
     const confirmed = await this.confirmModalService.open({
-      title: 'Are you sure you want to delete this category?',
-      description:
-        'Deleting this category will remove it from all existing posts. This action cannot be undone.',
+      title: this.translate.instant('notify.category.destroy_confirm'),
+      description: this.translate.instant('notify.category.destroy_confirm_desc'),
     });
     if (!confirmed) return;
     this.deleted.emit({ id });

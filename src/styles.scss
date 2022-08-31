@@ -24,3 +24,14 @@ a {
     height: 1em;
   }
 }
+
+.page-content {
+  padding: 24px;
+  margin: 0 auto;
+  max-width: 800px;
+  background: #fff;
+
+  &:not(:last-child) {
+    margin-bottom: 24px;
+  }
+}

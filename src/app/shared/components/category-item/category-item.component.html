@@ -1,8 +1,4 @@
-<div
-  class="category-item"
-  [routerLink]="category.id.toString()"
-  [ngClass]="{ 'category-item--selected': isSelected }"
->
+<div class="category-item" [ngClass]="{ 'category-item--selected': isSelected }">
   <mat-checkbox
     [(ngModel)]="isSelected"
     (change)="selectCategory()"
@@ -10,7 +6,7 @@
   >
   </mat-checkbox>
   <div class="category-item__content">
-    <h4 class="category-item__title">
+    <h4 class="category-item__title" [routerLink]="category.id.toString()">
       <a [routerLink]="['/settings/categories', category.id]">
         {{ category.tag }}
       </a>

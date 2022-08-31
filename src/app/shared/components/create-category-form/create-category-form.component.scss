@@ -1,13 +1,29 @@
 .create-form {
   &__topbar {
     display: flex;
-    margin: 0 -8px;
-    align-items: center;
+    margin: 0 -8px 24px;
+    align-items: flex-start;
     justify-content: space-between;
 
-    .mat-button-base {
+    &__tabs {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -8px -8px;
+      align-items: center;
+
+      .create-form__topbar__btn {
+        margin-bottom: 8px;
+      }
+    }
+
+    &__btn {
+      flex-shrink: 0;
       margin: 0 8px;
       min-width: 100px;
+
+      &--add {
+        margin-left: 24px;
+      }
     }
   }
 
@@ -44,12 +60,11 @@
     padding-left: 16px;
   }
 
-  &::ng-deep {
-    .mat-radio-label-content {
-      display: inline-flex;
-      align-items: center;
-      justify-content: flex-start;
-    }
+  &__info,
+  &::ng-deep .mat-radio-label-content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   .mat-icon {

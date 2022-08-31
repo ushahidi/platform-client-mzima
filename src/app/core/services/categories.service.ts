@@ -24,4 +24,16 @@ export class CategoriesService extends ResourceService<any> {
   override get(): Observable<any> {
     return super.get();
   }
+
+  override post(data: any): Observable<any> {
+    return super.post(data);
+  }
+
+  override update(id: string, data: any): Observable<any> {
+    return super.update(id, data);
+  }
+
+  override delete(id: string | number): Observable<any> {
+    return super.delete(id);
+  }
 }

@@ -6,3 +6,7 @@ export * from './dialog/dialog.component';
 export * from './file-uploader/file-uploader.component';
 export * from './submit-post-button/submit-post-button.component';
 export * from './file-uploader/file-uploader.component';
+export * from './create-category-form/create-category-form.component';
+export * from './select-languages-modal/select-languages-modal.component';
+export * from './category-item/category-item.component';
+export * from './spinner/spinner.component';

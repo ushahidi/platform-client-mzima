@@ -1,3 +1,4 @@
-<div class="page-content">
-  <app-create-category-form (formSubmit)="createCategory()"> </app-create-category-form>
+<div class="page-content mat-elevation-z8">
+  <app-create-category-form [loading]="isFormOnSubmit" (formSubmit)="createCategory($event)">
+  </app-create-category-form>
 </div>

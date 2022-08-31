@@ -18,10 +18,13 @@ export class CategoriesComponent {
     private categoriesService: CategoriesService,
     private confirmModalService: ConfirmModalService,
   ) {
+    this.getCategories();
+  }
+
+  public getCategories(): void {
     this.categoriesService.get().subscribe({
       next: (data) => {
         this.categories = data.results;
-        console.log('categories: ', this.categories);
       },
     });
   }
@@ -32,7 +35,11 @@ export class CategoriesComponent {
 
   public deleteCategory(event: { id: number }): void {
     const { id } = event;
-    console.log('deleteCategory: ', id);
+    this.categoriesService.delete(id).subscribe({
+      next: () => {
+        this.getCategories();
+      },
+    });
   }
 
   public async deleteSelectedCategories(): Promise<void> {
@@ -42,7 +49,18 @@ export class CategoriesComponent {
         'Deleting these categories will remove it from all existing posts. This action cannot be undone.',
     });
     if (!confirmed) return;
-    console.log('deleteCategories: ', this.selectedCategories);
+
+    // FIXME: delete categories by array of IDs
+    this.selectedCategories.map((category, index) => {
+      this.categoriesService.delete(category).subscribe({
+        next: () => {
+          if (index === this.selectedCategories.length - 1) {
+            this.getCategories();
+            this.selectedCategories = [];
+          }
+        },
+      });
+    });
   }
 
   public selectCategory(event: { value: boolean; id: number }): void {

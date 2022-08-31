@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { CONST } from '@constants';
+import { Language } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '@services';
 
@@ -12,7 +13,7 @@ import { LanguageService } from '@services';
 })
 export class LanguageComponent {
   private languageKey = `${CONST.LOCAL_STORAGE_PREFIX}language`;
-  public languages = this.languageService.getLanguages();
+  public languages: Language[] = this.languageService.getLanguages();
   public selectedLanguage = localStorage.getItem(this.languageKey);
 
   constructor(

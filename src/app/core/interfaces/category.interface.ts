@@ -11,9 +11,9 @@ export interface CategoryInterface {
   parent: CategoryInterface;
   parent_id: number;
   priority: number;
-  role: string;
+  role?: string[];
   slug: string;
   tag: string;
-  translations: any[];
+  translations: any;
   type: string;
 }

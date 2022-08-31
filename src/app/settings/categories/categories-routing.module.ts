@@ -11,11 +11,13 @@ const routes: Routes = [
   {
     path: 'create',
     loadChildren: () => import('./create/create.module').then((m) => m.CreateModule),
+    data: { breadcrumb: 'Create' },
   },
   {
     path: ':id',
     loadChildren: () =>
       import('./category-item/category-item.module').then((m) => m.CategoryItemModule),
+    data: { breadcrumb: '' },
   },
 ];
 

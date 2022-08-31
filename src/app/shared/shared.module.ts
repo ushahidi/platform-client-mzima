@@ -10,6 +10,10 @@ import {
   BreadcrumbComponent,
   SubmitPostButtonComponent,
   FileUploaderComponent,
+  CreateCategoryFormComponent,
+  SelectLanguagesModalComponent,
+  CategoryItemComponent,
+  SpinnerComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import { DialogComponent } from './components';
@@ -19,7 +23,6 @@ import {
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 import { LanguageComponent } from './components/language/language.component';
-import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -35,6 +38,10 @@ const components = [
   LanguageComponent,
   SpinnerComponent,
   ConfirmModalComponent,
+  CreateCategoryFormComponent,
+  SelectLanguagesModalComponent,
+  CategoryItemComponent,
+  SpinnerComponent,
 ];
 
 const modules = [
