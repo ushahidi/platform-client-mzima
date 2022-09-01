@@ -1,0 +1,24 @@
+.mat-form-field {
+  width: 100%;
+}
+
+.info-msg {
+  display: flex;
+  padding: 8px 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: #fac4cb;
+  box-shadow: inset 2px 0 0 0 #b00f23;
+
+  .mat-icon {
+    flex-shrink: 0;
+    line-height: 1;
+    font-size: 24px;
+    color: #b00f23;
+    margin-right: 16px;
+  }
+
+  &__content {
+    flex: 1 1 100%;
+  }
+}
