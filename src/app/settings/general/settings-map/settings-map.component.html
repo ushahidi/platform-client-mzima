@@ -17,7 +17,7 @@
   <mat-grid-list cols="2" rowHeight="70" gutterSize="24">
     <mat-grid-tile>
       <div class="form-group">
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <mat-label translate>settings.map_default_latitude</mat-label>
           <input
             type="number"
@@ -32,7 +32,7 @@
 
     <mat-grid-tile>
       <div class="form-group">
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <mat-label translate>settings.map_default_longitude</mat-label>
           <input
             type="number"
@@ -47,7 +47,7 @@
 
     <mat-grid-tile>
       <div class="form-group">
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <mat-label translate>settings.map_default_baselayer</mat-label>
           <mat-select
             [(value)]="mapConfig.default_view.baselayer"
@@ -63,7 +63,7 @@
 
     <mat-grid-tile>
       <div class="form-group">
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <mat-label translate>settings.map_default_zoom_level</mat-label>
           <input
             type="number"
