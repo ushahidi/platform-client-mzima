@@ -1,5 +1,6 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { CategoryInterface } from '@models';
+import { forkJoin } from 'rxjs';
 import { CategoriesService } from 'src/app/core/services/categories.service';
 import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
 import { CategoryItemComponent } from 'src/app/shared/components/category-item/category-item.component';
@@ -49,18 +50,25 @@ export class CategoriesComponent {
         'Deleting these categories will remove it from all existing posts. This action cannot be undone.',
     });
     if (!confirmed) return;
-
     // FIXME: delete categories by array of IDs
-    this.selectedCategories.map((category, index) => {
-      this.categoriesService.delete(category).subscribe({
-        next: () => {
-          if (index === this.selectedCategories.length - 1) {
-            this.getCategories();
-            this.selectedCategories = [];
-          }
-        },
-      });
+
+    forkJoin(this.selectedCategories.map((c) => this.categoriesService.delete(c))).subscribe({
+      complete: () => {
+        this.selectedCategories = [];
+        this.getCategories();
+      },
     });
+
+    // this.selectedCategories.map((category, index) => {
+    //   this.categoriesService.delete(category).subscribe({
+    //     next: () => {
+    //       if (index === this.selectedCategories.length - 1) {
+    //         this.getCategories();
+    //         this.selectedCategories = [];
+    //       }
+    //     },
+    //   });
+    // });
   }
 
   public selectCategory(event: { value: boolean; id: number }): void {
