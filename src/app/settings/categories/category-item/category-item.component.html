@@ -1,29 +1,28 @@
-<ng-container *ngIf="category; else spinner">
-  <div class="page-content mat-elevation-z8">
-    <app-create-category-form
-      [category]="category"
-      [loading]="isFormOnSubmit"
-      (formSubmit)="updateCategory($event)"
-    >
-    </app-create-category-form>
+<div class="category-item" [ngClass]="{ 'category-item--selected': isSelected }">
+  <mat-checkbox
+    [(ngModel)]="isSelected"
+    (change)="selectCategory()"
+    class="category-item__checkbox"
+  >
+  </mat-checkbox>
+  <div class="category-item__content">
+    <h4 class="category-item__title" [routerLink]="category.id.toString()">
+      <a [routerLink]="['/settings/categories', category.id]">
+        {{ category.tag }}
+      </a>
+    </h4>
+    <span class="category-item__language">{{
+      getLanguage(category.enabled_languages.default)
+    }}</span>
   </div>
-
-  <div class="page-content mat-elevation-z8">
-    <h3>{{ 'category.delete_this_category' | translate }}</h3>
-    <p [innerHTML]="'category.delete_category_desc' | translate"></p>
-
+  <div class="category-item__controls">
     <button
       color="accent"
-      mat-raised-button
-      (click)="deleteCategory()"
+      mat-icon-button
       aria-label="Delete category"
+      (click)="deleteCategory(category.id)"
     >
       <mat-icon>delete</mat-icon>
-      {{ 'category.delete_category' | translate }}
     </button>
   </div>
-</ng-container>
-
-<ng-template #spinner>
-  <app-spinner class="spinner"></app-spinner>
-</ng-template>
+</div>

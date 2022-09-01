@@ -1,9 +1,8 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { CategoryInterface } from '@models';
 import { forkJoin } from 'rxjs';
-import { CategoriesService } from 'src/app/core/services/categories.service';
-import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
-import { CategoryItemComponent } from 'src/app/shared/components/category-item/category-item.component';
+import { CategoriesService, ConfirmModalService } from '@services';
+import { CategoryItemComponent } from './category-item/category-item.component';
 
 @Component({
   selector: 'app-categories',

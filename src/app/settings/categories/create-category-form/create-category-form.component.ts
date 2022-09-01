@@ -3,9 +3,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { MatDialog } from '@angular/material/dialog';
 import { RoleResult, CategoryInterface, TranslationInterface, LanguageInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { CategoriesService, LanguageService, RolesService } from '@services';
-import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
-import { SelectLanguagesModalComponent } from '../select-languages-modal/select-languages-modal.component';
+import { CategoriesService, LanguageService, RolesService, ConfirmModalService } from '@services';
+import { SelectLanguagesModalComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-create-category-form',

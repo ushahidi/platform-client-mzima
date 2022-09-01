@@ -3,8 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { RoleResult } from '@models';
-import { PermissionsService, RolesService } from '@services';
-import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
+import { PermissionsService, RolesService, ConfirmModalService } from '@services';
 
 @Component({
   selector: 'app-role-item',

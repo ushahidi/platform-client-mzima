@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CategoriesComponent } from './categories.component';
-import { CategoryItemComponent } from './category-item/category-item.component';
+import { CategoryComponent } from './category/category.component';
 import { CreateComponent } from './create/create.component';
 
 const routes: Routes = [
@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: CategoryItemComponent,
+    component: CategoryComponent,
     data: { breadcrumb: '' },
   },
 ];

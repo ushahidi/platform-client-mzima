@@ -10,7 +10,7 @@ import {
   SessionService,
 } from '@services';
 import { mergeMap } from 'rxjs';
-import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
+import { ConfirmModalService } from '@services';
 import { SettingsMapComponent } from './settings-map/settings-map.component';
 
 @Component({

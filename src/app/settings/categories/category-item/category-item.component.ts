@@ -1,58 +1,50 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CategoryInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { CategoriesService } from '@services';
-import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
+import { ConfirmModalService } from '@services';
 
 @Component({
-  selector: 'app-category-page',
+  selector: 'app-category-item',
   templateUrl: './category-item.component.html',
   styleUrls: ['./category-item.component.scss'],
 })
 export class CategoryItemComponent {
-  public category: CategoryInterface;
-  public isFormOnSubmit: boolean;
-  public categoryId: string;
+  @Input() public category: CategoryInterface;
+  @Output() selected = new EventEmitter<{ value: boolean; id: number }>();
+  @Output() deleted = new EventEmitter<{ id: number }>();
+  public isSelected: boolean;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private categoriesService: CategoriesService,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
-  ) {
-    this.categoryId = this.route.snapshot.paramMap.get('id') || '';
-    this.categoriesService.getById(this.categoryId).subscribe({
-      next: (data) => {
-        this.category = data.result;
-        console.log('category: ', this.category);
-      },
-    });
+  ) {}
+
+  public getLanguage(lang: string): string {
+    return lang;
   }
 
-  public updateCategory(data: any): void {
-    this.isFormOnSubmit = true;
-
-    this.categoriesService.update(this.categoryId, data).subscribe({
-      next: () => {
-        this.isFormOnSubmit = false;
-        this.router.navigate(['settings/categories']);
-      },
-    });
-  }
-
-  public async deleteCategory(): Promise<void> {
+  public async deleteCategory(id: number): Promise<void> {
     const confirmed = await this.confirmModalService.open({
       title: this.translate.instant('notify.category.destroy_confirm'),
       description: `<p>${this.translate.instant('notify.category.destroy_confirm_desc')}</p>`,
     });
     if (!confirmed) return;
+    this.deleted.emit({ id });
+  }
 
-    this.categoriesService.delete(this.categoryId).subscribe({
-      next: () => {
-        this.router.navigate(['settings/categories']);
-      },
-    });
+  public selectCategory(): void {
+    this.selected.emit({ value: this.isSelected, id: this.category.id });
+  }
+
+  public select(): void {
+    if (this.isSelected) return;
+    this.isSelected = true;
+    this.selectCategory();
+  }
+
+  public deselect(): void {
+    if (!this.isSelected) return;
+    this.isSelected = false;
+    this.selectCategory();
   }
 }

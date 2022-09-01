@@ -10,9 +10,7 @@ import {
   BreadcrumbComponent,
   SubmitPostButtonComponent,
   FileUploaderComponent,
-  CreateCategoryFormComponent,
   SelectLanguagesModalComponent,
-  CategoryItemComponent,
   SpinnerComponent,
   ConfirmModalComponent,
   LanguageComponent,
@@ -35,9 +33,7 @@ const components = [
   LanguageComponent,
   SpinnerComponent,
   ConfirmModalComponent,
-  CreateCategoryFormComponent,
   SelectLanguagesModalComponent,
-  CategoryItemComponent,
   SpinnerComponent,
 ];
 
