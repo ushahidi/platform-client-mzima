@@ -13,6 +13,7 @@ import {
   SpinnerComponent,
   ConfirmModalComponent,
   LanguageComponent,
+  DonationButtonComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import {
@@ -33,6 +34,7 @@ const components = [
   ConfirmModalComponent,
   SelectLanguagesModalComponent,
   SpinnerComponent,
+  DonationButtonComponent,
 ];
 
 const modules = [

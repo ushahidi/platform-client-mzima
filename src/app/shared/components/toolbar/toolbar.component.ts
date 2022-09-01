@@ -10,6 +10,6 @@ export class ToolbarComponent {
   isDonateAvailable = false;
 
   constructor(private session: SessionService) {
-    this.isDonateAvailable = session.getSiteConfigurations().donation?.enabled!;
+    this.isDonateAvailable = this.session.getSiteConfigurations().donation?.enabled!;
   }
 }
