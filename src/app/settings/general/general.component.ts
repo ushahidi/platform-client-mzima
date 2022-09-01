@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { ApiKeyResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -11,7 +10,7 @@ import {
   SessionService,
 } from '@services';
 import { mergeMap } from 'rxjs';
-import { DialogComponent } from 'src/app/shared/components';
+import { ConfirmModalService } from '@services';
 import { SettingsMapComponent } from './settings-map/settings-map.component';
 
 @Component({
@@ -43,8 +42,8 @@ export class GeneralComponent implements OnInit {
     private configService: ConfigService,
     public langService: LanguageService,
     private translate: TranslateService,
-    private dialog: MatDialog,
     private apiKeyService: ApiKeyService,
+    private confirmModalService: ConfirmModalService,
   ) {}
 
   ngOnInit(): void {
@@ -77,23 +76,16 @@ export class GeneralComponent implements OnInit {
     this.uploadedFile = { deleted: true };
   }
 
-  generateApiKey() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '480px',
-      data: {
-        title: 'Are you sure?',
-        body: '<p>notify.api_key.change_question</p>',
-      },
+  public async generateApiKey(): Promise<void> {
+    const confirmed = await this.confirmModalService.open({
+      title: this.translate.instant('notify.api_key.change_question'),
+      description: `<p>${this.translate.instant('notify.default.proceed_warning')}</p>`,
     });
 
-    dialogRef.afterClosed().subscribe({
-      next: (response) => {
-        if (response?.confirm) {
-          this.apiKeyService.update(this.apiKey.id, this.apiKey).subscribe((newKey) => {
-            this.apiKey = newKey;
-          });
-        }
-      },
+    if (!confirmed) return;
+
+    this.apiKeyService.update(this.apiKey.id, this.apiKey).subscribe((newKey) => {
+      this.apiKey = newKey;
     });
   }
 
