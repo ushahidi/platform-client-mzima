@@ -26,9 +26,6 @@
       ],
       "@post": [
         "src/app/post"
-      ],
-      "@environments": [
-        "src/environments"
       ]
     },
     "outDir": "./dist/out-tsc",

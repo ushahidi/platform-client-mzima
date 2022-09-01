@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { RoleResult } from '@models';
 import { PermissionsService, RolesService } from '@services';
-import { DialogComponent } from '../../../shared/components';
+import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
 
 @Component({
   selector: 'app-role-item',
@@ -28,12 +27,12 @@ export class RoleItemComponent implements OnInit {
   });
 
   constructor(
-    private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
     private rolesService: RolesService,
     private permissionsService: PermissionsService,
+    private confirmModalService: ConfirmModalService,
   ) {}
 
   ngOnInit(): void {
@@ -108,22 +107,14 @@ export class RoleItemComponent implements OnInit {
     }
   }
 
-  public openDialog(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '480px',
-      data: {
-        title: this.role.display_name + ' role will be deleted!',
-        body: '<p>This action cannot be undone.</p><p>Are you sure?</p>',
-      },
+  public async openDialog(): Promise<void> {
+    const confirmed = await this.confirmModalService.open({
+      title: this.role.display_name + ' role will be deleted!',
+      description: '<p>This action cannot be undone.</p><p>Are you sure?</p>',
     });
 
-    dialogRef.afterClosed().subscribe({
-      next: (response) => {
-        if (response?.confirm) {
-          this.delete();
-        }
-      },
-    });
+    if (!confirmed) return;
+    this.delete();
   }
 
   public cancel(): void {

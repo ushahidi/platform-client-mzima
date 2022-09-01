@@ -6,7 +6,7 @@ import { CategoriesService } from '@services';
 import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
 
 @Component({
-  selector: 'app-category-item',
+  selector: 'app-category-page',
   templateUrl: './category-item.component.html',
   styleUrls: ['./category-item.component.scss'],
 })
@@ -45,7 +45,7 @@ export class CategoryItemComponent {
   public async deleteCategory(): Promise<void> {
     const confirmed = await this.confirmModalService.open({
       title: this.translate.instant('notify.category.destroy_confirm'),
-      description: this.translate.instant('notify.category.destroy_confirm_desc'),
+      description: `<p>${this.translate.instant('notify.category.destroy_confirm_desc')}</p>`,
     });
     if (!confirmed) return;
 

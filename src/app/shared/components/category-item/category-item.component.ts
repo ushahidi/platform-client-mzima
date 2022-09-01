@@ -26,7 +26,7 @@ export class CategoryItemComponent {
   public async deleteCategory(id: number): Promise<void> {
     const confirmed = await this.confirmModalService.open({
       title: this.translate.instant('notify.category.destroy_confirm'),
-      description: this.translate.instant('notify.category.destroy_confirm_desc'),
+      description: `<p>${this.translate.instant('notify.category.destroy_confirm_desc')}</p>`,
     });
     if (!confirmed) return;
     this.deleted.emit({ id });

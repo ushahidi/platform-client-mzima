@@ -14,27 +14,24 @@ import {
   SelectLanguagesModalComponent,
   CategoryItemComponent,
   SpinnerComponent,
+  ConfirmModalComponent,
+  LanguageComponent,
 } from './components';
 import { MaterialModule } from './material.module';
-import { DialogComponent } from './components';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
-import { LanguageComponent } from './components/language/language.component';
-import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 const components = [
   SidebarComponent,
   ToolbarComponent,
   LogoComponent,
-  DialogComponent,
   BreadcrumbComponent,
   FileUploaderComponent,
   SubmitPostButtonComponent,
-  DialogComponent,
   LanguageComponent,
   SpinnerComponent,
   ConfirmModalComponent,

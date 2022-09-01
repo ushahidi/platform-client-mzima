@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { RoleResult, CategoryInterface, Language, Translation } from '@models';
+import { RoleResult, CategoryInterface, TranslationInterface, LanguageInterface } from '@models';
+import { TranslateService } from '@ngx-translate/core';
 import { CategoriesService, LanguageService, RolesService } from '@services';
 import { ConfirmModalService } from 'src/app/core/services/confirm-modal.service';
 import { SelectLanguagesModalComponent } from '../select-languages-modal/select-languages-modal.component';
@@ -17,9 +18,9 @@ export class CreateCategoryFormComponent implements OnInit {
   @Output() formSubmit = new EventEmitter<any>();
   public categories: CategoryInterface[];
   public roles: RoleResult[];
-  public languages: Language[] = this.languageService.getLanguages();
-  public defaultLanguage?: Language = this.languages.find((lang) => lang.code === 'en');
-  public activeLanguages: Language[] = [];
+  public languages: LanguageInterface[] = this.languageService.getLanguages();
+  public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
+  public activeLanguages: LanguageInterface[] = [];
   public selectedTranslation?: string;
 
   public form: FormGroup = this.fb.group({
@@ -29,7 +30,7 @@ export class CreateCategoryFormComponent implements OnInit {
     language: ['en'],
     category_visibility: ['everyone'],
     visible_to: this.fb.array<string>(['admin']),
-    translations: this.fb.array<Translation>([]),
+    translations: this.fb.array<TranslationInterface>([]),
     translate_name: [''],
     translate_description: [''],
     parent: [],
@@ -42,6 +43,7 @@ export class CreateCategoryFormComponent implements OnInit {
     private languageService: LanguageService,
     private dialog: MatDialog,
     private confirmModalService: ConfirmModalService,
+    private translate: TranslateService,
   ) {
     this.categoriesService.get().subscribe({
       next: (data) => {
@@ -64,13 +66,13 @@ export class CreateCategoryFormComponent implements OnInit {
           this.defaultLanguage = this.languages.find((lang) => lang.code === data.language);
           this.selectedTranslation = this.defaultLanguage?.code;
           this.form.value.translations = this.form.value.translations.filter(
-            (trans: Translation) => trans.id !== this.defaultLanguage?.code,
+            (trans: TranslationInterface) => trans.id !== this.defaultLanguage?.code,
           );
         }
 
         if (this.selectedTranslation && this.selectedTranslation !== this.defaultLanguage?.code) {
           const translation = this.form.value.translations.find(
-            (trans: Translation) => trans.id === this.selectedTranslation,
+            (trans: TranslationInterface) => trans.id === this.selectedTranslation,
           );
           if (!translation) {
             this.form.value.translations.push({
@@ -101,9 +103,11 @@ export class CreateCategoryFormComponent implements OnInit {
       }
 
       if (this.category?.translations) {
-        const translations: Translation[] = Object.keys(this.category?.translations).map((key) => {
-          return { id: key, ...this.category.translations[key] };
-        });
+        const translations: TranslationInterface[] = Object.keys(this.category?.translations).map(
+          (key) => {
+            return { id: key, ...this.category.translations[key] };
+          },
+        );
         this.activeLanguages = this.languages.filter((language) =>
           translations.find((trans) => trans.id === language.code),
         );
@@ -134,7 +138,7 @@ export class CreateCategoryFormComponent implements OnInit {
       slug: this.form.value.name,
       tag: this.form.value.name,
       translations: this.form.value.translations.reduce(
-        (acc: { name: string; description: string }, curr: Translation) => ({
+        (acc: { name: string; description: string }, curr: TranslationInterface) => ({
           ...acc,
           [curr.id]: { name: curr.name, description: curr.description },
         }),
@@ -186,8 +190,8 @@ export class CreateCategoryFormComponent implements OnInit {
   public chooseTranslation(languageCode?: string): void {
     this.selectedTranslation = languageCode;
 
-    const translation: Translation = this.form.controls['translations'].value.find(
-      (trans: Translation) => trans.id === languageCode,
+    const translation: TranslationInterface = this.form.controls['translations'].value.find(
+      (trans: TranslationInterface) => trans.id === languageCode,
     );
     if (translation) {
       this.form.patchValue({
@@ -204,7 +208,7 @@ export class CreateCategoryFormComponent implements OnInit {
     event.stopPropagation();
     const confirmed = await this.confirmModalService.open({
       title: 'Are you sure you want to remove this language and all the translations?',
-      description: 'This action cannot be undone. Please proceed with caution.',
+      description: `<p>${this.translate.instant('notify.default.proceed_warning')}</p>`,
     });
     if (!confirmed) return;
 
@@ -218,7 +222,7 @@ export class CreateCategoryFormComponent implements OnInit {
     );
 
     this.form.value.translations = this.form.value.translations.filter(
-      (trans: Translation) => trans.id !== languageCode,
+      (trans: TranslationInterface) => trans.id !== languageCode,
     );
   }
 

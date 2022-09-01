@@ -1,10 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Language } from '@models';
+import { LanguageInterface } from '@models';
 
 export interface SelectLanguagesDialogData {
-  languages: Language[];
-  activeLanguages: Language[];
+  languages: LanguageInterface[];
+  activeLanguages: LanguageInterface[];
 }
 
 @Component({
@@ -14,7 +14,7 @@ export interface SelectLanguagesDialogData {
 })
 export class SelectLanguagesModalComponent {
   public selectedLanguages: string[] = [];
-  public errorLanguages: Language[] = [];
+  public errorLanguages: LanguageInterface[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: SelectLanguagesDialogData) {}
 

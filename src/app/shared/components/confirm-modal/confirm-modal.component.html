@@ -1,6 +1,6 @@
 <h2 mat-dialog-title *ngIf="data.title">{{ data.title }}</h2>
 <mat-dialog-content>
-  <p *ngIf="data.description">{{ data.description }}</p>
+  <div [innerHTML]="data.description" *ngIf="data.description"></div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>{{ 'app.cancel' | translate }}</button>

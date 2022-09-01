@@ -1,4 +1,4 @@
-export interface Language {
+export interface LanguageInterface {
   name: string;
   code: string;
   nplurals: number;
@@ -6,7 +6,7 @@ export interface Language {
   rtl: boolean;
 }
 
-export interface Translation {
+export interface TranslationInterface {
   id: string;
   name: string;
   description?: string;

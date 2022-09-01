@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CategoriesComponent } from './categories.component';
+import { CategoryItemComponent } from './category-item/category-item.component';
+import { CreateComponent } from './create/create.component';
 
 const routes: Routes = [
   {
@@ -10,13 +12,12 @@ const routes: Routes = [
   },
   {
     path: 'create',
-    loadChildren: () => import('./create/create.module').then((m) => m.CreateModule),
+    component: CreateComponent,
     data: { breadcrumb: 'Create' },
   },
   {
     path: ':id',
-    loadChildren: () =>
-      import('./category-item/category-item.module').then((m) => m.CategoryItemModule),
+    component: CategoryItemComponent,
     data: { breadcrumb: '' },
   },
 ];
