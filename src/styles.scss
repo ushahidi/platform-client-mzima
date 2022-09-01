@@ -24,3 +24,15 @@ a {
     height: 1em;
   }
 }
+
+.form-controls-panel {
+  display: flex;
+  margin: 0 -8px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  .mat-button-base {
+    margin: 0 8px;
+  }
+}

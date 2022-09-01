@@ -1,14 +1,16 @@
 <figure class="logo" *ngIf="imageSrc">
   <img [src]="imageSrc" alt="Deployment-logo" />
 </figure>
-<button
-  *ngIf="imageSrc"
-  color="warn"
-  mat-raised-button
-  (click)="clearImage()"
-  translate="settings.delete_logo"
-></button>
-<button color="primary" mat-raised-button>
-  Update
-  <input name="file" type="file" (change)="uploadFile($event)" [required]="required" />
-</button>
+<div class="buttons">
+  <button
+    *ngIf="imageSrc"
+    color="warn"
+    mat-raised-button
+    (click)="clearImage()"
+    translate="settings.delete_logo"
+  ></button>
+  <button color="primary" mat-raised-button>
+    Update
+    <input name="file" type="file" (change)="uploadFile($event)" [required]="required" />
+  </button>
+</div>
