@@ -6,9 +6,10 @@ import { GeneralComponent } from './general.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { SharedModule } from 'src/app/shared';
 import { SettingsMapComponent } from './settings-map/settings-map.component';
+import { SettingsModule } from '../settings.module';
 
 @NgModule({
   declarations: [GeneralComponent, SettingsMapComponent],
-  imports: [CommonModule, SharedModule, GeneralRoutingModule, LeafletModule],
+  imports: [CommonModule, SharedModule, GeneralRoutingModule, LeafletModule, SettingsModule],
 })
 export class GeneralModule {}

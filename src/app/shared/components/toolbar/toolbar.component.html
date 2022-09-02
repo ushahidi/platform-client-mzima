@@ -10,6 +10,7 @@
           <input type="text" placeholder="Search" />
         </div>
       </div>
+      <app-donation-button *ngIf="isDonateAvailable"></app-donation-button>
       <app-language></app-language>
     </div>
   </mat-toolbar>

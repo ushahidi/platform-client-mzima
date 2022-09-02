@@ -35,3 +35,24 @@ a {
     margin-bottom: 24px;
   }
 }
+
+.form-controls-panel {
+  display: flex;
+  margin: 0 -8px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  .mat-button-base {
+    margin: 0 8px;
+  }
+}
+
+.mat-button-base {
+  .mat-icon {
+    width: 1em;
+    height: 1em;
+    font-size: 1em;
+    margin-right: 8px;
+  }
+}
