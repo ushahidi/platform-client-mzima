@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { WebhookApi, WebhookResult } from '@models';
+import { WebhookApiInterface, WebhookResultInterface } from '@models';
 import { Observable } from 'rxjs';
 import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
@@ -24,19 +24,19 @@ export class WebhooksService extends ResourceService<any> {
     return 'webhooks';
   }
 
-  override get(): Observable<WebhookApi> {
+  override get(): Observable<WebhookApiInterface> {
     return super.get();
   }
 
-  override getById(id: string | number): Observable<WebhookResult> {
+  override getById(id: string | number): Observable<WebhookResultInterface> {
     return super.getById(id);
   }
 
-  override update(id: string | number, resource: any): Observable<WebhookResult> {
+  override update(id: string | number, resource: any): Observable<WebhookResultInterface> {
     return super.update(id, resource);
   }
 
-  override delete(id: string | number): Observable<WebhookResult> {
+  override delete(id: string | number): Observable<WebhookResultInterface> {
     return super.delete(id);
   }
 }

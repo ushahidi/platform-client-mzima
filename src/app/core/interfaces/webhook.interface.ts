@@ -1,10 +1,10 @@
 import { ApiResponse } from './api-response.interface';
 
-export interface WebhookApi extends ApiResponse {
-  results: WebhookResult[];
+export interface WebhookApiInterface extends ApiResponse {
+  results: WebhookResultInterface[];
 }
 
-export interface WebhookResult {
+export interface WebhookResultInterface {
   allowed_privileges: string[];
   created: string;
   destination_field_key?: string;

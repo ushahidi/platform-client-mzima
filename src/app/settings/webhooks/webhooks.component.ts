@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WebhookResult } from '@models';
+import { WebhookResultInterface } from '@models';
 import { WebhooksService } from '@services';
 
 @Component({
@@ -8,7 +8,7 @@ import { WebhooksService } from '@services';
   styleUrls: ['./webhooks.component.scss'],
 })
 export class WebhooksComponent implements OnInit {
-  webhookList: WebhookResult[] = [];
+  webhookList: WebhookResultInterface[] = [];
 
   constructor(
     private webhooksService: WebhooksService, //

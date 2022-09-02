@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntilDestroy$ } from '@helpers';
-import { SurveyItem, SurveyItemTaskField, WebhookResult } from '@models';
+import { SurveyItem, SurveyItemTaskField, WebhookResultInterface } from '@models';
 import { SurveysService, WebhooksService } from '@services';
 import { switchMap } from 'rxjs';
 import { ApiFormsService } from '@services';
@@ -13,7 +13,7 @@ import { ApiFormsService } from '@services';
   styleUrls: ['./webhook-item.component.scss'],
 })
 export class WebhookItemComponent implements OnInit {
-  private webhook: WebhookResult;
+  private webhook: WebhookResultInterface;
   public form: FormGroup = this.formBuilder.group({
     allowed_privileges: ['', [Validators.required]],
     created: ['', [Validators.required]],
@@ -54,7 +54,7 @@ export class WebhookItemComponent implements OnInit {
     this.route.paramMap
       .pipe(switchMap((params: ParamMap) => this.webhooksService.getById(params.get('id') || 1)))
       .subscribe({
-        next: (response: WebhookResult) => {
+        next: (response: WebhookResultInterface) => {
           this.webhook = response;
           this.fillInForm(response);
         },
@@ -70,7 +70,7 @@ export class WebhookItemComponent implements OnInit {
     });
   }
 
-  private fillInForm(data: WebhookResult): void {
+  private fillInForm(data: WebhookResultInterface): void {
     this.form.patchValue({
       allowed_privileges: data.allowed_privileges,
       created: data.created,
