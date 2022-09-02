@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>Select languages</h1>
+<div mat-dialog-content>
+  <p>Add a language</p>
+  <mat-form-field appearance="standard">
+    <mat-label>Select a language to add translation for</mat-label>
+    <mat-select multiple [(value)]="selectedLanguages" (selectionChange)="checkLanguages()">
+      <mat-option [value]="language.code" *ngFor="let language of data.languages">
+        {{ language.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="info-msg" *ngIf="errorLanguages.length">
+    <mat-icon>warning</mat-icon>
+    <span class="info-msg__body">
+      <p>
+        {{ 'translations.error_translation_exists' | translate }}
+        <strong>
+          (
+          <ng-container *ngFor="let lang of errorLanguages; let i = index">
+            {{ lang.name }}
+            <ng-container *ngIf="errorLanguages.length > 1 && errorLanguages.length - 1 !== i"
+              >,
+            </ng-container>
+          </ng-container>
+          )
+        </strong>
+      </p>
+      <button mat-button (click)="removeLanguagesWithErrors()">Remove</button>
+    </span>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button
+    color="primary"
+    mat-raised-button
+    [mat-dialog-close]="selectedLanguages"
+    [disabled]="!!errorLanguages.length || !selectedLanguages.length"
+  >
+    Add
+  </button>
+</div>

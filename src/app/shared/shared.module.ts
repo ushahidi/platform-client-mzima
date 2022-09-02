@@ -10,27 +10,31 @@ import {
   BreadcrumbComponent,
   SubmitPostButtonComponent,
   FileUploaderComponent,
+  SelectLanguagesModalComponent,
+  SpinnerComponent,
+  ConfirmModalComponent,
+  LanguageComponent,
 } from './components';
 import { MaterialModule } from './material.module';
-import { DialogComponent } from './components';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
-import { LanguageComponent } from './components/language/language.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 const components = [
   SidebarComponent,
   ToolbarComponent,
   LogoComponent,
-  DialogComponent,
   BreadcrumbComponent,
   FileUploaderComponent,
   SubmitPostButtonComponent,
-  DialogComponent,
   LanguageComponent,
+  SpinnerComponent,
+  ConfirmModalComponent,
+  SelectLanguagesModalComponent,
+  SpinnerComponent,
 ];
 
 const modules = [

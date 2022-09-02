@@ -1,0 +1,166 @@
+<form class="create-form" [formGroup]="form" (submit)="submit()" novalidate>
+  <div class="create-form__topbar">
+    <div class="create-form__topbar__tabs">
+      <button
+        type="button"
+        mat-raised-button
+        class="create-form__topbar__btn"
+        [disabled]="!activeLanguages.length"
+        (click)="chooseTranslation(defaultLanguage?.code)"
+        [color]="
+          !selectedTranslation || selectedTranslation === defaultLanguage?.code ? 'primary' : null
+        "
+      >
+        {{ defaultLanguage?.name }} (default)
+      </button>
+      <ng-container *ngFor="let language of activeLanguages">
+        <button
+          type="button"
+          mat-raised-button
+          class="create-form__topbar__btn"
+          (click)="chooseTranslation(language.code)"
+          [color]="selectedTranslation === language.code ? 'primary' : null"
+        >
+          {{ language.name }}
+          <mat-icon (click)="deleteTranslation($event, language.code)">close</mat-icon>
+        </button>
+      </ng-container>
+    </div>
+
+    <button
+      type="button"
+      color="primary"
+      mat-raised-button
+      (click)="addTranslation()"
+      class="create-form__topbar__btn create-form__topbar__btn--add"
+    >
+      <mat-icon>add</mat-icon>
+      {{ 'translations.add_translation_lang' | translate }}
+    </button>
+  </div>
+
+  <ng-container
+    *ngIf="!selectedTranslation || selectedTranslation === defaultLanguage?.code; else translation"
+  >
+    <div class="form-group">
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'category.editor.name' | translate }}</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'category.editor.description' | translate }}</mat-label>
+        <input matInput formControlName="description" />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'app.this_category_is_child_to' | translate }}</mat-label>
+        <mat-select formControlName="is_child_to" (selectionChange)="parentChanged($event)">
+          <mat-option value="">{{ 'app.nothing' | translate }}</mat-option>
+          <mat-option [value]="category.id" *ngFor="let category of categories">
+            {{ category.tag }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'translations.category_select_default' | translate }}</mat-label>
+        <mat-hint>{{ 'translations.default_lang_info' | translate }}</mat-hint>
+        <mat-select formControlName="language">
+          <mat-option [value]="language.code" *ngFor="let language of languages">
+            {{ language.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <h4>{{ 'app.who_can_see_this_category' | translate }}</h4>
+      <mat-radio-group
+        class="radio-buttons"
+        *ngIf="!form.value.parent"
+        formControlName="category_visibility"
+      >
+        <p>
+          <mat-radio-button value="everyone" class="example-radio-button">
+            <mat-icon>person</mat-icon>
+            {{ 'role.everyone' | translate }}
+          </mat-radio-button>
+        </p>
+        <p>
+          <mat-radio-button [value]="'specific'" class="example-radio-button">
+            <mat-icon>group</mat-icon>
+            {{ 'app.specific_roles' | translate }}
+          </mat-radio-button>
+
+          <span
+            class="radio-buttons__options"
+            *ngIf="form.value.category_visibility === 'specific'"
+          >
+            <p *ngFor="let role of roles">
+              <mat-checkbox
+                [value]="role.name"
+                [disabled]="role.name === 'admin'"
+                (change)="onCheckChange($event, 'visible_to')"
+                [checked]="role.name === 'admin' || (category && isRoleActive(role.name))"
+              >
+                {{ role.display_name }}
+              </mat-checkbox>
+            </p>
+          </span>
+        </p>
+      </mat-radio-group>
+      <div class="radio-buttons" *ngIf="form.value.parent">
+        <p class="radio-buttons__info">
+          <mat-icon>group</mat-icon>
+          {{ 'category.child_permissions' | translate }}
+        </p>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #translation>
+    <div class="form-group">
+      <h4>{{ 'category.editor.name' | translate }}</h4>
+      <mat-form-field appearance="standard">
+        <mat-label
+          >{{ 'translations.edit_default_text' | translate }} {{ defaultLanguage?.name }}</mat-label
+        >
+        <input matInput disabled [value]="form.value.name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'category.editor.name' | translate }}</mat-label>
+        <input matInput formControlName="translate_name" />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <h4>{{ 'category.editor.description' | translate }}</h4>
+      <mat-form-field appearance="standard">
+        <mat-label
+          >{{ 'translations.edit_default_text' | translate }} {{ defaultLanguage?.name }}</mat-label
+        >
+        <input matInput disabled [value]="form.value.description" />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'category.editor.description' | translate }}</mat-label>
+        <input matInput formControlName="translate_description" />
+      </mat-form-field>
+    </div>
+  </ng-template>
+
+  <div class="create-form__controls">
+    <button mat-raised-button type="button" routerLink="../">{{ 'app.cancel' | translate }}</button>
+    <button mat-raised-button color="primary" [disabled]="form.disabled || form.invalid || loading">
+      {{ 'app.save' | translate }}
+    </button>
+  </div>
+</form>

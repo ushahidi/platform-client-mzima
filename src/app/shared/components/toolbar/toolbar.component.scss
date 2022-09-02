@@ -1,4 +1,10 @@
 .toolbar {
+  top: 0;
+  right: 0;
+  left: 63px;
+  z-index: 100;
+  position: fixed;
+
   &-wrapper {
     display: flex;
     align-items: center;

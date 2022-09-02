@@ -1,0 +1,29 @@
+<ng-container *ngIf="category; else spinner">
+  <div class="page-content mat-elevation-z8">
+    <app-create-category-form
+      [category]="category"
+      [loading]="isFormOnSubmit"
+      (formSubmit)="updateCategory($event)"
+    >
+    </app-create-category-form>
+  </div>
+
+  <div class="page-content mat-elevation-z8">
+    <h3>{{ 'category.delete_this_category' | translate }}</h3>
+    <p [innerHTML]="'category.delete_category_desc' | translate"></p>
+
+    <button
+      color="accent"
+      mat-raised-button
+      (click)="deleteCategory()"
+      aria-label="Delete category"
+    >
+      <mat-icon>delete</mat-icon>
+      {{ 'category.delete_category' | translate }}
+    </button>
+  </div>
+</ng-container>
+
+<ng-template #spinner>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>
