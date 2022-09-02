@@ -9,13 +9,12 @@ export const pointIcon = (color: string, size?: any, className?: string) => {
 
   return divIcon({
     className: 'custom-map-marker ' + className,
-    // html: '<svg class="iconic" style="fill:' + color + ';"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#map-marker"></use></svg><span class="iconic-bg" style="background-color:' + color + ';""></span>',
-    html:
-      '<svg class="iconic" style="height: 100%; width: 100%; fill:' +
-      color +
-      ';"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#map-marker"></use></svg><span class="iconic-bg" style="background-color:' +
-      color +
-      ';""></span>',
+    html: `
+    <svg class="iconic" style="height: 100%; width: 100%; fill:${color};">
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#map-marker"></use>
+    </svg>
+    <span class="iconic-bg" style="background-color:${color};"></span>
+    `,
     iconSize: size,
     iconAnchor: [size[0] / 2, size[1]],
     popupAnchor: [0, 0 - size[1]],
