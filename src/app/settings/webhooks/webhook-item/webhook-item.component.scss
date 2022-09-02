@@ -1,6 +1,7 @@
 .form {
   .form-field {
     margin-bottom: 10px;
+
     &-flex {
       justify-content: space-between;
     }
@@ -18,17 +19,29 @@
     border-collapse: collapse;
     border: 1px solid #eee;
   }
+
   table thead {
     color: #fff;
     border-radius: 2px 2px 0 0;
     background-color: #888;
   }
+
   table th,
   table td {
     text-align: left;
     padding: 16px;
   }
+
   tbody tr:nth-child(odd) {
     background-color: #eee;
+  }
+}
+
+.webhook-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+
+  button:not(:last-child) {
+    margin-right: 10px;
   }
 }

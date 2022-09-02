@@ -38,7 +38,7 @@ export class WebhookItemComponent implements OnInit {
   public entityList = [{ name: 'Post', value: 'post' }];
   public surveyList: SurveyItem[] = [];
   public surveyAttributesList: SurveyItemTaskField[] = [];
-  controlFormIdData$ = this.form.controls['form_id'].valueChanges.pipe(takeUntilDestroy$());
+  private controlFormIdData$ = this.form.controls['form_id'].valueChanges.pipe(takeUntilDestroy$());
 
   constructor(
     private route: ActivatedRoute,
@@ -110,7 +110,7 @@ export class WebhookItemComponent implements OnInit {
     });
   }
 
-  checkKeyFields(field: string): any {
+  private checkKeyFields(field: string): any {
     if (field === 'title' || field === 'content') {
       return this.filterAttributes('type', field === 'title' ? field : 'description')?.key;
     } else {
@@ -118,11 +118,11 @@ export class WebhookItemComponent implements OnInit {
     }
   }
 
-  filterAttributes(param: string, value: string) {
+  private filterAttributes(param: string, value: string) {
     return this.surveyAttributesList.find((el: any) => el[param] === value);
   }
 
-  fillForApi(obj: any): string {
+  private fillForApi(obj: any): string {
     if (obj.type === 'title' || obj.type === 'description') {
       return obj.type === 'title' ? obj.type : 'content';
     } else {
@@ -145,5 +145,9 @@ export class WebhookItemComponent implements OnInit {
     this.webhooksService.update(this.form.controls['id'].value, this.form.value).subscribe({
       next: () => this.router.navigate(['/settings/webhooks']),
     });
+  }
+
+  public cancel() {
+    this.router.navigate(['/settings/webhooks']);
   }
 }
