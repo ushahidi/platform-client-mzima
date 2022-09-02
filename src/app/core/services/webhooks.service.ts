@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SurveyApiResponse } from '@models';
+import { WebhookApi, WebhookResult } from '@models';
 import { Observable } from 'rxjs';
 import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
@@ -8,7 +8,7 @@ import { ResourceService } from './resource.service';
 @Injectable({
   providedIn: 'root',
 })
-export class SurveysService extends ResourceService<any> {
+export class WebhooksService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient, //
     protected override env: EnvService,
@@ -17,18 +17,26 @@ export class SurveysService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return this.env.environment.api_v5;
+    return this.env.environment.api_v3;
   }
 
   getResourceUrl(): string {
-    return 'surveys';
+    return 'webhooks';
   }
 
-  override get(): Observable<SurveyApiResponse> {
+  override get(): Observable<WebhookApi> {
     return super.get();
   }
 
-  override getById(id: string | number): Observable<any> {
+  override getById(id: string | number): Observable<WebhookResult> {
     return super.getById(id);
+  }
+
+  override update(id: string | number, resource: any): Observable<WebhookResult> {
+    return super.update(id, resource);
+  }
+
+  override delete(id: string | number): Observable<WebhookResult> {
+    return super.delete(id);
   }
 }

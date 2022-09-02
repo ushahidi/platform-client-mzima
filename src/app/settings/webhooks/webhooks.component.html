@@ -1,1 +1,17 @@
-<p>webhooks works!</p>
+<div class="webhook-wrapper">
+  <div class="webhook">
+    <ul class="webhook-item-list">
+      <li
+        class="webhook-item"
+        *ngFor="let webhook of webhookList"
+        [routerLink]="[webhook.id]"
+        [routerLinkActive]="'active'"
+      >
+        {{ webhook.name }}
+      </li>
+    </ul>
+  </div>
+  <div class="webhook-item-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

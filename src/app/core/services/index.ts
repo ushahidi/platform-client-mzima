@@ -15,3 +15,5 @@ export { SurveysService } from './surveys.service';
 export { EnvService } from './env.service';
 export { LanguageService } from './language.service';
 export { MediaService } from './media.service';
+export { WebhooksService } from './webhooks.service';
+export { ApiFormsService } from './api-forms.service';

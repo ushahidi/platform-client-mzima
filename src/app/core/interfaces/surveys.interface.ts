@@ -1,3 +1,9 @@
+import { ApiResponse } from './api-response.interface';
+
+export interface SurveyApiResponse {
+  results: SurveyItem[];
+}
+
 export interface SurveyItem {
   can_create: any[];
   color: string;
@@ -41,7 +47,7 @@ export interface SurveyItemTaskField {
   config: any[];
   default: string;
   form_stage_id: number;
-  id: number[];
+  id: number;
   input: string;
   instructions: string;
   key: string;
@@ -52,4 +58,8 @@ export interface SurveyItemTaskField {
   response_private: boolean;
   translations: any[];
   type: string;
+}
+
+export interface SurveyItemTaskFieldApiResponse extends ApiResponse {
+  results: SurveyItemTaskField[];
 }
