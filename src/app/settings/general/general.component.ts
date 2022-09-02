@@ -30,10 +30,9 @@ export class GeneralComponent implements OnInit {
   });
 
   siteConfig: any;
-  siteImage: string;
   apiKey: ApiKeyResult;
   isSaving = false;
-  uploadedFile: any = { deleted: false };
+  uploadedFile?: File;
 
   constructor(
     private sessionService: SessionService,
@@ -48,7 +47,6 @@ export class GeneralComponent implements OnInit {
 
   ngOnInit(): void {
     this.siteConfig = this.sessionService.getConfigurations('site');
-    this.siteImage = this.siteConfig.image_header;
     this.generalForm.patchValue({
       name: this.siteConfig.name,
       description: this.siteConfig.description,
@@ -66,14 +64,14 @@ export class GeneralComponent implements OnInit {
     });
   }
 
-  fileUploaded(event: any) {
-    this.siteImage = event.dataURI;
+  fileUploaded(event: File) {
+    // this.siteImage = event.dataURI;
     this.uploadedFile = event;
   }
 
-  clearHeader() {
-    this.siteImage = '';
-    this.uploadedFile = { deleted: true };
+  headerImageDeleted() {
+    this.siteConfig.image_header = '';
+    this.uploadedFile = undefined;
   }
 
   public async generateApiKey(): Promise<void> {
@@ -89,20 +87,11 @@ export class GeneralComponent implements OnInit {
     });
   }
 
-  uploadHeaderImage() {}
-
   save() {
     this.isSaving = true;
-    if (this.uploadedFile.deleted) {
-      this.siteConfig.image_header = '';
-      this.updateSettings().subscribe({
-        complete: () => {
-          this.isSaving = false;
-        },
-      });
-    } else if (this.uploadedFile.file) {
+    if (this.uploadedFile) {
       this.mediaService
-        .uploadFile(this.uploadedFile.file)
+        .uploadFile(this.uploadedFile)
         .pipe(
           mergeMap((newImage: any) => {
             this.siteConfig.image_header = newImage.original_file_url;

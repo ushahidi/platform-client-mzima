@@ -9,11 +9,11 @@ import {
   LogoComponent,
   BreadcrumbComponent,
   SubmitPostButtonComponent,
-  FileUploaderComponent,
   SelectLanguagesModalComponent,
   SpinnerComponent,
   ConfirmModalComponent,
   LanguageComponent,
+  DonationButtonComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import {
@@ -28,13 +28,13 @@ const components = [
   ToolbarComponent,
   LogoComponent,
   BreadcrumbComponent,
-  FileUploaderComponent,
   SubmitPostButtonComponent,
   LanguageComponent,
   SpinnerComponent,
   ConfirmModalComponent,
   SelectLanguagesModalComponent,
   SpinnerComponent,
+  DonationButtonComponent,
 ];
 
 const modules = [

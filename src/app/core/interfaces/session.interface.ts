@@ -14,7 +14,32 @@ export interface UserInterface {
   language?: string;
 }
 
-export interface SiteConfigInterface {}
+export interface DonationConfigInterface {
+  description: string;
+  title: string;
+  wallet: string;
+  images: Array<{ original_file_url: string; id: number }>;
+  enabled: boolean;
+}
+
+export interface SiteConfigInterface {
+  allowed_privileges?: string[];
+  client_url?: boolean;
+  date_format?: string;
+  description?: string;
+  disable_registration?: boolean;
+  email?: string;
+  first_login?: boolean;
+  id?: string;
+  image_header?: string;
+  language?: string;
+  name?: string;
+  tier?: string;
+  timezone?: string;
+  url?: string;
+  private?: boolean;
+  donation?: DonationConfigInterface;
+}
 
 export interface FeaturesConfigInterface {}
 
