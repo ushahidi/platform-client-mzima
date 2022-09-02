@@ -11,7 +11,9 @@ export class DonationButtonComponent {
   constructor(private dialog: MatDialog) {}
 
   showDonation() {
-    console.log('!');
-    this.dialog.open(DonationModalComponent);
+    this.dialog.open(DonationModalComponent, {
+      width: '100%',
+      maxWidth: 564,
+    });
   }
 }
