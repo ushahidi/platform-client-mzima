@@ -4,7 +4,6 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntilDestroy$ } from '@helpers';
 import { SurveyItem, SurveyItemTaskField, WebhookResultInterface } from '@models';
 import { SurveysService, WebhooksService } from '@services';
-import { switchMap } from 'rxjs';
 import { ApiFormsService } from '@services';
 
 @Component({
@@ -15,20 +14,20 @@ import { ApiFormsService } from '@services';
 export class WebhookItemComponent implements OnInit {
   private webhook: WebhookResultInterface;
   public form: FormGroup = this.formBuilder.group({
-    allowed_privileges: ['', [Validators.required]],
-    created: ['', [Validators.required]],
+    allowed_privileges: [''],
+    created: [''],
     destination_field_key: [null],
     entity_type: ['', [Validators.required]],
     event_type: ['', [Validators.required]],
     form_id: [0],
-    id: [0, [Validators.required]],
+    id: [0],
     name: ['', [Validators.required]],
     shared_secret: ['', [Validators.required]],
     source_field_key: [null],
     updated: [''],
     url: ['', [Validators.required]],
     user: ['', [Validators.required]],
-    webhook_uuid: ['', [Validators.required]],
+    webhook_uuid: [''],
     is_source_destination: [false],
   });
   public eventList = [
@@ -39,6 +38,7 @@ export class WebhookItemComponent implements OnInit {
   public surveyList: SurveyItem[] = [];
   public surveyAttributesList: SurveyItemTaskField[] = [];
   private controlFormIdData$ = this.form.controls['form_id'].valueChanges.pipe(takeUntilDestroy$());
+  public isCreateWebhook = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,14 +51,16 @@ export class WebhookItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSurveys();
-    this.route.paramMap
-      .pipe(switchMap((params: ParamMap) => this.webhooksService.getById(params.get('id') || 1)))
-      .subscribe({
-        next: (response: WebhookResultInterface) => {
-          this.webhook = response;
-          this.fillInForm(response);
-        },
-      });
+    this.route.paramMap.subscribe({
+      next: (params: ParamMap) => {
+        if (params.get('id')) {
+          this.getWebhook(params.get('id')!);
+          this.isCreateWebhook = false;
+        } else {
+          this.isCreateWebhook = true;
+        }
+      },
+    });
 
     if (this.form.controls['form_id'].value)
       this.getSurveyAttributes(this.form.controls['form_id'].value);
@@ -70,22 +72,22 @@ export class WebhookItemComponent implements OnInit {
     });
   }
 
-  private fillInForm(data: WebhookResultInterface): void {
-    this.form.patchValue({
-      allowed_privileges: data.allowed_privileges,
-      created: data.created,
-      entity_type: data.entity_type,
-      event_type: data.event_type,
-      form_id: data?.form_id,
-      id: data.id,
-      name: data.name,
-      shared_secret: data.shared_secret,
-      updated: data.updated,
-      url: data.url,
-      user: data.user,
-      webhook_uuid: data.webhook_uuid,
-      is_source_destination: !!data.destination_field_key,
+  private getWebhook(id: string) {
+    this.webhooksService.getById(id).subscribe({
+      next: (webhook) => {
+        this.webhook = webhook;
+        this.fillInForm(webhook);
+      },
     });
+  }
+
+  private fillInForm(data: any): void {
+    Object.keys(data).forEach((name) => {
+      if (this.form.controls[name]) {
+        this.form.controls[name].patchValue(data[name]);
+      }
+    });
+    this.form.controls['is_source_destination'].patchValue(!!this.form.controls['form_id'].value);
   }
 
   private getSurveys(): void {
@@ -102,9 +104,9 @@ export class WebhookItemComponent implements OnInit {
     this.apiFormsService.getFormSurveyAttributes(id, queryParams).subscribe({
       next: (response) => {
         this.surveyAttributesList = response.results;
-        this.form.patchValue({
-          destination_field_key: this.checkKeyFields(this.webhook?.destination_field_key || ''),
-          source_field_key: this.checkKeyFields(this.webhook?.source_field_key || ''),
+        this.fillInForm({
+          destination_field_key: this.checkKeyFields(this.webhook?.destination_field_key!),
+          source_field_key: this.checkKeyFields(this.webhook?.source_field_key!),
         });
       },
     });
@@ -132,7 +134,7 @@ export class WebhookItemComponent implements OnInit {
 
   public save() {
     if (this.form.value.is_source_destination) {
-      this.form.patchValue({
+      this.fillInForm({
         destination_field_key: this.fillForApi(
           this.filterAttributes('key', this.form.controls['destination_field_key'].value),
         ),
@@ -141,13 +143,34 @@ export class WebhookItemComponent implements OnInit {
         ),
       });
     }
-    delete this.form.value.is_source_destination;
+    this.deleteFormFields(['is_source_destination']);
+    this.isCreateWebhook ? this.postWebhook() : this.updateWebhook();
+  }
+
+  private postWebhook() {
+    this.deleteFormFields(['id', 'created', 'updated', 'allowed_privileges', 'user']);
+    this.webhooksService.post(this.form.value).subscribe({
+      next: () => this.navigateToWebhooks(),
+    });
+  }
+
+  private updateWebhook() {
     this.webhooksService.update(this.form.controls['id'].value, this.form.value).subscribe({
-      next: () => this.router.navigate(['/settings/webhooks']),
+      next: () => this.navigateToWebhooks(),
     });
   }
 
   public cancel() {
+    this.navigateToWebhooks();
+  }
+
+  private navigateToWebhooks() {
     this.router.navigate(['/settings/webhooks']);
+  }
+
+  private deleteFormFields(fields: Array<string>) {
+    for (const field of fields) {
+      delete this.form.value[field];
+    }
   }
 }

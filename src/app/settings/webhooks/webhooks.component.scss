@@ -6,31 +6,36 @@
 .webhook {
   width: 20%;
   overflow-y: auto;
-}
 
-.webhook-item {
-  margin: 0 0 1px;
-  padding: 20px;
-  list-style: none;
-  border-radius: 2px;
-  cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-
-  &:not(:last-child) {
-    border-bottom: none;
+  &-create {
+    margin-bottom: 10px;
+    width: 100%;
   }
 
-  &:hover {
-    box-shadow: inset 1px 1px 6px -1px rgba(0, 0, 0, 0.2),
-      inset -1px -1px 6px -1px rgba(255, 255, 255, 0.7), -0.5px -0.5px 0 rgba(255, 255, 255, 1),
-      0.5px 0.5px 0 rgba(0, 0, 0, 0.15), 0 12px 10px -10px rgba(0, 0, 0, 0.05);
-  }
+  &-item {
+    margin: 0 0 1px;
+    padding: 20px;
+    list-style: none;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.2);
 
-  &.active {
-    box-shadow: inset 1px 1px 6px -1px rgba(0, 0, 0, 0.2),
-      inset -1px -1px 6px -1px rgba(255, 255, 255, 0.7), -0.5px -0.5px 0 rgba(255, 255, 255, 1),
-      0.5px 0.5px 0 rgba(0, 0, 0, 0.15), 0 12px 10px -10px rgba(0, 0, 0, 0.05);
-    background-color: rgb(0 0 0 / 5%);
+    &:not(:last-child) {
+      border-bottom: none;
+    }
+
+    &:hover {
+      box-shadow: inset 1px 1px 6px -1px rgba(0, 0, 0, 0.2),
+        inset -1px -1px 6px -1px rgba(255, 255, 255, 0.7), -0.5px -0.5px 0 rgba(255, 255, 255, 1),
+        0.5px 0.5px 0 rgba(0, 0, 0, 0.15), 0 12px 10px -10px rgba(0, 0, 0, 0.05);
+    }
+
+    &.active {
+      box-shadow: inset 1px 1px 6px -1px rgba(0, 0, 0, 0.2),
+        inset -1px -1px 6px -1px rgba(255, 255, 255, 0.7), -0.5px -0.5px 0 rgba(255, 255, 255, 1),
+        0.5px 0.5px 0 rgba(0, 0, 0, 0.15), 0 12px 10px -10px rgba(0, 0, 0, 0.05);
+      background-color: rgb(0 0 0 / 5%);
+    }
   }
 }
 

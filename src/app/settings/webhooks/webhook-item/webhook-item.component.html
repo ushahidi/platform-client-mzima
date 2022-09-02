@@ -1,13 +1,11 @@
-<h2>Edit Webhook</h2>
+<h2>{{ isCreateWebhook ? 'Create ' : 'Edit' }} Webhook</h2>
 <form class="form" *ngIf="form" [formGroup]="form" (ngSubmit)="save()" novalidate>
   <div class="form-field">
     <p class="form-label">Name</p>
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
       <input matInput placeholder="Please enter webhook name" formControlName="name" required />
-      <mat-error *ngIf="form.get('name')?.invalid">{{
-        'settings.user_settings.valid_user' | translate
-      }}</mat-error>
+      <mat-error *ngIf="form.get('name')?.invalid">Webhook name is required</mat-error>
     </mat-form-field>
   </div>
 
@@ -21,9 +19,9 @@
         formControlName="shared_secret"
         required
       />
-      <mat-error *ngIf="form.get('shared_secret')?.invalid">{{
-        'settings.user_settings.valid_key' | translate
-      }}</mat-error>
+      <mat-error *ngIf="form.get('shared_secret')?.invalid"
+        >Shared secret key is required</mat-error
+      >
     </mat-form-field>
   </div>
 
@@ -32,9 +30,7 @@
     <mat-form-field appearance="fill">
       <mat-label>API URL</mat-label>
       <input matInput placeholder="Please enter api url" formControlName="url" required />
-      <mat-error *ngIf="form.get('url')?.invalid">{{
-        'settings.user_settings.valid_key' | translate
-      }}</mat-error>
+      <mat-error *ngIf="form.get('url')?.invalid">API URL id required</mat-error>
     </mat-form-field>
   </div>
 
@@ -47,9 +43,7 @@
           {{ event.name }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('event_type')?.invalid">
-        {{ 'settings.user_settings.valid_key' | translate }}
-      </mat-error>
+      <mat-error *ngIf="form.get('event_type')?.invalid">Event type is required</mat-error>
     </mat-form-field>
   </div>
 
@@ -62,9 +56,7 @@
           {{ entity.name }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('entity_type')?.invalid">
-        {{ 'settings.user_settings.valid_key' | translate }}
-      </mat-error>
+      <mat-error *ngIf="form.get('entity_type')?.invalid">Event entity is required</mat-error>
     </mat-form-field>
   </div>
 
@@ -88,9 +80,6 @@
             {{ survey.name }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="form.get('form_id')?.invalid">
-          {{ 'settings.user_settings.valid_key' | translate }}
-        </mat-error>
       </mat-form-field>
     </div>
 
@@ -117,9 +106,6 @@
                     {{ attribute.label }}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="form.get('event_type')?.invalid">{{
-                  'settings.user_settings.valid_key' | translate
-                }}</mat-error>
               </mat-form-field>
             </td>
           </tr>
@@ -137,9 +123,6 @@
                     {{ attribute.label }}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="form.get('event_type')?.invalid">{{
-                  'settings.user_settings.valid_key' | translate
-                }}</mat-error>
               </mat-form-field>
             </td>
           </tr>
@@ -149,7 +132,7 @@
   </div>
 
   <div class="webhook-btn-wrapper">
-    <button type="button" mat-raised-button (click)="cancel()">Cancel</button>
-    <button type="submit" color="primary" mat-raised-button>Save</button>
+    <button type="button" class="ushahidi-btn secondary-btn" (click)="cancel()">Cancel</button>
+    <button type="submit" class="ushahidi-btn primary-btn" mat-raised-button>Save</button>
   </div>
 </form>

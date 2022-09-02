@@ -28,7 +28,7 @@ export class WebhooksService extends ResourceService<any> {
     return super.get();
   }
 
-  override getById(id: string | number): Observable<WebhookResultInterface> {
+  override getById(id: string): Observable<WebhookResultInterface> {
     return super.getById(id);
   }
 
@@ -38,5 +38,9 @@ export class WebhooksService extends ResourceService<any> {
 
   override delete(id: string | number): Observable<WebhookResultInterface> {
     return super.delete(id);
+  }
+
+  override post(resource: any): Observable<any> {
+    return super.post(resource);
   }
 }

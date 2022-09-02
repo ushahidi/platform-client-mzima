@@ -7,7 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: WebhooksComponent,
-    children: [{ path: ':id', component: WebhookItemComponent }],
+    children: [
+      { path: 'create', component: WebhookItemComponent },
+      { path: ':id', component: WebhookItemComponent },
+    ],
   },
 ];
 
