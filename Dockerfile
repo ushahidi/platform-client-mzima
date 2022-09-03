@@ -8,12 +8,16 @@ RUN npm install
 COPY . ./
 RUN npm run build
 
-
 FROM nginx
+ENV DOCKERIZE_VERSION v0.6.1
 
-RUN apt update && \
-    apt install --no-install-recommends -y python3-pip python3-setuptools python3-yaml && \
-    pip install 'jinja-cli==1.2.1' && \
+RUN case `uname -m` in aarch*|armv8*) darch=armhf;; i?86) darch=386;; x86_64) darch=amd64;; *) darch=error;; esac && \
+    apt update && \
+    apt install --no-install-recommends -y python3-pip python3-setuptools python3-yaml wget && \
+    apt-get update && apt-get install -y wget && \
+    wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-${darch}-$DOCKERIZE_VERSION.tar.gz && \
+    tar -C /usr/local/bin -xzvf dockerize-linux-${darch}-$DOCKERIZE_VERSION.tar.gz && \
+    rm dockerize-linux-${darch}-$DOCKERIZE_VERSION.tar.gz && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -21,9 +25,7 @@ ARG HTTP_PORT=8080
 
 WORKDIR /usr/share/nginx/html
 COPY --from=0 /var/app/dist/platform-client ./
-# COPY --from=0 /var/app/dist/platfor-client /var/app/app/config.js.j2 /var/app/app/config.json.j2 ./
-COPY docker/nginx.default.conf /etc/nginx/conf.d/default.conf
-COPY docker/nginx.run.sh /nginx.run.sh
+COPY docker/ /opt/docker/
 RUN sed -i 's/$HTTP_PORT/'$HTTP_PORT'/' /etc/nginx/conf.d/default.conf && \
     mkdir /var/lib/nginx && \
     chgrp -R 0 . /var/lib/nginx /run && \
@@ -34,5 +36,5 @@ RUN sed -i 's/$HTTP_PORT/'$HTTP_PORT'/' /etc/nginx/conf.d/default.conf && \
 ENV HTTP_PORT=$HTTP_PORT
 EXPOSE $HTTP_PORT
 
-ENTRYPOINT [ "/bin/sh", "/nginx.run.sh" ]
+ENTRYPOINT [ "/bin/sh", "/opt/docker/nginx.run.sh" ]
 CMD [ "/usr/sbin/nginx", "-g", "daemon off;" ]
