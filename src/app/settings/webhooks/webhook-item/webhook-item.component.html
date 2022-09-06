@@ -1,0 +1,138 @@
+<h2>{{ isCreateWebhook ? 'Create ' : 'Edit' }} Webhook</h2>
+<form class="form" *ngIf="form" [formGroup]="form" (ngSubmit)="save()" novalidate>
+  <div class="form-field">
+    <p class="form-label">Name</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Please enter webhook name" formControlName="name" required />
+      <mat-error *ngIf="form.get('name')?.invalid">Webhook name is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <p class="form-label">Shared secret</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Shared secret</mat-label>
+      <input
+        matInput
+        placeholder="Please enter shared secret"
+        formControlName="shared_secret"
+        required
+      />
+      <mat-error *ngIf="form.get('shared_secret')?.invalid"
+        >Shared secret key is required</mat-error
+      >
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <p class="form-label">API URL</p>
+    <mat-form-field appearance="fill">
+      <mat-label>API URL</mat-label>
+      <input matInput placeholder="Please enter api url" formControlName="url" required />
+      <mat-error *ngIf="form.get('url')?.invalid">API URL id required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <p class="form-label">Event Type</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Event Type</mat-label>
+      <mat-select formControlName="event_type">
+        <mat-option *ngFor="let event of eventList" [value]="event.value">
+          {{ event.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('event_type')?.invalid">Event type is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <p class="form-label">Entity Type</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Entity Type</mat-label>
+      <mat-select formControlName="entity_type">
+        <mat-option *ngFor="let entity of entityList" [value]="entity.value">
+          {{ entity.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('entity_type')?.invalid">Event entity is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-field form-field-flex">
+    <p class="form-label">{{ 'settings.webhooks.enable_source_destination' | translate }}</p>
+    <mat-slide-toggle formControlName="is_source_destination" name="first-name"> </mat-slide-toggle>
+  </div>
+
+  <div class="source-destination-wrapper" *ngIf="form.get('is_source_destination')?.value">
+    <div class="form-field">
+      <p class="form-label">This webhook will only be applied to Surveys of the selected type.</p>
+      <mat-form-field appearance="fill">
+        <mat-label
+          >{{ 'settings.webhooks.use_webhook_for' | translate }}
+          <span *ngIf="!form.get('form_id')?.value">
+            <strong>{{ 'data_import.which_survey' | translate }}</strong>
+          </span>
+        </mat-label>
+        <mat-select formControlName="form_id">
+          <mat-option *ngFor="let survey of surveyList" [value]="survey.id">
+            {{ survey.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field" *ngIf="form.get('form_id')?.value">
+      <p>{{ 'survey.choose_survey_field' | translate }}</p>
+      <p>{{ 'survey.choose_survey_field_desc' | translate }}</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>{{ 'survey.survey_field' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span>Source</span></td>
+            <td>
+              <mat-form-field appearance="fill">
+                <mat-select formControlName="source_field_key">
+                  <mat-option
+                    *ngFor="let attribute of surveyAttributesList"
+                    [value]="attribute.key"
+                  >
+                    {{ attribute.label }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>{{ 'settings.webhooks.destination' | translate }}</span>
+            </td>
+            <td>
+              <mat-form-field appearance="fill">
+                <mat-select formControlName="destination_field_key">
+                  <mat-option
+                    *ngFor="let attribute of surveyAttributesList"
+                    [value]="attribute.key"
+                  >
+                    {{ attribute.label }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="webhook-btn-wrapper">
+    <button type="button" class="ushahidi-btn secondary-btn" (click)="cancel()">Cancel</button>
+    <button type="submit" class="ushahidi-btn primary-btn" mat-raised-button>Save</button>
+  </div>
+</form>
