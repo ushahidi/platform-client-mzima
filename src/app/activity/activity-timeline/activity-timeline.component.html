@@ -1,6 +1,6 @@
 <div class="chart-container">
   <h3>Activity over time</h3>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="standard">
     <mat-label>Select filter</mat-label>
     <mat-select [(ngModel)]="selectedFilter" (selectionChange)="change($event)" name="filter">
       <mat-option *ngFor="let filter of filters" [value]="filter.value">

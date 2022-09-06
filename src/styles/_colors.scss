@@ -1,0 +1,11 @@
+.color {
+  &-primary {
+    color: var(--color-primary);
+  }
+  &-accent {
+    color: var(--color-accent);
+  }
+  &-dark {
+    color: var(--color-dark);
+  }
+}

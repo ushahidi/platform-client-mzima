@@ -1,6 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
+@import 'styles/theme';
+@import 'styles/colors';
+@import 'styles/buttons';
+@import 'styles/pagination';
+@import 'styles/forms';
+@import 'styles/modal';
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -30,29 +37,32 @@ a {
   margin: 0 auto;
   max-width: 800px;
   background: #fff;
+  box-shadow: 0 0 2px rgba(#000, 0.12), 0 2px 2px rgba(#000, 0.24);
 
   &:not(:last-child) {
     margin-bottom: 24px;
   }
 }
 
-.form-controls-panel {
-  display: flex;
-  margin: 0 -8px;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
+a {
+  text-decoration: none;
+  color: var(--color-info);
+  transition: color 0.35s ease;
 
-  .mat-button-base {
-    margin: 0 8px;
+  &:hover {
+    color: var(--color-info-shade);
   }
-}
 
-.mat-button-base {
   .mat-icon {
     width: 1em;
     height: 1em;
-    font-size: 1em;
-    margin-right: 8px;
+    font-size: inherit;
+    margin-right: 10px;
+    vertical-align: middle;
   }
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: var(--color-primary);
 }

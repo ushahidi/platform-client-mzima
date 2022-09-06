@@ -5,47 +5,65 @@
   z-index: 100;
   position: fixed;
 
-  &-wrapper {
+  &__wrapper {
     display: flex;
     align-items: center;
   }
 
-  mat-toolbar {
-    background-color: #373e46;
+  &__main {
     height: 68px;
     padding-left: 100px;
+    background-color: #373e46;
     justify-content: space-between;
+  }
 
-    .box {
-      .input-wrapper {
-        position: relative;
-        display: flex;
-        align-items: center;
-      }
+  app-donation-button {
+    display: block;
+    margin-left: 32px;
+  }
+}
 
-      mat-icon {
-        position: absolute;
-        left: 10px;
-        color: #fff;
-      }
+.search {
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
 
-      input {
-        padding: 10px 8px 10px 38px;
-        width: 100%;
-        max-width: 450px;
-        color: #fff;
-        border-color: transparent;
-        background-color: #60646b;
-      }
-      input::placeholder {
-        color: #fff;
-      }
-      input:focus {
-        box-shadow: 0 0 2px 4px #ffc334, inset 0 1px 1px rgb(0 0 0 / 30%);
+  mat-icon {
+    left: 10px;
+    position: absolute;
+    color: var(--color-light);
+  }
+
+  input {
+    width: 100%;
+    color: #222;
+    max-width: 450px;
+    background-color: #60646b;
+    padding: 10px 8px 10px 38px;
+    border: 1px solid transparent;
+
+    &::placeholder {
+      color: var(--color-light);
+    }
+
+    &:-ms-input-placeholder {
+      color: var(--color-light);
+    }
+
+    &::-ms-input-placeholder {
+      color: var(--color-light);
+    }
+
+    &:focus {
+      border-color: #c8c8c8;
+      outline-color: #2b323a;
+      background-color: var(--color-light);
+      box-shadow: 0 0 2px 4px var(var(--color-primary)), inset 0 1px 1px rgb(0 0 0 / 30%);
+
+      + mat-icon {
         color: #222;
-        outline-color: #2b323a;
-        border: 1px solid #c8c8c8;
-        background-color: #fff;
       }
     }
   }

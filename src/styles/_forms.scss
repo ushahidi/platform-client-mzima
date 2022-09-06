@@ -1,0 +1,127 @@
+.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
+.mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: var(--color-primary);
+}
+
+.mat-checkbox-checkmark {
+  fill: var(--color-primary-contrast);
+}
+
+.mat-checkbox-checkmark-path {
+  stroke: var(--color-primary-contrast) !important;
+}
+
+.mat-checkbox-mixedmark {
+  background-color: var(--color-primary-contrast);
+}
+
+.mat-primary {
+  .mat-pseudo-checkbox-checked,
+  .mat-pseudo-checkbox-indeterminate {
+    background-color: var(--color-primary);
+  }
+}
+
+.form-controls-panel {
+  display: flex;
+  margin: 0 -8px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  .mat-button-base {
+    margin: 0 8px;
+  }
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.form-group {
+  flex: 1 1 100%;
+  margin-bottom: 24px;
+
+  .mat-checkbox {
+    + p {
+      margin-top: 8px;
+    }
+  }
+
+  .mat-hint {
+    margin-bottom: 12px;
+  }
+}
+
+.mat-primary {
+  .mat-option {
+    &.mat-selected {
+      &:not(.mat-option-disabled) {
+        color: var(--color-primary);
+      }
+    }
+  }
+}
+
+.mat-select-panel {
+  .mat-option {
+    &.mat-selected {
+      &:not(.mat-option-multiple) {
+        background-color: var(--color-gray);
+      }
+    }
+  }
+}
+
+.mat-option {
+  &:hover,
+  &:focus {
+    &:not(.mat-option-disabled) {
+      background-color: var(--color-gray-tint);
+    }
+  }
+}
+
+.mat-form-field.mat-focused {
+  .mat-form-field-label {
+    color: var(--color-primary);
+  }
+
+  .mat-form-field-ripple {
+    background-color: var(--color-primary);
+  }
+
+  &.mat-primary {
+    .mat-select-arrow {
+      color: var(--color-primary);
+    }
+  }
+}
+
+.mat-form-field.mat-form-field-invalid {
+  .mat-form-field-label {
+    color: var(--color-accent);
+  }
+
+  .mat-form-field-ripple,
+  .mat-form-field-ripple.mat-accent {
+    background-color: var(--color-accent);
+  }
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked {
+  .mat-radio-outer-circle {
+    border-color: var(--color-primary);
+  }
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent
+  .mat-radio-ripple
+  .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: var(--color-primary);
+}

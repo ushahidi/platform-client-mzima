@@ -1,0 +1,11 @@
+.mat-dialog-container {
+  position: relative;
+
+  .modal {
+    &__close-btn {
+      top: 16px;
+      right: 16px;
+      position: absolute;
+    }
+  }
+}

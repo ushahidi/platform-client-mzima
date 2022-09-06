@@ -52,7 +52,8 @@ export class SidebarComponent implements OnInit {
 
   private openLogin(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
-      width: '480px',
+      width: '100%',
+      maxWidth: 480,
     });
 
     dialogRef.afterClosed().subscribe({
@@ -67,7 +68,8 @@ export class SidebarComponent implements OnInit {
 
   private openRegister(): void {
     const dialogRef = this.dialog.open(RegisterComponent, {
-      width: '250px',
+      width: '100%',
+      maxWidth: 480,
     });
 
     dialogRef.afterClosed().subscribe({
