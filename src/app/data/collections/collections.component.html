@@ -1,20 +1,28 @@
-<div class="collections">
-  <h2 class="mat-dialog-title">{{ 'app.collection' | translate }}</h2>
-  <form class="box">
-    <div class="input-wrapper">
-      <mat-icon>search</mat-icon>
-      <input type="text" placeholder="Search" />
+<button mat-icon-button mat-dialog-close class="modal__close-btn" tabindex="-1">
+  <mat-icon class="fab-button__icon">close</mat-icon>
+</button>
+
+<h1 mat-dialog-title>{{ 'app.collection' | translate }}</h1>
+
+<form>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'location.search' | translate }}</mat-label>
+    <input matInput placeholder="{{ 'location.search' | translate }}" />
+    <mat-icon matPrefix>search</mat-icon>
+  </mat-form-field>
+</form>
+
+<div mat-dialog-content>
+  <div *ngFor="let item of collectionList" class="collection-item">
+    <div class="collection-item__content">
+      <h3 class="collection-item__title">{{ item.name }}</h3>
+      <span class="collection-item__description">{{ item.description }}</span>
     </div>
-  </form>
-  <mat-dialog-content class="mat-typography">
-    <div *ngFor="let item of collectionList" class="item">
-      <div class="item-content">
-        <h3 class="item-title">{{ item.name }}</h3>
-        <span class="item-description">{{ item.description }}</span>
-      </div>
-    </div>
-  </mat-dialog-content>
+  </div>
+
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>{{ 'app.save_and_close' | translate }}</button>
+    <button mat-raised-button color="primary" mat-dialog-close>
+      {{ 'form.save_and_close' | translate }}
+    </button>
   </mat-dialog-actions>
 </div>

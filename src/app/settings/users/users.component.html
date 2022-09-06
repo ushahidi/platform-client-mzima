@@ -2,7 +2,7 @@
   <h4>{{ selection.selected.length }} selected</h4>
   <div class="form-group">
     <mat-form-field appearance="fill">
-      <mat-label>Select role</mat-label>
+      <mat-label>Change role</mat-label>
       <mat-select [(ngModel)]="selectedValue" name="role">
         <mat-option
           *ngFor="let role of (roleResponse$ | async)?.results"
@@ -12,7 +12,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-stroked-button color="primary" type="submit">Apply</button>
+    <button mat-raised-button color="primary" type="submit">Apply</button>
   </div>
 </form>
 <div class="mat-elevation-z8">

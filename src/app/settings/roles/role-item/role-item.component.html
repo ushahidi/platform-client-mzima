@@ -1,64 +1,60 @@
-<form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
-  <div class="form-field">
-    <p class="legend">Name</p>
-    <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="display_name" />
-    </mat-form-field>
-  </div>
-  <div class="form-field">
-    <p class="legend">Description</p>
-    <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <input matInput formControlName="description" />
-    </mat-form-field>
-  </div>
-
-  <div class="form-field">
-    <p class="legend">Permissions</p>
-    <p>
-      These options control what this type of role can mke changes to.
-      <a href="#">Visit our support guides to find out more</a>
-    </p>
-    <div *ngFor="let item of permissionsList">
-      <mat-checkbox
-        [checked]="item.checked"
-        (change)="onCheckChange($event, 'permissions')"
-        [value]="item.name"
-      >
-        {{ item.name }}
-      </mat-checkbox>
+<div class="page-content">
+  <form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
+    <div class="form-group">
+      <h3>Name</h3>
+      <mat-form-field appearance="standard">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="display_name" />
+      </mat-form-field>
     </div>
-  </div>
+    <div class="form-group">
+      <h3>Description</h3>
+      <mat-form-field appearance="standard">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description" />
+      </mat-form-field>
+    </div>
 
-  <div class="form-field buttons-container">
-    <button mat-stroked-button color="primary" class="role-button" type="button" (click)="cancel()">
-      <mat-icon>canceled</mat-icon>
-      <span>Cancel</span>
-    </button>
-    <button mat-raised-button color="primary" class="role-button" type="submit">
-      <mat-icon>save</mat-icon>
-      <span>Save</span>
-    </button>
-  </div>
-</form>
+    <div class="form-group">
+      <h3>Permissions</h3>
+      <p>
+        These options control what this type of role can mke changes to.
+        <a href="#">Visit our support guides to find out more</a>
+      </p>
+      <div *ngFor="let item of permissionsList">
+        <mat-checkbox
+          [checked]="item.checked"
+          (change)="onCheckChange($event, 'permissions')"
+          [value]="item.name"
+        >
+          {{ item.name }}
+        </mat-checkbox>
+      </div>
+    </div>
 
-<div class="role-delete-container" *ngIf="role && !role?.protected">
-  <h3 class="role-delete-title">Delete this role</h3>
-  <p class="role-delete-description">
+    <div class="form-controls-panel">
+      <button mat-raised-button type="button" (click)="cancel()">
+        <span>Cancel</span>
+      </button>
+      <button mat-raised-button color="primary" class="role-button" type="submit">
+        <span>Save</span>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="page-content" *ngIf="role && !role?.protected">
+  <h3>Delete this role</h3>
+  <p>
     <strong>If you delete this role,</strong> all of the users assigned to it will be assigned
     default permissions. proceed with caution.
   </p>
-  <div class="buttons-container">
-    <button
-      mat-raised-button
-      color="warn"
-      class="role-delete-button"
-      type="button"
-      (click)="openDialog()"
-    >
-      <mat-icon>delete</mat-icon>
-      <span>Delete</span>
-    </button>
-  </div>
+  <button type="button" color="accent" mat-raised-button (click)="openDialog()">
+    <mat-icon>
+      <svg class="iconic">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#trash"></use>
+      </svg>
+    </mat-icon>
+    <span>Delete</span>
+  </button>
 </div>

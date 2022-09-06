@@ -5,16 +5,32 @@ table {
   td p {
     margin: 0;
   }
-  td .label {
-    font-size: 0.857142857rem;
-    margin-top: 4px;
-    margin-right: 10px;
-    margin-left: 10px;
-    line-height: 13.5px;
-    font-weight: 600;
-    width: fit-content;
-    padding: 7px;
-    border-radius: 15px;
+  td {
+    &:first-child {
+      border-left: 3px solid var(--color, transparent);
+    }
+
+    .label {
+      font-size: 0.857142857rem;
+      margin-top: 4px;
+      margin-right: 10px;
+      margin-left: 10px;
+      line-height: 13.5px;
+      font-weight: 600;
+      width: fit-content;
+      padding: 7px;
+      border-radius: 15px;
+
+      &--default {
+        color: var(--color-dark);
+        background-color: var(--color-gray);
+      }
+
+      &--primary {
+        color: var(--color-primary-contrast);
+        background-color: var(--color-primary);
+      }
+    }
   }
 }
 

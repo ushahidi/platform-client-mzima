@@ -1,0 +1,67 @@
+.mat-button-base {
+  .mat-icon {
+    width: 1em;
+    height: 1em;
+    font-size: 1em;
+    line-height: 1;
+
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}
+
+.mat-accent {
+  &.mat-button,
+  &.mat-icon-button,
+  &.mat-stroked-button {
+    color: var(--color-accent);
+
+    &:hover {
+      color: var(--color-accent-tint);
+    }
+  }
+}
+
+.mat-mini-fab {
+  font-size: 18px;
+}
+
+.mat-icon-button {
+  font-size: 20px;
+
+  .mat-icon {
+    display: block;
+    margin: 0 auto;
+    line-height: 1 !important;
+  }
+}
+
+.mat-primary {
+  &.mat-fab,
+  &.mat-flat-button,
+  &.mat-raised-button,
+  &.mat-mini-fab {
+    color: var(--color-primary-contrast);
+    background-color: var(--color-primary);
+  }
+}
+
+.mat-accent {
+  &.mat-fab,
+  &.mat-flat-button,
+  &.mat-raised-button,
+  &.mat-mini-fab {
+    color: var(--color-accent-contrast);
+    background-color: var(--color-accent);
+  }
+}
+
+.mat-fab {
+  font-size: 16px;
+
+  .mat-button-wrapper {
+    padding: 0 !important;
+    line-height: 1 !important;
+  }
+}

@@ -1,13 +1,13 @@
 <div class="toolbar">
   <app-submit-post-button></app-submit-post-button>
 
-  <mat-toolbar>
+  <mat-toolbar class="toolbar__main">
     <app-breadcrumb></app-breadcrumb>
-    <div class="toolbar-wrapper">
-      <div class="box">
+    <div class="toolbar__wrapper">
+      <div class="search">
         <div class="input-wrapper">
-          <mat-icon>search</mat-icon>
           <input type="text" placeholder="Search" />
+          <mat-icon>search</mat-icon>
         </div>
       </div>
       <app-donation-button *ngIf="isDonateAvailable"></app-donation-button>

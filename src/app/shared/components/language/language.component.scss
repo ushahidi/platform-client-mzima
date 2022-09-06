@@ -1,39 +1,35 @@
 .language {
-  margin-left: 20px;
-
-  & .mat-form-field {
-    width: 52px;
-  }
+  max-width: 54px;
+  margin-left: 24px;
+  color: var(--color-light);
 }
 
 .flag-icon-wrapper {
   width: 30px;
-  height: 40px;
+  height: 20px;
   overflow: hidden;
   margin-right: 5px;
 
-  & .flag-icon {
+  .flag-icon {
     width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    object-position: 0 50%;
   }
 }
 
-.language-field {
-  .mat-select-panel {
-    min-height: calc(100% + 100px) !important;
-  }
-
-  .mat-option {
-    line-height: 2em !important;
-    height: 2em !important;
-  }
-
-  .mat-option-text {
-    height: 40px;
-  }
+.mat-select-panel {
+  min-height: calc(100% + 100px) !important;
 }
 
-.mat-select-value {
-  height: 20px;
+.mat-option {
+  line-height: 2em !important;
+  height: 2em !important;
+}
+
+.mat-option-text {
+  height: 40px;
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-wrapper {
