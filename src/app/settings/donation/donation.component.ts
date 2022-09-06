@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { validateFile } from '@helpers';
 import { DonationConfigInterface, SiteConfigInterface } from '@models';
 import { ConfigService, MediaService, NotificationService, SessionService } from '@services';
 import { tap } from 'rxjs';
@@ -42,7 +43,7 @@ export class DonationComponent implements OnInit {
   }
 
   uploadFile($event: any) {
-    if (this.validateFile($event.target.files[0])) {
+    if (validateFile($event.target.files[0])) {
       var reader = new FileReader();
       reader.onload = () => {
         this.mediaService.uploadFile($event.target.files[0]).subscribe((result: any) => {
@@ -56,11 +57,6 @@ export class DonationComponent implements OnInit {
     } else {
       this.notificationService.showError('post.media.error_in_upload');
     }
-  }
-
-  private validateFile(file: File) {
-    const mimeReg = /[\/.](gif|jpg|jpeg|png)$/i;
-    return mimeReg.test(file.type) && file.size < 1048576;
   }
 
   save() {

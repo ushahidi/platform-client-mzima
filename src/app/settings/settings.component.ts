@@ -29,7 +29,7 @@ export class SettingsComponent {
       title: 'settings.settings_list.import',
       description: 'settings.settings_list.import_desc',
       icon: 'home',
-      router: 'data-data-import',
+      router: 'data-import',
     },
     {
       title: 'settings.settings_list.donation',
@@ -38,9 +38,8 @@ export class SettingsComponent {
       router: 'donation',
     },
     {
-      title: 'Configure HDX API',
-      description:
-        'Configure your API so that your tagged Ushahidi data can be uploaded to your Humanitarian Data Exchange (HDX) account.',
+      title: 'settings.settings_list.user_settings',
+      description: 'settings.settings_list.user_settings_desc',
       icon: 'home',
       router: 'user-settings',
     },
@@ -52,8 +51,8 @@ export class SettingsComponent {
       router: 'data-export',
     },
     {
-      title: 'settings.settings_list.user_settings',
-      description: 'settings.settings_list.user_settings_desc',
+      title: 'settings.settings_list.users',
+      description: 'settings.settings_list.users_desc',
       icon: 'home',
       router: 'users',
     },

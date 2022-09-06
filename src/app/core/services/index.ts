@@ -17,3 +17,5 @@ export { LanguageService } from './language.service';
 export { MediaService } from './media.service';
 export { CategoriesService } from './categories.service';
 export { ConfirmModalService } from './confirm-modal.service';
+export { DataImportService } from './data-import.service';
+export { FormsService } from './forms.service';
