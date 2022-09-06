@@ -22,7 +22,14 @@
       aria-label="Delete category"
       (click)="deleteCategory(category.id)"
     >
-      <mat-icon>delete</mat-icon>
+      <mat-icon>
+        <svg class="iconic">
+          <use
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xlink:href="assets/sprites.svg#trash"
+          ></use>
+        </svg>
+      </mat-icon>
     </button>
   </div>
 </div>

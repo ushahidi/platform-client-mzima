@@ -1,8 +1,12 @@
-<h1 mat-dialog-title>Select languages</h1>
+<button mat-icon-button mat-dialog-close class="modal__close-btn" tabindex="-1">
+  <mat-icon class="fab-button__icon">close</mat-icon>
+</button>
+
+<h1 mat-dialog-title>{{ 'form.select_language' | translate }}</h1>
 <div mat-dialog-content>
-  <p>Add a language</p>
+  <p>{{ 'translations.add_a_language' | translate }}</p>
   <mat-form-field appearance="standard">
-    <mat-label>Select a language to add translation for</mat-label>
+    <mat-label>{{ 'translations.select_language' | translate }}</mat-label>
     <mat-select multiple [(value)]="selectedLanguages" (selectionChange)="checkLanguages()">
       <mat-option [value]="language.code" *ngFor="let language of data.languages">
         {{ language.name }}
@@ -26,18 +30,20 @@
           )
         </strong>
       </p>
-      <button mat-button (click)="removeLanguagesWithErrors()">Remove</button>
+      <button mat-button (click)="removeLanguagesWithErrors()">
+        {{ 'set.setzremove' | translate }}
+      </button>
     </span>
   </div>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button mat-dialog-close>{{ 'app.cancel' | translate }}</button>
   <button
     color="primary"
     mat-raised-button
     [mat-dialog-close]="selectedLanguages"
     [disabled]="!!errorLanguages.length || !selectedLanguages.length"
   >
-    Add
+    {{ 'app.add' | translate }}
   </button>
 </div>

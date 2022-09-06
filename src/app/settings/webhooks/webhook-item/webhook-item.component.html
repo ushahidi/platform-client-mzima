@@ -2,7 +2,7 @@
 <form class="form" *ngIf="form" [formGroup]="form" (ngSubmit)="save()" novalidate>
   <div class="form-field">
     <p class="form-label">Name</p>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="standard">
       <mat-label>Name</mat-label>
       <input matInput placeholder="Please enter webhook name" formControlName="name" required />
       <mat-error *ngIf="form.get('name')?.invalid">Webhook name is required</mat-error>
@@ -11,7 +11,7 @@
 
   <div class="form-field">
     <p class="form-label">Shared secret</p>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="standard">
       <mat-label>Shared secret</mat-label>
       <input
         matInput
@@ -27,7 +27,7 @@
 
   <div class="form-field">
     <p class="form-label">API URL</p>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="standard">
       <mat-label>API URL</mat-label>
       <input matInput placeholder="Please enter api url" formControlName="url" required />
       <mat-error *ngIf="form.get('url')?.invalid">API URL id required</mat-error>
@@ -36,7 +36,7 @@
 
   <div class="form-field">
     <p class="form-label">Event Type</p>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="standard">
       <mat-label>Event Type</mat-label>
       <mat-select formControlName="event_type">
         <mat-option *ngFor="let event of eventList" [value]="event.value">
@@ -49,7 +49,7 @@
 
   <div class="form-field">
     <p class="form-label">Entity Type</p>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="standard">
       <mat-label>Entity Type</mat-label>
       <mat-select formControlName="entity_type">
         <mat-option *ngFor="let entity of entityList" [value]="entity.value">
@@ -68,7 +68,7 @@
   <div class="source-destination-wrapper" *ngIf="form.get('is_source_destination')?.value">
     <div class="form-field">
       <p class="form-label">This webhook will only be applied to Surveys of the selected type.</p>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="standard">
         <mat-label
           >{{ 'settings.webhooks.use_webhook_for' | translate }}
           <span *ngIf="!form.get('form_id')?.value">
@@ -97,7 +97,7 @@
           <tr>
             <td><span>Source</span></td>
             <td>
-              <mat-form-field appearance="fill">
+              <mat-form-field appearance="standard">
                 <mat-select formControlName="source_field_key">
                   <mat-option
                     *ngFor="let attribute of surveyAttributesList"
@@ -114,7 +114,7 @@
               <span>{{ 'settings.webhooks.destination' | translate }}</span>
             </td>
             <td>
-              <mat-form-field appearance="fill">
+              <mat-form-field appearance="standard">
                 <mat-select formControlName="destination_field_key">
                   <mat-option
                     *ngFor="let attribute of surveyAttributesList"
@@ -131,8 +131,8 @@
     </div>
   </div>
 
-  <div class="webhook-btn-wrapper">
-    <button type="button" class="ushahidi-btn secondary-btn" (click)="cancel()">Cancel</button>
-    <button type="submit" class="ushahidi-btn primary-btn" mat-raised-button>Save</button>
+  <div class="form-controls-panel">
+    <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Save</button>
   </div>
 </form>

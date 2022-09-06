@@ -3,6 +3,7 @@ import { CategoryInterface } from '@models';
 import { forkJoin } from 'rxjs';
 import { CategoriesService, ConfirmModalService } from '@services';
 import { CategoryItemComponent } from './category-item/category-item.component';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-categories',
@@ -17,6 +18,7 @@ export class CategoriesComponent {
   constructor(
     private categoriesService: CategoriesService,
     private confirmModalService: ConfirmModalService,
+    private loaderService: LoaderService,
   ) {
     this.getCategories();
   }
@@ -57,17 +59,6 @@ export class CategoriesComponent {
         this.getCategories();
       },
     });
-
-    // this.selectedCategories.map((category, index) => {
-    //   this.categoriesService.delete(category).subscribe({
-    //     next: () => {
-    //       if (index === this.selectedCategories.length - 1) {
-    //         this.getCategories();
-    //         this.selectedCategories = [];
-    //       }
-    //     },
-    //   });
-    // });
   }
 
   public selectCategory(event: { value: boolean; id: number }): void {

@@ -8,7 +8,7 @@
   transition: background-color 0.35s ease;
 
   &--selected {
-    background: rgba(#ff4081, 0.05);
+    background: rgba(var(--color-primary-rgb), 0.05);
   }
 
   &__checkbox {
@@ -24,13 +24,14 @@
     margin-bottom: 8px;
 
     a {
+      color: inherit;
       vertical-align: top;
       display: inline-block;
       text-decoration: none;
       transition: color 0.35s ease;
 
       &:hover {
-        color: #ffc334;
+        color: var(--color-primary-shade);
       }
     }
   }

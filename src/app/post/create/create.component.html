@@ -1,9 +1,9 @@
 <!-- FIXME: SOMEHOW I CANT ADD FORM TAG HERE -->
 
-<div class="form" [ngStyle]="{ '--color': data?.result?.color }">
+<div class="page-content" [ngStyle]="{ '--color': data?.result?.color }">
   <ng-container *ngIf="fields.length; else spinner">
     <div class="field" *ngFor="let field of fields">
-      <h3>{{ field.label }} <span class="required" *ngIf="field.required">*</span></h3>
+      <h3>{{ field.label }} <span class="color-accent" *ngIf="field.required">*</span></h3>
       <mat-label class="field__instruction" *ngIf="field.instructions">{{
         field.instructions
       }}</mat-label>
@@ -11,13 +11,13 @@
       <ng-container
         *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
       >
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <input matInput [value]="field.default" />
         </mat-form-field>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <textarea matInput [value]="field.default"></textarea>
         </mat-form-field>
       </ng-container>
@@ -52,7 +52,7 @@
       </ng-container>
 
       <ng-container *ngIf="field.input === 'date'">
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <input matInput [matDatepicker]="picker" />
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -60,7 +60,7 @@
       </ng-container>
 
       <ng-container *ngIf="field.input === 'datetime'">
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <input matInput [ngxMatDatetimePicker]="picker" />
           <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
@@ -86,7 +86,7 @@
       </ng-container>
 
       <ng-container *ngIf="field.input === 'select'">
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <mat-select>
             <mat-option *ngFor="let option of field.options" [value]="option">
               {{ option }}
@@ -96,7 +96,7 @@
       </ng-container>
 
       <ng-container *ngIf="field.input === 'number'">
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <input matInput [value]="field.default" type="number" />
         </mat-form-field>
       </ng-container>
@@ -107,7 +107,7 @@
       </ng-container>
 
       <ng-container *ngIf="field.input === 'video'">
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <input
             matInput
             [value]="field.default"

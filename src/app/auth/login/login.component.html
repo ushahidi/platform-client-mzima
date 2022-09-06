@@ -1,7 +1,10 @@
-<h2>{{ 'nav.login' | translate }}</h2>
+<button mat-icon-button mat-dialog-close class="modal__close-btn" tabindex="-1">
+  <mat-icon class="fab-button__icon">close</mat-icon>
+</button>
 
-<form class="modal-body" (ngSubmit)="login()" [formGroup]="form" novalidate>
-  <mat-form-field appearance="fill">
+<strong mat-dialog-title>{{ 'nav.login' | translate }}</strong>
+<form novalidate [formGroup]="form" (ngSubmit)="login()">
+  <mat-form-field appearance="standard">
     <mat-label>
       {{ 'user.email' | translate }}
     </mat-label>
@@ -9,7 +12,7 @@
     <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="standard">
     <mat-label>
       {{ 'user.password' | translate }}
     </mat-label>
@@ -23,15 +26,14 @@
     <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
   </mat-form-field>
 
-  <div class="modal-actions form-field">
-    <button mat-stroked-button type="button" class="button-cancel" (click)="cancel()">
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button type="button" (click)="cancel()">
       {{ 'app.cancel' | translate }}
     </button>
     <button
-      mat-stroked-button
-      color="primary"
       type="submit"
-      class="button-login"
+      color="primary"
+      mat-raised-button
       [disabled]="form.invalid || form.disabled"
     >
       {{ 'nav.login' | translate }}

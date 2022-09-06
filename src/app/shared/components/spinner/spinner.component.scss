@@ -1,3 +1,17 @@
+.overlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  z-index: 5000;
+  position: fixed;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(#000, 0.5);
+}
+
 .spinner {
   margin: 0 auto;
 }

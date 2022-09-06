@@ -1,0 +1,9 @@
+.mat-paginator-range-actions {
+  .mat-button-base {
+    &:not(.mat-button-disabled) {
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+  }
+}

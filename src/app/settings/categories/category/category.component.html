@@ -1,5 +1,5 @@
 <ng-container *ngIf="category; else spinner">
-  <div class="page-content mat-elevation-z8">
+  <div class="page-content">
     <app-create-category-form
       [category]="category"
       [loading]="isFormOnSubmit"
@@ -8,7 +8,7 @@
     </app-create-category-form>
   </div>
 
-  <div class="page-content mat-elevation-z8">
+  <div class="page-content">
     <h3>{{ 'category.delete_this_category' | translate }}</h3>
     <p [innerHTML]="'category.delete_category_desc' | translate"></p>
 

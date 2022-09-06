@@ -52,8 +52,8 @@ export class SettingsComponent {
       router: 'data-export',
     },
     {
-      title: 'settings.settings_list.user_settings',
-      description: 'settings.settings_list.user_settings_desc',
+      title: 'settings.settings_list.users',
+      description: 'settings.settings_list.users_desc',
       icon: 'home',
       router: 'users',
     },

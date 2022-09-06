@@ -33,7 +33,6 @@ const components = [
   SpinnerComponent,
   ConfirmModalComponent,
   SelectLanguagesModalComponent,
-  SpinnerComponent,
   DonationButtonComponent,
 ];
 
