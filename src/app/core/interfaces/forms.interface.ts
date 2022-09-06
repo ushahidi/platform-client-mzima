@@ -38,15 +38,18 @@ export interface FormTaskInterface {
 export interface FormAttributeInterface {
   cardinality: number;
   config: any[];
+  default: string;
   form_stage_id: number;
   id: number;
   input: string;
+  instructions: string;
   key: string;
   label: string;
   options: any[];
   priority: number;
   required: boolean;
   response_private: boolean;
+  translations: any[];
   type: string;
 }
 
