@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SurveyApiResponse } from '@models';
 import { Observable } from 'rxjs';
 import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
@@ -8,7 +9,10 @@ import { ResourceService } from './resource.service';
   providedIn: 'root',
 })
 export class SurveysService extends ResourceService<any> {
-  constructor(protected override httpClient: HttpClient, protected override env: EnvService) {
+  constructor(
+    protected override httpClient: HttpClient, //
+    protected override env: EnvService,
+  ) {
     super(httpClient, env);
   }
 
@@ -20,7 +24,7 @@ export class SurveysService extends ResourceService<any> {
     return 'surveys';
   }
 
-  override get(): Observable<any> {
+  override get(): Observable<SurveyApiResponse> {
     return super.get();
   }
 

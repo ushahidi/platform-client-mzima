@@ -1,6 +1,10 @@
 <div class="language">
   <mat-form-field>
-    <mat-select [(value)]="selectedLanguage" (selectionChange)="changeLanguage($event)">
+    <mat-select
+      panelClass="language-field"
+      [(value)]="selectedLanguage"
+      (selectionChange)="changeLanguage($event)"
+    >
       <mat-select-trigger>
         <div class="flag-icon-wrapper">
           <img

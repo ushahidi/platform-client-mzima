@@ -14,3 +14,4 @@ export * from './env.interface';
 export * from './category.interface';
 export * from './language.interface';
 export * from './forms.interface';
+export * from './webhook.interface';
