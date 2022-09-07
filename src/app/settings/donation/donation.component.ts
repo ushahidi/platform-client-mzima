@@ -2,7 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { validateFile } from '@helpers';
 import { DonationConfigInterface, SiteConfigInterface } from '@models';
-import { ConfigService, MediaService, NotificationService, SessionService } from '@services';
+import {
+  ConfigService,
+  LoaderService,
+  MediaService,
+  NotificationService,
+  SessionService,
+} from '@services';
 import { tap } from 'rxjs';
 
 @Component({
@@ -22,6 +28,7 @@ export class DonationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private sessionService: SessionService,
     private mediaService: MediaService,
+    private loader: LoaderService,
     private notificationService: NotificationService,
     private configService: ConfigService,
   ) {}
@@ -44,6 +51,7 @@ export class DonationComponent implements OnInit {
 
   uploadFile($event: any) {
     if (validateFile($event.target.files[0])) {
+      this.loader.show();
       var reader = new FileReader();
       reader.onload = () => {
         this.mediaService.uploadFile($event.target.files[0]).subscribe((result: any) => {
@@ -51,6 +59,7 @@ export class DonationComponent implements OnInit {
             id: result.id,
             original_file_url: result.original_file_url,
           });
+          this.loader.hide();
         });
       };
       reader.readAsDataURL($event.target.files[0]);

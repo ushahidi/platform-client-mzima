@@ -8,10 +8,10 @@ import { LoaderService } from '@services';
 })
 export class AppComponent {
   title = 'platform-client';
-  public isShowLoader: boolean;
+  public isShowLoader = false;
 
   constructor(private loaderService: LoaderService) {
-    this.loaderService.isActive.subscribe({
+    this.loaderService.isActive$.subscribe({
       next: (value) => {
         this.isShowLoader = value;
       },
