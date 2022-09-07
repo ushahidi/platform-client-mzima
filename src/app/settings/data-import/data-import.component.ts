@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatStepper } from '@angular/material/stepper';
 import { FormAttributeInterface, FormCSVInterface, FormInterface } from '@models';
-import { DataImportService, FormsService, NotificationService } from '@services';
+import { TranslateService } from '@ngx-translate/core';
+import { DataImportService, FormsService, LoaderService, NotificationService } from '@services';
 import { forkJoin, Observable } from 'rxjs';
 
 enum PostStatus {
@@ -14,13 +16,13 @@ enum PostStatus {
   styleUrls: ['./data-import.component.scss'],
 })
 export class DataImportComponent implements OnInit {
+  @ViewChild('stepper') stepper: MatStepper;
   PostStatus = PostStatus;
 
   selectedFile: File;
   selectedForm: FormInterface;
   forms$: Observable<FormInterface[]>;
   uploadedCSV: FormCSVInterface;
-  currentStep = 1;
   hasRequiredTask = false;
   requiredFields = new Map<string, string>();
   maps_to: any = {};
@@ -30,7 +32,9 @@ export class DataImportComponent implements OnInit {
 
   constructor(
     private importService: DataImportService,
+    private translateService: TranslateService,
     private notification: NotificationService,
+    private loader: LoaderService,
     private formsService: FormsService,
   ) {}
 
@@ -47,14 +51,22 @@ export class DataImportComponent implements OnInit {
   }
 
   completeStepOne() {
-    if (!this.selectedFile) return this.notification.showError('notify.data_import.file_missing');
-    if (!this.selectedForm) return this.notification.showError('notify.data_import.form_missing');
+    if (!this.selectedFile)
+      return this.notification.showError(
+        this.translateService.instant('notify.data_import.file_missing'),
+      );
+    if (!this.selectedForm)
+      return this.notification.showError(
+        this.translateService.instant('notify.data_import.form_missing'),
+      );
 
+    this.loader.show();
     this.importService.uploadFile(this.selectedFile, this.selectedForm.id).subscribe({
       next: (csv) => {
-        console.log('	csvcsv', csv);
         this.uploadedCSV = csv;
-        this.currentStep = 2;
+        this.stepper.selected!.completed = true;
+        this.stepper.selected!.editable = false;
+        this.stepper.next();
         this.initStepTwo();
       },
     });
@@ -62,18 +74,22 @@ export class DataImportComponent implements OnInit {
 
   initStepTwo() {
     if (this.uploadedCSV.columns?.every((c: any) => c === ''))
-      return this.notification.showError('notify.data_import.empty_mapping_empty');
+      return this.notification.showError(
+        this.translateService.instant('notify.data_import.empty_mapping_empty'),
+      );
 
     forkJoin([
       this.formsService.getStages(this.selectedForm.id.toString()),
       this.formsService.getAttributes(this.selectedForm.id.toString()),
     ]).subscribe({
       next: (result) => {
+        this.loader.hide();
         console.log('res, ', result);
         this.selectedForm.tasks = result[0];
         this.selectedForm.attributes = result[1];
         this.hasRequiredTask = this.selectedForm.tasks.some((task) => task.required);
         this.setRequiredFields(this.selectedForm.attributes);
+        console.log(1111, this.stepper.steps);
       },
     });
   }
