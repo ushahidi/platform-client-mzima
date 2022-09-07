@@ -134,3 +134,24 @@
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
   background-color: rgba(var(--color-primary-rgb), 0.54);
 }
+
+.mat-step-header {
+  .mat-step-icon-selected,
+  .mat-step-icon-state-done,
+  .mat-step-icon-state-edit {
+    color: var(--color-primary-contrast);
+    background-color: var(--color-primary);
+  }
+}
+
+.mat-step-text-label {
+  h3 {
+    margin-bottom: 0;
+  }
+}
+
+.mat-step {
+  .mat-vertical-content {
+    padding-top: 16px;
+  }
+}

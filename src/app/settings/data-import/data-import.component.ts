@@ -29,6 +29,7 @@ export class DataImportComponent implements OnInit {
 
   statusOption: string;
   selectedStatus: PostStatus;
+  displayedColumns: string[] = ['survey', 'csv'];
 
   constructor(
     private importService: DataImportService,
@@ -100,10 +101,6 @@ export class DataImportComponent implements OnInit {
         this.requiredFields.set(attr.key, attr.label);
       }
     });
-  }
-
-  setStatus(status: PostStatus) {
-    this.selectedStatus = status;
   }
 
   cancelImport() {}

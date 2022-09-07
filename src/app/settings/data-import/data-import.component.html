@@ -3,190 +3,179 @@
   <p>{{ 'data_import.import_explanation_csv' | translate }}</p>
   <mat-stepper orientation="vertical" [linear]="true" #stepper [disableRipple]="true">
     <mat-step completed="false">
-      <h3>{{ 'data_import.choose_csv_file' | translate }}</h3>
-      <button color="primary" mat-raised-button class="upload-button">
-        Upload
-        <input name="file" type="file" (change)="uploadFile($event)" />
-      </button>
-      <div>
-        <h2>Selected form</h2>
-        <!-- <pre>{{selectedForm | json}}</pre> -->
-        <mat-select [(value)]="selectedForm">
-          <mat-option *ngFor="let option of forms$ | async" [value]="option">
-            {{ option.name }}
-          </mat-option>
-        </mat-select>
+      <ng-template matStepLabel
+        ><h3>{{ 'data_import.choose_csv_file' | translate }}</h3></ng-template
+      >
+      <div class="form-group">
+        <button color="secondary" mat-raised-button class="upload-button">
+          Upload
+          <input name="file" type="file" (change)="uploadFile($event)" />
+        </button>
       </div>
 
-      <button mat-raised-button (click)="completeStepOne()">completeStepOne</button>
+      <div class="form-group">
+        <!-- <h2>Selected form</h2> -->
+        <!-- <pre>{{selectedForm | json}}</pre> -->
+        <mat-form-field appearance="standard">
+          <span matPrefix>{{ 'data_import.import_to' | translate }}&nbsp;</span>
+          <mat-select
+            [(value)]="selectedForm"
+            [placeholder]="'data_import.which_survey' | translate"
+          >
+            <mat-option *ngFor="let option of forms$ | async" [value]="option">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="completeStepOne()">
+        {{ 'settings.continue' | translate }}
+      </button>
     </mat-step>
     <mat-step completed="false">
+      <ng-template matStepLabel
+        ><h3>{{ 'data_import.configure_imported_posts' | translate }}</h3></ng-template
+      >
       <ng-template matStepContent>
-        <h2>
-          <span>
-            {{ 'data_import.configure_imported_posts' | translate }}
-          </span>
-        </h2>
-        <div>
-          <ol class="metadata">
+        <div class="form-group">
+          <ul class="metadata">
             <li>{{ selectedFile.name }}</li>
             <li>{{ selectedForm.name }}</li>
-          </ol>
+          </ul>
         </div>
 
-        <fieldset>
-          <legend>{{ 'data_import.imported_posts_status' | translate }}</legend>
-          <div class="form-field radio">
-            <label for="status-model-mark">
-              <input
-                type="radio"
-                id="status-model-mark"
-                name="status-model"
-                [(ngModel)]="statusOption"
-                value="mark_as"
-              />
-              <span>{{ 'data_import.marked_as' | translate }}</span>
-            </label>
-            <fieldset data-fieldgroup-target="status-model-mark" *ngIf="statusOption === 'mark_as'">
-              <legend class="hidden">Post status</legend>
-              <div
-                class="form-field radio icon-input"
-                [ngClass]="{ checked: selectedStatus === PostStatus.Published }"
-              >
-                <label for="status-published" (click)="setStatus(PostStatus.Published)">
-                  <svg class="iconic" role="img">
-                    <use xlink:href="assets/sprites.svg#globe"></use>
-                  </svg>
-                  <input
-                    type="radio"
-                    name="status"
-                    id="status-published"
-                    checked
-                    data-fieldgroup-toggle="status-model-mark-published"
-                  />
-                  <span>{{ 'post.published' | translate }}</span>
-                </label>
+        <div class="radio-group">
+          <h3>{{ 'data_import.imported_posts_status' | translate }}</h3>
+          <mat-radio-group
+            [(ngModel)]="statusOption"
+            [attr.aria-label]="'data_import.imported_posts_status' | translate"
+          >
+            <div class="radio-group">
+              <mat-radio-button value="mark_as">
+                {{ 'data_import.marked_as' | translate }}
+              </mat-radio-button>
+              <div *ngIf="statusOption === 'mark_as'" class="radio-group__content">
+                <mat-radio-group [(ngModel)]="selectedStatus">
+                  <div class="radio-group">
+                    <mat-radio-button [value]="PostStatus.Published">
+                      <mat-icon matPrefix>
+                        <svg class="iconic" role="img">
+                          <use xlink:href="assets/sprites.svg#globe"></use>
+                        </svg>
+                      </mat-icon>
+                      {{ 'post.published' | translate }}
+                    </mat-radio-button>
 
-                <!--// IF the chosen survey has tasks that must be completed before its posts can be published //-->
-                <p
-                  *ngIf="hasRequiredTask"
-                  class="alert"
-                  data-fieldgroup-target="status-model-mark-published"
-                >
-                  Your survey, <strong>{{ selectedForm.name }}</strong
-                  >, includes tasks that typically must be completed for each post before they can
-                  be marked 'published.' During this import, all of your imported posts will have
-                  their tasks marked as 'incomplete', while still allowing their status to be marked
-                  as 'published.' If you edit any of these posts after they've been imported,
-                  however, you'll be asked to complete those tasks before re-publishing them.
-                </p>
-                <!--// END IF //-->
-              </div>
-
-              <div
-                class="form-field radio icon-input"
-                [ngClass]="{ checked: selectedStatus === PostStatus.Draft }"
-              >
-                <label for="status-review" (click)="setStatus(PostStatus.Draft)">
-                  <svg class="iconic" role="img">
-                    <use xlink:href="assets/sprites.svg#document"></use>
-                  </svg>
-                  <input type="radio" name="status" id="status-review" />
-                  <span>{{ 'post.draft' | translate }}</span>
-                </label>
-              </div>
-
-              <div
-                class="form-field radio icon-input"
-                [ngClass]="{ checked: selectedStatus === PostStatus.Archived }"
-              >
-                <label for="status-archive" (click)="setStatus(PostStatus.Archived)">
-                  <svg class="iconic" role="img">
-                    <use xlink:href="assets/sprites.svg#box"></use>
-                  </svg>
-                  <input type="radio" name="status" id="status-archive" />
-                  <span>{{ 'post.archived' | translate }}</span>
-                </label>
-              </div>
-            </fieldset>
-          </div>
-
-          <div class="form-field radio">
-            <label for="status-model-columns">
-              <input
-                type="radio"
-                id="status-model-columns"
-                name="status-model"
-                data-fieldgroup-toggle="status-model-columns"
-                [(ngModel)]="statusOption"
-                value="defined_column"
-              />
-              <span>{{ 'data_import.defined_column' | translate }}</span>
-            </label>
-
-            <div
-              class="form-field select"
-              data-fieldgroup-target="status-model-columns"
-              *ngIf="statusOption === 'defined_column'"
-            >
-              <div class="custom-select">
-                <select [(ngModel)]="selectedStatus">
-                  <option *ngFor="let column of uploadedCSV.columns; let i = index" [value]="i">
-                    {{ column }}
-                  </option>
-                </select>
-              </div>
-              <p>
-                <em>{{ 'data_import.status_explanation' | translate }}</em>
-              </p>
-
-              <!--// IF the chosen survey has tasks that must be completed before its posts can be published //-->
-              <p class="alert" data-fieldgroup-target="status-model-mark-published">
-                Your survey, <strong>{{ selectedForm.name }}</strong
-                >, includes tasks that typically must be completed for each post before they can be
-                marked 'published.' During this import, all of your imported posts will have their
-                tasks marked as 'incomplete', even if their status is marked as 'published.' If you
-                edit any of these posts after they've been imported, however, you'll be asked to
-                complete those tasks before re-publishing them.
-              </p>
-              <!--// END IF //-->
-            </div>
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>{{ 'data_import.choose_which_column' | translate }}</legend>
-          <p>{{ 'data_import.each_survey_field' | translate }}</p>
-
-          <table>
-            <thead>
-              <tr>
-                <th>{{ 'data_import.survey_field' | translate }}</th>
-                <th>{{ 'data_import.csv_column' | translate }}</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr *ngFor="let attribute of selectedForm.attributes">
-                <td>
-                  <span [ngClass]="{ required: attribute.required }">{{ attribute.label }}</span>
-                </td>
-                <td>
-                  <div class="custom-select">
-                    <select [(ngModel)]="maps_to[attribute.key]">
-                      <option selected="selected" value="">
-                        {{ 'data_import.leave_empty' | translate }}
-                      </option>
-                      <option *ngFor="let column of uploadedCSV.columns; let i = index" [value]="i">
-                        {{ column }}
-                      </option>
-                    </select>
+                    <!--// IF the chosen survey has tasks that must be completed before its posts can be published //-->
+                    <p *ngIf="hasRequiredTask">
+                      Your survey, <strong>{{ selectedForm.name }}</strong>
+                      , includes tasks that typically must be completed for each post before they
+                      can be marked 'published.' During this import, all of your imported posts will
+                      have their tasks marked as 'incomplete', while still allowing their status to
+                      be marked as 'published.' If you edit any of these posts after they've been
+                      imported, however, you'll be asked to complete those tasks before
+                      re-publishing them.
+                    </p>
+                    <!--// END IF //-->
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </fieldset>
+
+                  <div class="radio-group">
+                    <mat-radio-button [value]="PostStatus.Draft">
+                      <mat-icon matPrefix>
+                        <svg class="iconic" role="img">
+                          <use xlink:href="assets/sprites.svg#document"></use>
+                        </svg>
+                      </mat-icon>
+                      {{ 'post.draft' | translate }}
+                    </mat-radio-button>
+                  </div>
+
+                  <div class="radio-group">
+                    <mat-radio-button [value]="PostStatus.Archived">
+                      <mat-icon matPrefix>
+                        <svg class="iconic" role="img">
+                          <use xlink:href="assets/sprites.svg#box"></use>
+                        </svg>
+                      </mat-icon>
+                      {{ 'post.archived' | translate }}
+                    </mat-radio-button>
+                  </div>
+                </mat-radio-group>
+              </div>
+            </div>
+
+            <div class="radio-group">
+              <mat-radio-button value="defined_column">
+                {{ 'data_import.defined_column' | translate }}
+              </mat-radio-button>
+              <div class="radio-group select" *ngIf="statusOption === 'defined_column'">
+                <div class="radio-group__content">
+                  <mat-form-field appearance="standard">
+                    <mat-select [(ngModel)]="selectedStatus">
+                      <mat-option
+                        *ngFor="let column of uploadedCSV.columns; let i = index"
+                        [value]="i"
+                      >
+                        {{ column }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <p>
+                    <em>{{ 'data_import.status_explanation' | translate }}</em>
+                  </p>
+
+                  <!--// IF the chosen survey has tasks that must be completed before its posts can be published //-->
+                  <p class="note">
+                    Your survey, <strong>{{ selectedForm.name }}</strong
+                    >, includes tasks that typically must be completed for each post before they can
+                    be marked 'published.' During this import, all of your imported posts will have
+                    their tasks marked as 'incomplete', even if their status is marked as
+                    'published.' If you edit any of these posts after they've been imported,
+                    however, you'll be asked to complete those tasks before re-publishing them.
+                  </p>
+                  <!--// END IF //-->
+                </div>
+              </div>
+            </div>
+          </mat-radio-group>
+        </div>
+
+        <h3>{{ 'data_import.choose_which_column' | translate }}</h3>
+        <p>{{ 'data_import.each_survey_field' | translate }}</p>
+
+        <table mat-table *ngIf="selectedForm.attributes" [dataSource]="selectedForm.attributes">
+          <ng-container matColumnDef="survey">
+            <th mat-header-cell *matHeaderCellDef>{{ 'data_import.survey_field' | translate }}</th>
+            <td mat-cell *matCellDef="let attribute">
+              {{ attribute.label }}&nbsp;<span class="color-accent" *ngIf="attribute.required"
+                >*</span
+              >
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="csv">
+            <th mat-header-cell *matHeaderCellDef>{{ 'data_import.csv_column' | translate }}</th>
+            <td mat-cell *matCellDef="let attribute">
+              <mat-form-field appearance="standard">
+                <mat-select
+                  [(ngModel)]="maps_to[attribute.key]"
+                  [placeholder]="'data_import.leave_empty' | translate"
+                >
+                  <mat-option selected="selected" value="">
+                    {{ 'data_import.leave_empty' | translate }}
+                  </mat-option>
+                  <mat-option *ngFor="let column of uploadedCSV.columns; let i = index" [value]="i">
+                    {{ column }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
 
         <div class="form-controls-panel">
           <button type="button" mat-raised-button (click)="cancelImport()">
