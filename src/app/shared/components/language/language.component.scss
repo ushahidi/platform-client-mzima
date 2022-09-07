@@ -19,17 +19,19 @@
   }
 }
 
-.mat-select-panel {
-  min-height: calc(100% + 100px) !important;
-}
+.language-field {
+  .mat-select-panel {
+    min-height: calc(100% + 100px) !important;
+  }
 
-.mat-option {
-  line-height: 2em !important;
-  height: 2em !important;
-}
+  .mat-option {
+    line-height: 2em !important;
+    height: 2em !important;
+  }
 
-.mat-option-text {
-  height: 40px;
+  .mat-option-text {
+    height: 40px;
+  }
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-wrapper {
