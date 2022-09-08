@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MapRoutingModule } from './map-routing.module';
 import { MapComponent } from './map.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { PostPopupComponent } from './post-popup/post-popup.component';
+import { PostComponent } from './post/post.component';
+import { SharedModule } from '../shared/shared.module';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 @NgModule({
-  declarations: [MapComponent, PostPopupComponent],
-  imports: [CommonModule, MapRoutingModule, LeafletModule],
+  declarations: [MapComponent, PostComponent, PostDetailsComponent],
+  imports: [CommonModule, MapRoutingModule, LeafletModule, SharedModule],
 })
 export class MapModule {}

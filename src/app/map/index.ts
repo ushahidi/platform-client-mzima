@@ -1,1 +1,2 @@
-export { PostPopupComponent } from './post-popup/post-popup.component';
+export { PostComponent } from './post/post.component';
+export { PostDetailsComponent } from './post-details/post-details.component';

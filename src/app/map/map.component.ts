@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   control,
   tileLayer,
@@ -12,11 +12,14 @@ import {
   MapOptions,
   Map,
 } from 'leaflet';
-import { ConfigService, PostsService } from '@services';
+import { ConfigService, EventBusService, EventType, PostsService } from '@services';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
 import { mapHelper } from '@helpers';
-import { PostPopupComponent } from './post-popup/post-popup.component';
+import { PostComponent } from './post/post.component';
 import { ViewContainerRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PostDetailsComponent } from './post-details/post-details.component';
+import { takeUntilDestroy$ } from '@helpers';
 
 @Component({
   selector: 'app-map',
@@ -41,7 +44,19 @@ export class MapComponent implements OnInit {
     private postsService: PostsService,
     private view: ViewContainerRef,
     private configService: ConfigService,
-  ) {}
+    private dialog: MatDialog,
+    private eventBusService: EventBusService,
+    private changeDetector: ChangeDetectorRef,
+  ) {
+    this.eventBusService
+      .on(EventType.SHOW_POST_DETAILS)
+      .pipe(takeUntilDestroy$())
+      .subscribe({
+        next: () => {
+          this.showPostDetailsModal();
+        },
+      });
+  }
 
   ngOnInit() {
     this.configService.getMap().subscribe({
@@ -70,11 +85,10 @@ export class MapComponent implements OnInit {
   }
 
   getPostsGeoJson() {
-    const that = this;
     this.postsService.getGeojson().subscribe((posts) => {
       const geoPosts = geoJSON(posts, {
         pointToLayer: mapHelper.pointToLayer,
-        onEachFeature(feature, layer) {
+        onEachFeature: (feature, layer) => {
           layer.on('click', () => {
             if (layer instanceof FeatureGroup) {
               layer = layer.getLayers()[0];
@@ -83,8 +97,8 @@ export class MapComponent implements OnInit {
             if (layer.getPopup()) {
               layer.openPopup();
             } else {
-              const comp = that.view.createComponent(PostPopupComponent);
-              that.postsService.getById(feature.properties.id).subscribe({
+              const comp = this.view.createComponent(PostComponent);
+              this.postsService.getById(feature.properties.id).subscribe({
                 next: (post) => {
                   comp.setInput('data', post);
                   comp.changeDetectorRef.detectChanges();
@@ -94,7 +108,7 @@ export class MapComponent implements OnInit {
                   layer.bindPopup(popup, {
                     maxWidth: 360,
                     minWidth: 360,
-                    maxHeight: 200,
+                    maxHeight: 320,
                     closeButton: false,
                     className: 'pl-popup',
                   });
@@ -114,6 +128,15 @@ export class MapComponent implements OnInit {
       }
 
       this.mapFitToBounds = geoPosts.getBounds();
+    });
+  }
+
+  private showPostDetailsModal(): void {
+    console.log('showPostDetailsModal');
+
+    this.dialog.open(PostDetailsComponent, {
+      width: '100%',
+      maxWidth: 640,
     });
   }
 }

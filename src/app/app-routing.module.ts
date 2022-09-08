@@ -19,6 +19,11 @@ const routes: Routes = [
     data: { breadcrumb: 'Data' },
   },
   {
+    path: 'feed',
+    loadChildren: () => import('./feed/feed.module').then((m) => m.FeedModule),
+    data: { breadcrumb: 'Feed' },
+  },
+  {
     path: 'activity',
     loadChildren: () => import('./activity/activity.module').then((m) => m.ActivityModule),
     data: { breadcrumb: 'Activity' },
