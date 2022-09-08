@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import {
   control,
   tileLayer,
@@ -46,7 +46,7 @@ export class MapComponent implements OnInit {
     private configService: ConfigService,
     private dialog: MatDialog,
     private eventBusService: EventBusService,
-    private changeDetector: ChangeDetectorRef,
+    private zone: NgZone,
   ) {
     this.eventBusService
       .on(EventType.SHOW_POST_DETAILS)
@@ -90,32 +90,33 @@ export class MapComponent implements OnInit {
         pointToLayer: mapHelper.pointToLayer,
         onEachFeature: (feature, layer) => {
           layer.on('click', () => {
-            if (layer instanceof FeatureGroup) {
-              layer = layer.getLayers()[0];
-            }
+            this.zone.run(() => {
+              if (layer instanceof FeatureGroup) {
+                layer = layer.getLayers()[0];
+              }
 
-            if (layer.getPopup()) {
-              layer.openPopup();
-            } else {
-              const comp = this.view.createComponent(PostComponent);
-              this.postsService.getById(feature.properties.id).subscribe({
-                next: (post) => {
-                  comp.setInput('data', post);
-                  comp.changeDetectorRef.detectChanges();
+              if (layer.getPopup()) {
+                layer.openPopup();
+              } else {
+                const comp = this.view.createComponent(PostComponent);
+                this.postsService.getById(feature.properties.id).subscribe({
+                  next: (post) => {
+                    comp.setInput('data', post);
 
-                  const popup: Content = comp.location.nativeElement;
+                    const popup: Content = comp.location.nativeElement;
 
-                  layer.bindPopup(popup, {
-                    maxWidth: 360,
-                    minWidth: 360,
-                    maxHeight: 320,
-                    closeButton: false,
-                    className: 'pl-popup',
-                  });
-                  layer.openPopup();
-                },
-              });
-            }
+                    layer.bindPopup(popup, {
+                      maxWidth: 360,
+                      minWidth: 360,
+                      maxHeight: 320,
+                      closeButton: false,
+                      className: 'pl-popup',
+                    });
+                    layer.openPopup();
+                  },
+                });
+              }
+            });
           });
         },
       });
