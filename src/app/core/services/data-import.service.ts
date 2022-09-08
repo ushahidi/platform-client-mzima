@@ -24,6 +24,10 @@ export class DataImportService extends ResourceService<any> {
     return super.getById(id);
   }
 
+  override delete(id: string | number): Observable<any> {
+    return super.delete(id);
+  }
+
   uploadFile(file: File, formId: string | number): Observable<any> {
     const apiUrl = this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl();
 

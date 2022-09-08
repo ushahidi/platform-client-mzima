@@ -8,9 +8,10 @@
       >
       <div class="form-group">
         <button color="secondary" mat-raised-button class="upload-button">
-          Upload
+          {{ selectedFile ? 'Change' : 'Upload' }} file
           <input name="file" type="file" (change)="uploadFile($event)" />
         </button>
+        <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
       </div>
 
       <div class="form-group">

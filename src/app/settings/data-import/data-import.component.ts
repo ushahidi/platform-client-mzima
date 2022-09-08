@@ -1,8 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
+import { Router } from '@angular/router';
 import { FormAttributeInterface, FormCSVInterface, FormInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { DataImportService, FormsService, LoaderService, NotificationService } from '@services';
+import {
+  ConfirmModalService,
+  DataImportService,
+  FormsService,
+  LoaderService,
+  NotificationService,
+} from '@services';
 import { forkJoin, Observable } from 'rxjs';
 
 enum PostStatus {
@@ -36,6 +43,8 @@ export class DataImportComponent implements OnInit {
     private translateService: TranslateService,
     private notification: NotificationService,
     private loader: LoaderService,
+    private router: Router,
+    private confirm: ConfirmModalService,
     private formsService: FormsService,
   ) {}
 
@@ -103,7 +112,56 @@ export class DataImportComponent implements OnInit {
     });
   }
 
-  cancelImport() {}
+  cancelImport() {
+    this.confirm
+      .open({
+        title: this.translateService.instant('notify.data_import.csv_import_cancel_confirm'),
+      })
+      .then(() => {
+        this.notification.showError(
+          this.translateService.instant('notify.data_import.csv_import_cancel'),
+        );
+        this.importService.delete(this.uploadedCSV.id).subscribe(() => {
+          this.router.navigate([`/settings/data-import`]);
+        });
+      });
+  }
 
-  completeStepTwo() {}
+  private remapColumns() {
+    return [];
+  }
+
+  completeStepTwo() {
+    this.uploadedCSV.maps_to = this.remapColumns();
+    this.uploadedCSV.fixed = { form: this.selectedForm.id };
+
+    if (this.statusOption === 'mark_as') {
+      this.uploadedCSV.fixed.status = this.selectedStatus;
+    } else {
+      this.uploadedCSV.maps_to[this.selectedStatus] = 'status';
+    }
+
+    this.updateAndImport();
+  }
+
+  updateAndImport() {
+    this.importService.update(this.uploadedCSV.id, this.uploadedCSV).subscribe(() => {
+      this.importService.post({ id: this.uploadedCSV.id, action: 'import' }).subscribe(() => {
+        // START POLLING!
+      });
+    });
+    // DataImportEndpoint.update(csv).$promise
+    //                 .then(function () {
+    //                     DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise.then(function () {
+    //                         DataImport.startImport(csv);
+    //                     }).catch(errorResponse => {
+    //                         Notify.apiErrors(errorResponse);
+    //                         $location.url('/settings/data-import');
+    //                     });
+    //                 }, function (errorResponse) {
+    //                     Notify.apiErrors(errorResponse);
+    //                 });
+    //             // Go to after import page
+    //             $location.url('/settings/data-after-import');
+  }
 }

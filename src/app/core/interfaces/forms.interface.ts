@@ -66,6 +66,7 @@ export interface FormCSVInterface {
   processed: boolean;
   size: number;
   status: string;
+  fixed?: any;
 }
 
 export interface TagInterface {
