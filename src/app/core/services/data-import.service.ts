@@ -28,6 +28,10 @@ export class DataImportService extends ResourceService<any> {
     return super.delete(id);
   }
 
+  import(data: { id: string | number; action: string }) {
+    return this.post({ id: data.id, action: data.action }, `${data.id}/${data.action}`);
+  }
+
   uploadFile(file: File, formId: string | number): Observable<any> {
     const apiUrl = this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl();
 

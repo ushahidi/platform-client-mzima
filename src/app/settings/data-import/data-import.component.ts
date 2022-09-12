@@ -9,6 +9,7 @@ import {
   FormsService,
   LoaderService,
   NotificationService,
+  PollingService,
 } from '@services';
 import { forkJoin, Observable } from 'rxjs';
 
@@ -42,6 +43,7 @@ export class DataImportComponent implements OnInit {
     private importService: DataImportService,
     private translateService: TranslateService,
     private notification: NotificationService,
+    private pollingService: PollingService,
     private loader: LoaderService,
     private router: Router,
     private confirm: ConfirmModalService,
@@ -146,22 +148,10 @@ export class DataImportComponent implements OnInit {
 
   updateAndImport() {
     this.importService.update(this.uploadedCSV.id, this.uploadedCSV).subscribe(() => {
-      this.importService.post({ id: this.uploadedCSV.id, action: 'import' }).subscribe(() => {
-        // START POLLING!
+      this.importService.import({ id: this.uploadedCSV.id, action: 'import' }).subscribe(() => {
+        this.pollingService.getImportJobs();
+        this.router.navigate(['results']);
       });
     });
-    // DataImportEndpoint.update(csv).$promise
-    //                 .then(function () {
-    //                     DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise.then(function () {
-    //                         DataImport.startImport(csv);
-    //                     }).catch(errorResponse => {
-    //                         Notify.apiErrors(errorResponse);
-    //                         $location.url('/settings/data-import');
-    //                     });
-    //                 }, function (errorResponse) {
-    //                     Notify.apiErrors(errorResponse);
-    //                 });
-    //             // Go to after import page
-    //             $location.url('/settings/data-after-import');
   }
 }
