@@ -1,1 +1,33 @@
-<p>feed works!</p>
+<div class="feed-page">
+  <div class="feed-page__column feed-page__column--feed">
+    <strong class="counter" *ngIf="posts">{{ posts.length }} of {{ 12 }} posts</strong>
+    <ng-container *ngIf="!isLoading || posts?.length; else loader">
+      <app-post
+        class="post"
+        [post]="post"
+        [feedView]="true"
+        [routerLink]="[post.id]"
+        *ngFor="let post of posts"
+        [routerLinkActive]="'post--selected'"
+      >
+      </app-post>
+    </ng-container>
+    <button
+      color="primary"
+      mat-raised-button
+      (click)="loadMore()"
+      class="load-more-btn"
+      [disabled]="isLoading"
+      *ngIf="posts?.length && posts.length !== total"
+    >
+      Load more ({{ posts ? total - posts.length : 0 }})
+    </button>
+  </div>
+  <div class="feed-page__column">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>

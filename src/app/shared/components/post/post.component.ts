@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { PostPropertiesInterface } from '@models';
-import { EventBusService, EventType } from '@services';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -8,15 +8,16 @@ import { EventBusService, EventType } from '@services';
   styleUrls: ['./post.component.scss'],
 })
 export class PostComponent implements OnChanges {
-  @Input() data: PostPropertiesInterface;
-
-  constructor(private eventBusService: EventBusService) {}
+  @Input() post: PostPropertiesInterface;
+  @Input() feedView: boolean;
+  private details = new Subject<boolean>();
+  public details$ = this.details.asObservable();
 
   ngOnChanges(changes: any) {
     console.log('ngOnChanges> ', changes);
   }
 
   public showDetails(): void {
-    this.eventBusService.next({ type: EventType.SHOW_POST_DETAILS, payload: this.data });
+    this.details.next(true);
   }
 }

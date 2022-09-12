@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { filter, map, Observable, Subject } from 'rxjs';
 
-export const enum EventType {
-  SHOW_POST_DETAILS = 'showPostDetails',
-}
+export const enum EventType {}
 
 export interface BusEvent<T = any> {
   type: EventType;

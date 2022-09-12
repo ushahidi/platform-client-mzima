@@ -12,14 +12,13 @@ import {
   MapOptions,
   Map,
 } from 'leaflet';
-import { ConfigService, EventBusService, EventType, PostsService } from '@services';
+import { ConfigService, PostsService, PostsV5Service } from '@services';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
 import { mapHelper } from '@helpers';
-import { PostComponent } from './post/post.component';
+import { PostComponent } from '../shared/components/post/post.component';
 import { ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PostDetailsComponent } from './post-details/post-details.component';
-import { takeUntilDestroy$ } from '@helpers';
+import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
 
 @Component({
   selector: 'app-map',
@@ -42,21 +41,12 @@ export class MapComponent implements OnInit {
 
   constructor(
     private postsService: PostsService,
+    private postsV5Service: PostsV5Service,
     private view: ViewContainerRef,
     private configService: ConfigService,
     private dialog: MatDialog,
-    private eventBusService: EventBusService,
     private zone: NgZone,
-  ) {
-    this.eventBusService
-      .on(EventType.SHOW_POST_DETAILS)
-      .pipe(takeUntilDestroy$())
-      .subscribe({
-        next: () => {
-          this.showPostDetailsModal();
-        },
-      });
-  }
+  ) {}
 
   ngOnInit() {
     this.configService.getMap().subscribe({
@@ -99,9 +89,9 @@ export class MapComponent implements OnInit {
                 layer.openPopup();
               } else {
                 const comp = this.view.createComponent(PostComponent);
-                this.postsService.getById(feature.properties.id).subscribe({
+                this.postsV5Service.getById(feature.properties.id).subscribe({
                   next: (post) => {
-                    comp.setInput('data', post);
+                    comp.setInput('post', post);
 
                     const popup: Content = comp.location.nativeElement;
 
@@ -113,6 +103,12 @@ export class MapComponent implements OnInit {
                       className: 'pl-popup',
                     });
                     layer.openPopup();
+
+                    comp.instance.details$.subscribe({
+                      next: () => {
+                        this.showPostDetailsModal(post);
+                      },
+                    });
                   },
                 });
               }
@@ -132,12 +128,13 @@ export class MapComponent implements OnInit {
     });
   }
 
-  private showPostDetailsModal(): void {
-    console.log('showPostDetailsModal');
-
-    this.dialog.open(PostDetailsComponent, {
+  private showPostDetailsModal(post: any): void {
+    this.dialog.open(PostDetailsModalComponent, {
       width: '100%',
       maxWidth: 640,
+      data: { post },
+      height: 'auto',
+      maxHeight: '90vh',
     });
   }
 }

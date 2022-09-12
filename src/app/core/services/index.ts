@@ -21,3 +21,4 @@ export { WebhooksService } from './webhooks.service';
 export { ApiFormsService } from './api-forms.service';
 export { LoaderService } from './loader.service';
 export { EventBusService, EventType } from './event-bus.service';
+export { PostsV5Service } from './posts.v5.service';
