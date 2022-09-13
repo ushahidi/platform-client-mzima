@@ -34,9 +34,7 @@ export class PostsService extends ResourceService<any> {
       order_unlocked_on_top: true,
       orderby: 'created',
       reactToFilters: true,
-      // source: [
-      //   'sms', 'twitter', 'web', 'email', 'published', 'draft'
-      // ]
+      'source[]': ['sms', 'twitter', 'web', 'email', 'published', 'draft'],
     };
     return super.get('geojson', filter || test);
   }

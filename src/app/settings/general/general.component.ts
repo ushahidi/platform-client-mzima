@@ -6,6 +6,7 @@ import {
   ApiKeyService,
   ConfigService,
   LanguageService,
+  LoaderService,
   MediaService,
   SessionService,
 } from '@services';
@@ -31,7 +32,6 @@ export class GeneralComponent implements OnInit {
 
   siteConfig: any;
   apiKey: ApiKeyResult;
-  isSaving = false;
   uploadedFile?: File;
 
   constructor(
@@ -39,6 +39,7 @@ export class GeneralComponent implements OnInit {
     private formBuilder: FormBuilder,
     private mediaService: MediaService,
     private configService: ConfigService,
+    private loader: LoaderService,
     public langService: LanguageService,
     private translate: TranslateService,
     private apiKeyService: ApiKeyService,
@@ -65,7 +66,6 @@ export class GeneralComponent implements OnInit {
   }
 
   fileUploaded(event: File) {
-    // this.siteImage = event.dataURI;
     this.uploadedFile = event;
   }
 
@@ -88,7 +88,7 @@ export class GeneralComponent implements OnInit {
   }
 
   save() {
-    this.isSaving = true;
+    this.loader.show();
     if (this.uploadedFile) {
       this.mediaService
         .uploadFile(this.uploadedFile)
@@ -100,13 +100,13 @@ export class GeneralComponent implements OnInit {
         )
         .subscribe({
           complete: () => {
-            this.isSaving = false;
+            this.loader.hide();
           },
         });
     } else {
       this.updateSettings().subscribe({
         complete: () => {
-          this.isSaving = false;
+          this.loader.hide();
         },
       });
     }

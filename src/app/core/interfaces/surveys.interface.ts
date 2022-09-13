@@ -1,4 +1,4 @@
-import { ApiResponse } from './api-response.interface';
+import { FormAttributeInterface } from './forms.interface';
 
 export interface SurveyApiResponse {
   results: SurveyItem[];
@@ -30,7 +30,7 @@ export interface SurveyItemEnabledLanguages {
 
 export interface SurveyItemTask {
   description: string;
-  fields: SurveyItemTaskField[];
+  fields: FormAttributeInterface[];
   form_id: number;
   id: number;
   label: string;
@@ -40,26 +40,4 @@ export interface SurveyItemTask {
   task_is_internal_only: boolean;
   translations: any[];
   type: string;
-}
-
-export interface SurveyItemTaskField {
-  cardinality: number;
-  config: any[];
-  default: string;
-  form_stage_id: number;
-  id: number;
-  input: string;
-  instructions: string;
-  key: string;
-  label: string;
-  options: any[];
-  priority: number;
-  required: boolean;
-  response_private: boolean;
-  translations: any[];
-  type: string;
-}
-
-export interface SurveyItemTaskFieldApiResponse extends ApiResponse {
-  results: SurveyItemTaskField[];
 }
