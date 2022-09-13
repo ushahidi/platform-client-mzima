@@ -23,7 +23,18 @@
       </mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item [routerLink]="['/feed', post.id, 'edit']">
+        <mat-icon>
+          <svg class="iconic" role="img">
+            <use
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xlink:href="assets/sprites.svg#pencil"
+            ></use>
+          </svg>
+        </mat-icon>
+        {{ 'post.post_actions.edit' | translate }}
+      </button>
+      <button mat-menu-item (click)="addToCollection()">
         <mat-icon>
           <svg class="iconic" role="img">
             <use
@@ -44,6 +55,51 @@
           </svg>
         </mat-icon>
         {{ 'app.share' | translate }}
+      </button>
+      <hr />
+      <button mat-menu-item>
+        <mat-icon>
+          <svg class="iconic" role="img">
+            <use
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xlink:href="assets/sprites.svg#globe"
+            ></use>
+          </svg>
+        </mat-icon>
+        {{ 'post.post_actions.publish' | translate }}
+      </button>
+      <button mat-menu-item>
+        <mat-icon>
+          <svg class="iconic" role="img">
+            <use
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xlink:href="assets/sprites.svg#document"
+            ></use>
+          </svg>
+        </mat-icon>
+        {{ 'post.post_actions.put_under_review' | translate }}
+      </button>
+      <button mat-menu-item>
+        <mat-icon>
+          <svg class="iconic" role="img">
+            <use
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xlink:href="assets/sprites.svg#box"
+            ></use>
+          </svg>
+        </mat-icon>
+        {{ 'post.post_actions.archive' | translate }}
+      </button>
+      <button mat-menu-item (click)="deletePost()">
+        <mat-icon>
+          <svg class="iconic" role="img">
+            <use
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xlink:href="assets/sprites.svg#trash"
+            ></use>
+          </svg>
+        </mat-icon>
+        {{ 'post.post_actions.delete' | translate }}
       </button>
     </mat-menu>
   </div>

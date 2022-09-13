@@ -17,6 +17,7 @@ import {
   PostComponent,
   PostDetailsComponent,
   MapWithMarkerComponent,
+  CollectionsModalComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import {
@@ -43,6 +44,7 @@ const components = [
   PostDetailsComponent,
   DateAgoPipe,
   MapWithMarkerComponent,
+  CollectionsModalComponent,
 ];
 
 const modules = [

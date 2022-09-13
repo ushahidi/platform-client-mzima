@@ -29,7 +29,6 @@ export class FeedItemComponent implements OnInit {
     this.postsV5Service.getById(postId).subscribe({
       next: (post) => {
         this.post = post;
-        console.log('post: ', this.post);
       },
     });
   }
