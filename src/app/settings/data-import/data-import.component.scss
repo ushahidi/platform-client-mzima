@@ -50,3 +50,15 @@
   width: 100%;
   margin-bottom: 32px;
 }
+
+.seleted-file {
+  margin-left: 16px;
+}
+
+.survey-select {
+  font-weight: bold;
+
+  &__prefix {
+    font-weight: normal;
+  }
+}

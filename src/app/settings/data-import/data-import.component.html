@@ -11,14 +11,16 @@
           {{ selectedFile ? 'Change' : 'Upload' }} file
           <input name="file" type="file" (change)="uploadFile($event)" />
         </button>
-        <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+        <span class="seleted-file" *ngIf="selectedFile">{{ selectedFile.name }}</span>
       </div>
 
       <div class="form-group">
         <!-- <h2>Selected form</h2> -->
         <!-- <pre>{{selectedForm | json}}</pre> -->
-        <mat-form-field appearance="standard">
-          <span matPrefix>{{ 'data_import.import_to' | translate }}&nbsp;</span>
+        <mat-form-field class="survey-select" appearance="standard">
+          <span class="survey-select__prefix" matPrefix
+            >{{ 'data_import.import_to' | translate }}&nbsp;</span
+          >
           <mat-select
             [(value)]="selectedForm"
             [placeholder]="'data_import.which_survey' | translate"
