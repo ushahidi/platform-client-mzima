@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ImportCSVFileInterface, ImportCSVFilesResponse } from '@models';
 import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
 
@@ -20,8 +21,12 @@ export class DataImportService extends ResourceService<any> {
     return 'csv';
   }
 
-  override getById(id: string | number): Observable<any> {
+  override getById(id: string | number): Observable<ImportCSVFileInterface> {
     return super.getById(id);
+  }
+
+  override get(url?: string | undefined, queryParams?: any): Observable<ImportCSVFilesResponse> {
+    return super.get(url, queryParams);
   }
 
   override delete(id: string | number): Observable<any> {
