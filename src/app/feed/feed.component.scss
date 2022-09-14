@@ -25,11 +25,18 @@
     -webkit-overflow-scrolling: touch;
 
     &--feed {
-      flex: 0 0 35%;
-      min-width: 400px;
-      max-width: 480px;
-      margin-right: 20px;
+      &:not(.feed-page__column--full-width) {
+        flex: 0 0 35%;
+        max-width: 480px;
+        margin-right: 20px;
+      }
     }
+  }
+
+  &__feed {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 480px;
   }
 }
 
@@ -59,4 +66,23 @@
   &--selected {
     right: -16px;
   }
+}
+
+.post-details {
+  display: block;
+  min-height: 100%;
+}
+
+.feed-loader {
+  display: block;
+  margin-top: 32px;
+  margin-bottom: 24px;
+}
+
+.posts-empty {
+  display: block;
+  margin: 20vh 0;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
 }

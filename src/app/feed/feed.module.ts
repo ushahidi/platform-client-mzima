@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FeedComponent } from './feed.component';
 import { SharedModule } from '../shared/shared.module';
 import { FeedRoutingModule } from './feed-routing.module';
-import { FeedItemComponent } from './feed-item/feed-item.component';
-import { EditComponent } from './edit/edit.component';
+import { EditFeedItemComponent } from './edit-feed-item/edit-feed-item.component';
 
 @NgModule({
-  declarations: [FeedComponent, FeedItemComponent, EditComponent],
+  declarations: [FeedComponent, EditFeedItemComponent],
   imports: [CommonModule, SharedModule, FeedRoutingModule],
 })
 export class FeedModule {}

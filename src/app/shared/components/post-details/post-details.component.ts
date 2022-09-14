@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CategoryInterface, PostResult, SurveyItem } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,10 +10,11 @@ import { CollectionsModalComponent } from '../collections-modal/collections-moda
   templateUrl: './post-details.component.html',
   styleUrls: ['./post-details.component.scss'],
 })
-export class PostDetailsComponent implements OnInit {
-  @Input() post: PostResult;
+export class PostDetailsComponent implements OnChanges {
+  @Input() post?: PostResult;
   @Input() feedView: boolean;
   public survey: SurveyItem;
+  public isSurveyLoading: boolean;
 
   constructor(
     private surveysService: SurveysService,
@@ -22,13 +23,17 @@ export class PostDetailsComponent implements OnInit {
     private confirmModalService: ConfirmModalService,
   ) {}
 
-  ngOnInit(): void {
-    if (this.post.form_id) {
-      this.surveysService.getById(this.post.form_id).subscribe({
-        next: (response) => {
-          this.survey = response.result;
-        },
-      });
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['post']) {
+      if (changes['post'].currentValue?.form_id) {
+        this.isSurveyLoading = true;
+        this.surveysService.getById(changes['post'].currentValue.form_id).subscribe({
+          next: (response) => {
+            this.survey = response.result;
+            this.isSurveyLoading = false;
+          },
+        });
+      }
     }
   }
 

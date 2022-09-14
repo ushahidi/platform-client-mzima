@@ -11,6 +11,7 @@ import {
   tileLayer,
   marker,
 } from 'leaflet';
+import { pointIcon } from 'src/app/core/helpers/map';
 
 @Component({
   selector: 'app-map-with-marker',
@@ -46,12 +47,16 @@ export class MapWithMarkerComponent implements OnInit {
           zoom: 15,
         };
 
-        this.mapLayers.push(
-          marker({
+        const mapMarker = marker(
+          {
             lat: this.marker.lat,
             lng: this.marker.lon,
-          }),
+          },
+          {
+            icon: pointIcon(this.mapConfig.default_view.color),
+          },
         );
+        this.mapLayers.push(mapMarker);
 
         this.mapReady = true;
       },
