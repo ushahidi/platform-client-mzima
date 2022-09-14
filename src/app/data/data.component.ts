@@ -18,6 +18,7 @@ export class DataComponent implements OnInit, AfterViewInit {
   pageSize = 20;
   pageIndex = 0;
   showFirstLastButtons = false;
+  isLoading = false;
 
   params = {
     has_location: 'all',
@@ -31,10 +32,7 @@ export class DataComponent implements OnInit, AfterViewInit {
   };
   postList: any[] = [];
 
-  constructor(
-    public sessionService: SessionService, //
-    private postsService: PostsService,
-  ) {}
+  constructor(public sessionService: SessionService, private postsService: PostsService) {}
 
   ngOnInit() {
     this.getPosts();
@@ -45,10 +43,12 @@ export class DataComponent implements OnInit, AfterViewInit {
   }
 
   getPosts() {
+    this.isLoading = true;
     this.postsService.getPosts('', this.params).subscribe({
       next: (response) => {
         this.length = response.total_count;
         this.dataSource = new MatTableDataSource<PostResult>(response.results);
+        this.isLoading = false;
       },
     });
   }

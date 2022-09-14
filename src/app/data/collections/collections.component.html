@@ -12,11 +12,13 @@
   </mat-form-field>
 </form>
 
-<div mat-dialog-content>
-  <div *ngFor="let item of collectionList" class="collection-item">
-    <div class="collection-item__content">
-      <h3 class="collection-item__title">{{ item.name }}</h3>
-      <span class="collection-item__description">{{ item.description }}</span>
+<ng-container *ngIf="!isLoading; else loader">
+  <div mat-dialog-content>
+    <div *ngFor="let item of collectionList" class="collection-item">
+      <div class="collection-item__content">
+        <h3 class="collection-item__title">{{ item.name }}</h3>
+        <span class="collection-item__description">{{ item.description }}</span>
+      </div>
     </div>
   </div>
 
@@ -25,4 +27,8 @@
       {{ 'form.save_and_close' | translate }}
     </button>
   </mat-dialog-actions>
-</div>
+</ng-container>
+
+<ng-template #loader>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>

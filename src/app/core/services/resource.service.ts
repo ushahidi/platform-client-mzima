@@ -56,9 +56,10 @@ export abstract class ResourceService<T> {
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
-  post(resource: T): Observable<any> {
+  post(resource: T, url?: string): Observable<any> {
+    const apiUrl = url ? `${this.apiUrl}/${url}` : this.apiUrl;
     return this.httpClient
-      .post(`${this.apiUrl}`, this.toServerModel(resource), this.options)
+      .post(`${apiUrl}`, this.toServerModel(resource), this.options)
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
