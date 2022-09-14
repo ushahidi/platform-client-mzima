@@ -1,0 +1,88 @@
+::ng-deep {
+  app-feed-item {
+    display: block;
+    min-height: 100%;
+  }
+}
+
+.feed-page {
+  display: flex;
+  margin: -30px -20px;
+  justify-content: center;
+  height: calc(100vh - 68px);
+
+  &__column {
+    display: flex;
+    flex: 1 1 100%;
+    overflow-y: auto;
+    max-height: 100%;
+    overflow-x: hidden;
+    position: relative;
+    padding: 30px 20px;
+    flex-direction: column;
+    scroll-behavior: smooth;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+
+    &--feed {
+      &:not(.feed-page__column--full-width) {
+        flex: 0 0 35%;
+        max-width: 480px;
+        margin-right: 20px;
+      }
+    }
+  }
+
+  &__feed {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 480px;
+  }
+}
+
+.counter {
+  display: block;
+  text-align: right;
+  margin-bottom: 16px;
+}
+
+.load-more-btn {
+  width: 100%;
+}
+
+.spinner {
+  display: block;
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+}
+
+.post {
+  right: 0;
+  display: block;
+  position: relative;
+  margin-bottom: 16px;
+  transition: right 0.35s ease;
+
+  &--selected {
+    right: -16px;
+  }
+}
+
+.post-details {
+  display: block;
+  min-height: 100%;
+}
+
+.feed-loader {
+  display: block;
+  margin-top: 32px;
+  margin-bottom: 24px;
+}
+
+.posts-empty {
+  display: block;
+  margin: 20vh 0;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+}

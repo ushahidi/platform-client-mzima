@@ -1,1 +1,1 @@
-export { PostPopupComponent } from './post-popup/post-popup.component';
+export { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';

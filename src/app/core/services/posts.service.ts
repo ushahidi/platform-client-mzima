@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GeoJsonFilter, GeoJsonPostsResponse, PostApiResponse } from '@models';
-import { Observable } from 'rxjs';
+import { GeoJsonFilter, GeoJsonPostsResponse, PostApiResponse, PostResult } from '@models';
+import { map, Observable } from 'rxjs';
 import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
 
@@ -22,7 +22,20 @@ export class PostsService extends ResourceService<any> {
   }
 
   override getById(id: string | number): Observable<any> {
-    return super.getById(id);
+    return super.getById(id).pipe(
+      map((response) => {
+        const source =
+          response.source === 'sms'
+            ? 'SMS'
+            : response.source
+            ? response.source.charAt(0).toUpperCase() + response.source.slice(1)
+            : 'Web';
+        return {
+          ...response,
+          source,
+        };
+      }),
+    );
   }
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
@@ -40,7 +53,20 @@ export class PostsService extends ResourceService<any> {
   }
 
   public getPosts(url: string, queryParams: any): Observable<PostApiResponse> {
-    return super.get(url, queryParams);
+    return super.get(url, queryParams).pipe(
+      map((response) => {
+        response.results.map((post: PostResult) => {
+          post.source =
+            post.source === 'sms'
+              ? 'SMS'
+              : post.source
+              ? post.source.charAt(0).toUpperCase() + post.source.slice(1)
+              : 'Web';
+        });
+
+        return response;
+      }),
+    );
   }
 
   public getPostStatistics(queryParams: any) {

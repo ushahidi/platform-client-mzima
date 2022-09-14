@@ -21,4 +21,6 @@ export { DataImportService } from './data-import.service';
 export { FormsService } from './forms.service';
 export { WebhooksService } from './webhooks.service';
 export { LoaderService } from './loader.service';
+export { EventBusService, EventType } from './event-bus.service';
+export { PostsV5Service } from './posts.v5.service';
 export { PollingService } from './polling.service';
