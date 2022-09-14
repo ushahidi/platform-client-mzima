@@ -20,3 +20,4 @@ export { ConfirmModalService } from './confirm-modal.service';
 export { WebhooksService } from './webhooks.service';
 export { ApiFormsService } from './api-forms.service';
 export { LoaderService } from './loader.service';
+export { DataSourcesService } from './data-sources.service';

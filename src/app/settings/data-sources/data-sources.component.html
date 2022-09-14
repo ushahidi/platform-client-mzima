@@ -1,1 +1,62 @@
-<p>data-sources works!</p>
+<div class="data-source-wrapper">
+  <div class="data-source">
+    <ul class="data-source-item-list">
+      <li
+        class="data-source-item"
+        [ngClass]="{ 'control-on': dataSource.availableProvider }"
+        *ngFor="let dataSource of dataSourceList"
+        (click)="selectProvider(dataSource)"
+      >
+        {{ dataSource.name }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="data-source-item-container">
+    <h2>{{ providerName | titlecase }}</h2>
+    <app-data-source-form
+      [formControls]="formControls"
+      [surveyList]="surveyList"
+      (formControlsChange)="saveProviderData($event)"
+    >
+      <ng-template #survey *ngIf="visibleSurvey">
+        <div class="form-field form-field-flex">
+          <p class="form-label" translate>Accept survey submissions from this source</p>
+          <mat-slide-toggle
+            [(ngModel)]="isAvailableProvider"
+            name="accept-survey"
+            (change)="changeAvailableProviders()"
+          >
+          </mat-slide-toggle>
+        </div>
+        <div class="form-field form-field-flex">
+          <p class="form-label" translate>Import to survey</p>
+          <mat-slide-toggle [(ngModel)]="isImportToSurvey" name="import-to-survey">
+          </mat-slide-toggle>
+        </div>
+        <div class="source-destination-wrapper" *ngIf="isImportToSurvey">
+          <div class="form-field">
+            <p class="form-label">
+              Each of the survey's fields are listed below. Choose the data from
+              {{ providerName | titlecase }} that you'd like to use to populate each of those
+              fields.
+            </p>
+            <mat-form-field appearance="standard">
+              <mat-label
+                >{{ 'settings.webhooks.use_webhook_for' | translate }}
+                <!--                  <span *ngIf="!form.get('form_id')?.value">-->
+                <!--                    <strong>{{ 'data_import.which_survey' | translate }}</strong>-->
+                <!--                  </span>-->
+              </mat-label>
+              <mat-select>
+                <mat-option *ngFor="let survey of surveyList" [value]="survey.id">
+                  {{ survey.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-template>
+    </app-data-source-form>
+  </div>
+</div>

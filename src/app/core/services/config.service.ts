@@ -71,4 +71,21 @@ export class ConfigService {
       ),
     );
   }
+
+  getProvidersData(): Observable<any> {
+    return this.httpClient.get<MapConfigInterface>(
+      `${
+        this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
+      }/data-provider`,
+    );
+  }
+
+  updateProviders(providers: any) {
+    return this.httpClient.put(
+      `${
+        this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
+      }/data-provider`,
+      providers,
+    );
+  }
 }

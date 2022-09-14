@@ -1,0 +1,22 @@
+.form-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.form-radio-button {
+  margin: 5px;
+}
+
+.form-field {
+  margin-bottom: 32px;
+
+  &-flex {
+    justify-content: space-between;
+  }
+}
+
+.form-controls-panel {
+  justify-content: flex-end;
+}

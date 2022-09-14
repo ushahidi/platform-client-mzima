@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntilDestroy$ } from '@helpers';
 import { SurveyItem, SurveyItemTaskField, WebhookResultInterface } from '@models';
-import { SurveysService, WebhooksService } from '@services';
+import { ConfirmModalService, SurveysService, WebhooksService } from '@services';
 import { ApiFormsService } from '@services';
 
 @Component({
@@ -47,6 +47,7 @@ export class WebhookItemComponent implements OnInit {
     private surveysService: SurveysService,
     private apiFormsService: ApiFormsService,
     private router: Router,
+    private confirmModalService: ConfirmModalService,
   ) {}
 
   ngOnInit(): void {
@@ -172,5 +173,21 @@ export class WebhookItemComponent implements OnInit {
     for (const field of fields) {
       delete this.form.value[field];
     }
+  }
+
+  public async openDialog(): Promise<void> {
+    const confirmed = await this.confirmModalService.open({
+      title: this.form.controls['name'].value + ' webhook will be deleted!',
+      description: '<p>This action cannot be undone.</p><p>Are you sure?</p>',
+    });
+
+    if (!confirmed) return;
+    this.delete();
+  }
+
+  public delete() {
+    this.webhooksService.delete(this.form.controls['id'].value).subscribe({
+      next: () => this.navigateToWebhooks(),
+    });
   }
 }

@@ -132,7 +132,23 @@
   </div>
 
   <div class="form-controls-panel">
-    <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
-    <button mat-raised-button color="primary" type="submit">Save</button>
+    <button mat-raised-button type="button" (click)="cancel()" translate>Cancel</button>
+    <button mat-raised-button color="primary" type="submit" translate>Save</button>
   </div>
 </form>
+
+<div class="page-content" *ngIf="form.get('id')?.value">
+  <h3 translate>Delete this webhook</h3>
+  <p translate>
+    <strong>If you delete this webhook,</strong> all of the users assigned to it will be assigned
+    default permissions. proceed with caution.
+  </p>
+  <button type="button" color="accent" mat-raised-button (click)="openDialog()">
+    <mat-icon>
+      <svg class="iconic">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#trash"></use>
+      </svg>
+    </mat-icon>
+    <span translate>{{ 'Delete this webhook' | uppercase }}</span>
+  </button>
+</div>
