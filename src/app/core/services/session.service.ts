@@ -65,6 +65,10 @@ export class SessionService {
     return this.currentConfig.site;
   }
 
+  getFeatureConfigurations() {
+    return this.currentConfig.features;
+  }
+
   setConfigurations(
     type: keyof SessionConfigInterface,
     data: FeaturesConfigInterface | SiteConfigInterface,

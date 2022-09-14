@@ -22,3 +22,28 @@ export interface ImportCSVFileInterface {
 export interface ImportCSVFilesResponse extends ApiResponse {
   results: ImportCSVFileInterface[];
 }
+
+export interface ExportJobInterface {
+  allowed_privileges: string[];
+  created: Date;
+  entity_type: string;
+  fields: string[];
+  filters: any;
+  header_row: any[];
+  hxl_heading_row: string[];
+  hxl_meta_data_id: number;
+  id: number;
+  include_hxl: boolean;
+  send_to_browser: boolean;
+  send_to_hdx: boolean;
+  status: string;
+  total_batches: number;
+  total_rows: number;
+  updated?: Date;
+  url: string;
+  url_expiration: number;
+}
+
+export interface ExportJobsResponse extends ApiResponse {
+  results: ExportJobInterface[];
+}

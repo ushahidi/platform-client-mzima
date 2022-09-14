@@ -22,3 +22,4 @@ export { FormsService } from './forms.service';
 export { WebhooksService } from './webhooks.service';
 export { LoaderService } from './loader.service';
 export { PollingService } from './polling.service';
+export { ExportJobsService } from './export-jobs.service';

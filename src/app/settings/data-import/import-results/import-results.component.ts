@@ -20,7 +20,6 @@ export class ImportResultsComponent implements OnInit {
       this.importFinished = true;
       this.collectionId = job.collection_id;
       this.filename = job.filename;
-      console.log('importFinished$', job);
     });
   }
 }
