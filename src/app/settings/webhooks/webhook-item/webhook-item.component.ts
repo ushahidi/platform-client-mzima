@@ -111,7 +111,7 @@ export class WebhookItemComponent implements OnInit {
   private checkKeyFields(field: string): any {
     if (field === 'title' || field === 'content') {
       return this.filterAttributes('type', field === 'title' ? field : 'description')?.key;
-    } else {
+    } else if (field) {
       return field.replace(/values./gi, '');
     }
   }

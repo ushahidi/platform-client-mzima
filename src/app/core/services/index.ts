@@ -20,7 +20,6 @@ export { ConfirmModalService } from './confirm-modal.service';
 export { DataImportService } from './data-import.service';
 export { FormsService } from './forms.service';
 export { WebhooksService } from './webhooks.service';
-export { ApiFormsService } from './api-forms.service';
 export { LoaderService } from './loader.service';
 export { PollingService } from './polling.service';
 export { DataSourcesService } from './data-sources.service';
