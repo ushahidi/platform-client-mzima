@@ -9,6 +9,7 @@ import { CollectionsService } from '@services';
 })
 export class CollectionsComponent implements OnInit {
   public collectionList: CollectionResult[];
+  public isLoading: boolean;
 
   constructor(private collectionsService: CollectionsService) {}
 
@@ -17,6 +18,7 @@ export class CollectionsComponent implements OnInit {
   }
 
   private getCollections() {
+    this.isLoading = true;
     const params = {
       orderby: 'created',
       order: 'desc',
@@ -24,6 +26,7 @@ export class CollectionsComponent implements OnInit {
     this.collectionsService.getCollections('', params).subscribe({
       next: (response) => {
         this.collectionList = response.results;
+        this.isLoading = false;
       },
     });
   }

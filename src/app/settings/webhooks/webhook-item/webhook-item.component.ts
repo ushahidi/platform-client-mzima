@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntilDestroy$ } from '@helpers';
-import { SurveyItem, SurveyItemTaskField, WebhookResultInterface } from '@models';
-import { ConfirmModalService, SurveysService, WebhooksService } from '@services';
-import { ApiFormsService } from '@services';
+import { FormAttributeInterface, SurveyItem, WebhookResultInterface } from '@models';
+import { FormsService, ConfirmModalService, SurveysService, WebhooksService } from '@services';
 
 @Component({
   selector: 'app-webhook-item',
@@ -36,7 +35,7 @@ export class WebhookItemComponent implements OnInit {
   ];
   public entityList = [{ name: 'Post', value: 'post' }];
   public surveyList: SurveyItem[] = [];
-  public surveyAttributesList: SurveyItemTaskField[] = [];
+  public surveyAttributesList: FormAttributeInterface[] = [];
   private controlFormIdData$ = this.form.controls['form_id'].valueChanges.pipe(takeUntilDestroy$());
   public isCreateWebhook = false;
 
@@ -45,7 +44,7 @@ export class WebhookItemComponent implements OnInit {
     private webhooksService: WebhooksService,
     private formBuilder: FormBuilder,
     private surveysService: SurveysService,
-    private apiFormsService: ApiFormsService,
+    private formsService: FormsService,
     private router: Router,
     private confirmModalService: ConfirmModalService,
   ) {}
@@ -98,13 +97,9 @@ export class WebhookItemComponent implements OnInit {
   }
 
   private getSurveyAttributes(id: number): void {
-    const queryParams = {
-      order: 'asc',
-      orderby: 'priority',
-    };
-    this.apiFormsService.getFormSurveyAttributes(id, queryParams).subscribe({
+    this.formsService.getAttributes(id.toString()).subscribe({
       next: (response) => {
-        this.surveyAttributesList = response.results;
+        this.surveyAttributesList = response;
         this.fillInForm({
           destination_field_key: this.checkKeyFields(this.webhook?.destination_field_key!),
           source_field_key: this.checkKeyFields(this.webhook?.source_field_key!),

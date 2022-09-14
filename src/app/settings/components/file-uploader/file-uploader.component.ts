@@ -1,5 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { Component, Input, Output } from '@angular/core';
+import { validateFile } from '@helpers';
 import { NotificationService } from '@services';
 
 @Component({
@@ -19,7 +20,7 @@ export class FileUploaderComponent {
   constructor(private notificationService: NotificationService) {}
 
   uploadFile($event: any) {
-    if (this.validateFile($event.target.files[0])) {
+    if (validateFile($event.target.files[0])) {
       var reader = new FileReader();
       reader.onload = () => {
         this.currentFile = {
@@ -40,13 +41,5 @@ export class FileUploaderComponent {
   clearImage() {
     this.imageSrc = '';
     this.delete.emit(true);
-  }
-
-  private validateFile(file: File) {
-    if (this.validation === 'image') {
-      const mimeReg = /[\/.](gif|jpg|jpeg|png)$/i;
-      return mimeReg.test(file.type) && file.size < 1048576;
-    }
-    return true;
   }
 }
