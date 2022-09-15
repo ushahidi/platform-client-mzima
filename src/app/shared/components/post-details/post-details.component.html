@@ -1,0 +1,179 @@
+<div
+  class="post"
+  [ngClass]="{ 'post--feed': feedView }"
+  [ngStyle]="{ '--color': survey ? survey.color : 'transparent' }"
+>
+  <ng-container *ngIf="post && !isSurveyLoading; else spinner">
+    <span class="post__border"></span>
+
+    <div class="post__survey" *ngIf="survey">
+      <h2>{{ survey.name }}</h2>
+      <p>{{ survey.description }}</p>
+    </div>
+
+    <div class="post__head">
+      <h2>{{ post.title }}</h2>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>
+          <svg class="iconic" role="img">
+            <use
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xlink:href="assets/sprites.svg#ellipses"
+            ></use>
+          </svg>
+        </mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['/feed', post.id, 'edit']">
+          <mat-icon>
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="assets/sprites.svg#pencil"
+              ></use>
+            </svg>
+          </mat-icon>
+          {{ 'post.post_actions.edit' | translate }}
+        </button>
+        <button mat-menu-item (click)="addToCollection()">
+          <mat-icon>
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="assets/sprites.svg#grid-three-up"
+              ></use>
+            </svg>
+          </mat-icon>
+          {{ 'set.add_to_collection' | translate }}
+        </button>
+        <button mat-menu-item>
+          <mat-icon>
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="assets/sprites.svg#share"
+              ></use>
+            </svg>
+          </mat-icon>
+          {{ 'app.share' | translate }}
+        </button>
+        <hr />
+        <button mat-menu-item>
+          <mat-icon>
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="assets/sprites.svg#globe"
+              ></use>
+            </svg>
+          </mat-icon>
+          {{ 'post.post_actions.publish' | translate }}
+        </button>
+        <button mat-menu-item>
+          <mat-icon>
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="assets/sprites.svg#document"
+              ></use>
+            </svg>
+          </mat-icon>
+          {{ 'post.post_actions.put_under_review' | translate }}
+        </button>
+        <button mat-menu-item>
+          <mat-icon>
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="assets/sprites.svg#box"
+              ></use>
+            </svg>
+          </mat-icon>
+          {{ 'post.post_actions.archive' | translate }}
+        </button>
+        <button mat-menu-item (click)="deletePost()">
+          <mat-icon>
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="assets/sprites.svg#trash"
+              ></use>
+            </svg>
+          </mat-icon>
+          {{ 'post.post_actions.delete' | translate }}
+        </button>
+      </mat-menu>
+    </div>
+
+    <div class="post__info">
+      <span class="post__status">
+        <ng-container *ngIf="post.status === 'published'">Published</ng-container>
+        <ng-container *ngIf="post.status === 'draft'">Draft</ng-container>
+        <ng-container *ngIf="post.status === 'archived'">Archived</ng-container>
+      </span>
+
+      <div class="post__user">
+        <div class="post__user__avatar">
+          <img
+            alt="user avatar"
+            src="//www.gravatar.com/avatar/{{
+              post.user?.gravatar || '00000000000000000000000000000000'
+            }}?d=retro&s=40"
+          />
+        </div>
+        <strong class="post__user__name">
+          {{ post.user?.realname || post.contact?.contact || post.author_realname || 'Anonymous' }}
+        </strong>
+      </div>
+
+      <span class="post__time">{{ post.post_date | dateAgo }}</span>
+
+      <strong class="post__source">{{ 'post.source' | translate: { source: post.source } }}</strong>
+    </div>
+
+    <div class="post__description">
+      {{ post.content }}
+    </div>
+
+    <ng-container *ngFor="let post_content of post.post_content">
+      <ng-container *ngFor="let field of post_content.fields">
+        <div *ngIf="field.input !== 'tags' ? field.value : field.value?.length" class="post__group">
+          <h3>{{ field.label }}</h3>
+          <ng-container *ngIf="field.input === 'tags'">
+            <ng-container *ngFor="let category of post.categories">
+              <div class="category" *ngIf="!isParentCategory(post.categories, category.id)">
+                <mat-icon class="category__icon">
+                  <svg class="iconic">
+                    <use xlink:href="assets/sprites.svg#tag"></use>
+                  </svg>
+                </mat-icon>
+                {{ category.tag }}
+              </div>
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'location'">
+            <app-map-with-marker class="map" [marker]="field.value.value"> </app-map-with-marker>
+            <p>{{ field.value.value.lat }} {{ field.value.value.lon }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'date'">
+            <p>{{ field.value.value | date: 'MMMM d, y' }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'datetime'">
+            <p>{{ field.value.value | date: 'MMMM d, y h:mm aaa' }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'radio'">
+            <p>{{ field.value.value }}</p>
+          </ng-container>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #spinner>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>

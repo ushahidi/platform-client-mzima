@@ -1,4 +1,5 @@
 import { ApiResponse } from './api-response.interface';
+import { CategoryInterface } from './category.interface';
 
 export interface GeoJsonPostsResponse {
   features: GeoJSON.Feature[];
@@ -29,6 +30,7 @@ export interface PostPropertiesInterface {
   author_realname?: string;
   status?: string;
   contact?: any;
+  source?: string;
 }
 
 export interface PostPropertiesUser {
@@ -47,9 +49,9 @@ export interface PostResult {
   author_realname?: string;
   color: string;
   completed_stages: [];
-  contact?: string;
+  contact?: string | any;
   content: string;
-  created: string;
+  created: Date;
   data_source_message_id?: number;
   form: PostForm;
   id: number;
@@ -57,7 +59,7 @@ export interface PostResult {
   lock?: string | boolean;
   message?: string;
   parent_id?: number;
-  post_date: string;
+  post_date: Date;
   published_to: [];
   sets: [];
   slug: string;
@@ -70,6 +72,10 @@ export interface PostResult {
   url: string;
   user_id?: number;
   values: {};
+  categories?: CategoryInterface[];
+  form_id?: number;
+  user?: PostPropertiesUser;
+  post_content?: PostContent[];
 }
 
 interface PostTag {
@@ -80,4 +86,38 @@ interface PostTag {
 interface PostForm {
   id: number;
   url: string;
+}
+
+interface PostContent {
+  description?: string;
+  fields: PostContentField[];
+  form_id: number;
+  id: number;
+  label: string;
+  priority: number;
+  required: number;
+  show_when_published: boolean;
+  task_is_internal_only: boolean;
+  translations: any[];
+  type: string;
+}
+
+interface PostContentField {
+  cardinality: number;
+  config: any[];
+  default: string;
+  description?: string;
+  form_stage_id: number;
+  id: number;
+  input: string;
+  instructions: string;
+  key: string;
+  label: string;
+  options: any;
+  priority: number;
+  required: number;
+  response_private: number;
+  translations: any[];
+  type: string;
+  value?: any;
 }
