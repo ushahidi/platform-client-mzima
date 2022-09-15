@@ -6,50 +6,54 @@
     <p *ngIf="showProgress; else description" translate>data_export.export_progress</p>
     <mat-tab-group>
       <mat-tab [label]="'data_export.export' | translate">
-        <div class="form-field" *ngIf="!hxlEnabled">
-          <div class="alert">
-            <p>{{ 'data_export.hxl_apikey_alert_1' | translate }}</p>
-            <p>
-              {{ 'data_export.hxl_apikey_alert_2' | translate }}
-              <a [routerLink]="['/settings/user-settings']" class="link-blue">
-                {{ 'data_export.hxl_configure' | translate }}
-              </a>
-              {{ 'data_export.hxl_apikey_alert_3' | translate }}
-            </p>
+        <div class="tab-cover">
+          <div class="form-field" *ngIf="!hxlEnabled">
+            <div class="alert">
+              <p>{{ 'data_export.hxl_apikey_alert_1' | translate }}</p>
+              <p>
+                {{ 'data_export.hxl_apikey_alert_2' | translate }}
+                <a [routerLink]="['/settings/user-settings']" class="link-blue">
+                  {{ 'data_export.hxl_configure' | translate }}
+                </a>
+                {{ 'data_export.hxl_apikey_alert_3' | translate }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="form-field">
-          <button
-            type="button"
-            color="primary"
-            mat-raised-button
-            (click)="exportAll()"
-            [disabled]="showProgress"
-          >
-            {{ 'data_export.all' | translate }}
-          </button>
-          <button
-            type="button"
-            color="secondary"
-            mat-raised-button
-            (click)="selectFields()"
-            [disabled]="showProgress"
-          >
-            {{ 'data_export.select_fields' | translate }}
-          </button>
-          <!-- <button  type="button" color="secondary" [routerLink]="['/settings/']" class="button" role="button" *ngIf="hxlEnabled" [disabled]="showProgress || !hxlApiKey" >{{'data_export.tags_attributes' | translate}}</button> -->
+          <div class="form-controls-panel">
+            <button
+              type="button"
+              color="primary"
+              mat-raised-button
+              (click)="exportAll()"
+              [disabled]="showProgress"
+            >
+              {{ 'data_export.all' | translate }}
+            </button>
+            <button
+              type="button"
+              color="secondary"
+              mat-raised-button
+              (click)="selectFields()"
+              [disabled]="showProgress"
+            >
+              {{ 'data_export.select_fields' | translate }}
+            </button>
+            <!-- <button  type="button" color="secondary" [routerLink]="['/settings/']" class="button" role="button" *ngIf="hxlEnabled" [disabled]="showProgress || !hxlApiKey" >{{'data_export.tags_attributes' | translate}}</button> -->
+          </div>
         </div>
       </mat-tab>
       <mat-tab [label]="'data_export.export_history' | translate">
-        <div class="listing">
+        <div class="tab-cover listing">
           <div class="listing-item" *ngFor="let job of exportJobs">
             <div class="listing-item-primary">
-              <h2 class="listing-item-title">
-                <a [href]="job.url" target="_blank">{{
-                  'data_export.job' | translate: { jobId: job.id }
-                }}</a>
-              </h2>
-              <p class="listing-item-secondary">{{ 'data_export.' + job.status | translate }}</p>
+              <strong class="listing-item__title">
+                <a [href]="job.url" target="_blank">
+                  {{ 'data_export.job' | translate: { jobId: job.id } }}
+                </a>
+              </strong>
+              <p class="listing-item-secondary">
+                <strong>Status:</strong> {{ 'data_export.' + job.status | translate }}
+              </p>
               <p
                 class="listing-item-secondary"
                 [innerHTML]="'data_export.created' | translate: { created: job.created }"
@@ -105,9 +109,11 @@
   <p *ngIf="hxlEnabled">
     {{ 'data_export.description_hxl' | translate }}
     <a href="https://hxlstandard.org/standard/1-1final/tagging/" class="link-blue" target="_blank">
-      <svg class="iconic" role="img">
-        <use xlink:href="assets/sprites.svg#external-link"></use>
-      </svg>
+      <mat-icon>
+        <svg class="iconic" role="img">
+          <use xlink:href="assets/sprites.svg#external-link"></use>
+        </svg>
+      </mat-icon>
       {{ 'data_export.hxl_tags' | translate }} </a
     >,
     <a
@@ -115,17 +121,25 @@
       class="link-blue"
       target="_blank"
     >
-      <svg class="iconic" role="img">
-        <use xlink:href="assets/sprites.svg#external-link"></use>
-      </svg>
-      {{ 'data_export.hxl_attributes' | translate }}
+      <strong>
+        <mat-icon>
+          <svg class="iconic" role="img">
+            <use xlink:href="assets/sprites.svg#external-link"></use>
+          </svg>
+        </mat-icon>
+        {{ 'data_export.hxl_attributes' | translate }}
+      </strong>
     </a>
     {{ 'data_export.and_choose' | translate }}
     <a href="https://data.humdata.org/" class="link-blue" target="_blank">
-      <svg class="iconic" role="img">
-        <use xlink:href="assets/sprites.svg#external-link"></use>
-      </svg>
-      {{ 'data_export.HDX' | translate }}
+      <strong>
+        <mat-icon>
+          <svg class="iconic" role="img">
+            <use xlink:href="assets/sprites.svg#external-link"></use>
+          </svg>
+        </mat-icon>
+        {{ 'data_export.HDX' | translate }}
+      </strong>
     </a>
     {{ 'data_export.account' | translate }}
   </p>
