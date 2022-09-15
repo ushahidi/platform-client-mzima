@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
-import { ConfigService } from '@services';
+import { SessionService } from '@services';
 import {
   control,
   FitBoundsOptions,
@@ -30,37 +30,34 @@ export class MapWithMarkerComponent implements OnInit {
   };
   public mapLayers: any[] = [];
 
-  constructor(private configService: ConfigService) {}
+  constructor(private sessionService: SessionService) {}
 
   ngOnInit(): void {
-    this.configService.getMap().subscribe({
-      next: (mapConfig) => {
-        this.mapConfig = mapConfig;
+    this.mapConfig = this.sessionService.getMapConfigurations();
 
-        const currentLayer = mapHelper.getMapLayers().baselayers[mapConfig.default_view.baselayer];
+    const currentLayer =
+      mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
-        this.leafletOptions = {
-          scrollWheelZoom: true,
-          zoomControl: false,
-          layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
-          center: [this.marker.lat, this.marker.lon],
-          zoom: 15,
-        };
+    this.leafletOptions = {
+      scrollWheelZoom: true,
+      zoomControl: false,
+      layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+      center: [this.marker.lat, this.marker.lon],
+      zoom: 15,
+    };
 
-        const mapMarker = marker(
-          {
-            lat: this.marker.lat,
-            lng: this.marker.lon,
-          },
-          {
-            icon: pointIcon(this.mapConfig.default_view.color),
-          },
-        );
-        this.mapLayers.push(mapMarker);
-
-        this.mapReady = true;
+    const mapMarker = marker(
+      {
+        lat: this.marker.lat,
+        lng: this.marker.lon,
       },
-    });
+      {
+        icon: pointIcon(this.mapConfig.default_view!.color),
+      },
+    );
+    this.mapLayers.push(mapMarker);
+
+    this.mapReady = true;
   }
 
   public onMapReady(map: Map) {

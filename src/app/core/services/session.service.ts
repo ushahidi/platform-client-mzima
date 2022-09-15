@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   FeaturesConfigInterface,
+  MapConfigInterface,
   SessionConfigInterface,
   SessionTokenInterface,
   SiteConfigInterface,
@@ -45,6 +46,7 @@ export class SessionService {
   private currentConfig: SessionConfigInterface = {
     features: {},
     site: {},
+    map: {},
   };
 
   constructor() {
@@ -57,10 +59,6 @@ export class SessionService {
     return `${CONST.LOCAL_STORAGE_PREFIX}${key}`;
   }
 
-  getConfigurations(type: keyof SessionConfigInterface) {
-    return this.currentConfig[type];
-  }
-
   getSiteConfigurations() {
     return this.currentConfig.site;
   }
@@ -69,9 +67,13 @@ export class SessionService {
     return this.currentConfig.features;
   }
 
+  getMapConfigurations() {
+    return this.currentConfig.map;
+  }
+
   setConfigurations(
     type: keyof SessionConfigInterface,
-    data: FeaturesConfigInterface | SiteConfigInterface,
+    data: FeaturesConfigInterface | SiteConfigInterface | MapConfigInterface,
   ) {
     this.currentConfig[type] = data as any;
   }

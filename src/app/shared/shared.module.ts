@@ -26,7 +26,7 @@ import {
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 import { TranslateModule } from '@ngx-translate/core';
-import { DateAgoPipe } from '../core/pipes';
+import { DateAgoPipe } from '@pipes';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 const components = [

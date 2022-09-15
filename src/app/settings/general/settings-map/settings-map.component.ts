@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface, MapViewInterface } from '@models';
-import { ConfigService } from '@services';
+import { SessionService } from '@services';
 import {
   control,
   DragEndEvent,
@@ -31,30 +31,26 @@ export class SettingsMapComponent implements OnInit {
   minZoom = 0;
   baseLayers = Object.keys(mapHelper.getMapLayers().baselayers);
 
-  constructor(private configService: ConfigService, private changeDetector: ChangeDetectorRef) {}
+  constructor(private sessionService: SessionService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.configService.getMap().subscribe({
-      next: (mapConfig) => {
-        this.mapConfig = mapConfig;
+    this.mapConfig = this.sessionService.getMapConfigurations();
 
-        this.leafletOptions = {
-          scrollWheelZoom: true,
-          zoomControl: false,
-          layers: [],
-          center: [mapConfig.default_view.lat, mapConfig.default_view.lon],
-          zoom: mapConfig.default_view.zoom,
-        };
-        this.mapReady = true;
-        this.addTileLayerToMap(mapConfig.default_view.baselayer);
-      },
-    });
+    this.leafletOptions = {
+      scrollWheelZoom: true,
+      zoomControl: false,
+      layers: [],
+      center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
+      zoom: this.mapConfig.default_view!.zoom,
+    };
+    this.mapReady = true;
+    this.addTileLayerToMap(this.mapConfig.default_view!.baselayer);
   }
 
   addMarker(map: Map) {
     this.mapMarker = marker(map.getCenter(), {
       draggable: true,
-      icon: pointIcon(this.mapConfig.default_view.color),
+      icon: pointIcon(this.mapConfig.default_view!.color),
     });
     this.mapMarker.on('dragend', (e) => {
       this.handleDragEnd(e);
@@ -80,7 +76,7 @@ export class SettingsMapComponent implements OnInit {
       this.mapClick(e);
     });
     map.on('zoomend', () => {
-      this.mapConfig.default_view.zoom = map.getZoom();
+      this.mapConfig.default_view!.zoom = map.getZoom();
       this.changeDetector.detectChanges();
     });
   }
@@ -89,27 +85,27 @@ export class SettingsMapComponent implements OnInit {
     // Center the map at our current default.
     // Set the zoom level to our default zoom.
     this.settingMap.setView(
-      [this.mapConfig.default_view.lat, this.mapConfig.default_view.lon],
-      this.mapConfig.default_view.zoom,
+      [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
+      this.mapConfig.default_view!.zoom,
     );
 
     // Update our draggable marker to the default.
-    this.mapMarker.setLatLng([this.mapConfig.default_view.lat, this.mapConfig.default_view.lon]);
+    this.mapMarker.setLatLng([this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon]);
     this.changeDetector.detectChanges();
   }
 
   mapClick(e: LeafletMouseEvent) {
     const latlng = e.latlng.wrap();
-    this.mapConfig.default_view.lat = latlng.lat;
-    this.mapConfig.default_view.lon = latlng.lng;
+    this.mapConfig.default_view!.lat = latlng.lat;
+    this.mapConfig.default_view!.lon = latlng.lng;
 
     this.updateMapPreview();
   }
 
   handleDragEnd(e: DragEndEvent) {
     const latlng = e.target.getLatLng().wrap();
-    this.mapConfig.default_view.lat = latlng.lat;
-    this.mapConfig.default_view.lon = latlng.lng;
+    this.mapConfig.default_view!.lat = latlng.lat;
+    this.mapConfig.default_view!.lon = latlng.lng;
     this.updateMapPreview();
   }
 }

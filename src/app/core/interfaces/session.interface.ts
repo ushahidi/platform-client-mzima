@@ -77,14 +77,15 @@ export interface MapViewInterface {
 }
 
 export interface MapConfigInterface {
-  allowed_privileges: string[];
-  cluster_radius: number;
-  clustering: boolean;
-  default_view: MapViewInterface;
-  location_precision: number;
+  allowed_privileges?: string[];
+  cluster_radius?: number;
+  clustering?: boolean;
+  default_view?: MapViewInterface;
+  location_precision?: number;
 }
 
 export interface SessionConfigInterface {
   site: SiteConfigInterface;
   features: FeaturesConfigInterface;
+  map: MapConfigInterface;
 }

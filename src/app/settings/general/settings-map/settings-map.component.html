@@ -22,7 +22,7 @@
           <input
             type="number"
             matInput
-            [(ngModel)]="mapConfig.default_view.lat"
+            [(ngModel)]="mapConfig.default_view!.lat"
             [max]="90"
             [min]="-90"
           />
@@ -37,7 +37,7 @@
           <input
             type="number"
             matInput
-            [(ngModel)]="mapConfig.default_view.lon"
+            [(ngModel)]="mapConfig.default_view!.lon"
             [max]="180"
             [min]="-180"
           />
@@ -50,7 +50,7 @@
         <mat-form-field appearance="standard">
           <mat-label translate>settings.map_default_baselayer</mat-label>
           <mat-select
-            [(value)]="mapConfig.default_view.baselayer"
+            [(value)]="mapConfig.default_view!.baselayer"
             (valueChange)="layerChange($event)"
           >
             <mat-option *ngFor="let layer of baseLayers" [value]="layer">
@@ -68,7 +68,7 @@
           <input
             type="number"
             matInput
-            [(ngModel)]="mapConfig.default_view.zoom"
+            [(ngModel)]="mapConfig.default_view!.zoom"
             [max]="maxZoom"
             [min]="minZoom"
           />
