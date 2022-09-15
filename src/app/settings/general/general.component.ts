@@ -47,7 +47,7 @@ export class GeneralComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.siteConfig = this.sessionService.getConfigurations('site');
+    this.siteConfig = this.sessionService.getSiteConfigurations();
     this.generalForm.patchValue({
       name: this.siteConfig.name,
       description: this.siteConfig.description,

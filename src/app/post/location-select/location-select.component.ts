@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
-import { ConfigService } from '@services';
+import { SessionService } from '@services';
 import {
   control,
   FitBoundsOptions,
@@ -32,27 +32,24 @@ export class LocationSelectComponent implements OnInit {
 
   public leafletOptions: MapOptions;
 
-  constructor(private configService: ConfigService) {}
+  constructor(private sessionService: SessionService) {}
 
   ngOnInit(): void {
-    this.configService.getMap().subscribe({
-      next: (mapConfig) => {
-        this.mapConfig = mapConfig;
+    this.mapConfig = this.sessionService.getMapConfigurations();
 
-        const currentLayer = mapHelper.getMapLayers().baselayers[mapConfig.default_view.baselayer];
+    const currentLayer =
+      mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
-        this.leafletOptions = {
-          scrollWheelZoom: true,
-          zoomControl: false,
-          layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
-          center: [mapConfig.default_view.lat, mapConfig.default_view.lon],
-          zoom: mapConfig.default_view.zoom,
-        };
-        this.markerClusterOptions.maxClusterRadius = mapConfig.cluster_radius;
+    this.leafletOptions = {
+      scrollWheelZoom: true,
+      zoomControl: false,
+      layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+      center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
+      zoom: this.mapConfig.default_view!.zoom,
+    };
+    this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
 
-        this.mapReady = true;
-      },
-    });
+    this.mapReady = true;
   }
 
   onMapReady(map: Map) {

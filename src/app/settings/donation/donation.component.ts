@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { validateFile } from '@helpers';
-import { DonationConfigInterface, SiteConfigInterface } from '@models';
+import { DonationConfigInterface } from '@models';
 import {
   ConfigService,
   LoaderService,
@@ -34,9 +34,7 @@ export class DonationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.donationConfig = (
-      this.sessionService.getConfigurations('site') as SiteConfigInterface
-    ).donation!;
+    this.donationConfig = this.sessionService.getSiteConfigurations().donation!;
     console.log('DONATION!', this.donationConfig);
     this.donationForm.patchValue({
       title: this.donationConfig.title,

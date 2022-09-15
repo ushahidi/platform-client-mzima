@@ -12,6 +12,9 @@
       "@models": [
         "src/app/core/interfaces"
       ],
+      "@pipes": [
+        "src/app/core/pipes"
+      ],
       "@services": [
         "src/app/core/services"
       ],
