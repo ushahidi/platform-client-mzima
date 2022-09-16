@@ -12,3 +12,4 @@ export * from './post/post.component';
 export * from './post-details/post-details.component';
 export * from './map-with-marker/map-with-marker.component';
 export * from './collections-modal/collections-modal.component';
+export * from './snackbar/snackbar.component';

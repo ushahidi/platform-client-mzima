@@ -18,6 +18,7 @@ import {
   PostDetailsComponent,
   MapWithMarkerComponent,
   CollectionsModalComponent,
+  SnackbarComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import {
@@ -45,6 +46,7 @@ const components = [
   DateAgoPipe,
   MapWithMarkerComponent,
   CollectionsModalComponent,
+  SnackbarComponent,
 ];
 
 const modules = [

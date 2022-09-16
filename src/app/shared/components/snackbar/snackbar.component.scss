@@ -1,0 +1,82 @@
+$leftSidePanelWidth: 64px;
+
+::ng-deep {
+  .custom-snackbar {
+    position: relative;
+
+    &--wide {
+      padding: 24px;
+      max-width: none;
+      border-radius: 0;
+      transform-origin: 50% 100%;
+      margin: 0 0 0 $leftSidePanelWidth;
+      width: calc(100vw - $leftSidePanelWidth);
+    }
+  }
+}
+
+.snackbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  &__icon {
+    width: 2em;
+    height: 2em;
+    display: flex;
+    flex-shrink: 0;
+    font-size: 24px;
+    border-radius: 50%;
+    margin-right: 16px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    &.primary {
+      background: var(--color-primary);
+      color: var(--color-primary-contrast);
+    }
+
+    &.accent {
+      background: var(--color-accent);
+      color: var(--color-accent-contrast);
+    }
+
+    &.secondary {
+      background: var(--color-secondary);
+      color: var(--color-secondary-contrast);
+    }
+
+    &.dark {
+      background: var(--color-dark);
+      color: var(--color-dark-contrast);
+    }
+
+    &.success {
+      background: var(--color-success);
+      color: var(--color-success-contrast);
+    }
+  }
+
+  &__progress {
+    top: 0;
+    left: 0;
+    position: absolute;
+  }
+
+  &__main {
+    flex: 1 1 100%;
+  }
+
+  &__buttons {
+    display: flex;
+    margin: 0 -8px;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    .mat-button-base {
+      line-height: 28px;
+      margin: 0 8px 8px;
+    }
+  }
+}

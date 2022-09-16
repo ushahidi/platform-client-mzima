@@ -1,0 +1,32 @@
+<div class="snackbar">
+  <mat-progress-bar
+    class="snackbar__progress"
+    mode="query"
+    *ngIf="data.isLoading"
+  ></mat-progress-bar>
+  <span *ngIf="data.icon" class="snackbar__icon" [ngClass]="data.icon.color || 'primary'">
+    <mat-icon>
+      <svg class="iconic" role="img">
+        <use
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          [attr.xlink:href]="'assets/sprites.svg#' + data.icon.name"
+        ></use>
+      </svg>
+    </mat-icon>
+  </span>
+  <div class="snackbar__main">
+    <h3 class="snackbar__title" *ngIf="data.title">{{ data.title }}</h3>
+    <p *ngIf="data.message">{{ data.message }}</p>
+
+    <div class="snackbar__buttons" *ngIf="data.buttons?.length">
+      <button
+        mat-raised-button
+        [color]="button.color"
+        *ngFor="let button of data.buttons"
+        (click)="closeSnackbar(button.handler)"
+      >
+        {{ button.text }}
+      </button>
+    </div>
+  </div>
+</div>

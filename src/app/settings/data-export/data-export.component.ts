@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormInterface, ExportJobInterface } from '@models';
+import { TranslateService } from '@ngx-translate/core';
 import {
   ExportJobsService,
   FormsService,
@@ -28,6 +29,7 @@ export class DataExportComponent implements OnInit {
     private exportJobsService: ExportJobsService,
     private pollingService: PollingService,
     private notificationService: NotificationService,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -94,13 +96,67 @@ export class DataExportComponent implements OnInit {
   showTest(q: number) {
     switch (q) {
       case 0:
-        this.notificationService.showError('STARTED');
+        this.notificationService.showSnackbar(
+          {
+            icon: {
+              color: 'success',
+              name: 'ellipses',
+            },
+            title: this.translate.instant('notify.export.in_progress'),
+            isLoading: true,
+            buttons: [
+              {
+                color: 'accent',
+                text: this.translate.instant('notify.export.cancel_export'),
+                handler: () => {
+                  console.log('cancel export clicked');
+                },
+              },
+              {
+                color: 'primary',
+                text: this.translate.instant('notify.export.confirmation'),
+              },
+            ],
+          },
+          {
+            duration: 0,
+            wide: true,
+          },
+        );
         break;
-      case 1:
-        this.notificationService.showError('IN PROGRESS');
-        break;
+      // case 1:
+      //   this.notificationService.showSnackbar({
+      //     icon: {
+      //       color: 'success',
+      //       name: 'thumb-up',
+      //     },
+      //     title: this.translate.instant('notify.export.upload_complete'),
+      //     buttons: [{
+      //       color: 'primary',
+      //       text: this.translate.instant('notify.export.confirmation'),
+      //     }],
+      //   });
+      //   break;
       case 2:
-        this.notificationService.showError('FINISHED');
+        this.notificationService.showSnackbar(
+          {
+            icon: {
+              color: 'success',
+              name: 'thumb-up',
+            },
+            title: this.translate.instant('notify.export.upload_complete'),
+            buttons: [
+              {
+                color: 'primary',
+                text: this.translate.instant('notify.export.confirmation'),
+              },
+            ],
+          },
+          {
+            duration: 0,
+            wide: true,
+          },
+        );
         break;
     }
   }

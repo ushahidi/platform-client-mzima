@@ -4,6 +4,7 @@
 @import 'styles/theme';
 @import 'styles/colors';
 @import 'styles/buttons';
+@import 'styles/progress';
 @import 'styles/note';
 @import 'styles/pagination';
 @import 'styles/tabs';
@@ -20,11 +21,6 @@
 html,
 body {
   height: 100%;
-}
-
-p,
-a {
-  color: #373e46;
 }
 
 .mat-icon {
