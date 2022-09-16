@@ -1,1 +1,138 @@
-<p>data-export works!</p>
+<div class="page-content">
+  <ng-container *ngIf="exportView; else fieldSelector">
+    <h2 class="form-sheet-title" translate>
+      {{ hxlEnabled ? 'data_export.title_hxl' : 'data_export.title' }}
+    </h2>
+    <p *ngIf="showProgress; else description" translate>data_export.export_progress</p>
+    <mat-tab-group>
+      <mat-tab [label]="'data_export.export' | translate">
+        <div class="tab-cover">
+          <div class="form-field" *ngIf="!hxlEnabled">
+            <div class="alert">
+              <p>{{ 'data_export.hxl_apikey_alert_1' | translate }}</p>
+              <p>
+                {{ 'data_export.hxl_apikey_alert_2' | translate }}
+                <a [routerLink]="['/settings/user-settings']" class="link-blue">
+                  {{ 'data_export.hxl_configure' | translate }}
+                </a>
+                {{ 'data_export.hxl_apikey_alert_3' | translate }}
+              </p>
+            </div>
+          </div>
+          <div class="form-controls-panel">
+            <button
+              type="button"
+              color="primary"
+              mat-raised-button
+              (click)="exportAll()"
+              [disabled]="showProgress"
+            >
+              {{ 'data_export.all' | translate }}
+            </button>
+            <button
+              type="button"
+              color="secondary"
+              mat-raised-button
+              (click)="selectFields()"
+              [disabled]="showProgress"
+            >
+              {{ 'data_export.select_fields' | translate }}
+            </button>
+            <!-- <button  type="button" color="secondary" [routerLink]="['/settings/']" class="button" role="button" *ngIf="hxlEnabled" [disabled]="showProgress || !hxlApiKey" >{{'data_export.tags_attributes' | translate}}</button> -->
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab [label]="'data_export.export_history' | translate">
+        <div class="tab-cover listing">
+          <div class="listing-item" *ngFor="let job of exportJobs">
+            <div class="listing-item-primary">
+              <strong class="listing-item__title">
+                <a [href]="job.url" target="_blank">
+                  {{ 'data_export.job' | translate: { jobId: job.id } }}
+                </a>
+              </strong>
+              <p class="listing-item-secondary">
+                <strong>Status:</strong> {{ 'data_export.' + job.status | translate }}
+              </p>
+              <p
+                class="listing-item-secondary"
+                [innerHTML]="'data_export.created' | translate: { created: job.created }"
+              ></p>
+              <p
+                class="listing-item-secondary"
+                [innerHTML]="'data_export.expires' | translate: { expires: job.url_expiration }"
+              ></p>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </ng-container>
+</div>
+<ng-template #fieldSelector>
+  <h2 class="form-sheet-title" translate>data_export.select_fields_title</h2>
+  <p translate>data_export.select_fields_desc</p>
+
+  <div class="form-group" *ngFor="let form of forms">
+    <h3>{{ form.name }}</h3>
+    <div *ngIf="form.attributes">
+      <mat-checkbox (change)="selectAll(form)" [checked]="isAllSelected(form)">
+        <em>{{ 'category.select_all' | translate }}</em>
+      </mat-checkbox>
+    </div>
+    <div *ngFor="let attribute of form.attributes">
+      <mat-checkbox [value]="attribute.key" [(ngModel)]="fieldsMap[form.id][attribute.key]">
+        {{ attribute.label }}
+      </mat-checkbox>
+    </div>
+  </div>
+  <div class="form-controls-panel">
+    <button type="button" color="secondary" mat-raised-button (click)="selectFields()">
+      {{ 'data_export.cancel' | translate }}
+    </button>
+    <button type="button" color="primary" mat-raised-button (click)="exportSelected()">
+      {{ 'data_export.export_selected' | translate }}
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #description>
+  <p translate *ngIf="!hxlEnabled">data_export.description</p>
+  <p *ngIf="hxlEnabled">
+    {{ 'data_export.description_hxl' | translate }}
+    <a href="https://hxlstandard.org/standard/1-1final/tagging/" class="link-blue" target="_blank">
+      <mat-icon>
+        <svg class="iconic" role="img">
+          <use xlink:href="assets/sprites.svg#external-link"></use>
+        </svg>
+      </mat-icon>
+      {{ 'data_export.hxl_tags' | translate }} </a
+    >,
+    <a
+      href="https://hxlstandard.org/standard/1-1final/dictionary/"
+      class="link-blue"
+      target="_blank"
+    >
+      <strong>
+        <mat-icon>
+          <svg class="iconic" role="img">
+            <use xlink:href="assets/sprites.svg#external-link"></use>
+          </svg>
+        </mat-icon>
+        {{ 'data_export.hxl_attributes' | translate }}
+      </strong>
+    </a>
+    {{ 'data_export.and_choose' | translate }}
+    <a href="https://data.humdata.org/" class="link-blue" target="_blank">
+      <strong>
+        <mat-icon>
+          <svg class="iconic" role="img">
+            <use xlink:href="assets/sprites.svg#external-link"></use>
+          </svg>
+        </mat-icon>
+        {{ 'data_export.HDX' | translate }}
+      </strong>
+    </a>
+    {{ 'data_export.account' | translate }}
+  </p>
+</ng-template>

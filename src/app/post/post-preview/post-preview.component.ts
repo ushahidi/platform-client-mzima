@@ -3,11 +3,11 @@ import { PostPropertiesInterface } from '@models';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss'],
+  selector: 'app-post-preview',
+  templateUrl: './post-preview.component.html',
+  styleUrls: ['./post-preview.component.scss'],
 })
-export class PostComponent implements OnChanges {
+export class PostPreviewComponent implements OnChanges {
   @Input() post: PostPropertiesInterface;
   @Input() feedView: boolean;
   private details = new Subject<boolean>();

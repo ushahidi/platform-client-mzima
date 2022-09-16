@@ -1,0 +1,41 @@
+.tab-cover {
+  overflow: hidden;
+}
+
+.form-controls-panel {
+  margin-top: 32px;
+}
+
+.listing-item {
+  margin: 0 -24px;
+  font-size: 12px;
+  padding: 16px 24px;
+
+  &:not(:first-child) {
+    border-top: 1px solid #eee;
+  }
+
+  p {
+    margin-bottom: 8px;
+  }
+
+  &-primary {
+    margin: 0 auto;
+    max-width: 480px;
+  }
+
+  &__title {
+    display: block;
+    font-size: 16px;
+    line-height: 1.2;
+    margin-bottom: 1em;
+
+    a {
+      color: #373e46;
+
+      &:hover {
+        color: #0a0b0d;
+      }
+    }
+  }
+}

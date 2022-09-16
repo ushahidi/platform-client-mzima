@@ -7,4 +7,5 @@ export interface EnvConfigInterface {
   default_locale: string;
   oauth_client_id: string;
   oauth_client_secret: string;
+  export_polling_interval: number;
 }

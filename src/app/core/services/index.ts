@@ -24,3 +24,4 @@ export { LoaderService } from './loader.service';
 export { EventBusService, EventType } from './event-bus.service';
 export { PostsV5Service } from './posts.v5.service';
 export { PollingService } from './polling.service';
+export { ExportJobsService } from './export-jobs.service';

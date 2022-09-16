@@ -12,10 +12,10 @@ import {
   MapOptions,
   Map,
 } from 'leaflet';
-import { ConfigService, PostsService, PostsV5Service } from '@services';
+import { PostsService, PostsV5Service, SessionService } from '@services';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
 import { mapHelper } from '@helpers';
-import { PostComponent } from '../shared/components/post/post.component';
+import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
 import { ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
@@ -43,31 +43,28 @@ export class MapComponent implements OnInit {
     private postsService: PostsService,
     private postsV5Service: PostsV5Service,
     private view: ViewContainerRef,
-    private configService: ConfigService,
+    private sessionService: SessionService,
     private dialog: MatDialog,
     private zone: NgZone,
   ) {}
 
   ngOnInit() {
-    this.configService.getMap().subscribe({
-      next: (mapConfig) => {
-        this.mapConfig = mapConfig;
+    this.mapConfig = this.sessionService.getMapConfigurations();
 
-        const currentLayer = mapHelper.getMapLayers().baselayers[mapConfig.default_view.baselayer];
+    const currentLayer =
+      mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
-        this.leafletOptions = {
-          scrollWheelZoom: true,
-          zoomControl: false,
-          layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
-          center: [mapConfig.default_view.lat, mapConfig.default_view.lon],
-          zoom: mapConfig.default_view.zoom,
-        };
-        this.markerClusterOptions.maxClusterRadius = mapConfig.cluster_radius;
+    this.leafletOptions = {
+      scrollWheelZoom: true,
+      zoomControl: false,
+      layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+      center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
+      zoom: this.mapConfig.default_view!.zoom,
+    };
+    this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
 
-        this.mapReady = true;
-        this.getPostsGeoJson();
-      },
-    });
+    this.mapReady = true;
+    this.getPostsGeoJson();
   }
 
   onMapReady(map: Map) {
@@ -88,7 +85,7 @@ export class MapComponent implements OnInit {
               if (layer.getPopup()) {
                 layer.openPopup();
               } else {
-                const comp = this.view.createComponent(PostComponent);
+                const comp = this.view.createComponent(PostPreviewComponent);
                 this.postsV5Service.getById(feature.properties.id).subscribe({
                   next: (post) => {
                     comp.setInput('post', post);

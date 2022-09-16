@@ -4,8 +4,10 @@
 @import 'styles/theme';
 @import 'styles/colors';
 @import 'styles/buttons';
+@import 'styles/progress';
 @import 'styles/note';
 @import 'styles/pagination';
+@import 'styles/tabs';
 @import 'styles/forms';
 @import 'styles/modal';
 
@@ -19,11 +21,6 @@
 html,
 body {
   height: 100%;
-}
-
-p,
-a {
-  color: #373e46;
 }
 
 .mat-icon {
@@ -60,6 +57,10 @@ a {
     font-size: inherit;
     margin-right: 10px;
     vertical-align: middle;
+
+    p & {
+      margin-right: 4px;
+    }
   }
 }
 

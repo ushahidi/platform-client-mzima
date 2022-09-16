@@ -41,7 +41,30 @@ export interface SiteConfigInterface {
   donation?: DonationConfigInterface;
 }
 
-export interface FeaturesConfigInterface {}
+export interface FeatureFlag {
+  enabled: boolean;
+}
+
+export interface FeaturesConfigInterface {
+  allowed_privileges?: string[];
+  'anonymise-reporters'?: FeatureFlag;
+  'csv-speedup'?: FeatureFlag;
+  'data-import'?: FeatureFlag;
+  disable_registration?: FeatureFlag;
+  donation?: FeatureFlag;
+  'gmail-support'?: FeatureFlag;
+  hxl?: FeatureFlag;
+  id?: string;
+  limits?: any;
+  private?: FeatureFlag;
+  roles?: FeatureFlag;
+  'targeted-surveys'?: FeatureFlag;
+  url?: string;
+  webhooks?: FeatureFlag;
+  'user-settings'?: FeatureFlag;
+  'data-providers'?: any;
+  views?: any;
+}
 
 export interface MapViewInterface {
   baselayer: 'streets' | 'satellite' | 'hOSM';
@@ -54,14 +77,15 @@ export interface MapViewInterface {
 }
 
 export interface MapConfigInterface {
-  allowed_privileges: string[];
-  cluster_radius: number;
-  clustering: boolean;
-  default_view: MapViewInterface;
-  location_precision: number;
+  allowed_privileges?: string[];
+  cluster_radius?: number;
+  clustering?: boolean;
+  default_view?: MapViewInterface;
+  location_precision?: number;
 }
 
 export interface SessionConfigInterface {
   site: SiteConfigInterface;
   features: FeaturesConfigInterface;
+  map: MapConfigInterface;
 }

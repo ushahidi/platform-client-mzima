@@ -20,6 +20,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   exports: [
@@ -44,6 +45,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatRadioModule,
     MatGridListModule,
     MatMenuModule,
+    MatProgressBarModule,
   ],
 })
 export class MaterialModule {}
