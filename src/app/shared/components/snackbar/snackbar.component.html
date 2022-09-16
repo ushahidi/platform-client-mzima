@@ -15,8 +15,8 @@
     </mat-icon>
   </span>
   <div class="snackbar__main">
-    <h3 class="snackbar__title" *ngIf="data.title">{{ data.title }}</h3>
-    <p *ngIf="data.message">{{ data.message }}</p>
+    <h3 class="snackbar__title" *ngIf="data.title">{{ data.title | translate }}</h3>
+    <p *ngIf="data.message">{{ data.message | translate }}</p>
 
     <div class="snackbar__buttons" *ngIf="data.buttons?.length">
       <button
@@ -25,7 +25,7 @@
         *ngFor="let button of data.buttons"
         (click)="closeSnackbar(button.handler)"
       >
-        {{ button.text }}
+        {{ button.text! | translate }}
       </button>
     </div>
   </div>

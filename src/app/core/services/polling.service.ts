@@ -14,6 +14,7 @@ import { ExportJobInterface } from '@models';
 import { DataImportService } from './data-import.service';
 import { ExportJobsService } from './export-jobs.service';
 import { NotificationService } from './notification.service';
+import { EnvService } from './env.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,7 @@ export class PollingService implements OnDestroy {
     private dataImportService: DataImportService,
     private exportJobsService: ExportJobsService,
     private notificationService: NotificationService,
+    private env: EnvService,
     private rendererFactory: RendererFactory2,
   ) {}
 
@@ -42,7 +44,7 @@ export class PollingService implements OnDestroy {
 
   private startImportPolling(queries: Observable<any>[]) {
     const nextQueries: Observable<any>[] = [];
-    timer(6000)
+    timer(this.env.environment.export_polling_interval || 30 * 1000)
       .pipe(
         switchMap(() => forkJoin(queries)),
         retry(),
@@ -66,6 +68,65 @@ export class PollingService implements OnDestroy {
       });
   }
 
+  private showNotification(type: 'success' | 'error' | 'started') {
+    switch (type) {
+      case 'success':
+        this.notificationService.showSnackbar(
+          {
+            icon: {
+              color: 'success',
+              name: 'thumb-up',
+            },
+            title: 'notify.export.upload_complete',
+            buttons: [
+              {
+                color: 'primary',
+                text: 'notify.export.confirmation',
+              },
+            ],
+          },
+          {
+            duration: 0,
+            wide: true,
+          },
+        );
+        break;
+
+      case 'started':
+        this.notificationService.showSnackbar(
+          {
+            icon: {
+              color: 'success',
+              name: 'ellipses',
+            },
+            title: 'notify.export.in_progress',
+            isLoading: true,
+            buttons: [
+              {
+                color: 'accent',
+                text: 'notify.export.cancel_export',
+                handler: () => {
+                  console.log('cancel export clicked');
+                },
+              },
+              {
+                color: 'primary',
+                text: 'notify.export.confirmation',
+              },
+            ],
+          },
+          {
+            duration: 0,
+            wide: true,
+          },
+        );
+        break;
+      default:
+        this.notificationService.showError('Failed to export');
+        break;
+    }
+  }
+
   private downloadFile(downloadUrl: string) {
     const URL = window.URL || window.webkitURL;
 
@@ -85,7 +146,7 @@ export class PollingService implements OnDestroy {
 
     return this.exportJobsService.save(query).pipe(
       map((job) => {
-        this.notificationService.showError('JOB STARTED');
+        this.showNotification('started');
         this.startExportPolling([this.exportJobsService.getById(job.id)]);
         return job.id;
       }),
@@ -107,12 +168,11 @@ export class PollingService implements OnDestroy {
             if (job.send_to_browser) {
               this.downloadFile(job.url);
             } else {
-              this.notificationService.showError('JOB SUCCESS');
+              this.showNotification('success');
             }
           } else if (job.status === 'FAILED') {
-            this.notificationService.showError('JOB FAILED');
+            this.showNotification('error');
           } else {
-            this.notificationService.showError('JOB PENDING');
             nextQueries.push(this.exportJobsService.getById(job.id));
           }
         });
