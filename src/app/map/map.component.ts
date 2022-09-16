@@ -12,10 +12,10 @@ import {
   MapOptions,
   Map,
 } from 'leaflet';
-import { ConfigService, PostsService, PostsV5Service, SessionService } from '@services';
+import { PostsService, PostsV5Service, SessionService } from '@services';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
 import { mapHelper } from '@helpers';
-import { PostComponent } from '../shared/components/post/post.component';
+import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
 import { ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
@@ -43,7 +43,6 @@ export class MapComponent implements OnInit {
     private postsService: PostsService,
     private postsV5Service: PostsV5Service,
     private view: ViewContainerRef,
-    private configService: ConfigService,
     private sessionService: SessionService,
     private dialog: MatDialog,
     private zone: NgZone,
@@ -86,7 +85,7 @@ export class MapComponent implements OnInit {
               if (layer.getPopup()) {
                 layer.openPopup();
               } else {
-                const comp = this.view.createComponent(PostComponent);
+                const comp = this.view.createComponent(PostPreviewComponent);
                 this.postsV5Service.getById(feature.properties.id).subscribe({
                   next: (post) => {
                     comp.setInput('post', post);
