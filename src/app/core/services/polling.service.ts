@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, RendererFactory2 } from '@angular/core';
 import {
   Observable,
   Subject,
@@ -22,11 +22,13 @@ export class PollingService implements OnDestroy {
   stopPolling = new Subject();
   private importFinished = new Subject();
   importFinished$ = this.importFinished.asObservable();
+  private renderer = this.rendererFactory.createRenderer(null, null);
 
   constructor(
     private dataImportService: DataImportService,
     private exportJobsService: ExportJobsService,
     private notificationService: NotificationService,
+    private rendererFactory: RendererFactory2,
   ) {}
 
   getImportJobs() {
@@ -49,9 +51,9 @@ export class PollingService implements OnDestroy {
       )
       .subscribe((result) => {
         console.log('RESULT', result);
-        result.forEach((job) => {
+        result.forEach((job: ExportJobInterface) => {
           if (job.status === 'SUCCESS') {
-            this.notificationService.showError('JOB SUCCEEDED');
+            this.notificationService.showError('JOB SUCCESS SUCCESS');
           } else if (job.status === 'FAILED') {
             this.notificationService.showError('JOB FAILED');
           } else {
@@ -62,6 +64,20 @@ export class PollingService implements OnDestroy {
           this.startImportPolling(nextQueries);
         }
       });
+  }
+
+  private downloadFile(downloadUrl: string) {
+    const URL = window.URL || window.webkitURL;
+
+    const anchor: HTMLAnchorElement = this.renderer.createElement('a');
+    anchor.href = downloadUrl;
+    this.renderer.appendChild(document.body, anchor);
+    anchor.click();
+    anchor.remove();
+
+    setTimeout(() => {
+      URL.revokeObjectURL(downloadUrl);
+    }, 0);
   }
 
   startExport(query: Partial<ExportJobInterface>) {
@@ -88,7 +104,11 @@ export class PollingService implements OnDestroy {
       .subscribe((result) => {
         result.forEach((job) => {
           if (job.status === 'SUCCESS') {
-            this.notificationService.showError('JOB SUCCEEDED');
+            if (job.send_to_browser) {
+              this.downloadFile(job.url);
+            } else {
+              this.notificationService.showError('JOB SUCCESS');
+            }
           } else if (job.status === 'FAILED') {
             this.notificationService.showError('JOB FAILED');
           } else {
