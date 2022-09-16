@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormInterface, ExportJobInterface } from '@models';
-import { ExportJobsService, FormsService, PollingService, SessionService } from '@services';
+import {
+  ExportJobsService,
+  FormsService,
+  NotificationService,
+  PollingService,
+  SessionService,
+} from '@services';
 
 @Component({
   selector: 'app-data-export',
@@ -21,6 +27,7 @@ export class DataExportComponent implements OnInit {
     private sessionService: SessionService,
     private exportJobsService: ExportJobsService,
     private pollingService: PollingService,
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit() {
@@ -82,6 +89,20 @@ export class DataExportComponent implements OnInit {
 
   selectFields() {
     this.exportView = !this.exportView;
+  }
+
+  showTest(q: number) {
+    switch (q) {
+      case 0:
+        this.notificationService.showError('STARTED');
+        break;
+      case 1:
+        this.notificationService.showError('IN PROGRESS');
+        break;
+      case 2:
+        this.notificationService.showError('FINISHED');
+        break;
+    }
   }
 
   private attachFormAttributes() {

@@ -68,6 +68,13 @@
       </mat-tab>
     </mat-tab-group>
   </ng-container>
+
+  <!-- DELETE TESTING -->
+  <button type="button" color="secondary" mat-raised-button (click)="showTest(0)">STARTED</button>
+  <button type="button" color="secondary" mat-raised-button (click)="showTest(1)">
+    IN PROGRESS
+  </button>
+  <button type="button" color="secondary" mat-raised-button (click)="showTest(2)">DONE</button>
 </div>
 <ng-template #fieldSelector>
   <h2 class="form-sheet-title" translate>data_export.select_fields_title</h2>
