@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CategoryInterface, PostResult, SurveyItem } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, SurveysService } from '@services';
-import { CollectionsModalComponent } from '../collections-modal/collections-modal.component';
+import { CollectionsModalComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-post-details',
