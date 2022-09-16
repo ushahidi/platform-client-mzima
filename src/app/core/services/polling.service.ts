@@ -20,7 +20,8 @@ import { EnvService } from './env.service';
   providedIn: 'root',
 })
 export class PollingService implements OnDestroy {
-  stopPolling = new Subject();
+  stopImportPolling = new Subject();
+  stopExportPolling = new Subject();
   private importFinished = new Subject();
   importFinished$ = this.importFinished.asObservable();
   private renderer = this.rendererFactory.createRenderer(null, null);
@@ -49,7 +50,7 @@ export class PollingService implements OnDestroy {
         switchMap(() => forkJoin(queries)),
         retry(),
         share(),
-        takeUntil(this.stopPolling),
+        takeUntil(this.stopImportPolling),
       )
       .subscribe((result) => {
         console.log('RESULT', result);
@@ -106,7 +107,7 @@ export class PollingService implements OnDestroy {
                 color: 'accent',
                 text: 'notify.export.cancel_export',
                 handler: () => {
-                  console.log('cancel export clicked');
+                  this.stopExportPolling.next(true);
                 },
               },
               {
@@ -160,7 +161,7 @@ export class PollingService implements OnDestroy {
         switchMap(() => forkJoin(queries)),
         retry(),
         share(),
-        takeUntil(this.stopPolling),
+        takeUntil(this.stopExportPolling),
       )
       .subscribe((result) => {
         result.forEach((job) => {
@@ -183,6 +184,7 @@ export class PollingService implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.stopPolling.next(true);
+    this.stopImportPolling.next(true);
+    this.stopExportPolling.next(true);
   }
 }
