@@ -1,0 +1,46 @@
+<div class="feed-page">
+  <div
+    class="feed-page__column feed-page__column--feed"
+    [ngClass]="{ 'feed-page__column--full-width': !postDetails && !isPostLoading }"
+  >
+    <div class="feed-page__feed">
+      <strong class="counter" *ngIf="posts?.length">{{ posts.length }} of {{ total }} posts</strong>
+      <ng-container *ngIf="!isLoading || posts?.length; else loader">
+        <ng-container *ngIf="posts.length; else postsEmpty">
+          <app-post-preview
+            class="post"
+            [post]="post"
+            [feedView]="true"
+            *ngFor="let post of posts"
+            (click)="showPostDetails(post.id.toString())"
+            [ngClass]="{ 'post--selected': post.id === postDetails?.id }"
+          >
+          </app-post-preview>
+        </ng-container>
+        <!-- <app-spinner class="feed-loader" *ngIf="isLoading"></app-spinner> -->
+      </ng-container>
+      <button
+        color="primary"
+        mat-raised-button
+        (click)="loadMore()"
+        class="load-more-btn"
+        [disabled]="isLoading"
+        *ngIf="posts?.length && posts.length !== total"
+      >
+        Load more ({{ posts ? total - posts.length : 0 }})
+      </button>
+    </div>
+  </div>
+  <div class="feed-page__column" *ngIf="postDetails || isPostLoading">
+    <app-post-details [feedView]="true" [post]="postDetails" class="post-details">
+    </app-post-details>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>
+
+<ng-template #postsEmpty>
+  <span class="posts-empty">{{ 'post.no_posts_yet' | translate }}</span>
+</ng-template>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MapConfigInterface } from '@models';
-import { lastValueFrom, mergeMap, Observable, tap } from 'rxjs';
+import { forkJoin, lastValueFrom, Observable, tap } from 'rxjs';
 import { SessionService } from './session.service';
 import { EnvService } from './env.service';
 
@@ -50,9 +50,15 @@ export class ConfigService {
   }
 
   getMap(): Observable<MapConfigInterface> {
-    return this.httpClient.get<MapConfigInterface>(
-      `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/map`,
-    );
+    return this.httpClient
+      .get<MapConfigInterface>(
+        `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/map`,
+      )
+      .pipe(
+        tap((data) => {
+          this.sessionService.setConfigurations('map', data);
+        }),
+      );
   }
 
   update(id: string | number, resource: any) {
@@ -63,13 +69,7 @@ export class ConfigService {
   }
 
   initAllConfigurations() {
-    return lastValueFrom(
-      this.getSite().pipe(
-        mergeMap(() => {
-          return lastValueFrom(this.getFeatures());
-        }),
-      ),
-    );
+    return lastValueFrom(forkJoin([this.getSite(), this.getFeatures(), this.getMap()]));
   }
 
   public getProvidersData(): Observable<any> {

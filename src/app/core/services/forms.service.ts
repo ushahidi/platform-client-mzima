@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import { FormAttributeInterface, FormInterface, FormTaskInterface } from '@models';
+import { FormAttributeInterface, FormInterface, FormsResponse, FormTaskInterface } from '@models';
 import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
 import { Observable } from 'rxjs';
@@ -20,6 +20,10 @@ export class FormsService extends ResourceService<any> {
 
   getResourceUrl(): string {
     return 'forms';
+  }
+
+  override get(url?: string | undefined, queryParams?: any): Observable<FormsResponse> {
+    return super.get(url, queryParams);
   }
 
   getFresh(): Observable<FormInterface[]> {

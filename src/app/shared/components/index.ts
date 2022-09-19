@@ -8,3 +8,6 @@ export * from './select-languages-modal/select-languages-modal.component';
 export * from './spinner/spinner.component';
 export * from './confirm-modal/confirm-modal.component';
 export * from './language/language.component';
+export * from './map-with-marker/map-with-marker.component';
+export * from './collections-modal/collections-modal.component';
+export * from './snackbar/snackbar.component';

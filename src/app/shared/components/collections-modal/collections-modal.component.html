@@ -1,0 +1,37 @@
+<button mat-icon-button mat-dialog-close class="modal__close-btn" tabindex="-1">
+  <mat-icon class="fab-button__icon">close</mat-icon>
+</button>
+
+<strong mat-dialog-title>{{ data.title }}</strong>
+
+<form>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'location.search' | translate }}</mat-label>
+    <input matInput placeholder="{{ 'location.search' | translate }}" />
+    <mat-icon matPrefix>search</mat-icon>
+  </mat-form-field>
+</form>
+
+<div mat-dialog-content>
+  <ng-container *ngIf="!loading; else spinner">
+    <div *ngFor="let item of collectionList" class="collection-item">
+      <div class="collection-item__content">
+        <h3 class="collection-item__title">{{ item.name }}</h3>
+        <span class="collection-item__description">{{ item.description }}</span>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>
+    {{ 'app.create_new' | translate }}
+  </button>
+  <button mat-raised-button color="primary" mat-dialog-close>
+    {{ 'form.save_and_close' | translate }}
+  </button>
+</mat-dialog-actions>
+
+<ng-template #spinner>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>

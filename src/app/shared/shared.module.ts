@@ -14,6 +14,9 @@ import {
   ConfirmModalComponent,
   LanguageComponent,
   DonationButtonComponent,
+  MapWithMarkerComponent,
+  CollectionsModalComponent,
+  SnackbarComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import {
@@ -22,6 +25,8 @@ import {
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 import { TranslateModule } from '@ngx-translate/core';
+import { DateAgoPipe } from '@pipes';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 const components = [
   SidebarComponent,
@@ -34,6 +39,10 @@ const components = [
   ConfirmModalComponent,
   SelectLanguagesModalComponent,
   DonationButtonComponent,
+  DateAgoPipe,
+  MapWithMarkerComponent,
+  CollectionsModalComponent,
+  SnackbarComponent,
 ];
 
 const modules = [
@@ -47,6 +56,7 @@ const modules = [
   NgxMatNativeDateModule,
   FormsModule,
   TranslateModule,
+  LeafletModule,
 ];
 
 @NgModule({

@@ -33,7 +33,8 @@ export class SidebarComponent implements OnInit {
   private initMenu() {
     this.menu = [
       { label: 'Maps', router: 'map', icon: 'location_on', visible: true },
-      { label: 'Data', router: 'data', icon: 'storage', visible: true },
+      { label: 'Feed', router: 'feed', icon: 'storage', visible: true },
+      { label: 'Data', router: 'data', icon: 'table', visible: true },
       { label: 'Activity', router: 'activity', icon: 'monitoring', visible: true },
       { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isLoggedIn },
     ];
