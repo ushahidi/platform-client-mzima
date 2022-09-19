@@ -1,9 +1,15 @@
+<div class="alert">
+  <p class="notice">
+    <em translate>You can configure options for data sources, and then turn sources on and off.</em>
+  </p>
+</div>
+
 <div class="data-source-wrapper">
   <div class="data-source">
     <ul class="data-source-item-list">
       <li
         class="data-source-item"
-        [ngClass]="{ 'control-on': dataSource.availableProvider }"
+        [ngClass]="{ 'control-on': dataSource.available_provider, active: dataSource.active }"
         *ngFor="let dataSource of dataSourceList"
         (click)="selectProvider(dataSource)"
       >
@@ -13,47 +19,88 @@
   </div>
 
   <div class="data-source-item-container">
-    <h2>{{ providerName | titlecase }}</h2>
+    <h2>{{ provider?.name | titlecase }}</h2>
     <app-data-source-form
-      [formControls]="formControls"
+      [provider]="provider"
       [surveyList]="surveyList"
       (formControlsChange)="saveProviderData($event)"
+      (formCancel)="getProvidersList()"
     >
-      <ng-template #survey *ngIf="visibleSurvey">
+      <ng-template #survey *ngIf="!provider?.visible_survey">
+        <div class="alert error">
+          <p class="notice">
+            <em translate>You need to configure this data source before you can enable it.</em>
+          </p>
+        </div>
+      </ng-template>
+
+      <ng-template #survey *ngIf="provider?.visible_survey">
         <div class="form-field form-field-flex">
           <p class="form-label" translate>Accept survey submissions from this source</p>
           <mat-slide-toggle
-            [(ngModel)]="isAvailableProvider"
+            [(ngModel)]="provider.available_provider"
             name="accept-survey"
-            (change)="changeAvailableProviders()"
+            (change)="changeAvailableProviders($event)"
           >
           </mat-slide-toggle>
         </div>
         <div class="form-field form-field-flex">
           <p class="form-label" translate>Import to survey</p>
-          <mat-slide-toggle [(ngModel)]="isImportToSurvey" name="import-to-survey">
-          </mat-slide-toggle>
+          <mat-slide-toggle
+            [(ngModel)]="isImportToSurvey"
+            name="import-to-survey"
+          ></mat-slide-toggle>
         </div>
         <div class="source-destination-wrapper" *ngIf="isImportToSurvey">
           <div class="form-field">
             <p class="form-label">
               Each of the survey's fields are listed below. Choose the data from
-              {{ providerName | titlecase }} that you'd like to use to populate each of those
+              {{ provider?.name | titlecase }} that you'd like to use to populate each of those
               fields.
             </p>
             <mat-form-field appearance="standard">
-              <mat-label
-                >{{ 'settings.webhooks.use_webhook_for' | translate }}
-                <!--                  <span *ngIf="!form.get('form_id')?.value">-->
-                <!--                    <strong>{{ 'data_import.which_survey' | translate }}</strong>-->
-                <!--                  </span>-->
-              </mat-label>
-              <mat-select>
+              <mat-label>{{ 'settings.webhooks.use_webhook_for' | translate }} </mat-label>
+              <mat-select (valueChange)="getSurveyAttributes($event)">
                 <mat-option *ngFor="let survey of surveyList" [value]="survey.id">
                   {{ survey.name }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
+          </div>
+
+          <div class="survey-fields" *ngIf="surveyAttributesList?.length">
+            <p>{{ 'survey.choose_survey_field' | translate }}</p>
+            <p>{{ 'survey.choose_survey_field_desc' | translate }}</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>{{ provider?.name | titlecase }} data</th>
+                  <th>{{ 'survey.survey_field' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of provider.inbound_fields">
+                  <td>
+                    <span>{{ item.form_label | titlecase }}</span>
+                  </td>
+                  <td>
+                    <mat-form-field appearance="standard">
+                      <mat-label>Leave empty</mat-label>
+                      <mat-select>
+                        <ng-container *ngFor="let attribute of surveyAttributesList">
+                          <mat-option
+                            *ngIf="item.type === attribute.input"
+                            [value]="attribute?.key"
+                          >
+                            {{ attribute?.label }}
+                          </mat-option>
+                        </ng-container>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </ng-template>

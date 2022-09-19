@@ -71,3 +71,25 @@ a {
 .form-field-flex {
   display: flex;
 }
+
+.alert {
+  display: inline-block;
+  direction: ltr;
+  font-style: italic;
+  line-height: 1.4;
+  border-left: 2px solid #ffc334;
+  background-color: #fff3d7;
+  margin-bottom: 16px;
+  padding: 8px 16px;
+
+  &.error {
+    float: left;
+    clear: left;
+    border-color: #b00f23;
+    background-color: #fac4cb;
+  }
+
+  .notice {
+    margin: 0;
+  }
+}

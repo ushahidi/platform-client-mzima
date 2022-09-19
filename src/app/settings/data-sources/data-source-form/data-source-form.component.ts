@@ -1,5 +1,7 @@
 import {
+  AfterContentChecked,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ContentChild,
   EventEmitter,
@@ -10,7 +12,7 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-data-source-form',
@@ -19,24 +21,36 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataSourceFormComponent implements OnChanges {
+export class DataSourceFormComponent implements AfterContentChecked, OnChanges {
   @Input() surveyList: any[];
-  @Input() formControls: any[];
+  @Input() provider: any;
   @Output() formControlsChange = new EventEmitter();
+  @Output() formCancel = new EventEmitter();
+  @ContentChild('survey') survey!: TemplateRef<any>;
   public form: FormGroup = this.fb.group({});
   private hasChange = false;
 
-  @ContentChild('survey') survey!: TemplateRef<any>;
-
   constructor(
     private fb: FormBuilder, //
+    private ref: ChangeDetectorRef,
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!changes['formControls']?.firstChange) {
+    if (!changes['provider']?.firstChange && !changes['surveyList']) {
       this.removeControls(this.form.controls);
-      this.createControls(this.formControls);
+      this.createForm(this.provider);
+      this.addControlsToForm('id', this.fb.control(this.provider.id, Validators.required));
     }
+  }
+
+  ngAfterContentChecked() {
+    this.ref.detectChanges();
+  }
+
+  private createForm(provider: any) {
+    this.createControls(provider.options);
+    this.createControls(provider.inbound_fields);
+    // console.log(this.form.controls);
   }
 
   private removeControls(controls: any) {
@@ -61,15 +75,19 @@ export class DataSourceFormComponent implements OnChanges {
           }
         }
       }
-
-      this.form.addControl(control.form_label, this.fb.control(control.value, validatorsToAdd));
+      this.addControlsToForm(control.form_label, this.fb.control(control.value, validatorsToAdd));
     }
-    console.log(this.form.value);
   }
 
-  submit() {
+  private addControlsToForm(name: string, control: AbstractControl) {
+    this.form.addControl(name, control);
+  }
+
+  public submit() {
     this.formControlsChange.emit(this.form.value);
   }
 
-  cancel() {}
+  public cancel() {
+    this.formCancel.emit(true);
+  }
 }

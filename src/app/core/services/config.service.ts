@@ -72,15 +72,15 @@ export class ConfigService {
     );
   }
 
-  getProvidersData(): Observable<any> {
-    return this.httpClient.get<MapConfigInterface>(
+  public getProvidersData(): Observable<any> {
+    return this.httpClient.get<any>(
       `${
         this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
       }/data-provider`,
     );
   }
 
-  updateProviders(providers: any) {
+  public updateProviders(providers: any): Observable<any> {
     return this.httpClient.put(
       `${
         this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()

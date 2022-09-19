@@ -1,22 +1,10 @@
-<form [formGroup]="form" *ngIf="form" (ngSubmit)="submit()">
+<form class="flex-column" [formGroup]="form" *ngIf="provider?.options" (ngSubmit)="submit()">
   <ng-container [ngTemplateOutlet]="survey"></ng-container>
 
-  <div class="form-field" *ngFor="let control of formControls">
+  <div class="form-field" *ngFor="let control of provider.options">
     <ng-container *ngIf="control.input === 'read-only-text'">
-      <div *ngIf="control.form_label === 'intro_text'">
-        <p>intro_text</p>
-        <p [innerHTML]="control.description"></p>
-      </div>
-
-      <div *ngIf="control.form_label === 'intro_step1'">
-        <p>intro_step1</p>
-        <p [innerHTML]="control.description"></p>
-      </div>
-
-      <div *ngIf="control.form_label === 'intro_step2'">
-        <p>intro_step2</p>
-        <p [innerHTML]="control.description"></p>
-      </div>
+      <p>{{ control.label }}</p>
+      <p [innerHTML]="control.description"></p>
     </ng-container>
 
     <ng-container *ngIf="control.input !== 'read-only-text'">
@@ -34,7 +22,6 @@
           [type]="control.input"
           required
         />
-        <!--      <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>-->
       </mat-form-field>
 
       <mat-radio-group
@@ -51,9 +38,16 @@
         </mat-radio-button>
       </mat-radio-group>
     </ng-container>
+    <div *ngIf="form.get(control.form_label)?.touched || form.get(control.form_label)?.dirty">
+      <mat-error *ngIf="form.get(control.form_label)?.hasError('required')"
+        >This field is required</mat-error
+      >
+    </div>
   </div>
   <div class="form-controls-panel">
     <button mat-raised-button type="button" (click)="cancel()" translate>Cancel</button>
-    <button mat-raised-button color="primary" type="submit" translate>Save</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" translate>
+      Save
+    </button>
   </div>
 </form>

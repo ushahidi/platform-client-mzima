@@ -30,7 +30,7 @@ export class FormsService extends ResourceService<any> {
     return super.get(`${formId}/stages`).pipe(map((res) => res.results));
   }
 
-  getAttributes(formId: string): Observable<FormAttributeInterface[]> {
-    return super.get(`${formId}/attributes`).pipe(map((res) => res.results));
+  getAttributes(formId: string, queryParams?: any): Observable<FormAttributeInterface[]> {
+    return super.get(`${formId}/attributes`, queryParams).pipe(map((res) => res.results));
   }
 }
