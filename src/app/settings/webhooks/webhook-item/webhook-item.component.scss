@@ -1,4 +1,6 @@
 .form {
+  margin-bottom: 30px;
+
   .form-field {
     margin-bottom: 10px;
 
@@ -35,4 +37,13 @@
   tbody tr:nth-child(odd) {
     background-color: #eee;
   }
+}
+
+.page-content {
+  margin: initial;
+  max-width: inherit;
+}
+
+.form-controls-panel {
+  justify-content: flex-end;
 }

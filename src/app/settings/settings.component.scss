@@ -22,6 +22,14 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 
+  @media (max-width: 1168px) {
+    flex-basis: 300px;
+  }
+
+  @media (max-width: 768px) {
+    flex-basis: 330px;
+  }
+
   & .item-icon-wrapper {
     display: flex;
     align-items: center;
@@ -50,6 +58,14 @@
     margin-bottom: 5px;
     padding-bottom: 5px;
     color: #373e46;
+
+    @media (max-width: 1168px) {
+      font-size: 18px;
+    }
+
+    @media (max-width: 768px) {
+      flex-basis: 22px;
+    }
   }
 
   &-secondary {
