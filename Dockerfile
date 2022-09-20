@@ -26,7 +26,8 @@ ARG HTTP_PORT=8080
 WORKDIR /usr/share/nginx/html
 COPY --from=0 /var/app/dist/platform-client ./
 COPY docker/ /opt/docker/
-RUN sed -i 's/$HTTP_PORT/'$HTTP_PORT'/' /etc/nginx/conf.d/default.conf && \
+RUN cp /opt/docker/nginx.default.conf /etc/nginx/conf.d/default.conf && \
+    sed -i 's/$HTTP_PORT/'$HTTP_PORT'/' /etc/nginx/conf.d/default.conf && \
     mkdir /var/lib/nginx && \
     chgrp -R 0 . /var/lib/nginx /run && \
     chmod -R g+rwX . /var/lib/nginx /run && \
