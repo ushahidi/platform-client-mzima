@@ -1,1 +1,23 @@
-<p>surveys works!</p>
+<div class="page-content">
+  <button type="button" color="primary" mat-raised-button [routerLink]="['create']">
+    Create new
+  </button>
+  <div class="surveys-list" *ngIf="surveys; else loader">
+    <div class="item" *ngFor="let survey of surveys">
+      <h2>{{ survey.name }}</h2>
+      <div [innerText]="survey.description"></div>
+      <p>{{ getLanguages(survey.enabled_languages) }}</p>
+      <button type="button" mat-raised-button (click)="duplicateSurvey(survey)">
+        {{ 'survey.duplicate_survey' | translate }}
+      </button>
+      <button type="button" mat-raised-button (click)="deleteSurvey(survey)">
+        {{ 'survey.delete.delete' | translate }}
+      </button>
+    </div>
+    <h2 *ngIf="surveys.length === 0">No surveys</h2>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-spinner></app-spinner>
+</ng-template>

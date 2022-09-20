@@ -143,4 +143,8 @@ export class SessionService {
     this.currentUser = {};
     this._currentUserData$.next(this.currentUser);
   }
+
+  isFeatureEnabled(feature: keyof FeaturesConfigInterface) {
+    return this.currentConfig.features[feature];
+  }
 }
