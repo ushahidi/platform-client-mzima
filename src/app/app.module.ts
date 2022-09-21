@@ -7,7 +7,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedModule } from './shared';
+import { SharedModule } from '@shared';
 import { ErrorsHandler } from './core/handlers/errors-handler';
 import { AuthInterceptor, HttpsInterceptor } from './core/interceptors';
 import { AuthModule } from './auth/auth.module';
@@ -62,6 +62,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     loadConfigProvider,
     { provide: ErrorHandler, useClass: ErrorsHandler },
     { provide: HTTP_INTERCEPTORS, useClass: HttpsInterceptor, multi: true },
+    // TODO: Try connect from envService
+    // { provide: 'googleTagManagerId', useValue: EnvService.ENV.gtm_key },
+    { provide: 'googleTagManagerId', useValue: 'GTM-TXQLHS5' },
   ],
   bootstrap: [AppComponent],
 })

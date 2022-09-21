@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { SessionService, AuthService } from '@services';
+import { SessionService, AuthService, GtmTrackingService } from '@services';
 import { LoginComponent, RegisterComponent } from '@auth';
 import { MenuInterface, UserMenuInterface } from '@models';
 import { CollectionsComponent } from '@data';
 import { takeUntilDestroy$ } from '@helpers';
+import { EnumGtmEvent, EnumGtmSource } from '@enums';
 
 @Component({
   selector: 'app-sidebar',
@@ -21,6 +22,7 @@ export class SidebarComponent implements OnInit {
     private dialog: MatDialog,
     private sessionService: SessionService,
     private authService: AuthService,
+    private gtmTracking: GtmTrackingService,
   ) {}
 
   ngOnInit() {
@@ -95,5 +97,13 @@ export class SidebarComponent implements OnInit {
   private logout() {
     this.authService.logout();
     this.initMenu(); // Somehow refresh menu
+  }
+
+  registerPage(event: MouseEvent, router: string, label: string) {
+    event.preventDefault();
+    this.gtmTracking.registerEvent(
+      { event: EnumGtmEvent.PageView, source: EnumGtmSource[label] },
+      GtmTrackingService.MapPath(`/${router}`),
+    );
   }
 }

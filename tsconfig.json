@@ -32,6 +32,9 @@
       ],
       "@post": [
         "src/app/post"
+      ],
+      "@enums": [
+        "src/app/core/enums"
       ]
     },
     "outDir": "./dist/out-tsc",
@@ -55,7 +58,8 @@
       "es2020",
       "dom"
     ],
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "suppressImplicitAnyIndexErrors": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

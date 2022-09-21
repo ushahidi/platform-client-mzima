@@ -6,6 +6,7 @@
         class="sidebar-icon-wrapper"
         [routerLink]="item.router"
         routerLinkActive="active"
+        (click)="registerPage($event, item.router, item.label)"
       >
         <mat-icon>{{ item.icon }}</mat-icon>
         <label class="sidebar-icon-label">{{ item.label }}</label>
