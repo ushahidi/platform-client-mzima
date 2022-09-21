@@ -21,12 +21,6 @@ export class GtmDirective implements AfterViewInit {
 
   @HostListener('click', ['$event.target'])
   onClick(): void {
-    console.log(
-      GtmTrackingService.MapGroup(
-        this.appGtm.group || EnumGtmGroup.General,
-        this.elRef.nativeElement.innerText,
-      ),
-    );
     this.gtmTrackingService.registerEvent(
       {
         event: EnumGtmEvent.GroupClick,

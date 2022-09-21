@@ -1,8 +1,8 @@
+/**
+ * event are added here, prefixed with ush to clear head
+ * left side is internal, right side is GTM
+ */
 export enum EnumGtmEvent {
-  /**
-   * event are added here, prefixed with ush to clear head
-   * left side is internal, right side is GTM
-   */
   Login = 'ush_login',
   Search = 'ush_search',
   PageView = 'ush_page_view',
@@ -21,11 +21,11 @@ export enum EnumGtmGroup {
   General = 'general',
 }
 
+/**
+ * any source in web is added here
+ * left side is internal, right side is GTM
+ */
 export enum EnumGtmSource {
-  /**
-   * any source in web is added here
-   * left side is internal, right side is GTM
-   */
   Maps = 'map',
   Feed = 'feed',
   Data = 'data',
