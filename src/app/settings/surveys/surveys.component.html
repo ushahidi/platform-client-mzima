@@ -1,19 +1,46 @@
 <div class="page-content">
-  <button type="button" color="primary" mat-raised-button [routerLink]="['create']">
-    Create new
-  </button>
+  <div class="create-button-container">
+    <button
+      type="button"
+      class="create-button"
+      color="primary"
+      mat-raised-button
+      [routerLink]="['create']"
+    >
+      <mat-icon class="create-icon">create</mat-icon>
+      <span class="create-name">Create new</span>
+    </button>
+  </div>
+
   <div class="surveys-list" *ngIf="surveys; else loader">
-    <div class="item" *ngFor="let survey of surveys">
-      <h2>{{ survey.name }}</h2>
-      <div [innerText]="survey.description"></div>
-      <p>{{ getLanguages(survey.enabled_languages) }}</p>
-      <button type="button" mat-raised-button (click)="duplicateSurvey(survey)">
-        {{ 'survey.duplicate_survey' | translate }}
-      </button>
-      <button type="button" mat-raised-button (click)="deleteSurvey(survey)">
-        {{ 'survey.delete.delete' | translate }}
-      </button>
-    </div>
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel *ngFor="let survey of surveys">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="survey-title">
+            <strong>{{ survey.name }}</strong>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="survey-description" [innerText]="survey.description"></div>
+        <p class="survey-languages">{{ getLanguages(survey.enabled_languages) }}</p>
+        <div class="item-button-container">
+          <button type="button" class="item-button" mat-button (click)="duplicateSurvey(survey)">
+            <mat-icon class="item-button-icon">file_copy</mat-icon>
+            <span>{{ 'survey.duplicate_survey' | translate }}</span>
+          </button>
+          <button
+            type="button"
+            class="item-button"
+            mat-button
+            color="accent"
+            (click)="deleteSurvey(survey)"
+          >
+            <mat-icon class="item-button-icon">delete</mat-icon>
+            <span>{{ 'survey.delete.delete' | translate }}</span>
+          </button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
     <h2 *ngIf="surveys.length === 0">No surveys</h2>
   </div>
 </div>

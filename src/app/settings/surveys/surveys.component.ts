@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SurveyItem, SurveyItemEnabledLanguages } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { SurveysService } from '@services';
@@ -7,6 +7,7 @@ import { SurveysService } from '@services';
   selector: 'app-surveys',
   templateUrl: './surveys.component.html',
   styleUrls: ['./surveys.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SurveysComponent implements OnInit {
   surveys: SurveyItem[];

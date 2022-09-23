@@ -1,7 +1,42 @@
+.create-button {
+  text-transform: uppercase;
+  margin-bottom: 30px;
+
+  &-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .create-icon {
+    font-size: 18px;
+    margin-right: 5px;
+  }
+}
+
 .surveys-list {
-  .item {
-    border: 2px solid black;
+  .survey {
     margin-bottom: 20px;
     padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    &-name {
+    }
+    &-description {
+      margin-bottom: 5px;
+      font-style: italic;
+    }
+    &-language {
+    }
+  }
+}
+
+.item-button-container {
+  display: flex;
+  justify-content: flex-end;
+
+  button.mat-button > span.mat-button-wrapper {
+    .item-button-icon {
+      font-size: 18px;
+    }
   }
 }
