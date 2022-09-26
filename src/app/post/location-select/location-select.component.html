@@ -15,21 +15,21 @@
   </form>
 </div>
 
-<span class="instructions"
-  >You can search or click the area of map where you want to place the marker.</span
->
-<mat-grid-list cols="2" gutterSize="32" rowHeight="58">
+<span class="instructions">
+  You can search or click the area of map where you want to place the marker.
+</span>
+<mat-grid-list cols="2" gutterSize="32" rowHeight="58" *ngIf="location">
   <mat-grid-tile>
     <mat-form-field appearance="standard">
       <mat-label>Lat</mat-label>
-      <input matInput />
+      <input matInput [(ngModel)]="location.lat" />
     </mat-form-field>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <mat-form-field appearance="standard">
       <mat-label>Long</mat-label>
-      <input matInput />
+      <input matInput [(ngModel)]="location.lng" />
     </mat-form-field>
   </mat-grid-tile>
 </mat-grid-list>
