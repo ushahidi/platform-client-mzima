@@ -1,0 +1,263 @@
+<form
+  novalidate
+  [formGroup]="form"
+  class="search-form"
+  (ngChange)="formChanged($event)"
+  [ngClass]="{ 'search-form--dropdown-open': onFocus || isDropdownOpen }"
+>
+  <div class="search-form__control">
+    <input
+      type="text"
+      placeholder="Search"
+      class="form-control"
+      (blur)="inputOnBlur()"
+      (focus)="inputOnFocus()"
+    />
+    <mat-icon class="search-form__control__icon">search</mat-icon>
+  </div>
+  <button
+    color="dark"
+    matBadge="8"
+    mat-raised-button
+    class="sorting-btn"
+    matBadgeColor="primary"
+    matBadgePosition="before"
+    (click)="toggleDropdown()"
+  >
+    {{ 'app.sort_and_filter' | translate }}
+    <mat-icon>
+      <svg class="iconic" role="img">
+        <use xlink:href="assets/sprites.svg#funnel"></use>
+      </svg>
+    </mat-icon>
+  </button>
+
+  <span class="search-form__backdrop" (click)="toggleDropdown(false)"></span>
+
+  <div class="search-form__dropdown" (click)="toggleDropdown(true)">
+    <div class="search-form__dropdown__group" *ngIf="activeSavedSearch || activeFilters">
+      <div class="active-filters active-filters--saved" *ngIf="activeSavedSearch">
+        <div class="active-filters__row">
+          <button color="dark" mat-raised-button class="active-filter">
+            <i>{{ 'app.saved_search' | translate }}:</i> {{ activeSavedSearch.name | translate }}
+            <mat-icon class="active-filter__icon" (click)="resetSavedFilter()">
+              <svg class="iconic" role="img">
+                <use xlink:href="assets/sprites.svg#circle-x"></use>
+              </svg>
+            </mat-icon>
+          </button>
+        </div>
+        <div class="active-filters__row" *ngFor="let filter of activeSavedSearch.filter | keyvalue">
+          <button
+            color="dark"
+            mat-raised-button
+            class="active-filter"
+            *ngIf="!_array.isArray(filter.value)"
+          >
+            <i>{{ 'global_filter.filter_tabs.' + filter.key | translate }}:</i>
+            {{ filter.value | filterValue: filter.key }}
+            <mat-icon class="active-filter__icon" (click)="resetSavedFilter()">
+              <svg class="iconic" role="img">
+                <use xlink:href="assets/sprites.svg#circle-x"></use>
+              </svg>
+            </mat-icon>
+          </button>
+
+          <ng-container *ngIf="_array.isArray(filter.value)">
+            <button
+              color="dark"
+              mat-raised-button
+              class="active-filter"
+              *ngFor="let value of filter.value"
+            >
+              <i>{{ 'global_filter.filter_tabs.' + filter.key | translate }}:</i>
+              {{ value | filterValue: filter.key }}
+              <mat-icon class="active-filter__icon" (click)="resetSavedFilter()">
+                <svg class="iconic" role="img">
+                  <use xlink:href="assets/sprites.svg#circle-x"></use>
+                </svg>
+              </mat-icon>
+            </button>
+          </ng-container>
+        </div>
+      </div>
+      <div class="active-filters" *ngIf="activeFilters?.length">
+        <button
+          color="dark"
+          mat-raised-button
+          class="active-filter"
+          *ngFor="let filter of activeFilters"
+        >
+          <i>{{ filter.name }}:</i> {{ filter.value }}
+          <mat-icon class="active-filter__icon">
+            <svg class="iconic" role="img">
+              <use xlink:href="assets/sprites.svg#circle-x"></use>
+            </svg>
+          </mat-icon>
+        </button>
+      </div>
+      <div
+        class="save-filters-button"
+        *ngIf="activeFilters?.length || (activeSavedSearch && form.dirty)"
+      >
+        <button color="primary" mat-raised-button (click)="saveSearch(!!activeSavedSearch)">
+          <ng-container *ngIf="!activeSavedSearch">{{
+            'set.save_savedsearch' | translate
+          }}</ng-container>
+          <ng-container *ngIf="activeSavedSearch">{{
+            'set.update_savedsearch' | translate
+          }}</ng-container>
+        </button>
+      </div>
+    </div>
+
+    <!-- <div class="search-form__dropdown__group" *ngIf="isMapView">
+      <h4 class="dropdown-menu-title">{{ 'post.search_results' | translate }}</h4>
+      <p>{{ 'post.posts_total_map' | translate: { posts: onMapPostsCount, total_nb: total } }}</p>
+    </div> -->
+
+    <div class="search-form__dropdown__group">
+      <h4 class="dropdown-menu-title">{{ 'app.sort_by' | translate }}</h4>
+      <mat-form-field appearance="standard">
+        <mat-select formControlName="sorting" [compareWith]="setSortingValue">
+          <mat-option *ngFor="let option of sortingOptions" [value]="option.value">
+            {{ option.orderBy | translate }} ( {{ option.order | translate }} )
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-checkbox formControlName="order_unlocked_on_top">{{
+        'global_filter.sort.unlockedOnTop.filter_type_tag' | translate
+      }}</mat-checkbox>
+    </div>
+
+    <div class="search-form__dropdown__group">
+      <h4 class="dropdown-menu-title">{{ 'app.filter_by' | translate }}</h4>
+
+      <ng-container *ngIf="savedsearches?.length">
+        <h5>{{ 'app.saved_search' | translate }}</h5>
+        <mat-form-field appearance="standard">
+          <mat-select
+            [(ngModel)]="activeSavedSearchValue"
+            [ngModelOptions]="{ standalone: true }"
+            (selectionChange)="applySavedFilter($event)"
+            [placeholder]="'app.select_one' | translate"
+          >
+            <mat-option>{{ 'graph.none' | translate }}</mat-option>
+            <mat-option *ngFor="let option of savedsearches" [value]="option.id">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <h5>{{ 'global_filter.status' | translate }}</h5>
+      <mat-form-field appearance="standard">
+        <mat-select multiple formControlName="status" [placeholder]="'nav.all' | translate">
+          <mat-option [value]="option.value" *ngFor="let option of statuses">
+            {{ option.name | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <h5>{{ 'app.categories' | translate }}</h5>
+      <mat-form-field appearance="standard">
+        <input
+          matInput
+          readonly
+          [matMenuTriggerFor]="categoriesMenu"
+          [placeholder]="'nav.all' | translate"
+          [value]="getCategoriesName(form.controls['categories'].value)"
+        />
+        <div matSuffix class="mat-select-arrow ng-tns-c117-17"></div>
+      </mat-form-field>
+
+      <mat-menu #categoriesMenu="matMenu">
+        <mat-tree
+          [dataSource]="dataSource"
+          [treeControl]="treeControl"
+          class="multiselect-dropdown"
+        >
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+            <mat-checkbox
+              [value]="node.id"
+              (click)="$event.stopPropagation()"
+              (change)="onCheckChange($event, 'categories')"
+            >
+              {{ node.name }}
+            </mat-checkbox>
+          </mat-tree-node>
+          <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+            <mat-checkbox
+              [value]="node.id"
+              (click)="$event.stopPropagation()"
+              (change)="onCheckChange($event, 'categories')"
+            >
+              {{ node.name }}
+            </mat-checkbox>
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+              </mat-icon>
+            </button>
+          </mat-tree-node>
+        </mat-tree>
+      </mat-menu>
+
+      <h5>{{ 'app.surveys' | translate }}</h5>
+      <mat-form-field appearance="standard">
+        <mat-select multiple formControlName="surveys" [placeholder]="'nav.all' | translate">
+          <mat-option [value]="option.id" *ngFor="let option of surveyList">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <h5>{{ 'global_filter.source' | translate }}</h5>
+      <mat-form-field appearance="standard">
+        <mat-select multiple formControlName="sources" [placeholder]="'nav.all' | translate">
+          <mat-option [value]="option.value" *ngFor="let option of sources">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <h5>{{ 'global_filter.date_range' | translate }}</h5>
+      <div class="form-group">
+        <mat-form-field appearance="standard">
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" formControlName="date_after" />
+            <input matEndDate placeholder="End date" formControlName="date_before" />
+          </mat-date-range-input>
+          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+
+      <h5>{{ 'global_filter.location' | translate }}</h5>
+      <mat-form-field appearance="standard" class="location-control">
+        <mat-icon matPrefix class="location-control__icon">
+          <svg class="iconic" role="img" style="left: 8px">
+            <use
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xlink:href="assets/sprites.svg#location"
+            ></use>
+          </svg>
+        </mat-icon>
+        <input
+          matInput
+          formControlName="location"
+          [placeholder]="'global_filter.location_placeholder' | translate"
+        />
+        <div matSuffix>
+          <mat-select formControlName="location_distance" class="location-control__distance">
+            <mat-option [value]="option.value" *ngFor="let option of distanceOptions">
+              {{ option.label | translate }}
+            </mat-option>
+          </mat-select>
+        </div>
+      </mat-form-field>
+    </div>
+  </div>
+</form>

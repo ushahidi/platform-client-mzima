@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { PostResult } from '@models';
+import { GeoJsonFilter, PostResult } from '@models';
 import { PostsService, SessionService } from '@services';
 
 @Component({
@@ -20,7 +20,7 @@ export class DataComponent implements OnInit, AfterViewInit {
   showFirstLastButtons = false;
   isLoading = false;
 
-  params = {
+  params: GeoJsonFilter = {
     has_location: 'all',
     limit: 20,
     offset: 0,
@@ -55,10 +55,10 @@ export class DataComponent implements OnInit, AfterViewInit {
 
   handlePageEvent(event: PageEvent) {
     this.pageSize = event.pageSize;
-    if (event.pageIndex > this.pageIndex) {
+    if (this.params.offset && event.pageIndex > this.pageIndex) {
       this.params.offset = this.pageSize + this.params.offset;
     }
-    if (event.pageIndex < this.pageIndex) {
+    if (this.params.offset && event.pageIndex < this.pageIndex) {
       this.params.offset = this.params.offset - this.pageSize;
     }
     this.pageIndex = event.pageIndex;

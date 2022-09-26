@@ -15,10 +15,10 @@ import {
 import { PostsService, PostsV5Service, SessionService } from '@services';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
 import { mapHelper } from '@helpers';
-import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
 import { ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
+import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
 
 @Component({
   selector: 'app-map',
@@ -26,6 +26,11 @@ import { PostDetailsModalComponent } from './post-details-modal/post-details-mod
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
+  private params = {
+    limit: 200,
+    offset: 0,
+    created_before_by_id: '',
+  };
   postsCollection: GeoJsonPostsResponse;
   mapLayers: any[] = [];
   mapReady = false;
@@ -64,7 +69,13 @@ export class MapComponent implements OnInit {
     this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
 
     this.mapReady = true;
-    this.getPostsGeoJson();
+    // this.getPostsGeoJson();
+
+    this.postsService.postsFilters$.subscribe({
+      next: () => {
+        this.getPostsGeoJson();
+      },
+    });
   }
 
   onMapReady(map: Map) {
@@ -72,7 +83,7 @@ export class MapComponent implements OnInit {
   }
 
   getPostsGeoJson() {
-    this.postsService.getGeojson().subscribe((posts) => {
+    this.postsService.getGeojson(this.params).subscribe((posts) => {
       const geoPosts = geoJSON(posts, {
         pointToLayer: mapHelper.pointToLayer,
         onEachFeature: (feature, layer) => {

@@ -8,13 +8,19 @@ export interface GeoJsonPostsResponse {
 }
 
 export interface GeoJsonFilter {
-  has_location: string;
-  limit: number;
-  offset: number;
-  order: 'desc' | 'asc';
-  order_unlocked_on_top: boolean;
-  orderby: string;
-  reactToFilters: boolean;
+  has_location?: string;
+  limit?: number;
+  offset?: number;
+  order?: 'desc' | 'asc';
+  order_unlocked_on_top?: boolean;
+  orderby?: string;
+  reactToFilters?: boolean;
+  date_after?: Date | string;
+  date_before?: Date | string;
+  'source[]'?: string[];
+  'tags[]'?: string[];
+  'status[]'?: string[];
+  created_before_by_id?: string;
 }
 
 export interface PostPropertiesInterface {
