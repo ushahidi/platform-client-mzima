@@ -146,8 +146,7 @@
     </div>
 
     <div class="form-controls-panel">
-      <button color="primary" mat-raised-button>
-        <!-- [disabled]="form.invalid || form.disabled" -->
+      <button color="primary" mat-raised-button [disabled]="form.invalid || form.disabled">
         {{ 'app.submit' | translate }}
       </button>
     </div>

@@ -16,7 +16,7 @@ dayjs.extend(timezone);
 export class CreateComponent implements OnInit {
   public data: any;
   public fields: any[] = [];
-  public form: FormGroup = this.formBuilder.group({});
+  public form: FormGroup;
   public description: string;
   public title: string;
   private formId?: number;
