@@ -1,0 +1,39 @@
+<div class="create-form__topbar">
+  <div class="create-form__topbar__tabs">
+    <button
+      type="button"
+      mat-raised-button
+      class="create-form__topbar__btn"
+      [disabled]="!activeLanguages.length"
+      (click)="chooseTranslation(defaultLanguage?.code)"
+      [color]="
+        !selectedTranslation || selectedTranslation === defaultLanguage?.code ? 'primary' : null
+      "
+    >
+      {{ defaultLanguage?.name }} (default)
+    </button>
+    <ng-container *ngFor="let language of activeLanguages">
+      <button
+        type="button"
+        mat-raised-button
+        class="create-form__topbar__btn"
+        (click)="chooseTranslation(language.code)"
+        [color]="selectedTranslation === language.code ? 'primary' : null"
+      >
+        {{ language.name }}
+        <mat-icon (click)="deleteTranslation($event, language.code)">close</mat-icon>
+      </button>
+    </ng-container>
+  </div>
+
+  <button
+    type="button"
+    color="primary"
+    mat-raised-button
+    (click)="addTranslation()"
+    class="create-form__topbar__btn create-form__topbar__btn--add"
+  >
+    <mat-icon>add</mat-icon>
+    {{ 'translations.add_translation_lang' | translate }}
+  </button>
+</div>

@@ -7,9 +7,14 @@
     justify-content: flex-end;
   }
 
-  .create-icon {
+  &-icon {
     font-size: 18px;
     margin-right: 5px;
+  }
+
+  &-name {
+    line-height: 1.35;
+    letter-spacing: 1px;
   }
 }
 
