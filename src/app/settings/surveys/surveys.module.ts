@@ -4,11 +4,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 import { SurveysRoutingModule } from './surveys-routing.module';
 import { SurveysComponent } from './surveys.component';
-import { CreateSurveyComponent } from './create-survey/create-survey.component';
+import { SurveyItemComponent } from './survey-item/survey-item.component';
 import { SharedModule, TranslationsSwitchModule } from '@shared';
 
 @NgModule({
-  declarations: [SurveysComponent, CreateSurveyComponent],
+  declarations: [SurveysComponent, SurveyItemComponent],
   imports: [
     CommonModule,
     SharedModule,

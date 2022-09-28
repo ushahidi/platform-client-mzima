@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LanguageInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,12 +11,12 @@ import { SelectLanguagesModalComponent } from '../select-languages-modal/select-
   styleUrls: ['./translations-switch.component.scss'],
 })
 export class TranslationsSwitchComponent {
-  @Output() chooseTranslationChange = new EventEmitter();
-  @Output() deleteTranslationChange = new EventEmitter();
-  @Output() addTranslationChange = new EventEmitter();
+  @Input() public activeLanguages: LanguageInterface[] = [];
+  @Output() private chooseTranslationChange = new EventEmitter();
+  @Output() private deleteTranslationChange = new EventEmitter();
+  @Output() private addTranslationChange = new EventEmitter();
   public languages: LanguageInterface[] = this.languageService.getLanguages();
   public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
-  public activeLanguages: LanguageInterface[] = [];
   public selectedTranslation?: string;
 
   constructor(

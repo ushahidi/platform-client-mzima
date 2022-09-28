@@ -24,7 +24,7 @@
         <div class="survey-description" [innerText]="survey.description"></div>
         <p class="survey-languages">{{ getLanguages(survey.enabled_languages) }}</p>
         <div class="item-button-container">
-          <button type="button" class="item-button" mat-button (click)="detail(survey)">
+          <button type="button" class="item-button" mat-button [routerLink]="['update', survey.id]">
             <mat-icon class="item-button-icon">folder</mat-icon>
             <span>{{ 'survey.view_detail' | translate }}</span>
           </button>

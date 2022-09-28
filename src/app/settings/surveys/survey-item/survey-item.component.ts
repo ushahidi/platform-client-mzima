@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SurveysService } from '@services';
 
 @Component({
-  selector: 'app-create-survey',
-  templateUrl: './create-survey.component.html',
-  styleUrls: ['./create-survey.component.scss'],
+  selector: 'app-survey-item',
+  templateUrl: './survey-item.component.html',
+  styleUrls: ['./survey-item.component.scss'],
 })
-export class CreateSurveyComponent implements OnInit {
+export class SurveyItemComponent implements OnInit {
   public selectLanguageCode: string;
   public description: string;
   public name: string;
@@ -16,26 +18,47 @@ export class CreateSurveyComponent implements OnInit {
     color: [null],
     enabled_languages: this.formBuilder.group({
       default: ['en'],
-      available: this.formBuilder.array(this.buildArrayControl(null)),
+      available: [],
     }),
-    tasks: this.formBuilder.array(this.buildArrayControl(null)), // array
+    tasks: [],
     require_approval: [true],
     everyone_can_create: [true],
-    translations: [], //{} or "translations":{"aln":{"name": "name aln", "description":"desc aln"}}
+    translations: [{}],
+    can_create: [],
+    disabled: [false],
+    hide_author: [false],
+    hide_location: [false],
+    hide_time: [false],
+    targeted_survey: [false],
+    type: [''],
   });
   public isEdit = false;
 
   constructor(
     private formBuilder: FormBuilder, //
+    private router: Router,
+    private route: ActivatedRoute,
+    private surveysService: SurveysService,
   ) {}
 
-  private buildArrayControl(data: any[] | null) {
-    console.log('buildArrayControl > data ', data);
-    return [];
+  public ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isEdit = !!id;
+      this.surveysService.getById(id).subscribe({
+        next: (response) => {
+          this.updateForm(response.result);
+        },
+      });
+    }
   }
 
-  public ngOnInit(): void {
-    console.log('CreateSurveyComponent');
+  private updateForm(data: any) {
+    Object.keys(data).forEach((key) => {
+      if (this.form.controls[key]) {
+        this.form.controls[key].patchValue(data[key]);
+      }
+    });
   }
 
   private getFormControl(name: string) {
@@ -65,7 +88,7 @@ export class CreateSurveyComponent implements OnInit {
     this.name = this.description = '';
   }
 
-  setTranslates(languageCode: string, field: string, event: any) {
+  public setTranslates(languageCode: string, field: string, event: any) {
     const translations = this.getFormControl('translations').value;
     for (const key in translations) {
       if (key === languageCode) {
@@ -100,7 +123,11 @@ export class CreateSurveyComponent implements OnInit {
     console.log('save > form ', this.form.value);
   }
 
+  public update() {
+    console.log('update > form ', this.form.value);
+  }
+
   public cancel() {
-    console.log('cancel');
+    this.router.navigate(['settings/surveys']);
   }
 }

@@ -4,7 +4,7 @@
       type="button"
       mat-raised-button
       class="create-form__topbar__btn"
-      [disabled]="!activeLanguages.length"
+      [disabled]="!activeLanguages?.length"
       (click)="chooseTranslation(defaultLanguage?.code)"
       [color]="
         !selectedTranslation || selectedTranslation === defaultLanguage?.code ? 'primary' : null

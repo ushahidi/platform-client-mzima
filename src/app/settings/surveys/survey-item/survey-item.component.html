@@ -1,5 +1,6 @@
-<form novalidate [formGroup]="form" (ngSubmit)="save()">
+<form novalidate [formGroup]="form" (ngSubmit)="isEdit ? update() : save()">
   <app-translations-switch
+    [activeLanguages]="this.form.get('enabled_languages')?.value.available"
     (addTranslationChange)="setAvailableLanguages($event)"
     (chooseTranslationChange)="chooseTranslation($event)"
     (deleteTranslationChange)="deleteTranslation($event)"
@@ -30,24 +31,28 @@
     <mat-label>
       {{ 'survey.description' | translate }}
     </mat-label>
-    <input
+    <textarea
+      rows="5"
       matInput
       [placeholder]="'survey.description' | translate"
       formControlName="description"
-    />
+    >
+    </textarea>
   </mat-form-field>
 
   <mat-form-field appearance="standard" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
     <mat-label> {{ 'survey.description' | translate }} ({{ selectLanguageCode }}) </mat-label>
-    <input
+    <textarea
+      rows="5"
       matInput
       [placeholder]="'survey.description' | translate"
       [value]="this.form.get('translations')?.value[selectLanguageCode]?.description"
       (change)="setTranslates(selectLanguageCode, 'description', $event)"
-    />
+    >
+    </textarea>
   </mat-form-field>
 
-  <div mat-dialog-actions align="end">
+  <div mat-dialog-actions align="end" class="mat-dialog-actions">
     <button mat-raised-button type="button" (click)="cancel()">
       {{ 'app.cancel' | translate }}
     </button>

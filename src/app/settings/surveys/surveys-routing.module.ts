@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreateSurveyComponent } from './create-survey/create-survey.component';
+import { SurveyItemComponent } from './survey-item/survey-item.component';
 
 import { SurveysComponent } from './surveys.component';
 
 const routes: Routes = [
   { path: '', component: SurveysComponent },
-  { path: 'create', component: CreateSurveyComponent, data: { breadcrumb: 'Create' } },
-  { path: 'update/:id', component: CreateSurveyComponent, data: { breadcrumb: 'Update' } },
+  { path: 'create', component: SurveyItemComponent, data: { breadcrumb: 'Create' } },
+  { path: 'update/:id', component: SurveyItemComponent, data: { breadcrumb: 'Update' } },
 ];
 
 @NgModule({
