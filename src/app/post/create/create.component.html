@@ -1,24 +1,36 @@
 <!-- FIXME: SOMEHOW I CANT ADD FORM TAG HERE -->
 
 <div class="page-content" [ngStyle]="{ '--color': data?.result?.color }">
-  <ng-container *ngIf="fields.length; else spinner">
+  <form
+    novalidate
+    [formGroup]="form"
+    (ngSubmit)="submitPost()"
+    *ngIf="form && fields.length; else spinner"
+  >
     <div class="field" *ngFor="let field of fields">
       <h3>{{ field.label }} <span class="color-accent" *ngIf="field.required">*</span></h3>
-      <mat-label class="field__instruction" *ngIf="field.instructions">{{
-        field.instructions
-      }}</mat-label>
+      <mat-label class="field__instruction" *ngIf="field.instructions">
+        {{ field.instructions }}
+      </mat-label>
 
       <ng-container
         *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
       >
         <mat-form-field appearance="standard">
-          <input matInput [value]="field.default" />
+          <input
+            matInput
+            [formControlName]="field.key"
+            *ngIf="field.type !== 'title'; else titleInput"
+          />
+          <ng-template #titleInput>
+            <input matInput [formControlName]="field.key" [(ngModel)]="title" />
+          </ng-template>
         </mat-form-field>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
         <mat-form-field appearance="standard">
-          <textarea matInput [value]="field.default"></textarea>
+          <textarea matInput [formControlName]="field.key" [(ngModel)]="description"></textarea>
         </mat-form-field>
       </ng-container>
 
@@ -31,7 +43,12 @@
 
         <ng-container *ngFor="let option of field.options">
           <div class="tag-item" *ngIf="!option.parent_id" [ngStyle]="{ '--color': option.color }">
-            <mat-checkbox [checked]="option.value" [disabled]="!!option.children?.length">
+            <mat-checkbox
+              [value]="option.id"
+              [checked]="option.value"
+              [disabled]="!!option.children?.length"
+              (change)="onCheckChange($event, field.key)"
+            >
               {{ option.tag }}
             </mat-checkbox>
           </div>
@@ -40,8 +57,12 @@
             <ng-container *ngFor="let option of getOptionsByParentId(field, option.id)">
               <div class="tag-item" [ngStyle]="{ '--color': option.color }">
                 <mat-checkbox
+                  [value]="option.id"
                   [checked]="option.value"
-                  (change)="checkGroupIsChecked($event.checked, field, option)"
+                  (change)="
+                    checkGroupIsChecked($event.checked, field, option);
+                    onCheckChange($event, field.key)
+                  "
                 >
                   {{ option.tag }}
                 </mat-checkbox>
@@ -53,7 +74,7 @@
 
       <ng-container *ngIf="field.input === 'date'">
         <mat-form-field appearance="standard">
-          <input matInput [matDatepicker]="picker" />
+          <input matInput [matDatepicker]="picker" [formControlName]="field.key" />
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -61,14 +82,14 @@
 
       <ng-container *ngIf="field.input === 'datetime'">
         <mat-form-field appearance="standard">
-          <input matInput [ngxMatDatetimePicker]="picker" />
+          <input matInput [ngxMatDatetimePicker]="picker" [formControlName]="field.key" />
           <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
         </mat-form-field>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'radio'">
-        <mat-radio-group [attr.aria-label]="field.label">
+        <mat-radio-group [attr.aria-label]="field.label" [formControlName]="field.key">
           <div class="radio-button" *ngFor="let option of field.options">
             <mat-radio-button [value]="option">
               {{ option }}
@@ -87,7 +108,7 @@
 
       <ng-container *ngIf="field.input === 'select'">
         <mat-form-field appearance="standard">
-          <mat-select>
+          <mat-select [formControlName]="field.key">
             <mat-option *ngFor="let option of field.options" [value]="option">
               {{ option }}
             </mat-option>
@@ -97,13 +118,13 @@
 
       <ng-container *ngIf="field.input === 'number'">
         <mat-form-field appearance="standard">
-          <input matInput [value]="field.default" type="number" />
+          <input matInput [formControlName]="field.key" type="number" />
         </mat-form-field>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'upload'">
         <button type="button" mat-raised-button (click)="fileInput.click()">Add photo</button>
-        <input hidden #fileInput type="file" id="file" />
+        <input hidden #fileInput type="file" id="file" [formControlName]="field.key" />
       </ng-container>
 
       <ng-container *ngIf="field.input === 'video'">
@@ -120,10 +141,16 @@
       </ng-container>
 
       <ng-container *ngIf="field.input === 'location'">
-        <app-location-select></app-location-select>
+        <app-location-select [zoom]="12" [formControlName]="field.key"> </app-location-select>
       </ng-container>
     </div>
-  </ng-container>
+
+    <div class="form-controls-panel">
+      <button color="primary" mat-raised-button [disabled]="form.invalid || form.disabled">
+        {{ 'app.submit' | translate }}
+      </button>
+    </div>
+  </form>
 </div>
 
 <ng-template #spinner>
