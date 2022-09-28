@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LanguageInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,13 +10,14 @@ import { SelectLanguagesModalComponent } from '../select-languages-modal/select-
   templateUrl: './translations-switch.component.html',
   styleUrls: ['./translations-switch.component.scss'],
 })
-export class TranslationsSwitchComponent {
-  @Input() public activeLanguages: LanguageInterface[] = [];
+export class TranslationsSwitchComponent implements OnInit {
+  @Input() public selectedLanguages: string[] = [];
   @Output() private chooseTranslationChange = new EventEmitter();
   @Output() private deleteTranslationChange = new EventEmitter();
   @Output() private addTranslationChange = new EventEmitter();
   public languages: LanguageInterface[] = this.languageService.getLanguages();
   public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
+  public activeLanguages: LanguageInterface[] = [];
   public selectedTranslation?: string;
 
   constructor(
@@ -25,6 +26,12 @@ export class TranslationsSwitchComponent {
     private translate: TranslateService,
     private dialog: MatDialog,
   ) {}
+
+  ngOnInit() {
+    for (const langCode of this.selectedLanguages) {
+      this.setActiveLanguages(langCode);
+    }
+  }
 
   public chooseTranslation(languageCode?: string): void {
     this.selectedTranslation = languageCode;
@@ -45,13 +52,17 @@ export class TranslationsSwitchComponent {
       next: (result: string[]) => {
         if (!result) return;
         result.map((langCode) => {
-          const language = this.languages.find((lang) => lang.code === langCode);
-          if (this.activeLanguages.find((lang) => lang.code === langCode) || !language) return;
-          this.activeLanguages.push(language);
+          this.setActiveLanguages(langCode);
           this.addTranslationChange.emit(langCode);
         });
       },
     });
+  }
+
+  private setActiveLanguages(langCode: string) {
+    const language = this.languages.find((lang) => lang.code === langCode);
+    if (this.activeLanguages.find((lang) => lang.code === langCode) || !language) return;
+    this.activeLanguages.push(language);
   }
 
   public async deleteTranslation(event: Event, languageCode?: string): Promise<void> {

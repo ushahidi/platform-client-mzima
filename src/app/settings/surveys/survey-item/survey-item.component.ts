@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SurveysService } from '@services';
 
@@ -18,13 +18,13 @@ export class SurveyItemComponent implements OnInit {
     color: [null],
     enabled_languages: this.formBuilder.group({
       default: ['en'],
-      available: [],
+      available: [[]],
     }),
-    tasks: [],
+    tasks: [[]],
     require_approval: [true],
     everyone_can_create: [true],
     translations: [{}],
-    can_create: [],
+    can_create: [[]],
     disabled: [false],
     hide_author: [false],
     hide_location: [false],
@@ -63,10 +63,6 @@ export class SurveyItemComponent implements OnInit {
 
   private getFormControl(name: string) {
     return this.form.controls[name];
-  }
-
-  get availableLanguages() {
-    return this.getFormControl('enabled_languages').value.available as FormArray;
   }
 
   public setAvailableLanguages(languageCode: string): void {

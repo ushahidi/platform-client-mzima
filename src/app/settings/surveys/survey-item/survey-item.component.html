@@ -1,6 +1,6 @@
 <form novalidate [formGroup]="form" (ngSubmit)="isEdit ? update() : save()">
   <app-translations-switch
-    [activeLanguages]="this.form.get('enabled_languages')?.value.available"
+    [selectedLanguages]="this.form.get('enabled_languages')?.value.available"
     (addTranslationChange)="setAvailableLanguages($event)"
     (chooseTranslationChange)="chooseTranslation($event)"
     (deleteTranslationChange)="deleteTranslation($event)"
