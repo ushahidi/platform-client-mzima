@@ -23,6 +23,14 @@
 
       &--add {
         margin-left: 24px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      &.mat-button-base .mat-icon {
+        font-size: 18px;
+        height: 20px;
+        width: 20px;
       }
     }
   }

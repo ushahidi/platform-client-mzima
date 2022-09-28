@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LanguageInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,6 +9,7 @@ import { SelectLanguagesModalComponent } from '../select-languages-modal/select-
   selector: 'app-translations-switch',
   templateUrl: './translations-switch.component.html',
   styleUrls: ['./translations-switch.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TranslationsSwitchComponent implements OnInit {
   @Input() public selectedLanguages: string[] = [];
