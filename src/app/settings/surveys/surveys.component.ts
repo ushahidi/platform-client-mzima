@@ -1,32 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SurveyItem, SurveyItemEnabledLanguages } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { SurveysService } from '@services';
+import { ConfirmModalService, SurveysService } from '@services';
 
 @Component({
   selector: 'app-surveys',
   templateUrl: './surveys.component.html',
   styleUrls: ['./surveys.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SurveysComponent implements OnInit {
   surveys: SurveyItem[];
-  constructor(private surveysService: SurveysService, private translate: TranslateService) {}
+
+  constructor(
+    private surveysService: SurveysService,
+    private translate: TranslateService,
+    private confirmModalService: ConfirmModalService,
+  ) {}
 
   ngOnInit(): void {
-    this.surveysService.get().subscribe((res) => {
-      this.surveys = res.results;
+    this.getSurveys();
+  }
+
+  private getSurveys() {
+    this.surveysService.get().subscribe({
+      next: (res) => (this.surveys = res.results),
     });
   }
 
-  duplicateSurvey(survey: SurveyItem) {
-    // FIXME: probably we want to create here without redirects
-    console.log('Survey: ', survey);
+  public duplicateSurvey(survey: SurveyItem) {
+    const surveyDuplicate = JSON.parse(JSON.stringify(survey));
+    delete surveyDuplicate.id;
+    surveyDuplicate.name = `${survey.name} - duplicate`;
+
+    this.surveysService.post(surveyDuplicate).subscribe({
+      next: () => this.getSurveys(),
+    });
   }
 
-  deleteSurvey(survey: SurveyItem) {
-    // FIXME: Confirm + delete after we do creation.
+  async deleteSurvey({ id }: SurveyItem) {
+    const confirmed = await this.confirmModalService.open({
+      title: this.translate.instant('notify.survey.destroy_confirm'),
+      description: `<p>${this.translate.instant('notify.survey.destroy_confirm_desc')}</p>`,
+    });
+    if (!confirmed) return;
 
-    console.log('Survey: ', survey);
+    this.surveysService.delete(id).subscribe({
+      next: () => this.getSurveys(),
+    });
   }
 
   getLanguages(languages: SurveyItemEnabledLanguages) {

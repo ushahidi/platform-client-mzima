@@ -18,7 +18,7 @@ import {
   CollectionsModalComponent,
   SnackbarComponent,
 } from './components';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './material/material.module';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,

@@ -31,4 +31,8 @@ export class SurveysService extends ResourceService<any> {
   override getById(id: string | number): Observable<any> {
     return super.getById(id);
   }
+
+  override delete(id: string | number): Observable<any> {
+    return super.delete(id);
+  }
 }

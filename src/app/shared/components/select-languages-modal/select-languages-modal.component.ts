@@ -19,6 +19,7 @@ export class SelectLanguagesModalComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: SelectLanguagesDialogData) {}
 
   public checkLanguages(): void {
+    console.log(this.data.activeLanguages);
     this.errorLanguages = [];
     this.selectedLanguages.map((selectedLanguage) => {
       const lang = this.data.activeLanguages.find(
@@ -28,6 +29,8 @@ export class SelectLanguagesModalComponent {
         this.errorLanguages.push(lang);
       }
     });
+
+    console.log(this.selectedLanguages);
   }
 
   public removeLanguagesWithErrors(): void {

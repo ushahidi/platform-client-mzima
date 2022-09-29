@@ -1,0 +1,37 @@
+.create-form {
+  &__topbar {
+    display: flex;
+    margin: 0 -8px 24px;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    &__tabs {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -8px -8px;
+      align-items: center;
+
+      .create-form__topbar__btn {
+        margin-bottom: 8px;
+      }
+    }
+
+    &__btn {
+      flex-shrink: 0;
+      margin: 0 8px;
+      min-width: 100px;
+
+      &--add {
+        margin-left: 24px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      &.mat-button-base .mat-icon {
+        font-size: 18px;
+        height: 20px;
+        width: 20px;
+      }
+    }
+  }
+}

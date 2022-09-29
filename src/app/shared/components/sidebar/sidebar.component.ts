@@ -39,7 +39,8 @@ export class SidebarComponent implements OnInit {
       { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isLoggedIn },
     ];
     this.userMenu = [
-      { label: '', icon: 'apps', visible: true, action: () => this.openCollections() },
+      { label: 'Collections', icon: 'apps', visible: true, action: () => this.openCollections() },
+      { label: 'Profile', icon: 'face', visible: true, action: () => this.openProfile() },
       { label: 'Log in', icon: 'login', visible: !this.isLoggedIn, action: () => this.openLogin() },
       { label: 'Log out', icon: 'logout', visible: this.isLoggedIn, action: () => this.logout() },
       {
@@ -90,6 +91,19 @@ export class SidebarComponent implements OnInit {
         response ? console.log(response) : null;
       },
     });
+  }
+
+  private openProfile(): void {
+    console.log('openProfile');
+    // const dialogRef = this.dialog.open(CollectionsComponent, {
+    //   width: '480px',
+    // });
+    //
+    // dialogRef.afterClosed().subscribe({
+    //   next: (response) => {
+    //     response ? console.log(response) : null;
+    //   },
+    // });
   }
 
   private logout() {

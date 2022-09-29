@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { SurveysRoutingModule } from './surveys-routing.module';
 import { SurveysComponent } from './surveys.component';
-import { CreateSurveyComponent } from './create-survey/create-survey.component';
-import { SharedModule } from '@shared';
+import { SurveyItemComponent } from './survey-item/survey-item.component';
+import { SharedModule, TranslationsSwitchModule } from '@shared';
 import { SurveyTaskComponent } from './survey-task/survey-task.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -14,11 +15,19 @@ import { CreateFieldModalComponent } from './create-field-modal/create-field-mod
 @NgModule({
   declarations: [
     SurveysComponent,
-    CreateSurveyComponent,
+    SurveyItemComponent,
     SurveyTaskComponent,
     CreateTaskModalComponent,
     CreateFieldModalComponent,
   ],
-  imports: [CommonModule, SharedModule, MatTabsModule, DragDropModule, SurveysRoutingModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    MatTabsModule,
+    DragDropModule,
+    SurveysRoutingModule,
+    MatExpansionModule,
+    TranslationsSwitchModule,
+  ],
 })
 export class SurveysModule {}
