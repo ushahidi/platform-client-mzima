@@ -23,14 +23,19 @@ export class SurveysComponent implements OnInit {
   }
 
   private getSurveys() {
-    this.surveysService.get().subscribe((res) => {
-      this.surveys = res.results;
+    this.surveysService.get().subscribe({
+      next: (res) => (this.surveys = res.results),
     });
   }
 
   public duplicateSurvey(survey: SurveyItem) {
-    // FIXME: probably we want to create here without redirects
-    console.log('Survey: ', survey);
+    const surveyDuplicate = JSON.parse(JSON.stringify(survey));
+    delete surveyDuplicate.id;
+    surveyDuplicate.name = `${survey.name} - duplicate`;
+
+    this.surveysService.post(surveyDuplicate).subscribe({
+      next: () => this.getSurveys(),
+    });
   }
 
   async deleteSurvey({ id }: SurveyItem) {
@@ -41,9 +46,7 @@ export class SurveysComponent implements OnInit {
     if (!confirmed) return;
 
     this.surveysService.delete(id).subscribe({
-      next: () => {
-        this.getSurveys();
-      },
+      next: () => this.getSurveys(),
     });
   }
 
@@ -57,10 +60,5 @@ export class SurveysComponent implements OnInit {
         `languages.${languages.default}`,
       )}`;
     }
-  }
-
-  detail({ id }: SurveyItem) {
-    // FIXME: add route to detail page
-    console.log(id);
   }
 }
