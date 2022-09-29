@@ -1,0 +1,65 @@
+<div class="task">
+  <ng-container *ngIf="!isPost">
+    <h3 cdkDrag>{{ task.label }}</h3>
+    <p>{{ task.description }}</p>
+  </ng-container>
+  <mat-tab-group>
+    <mat-tab [label]="'survey.build' | translate">
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let field of taskFields; let i = index" cdkDrag>
+          {{ field.label }}
+          <br />
+          {{ field.type }}
+          <br />
+          <button type="button" mat-raised-button (click)="deleteField(i)">
+            <mat-icon>
+              <svg class="iconic" role="img">
+                <use
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xlink:href="assets/sprites.svg#trash"
+                ></use>
+              </svg>
+            </mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <button type="button" mat-raised-button (click)="addField()">
+        <mat-icon>
+          <svg class="iconic" role="img">
+            <use
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xlink:href="assets/sprites.svg#plus"
+            ></use>
+          </svg>
+        </mat-icon>
+      </button>
+    </mat-tab>
+    <mat-tab [label]="'survey.configure' | translate">
+      <div class="form-field form-field-flex">
+        <p class="form-label" translate>survey.required</p>
+        <mat-slide-toggle [(ngModel)]="task.required" name="accept-survey"> </mat-slide-toggle>
+        <p *ngIf="task.required" translate>survey.required_desc</p>
+      </div>
+      <div class="form-field form-field-flex">
+        <p class="form-label" translate>survey.internal_use_task</p>
+        <mat-slide-toggle
+          [(ngModel)]="task.task_is_internal_only"
+          name="import-to-survey"
+        ></mat-slide-toggle>
+        <p *ngIf="task.task_is_internal_only" translate>survey.internal_use_task_desc</p>
+      </div>
+      <div class="form-field form-field-flex">
+        <p class="form-label" translate>survey.show_this_task_to</p>
+        <mat-slide-toggle
+          [(ngModel)]="task.show_when_published"
+          name="import-to-survey"
+        ></mat-slide-toggle>
+        <p *ngIf="task.show_when_published" translate>survey.show_this_task_to_desc</p>
+      </div>
+    </mat-tab>
+    <mat-tab *ngIf="isPost" [label]="'survey.share' | translate">
+      <h2>WHAT</h2>
+    </mat-tab>
+  </mat-tab-group>
+</div>

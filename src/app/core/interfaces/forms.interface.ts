@@ -36,8 +36,8 @@ export interface FormTaskInterface {
 }
 
 export interface FormAttributeInterface {
-  cardinality: number;
-  config: any[];
+  cardinality?: number;
+  config?: any;
   default: string;
   form_stage_id: number;
   id: number;

@@ -1,1 +1,9 @@
 <p>create-survey works!</p>
+
+<div class="" *ngIf="survey">
+  <ng-container *ngFor="let task of survey.tasks">
+    <app-survey-task [task]="task"></app-survey-task>
+  </ng-container>
+
+  <button type="button" mat-raised-button (click)="addTask()">Add task</button>
+</div>

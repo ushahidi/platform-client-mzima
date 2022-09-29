@@ -1,0 +1,170 @@
+<button mat-icon-button mat-dialog-close class="modal__close-btn" tabindex="-1">
+  <mat-icon class="fab-button__icon">close</mat-icon>
+</button>
+
+<mat-dialog-content>
+  <ng-container *ngIf="selectedFieldType; else allFields">
+    <div class="form-group">
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'app.name' | translate }} </mat-label>
+        <input
+          matInput
+          [(ngModel)]="label"
+          placeholder="{{ 'form.field_name_placeholder' | translate }}"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
+        <input
+          matInput
+          [(ngModel)]="label"
+          placeholder="{{ 'form.field_name_placeholder' | translate }}"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Has options -->
+    <div class="form-group" *ngIf="hasOptions(selectedFieldType)">
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'form.field_options' | translate }} </mat-label>
+        <input
+          style="display: none"
+          matInput
+          [(ngModel)]="label"
+          placeholder="{{ 'form.field_name_placeholder' | translate }}"
+        />
+
+        <div class="alert error" role="alert" *ngIf="!validateDuplicate()">
+          <p translate>survey.duplicate_option</p>
+        </div>
+
+        <div class="input-inline" *ngFor="let opt of selectedFieldType.options; let i = index">
+          <input
+            matInput
+            [(ngModel)]="selectedFieldType.options[i]"
+            placeholder="{{ 'form.field_name_placeholder' | translate }}"
+          />
+
+          <button
+            type="button"
+            class="button-flat button-beta"
+            (click)="removeOption(i)"
+            *ngIf="selectedFieldType.options.length > 1"
+          >
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="assets/sprites.svg#trash"
+              ></use>
+            </svg>
+            <span class="button-label hidden">Remove</span>
+          </button>
+        </div>
+
+        <button type="button" class="button-secondary alt" (click)="addOption(selectedFieldType)">
+          <i class="fa fa-plus"></i> <span translate>form.field_add_option</span>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" *ngIf="selectedFieldType.input === 'tags'">
+      <mat-label>{{ 'category.which_categories' | translate }} </mat-label>
+      <!-- <app-category-selector> </app-category-selector> -->
+      <h2 *ngIf="availableCategories; else spinner">Category selector</h2>
+    </div>
+
+    <div class="form-group" *ngIf="selectedFieldType.input === 'relation'">
+      <mat-label>{{ 'survey.field_allowed_relation_survey' | translate }} </mat-label>
+      <!-- <div name="visible-to">
+        <div class="form-field checkbox" ng-repeat="relationForm in availableSurveys | filter : filterNotCurrentForm">
+          <label>
+            <input type="checkbox" checklist-model="editField.config.input.form" checklist-value="relationForm.id" />
+            {{relationForm.name}}
+          </label>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="form-field form-field-flex" *ngIf="onlyOptional">
+      <p class="form-label" translate>survey.required</p>
+      <mat-slide-toggle [(ngModel)]="selectedFieldType.required"></mat-slide-toggle>
+    </div>
+
+    <div class="form-field form-field-flex" *ngIf="canDisableCaption">
+      <p class="form-label" translate>survey.collect_image_caption</p>
+      <p
+        class="init active"
+        translate="survey.disable_caption_field_explanation"
+        *ngIf="!selectedFieldType.config?.hasCaption"
+      ></p>
+      <mat-slide-toggle [(ngModel)]="selectedFieldType.config.hasCaption"></mat-slide-toggle>
+    </div>
+
+    <div class="form-field form-field-flex" *ngIf="canMakePrivate">
+      <p class="form-label" translate>survey.make_response_private</p>
+      <p
+        class="init active"
+        translate="survey.response_private_desc"
+        *ngIf="selectedFieldType.response_private"
+      ></p>
+      <mat-slide-toggle [(ngModel)]="selectedFieldType.response_private"></mat-slide-toggle>
+    </div>
+
+    <div class="form-group" *ngIf="canDisplay">
+      <mat-label>{{ 'app.default_value' | translate }} </mat-label>
+      <div [ngSwitch]="selectedFieldType.type">
+        <input
+          *ngSwitchCase="'location'"
+          matInput
+          [(ngModel)]="selectedFieldType.default"
+          placeholder="{{ 'form.default_location_placeholder' | translate }}"
+        />
+        <input
+          *ngSwitchCase="'date'"
+          matInput
+          [(ngModel)]="selectedFieldType.default"
+          placeholder="{{ 'form.default_location_placeholder' | translate }}"
+        />
+        <input
+          *ngSwitchCase="'int'"
+          matInput
+          [(ngModel)]="selectedFieldType.default"
+          type="number"
+          step="1"
+        />
+        <input
+          *ngSwitchCase="'decimal'"
+          matInput
+          [(ngModel)]="selectedFieldType.default"
+          type="number"
+        />
+        <input
+          *ngSwitchDefault
+          matInput
+          [(ngModel)]="selectedFieldType.default"
+          placeholder="{{ 'form.default_default_placeholder' | translate }}"
+        />
+      </div>
+    </div>
+  </ng-container>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button type="button" (click)="cancel()">
+    {{ editMode ? ('app.update_and_close' | translate) : ('app.add_and_close' | translate) }}
+  </button>
+</div>
+
+<ng-template #allFields>
+  <div *ngFor="let field of fields" class="list-item" (click)="selectField(field)">
+    <h3>{{ field.label | translate }}</h3>
+    <p>{{ field.description | translate }}</p>
+  </div>
+</ng-template>
+
+<ng-template #spinner>
+  <h2>SPINNER</h2>
+</ng-template>
