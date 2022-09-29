@@ -71,4 +71,21 @@ export class ConfigService {
   initAllConfigurations() {
     return lastValueFrom(forkJoin([this.getSite(), this.getFeatures(), this.getMap()]));
   }
+
+  public getProvidersData(): Observable<any> {
+    return this.httpClient.get<any>(
+      `${
+        this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
+      }/data-provider`,
+    );
+  }
+
+  public updateProviders(providers: any): Observable<any> {
+    return this.httpClient.put(
+      `${
+        this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
+      }/data-provider`,
+      providers,
+    );
+  }
 }

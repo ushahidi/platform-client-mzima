@@ -16,4 +16,5 @@ export * from './language.interface';
 export * from './forms.interface';
 export * from './webhook.interface';
 export * from './io-data.interface';
+export * from './data-source-config.interface';
 export * from './savedsearches-response.interface';
