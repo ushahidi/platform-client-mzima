@@ -29,8 +29,8 @@ export class MapComponent implements OnInit {
   private params = {
     limit: 200,
     offset: 0,
-    created_before_by_id: '',
   };
+  public map: Map;
   postsCollection: GeoJsonPostsResponse;
   mapLayers: any[] = [];
   mapReady = false;
@@ -60,6 +60,7 @@ export class MapComponent implements OnInit {
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
     this.leafletOptions = {
+      minZoom: 3,
       scrollWheelZoom: true,
       zoomControl: false,
       layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
@@ -69,16 +70,23 @@ export class MapComponent implements OnInit {
     this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
 
     this.mapReady = true;
-    // this.getPostsGeoJson();
 
     this.postsService.postsFilters$.subscribe({
       next: () => {
+        this.mapLayers.map((layer) => {
+          this.map.removeLayer(layer);
+          this.markerClusterData.removeLayer(layer);
+        });
+
+        this.mapLayers = [];
+
         this.getPostsGeoJson();
       },
     });
   }
 
   onMapReady(map: Map) {
+    this.map = map;
     control.zoom({ position: 'bottomleft' }).addTo(map);
   }
 
@@ -132,6 +140,7 @@ export class MapComponent implements OnInit {
         this.mapLayers.push(geoPosts);
       }
 
+      if (!posts.features.length) return;
       this.mapFitToBounds = geoPosts.getBounds();
     });
   }

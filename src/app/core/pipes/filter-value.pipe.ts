@@ -1,12 +1,16 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import dayjs from 'dayjs';
+import { CategoryInterface } from '../interfaces/category.interface';
+import { SurveyItem } from '../interfaces/surveys.interface';
+
 @Pipe({
   name: 'filterValue',
 })
 export class FilterValuePipe implements PipeTransform {
   constructor(private translate: TranslateService) {}
 
-  transform(value: any, key: any): unknown {
+  transform(value: any, key: any, surveys: SurveyItem[], categories: CategoryInterface[]): unknown {
     switch (key) {
       case 'order_unlocked_on_top':
         var boolText = value === 'true' ? 'yes' : 'no';
@@ -22,50 +26,26 @@ export class FilterValuePipe implements PipeTransform {
       case 'orderby':
         return this.translate.instant('global_filter.filter_tabs.order_group.orderby.' + value);
 
-      // case 'tags':
-      //   return tags[value] ? tags[value].tag : value;
+      case 'tags':
+        return categories.find((category: CategoryInterface) => category.id === value)?.tag;
 
-      // case 'user':
-      //   return users[value] ? users[value].realname : value;
+      case 'center_point':
+        return this.translate.instant('global_filter.filter_tabs.location_value', {
+          value: `${value.location?.lat} ${value.location?.lng}`,
+          km: value.distance,
+        });
 
-      // case 'saved_search':
-      //   if (value) {
-      //       return savedSearches[value.id].name;
-      //   }
-      //   return '';
+      case 'date_before':
+        return dayjs(value).format('MMM D, YYYY');
 
-      // case 'set':
-      //   if (value) {
-      //       return collections[value.id].name;
-      //   }
-      //   return '';
-
-      // case 'center_point':
-      //   return this.translate.instant('global_filter.filter_tabs.location_value', {
-      //       value: self.rawFilters.location_text ? this.rawFilters.location_text : value,
-      //       km: self.rawFilters.within_km
-      //   });
-
-      // case 'created_before':
-      //   return $filter('date', 'longdate')(value);
-
-      // case 'created_after':
-      //   return $filter('date', 'longdate')(value);
-
-      // case 'date_before':
-      //   return $filter('date', 'longdate')(value);
-
-      // case 'date_after':
-      //   return $filter('date', 'longdate')(value);
+      case 'date_after':
+        return dayjs(value).format('MMM D, YYYY');
 
       case 'status':
         return this.translate.instant('post.' + value);
 
-      // case 'source':
-      //   return PostMetadataService.formatSource(value);
-
-      // case 'form':
-      //   return forms[value] ? forms[value].name : value;
+      case 'form':
+        return surveys.find((survey: SurveyItem) => survey.id === value)?.name;
 
       default:
         return value;

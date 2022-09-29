@@ -1,13 +1,13 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { NavigationStart, Router } from '@angular/router';
 import { CategoryInterface, Savedsearch, SurveyItem } from '@models';
-import { TranslateService } from '@ngx-translate/core';
 import { CategoriesService, PostsService, SurveysService } from '@services';
+import { filter, map } from 'rxjs';
 import { SavedsearchesService } from 'src/app/core/services/savedsearches.service';
 import { SaveSearchModalComponent } from '../save-search-modal/save-search-modal.component';
 
@@ -29,21 +29,29 @@ export class SearchFormComponent {
   public onFocus = false;
   public isDropdownOpen = false;
   public form: FormGroup = this.formBuilder.group({
-    sorting: [
-      {
-        orderBy: 'created',
-        order: 'desc',
-      },
-    ],
-    order_unlocked_on_top: [true],
-    status: [['published', 'draft']],
-    categories: this.formBuilder.array([]),
-    sources: [],
-    surveys: [],
+    query: [],
+    // sorting: [
+    //   {
+    //     orderBy: 'created',
+    //     order: 'desc',
+    //   },
+    // ],
+    // order_unlocked_on_top: [true],
+    status: [], // ['published', 'draft']
+    tags: [],
+    source: [],
+    form: [],
     date_after: [],
     date_before: [],
-    location: [],
-    location_distance: ['1'],
+    center_point: [
+      {
+        location: {
+          lat: null,
+          lng: null,
+        },
+        distance: 1,
+      },
+    ],
   });
   public activeFilters: any;
   public sortingOptions = [
@@ -136,31 +144,10 @@ export class SearchFormComponent {
   public categories: CategoryInterface[];
   public activeSavedSearch?: Savedsearch;
   public activeSavedSearchValue?: string;
-  public distanceOptions = [
-    {
-      value: '1',
-      label: 'global_filter.option_1',
-    },
-    {
-      value: '10',
-      label: 'global_filter.option_2',
-    },
-    {
-      value: '50',
-      label: 'global_filter.option_3',
-    },
-    {
-      value: '100',
-      label: 'global_filter.option_4',
-    },
-    {
-      value: '500',
-      label: 'global_filter.option_5',
-    },
-  ];
   public total: number;
   public onMapPostsCount: number;
   public isMapView: boolean;
+  public activeFiltersCount?: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -168,20 +155,10 @@ export class SearchFormComponent {
     private surveysService: SurveysService,
     private categoriesService: CategoriesService,
     private dialog: MatDialog,
-    private translate: TranslateService,
     private postsService: PostsService,
+    private router: Router,
   ) {
-    this.savedsearchesService.get().subscribe({
-      next: (response) => {
-        this.savedsearches = response.results;
-
-        this.savedsearches.map((search) => {
-          if (search.filter?.status === 'all') {
-            search.filter.status = ['published', 'draft', 'archived'];
-          }
-        });
-      },
-    });
+    this.getSavedFilters();
 
     this.surveysService.get().subscribe({
       next: (response) => {
@@ -211,35 +188,75 @@ export class SearchFormComponent {
       },
     });
 
-    this.form.valueChanges.subscribe({
-      next: (values) => {
-        console.log('change: ', values);
-        this.postsService.applyFilters({
-          has_location: 'all',
-          order: values.sorting.order,
-          order_unlocked_on_top: values.order_unlocked_on_top,
-          orderby: values.sorting.orderBy,
-          'source[]': values.source,
-          'status[]': values.status,
-          'tags[]': values.categories,
-          date_after: values.date_after ? new Date(values.date_after).toISOString() : null,
-          date_before: values.date_before ? new Date(values.date_before).toISOString() : null,
-        });
-      },
-    });
-
     this.postsService.totalPosts$.subscribe({
       next: (total) => {
         this.total = total;
       },
     });
 
-    // this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe({
-    //   next: (params: any) => {
-    //     this.isMapView = params.url === '/map';
-    //     console.log('isMapView: ', this.isMapView);
-    //   },
-    // });
+    this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
+      next: (params: any) => {
+        this.isMapView = params.url === '/map';
+      },
+    });
+
+    this.form.valueChanges.subscribe({
+      next: (values) => {
+        const filters: any = {
+          'source[]': values.source,
+          'status[]': values.status,
+          'form[]': values.form,
+          'tags[]': values.tags,
+          date_after: values.date_after ? new Date(values.date_after).toISOString() : null,
+          date_before: values.date_before ? new Date(values.date_before).toISOString() : null,
+          q: values.query,
+          center_point:
+            values.center_point?.location?.lat && values.center_point?.location?.lng
+              ? [values.center_point.location.lat, values.center_point.location.lng].join(',')
+              : null,
+        };
+
+        this.activeFilters = {};
+        for (const key in filters) {
+          if (!filters[key] || !filters[key].length) continue;
+          this.activeFilters[key] = filters[key];
+        }
+
+        this.activeFiltersCount = Object.keys(this.activeFilters).length || undefined;
+      },
+    });
+  }
+
+  private getSavedFilters(): void {
+    this.savedsearchesService
+      .get()
+      .pipe(
+        map((response) => {
+          response.results.map((search) => {
+            if (search.filter?.status === 'all') {
+              search.filter.status = ['published', 'draft', 'archived'];
+            }
+
+            if (search.filter?.center_point || search.filter?.within_km) {
+              const latLng = search.filter.center_point?.split(',');
+              search.filter.center_point = {
+                location: {
+                  lat: Number(latLng[0]),
+                  lng: Number(latLng[1]),
+                },
+                distance: search.filter.within_km || 1,
+              };
+            }
+          });
+
+          return response;
+        }),
+      )
+      .subscribe({
+        next: (response) => {
+          this.savedsearches = response.results;
+        },
+      });
   }
 
   public setSortingValue(option: any, value: any): boolean {
@@ -277,76 +294,159 @@ export class SearchFormComponent {
     this.onFocus = false;
   }
 
-  public onCheckChange(event: MatCheckboxChange, field: string) {
-    this.form.markAsDirty();
-    const formArray: FormArray = this.form.get(field) as FormArray;
-    if (event.checked) {
-      formArray.push(new FormControl(event.source.value));
-    } else {
-      const index = formArray.controls.findIndex((ctrl: any) => ctrl.value == event.source.value);
-      if (index > -1) {
-        formArray.removeAt(index);
-      }
-    }
-  }
-
   public hasChild = (_: number, node: CategoryFlatNode) => node.expandable;
 
   public getCategoriesName(categories: number[]): string {
     return categories
-      .reduce((acc: string[], categoryId: number) => {
-        const tag = this.categories.find((category) => category.id === categoryId)?.tag;
-        return tag ? [...acc, tag] : acc;
-      }, [])
-      .join(', ');
+      ? categories
+          .reduce((acc: string[], categoryId: number) => {
+            const tag = this.categories.find((category) => category.id === categoryId)?.tag;
+            return tag ? [...acc, tag] : acc;
+          }, [])
+          .join(', ')
+      : '';
   }
 
-  public saveSearch(isUpdate?: boolean): void {
+  public saveSearch(search?: Savedsearch): void {
     const dialogRef = this.dialog.open(SaveSearchModalComponent, {
       width: '100%',
       maxWidth: 480,
       height: 'auto',
       maxHeight: '90vh',
       data: {
-        title: !isUpdate
-          ? this.translate.instant('set.create_savedsearch')
-          : this.translate.instant('set.update_savedsearch'),
+        search,
       },
     });
 
     dialogRef.afterClosed().subscribe({
       next: (result: any) => {
         if (!result || result === 'cancel') return;
-        console.log('result: ', result);
+
+        if (result === 'delete') {
+          if (this.activeSavedSearch?.id) {
+            this.savedsearchesService.delete(this.activeSavedSearch.id).subscribe({
+              next: () => {
+                this.form.enable();
+                this.resetSavedFilter();
+                this.getSavedFilters();
+              },
+            });
+          }
+          return;
+        }
+
+        this.form.disable();
+
+        const filters: any = {};
+        for (const key in this.activeFilters) {
+          filters[key.replace(/\[\]/g, '')] = this.activeFilters[key];
+        }
+
+        const savedSearchPatams = {
+          filter: filters,
+          name: result.name,
+          description: result.description,
+          featured: result.featured,
+          role: result.category_visibility === 'specific' ? result.visible_to : ['admin'],
+          view: result.defaultViewingMode,
+        };
+
+        if (this.activeSavedSearch && this.activeSavedSearch.id) {
+          this.savedsearchesService
+            .update(this.activeSavedSearch.id, {
+              ...this.activeSavedSearch,
+              ...savedSearchPatams,
+            })
+            .subscribe({
+              next: () => {
+                this.form.enable();
+                this.getSavedFilters();
+              },
+            });
+        } else {
+          this.savedsearchesService
+            .post({
+              ...savedSearchPatams,
+            })
+            .subscribe({
+              next: () => {
+                this.form.enable();
+                this.getSavedFilters();
+              },
+            });
+        }
       },
     });
   }
 
   public applySavedFilter(event: MatSelectChange): void {
     this.activeSavedSearch = this.savedsearches.find((search) => search.id === event.value);
+
     if (this.activeSavedSearch) {
+      if (
+        this.activeSavedSearch.filter.form &&
+        !this._array.isArray(this.activeSavedSearch.filter.form)
+      ) {
+        this.activeSavedSearch.filter.form = [this.activeSavedSearch.filter.form];
+      }
       if (
         this.activeSavedSearch.filter.status &&
         !this._array.isArray(this.activeSavedSearch.filter.status)
       ) {
         this.activeSavedSearch.filter.status = [this.activeSavedSearch.filter.status];
       }
-      this.form.patchValue(this.activeSavedSearch.filter);
+      if (
+        this.activeSavedSearch.filter.tags &&
+        !this._array.isArray(this.activeSavedSearch.filter.tags)
+      ) {
+        this.activeSavedSearch.filter.tags = [this.activeSavedSearch.filter.tags];
+      }
+      if (
+        this.activeSavedSearch.filter.source &&
+        !this._array.isArray(this.activeSavedSearch.filter.source)
+      ) {
+        this.activeSavedSearch.filter.source = [this.activeSavedSearch.filter.source];
+      }
+
+      this.resetForm(this.activeSavedSearch.filter);
     } else {
-      this.form.reset();
+      this.resetForm();
     }
   }
 
   public resetSavedFilter(): void {
     this.activeSavedSearch = undefined;
     this.activeSavedSearchValue = undefined;
-  }
-
-  public formChanged(event: any): void {
-    console.log('formChanged: ', event);
+    this.resetForm();
   }
 
   public toggleDropdown(state?: boolean): void {
     this.isDropdownOpen = state || !this.isDropdownOpen;
+  }
+
+  public applyFilters(): void {
+    this.postsService.applyFilters(this.activeFilters);
+
+    this.toggleDropdown(false);
+  }
+
+  public resetForm(filters: any = {}): void {
+    this.form.patchValue({
+      query: '',
+      status: [],
+      tags: [],
+      source: [],
+      form: [],
+      date_after: '',
+      date_before: '',
+      center_point: {
+        location: {
+          lat: null,
+          lng: null,
+        },
+        distance: 1,
+      },
+      ...filters,
+    });
   }
 }

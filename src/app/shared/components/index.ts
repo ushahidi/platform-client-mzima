@@ -13,3 +13,4 @@ export * from './collections-modal/collections-modal.component';
 export * from './snackbar/snackbar.component';
 export * from './search-form/search-form.component';
 export * from './save-search-modal/save-search-modal.component';
+export * from './location-selection/location-selection.component';

@@ -19,6 +19,7 @@ import {
   SnackbarComponent,
   SearchFormComponent,
   SaveSearchModalComponent,
+  LocationSelectionComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import {
@@ -48,6 +49,7 @@ const components = [
   SearchFormComponent,
   SaveSearchModalComponent,
   FilterValuePipe,
+  LocationSelectionComponent,
 ];
 
 const modules = [

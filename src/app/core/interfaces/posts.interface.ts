@@ -20,7 +20,9 @@ export interface GeoJsonFilter {
   'source[]'?: string[];
   'tags[]'?: string[];
   'status[]'?: string[];
+  'form[]'?: string[];
   created_before_by_id?: string;
+  q?: string;
 }
 
 export interface PostPropertiesInterface {

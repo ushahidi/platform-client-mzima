@@ -13,6 +13,7 @@ export interface PostFilters {
   'source[]'?: string[];
   'tags[]'?: number[];
   'status[]'?: string[];
+  'form[]'?: string[];
   reactToFilters?: boolean;
 }
 
@@ -22,14 +23,13 @@ export interface PostFilters {
 export class PostsService extends ResourceService<any> {
   private defaultPostsFilters: GeoJsonFilter = {
     order: 'desc',
-    order_unlocked_on_top: true,
     orderby: 'created',
+    order_unlocked_on_top: true,
     reactToFilters: true,
     'source[]': [],
     'tags[]': [],
+    'form[]': [],
     'status[]': ['published', 'draft'],
-    date_after: '',
-    date_before: '',
   };
   private postsFilters = new BehaviorSubject<any>(this.defaultPostsFilters);
   public postsFilters$ = this.postsFilters.asObservable();
@@ -66,18 +66,7 @@ export class PostsService extends ResourceService<any> {
   }
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
-    // const test = {
-    //   has_location: 'mapped',
-    //   limit: 200,
-    //   offset: 0,
-    //   order: 'desc',
-    //   order_unlocked_on_top: true,
-    //   orderby: 'created',
-    //   reactToFilters: true,
-    //   'source[]': ['sms', 'twitter', 'web', 'email'],
-    //   'status[]': ['published', 'draft'],
-    // };
-    return super.get('geojson', { ...filter, ...this.postsFilters.value, has_location: 'mapped' });
+    return super.get('geojson', { has_location: 'mapped', ...filter, ...this.postsFilters.value });
   }
 
   public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {

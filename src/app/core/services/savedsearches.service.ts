@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SavedsearchesResponse } from '@models';
+import { Savedsearch, SavedsearchesResponse } from '@models';
 import { Observable } from 'rxjs';
 import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
@@ -23,5 +23,17 @@ export class SavedsearchesService extends ResourceService<any> {
 
   override get(): Observable<SavedsearchesResponse> {
     return super.get();
+  }
+
+  override update(id: string | number, resource: Savedsearch): Observable<SavedsearchesResponse> {
+    return super.update(id, resource);
+  }
+
+  override post(resource: Savedsearch): Observable<SavedsearchesResponse> {
+    return super.post(resource);
+  }
+
+  override delete(id: string | number): Observable<SavedsearchesResponse> {
+    return super.delete(id);
   }
 }

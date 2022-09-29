@@ -220,3 +220,49 @@
   background: var(--color-dark);
   color: var(--color-dark-contrast);
 }
+
+.mat-list-base.mat-selection-list {
+  .mat-list-option {
+    height: auto;
+    display: flex;
+    min-height: 36px;
+    align-items: center;
+    justify-content: flex-start;
+
+    &:not(:first-child) {
+      margin-top: 4px;
+    }
+  }
+
+  .mat-list-item,
+  .mat-list-option {
+    .mat-list-item-content {
+      flex-basis: 100%;
+      padding: 4px 8px;
+      min-height: 36px;
+    }
+  }
+}
+
+.multilevelselect {
+  &.mat-menu-panel {
+    max-width: none;
+    max-height: 400px;
+  }
+
+  .mat-tree {
+    width: 602px;
+    padding: 0 16px;
+  }
+
+  .mat-list-option {
+    flex: 1 1 100%;
+  }
+
+  .mat-list-item-content {
+    display: flex;
+    min-height: 36px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}

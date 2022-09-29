@@ -12,17 +12,17 @@ export interface SavedsearchesResponse {
 }
 
 export interface Savedsearch {
-  allowed_privileges: string[];
-  created: string;
-  description: string;
-  featured: boolean;
-  filter: any;
-  id: number;
-  name: string;
-  role: string[];
+  allowed_privileges?: string[];
+  created?: string;
+  description?: string;
+  featured?: boolean;
+  filter?: any;
+  id?: number;
+  name?: string;
+  role?: string[];
   updated?: Date;
   url?: string;
   user_id?: number;
-  view: string;
+  view?: string;
   view_options?: any;
 }
