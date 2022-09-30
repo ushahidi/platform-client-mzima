@@ -4,14 +4,11 @@
   <mat-toolbar class="toolbar__main">
     <app-breadcrumb></app-breadcrumb>
     <div class="toolbar__wrapper">
-      <div class="search">
-        <div class="input-wrapper">
-          <input type="text" placeholder="Search" />
-          <mat-icon>search</mat-icon>
-        </div>
+      <app-search-form class="toolbar__search-form"></app-search-form>
+      <div class="toolbar__controls">
+        <app-donation-button *ngIf="isDonateAvailable"></app-donation-button>
+        <app-language></app-language>
       </div>
-      <app-donation-button *ngIf="isDonateAvailable"></app-donation-button>
-      <app-language></app-language>
     </div>
   </mat-toolbar>
 </div>

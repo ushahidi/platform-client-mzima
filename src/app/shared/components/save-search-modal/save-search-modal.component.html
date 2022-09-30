@@ -1,0 +1,101 @@
+<button mat-icon-button mat-dialog-close class="modal__close-btn" tabindex="-1">
+  <mat-icon class="fab-button__icon">close</mat-icon>
+</button>
+
+<strong mat-dialog-title>
+  {{
+    !!data.search ? ('set.update_savedsearch' | translate) : ('set.create_savedsearch' | translate)
+  }}
+</strong>
+
+<form novalidate [formGroup]="form" (ngSubmit)="formSubmit()">
+  <mat-form-field appearance="standard">
+    <mat-label>{{ 'set.name_savedsearch' | translate }}</mat-label>
+    <input matInput placeholder="Name your Saved Search..." formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>{{ 'app.description' | translate }}</mat-label>
+    <input matInput formControlName="description" />
+  </mat-form-field>
+
+  <div class="form-group">
+    <h4>{{ 'app.who_can_see_this' | translate }}</h4>
+    <mat-radio-group
+      class="radio-buttons"
+      *ngIf="!form.value.parent"
+      formControlName="category_visibility"
+    >
+      <p>
+        <mat-radio-button value="everyone" class="example-radio-button">
+          <mat-icon>person</mat-icon>
+          {{ 'role.everyone' | translate }}
+        </mat-radio-button>
+      </p>
+      <p>
+        <mat-radio-button value="specific" class="example-radio-button">
+          <mat-icon>group</mat-icon>
+          {{ 'app.specific_roles' | translate }}
+        </mat-radio-button>
+
+        <span class="radio-buttons__options" *ngIf="form.value.category_visibility === 'specific'">
+          <mat-selection-list formControlName="visible_to">
+            <mat-list-option
+              color="primary"
+              [value]="role.name"
+              class="list-option"
+              checkboxPosition="before"
+              *ngFor="let role of roles"
+              [disabled]="role.name === 'admin'"
+            >
+              {{ role.display_name }}
+            </mat-list-option>
+          </mat-selection-list>
+        </span>
+      </p>
+    </mat-radio-group>
+    <div class="radio-buttons" *ngIf="form.value.parent">
+      <p class="radio-buttons__info">
+        <mat-icon>group</mat-icon>
+        {{ 'category.child_permissions' | translate }}
+      </p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <mat-slide-toggle formControlName="featured">
+      {{ 'saved_search.featured' | translate }}
+      <span class="tooltip-icon" [matTooltip]="'saved_search.featured_tooltip' | translate">?</span>
+    </mat-slide-toggle>
+  </div>
+
+  <mat-form-field appearance="standard">
+    <mat-label>{{ 'set.default_viewing_mode' | translate }}</mat-label>
+    <mat-select formControlName="defaultViewingMode">
+      <mat-option value="map">
+        {{ 'views.map' | translate }}
+      </mat-option>
+      <mat-option value="data">
+        {{ 'views.data' | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div mat-dialog-actions align="end">
+    <button type="button" (click)="cancel()" mat-raised-button>
+      {{ 'app.cancel' | translate }}
+    </button>
+    <button
+      type="button"
+      color="accent"
+      mat-raised-button
+      *ngIf="data.search"
+      (click)="deleteSavedfilter()"
+    >
+      {{ 'app.delete' | translate }}
+    </button>
+    <button color="primary" mat-raised-button [disabled]="form.invalid || form.disabled">
+      {{ 'form.save_and_close' | translate }}
+    </button>
+  </div>
+</form>

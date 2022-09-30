@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { PostResult } from '../core/interfaces/posts.interface';
+import { GeoJsonFilter, PostResult } from '../core/interfaces/posts.interface';
 import { PostsService } from '../core/services/posts.service';
 import { PostsV5Service } from '../core/services/posts.v5.service';
 
@@ -10,18 +10,12 @@ import { PostsV5Service } from '../core/services/posts.v5.service';
   styleUrls: ['./feed.component.scss'],
 })
 export class FeedComponent {
-  private params = {
-    has_location: 'all',
+  private params: GeoJsonFilter = {
     limit: 10,
     offset: 0,
-    order: 'desc',
-    order_unlocked_on_top: true,
     created_before_by_id: '',
-    orderby: 'created',
-    'source[]': ['sms', 'twitter', 'web', 'email'],
-    'status[]': ['published', 'draft'],
   };
-  public posts: PostResult[];
+  public posts?: PostResult[];
   public isLoading = false;
   public activePostId: any;
   public total: number;
@@ -39,18 +33,28 @@ export class FeedComponent {
         const id: string = params['id'] || '';
         this.params.created_before_by_id = id;
         id?.length ? this.getPost(id) : (this.postDetails = undefined);
-        if (!this.posts?.length) {
-          this.getPosts();
-        }
+
+        this.postsService.postsFilters$.subscribe({
+          next: () => {
+            this.posts = undefined;
+            this.params.offset = 0;
+            this.getPosts(this.params);
+          },
+        });
+      },
+    });
+
+    this.postsService.totalPosts$.subscribe({
+      next: (total) => {
+        this.total = total;
       },
     });
   }
 
-  private getPosts(): void {
+  private getPosts(params: any): void {
     this.isLoading = true;
-    this.postsService.getPosts('', this.params).subscribe({
+    this.postsService.getPosts('', params).subscribe({
       next: (data) => {
-        this.total = data.total_count;
         this.posts?.length
           ? (this.posts = [...this.posts, ...data.results])
           : (this.posts = data.results);
@@ -73,9 +77,13 @@ export class FeedComponent {
   }
 
   public loadMore(): void {
-    if (this.params.offset + this.params.limit < this.total) {
+    if (
+      this.params.offset &&
+      this.params.limit &&
+      this.params.offset + this.params.limit < this.total
+    ) {
       this.params.offset = this.params.offset + 10;
-      this.getPosts();
+      this.getPosts(this.params);
     }
   }
 

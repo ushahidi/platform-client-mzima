@@ -17,6 +17,9 @@ import {
   MapWithMarkerComponent,
   CollectionsModalComponent,
   SnackbarComponent,
+  SearchFormComponent,
+  SaveSearchModalComponent,
+  LocationSelectionComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import {
@@ -25,7 +28,7 @@ import {
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 import { TranslateModule } from '@ngx-translate/core';
-import { DateAgoPipe } from '@pipes';
+import { DateAgoPipe, FilterValuePipe } from '@pipes';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 const components = [
@@ -43,6 +46,10 @@ const components = [
   MapWithMarkerComponent,
   CollectionsModalComponent,
   SnackbarComponent,
+  SearchFormComponent,
+  SaveSearchModalComponent,
+  FilterValuePipe,
+  LocationSelectionComponent,
 ];
 
 const modules = [
