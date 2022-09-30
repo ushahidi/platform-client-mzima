@@ -1,14 +1,7 @@
-export interface SavedsearchesResponse {
-  count: number;
-  curr: string;
-  limit?: number;
-  next?: string;
-  offset?: number;
-  order: string;
-  orderby: string;
-  prev?: string;
+import { ApiResponse } from './api-response.interface';
+
+export interface SavedsearchesResponse extends ApiResponse {
   results: Savedsearch[];
-  total_count: number;
 }
 
 export interface Savedsearch {
