@@ -21,6 +21,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   exports: [
@@ -46,6 +50,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatGridListModule,
     MatMenuModule,
     MatProgressBarModule,
+    MatBadgeModule,
+    MatTreeModule,
+    MatTooltipModule,
+    MatListModule,
   ],
 })
 export class MaterialModule {}

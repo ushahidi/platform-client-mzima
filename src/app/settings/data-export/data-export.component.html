@@ -77,7 +77,7 @@
     <h3>{{ form.name }}</h3>
     <div *ngIf="form.attributes">
       <mat-checkbox (change)="selectAll(form)" [checked]="isAllSelected(form)">
-        <em>{{ 'category.select_all' | translate }}</em>
+        <i>{{ 'category.select_all' | translate }}</i>
       </mat-checkbox>
     </div>
     <div *ngFor="let attribute of form.attributes">
