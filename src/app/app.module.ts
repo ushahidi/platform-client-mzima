@@ -37,6 +37,12 @@ export function googleTagManagerFactory(config: EnvService) {
   return config.environment.gtm_key;
 }
 
+export const loadGoogleTagManagerProvider: FactoryProvider = {
+  provide: 'googleTagManagerId',
+  useFactory: googleTagManagerFactory,
+  deps: [EnvService],
+};
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -66,11 +72,7 @@ export function googleTagManagerFactory(config: EnvService) {
     loadConfigProvider,
     { provide: ErrorHandler, useClass: ErrorsHandler },
     { provide: HTTP_INTERCEPTORS, useClass: HttpsInterceptor, multi: true },
-    {
-      provide: 'googleTagManagerId',
-      useFactory: googleTagManagerFactory,
-      deps: [EnvService],
-    },
+    loadGoogleTagManagerProvider,
   ],
   bootstrap: [AppComponent],
 })
