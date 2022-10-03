@@ -33,6 +33,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
 }
 
+export function googleTagManagerFactory(config: EnvService) {
+  return config.environment.gtm_key;
+}
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -62,9 +66,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     loadConfigProvider,
     { provide: ErrorHandler, useClass: ErrorsHandler },
     { provide: HTTP_INTERCEPTORS, useClass: HttpsInterceptor, multi: true },
-    // TODO: Try connect from envService
-    // { provide: 'googleTagManagerId', useValue: EnvService.ENV.gtm_key },
-    { provide: 'googleTagManagerId', useValue: 'GTM-TXQLHS5' },
+    {
+      provide: 'googleTagManagerId',
+      useFactory: googleTagManagerFactory,
+      deps: [EnvService],
+    },
   ],
   bootstrap: [AppComponent],
 })
