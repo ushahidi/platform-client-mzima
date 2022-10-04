@@ -33,16 +33,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
 }
 
-export function googleTagManagerFactory(config: EnvService) {
-  return config.environment.gtm_key;
-}
-
-export const loadGoogleTagManagerProvider: FactoryProvider = {
-  provide: 'googleTagManagerId',
-  useFactory: googleTagManagerFactory,
-  deps: [EnvService],
-};
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -72,7 +62,6 @@ export const loadGoogleTagManagerProvider: FactoryProvider = {
     loadConfigProvider,
     { provide: ErrorHandler, useClass: ErrorsHandler },
     { provide: HTTP_INTERCEPTORS, useClass: HttpsInterceptor, multi: true },
-    loadGoogleTagManagerProvider,
   ],
   bootstrap: [AppComponent],
 })

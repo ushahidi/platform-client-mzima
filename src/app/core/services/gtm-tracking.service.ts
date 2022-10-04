@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
 import { GtmTrackInterface } from '@models';
-import { GoogleTagManagerService } from 'angular-google-tag-manager';
 import { EnumGtmGroup } from '@enums';
+
+declare let dataLayer: any[];
 
 @Injectable({
   providedIn: 'root',
 })
 export class GtmTrackingService {
-  constructor(private gtmService: GoogleTagManagerService) {}
+  private push(data: any) {
+    // @ts-ignore
+    if (window && window['dataLayer']) {
+      dataLayer.push(data);
+    }
+  }
 
   public registerEvent(track: GtmTrackInterface, extra?: any): void {
     let data = {
       event: track.event,
       ush_track: { source: track.source, ...extra },
     };
-    this.gtmService.pushTag(data);
+    this.push(data);
   }
 
   public static MapPath(path: string): any {
