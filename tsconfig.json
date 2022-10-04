@@ -32,6 +32,9 @@
       ],
       "@post": [
         "src/app/post"
+      ],
+      "@enums": [
+        "src/app/core/enums"
       ]
     },
     "outDir": "./dist/out-tsc",

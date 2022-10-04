@@ -8,4 +8,5 @@ export interface EnvConfigInterface {
   oauth_client_id: string;
   oauth_client_secret: string;
   export_polling_interval: number;
+  gtm_key: string;
 }
