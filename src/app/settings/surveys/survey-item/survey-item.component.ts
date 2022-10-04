@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SurveysService } from '@services';
+import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 
 @Component({
   selector: 'app-survey-item',
@@ -35,8 +37,9 @@ export class SurveyItemComponent implements OnInit {
   public isEdit = false;
 
   constructor(
-    private formBuilder: FormBuilder, //
+    private formBuilder: FormBuilder,
     private router: Router,
+    private dialog: MatDialog,
     private route: ActivatedRoute,
     private surveysService: SurveysService,
   ) {}
@@ -125,5 +128,24 @@ export class SurveyItemComponent implements OnInit {
 
   public cancel() {
     this.router.navigate(['settings/surveys']);
+  }
+
+  addTask() {
+    const dialogRef = this.dialog.open(CreateTaskModalComponent, {
+      width: '100%',
+      maxWidth: '564px',
+      minWidth: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (response) => {
+        console.log('response, ', response);
+        if (response) {
+          const tasks = this.getFormControl('tasks').value;
+          tasks.push(response);
+          this.form.patchValue({ tasks });
+        }
+      },
+    });
   }
 }

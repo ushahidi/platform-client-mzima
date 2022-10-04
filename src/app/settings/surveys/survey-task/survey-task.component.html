@@ -59,7 +59,7 @@
       </div>
     </mat-tab>
     <mat-tab *ngIf="isPost" [label]="'survey.share' | translate">
-      <h2>WHAT</h2>
+      <app-share-menu [surveyId]="surveyId"></app-share-menu>
     </mat-tab>
   </mat-tab-group>
 </div>

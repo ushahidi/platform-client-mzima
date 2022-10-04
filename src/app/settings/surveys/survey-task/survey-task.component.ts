@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { FormAttributeInterface, SurveyItemTask } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService } from '@services';
@@ -14,16 +15,21 @@ import { CreateFieldModalComponent } from '../create-field-modal/create-field-mo
 export class SurveyTaskComponent implements OnInit {
   @Input() task: SurveyItemTask;
 
+  surveyId: string;
+
   taskFields: FormAttributeInterface[];
   isPost = false;
 
   constructor(
     private confirm: ConfirmModalService,
     private dialog: MatDialog,
+    private route: ActivatedRoute,
     private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
+    this.surveyId = this.route.snapshot.paramMap.get('id') || '';
+    console.log('surveyId', this.surveyId);
     this.taskFields = this.task.fields;
     this.isPost = this.task.type === 'post';
   }
@@ -51,9 +57,8 @@ export class SurveyTaskComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe({
       next: (response) => {
-        console.log('response, ', response);
         if (response) {
-          // this.survey.tasks.push(response);
+          this.taskFields.push(response);
         }
       },
     });

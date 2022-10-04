@@ -11,6 +11,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CreateTaskModalComponent } from './create-task-modal/create-task-modal.component';
 import { CreateFieldModalComponent } from './create-field-modal/create-field-modal.component';
+import { ShareMenuComponent } from './share-menu/share-menu.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CreateFieldModalComponent } from './create-field-modal/create-field-mod
     SurveyTaskComponent,
     CreateTaskModalComponent,
     CreateFieldModalComponent,
+    ShareMenuComponent,
   ],
   imports: [
     CommonModule,

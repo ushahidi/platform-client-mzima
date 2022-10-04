@@ -65,4 +65,12 @@
       {{ (isEdit ? 'app.edit_survey' : 'app.add_survey') | translate }}
     </button>
   </div>
+
+  <div class="">
+    <ng-container *ngFor="let task of this.form.get('tasks')?.value">
+      <app-survey-task [task]="task"></app-survey-task>
+    </ng-container>
+
+    <button type="button" mat-raised-button (click)="addTask()">Add task</button>
+  </div>
 </form>

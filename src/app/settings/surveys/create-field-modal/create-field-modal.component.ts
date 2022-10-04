@@ -46,7 +46,7 @@ export class CreateFieldModalComponent {
   }
 
   addNewTask() {
-    // this.matDialogRef.close(this.newTask);
+    this.matDialogRef.close(this.selectedFieldType);
   }
 
   selectField(field: Partial<FormAttributeInterface>) {
@@ -60,6 +60,7 @@ export class CreateFieldModalComponent {
   removeOption(i: any) {
     this.selectedFieldType.options.splice(i, 1);
   }
+
   addOption(attribute: FormAttributeInterface) {
     attribute.options.push('');
   }
