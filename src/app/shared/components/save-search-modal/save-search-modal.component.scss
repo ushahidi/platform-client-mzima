@@ -1,0 +1,18 @@
+.radio-buttons {
+  &__options {
+    display: block;
+    margin-top: 16px;
+    padding-left: 16px;
+  }
+
+  &__info,
+  &::ng-deep .mat-radio-label-content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .mat-icon {
+    margin-right: 8px;
+  }
+}

@@ -47,6 +47,16 @@
   }
 }
 
+.mat-dark {
+  &.mat-fab,
+  &.mat-flat-button,
+  &.mat-raised-button,
+  &.mat-mini-fab {
+    color: var(--color-dark-contrast);
+    background-color: var(--color-dark);
+  }
+}
+
 .mat-info {
   &.mat-fab,
   &.mat-flat-button,

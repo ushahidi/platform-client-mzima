@@ -1,0 +1,240 @@
+<form
+  novalidate
+  [formGroup]="form"
+  class="search-form"
+  (submit)="applyFilters()"
+  [ngClass]="{ 'search-form--dropdown-open': onFocus || isDropdownOpen }"
+>
+  <div class="search-form__control">
+    <input
+      type="text"
+      placeholder="Search"
+      class="form-control"
+      formControlName="query"
+      (blur)="inputOnBlur()"
+      (focus)="inputOnFocus()"
+    />
+    <mat-icon class="search-form__control__icon">search</mat-icon>
+  </div>
+  <button
+    color="dark"
+    type="button"
+    mat-raised-button
+    class="sorting-btn"
+    matBadgeColor="primary"
+    matBadgePosition="before"
+    (click)="toggleDropdown()"
+    [matBadge]="activeFiltersCount"
+  >
+    {{ 'app.sort_and_filter' | translate }}
+    <mat-icon>
+      <svg class="iconic" role="img">
+        <use xlink:href="assets/sprites.svg#funnel"></use>
+      </svg>
+    </mat-icon>
+  </button>
+
+  <span class="search-form__backdrop" (click)="toggleDropdown(false)"></span>
+
+  <div class="search-form__dropdown" (click)="toggleDropdown(true)">
+    <div class="search-form__dropdown__group" *ngIf="activeSavedSearch">
+      <div class="active-filters active-filters--saved">
+        <div class="active-filters__row">
+          <button color="dark" mat-raised-button class="active-filter">
+            <ng-container *ngIf="activeSavedSearch.name">
+              <i>{{ 'app.saved_search' | translate }}:</i> {{ activeSavedSearch.name | translate }}
+            </ng-container>
+            <mat-icon class="active-filter__icon" (click)="resetSavedFilter()">
+              <svg class="iconic" role="img">
+                <use xlink:href="assets/sprites.svg#circle-x"></use>
+              </svg>
+            </mat-icon>
+          </button>
+        </div>
+        <div class="active-filters__row" *ngFor="let filter of activeSavedSearch.filter | keyvalue">
+          <button
+            color="dark"
+            type="button"
+            mat-raised-button
+            class="active-filter"
+            *ngIf="!_array.isArray(filter.value)"
+          >
+            <i>{{ 'global_filter.filter_tabs.' + filter.key | translate }}:</i>
+            {{ filter.value | filterValue: filter.key:surveyList:categories }}
+          </button>
+
+          <ng-container *ngIf="_array.isArray(filter.value)">
+            <button
+              color="dark"
+              type="button"
+              mat-raised-button
+              class="active-filter"
+              *ngFor="let value of filter.value"
+            >
+              <i>{{ 'global_filter.filter_tabs.' + filter.key | translate }}:</i>
+              {{ value | filterValue: filter.key:surveyList:categories }}
+            </button>
+          </ng-container>
+        </div>
+      </div>
+      <div class="save-filters-button">
+        <button
+          type="button"
+          color="primary"
+          mat-raised-button
+          (click)="saveSearch(activeSavedSearch)"
+          [disabled]="form.invalid || form.disabled"
+        >
+          <ng-container *ngIf="!activeSavedSearch">
+            {{ 'set.save_savedsearch' | translate }}
+          </ng-container>
+          <ng-container *ngIf="activeSavedSearch">
+            {{ 'set.update_savedsearch' | translate }}
+          </ng-container>
+        </button>
+      </div>
+    </div>
+
+    <div class="search-form__dropdown__group" *ngIf="savedsearches?.length">
+      <h4 class="dropdown-menu-title">{{ 'app.saved_search' | translate }}</h4>
+      <mat-form-field appearance="standard">
+        <mat-select
+          [(ngModel)]="activeSavedSearchValue"
+          [ngModelOptions]="{ standalone: true }"
+          (selectionChange)="applySavedFilter($event)"
+          [placeholder]="'app.select_one' | translate"
+        >
+          <mat-option>{{ 'graph.none' | translate }}</mat-option>
+          <mat-option *ngFor="let option of savedsearches" [value]="option.id">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="search-form__dropdown__group">
+      <h4 class="dropdown-menu-title">{{ 'app.filter_by' | translate }}</h4>
+
+      <h5>{{ 'global_filter.status' | translate }}</h5>
+      <mat-form-field appearance="standard">
+        <mat-select multiple formControlName="status" [placeholder]="'nav.all' | translate">
+          <mat-option [value]="option.value" *ngFor="let option of statuses">
+            {{ option.name | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <h5>{{ 'app.categories' | translate }}</h5>
+      <mat-form-field appearance="standard">
+        <input
+          matInput
+          readonly
+          [matMenuTriggerFor]="categoriesMenu"
+          [placeholder]="'nav.all' | translate"
+          [value]="getCategoriesName(form.controls['tags'].value)"
+        />
+        <div matSuffix class="mat-select-arrow ng-tns-c117-17"></div>
+      </mat-form-field>
+
+      <mat-menu class="multilevelselect" #categoriesMenu="matMenu">
+        <mat-tree
+          [dataSource]="dataSource"
+          [treeControl]="treeControl"
+          class="multiselect-dropdown"
+        >
+          <mat-selection-list formControlName="tags">
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+              <mat-list-option
+                color="primary"
+                [value]="node.id"
+                class="list-option"
+                checkboxPosition="before"
+                (click)="$event.stopPropagation()"
+              >
+                {{ node.name }}
+              </mat-list-option>
+            </mat-tree-node>
+            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+              <mat-list-option
+                color="primary"
+                [value]="node.id"
+                class="list-option"
+                checkboxPosition="before"
+                (click)="$event.stopPropagation()"
+              >
+                {{ node.name }}
+              </mat-list-option>
+              <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                </mat-icon>
+              </button>
+            </mat-tree-node>
+          </mat-selection-list>
+        </mat-tree>
+      </mat-menu>
+
+      <h5>{{ 'app.surveys' | translate }}</h5>
+      <mat-form-field appearance="standard">
+        <mat-select multiple formControlName="form" [placeholder]="'nav.all' | translate">
+          <mat-option [value]="option.id" *ngFor="let option of surveyList">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <h5>{{ 'global_filter.source' | translate }}</h5>
+      <mat-form-field appearance="standard">
+        <mat-select multiple formControlName="source" [placeholder]="'nav.all' | translate">
+          <mat-option [value]="option.value" *ngFor="let option of sources">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <h5>{{ 'global_filter.date_range' | translate }}</h5>
+      <div class="form-group">
+        <mat-form-field appearance="standard">
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" formControlName="date_after" />
+            <input matEndDate placeholder="End date" formControlName="date_before" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+
+      <h5>{{ 'global_filter.location' | translate }}</h5>
+      <app-location-selection formControlName="center_point"> </app-location-selection>
+    </div>
+
+    <div class="search-form__dropdown__group form-controls-panel">
+      <button color="primary" mat-raised-button [disabled]="form.disabled || form.invalid">
+        {{ 'global_filter.apply_filters' | translate }}
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        [disabled]="form.disabled"
+        (click)="resetSavedFilter()"
+      >
+        {{ 'global_filter.restore_defaults' | translate }}
+      </button>
+      <button
+        type="button"
+        color="secondary"
+        mat-raised-button
+        (click)="saveSearch(activeSavedSearch)"
+        *ngIf="activeSavedSearch || form.dirty"
+        [disabled]="form.disabled || form.invalid"
+      >
+        <ng-container *ngIf="!activeSavedSearch">
+          {{ 'set.save_savedsearch' | translate }}</ng-container
+        >
+        <ng-container *ngIf="activeSavedSearch">
+          {{ 'set.update_savedsearch' | translate }}</ng-container
+        >
+      </button>
+    </div>
+  </div>
+</form>

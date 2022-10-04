@@ -1,14 +1,41 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GeoJsonFilter, GeoJsonPostsResponse, PostApiResponse, PostResult } from '@models';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
 import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
+
+export interface PostFilters {
+  has_location?: string;
+  order?: string;
+  order_unlocked_on_top?: boolean;
+  orderby?: string;
+  'source[]'?: string[];
+  'tags[]'?: number[];
+  'status[]'?: string[];
+  'form[]'?: string[];
+  reactToFilters?: boolean;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService extends ResourceService<any> {
+  private defaultPostsFilters: GeoJsonFilter = {
+    order: 'desc',
+    orderby: 'created',
+    order_unlocked_on_top: true,
+    reactToFilters: true,
+    'source[]': [],
+    'tags[]': [],
+    'form[]': [],
+    'status[]': ['published', 'draft'],
+  };
+  private postsFilters = new BehaviorSubject<any>(this.defaultPostsFilters);
+  public postsFilters$ = this.postsFilters.asObservable();
+  private totalPosts = new Subject<number>();
+  public totalPosts$ = this.totalPosts.asObservable();
+
   constructor(protected override httpClient: HttpClient, protected override env: EnvService) {
     super(httpClient, env);
   }
@@ -39,21 +66,11 @@ export class PostsService extends ResourceService<any> {
   }
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
-    const test = {
-      has_location: 'mapped',
-      limit: 200,
-      offset: 0,
-      order: 'desc',
-      order_unlocked_on_top: true,
-      orderby: 'created',
-      reactToFilters: true,
-      'source[]': ['sms', 'twitter', 'web', 'email', 'published', 'draft'],
-    };
-    return super.get('geojson', filter || test);
+    return super.get('geojson', { has_location: 'mapped', ...filter, ...this.postsFilters.value });
   }
 
-  public getPosts(url: string, queryParams: any): Observable<PostApiResponse> {
-    return super.get(url, queryParams).pipe(
+  public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
+    return super.get(url, { ...filter, ...this.postsFilters.value, has_location: 'all' }).pipe(
       map((response) => {
         response.results.map((post: PostResult) => {
           post.source =
@@ -66,10 +83,23 @@ export class PostsService extends ResourceService<any> {
 
         return response;
       }),
+      tap((response) => {
+        this.totalPosts.next(response.total_count);
+      }),
     );
   }
 
   public getPostStatistics(queryParams: any) {
     return super.get('stats', queryParams);
+  }
+
+  public applyFilters(filters: any): void {
+    const newFilters: any = {};
+    for (const key in filters) {
+      if (filters[key] || this.postsFilters.value[key]) {
+        newFilters[key] = filters[key] || this.postsFilters.value[key];
+      }
+    }
+    this.postsFilters.next(newFilters);
   }
 }
