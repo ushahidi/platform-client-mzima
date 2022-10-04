@@ -68,7 +68,8 @@ module.exports = {
             'prefix': 'app',
             'style': 'kebab-case'
           }
-        ]
+        ],
+        '@typescript-eslint/dot-notation': 'off',
       }
     }, // *.ts
     {
