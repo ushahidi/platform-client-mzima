@@ -102,7 +102,11 @@ export class SidebarComponent implements OnInit {
   registerPage(event: MouseEvent, router: string, label: string) {
     event.preventDefault();
     this.gtmTracking.registerEvent(
-      { event: EnumGtmEvent.PageView, source: EnumGtmSource[label] },
+      {
+        event: EnumGtmEvent.PageView,
+        // @ts-ignore
+        source: EnumGtmSource[label],
+      },
       GtmTrackingService.MapPath(`/${router}`),
     );
   }
