@@ -52,6 +52,14 @@
     </textarea>
   </mat-form-field>
 
+  <div>
+    <ng-container *ngFor="let task of this.form.get('tasks')?.value">
+      <app-survey-task [task]="task"></app-survey-task>
+    </ng-container>
+
+    <button type="button" mat-raised-button (click)="addTask()">Add task</button>
+  </div>
+
   <div mat-dialog-actions align="end" class="mat-dialog-actions">
     <button mat-raised-button type="button" (click)="cancel()">
       {{ 'app.cancel' | translate }}
@@ -64,13 +72,5 @@
     >
       {{ (isEdit ? 'app.edit_survey' : 'app.add_survey') | translate }}
     </button>
-  </div>
-
-  <div class="">
-    <ng-container *ngFor="let task of this.form.get('tasks')?.value">
-      <app-survey-task [task]="task"></app-survey-task>
-    </ng-container>
-
-    <button type="button" mat-raised-button (click)="addTask()">Add task</button>
   </div>
 </form>

@@ -1,70 +1,58 @@
-<mat-accordion>
-  <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <mat-form-field appearance="standard">
-          <mat-label translate>app.survey_web_address</mat-label>
-          <input type="url" matInput [value]="shareUrl" readonly="true" />
-        </mat-form-field>
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-  </mat-expansion-panel>
-  <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <img class="icon" src="/img/facebook.png" alt="" />
-        <a
-          class="fb-xfbml-parse-ignore"
-          target="_blank"
-          [href]="
-            'https://www.facebook.com/sharer/sharer.php?u=' +
-            shareUrlEncoded +
-            '&amp;src=sdkpreparse'
-          "
-        >
-          Facebook
-        </a>
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-  </mat-expansion-panel>
+<mat-form-field appearance="standard">
+  <mat-label translate>app.survey_web_address</mat-label>
+  <input type="url" matInput [value]="shareUrl" readonly="true" />
+</mat-form-field>
 
-  <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <img class="icon" src="/img/twitter.png" alt="" />
-        <a target="_blank" [href]="'https://twitter.com/intent/tweet?url=' + shareUrlEncoded"
-          >Twitter</a
-        >
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Configure </mat-panel-title>
-    </mat-expansion-panel-header>
-    <div class="form-field">
-      <mat-form-field appearance="standard">
-        <textarea matInput>
-          &lt;iframe width="560" height="315" src="{{
-            shareUrl
-          }}" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
-        </textarea>
-      </mat-form-field>
-      <textarea></textarea>
-    </div>
-  </mat-expansion-panel>
+<a
+  target="_blank"
+  class="share-item"
+  mat-raised-button
+  [href]="
+    'https://www.facebook.com/sharer/sharer.php?u=' + shareUrlEncoded + '&amp;src=sdkpreparse'
+  "
+>
+  <span class="share-item__icon">
+    <img class="icon" src="assets/images/facebook.png" alt="" />
+  </span>
+  Facebook
+</a>
 
-  <mat-expansion-panel hideToggle *ngIf="isExportable() && hasPermission">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <svg class="iconic" role="img">
-          <use
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            xlink:href="assets/sprites.svg#external-link"
-          ></use>
-        </svg>
-        Export ?
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-  </mat-expansion-panel>
-</mat-accordion>
+<a
+  target="_blank"
+  class="share-item"
+  mat-raised-button
+  [href]="'https://twitter.com/intent/tweet?url=' + shareUrlEncoded"
+>
+  <span class="share-item__icon">
+    <img class="icon" src="assets/images/twitter.png" alt="" />
+  </span>
+  Twitter
+</a>
+
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title> Configure </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="embed-input">
+    <mat-form-field appearance="standard">
+      <mat-label>HTML</mat-label>
+      <textarea matInput readonly>
+&lt;iframe width="560" height="315" src="{{
+          shareUrl
+        }}" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</textarea
+      >
+    </mat-form-field>
+  </div>
+</mat-expansion-panel>
+
+<button mat-raised-button class="share-item">
+  <mat-icon class="share-item__icon">
+    <svg class="iconic" role="img">
+      <use
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xlink:href="assets/sprites.svg#external-link"
+      ></use>
+    </svg>
+  </mat-icon>
+  {{ 'app.export_to_csv' | translate }}
+</button>

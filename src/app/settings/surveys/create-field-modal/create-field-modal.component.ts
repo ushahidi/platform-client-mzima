@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { surveyHelper } from '@helpers';
-import { FormAttributeInterface } from '@models';
+import { CategoryInterface, FormAttributeInterface } from '@models';
+import { TranslateService } from '@ngx-translate/core';
+import { CategoriesService } from '@services';
+import { map } from 'rxjs';
+import { MultilevelSelectOption } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-create-field-modal',
@@ -13,9 +17,40 @@ export class CreateFieldModalComponent {
   selectedFieldType: any;
   editMode = true;
   label: any;
-  availableCategories: any;
+  availableCategories: MultilevelSelectOption[];
+  categories: any = [];
 
-  constructor(private matDialogRef: MatDialogRef<CreateFieldModalComponent>) {}
+  constructor(
+    private matDialogRef: MatDialogRef<CreateFieldModalComponent>,
+    private translate: TranslateService,
+    private categoriesService: CategoriesService,
+  ) {
+    this.categoriesService
+      .get()
+      .pipe(
+        map((res) => {
+          return res?.results?.map((category: CategoryInterface) => {
+            return {
+              id: category.id,
+              name: category.tag,
+              children: res?.results
+                ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
+                .map((cat: CategoryInterface) => {
+                  return {
+                    id: cat.id,
+                    name: cat.tag,
+                  };
+                }),
+            };
+          });
+        }),
+      )
+      .subscribe({
+        next: (response) => {
+          this.availableCategories = response;
+        },
+      });
+  }
 
   cancel() {
     this.matDialogRef.close();
@@ -51,6 +86,8 @@ export class CreateFieldModalComponent {
 
   selectField(field: Partial<FormAttributeInterface>) {
     this.selectedFieldType = field;
+    this.selectedFieldType.label = this.translate.instant(this.selectedFieldType.label);
+    this.selectedFieldType.description = this.translate.instant(this.selectedFieldType.description);
   }
 
   hasOptions(attribute: FormAttributeInterface) {
@@ -62,6 +99,7 @@ export class CreateFieldModalComponent {
   }
 
   addOption(attribute: FormAttributeInterface) {
+    if (!attribute.options) attribute.options = [];
     attribute.options.push('');
   }
 

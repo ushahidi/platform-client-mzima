@@ -9,11 +9,9 @@
 
 .mat-dialog-actions {
   padding: 8px 0;
+  margin-bottom: 0;
 
   .mat-raised-button {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-
     &:not(:first-child) {
       margin-left: 8px;
     }
