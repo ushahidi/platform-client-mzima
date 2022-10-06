@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CONST } from '@constants';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest } from 'rxjs';
 import { RoleResult } from '@models';
@@ -16,6 +17,7 @@ export class RoleItemComponent implements OnInit {
   public role: RoleResult;
   public roles: RoleResult[];
   public isUpdate = false;
+  public userRole: string;
 
   public form: FormGroup = this.fb.group({
     display_name: ['', [Validators.required]],
@@ -39,6 +41,7 @@ export class RoleItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userRole = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`) || '';
     this.isUpdate = !!this.route.snapshot.paramMap.get('id');
     const roleId = this.route.snapshot.paramMap.get('id') || '';
     const roles$ = this.rolesService.get();
@@ -156,21 +159,16 @@ export class RoleItemComponent implements OnInit {
       this.role.display_name + ' role will be deleted!',
       '<p>This action cannot be undone.</p><p>Are you sure?</p>',
     );
-
-    console.log('confirmed', confirmed);
     if (!confirmed) return;
-    console.log(this.role);
-    console.log(this.form.value);
-    if (this.role.name === 'admin'.toLowerCase() && this.checkIfLastAdmin()) {
-      // Notify.error('notify.role.last_admin');
-      const checkLastAdmin = await this.openConfirmModal(
-        'notify.role.last_admin',
-        'notify.role.last_admin',
-      );
-      console.log('checkLastAdmin', checkLastAdmin);
-      if (!checkLastAdmin) return;
-    }
-    // await this.delete();
+    // TODO ask for uniq name field
+    // if (this.role.name === 'admin'.toLowerCase() && this.checkIfLastAdmin()) {
+    //   const checkLastAdmin = await this.openConfirmModal(
+    //     'notify.role.last_admin',
+    //     'notify.role.last_admin',
+    //   );
+    //   if (!checkLastAdmin) return;
+    // }
+    await this.delete();
   }
 
   public async delete() {
@@ -187,14 +185,13 @@ export class RoleItemComponent implements OnInit {
     });
   }
 
-  checkIfLastAdmin() {
-    console.log('checkIfLastAdmin');
-    let admins = 0;
-    for (const role of this.roles) {
-      if (role.name === 'admin') {
-        admins++;
-      }
-    }
-    return admins === 1;
-  }
+  // checkIfLastAdmin() {
+  //   let admins = 0;
+  //   for (const role of this.roles) {
+  //     if (role.name === 'admin') {
+  //       admins++;
+  //     }
+  //   }
+  //   return admins === 1;
+  // }
 }

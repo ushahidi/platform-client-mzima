@@ -21,6 +21,7 @@
       <div *ngFor="let item of permissionsList">
         <mat-checkbox
           [checked]="item.checked"
+          [disabled]="userRole === role.name"
           (change)="onCheckChange($event, 'permissions')"
           [value]="item.name"
         >

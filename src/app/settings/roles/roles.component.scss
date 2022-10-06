@@ -8,10 +8,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 992px) {
-    justify-content: space-around;
-  }
-  @media (max-width: 768px) {
+  flex-wrap: wrap;
+
+  @media (max-width: 575px) {
     flex-direction: column;
   }
 }
@@ -24,20 +23,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  width: 250px;
   justify-content: center;
   flex-basis: 250px;
   margin-right: 20px;
-
-  &:last-child {
-    margin-right: 0;
-  }
-
-  @media (max-width: 992px) {
-    flex-basis: 200px;
-    margin-right: 0;
-    margin-bottom: 20px;
-  }
+  margin-bottom: 20px;
 
   @media (max-width: 575px) {
     width: 100%;
