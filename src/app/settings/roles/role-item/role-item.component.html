@@ -1,26 +1,23 @@
 <div class="page-content">
   <form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
     <div class="form-group">
-      <h3>Name</h3>
+      <h3>{{ 'role.name' | translate }}</h3>
       <mat-form-field appearance="standard">
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="display_name" />
+        <mat-label>{{ 'role.name' | translate }}</mat-label>
+        <input matInput formControlName="display_name" (ngModelChange)="setName($event)" />
       </mat-form-field>
     </div>
     <div class="form-group">
-      <h3>Description</h3>
+      <h3>{{ 'role.description' | translate }}</h3>
       <mat-form-field appearance="standard">
-        <mat-label>Description</mat-label>
+        <mat-label>{{ 'role.description' | translate }}</mat-label>
         <input matInput formControlName="description" />
       </mat-form-field>
     </div>
 
     <div class="form-group">
-      <h3>Permissions</h3>
-      <p>
-        These options control what this type of role can mke changes to.
-        <a href="#">Visit our support guides to find out more</a>
-      </p>
+      <h3>{{ 'role.permissions' | translate }}</h3>
+      <p [innerHTML]="'settings.roles.roles_description' | translate"></p>
       <div *ngFor="let item of permissionsList">
         <mat-checkbox
           [checked]="item.checked"
@@ -33,28 +30,31 @@
     </div>
 
     <div class="form-controls-panel">
-      <button mat-raised-button type="button" (click)="cancel()">
-        <span>Cancel</span>
+      <button mat-raised-button type="button" (click)="navigateToRoles()">
+        <span>{{ 'app.cancel' | translate }}</span>
       </button>
-      <button mat-raised-button color="primary" class="role-button" type="submit">
-        <span>Save</span>
+      <button
+        mat-raised-button
+        color="primary"
+        class="role-button"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
       </button>
     </div>
   </form>
 </div>
 
-<div class="page-content" *ngIf="role && !role?.protected">
-  <h3>Delete this role</h3>
-  <p>
-    <strong>If you delete this role,</strong> all of the users assigned to it will be assigned
-    default permissions. proceed with caution.
-  </p>
-  <button type="button" color="accent" mat-raised-button (click)="openDialog()">
+<div class="page-content" *ngIf="isUpdate && !role?.protected">
+  <h3>{{ 'role.delete_role' | translate }}</h3>
+  <p [innerHTML]="'role.delete_role_desc' | translate"></p>
+  <button type="button" color="accent" mat-raised-button (click)="deleteRole()">
     <mat-icon>
       <svg class="iconic">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#trash"></use>
       </svg>
     </mat-icon>
-    <span>Delete</span>
+    <span>{{ 'role.delete' | translate }}</span>
   </button>
 </div>

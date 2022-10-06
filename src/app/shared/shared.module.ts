@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { GtmDirective } from '../core/directives/gtm.directive';
+import { GtmDirective, UserRoleDirective } from '@directives';
 
 import {
   SidebarComponent,
@@ -51,7 +51,11 @@ const components = [
   SaveSearchModalComponent,
   FilterValuePipe,
   LocationSelectionComponent,
-  GtmDirective,
+];
+
+const directives = [
+  GtmDirective, //
+  UserRoleDirective,
 ];
 
 const modules = [
@@ -69,8 +73,8 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, ...directives],
   imports: [...modules],
-  exports: [...components, ...modules],
+  exports: [...components, ...modules, ...directives],
 })
 export class SharedModule {}

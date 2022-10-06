@@ -53,6 +53,7 @@ export class SessionService {
     this.loadSessionDataFromLocalStorage();
     this.loadUserDataFromLocalStorage();
     this._isLogged.next(!!this.currentUser.userId);
+    console.log(this.currentUser.role);
   }
 
   localStorageNameMapper(key: string) {

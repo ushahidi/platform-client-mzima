@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { combineLatest } from 'rxjs';
 import { RoleResult } from '@models';
 import { PermissionsService, RolesService, ConfirmModalService } from '@services';
@@ -13,16 +14,18 @@ import { PermissionsService, RolesService, ConfirmModalService } from '@services
 export class RoleItemComponent implements OnInit {
   public permissionsList: any[] = [];
   public role: RoleResult;
+  public roles: RoleResult[];
+  public isUpdate = false;
 
   public form: FormGroup = this.fb.group({
     display_name: ['', [Validators.required]],
     description: [''],
-    permissions: this.fb.array([]),
+    permissions: this.fb.array([], [Validators.required]),
     allowed_privileges: this.fb.array([]),
-    id: ['', [Validators.required]],
+    id: [0],
     name: ['', [Validators.required]],
-    protected: ['', [Validators.required]],
-    url: ['', [Validators.required]],
+    protected: [false],
+    url: [''],
   });
 
   constructor(
@@ -32,14 +35,18 @@ export class RoleItemComponent implements OnInit {
     private rolesService: RolesService,
     private permissionsService: PermissionsService,
     private confirmModalService: ConfirmModalService,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
+    this.isUpdate = !!this.route.snapshot.paramMap.get('id');
     const roleId = this.route.snapshot.paramMap.get('id') || '';
+    const roles$ = this.rolesService.get();
     const role$ = this.rolesService.getById(roleId);
     const permissions$ = this.permissionsService.get();
-    combineLatest([role$, permissions$]).subscribe({
-      next: ([role, permissions]) => {
+    combineLatest([role$, permissions$, roles$]).subscribe({
+      next: ([role, permissions, roles]) => {
+        this.roles = roles.results;
         this.role = role;
         this.permissionsList = permissions.results.map((el: any) => {
           return {
@@ -47,22 +54,28 @@ export class RoleItemComponent implements OnInit {
             checked: false,
           };
         });
-        this.fillInForm(role);
+        if (this.isUpdate) {
+          this.fillInForm(role);
 
-        for (const privileges of role.allowed_privileges) {
-          this.addData(privileges, this.privilegesControl);
-        }
+          for (const privileges of role.allowed_privileges) {
+            this.addData(privileges, this.privilegesControl);
+          }
 
-        for (const permission of role.permissions) {
-          this.addData(permission, this.permissionsControl);
+          for (const permission of role.permissions) {
+            this.addData(permission, this.permissionsControl);
 
-          this.permissionsList.reduce((acc, el: any) => {
-            return el.name === permission ? [...acc, (el.checked = true)] : [...acc, el];
-          }, []);
+            this.permissionsList.reduce((acc, el: any) => {
+              return el.name === permission ? [...acc, (el.checked = true)] : [...acc, el];
+            }, []);
+          }
         }
       },
       error: (err) => console.log(err),
     });
+  }
+
+  setName(event: string) {
+    this.form.patchValue({ name: event.toLowerCase() });
   }
 
   private fillInForm(role: RoleResult) {
@@ -106,33 +119,82 @@ export class RoleItemComponent implements OnInit {
     }
   }
 
-  public async openDialog(): Promise<void> {
-    const confirmed = await this.confirmModalService.open({
-      title: this.role.display_name + ' role will be deleted!',
-      description: '<p>This action cannot be undone.</p><p>Are you sure?</p>',
-    });
-
-    if (!confirmed) return;
-    this.delete();
-  }
-
-  public cancel(): void {
+  public navigateToRoles(): void {
     this.router.navigate(['settings/roles']);
   }
 
   public save(): void {
-    console.log(this.role.id, this.form.value);
-    // this.rolesService.update(this.role.id, this.form.value).subscribe({
-    //   next: (response) => console.log(response),
-    //   error: (err) => console.log(err),
-    // });
+    const roleBody = {
+      id: this.form.value.id,
+      name: this.form.value.name,
+      display_name: this.form.value.display_name,
+      description: this.form.value.description,
+      permissions: this.form.value.permissions,
+      protected: this.form.value.protected,
+    };
+    console.log(this.form.value);
+
+    if (!this.isUpdate) {
+      delete roleBody.id;
+      this.rolesService.post(roleBody).subscribe({
+        next: () => this.navigateToRoles(),
+        error: (err) => console.log(err),
+      });
+    } else {
+      this.rolesService.update(this.role.id, this.form.value).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.navigateToRoles();
+        },
+        error: (err) => console.log(err),
+      });
+    }
   }
 
-  public delete() {
-    console.log('delete');
-    // this.rolesService.delete(this.role.id).subscribe({
-    //   next: (response) => console.log(response),
-    //   error: (err) => console.log(err),
-    // });
+  public async deleteRole(): Promise<void> {
+    const confirmed = await this.openConfirmModal(
+      this.role.display_name + ' role will be deleted!',
+      '<p>This action cannot be undone.</p><p>Are you sure?</p>',
+    );
+
+    console.log('confirmed', confirmed);
+    if (!confirmed) return;
+    console.log(this.role);
+    console.log(this.form.value);
+    if (this.role.name === 'admin'.toLowerCase() && this.checkIfLastAdmin()) {
+      // Notify.error('notify.role.last_admin');
+      const checkLastAdmin = await this.openConfirmModal(
+        'notify.role.last_admin',
+        'notify.role.last_admin',
+      );
+      console.log('checkLastAdmin', checkLastAdmin);
+      if (!checkLastAdmin) return;
+    }
+    // await this.delete();
+  }
+
+  public async delete() {
+    this.rolesService.delete(this.role.id).subscribe({
+      next: () => this.navigateToRoles(),
+      error: (err) => console.log(err),
+    });
+  }
+
+  private async openConfirmModal(title: string, description: string): Promise<boolean> {
+    return this.confirmModalService.open({
+      title: this.translate.instant(title),
+      description: this.translate.instant(description),
+    });
+  }
+
+  checkIfLastAdmin() {
+    console.log('checkIfLastAdmin');
+    let admins = 0;
+    for (const role of this.roles) {
+      if (role.name === 'admin') {
+        admins++;
+      }
+    }
+    return admins === 1;
   }
 }
