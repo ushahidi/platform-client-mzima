@@ -2,7 +2,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { FormAttributeInterface, SurveyItemTask } from '@models';
+import { FormAttributeInterface, RoleResult, SurveyItem, SurveyItemTask } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService } from '@services';
 import { CreateFieldModalComponent } from '../create-field-modal/create-field-modal.component';
@@ -14,8 +14,11 @@ import { CreateFieldModalComponent } from '../create-field-modal/create-field-mo
 })
 export class SurveyTaskComponent implements OnInit {
   @Input() task: SurveyItemTask;
+  @Input() survey: SurveyItem;
+  @Input() roles: RoleResult[];
 
   surveyId: string;
+  selectedRoles: any[] = [];
 
   taskFields: FormAttributeInterface[];
   isPost = false;
@@ -46,6 +49,19 @@ export class SurveyTaskComponent implements OnInit {
     if (!confirmed) return;
 
     this.taskFields.splice(index, 1);
+  }
+
+  get anonymiseReportersEnabled() {
+    return true;
+  }
+
+  onCheckChange(event: any, field: any) {
+    console.log('field', field, 'event', event);
+    if (event.checked) {
+      this.selectedRoles.push(field);
+    } else {
+      this.selectedRoles = this.selectedRoles.filter((r) => r !== field);
+    }
   }
 
   addField() {

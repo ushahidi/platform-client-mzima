@@ -49,7 +49,7 @@
         </button>
       </div>
     </mat-tab>
-    <mat-tab [label]="'survey.configure' | translate">
+    <mat-tab [label]="'survey.configure' | translate" *ngIf="!isPost">
       <div class="tab-content">
         <div class="form-field">
           <mat-slide-toggle [(ngModel)]="task.required" name="accept-survey">
@@ -75,6 +75,116 @@
         </div>
       </div>
     </mat-tab>
+    <mat-tab [label]="'survey.configure' | translate" *ngIf="isPost">
+      <div class="tab-content" *ngIf="survey">
+        <div class="form-field">
+          <mat-slide-toggle [(ngModel)]="survey.require_approval" name="accept-survey">
+            {{ 'survey.require_review' | translate }}
+            <p *ngIf="survey.require_approval">
+              <small translate>survey.require_review_desc</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+        <div class="form-field">
+          <mat-slide-toggle [(ngModel)]="survey.hide_author" name="import-to-survey">
+            {{ 'survey.hide_author_information' | translate }}
+            <p *ngIf="survey.hide_author">
+              <small translate>survey.hide_author_information_desc</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+        <div class="form-field" *ngIf="anonymiseReportersEnabled">
+          <mat-slide-toggle [(ngModel)]="survey.hide_location" name="import-to-survey">
+            {{ 'survey.hide_location_information' | translate }}
+            <p *ngIf="survey.hide_location">
+              <small translate>survey.hide_location_information_desc</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+        <div class="form-field" *ngIf="anonymiseReportersEnabled">
+          <mat-slide-toggle [(ngModel)]="survey.hide_time" name="import-to-survey">
+            {{ 'survey.hide_time_information' | translate }}
+            <p *ngIf="survey.hide_time">
+              <small translate>survey.hide_time_information_desc</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+        <div class="radio-group">
+          <h3>{{ 'survey.who_can_add' | translate }}</h3>
+          <mat-radio-group [(ngModel)]="survey.everyone_can_create">
+            <div class="radio-group">
+              <mat-radio-button [value]="true">
+                <mat-icon matPrefix>
+                  <svg class="iconic" role="img">
+                    <use xlink:href="assets/sprites.svg#globe"></use>
+                  </svg>
+                </mat-icon>
+                {{ 'nav.everyone' | translate }}
+              </mat-radio-button>
+            </div>
+
+            <div class="radio-group">
+              <mat-radio-button [value]="false">
+                <mat-icon matPrefix>
+                  <svg class="iconic" role="img">
+                    <use xlink:href="assets/sprites.svg#people"></use>
+                  </svg>
+                </mat-icon>
+                {{ 'app.specific_roles' | translate }}
+              </mat-radio-button>
+              <div *ngIf="!survey.everyone_can_create">
+                <ng-container *ngFor="let role of roles">
+                  <mat-checkbox
+                    [checked]="role.name === 'admin'"
+                    [disabled]="role.name === 'admin'"
+                    (change)="onCheckChange($event, role.id)"
+                  >
+                    {{ role.display_name | translate }}
+                  </mat-checkbox>
+                </ng-container>
+              </div>
+            </div>
+          </mat-radio-group>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- <fieldset>
+
+    <color-picker color-container="survey"></color-picker>
+
+    <div class="form-field">
+        <label translate="translations.survey_select_default"
+            >Select default language for this survey</label
+        >
+        <p
+            class="alert"
+            translate="translations.default_lang_info"
+        ></p>
+        <div class="custom-select">
+            <select
+                ng-model="selectedLanguage"
+                ng-options="lang.code as lang.name for lang in languagesToSelect"
+                ng-change="selectLanguage(selectedLanguage)"
+            ></select>
+        </div>
+        <div ng-show="showLangError" class="alert error">
+            <svg class="iconic">
+                <use
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="#warning"
+                ></use>
+            </svg>
+            <p
+                translate="translations.error_translation_exists"
+            >
+                You cannot select this language since there is
+                already a translation for it.
+            </p>
+        </div>
+    </div>
+</div> -->
+
     <mat-tab *ngIf="isPost" [label]="'survey.share' | translate">
       <div class="tab-content">
         <app-share-menu [surveyId]="surveyId"></app-share-menu>

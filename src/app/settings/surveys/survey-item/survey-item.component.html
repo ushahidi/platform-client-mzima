@@ -1,4 +1,4 @@
-<form class="form-container" novalidate [formGroup]="form" (ngSubmit)="isEdit ? update() : save()">
+<form class="form-container" novalidate [formGroup]="form" (ngSubmit)="save()">
   <app-translations-switch
     [selectedLanguages]="this.form.get('enabled_languages')?.value.available"
     (addTranslationChange)="setAvailableLanguages($event)"
@@ -52,25 +52,33 @@
     </textarea>
   </mat-form-field>
 
-  <div>
-    <ng-container *ngFor="let task of this.form.get('tasks')?.value">
-      <app-survey-task [task]="task"></app-survey-task>
-    </ng-container>
-
-    <button type="button" mat-raised-button (click)="addTask()">Add task</button>
-  </div>
-
-  <div mat-dialog-actions align="end" class="mat-dialog-actions">
-    <button mat-raised-button type="button" (click)="cancel()">
-      {{ 'app.cancel' | translate }}
-    </button>
-    <button
-      type="submit"
-      color="primary"
-      mat-raised-button
-      [disabled]="form.invalid || form.disabled"
-    >
-      {{ (isEdit ? 'app.edit_survey' : 'app.add_survey') | translate }}
-    </button>
-  </div>
+  <app-survey-task
+    [task]="mainPost"
+    [roles]="roles"
+    [survey]="surveyObject"
+    (surveyChange)="updateForm($event)"
+    *ngIf="mainPost"
+  ></app-survey-task>
 </form>
+
+<div class="form-container">
+  <ng-container *ngFor="let task of additionalTasks">
+    <app-survey-task [task]="task"></app-survey-task>
+  </ng-container>
+
+  <button type="button" mat-raised-button (click)="addTask()">Add task</button>
+</div>
+
+<div mat-dialog-actions align="end" class="mat-dialog-actions">
+  <button mat-raised-button type="button" (click)="cancel()">
+    {{ 'app.cancel' | translate }}
+  </button>
+  <button
+    type="submit"
+    color="primary"
+    mat-raised-button
+    [disabled]="form.invalid || form.disabled"
+  >
+    {{ (isEdit ? 'app.edit_survey' : 'app.add_survey') | translate }}
+  </button>
+</div>

@@ -106,3 +106,25 @@ export const surveyFields = [
     description: 'settings.settings_list.categories_desc',
   },
 ];
+
+export const fieldHasTranslations = (field: any, lang: any) => {
+  return (
+    field.translations[lang] &&
+    field.translations[lang].options &&
+    Object.values(field.translations[lang].options).length > 0
+  );
+};
+
+export const fieldCanHaveOptions = (field: any) => {
+  return field.input === 'checkbox' || field.input === 'radio' || field.input === 'select';
+};
+
+export const areOptionsUnique = (options: any[]) => {
+  // converting to Set would remove duplicates,so if size matches original we are good
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+  return new Set(options).size === options.length;
+};
+export const hasEmptyOptions = (options: any[]) => {
+  // check against duplicate or empty options
+  return options.filter((i) => i === '' || i === null).length > 0;
+};
