@@ -146,45 +146,32 @@
             </div>
           </mat-radio-group>
         </div>
+
+        <!-- <color-picker color-container="survey"></color-picker> -->
+
+        <div class="form-field">
+          <mat-label>{{ 'translations.survey_select_default' | translate }}</mat-label>
+          <mat-select
+            panelClass="language-field"
+            [(value)]="selectedLanguage"
+            (selectionChange)="changeLanguage($event)"
+          >
+            <mat-option *ngFor="let lang of languagesToSelect" [value]="lang.code">
+              <span class="language-title">{{ lang.name }}</span>
+            </mat-option>
+          </mat-select>
+          <div *ngIf="showLangError" class="alert error">
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="assets/sprites.svg#warning"
+              ></use>
+            </svg>
+            <p translate="translations.error_translation_exists"></p>
+          </div>
+        </div>
       </div>
     </mat-tab>
-
-    <!-- <fieldset>
-
-    <color-picker color-container="survey"></color-picker>
-
-    <div class="form-field">
-        <label translate="translations.survey_select_default"
-            >Select default language for this survey</label
-        >
-        <p
-            class="alert"
-            translate="translations.default_lang_info"
-        ></p>
-        <div class="custom-select">
-            <select
-                ng-model="selectedLanguage"
-                ng-options="lang.code as lang.name for lang in languagesToSelect"
-                ng-change="selectLanguage(selectedLanguage)"
-            ></select>
-        </div>
-        <div ng-show="showLangError" class="alert error">
-            <svg class="iconic">
-                <use
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    xlink:href="#warning"
-                ></use>
-            </svg>
-            <p
-                translate="translations.error_translation_exists"
-            >
-                You cannot select this language since there is
-                already a translation for it.
-            </p>
-        </div>
-    </div>
-</div> -->
-
     <mat-tab *ngIf="isPost" [label]="'survey.share' | translate">
       <div class="tab-content">
         <app-share-menu [surveyId]="surveyId"></app-share-menu>
