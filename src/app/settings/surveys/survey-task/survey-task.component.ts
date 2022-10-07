@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { CONST } from '@constants';
@@ -12,6 +12,7 @@ import {
 } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, LanguageService } from '@services';
+import { GroupCheckboxItemInterface, GroupCheckboxValueInterface } from 'src/app/shared/components';
 import { CreateFieldModalComponent } from '../create-field-modal/create-field-modal.component';
 
 @Component({
@@ -19,13 +20,16 @@ import { CreateFieldModalComponent } from '../create-field-modal/create-field-mo
   templateUrl: './survey-task.component.html',
   styleUrls: ['./survey-task.component.scss'],
 })
-export class SurveyTaskComponent implements OnInit {
+export class SurveyTaskComponent implements OnInit, OnChanges {
   @Input() task: SurveyItemTask;
   @Input() survey: SurveyItem;
   @Input() roles: RoleResult[];
 
   surveyId: string;
-  selectedRoles: any[] = [];
+  selectedRoles: GroupCheckboxValueInterface = {
+    value: 'everyone',
+    options: [],
+  };
 
   taskFields: FormAttributeInterface[];
   isPost = false;
@@ -33,6 +37,8 @@ export class SurveyTaskComponent implements OnInit {
   selectedLanguage: any;
   languages: any;
   languagesToSelect: LanguageInterface[] = [];
+  roleOptions: GroupCheckboxItemInterface[] = [];
+  selectedColor: string;
 
   constructor(
     private confirm: ConfirmModalService,
@@ -41,6 +47,31 @@ export class SurveyTaskComponent implements OnInit {
     private languageService: LanguageService,
     private translate: TranslateService,
   ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['roles']) {
+      this.roleOptions = [
+        {
+          name: this.translate.instant('role.everyone'),
+          value: 'everyone',
+          icon: 'person',
+        },
+        {
+          name: this.translate.instant('app.specific_roles'),
+          value: 'specific',
+          icon: 'group',
+          options: this.roles.map((role) => {
+            return {
+              name: role.display_name,
+              value: role.name,
+              checked: role.name === 'admin',
+              disabled: role.name === 'admin',
+            };
+          }),
+        },
+      ];
+    }
+  }
 
   ngOnInit(): void {
     this.surveyId = this.route.snapshot.paramMap.get('id') || '';
@@ -106,15 +137,6 @@ export class SurveyTaskComponent implements OnInit {
 
   get anonymiseReportersEnabled() {
     return true;
-  }
-
-  onCheckChange(event: any, field: any) {
-    console.log('field', field, 'event', event);
-    if (event.checked) {
-      this.selectedRoles.push(field);
-    } else {
-      this.selectedRoles = this.selectedRoles.filter((r) => r !== field);
-    }
   }
 
   addField() {

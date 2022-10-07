@@ -82,40 +82,8 @@
 
     <div class="form-group">
       <h4>{{ 'app.who_can_see_this_category' | translate }}</h4>
-      <mat-radio-group
-        class="radio-buttons"
-        *ngIf="!form.value.parent"
-        formControlName="category_visibility"
-      >
-        <p>
-          <mat-radio-button value="everyone" class="example-radio-button">
-            <mat-icon>person</mat-icon>
-            {{ 'role.everyone' | translate }}
-          </mat-radio-button>
-        </p>
-        <p>
-          <mat-radio-button [value]="'specific'" class="example-radio-button">
-            <mat-icon>group</mat-icon>
-            {{ 'app.specific_roles' | translate }}
-          </mat-radio-button>
-
-          <span
-            class="radio-buttons__options"
-            *ngIf="form.value.category_visibility === 'specific'"
-          >
-            <p *ngFor="let role of roles">
-              <mat-checkbox
-                [value]="role.name"
-                [disabled]="role.name === 'admin'"
-                (change)="onCheckChange($event, 'visible_to')"
-                [checked]="role.name === 'admin' || (category && isRoleActive(role.name))"
-              >
-                {{ role.display_name }}
-              </mat-checkbox>
-            </p>
-          </span>
-        </p>
-      </mat-radio-group>
+      <app-group-checkbox-select [data]="roleOptions" formControlName="visible_to">
+      </app-group-checkbox-select>
       <div class="radio-buttons" *ngIf="form.value.parent">
         <p class="radio-buttons__info">
           <mat-icon>group</mat-icon>
@@ -129,9 +97,9 @@
     <div class="form-group">
       <h4>{{ 'category.editor.name' | translate }}</h4>
       <mat-form-field appearance="standard">
-        <mat-label
-          >{{ 'translations.edit_default_text' | translate }} {{ defaultLanguage?.name }}</mat-label
-        >
+        <mat-label>
+          {{ 'translations.edit_default_text' | translate }} {{ defaultLanguage?.name }}
+        </mat-label>
         <input matInput disabled [value]="form.value.name" />
       </mat-form-field>
 

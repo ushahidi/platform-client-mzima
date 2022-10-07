@@ -15,3 +15,5 @@ export * from './search-form/search-form.component';
 export * from './save-search-modal/save-search-modal.component';
 export * from './location-selection/location-selection.component';
 export * from './multilevel-select/multilevel-select.component';
+export * from './group-checkbox-select/group-checkbox-select.component';
+export * from './color-picker/color-picker.component';

@@ -209,12 +209,12 @@ export class SearchFormComponent {
           filters[key.replace(/\[\]/g, '')] = this.activeFilters[key];
         }
 
-        const savedSearchPatams = {
+        const savedSearchParams = {
           filter: filters,
           name: result.name,
           description: result.description,
           featured: result.featured,
-          role: result.category_visibility === 'specific' ? result.visible_to : ['admin'],
+          role: result.visible_to.value === 'specific' ? result.visible_to.options : ['admin'],
           view: result.defaultViewingMode,
         };
 
@@ -222,7 +222,7 @@ export class SearchFormComponent {
           this.savedsearchesService
             .update(this.activeSavedSearch.id, {
               ...this.activeSavedSearch,
-              ...savedSearchPatams,
+              ...savedSearchParams,
             })
             .subscribe({
               next: () => {
@@ -233,7 +233,7 @@ export class SearchFormComponent {
         } else {
           this.savedsearchesService
             .post({
-              ...savedSearchPatams,
+              ...savedSearchParams,
             })
             .subscribe({
               next: () => {

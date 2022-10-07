@@ -1,0 +1,31 @@
+<mat-form-field appearance="standard">
+  <mat-label *ngIf="label">{{ label }}</mat-label>
+  <span matPrefix class="selected-color" [ngStyle]="{ backgroundColor: value || '#eee' }"></span>
+  <input
+    matInput
+    readonly
+    [(ngModel)]="value"
+    [matMenuTriggerFor]="menu"
+    [placeholder]="placeholder"
+  />
+</mat-form-field>
+
+<mat-menu #menu="matMenu" class="colorpicker-menu">
+  <input
+    matInput
+    [value]="value"
+    cpPresetLabel=""
+    cpPosition="auto"
+    [cpToggle]="true"
+    cpOutputFormat="hex"
+    [(colorPicker)]="value"
+    cpDialogDisplay="inline"
+    cpAlphaChannel="disabled"
+    [cpPresetColors]="preset"
+    [style.background]="value"
+    (colorPickerChange)="colorChange()"
+  />
+  <div class="colorpicker-menu__buttons">
+    <button mat-raised-button color="primary">Ok</button>
+  </div>
+</mat-menu>

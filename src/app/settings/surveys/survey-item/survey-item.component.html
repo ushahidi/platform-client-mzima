@@ -61,24 +61,29 @@
   ></app-survey-task>
 </form>
 
-<div class="form-container">
-  <ng-container *ngFor="let task of additionalTasks">
-    <app-survey-task [task]="task"></app-survey-task>
-  </ng-container>
-
-  <button type="button" mat-raised-button (click)="addTask()">Add task</button>
+<div class="form-container" *ngFor="let task of additionalTasks">
+  <app-survey-task [task]="task"></app-survey-task>
 </div>
 
-<div mat-dialog-actions align="end" class="mat-dialog-actions">
-  <button mat-raised-button type="button" (click)="cancel()">
-    {{ 'app.cancel' | translate }}
+<div class="form-container form-container--add-task">
+  <button type="button" mat-raised-button (click)="addTask()" class="add-task-button">
+    <mat-icon>add</mat-icon>
+    {{ 'survey.add_task' | translate }}
   </button>
-  <button
-    type="submit"
-    color="primary"
-    mat-raised-button
-    [disabled]="form.invalid || form.disabled"
-  >
-    {{ (isEdit ? 'app.edit_survey' : 'app.add_survey') | translate }}
-  </button>
+</div>
+
+<div class="form-container form-container--buttons">
+  <div mat-dialog-actions align="end" class="mat-dialog-actions">
+    <button mat-raised-button type="button" (click)="cancel()">
+      {{ 'app.cancel' | translate }}
+    </button>
+    <button
+      type="submit"
+      color="primary"
+      mat-raised-button
+      [disabled]="form.invalid || form.disabled"
+    >
+      {{ (isEdit ? 'app.edit_survey' : 'app.add_survey') | translate }}
+    </button>
+  </div>
 </div>

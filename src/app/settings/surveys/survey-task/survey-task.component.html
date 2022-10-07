@@ -111,45 +111,15 @@
         </div>
         <div class="radio-group">
           <h3>{{ 'survey.who_can_add' | translate }}</h3>
-          <mat-radio-group [(ngModel)]="survey.everyone_can_create">
-            <div class="radio-group">
-              <mat-radio-button [value]="true">
-                <mat-icon matPrefix>
-                  <svg class="iconic" role="img">
-                    <use xlink:href="assets/sprites.svg#globe"></use>
-                  </svg>
-                </mat-icon>
-                {{ 'nav.everyone' | translate }}
-              </mat-radio-button>
-            </div>
-
-            <div class="radio-group">
-              <mat-radio-button [value]="false">
-                <mat-icon matPrefix>
-                  <svg class="iconic" role="img">
-                    <use xlink:href="assets/sprites.svg#people"></use>
-                  </svg>
-                </mat-icon>
-                {{ 'app.specific_roles' | translate }}
-              </mat-radio-button>
-              <div *ngIf="!survey.everyone_can_create">
-                <ng-container *ngFor="let role of roles">
-                  <mat-checkbox
-                    [checked]="role.name === 'admin'"
-                    [disabled]="role.name === 'admin'"
-                    (change)="onCheckChange($event, role.id)"
-                  >
-                    {{ role.display_name | translate }}
-                  </mat-checkbox>
-                </ng-container>
-              </div>
-            </div>
-          </mat-radio-group>
+          {{ selectedRoles | json }}
+          <app-group-checkbox-select [data]="roleOptions" [(ngModel)]="selectedRoles">
+          </app-group-checkbox-select>
         </div>
 
-        <!-- <color-picker color-container="survey"></color-picker> -->
+        <p>color: {{ selectedColor }}</p>
+        <app-color-picker [(ngModel)]="selectedColor" color-container="survey"></app-color-picker>
 
-        <div class="form-field">
+        <mat-form-field appearance="standard">
           <mat-label>{{ 'translations.survey_select_default' | translate }}</mat-label>
           <mat-select
             panelClass="language-field"
@@ -169,7 +139,7 @@
             </svg>
             <p translate="translations.error_translation_exists"></p>
           </div>
-        </div>
+        </mat-form-field>
       </div>
     </mat-tab>
     <mat-tab *ngIf="isPost" [label]="'survey.share' | translate">
