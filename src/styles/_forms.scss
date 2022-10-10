@@ -22,6 +22,18 @@
   .mat-pseudo-checkbox-indeterminate {
     background-color: var(--color-primary);
   }
+
+  .mat-pseudo-checkbox {
+    &:after {
+      border-bottom-color: var(--color-primary-contrast);
+    }
+  }
+
+  .mat-pseudo-checkbox-checked {
+    &:after {
+      border-left-color: var(--color-primary-contrast);
+    }
+  }
 }
 
 .form-controls-panel {
@@ -59,7 +71,7 @@
   .mat-option {
     &.mat-selected {
       &:not(.mat-option-disabled) {
-        color: var(--color-primary);
+        color: #000;
       }
     }
   }
@@ -153,5 +165,81 @@
 .mat-step {
   .mat-vertical-content {
     padding-top: 16px;
+  }
+}
+
+.mat-calendar-body-selected {
+  background-color: var(--color-primary);
+}
+
+.mat-calendar-body-in-range {
+  &:before {
+    background: rgba(var(--color-primary-rgb), 0.2);
+  }
+}
+
+@media (hover: hover) {
+  .mat-calendar-body-cell {
+    &:not(.mat-calendar-body-disabled) {
+      &:hover {
+        > .mat-calendar-body-cell-content {
+          &:not(.mat-calendar-body-selected) {
+            &:not(.mat-calendar-body-comparison-identical) {
+              background-color: rgba(var(--color-primary-rgb), 0.3);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.cdk-program-focused,
+.cdk-keyboard-focused {
+  .mat-calendar-body-active {
+    > .mat-calendar-body-cell-content {
+      &:not(.mat-calendar-body-selected) {
+        &:not(.mat-calendar-body-comparison-identical) {
+          background-color: rgba(var(--color-primary-rgb), 0.3);
+        }
+      }
+    }
+  }
+}
+
+.tooltip-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  font-size: 10px;
+  margin-left: 4px;
+  line-height: 16px;
+  text-align: center;
+  border-radius: 50%;
+  display: inline-block;
+  background: var(--color-dark);
+  color: var(--color-dark-contrast);
+}
+
+.mat-list-base.mat-selection-list {
+  .mat-list-option {
+    height: auto;
+    display: flex;
+    min-height: 36px;
+    align-items: center;
+    justify-content: flex-start;
+
+    &:not(:first-child) {
+      margin-top: 4px;
+    }
+  }
+
+  .mat-list-item,
+  .mat-list-option {
+    .mat-list-item-content {
+      flex-basis: 100%;
+      padding: 4px 8px;
+      min-height: 36px;
+    }
   }
 }

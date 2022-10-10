@@ -51,9 +51,9 @@
     "more": "More",
     "cancel": "Cancel",
     "save": "Save",
-    "save_and_close": "Save &amp; close",
-    "add_and_close": "Add &amp; close",
-    "update_and_close": "Update &amp; close",
+    "save_and_close": "Save & close",
+    "add_and_close": "Add & close",
+    "update_and_close": "Update & close",
     "updating": "Updating",
     "saving": "Saving",
     "settings": "Settings",
@@ -863,7 +863,7 @@
         "info": "<strong>This post hasn't yet been assigned to a survey within your deployment.</strong> That's because it was submitted via {{source}}, which doesn't provide a way for the author to add their post to a specific survey.",
         "choose": "Which survey would you like to add this post to?",
         "title": "Add this post to a survey",
-        "save_and_edit": "Add to survey &amp; edit"
+        "save_and_edit": "Add to survey & edit"
       },
       "survey_title": "Unknown Survey"
     }
@@ -1405,7 +1405,7 @@
     "update_password": "Update password",
     "update_success": "Your profile was updated successfully. You may need to sign out and back in before all your changes are reflected.",
     "button": {
-      "save": "Save &amp; close",
+      "save": "Save & close",
       "cancel": "Cancel"
     },
     "nav": {

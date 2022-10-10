@@ -7,7 +7,20 @@
 
   &__wrapper {
     display: flex;
+    flex: 1 1 100%;
+    margin-left: 16px;
     align-items: center;
+    justify-content: space-between;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &__search-form {
+    flex: 1 1 100%;
   }
 
   &__main {
@@ -20,51 +33,5 @@
   app-donation-button {
     display: block;
     margin-left: 32px;
-  }
-}
-
-.search {
-  .input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  mat-icon {
-    left: 10px;
-    position: absolute;
-    color: var(--color-light);
-  }
-
-  input {
-    width: 100%;
-    color: #222;
-    max-width: 450px;
-    background-color: #60646b;
-    padding: 10px 8px 10px 38px;
-    border: 1px solid transparent;
-
-    &::placeholder {
-      color: var(--color-light);
-    }
-
-    &:-ms-input-placeholder {
-      color: var(--color-light);
-    }
-
-    &::-ms-input-placeholder {
-      color: var(--color-light);
-    }
-
-    &:focus {
-      border-color: #c8c8c8;
-      outline-color: #2b323a;
-      background-color: var(--color-light);
-      box-shadow: 0 0 2px 4px var(var(--color-primary)), inset 0 1px 1px rgb(0 0 0 / 30%);
-
-      + mat-icon {
-        color: #222;
-      }
-    }
   }
 }

@@ -1,0 +1,191 @@
+<button mat-icon-button mat-dialog-close class="modal__close-btn" tabindex="-1">
+  <mat-icon class="fab-button__icon">close</mat-icon>
+</button>
+
+<strong mat-dialog-title>{{ 'form.add_field' | translate }}</strong>
+<mat-dialog-content>
+  <ng-container *ngIf="selectedFieldType; else allFields">
+    <div class="form-group">
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'app.name' | translate }} </mat-label>
+        <input
+          matInput
+          [(ngModel)]="selectedFieldType.label"
+          placeholder="{{ 'form.field_name_placeholder' | translate }}"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
+        <input
+          matInput
+          [(ngModel)]="selectedFieldType.description"
+          placeholder="{{ 'form.field_name_placeholder' | translate }}"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Has options -->
+    <div class="form-group" *ngIf="hasOptions(selectedFieldType)">
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'form.field_options' | translate }} </mat-label>
+        <input
+          style="display: none"
+          matInput
+          [(ngModel)]="label"
+          placeholder="{{ 'form.field_name_placeholder' | translate }}"
+        />
+
+        <div class="alert error" role="alert" *ngIf="!validateDuplicate()">
+          <p translate>survey.duplicate_option</p>
+        </div>
+      </mat-form-field>
+
+      <div *ngFor="let opt of selectedFieldType.options; let i = index">
+        <mat-form-field appearance="standard">
+          <input
+            matInput
+            [(ngModel)]="selectedFieldType.options[i]"
+            placeholder="{{ 'form.field_name_placeholder' | translate }}"
+          />
+
+          <button
+            matSuffix
+            type="button"
+            color="accent"
+            mat-icon-button
+            (click)="removeOption(i)"
+            class="button-flat button-beta"
+            *ngIf="selectedFieldType.options.length > 1"
+          >
+            <mat-icon>
+              <svg class="iconic" role="img">
+                <use
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xlink:href="assets/sprites.svg#trash"
+                ></use>
+              </svg>
+            </mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <button
+        type="button"
+        color="primary"
+        mat-raised-button
+        class="button-secondary alt"
+        (click)="addOption(selectedFieldType)"
+      >
+        <i class="fa fa-plus"></i> <span translate>form.field_add_option</span>
+      </button>
+    </div>
+
+    <div class="form-group" *ngIf="selectedFieldType.input === 'tags'">
+      <ng-container *ngIf="availableCategories; else spinner">
+        <app-multilevel-select
+          [(ngModel)]="categories"
+          [data]="availableCategories"
+          [label]="'category.which_categories' | translate"
+        >
+        </app-multilevel-select>
+      </ng-container>
+    </div>
+
+    <div class="form-group" *ngIf="selectedFieldType.input === 'relation'">
+      <mat-label>{{ 'survey.field_allowed_relation_survey' | translate }} </mat-label>
+      <!-- <div name="visible-to">
+        <div class="form-field checkbox" ng-repeat="relationForm in availableSurveys | filter : filterNotCurrentForm">
+          <label>
+            <input type="checkbox" checklist-model="editField.config.input.form" checklist-value="relationForm.id" />
+            {{relationForm.name}}
+          </label>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="form-group">
+      <p *ngIf="onlyOptional">
+        <mat-slide-toggle [(ngModel)]="selectedFieldType.required">
+          {{ 'survey.required' | translate }}
+        </mat-slide-toggle>
+      </p>
+
+      <p *ngIf="canDisableCaption">
+        <mat-slide-toggle [(ngModel)]="selectedFieldType.config.hasCaption">
+          {{ 'survey.collect_image_caption' | translate }}
+          <p class="init active" *ngIf="!selectedFieldType.config?.hasCaption">
+            <small translate>survey.disable_caption_field_explanation</small>
+          </p>
+        </mat-slide-toggle>
+      </p>
+
+      <p *ngIf="canMakePrivate">
+        <mat-slide-toggle [(ngModel)]="selectedFieldType.response_private">
+          {{ 'survey.make_response_private' | translate }}
+          <p class="init active" *ngIf="selectedFieldType.response_private">
+            <small translate>survey.response_private_desc</small>
+          </p>
+        </mat-slide-toggle>
+      </p>
+    </div>
+
+    <div class="form-group" *ngIf="canDisplay">
+      <mat-form-field appearance="standard">
+        <mat-label>{{ 'app.default_value' | translate }} </mat-label>
+        <ng-container [ngSwitch]="selectedFieldType.type">
+          <input
+            *ngSwitchCase="'location'"
+            matInput
+            [(ngModel)]="selectedFieldType.default"
+            placeholder="{{ 'form.default_location_placeholder' | translate }}"
+          />
+          <input
+            *ngSwitchCase="'date'"
+            matInput
+            [(ngModel)]="selectedFieldType.default"
+            placeholder="{{ 'form.default_location_placeholder' | translate }}"
+          />
+          <input
+            *ngSwitchCase="'int'"
+            matInput
+            [(ngModel)]="selectedFieldType.default"
+            type="number"
+            step="1"
+          />
+          <input
+            *ngSwitchCase="'decimal'"
+            matInput
+            [(ngModel)]="selectedFieldType.default"
+            type="number"
+          />
+          <input
+            *ngSwitchDefault
+            matInput
+            [(ngModel)]="selectedFieldType.default"
+            placeholder="{{ 'form.default_default_placeholder' | translate }}"
+          />
+        </ng-container>
+      </mat-form-field>
+    </div>
+  </ng-container>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button type="button" (click)="addNewTask()">
+    {{ editMode ? ('app.update_and_close' | translate) : ('app.add_and_close' | translate) }}
+  </button>
+</div>
+
+<ng-template #allFields>
+  <div *ngFor="let field of fields" class="list-item" (click)="selectField(field)" matRipple>
+    <h3>{{ field.label | translate }}</h3>
+    <p>{{ field.description | translate }}</p>
+  </div>
+</ng-template>
+
+<ng-template #spinner>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>

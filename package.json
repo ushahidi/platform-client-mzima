@@ -29,9 +29,11 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "@swimlane/ngx-charts": "^20.1.0",
     "@types/leaflet.markercluster": "^1.5.1",
+    "angular-google-tag-manager": "^1.6.1",
     "dayjs": "^1.11.5",
     "leaflet": "^1.8.0",
     "leaflet.markercluster": "^1.5.3",
+    "ngx-color-picker": "^13.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { RoleResult, CategoryInterface, TranslationInterface, LanguageInterface } from '@models';
+import { CategoryInterface, TranslationInterface, LanguageInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { CategoriesService, LanguageService, RolesService, ConfirmModalService } from '@services';
-import { SelectLanguagesModalComponent } from 'src/app/shared/components';
+import {
+  GroupCheckboxItemInterface,
+  SelectLanguagesModalComponent,
+} from 'src/app/shared/components';
 
 @Component({
   selector: 'app-create-category-form',
@@ -16,19 +19,23 @@ export class CreateCategoryFormComponent implements OnInit {
   @Input() public category: CategoryInterface;
   @Output() formSubmit = new EventEmitter<any>();
   public categories: CategoryInterface[];
-  public roles: RoleResult[];
   public languages: LanguageInterface[] = this.languageService.getLanguages();
   public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
   public activeLanguages: LanguageInterface[] = [];
   public selectedTranslation?: string;
+  public roleOptions: GroupCheckboxItemInterface[] = [];
 
   public form: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     description: [''],
     is_child_to: [''],
     language: ['en'],
-    category_visibility: ['everyone'],
-    visible_to: this.fb.array<string>(['admin']),
+    visible_to: [
+      {
+        value: 'everyone',
+        options: ['admin'],
+      },
+    ],
     translations: this.fb.array<TranslationInterface>([]),
     translate_name: [''],
     translate_description: [''],
@@ -51,8 +58,27 @@ export class CreateCategoryFormComponent implements OnInit {
     });
 
     this.rolesService.get().subscribe({
-      next: (data) => {
-        this.roles = data.results;
+      next: (response) => {
+        this.roleOptions = [
+          {
+            name: this.translate.instant('role.everyone'),
+            value: 'everyone',
+            icon: 'person',
+          },
+          {
+            name: this.translate.instant('app.specific_roles'),
+            value: 'specific',
+            icon: 'group',
+            options: response.results.map((role) => {
+              return {
+                name: role.display_name,
+                value: role.name,
+                checked: role.name === 'admin',
+                disabled: role.name === 'admin',
+              };
+            }),
+          },
+        ];
       },
     });
 
@@ -133,7 +159,10 @@ export class CreateCategoryFormComponent implements OnInit {
       parent: this.form.value.parent,
       parent_id: this.form.value.is_child_to || null,
       parent_id_original: this.form.value.is_child_to || null,
-      role: this.form.value.visible_to.length > 1 ? this.form.value.visible_to : null,
+      role:
+        this.form.value.visible_to.value === 'specific'
+          ? this.form.value.visible_to.options
+          : ['admin'],
       slug: this.form.value.name,
       tag: this.form.value.name,
       translations: this.form.value.translations.reduce(
@@ -146,22 +175,6 @@ export class CreateCategoryFormComponent implements OnInit {
       type: 'category',
     };
     this.formSubmit.emit(category);
-  }
-
-  public onCheckChange(event: any, field: string) {
-    const formArray: FormArray = this.form.get(field) as FormArray;
-    if (event.checked) {
-      formArray.push(new FormControl(event.source.value));
-    } else {
-      let i: number = 0;
-      formArray.controls.forEach((ctrl: any) => {
-        if (ctrl.value == event.source.value) {
-          formArray.removeAt(i);
-          return;
-        }
-        i++;
-      });
-    }
   }
 
   public addTranslation(): void {

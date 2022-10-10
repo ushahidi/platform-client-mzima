@@ -26,3 +26,4 @@ export { PostsV5Service } from './posts.v5.service';
 export { PollingService } from './polling.service';
 export { ExportJobsService } from './export-jobs.service';
 export { DataSourcesService } from './data-sources.service';
+export { GtmTrackingService } from './gtm-tracking.service';
