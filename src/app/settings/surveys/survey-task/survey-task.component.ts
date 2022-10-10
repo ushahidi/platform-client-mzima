@@ -71,14 +71,28 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
         },
       ];
     }
+
+    if (changes['survey']) {
+      this.initLanguages();
+      this.selectedColor = this.survey.color;
+    }
+  }
+
+  getConfigOptions() {
+    return {
+      selectedRoles: this.selectedRoles,
+      hide_time: this.survey.hide_time,
+      hide_location: this.survey.hide_location,
+      hide_author: this.survey.hide_author,
+      require_approval: this.survey.require_approval,
+      color: this.selectedColor,
+    };
   }
 
   ngOnInit(): void {
     this.surveyId = this.route.snapshot.paramMap.get('id') || '';
-    console.log('surveyId', this.surveyId);
     this.taskFields = this.task.fields;
     this.isPost = this.task.type === 'post';
-    this.initLanguages();
   }
 
   private initLanguages() {
@@ -110,7 +124,6 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
 
   changeLanguage(event: any) {
     const newLang = event.value;
-    console.log('changeLanguage', newLang, this.survey);
     if (this.survey.enabled_languages.available.some((l) => l === newLang)) {
       this.showLangError = true;
     } else {

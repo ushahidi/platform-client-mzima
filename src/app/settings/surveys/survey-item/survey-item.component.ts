@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { surveyHelper } from '@helpers';
 import { RoleResult, SurveyItemTask } from '@models';
 import { FormsService, NotificationService, RolesService, SurveysService } from '@services';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
+import { SurveyTaskComponent } from '../survey-task/survey-task.component';
 
 @Component({
   selector: 'app-survey-item',
@@ -13,6 +14,7 @@ import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal
   styleUrls: ['./survey-item.component.scss'],
 })
 export class SurveyItemComponent implements OnInit {
+  @ViewChild('configTask') configTask: SurveyTaskComponent;
   public selectLanguageCode: string;
   public description: string;
   public name: string;
@@ -175,13 +177,15 @@ export class SurveyItemComponent implements OnInit {
   }
 
   public save() {
-    const defaultLang: any[] = this.getFormControl('enabled_languages').value.default;
+    const defaultLang: any[] = this.configTask.selectedLanguage;
     if (this.validateAttributeOptionTranslations() && this.validateAttributeOptionTranslations()) {
       this.removeInterimIds();
       this.form.patchValue({
         base_language: defaultLang,
       });
-      this.surveysService.saveSurvey(this.form.value, this.surveyId).subscribe((response) => {
+
+      const request = Object.assign({}, this.form.value, this.configTask.getConfigOptions());
+      this.surveysService.saveSurvey(request, this.surveyId).subscribe((response) => {
         this.updateForm(response.result);
         this.saveRoles(response.result.id);
         this.router.navigate(['settings/surveys']);

@@ -24,7 +24,9 @@ export class CreateFieldModalComponent {
     private matDialogRef: MatDialogRef<CreateFieldModalComponent>,
     private translate: TranslateService,
     private categoriesService: CategoriesService,
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.categoriesService
       .get()
       .pipe(
@@ -104,6 +106,9 @@ export class CreateFieldModalComponent {
   }
 
   validateDuplicate() {
+    if (surveyHelper.fieldCanHaveOptions(this.selectedFieldType)) {
+      return surveyHelper.areOptionsUnique(this.selectedFieldType.options);
+    }
     return true;
   }
 }

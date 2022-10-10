@@ -111,12 +111,10 @@
         </div>
         <div class="radio-group">
           <h3>{{ 'survey.who_can_add' | translate }}</h3>
-          {{ selectedRoles | json }}
           <app-group-checkbox-select [data]="roleOptions" [(ngModel)]="selectedRoles">
           </app-group-checkbox-select>
         </div>
 
-        <p>color: {{ selectedColor }}</p>
         <app-color-picker [(ngModel)]="selectedColor" color-container="survey"></app-color-picker>
 
         <mat-form-field appearance="standard">
