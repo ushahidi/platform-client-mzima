@@ -11,7 +11,7 @@ import {
   SurveyItemTask,
 } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmModalService, LanguageService } from '@services';
+import { ConfirmModalService, FormsService, LanguageService } from '@services';
 import { GroupCheckboxItemInterface, GroupCheckboxValueInterface } from 'src/app/shared/components';
 import { CreateFieldModalComponent } from '../create-field-modal/create-field-modal.component';
 
@@ -42,6 +42,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
 
   constructor(
     private confirm: ConfirmModalService,
+    private formsService: FormsService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private languageService: LanguageService,
@@ -78,6 +79,17 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     }
   }
 
+  private getSurveyRoles() {
+    this.formsService.getRoles(this.surveyId).subscribe((response) => {
+      this.selectedRoles = {
+        value: this.survey.everyone_can_create ? 'everyone' : 'specific',
+        options: response.map((r) => {
+          return this.roles.find((role) => role.id === r.role_id)!.name;
+        }),
+      };
+    });
+  }
+
   getConfigOptions() {
     return {
       selectedRoles: this.selectedRoles,
@@ -93,6 +105,9 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     this.surveyId = this.route.snapshot.paramMap.get('id') || '';
     this.taskFields = this.task.fields;
     this.isPost = this.task.type === 'post';
+    if (this.surveyId && this.isPost) {
+      this.getSurveyRoles();
+    }
   }
 
   private initLanguages() {

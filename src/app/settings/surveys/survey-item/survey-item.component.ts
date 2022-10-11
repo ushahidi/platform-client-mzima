@@ -41,7 +41,6 @@ export class SurveyItemComponent implements OnInit {
   });
   public isEdit = false;
   roles: RoleResult[] = [];
-  roles_allowed: any[] = [];
   surveyId: string;
   additionalTasks: SurveyItemTask[] = [];
   mainPost: SurveyItemTask;
@@ -70,7 +69,6 @@ export class SurveyItemComponent implements OnInit {
           this.initTasks();
         },
       });
-      this.getSurveyRoles();
     }
   }
 
@@ -83,7 +81,6 @@ export class SurveyItemComponent implements OnInit {
       .get('tasks')
       ?.value.filter((t: SurveyItemTask) => t.type === 'task');
     this.form.controls['tasks'].valueChanges.subscribe((change) => {
-      console.log('changechange', change);
       this.additionalTasks = change.filter((t: SurveyItemTask) => t.type === 'task');
     });
   }
@@ -158,22 +155,24 @@ export class SurveyItemComponent implements OnInit {
     });
   }
 
-  getSurveyRoles() {
-    this.formsService.getRoles(this.surveyId).subscribe((response) => {
-      this.roles_allowed = response;
-    });
-  }
-
   saveRoles(formId: string) {
+    const selectedRoles = this.configTask.selectedRoles.options!.map((r) => {
+      return this.roles.find((role) => role.name === r);
+    });
     const admin: any = this.roles.find((r: any) => r.name === 'admin');
     if (
       !this.getFormControl('everyone_can_create').value &&
-      !this.roles_allowed.some((r) => r === admin.name)
+      !selectedRoles.some((r) => r?.name === admin.name)
     ) {
-      this.roles_allowed.push(admin);
+      selectedRoles.push(admin);
     }
 
-    this.formsService.updateRoles(formId, this.roles_allowed).subscribe();
+    this.formsService
+      .updateRoles(
+        formId,
+        selectedRoles.map((r) => r?.id),
+      )
+      .subscribe();
   }
 
   public save() {
@@ -211,7 +210,6 @@ export class SurveyItemComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe({
       next: (response) => {
-        console.log('response, ', response);
         if (response) {
           const tasks: SurveyItemTask[] = this.getFormControl('tasks').value;
           tasks.push(response);
@@ -224,7 +222,6 @@ export class SurveyItemComponent implements OnInit {
   validateAttributeOptionTranslations() {
     const availableLangs: any[] = this.getFormControl('enabled_languages').value.available;
     const tasks: SurveyItemTask[] = this.getFormControl('tasks').value;
-    console.log('availableLangs', availableLangs);
 
     return availableLangs.every((language) => {
       return tasks.every((t) => {
