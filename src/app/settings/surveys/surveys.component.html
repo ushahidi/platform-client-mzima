@@ -14,8 +14,13 @@
 
   <div class="surveys-list" *ngIf="surveys; else loader">
     <mat-accordion class="example-headers-align" multi>
-      <mat-expansion-panel *ngFor="let survey of surveys">
-        <mat-expansion-panel-header>
+      <mat-expansion-panel
+        *ngFor="let survey of surveys"
+        class="survey-item"
+        [ngStyle]="{ '--color': survey ? survey.color : 'transparent' }"
+      >
+        <mat-expansion-panel-header class="survey-item__header">
+          <span class="survey-border"></span>
           <mat-panel-title class="survey-title">
             <strong>{{ survey.name }}</strong>
           </mat-panel-title>

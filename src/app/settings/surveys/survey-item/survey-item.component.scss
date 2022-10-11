@@ -1,4 +1,5 @@
 .form-container {
+  position: relative;
   padding: 24px;
   max-width: 800px;
   margin: 0 auto;
@@ -20,6 +21,16 @@
     border-radius: 0;
     box-shadow: none;
   }
+}
+
+.survey-item-border {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  position: absolute;
+  background: var(--color);
+  border-radius: 4px 0 0 4px;
 }
 
 .add-task-button {

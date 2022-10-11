@@ -26,6 +26,21 @@
     padding: 5px;
     display: flex;
     justify-content: space-between;
+    &-item {
+      position: relative;
+      &__header {
+        position: static;
+      }
+    }
+    &-border {
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 4px;
+      position: absolute;
+      background: var(--color);
+      border-radius: 4px 0 0 4px;
+    }
     &-name {
     }
     &-description {

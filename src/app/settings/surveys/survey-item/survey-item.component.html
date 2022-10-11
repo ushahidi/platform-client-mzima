@@ -1,4 +1,13 @@
-<form class="form-container" novalidate [formGroup]="form" (ngSubmit)="save()">
+<form
+  class="form-container"
+  novalidate
+  [formGroup]="form"
+  (ngSubmit)="save()"
+  [ngStyle]="{
+    '--color': this.form.get('color')?.value ? this.form.get('color')?.value : 'transparent'
+  }"
+>
+  <span class="survey-item-border"></span>
   <app-translations-switch
     [selectedLanguages]="this.form.get('enabled_languages')?.value.available"
     (addTranslationChange)="setAvailableLanguages($event)"
