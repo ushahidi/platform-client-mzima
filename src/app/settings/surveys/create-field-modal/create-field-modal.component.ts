@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { surveyHelper } from '@helpers';
 import { CategoryInterface, FormAttributeInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,7 +13,7 @@ import { MultilevelSelectOption } from 'src/app/shared/components';
   styleUrls: ['./create-field-modal.component.scss'],
 })
 export class CreateFieldModalComponent {
-  public fields = surveyHelper.surveyFields;
+  fields = surveyHelper.surveyFields;
   selectedFieldType: any;
   editMode = true;
   label: any;
@@ -21,12 +21,15 @@ export class CreateFieldModalComponent {
   categories: any = [];
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private matDialogRef: MatDialogRef<CreateFieldModalComponent>,
     private translate: TranslateService,
     private categoriesService: CategoriesService,
   ) {}
 
   ngOnInit() {
+    this.editMode = !!this.data.selectedFieldType;
+    this.selectedFieldType = this.data.selectedFieldType;
     this.categoriesService
       .get()
       .pipe(

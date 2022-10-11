@@ -26,6 +26,22 @@
             <span class="field-item__type">{{ field.type }}</span>
             <button
               type="button"
+              color="primary"
+              mat-icon-button
+              (click)="editField(field)"
+              class="field-item__edit"
+            >
+              <mat-icon>
+                <svg class="iconic" role="img">
+                  <use
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="assets/sprites.svg#pencil"
+                  ></use>
+                </svg>
+              </mat-icon>
+            </button>
+            <button
+              type="button"
               color="accent"
               mat-icon-button
               (click)="deleteField(i)"

@@ -182,4 +182,27 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       },
     });
   }
+
+  editField(selectedFieldType: any) {
+    const dialogRef = this.dialog.open(CreateFieldModalComponent, {
+      width: '100%',
+      maxWidth: '564px',
+      minWidth: '300px',
+      data: {
+        selectedFieldType,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (response) => {
+        if (response) {
+          this.taskFields.map((field) => {
+            if (field.id === response.id) {
+              field = response;
+            }
+          });
+        }
+      },
+    });
+  }
 }
