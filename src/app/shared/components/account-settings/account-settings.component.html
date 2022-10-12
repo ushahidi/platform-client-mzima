@@ -1,0 +1,191 @@
+<ng-container *ngIf="profile !== undefined; else spinner">
+  <button
+    mat-icon-button
+    mat-dialog-close
+    class="modal__close-btn"
+    tabindex="-1"
+    aria-label="{{ 'modal.button.close' | translate }}"
+  >
+    <mat-icon class="fab-button__icon">close</mat-icon>
+  </button>
+
+  <strong mat-dialog-title
+    >{{ profile.realname }} <small>{{ 'user_profile.title' | translate }}</small></strong
+  >
+  <div class="content">
+    <mat-tab-group
+      [(selectedIndex)]="selectedTabIndex"
+      (selectedIndexChange)="getTabInformation()"
+      dynamicHeight
+      animationDuration="0ms"
+    >
+      <mat-tab label="{{ 'user_profile.nav.general' | translate }}">
+        <div class="tab-content" *ngIf="!isLoading; else spinner" mat-dialog-content>
+          <form novalidate [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+            <mat-form-field appearance="standard">
+              <mat-label>{{ 'user.role' | translate }}</mat-label>
+              <input matInput readonly formControlName="role" />
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+              <mat-label>{{ 'user.full_name' | translate }}</mat-label>
+              <input matInput formControlName="display_name" />
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+              <mat-label>{{ 'user.email' | translate }}</mat-label>
+              <input matInput type="email" formControlName="email" />
+            </mat-form-field>
+
+            <mat-accordion class="update-password" #updatePasswordFields>
+              <mat-expansion-panel
+                [expanded]="isUpdatingPassword"
+                (opened)="updatePassword(true)"
+                (closed)="updatePassword(false)"
+              >
+                <mat-expansion-panel-header>
+                  {{ 'user.update_password' | translate }}
+                </mat-expansion-panel-header>
+
+                <mat-form-field appearance="standard">
+                  <mat-label>{{ 'user.password' | translate }}</mat-label>
+                  <input matInput type="password" formControlName="password" />
+                  <mat-error *ngIf="profileForm.controls['password'].errors">
+                    <p>Password must be at least 8 characters long</p>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard">
+                  <mat-label>{{ 'user.confirm_password' | translate }}</mat-label>
+                  <input
+                    matInput
+                    type="password"
+                    formControlName="confirmPassword"
+                    [errorStateMatcher]="matcher"
+                  />
+                  <mat-error
+                    *ngIf="
+                      profileForm.hasError('notSame') || profileForm.controls['password'].errors
+                    "
+                  >
+                    <p *ngIf="profileForm.controls['password'].errors">
+                      Password must be at least 8 characters long
+                    </p>
+                    <p *ngIf="profileForm.hasError('notSame')">Passwords do not match</p>
+                  </mat-error>
+                </mat-form-field>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </form>
+        </div>
+      </mat-tab>
+      <mat-tab label="{{ 'user_profile.nav.notifications' | translate }}">
+        <div class="tab-content contacts-tab" *ngIf="!isLoading; else spinner" mat-dialog-content>
+          <h3 class="contacts-tab__title">{{ 'notification.contacts_heading' | translate }}</h3>
+          <mat-accordion class="contacts">
+            <mat-expansion-panel *ngFor="let contact of contacts" class="contact-item">
+              <mat-expansion-panel-header>
+                {{ contact.contact }}
+                <span class="contact-item__is-active" *ngIf="contact.can_notify"></span>
+              </mat-expansion-panel-header>
+
+              <mat-slide-toggle
+                [(ngModel)]="contact.can_notify"
+                (ngModelChange)="isContactsChanged = true"
+              >
+                {{ 'notification.send_to_address' | translate }}
+              </mat-slide-toggle>
+
+              <mat-form-field appearance="standard">
+                <mat-label>{{ 'contact.edit_email_address' | translate }}</mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="contact.contact"
+                  (ngModelChange)="isContactsChanged = true"
+                />
+              </mat-form-field>
+
+              <div class="contact-item__buttons">
+                <button color="accent" mat-raised-button (click)="deleteContact(contact.id)">
+                  {{ 'contact.button.delete' | translate }}
+                </button>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel
+              (opened)="isAddAccountFormOpen = true"
+              (closed)="isAddAccountFormOpen = false"
+              class="contact-item contact-item--add-new"
+            >
+              <mat-expansion-panel-header>
+                {{ 'contact.button.add' | translate }}
+              </mat-expansion-panel-header>
+
+              <form novalidate (ngSubmit)="addAccount()" [formGroup]="addAccountForm">
+                <mat-radio-group formControlName="type" (change)="accountFormatChanged($event)">
+                  <div class="radio-button" *ngFor="let accountType of accountTypes">
+                    <mat-radio-button [value]="accountType.value">
+                      {{ accountType.name }}
+                    </mat-radio-button>
+                  </div>
+                </mat-radio-group>
+
+                <mat-form-field appearance="standard">
+                  <mat-label>{{
+                    (addAccountForm.controls['type'].value === 'email'
+                      ? 'contact.add_email_address'
+                      : 'contact.add_phone_number'
+                    ) | translate
+                  }}</mat-label>
+                  <input
+                    matInput
+                    formControlName="name"
+                    [placeholder]="
+                      (addAccountForm.controls['type'].value === 'email'
+                        ? 'contact.add_email_address'
+                        : 'contact.add_phone_number'
+                      ) | translate
+                    "
+                  />
+                </mat-form-field>
+
+                <button
+                  color="primary"
+                  mat-raised-button
+                  [disabled]="
+                    addAccountForm.invalid || addAccountForm.pristine || addAccountForm.disabled
+                  "
+                >
+                  Add account
+                </button>
+              </form>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>
+      {{ 'app.cancel' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="applyChanges()"
+      [disabled]="
+        isLoading ||
+        (selectedTabIndex === 0
+          ? profileForm.invalid || profileForm.pristine || profileForm.disabled
+          : !isContactsChanged) ||
+        isContactsOnUpdate
+      "
+    >
+      {{ 'form.save_and_close' | translate }}
+    </button>
+  </mat-dialog-actions>
+</ng-container>
+
+<ng-template #spinner>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>

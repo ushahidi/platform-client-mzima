@@ -19,3 +19,6 @@ export * from './io-data.interface';
 export * from './data-source-config.interface';
 export * from './savedsearches-response.interface';
 export * from './gtm-track.interface';
+export * from './profile-response.interface';
+export * from './contacts.interface';
+export * from './notifications.interface';
