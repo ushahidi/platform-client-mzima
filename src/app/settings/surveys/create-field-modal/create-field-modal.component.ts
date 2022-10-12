@@ -15,7 +15,7 @@ import { MultilevelSelectOption } from 'src/app/shared/components';
 export class CreateFieldModalComponent {
   fields = surveyHelper.surveyFields;
   selectedFieldType: any;
-  editMode = true;
+  editMode = false;
   label: any;
   availableCategories: MultilevelSelectOption[];
   categories: any = [];
@@ -28,8 +28,11 @@ export class CreateFieldModalComponent {
   ) {}
 
   ngOnInit() {
-    this.editMode = !!this.data.selectedFieldType;
-    this.selectedFieldType = this.data.selectedFieldType;
+    if (this.data?.selectedFieldType) {
+      this.selectedFieldType = this.data.selectedFieldType;
+      this.editMode = true;
+    }
+
     this.categoriesService
       .get()
       .pipe(

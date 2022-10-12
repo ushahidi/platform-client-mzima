@@ -14,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigService, EnvService } from '@services';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import { QuillModule } from 'ngx-quill';
 
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
@@ -54,6 +55,15 @@ export const loadGoogleTagManagerProvider: FactoryProvider = {
     AuthModule,
     SharedModule,
     HttpClientModule,
+    QuillModule.forRoot({
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['link'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+        ],
+      },
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

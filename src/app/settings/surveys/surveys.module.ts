@@ -12,6 +12,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CreateTaskModalComponent } from './create-task-modal/create-task-modal.component';
 import { CreateFieldModalComponent } from './create-field-modal/create-field-modal.component';
 import { ShareMenuComponent } from './share-menu/share-menu.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ShareMenuComponent } from './share-menu/share-menu.component';
     SurveysRoutingModule,
     MatExpansionModule,
     TranslationsSwitchModule,
+    QuillModule.forRoot(),
   ],
 })
 export class SurveysModule {}

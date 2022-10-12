@@ -17,14 +17,15 @@
     </div>
 
     <div class="form-group">
-      <mat-form-field appearance="standard">
+      <quill-editor [(ngModel)]="selectedFieldType.description"></quill-editor>
+      <!-- <mat-form-field appearance="standard">
         <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
         <input
           matInput
           [(ngModel)]="selectedFieldType.description"
           placeholder="{{ 'form.field_name_placeholder' | translate }}"
         />
-      </mat-form-field>
+      </mat-form-field> -->
     </div>
 
     <!-- Has options -->
