@@ -17,6 +17,7 @@
     </div>
 
     <div class="form-group">
+      <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
       <quill-editor [(ngModel)]="selectedFieldType.description"></quill-editor>
       <!-- <mat-form-field appearance="standard">
         <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
@@ -96,15 +97,12 @@
     </div>
 
     <div class="form-group" *ngIf="selectedFieldType.input === 'relation'">
-      <mat-label>{{ 'survey.field_allowed_relation_survey' | translate }} </mat-label>
-      <!-- <div name="visible-to">
-        <div class="form-field checkbox" ng-repeat="relationForm in availableSurveys | filter : filterNotCurrentForm">
-          <label>
-            <input type="checkbox" checklist-model="editField.config.input.form" checklist-value="relationForm.id" />
-            {{relationForm.name}}
-          </label>
-        </div>
-      </div> -->
+      <app-multilevel-select
+        [(ngModel)]="selectedFieldType.config.input.form"
+        [data]="availableSurveys"
+        [label]="'survey.field_allowed_relation_survey' | translate"
+      >
+      </app-multilevel-select>
     </div>
 
     <div class="form-group">
@@ -175,7 +173,7 @@
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
-  <button mat-raised-button type="button" (click)="addNewTask()">
+  <button mat-raised-button type="button" (click)="addNewTask()" [disabled]="!validateDuplicate()">
     {{ editMode ? ('app.update_and_close' | translate) : ('app.add_and_close' | translate) }}
   </button>
 </div>

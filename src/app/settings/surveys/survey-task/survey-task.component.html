@@ -41,6 +41,7 @@
               </mat-icon>
             </button>
             <button
+              *ngIf="canDelete(field)"
               type="button"
               color="accent"
               mat-icon-button

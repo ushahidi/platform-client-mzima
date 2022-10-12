@@ -172,6 +172,9 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       width: '100%',
       maxWidth: '564px',
       minWidth: '300px',
+      data: {
+        surveyId: this.surveyId,
+      },
     });
 
     dialogRef.afterClosed().subscribe({
@@ -183,6 +186,10 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     });
   }
 
+  canDelete(field: FormAttributeInterface) {
+    return this.isPost ? field.type !== 'title' && field.type !== 'description' : true;
+  }
+
   editField(selectedFieldType: any) {
     const dialogRef = this.dialog.open(CreateFieldModalComponent, {
       width: '100%',
@@ -190,6 +197,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       minWidth: '300px',
       data: {
         selectedFieldType,
+        surveyId: this.surveyId,
       },
     });
 

@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { surveyHelper } from '@helpers';
-import { CategoryInterface, FormAttributeInterface } from '@models';
+import { CategoryInterface, FormAttributeInterface, SurveyItem } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { CategoriesService } from '@services';
+import { CategoriesService, SurveysService } from '@services';
 import { map } from 'rxjs';
 import { MultilevelSelectOption } from 'src/app/shared/components';
 
@@ -19,19 +19,27 @@ export class CreateFieldModalComponent {
   label: any;
   availableCategories: MultilevelSelectOption[];
   categories: any = [];
+  availableSurveys: SurveyItem[] = [];
+  surveyId: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private matDialogRef: MatDialogRef<CreateFieldModalComponent>,
     private translate: TranslateService,
     private categoriesService: CategoriesService,
+    private surveysService: SurveysService,
   ) {}
 
   ngOnInit() {
     if (this.data?.selectedFieldType) {
       this.selectedFieldType = this.data.selectedFieldType;
       this.editMode = true;
+      if (this.selectedFieldType.input === 'relation') {
+        this.loadAvailableSurveys();
+      }
     }
+
+    this.surveyId = this.data?.surveyId;
 
     this.categoriesService
       .get()
@@ -81,11 +89,20 @@ export class CreateFieldModalComponent {
   }
 
   get canDisableCaption() {
-    return this.selectedFieldType.type === 'media' && this.selectedFieldType.input !== 'upload';
+    return this.selectedFieldType.type === 'media' && this.selectedFieldType.input === 'upload';
   }
 
   get canDisplay() {
     return this.selectedFieldType.input !== 'upload' && this.selectedFieldType.type !== 'tags';
+  }
+
+  private loadAvailableSurveys() {
+    this.surveysService.get().subscribe({
+      next: (types) => {
+        this.availableSurveys =
+          types.results.filter((s) => s.id.toString() !== this.surveyId) || [];
+      },
+    });
   }
 
   addNewTask() {
@@ -96,6 +113,9 @@ export class CreateFieldModalComponent {
     this.selectedFieldType = field;
     this.selectedFieldType.label = this.translate.instant(this.selectedFieldType.label);
     this.selectedFieldType.description = this.translate.instant(this.selectedFieldType.description);
+    if (field.input === 'relation') {
+      this.loadAvailableSurveys();
+    }
   }
 
   hasOptions(attribute: FormAttributeInterface) {
