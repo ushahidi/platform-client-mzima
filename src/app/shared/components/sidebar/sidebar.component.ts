@@ -31,8 +31,8 @@ export class SidebarComponent implements OnInit {
     this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
       this.isAdmin = userData.role === 'admin';
+      this.initMenu();
     });
-    this.initMenu();
   }
 
   private initMenu() {
@@ -57,18 +57,9 @@ export class SidebarComponent implements OnInit {
   }
 
   private openLogin(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
+    this.dialog.open(LoginComponent, {
       width: '100%',
       maxWidth: 480,
-    });
-
-    dialogRef.afterClosed().subscribe({
-      next: (response) => {
-        if (response) {
-          console.log('After login User info: ', response);
-          this.initMenu();
-        }
-      },
     });
   }
 

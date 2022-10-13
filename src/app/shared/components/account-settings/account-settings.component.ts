@@ -10,9 +10,9 @@ import {
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { formHelper } from '@helpers';
-import { ContactsInterface, ProfileDataInterface, ProfileResponseInterface } from '@models';
+import { ContactsInterface, UserDataInterface, UserInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { ProfileService, ContactsService, ConfirmModalService } from '@services';
+import { UsersService, ContactsService, ConfirmModalService } from '@services';
 import { forkJoin } from 'rxjs';
 
 enum AccountTypeEnum {
@@ -31,7 +31,7 @@ interface AccountTypeInterface {
   styleUrls: ['./account-settings.component.scss'],
 })
 export class AccountSettingsComponent implements OnInit {
-  public profile: ProfileResponseInterface;
+  public profile: UserInterface;
   public contacts: ContactsInterface[];
   public isUpdatingPassword = false;
   public selectedTabIndex = 0;
@@ -74,7 +74,7 @@ export class AccountSettingsComponent implements OnInit {
   });
 
   constructor(
-    private profileService: ProfileService,
+    private usersService: UsersService,
     private contactsService: ContactsService,
     private formBuilder: FormBuilder,
     private confirmModalService: ConfirmModalService,
@@ -86,10 +86,10 @@ export class AccountSettingsComponent implements OnInit {
     this.getTabInformation();
   }
 
-  public matcher = new formHelper.MyErrorStateMatcher();
+  public matcher = new formHelper.FormErrorStateMatcher();
 
   private getProfile(): void {
-    this.profileService.get().subscribe({
+    this.usersService.getCurrentUser().subscribe({
       next: (profile) => {
         this.profile = profile;
 
@@ -122,7 +122,7 @@ export class AccountSettingsComponent implements OnInit {
   public updateProfile(): void {
     if (this.profileForm.invalid) return;
 
-    let options: ProfileDataInterface = {
+    let options: UserDataInterface = {
       realname: this.profileForm.value.display_name,
       email: this.profileForm.value.email,
     };
@@ -134,13 +134,12 @@ export class AccountSettingsComponent implements OnInit {
     }
 
     this.profileForm.disable();
-    this.profileService.update(options).subscribe({
-      next: (profile) => {
-        this.profile = profile;
+    this.usersService.updateCurrentUser(options).subscribe({
+      next: () => {
+        this.getProfile();
         this.profileForm.controls['password'].setValue('');
         this.profileForm.controls['confirmPassword'].setValue('');
         this.updatePassword(false);
-        this.profileForm.markAsPristine();
         this.profileForm.enable();
       },
     });
