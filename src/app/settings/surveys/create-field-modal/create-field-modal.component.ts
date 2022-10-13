@@ -21,6 +21,7 @@ export class CreateFieldModalComponent {
   categories: any = [];
   availableSurveys: SurveyItem[] = [];
   surveyId: string;
+  hasOptions = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -34,6 +35,9 @@ export class CreateFieldModalComponent {
     if (this.data?.selectedFieldType) {
       this.selectedFieldType = this.data.selectedFieldType;
       this.editMode = true;
+      this.hasOptions = ['checkbox', 'radio', 'select'].some(
+        (a) => a === this.selectedFieldType.input,
+      );
       if (this.selectedFieldType.input === 'relation') {
         this.loadAvailableSurveys();
       }
@@ -113,13 +117,12 @@ export class CreateFieldModalComponent {
     this.selectedFieldType = field;
     this.selectedFieldType.label = this.translate.instant(this.selectedFieldType.label);
     this.selectedFieldType.description = this.translate.instant(this.selectedFieldType.description);
+    this.hasOptions = ['checkbox', 'radio', 'select'].some(
+      (a) => a === this.selectedFieldType.input,
+    );
     if (field.input === 'relation') {
       this.loadAvailableSurveys();
     }
-  }
-
-  hasOptions(attribute: FormAttributeInterface) {
-    return ['checkbox', 'radio', 'select'].some((a) => a === attribute.input);
   }
 
   removeOption(i: any) {

@@ -30,13 +30,12 @@
     </div>
 
     <!-- Has options -->
-    <div class="form-group" *ngIf="hasOptions(selectedFieldType)">
+    <div class="form-group" *ngIf="hasOptions">
       <mat-form-field appearance="standard">
         <mat-label>{{ 'form.field_options' | translate }} </mat-label>
         <input
-          style="display: none"
           matInput
-          [(ngModel)]="label"
+          [(ngModel)]="selectedFieldType.options[0]"
           placeholder="{{ 'form.field_name_placeholder' | translate }}"
         />
 

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, RolesService } from '@services';
-import { Savedsearch } from 'src/app/core/interfaces/savedsearches-response.interface';
+import { Savedsearch } from '@models';
 import { GroupCheckboxItemInterface } from '../group-checkbox-select/group-checkbox-select.component';
 
 export interface SaveSearchModalData {

@@ -243,3 +243,41 @@
     }
   }
 }
+<<<<<<< HEAD ======= .multilevelselect {
+  &.mat-menu-panel {
+    max-width: none;
+    max-height: 400px;
+  }
+
+  .mat-tree {
+    width: 602px;
+    padding: 0 16px;
+  }
+
+  .mat-list-option {
+    flex: 1 1 100%;
+  }
+
+  .mat-list-item-content {
+    display: flex;
+    min-height: 36px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+.mat-form-field.mat-warn .mat-input-element,
+.mat-form-field-invalid .mat-input-element {
+  caret-color: var(--color-accent);
+}
+
+.mat-form-field.mat-form-field-invalid {
+  .mat-form-field-label.mat-accent,
+  .mat-form-field-label .mat-form-field-required-marker {
+    color: var(--color-accent);
+  }
+}
+
+.mat-form-field-required-marker {
+  color: var(--color-accent);
+}

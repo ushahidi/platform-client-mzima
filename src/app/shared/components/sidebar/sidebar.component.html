@@ -1,27 +1,33 @@
 <div class="sidebar">
   <div>
     <ng-container *ngFor="let item of menu">
-      <div
+      <button
+        mat-raised-button
         *ngIf="item.visible"
-        class="sidebar-icon-wrapper"
+        class="sidebar-button"
         [routerLink]="item.router"
-        routerLinkActive="active"
+        routerLinkActive="sidebar-button--active"
         (click)="registerPage($event, item.router, item.label)"
       >
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <label class="sidebar-icon-label">{{ item.label }}</label>
-      </div>
+        <mat-icon class="sidebar-button__icon">{{ item.icon }}</mat-icon>
+        <span class="sidebar-button__title">{{ item.label }}</span>
+      </button>
     </ng-container>
   </div>
   <div>
     <ng-container *ngFor="let item of userMenu">
-      <div *ngIf="item.visible" class="sidebar-icon-wrapper" (click)="item.action()">
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <label class="sidebar-icon-label">{{ item.label }}</label>
-      </div>
+      <button mat-raised-button *ngIf="item.visible" class="sidebar-button" (click)="item.action()">
+        <mat-icon class="sidebar-button__icon">{{ item.icon }}</mat-icon>
+        <span class="sidebar-button__title">{{ item.label }}</span>
+      </button>
     </ng-container>
-    <div class="sidebar-icon-wrapper">
+    <button
+      mat-raised-button
+      class="sidebar-button"
+      matTooltipPosition="right"
+      matTooltip="{{ 'app.support' | translate }}"
+    >
       <app-logo></app-logo>
-    </div>
+    </button>
   </div>
 </div>

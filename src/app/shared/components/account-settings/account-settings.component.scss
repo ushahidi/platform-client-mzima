@@ -1,0 +1,146 @@
+.spinner {
+  margin: 60px 0;
+  display: block;
+}
+
+.content {
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  &::ng-deep {
+    .mat-tab-header {
+      margin-bottom: 8px;
+      border-style: solid;
+      border-width: 1px 0;
+      border-color: #eee;
+      background: var(--color-light);
+    }
+  }
+}
+
+.mat-dialog-content {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.tab-content {
+  margin: 0;
+  padding: 16px;
+  border-top: 1px solid #eee;
+}
+
+.mat-dialog-actions {
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  background: rgba(#eee, 0.8);
+}
+
+.contacts-tab {
+  background: #eee;
+  margin-bottom: 16px;
+
+  &__title {
+    padding: 16px;
+    margin-top: -16px;
+    margin-left: -16px;
+    margin-right: -16px;
+    background: #d6d5d2;
+  }
+
+  &__add-btn {
+    margin-top: 16px;
+  }
+}
+
+.contacts,
+.update-password {
+  .mat-expansion-panel-header {
+    height: 36px;
+    padding-left: 0;
+    padding-right: 0;
+
+    &:hover {
+      background: none;
+    }
+
+    &::ng-deep {
+      .mat-expansion-indicator {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+  }
+
+  .mat-expansion-panel {
+    box-shadow: none !important;
+  }
+
+  .mat-expansion-panel-content {
+    padding-top: 8px;
+  }
+
+  &::ng-deep {
+    .mat-expansion-panel-body {
+      padding: 0;
+    }
+  }
+}
+
+.contacts {
+  .mat-expansion-panel {
+    background: none;
+    margin-left: -16px;
+    margin-right: -16px;
+
+    &-header {
+      height: 48px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+}
+
+.contact-item {
+  &::ng-deep {
+    .mat-expansion-panel-content {
+      padding-left: 24px;
+      padding-right: 24px;
+      transition: padding 0.35s ease;
+      background: var(--color-light);
+      box-shadow: inset 0 1px 4px rgba(var(--color-dark-rgb), 0.24);
+    }
+  }
+
+  &.mat-expanded {
+    &::ng-deep {
+      .mat-expansion-panel-content {
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+    }
+  }
+
+  &--add-new {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(var(--color-dark-rgb), 0.15);
+  }
+
+  .mat-slide-toggle {
+    margin-bottom: 16px;
+  }
+}
+
+.radio-button {
+  &:not(:first-child) {
+    margin-top: 8px;
+  }
+}

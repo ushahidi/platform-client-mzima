@@ -36,7 +36,7 @@ export class AuthService extends ResourceService<any> {
       scope: CONST.CLAIMED_USER_SCOPES.join(' '),
     };
     return super.post(payload).pipe(
-      mergeMap((authResponse) => {
+      mergeMap(async (authResponse) => {
         const accessToken = authResponse.access_token;
 
         if (authResponse.expires_in) {
@@ -53,7 +53,11 @@ export class AuthService extends ResourceService<any> {
           });
         }
 
-        return this.userService.getCurrentUser();
+        return this.userService.getCurrentUser().subscribe({
+          next: (userData) => {
+            this.userService.dispatchUserEvents(userData);
+          },
+        });
       }),
     );
   }
