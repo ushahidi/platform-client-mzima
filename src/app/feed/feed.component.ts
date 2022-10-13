@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { GeoJsonFilter, PostResult } from '../core/interfaces/posts.interface';
+import { GeoJsonFilter, PostResult } from '@models';
 import { PostsService } from '../core/services/posts.service';
 import { PostsV5Service } from '../core/services/posts.v5.service';
 

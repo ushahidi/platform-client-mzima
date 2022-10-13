@@ -21,6 +21,7 @@ import {
   SearchFormComponent,
   SaveSearchModalComponent,
   LocationSelectionComponent,
+  AccountSettingsComponent,
 } from './components';
 import { MaterialModule } from './material.module';
 import {
@@ -52,6 +53,7 @@ const components = [
   FilterValuePipe,
   LocationSelectionComponent,
   GtmDirective,
+  AccountSettingsComponent,
 ];
 
 const modules = [

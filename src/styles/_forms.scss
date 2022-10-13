@@ -266,3 +266,19 @@
     justify-content: flex-start;
   }
 }
+
+.mat-form-field.mat-warn .mat-input-element,
+.mat-form-field-invalid .mat-input-element {
+  caret-color: var(--color-accent);
+}
+
+.mat-form-field.mat-form-field-invalid {
+  .mat-form-field-label.mat-accent,
+  .mat-form-field-label .mat-form-field-required-marker {
+    color: var(--color-accent);
+  }
+}
+
+.mat-form-field-required-marker {
+  color: var(--color-accent);
+}

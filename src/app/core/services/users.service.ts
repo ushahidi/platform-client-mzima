@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { EnvService } from './env.service';
-import { UserResponse } from '@models';
+import { UserInterface, UserResponse } from '@models';
 import { ResourceService } from './resource.service';
 import { SessionService } from './session.service';
 
@@ -26,7 +26,7 @@ export class UsersService extends ResourceService<any> {
     return 'users';
   }
 
-  getCurrentUser(): Observable<any> {
+  getCurrentUser(): Observable<UserInterface> {
     return super.get('me').pipe(
       tap((userData) => {
         this.sessionService.setCurrentUser({
@@ -38,19 +38,26 @@ export class UsersService extends ResourceService<any> {
           gravatar: userData.gravatar,
           language: userData.language,
         });
-        // FIXME?! window.dispatchEvent
-        window.dispatchEvent(new CustomEvent('ush:analytics:refreshUserProperties'));
-        window.dispatchEvent(
-          new CustomEvent('datalayer:custom-event', {
-            detail: {
-              event: 'user logged in',
-              event_type: 'user_interaction',
-              user_role: userData.role === 'admin' ? 'admin' : 'member',
-            },
-          }),
-        );
       }),
     );
+  }
+
+  public dispatchUserEvents(userData: any): void {
+    // FIXME?! window.dispatchEvent
+    window.dispatchEvent(new CustomEvent('ush:analytics:refreshUserProperties'));
+    window.dispatchEvent(
+      new CustomEvent('datalayer:custom-event', {
+        detail: {
+          event: 'user logged in',
+          event_type: 'user_interaction',
+          user_role: userData.role === 'admin' ? 'admin' : 'member',
+        },
+      }),
+    );
+  }
+
+  updateCurrentUser(data: any): Observable<UserInterface> {
+    return super.update('me', data);
   }
 
   public getUsers(url?: string): Observable<UserResponse> {

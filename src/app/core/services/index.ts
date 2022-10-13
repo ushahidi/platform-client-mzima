@@ -27,3 +27,4 @@ export { PollingService } from './polling.service';
 export { ExportJobsService } from './export-jobs.service';
 export { DataSourcesService } from './data-sources.service';
 export { GtmTrackingService } from './gtm-tracking.service';
+export { ContactsService } from './contacts.service';

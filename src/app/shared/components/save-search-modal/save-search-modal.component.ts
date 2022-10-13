@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RoleResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, RolesService } from '@services';
-import { Savedsearch } from 'src/app/core/interfaces/savedsearches-response.interface';
+import { Savedsearch } from '@models';
 
 export interface SaveSearchModalData {
   search?: Savedsearch;
