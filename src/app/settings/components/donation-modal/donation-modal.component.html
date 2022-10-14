@@ -20,8 +20,7 @@
 
   <hr />
 
-  <!-- FIXME check donationConfig.enabled -->
-  <p class="soft-text" *ngIf="donationConfig.enabled">
+  <p class="soft-text" *ngIf="donationService.isMonetizationStarted">
     <mat-icon
       ><svg class="iconic">
         <use
@@ -29,13 +28,11 @@
           xlink:href="assets/sprites.svg#heart"
         ></use></svg
     ></mat-icon>
-    <!-- FIXME check assetCode and formattedAmount -->
-    <!-- Web monetization is enabled on this website. Thank you for your donation. You have donated {{ donation.assetCode }} {{ donation.formattedAmount }} so far -->
-    Web monetization is enabled on this website. Thank you for your donation. You have donated so
-    far
+    Web monetization is enabled on this website. Thank you for your donation. You have donated
+    {{ donationInfo?.assetCode }} {{ donationInfo?.formattedAmount }} so far
   </p>
 
-  <ng-container *ngIf="!donationConfig.enabled">
+  <ng-container *ngIf="!donationService.isMonetizationStarted">
     <p class="soft-text">
       Ushahidi deployments are now web monetization enabled. Web monetization is a way of supporting
       the websites you love without playing advertisers game. All you need is to get your browser

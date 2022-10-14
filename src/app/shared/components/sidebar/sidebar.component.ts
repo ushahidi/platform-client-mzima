@@ -39,13 +39,12 @@ export class SidebarComponent implements OnInit {
     this.menu = [
       { label: 'Maps', router: 'map', icon: 'location_on', visible: true },
       { label: 'Feed', router: 'feed', icon: 'storage', visible: true },
-      { label: 'Data', router: 'data', icon: 'table', visible: true },
+      { label: 'Data', router: 'data', icon: 'table', visible: false }, // Table view disabled for now
       { label: 'Activity', router: 'activity', icon: 'monitoring', visible: true },
       { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isAdmin },
     ];
     this.userMenu = [
       { label: 'Collections', icon: 'apps', visible: true, action: () => this.openCollections() },
-      { label: 'Profile', icon: 'face', visible: true, action: () => this.openProfile() },
       {
         label: 'Profile',
         icon: 'face',

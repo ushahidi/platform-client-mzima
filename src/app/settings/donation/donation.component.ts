@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { validateFile } from '@helpers';
-import { DonationConfigInterface } from '@models';
+import { DonationConfigInterface, SiteConfigInterface } from '@models';
 import {
   ConfigService,
   LoaderService,
@@ -9,7 +9,6 @@ import {
   NotificationService,
   SessionService,
 } from '@services';
-import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-donation',
@@ -22,6 +21,7 @@ export class DonationComponent implements OnInit {
     title: ['', [Validators.required]],
     description: ['', []],
     wallet: ['', []],
+    enabled: [false, []],
   });
 
   constructor(
@@ -40,6 +40,7 @@ export class DonationComponent implements OnInit {
       title: this.donationConfig.title,
       description: this.donationConfig.description,
       wallet: this.donationConfig.wallet,
+      enabled: this.donationConfig.enabled,
     });
   }
 
@@ -70,6 +71,8 @@ export class DonationComponent implements OnInit {
     const donation: DonationConfigInterface = Object.assign({}, this.donationForm.value, {
       images: this.donationConfig.images,
     });
-    this.configService.update('site', { donation }).pipe(tap());
+    this.configService.update('site', { donation }).subscribe((res: SiteConfigInterface) => {
+      this.donationConfig = res.donation!;
+    });
   }
 }
