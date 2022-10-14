@@ -1,0 +1,123 @@
+.fields-list {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  min-height: 60px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  background: var(--color-light);
+  border: 1px solid rgba(var(--color-dark-rgb), 0.12);
+}
+
+.field-item {
+  position: relative;
+  padding: 16px 64px 16px 48px;
+  background: var(--color-light);
+  color: rgba(var(--color-dark-rgb), 0.87);
+
+  &:not(:first-child) {
+    border-top: 1px solid rgba(var(--color-dark-rgb), 0.12);
+  }
+
+  &__title {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  &__type {
+    display: block;
+  }
+
+  &__remove {
+    top: 50%;
+    right: 8px;
+    margin-top: -20px;
+    position: absolute;
+  }
+  &__edit {
+    top: 50%;
+    right: 58px;
+    margin-top: -20px;
+    position: absolute;
+  }
+
+  &__drag-handle {
+    top: 50%;
+    left: 12px;
+    width: 1em;
+    height: 1em;
+    cursor: move;
+    font-size: 24px;
+    position: absolute;
+    margin-top: -0.5em;
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.fields-list.cdk-drop-list-dragging {
+  .field-item {
+    &:not(.cdk-drag-placeholder) {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+}
+
+.title {
+  font-size: 18px;
+}
+
+.form-field {
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
+.mat-slide-toggle {
+  height: auto;
+
+  &::ng-deep {
+    .mat-slide-toggle {
+      &-label {
+        align-items: flex-start;
+
+        small {
+          font-size: 12px;
+          line-height: 1.4;
+        }
+
+        p {
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      &-bar {
+        margin-top: 5px;
+      }
+    }
+  }
+}
+
+.tab-content {
+  padding: 16px;
+}
+
+.radio-group {
+  margin: 16px 0;
+}

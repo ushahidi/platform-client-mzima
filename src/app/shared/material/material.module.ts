@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -25,6 +25,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatListModule } from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   exports: [
@@ -54,6 +56,9 @@ import { MatListModule } from '@angular/material/list';
     MatTreeModule,
     MatTooltipModule,
     MatListModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatRippleModule,
   ],
 })
 export class MaterialModule {}

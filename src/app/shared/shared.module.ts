@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { GtmDirective, UserRoleDirective } from '@directives';
+import { GtmDirective } from '../core/directives/gtm.directive';
 
 import {
   SidebarComponent,
@@ -21,8 +21,12 @@ import {
   SearchFormComponent,
   SaveSearchModalComponent,
   LocationSelectionComponent,
+  AccountSettingsComponent,
+  MultilevelSelectComponent,
+  GroupCheckboxSelectComponent,
+  ColorPickerComponent,
 } from './components';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './material/material.module';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
@@ -31,6 +35,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { DateAgoPipe, FilterValuePipe } from '@pipes';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 const components = [
   SidebarComponent,
@@ -51,11 +56,11 @@ const components = [
   SaveSearchModalComponent,
   FilterValuePipe,
   LocationSelectionComponent,
-];
-
-const directives = [
-  GtmDirective, //
-  UserRoleDirective,
+  GtmDirective,
+  AccountSettingsComponent,
+  MultilevelSelectComponent,
+  GroupCheckboxSelectComponent,
+  ColorPickerComponent,
 ];
 
 const modules = [
@@ -70,11 +75,12 @@ const modules = [
   FormsModule,
   TranslateModule,
   LeafletModule,
+  ColorPickerModule,
 ];
 
 @NgModule({
-  declarations: [...components, ...directives],
+  declarations: [...components],
   imports: [...modules],
-  exports: [...components, ...modules, ...directives],
+  exports: [...components, ...modules],
 })
 export class SharedModule {}

@@ -1,8 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import dayjs from 'dayjs';
-import { CategoryInterface } from '../interfaces/category.interface';
-import { SurveyItem } from '../interfaces/surveys.interface';
+import { CategoryInterface, SurveyItem } from '@models';
 
 @Pipe({
   name: 'filterValue',

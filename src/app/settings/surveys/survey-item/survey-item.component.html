@@ -1,0 +1,100 @@
+<form
+  class="form-container"
+  novalidate
+  [formGroup]="form"
+  (ngSubmit)="save()"
+  [ngStyle]="{
+    '--color': this.form.get('color')?.value ? this.form.get('color')?.value : 'transparent'
+  }"
+>
+  <span class="survey-item-border"></span>
+  <app-translations-switch
+    [selectedLanguages]="this.form.get('enabled_languages')?.value.available"
+    (addTranslationChange)="setAvailableLanguages($event)"
+    (chooseTranslationChange)="chooseTranslation($event)"
+    (deleteTranslationChange)="deleteTranslation($event)"
+  >
+  </app-translations-switch>
+
+  <mat-form-field appearance="standard">
+    <mat-label>
+      {{ 'survey.survey_name' | translate }}
+    </mat-label>
+    <input matInput [placeholder]="'survey.survey_name' | translate" formControlName="name" />
+    <mat-error *ngIf="form.get('name')?.invalid">
+      {{ 'survey.fields.validation.required' | translate }}</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field appearance="standard" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
+    <mat-label> {{ 'survey.survey_name' | translate }} ({{ selectLanguageCode }}) </mat-label>
+    <input
+      matInput
+      [placeholder]="'survey.survey_name' | translate"
+      [value]="this.form.get('translations')?.value[selectLanguageCode]?.name"
+      (change)="setTranslates(selectLanguageCode, 'name', $event)"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>
+      {{ 'survey.description' | translate }}
+    </mat-label>
+    <textarea
+      rows="5"
+      matInput
+      [placeholder]="'survey.description' | translate"
+      formControlName="description"
+    >
+    </textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
+    <mat-label> {{ 'survey.description' | translate }} ({{ selectLanguageCode }}) </mat-label>
+    <textarea
+      rows="5"
+      matInput
+      [placeholder]="'survey.description' | translate"
+      [value]="this.form.get('translations')?.value[selectLanguageCode]?.description"
+      (change)="setTranslates(selectLanguageCode, 'description', $event)"
+    >
+    </textarea>
+  </mat-form-field>
+
+  <app-survey-task
+    #configTask
+    [task]="mainPost"
+    [roles]="roles"
+    [survey]="surveyObject"
+    (surveyChange)="updateForm($event)"
+    *ngIf="mainPost"
+  ></app-survey-task>
+</form>
+
+<div class="form-container" *ngFor="let task of additionalTasks">
+  <app-survey-task [task]="task"></app-survey-task>
+</div>
+
+<div class="form-container form-container--add-task">
+  <button type="button" mat-raised-button (click)="addTask()" class="add-task-button">
+    <mat-icon>add</mat-icon>
+    {{ 'survey.add_task' | translate }}
+  </button>
+</div>
+
+<div class="form-container form-container--buttons">
+  <div mat-dialog-actions align="end" class="mat-dialog-actions">
+    <button mat-raised-button type="button" (click)="cancel()">
+      {{ 'app.cancel' | translate }}
+    </button>
+    <button
+      type="submit"
+      color="primary"
+      mat-raised-button
+      [disabled]="form.invalid || form.disabled"
+      (click)="save()"
+    >
+      {{ (isEdit ? 'app.save' : 'app.add_survey') | translate }}
+    </button>
+  </div>
+</div>

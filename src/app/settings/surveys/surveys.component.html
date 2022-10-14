@@ -1,1 +1,59 @@
-<p>surveys works!</p>
+<div class="page-content">
+  <div class="create-button-container">
+    <button
+      type="button"
+      class="create-button"
+      color="primary"
+      mat-raised-button
+      [routerLink]="['create']"
+    >
+      <mat-icon class="create-button-icon">create</mat-icon>
+      <span class="create-button-name">New survey</span>
+    </button>
+  </div>
+
+  <div class="surveys-list" *ngIf="surveys; else loader">
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel
+        *ngFor="let survey of surveys"
+        class="survey-item"
+        [ngStyle]="{ '--color': survey ? survey.color : 'transparent' }"
+      >
+        <mat-expansion-panel-header class="survey-item__header">
+          <span class="survey-border"></span>
+          <mat-panel-title class="survey-title">
+            <strong>{{ survey.name }}</strong>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="survey-description" [innerText]="survey.description"></div>
+        <p class="survey-languages">{{ getLanguages(survey.enabled_languages) }}</p>
+        <div class="item-button-container">
+          <button type="button" class="item-button" mat-button [routerLink]="['update', survey.id]">
+            <mat-icon class="item-button-icon">folder</mat-icon>
+            <span>{{ 'survey.view_detail' | translate }}</span>
+          </button>
+          <button type="button" class="item-button" mat-button (click)="duplicateSurvey(survey)">
+            <mat-icon class="item-button-icon">file_copy</mat-icon>
+            <span>{{ 'survey.duplicate_survey' | translate }}</span>
+          </button>
+          <button
+            type="button"
+            class="item-button"
+            mat-button
+            color="accent"
+            (click)="deleteSurvey(survey)"
+          >
+            <mat-icon class="item-button-icon">delete</mat-icon>
+            <span>{{ 'survey.delete.delete' | translate }}</span>
+          </button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <h2 *ngIf="surveys.length === 0">No surveys</h2>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-spinner></app-spinner>
+</ng-template>

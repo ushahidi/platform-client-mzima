@@ -325,6 +325,7 @@
     "choose_survey_field": "Изберете какво трябва да се припише на всяко поле в допитването",
     "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "Кой може да добавя полета към тази задача",
+    "view_detail": "Detail",
     "delete": {
       "desc": "<strong>Ако изтриете това допитване</strong>, всички негови публикации ще бъдат също изтрити. Моля продължете внимателно.",
       "delete": "Изтрий допитване",
@@ -1612,6 +1613,10 @@
       "cancel_export": "Откажи сваляне",
       "canceled_job": "Задачата за сваляне на данни в отказана",
       "upload_complete": "Качването е завършено. Сега трябва да може да видите отбелязаните си данни в HDX акаунта си."
+    },
+    "survey": {
+      "destroy_confirm": "Are you sure you want to delete this survey?",
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
     }
   },
   "empty": {

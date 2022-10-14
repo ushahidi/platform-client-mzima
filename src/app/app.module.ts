@@ -14,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigService, EnvService } from '@services';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import { QuillModule } from 'ngx-quill';
 
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
@@ -33,6 +34,16 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
 }
 
+export function googleTagManagerFactory(config: EnvService) {
+  return config.environment.gtm_key;
+}
+
+export const loadGoogleTagManagerProvider: FactoryProvider = {
+  provide: 'googleTagManagerId',
+  useFactory: googleTagManagerFactory,
+  deps: [EnvService],
+};
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -44,6 +55,15 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AuthModule,
     SharedModule,
     HttpClientModule,
+    QuillModule.forRoot({
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['link'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+        ],
+      },
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -62,6 +82,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     loadConfigProvider,
     { provide: ErrorHandler, useClass: ErrorsHandler },
     { provide: HTTP_INTERCEPTORS, useClass: HttpsInterceptor, multi: true },
+    loadGoogleTagManagerProvider,
   ],
   bootstrap: [AppComponent],
 })

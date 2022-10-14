@@ -313,6 +313,7 @@
     "choose_survey_field": "Choose what should be assigned to each survey field",
     "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "Who can contribute to fields in this task",
+    "view_detail": "Detail",
     "delete": {
       "desc": "<strong>Se elimini questa indagine</strong>, verranno eliminate anche tutte le relative segnalazioni. Attenzione.",
       "delete": "Elimina indagine",
@@ -1566,6 +1567,10 @@
       "cancel_export": "Cancel export",
       "canceled_job": "Your export-job is canceled",
       "upload_complete": "Upload complete. You should now see your tagged data in your HDX account."
+    },
+    "survey": {
+      "destroy_confirm": "Are you sure you want to delete this survey?",
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
     }
   },
   "empty": {

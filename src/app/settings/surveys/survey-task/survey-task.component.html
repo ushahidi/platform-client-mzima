@@ -1,0 +1,166 @@
+<div class="task">
+  <ng-container *ngIf="!isPost">
+    <mat-form-field appearance="standard" class="title">
+      <input matInput [(ngModel)]="task.label" [placeholder]="'survey.untitled_task' | translate" />
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <input
+        matInput
+        [(ngModel)]="task.description"
+        [placeholder]="'survey.describe_this_task' | translate"
+      />
+    </mat-form-field>
+  </ng-container>
+  <mat-tab-group>
+    <mat-tab [label]="'survey.build' | translate">
+      <div class="tab-content">
+        <div
+          cdkDropList
+          class="fields-list"
+          (cdkDropListDropped)="drop($event)"
+          *ngIf="taskFields?.length"
+        >
+          <div class="field-item" *ngFor="let field of taskFields; let i = index" cdkDrag>
+            <mat-icon cdkDragHandle class="field-item__drag-handle">drag_indicator</mat-icon>
+            <strong class="field-item__title">{{ field.label }}</strong>
+            <span class="field-item__type">{{ field.type }}</span>
+            <button
+              type="button"
+              color="primary"
+              mat-icon-button
+              (click)="editField(field)"
+              class="field-item__edit"
+            >
+              <mat-icon>
+                <svg class="iconic" role="img">
+                  <use
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="assets/sprites.svg#pencil"
+                  ></use>
+                </svg>
+              </mat-icon>
+            </button>
+            <button
+              *ngIf="canDelete(field)"
+              type="button"
+              color="accent"
+              mat-icon-button
+              (click)="deleteField(i)"
+              class="field-item__remove"
+            >
+              <mat-icon>
+                <svg class="iconic" role="img">
+                  <use
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="assets/sprites.svg#trash"
+                  ></use>
+                </svg>
+              </mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" mat-raised-button (click)="addField()">
+          <mat-icon>add</mat-icon>
+          {{ 'form.add_field' | translate }}
+        </button>
+      </div>
+    </mat-tab>
+    <mat-tab [label]="'survey.configure' | translate" *ngIf="!isPost">
+      <div class="tab-content">
+        <div class="form-field">
+          <mat-slide-toggle [(ngModel)]="task.required" name="accept-survey">
+            {{ 'survey.required' | translate }}
+            <p *ngIf="task.required"><small translate>survey.required_desc</small></p>
+          </mat-slide-toggle>
+        </div>
+        <div class="form-field">
+          <mat-slide-toggle [(ngModel)]="task.task_is_internal_only" name="import-to-survey">
+            {{ 'survey.internal_use_task' | translate }}
+            <p *ngIf="task.task_is_internal_only">
+              <small translate>survey.internal_use_task_desc</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+        <div class="form-field">
+          <mat-slide-toggle [(ngModel)]="task.show_when_published" name="import-to-survey">
+            {{ 'survey.show_this_task_to' | translate }}
+            <p *ngIf="task.show_when_published">
+              <small translate>survey.show_this_task_to_desc</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab [label]="'survey.configure' | translate" *ngIf="isPost">
+      <div class="tab-content" *ngIf="survey">
+        <div class="form-field">
+          <mat-slide-toggle [(ngModel)]="survey.require_approval" name="accept-survey">
+            {{ 'survey.require_review' | translate }}
+            <p *ngIf="survey.require_approval">
+              <small translate>survey.require_review_desc</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+        <div class="form-field">
+          <mat-slide-toggle [(ngModel)]="survey.hide_author" name="import-to-survey">
+            {{ 'survey.hide_author_information' | translate }}
+            <p *ngIf="survey.hide_author">
+              <small translate>survey.hide_author_information_desc</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+        <div class="form-field" *ngIf="anonymiseReportersEnabled">
+          <mat-slide-toggle [(ngModel)]="survey.hide_location" name="import-to-survey">
+            {{ 'survey.hide_location_information' | translate }}
+            <p *ngIf="survey.hide_location">
+              <small translate>survey.hide_location_information_desc</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+        <div class="form-field" *ngIf="anonymiseReportersEnabled">
+          <mat-slide-toggle [(ngModel)]="survey.hide_time" name="import-to-survey">
+            {{ 'survey.hide_time_information' | translate }}
+            <p *ngIf="survey.hide_time">
+              <small translate>survey.hide_time_information_desc</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+        <div class="radio-group">
+          <h3>{{ 'survey.who_can_add' | translate }}</h3>
+          <app-group-checkbox-select [data]="roleOptions" [(ngModel)]="selectedRoles">
+          </app-group-checkbox-select>
+        </div>
+
+        <app-color-picker [(ngModel)]="selectedColor" color-container="survey"></app-color-picker>
+
+        <mat-form-field appearance="standard">
+          <mat-label>{{ 'translations.survey_select_default' | translate }}</mat-label>
+          <mat-select
+            panelClass="language-field"
+            [(value)]="selectedLanguage"
+            (selectionChange)="changeLanguage($event)"
+          >
+            <mat-option *ngFor="let lang of languagesToSelect" [value]="lang.code">
+              <span class="language-title">{{ lang.name }}</span>
+            </mat-option>
+          </mat-select>
+          <div *ngIf="showLangError" class="alert error">
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xlink:href="assets/sprites.svg#warning"
+              ></use>
+            </svg>
+            <p translate="translations.error_translation_exists"></p>
+          </div>
+        </mat-form-field>
+      </div>
+    </mat-tab>
+    <mat-tab *ngIf="isPost" [label]="'survey.share' | translate">
+      <div class="tab-content">
+        <app-share-menu [surveyId]="surveyId"></app-share-menu>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

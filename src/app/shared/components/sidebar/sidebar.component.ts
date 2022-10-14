@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionService, AuthService, GtmTrackingService } from '@services';
-import { LoginComponent, RegisterComponent } from '@auth';
+import { LoginComponent } from '@auth';
 import { MenuInterface, UserMenuInterface } from '@models';
 import { CollectionsComponent } from '@data';
 import { takeUntilDestroy$ } from '@helpers';
 import { EnumGtmEvent, EnumGtmSource } from '@enums';
+import { AccountSettingsComponent } from '../account-settings/account-settings.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,6 +15,7 @@ import { EnumGtmEvent, EnumGtmSource } from '@enums';
 })
 export class SidebarComponent implements OnInit {
   isLoggedIn = false;
+  isAdmin = false;
   public menu: MenuInterface[] = [];
   public userMenu: UserMenuInterface[] = [];
   userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
@@ -28,8 +30,9 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
+      this.isAdmin = userData.role === 'admin';
+      this.initMenu();
     });
-    this.initMenu();
   }
 
   private initMenu() {
@@ -38,47 +41,26 @@ export class SidebarComponent implements OnInit {
       { label: 'Feed', router: 'feed', icon: 'storage', visible: true },
       { label: 'Data', router: 'data', icon: 'table', visible: true },
       { label: 'Activity', router: 'activity', icon: 'monitoring', visible: true },
-      { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isLoggedIn },
+      { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isAdmin },
     ];
     this.userMenu = [
-      { label: '', icon: 'apps', visible: true, action: () => this.openCollections() },
+      { label: 'Collections', icon: 'apps', visible: true, action: () => this.openCollections() },
+      { label: 'Profile', icon: 'face', visible: true, action: () => this.openProfile() },
+      {
+        label: 'Profile',
+        icon: 'face',
+        visible: this.isLoggedIn,
+        action: () => this.openProfile(),
+      },
       { label: 'Log in', icon: 'login', visible: !this.isLoggedIn, action: () => this.openLogin() },
       { label: 'Log out', icon: 'logout', visible: this.isLoggedIn, action: () => this.logout() },
-      {
-        label: 'Sign up',
-        icon: 'person_add',
-        visible: !this.isLoggedIn,
-        action: () => this.openRegister(),
-      },
     ];
   }
 
   private openLogin(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
+    this.dialog.open(LoginComponent, {
       width: '100%',
       maxWidth: 480,
-    });
-
-    dialogRef.afterClosed().subscribe({
-      next: (response) => {
-        if (response) {
-          console.log('After login User info: ', response);
-          this.initMenu();
-        }
-      },
-    });
-  }
-
-  private openRegister(): void {
-    const dialogRef = this.dialog.open(RegisterComponent, {
-      width: '100%',
-      maxWidth: 480,
-    });
-
-    dialogRef.afterClosed().subscribe({
-      next: (response) => {
-        response ? console.log(response) : null;
-      },
     });
   }
 
@@ -109,5 +91,11 @@ export class SidebarComponent implements OnInit {
       },
       GtmTrackingService.MapPath(`/${router}`),
     );
+  }
+
+  private openProfile(): void {
+    this.dialog.open(AccountSettingsComponent, {
+      width: '480px',
+    });
   }
 }

@@ -1,0 +1,43 @@
+<mat-form-field appearance="standard">
+  <mat-label *ngIf="label">{{ label }}</mat-label>
+  <input matInput readonly [value]="value" [matMenuTriggerFor]="menu" [placeholder]="placeholder" />
+  <div matSuffix class="mat-select-arrow ng-tns-c117-17"></div>
+</mat-form-field>
+
+<mat-menu class="multilevelselect" #menu="matMenu">
+  <mat-tree
+    [dataSource]="dataSource"
+    [treeControl]="treeControl"
+    class="multilevelselect__dropdown"
+  >
+    <mat-selection-list [(ngModel)]="values" (selectionChange)="changed()">
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <mat-list-option
+          color="primary"
+          [value]="node.id"
+          class="list-option"
+          checkboxPosition="before"
+          (click)="$event.stopPropagation()"
+        >
+          {{ node.name }}
+        </mat-list-option>
+      </mat-tree-node>
+      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <mat-list-option
+          color="primary"
+          [value]="node.id"
+          class="list-option"
+          checkboxPosition="before"
+          (click)="$event.stopPropagation()"
+        >
+          {{ node.name }}
+        </mat-list-option>
+        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+          </mat-icon>
+        </button>
+      </mat-tree-node>
+    </mat-selection-list>
+  </mat-tree>
+</mat-menu>

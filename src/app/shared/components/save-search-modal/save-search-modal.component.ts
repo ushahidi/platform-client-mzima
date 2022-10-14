@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { RoleResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, RolesService } from '@services';
-import { Savedsearch } from 'src/app/core/interfaces/savedsearches-response.interface';
+import { Savedsearch } from '@models';
+import { GroupCheckboxItemInterface } from '../group-checkbox-select/group-checkbox-select.component';
 
 export interface SaveSearchModalData {
   search?: Savedsearch;
@@ -20,11 +20,16 @@ export class SaveSearchModalComponent implements OnInit {
     name: ['', Validators.required],
     description: [''],
     category_visibility: ['everyone'],
-    visible_to: [['admin']],
+    visible_to: [
+      {
+        value: 'everyone',
+        options: ['admin'],
+      },
+    ],
     featured: [false],
     defaultViewingMode: ['map'],
   });
-  public roles: RoleResult[];
+  public roleOptions: GroupCheckboxItemInterface[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -38,15 +43,38 @@ export class SaveSearchModalComponent implements OnInit {
   ngOnInit(): void {
     this.rolesService.get().subscribe({
       next: (response) => {
-        this.roles = response.results;
+        this.roleOptions = [
+          {
+            name: this.translate.instant('role.everyone'),
+            value: 'everyone',
+            icon: 'person',
+          },
+          {
+            name: this.translate.instant('app.specific_roles'),
+            value: 'specific',
+            icon: 'group',
+            options: response.results.map((role) => {
+              return {
+                name: role.display_name,
+                value: role.name,
+                checked: role.name === 'admin',
+                disabled: role.name === 'admin',
+              };
+            }),
+          },
+        ];
 
         if (this.data?.search) {
           this.form.patchValue({
             name: this.data.search.name,
             description: this.data.search.description,
-            category_visibility:
-              this.data.search.role?.length === this.roles.length ? 'everyone' : 'specific',
-            visible_to: this.data.search.role,
+            visible_to: {
+              value:
+                this.data.search.role?.length === response.results?.length
+                  ? 'everyone'
+                  : 'specific',
+              options: this.data.search.role,
+            },
             featured: this.data.search.featured,
             defaultViewingMode: this.data.search.view,
           });

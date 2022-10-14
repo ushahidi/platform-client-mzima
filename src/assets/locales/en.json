@@ -316,6 +316,7 @@
     "choose_survey_field": "Choose what should be assigned to each survey field",
     "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "Who can contribute to fields in this task",
+    "view_detail": "Detail",
     "delete": {
       "desc": "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
       "delete": "Delete survey",
@@ -863,7 +864,7 @@
         "info": "<strong>This post hasn't yet been assigned to a survey within your deployment.</strong> That's because it was submitted via {{source}}, which doesn't provide a way for the author to add their post to a specific survey.",
         "choose": "Which survey would you like to add this post to?",
         "title": "Add this post to a survey",
-        "save_and_edit": "Add to survey &amp; edit"
+        "save_and_edit": "Add to survey & edit"
       },
       "survey_title": "Unknown Survey"
     }
@@ -1160,7 +1161,6 @@
     "roles": {
       "member": "Member",
       "admin": "Admin",
-      "staff": "Staff",
       "manage_users": "Manage Users",
       "manage_posts": "Manage Posts",
       "manage_settings": "Manage Settings",
@@ -1406,7 +1406,7 @@
     "update_password": "Update password",
     "update_success": "Your profile was updated successfully. You may need to sign out and back in before all your changes are reflected.",
     "button": {
-      "save": "Save &amp; close",
+      "save": "Save & close",
       "cancel": "Cancel"
     },
     "nav": {
@@ -1610,6 +1610,10 @@
       "cancel_export": "Cancel export",
       "canceled_job": "Your export-job is canceled",
       "upload_complete": "Upload complete. You should now see your tagged data in your HDX account."
+    },
+    "survey": {
+      "destroy_confirm": "Are you sure you want to delete this survey?",
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
     }
   },
   "empty": {

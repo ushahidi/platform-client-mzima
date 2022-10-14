@@ -1,0 +1,57 @@
+.share-item {
+  width: 100%;
+  display: block;
+  text-align: left;
+  padding: 12px 8px;
+  line-height: 24px;
+  margin-bottom: 8px;
+
+  &__icon {
+    font-size: 24px;
+    margin-right: 8px;
+    display: inline-block;
+
+    img {
+      width: 1em;
+      height: 1em;
+      display: block;
+      object-fit: contain;
+    }
+  }
+
+  &::ng-deep {
+    .mat-button-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+}
+
+.mat-expansion-panel {
+  margin-bottom: 8px;
+
+  &-header {
+    &-title {
+      font-size: 14px;
+    }
+  }
+
+  &::ng-deep {
+    .mat-expansion-indicator {
+      line-height: 1;
+      margin-top: -4px;
+    }
+  }
+}
+
+.embed-input {
+  margin: 0 auto;
+  max-width: 548px;
+
+  textarea {
+    resize: none;
+    font-size: 16px;
+    line-height: calc(20 / 16 * 1);
+  }
+}
