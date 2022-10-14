@@ -1,22 +1,15 @@
-import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { NavigationStart, Router } from '@angular/router';
+import { searchFormHelper } from '@helpers';
 import { CategoryInterface, Savedsearch, SurveyItem } from '@models';
 import { CategoriesService, PostsService, SurveysService } from '@services';
 import { filter, map } from 'rxjs';
 import { SavedsearchesService } from 'src/app/core/services/savedsearches.service';
+import { MultilevelSelectOption } from '../multilevel-select/multilevel-select.component';
 import { SaveSearchModalComponent } from '../save-search-modal/save-search-modal.component';
-
-interface CategoryFlatNode {
-  expandable: boolean;
-  name: string;
-  id: number | string;
-  level: number;
-}
 
 @Component({
   selector: 'app-search-form',
@@ -30,14 +23,7 @@ export class SearchFormComponent {
   public isDropdownOpen = false;
   public form: FormGroup = this.formBuilder.group({
     query: [],
-    // sorting: [
-    //   {
-    //     orderBy: 'created',
-    //     order: 'desc',
-    //   },
-    // ],
-    // order_unlocked_on_top: [true],
-    status: [], // ['published', 'draft']
+    status: [],
     tags: [],
     source: [],
     form: [],
@@ -54,94 +40,13 @@ export class SearchFormComponent {
     ],
   });
   public activeFilters: any;
-  public sortingOptions = [
-    {
-      orderBy: 'global_filter.sort.orderby.post_date',
-      order: 'global_filter.sort.order.desc',
-      value: {
-        orderBy: 'post_date',
-        order: 'desc',
-      },
-    },
-    {
-      orderBy: 'global_filter.sort.orderby.post_date',
-      order: 'global_filter.sort.order.asc',
-      value: {
-        orderBy: 'post_date',
-        order: 'asc',
-      },
-    },
-    {
-      orderBy: 'global_filter.sort.orderby.created',
-      order: 'global_filter.sort.order.desc',
-      value: {
-        orderBy: 'created',
-        order: 'desc',
-      },
-    },
-    {
-      orderBy: 'global_filter.sort.orderby.created',
-      order: 'global_filter.sort.order.asc',
-      value: {
-        orderBy: 'created',
-        order: 'asc',
-      },
-    },
-    {
-      orderBy: 'global_filter.sort.orderby.updated',
-      order: 'global_filter.sort.order.desc',
-      value: {
-        orderBy: 'updated',
-        order: 'desc',
-      },
-    },
-    {
-      orderBy: 'global_filter.sort.orderby.updated',
-      order: 'global_filter.sort.order.asc',
-      value: {
-        orderBy: 'updated',
-        order: 'asc',
-      },
-    },
-  ];
+  public sortingOptions = searchFormHelper.sortingOptions;
   public savedsearches: Savedsearch[];
-  public statuses = [
-    {
-      value: 'published',
-      name: 'post.published',
-      icon: 'globe',
-    },
-    {
-      value: 'draft',
-      name: 'post.draft',
-      icon: 'document',
-    },
-    {
-      value: 'archived',
-      name: 'post.archived',
-      icon: 'box',
-    },
-  ];
+  public statuses = searchFormHelper.statuses;
   public surveyList: SurveyItem[] = [];
-  public sources = [
-    {
-      name: 'Email',
-      value: 'email',
-    },
-    {
-      name: 'SMS',
-      value: 'sms',
-    },
-    {
-      name: 'Twitter',
-      value: 'twitter',
-    },
-    {
-      name: 'Web',
-      value: 'web',
-    },
-  ];
+  public sources = searchFormHelper.sources;
   public categories: CategoryInterface[];
+  public categoriesData: MultilevelSelectOption[];
   public activeSavedSearch?: Savedsearch;
   public activeSavedSearchValue?: string;
   public total: number;
@@ -168,23 +73,21 @@ export class SearchFormComponent {
 
     this.categoriesService.get().subscribe({
       next: (response) => {
-        this.categories = response.results;
-        this.dataSource.data = this.categories
-          .filter((category) => !category.parent_id)
-          .map((category) => {
-            return {
-              id: category.id,
-              name: category.tag,
-              children: this.categories
-                .filter((cat) => cat.parent_id === category.id)
-                .map((cat) => {
-                  return {
-                    id: cat.id,
-                    name: cat.tag,
-                  };
-                }),
-            };
-          });
+        this.categories = response;
+        this.categoriesData = response?.results?.map((category: CategoryInterface) => {
+          return {
+            id: category.id,
+            name: category.tag,
+            children: response?.results
+              ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
+              .map((cat: CategoryInterface) => {
+                return {
+                  id: cat.id,
+                  name: cat.tag,
+                };
+              }),
+          };
+        });
       },
     });
 
@@ -263,48 +166,12 @@ export class SearchFormComponent {
     return option.order === value.order && option.orderBy === value.orderBy;
   }
 
-  private _transformer = (node: any, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.name,
-      id: node.id,
-      level: level,
-    };
-  };
-
-  public treeControl = new FlatTreeControl<CategoryFlatNode>(
-    (node) => node.level,
-    (node) => node.expandable,
-  );
-
-  private treeFlattener = new MatTreeFlattener(
-    this._transformer,
-    (node) => node.level,
-    (node) => node.expandable,
-    (node) => node.children,
-  );
-
-  public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
   public inputOnFocus(): void {
     this.onFocus = true;
   }
 
   public inputOnBlur(): void {
     this.onFocus = false;
-  }
-
-  public hasChild = (_: number, node: CategoryFlatNode) => node.expandable;
-
-  public getCategoriesName(categories: number[]): string {
-    return categories
-      ? categories
-          .reduce((acc: string[], categoryId: number) => {
-            const tag = this.categories.find((category) => category.id === categoryId)?.tag;
-            return tag ? [...acc, tag] : acc;
-          }, [])
-          .join(', ')
-      : '';
   }
 
   public saveSearch(search?: Savedsearch): void {
@@ -342,12 +209,12 @@ export class SearchFormComponent {
           filters[key.replace(/\[\]/g, '')] = this.activeFilters[key];
         }
 
-        const savedSearchPatams = {
+        const savedSearchParams = {
           filter: filters,
           name: result.name,
           description: result.description,
           featured: result.featured,
-          role: result.category_visibility === 'specific' ? result.visible_to : ['admin'],
+          role: result.visible_to.value === 'specific' ? result.visible_to.options : ['admin'],
           view: result.defaultViewingMode,
         };
 
@@ -355,7 +222,7 @@ export class SearchFormComponent {
           this.savedsearchesService
             .update(this.activeSavedSearch.id, {
               ...this.activeSavedSearch,
-              ...savedSearchPatams,
+              ...savedSearchParams,
             })
             .subscribe({
               next: () => {
@@ -366,7 +233,7 @@ export class SearchFormComponent {
         } else {
           this.savedsearchesService
             .post({
-              ...savedSearchPatams,
+              ...savedSearchParams,
             })
             .subscribe({
               next: () => {

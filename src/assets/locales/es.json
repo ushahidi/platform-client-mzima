@@ -325,6 +325,7 @@
     "choose_survey_field": "Elija lo que debería asignarse a cada campo de encuesta",
     "choose_survey_field_desc": "Cada uno de los campos de la encuesta se enumeran a continuación. Elija los datos de la  {{datasource_type}} que desea utilizar para rellenar cada uno de esos campos.",
     "who_can_contribute_to_task": "Quién puede contribuir en los campos de esta función",
+    "view_detail": "Detail",
     "delete": {
       "desc": "<strong>Si borra esta encuesta</strong>, todas sus publicaciones serán borradas. Proceda con precaución.",
       "delete": "Borrar survey",
@@ -1612,6 +1613,10 @@
       "cancel_export": "Cancelar exportación",
       "canceled_job": "Se ha cancelado su trabajo de exportación",
       "upload_complete": "Carga completa. Ahora debería ver sus datos etiquetados en su cuenta HDX."
+    },
+    "survey": {
+      "destroy_confirm": "Are you sure you want to delete this survey?",
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
     }
   },
   "empty": {

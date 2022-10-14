@@ -27,39 +27,8 @@
 
   <div class="form-group">
     <h4>{{ 'app.who_can_see_this' | translate }}</h4>
-    <mat-radio-group
-      class="radio-buttons"
-      *ngIf="!form.value.parent"
-      formControlName="category_visibility"
-    >
-      <p>
-        <mat-radio-button value="everyone" class="example-radio-button">
-          <mat-icon>person</mat-icon>
-          {{ 'role.everyone' | translate }}
-        </mat-radio-button>
-      </p>
-      <p>
-        <mat-radio-button value="specific" class="example-radio-button">
-          <mat-icon>group</mat-icon>
-          {{ 'app.specific_roles' | translate }}
-        </mat-radio-button>
-
-        <span class="radio-buttons__options" *ngIf="form.value.category_visibility === 'specific'">
-          <mat-selection-list formControlName="visible_to">
-            <mat-list-option
-              color="primary"
-              [value]="role.name"
-              class="list-option"
-              checkboxPosition="before"
-              *ngFor="let role of roles"
-              [disabled]="role.name === 'admin'"
-            >
-              {{ role.display_name }}
-            </mat-list-option>
-          </mat-selection-list>
-        </span>
-      </p>
-    </mat-radio-group>
+    <app-group-checkbox-select [data]="roleOptions" formControlName="visible_to">
+    </app-group-checkbox-select>
     <div class="radio-buttons" *ngIf="form.value.parent">
       <p class="radio-buttons__info">
         <mat-icon>group</mat-icon>

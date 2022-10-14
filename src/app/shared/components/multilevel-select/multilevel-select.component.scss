@@ -1,0 +1,30 @@
+::ng-deep {
+  .multilevelselect {
+    &.mat-menu-panel {
+      max-width: none;
+      max-height: 400px;
+    }
+
+    .mat-tree {
+      width: 602px;
+      padding: 0 16px;
+    }
+
+    .mat-list-option {
+      flex: 1 1 100%;
+    }
+
+    .mat-list-item-content {
+      display: flex;
+      min-height: 36px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    &__dropdown {
+      .mat-pseudo-checkbox {
+        margin-right: 12px;
+      }
+    }
+  }
+}

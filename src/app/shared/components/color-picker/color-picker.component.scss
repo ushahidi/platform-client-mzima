@@ -1,0 +1,87 @@
+.selected-color {
+  width: 16px;
+  height: 16px;
+  display: block;
+  margin-right: 8px;
+  border-radius: 2px;
+}
+
+.colorpicker-menu {
+  &__buttons {
+    display: flex;
+    margin: 0 -4px;
+    padding: 0 8px 8px;
+    align-items: flex-start;
+
+    .mat-raised-button {
+      margin: 0 4px;
+      line-height: 32px;
+    }
+  }
+}
+
+::ng-deep {
+  .colorpicker-menu {
+    overflow: visible;
+
+    .cdk-text-field-autofill-monitored {
+      display: none;
+    }
+
+    .mat-menu-content {
+      &:not(:empty) {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+
+    .color-picker {
+      border: none;
+
+      .box {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .hex-text {
+        padding-left: 0;
+        padding-right: 0;
+
+        .box {
+          padding-right: 8px;
+
+          &:not(:first-child) {
+            display: none;
+          }
+        }
+      }
+
+      .preset-area {
+        padding: 0 8px;
+
+        hr {
+          display: none;
+        }
+
+        .preset-label {
+          display: none;
+        }
+
+        .cp-preset-colors-class {
+          margin-left: -4px;
+          margin-right: -4px;
+        }
+
+        .preset-color {
+          width: 24px;
+          height: 24px;
+          margin: 4px 4px 8px;
+        }
+      }
+
+      .type-policy {
+        display: none;
+      }
+    }
+  }
+}

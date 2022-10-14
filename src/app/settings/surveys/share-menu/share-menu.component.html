@@ -1,0 +1,58 @@
+<mat-form-field appearance="standard">
+  <mat-label translate>app.survey_web_address</mat-label>
+  <input type="url" matInput [value]="shareUrl" readonly="true" />
+</mat-form-field>
+
+<a
+  target="_blank"
+  class="share-item"
+  mat-raised-button
+  [href]="
+    'https://www.facebook.com/sharer/sharer.php?u=' + shareUrlEncoded + '&amp;src=sdkpreparse'
+  "
+>
+  <span class="share-item__icon">
+    <img class="icon" src="assets/images/facebook.png" alt="" />
+  </span>
+  Facebook
+</a>
+
+<a
+  target="_blank"
+  class="share-item"
+  mat-raised-button
+  [href]="'https://twitter.com/intent/tweet?url=' + shareUrlEncoded"
+>
+  <span class="share-item__icon">
+    <img class="icon" src="assets/images/twitter.png" alt="" />
+  </span>
+  Twitter
+</a>
+
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title> Configure </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="embed-input">
+    <mat-form-field appearance="standard">
+      <mat-label>HTML</mat-label>
+      <textarea matInput readonly>
+&lt;iframe width="560" height="315" src="{{
+          shareUrl
+        }}" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</textarea
+      >
+    </mat-form-field>
+  </div>
+</mat-expansion-panel>
+
+<button mat-raised-button class="share-item">
+  <mat-icon class="share-item__icon">
+    <svg class="iconic" role="img">
+      <use
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xlink:href="assets/sprites.svg#external-link"
+      ></use>
+    </svg>
+  </mat-icon>
+  {{ 'app.export_to_csv' | translate }}
+</button>

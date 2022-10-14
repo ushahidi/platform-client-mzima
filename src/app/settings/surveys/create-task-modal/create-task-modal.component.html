@@ -1,0 +1,39 @@
+<button mat-icon-button mat-dialog-close class="modal__close-btn" tabindex="-1">
+  <mat-icon class="fab-button__icon">close</mat-icon>
+</button>
+
+<strong mat-dialog-title>{{ 'survey.add_task' | translate }}</strong>
+<mat-dialog-content class="post">
+  <mat-form-field appearance="standard">
+    <mat-label translate>{{ 'survey.task_name' | translate }}</mat-label>
+    <input
+      matInput
+      placeholder="{{ 'survey.name_this_task' | translate }}"
+      [(ngModel)]="newTask.label"
+    />
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label translate>{{ 'survey.task_description' | translate }}</mat-label>
+    <textarea
+      matInput
+      placeholder="{{ 'survey.describe_this_task' }}"
+      [(ngModel)]="newTask.description"
+      data-min-rows="1"
+      rows="1"
+    ></textarea>
+  </mat-form-field>
+  <div class="form-group">
+    <mat-slide-toggle [(ngModel)]="newTask.required">{{
+      'survey.require_section' | translate
+    }}</mat-slide-toggle>
+  </div>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button type="button" (click)="cancel()">
+    {{ 'app.cancel' | translate }}
+  </button>
+  <button type="submit" color="primary" mat-raised-button (click)="addNewTask()">
+    {{ 'app.add_and_close' | translate }}
+  </button>
+</div>

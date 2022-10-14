@@ -325,6 +325,7 @@
     "choose_survey_field": "Válaszd ki, mi kerüljön minden kérdőív mezőhöz",
     "choose_survey_field_desc": "A felmérés/kérdőív minden mezője ki van listázva alább. Válaszd ki az adatot a {{datasource_type}} -ból/ből, amelyet fel akarsz használni a mezők kitöltéséhez.",
     "who_can_contribute_to_task": "Ki tud ehhez a mezőhöz hozzáférni ebben a feladatban",
+    "view_detail": "Detail",
     "delete": {
       "desc": "<strong>Ha törlöd ezt a kérdőívet</strong>, minden hozzá tartozó bejegyzés törlődni fog, ezért járj el körültekintően.",
       "delete": "Kérdőív törlése",
@@ -1612,6 +1613,10 @@
       "cancel_export": "Exportálás elvetése",
       "canceled_job": "Biztos vagy benne, hogy törlöd ezt a mezőt?",
       "upload_complete": "A feltöltés befejeződött. Most pedig tekintsd meg a címkézett adataiadat a HDX fiókodban."
+    },
+    "survey": {
+      "destroy_confirm": "Are you sure you want to delete this survey?",
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
     }
   },
   "empty": {

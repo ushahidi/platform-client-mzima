@@ -125,54 +125,12 @@
       </mat-form-field>
 
       <h5>{{ 'app.categories' | translate }}</h5>
-      <mat-form-field appearance="standard">
-        <input
-          matInput
-          readonly
-          [matMenuTriggerFor]="categoriesMenu"
-          [placeholder]="'nav.all' | translate"
-          [value]="getCategoriesName(form.controls['tags'].value)"
-        />
-        <div matSuffix class="mat-select-arrow ng-tns-c117-17"></div>
-      </mat-form-field>
-
-      <mat-menu class="multilevelselect" #categoriesMenu="matMenu">
-        <mat-tree
-          [dataSource]="dataSource"
-          [treeControl]="treeControl"
-          class="multiselect-dropdown"
-        >
-          <mat-selection-list formControlName="tags">
-            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-              <mat-list-option
-                color="primary"
-                [value]="node.id"
-                class="list-option"
-                checkboxPosition="before"
-                (click)="$event.stopPropagation()"
-              >
-                {{ node.name }}
-              </mat-list-option>
-            </mat-tree-node>
-            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-              <mat-list-option
-                color="primary"
-                [value]="node.id"
-                class="list-option"
-                checkboxPosition="before"
-                (click)="$event.stopPropagation()"
-              >
-                {{ node.name }}
-              </mat-list-option>
-              <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-                <mat-icon class="mat-icon-rtl-mirror">
-                  {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
-                </mat-icon>
-              </button>
-            </mat-tree-node>
-          </mat-selection-list>
-        </mat-tree>
-      </mat-menu>
+      <app-multilevel-select
+        formControlName="tags"
+        [data]="categoriesData"
+        [placeholder]="'nav.all' | translate"
+      >
+      </app-multilevel-select>
 
       <h5>{{ 'app.surveys' | translate }}</h5>
       <mat-form-field appearance="standard">
