@@ -13,12 +13,12 @@ const routes: Routes = [
   {
     path: 'create',
     component: CreateComponent,
-    data: { breadcrumb: 'Create' },
+    data: { breadcrumb: 'Create category' },
   },
   {
     path: ':id',
     component: CategoryComponent,
-    data: { breadcrumb: '' },
+    data: { breadcrumb: 'Update category' },
   },
 ];
 

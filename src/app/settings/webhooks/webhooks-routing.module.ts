@@ -8,8 +8,8 @@ const routes: Routes = [
     path: '',
     component: WebhooksComponent,
     children: [
-      { path: 'create', component: WebhookItemComponent },
-      { path: ':id', component: WebhookItemComponent },
+      { path: 'create', component: WebhookItemComponent, data: { breadcrumb: 'Create webhook' } },
+      { path: ':id', component: WebhookItemComponent, data: { breadcrumb: 'Update webhook' } },
     ],
   },
 ];
