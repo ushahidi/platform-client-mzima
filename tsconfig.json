@@ -35,6 +35,9 @@
       ],
       "@enums": [
         "src/app/core/enums"
+      ],
+      "@directives": [
+        "src/app/core/directives"
       ]
     },
     "outDir": "./dist/out-tsc",
