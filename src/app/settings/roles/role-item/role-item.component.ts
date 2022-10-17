@@ -135,7 +135,6 @@ export class RoleItemComponent implements OnInit {
       permissions: this.form.value.permissions,
       protected: this.form.value.protected,
     };
-    console.log(this.form.value);
 
     if (!this.isUpdate) {
       delete roleBody.id;
@@ -145,10 +144,7 @@ export class RoleItemComponent implements OnInit {
       });
     } else {
       this.rolesService.update(this.role.id, this.form.value).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.navigateToRoles();
-        },
+        next: () => this.navigateToRoles(),
         error: (err) => console.log(err),
       });
     }
@@ -160,14 +156,6 @@ export class RoleItemComponent implements OnInit {
       '<p>This action cannot be undone.</p><p>Are you sure?</p>',
     );
     if (!confirmed) return;
-    // TODO ask for uniq name field
-    // if (this.role.name === 'admin'.toLowerCase() && this.checkIfLastAdmin()) {
-    //   const checkLastAdmin = await this.openConfirmModal(
-    //     'notify.role.last_admin',
-    //     'notify.role.last_admin',
-    //   );
-    //   if (!checkLastAdmin) return;
-    // }
     await this.delete();
   }
 
@@ -184,14 +172,4 @@ export class RoleItemComponent implements OnInit {
       description: this.translate.instant(description),
     });
   }
-
-  // checkIfLastAdmin() {
-  //   let admins = 0;
-  //   for (const role of this.roles) {
-  //     if (role.name === 'admin') {
-  //       admins++;
-  //     }
-  //   }
-  //   return admins === 1;
-  // }
 }

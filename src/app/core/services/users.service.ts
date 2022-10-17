@@ -73,4 +73,20 @@ export class UsersService extends ResourceService<any> {
     const config = 'settings';
     return super.update(id, params, config);
   }
+
+  public getUserById(id: string) {
+    return super.get(id);
+  }
+
+  public updateUserById(id: number, params: any) {
+    return super.update(id, params);
+  }
+
+  public createUser(data: any) {
+    return super.post(data);
+  }
+
+  public deleteUser(id: number) {
+    return super.delete(id);
+  }
 }

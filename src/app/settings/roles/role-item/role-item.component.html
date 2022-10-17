@@ -1,61 +1,67 @@
-<div class="page-content">
-  <form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
-    <div class="form-group">
-      <h3>{{ 'role.name' | translate }}</h3>
-      <mat-form-field appearance="standard">
-        <mat-label>{{ 'role.name' | translate }}</mat-label>
-        <input matInput formControlName="display_name" (ngModelChange)="setName($event)" />
-      </mat-form-field>
-    </div>
-    <div class="form-group">
-      <h3>{{ 'role.description' | translate }}</h3>
-      <mat-form-field appearance="standard">
-        <mat-label>{{ 'role.description' | translate }}</mat-label>
-        <input matInput formControlName="description" />
-      </mat-form-field>
-    </div>
-
-    <div class="form-group">
-      <h3>{{ 'role.permissions' | translate }}</h3>
-      <p [innerHTML]="'settings.roles.roles_description' | translate"></p>
-      <div *ngFor="let item of permissionsList">
-        <mat-checkbox
-          [checked]="item.checked"
-          [disabled]="userRole === role.name"
-          (change)="onCheckChange($event, 'permissions')"
-          [value]="item.name"
-        >
-          {{ item.name }}
-        </mat-checkbox>
+<section class="section">
+  <h3 class="section-title">{{ 'role.add_role' | translate }}</h3>
+  <div class="page-content">
+    <form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
+      <div class="form-group">
+        <h3>{{ 'role.name' | translate }}</h3>
+        <mat-form-field appearance="standard">
+          <mat-label>{{ 'role.name' | translate }}</mat-label>
+          <input matInput formControlName="display_name" (ngModelChange)="setName($event)" />
+        </mat-form-field>
       </div>
-    </div>
+      <div class="form-group">
+        <h3>{{ 'role.description' | translate }}</h3>
+        <mat-form-field appearance="standard">
+          <mat-label>{{ 'role.description' | translate }}</mat-label>
+          <input matInput formControlName="description" />
+        </mat-form-field>
+      </div>
 
-    <div class="form-controls-panel">
-      <button mat-raised-button type="button" (click)="navigateToRoles()">
-        <span>{{ 'app.cancel' | translate }}</span>
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        class="role-button"
-        type="submit"
-        [disabled]="form.invalid"
-      >
-        <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
-      </button>
-    </div>
-  </form>
-</div>
+      <div class="form-group">
+        <h3>{{ 'role.permissions' | translate }}</h3>
+        <p [innerHTML]="'settings.roles.roles_description' | translate"></p>
+        <div *ngFor="let item of permissionsList">
+          <mat-checkbox
+            [checked]="item.checked"
+            [disabled]="userRole === role.name"
+            (change)="onCheckChange($event, 'permissions')"
+            [value]="item.name"
+          >
+            {{ item.name }}
+          </mat-checkbox>
+        </div>
+      </div>
 
-<div class="page-content" *ngIf="isUpdate && !role?.protected">
-  <h3>{{ 'role.delete_role' | translate }}</h3>
-  <p [innerHTML]="'role.delete_role_desc' | translate"></p>
-  <button type="button" color="accent" mat-raised-button (click)="deleteRole()">
-    <mat-icon>
-      <svg class="iconic">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#trash"></use>
-      </svg>
-    </mat-icon>
-    <span>{{ 'role.delete' | translate }}</span>
-  </button>
-</div>
+      <div class="form-controls-panel">
+        <button mat-raised-button type="button" (click)="navigateToRoles()">
+          <span>{{ 'app.cancel' | translate }}</span>
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="role-button"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="page-content" *ngIf="isUpdate && !role?.protected">
+    <h3>{{ 'role.delete_role' | translate }}</h3>
+    <p [innerHTML]="'role.delete_role_desc' | translate"></p>
+    <button type="button" color="accent" mat-raised-button (click)="deleteRole()">
+      <mat-icon>
+        <svg class="iconic">
+          <use
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xlink:href="assets/sprites.svg#trash"
+          ></use>
+        </svg>
+      </mat-icon>
+      <span>{{ 'role.delete' | translate }}</span>
+    </button>
+  </div>
+</section>

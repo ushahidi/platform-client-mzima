@@ -1,3 +1,31 @@
+.section {
+  &-title {
+    font-size: 36px;
+  }
+
+  .create-button {
+    text-transform: uppercase;
+    margin-bottom: 30px;
+
+    &-container {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    &.mat-button-base .mat-icon {
+      font-size: 18px;
+      height: 20px;
+      width: 20px;
+      margin-right: 5px;
+    }
+
+    &-name {
+      line-height: 1.35;
+      letter-spacing: 1px;
+    }
+  }
+}
+
 table {
   width: 100%;
 }
@@ -19,15 +47,23 @@ tr.mat-row {
 .form {
   &-group {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
     height: 53px;
-
+    & group-elements {
+      display: flex;
+      &:not(:first-child) {
+        justify-content: flex-end;
+      }
+    }
     & mat-form-field {
       margin-right: 10px;
     }
     & button {
       margin-bottom: 1.34375em;
       height: 100%;
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
     }
   }
 }
