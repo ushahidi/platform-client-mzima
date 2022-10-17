@@ -12,9 +12,9 @@ const routes: Routes = [
   {
     path: 'update/:id',
     component: RoleItemComponent,
-    data: { breadcrumb: 'Create' },
+    data: { breadcrumb: 'Update role' },
   },
-  { path: 'create', component: RoleItemComponent, data: { breadcrumb: 'Create' } },
+  { path: 'create', component: RoleItemComponent, data: { breadcrumb: 'Create role' } },
 ];
 
 @NgModule({
