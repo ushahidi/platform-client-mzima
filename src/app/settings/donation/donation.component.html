@@ -40,7 +40,7 @@
             color="warn"
             mat-raised-button
             (click)="deleteImage(image.id)"
-            translate="settings.delete"
+            translate="app.delete"
           ></button>
         </div>
       </div>
@@ -70,11 +70,13 @@
         </p>
       </div>
     </div>
+    <mat-slide-toggle color="primary" class="monetization-toggle" formControlName="enabled">
+      Enable Monetization
+    </mat-slide-toggle>
   </form>
-
-  <mat-slide-toggle color="primary" class="monetization-toggle" [checked]="donationConfig.enabled">
-    Enable Monetization
-  </mat-slide-toggle>
+  <div class="alert" *ngIf="!donationConfig.enabled">
+    <p class="notice" translate="app.enable_monetization_info"></p>
+  </div>
 
   <div class="form-controls-panel">
     <button type="button" mat-raised-button routerLink="/settings">Cancel</button>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DonationConfigInterface } from '@models';
-import { SessionService } from '@services';
+import { DonationService, SessionService } from '@services';
 
 @Component({
   selector: 'app-donation-modal',
@@ -9,11 +9,15 @@ import { SessionService } from '@services';
 })
 export class DonationModalComponent implements OnInit {
   donationConfig: DonationConfigInterface;
+  donationInfo: any = {};
 
-  constructor(private session: SessionService) {}
+  constructor(private session: SessionService, public donationService: DonationService) {}
 
   ngOnInit(): void {
     this.donationConfig = this.session.getSiteConfigurations().donation!;
-    console.log('this.donationConfig', this.donationConfig);
+    this.donationService.donate$.subscribe((donationInfo) => {
+      console.log('donationService: donationInfo', donationInfo);
+      this.donationInfo = donationInfo;
+    });
   }
 }
