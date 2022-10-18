@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Meta } from '@angular/platform-browser';
 import { DonationService, SessionService } from '@services';
 import { DonationModalComponent } from 'src/app/settings';
 
@@ -16,17 +17,25 @@ export class DonationButtonComponent implements OnInit {
     private dialog: MatDialog,
     private session: SessionService,
     public donationService: DonationService,
+    private meta: Meta,
   ) {}
 
   ngOnInit() {
     this.isDonationEnabled = !!this.session.getSiteConfigurations().donation?.enabled;
     if (this.isDonationEnabled) {
-      console.log('donationService.isDonationEnabled');
+      this.setPaymentPointer(this.session.getSiteConfigurations().donation?.wallet);
       this.donationService.setupMonetization();
       this.donationService.donate$.subscribe((donationInfo) => {
         this.donationInfo = donationInfo;
-        console.log('DonationButtonComponent: donationInfo ', donationInfo);
       });
+    }
+  }
+
+  private setPaymentPointer(paymentPointer?: string): void {
+    if (paymentPointer) {
+      this.meta.updateTag({ name: 'monetization', content: paymentPointer });
+    } else {
+      this.meta.removeTag('name="monetization"');
     }
   }
 

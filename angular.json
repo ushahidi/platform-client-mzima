@@ -41,7 +41,8 @@
               "leaflet.markercluster",
               "clone-deep",
               "dayjs",
-              "quill"
+              "quill",
+              "types-wm"
             ]
           },
           "configurations": {

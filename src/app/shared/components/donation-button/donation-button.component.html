@@ -16,22 +16,25 @@
 
   <button
     type="button"
-    class="button button-transparent"
+    color="dark"
+    class="donation-amount"
+    mat-raised-button
     (click)="showDonation()"
     *ngIf="donationService.isMonetizationStarted"
   >
-    <span class="toolbar-donating">
-      <span class="iconic">
-        <svg role="img" class="coins iconic">
-          <use xlink:href="assets/sprites.svg#coins"></use>
-        </svg>
-      </span>
-      <span class="button-label">{{ donationInfo.formattedAmount }}</span>
-      <span class="iconic">
-        <svg role="img" class="iconic">
-          <use xlink:href="assets/sprites.svg#info-circle"></use>
-        </svg>
-      </span>
-    </span>
+    <mat-icon>
+      <svg class="iconic" role="img">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#coins"></use>
+      </svg>
+    </mat-icon>
+    <span class="button-label">{{ donationInfo.formattedAmount }}</span>
+    <mat-icon>
+      <svg class="iconic" role="img">
+        <use
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xlink:href="assets/sprites.svg#info-circle"
+        ></use>
+      </svg>
+    </mat-icon>
   </button>
 </ng-container>
