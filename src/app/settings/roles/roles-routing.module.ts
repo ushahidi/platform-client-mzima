@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RoleItemComponent } from './role-item/role-item.component';
 
 import { RolesComponent } from './roles.component';
 
@@ -9,10 +10,11 @@ const routes: Routes = [
     component: RolesComponent,
   },
   {
-    path: ':id',
-    loadChildren: () => import('./role-item/role-item.module').then((m) => m.RoleItemModule),
-    data: { breadcrumb: '' },
+    path: 'update/:id',
+    component: RoleItemComponent,
+    data: { breadcrumb: 'Update role' },
   },
+  { path: 'create', component: RoleItemComponent, data: { breadcrumb: 'Create role' } },
 ];
 
 @NgModule({
