@@ -15,8 +15,7 @@ export class DonationModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.donationConfig = this.session.getSiteConfigurations().donation!;
-    this.donationService.donate$.subscribe((donationInfo) => {
-      console.log('donationService: donationInfo', donationInfo);
+    this.donationService.donate$.subscribe((donationInfo: any) => {
       this.donationInfo = donationInfo;
     });
   }
