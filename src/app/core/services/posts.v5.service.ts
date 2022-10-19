@@ -20,6 +20,14 @@ export class PostsV5Service extends ResourceService<any> {
     return 'posts';
   }
 
+  override get(): any {
+    return super.get().pipe(
+      map((response) => {
+        return response.results;
+      }),
+    );
+  }
+
   override getById(id: string | number): Observable<any> {
     return super.getById(id).pipe(
       map((response) => {
