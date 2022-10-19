@@ -20,6 +20,10 @@ import { EnvService } from './env.service';
   providedIn: 'root',
 })
 export class PollingService implements OnDestroy {
+  private currentPool = {
+    importing: 0,
+    exporting: 0,
+  };
   stopImportPolling = new Subject();
   stopExportPolling = new Subject();
   private importFinished = new Subject();
@@ -44,6 +48,7 @@ export class PollingService implements OnDestroy {
   }
 
   private startImportPolling(queries: Observable<any>[]) {
+    this.currentPool.importing = queries.length;
     const nextQueries: Observable<any>[] = [];
     timer(this.env.environment.export_polling_interval || 30 * 1000)
       .pipe(
@@ -53,10 +58,10 @@ export class PollingService implements OnDestroy {
         takeUntil(this.stopImportPolling),
       )
       .subscribe((result) => {
-        console.log('RESULT', result);
         result.forEach((job: ExportJobInterface) => {
           if (job.status === 'SUCCESS') {
             this.notificationService.showError('JOB SUCCESS SUCCESS');
+            this.importFinished.next(job);
           } else if (job.status === 'FAILED') {
             this.notificationService.showError('JOB FAILED');
           } else {
@@ -65,6 +70,8 @@ export class PollingService implements OnDestroy {
         });
         if (nextQueries.length) {
           this.startImportPolling(nextQueries);
+        } else {
+          this.currentPool.importing = 0;
         }
       });
   }
@@ -154,7 +161,13 @@ export class PollingService implements OnDestroy {
     );
   }
 
+  getCurrentPool() {
+    return this.currentPool;
+  }
+
   private startExportPolling(queries: Observable<any>[]) {
+    this.currentPool.exporting = queries.length;
+
     const nextQueries: Observable<any>[] = [];
     timer(6000)
       .pipe(
@@ -179,6 +192,8 @@ export class PollingService implements OnDestroy {
         });
         if (nextQueries.length) {
           this.startExportPolling(nextQueries);
+        } else {
+          this.currentPool.exporting = 0;
         }
       });
   }

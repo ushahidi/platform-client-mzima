@@ -35,7 +35,6 @@ export class DonationComponent implements OnInit {
 
   ngOnInit(): void {
     this.donationConfig = this.sessionService.getSiteConfigurations().donation!;
-    console.log('DONATION!', this.donationConfig);
     this.donationForm.patchValue({
       title: this.donationConfig.title,
       description: this.donationConfig.description,

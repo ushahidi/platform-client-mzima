@@ -6,7 +6,13 @@ import { ImportResultsComponent } from './import-results/import-results.componen
 
 const routes: Routes = [
   { path: '', component: DataImportComponent },
-  { path: 'results', component: ImportResultsComponent },
+  {
+    path: 'results',
+    component: ImportResultsComponent,
+    data: {
+      breadcrumb: 'Results',
+    },
+  },
 ];
 
 @NgModule({

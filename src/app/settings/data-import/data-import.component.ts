@@ -81,6 +81,10 @@ export class DataImportComponent implements OnInit {
         this.stepper.next();
         this.initStepTwo();
       },
+      error: (err) => {
+        this.notification.showError(err);
+        this.loader.hide();
+      },
     });
   }
 
@@ -96,12 +100,10 @@ export class DataImportComponent implements OnInit {
     ]).subscribe({
       next: (result) => {
         this.loader.hide();
-        console.log('res, ', result);
         this.selectedForm.tasks = result[0];
         this.selectedForm.attributes = result[1];
         this.hasRequiredTask = this.selectedForm.tasks.some((task) => task.required);
         this.setRequiredFields(this.selectedForm.attributes);
-        console.log(1111, this.stepper.steps);
       },
     });
   }
@@ -148,9 +150,14 @@ export class DataImportComponent implements OnInit {
 
   updateAndImport() {
     this.importService.update(this.uploadedCSV.id, this.uploadedCSV).subscribe(() => {
-      this.importService.import({ id: this.uploadedCSV.id, action: 'import' }).subscribe(() => {
-        this.pollingService.getImportJobs();
-        this.router.navigate(['results']);
+      this.importService.import({ id: this.uploadedCSV.id, action: 'import' }).subscribe({
+        next: () => {
+          this.pollingService.getImportJobs();
+          this.router.navigate(['results']);
+        },
+        error: (err) => {
+          this.notification.showError(err);
+        },
       });
     });
   }
