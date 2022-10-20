@@ -11,6 +11,8 @@ export class ImportResultsComponent implements OnInit {
   filename: string;
   collectionId: any;
   importJobs: any;
+  pollingInfo: any;
+  document: any = document;
 
   constructor(private pollingService: PollingService) {}
 
@@ -21,5 +23,9 @@ export class ImportResultsComponent implements OnInit {
       this.collectionId = job.collection_id;
       this.filename = job.filename;
     });
+  }
+
+  getPollingInfo() {
+    this.pollingInfo = this.pollingService.getCurrentPool();
   }
 }
