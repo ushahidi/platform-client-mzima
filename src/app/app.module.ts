@@ -19,9 +19,6 @@ import { QuillModule } from 'ngx-quill';
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
     envService.initEnv().then(() => {
-      configService.initAllConfigurations().catch((err) => {
-        if (err.status === 401) window.location.reload();
-      });
       return configService.initAllConfigurations();
     });
 }

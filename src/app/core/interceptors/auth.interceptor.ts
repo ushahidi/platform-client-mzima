@@ -13,9 +13,12 @@ export class AuthInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const site = req.url.includes('site');
+    const map = req.url.includes('map');
+    const features = req.url.includes('features');
     const authToken = this.session.currentAuthToken;
     const authTokenType = this.session.currentAuthTokenType;
-    if (authToken) {
+    if (authToken && !site && !map && !features) {
       req = req.clone({
         setHeaders: {
           Authorization: `${authTokenType} ${authToken}`,
