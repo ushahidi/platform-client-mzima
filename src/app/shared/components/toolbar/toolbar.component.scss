@@ -1,37 +1,98 @@
 .toolbar {
   top: 0;
   right: 0;
-  left: 63px;
+  width: auto;
+  left: 220px;
+  height: 72px;
   z-index: 100;
   position: fixed;
-
-  &__wrapper {
-    display: flex;
-    flex: 1 1 100%;
-    margin-left: 16px;
-    align-items: center;
-    justify-content: space-between;
-  }
+  padding-left: 24px;
+  padding-right: 24px;
+  color: var(--color-dark);
+  background: var(--color-light);
+  border-bottom: 1px solid #e3e9f8;
 
   &__controls {
     display: flex;
+    flex: 1 1 100%;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 
   &__search-form {
     flex: 1 1 100%;
   }
 
-  &__main {
-    height: 68px;
-    padding-left: 100px;
-    background-color: #373e46;
-    justify-content: space-between;
+  &__button {
+    min-width: 125px;
+    margin-left: 16px;
+
+    &::ng-deep {
+      .mat-button-wrapper {
+        justify-content: center;
+      }
+    }
   }
 
-  app-donation-button {
+  &__language {
+    width: 81px;
     display: block;
-    margin-left: 32px;
+    margin-left: 16px;
   }
+}
+
+.account-info {
+  height: 100%;
+  flex-shrink: 0;
+  font-size: 14px;
+  min-width: 236px;
+  font-weight: 400;
+  max-width: 250px;
+  line-height: 17px;
+  text-align: right;
+  margin-left: 16px;
+  white-space: normal;
+  margin-right: -24px;
+  padding: 0 24px 0 8px;
+  border-left: 1px solid #e3e9f8;
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    margin-left: 12px;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+
+  &__main {
+    max-width: calc(100% - 44px);
+  }
+
+  &__name {
+    display: block;
+  }
+
+  &__email {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  &__arrow {
+    flex-shrink: 0;
+    font-size: 24px;
+    margin-left: 12px;
+  }
+}
+
+::ng-deep {
+  .account-menu {
+    width: 236px;
+  }
+}
+
+.search-form {
+  flex: 1 1 100%;
+  max-width: 371px;
 }

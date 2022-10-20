@@ -21,6 +21,7 @@ export interface SurveyItem {
   tasks: SurveyItemTask[];
   translations: any[];
   type: string;
+  total?: number;
 }
 
 export interface SurveyItemEnabledLanguages {

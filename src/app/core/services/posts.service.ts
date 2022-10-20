@@ -35,6 +35,8 @@ export class PostsService extends ResourceService<any> {
   public postsFilters$ = this.postsFilters.asObservable();
   private totalPosts = new Subject<number>();
   public totalPosts$ = this.totalPosts.asObservable();
+  private totalGeoPosts = new Subject<number>();
+  public totalGeoPosts$ = this.totalGeoPosts.asObservable();
 
   constructor(protected override httpClient: HttpClient, protected override env: EnvService) {
     super(httpClient, env);
@@ -66,7 +68,13 @@ export class PostsService extends ResourceService<any> {
   }
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
-    return super.get('geojson', { has_location: 'mapped', ...filter, ...this.postsFilters.value });
+    return super
+      .get('geojson', { has_location: 'mapped', ...filter, ...this.postsFilters.value })
+      .pipe(
+        tap((res) => {
+          this.totalGeoPosts.next(res.total);
+        }),
+      );
   }
 
   public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
@@ -89,8 +97,16 @@ export class PostsService extends ResourceService<any> {
     );
   }
 
-  public getPostStatistics(queryParams: any) {
-    return super.get('stats', queryParams);
+  public getPostStatistics(queryParams?: any) {
+    return super.get(
+      'stats',
+      queryParams ?? {
+        ...this.postsFilters.value,
+        group_by: 'form',
+        has_location: 'all',
+        include_unmapped: true,
+      },
+    );
   }
 
   public applyFilters(filters: any): void {

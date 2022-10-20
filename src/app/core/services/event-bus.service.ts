@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { filter, map, Observable, Subject } from 'rxjs';
 
-export const enum EventType {}
+export const enum EventType {
+  SearchOptionSelected = 'SEARCH_OPTION_SELECTED',
+}
 
 export interface BusEvent<T = any> {
   type: EventType;

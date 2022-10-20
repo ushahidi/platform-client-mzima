@@ -15,10 +15,15 @@
 @import 'styles/modal';
 
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: 'Lato', 'Arial', sans-serif;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
 }
 
 html,
@@ -101,5 +106,6 @@ a {
 .mat-drawer-container {
   .mat-drawer-content {
     position: static;
+    padding-top: 72px;
   }
 }

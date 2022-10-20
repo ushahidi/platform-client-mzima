@@ -1,13 +1,23 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { NavigationStart, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { CategoryInterface, Savedsearch, SurveyItem } from '@models';
-import { CategoriesService, PostsService, SurveysService } from '@services';
-import { filter, map } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import {
+  CategoriesService,
+  EventBusService,
+  PostsService,
+  SurveysService,
+  EventType,
+} from '@services';
+import { BehaviorSubject, debounceTime, filter, forkJoin, map, Subject } from 'rxjs';
 import { SavedsearchesService } from 'src/app/core/services/savedsearches.service';
+import { SearchService } from 'src/app/core/services/search.service';
+import { FilterType } from '../filter-control/filter-control.component';
+import { SearchResponse } from '../location-selection/location-selection.component';
 import { MultilevelSelectOption } from '../multilevel-select/multilevel-select.component';
 import { SaveSearchModalComponent } from '../save-search-modal/save-search-modal.component';
 
@@ -16,19 +26,22 @@ import { SaveSearchModalComponent } from '../save-search-modal/save-search-modal
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.scss'],
 })
-export class SearchFormComponent {
-  @ViewChild('select') select: MatSelect;
+export class SearchFormComponent implements OnInit {
   public _array = Array;
-  public onFocus = false;
-  public isDropdownOpen = false;
+  public filterType = FilterType;
   public form: FormGroup = this.formBuilder.group({
     query: [],
-    status: [],
+    status: [['published', 'draft']],
     tags: [],
     source: [],
     form: [],
-    date_after: [],
-    date_before: [],
+    place: [''],
+    date: [
+      {
+        start: '',
+        end: '',
+      },
+    ],
     center_point: [
       {
         location: {
@@ -40,19 +53,20 @@ export class SearchFormComponent {
     ],
   });
   public activeFilters: any;
-  public sortingOptions = searchFormHelper.sortingOptions;
   public savedsearches: Savedsearch[];
   public statuses = searchFormHelper.statuses;
   public surveyList: SurveyItem[] = [];
   public sources = searchFormHelper.sources;
-  public categories: CategoryInterface[];
   public categoriesData: MultilevelSelectOption[];
   public activeSavedSearch?: Savedsearch;
-  public activeSavedSearchValue?: string;
+  public activeSavedSearchValue: number | null = null;
   public total: number;
-  public onMapPostsCount: number;
   public isMapView: boolean;
-  public activeFiltersCount?: number;
+  public isFiltersVisible: boolean;
+  public searchQuery: string;
+  private readonly searchSubject = new Subject<string>();
+  public citiesOptions: BehaviorSubject<(SearchResponse | any)[]>;
+  public notShownPostsCount: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,18 +76,19 @@ export class SearchFormComponent {
     private dialog: MatDialog,
     private postsService: PostsService,
     private router: Router,
+    private translate: TranslateService,
+    private searchService: SearchService,
+    private eventBusService: EventBusService,
   ) {
     this.getSavedFilters();
 
-    this.surveysService.get().subscribe({
-      next: (response) => {
-        this.surveyList = response.results;
-      },
-    });
+    const isFiltersVisible = localStorage.getItem('is_filters_visible');
+    this.isFiltersVisible = isFiltersVisible ? JSON.parse(isFiltersVisible) : false;
+
+    this.getSurveys();
 
     this.categoriesService.get().subscribe({
       next: (response) => {
-        this.categories = response;
         this.categoriesData = response?.results?.map((category: CategoryInterface) => {
           return {
             id: category.id,
@@ -91,12 +106,6 @@ export class SearchFormComponent {
       },
     });
 
-    this.postsService.totalPosts$.subscribe({
-      next: (total) => {
-        this.total = total;
-      },
-    });
-
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
         this.isMapView = params.url === '/map';
@@ -110,22 +119,112 @@ export class SearchFormComponent {
           'status[]': values.status,
           'form[]': values.form,
           'tags[]': values.tags,
-          date_after: values.date_after ? new Date(values.date_after).toISOString() : null,
-          date_before: values.date_before ? new Date(values.date_before).toISOString() : null,
+          date_after: values.date.start ? new Date(values.date.start).toISOString() : null,
+          date_before: values.date.end ? new Date(values.date.end).toISOString() : null,
           q: values.query,
           center_point:
             values.center_point?.location?.lat && values.center_point?.location?.lng
               ? [values.center_point.location.lat, values.center_point.location.lng].join(',')
               : null,
+          within_km: values.center_point.distance,
         };
 
         this.activeFilters = {};
         for (const key in filters) {
-          if (!filters[key] || !filters[key].length) continue;
+          if (!filters[key] && !filters[key]?.length) continue;
           this.activeFilters[key] = filters[key];
         }
 
-        this.activeFiltersCount = Object.keys(this.activeFilters).length || undefined;
+        this.applyFilters();
+      },
+    });
+
+    this.translate.onLangChange.subscribe({
+      next: () => {
+        this.statuses.map((status) => {
+          status.name = this.translate.instant(status.name);
+        });
+      },
+    });
+
+    this.citiesOptions = new BehaviorSubject<any[]>([]);
+
+    this.searchSubject.pipe(debounceTime(350)).subscribe({
+      next: (query: string) => {
+        this.searchService.get(query).subscribe({
+          next: (response: SearchResponse[]) => {
+            console.log('response: ', response);
+            if (response?.length) {
+              this.citiesOptions.next(response);
+            } else {
+              this.citiesOptions.next([
+                {
+                  disabled: true,
+                  display_name: 'No results... Try to search by another phrase. ',
+                },
+              ]);
+            }
+          },
+        });
+      },
+    });
+
+    this.postsService.postsFilters$.subscribe({
+      next: () => {
+        this.getPostsStatistic();
+      },
+    });
+
+    this.postsService.totalGeoPosts$.subscribe({
+      next: (total) => {
+        this.total = total;
+      },
+    });
+  }
+
+  ngOnInit(): void {
+    this.isMapView = this.router.url === '/map';
+  }
+
+  public getSurveys(): void {
+    forkJoin([this.surveysService.get(), this.postsService.getPostStatistics()]).subscribe({
+      next: (responses) => {
+        const values = responses[1].totals.find((total: any) => total.key === 'form')?.values;
+        this.surveyList = responses[0].results;
+
+        values.map((value: any) => {
+          const survey = this.surveyList.find((s) => s.id === value.id);
+          if (!survey) return;
+          survey.total = value.total;
+        });
+
+        this.sources.map(
+          (source) =>
+            (source.total = values
+              .filter((value: any) => value.type === source.value)
+              .reduce((acc: any, value: any) => {
+                return acc + value.total;
+              }, 0)),
+        );
+      },
+    });
+  }
+
+  public getPostsStatistic(): void {
+    this.postsService.getPostStatistics().subscribe({
+      next: (res) => {
+        this.notShownPostsCount = res.unmapped;
+
+        if (this.surveyList?.length) {
+          this.surveyList.map((survey) => (survey.total = 0));
+          const values = res.totals.find((total: any) => total.key === 'form')?.values;
+
+          values.map((value: any) => {
+            const survey = this.surveyList.find((s) => s.id === value.id);
+            if (!survey) return;
+            survey.total = value.total;
+          });
+        }
       },
     });
   }
@@ -166,14 +265,6 @@ export class SearchFormComponent {
     return option.order === value.order && option.orderBy === value.orderBy;
   }
 
-  public inputOnFocus(): void {
-    this.onFocus = true;
-  }
-
-  public inputOnBlur(): void {
-    this.onFocus = false;
-  }
-
   public saveSearch(search?: Savedsearch): void {
     const dialogRef = this.dialog.open(SaveSearchModalComponent, {
       width: '100%',
@@ -190,8 +281,8 @@ export class SearchFormComponent {
         if (!result || result === 'cancel') return;
 
         if (result === 'delete') {
-          if (this.activeSavedSearch?.id) {
-            this.savedsearchesService.delete(this.activeSavedSearch.id).subscribe({
+          if (search?.id) {
+            this.savedsearchesService.delete(search.id).subscribe({
               next: () => {
                 this.form.enable();
                 this.resetSavedFilter();
@@ -218,9 +309,9 @@ export class SearchFormComponent {
           view: result.defaultViewingMode,
         };
 
-        if (this.activeSavedSearch && this.activeSavedSearch.id) {
+        if (search?.id) {
           this.savedsearchesService
-            .update(this.activeSavedSearch.id, {
+            .update(search.id, {
               ...this.activeSavedSearch,
               ...savedSearchParams,
             })
@@ -246,8 +337,14 @@ export class SearchFormComponent {
     });
   }
 
-  public applySavedFilter(event: MatSelectChange): void {
-    this.activeSavedSearch = this.savedsearches.find((search) => search.id === event.value);
+  public applySavedFilter(value: number | null): void {
+    this.activeSavedSearchValue = value;
+    if (value === null) {
+      this.resetForm();
+      return;
+    }
+
+    this.activeSavedSearch = this.savedsearches.find((search) => search.id === value);
 
     if (this.activeSavedSearch) {
       if (
@@ -283,29 +380,26 @@ export class SearchFormComponent {
 
   public resetSavedFilter(): void {
     this.activeSavedSearch = undefined;
-    this.activeSavedSearchValue = undefined;
+    this.activeSavedSearchValue = null;
     this.resetForm();
-  }
-
-  public toggleDropdown(state?: boolean): void {
-    this.isDropdownOpen = state || !this.isDropdownOpen;
   }
 
   public applyFilters(): void {
     this.postsService.applyFilters(this.activeFilters);
-
-    this.toggleDropdown(false);
   }
 
   public resetForm(filters: any = {}): void {
     this.form.patchValue({
       query: '',
-      status: [],
+      status: ['published', 'draft'],
       tags: [],
       source: [],
       form: [],
-      date_after: '',
-      date_before: '',
+      date: {
+        start: '',
+        end: '',
+      },
+      place: '',
       center_point: {
         location: {
           lat: null,
@@ -314,6 +408,31 @@ export class SearchFormComponent {
         distance: 1,
       },
       ...filters,
+    });
+  }
+
+  public toggleFilters(): void {
+    this.isFiltersVisible = !this.isFiltersVisible;
+    localStorage.setItem('is_filters_visible', JSON.stringify(this.isFiltersVisible));
+  }
+
+  public clearFilter(filterName: string): void {
+    this.form.controls[filterName].patchValue('');
+  }
+
+  public searchOnMap(): void {
+    if (typeof this.searchQuery !== 'string') return;
+    this.searchSubject.next(this.searchQuery);
+  }
+
+  public displayFn(city: SearchResponse): string {
+    return city?.display_name || '';
+  }
+
+  public optionSelected(event: MatAutocompleteSelectedEvent): void {
+    this.eventBusService.next({
+      type: EventType.SearchOptionSelected,
+      payload: event.option.value,
     });
   }
 }

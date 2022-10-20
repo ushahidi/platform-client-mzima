@@ -1,5 +1,6 @@
 import { Component, RendererFactory2 } from '@angular/core';
 import { EnvService, LoaderService } from '@services';
+import { IconService } from './core/services/icon.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent {
     private loaderService: LoaderService, //
     private rendererFactory: RendererFactory2,
     protected env: EnvService,
+    private iconService: IconService,
   ) {
     this.loaderService.isActive$.subscribe({
       next: (value) => {
@@ -22,6 +24,8 @@ export class AppComponent {
       },
     });
     if (this.env.environment.gtm_key) this.loadGtm();
+
+    this.iconService.registerIcons();
   }
 
   private loadGtm() {

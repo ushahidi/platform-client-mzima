@@ -1,0 +1,17 @@
+<mat-expansion-panel
+  hideToggle
+  class="company-info"
+  [expanded]="isDescriptionOpen"
+  (opened)="descriptionToggleHandle(true)"
+  (closed)="descriptionToggleHandle(false)"
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title class="company-info__header">
+      <img [src]="logo" [alt]="title" class="company-info__logo" />
+      <span class="company-info__title">{{ title }}</span>
+      <mat-icon svgIcon="arrow-down" class="company-info__header__arrow"></mat-icon>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  {{ description }}
+</mat-expansion-panel>

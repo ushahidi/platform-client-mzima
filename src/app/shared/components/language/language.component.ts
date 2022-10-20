@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { CONST } from '@constants';
 import { LanguageInterface } from '@models';
@@ -9,7 +9,6 @@ import { LanguageService } from '@services';
   selector: 'app-language',
   templateUrl: './language.component.html',
   styleUrls: ['./language.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class LanguageComponent {
   private languageKey = `${CONST.LOCAL_STORAGE_PREFIX}language`;

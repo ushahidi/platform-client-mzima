@@ -1,9 +1,10 @@
-<div class="submit-post-button">
-  <button mat-fab (click)="addPost()" aria-label="Add post" color="primary">
-    <mat-icon>
-      <svg class="iconic">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#plus"></use>
-      </svg>
-    </mat-icon>
-  </button>
-</div>
+<button
+  mat-raised-button
+  (click)="addPost()"
+  aria-label="Add post"
+  color="primary"
+  class="submit-post-button"
+>
+  Add new post
+  <mat-icon svgIcon="plus"></mat-icon>
+</button>

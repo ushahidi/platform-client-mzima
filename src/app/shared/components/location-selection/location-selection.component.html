@@ -1,5 +1,7 @@
 <div class="location-select">
-  <mat-form-field appearance="standard" class="location-control">
+  <h4 class="location-select__title">City or address</h4>
+
+  <mat-form-field appearance="standard" class="form-control location-control">
     <mat-icon matPrefix class="location-control__icon">
       <svg class="iconic" role="img">
         <use
@@ -38,7 +40,8 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <mat-form-field appearance="standard" class="location-select__distance">
+
+  <mat-form-field appearance="standard">
     <mat-select
       placeholder="Distance"
       [(ngModel)]="location_distance"

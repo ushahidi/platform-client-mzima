@@ -1,42 +1,85 @@
 .sidebar {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+  font-size: 12px;
+  line-height: 14px;
+  --side-offset: 24px;
+  --divider-color: #383e45;
+  color: var(--color-light-gray);
+  padding: 24px var(--side-offset) 20px;
 
-.sidebar-button {
-  font-size: 10px;
-  border-radius: 0;
-  line-height: 12px;
-  padding: 10px 4px;
-  background: transparent;
-  transition-duration: 0.35s;
-  box-shadow: none !important;
-  color: var(--color-gray-shade);
-  transition-timing-function: ease;
-  transition-property: color, background-color;
+  &__logo {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px var(--side-offset) 0;
+    border-bottom: 1px solid var(--divider-color);
+    margin: -24px calc(var(--side-offset) * -1) 8px;
 
-  &::ng-deep {
-    .mat-button-wrapper {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
+    img {
+      display: block;
+      max-width: 100%;
     }
   }
 
-  &--active {
-    background-color: #4e545b;
+  &__add-post-btn {
+    display: block;
+    border-width: 1px 0;
+    border-style: solid;
+    padding: 12px var(--side-offset);
+    border-color: var(--divider-color);
+    margin: 0 calc(var(--side-offset) * -1) 8px;
+  }
+
+  &__menu {
+    margin: 0 calc(var(--side-offset) * -1);
+
+    &:not(:first-child) {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--divider-color);
+    }
+  }
+}
+
+.sidebar-menu-button {
+  width: 100%;
+  color: inherit;
+  font-size: 16px;
+  text-align: left;
+  border-radius: 0;
+  line-height: 1.6;
+  font-weight: normal;
+  background: transparent;
+  transition-duration: 0.35s;
+  box-shadow: none !important;
+  transition-timing-function: ease;
+  border-left: 4px solid transparent;
+  transition-property: color, background-color, border-color;
+  padding: 9px var(--side-offset) 9px calc(var(--side-offset) - 4px);
+
+  &:hover {
     color: var(--color-primary);
+  }
+
+  &--active {
+    color: var(--color-primary);
+    background-color: var(--color-dark);
+    border-left-color: var(--color-primary);
+  }
+
+  &:not(:first-child) {
+    margin-top: 8px;
   }
 
   &__icon {
     font-size: 30px;
-    margin-right: 0 !important;
-  }
+    margin-right: 12px !important;
 
-  &__title {
-    display: block;
-    margin-top: 5px;
+    img {
+      font-size: 14px;
+      fill: currentColor;
+    }
   }
 }

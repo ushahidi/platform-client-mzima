@@ -1,29 +1,53 @@
+.multilevelselect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__control {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    color: var(--color-dark);
+  }
+
+  &__arrow {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    font-size: 24px;
+    margin-left: 8px;
+    background: url(/assets/images/select-arrow.svg) 50% 50% / contain no-repeat;
+  }
+}
+
 ::ng-deep {
   .multilevelselect {
-    &.mat-menu-panel {
-      max-width: none;
-      max-height: 400px;
-    }
-
-    .mat-tree {
-      width: 602px;
-      padding: 0 16px;
-    }
-
-    .mat-list-option {
-      flex: 1 1 100%;
-    }
-
-    .mat-list-item-content {
-      display: flex;
-      min-height: 36px;
-      align-items: center;
-      justify-content: flex-start;
-    }
-
     &__dropdown {
-      .mat-pseudo-checkbox {
-        margin-right: 12px;
+      &.mat-menu-panel {
+        max-width: none;
+        max-height: 400px;
+      }
+
+      .mat-tree {
+        width: 602px;
+        padding: 0 16px;
+      }
+
+      .mat-list-option {
+        flex: 1 1 100%;
+      }
+
+      .mat-list-item-content {
+        display: flex;
+        min-height: 36px;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      &__dropdown {
+        .mat-pseudo-checkbox {
+          margin-right: 12px;
+        }
       }
     }
   }

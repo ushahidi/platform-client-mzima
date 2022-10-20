@@ -6,7 +6,6 @@ import { MenuInterface, UserMenuInterface } from '@models';
 import { CollectionsComponent } from '@data';
 import { takeUntilDestroy$ } from '@helpers';
 import { EnumGtmEvent, EnumGtmSource } from '@enums';
-import { AccountSettingsComponent } from '../account-settings/account-settings.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,6 +18,7 @@ export class SidebarComponent implements OnInit {
   public menu: MenuInterface[] = [];
   public userMenu: UserMenuInterface[] = [];
   userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
+  public siteConfig = this.sessionService.getSiteConfigurations();
 
   constructor(
     private dialog: MatDialog,
@@ -37,20 +37,17 @@ export class SidebarComponent implements OnInit {
 
   private initMenu() {
     this.menu = [
-      { label: 'Maps', router: 'map', icon: 'location_on', visible: true },
-      { label: 'Feed', router: 'feed', icon: 'storage', visible: true },
-      { label: 'Data', router: 'data', icon: 'table', visible: true },
-      { label: 'Activity', router: 'activity', icon: 'monitoring', visible: true },
+      { label: 'Map view', router: 'map', icon: 'marker', visible: true },
+      { label: 'Data view', router: 'feed', icon: 'data', visible: true },
+      { label: 'Activity', router: 'activity', icon: 'activity', visible: true },
       { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isAdmin },
     ];
     this.userMenu = [
-      { label: 'Collections', icon: 'apps', visible: true, action: () => this.openCollections() },
-      { label: 'Profile', icon: 'face', visible: true, action: () => this.openProfile() },
       {
-        label: 'Profile',
-        icon: 'face',
-        visible: this.isLoggedIn,
-        action: () => this.openProfile(),
+        label: 'Collections',
+        icon: 'collections',
+        visible: true,
+        action: () => this.openCollections(),
       },
       { label: 'Log in', icon: 'login', visible: !this.isLoggedIn, action: () => this.openLogin() },
       { label: 'Log out', icon: 'logout', visible: this.isLoggedIn, action: () => this.logout() },
@@ -78,7 +75,6 @@ export class SidebarComponent implements OnInit {
 
   private logout() {
     this.authService.logout();
-    this.initMenu(); // Somehow refresh menu
   }
 
   registerPage(event: MouseEvent, router: string, label: string) {
@@ -91,11 +87,5 @@ export class SidebarComponent implements OnInit {
       },
       GtmTrackingService.MapPath(`/${router}`),
     );
-  }
-
-  private openProfile(): void {
-    this.dialog.open(AccountSettingsComponent, {
-      width: '480px',
-    });
   }
 }

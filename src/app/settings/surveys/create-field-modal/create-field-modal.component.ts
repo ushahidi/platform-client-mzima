@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { surveyHelper } from '@helpers';
 import { CategoryInterface, FormAttributeInterface, SurveyItem } from '@models';
@@ -12,7 +12,7 @@ import { MultilevelSelectOption } from 'src/app/shared/components';
   templateUrl: './create-field-modal.component.html',
   styleUrls: ['./create-field-modal.component.scss'],
 })
-export class CreateFieldModalComponent {
+export class CreateFieldModalComponent implements OnInit {
   fields = surveyHelper.surveyFields;
   selectedFieldType: any;
   editMode = false;

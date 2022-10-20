@@ -1,7 +1,11 @@
-<ul>
-  <li routerLink="/"><mat-icon class="color-primary">home</mat-icon></li>
-  <li *ngFor="let breadcrumb of breadcrumbs$ | async">
-    <button mat-stroked-button [routerLink]="breadcrumb.url" routerLinkActive="active">
+<ul class="breacrumbs">
+  <li *ngFor="let breadcrumb of breadcrumbs$ | async" class="breacrumbs__item">
+    <button
+      mat-button
+      routerLinkActive="active"
+      class="breadcrumb-button"
+      [routerLink]="breadcrumb.url"
+    >
       {{ breadcrumb.label }}
     </button>
   </li>

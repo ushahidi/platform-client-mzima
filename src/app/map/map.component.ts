@@ -12,7 +12,13 @@ import {
   MapOptions,
   Map,
 } from 'leaflet';
-import { PostsService, PostsV5Service, SessionService } from '@services';
+import {
+  EventBusService,
+  EventType,
+  PostsService,
+  PostsV5Service,
+  SessionService,
+} from '@services';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
 import { mapHelper } from '@helpers';
 import { ViewContainerRef } from '@angular/core';
@@ -51,6 +57,7 @@ export class MapComponent implements OnInit {
     private sessionService: SessionService,
     private dialog: MatDialog,
     private zone: NgZone,
+    private eventBusService: EventBusService,
   ) {}
 
   ngOnInit() {
@@ -81,6 +88,13 @@ export class MapComponent implements OnInit {
         this.mapLayers = [];
 
         this.getPostsGeoJson();
+      },
+    });
+
+    this.eventBusService.on(EventType.SearchOptionSelected).subscribe({
+      next: (option) => {
+        this.map.setZoom(12);
+        this.map.panTo({ lat: option.lat, lng: option.lon });
       },
     });
   }
