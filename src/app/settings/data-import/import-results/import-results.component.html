@@ -45,4 +45,16 @@
       </button>
     </div>
   </div>
+  <!-- TODO: FIXME: DEBUG INFO -->
+  <pre>{{ pollingInfo | json }}</pre>
+  <button
+    *ngIf="document.magic"
+    type="button"
+    color="secondary"
+    mat-raised-button
+    (click)="getPollingInfo()"
+  >
+    Get Polling Info
+  </button>
+  <!-- EOF Debug -->
 </ng-template>

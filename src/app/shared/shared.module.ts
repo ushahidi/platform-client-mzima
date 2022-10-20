@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { GtmDirective } from '../core/directives/gtm.directive';
+import { GtmDirective } from '@directives';
 
 import {
   SidebarComponent,
@@ -26,6 +26,7 @@ import {
   ColorPickerComponent,
   CompanyInfoComponent,
   FilterControlComponent,
+  DonationButtonComponent,
 } from './components';
 import { MaterialModule } from './material/material.module';
 import {
@@ -63,6 +64,7 @@ const components = [
   ColorPickerComponent,
   CompanyInfoComponent,
   FilterControlComponent,
+  DonationButtonComponent,
 ];
 
 const modules = [

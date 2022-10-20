@@ -19,3 +19,4 @@ export * from './group-checkbox-select/group-checkbox-select.component';
 export * from './color-picker/color-picker.component';
 export * from './company-info/company-info.component';
 export * from './filter-control/filter-control.component';
+export * from './donation-button/donation-button.component';

@@ -18,6 +18,7 @@ export class SessionService {
     accessToken: '',
     accessTokenExpires: 0,
     grantType: '',
+    tokenType: '',
   });
 
   private readonly _currentUserData$ = new BehaviorSubject<UserInterface>({});
@@ -31,6 +32,7 @@ export class SessionService {
     accessToken: '',
     accessTokenExpires: 0,
     grantType: '',
+    tokenType: '',
   };
 
   private currentUser: UserInterface = {
@@ -86,12 +88,18 @@ export class SessionService {
     this.currentSessionData.accessTokenExpires = +expires;
     this.currentSessionData.grantType =
       localStorage.getItem(this.localStorageNameMapper('grantType')) || '';
+    this.currentSessionData.tokenType =
+      localStorage.getItem(this.localStorageNameMapper('tokenType')) || '';
 
     this._currentSessionData$.next(this.currentSessionData);
   }
 
   get currentAuthToken() {
     return this.currentSessionData.accessToken;
+  }
+
+  get currentAuthTokenType() {
+    return this.currentSessionData.tokenType;
   }
 
   loadUserDataFromLocalStorage() {
@@ -132,6 +140,7 @@ export class SessionService {
       accessToken: '',
       accessTokenExpires: 0,
       grantType: '',
+      tokenType: '',
     };
     this._currentSessionData$.next(this.currentSessionData);
   }

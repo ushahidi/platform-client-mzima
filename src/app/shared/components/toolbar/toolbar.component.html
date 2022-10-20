@@ -2,16 +2,7 @@
   <app-breadcrumb></app-breadcrumb>
   <div class="toolbar__controls">
     <app-search-form class="search-form" *ngIf="showSearchForm"> </app-search-form>
-    <button
-      color="primary"
-      mat-raised-button
-      class="toolbar__button"
-      (click)="showDonation()"
-      *ngIf="isDonateAvailable"
-    >
-      {{ 'app.donate' | translate }}
-      <mat-icon class="toolbar__button__icon" svgIcon="heart"></mat-icon>
-    </button>
+    <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
     <button color="dark" mat-raised-button class="toolbar__button">
       {{ 'app.share' | translate }}
       <mat-icon class="toolbar__button__icon" svgIcon="share"></mat-icon>

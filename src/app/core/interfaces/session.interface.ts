@@ -2,6 +2,7 @@ export interface SessionTokenInterface {
   accessToken: string;
   accessTokenExpires: number;
   grantType: string;
+  tokenType: string;
 }
 
 export interface UserInterface {

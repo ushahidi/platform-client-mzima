@@ -28,3 +28,4 @@ export { ExportJobsService } from './export-jobs.service';
 export { DataSourcesService } from './data-sources.service';
 export { GtmTrackingService } from './gtm-tracking.service';
 export { ContactsService } from './contacts.service';
+export { DonationService } from './donation.service';

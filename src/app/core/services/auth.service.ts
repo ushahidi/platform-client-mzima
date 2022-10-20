@@ -44,12 +44,14 @@ export class AuthService extends ResourceService<any> {
             accessToken,
             accessTokenExpires: Math.floor(Date.now() / 1000) + authResponse.expires_in,
             grantType: 'password',
+            tokenType: authResponse.token_type,
           });
         } else if (authResponse.expires) {
           this.sessionService.setSessionData({
             accessToken,
             accessTokenExpires: authResponse.expires,
             grantType: 'password',
+            tokenType: authResponse.token_type,
           });
         }
 

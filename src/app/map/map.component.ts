@@ -68,6 +68,7 @@ export class MapComponent implements OnInit {
 
     this.leafletOptions = {
       minZoom: 3,
+      maxZoom: 17,
       scrollWheelZoom: true,
       zoomControl: false,
       layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
@@ -154,8 +155,14 @@ export class MapComponent implements OnInit {
         this.mapLayers.push(geoPosts);
       }
 
-      if (!posts.features.length) return;
-      this.mapFitToBounds = geoPosts.getBounds();
+      if (posts.total > this.params.limit + this.params.offset) {
+        this.params.offset = this.params.limit + this.params.offset;
+        this.getPostsGeoJson();
+      }
+
+      if (posts.features.length && this.params.offset <= this.params.limit) {
+        this.mapFitToBounds = geoPosts.getBounds();
+      }
     });
   }
 

@@ -52,8 +52,9 @@
     "cancel": "Cancel",
     "save": "Save",
     "save_and_close": "Save & close",
-    "add_and_close": "Add & close",
+    "update": "Update",
     "update_and_close": "Update & close",
+    "add_and_close": "Add & close",
     "updating": "Updating",
     "saving": "Saving",
     "settings": "Settings",
@@ -1162,7 +1163,7 @@
       "admin": "Admin",
       "manage_users": "Manage Users",
       "manage_posts": "Manage Posts",
-      "manage_settings": "Mangage Settings",
+      "manage_settings": "Manage Settings",
       "bulk_data_import": "Bulk Data Import and Export",
       "edit_own_posts": "Edit their own posts",
       "registred_member": "Registered member",
@@ -1517,9 +1518,9 @@
       "bulk_destroy_success": "{{count}} categories deleted"
     },
     "role": {
-      "delete_question": "Are you sure you want to delete the role {{role}}?",
-      "destroy_success": "Role {{role}} deleted.",
-      "save_success": "Role {{role}} saved.",
+      "delete_question": "Are you sure you want to delete the role?",
+      "destroy_success": "Role has been deleted.",
+      "save_success": "Role has been saved.",
       "last_admin": "You can not delete the only admin role"
     },
     "webhook": {
