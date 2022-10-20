@@ -16,6 +16,8 @@ export class ErrorsHandler implements ErrorHandler {
       if (error instanceof HttpErrorResponse) {
         if (!navigator.onLine) {
           notifier.showError(error.message);
+        } else if (error.status === 401) {
+          notifier.showError('You are not authorized');
         } else {
           notifier.showError('Http Error: ' + error.message);
         }
