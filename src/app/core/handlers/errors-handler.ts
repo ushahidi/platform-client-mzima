@@ -16,7 +16,7 @@ export class ErrorsHandler implements ErrorHandler {
       if (error instanceof HttpErrorResponse) {
         if (!navigator.onLine) {
           notifier.showError(error.message);
-        } else {
+        } else if (error.status !== 401) {
           notifier.showError('Http Error: ' + error.message);
         }
       } else {

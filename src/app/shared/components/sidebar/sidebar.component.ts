@@ -45,7 +45,6 @@ export class SidebarComponent implements OnInit {
     ];
     this.userMenu = [
       { label: 'Collections', icon: 'apps', visible: true, action: () => this.openCollections() },
-      { label: 'Profile', icon: 'face', visible: true, action: () => this.openProfile() },
       {
         label: 'Profile',
         icon: 'face',

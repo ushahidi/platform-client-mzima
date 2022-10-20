@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '@shared';
 import { ErrorsHandler } from './core/handlers/errors-handler';
-import { AuthInterceptor, HttpsInterceptor } from './core/interceptors';
+import { AuthInterceptor } from './core/interceptors';
 import { AuthModule } from './auth/auth.module';
 import { ConfigService, EnvService } from '@services';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -19,6 +19,9 @@ import { QuillModule } from 'ngx-quill';
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
     envService.initEnv().then(() => {
+      configService.initAllConfigurations().catch((err) => {
+        if (err.status === 401) window.location.reload();
+      });
       return configService.initAllConfigurations();
     });
 }
@@ -81,7 +84,6 @@ export const loadGoogleTagManagerProvider: FactoryProvider = {
     },
     loadConfigProvider,
     { provide: ErrorHandler, useClass: ErrorsHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpsInterceptor, multi: true },
     loadGoogleTagManagerProvider,
   ],
   bootstrap: [AppComponent],
