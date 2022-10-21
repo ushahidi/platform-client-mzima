@@ -139,14 +139,6 @@ export class SearchFormComponent implements OnInit {
       },
     });
 
-    this.translate.onLangChange.subscribe({
-      next: () => {
-        this.statuses.map((status) => {
-          status.name = this.translate.instant(status.name);
-        });
-      },
-    });
-
     this.citiesOptions = new BehaviorSubject<any[]>([]);
 
     this.searchSubject.pipe(debounceTime(350)).subscribe({
@@ -184,6 +176,9 @@ export class SearchFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMapView = this.router.url === '/map';
+    this.statuses.map((status) => {
+      status.name = this.translate.instant(status.name);
+    });
   }
 
   public getSurveys(): void {
@@ -268,7 +263,7 @@ export class SearchFormComponent implements OnInit {
   public saveSearch(search?: Savedsearch): void {
     const dialogRef = this.dialog.open(SaveSearchModalComponent, {
       width: '100%',
-      maxWidth: 480,
+      maxWidth: 576,
       height: 'auto',
       maxHeight: '90vh',
       data: {

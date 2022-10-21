@@ -13,7 +13,7 @@ const routes: Routes = [
     path: 'map',
     title: 'post.posts',
     loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
-    data: { breadcrumb: 'Map' },
+    data: { breadcrumb: 'Map view' },
   },
   {
     path: 'data',

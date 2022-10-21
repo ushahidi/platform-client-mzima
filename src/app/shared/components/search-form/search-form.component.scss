@@ -16,45 +16,8 @@
 
     &.mat-form-field-appearance-outline {
       &::ng-deep {
-        .mat-form-field-flex {
-          padding-left: 10px !important;
-          padding-right: 10px !important;
-        }
-
-        .mat-form-field-infix {
-          font-size: 16px;
-          line-height: 1.6;
-          padding-top: 8px;
-          padding-bottom: 8px;
-        }
-
         .mat-form-field-wrapper {
           padding-bottom: 0;
-        }
-
-        .mat-form-field-prefix,
-        .mat-form-field-suffix {
-          top: 7px;
-        }
-
-        .mat-form-field-prefix {
-          margin-right: 10px;
-        }
-
-        .mat-form-field-outline-end {
-          border-radius: 8px !important;
-        }
-
-        .mat-input-element {
-          &::placeholder {
-            color: #4e545b;
-          }
-          &:-ms-input-placeholder {
-            color: #4e545b;
-          }
-          &::-ms-input-placeholder {
-            color: #4e545b;
-          }
         }
       }
     }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 import { UserInterface } from '@models';
-import { AuthService, SessionService } from '@services';
+import { AuthService, BreadcrumbService, SessionService } from '@services';
 import { filter } from 'rxjs';
 import { DonationModalComponent } from 'src/app/settings';
 import { AccountSettingsComponent } from '../account-settings/account-settings.component';
@@ -18,18 +18,26 @@ export class ToolbarComponent implements OnInit {
   private userData$ = this.session.currentUserData$;
   public profile: UserInterface;
   public showSearchForm: boolean;
+  public pageTitle: string;
 
   constructor(
     private session: SessionService,
     private dialog: MatDialog,
     private authService: AuthService,
     private router: Router,
+    private readonly breadcrumbService: BreadcrumbService,
   ) {
     this.isDonateAvailable = this.session.getSiteConfigurations().donation?.enabled!;
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       const url = router.routerState.snapshot.url;
-      this.showSearchForm = (url.indexOf('/settings') && url.indexOf('/activity')) === -1;
+      this.showSearchForm = url.indexOf('/map') > -1 || url.indexOf('/feed') > -1;
+    });
+
+    this.breadcrumbService.breadcrumbs$.subscribe({
+      next: (res) => {
+        this.pageTitle = res[0]?.label;
+      },
     });
   }
 

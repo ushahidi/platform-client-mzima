@@ -135,10 +135,18 @@
 }
 
 .mat-button-base {
-  &.mat-raised-button {
+  &.mat-raised-button,
+  &.mat-stroked-button {
     font-size: 14px;
     font-weight: 600;
     line-height: 40px;
     border-radius: 8px;
+  }
+}
+
+.mat-stroked-button {
+  &:not(.mat-button-disabled) {
+    border-color: #e9e9ea;
+    color: var(--color-dark);
   }
 }

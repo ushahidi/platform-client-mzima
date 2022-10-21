@@ -39,6 +39,13 @@
     display: block;
     margin-left: 16px;
   }
+
+  &__page-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
 }
 
 .account-info {

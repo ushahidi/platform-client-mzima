@@ -114,31 +114,34 @@
       <ng-container *ngSwitchCase="filterType.Daterange">
         <div class="daterange" *ngIf="value" (click)="$event.stopPropagation()">
           <div class="daterange__inputs">
-            <div class="form-row">
+            <div class="form-row form-row--small">
               <mat-label>{{ 'global_filter.filter_tabs.date_after' | translate }}</mat-label>
               <mat-form-field
                 appearance="outline"
                 [ngClass]="{ 'daterange__input--focused': !value.start }"
               >
                 <input
-                  class="daterange__input"
                   matInput
+                  autocomplete="off"
+                  class="daterange__input"
                   placeholder="DD-MM-YYYY"
                   [(ngModel)]="calendarValue.start"
                   (ngModelChange)="calendarInputChangeHandle()"
                 />
               </mat-form-field>
             </div>
-            <div class="form-row">
+            <div class="form-row form-row--small">
               <mat-label>{{ 'global_filter.filter_tabs.date_before' | translate }}</mat-label>
               <mat-form-field
                 appearance="outline"
                 [ngClass]="{ 'daterange__input--focused': value.start && !value.end }"
               >
                 <input
-                  class="daterange__input"
                   matInput
+                  autocomplete="off"
+                  class="daterange__input"
                   placeholder="DD-MM-YYYY"
+                  [disabled]="!value.start"
                   [(ngModel)]="calendarValue.end"
                   (ngModelChange)="calendarInputChangeHandle()"
                 />
