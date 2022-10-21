@@ -1,8 +1,11 @@
 .radio-buttons {
   &__options {
     display: block;
-    margin-top: 16px;
     padding-left: 16px;
+
+    .mat-list-base {
+      padding-top: 0;
+    }
   }
 
   &__info,

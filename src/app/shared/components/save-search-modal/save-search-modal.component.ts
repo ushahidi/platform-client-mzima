@@ -45,14 +45,19 @@ export class SaveSearchModalComponent implements OnInit {
       next: (response) => {
         this.roleOptions = [
           {
+            name: 'Only me',
+            value: 'only_me',
+            // icon: 'person',
+          },
+          {
             name: this.translate.instant('role.everyone'),
             value: 'everyone',
-            icon: 'person',
+            // icon: 'person',
           },
           {
             name: this.translate.instant('app.specific_roles'),
             value: 'specific',
-            icon: 'group',
+            // icon: 'group',
             options: response.results.map((role) => {
               return {
                 name: role.display_name,

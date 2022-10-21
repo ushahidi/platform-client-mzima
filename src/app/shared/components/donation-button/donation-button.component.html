@@ -6,17 +6,13 @@
     (click)="showDonation()"
     *ngIf="!donationService.isMonetizationStarted"
   >
-    <mat-icon>
-      <svg class="iconic" role="img">
-        <use xlink:href="assets/sprites.svg#heart"></use>
-      </svg>
-    </mat-icon>
-    <span translate="app.donate"></span>
+    {{ 'app.donate' | translate }}
+    <mat-icon class="toolbar__button__icon" svgIcon="heart"></mat-icon>
   </button>
 
   <button
     type="button"
-    color="dark"
+    color="primary"
     class="donation-amount"
     mat-raised-button
     (click)="showDonation()"

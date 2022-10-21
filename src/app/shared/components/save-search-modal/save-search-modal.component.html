@@ -15,18 +15,22 @@
 </strong>
 
 <form novalidate [formGroup]="form" (ngSubmit)="formSubmit()">
-  <mat-form-field appearance="standard">
-    <mat-label>{{ 'set.name_savedsearch' | translate }}</mat-label>
-    <input matInput placeholder="Name your Saved Search..." formControlName="name" />
-  </mat-form-field>
+  <div class="form-row">
+    <mat-label>{{ 'app.name' | translate }} *</mat-label>
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Name your Saved Search..." formControlName="name" />
+    </mat-form-field>
+  </div>
 
-  <mat-form-field appearance="standard">
+  <div class="form-row">
     <mat-label>{{ 'app.description' | translate }}</mat-label>
-    <input matInput formControlName="description" />
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput formControlName="description" />
+    </mat-form-field>
+  </div>
 
-  <div class="form-group">
-    <h4>{{ 'app.who_can_see_this' | translate }}</h4>
+  <div class="form-row">
+    <mat-label>{{ 'app.who_can_see_this' | translate }}</mat-label>
     <app-group-checkbox-select [data]="roleOptions" formControlName="visible_to">
     </app-group-checkbox-select>
     <div class="radio-buttons" *ngIf="form.value.parent">
@@ -37,30 +41,32 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-row">
     <mat-slide-toggle formControlName="featured">
       {{ 'saved_search.featured' | translate }}
       <span class="tooltip-icon" [matTooltip]="'saved_search.featured_tooltip' | translate">?</span>
     </mat-slide-toggle>
   </div>
 
-  <mat-form-field appearance="standard">
+  <div class="form-row">
     <mat-label>{{ 'set.default_viewing_mode' | translate }}</mat-label>
-    <mat-select formControlName="defaultViewingMode">
-      <mat-option value="map">
-        {{ 'views.map' | translate }}
-      </mat-option>
-      <mat-option value="data">
-        {{ 'views.data' | translate }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-select formControlName="defaultViewingMode">
+        <mat-option value="map">
+          {{ 'views.map' | translate }}
+        </mat-option>
+        <mat-option value="data">
+          {{ 'views.data' | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
   <div mat-dialog-actions align="end">
-    <button type="button" (click)="cancel()" mat-raised-button>
+    <button type="button" (click)="cancel()" mat-stroked-button>
       {{ 'app.cancel' | translate }}
     </button>
-    <button
+    <!-- <button
       type="button"
       color="accent"
       mat-raised-button
@@ -68,9 +74,9 @@
       (click)="deleteSavedfilter()"
     >
       {{ 'app.delete' | translate }}
-    </button>
+    </button> -->
     <button color="primary" mat-raised-button [disabled]="form.invalid || form.disabled">
-      {{ 'form.save_and_close' | translate }}
+      {{ 'app.apply_filters' | translate }}
     </button>
   </div>
 </form>

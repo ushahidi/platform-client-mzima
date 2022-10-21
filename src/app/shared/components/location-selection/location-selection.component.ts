@@ -9,12 +9,12 @@ interface LatLng {
   lng?: number;
 }
 
-interface SelectedLocation {
+export interface SelectedLocation {
   location: LatLng;
   distance: number;
 }
 
-interface SearchResponse {
+export interface SearchResponse {
   boundingbox: string[];
   class: string;
   display_name: string;

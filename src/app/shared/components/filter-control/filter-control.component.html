@@ -1,0 +1,167 @@
+<div class="filter-control">
+  <button type="button" mat-raised-button [matMenuTriggerFor]="menu" class="filter-control__button">
+    <span>{{ title }}</span>
+    <span class="filter-control__button__count" *ngIf="badge">{{ badge }}</span>
+    <mat-icon class="filter-control__button__arrow" svgIcon="arrow-down"></mat-icon>
+  </button>
+
+  <mat-menu
+    #menu="matMenu"
+    [class]="
+      'filter-control-menu' +
+      (type === filterType.Multilevelselect ||
+      type === filterType.Daterange ||
+      type === filterType.Location
+        ? ' filter-control-menu--wide'
+        : '')
+    "
+  >
+    <ng-container [ngSwitch]="type">
+      <ng-container *ngSwitchCase="filterType.Select">
+        <mat-radio-group
+          [(ngModel)]="value"
+          (ngModelChange)="valueChanged()"
+          (change)="filterChange.emit($event.value)"
+        >
+          <div class="radio-button">
+            <mat-radio-button>
+              {{ 'graph.none' | translate }}
+            </mat-radio-button>
+          </div>
+          <div class="radio-button" *ngFor="let option of options">
+            <mat-radio-button
+              [value]="option[fields[0]]"
+              [checked]="option.checked"
+              [disabled]="option.disabled"
+            >
+              {{ option[fields[1]] }}
+            </mat-radio-button>
+            <button class="edit-btn" mat-icon-button (click)="editOption.emit(option)">
+              <mat-icon svgIcon="pencil"></mat-icon>
+            </button>
+          </div>
+        </mat-radio-group>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="filterType.Multiselect">
+        <mat-selection-list
+          [(ngModel)]="value"
+          (ngModelChange)="valueChanged()"
+          (click)="$event.stopPropagation()"
+          (selectionChange)="filterChange.emit($event)"
+        >
+          <mat-list-option
+            color="primary"
+            class="checkbox-option"
+            checkboxPosition="before"
+            [value]="option[fields[0]]"
+            [selected]="option.checked"
+            [disabled]="option.disabled"
+            *ngFor="let option of options"
+          >
+            {{ option[fields[1]] }}
+          </mat-list-option>
+        </mat-selection-list>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="filterType.Multilevelselect">
+        <mat-tree
+          [dataSource]="dataSource"
+          [treeControl]="treeControl"
+          class="multilevelselect-filter"
+        >
+          <mat-selection-list [(ngModel)]="value" (selectionChange)="valueChanged()">
+            <mat-tree-node *matTreeNodeDef="let option">
+              <mat-list-option
+                color="primary"
+                [value]="option[fields[0]]"
+                checkboxPosition="before"
+                (click)="$event.stopPropagation()"
+                class="multilevelselect-filter__option"
+              >
+                {{ option[fields[1]] }}
+              </mat-list-option>
+            </mat-tree-node>
+            <mat-tree-node
+              *matTreeNodeDef="let option; when: hasChild"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-list-option
+                color="primary"
+                checkboxPosition="before"
+                [value]="option[fields[0]]"
+                (click)="$event.stopPropagation()"
+                class="multilevelselect-filter__option"
+              >
+                {{ option[fields[1]] }}
+              </mat-list-option>
+              <button
+                mat-icon-button
+                matTreeNodeToggle
+                class="multilevelselect-filter__option__arrow"
+                [attr.aria-label]="'Toggle ' + option[fields[1]]"
+                [ngClass]="{
+                  'multilevelselect-filter__option__arrow--open': treeControl.isExpanded(option)
+                }"
+              >
+                <mat-icon svgIcon="arrow-down"></mat-icon>
+              </button>
+            </mat-tree-node>
+          </mat-selection-list>
+        </mat-tree>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="filterType.Daterange">
+        <div class="daterange" *ngIf="value" (click)="$event.stopPropagation()">
+          <div class="daterange__inputs">
+            <div class="form-row form-row--small">
+              <mat-label>{{ 'global_filter.filter_tabs.date_after' | translate }}</mat-label>
+              <mat-form-field
+                appearance="outline"
+                [ngClass]="{ 'daterange__input--focused': !value.start }"
+              >
+                <input
+                  matInput
+                  autocomplete="off"
+                  class="daterange__input"
+                  placeholder="DD-MM-YYYY"
+                  [(ngModel)]="calendarValue.start"
+                  (ngModelChange)="calendarInputChangeHandle()"
+                />
+              </mat-form-field>
+            </div>
+            <div class="form-row form-row--small">
+              <mat-label>{{ 'global_filter.filter_tabs.date_before' | translate }}</mat-label>
+              <mat-form-field
+                appearance="outline"
+                [ngClass]="{ 'daterange__input--focused': value.start && !value.end }"
+              >
+                <input
+                  matInput
+                  autocomplete="off"
+                  class="daterange__input"
+                  placeholder="DD-MM-YYYY"
+                  [disabled]="!value.start"
+                  [(ngModel)]="calendarValue.end"
+                  (ngModelChange)="calendarInputChangeHandle()"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <mat-calendar #calendar [selected]="value" (selectedChange)="selectedChange($event)">
+          </mat-calendar>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="filterType.Location">
+        <app-location-selection
+          [(ngModel)]="value"
+          class="location-select"
+          (ngModelChange)="valueChanged()"
+          (click)="$event.stopPropagation()"
+        >
+        </app-location-selection>
+      </ng-container>
+    </ng-container>
+  </mat-menu>
+</div>

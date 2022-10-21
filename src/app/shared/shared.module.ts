@@ -14,7 +14,6 @@ import {
   SpinnerComponent,
   ConfirmModalComponent,
   LanguageComponent,
-  DonationButtonComponent,
   MapWithMarkerComponent,
   CollectionsModalComponent,
   SnackbarComponent,
@@ -25,6 +24,9 @@ import {
   MultilevelSelectComponent,
   GroupCheckboxSelectComponent,
   ColorPickerComponent,
+  CompanyInfoComponent,
+  FilterControlComponent,
+  DonationButtonComponent,
 } from './components';
 import { MaterialModule } from './material/material.module';
 import {
@@ -47,7 +49,6 @@ const components = [
   SpinnerComponent,
   ConfirmModalComponent,
   SelectLanguagesModalComponent,
-  DonationButtonComponent,
   DateAgoPipe,
   MapWithMarkerComponent,
   CollectionsModalComponent,
@@ -61,6 +62,9 @@ const components = [
   MultilevelSelectComponent,
   GroupCheckboxSelectComponent,
   ColorPickerComponent,
+  CompanyInfoComponent,
+  FilterControlComponent,
+  DonationButtonComponent,
 ];
 
 const modules = [

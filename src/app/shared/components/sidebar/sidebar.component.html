@@ -1,33 +1,59 @@
 <div class="sidebar">
-  <div>
-    <ng-container *ngFor="let item of menu">
-      <button
-        mat-raised-button
-        *ngIf="item.visible"
-        class="sidebar-button"
-        [routerLink]="item.router"
-        routerLinkActive="sidebar-button--active"
-        (click)="registerPage($event, item.router, item.label)"
-      >
-        <mat-icon class="sidebar-button__icon">{{ item.icon }}</mat-icon>
-        <span class="sidebar-button__title">{{ item.label }}</span>
-      </button>
-    </ng-container>
+  <a target="_blank" class="sidebar__logo" href="https://www.ushahidi.com/">
+    <img src="assets/images/ushahidi-logo.svg" alt="ushahidi" width="172" height="40" />
+  </a>
+
+  <div class="sidebar__info">
+    <app-company-info
+      [title]="siteConfig.name"
+      [logo]="siteConfig.image_header"
+      [description]="siteConfig.description"
+    ></app-company-info>
+    <app-submit-post-button class="sidebar__add-post-btn"></app-submit-post-button>
   </div>
-  <div>
-    <ng-container *ngFor="let item of userMenu">
-      <button mat-raised-button *ngIf="item.visible" class="sidebar-button" (click)="item.action()">
-        <mat-icon class="sidebar-button__icon">{{ item.icon }}</mat-icon>
-        <span class="sidebar-button__title">{{ item.label }}</span>
-      </button>
-    </ng-container>
-    <button
-      mat-raised-button
-      class="sidebar-button"
-      matTooltipPosition="right"
-      matTooltip="{{ 'app.support' | translate }}"
-    >
-      <app-logo></app-logo>
-    </button>
+
+  <div class="sidebar__controls">
+    <div class="sidebar__menu">
+      <ng-container *ngFor="let item of menu">
+        <button
+          mat-raised-button
+          *ngIf="item.visible"
+          class="sidebar-menu-button"
+          [routerLink]="item.router"
+          routerLinkActive="sidebar-menu-button--active"
+          (click)="registerPage($event, item.router, item.label)"
+        >
+          <mat-icon class="sidebar-menu-button__icon">
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                [attr.xlink:href]="'assets/menu-icons.svg#' + item.icon"
+              ></use>
+            </svg>
+          </mat-icon>
+          <span class="sidebar-menu-button__title">{{ item.label }}</span>
+        </button>
+      </ng-container>
+    </div>
+    <div class="sidebar__menu">
+      <ng-container *ngFor="let item of userMenu">
+        <button
+          mat-raised-button
+          *ngIf="item.visible"
+          class="sidebar-menu-button"
+          (click)="item.action()"
+        >
+          <mat-icon class="sidebar-menu-button__icon">
+            <svg class="iconic" role="img">
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                [attr.xlink:href]="'assets/menu-icons.svg#' + item.icon"
+              ></use>
+            </svg>
+          </mat-icon>
+          <span class="sidebar-menu-button__title">{{ item.label }}</span>
+        </button>
+      </ng-container>
+    </div>
   </div>
 </div>

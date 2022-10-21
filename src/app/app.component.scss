@@ -2,15 +2,16 @@ mat-sidenav-container {
   height: 100%;
 }
 
-mat-sidenav {
-  background-color: #373e46;
-  max-width: 64px;
+.sidebar {
   width: 100%;
+  max-width: 220px;
+  border-right: none;
+  background-color: var(--color-dark-gray);
 }
 
 .content-wrapper {
   &:not(.content-wrapper--no-offset) {
-    padding: 98px 20px 30px;
+    padding: 30px 20px;
   }
 }
 

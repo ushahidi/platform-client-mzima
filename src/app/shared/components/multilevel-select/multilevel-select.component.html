@@ -1,10 +1,11 @@
-<mat-form-field appearance="standard">
-  <mat-label *ngIf="label">{{ label }}</mat-label>
-  <input matInput readonly [value]="value" [matMenuTriggerFor]="menu" [placeholder]="placeholder" />
-  <div matSuffix class="mat-select-arrow ng-tns-c117-17"></div>
-</mat-form-field>
+<div class="multilevelselect">
+  <span [matMenuTriggerFor]="menu" class="multilevelselect__control">
+    {{ value || placeholder }}
+  </span>
+  <span class="multilevelselect__arrow"></span>
+</div>
 
-<mat-menu class="multilevelselect" #menu="matMenu">
+<mat-menu class="multilevelselect__dropdown" #menu="matMenu">
   <mat-tree
     [dataSource]="dataSource"
     [treeControl]="treeControl"

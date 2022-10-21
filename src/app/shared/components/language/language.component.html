@@ -1,30 +1,17 @@
 <div class="language">
   <mat-form-field>
-    <mat-select
-      panelClass="language-field"
-      [(value)]="selectedLanguage"
-      (selectionChange)="changeLanguage($event)"
-    >
-      <mat-select-trigger>
-        <div class="flag-icon-wrapper">
-          <img
-            class="flag-icon"
-            [src]="'assets/images/flags/' + (selectedLanguage | lowercase) + '.svg'"
-            alt=""
-          />
-        </div>
+    <mat-select [(value)]="selectedLanguage" (selectionChange)="changeLanguage($event)">
+      <mat-select-trigger class="language__selected">
+        {{ selectedLanguage }}
+        <mat-icon svgIcon="arrow-down" class="language__selected__arrow"></mat-icon>
       </mat-select-trigger>
-      <mat-option *ngFor="let lang of languages" [value]="lang.code">
-        <div class="option-wrapper">
-          <div class="flag-icon-wrapper">
-            <img
-              class="flag-icon"
-              [src]="'assets/images/flags/' + (lang.code | lowercase) + '.svg'"
-              alt=""
-            />
-          </div>
-          <span class="language-title">{{ lang.name }}</span>
-        </div>
+      <mat-option *ngFor="let lang of languages" [value]="lang.code" class="language__option">
+        <img
+          [alt]="lang.code"
+          class="language__option__flag"
+          [src]="'assets/images/flags/' + (lang.code | lowercase) + '.svg'"
+        />
+        <span class="language__option__title">{{ lang.name }}</span>
       </mat-option>
     </mat-select>
   </mat-form-field>

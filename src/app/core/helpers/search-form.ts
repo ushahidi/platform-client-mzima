@@ -20,18 +20,22 @@ export const sources = [
   {
     name: 'Email',
     value: 'email',
+    total: 0,
   },
   {
     name: 'SMS',
     value: 'sms',
+    total: 0,
   },
   {
     name: 'Twitter',
     value: 'twitter',
+    total: 0,
   },
   {
     name: 'Web',
     value: 'web',
+    total: 0,
   },
 ];
 

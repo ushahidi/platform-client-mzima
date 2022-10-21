@@ -3,195 +3,179 @@
   [formGroup]="form"
   class="search-form"
   (submit)="applyFilters()"
-  [ngClass]="{ 'search-form--dropdown-open': onFocus || isDropdownOpen }"
+  [ngClass]="{ 'search-form--map-view': isMapView }"
 >
-  <div class="search-form__control">
+  <mat-form-field appearance="outline" class="search-form__control">
+    <mat-icon matPrefix svgIcon="search" class="search-form__control__icon"></mat-icon>
     <input
-      type="text"
-      placeholder="Search"
-      class="form-control"
-      formControlName="query"
-      (blur)="inputOnBlur()"
-      (focus)="inputOnFocus()"
+      matInput
+      [(ngModel)]="searchQuery"
+      [matAutocomplete]="cities"
+      (ngModelChange)="searchOnMap()"
+      class="search-form__form-control"
+      [ngModelOptions]="{ standalone: true }"
+      [placeholder]="'global_filter.search' | translate"
     />
-    <mat-icon class="search-form__control__icon">search</mat-icon>
-  </div>
-  <button
-    color="dark"
-    type="button"
-    mat-raised-button
-    class="sorting-btn"
-    matBadgeColor="primary"
-    matBadgePosition="before"
-    (click)="toggleDropdown()"
-    [matBadge]="activeFiltersCount"
-  >
-    {{ 'app.sort_and_filter' | translate }}
-    <mat-icon>
-      <svg class="iconic" role="img">
-        <use xlink:href="assets/sprites.svg#funnel"></use>
-      </svg>
-    </mat-icon>
+    <mat-autocomplete
+      autoActiveFirstOption
+      autoSelectActiveOption
+      #cities="matAutocomplete"
+      [displayWith]="displayFn"
+      class="search-autocomplete"
+      (optionSelected)="optionSelected($event)"
+    >
+      <mat-option
+        [value]="option"
+        *ngFor="let option of citiesOptions | async"
+        [disabled]="option.disabled"
+      >
+        {{ option.display_name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <button type="button" mat-raised-button (click)="toggleFilters()" class="search-form__filters">
+    <mat-icon class="search-form__filters__icon" svgIcon="filters"></mat-icon>
+    {{ 'app.filters' | translate }}
   </button>
 
-  <span class="search-form__backdrop" (click)="toggleDropdown(false)"></span>
+  <div class="search-form__main-filters" *ngIf="isMapView">
+    <span class="search-form__main-filters__total">Results: {{ total }}</span>
 
-  <div class="search-form__dropdown" (click)="toggleDropdown(true)">
-    <div class="search-form__dropdown__group" *ngIf="activeSavedSearch">
-      <div class="active-filters active-filters--saved">
-        <div class="active-filters__row">
-          <button color="dark" mat-raised-button class="active-filter">
-            <ng-container *ngIf="activeSavedSearch.name">
-              <i>{{ 'app.saved_search' | translate }}:</i> {{ activeSavedSearch.name | translate }}
-            </ng-container>
-            <mat-icon class="active-filter__icon" (click)="resetSavedFilter()">
-              <svg class="iconic" role="img">
-                <use xlink:href="assets/sprites.svg#circle-x"></use>
-              </svg>
-            </mat-icon>
-          </button>
-        </div>
-        <div class="active-filters__row" *ngFor="let filter of activeSavedSearch.filter | keyvalue">
-          <button
-            color="dark"
-            type="button"
-            mat-raised-button
-            class="active-filter"
-            *ngIf="!_array.isArray(filter.value)"
-          >
-            <i>{{ 'global_filter.filter_tabs.' + filter.key | translate }}:</i>
-            {{ filter.value | filterValue: filter.key:surveyList:categories }}
-          </button>
-
-          <ng-container *ngIf="_array.isArray(filter.value)">
-            <button
-              color="dark"
-              type="button"
-              mat-raised-button
-              class="active-filter"
-              *ngFor="let value of filter.value"
-            >
-              <i>{{ 'global_filter.filter_tabs.' + filter.key | translate }}:</i>
-              {{ value | filterValue: filter.key:surveyList:categories }}
-            </button>
-          </ng-container>
-        </div>
-      </div>
-      <div class="save-filters-button">
+    <div class="filter-group">
+      <div class="filter-group__head">
+        <label class="filter-group__title" for="surveys">{{ 'app.surveys' | translate }}</label>
         <button
+          mat-button
           type="button"
           color="primary"
-          mat-raised-button
-          (click)="saveSearch(activeSavedSearch)"
-          [disabled]="form.invalid || form.disabled"
+          (click)="clearFilter('form')"
+          class="filter-group__head__button"
         >
-          <ng-container *ngIf="!activeSavedSearch">
-            {{ 'set.save_savedsearch' | translate }}
-          </ng-container>
-          <ng-container *ngIf="activeSavedSearch">
-            {{ 'set.update_savedsearch' | translate }}
-          </ng-container>
+          {{ 'nav.clear' | translate }}
         </button>
       </div>
-    </div>
-
-    <div class="search-form__dropdown__group" *ngIf="savedsearches?.length">
-      <h4 class="dropdown-menu-title">{{ 'app.saved_search' | translate }}</h4>
-      <mat-form-field appearance="standard">
-        <mat-select
-          [(ngModel)]="activeSavedSearchValue"
-          [ngModelOptions]="{ standalone: true }"
-          (selectionChange)="applySavedFilter($event)"
-          [placeholder]="'app.select_one' | translate"
+      <mat-selection-list name="surveys" class="selection-list" formControlName="form">
+        <mat-list-option
+          color="primary"
+          [value]="survey.id"
+          checkboxPosition="before"
+          class="selection-list__option"
+          *ngFor="let survey of surveyList"
+          [ngStyle]="{ '--color': survey.color }"
         >
-          <mat-option>{{ 'graph.none' | translate }}</mat-option>
-          <mat-option *ngFor="let option of savedsearches" [value]="option.id">
-            {{ option.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+          <span class="selection-list__option__border"></span>
+          {{ survey.name }}
+          <span class="selection-list__option__total">{{ survey.total || 0 }}</span>
+        </mat-list-option>
+      </mat-selection-list>
 
-    <div class="search-form__dropdown__group">
-      <h4 class="dropdown-menu-title">{{ 'app.filter_by' | translate }}</h4>
-
-      <h5>{{ 'global_filter.status' | translate }}</h5>
-      <mat-form-field appearance="standard">
-        <mat-select multiple formControlName="status" [placeholder]="'nav.all' | translate">
-          <mat-option [value]="option.value" *ngFor="let option of statuses">
-            {{ option.name | translate }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <h5>{{ 'app.categories' | translate }}</h5>
-      <app-multilevel-select
-        formControlName="tags"
-        [data]="categoriesData"
-        [placeholder]="'nav.all' | translate"
-      >
-      </app-multilevel-select>
-
-      <h5>{{ 'app.surveys' | translate }}</h5>
-      <mat-form-field appearance="standard">
-        <mat-select multiple formControlName="form" [placeholder]="'nav.all' | translate">
-          <mat-option [value]="option.id" *ngFor="let option of surveyList">
-            {{ option.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <h5>{{ 'global_filter.source' | translate }}</h5>
-      <mat-form-field appearance="standard">
-        <mat-select multiple formControlName="source" [placeholder]="'nav.all' | translate">
-          <mat-option [value]="option.value" *ngFor="let option of sources">
-            {{ option.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <h5>{{ 'global_filter.date_range' | translate }}</h5>
-      <div class="form-group">
-        <mat-form-field appearance="standard">
-          <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate placeholder="Start date" formControlName="date_after" />
-            <input matEndDate placeholder="End date" formControlName="date_before" />
-          </mat-date-range-input>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>
+      <div class="filter-group__info" *ngIf="notShownPostsCount > 0">
+        There are <a [routerLink]="['feed']">{{ notShownPostsCount }} posts</a> not shown here
+        because they don't include location information.
       </div>
-
-      <h5>{{ 'global_filter.location' | translate }}</h5>
-      <app-location-selection formControlName="center_point"> </app-location-selection>
     </div>
 
-    <div class="search-form__dropdown__group form-controls-panel">
-      <button color="primary" mat-raised-button [disabled]="form.disabled || form.invalid">
-        {{ 'global_filter.apply_filters' | translate }}
-      </button>
+    <div class="filter-group">
+      <div class="filter-group__head">
+        <label class="filter-group__title" for="source">{{
+          'global_filter.source' | translate
+        }}</label>
+        <button
+          mat-button
+          type="button"
+          color="primary"
+          (click)="clearFilter('source')"
+          class="filter-group__head__button"
+        >
+          {{ 'nav.clear' | translate }}
+        </button>
+      </div>
+      <mat-selection-list name="source" class="selection-list" formControlName="source">
+        <ng-container *ngFor="let source of sources">
+          <mat-list-option
+            color="primary"
+            [value]="source.value"
+            *ngIf="source.total > 0"
+            checkboxPosition="before"
+            class="selection-list__option"
+          >
+            {{ source.name }}
+            <span class="selection-list__option__total">{{ source.total }}</span>
+          </mat-list-option>
+        </ng-container>
+      </mat-selection-list>
+    </div>
+  </div>
+
+  <div
+    class="search-form__filters-panel"
+    [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
+  >
+    <app-filter-control
+      [type]="filterType.Select"
+      [options]="savedsearches"
+      (editOption)="saveSearch($event)"
+      [(ngModel)]="activeSavedSearchValue"
+      [ngModelOptions]="{ standalone: true }"
+      (filterChange)="applySavedFilter($event)"
+      class="search-form__filters-panel__item"
+      [title]="'app.saved_search' | translate"
+      [badge]="activeSavedSearchValue ? 1 : null"
+    >
+    </app-filter-control>
+
+    <app-filter-control
+      [options]="statuses"
+      formControlName="status"
+      [fields]="['value', 'name']"
+      [type]="filterType.Multiselect"
+      class="search-form__filters-panel__item"
+      [title]="'global_filter.status' | translate"
+      [badge]="form.controls['status'].value?.length || null"
+    >
+    </app-filter-control>
+
+    <app-filter-control
+      formControlName="tags"
+      [options]="categoriesData"
+      [type]="filterType.Multilevelselect"
+      [title]="'app.categories' | translate"
+      class="search-form__filters-panel__item"
+      [badge]="form.controls['tags'].value?.length || null"
+    >
+    </app-filter-control>
+
+    <app-filter-control
+      formControlName="date"
+      [type]="filterType.Daterange"
+      class="search-form__filters-panel__item"
+      [title]="'global_filter.date_range' | translate"
+      [badge]="
+        form.controls['date'].value?.start?.length || form.controls['date'].value?.start?.length
+          ? 1
+          : null
+      "
+    >
+    </app-filter-control>
+
+    <app-filter-control
+      [type]="filterType.Location"
+      formControlName="center_point"
+      class="search-form__filters-panel__item"
+      [title]="'global_filter.location' | translate"
+      [badge]="form.controls['center_point'].value?.length ? 1 : null"
+    >
+    </app-filter-control>
+
+    <div class="search-form__filters-panel__group search-form__filters-panel__group--controls">
       <button
         type="button"
-        mat-raised-button
+        mat-stroked-button
         [disabled]="form.disabled"
+        class="search-form__button"
         (click)="resetSavedFilter()"
       >
-        {{ 'global_filter.restore_defaults' | translate }}
-      </button>
-      <button
-        type="button"
-        color="secondary"
-        mat-raised-button
-        (click)="saveSearch(activeSavedSearch)"
-        *ngIf="activeSavedSearch || form.dirty"
-        [disabled]="form.disabled || form.invalid"
-      >
-        <ng-container *ngIf="!activeSavedSearch">
-          {{ 'set.save_savedsearch' | translate }}</ng-container
-        >
-        <ng-container *ngIf="activeSavedSearch">
-          {{ 'set.update_savedsearch' | translate }}</ng-container
-        >
+        Clear All
       </button>
     </div>
   </div>

@@ -2,11 +2,28 @@
   .mat-icon {
     width: 1em;
     height: 1em;
-    font-size: 1em;
     line-height: 1;
+    font-size: 24px;
+  }
 
+  .mat-button-wrapper {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: top;
+    justify-content: flex-start;
+  }
+}
+
+.mat-raised-button {
+  box-shadow: none !important;
+
+  .mat-icon {
     &:not(:last-child) {
-      margin-right: 8px;
+      margin-right: 12px;
+    }
+
+    &:last-child {
+      margin-left: 12px;
     }
   }
 }
@@ -44,6 +61,12 @@
   &.mat-mini-fab {
     color: var(--color-primary-contrast);
     background-color: var(--color-primary);
+  }
+
+  &.mat-button,
+  &.mat-icon-button,
+  &.mat-stroked-button {
+    color: var(--color-primary);
   }
 }
 
@@ -108,5 +131,22 @@
     cursor: pointer;
     position: absolute;
     -webkit-appearance: none;
+  }
+}
+
+.mat-button-base {
+  &.mat-raised-button,
+  &.mat-stroked-button {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 40px;
+    border-radius: 8px;
+  }
+}
+
+.mat-stroked-button {
+  &:not(.mat-button-disabled) {
+    border-color: #e9e9ea;
+    color: var(--color-dark);
   }
 }

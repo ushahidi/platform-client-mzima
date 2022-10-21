@@ -1,18 +1,4 @@
-.location-select {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-
-  &__distance {
-    flex: 0 0 100%;
-    max-width: 160px;
-    margin-left: 16px;
-  }
-}
-
 .location-control {
-  flex: 1 1 100%;
-
   &__icon {
     top: 4px;
     width: 1em;
