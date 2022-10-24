@@ -13,7 +13,7 @@ import { CollectionsModalComponent } from 'src/app/shared/components';
 export class PostDetailsComponent implements OnChanges {
   @Input() post?: PostResult;
   @Input() feedView: boolean;
-  @Input() userId: number | string | undefined;
+  @Input() userId?: number | string;
   public survey: SurveyItem;
   public isSurveyLoading: boolean;
 
@@ -63,6 +63,6 @@ export class PostDetailsComponent implements OnChanges {
       description: this.translate.instant('notify.default.proceed_warning'),
     });
     if (!confirmed) return;
-    console.log('delete post');
+    console.log('FIXME: delete post');
   }
 }
