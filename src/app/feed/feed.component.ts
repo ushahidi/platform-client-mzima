@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { takeUntilDestroy$ } from '@helpers';
 import { GeoJsonFilter, PostResult } from '@models';
-import { PostsService } from '../core/services/posts.service';
-import { PostsV5Service } from '../core/services/posts.v5.service';
+import { PostsService, PostsV5Service, SessionService } from '@services';
 
 @Component({
   selector: 'app-feed',
@@ -21,13 +21,17 @@ export class FeedComponent {
   public total: number;
   public postDetails?: PostResult;
   public isPostLoading: boolean;
+  userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
+  userId: string | number;
 
   constructor(
     private postsService: PostsService,
     private route: ActivatedRoute,
     private postsV5Service: PostsV5Service,
     private router: Router,
+    private sessionService: SessionService,
   ) {
+    this.userData$.subscribe((userData) => (this.userId = userData.userId!));
     this.route.queryParams.subscribe({
       next: (params: Params) => {
         const id: string = params['id'] || '';
