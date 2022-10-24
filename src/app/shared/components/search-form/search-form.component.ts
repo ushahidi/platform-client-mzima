@@ -190,7 +190,7 @@ export class SearchFormComponent implements OnInit {
         values.map((value: any) => {
           const survey = this.surveyList.find((s) => s.id === value.id);
           if (!survey) return;
-          survey.total = value.total;
+          survey.total = (survey.total || 0) + value.total;
         });
 
         this.sources.map(
