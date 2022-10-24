@@ -34,7 +34,7 @@
     </div>
   </div>
   <div class="feed-page__column" *ngIf="postDetails || isPostLoading">
-    <app-post-details [feedView]="true" [post]="postDetails" class="post-details">
+    <app-post-details [feedView]="true" [post]="postDetails" [userId]="userId" class="post-details">
     </app-post-details>
   </div>
 </div>

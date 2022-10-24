@@ -13,6 +13,7 @@ import { CollectionsModalComponent } from 'src/app/shared/components';
 export class PostDetailsComponent implements OnChanges {
   @Input() post?: PostResult;
   @Input() feedView: boolean;
+  @Input() userId: number | string | undefined;
   public survey: SurveyItem;
   public isSurveyLoading: boolean;
 
