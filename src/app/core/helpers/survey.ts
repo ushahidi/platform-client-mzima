@@ -1,3 +1,5 @@
+let currentInterimId = 0;
+
 export const surveyFields = [
   {
     label: 'survey.short_text',
@@ -130,7 +132,50 @@ export const areOptionsUnique = (options: any[] = []) => {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
   return new Set(options).size === options.length;
 };
+
 export const hasEmptyOptions = (options: any[] = []) => {
   // check against duplicate or empty options
   return options.filter((i) => i === '' || i === null).length > 0;
+};
+
+const getInterimId = () => {
+  const id = 'interim_id_' + currentInterimId;
+  currentInterimId++;
+  return id;
+};
+
+export const defaultTask = {
+  priority: 0,
+  required: false,
+  type: 'post',
+  label: 'Post',
+  show_when_published: true,
+  task_is_internal_only: false,
+  translations: {},
+  fields: [
+    {
+      cardinality: 0,
+      input: 'text',
+      priority: 1,
+      required: true,
+      label: 'Title',
+      type: 'title',
+      config: {},
+      form_stage_id: getInterimId(),
+      translations: {},
+    },
+    {
+      cardinality: 0,
+      input: 'text',
+      priority: 2,
+      required: true,
+      label: 'Description',
+      type: 'description',
+      options: [],
+      config: {},
+      form_stage_id: getInterimId(),
+      translations: {},
+    },
+  ],
+  is_public: true,
 };

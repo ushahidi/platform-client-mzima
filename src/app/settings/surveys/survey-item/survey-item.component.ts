@@ -69,11 +69,18 @@ export class SurveyItemComponent implements OnInit {
           this.initTasks();
         },
       });
+    } else {
+      this.initTasks(true);
     }
   }
 
-  private initTasks() {
+  private initTasks(isNew = false) {
     this.surveyObject = this.form.value;
+
+    if (isNew) {
+      this.form.patchValue({ tasks: [surveyHelper.defaultTask] });
+    }
+
     this.mainPost = this.form
       .get('tasks')
       ?.value.filter((t: SurveyItemTask) => t.type === 'post')[0];
