@@ -22,7 +22,7 @@ export class FeedComponent {
   public postDetails?: PostResult;
   public isPostLoading: boolean;
   userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
-  userId: string | number | undefined;
+  userId: string | number;
 
   constructor(
     private postsService: PostsService,
@@ -31,7 +31,7 @@ export class FeedComponent {
     private router: Router,
     private sessionService: SessionService,
   ) {
-    this.userData$.subscribe((userData) => (this.userId = userData.userId));
+    this.userData$.subscribe((userData) => (this.userId = userData.userId!));
     this.route.queryParams.subscribe({
       next: (params: Params) => {
         const id: string = params['id'] || '';
