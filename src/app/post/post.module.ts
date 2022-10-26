@@ -20,6 +20,6 @@ import { PostMetadataComponent } from './post-metadata/post-metadata.component';
     PostMetadataComponent,
   ],
   imports: [CommonModule, SharedModule, PostRoutingModule, LeafletModule],
-  exports: [PostPreviewComponent, PostDetailsComponent],
+  exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent],
 })
 export class PostModule {}
