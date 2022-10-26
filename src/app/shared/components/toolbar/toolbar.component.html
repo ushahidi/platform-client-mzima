@@ -10,7 +10,13 @@
     </button>
     <app-language class="toolbar__language"></app-language>
   </div>
-  <button mat-button *ngIf="isLoggedIn" class="account-info" [matMenuTriggerFor]="accountMenu">
+  <button
+    mat-button
+    *ngIf="isLoggedIn"
+    class="account-info"
+    [matMenuTriggerFor]="accountMenu"
+    data-qa="account-info"
+  >
     <div class="account-info__main">
       <span class="account-info__name">{{ profile.realname }}</span>
       <span class="account-info__email">{{ profile.email }}</span>

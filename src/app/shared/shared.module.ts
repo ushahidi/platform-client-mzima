@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { GtmDirective } from '@directives';
+import { GtmDirective, DataQaInputDirective, DataQaDirective } from '@directives';
 
 import {
   SidebarComponent,
@@ -39,6 +39,12 @@ import { DateAgoPipe, FilterValuePipe } from '@pipes';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ColorPickerModule } from 'ngx-color-picker';
 
+const directives = [
+  GtmDirective, //
+  DataQaInputDirective,
+  DataQaDirective,
+];
+
 const components = [
   SidebarComponent,
   ToolbarComponent,
@@ -57,7 +63,6 @@ const components = [
   SaveSearchModalComponent,
   FilterValuePipe,
   LocationSelectionComponent,
-  GtmDirective,
   AccountSettingsComponent,
   MultilevelSelectComponent,
   GroupCheckboxSelectComponent,
@@ -83,8 +88,8 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, ...directives],
   imports: [...modules],
-  exports: [...components, ...modules],
+  exports: [...components, ...directives, ...modules],
 })
 export class SharedModule {}
