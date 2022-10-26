@@ -4,12 +4,12 @@ class BaseActions {
   }
 
   goHomePage() {
-    cy.visit('/')
+    cy.visit('/');
     return this;
   }
 
   goToPage(page: string) {
-    cy.visit(page)
+    cy.visit(page);
     return this;
   }
 

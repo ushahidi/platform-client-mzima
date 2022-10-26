@@ -3,7 +3,7 @@ import { Base, Login } from '../actions';
 describe('Initialize login page', () => {
   before(() => {
     Base.goHomePage();
-    Base.checkExistSelector('[data-qa="btn-login"]')
+    Base.checkExistSelector('[data-qa="btn-login"]');
     Base.clickElement('btn-login');
   })
 
