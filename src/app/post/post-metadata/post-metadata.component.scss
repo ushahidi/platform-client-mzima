@@ -98,3 +98,15 @@
     margin-top: 24px;
   }
 }
+
+.label {
+  &--primary {
+    color: var(--color-primary-contrast);
+    background-color: var(--color-primary);
+  }
+
+  &--archived {
+    color: var(--color-gray);
+    background-color: #666666;
+  }
+}

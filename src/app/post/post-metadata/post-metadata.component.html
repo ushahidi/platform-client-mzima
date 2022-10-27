@@ -2,9 +2,15 @@
 
 <div class="post__head">
   <div class="post__head__item">
-    <span class="post__status">
+    <span
+      class="post__status"
+      [ngClass]="{
+        'label--primary': post.status === 'draft',
+        'label--archived': post.status === 'archived'
+      }"
+    >
       <ng-container *ngIf="post.status === 'published'">Published</ng-container>
-      <ng-container *ngIf="post.status === 'draft'">Draft</ng-container>
+      <ng-container *ngIf="post.status === 'draft'">Under Review</ng-container>
       <ng-container *ngIf="post.status === 'archived'">Archived</ng-container>
     </span>
   </div>
