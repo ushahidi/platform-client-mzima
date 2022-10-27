@@ -344,7 +344,7 @@
     display: block;
     font-size: 16px;
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.5;
     margin-bottom: 4px;
     color: var(--color-dark);
   }
@@ -425,15 +425,15 @@
 
   .mat-form-field-outline {
     top: 0 !important;
-    color: var(--color-gray-shade);
+    color: var(--color-neutral-30);
   }
 
   &.mat-focused {
     .mat-form-field-outline-thick {
-      color: var(--color-gray-shade);
+      color: var(--color-neutral-30);
 
       .mat-form-field-outline-end {
-        box-shadow: 0 0 4px var(--color-primary);
+        border-color: var(--color-neutral-100);
       }
     }
   }
@@ -455,8 +455,8 @@
   .mat-form-field-flex {
     vertical-align: top;
     margin-top: 0 !important;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+    padding-left: 22px !important;
+    padding-right: 22px !important;
   }
 
   .mat-form-field-infix {
@@ -464,8 +464,8 @@
     border-top: none;
     font-size: 16px;
     line-height: 1.6;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 7px;
+    padding-bottom: 7px;
   }
 
   .mat-form-field-outline-start,
@@ -490,20 +490,32 @@
 
     &::placeholder {
       opacity: 1;
-      color: #4e545b;
+      color: var(--color-neutral-70);
     }
     &:-ms-input-placeholder {
       opacity: 1;
-      color: #4e545b;
+      color: var(--color-neutral-70);
     }
     &::-ms-input-placeholder {
       opacity: 1;
-      color: #4e545b;
+      color: var(--color-neutral-70);
+    }
+
+    &:focus {
+      &::placeholder {
+        color: transparent;
+      }
+      &:-ms-input-placeholder {
+        color: transparent;
+      }
+      &::-ms-input-placeholder {
+        color: transparent;
+      }
     }
   }
 
   .mat-select-arrow-wrapper {
-    transform: none;
+    transform: none !important;
   }
 }
 
@@ -512,7 +524,7 @@
   .mat-form-field-outline-end,
   .mat-form-field-outline-gap {
     border-width: 1px !important;
-    transition: box-shadow 0.35s ease;
+    transition: border-color 0.35s ease;
   }
 }
 

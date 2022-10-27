@@ -1,9 +1,21 @@
 .company-info {
   color: inherit;
+  font-size: 12px;
   border-radius: 0;
   box-shadow: none;
   background: none;
+  line-height: 1.3;
   margin: 0 -10px 12px;
+
+  &::ng-deep {
+    a {
+      color: var(--color-primary);
+
+      &:hover {
+        color: var(--color-primary-shade);
+      }
+    }
+  }
 
   .mat-expansion-panel {
     &-header {

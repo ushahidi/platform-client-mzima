@@ -145,7 +145,6 @@ export class SearchFormComponent implements OnInit {
       next: (query: string) => {
         this.searchService.get(query).subscribe({
           next: (response: SearchResponse[]) => {
-            console.log('response: ', response);
             if (response?.length) {
               this.citiesOptions.next(response);
             } else {
@@ -217,7 +216,7 @@ export class SearchFormComponent implements OnInit {
           values.map((value: any) => {
             const survey = this.surveyList.find((s) => s.id === value.id);
             if (!survey) return;
-            survey.total = value.total;
+            survey.total = (survey.total || 0) + value.total;
           });
         }
       },

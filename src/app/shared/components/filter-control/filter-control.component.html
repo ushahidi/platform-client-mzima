@@ -2,16 +2,14 @@
   <button type="button" mat-raised-button [matMenuTriggerFor]="menu" class="filter-control__button">
     <span>{{ title }}</span>
     <span class="filter-control__button__count" *ngIf="badge">{{ badge }}</span>
-    <mat-icon class="filter-control__button__arrow" svgIcon="arrow-down"></mat-icon>
+    <mat-icon class="filter-control__button__arrow" svgIcon="arrow-down-thin"></mat-icon>
   </button>
 
   <mat-menu
     #menu="matMenu"
     [class]="
       'filter-control-menu' +
-      (type === filterType.Multilevelselect ||
-      type === filterType.Daterange ||
-      type === filterType.Location
+      (type === filterType.Daterange || type === filterType.Location
         ? ' filter-control-menu--wide'
         : '')
     "
@@ -41,6 +39,7 @@
             </button>
           </div>
         </mat-radio-group>
+        <ng-content select="[postfix]"></ng-content>
       </ng-container>
 
       <ng-container *ngSwitchCase="filterType.Multiselect">
@@ -83,8 +82,8 @@
               </mat-list-option>
             </mat-tree-node>
             <mat-tree-node
-              *matTreeNodeDef="let option; when: hasChild"
               (click)="$event.stopPropagation()"
+              *matTreeNodeDef="let option; when: hasChild"
             >
               <mat-list-option
                 color="primary"
