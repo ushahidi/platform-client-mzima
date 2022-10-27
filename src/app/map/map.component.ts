@@ -120,7 +120,7 @@ export class MapComponent implements OnInit {
                 layer.openPopup();
               } else {
                 const comp = this.view.createComponent(PostPreviewComponent);
-                this.postsV5Service.getById(feature.properties.id).subscribe({
+                this.postsService.getById(feature.properties.id).subscribe({
                   next: (post) => {
                     comp.setInput('post', post);
 
@@ -135,9 +135,13 @@ export class MapComponent implements OnInit {
                     });
                     layer.openPopup();
 
-                    comp.instance.details$.subscribe({
-                      next: () => {
-                        this.showPostDetailsModal(post);
+                    this.postsV5Service.getById(feature.properties.id).subscribe({
+                      next: (postV5) => {
+                        comp.instance.details$.subscribe({
+                          next: () => {
+                            this.showPostDetailsModal(postV5);
+                          },
+                        });
                       },
                     });
                   },
