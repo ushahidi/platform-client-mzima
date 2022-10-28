@@ -25,8 +25,8 @@
           }}?d=retro&s=40"
         />
       </div>
-      <strong class="post__user__name">
-        {{ post.user?.realname || post.contact?.contact || post.author_realname || 'Anonymous' }}
+      <strong *ngIf="showAuthor()" [ngClass]="{ post__user__name: showAuthor() }">
+        {{ author }}
       </strong>
     </div>
   </div>
