@@ -6,4 +6,5 @@ export enum Icons {
   filters = 'filters',
   search = 'search',
   pencil = 'pencil',
+  arrowDownThin = 'arrow-down-thin',
 }

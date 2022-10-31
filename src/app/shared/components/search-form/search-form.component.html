@@ -112,6 +112,7 @@
     [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
   >
     <app-filter-control
+      title="Saved filters"
       [type]="filterType.Select"
       [options]="savedsearches"
       (editOption)="saveSearch($event)"
@@ -119,9 +120,18 @@
       [ngModelOptions]="{ standalone: true }"
       (filterChange)="applySavedFilter($event)"
       class="search-form__filters-panel__item"
-      [title]="'app.saved_search' | translate"
       [badge]="activeSavedSearchValue ? 1 : null"
     >
+      <button
+        postfix
+        mat-button
+        color="primary"
+        (click)="saveSearch()"
+        class="save-filter-button small"
+      >
+        <mat-icon svgIcon="plus" class="save-filter-button__icon"></mat-icon>
+        Save new filter
+      </button>
     </app-filter-control>
 
     <app-filter-control

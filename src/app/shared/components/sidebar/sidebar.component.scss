@@ -63,6 +63,12 @@
     color: var(--color-primary);
   }
 
+  &::ng-deep {
+    .mat-ripple-element {
+      background-color: var(--color-dark);
+    }
+  }
+
   &--active {
     color: var(--color-primary);
     background-color: var(--color-dark);

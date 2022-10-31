@@ -132,7 +132,7 @@
 
   &.mat-primary {
     .mat-select-arrow {
-      color: var(--color-primary);
+      color: var(--color-dark);
     }
   }
 }
@@ -313,38 +313,14 @@
   color: var(--color-accent);
 }
 
-.custom-select {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 17px;
-  color: var(--color-dark);
-
-  .mat-select-arrow-wrapper {
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-    margin-left: 8px;
-  }
-
-  .mat-select-arrow {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    background: url(/assets/images/select-arrow.svg) 50% 50% / contain no-repeat;
-  }
-
-  .mat-select-placeholder {
-    color: #383e45;
-  }
-}
-
 .form-row {
+  flex: 1 1 100%;
+
   > mat-label {
     display: block;
     font-size: 16px;
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.5;
     margin-bottom: 4px;
     color: var(--color-dark);
   }
@@ -425,15 +401,15 @@
 
   .mat-form-field-outline {
     top: 0 !important;
-    color: var(--color-gray-shade);
+    color: var(--color-neutral-30);
   }
 
   &.mat-focused {
     .mat-form-field-outline-thick {
-      color: var(--color-gray-shade);
+      color: var(--color-neutral-30);
 
       .mat-form-field-outline-end {
-        box-shadow: 0 0 4px var(--color-primary);
+        border-color: var(--color-neutral-100);
       }
     }
   }
@@ -455,8 +431,8 @@
   .mat-form-field-flex {
     vertical-align: top;
     margin-top: 0 !important;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+    padding-left: 22px !important;
+    padding-right: 22px !important;
   }
 
   .mat-form-field-infix {
@@ -464,8 +440,8 @@
     border-top: none;
     font-size: 16px;
     line-height: 1.6;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 7px;
+    padding-bottom: 7px;
   }
 
   .mat-form-field-outline-start,
@@ -474,7 +450,7 @@
   }
 
   .mat-form-field-outline-end {
-    border-radius: 8px !important;
+    border-radius: 4px !important;
     border-left-style: solid !important;
   }
 
@@ -490,20 +466,32 @@
 
     &::placeholder {
       opacity: 1;
-      color: #4e545b;
+      color: var(--color-neutral-70);
     }
     &:-ms-input-placeholder {
       opacity: 1;
-      color: #4e545b;
+      color: var(--color-neutral-70);
     }
     &::-ms-input-placeholder {
       opacity: 1;
-      color: #4e545b;
+      color: var(--color-neutral-70);
+    }
+
+    &:focus {
+      &::placeholder {
+        color: transparent;
+      }
+      &:-ms-input-placeholder {
+        color: transparent;
+      }
+      &::-ms-input-placeholder {
+        color: transparent;
+      }
     }
   }
 
   .mat-select-arrow-wrapper {
-    transform: none;
+    transform: none !important;
   }
 }
 
@@ -512,7 +500,7 @@
   .mat-form-field-outline-end,
   .mat-form-field-outline-gap {
     border-width: 1px !important;
-    transition: box-shadow 0.35s ease;
+    transition: border-color 0.35s ease;
   }
 }
 
@@ -604,5 +592,62 @@
 
   .mat-radio-label {
     padding: 11px 16px;
+  }
+}
+
+.mat-select {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-dark);
+
+  .mat-select-arrow-wrapper {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+
+  .mat-select-arrow {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    transition: transform 0.35s ease;
+    background: url(/assets/images/select-arrow.svg) 50% 50% / contain no-repeat;
+  }
+
+  .mat-select-placeholder {
+    color: #383e45;
+  }
+
+  &[aria-expanded='true'] {
+    .mat-select-arrow {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.mat-select-panel-wrap {
+  .mat-select-panel {
+    margin-top: 31px;
+    margin-left: -6px;
+    border-radius: 6px;
+    box-shadow: none !important;
+    min-width: calc(100% + 44px) !important;
+    border: 1px solid var(--color-neutral-30);
+
+    .mat-optgroup-label,
+    .mat-option {
+      height: auto;
+      font-size: 16px;
+      min-height: 52px;
+      line-height: 1.5;
+    }
+  }
+
+  .mat-option {
+    padding-left: 22px;
+    padding-right: 22px;
   }
 }
