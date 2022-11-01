@@ -1,6 +1,6 @@
 <mat-toolbar class="toolbar">
   <!-- <app-breadcrumb></app-breadcrumb> -->
-  <h1 class="toolbar__page-title">{{ pageTitle }}</h1>
+  <h1 class="toolbar__page-title" data-qa="page-title">{{ pageTitle }}</h1>
   <div class="toolbar__controls">
     <app-search-form class="search-form" *ngIf="showSearchForm"> </app-search-form>
     <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>

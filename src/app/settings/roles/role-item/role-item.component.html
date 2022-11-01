@@ -26,6 +26,7 @@
             [disabled]="userRole === role.name"
             (change)="onCheckChange($event, 'permissions')"
             [value]="item.name"
+            [data-qa]="item.test"
           >
             {{ item.name }}
           </mat-checkbox>
@@ -33,7 +34,12 @@
       </div>
 
       <div class="form-controls-panel">
-        <button mat-raised-button type="button" (click)="navigateToRoles()">
+        <button
+          mat-raised-button
+          type="button"
+          (click)="navigateToRoles()"
+          data-qa="btn-cancel-role"
+        >
           <span>{{ 'app.cancel' | translate }}</span>
         </button>
         <button
@@ -42,6 +48,7 @@
           class="role-button"
           type="submit"
           [disabled]="form.invalid"
+          data-qa="btn-save-role"
         >
           <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
         </button>
@@ -52,7 +59,13 @@
   <div class="page-content" *ngIf="isUpdate && !role?.protected">
     <h3>{{ 'role.delete_role' | translate }}</h3>
     <p [innerHTML]="'role.delete_role_desc' | translate"></p>
-    <button type="button" color="accent" mat-raised-button (click)="deleteRole()">
+    <button
+      type="button"
+      color="accent"
+      mat-raised-button
+      (click)="deleteRole()"
+      data-qa="btn-delete-role"
+    >
       <mat-icon>
         <svg class="iconic">
           <use

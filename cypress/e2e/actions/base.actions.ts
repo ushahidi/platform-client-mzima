@@ -18,6 +18,11 @@ class BaseActions {
     return this;
   }
 
+  checkField(element: string) {
+    cy.get(`[data-qa=${ element }]`).find('input').click({ force: true });
+    return this;
+  }
+
   submitButton() {
     cy.root().submit();
     return this;
