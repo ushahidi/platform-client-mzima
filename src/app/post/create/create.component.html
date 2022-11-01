@@ -1,22 +1,25 @@
 <!-- FIXME: SOMEHOW I CANT ADD FORM TAG HERE -->
 
-<div class="page-content" [ngStyle]="{ '--color': data?.result?.color }">
-  <form
-    novalidate
-    [formGroup]="form"
-    (ngSubmit)="submitPost()"
-    *ngIf="form && fields.length; else spinner"
-  >
-    <div class="field" *ngFor="let field of fields">
-      <h3>{{ field.label }} <span class="color-accent" *ngIf="field.required">*</span></h3>
-      <mat-label class="field__instruction" *ngIf="field.instructions">
+<form
+  novalidate
+  [formGroup]="form"
+  autocomplete="off"
+  (ngSubmit)="submitPost()"
+  *ngIf="form && fields.length; else spinner"
+>
+  <div class="page-content" [ngStyle]="{ '--color': data?.result?.color }">
+    <div class="form-row" *ngFor="let field of fields">
+      <mat-label
+        >{{ field.label }} <span class="color-accent" *ngIf="field.required">*</span></mat-label
+      >
+      <span class="form-row__instruction" *ngIf="field.instructions">
         {{ field.instructions }}
-      </mat-label>
+      </span>
 
       <ng-container
         *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
       >
-        <mat-form-field appearance="standard">
+        <mat-form-field appearance="outline">
           <input
             matInput
             [formControlName]="field.key"
@@ -29,62 +32,91 @@
       </ng-container>
 
       <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
-        <mat-form-field appearance="standard">
-          <textarea matInput [formControlName]="field.key" [(ngModel)]="description"></textarea>
+        <mat-form-field appearance="outline">
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="5"
+            [(ngModel)]="description"
+            [formControlName]="field.key"
+          >
+          </textarea>
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'textarea'">
+        <mat-form-field appearance="outline">
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="5"
+            [formControlName]="field.key"
+          >
+          </textarea>
         </mat-form-field>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'tags'">
-        <div class="tag-item">
-          <mat-checkbox [checked]="field.all_selected" (change)="selectAll($event.checked, field)">
+        <mat-selection-list [formControlName]="field.key">
+          <mat-list-option color="primary" checkboxPosition="before">
             <i>Select All</i>
-          </mat-checkbox>
-        </div>
+          </mat-list-option>
 
-        <ng-container *ngFor="let option of field.options">
-          <div class="tag-item" *ngIf="!option.parent_id" [ngStyle]="{ '--color': option.color }">
-            <mat-checkbox
+          <ng-container *ngFor="let option of field.options">
+            <mat-list-option
+              color="primary"
               [value]="option.id"
-              [checked]="option.value"
+              *ngIf="!option.parent_id"
+              checkboxPosition="before"
               [disabled]="!!option.children?.length"
-              (change)="onCheckChange($event, field.key)"
+              [ngStyle]="{ '--color': option.color }"
             >
               {{ option.tag }}
-            </mat-checkbox>
-          </div>
+            </mat-list-option>
 
-          <div class="tags__group" *ngIf="option.children?.length">
-            <ng-container *ngFor="let option of getOptionsByParentId(field, option.id)">
-              <div class="tag-item" [ngStyle]="{ '--color': option.color }">
-                <mat-checkbox
-                  [value]="option.id"
-                  [checked]="option.value"
-                  (change)="
-                    checkGroupIsChecked($event.checked, field, option);
-                    onCheckChange($event, field.key)
-                  "
+            <div class="tags__group" *ngIf="option.children?.length">
+              <ng-container *ngFor="let childOption of getOptionsByParentId(field, option.id)">
+                <mat-list-option
+                  color="primary"
+                  [value]="childOption.id"
+                  checkboxPosition="before"
+                  [ngStyle]="{ '--color': childOption.color }"
                 >
-                  {{ option.tag }}
-                </mat-checkbox>
-              </div>
-            </ng-container>
-          </div>
-        </ng-container>
+                  {{ childOption.tag }}
+                </mat-list-option>
+              </ng-container>
+            </div>
+          </ng-container>
+        </mat-selection-list>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'date'">
-        <mat-form-field appearance="standard">
-          <input matInput [matDatepicker]="picker" [formControlName]="field.key" />
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [formControlName]="field.key"
+            (focus)="picker.open()"
+            #input
+          />
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <mat-datepicker #picker (closed)="input.blur()"></mat-datepicker>
         </mat-form-field>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'datetime'">
-        <mat-form-field appearance="standard">
-          <input matInput [ngxMatDatetimePicker]="picker" [formControlName]="field.key" />
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [ngxMatDatetimePicker]="picker"
+            [formControlName]="field.key"
+            (focus)="picker.open()"
+            #input
+          />
           <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+          <ngx-mat-datetime-picker #picker (closed)="input.blur()"></ngx-mat-datetime-picker>
         </mat-form-field>
       </ng-container>
 
@@ -99,16 +131,22 @@
       </ng-container>
 
       <ng-container *ngIf="field.input === 'checkbox'">
-        <div class="radio-button" *ngFor="let option of field.options">
-          <mat-checkbox>
+        <mat-selection-list [formControlName]="field.key">
+          <mat-list-option
+            color="primary"
+            [value]="option"
+            class="list-option"
+            checkboxPosition="before"
+            *ngFor="let option of field.options"
+          >
             {{ option }}
-          </mat-checkbox>
-        </div>
+          </mat-list-option>
+        </mat-selection-list>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'select'">
-        <mat-form-field appearance="standard">
-          <mat-select [formControlName]="field.key">
+        <mat-form-field appearance="outline">
+          <mat-select [formControlName]="field.key" disableOptionCentering>
             <mat-option *ngFor="let option of field.options" [value]="option">
               {{ option }}
             </mat-option>
@@ -117,27 +155,35 @@
       </ng-container>
 
       <ng-container *ngIf="field.input === 'number'">
-        <mat-form-field appearance="standard">
+        <mat-form-field appearance="outline">
           <input matInput [formControlName]="field.key" type="number" />
         </mat-form-field>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'upload'">
-        <button type="button" mat-raised-button (click)="fileInput.click()">Add photo</button>
+        <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">
+          Add photo
+        </button>
         <input hidden #fileInput type="file" id="file" [formControlName]="field.key" />
+        <br />
+        <br />
       </ng-container>
 
       <ng-container *ngIf="field.input === 'video'">
-        <mat-form-field appearance="standard">
+        <mat-form-field appearance="outline">
           <input
             matInput
             [value]="field.default"
             #videoInput
-            (change)="videoPreview.src = videoInput.value"
+            (change)="
+              videoPreview.src =
+                'https://www.youtube.com/embed/' +
+                videoInput.value.split('watch?v=')[1].split('&')[0]
+            "
           />
         </mat-form-field>
 
-        <iframe width="560" height="315" #videoPreview></iframe>
+        <iframe width="560" height="315" #videoPreview [hidden]="!videoInput.value.length"></iframe>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'location'">
@@ -145,13 +191,42 @@
       </ng-container>
     </div>
 
-    <div class="form-controls-panel">
+    <div class="form-controls-panel" *ngIf="!tasks.length">
       <button color="primary" mat-raised-button [disabled]="form.invalid || form.disabled">
         {{ 'app.submit' | translate }}
       </button>
     </div>
-  </form>
-</div>
+  </div>
+
+  <div class="page-content" *ngFor="let task of tasks; let i = index">
+    <h2>{{ task.translations[activeLanguage]?.label || task.label }}</h2>
+
+    <div *ngIf="task.show_when_published">
+      <p translate="survey.task_visible_when_published">
+        This task will be visible when post is published
+      </p>
+    </div>
+
+    <div *ngIf="task.task_is_internal_only">
+      <p>
+        This task is marked for internal use only. It is not seen by users when they create a post.
+      </p>
+    </div>
+
+    <div class="form-row">
+      <mat-slide-toggle name="accept-survey" [required]="task.reqiured">
+        {{ 'post.task_completed' | translate }}
+        <span class="color-accent" *ngIf="task.required">*</span>
+      </mat-slide-toggle>
+    </div>
+
+    <div class="form-controls-panel" *ngIf="i === tasks.length - 1">
+      <button color="primary" mat-raised-button [disabled]="form.invalid || form.disabled">
+        {{ 'app.submit' | translate }}
+      </button>
+    </div>
+  </div>
+</form>
 
 <ng-template #spinner>
   <app-spinner class="spinner"></app-spinner>

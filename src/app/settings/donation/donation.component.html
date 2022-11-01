@@ -3,9 +3,9 @@
   <form class="form" (ngSubmit)="save()" [formGroup]="donationForm" novalidate>
     <div class="form__step">
       <h3>Donation Details</h3>
-      <div class="form-group">
-        <mat-form-field appearance="standard">
-          <mat-label translate>settings.donation.title.label</mat-label>
+      <div class="form-row">
+        <mat-label translate>settings.donation.title.label</mat-label>
+        <mat-form-field appearance="outline">
           <input
             matInput
             placeholder="{{ 'settings.donation.title.placeholder' }}"
@@ -18,15 +18,16 @@
         </mat-form-field>
       </div>
 
-      <div class="form-group">
-        <mat-form-field appearance="standard">
-          <mat-label translate>Describe your donation</mat-label>
+      <div class="form-row">
+        <mat-label translate>Describe your donation</mat-label>
+        <mat-form-field appearance="outline">
           <textarea
             matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="5"
             placeholder="{{ 'settings.site_description' }}"
             formControlName="description"
-            data-min-rows="1"
-            rows="1"
           ></textarea>
         </mat-form-field>
       </div>
@@ -53,9 +54,9 @@
 
     <div class="form__step">
       <h3>Donation Wallet</h3>
-      <div class="form-group">
-        <mat-form-field appearance="standard">
-          <mat-label translate>Wallet address</mat-label>
+      <div class="form-row">
+        <mat-label translate>Wallet address</mat-label>
+        <mat-form-field appearance="outline">
           <input
             matInput
             placeholder="{{ 'settings.donation.title.placeholder' }}"
@@ -79,7 +80,7 @@
   </div>
 
   <div class="form-controls-panel">
-    <button type="button" mat-raised-button routerLink="/settings">Cancel</button>
+    <button type="button" mat-stroked-button routerLink="/settings" translate>Cancel</button>
     <button type="button" color="primary" mat-raised-button (click)="save()">Save</button>
   </div>
 </div>

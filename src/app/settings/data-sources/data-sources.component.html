@@ -35,32 +35,26 @@
       </ng-template>
 
       <ng-template #survey *ngIf="provider?.visible_survey">
-        <div class="form-field form-field-flex">
-          <p class="form-label" translate>Accept survey submissions from this source</p>
-          <mat-slide-toggle
-            [(ngModel)]="provider.available_provider"
-            name="accept-survey"
-            (change)="changeAvailableProviders($event)"
-          >
-          </mat-slide-toggle>
-        </div>
-        <div class="form-field form-field-flex">
-          <p class="form-label" translate>Import to survey</p>
-          <mat-slide-toggle
-            [(ngModel)]="isImportToSurvey"
-            name="import-to-survey"
-          ></mat-slide-toggle>
-        </div>
+        <mat-slide-toggle
+          [(ngModel)]="provider.available_provider"
+          name="accept-survey"
+          (change)="changeAvailableProviders($event)"
+        >
+          {{ 'settings.data_sources.enable_provider_message' | translate }}
+        </mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isImportToSurvey" name="import-to-survey">
+          {{ 'settings.data_sources.associate_with_form' | translate }}
+        </mat-slide-toggle>
         <div class="source-destination-wrapper" *ngIf="isImportToSurvey">
-          <div class="form-field">
-            <p class="form-label">
-              Each of the survey's fields are listed below. Choose the data from
-              {{ provider?.name | titlecase }} that you'd like to use to populate each of those
-              fields.
-            </p>
-            <mat-form-field appearance="standard">
-              <mat-label>{{ 'settings.webhooks.use_webhook_for' | translate }} </mat-label>
-              <mat-select (valueChange)="getSurveyAttributes($event)">
+          <p>
+            Each of the survey's fields are listed below. Choose the data from
+            {{ provider?.name | titlecase }} that you'd like to use to populate each of those
+            fields.
+          </p>
+          <div class="form-row">
+            <mat-label>{{ 'settings.webhooks.use_webhook_for' | translate }} </mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select (valueChange)="getSurveyAttributes($event)" disableOptionCentering>
                 <mat-option *ngFor="let survey of surveyList" [value]="survey.id">
                   {{ survey.name }}
                 </mat-option>
@@ -84,19 +78,21 @@
                     <span>{{ item.form_label | titlecase }}</span>
                   </td>
                   <td>
-                    <mat-form-field appearance="standard">
+                    <div class="form-row">
                       <mat-label>Leave empty</mat-label>
-                      <mat-select>
-                        <ng-container *ngFor="let attribute of surveyAttributesList">
-                          <mat-option
-                            *ngIf="item.type === attribute.input"
-                            [value]="attribute?.key"
-                          >
-                            {{ attribute?.label }}
-                          </mat-option>
-                        </ng-container>
-                      </mat-select>
-                    </mat-form-field>
+                      <mat-form-field appearance="outline">
+                        <mat-select disableOptionCentering>
+                          <ng-container *ngFor="let attribute of surveyAttributesList">
+                            <mat-option
+                              *ngIf="item.type === attribute.input"
+                              [value]="attribute?.key"
+                            >
+                              {{ attribute?.label }}
+                            </mat-option>
+                          </ng-container>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
                   </td>
                 </tr>
               </tbody>

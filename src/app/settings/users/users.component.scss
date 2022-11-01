@@ -30,26 +30,23 @@ tr.mat-row {
   }
 }
 
-.form {
-  &-group {
-    display: flex;
-    justify-content: space-between;
-    height: 53px;
-    & group-elements {
-      display: flex;
-      &:not(:first-child) {
-        justify-content: flex-end;
-      }
-    }
-    & mat-form-field {
-      margin-right: 10px;
-    }
-    & button {
-      margin-bottom: 1.34375em;
-      height: 100%;
-      &:not(:last-child) {
-        margin-right: 10px;
-      }
-    }
+.head-panel {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  .form-row {
+    max-width: 400px;
+  }
+}
+
+.group-elements {
+  display: flex;
+  align-items: flex-start;
+  margin: 0 -8px 16px 16px;
+  justify-content: flex-start;
+
+  .mat-button-base {
+    margin: 0 8px;
   }
 }

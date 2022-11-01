@@ -29,17 +29,30 @@
     display: block;
   }
 
+  &__edit,
   &__remove {
     top: 50%;
-    right: 8px;
-    margin-top: -20px;
+    display: flex;
+    width: 1.5em;
+    height: 1.5em;
+    font-size: 24px;
     position: absolute;
+    margin-top: -0.75em;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    .mat-icon {
+      font-size: 0.75em;
+    }
   }
+
+  &__remove {
+    right: 8px;
+  }
+
   &__edit {
-    top: 50%;
-    right: 58px;
-    margin-top: -20px;
-    position: absolute;
+    right: 48px;
   }
 
   &__drag-handle {

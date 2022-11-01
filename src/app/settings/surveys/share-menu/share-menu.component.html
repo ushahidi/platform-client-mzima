@@ -1,7 +1,9 @@
-<mat-form-field appearance="standard">
+<div class="form-row">
   <mat-label translate>app.survey_web_address</mat-label>
-  <input type="url" matInput [value]="shareUrl" readonly="true" />
-</mat-form-field>
+  <mat-form-field appearance="outline">
+    <input type="url" matInput [value]="shareUrl" readonly="true" />
+  </mat-form-field>
+</div>
 
 <a
   target="_blank"
@@ -34,14 +36,16 @@
     <mat-panel-title> Configure </mat-panel-title>
   </mat-expansion-panel-header>
   <div class="embed-input">
-    <mat-form-field appearance="standard">
+    <div class="form-row">
       <mat-label>HTML</mat-label>
-      <textarea matInput readonly>
-&lt;iframe width="560" height="315" src="{{
-          shareUrl
-        }}" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</textarea
-      >
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <textarea matInput readonly cdkTextareaAutosize cdkAutosizeMaxRows="10">
+  &lt;iframe width="560" height="315" src="{{
+            shareUrl
+          }}" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</textarea
+        >
+      </mat-form-field>
+    </div>
   </div>
 </mat-expansion-panel>
 

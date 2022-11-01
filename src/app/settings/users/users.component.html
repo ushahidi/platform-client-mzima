@@ -2,25 +2,19 @@
   <!-- <h3 class="section-title">{{ 'nav.users' | translate }}</h3> -->
 
   <div class="create-button-container">
-    <button
-      type="button"
-      class="create-button"
-      color="primary"
-      mat-raised-button
-      [routerLink]="['create']"
-    >
+    <button type="button" color="primary" mat-raised-button [routerLink]="['create']">
+      {{ 'user.add_user' | translate }}
       <mat-icon class="create-button-icon">create</mat-icon>
-      <span class="create-button-name">{{ 'user.add_user' | translate }}</span>
     </button>
   </div>
 
   <form *ngIf="selection.selected.length" novalidate>
     <h4>{{ selection.selected.length }} selected</h4>
-    <div class="form-group">
-      <div class="group-elements">
-        <mat-form-field appearance="fill">
-          <mat-label>Change role</mat-label>
-          <mat-select [(ngModel)]="selectedRole" name="role">
+    <div class="head-panel">
+      <div class="form-row">
+        <mat-label>Change role</mat-label>
+        <mat-form-field appearance="outline">
+          <mat-select [(ngModel)]="selectedRole" name="role" disableOptionCentering>
             <mat-option *ngFor="let role of (roleResponse$ | async)?.results" [value]="role.name">
               {{ role.display_name }}
             </mat-option>
@@ -98,6 +92,13 @@
         (click)="selection.toggle(row)"
       ></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+    <mat-paginator
+      showFirstLastButtons
+      [pageSizeOptions]="[10, 20, 30]"
+      [selectConfig]="{
+        disableOptionCentering: true
+      }"
+    >
+    </mat-paginator>
   </div>
 </section>

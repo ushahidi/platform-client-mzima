@@ -2,40 +2,41 @@
   <h3 class="section-title">{{ 'role.add_role' | translate }}</h3>
   <div class="page-content">
     <form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
-      <div class="form-group">
-        <h3>{{ 'role.name' | translate }}</h3>
-        <mat-form-field appearance="standard">
-          <mat-label>{{ 'role.name' | translate }}</mat-label>
+      <div class="form-row">
+        <mat-label>{{ 'role.name' | translate }}</mat-label>
+        <mat-form-field appearance="outline">
           <input matInput formControlName="display_name" (ngModelChange)="setName($event)" />
         </mat-form-field>
       </div>
-      <div class="form-group">
-        <h3>{{ 'role.description' | translate }}</h3>
-        <mat-form-field appearance="standard">
-          <mat-label>{{ 'role.description' | translate }}</mat-label>
+      <div class="form-row">
+        <mat-label>{{ 'role.description' | translate }}</mat-label>
+        <mat-form-field appearance="outline">
           <input matInput formControlName="description" />
         </mat-form-field>
       </div>
 
-      <div class="form-group">
-        <h3>{{ 'role.permissions' | translate }}</h3>
+      <div class="form-row">
+        <mat-label>{{ 'role.permissions' | translate }}</mat-label>
         <p [innerHTML]="'settings.roles.roles_description' | translate"></p>
-        <div *ngFor="let item of permissionsList">
-          <mat-checkbox
-            [checked]="item.checked"
-            [disabled]="userRole === role.name"
-            (change)="onCheckChange($event, 'permissions')"
+        <mat-selection-list>
+          <mat-list-option
+            color="primary"
+            class="list-option"
+            checkboxPosition="before"
+            *ngFor="let item of permissionsList"
             [value]="item.name"
+            [selected]="item.checked"
+            [disabled]="userRole === role.name"
             [data-qa]="item.test"
           >
             {{ item.name }}
-          </mat-checkbox>
-        </div>
+          </mat-list-option>
+        </mat-selection-list>
       </div>
 
       <div class="form-controls-panel">
         <button
-          mat-raised-button
+          mat-stroked-button
           type="button"
           (click)="navigateToRoles()"
           data-qa="btn-cancel-role"

@@ -15,7 +15,7 @@
   <div class="sidebar__controls">
     <div class="sidebar__menu">
       <ng-container *ngFor="let item of menu">
-        <button
+        <a
           mat-raised-button
           *ngIf="item.visible"
           class="sidebar-menu-button"
@@ -33,12 +33,12 @@
             </svg>
           </mat-icon>
           <span class="sidebar-menu-button__title">{{ item.label }}</span>
-        </button>
+        </a>
       </ng-container>
     </div>
     <div class="sidebar__menu">
       <ng-container *ngFor="let item of userMenu">
-        <button
+        <a
           mat-raised-button
           *ngIf="item.visible"
           class="sidebar-menu-button"
@@ -54,7 +54,7 @@
             </svg>
           </mat-icon>
           <span class="sidebar-menu-button__title">{{ item.label }}</span>
-        </button>
+        </a>
       </ng-container>
     </div>
   </div>

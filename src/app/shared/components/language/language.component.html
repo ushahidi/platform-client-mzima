@@ -1,6 +1,10 @@
 <div class="language">
   <mat-form-field>
-    <mat-select [(value)]="selectedLanguage" (selectionChange)="changeLanguage($event)">
+    <mat-select
+      disableOptionCentering
+      [(value)]="selectedLanguage"
+      (selectionChange)="changeLanguage($event)"
+    >
       <mat-select-trigger class="language__selected">
         {{ selectedLanguage }}
         <mat-icon svgIcon="arrow-down" class="language__selected__arrow"></mat-icon>
