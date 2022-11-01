@@ -22,20 +22,26 @@
       <mat-tab label="{{ 'user_profile.nav.general' | translate }}">
         <div class="tab-content" *ngIf="!isLoading; else spinner" mat-dialog-content>
           <form novalidate [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-            <mat-form-field appearance="standard">
+            <div class="form-row">
               <mat-label>{{ 'user.role' | translate }}</mat-label>
-              <input matInput readonly formControlName="role" />
-            </mat-form-field>
+              <mat-form-field appearance="outline">
+                <input matInput readonly formControlName="role" />
+              </mat-form-field>
+            </div>
 
-            <mat-form-field appearance="standard">
+            <div class="form-row">
               <mat-label>{{ 'user.full_name' | translate }}</mat-label>
-              <input matInput formControlName="display_name" />
-            </mat-form-field>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="display_name" />
+              </mat-form-field>
+            </div>
 
-            <mat-form-field appearance="standard">
+            <div class="form-row">
               <mat-label>{{ 'user.email' | translate }}</mat-label>
-              <input matInput type="email" formControlName="email" />
-            </mat-form-field>
+              <mat-form-field appearance="outline">
+                <input matInput type="email" formControlName="email" />
+              </mat-form-field>
+            </div>
 
             <mat-accordion class="update-password" #updatePasswordFields>
               <mat-expansion-panel
@@ -47,33 +53,37 @@
                   {{ 'user.update_password' | translate }}
                 </mat-expansion-panel-header>
 
-                <mat-form-field appearance="standard">
+                <div class="form-row">
                   <mat-label>{{ 'user.password' | translate }}</mat-label>
-                  <input matInput type="password" formControlName="password" />
-                  <mat-error *ngIf="profileForm.controls['password'].errors">
-                    <p>Password must be at least 8 characters long</p>
-                  </mat-error>
-                </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <input matInput type="password" formControlName="password" />
+                    <mat-error *ngIf="profileForm.controls['password'].errors">
+                      <p>Password must be at least 8 characters long</p>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
 
-                <mat-form-field appearance="standard">
+                <div class="form-row">
                   <mat-label>{{ 'user.confirm_password' | translate }}</mat-label>
-                  <input
-                    matInput
-                    type="password"
-                    formControlName="confirmPassword"
-                    [errorStateMatcher]="matcher"
-                  />
-                  <mat-error
-                    *ngIf="
-                      profileForm.hasError('notSame') || profileForm.controls['password'].errors
-                    "
-                  >
-                    <p *ngIf="profileForm.controls['password'].errors">
-                      Password must be at least 8 characters long
-                    </p>
-                    <p *ngIf="profileForm.hasError('notSame')">Passwords do not match</p>
-                  </mat-error>
-                </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <input
+                      matInput
+                      type="password"
+                      formControlName="confirmPassword"
+                      [errorStateMatcher]="matcher"
+                    />
+                    <mat-error
+                      *ngIf="
+                        profileForm.hasError('notSame') || profileForm.controls['password'].errors
+                      "
+                    >
+                      <p *ngIf="profileForm.controls['password'].errors">
+                        Password must be at least 8 characters long
+                      </p>
+                      <p *ngIf="profileForm.hasError('notSame')">Passwords do not match</p>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
               </mat-expansion-panel>
             </mat-accordion>
           </form>
@@ -96,14 +106,16 @@
                 {{ 'notification.send_to_address' | translate }}
               </mat-slide-toggle>
 
-              <mat-form-field appearance="standard">
+              <div class="form-row">
                 <mat-label>{{ 'contact.edit_email_address' | translate }}</mat-label>
-                <input
-                  matInput
-                  [(ngModel)]="contact.contact"
-                  (ngModelChange)="isContactsChanged = true"
-                />
-              </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <input
+                    matInput
+                    [(ngModel)]="contact.contact"
+                    (ngModelChange)="isContactsChanged = true"
+                  />
+                </mat-form-field>
+              </div>
 
               <div class="contact-item__buttons">
                 <button color="accent" mat-raised-button (click)="deleteContact(contact.id)">
@@ -129,24 +141,26 @@
                   </div>
                 </mat-radio-group>
 
-                <mat-form-field appearance="standard">
+                <div class="form-row">
                   <mat-label>{{
                     (addAccountForm.controls['type'].value === 'email'
                       ? 'contact.add_email_address'
                       : 'contact.add_phone_number'
                     ) | translate
                   }}</mat-label>
-                  <input
-                    matInput
-                    formControlName="name"
-                    [placeholder]="
-                      (addAccountForm.controls['type'].value === 'email'
-                        ? 'contact.add_email_address'
-                        : 'contact.add_phone_number'
-                      ) | translate
-                    "
-                  />
-                </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <input
+                      matInput
+                      formControlName="name"
+                      [placeholder]="
+                        (addAccountForm.controls['type'].value === 'email'
+                          ? 'contact.add_email_address'
+                          : 'contact.add_phone_number'
+                        ) | translate
+                      "
+                    />
+                  </mat-form-field>
+                </div>
 
                 <button
                   color="primary"
@@ -166,7 +180,7 @@
   </div>
 
   <mat-dialog-actions align="end">
-    <button mat-raised-button mat-dialog-close>
+    <button mat-stroked-button mat-dialog-close>
       {{ 'app.cancel' | translate }}
     </button>
     <button

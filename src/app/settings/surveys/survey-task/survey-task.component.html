@@ -1,15 +1,25 @@
 <div class="task">
   <ng-container *ngIf="!isPost">
-    <mat-form-field appearance="standard" class="title">
-      <input matInput [(ngModel)]="task.label" [placeholder]="'survey.untitled_task' | translate" />
-    </mat-form-field>
-    <mat-form-field appearance="standard">
-      <input
-        matInput
-        [(ngModel)]="task.description"
-        [placeholder]="'survey.describe_this_task' | translate"
-      />
-    </mat-form-field>
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="title">
+        <input
+          matInput
+          [(ngModel)]="task.label"
+          [placeholder]="'survey.untitled_task' | translate"
+        />
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          [(ngModel)]="task.description"
+          [placeholder]="'survey.describe_this_task' | translate"
+        >
+        </textarea>
+      </mat-form-field>
+    </div>
   </ng-container>
   <mat-tab-group>
     <mat-tab [label]="'survey.build' | translate">
@@ -26,7 +36,6 @@
             <span class="field-item__type">{{ field.type }}</span>
             <button
               type="button"
-              color="primary"
               mat-icon-button
               (click)="editField(field)"
               class="field-item__edit"
@@ -60,9 +69,9 @@
           </div>
         </div>
 
-        <button type="button" mat-raised-button (click)="addField()">
-          <mat-icon>add</mat-icon>
+        <button type="button" mat-raised-button (click)="addField()" color="dark">
           {{ 'form.add_field' | translate }}
+          <mat-icon>add</mat-icon>
         </button>
       </div>
     </mat-tab>
@@ -134,27 +143,30 @@
 
         <app-color-picker [(ngModel)]="selectedColor" color-container="survey"></app-color-picker>
 
-        <mat-form-field appearance="standard">
+        <div class="form-row">
           <mat-label>{{ 'translations.survey_select_default' | translate }}</mat-label>
-          <mat-select
-            panelClass="language-field"
-            [(value)]="selectedLanguage"
-            (selectionChange)="changeLanguage($event)"
-          >
-            <mat-option *ngFor="let lang of languagesToSelect" [value]="lang.code">
-              <span class="language-title">{{ lang.name }}</span>
-            </mat-option>
-          </mat-select>
-          <div *ngIf="showLangError" class="alert error">
-            <svg class="iconic" role="img">
-              <use
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                xlink:href="assets/sprites.svg#warning"
-              ></use>
-            </svg>
-            <p translate="translations.error_translation_exists"></p>
-          </div>
-        </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-select
+              disableOptionCentering
+              panelClass="language-field"
+              [(value)]="selectedLanguage"
+              (selectionChange)="changeLanguage($event)"
+            >
+              <mat-option *ngFor="let lang of languagesToSelect" [value]="lang.code">
+                <span class="language-title">{{ lang.name }}</span>
+              </mat-option>
+            </mat-select>
+            <div *ngIf="showLangError" class="alert error">
+              <svg class="iconic" role="img">
+                <use
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xlink:href="assets/sprites.svg#warning"
+                ></use>
+              </svg>
+              <p translate="translations.error_translation_exists"></p>
+            </div>
+          </mat-form-field>
+        </div>
       </div>
     </mat-tab>
     <mat-tab *ngIf="isPost" [label]="'survey.share' | translate">

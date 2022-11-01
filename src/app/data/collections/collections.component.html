@@ -11,11 +11,13 @@
 <h1 mat-dialog-title>{{ 'app.collection' | translate }}</h1>
 
 <form>
-  <mat-form-field appearance="fill">
+  <div class="form-row">
     <mat-label>{{ 'location.search' | translate }}</mat-label>
-    <input matInput placeholder="{{ 'location.search' | translate }}" />
-    <mat-icon matPrefix>search</mat-icon>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="{{ 'location.search' | translate }}" />
+      <mat-icon matPrefix svgIcon="search"></mat-icon>
+    </mat-form-field>
+  </div>
 </form>
 
 <ng-container *ngIf="!isLoading; else loader">

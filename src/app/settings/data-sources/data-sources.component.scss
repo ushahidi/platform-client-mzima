@@ -1,11 +1,13 @@
 .data-source-wrapper {
   display: flex;
-  height: calc(100vh - 130px);
+  margin: 0 -20px -30px 0;
+  height: calc(100vh - 198px);
 }
 
 .data-source {
   width: 20%;
   overflow-y: auto;
+  padding-bottom: 20px;
 
   &-item {
     display: flex;
@@ -60,8 +62,8 @@
 
 .data-source-item-container {
   width: 80%;
-  overflow-y: auto;
   padding: 20px;
+  overflow-y: auto;
 }
 
 .survey-fields {

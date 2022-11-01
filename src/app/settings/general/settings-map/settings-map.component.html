@@ -1,6 +1,6 @@
 <div *ngIf="mapConfig">
-  <div class="form-group">
-    <h3 translate>settings.map_default_location</h3>
+  <div class="form-row">
+    <mat-label translate>settings.map_default_location</mat-label>
     <div class="map-holder">
       <div
         id="settings-map"
@@ -78,7 +78,7 @@
     </mat-grid-tile>
   </mat-grid-list>
 
-  <div class="form-group">
+  <div class="form-row">
     <mat-checkbox [checked]="mapConfig.clustering" (change)="mapConfig.clustering = $event.checked">
       {{ 'settings.map_clustering' | translate }}
     </mat-checkbox>

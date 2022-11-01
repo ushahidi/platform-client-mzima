@@ -10,30 +10,30 @@
 
 <strong mat-dialog-title>{{ 'nav.login' | translate }}</strong>
 <form novalidate [formGroup]="form" (ngSubmit)="login()">
-  <mat-form-field appearance="standard">
-    <mat-label>
-      {{ 'user.email' | translate }}
-    </mat-label>
-    <input matInput placeholder="pat@example.com" formControlName="email" required />
-    <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
-  </mat-form-field>
+  <div class="form-row">
+    <mat-label>{{ 'user.email' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="pat@example.com" formControlName="email" required />
+      <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
+    </mat-form-field>
+  </div>
 
-  <mat-form-field appearance="standard">
-    <mat-label>
-      {{ 'user.password' | translate }}
-    </mat-label>
-    <input
-      matInput
-      placeholder="pat@example.com"
-      formControlName="password"
-      required
-      type="password"
-    />
-    <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
-  </mat-form-field>
+  <div class="form-row">
+    <mat-label>{{ 'user.password' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        placeholder="pat@example.com"
+        formControlName="password"
+        required
+        type="password"
+      />
+      <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
+    </mat-form-field>
+  </div>
 
   <div mat-dialog-actions align="end">
-    <button mat-raised-button type="button" (click)="cancel()">
+    <button mat-stroked-button type="button" (click)="cancel()">
       {{ 'app.cancel' | translate }}
     </button>
     <button

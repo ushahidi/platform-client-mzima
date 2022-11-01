@@ -28,6 +28,7 @@
 
 .mat-slide-toggle {
   height: auto;
+  display: block;
 
   &::ng-deep {
     .mat-slide-toggle {

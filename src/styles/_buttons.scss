@@ -27,7 +27,8 @@
 }
 
 .mat-button,
-.mat-raised-button {
+.mat-raised-button,
+.mat-stroked-button {
   box-shadow: none !important;
 
   .mat-icon {
@@ -35,7 +36,7 @@
       margin-right: 10px;
     }
 
-    &:last-child {
+    &:last-child:not(:first-child) {
       margin-left: 10px;
     }
   }
@@ -206,6 +207,7 @@
 }
 
 .mat-button-base {
+  &.mat-button,
   &.mat-raised-button,
   &.mat-stroked-button {
     font-size: 16px;
@@ -213,6 +215,7 @@
     border-radius: 4px;
   }
 
+  &.mat-button,
   &.mat-raised-button {
     line-height: 40px;
   }
@@ -253,5 +256,12 @@
 
   .mat-button-focus-overlay {
     display: none;
+  }
+}
+
+.mat-mini-fab {
+  .mat-button-wrapper {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
   }
 }
