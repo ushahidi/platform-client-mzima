@@ -5,9 +5,9 @@
 <strong mat-dialog-title>{{ 'form.add_field' | translate }}</strong>
 <mat-dialog-content>
   <ng-container *ngIf="selectedFieldType; else allFields">
-    <div class="form-group">
-      <mat-form-field appearance="standard">
-        <mat-label>{{ 'app.name' | translate }} </mat-label>
+    <div class="form-row">
+      <mat-label>{{ 'app.name' | translate }} </mat-label>
+      <mat-form-field appearance="outline">
         <input
           matInput
           [(ngModel)]="selectedFieldType.label"
@@ -16,7 +16,7 @@
       </mat-form-field>
     </div>
 
-    <div class="form-group">
+    <div class="form-row">
       <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
       <quill-editor [(ngModel)]="selectedFieldType.description"></quill-editor>
       <!-- <mat-form-field appearance="standard">
@@ -30,9 +30,9 @@
     </div>
 
     <!-- Has options -->
-    <div class="form-group" *ngIf="hasOptions">
-      <mat-form-field appearance="standard">
-        <mat-label>{{ 'form.field_options' | translate }} </mat-label>
+    <div class="form-row" *ngIf="hasOptions">
+      <mat-label>{{ 'form.field_options' | translate }} </mat-label>
+      <mat-form-field appearance="outline">
         <input
           matInput
           [(ngModel)]="selectedFieldType.options[0]"
@@ -45,7 +45,7 @@
       </mat-form-field>
 
       <div *ngFor="let opt of selectedFieldType.options; let i = index">
-        <mat-form-field appearance="standard">
+        <mat-form-field appearance="outline">
           <input
             matInput
             [(ngModel)]="selectedFieldType.options[i]"
@@ -82,9 +82,10 @@
       >
         <i class="fa fa-plus"></i> <span translate>form.field_add_option</span>
       </button>
+      <br /><br />
     </div>
 
-    <div class="form-group" *ngIf="selectedFieldType.input === 'tags'">
+    <div class="form-row" *ngIf="selectedFieldType.input === 'tags'">
       <ng-container *ngIf="availableCategories; else spinner">
         <app-multilevel-select
           [(ngModel)]="categories"
@@ -95,7 +96,7 @@
       </ng-container>
     </div>
 
-    <div class="form-group" *ngIf="selectedFieldType.input === 'relation'">
+    <div class="form-row" *ngIf="selectedFieldType.input === 'relation'">
       <app-multilevel-select
         [(ngModel)]="selectedFieldType.config.input.form"
         [data]="availableSurveys"
@@ -104,35 +105,29 @@
       </app-multilevel-select>
     </div>
 
-    <div class="form-group">
-      <p *ngIf="onlyOptional">
-        <mat-slide-toggle [(ngModel)]="selectedFieldType.required">
-          {{ 'survey.required' | translate }}
-        </mat-slide-toggle>
-      </p>
+    <div class="form-row">
+      <mat-slide-toggle *ngIf="onlyOptional" [(ngModel)]="selectedFieldType.required">
+        {{ 'survey.required' | translate }}
+      </mat-slide-toggle>
 
-      <p *ngIf="canDisableCaption">
-        <mat-slide-toggle [(ngModel)]="selectedFieldType.config.hasCaption">
-          {{ 'survey.collect_image_caption' | translate }}
-          <p class="init active" *ngIf="!selectedFieldType.config?.hasCaption">
-            <small translate>survey.disable_caption_field_explanation</small>
-          </p>
-        </mat-slide-toggle>
-      </p>
+      <mat-slide-toggle *ngIf="canDisableCaption" [(ngModel)]="selectedFieldType.config.hasCaption">
+        {{ 'survey.collect_image_caption' | translate }}
+        <p class="init active" *ngIf="!selectedFieldType.config?.hasCaption">
+          <small translate>survey.disable_caption_field_explanation</small>
+        </p>
+      </mat-slide-toggle>
 
-      <p *ngIf="canMakePrivate">
-        <mat-slide-toggle [(ngModel)]="selectedFieldType.response_private">
-          {{ 'survey.make_response_private' | translate }}
-          <p class="init active" *ngIf="selectedFieldType.response_private">
-            <small translate>survey.response_private_desc</small>
-          </p>
-        </mat-slide-toggle>
-      </p>
+      <mat-slide-toggle *ngIf="canMakePrivate" [(ngModel)]="selectedFieldType.response_private">
+        {{ 'survey.make_response_private' | translate }}
+        <p class="init active" *ngIf="selectedFieldType.response_private">
+          <small translate>survey.response_private_desc</small>
+        </p>
+      </mat-slide-toggle>
     </div>
 
-    <div class="form-group" *ngIf="canDisplay">
-      <mat-form-field appearance="standard">
-        <mat-label>{{ 'app.default_value' | translate }} </mat-label>
+    <div class="form-row" *ngIf="canDisplay">
+      <mat-label>{{ 'app.default_value' | translate }} </mat-label>
+      <mat-form-field appearance="outline">
         <ng-container [ngSwitch]="selectedFieldType.type">
           <input
             *ngSwitchCase="'location'"

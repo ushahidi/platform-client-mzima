@@ -10,26 +10,32 @@
     [leafletFitBoundsOptions]="fitBoundsOptions"
   ></div>
 
-  <form class="search-form" appearance="fill">
-    <input matInput placeholder="Search for addresses, place names, or coordinates..." />
+  <form class="search-form">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Search for addresses, place names, or coordinates..." />
+    </mat-form-field>
   </form>
 </div>
 
 <span class="instructions">
   You can search or click the area of map where you want to place the marker.
 </span>
-<mat-grid-list cols="2" gutterSize="32" rowHeight="58" *ngIf="location">
+<mat-grid-list cols="2" gutterSize="32" rowHeight="84" *ngIf="location">
   <mat-grid-tile>
-    <mat-form-field appearance="standard">
+    <div class="form-row">
       <mat-label>Lat</mat-label>
-      <input matInput [(ngModel)]="location.lat" />
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="location.lat" />
+      </mat-form-field>
+    </div>
   </mat-grid-tile>
 
   <mat-grid-tile>
-    <mat-form-field appearance="standard">
+    <div class="form-row">
       <mat-label>Long</mat-label>
-      <input matInput [(ngModel)]="location.lng" />
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="location.lng" />
+      </mat-form-field>
+    </div>
   </mat-grid-tile>
 </mat-grid-list>

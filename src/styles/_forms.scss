@@ -10,20 +10,23 @@
 }
 
 .mat-pseudo-checkbox {
-  color: #383e45;
-  border-width: 1px !important;
+  width: 21px !important;
+  height: 21px !important;
+  border-width: 2px !important;
+  color: var(--color-neutral-80);
 
   &:after {
     left: 2px !important;
     top: 3.4px !important;
-    border-bottom-width: 1px !important;
+    border-bottom-width: 2px !important;
   }
 }
 
 .mat-pseudo-checkbox-checked {
   &:after {
-    height: 4px !important;
-    border-left-width: 1px !important;
+    width: 12px !important;
+    height: 6px !important;
+    border-left-width: 2px !important;
   }
 }
 
@@ -31,7 +34,7 @@
 .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,
 .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
 .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text {
-  padding-left: 8px !important;
+  padding-left: 12px !important;
 }
 
 .mat-checkbox-checkmark-path {
@@ -75,21 +78,6 @@
 
 .mat-form-field {
   width: 100%;
-}
-
-.form-group {
-  flex: 1 1 100%;
-  margin-bottom: 24px;
-
-  .mat-checkbox {
-    + p {
-      margin-top: 8px;
-    }
-  }
-
-  .mat-hint {
-    margin-bottom: 12px;
-  }
 }
 
 .mat-primary {
@@ -315,6 +303,7 @@
 
 .form-row {
   flex: 1 1 100%;
+  margin-bottom: 4px;
 
   > mat-label {
     display: block;
@@ -332,20 +321,14 @@
     }
 
     .mat-form-field-appearance-outline {
-      .mat-form-field-flex {
-        padding-left: 16px !important;
-        padding-right: 16px !important;
-      }
-
       .mat-form-field-infix {
         font-size: 12px;
-        line-height: 1.6;
-        padding-top: 6px;
-        padding-bottom: 6px;
       }
 
-      .mat-form-field-outline-end {
-        border-radius: 4px !important;
+      .mat-input-element {
+        height: 18px;
+        padding: 6px 16px;
+        max-width: calc(100% - 34px);
       }
     }
   }
@@ -396,7 +379,6 @@
 
 .mat-form-field-appearance-outline {
   font-size: 12px;
-  margin-bottom: 4px;
   vertical-align: top;
 
   .mat-form-field-outline {
@@ -414,15 +396,6 @@
     }
   }
 
-  .mat-form-field-prefix,
-  .mat-form-field-suffix {
-    top: 7px !important;
-  }
-
-  .mat-form-field-prefix {
-    margin-right: 10px;
-  }
-
   .mat-form-field-wrapper {
     margin: 0 !important;
     padding-bottom: 12px;
@@ -430,9 +403,10 @@
 
   .mat-form-field-flex {
     vertical-align: top;
+    align-items: stretch;
     margin-top: 0 !important;
-    padding-left: 22px !important;
-    padding-right: 22px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .mat-form-field-infix {
@@ -440,8 +414,8 @@
     border-top: none;
     font-size: 16px;
     line-height: 1.6;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   .mat-form-field-outline-start,
@@ -462,7 +436,13 @@
   }
 
   .mat-input-element {
+    margin: 1px;
+    height: 24px;
+    padding: 7px 21px;
+    border-radius: 4px;
     color: var(--color-dark);
+    max-width: calc(100% - 45px);
+    background: var(--color-light);
 
     &::placeholder {
       opacity: 1;
@@ -490,8 +470,81 @@
     }
   }
 
+  textarea.mat-input-element.cdk-textarea-autosize {
+    min-height: 51px !important;
+  }
+
+  .mat-select-trigger {
+    margin: 1px;
+    height: 38px;
+    width: calc(100% - 2px);
+    background: var(--color-light);
+  }
+
+  .mat-select-value {
+    padding: 7px 21px;
+  }
+
   .mat-select-arrow-wrapper {
     transform: none !important;
+  }
+
+  .mat-form-field-prefix,
+  .mat-form-field-suffix {
+    display: flex;
+    flex-shrink: 0;
+    line-height: 1;
+    font-size: 16px;
+    top: 0 !important;
+    flex-direction: column;
+    justify-content: center;
+
+    .mat-icon {
+      width: 1em;
+      height: 1em;
+      line-height: 1;
+      font-size: 24px;
+    }
+  }
+
+  .mat-form-field-prefix {
+    flex-basis: 40px;
+    padding-left: 8px;
+    align-items: flex-end;
+
+    + .mat-form-field-infix {
+      .mat-input-element,
+      .mat-select-value {
+        padding-left: 10px;
+      }
+    }
+  }
+
+  .mat-form-field-suffix {
+    flex-basis: 56px;
+    align-items: center;
+  }
+
+  .mat-form-field-suffix {
+    .mat-icon-button {
+      padding: 0;
+      width: 1.5em !important;
+      height: 1.5em !important;
+      display: flex !important;
+    }
+
+    .mat-datepicker-toggle-default-icon {
+      width: 1em !important;
+      height: 1em !important;
+    }
+  }
+
+  .mat-datepicker-toggle {
+    transition: color 0.35s ease;
+  }
+
+  .mat-datepicker-toggle-active {
+    color: var(--color-primary);
   }
 }
 
@@ -602,10 +655,10 @@
   color: var(--color-dark);
 
   .mat-select-arrow-wrapper {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     flex-shrink: 0;
-    margin-left: 8px;
+    margin: 0 16px;
   }
 
   .mat-select-arrow {
@@ -623,18 +676,18 @@
 
   &[aria-expanded='true'] {
     .mat-select-arrow {
-      transform: rotate(180deg);
+      transform: rotate(180deg) !important;
     }
   }
 }
 
 .mat-select-panel-wrap {
   .mat-select-panel {
-    margin-top: 31px;
-    margin-left: -6px;
+    margin-top: 44px;
+    margin-left: 16px;
     border-radius: 6px;
+    min-width: 100% !important;
     box-shadow: none !important;
-    min-width: calc(100% + 44px) !important;
     border: 1px solid var(--color-neutral-30);
 
     .mat-optgroup-label,
@@ -649,5 +702,30 @@
   .mat-option {
     padding-left: 22px;
     padding-right: 22px;
+  }
+}
+
+.mat-checkbox-layout {
+  align-items: center !important;
+}
+
+.mat-checkbox-inner-container {
+  width: 21px !important;
+  height: 21px !important;
+  margin: 0 12px 0 0 !important;
+}
+
+.mat-checkbox-background,
+.mat-checkbox-frame {
+  border-radius: 3px;
+}
+
+.mat-checkbox-frame {
+  border-color: var(--color-neutral-80);
+}
+
+.mat-checkbox {
+  + p {
+    margin-top: 8px;
   }
 }

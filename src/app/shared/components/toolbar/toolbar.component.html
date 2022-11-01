@@ -5,7 +5,7 @@
     <app-search-form class="search-form" *ngIf="showSearchForm"> </app-search-form>
     <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
     <button color="dark" mat-raised-button class="toolbar__button">
-      {{ 'app.share' | translate }}
+      <span>{{ 'app.share' | translate }}</span>
       <mat-icon class="toolbar__button__icon" svgIcon="share"></mat-icon>
     </button>
     <app-language class="toolbar__language"></app-language>

@@ -9,18 +9,17 @@
   border: 1px solid #d6d5d2;
 }
 
-.mat-button-base {
-  .mat-icon {
-    font-size: 14px;
-    display: inline-flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-
 .deployment-logo {
   height: 80px;
   width: 80px;
   border-radius: 100%;
+}
+
+.logo__uploader {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.form-controls-panel {
+  margin-top: 16px;
 }

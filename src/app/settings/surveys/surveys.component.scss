@@ -41,13 +41,9 @@
 .item-button-container {
   display: flex;
   justify-content: flex-end;
+}
 
-  .item-button {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-
-    &.mat-button-base .mat-icon {
-      font-size: 18px;
-    }
-  }
+.spinner {
+  display: block;
+  margin: 20vh 0;
 }

@@ -11,18 +11,18 @@
       <p>{{ control.label }}</p>
       <i [innerHTML]="control.description"></i>
 
-      <mat-form-field appearance="standard" *ngIf="control.input === 'text'">
-        <mat-label>
-          {{ control.label }}
-        </mat-label>
-        <input
-          matInput
-          [placeholder]="control.description"
-          [formControlName]="control.form_label"
-          [type]="control.input"
-          required
-        />
-      </mat-form-field>
+      <div class="form-row">
+        <mat-label>{{ control.label }}</mat-label>
+        <mat-form-field appearance="outline" *ngIf="control.input === 'text'">
+          <input
+            matInput
+            [placeholder]="control.description"
+            [formControlName]="control.form_label"
+            [type]="control.input"
+            required
+          />
+        </mat-form-field>
+      </div>
 
       <mat-radio-group
         *ngIf="control.input === 'radio'"
@@ -45,7 +45,7 @@
     </div>
   </div>
   <div class="form-controls-panel">
-    <button mat-raised-button type="button" (click)="cancel()" translate>Cancel</button>
+    <button mat-stroked-button type="button" (click)="cancel()" translate>Cancel</button>
     <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" translate>
       Save
     </button>
