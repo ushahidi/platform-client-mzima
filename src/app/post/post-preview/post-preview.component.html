@@ -4,39 +4,7 @@
   [ngStyle]="{ '--color': post.color }"
   [ngClass]="{ 'post--feed': feedView }"
 >
-  <span class="post__border"></span>
-
-  <div class="post__head">
-    <div class="post__head__item">
-      <span class="post__status">
-        <ng-container *ngIf="post.status === 'published'">Published</ng-container>
-        <ng-container *ngIf="post.status === 'draft'">Draft</ng-container>
-        <ng-container *ngIf="post.status === 'archived'">Archived</ng-container>
-      </span>
-    </div>
-
-    <div class="post__head__item">
-      <div class="post__user">
-        <div class="post__user__avatar">
-          <img
-            alt="user avatar"
-            src="//www.gravatar.com/avatar/{{
-              post.user?.gravatar || '00000000000000000000000000000000'
-            }}?d=retro&s=40"
-          />
-        </div>
-        <strong class="post__user__name">
-          {{ post.user?.realname || post.contact?.contact || post.author_realname || 'Anonymous' }}
-        </strong>
-      </div>
-    </div>
-
-    <div class="post__head__item">
-      <span class="post__time">{{ post.post_date | dateAgo }}</span>
-    </div>
-
-    <strong class="post__source">{{ 'post.source' | translate: { source: post.source } }}</strong>
-  </div>
+  <app-post-metadata [post]="post"></app-post-metadata>
 
   <div class="post__content">
     <h3>{{ post.title }}</h3>
