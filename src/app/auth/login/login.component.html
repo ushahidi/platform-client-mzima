@@ -4,6 +4,7 @@
   class="modal__close-btn"
   tabindex="-1"
   aria-label="{{ 'modal.button.close' | translate }}"
+  data-qa="btn-close"
 >
   <mat-icon class="fab-button__icon">close</mat-icon>
 </button>
@@ -33,7 +34,7 @@
   </div>
 
   <div mat-dialog-actions align="end">
-    <button mat-stroked-button type="button" (click)="cancel()">
+    <button mat-stroked-button type="button" (click)="cancel()" data-qa="btn-cancel">
       {{ 'app.cancel' | translate }}
     </button>
     <button
@@ -41,6 +42,7 @@
       color="primary"
       mat-raised-button
       [disabled]="form.invalid || form.disabled"
+      data-qa="btn-login"
     >
       {{ 'nav.login' | translate }}
     </button>

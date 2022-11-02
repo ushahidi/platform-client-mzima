@@ -22,6 +22,7 @@
           [routerLink]="item.router"
           routerLinkActive="sidebar-menu-button--active"
           (click)="registerPage($event, item.router, item.label)"
+          [data-qa]="'btn-' + item.icon"
         >
           <mat-icon class="sidebar-menu-button__icon">
             <svg class="iconic" role="img">
@@ -42,6 +43,7 @@
           *ngIf="item.visible"
           class="sidebar-menu-button"
           (click)="item.action()"
+          [data-qa]="'btn-' + item.icon"
         >
           <mat-icon class="sidebar-menu-button__icon">
             <svg class="iconic" role="img">

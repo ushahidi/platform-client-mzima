@@ -1,5 +1,4 @@
 <section class="section">
-  <h3 class="section-title">{{ 'nav.roles' | translate }}</h3>
   <div class="create-button-container">
     <button
       type="button"
@@ -7,6 +6,7 @@
       color="primary"
       mat-raised-button
       [routerLink]="['create']"
+      data-qa="btn-add-role"
     >
       <mat-icon class="create-button-icon">create</mat-icon>
       <span class="create-button-name">{{ 'role.add_role' | translate }}</span>
@@ -17,6 +17,7 @@
       class="roles-item"
       *ngFor="let role of (roleResponse$ | async)?.results"
       [routerLink]="['update', role.id]"
+      [data-qa]="'btn-' + role.display_name | lowercase"
     >
       <div class="item-icon-wrapper">
         <mat-icon class="item-icon">home</mat-icon>
