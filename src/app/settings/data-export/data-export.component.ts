@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormInterface, ExportJobInterface } from '@models';
-import { TranslateService } from '@ngx-translate/core';
-import {
-  ExportJobsService,
-  FormsService,
-  NotificationService,
-  PollingService,
-  SessionService,
-} from '@services';
+import { ExportJobsService, FormsService, PollingService, SessionService } from '@services';
 
 @Component({
   selector: 'app-data-export',
@@ -22,14 +15,13 @@ export class DataExportComponent implements OnInit {
   hxlApiKey = false;
   showProgress = false;
   exportView = true;
+  exportJobsReady = false;
 
   constructor(
     private formsService: FormsService,
     private sessionService: SessionService,
     private exportJobsService: ExportJobsService,
     private pollingService: PollingService,
-    private notificationService: NotificationService,
-    private translate: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -43,8 +35,16 @@ export class DataExportComponent implements OnInit {
   }
 
   loadExportJobs() {
-    this.exportJobsService.get().subscribe((jobs) => {
-      this.exportJobs = jobs.results.reverse();
+    this.exportJobsReady = false;
+    this.exportJobsService.get().subscribe({
+      next: (jobs) => {
+        this.exportJobs = jobs.reverse();
+        this.exportJobsReady = true;
+      },
+      error: (err) => {
+        console.error('Export failed: ', err);
+        this.exportJobsReady = true;
+      },
     });
   }
 

@@ -11,6 +11,7 @@
             placeholder="{{ 'settings.donation.title.placeholder' }}"
             formControlName="title"
             required
+            data-qa="title"
           />
           <mat-error *ngIf="donationForm.get('title')?.invalid">
             {{ donationForm.get('title')?.errors | json }}
@@ -22,6 +23,7 @@
         <mat-form-field appearance="standard">
           <mat-label translate>Describe your donation</mat-label>
           <textarea
+            data-qa="description"
             matInput
             placeholder="{{ 'settings.site_description' }}"
             formControlName="description"
@@ -47,7 +49,7 @@
       <h4>Attach an image</h4>
       <button color="primary" mat-raised-button class="upload-button">
         Upload
-        <input name="file" type="file" (change)="uploadFile($event)" />
+        <input name="file" type="file" (change)="uploadFile($event)" data-qa="btn-upload" />
       </button>
     </div>
 
@@ -57,6 +59,7 @@
         <mat-form-field appearance="standard">
           <mat-label translate>Wallet address</mat-label>
           <input
+            data-qa="wallet"
             matInput
             placeholder="{{ 'settings.donation.title.placeholder' }}"
             formControlName="wallet"
@@ -70,7 +73,12 @@
         </p>
       </div>
     </div>
-    <mat-slide-toggle color="primary" class="monetization-toggle" formControlName="enabled">
+    <mat-slide-toggle
+      color="primary"
+      class="monetization-toggle"
+      formControlName="enabled"
+      data-qa="monetization-toggle"
+    >
       Enable Monetization
     </mat-slide-toggle>
   </form>
@@ -79,7 +87,11 @@
   </div>
 
   <div class="form-controls-panel">
-    <button type="button" mat-raised-button routerLink="/settings">Cancel</button>
-    <button type="button" color="primary" mat-raised-button (click)="save()">Save</button>
+    <button type="button" mat-raised-button routerLink="/settings" data-qa="btn-cancel">
+      Cancel
+    </button>
+    <button type="button" color="primary" mat-raised-button (click)="save()" data-qa="btn-save">
+      Save
+    </button>
   </div>
 </div>

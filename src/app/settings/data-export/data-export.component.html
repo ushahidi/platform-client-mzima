@@ -7,7 +7,7 @@
     <mat-tab-group>
       <mat-tab [label]="'data_export.export' | translate">
         <div class="tab-cover">
-          <div class="form-field" *ngIf="!hxlEnabled">
+          <div class="form-field" *ngIf="hxlEnabled && !hxlApiKey">
             <div class="alert">
               <p>{{ 'data_export.hxl_apikey_alert_1' | translate }}</p>
               <p>
@@ -43,7 +43,7 @@
         </div>
       </mat-tab>
       <mat-tab [label]="'data_export.export_history' | translate">
-        <div class="tab-cover listing">
+        <div class="tab-cover listing" *ngIf="exportJobsReady; else showLoader">
           <div class="listing-item" *ngFor="let job of exportJobs">
             <div class="listing-item-primary">
               <strong class="listing-item__title">
@@ -51,16 +51,19 @@
                   {{ 'data_export.job' | translate: { jobId: job.id } }}
                 </a>
               </strong>
-              <p class="listing-item-secondary">
-                <strong>Status:</strong> {{ 'data_export.' + job.status | translate }}
-              </p>
+              <p
+                class="listing-item-secondary"
+                [innerHTML]="'data_export.' + job.status | translate"
+              ></p>
               <p
                 class="listing-item-secondary"
                 [innerHTML]="'data_export.created' | translate: { created: job.created }"
               ></p>
               <p
                 class="listing-item-secondary"
-                [innerHTML]="'data_export.expires' | translate: { expires: job.url_expiration }"
+                [innerHTML]="
+                  'data_export.expires' | translate: { expires: job.url_expiration || '' }
+                "
               ></p>
             </div>
           </div>
@@ -135,4 +138,8 @@
     </a>
     {{ 'data_export.account' | translate }}
   </p>
+</ng-template>
+
+<ng-template #showLoader>
+  <app-spinner class="spinner"></app-spinner>
 </ng-template>
