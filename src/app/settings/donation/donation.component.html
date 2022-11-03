@@ -39,12 +39,9 @@
           <figure class="logo">
             <img [src]="image.original_file_url" alt="Donation-image" />
           </figure>
-          <button
-            color="warn"
-            mat-raised-button
-            (click)="deleteImage(image.id)"
-            translate="app.delete"
-          ></button>
+          <button color="accent" mat-raised-button (click)="deleteImage(image.id)">
+            {{ 'app.delete' | translate }}
+          </button>
         </div>
       </div>
       <h4>Attach an image</h4>
@@ -75,12 +72,11 @@
       </div>
     </div>
     <mat-slide-toggle
-      color="primary"
       class="monetization-toggle"
       formControlName="enabled"
       data-qa="monetization-toggle"
     >
-      Enable Monetization
+      {{ 'app.enable_monetization' | translate }}
     </mat-slide-toggle>
   </form>
   <div class="alert" *ngIf="!donationConfig.enabled">
