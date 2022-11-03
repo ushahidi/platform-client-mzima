@@ -8,6 +8,7 @@ import { SharedModule } from '../shared';
 import { LocationSelectComponent } from './location-select/location-select.component';
 import { PostPreviewComponent } from './post-preview/post-preview.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
+import { PostMetadataComponent } from './post-metadata/post-metadata.component';
 
 @NgModule({
   declarations: [
@@ -16,8 +17,9 @@ import { PostDetailsComponent } from './post-details/post-details.component';
     LocationSelectComponent,
     PostPreviewComponent,
     PostDetailsComponent,
+    PostMetadataComponent,
   ],
   imports: [CommonModule, SharedModule, PostRoutingModule, LeafletModule],
-  exports: [PostPreviewComponent, PostDetailsComponent],
+  exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent],
 })
 export class PostModule {}

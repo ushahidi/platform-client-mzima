@@ -16,50 +16,58 @@
   >
   </app-translations-switch>
 
-  <mat-form-field appearance="standard">
-    <mat-label>
-      {{ 'survey.survey_name' | translate }}
-    </mat-label>
-    <input matInput [placeholder]="'survey.survey_name' | translate" formControlName="name" />
-    <mat-error *ngIf="form.get('name')?.invalid">
-      {{ 'survey.fields.validation.required' | translate }}</mat-error
-    >
-  </mat-form-field>
+  <div class="form-row">
+    <mat-label>{{ 'survey.survey_name' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input matInput formControlName="name" [placeholder]="'survey.survey_name' | translate" />
+      <mat-error *ngIf="form.get('name')?.invalid">
+        {{ 'survey.fields.validation.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </div>
 
-  <mat-form-field appearance="standard" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
+  <div class="form-row" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
     <mat-label> {{ 'survey.survey_name' | translate }} ({{ selectLanguageCode }}) </mat-label>
-    <input
-      matInput
-      [placeholder]="'survey.survey_name' | translate"
-      [value]="this.form.get('translations')?.value[selectLanguageCode]?.name"
-      (change)="setTranslates(selectLanguageCode, 'name', $event)"
-    />
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        [placeholder]="'survey.survey_name' | translate"
+        [value]="this.form.get('translations')?.value[selectLanguageCode]?.name"
+        (change)="setTranslates(selectLanguageCode, 'name', $event)"
+      />
+    </mat-form-field>
+  </div>
 
-  <mat-form-field appearance="standard">
-    <mat-label>
-      {{ 'survey.description' | translate }}
-    </mat-label>
-    <textarea
-      rows="5"
-      matInput
-      [placeholder]="'survey.description' | translate"
-      formControlName="description"
-    >
-    </textarea>
-  </mat-form-field>
+  <div class="form-row">
+    <mat-label>{{ 'survey.description' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="2"
+        cdkAutosizeMaxRows="5"
+        [placeholder]="'survey.description' | translate"
+        formControlName="description"
+      >
+      </textarea>
+    </mat-form-field>
+  </div>
 
-  <mat-form-field appearance="standard" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
+  <div class="form-row" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
     <mat-label> {{ 'survey.description' | translate }} ({{ selectLanguageCode }}) </mat-label>
-    <textarea
-      rows="5"
-      matInput
-      [placeholder]="'survey.description' | translate"
-      [value]="this.form.get('translations')?.value[selectLanguageCode]?.description"
-      (change)="setTranslates(selectLanguageCode, 'description', $event)"
-    >
-    </textarea>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="2"
+        cdkAutosizeMaxRows="5"
+        [placeholder]="'survey.description' | translate"
+        [value]="this.form.get('translations')?.value[selectLanguageCode]?.description"
+        (change)="setTranslates(selectLanguageCode, 'description', $event)"
+      >
+      </textarea>
+    </mat-form-field>
+  </div>
 
   <app-survey-task
     #configTask
@@ -76,15 +84,15 @@
 </div>
 
 <div class="form-container form-container--add-task">
-  <button type="button" mat-raised-button (click)="addTask()" class="add-task-button">
-    <mat-icon>add</mat-icon>
+  <button type="button" mat-raised-button (click)="addTask()" class="add-task-button" color="dark">
     {{ 'survey.add_task' | translate }}
+    <mat-icon>add</mat-icon>
   </button>
 </div>
 
 <div class="form-container form-container--buttons">
   <div mat-dialog-actions align="end" class="mat-dialog-actions">
-    <button mat-raised-button type="button" (click)="cancel()">
+    <button mat-stroked-button type="button" (click)="cancel()">
       {{ 'app.cancel' | translate }}
     </button>
     <button

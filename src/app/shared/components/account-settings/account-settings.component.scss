@@ -31,14 +31,6 @@
   border-top: 1px solid #eee;
 }
 
-.mat-dialog-actions {
-  margin-left: -24px;
-  margin-right: -24px;
-  padding-left: 24px;
-  padding-right: 24px;
-  background: rgba(#eee, 0.8);
-}
-
 .contacts-tab {
   background: #eee;
   margin-bottom: 16px;
@@ -136,11 +128,5 @@
 
   .mat-slide-toggle {
     margin-bottom: 16px;
-  }
-}
-
-.radio-button {
-  &:not(:first-child) {
-    margin-top: 8px;
   }
 }

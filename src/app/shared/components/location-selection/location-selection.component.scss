@@ -1,3 +1,12 @@
+.location-select {
+  &__title {
+    margin: 0 0 4px;
+    font-size: 12px;
+    line-height: 1.6;
+    font-weight: normal;
+  }
+}
+
 .location-control {
   &__icon {
     top: 4px;

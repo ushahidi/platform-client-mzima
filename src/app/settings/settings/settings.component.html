@@ -1,5 +1,10 @@
 <div class="settings">
-  <div *ngFor="let item of settingsItems" [routerLink]="item.router" class="single-menu">
+  <div
+    *ngFor="let item of settingsItems"
+    [routerLink]="item.router"
+    class="single-menu"
+    [data-qa]="'btn-' + item.router"
+  >
     <div class="item-icon-wrapper">
       <mat-icon class="item-icon">{{ item.icon }}</mat-icon>
     </div>

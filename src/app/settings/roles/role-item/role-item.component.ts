@@ -55,6 +55,7 @@ export class RoleItemComponent implements OnInit {
           return {
             name: el.name,
             checked: false,
+            test: el.name.replace(' ', '-').toLowerCase(),
           };
         });
         if (this.isUpdate) {

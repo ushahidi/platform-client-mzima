@@ -28,13 +28,10 @@
 
   <form [formGroup]="form" novalidate>
     <div class="form-field">
-      <div class="form-group">
-        <h4>{{ 'settings.user_settings.hdx_maintainer_id' | translate }}</h4>
-        <p class="form-description">{{ 'settings.user_settings.profile_page' | translate }}</p>
-        <mat-form-field appearance="standard">
-          <mat-label>
-            {{ 'settings.user_settings.hdx_maintainer_id' | translate }}
-          </mat-label>
+      <div class="form-row">
+        <mat-label>{{ 'settings.user_settings.hdx_maintainer_id' | translate }}</mat-label>
+        <p>{{ 'settings.user_settings.profile_page' | translate }}</p>
+        <mat-form-field appearance="outline">
           <input
             matInput
             placeholder="Please enter maintainer id"
@@ -58,13 +55,10 @@
     </div>
 
     <div class="form-field">
-      <div class="form-group">
-        <h4>{{ 'settings.user_settings.api_key' | translate }}</h4>
+      <div class="form-row">
+        <mat-label>{{ 'settings.user_settings.api_key' | translate }}</mat-label>
         <p class="form-description">{{ 'settings.user_settings.profile_page' | translate }}</p>
-        <mat-form-field appearance="standard">
-          <mat-label>
-            {{ 'settings.user_settings.api_key' | translate }}
-          </mat-label>
+        <mat-form-field appearance="outline">
           <input
             matInput
             placeholder="Please enter API key"

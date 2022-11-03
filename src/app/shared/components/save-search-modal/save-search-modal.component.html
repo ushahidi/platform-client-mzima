@@ -1,5 +1,5 @@
 <button
-  mat-icon-button
+  mat-stroked-button
   mat-dialog-close
   class="modal__close-btn"
   tabindex="-1"
@@ -24,7 +24,7 @@
 
   <div class="form-row">
     <mat-label>{{ 'app.description' | translate }}</mat-label>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" disabled>
       <input matInput formControlName="description" />
     </mat-form-field>
   </div>
@@ -66,15 +66,6 @@
     <button type="button" (click)="cancel()" mat-stroked-button>
       {{ 'app.cancel' | translate }}
     </button>
-    <!-- <button
-      type="button"
-      color="accent"
-      mat-raised-button
-      *ngIf="data.search"
-      (click)="deleteSavedfilter()"
-    >
-      {{ 'app.delete' | translate }}
-    </button> -->
     <button color="primary" mat-raised-button [disabled]="form.invalid || form.disabled">
       {{ 'app.apply_filters' | translate }}
     </button>

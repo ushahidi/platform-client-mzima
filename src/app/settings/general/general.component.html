@@ -1,9 +1,9 @@
 <div class="page-content">
   <h2>General</h2>
   <form (ngSubmit)="save()" [formGroup]="generalForm" novalidate>
-    <div class="form-group">
-      <mat-form-field appearance="standard">
-        <mat-label translate>settings.deployment_name</mat-label>
+    <div class="form-row">
+      <mat-label translate>settings.deployment_name</mat-label>
+      <mat-form-field appearance="outline">
         <input
           matInput
           placeholder="{{ 'settings.deployment_name' }}"
@@ -15,20 +15,21 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <div class="form-group">
-      <mat-form-field appearance="standard">
-        <mat-label translate>settings.site_description</mat-label>
+    <div class="form-row">
+      <mat-label translate>settings.site_description</mat-label>
+      <mat-form-field appearance="outline">
         <textarea
           matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="2"
+          cdkAutosizeMaxRows="5"
           placeholder="{{ 'settings.site_description' }}"
           formControlName="description"
-          data-min-rows="1"
-          rows="1"
         ></textarea>
       </mat-form-field>
     </div>
-    <div class="form-group">
-      <h3 translate>settings.deployment_logo</h3>
+    <div class="form-row">
+      <mat-label translate>settings.deployment_logo</mat-label>
       <app-file-uploader
         class="logo__uploader"
         [imageSrc]="siteConfig.image_header"
@@ -37,9 +38,9 @@
       >
       </app-file-uploader>
     </div>
-    <div class="form-group">
-      <mat-form-field appearance="standard">
-        <mat-label translate>settings.site_email</mat-label>
+    <div class="form-row">
+      <mat-label translate>settings.site_email</mat-label>
+      <mat-form-field appearance="outline">
         <input matInput placeholder="name@domain.com" formControlName="email" required />
         <mat-error *ngIf="generalForm.get('email')?.invalid">
           {{ generalForm.get('email')?.errors | json }}
@@ -47,10 +48,10 @@
       </mat-form-field>
       <p class="small" translate>settings.site_email_note</p>
     </div>
-    <div class="form-group">
-      <mat-form-field appearance="standard">
-        <mat-label translate>settings.site_language</mat-label>
-        <mat-select formControlName="language">
+    <div class="form-row">
+      <mat-label translate>settings.site_language</mat-label>
+      <mat-form-field appearance="outline">
+        <mat-select formControlName="language" disableOptionCentering>
           <mat-option *ngFor="let lang of langService.getLanguages()" [value]="lang.code">
             {{ lang.name }}
           </mat-option>
@@ -59,45 +60,40 @@
     </div>
 
     <!-- FIXME: isPrivateEnabled -->
-    <div class="form-group">
+    <div class="form-row">
       <mat-checkbox formControlName="private">{{
         'settings.site_private' | translate
       }}</mat-checkbox>
       <p class="small" translate>settings.site_private_desc</p>
     </div>
     <!-- FIXME: isDisableRegistrationEnabled -->
-    <div class="form-group">
+    <div class="form-row">
       <mat-checkbox translate formControlName="disable_registration">
         {{ 'settings.site_disable_registration' | translate }}
       </mat-checkbox>
       <p translate="settings.site_disable_registration_desc"></p>
     </div>
   </form>
-
-  <div class="form-group danger" *ngIf="apiKey">
-    <h3 for="api-key" translate>API Key</h3>
+  <br />
+  <div class="form-row" *ngIf="apiKey">
+    <mat-label translate>API Key</mat-label>
     <p translate>settings.api_key_desc</p>
-    <button
-      id="api-key"
-      type="button"
-      mat-raised-button
-      class="button-beta"
-      (click)="generateApiKey()"
-    >
-      <mat-icon aria-hidden="false" aria-label="Generate API Key">
+    <button type="button" mat-stroked-button (click)="generateApiKey()">
+      <span>Generate API Key</span>
+      <mat-icon>
         <svg class="iconic" role="img">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#key"></use>
         </svg>
       </mat-icon>
-      <span class="button-label hidden-when-small"> Generate API Key </span>
     </button>
-    <span id="api_key" class="api-key">{{ apiKey.api_key }}</span>
+    <span class="api-key">{{ apiKey.api_key }}</span>
   </div>
+  <br />
 
   <app-settings-map #mapSettings></app-settings-map>
 
   <div class="form-controls-panel">
-    <button type="button" mat-raised-button routerLink="/settings">Cancel</button>
+    <button type="button" mat-stroked-button routerLink="/settings">Cancel</button>
     <button type="button" color="primary" mat-raised-button (click)="save()">Save</button>
   </div>
 </div>

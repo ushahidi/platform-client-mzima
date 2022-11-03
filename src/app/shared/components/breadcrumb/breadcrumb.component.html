@@ -10,6 +10,7 @@
       class="breadcrumb-button"
       [routerLink]="breadcrumb.url"
       routerLinkActive="breadcrumb-button--active"
+      [data-qa]="'bread-' + breadcrumb.label | lowercase"
     >
       {{ breadcrumb.label }}
     </button>

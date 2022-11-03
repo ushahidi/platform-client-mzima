@@ -76,7 +76,7 @@
   <h2 class="form-sheet-title" translate>data_export.select_fields_title</h2>
   <p translate>data_export.select_fields_desc</p>
 
-  <div class="form-group" *ngFor="let form of forms">
+  <div class="form-row" *ngFor="let form of forms">
     <h3>{{ form.name }}</h3>
     <div *ngIf="form.attributes">
       <mat-checkbox (change)="selectAll(form)" [checked]="isAllSelected(form)">

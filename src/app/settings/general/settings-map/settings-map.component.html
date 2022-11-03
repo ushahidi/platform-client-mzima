@@ -1,6 +1,6 @@
 <div *ngIf="mapConfig">
-  <div class="form-group">
-    <h3 translate>settings.map_default_location</h3>
+  <div class="form-row">
+    <mat-label translate>settings.map_default_location</mat-label>
     <div class="map-holder">
       <div
         id="settings-map"
@@ -16,9 +16,9 @@
 
   <mat-grid-list cols="2" rowHeight="70" gutterSize="24">
     <mat-grid-tile>
-      <div class="form-group">
-        <mat-form-field appearance="standard">
-          <mat-label translate>settings.map_default_latitude</mat-label>
+      <div class="form-row">
+        <mat-label translate>settings.map_default_latitude</mat-label>
+        <mat-form-field appearance="outline">
           <input
             type="number"
             matInput
@@ -31,9 +31,9 @@
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <div class="form-group">
-        <mat-form-field appearance="standard">
-          <mat-label translate>settings.map_default_longitude</mat-label>
+      <div class="form-row">
+        <mat-label translate>settings.map_default_longitude</mat-label>
+        <mat-form-field appearance="outline">
           <input
             type="number"
             matInput
@@ -46,10 +46,11 @@
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <div class="form-group">
-        <mat-form-field appearance="standard">
-          <mat-label translate>settings.map_default_baselayer</mat-label>
+      <div class="form-row">
+        <mat-label translate>settings.map_default_baselayer</mat-label>
+        <mat-form-field appearance="outline">
           <mat-select
+            disableOptionCentering
             [(value)]="mapConfig.default_view!.baselayer"
             (valueChange)="layerChange($event)"
           >
@@ -62,9 +63,9 @@
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <div class="form-group">
-        <mat-form-field appearance="standard">
-          <mat-label translate>settings.map_default_zoom_level</mat-label>
+      <div class="form-row">
+        <mat-label translate>settings.map_default_zoom_level</mat-label>
+        <mat-form-field appearance="outline">
           <input
             type="number"
             matInput
@@ -77,7 +78,7 @@
     </mat-grid-tile>
   </mat-grid-list>
 
-  <div class="form-group">
+  <div class="form-row">
     <mat-checkbox [checked]="mapConfig.clustering" (change)="mapConfig.clustering = $event.checked">
       {{ 'settings.map_clustering' | translate }}
     </mat-checkbox>

@@ -1,13 +1,20 @@
 <div class="chart-container">
-  <h3>Activity over time</h3>
-  <mat-form-field appearance="standard">
+  <h2>Activity over time</h2>
+  <div class="form-row">
     <mat-label>Select filter</mat-label>
-    <mat-select [(ngModel)]="selectedFilter" (selectionChange)="change($event)" name="filter">
-      <mat-option *ngFor="let filter of filters" [value]="filter.value">
-        {{ filter.displayNane }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-select
+        [(ngModel)]="selectedFilter"
+        (selectionChange)="change($event)"
+        name="filter"
+        disableOptionCentering
+      >
+        <mat-option *ngFor="let filter of filters" [value]="filter.value">
+          {{ filter.displayNane }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <mat-checkbox
     class="example-margin"
     [(ngModel)]="cumulativeTotal"

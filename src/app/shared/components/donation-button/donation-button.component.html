@@ -6,7 +6,7 @@
     (click)="showDonation()"
     *ngIf="!donationService.isMonetizationStarted"
   >
-    {{ 'app.donate' | translate }}
+    <span>{{ 'app.donate' | translate }}</span>
     <mat-icon class="toolbar__button__icon" svgIcon="heart"></mat-icon>
   </button>
 

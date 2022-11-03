@@ -1,49 +1,44 @@
 <div class="location-select">
   <h4 class="location-select__title">City or address</h4>
 
-  <mat-form-field appearance="standard" class="form-control location-control">
-    <mat-icon matPrefix class="location-control__icon">
-      <svg class="iconic" role="img">
-        <use
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          xlink:href="assets/sprites.svg#location"
-        ></use>
-      </svg>
-    </mat-icon>
-    <input
-      matInput
-      [(ngModel)]="searchQuery"
-      (ngModelChange)="search()"
-      [matAutocomplete]="cities"
-      [ngModelOptions]="{ standalone: true }"
-      [placeholder]="'global_filter.location_placeholder' | translate"
-    />
-    <button
-      matSuffix
-      type="button"
-      mat-icon-button
-      (click)="clear()"
-      *ngIf="searchQuery"
-      class="location-control__clear"
-    >
-      <mat-icon class="location-control__icon">close</mat-icon>
-    </button>
-    <mat-autocomplete
-      autoActiveFirstOption
-      autoSelectActiveOption
-      #cities="matAutocomplete"
-      [displayWith]="displayFn"
-      (optionSelected)="optionSelected($event)"
-    >
-      <mat-option [value]="option" *ngFor="let option of citiesOptions | async">
-        {{ option.display_name }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="form-control location-control">
+      <input
+        matInput
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="search()"
+        [matAutocomplete]="cities"
+        [ngModelOptions]="{ standalone: true }"
+        [placeholder]="'global_filter.location_placeholder' | translate"
+      />
+      <button
+        matSuffix
+        type="button"
+        mat-icon-button
+        (click)="clear()"
+        *ngIf="searchQuery"
+        class="location-control__clear"
+      >
+        <mat-icon class="location-control__icon">close</mat-icon>
+      </button>
+      <mat-autocomplete
+        autoActiveFirstOption
+        autoSelectActiveOption
+        #cities="matAutocomplete"
+        [displayWith]="displayFn"
+        (optionSelected)="optionSelected($event)"
+      >
+        <mat-option [value]="option" *ngFor="let option of citiesOptions | async">
+          {{ option.display_name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
 
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-select
       placeholder="Distance"
+      disableOptionCentering
       [(ngModel)]="location_distance"
       (ngModelChange)="changeDistance()"
     >

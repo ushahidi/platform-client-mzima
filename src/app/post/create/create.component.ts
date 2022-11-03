@@ -5,6 +5,7 @@ import { PostsV5Service, SurveysService } from '@services';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import { TranslateService } from '@ngx-translate/core';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -20,6 +21,8 @@ export class CreateComponent implements OnInit {
   public description: string;
   public title: string;
   private formId?: number;
+  public tasks: any[];
+  public activeLanguage: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,12 +30,17 @@ export class CreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private postsV5Service: PostsV5Service,
     private router: Router,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.formId = Number(params.get('id'));
       this.loadData(this.formId);
+    });
+
+    this.translate.onLangChange.subscribe((newLang) => {
+      this.activeLanguage = newLang.lang;
     });
   }
 
@@ -41,17 +49,12 @@ export class CreateComponent implements OnInit {
     this.surveysService.getById(id).subscribe({
       next: (data) => {
         this.data = data;
-        const tmpFields = data.result.tasks[0].fields
-          .sort((a: any, b: any) => a.priority - b.priority)
-          .map((field: any) => {
-            if (field.type === 'tags') {
-              field.all_selected = false;
-              field.options.map((option: any) => {
-                return (option.value = false);
-              });
-            }
-            return field;
-          });
+
+        this.tasks = data.result.tasks.slice(1);
+
+        const tmpFields = data.result.tasks[0].fields.sort(
+          (a: any, b: any) => a.priority - b.priority,
+        );
 
         this.fields = tmpFields;
 
@@ -65,21 +68,14 @@ export class CreateComponent implements OnInit {
           }
 
           if (field.key) {
-            if (field.input !== 'tags') {
-              const value =
-                field.default ||
-                (field.input === 'date'
-                  ? new Date()
-                  : field.input === 'location'
-                  ? { lat: -1.28569, lng: 36.832324 }
-                  : '');
-              fields[field.key] = new FormControl(
-                value,
-                field.required ? Validators.required : null,
-              );
-            } else {
-              fields[field.key] = new FormArray([]);
-            }
+            const value =
+              field.default ||
+              (field.input === 'date'
+                ? new Date()
+                : field.input === 'location'
+                ? { lat: -1.28569, lng: 36.832324 }
+                : '');
+            fields[field.key] = new FormControl(value, field.required ? Validators.required : null);
           }
         });
 
@@ -90,23 +86,6 @@ export class CreateComponent implements OnInit {
 
   public getOptionsByParentId(field: any, parent_id: number): any[] {
     return field.options.filter((option: any) => option.parent_id === parent_id);
-  }
-
-  public checkGroupIsChecked(value: boolean, field: any, option: any): void {
-    option.value = value;
-
-    if (
-      (value && field.options.find((o: any) => o.parent_id === option.parent_id && o.value)) ||
-      (!value && !field.options.find((o: any) => o.parent_id === option.parent_id && o.value))
-    ) {
-      field.options.find((o: any) => o.id === option.parent_id).value = value;
-    }
-  }
-
-  public selectAll(value: boolean, field: any): void {
-    field.options.map((option: any) => {
-      option.value = value;
-    });
   }
 
   public submitPost(): void {

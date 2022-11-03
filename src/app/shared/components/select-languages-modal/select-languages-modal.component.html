@@ -1,5 +1,5 @@
 <button
-  mat-icon-button
+  mat-stroked-button
   mat-dialog-close
   class="modal__close-btn"
   tabindex="-1"
@@ -10,15 +10,22 @@
 
 <h1 mat-dialog-title>{{ 'form.select_language' | translate }}</h1>
 <div mat-dialog-content>
-  <p>{{ 'translations.add_a_language' | translate }}</p>
-  <mat-form-field appearance="standard">
+  <div class="form-row">
     <mat-label>{{ 'translations.select_language' | translate }}</mat-label>
-    <mat-select multiple [(value)]="selectedLanguages" (selectionChange)="checkLanguages()">
-      <mat-option [value]="language.code" *ngFor="let language of data.languages">
-        {{ language.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-select
+        multiple
+        disableOptionCentering
+        [(value)]="selectedLanguages"
+        (selectionChange)="checkLanguages()"
+        [placeholder]="'translations.add_a_language' | translate"
+      >
+        <mat-option [value]="language.code" *ngFor="let language of data.languages">
+          {{ language.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
   <div class="info-msg" *ngIf="errorLanguages.length">
     <mat-icon>warning</mat-icon>
@@ -43,7 +50,7 @@
   </div>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>{{ 'app.cancel' | translate }}</button>
+  <button mat-stroked-button mat-dialog-close>{{ 'app.cancel' | translate }}</button>
   <button
     color="primary"
     mat-raised-button

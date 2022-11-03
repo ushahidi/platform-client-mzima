@@ -5,8 +5,8 @@
       mat-mini-fab
       color="primary"
       routerLink="create"
-      aria-label="Add new category"
       *ngIf="!selectedCategories.length"
+      [attr.aria-label]="'add_new_category' | translate"
     >
       <mat-icon>add</mat-icon>
     </button>
