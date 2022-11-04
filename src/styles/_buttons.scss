@@ -74,18 +74,6 @@
   }
 }
 
-.mat-accent {
-  &.mat-button,
-  &.mat-icon-button,
-  &.mat-stroked-button {
-    color: var(--color-accent);
-
-    &:hover {
-      color: var(--color-accent-tint);
-    }
-  }
-}
-
 .mat-mini-fab {
   font-size: 18px;
 }
@@ -179,6 +167,29 @@
   &.mat-mini-fab {
     color: var(--color-accent-contrast);
     background-color: var(--color-accent);
+
+    &:hover {
+      background-color: var(--color-accent-tint);
+    }
+
+    .mat-ripple-element {
+      background-color: var(--color-accent-shade);
+    }
+
+    &.mat-button-disabled {
+      color: var(--color-neutral-70);
+      background-color: var(--color-primary-90);
+    }
+  }
+
+  &.mat-button,
+  &.mat-icon-button,
+  &.mat-stroked-button {
+    color: var(--color-accent);
+
+    &:hover {
+      color: var(--color-accent-tint);
+    }
   }
 }
 
