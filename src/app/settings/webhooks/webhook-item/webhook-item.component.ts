@@ -156,7 +156,7 @@ export class WebhookItemComponent implements OnInit {
 
   private postWebhook() {
     this.deleteFormFields(['id', 'created', 'updated', 'allowed_privileges', 'user']);
-    if (this.form.controls['form_id'].value === 0) this.deleteFormFields(['form_id']);
+    if (!!this.form.controls['form_id'].value) this.deleteFormFields(['form_id']);
     this.webhooksService.post(this.form.value).subscribe({
       next: () => this.navigateToWebhooks(),
       error: (err) => console.log(err),
