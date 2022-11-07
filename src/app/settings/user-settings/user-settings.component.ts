@@ -30,9 +30,24 @@ export class UserSettingsComponent implements OnInit {
     if (this.xhdParams.user_id)
       this.usersService.getUserSettings(this.xhdParams.user_id).subscribe({
         next: (response) => {
-          console.log(response);
+          response.results.forEach((setting: any) => {
+            this.updateSettings(setting);
+          });
         },
       });
+  }
+
+  updateSettings(setting: any) {
+    if (setting.config_key === 'hdx_api_key') {
+      setting.config_value =
+        '*** *** *** *** *** *** *** ' +
+        setting.config_value.slice(setting.config_value.length - 4);
+      this.form.patchValue({ hdx_api_key: setting.config_value });
+    }
+
+    if (setting.config_key === 'hdx_maintainer_id') {
+      this.form.patchValue({ hdx_maintainer_id: setting.config_value });
+    }
   }
 
   public saveMaintainerId() {
