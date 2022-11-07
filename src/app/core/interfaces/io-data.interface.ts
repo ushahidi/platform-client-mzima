@@ -25,7 +25,7 @@ export interface ImportCSVFilesResponse extends ApiResponse {
 
 export interface ExportJobInterface {
   allowed_privileges: string[];
-  created: Date;
+  created: Date | string;
   entity_type: string;
   fields: string[];
   filters: any;
@@ -41,7 +41,8 @@ export interface ExportJobInterface {
   total_rows: number;
   updated?: Date;
   url: string;
-  url_expiration: number;
+  url_expiration: number | string | Date;
+  created_timestamp: number | string | Date;
 }
 
 export interface ExportJobsResponse extends ApiResponse {
