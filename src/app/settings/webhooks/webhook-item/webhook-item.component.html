@@ -4,7 +4,7 @@
     <mat-label>{{ 'webhook.name' | translate }} <span class="color-accent">*</span></mat-label>
     <mat-form-field appearance="outline">
       <input matInput placeholder="Please enter webhook name" formControlName="name" required />
-      <mat-error *ngIf="form.get('name')?.invalid">Webhook name is required</mat-error>
+      <mat-error *ngIf="form.get('name')?.hasError('required')">Webhook name is required</mat-error>
     </mat-form-field>
   </div>
 
@@ -19,8 +19,12 @@
         formControlName="shared_secret"
         required
       />
-      <mat-error *ngIf="form.get('shared_secret')?.invalid">
+      <mat-error *ngIf="form.get('shared_secret')?.hasError('required')">
         Shared secret key is required
+      </mat-error>
+      <mat-error *ngIf="form.get('shared_secret')?.hasError('minlength')">
+        Shared secret key can not less then
+        {{ form.get('shared_secret')?.errors?.['minlength']['requiredLength'] }} characters.
       </mat-error>
     </mat-form-field>
   </div>
@@ -29,7 +33,10 @@
     <mat-label>{{ 'webhook.url' | translate }} <span class="color-accent">*</span></mat-label>
     <mat-form-field appearance="outline">
       <input matInput placeholder="Please enter api url" formControlName="url" required />
-      <mat-error *ngIf="form.get('url')?.invalid">API URL id required</mat-error>
+      <mat-error *ngIf="form.get('url')?.hasError('required')">API URL id required</mat-error>
+      <mat-error *ngIf="form.get('url')?.hasError('pattern')"
+        >Please provide valid API URL</mat-error
+      >
     </mat-form-field>
   </div>
 
@@ -155,7 +162,7 @@
       data-qa="btn-webhook-save"
       [disabled]="form.invalid"
     >
-      {{ 'app.save' | translate }}
+      {{ (isCreateWebhook ? 'app.save' : 'app.edit') | translate | translate }}
     </button>
   </div>
 </form>

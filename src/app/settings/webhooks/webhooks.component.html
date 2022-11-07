@@ -1,8 +1,8 @@
-<div class="webhook-wrapper">
+<div class="webhook-wrapper" *ngIf="webhookList">
   <div class="webhook">
     <p>
       <button mat-raised-button routerLink="create" color="primary" data-qa="btn-webhook-create">
-        Create Webhook
+        {{ 'webhook.add_webhook' | translate }}
       </button>
     </p>
     <ul class="webhook-item-list">

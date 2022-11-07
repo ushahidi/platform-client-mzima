@@ -21,10 +21,16 @@ export class WebhookItemComponent implements OnInit {
     form_id: [0],
     id: [0],
     name: ['', [Validators.required]],
-    shared_secret: ['', [Validators.required]],
+    shared_secret: ['', [Validators.required, Validators.minLength(20)]],
     source_field_key: [null],
     updated: [''],
-    url: ['', [Validators.required]],
+    url: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?'),
+      ],
+    ],
     user: [''],
     webhook_uuid: [''],
     is_source_destination: [false],
@@ -150,6 +156,7 @@ export class WebhookItemComponent implements OnInit {
 
   private postWebhook() {
     this.deleteFormFields(['id', 'created', 'updated', 'allowed_privileges', 'user']);
+    if (this.form.controls['form_id'].value === 0) this.deleteFormFields(['form_id']);
     this.webhooksService.post(this.form.value).subscribe({
       next: () => this.navigateToWebhooks(),
       error: (err) => console.log(err),
@@ -168,6 +175,7 @@ export class WebhookItemComponent implements OnInit {
   }
 
   private navigateToWebhooks() {
+    this.webhooksService.setState(true);
     this.router.navigate(['/settings/webhooks']);
   }
 
