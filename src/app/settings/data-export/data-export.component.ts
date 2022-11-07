@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { CONST } from '@constants';
 import { FormInterface, ExportJobInterface } from '@models';
-import { ExportJobsService, FormsService, PollingService, SessionService } from '@services';
+import {
+  ExportJobsService,
+  FormsService,
+  PollingService,
+  SessionService,
+  UsersService,
+} from '@services';
 
 @Component({
   selector: 'app-data-export',
@@ -20,6 +27,7 @@ export class DataExportComponent implements OnInit {
   constructor(
     private formsService: FormsService,
     private sessionService: SessionService,
+    private usersService: UsersService,
     private exportJobsService: ExportJobsService,
     private pollingService: PollingService,
   ) {}
@@ -29,9 +37,23 @@ export class DataExportComponent implements OnInit {
       this.forms = forms.results;
       this.attachFormAttributes();
     });
+    this.initUserSettings();
 
     this.hxlEnabled = !!this.sessionService.getFeatureConfigurations().hxl?.enabled;
     this.loadExportJobs();
+  }
+
+  initUserSettings() {
+    const userId = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}userId`);
+    if (userId) {
+      this.usersService.getUserSettings(userId).subscribe({
+        next: (response) => {
+          this.hxlApiKey = response.results.some((setting: any) => {
+            return setting.config_key === 'hdx_api_key';
+          });
+        },
+      });
+    }
   }
 
   loadExportJobs() {
