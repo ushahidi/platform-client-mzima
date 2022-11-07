@@ -1,7 +1,9 @@
 <div class="webhook-wrapper">
   <div class="webhook">
     <p>
-      <button mat-raised-button routerLink="create" color="primary">Create Webhook</button>
+      <button mat-raised-button routerLink="create" color="primary" data-qa="btn-webhook-create">
+        Create Webhook
+      </button>
     </p>
     <ul class="webhook-item-list">
       <li
@@ -9,6 +11,7 @@
         *ngFor="let webhook of webhookList"
         [routerLink]="[webhook.id]"
         [routerLinkActive]="'active'"
+        [data-qa]="webhook.name"
       >
         {{ webhook.name }}
       </li>

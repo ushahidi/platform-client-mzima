@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../../shared';
+import { SharedModule } from '@shared';
 import { WebhooksRoutingModule } from './webhooks-routing.module';
 import { WebhooksComponent } from './webhooks.component';
 import { WebhookItemComponent } from './webhook-item/webhook-item.component';
@@ -13,7 +13,7 @@ import { WebhookItemComponent } from './webhook-item/webhook-item.component';
     CommonModule,
     ReactiveFormsModule,
     TranslateModule,
-    MaterialModule,
+    SharedModule,
     WebhooksRoutingModule,
   ],
 })

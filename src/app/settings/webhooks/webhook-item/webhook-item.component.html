@@ -39,7 +39,7 @@
     >
     <mat-form-field appearance="outline">
       <mat-select formControlName="event_type" disableOptionCentering>
-        <mat-option *ngFor="let event of eventList" [value]="event.value">
+        <mat-option *ngFor="let event of eventList" [value]="event.value" [data-qa]="event.value">
           {{ event.name }}
         </mat-option>
       </mat-select>
@@ -53,7 +53,11 @@
     >
     <mat-form-field appearance="outline">
       <mat-select formControlName="entity_type" disableOptionCentering>
-        <mat-option *ngFor="let entity of entityList" [value]="entity.value">
+        <mat-option
+          *ngFor="let entity of entityList"
+          [value]="entity.value"
+          [data-qa]="entity.value"
+        >
           {{ entity.name }}
         </mat-option>
       </mat-select>
@@ -76,7 +80,7 @@
       </mat-label>
       <mat-form-field appearance="outline">
         <mat-select formControlName="form_id" disableOptionCentering>
-          <mat-option *ngFor="let survey of surveyList" [value]="survey.id">
+          <mat-option *ngFor="let survey of surveyList" [value]="survey.id" [data-qa]="survey.name">
             {{ survey.name }}
           </mat-option>
         </mat-select>
@@ -102,6 +106,7 @@
                   <mat-option
                     *ngFor="let attribute of surveyAttributesList"
                     [value]="attribute.key"
+                    [data-qa]="attribute.key"
                   >
                     {{ attribute.label }}
                   </mat-option>
@@ -119,6 +124,7 @@
                   <mat-option
                     *ngFor="let attribute of surveyAttributesList"
                     [value]="attribute.key"
+                    [data-qa]="attribute.key"
                   >
                     {{ attribute.label }}
                   </mat-option>
@@ -132,10 +138,23 @@
   </div>
 
   <div class="form-controls-panel">
-    <button mat-stroked-button type="button" (click)="cancel()" translate>
+    <button
+      mat-stroked-button
+      type="button"
+      data-qa="btn-webhook-cancel"
+      (click)="cancel()"
+      translate
+    >
       {{ 'app.cancel' | translate }}
     </button>
-    <button mat-raised-button color="primary" type="submit" translate>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      translate
+      data-qa="btn-webhook-save"
+      [disabled]="form.invalid"
+    >
       {{ 'app.save' | translate }}
     </button>
   </div>
@@ -144,8 +163,14 @@
 <div class="page-content" *ngIf="form.get('id')?.value">
   <h3 translate>{{ 'webhook.delete_webhook' | translate }}</h3>
   <p translate [innerHTML]="'webhook.delete_webhook_desc' | translate"></p>
-  <button type="button" color="accent" mat-raised-button (click)="openDialog()">
-    <mat-icon>
+  <button
+    type="button"
+    color="accent"
+    mat-raised-button
+    data-qa="btn-webhook-delete"
+    (click)="openDialog()"
+  >
+    <mat-icon class="icon-medium">
       <svg class="iconic">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#trash"></use>
       </svg>

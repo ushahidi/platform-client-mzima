@@ -31,6 +31,7 @@
           class="btn-change-role"
           color="dark"
           type="button"
+          data-qa="btn-user-change-password"
           (click)="changePasswordToggle()"
         >
           {{ 'user.update_password' | translate }}
@@ -52,7 +53,7 @@
         <mat-label>{{ 'user.role' | translate }}</mat-label>
         <mat-form-field appearance="outline">
           <mat-select formControlName="role" disableOptionCentering>
-            <mat-option *ngFor="let role of roles" [value]="role.name">
+            <mat-option *ngFor="let role of roles" [value]="role.name" [data-qa]="role.name">
               {{ role.display_name }}
             </mat-option>
           </mat-select>
@@ -60,7 +61,12 @@
       </div>
 
       <div class="form-controls-panel">
-        <button mat-stroked-button type="button" (click)="navigateToUsers()">
+        <button
+          mat-stroked-button
+          type="button"
+          data-qa="btn-user-cancel"
+          (click)="navigateToUsers()"
+        >
           <span>{{ 'app.cancel' | translate }}</span>
         </button>
         <button
@@ -68,6 +74,7 @@
           color="primary"
           class="role-button"
           type="submit"
+          data-qa="btn-user-save"
           [disabled]="form.invalid"
         >
           <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
@@ -79,7 +86,13 @@
   <div class="page-content" *ngIf="isUpdate">
     <h2>{{ 'user.delete_this_user' | translate }}</h2>
     <p [innerHTML]="'user.delete_user_desc' | translate"></p>
-    <button mat-raised-button type="button" color="accent" (click)="deleteUser()">
+    <button
+      mat-raised-button
+      type="button"
+      color="accent"
+      data-qa="btn-user-delete-user"
+      (click)="deleteUser()"
+    >
       {{ 'user.delete_user' | translate }}
     </button>
   </div>

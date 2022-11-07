@@ -25,7 +25,7 @@ export class WebhookItemComponent implements OnInit {
     source_field_key: [null],
     updated: [''],
     url: ['', [Validators.required]],
-    user: ['', [Validators.required]],
+    user: [''],
     webhook_uuid: [''],
     is_source_destination: [false],
   });
@@ -60,6 +60,7 @@ export class WebhookItemComponent implements OnInit {
           this.isCreateWebhook = true;
         }
       },
+      error: (err) => console.log(err),
     });
 
     if (this.form.controls['form_id'].value)
@@ -69,6 +70,7 @@ export class WebhookItemComponent implements OnInit {
       next: (surveyId) => {
         if (surveyId) this.getSurveyAttributes(surveyId);
       },
+      error: (err) => console.log(err),
     });
   }
 
@@ -78,6 +80,7 @@ export class WebhookItemComponent implements OnInit {
         this.webhook = webhook;
         this.fillInForm(webhook);
       },
+      error: (err) => console.log(err),
     });
   }
 
@@ -93,6 +96,7 @@ export class WebhookItemComponent implements OnInit {
   private getSurveys(): void {
     this.surveysService.get().subscribe({
       next: (response) => (this.surveyList = response.results),
+      error: (err) => console.log(err),
     });
   }
 
@@ -105,6 +109,7 @@ export class WebhookItemComponent implements OnInit {
           source_field_key: this.checkKeyFields(this.webhook?.source_field_key!),
         });
       },
+      error: (err) => console.log(err),
     });
   }
 
@@ -147,12 +152,14 @@ export class WebhookItemComponent implements OnInit {
     this.deleteFormFields(['id', 'created', 'updated', 'allowed_privileges', 'user']);
     this.webhooksService.post(this.form.value).subscribe({
       next: () => this.navigateToWebhooks(),
+      error: (err) => console.log(err),
     });
   }
 
   private updateWebhook() {
     this.webhooksService.update(this.form.controls['id'].value, this.form.value).subscribe({
       next: () => this.navigateToWebhooks(),
+      error: (err) => console.log(err),
     });
   }
 
@@ -177,12 +184,13 @@ export class WebhookItemComponent implements OnInit {
     });
 
     if (!confirmed) return;
-    this.delete();
+    this.deleteWebhook();
   }
 
-  public delete() {
+  public deleteWebhook() {
     this.webhooksService.delete(this.form.controls['id'].value).subscribe({
       next: () => this.navigateToWebhooks(),
+      error: (err) => console.log(err),
     });
   }
 }

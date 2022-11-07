@@ -1,8 +1,12 @@
 <section class="section">
-  <!-- <h3 class="section-title">{{ 'nav.users' | translate }}</h3> -->
-
   <div class="create-button-container">
-    <button type="button" color="primary" mat-raised-button [routerLink]="['create']">
+    <button
+      type="button"
+      color="primary"
+      mat-raised-button
+      [routerLink]="['create']"
+      data-qa="btn-users-create-user"
+    >
       {{ 'user.add_user' | translate }}
       <mat-icon class="create-button-icon icon-medium">create</mat-icon>
     </button>
@@ -16,7 +20,11 @@
         <div class="form-role-container">
           <mat-form-field appearance="outline" class="users-role-select" style="margin-right: 10px">
             <mat-select [(ngModel)]="selectedRole" name="role" disableOptionCentering>
-              <mat-option *ngFor="let role of (roleResponse$ | async)?.results" [value]="role.name">
+              <mat-option
+                *ngFor="let role of (roleResponse$ | async)?.results"
+                [value]="role.name"
+                [data-qa]="role.name"
+              >
                 {{ role.display_name }}
               </mat-option>
             </mat-select>
@@ -27,6 +35,7 @@
             color="primary"
             type="button"
             [disabled]="!selectedRole"
+            data-qa="btn-users-change-role"
             (click)="changeRole()"
           >
             Change Role
@@ -39,6 +48,7 @@
         class="btn-users-delete"
         color="accent"
         type="button"
+        data-qa="btn-users-delete"
         (click)="deleteUsers()"
       >
         Delete
