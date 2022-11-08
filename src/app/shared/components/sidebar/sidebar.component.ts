@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { SessionService, AuthService, GtmTrackingService } from '@services';
 import { LoginComponent } from '@auth';
 import { MenuInterface, UserMenuInterface } from '@models';
@@ -25,6 +26,7 @@ export class SidebarComponent implements OnInit {
     private sessionService: SessionService,
     private authService: AuthService,
     private gtmTracking: GtmTrackingService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -75,6 +77,7 @@ export class SidebarComponent implements OnInit {
 
   private logout() {
     this.authService.logout();
+    this.router.navigate(['/']);
   }
 
   registerPage(event: MouseEvent, router: string, label: string) {

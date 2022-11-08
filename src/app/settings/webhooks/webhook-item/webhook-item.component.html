@@ -4,7 +4,7 @@
     <mat-label>{{ 'webhook.name' | translate }} <span class="color-accent">*</span></mat-label>
     <mat-form-field appearance="outline">
       <input matInput placeholder="Please enter webhook name" formControlName="name" required />
-      <mat-error *ngIf="form.get('name')?.invalid">Webhook name is required</mat-error>
+      <mat-error *ngIf="form.get('name')?.hasError('required')">Webhook name is required</mat-error>
     </mat-form-field>
   </div>
 
@@ -19,8 +19,12 @@
         formControlName="shared_secret"
         required
       />
-      <mat-error *ngIf="form.get('shared_secret')?.invalid">
+      <mat-error *ngIf="form.get('shared_secret')?.hasError('required')">
         Shared secret key is required
+      </mat-error>
+      <mat-error *ngIf="form.get('shared_secret')?.hasError('minlength')">
+        Shared secret key can not less then
+        {{ form.get('shared_secret')?.errors?.['minlength']['requiredLength'] }} characters.
       </mat-error>
     </mat-form-field>
   </div>
@@ -29,7 +33,10 @@
     <mat-label>{{ 'webhook.url' | translate }} <span class="color-accent">*</span></mat-label>
     <mat-form-field appearance="outline">
       <input matInput placeholder="Please enter api url" formControlName="url" required />
-      <mat-error *ngIf="form.get('url')?.invalid">API URL id required</mat-error>
+      <mat-error *ngIf="form.get('url')?.hasError('required')">API URL id required</mat-error>
+      <mat-error *ngIf="form.get('url')?.hasError('pattern')"
+        >Please provide valid API URL</mat-error
+      >
     </mat-form-field>
   </div>
 
@@ -38,8 +45,12 @@
       >{{ 'webhook.event_type' | translate }} <span class="color-accent">*</span></mat-label
     >
     <mat-form-field appearance="outline">
-      <mat-select formControlName="event_type" disableOptionCentering>
-        <mat-option *ngFor="let event of eventList" [value]="event.value">
+      <mat-select
+        formControlName="event_type"
+        disableOptionCentering
+        data-qa="webhook-event-select"
+      >
+        <mat-option *ngFor="let event of eventList" [value]="event.value" [data-qa]="event.value">
           {{ event.name }}
         </mat-option>
       </mat-select>
@@ -52,8 +63,16 @@
       >{{ 'webhook.entity_type' | translate }} <span class="color-accent">*</span></mat-label
     >
     <mat-form-field appearance="outline">
-      <mat-select formControlName="entity_type" disableOptionCentering>
-        <mat-option *ngFor="let entity of entityList" [value]="entity.value">
+      <mat-select
+        formControlName="entity_type"
+        disableOptionCentering
+        data-qa="webhook-entity-select"
+      >
+        <mat-option
+          *ngFor="let entity of entityList"
+          [value]="entity.value"
+          [data-qa]="entity.value"
+        >
           {{ entity.name }}
         </mat-option>
       </mat-select>
@@ -61,7 +80,11 @@
     </mat-form-field>
   </div>
 
-  <mat-slide-toggle formControlName="is_source_destination" name="first-name">
+  <mat-slide-toggle
+    formControlName="is_source_destination"
+    name="first-name"
+    data-qa="source-destination-toogle"
+  >
     {{ 'settings.webhooks.enable_source_destination' | translate }}
   </mat-slide-toggle>
 
@@ -75,8 +98,8 @@
         </span>
       </mat-label>
       <mat-form-field appearance="outline">
-        <mat-select formControlName="form_id" disableOptionCentering>
-          <mat-option *ngFor="let survey of surveyList" [value]="survey.id">
+        <mat-select formControlName="form_id" disableOptionCentering data-qa="survey-select">
+          <mat-option *ngFor="let survey of surveyList" [value]="survey.id" [data-qa]="survey.name">
             {{ survey.name }}
           </mat-option>
         </mat-select>
@@ -98,10 +121,15 @@
             <td><span>Source</span></td>
             <td>
               <mat-form-field appearance="outline">
-                <mat-select formControlName="source_field_key" disableOptionCentering>
+                <mat-select
+                  formControlName="source_field_key"
+                  disableOptionCentering
+                  data-qa="source-select"
+                >
                   <mat-option
                     *ngFor="let attribute of surveyAttributesList"
                     [value]="attribute.key"
+                    [data-qa]="attribute.key"
                   >
                     {{ attribute.label }}
                   </mat-option>
@@ -115,10 +143,15 @@
             </td>
             <td>
               <mat-form-field appearance="outline">
-                <mat-select formControlName="destination_field_key" disableOptionCentering>
+                <mat-select
+                  formControlName="destination_field_key"
+                  disableOptionCentering
+                  data-qa="destination-select"
+                >
                   <mat-option
                     *ngFor="let attribute of surveyAttributesList"
                     [value]="attribute.key"
+                    [data-qa]="attribute.key"
                   >
                     {{ attribute.label }}
                   </mat-option>
@@ -132,20 +165,39 @@
   </div>
 
   <div class="form-controls-panel">
-    <button mat-stroked-button type="button" (click)="cancel()" translate>
+    <button
+      mat-stroked-button
+      type="button"
+      data-qa="btn-webhook-cancel"
+      (click)="cancel()"
+      translate
+    >
       {{ 'app.cancel' | translate }}
     </button>
-    <button mat-raised-button color="primary" type="submit" translate>
-      {{ 'app.save' | translate }}
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      translate
+      data-qa="btn-webhook-save"
+      [disabled]="form.invalid"
+    >
+      {{ (isCreateWebhook ? 'app.save' : 'app.edit') | translate | translate }}
     </button>
   </div>
 </form>
 
 <div class="page-content" *ngIf="form.get('id')?.value">
-  <h3 translate>{{ 'webhook.delete_webhook' | translate }}</h3>
+  <h2 translate>{{ 'webhook.delete_webhook' | translate }}</h2>
   <p translate [innerHTML]="'webhook.delete_webhook_desc' | translate"></p>
-  <button type="button" color="accent" mat-raised-button (click)="openDialog()">
-    <mat-icon>
+  <button
+    type="button"
+    color="accent"
+    mat-raised-button
+    data-qa="btn-webhook-delete"
+    (click)="openDialog()"
+  >
+    <mat-icon class="icon-medium">
       <svg class="iconic">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#trash"></use>
       </svg>

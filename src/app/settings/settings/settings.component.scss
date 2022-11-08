@@ -1,9 +1,12 @@
 .settings {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 10px;
   padding: 20px;
+
+  @media (max-width: 909px) {
+    justify-content: center;
+  }
 
   &:after {
     content: '';
@@ -12,7 +15,8 @@
 }
 
 .single-menu {
-  flex-basis: 330px;
+  width: 330px;
+  height: 200px;
   margin-bottom: 15px;
   padding: 20px;
   cursor: pointer;
@@ -22,12 +26,16 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 
-  @media (max-width: 1168px) {
-    flex-basis: 300px;
+  @media (max-width: 969px) {
+    width: 300px;
+  }
+
+  @media (max-width: 909px) {
+    width: 70%;
   }
 
   @media (max-width: 768px) {
-    flex-basis: 330px;
+    width: 100%;
   }
 
   & .item-icon-wrapper {

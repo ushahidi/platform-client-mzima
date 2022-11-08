@@ -884,8 +884,8 @@
     "just_you": "Just you"
   },
   "webhook": {
-    "add_webhook": "Add Role",
-    "edit_webhook": "Edit Role",
+    "add_webhook": "Add Webhook",
+    "edit_webhook": "Edit Webhook",
     "uuid": "Webhook UUID",
     "name": "Name",
     "shared_secret": "Shared Secret",

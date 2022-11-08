@@ -5,7 +5,7 @@
     </h2>
     <p *ngIf="showProgress; else description" translate>data_export.export_progress</p>
     <mat-tab-group>
-      <mat-tab [label]="'data_export.export' | translate">
+      <mat-tab [label]="'data_export.export' | translate" data-qa="tab-export">
         <div class="tab-cover">
           <div class="form-field" *ngIf="hxlEnabled && !hxlApiKey">
             <div class="alert">
@@ -26,6 +26,7 @@
               mat-raised-button
               (click)="exportAll()"
               [disabled]="showProgress"
+              data-qa="btn-export-all"
             >
               {{ 'data_export.all' | translate }}
             </button>
@@ -35,6 +36,7 @@
               mat-raised-button
               (click)="selectFields()"
               [disabled]="showProgress"
+              data-qa="btn-select-fields"
             >
               {{ 'data_export.select_fields' | translate }}
             </button>
@@ -42,7 +44,7 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab [label]="'data_export.export_history' | translate">
+      <mat-tab [label]="'data_export.export_history' | translate" data-qa="tab-export-history">
         <div class="tab-cover listing" *ngIf="exportJobsReady; else showLoader">
           <div class="listing-item" *ngFor="let job of exportJobs">
             <div class="listing-item-primary">
@@ -90,10 +92,22 @@
     </div>
   </div>
   <div class="form-controls-panel">
-    <button type="button" color="secondary" mat-raised-button (click)="selectFields()">
+    <button
+      type="button"
+      color="secondary"
+      mat-raised-button
+      (click)="selectFields()"
+      data-qa="btn-cancel"
+    >
       {{ 'data_export.cancel' | translate }}
     </button>
-    <button type="button" color="primary" mat-raised-button (click)="exportSelected()">
+    <button
+      type="button"
+      color="primary"
+      mat-raised-button
+      (click)="exportSelected()"
+      data-qa="btn-export-selected"
+    >
       {{ 'data_export.export_selected' | translate }}
     </button>
   </div>

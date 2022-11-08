@@ -19,6 +19,7 @@ export class UsersComponent implements OnInit {
   selection: SelectionModel<UserResult> = new SelectionModel<UserResult>(true, []);
   public roleResponse$: Observable<RoleResponse>;
   selectedRole: string;
+  isLoading = false;
 
   constructor(
     private userService: UsersService,
@@ -33,10 +34,12 @@ export class UsersComponent implements OnInit {
   }
 
   private getUsers() {
+    this.isLoading = true;
     this.userService.getUsers().subscribe({
       next: (response) => {
         this.dataSource = new MatTableDataSource<UserResult>(response.results);
         this.dataSource.paginator = this.paginator;
+        this.isLoading = false;
       },
     });
   }
