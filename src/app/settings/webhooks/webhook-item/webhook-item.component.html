@@ -45,7 +45,11 @@
       >{{ 'webhook.event_type' | translate }} <span class="color-accent">*</span></mat-label
     >
     <mat-form-field appearance="outline">
-      <mat-select formControlName="event_type" disableOptionCentering>
+      <mat-select
+        formControlName="event_type"
+        disableOptionCentering
+        data-qa="webhook-event-select"
+      >
         <mat-option *ngFor="let event of eventList" [value]="event.value" [data-qa]="event.value">
           {{ event.name }}
         </mat-option>
@@ -59,7 +63,11 @@
       >{{ 'webhook.entity_type' | translate }} <span class="color-accent">*</span></mat-label
     >
     <mat-form-field appearance="outline">
-      <mat-select formControlName="entity_type" disableOptionCentering>
+      <mat-select
+        formControlName="entity_type"
+        disableOptionCentering
+        data-qa="webhook-entity-select"
+      >
         <mat-option
           *ngFor="let entity of entityList"
           [value]="entity.value"
@@ -72,7 +80,11 @@
     </mat-form-field>
   </div>
 
-  <mat-slide-toggle formControlName="is_source_destination" name="first-name">
+  <mat-slide-toggle
+    formControlName="is_source_destination"
+    name="first-name"
+    data-qa="source-destination-toogle"
+  >
     {{ 'settings.webhooks.enable_source_destination' | translate }}
   </mat-slide-toggle>
 
@@ -86,7 +98,7 @@
         </span>
       </mat-label>
       <mat-form-field appearance="outline">
-        <mat-select formControlName="form_id" disableOptionCentering>
+        <mat-select formControlName="form_id" disableOptionCentering data-qa="survey-select">
           <mat-option *ngFor="let survey of surveyList" [value]="survey.id" [data-qa]="survey.name">
             {{ survey.name }}
           </mat-option>
@@ -109,7 +121,11 @@
             <td><span>Source</span></td>
             <td>
               <mat-form-field appearance="outline">
-                <mat-select formControlName="source_field_key" disableOptionCentering>
+                <mat-select
+                  formControlName="source_field_key"
+                  disableOptionCentering
+                  data-qa="source-select"
+                >
                   <mat-option
                     *ngFor="let attribute of surveyAttributesList"
                     [value]="attribute.key"
@@ -127,7 +143,11 @@
             </td>
             <td>
               <mat-form-field appearance="outline">
-                <mat-select formControlName="destination_field_key" disableOptionCentering>
+                <mat-select
+                  formControlName="destination_field_key"
+                  disableOptionCentering
+                  data-qa="destination-select"
+                >
                   <mat-option
                     *ngFor="let attribute of surveyAttributesList"
                     [value]="attribute.key"
@@ -168,7 +188,7 @@
 </form>
 
 <div class="page-content" *ngIf="form.get('id')?.value">
-  <h3 translate>{{ 'webhook.delete_webhook' | translate }}</h3>
+  <h2 translate>{{ 'webhook.delete_webhook' | translate }}</h2>
   <p translate [innerHTML]="'webhook.delete_webhook_desc' | translate"></p>
   <button
     type="button"

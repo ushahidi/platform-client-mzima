@@ -19,7 +19,12 @@
         <mat-label>Change role</mat-label>
         <div class="form-role-container">
           <mat-form-field appearance="outline" class="users-role-select" style="margin-right: 10px">
-            <mat-select [(ngModel)]="selectedRole" name="role" disableOptionCentering>
+            <mat-select
+              [(ngModel)]="selectedRole"
+              name="role"
+              disableOptionCentering
+              data-qa="users-role-select"
+            >
               <mat-option
                 *ngFor="let role of (roleResponse$ | async)?.results"
                 [value]="role.name"
@@ -56,8 +61,12 @@
     </div>
   </form>
   <div class="mat-elevation-z8">
-    <mat-progress-bar mode="indeterminate" *ngIf="!dataSource"></mat-progress-bar>
-    <table mat-table [dataSource]="dataSource">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      *ngIf="!isLoading; else showLoader"
+      data-qa="users-table"
+    >
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox
@@ -125,3 +134,7 @@
     </mat-paginator>
   </div>
 </section>
+
+<ng-template #showLoader>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>

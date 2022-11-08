@@ -5,7 +5,7 @@
         {{ 'webhook.add_webhook' | translate }}
       </button>
     </p>
-    <ul class="webhook-item-list">
+    <ul class="webhook-item-list" data-qa="webhook-list">
       <li
         class="webhook-item"
         *ngFor="let webhook of webhookList"

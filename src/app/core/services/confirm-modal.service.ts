@@ -27,6 +27,7 @@ export class ConfirmModalService {
         width: '100%',
         maxWidth: '564px',
         minWidth: '300px',
+        id: 'confirm-modal',
       });
 
       dialogRef.afterClosed().subscribe({
