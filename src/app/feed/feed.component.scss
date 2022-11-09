@@ -7,7 +7,8 @@
 
 .feed-page {
   display: flex;
-  margin: -30px -20px;
+  //margin: -30px -20px;
+  margin: 35px 0;
   justify-content: center;
   height: calc(100vh - 72px);
 
@@ -18,7 +19,8 @@
     max-height: 100%;
     overflow-x: hidden;
     position: relative;
-    padding: 30px 20px;
+    //padding: 30px 20px;
+    padding: 30px 0;
     flex-direction: column;
     scroll-behavior: smooth;
     justify-content: flex-start;

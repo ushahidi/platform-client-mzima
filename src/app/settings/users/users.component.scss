@@ -1,12 +1,20 @@
-.section {
-  &-title {
-    font-size: 36px;
+.users {
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    margin: 0;
   }
 
   .create-button {
+    text-transform: uppercase;
+
     &-container {
       display: flex;
-      margin-bottom: 20px;
       justify-content: flex-end;
     }
   }
@@ -15,6 +23,7 @@
 table {
   width: 100%;
 }
+
 tr.mat-row {
   height: 68px;
 }
