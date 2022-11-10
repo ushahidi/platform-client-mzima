@@ -58,7 +58,7 @@ export class SidebarComponent implements OnInit {
       {
         label: 'Sign up',
         icon: 'signup',
-        visible: true, //!this.isLoggedIn && this.canRegister,
+        visible: !this.isLoggedIn && this.canRegister,
         action: () => this.openSignup(),
       },
       { label: 'Log out', icon: 'logout', visible: this.isLoggedIn, action: () => this.logout() },
@@ -79,7 +79,6 @@ export class SidebarComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((isSuccess) => {
-      console.log('isSuccess', isSuccess);
       if (isSuccess) {
         this.openLogin();
       }
