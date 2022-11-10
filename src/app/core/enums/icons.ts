@@ -7,6 +7,7 @@ export enum Icons {
   search = 'search',
   pencil = 'pencil',
   arrowDownThin = 'arrow-down-thin',
+  eye = 'eye',
   categories = 'categories',
   configure = 'configure',
   dataSource = 'data-source',

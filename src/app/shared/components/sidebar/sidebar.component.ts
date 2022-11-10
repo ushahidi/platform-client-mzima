@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SessionService, AuthService, GtmTrackingService } from '@services';
-import { LoginComponent } from '@auth';
+import { LoginComponent, RegisterComponent } from '@auth';
 import { MenuInterface, UserMenuInterface } from '@models';
 import { CollectionsComponent } from '@data';
 import { takeUntilDestroy$ } from '@helpers';
@@ -20,6 +20,7 @@ export class SidebarComponent implements OnInit {
   public userMenu: UserMenuInterface[] = [];
   userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
   public siteConfig = this.sessionService.getSiteConfigurations();
+  public canRegister = false;
 
   constructor(
     private dialog: MatDialog,
@@ -35,6 +36,8 @@ export class SidebarComponent implements OnInit {
       this.isAdmin = userData.role === 'admin';
       this.initMenu();
     });
+
+    this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
   }
 
   private initMenu() {
@@ -52,6 +55,12 @@ export class SidebarComponent implements OnInit {
         action: () => this.openCollections(),
       },
       { label: 'Log in', icon: 'login', visible: !this.isLoggedIn, action: () => this.openLogin() },
+      {
+        label: 'Sign up',
+        icon: 'signup',
+        visible: !this.isLoggedIn && this.canRegister,
+        action: () => this.openSignup(),
+      },
       { label: 'Log out', icon: 'logout', visible: this.isLoggedIn, action: () => this.logout() },
     ];
   }
@@ -60,6 +69,19 @@ export class SidebarComponent implements OnInit {
     this.dialog.open(LoginComponent, {
       width: '100%',
       maxWidth: 480,
+    });
+  }
+
+  private openSignup(): void {
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '100%',
+      maxWidth: 480,
+    });
+
+    dialogRef.afterClosed().subscribe((isSuccess) => {
+      if (isSuccess) {
+        this.openLogin();
+      }
     });
   }
 

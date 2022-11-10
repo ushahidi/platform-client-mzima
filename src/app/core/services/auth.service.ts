@@ -64,6 +64,10 @@ export class AuthService extends ResourceService<any> {
     );
   }
 
+  signup(payload: { email: string; password: string; realname: string }) {
+    return this.httpClient.post(`${this.env.environment.api_v3}register`, payload);
+  }
+
   public logout() {
     this.sessionService.clearSessionData();
     this.sessionService.clearUserData();
