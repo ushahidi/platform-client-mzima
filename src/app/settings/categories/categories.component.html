@@ -1,4 +1,4 @@
-<div class="page-content">
+<section class="categories">
   <div class="selected-filters">
     <h2 *ngIf="selectedCategories.length">{{ selectedCategories.length }} selected</h2>
     <button
@@ -8,7 +8,7 @@
       *ngIf="!selectedCategories.length"
       [attr.aria-label]="'add_new_category' | translate"
     >
-      <mat-icon>add</mat-icon>
+      <mat-icon svgIcon="plus"></mat-icon>
     </button>
     <div class="selected-filters__controls">
       <button mat-raised-button (click)="deselectAll()" *ngIf="selectedCategories.length">
@@ -60,7 +60,7 @@
       </li>
     </ng-container>
   </ul>
-</div>
+</section>
 
 <ng-template #spinner>
   <app-spinner class="spinner"></app-spinner>

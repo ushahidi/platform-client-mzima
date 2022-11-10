@@ -1,10 +1,22 @@
-<div class="webhook-wrapper" *ngIf="webhookList">
-  <div class="webhook">
-    <p>
-      <button mat-raised-button routerLink="create" color="primary" data-qa="btn-webhook-create">
-        {{ 'webhook.add_webhook' | translate }}
+<section class="webhooks" *ngIf="webhookList">
+  <div class="webhooks-header">
+    <h2 class="webhooks-title">{{ 'app.webhooks' | translate }}</h2>
+    <div class="create-button-container">
+      <button
+        type="button"
+        class="create-button"
+        color="primary"
+        mat-raised-button
+        [routerLink]="['create']"
+        data-qa="btn-webhook-create"
+      >
+        <span class="create-button-name">{{ 'webhook.add_webhook' | translate }}</span>
+        <mat-icon svgIcon="pencil"></mat-icon>
       </button>
-    </p>
+    </div>
+  </div>
+
+  <div class="webhook">
     <ul class="webhook-item-list" data-qa="webhook-list">
       <li
         class="webhook-item"
@@ -16,8 +28,8 @@
         {{ webhook.name }}
       </li>
     </ul>
+    <div class="webhook-item-content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-  <div class="webhook-item-container">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+</section>

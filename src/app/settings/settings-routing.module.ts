@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SettingsLayoutComponent } from './settings-layout.component';
-import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {
@@ -10,8 +9,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: SettingsComponent,
-        data: { breadcrumb: 'Settings' },
+        redirectTo: 'general',
+        pathMatch: 'full',
       },
       {
         path: 'general',
