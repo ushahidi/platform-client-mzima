@@ -17,7 +17,12 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Lato', 'Arial', sans-serif !important;
+  font-family: 'Lato', 'Arial', sans-serif;
+}
+
+.mat-typography,
+.mat-typography h2 {
+  font-family: 'Lato', 'Arial', sans-serif;
 }
 
 *,
