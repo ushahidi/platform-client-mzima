@@ -1,0 +1,56 @@
+<button
+  mat-stroked-button
+  mat-dialog-close
+  class="modal__close-btn"
+  tabindex="-1"
+  aria-label="{{ 'modal.button.close' | translate }}"
+  data-qa="btn-close"
+>
+  <mat-icon class="fab-button__icon">close</mat-icon>
+</button>
+
+<strong mat-dialog-title>{{ 'nav.register' | translate }}</strong>
+<form novalidate [formGroup]="form" (ngSubmit)="signup()">
+  <div class="form-row">
+    <mat-label>{{ 'user.full_name' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        placeholder="{{ 'user.full_name' | translate }}"
+        formControlName="name"
+        required
+      />
+      <mat-error *ngIf="form.get('name')?.invalid">{{ getErrorMessage('name') }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-label>{{ 'user.email' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="pat@example.com" formControlName="email" required />
+      <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-label>{{ 'user.password' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input matInput formControlName="password" required type="password" />
+      <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-stroked-button type="button" (click)="cancel()" data-qa="btn-cancel">
+      {{ 'app.cancel' | translate }}
+    </button>
+    <button
+      type="submit"
+      color="primary"
+      mat-raised-button
+      [disabled]="form.invalid || form.disabled"
+      data-qa="btn-register"
+    >
+      {{ 'nav.register' | translate }}
+    </button>
+  </div>
+</form>
