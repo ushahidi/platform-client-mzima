@@ -1,15 +1,19 @@
-<section class="section">
-  <div class="create-button-container">
-    <button
-      type="button"
-      color="primary"
-      mat-raised-button
-      [routerLink]="['create']"
-      data-qa="btn-users-create-user"
-    >
-      {{ 'user.add_user' | translate }}
-      <mat-icon class="create-button-icon icon-medium">create</mat-icon>
-    </button>
+<section class="users">
+  <div class="users-header">
+    <h2 class="users-title">{{ 'app.users' | translate }}</h2>
+    <div class="create-button-container">
+      <button
+        type="button"
+        class="create-button"
+        color="primary"
+        mat-raised-button
+        [routerLink]="['create']"
+        data-qa="btn-users-create-user"
+      >
+        <span class="create-button-name">{{ 'user.add_user' | translate }}</span>
+        <mat-icon svgIcon="pencil"></mat-icon>
+      </button>
+    </div>
   </div>
 
   <form class="form" *ngIf="selection.selected.length" novalidate>
@@ -60,79 +64,78 @@
       </button>
     </div>
   </form>
-  <div class="mat-elevation-z8">
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      *ngIf="!isLoading; else showLoader"
-      data-qa="users-table"
-    >
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()"
-          >
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox
-            (click)="$event.stopPropagation()"
-            (change)="$event ? selection.toggle(row) : null"
-            [checked]="selection.isSelected(row)"
-          >
-          </mat-checkbox>
-        </td>
-      </ng-container>
 
-      <ng-container matColumnDef="avatar">
-        <th mat-header-cell *matHeaderCellDef>Avatar</th>
-        <td mat-cell *matCellDef="let element">
-          <div class="avatar-wrapper">
-            <img
-              [src]="'https://www.gravatar.com/avatar/' + element.gravatar + '?d=retro'"
-              [alt]="element.realname"
-            />
-          </div>
-        </td>
-      </ng-container>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    *ngIf="!isLoading; else showLoader"
+    data-qa="users-table"
+  >
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="realname">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">
-          <span>{{ element.realname }}</span>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="avatar">
+      <th mat-header-cell *matHeaderCellDef>Avatar</th>
+      <td mat-cell *matCellDef="let element">
+        <div class="avatar-wrapper">
+          <img
+            [src]="'https://www.gravatar.com/avatar/' + element.gravatar + '?d=retro'"
+            [alt]="element.realname"
+          />
+        </div>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>Email</th>
-        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-      </ng-container>
+    <ng-container matColumnDef="realname">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">
+        <span>{{ element.realname }}</span>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="role">
-        <th mat-header-cell *matHeaderCellDef>Role</th>
-        <td mat-cell *matCellDef="let element">{{ element.role }}</td>
-      </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        [routerLink]="['update', row.id]"
-      ></tr>
-    </table>
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef>Role</th>
+      <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+    </ng-container>
 
-    <mat-paginator
-      showFirstLastButtons
-      [pageSize]="10"
-      [pageSizeOptions]="[10, 20, 30]"
-      [selectConfig]="{
-        disableOptionCentering: true
-      }"
-    >
-    </mat-paginator>
-  </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [routerLink]="['update', row.id]"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    showFirstLastButtons
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 20, 30]"
+    [selectConfig]="{
+      disableOptionCentering: true
+    }"
+  >
+  </mat-paginator>
 </section>
 
 <ng-template #showLoader>

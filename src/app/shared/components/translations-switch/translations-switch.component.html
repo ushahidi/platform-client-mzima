@@ -21,7 +21,7 @@
         [color]="selectedTranslation === language.code ? 'primary' : null"
       >
         {{ language.name }}
-        <mat-icon (click)="deleteTranslation($event, language.code)">close</mat-icon>
+        <mat-icon (click)="deleteTranslation($event, language.code)" svgIcon="close"></mat-icon>
       </button>
     </ng-container>
   </div>

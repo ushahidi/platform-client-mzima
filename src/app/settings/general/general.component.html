@@ -1,4 +1,4 @@
-<div class="page-content">
+<section class="general">
   <h2>General</h2>
   <form (ngSubmit)="save()" [formGroup]="generalForm" novalidate>
     <div class="form-row">
@@ -80,7 +80,7 @@
     <p translate>settings.api_key_desc</p>
     <button type="button" mat-stroked-button (click)="generateApiKey()">
       <span>Generate API Key</span>
-      <mat-icon>
+      <mat-icon class="icon-medium">
         <svg class="iconic" role="img">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#key"></use>
         </svg>
@@ -100,4 +100,4 @@
       Save
     </button>
   </div>
-</div>
+</section>

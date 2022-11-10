@@ -1,84 +1,66 @@
-.settings {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 20px;
-
-  @media (max-width: 909px) {
-    justify-content: center;
+.close {
+  .settings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
   }
+  .single-menu {
+    width: 330px;
+    height: fit-content;
+  }
+}
 
-  &:after {
-    content: '';
-    flex-basis: 330px;
+.open {
+  .settings {
+    padding: 24px 16px;
   }
 }
 
 .single-menu {
-  width: 330px;
-  height: 200px;
-  margin-bottom: 15px;
-  padding: 20px;
+  padding: 16px 16px 26px;
   cursor: pointer;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 
-  @media (max-width: 969px) {
-    width: 300px;
+  &:not(:last-child) {
+    margin-bottom: 8px;
   }
 
-  @media (max-width: 909px) {
-    width: 70%;
+  &-active {
+    border-color: var(--color-primary-60);
   }
 
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-
-  & .item-icon-wrapper {
+  .item-header {
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 50px;
-    width: 100%;
-    max-height: 50px;
-    height: 100%;
-    margin-right: 30px;
-    border-radius: 50%;
-    border: 1px solid #ddd;
-    padding: 3px;
-  }
-}
+    margin-bottom: 8px;
 
-.mat-icon {
-  font-size: 30px;
-  width: 30px;
-  height: 30px;
-}
-
-.listing-item {
-  &-title {
-    text-transform: capitalize;
-    font-size: 22px;
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    color: #373e46;
-
-    @media (max-width: 1168px) {
-      font-size: 18px;
+    .item-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      color: var(--color-dark);
     }
 
-    @media (max-width: 768px) {
-      flex-basis: 22px;
+    .item-header-title {
+      text-transform: capitalize;
+      font-size: 20px;
+      margin-bottom: 0;
+      padding-bottom: 0;
+      color: var(--color-dark);
     }
   }
 
-  &-secondary {
-    font-style: italic;
-    font-size: 0.857142857em;
-    color: #373e46;
+  .item-content {
+    .item-description {
+      font-size: 12px;
+      color: var(--color-neutral-80);
+      margin: 0;
+    }
   }
 }

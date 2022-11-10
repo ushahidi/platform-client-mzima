@@ -1,2 +1,8 @@
-<app-breadcrumb></app-breadcrumb>
-<router-outlet></router-outlet>
+<div [class]="className">
+  <div class="settings-layout">
+    <app-settings class="settings-menu"></app-settings>
+    <div class="settings-router">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
