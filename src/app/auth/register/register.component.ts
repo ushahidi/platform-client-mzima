@@ -9,6 +9,7 @@ import { AuthService } from '@services';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
+  isPasswordVisible = false;
   public form: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
@@ -30,7 +31,11 @@ export class RegisterComponent {
   }
 
   cancel() {
-    this.matDialogRef.close('cancel');
+    this.matDialogRef.close();
+  }
+
+  togglePasswordVisible() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   signup() {

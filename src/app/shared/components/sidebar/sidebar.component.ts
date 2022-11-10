@@ -57,8 +57,8 @@ export class SidebarComponent implements OnInit {
       { label: 'Log in', icon: 'login', visible: !this.isLoggedIn, action: () => this.openLogin() },
       {
         label: 'Sign up',
-        icon: 'login',
-        visible: !this.isLoggedIn && this.canRegister,
+        icon: 'signup',
+        visible: true, //!this.isLoggedIn && this.canRegister,
         action: () => this.openSignup(),
       },
       { label: 'Log out', icon: 'logout', visible: this.isLoggedIn, action: () => this.logout() },
