@@ -54,7 +54,7 @@ export class GeneralComponent implements OnInit {
       email: this.siteConfig.email,
       language: this.siteConfig.language,
       private: this.siteConfig.private,
-      disable_registration: true,
+      disable_registration: this.siteConfig.disable_registration,
     });
     this.apiKeyService.get().subscribe((res) => {
       // FIXME: results[0]
