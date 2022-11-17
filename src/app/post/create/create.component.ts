@@ -173,6 +173,9 @@ export class CreateComponent implements OnInit {
     };
 
     this.postsV5Service.post(postData).subscribe({
+      error: () => {
+        this.form.enable();
+      },
       complete: async () => {
         const confirmed = await this.confirmModalService.open({
           title: this.translate.instant('notify.confirm_modal.add_post_success.success'),

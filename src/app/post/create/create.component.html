@@ -222,7 +222,7 @@
         <mat-form-field appearance="outline">
           <input
             matInput
-            [value]="field.default"
+            [formControlName]="field.key"
             #videoInput
             (change)="
               videoPreview.src =
