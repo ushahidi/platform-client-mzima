@@ -119,7 +119,10 @@
     "newest_first": "Newest first",
     "oldest_first": "Oldest first",
     "language": "Taal",
-    "select_language": "Selecteer taal"
+    "select_language": "Selecteer taal",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -238,6 +241,7 @@
     "visible_to": "Zichtbaar voor"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Taak verwijderen",
     "duplicate_survey": "Dupliceer",
     "internal_use_task": "De taak is alleen voor intern gebruik",
@@ -1434,6 +1438,7 @@
       "destroy_success": "Registratie succesvol beëindigd "
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "De actie kan niet ongedaan worden gemaakt. Wees voorzichtig.",
       "save_success": "Opgeslagen bron",
       "save_error": "Bron kon niet worden opgeslagen, probeer het nog eens",

@@ -113,7 +113,10 @@
     "newest_first": "Newest first",
     "oldest_first": "Oldest first",
     "language": "Language",
-    "select_language": "Select language"
+    "select_language": "Select language",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -230,6 +233,7 @@
     "visible_to": "对下列人士可见"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "删除任务",
     "duplicate_survey": "Duplicate",
     "internal_use_task": "Task is only for internal use",
@@ -1401,6 +1405,7 @@
       "destroy_success": "账户已成功移除"
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "已保存资源",
       "save_error": "未能保存资源，请再试一次",

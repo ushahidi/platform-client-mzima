@@ -119,7 +119,10 @@
     "newest_first": "新的在前面",
     "oldest_first": "舊的在前面",
     "language": "語言",
-    "select_language": "選擇語言"
+    "select_language": "選擇語言",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -238,6 +241,7 @@
     "visible_to": "顯示對象"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "刪除任務",
     "duplicate_survey": "複製",
     "internal_use_task": "任務內容只做內部使用",
@@ -1434,6 +1438,7 @@
       "destroy_success": "Account removed successfully"
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "儲存的資源",
       "save_error": "無法儲存資源，請重試",

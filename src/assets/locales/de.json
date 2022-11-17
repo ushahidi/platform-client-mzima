@@ -119,7 +119,10 @@
     "newest_first": "Neueste zuerst",
     "oldest_first": "Älteste zuerst",
     "language": "Language",
-    "select_language": "Select language"
+    "select_language": "Select language",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -238,6 +241,7 @@
     "visible_to": "Sichtbar für"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Aufgabe löschen",
     "duplicate_survey": "Duplizieren",
     "internal_use_task": "Aufgabe ist nur für interne Nutzung vorgesehen",
@@ -1434,6 +1438,7 @@
       "destroy_success": "Konto wurde entfernt"
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Ressource gespeichert",
       "save_error": "Konnte Ressource nicht speichern, bitte erneut versuchen",

@@ -119,7 +119,10 @@
     "newest_first": "Najnoviji prvo",
     "oldest_first": "Najstariji prvo",
     "language": "Jezik",
-    "select_language": "Odaberi jezik"
+    "select_language": "Odaberi jezik",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -238,6 +241,7 @@
     "visible_to": "Vidljivo"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Obriši zadatak",
     "duplicate_survey": "Dupliciraj",
     "internal_use_task": "Zadatak je samo za interno korištenje",
@@ -1434,6 +1438,7 @@
       "destroy_success": "Račun uklonjen uspješno"
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "Ova akcije se ne može vratiti. Molimo nastavite sa oprezom.",
       "save_success": "Spremljeni resursi",
       "save_error": "Nemoguće spremiti resurs, molimo pokušajte ponovno",
