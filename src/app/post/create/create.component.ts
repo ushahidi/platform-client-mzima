@@ -1,11 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PostsV5Service, SurveysService } from '@services';
+import {
+  ConfirmModalService,
+  EventBusService,
+  EventType,
+  PostsV5Service,
+  SurveysService,
+} from '@services';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { TranslateService } from '@ngx-translate/core';
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -23,21 +31,28 @@ export class CreateComponent implements OnInit {
   private formId?: number;
   public tasks: any[];
   public activeLanguage: string;
+  public initialFormData: any;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public type: number,
+    private matDialogRef: MatDialogRef<CreateComponent>,
     private route: ActivatedRoute,
     private surveysService: SurveysService,
     private formBuilder: FormBuilder,
     private postsV5Service: PostsV5Service,
     private router: Router,
     private translate: TranslateService,
+    private confirmModalService: ConfirmModalService,
+    private eventBusService: EventBusService,
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.formId = Number(params.get('id'));
-      this.loadData(this.formId);
-    });
+    this.formId = this.type;
+    this.loadData(this.formId);
+    // this.route.paramMap.subscribe((params) => {
+    //   this.formId = Number(params.get('id'));
+    //   this.loadData(this.formId);
+    // });
 
     this.translate.onLangChange.subscribe((newLang) => {
       this.activeLanguage = newLang.lang;
@@ -80,6 +95,7 @@ export class CreateComponent implements OnInit {
         });
 
         this.form = this.formBuilder.group(fields);
+        this.initialFormData = this.form.value;
       },
     });
   }
@@ -88,7 +104,7 @@ export class CreateComponent implements OnInit {
     return field.options.filter((option: any) => option.parent_id === parent_id);
   }
 
-  public submitPost(): void {
+  public async submitPost(): Promise<void> {
     if (this.form.disabled) return;
 
     this.form.disable();
@@ -156,8 +172,18 @@ export class CreateComponent implements OnInit {
     };
 
     this.postsV5Service.post(postData).subscribe({
-      complete: () => {
-        this.router.navigate(['data']);
+      complete: async () => {
+        const confirmed = await this.confirmModalService.open({
+          title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
+          description: `<p>${this.translate.instant(
+            'notify.confirm_modal.add_post_success.success_description',
+          )}</p>`,
+          buttonSuccess: this.translate.instant(
+            'notify.confirm_modal.add_post_success.success_button',
+          ),
+        });
+        if (!confirmed) return;
+        this.matDialogRef.close();
         this.form.enable();
       },
     });
@@ -174,5 +200,26 @@ export class CreateComponent implements OnInit {
         formArray.removeAt(index);
       }
     }
+  }
+
+  public async previousPage() {
+    for (const key in this.initialFormData) {
+      this.initialFormData[key] = this.initialFormData[key]?.value || null;
+    }
+
+    if (JSON.stringify(this.initialFormData) !== JSON.stringify(this.form.value)) {
+      const confirmed = await this.confirmModalService.open({
+        title: this.translate.instant('notify.default.data_has_not_been_saved'),
+        description: this.translate.instant('notify.default.proceed_warning'),
+        confirmButtonText: 'OK',
+      });
+      if (!confirmed) return;
+    }
+
+    this.matDialogRef.close();
+    this.eventBusService.next({
+      type: EventType.AddPostButtonSubmit,
+      payload: true,
+    });
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { GtmDirective, DataQaInputDirective, DataQaDirective } from '@directives';
+import { LottieComponent } from 'ngx-lottie';
 
 import {
   SidebarComponent,
@@ -38,6 +39,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DateAgoPipe, FilterValuePipe } from '@pipes';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { LottieAnimationComponent } from './components/lottie-animation/lottie-animation.component';
 
 const directives = [
   GtmDirective, //
@@ -70,6 +72,7 @@ const components = [
   CompanyInfoComponent,
   FilterControlComponent,
   DonationButtonComponent,
+  LottieAnimationComponent,
 ];
 
 const modules = [
@@ -89,7 +92,7 @@ const modules = [
 
 @NgModule({
   declarations: [...components, ...directives],
-  imports: [...modules],
+  imports: [...modules, LottieComponent],
   exports: [...components, ...directives, ...modules],
 })
 export class SharedModule {}

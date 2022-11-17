@@ -1,4 +1,16 @@
 <!-- FIXME: SOMEHOW I CANT ADD FORM TAG HERE -->
+<button
+  mat-stroked-button
+  mat-dialog-close
+  class="modal__close-btn"
+  tabindex="-1"
+  aria-label="{{ 'modal.button.close' | translate }}"
+  data-qa="btn-create-post-close"
+>
+  <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
+</button>
+
+<h1 mat-dialog-title>{{ 'app.add_new_post' | translate }}</h1>
 
 <form
   novalidate
@@ -7,7 +19,7 @@
   (ngSubmit)="submitPost()"
   *ngIf="form && fields.length; else spinner"
 >
-  <div class="page-content" [ngStyle]="{ '--color': data?.result?.color }">
+  <div [ngStyle]="{ '--color': data?.result?.color }">
     <div class="form-row" *ngFor="let field of fields">
       <mat-label
         >{{ field.label }} <span class="color-accent" *ngIf="field.required">*</span></mat-label
@@ -40,6 +52,7 @@
             cdkAutosizeMaxRows="5"
             [(ngModel)]="description"
             [formControlName]="field.key"
+            [data-qa]="'create-post-' + field.key"
           >
           </textarea>
         </mat-form-field>
@@ -53,13 +66,17 @@
             cdkAutosizeMinRows="2"
             cdkAutosizeMaxRows="5"
             [formControlName]="field.key"
+            [data-qa]="'create-post-' + field.key"
           >
           </textarea>
         </mat-form-field>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'tags'">
-        <mat-selection-list [formControlName]="field.key">
+        <mat-selection-list
+          [formControlName]="field.key"
+          [data-qa]="'create-post-tags' + field.key"
+        >
           <mat-list-option color="primary" checkboxPosition="before">
             <i>Select All</i>
           </mat-list-option>
@@ -72,6 +89,7 @@
               checkboxPosition="before"
               [disabled]="!!option.children?.length"
               [ngStyle]="{ '--color': option.color }"
+              [data-qa]="'create-post-tags' + option.id"
             >
               {{ option.tag }}
             </mat-list-option>
@@ -83,6 +101,7 @@
                   [value]="childOption.id"
                   checkboxPosition="before"
                   [ngStyle]="{ '--color': childOption.color }"
+                  [data-qa]="'create-post-tags-group' + childOption.id"
                 >
                   {{ childOption.tag }}
                 </mat-list-option>
@@ -101,7 +120,11 @@
             (focus)="picker.open()"
             #input
           />
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+            [data-qa]="'create-post-date-toggle'"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker (closed)="input.blur()"></mat-datepicker>
         </mat-form-field>
       </ng-container>
@@ -115,15 +138,23 @@
             (focus)="picker.open()"
             #input
           />
-          <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="$any(picker)"
+            [data-qa]="'create-post-date-time-toggle' + field.key"
+          ></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #picker (closed)="input.blur()"></ngx-mat-datetime-picker>
         </mat-form-field>
       </ng-container>
 
       <ng-container *ngIf="field.input === 'radio'">
-        <mat-radio-group [attr.aria-label]="field.label" [formControlName]="field.key">
+        <mat-radio-group
+          [attr.aria-label]="field.label"
+          [formControlName]="field.key"
+          [data-qa]="'create-post-radio' + field.key"
+        >
           <div class="radio-button" *ngFor="let option of field.options">
-            <mat-radio-button [value]="option">
+            <mat-radio-button [value]="option" [data-qa]="'create-post-radio-option' + option">
               {{ option }}
             </mat-radio-button>
           </div>
@@ -131,13 +162,17 @@
       </ng-container>
 
       <ng-container *ngIf="field.input === 'checkbox'">
-        <mat-selection-list [formControlName]="field.key">
+        <mat-selection-list
+          [formControlName]="field.key"
+          [data-qa]="'create-post-checkbox' + field.key"
+        >
           <mat-list-option
             color="primary"
             [value]="option"
             class="list-option"
             checkboxPosition="before"
             *ngFor="let option of field.options"
+            [data-qa]="'create-post-checkbox-option' + option"
           >
             {{ option }}
           </mat-list-option>
@@ -146,8 +181,16 @@
 
       <ng-container *ngIf="field.input === 'select'">
         <mat-form-field appearance="outline">
-          <mat-select [formControlName]="field.key" disableOptionCentering>
-            <mat-option *ngFor="let option of field.options" [value]="option">
+          <mat-select
+            [formControlName]="field.key"
+            disableOptionCentering
+            [data-qa]="'create-post-select' + field.key"
+          >
+            <mat-option
+              *ngFor="let option of field.options"
+              [value]="option"
+              [data-qa]="'create-post-select-option' + option"
+            >
               {{ option }}
             </mat-option>
           </mat-select>
@@ -161,8 +204,14 @@
       </ng-container>
 
       <ng-container *ngIf="field.input === 'upload'">
-        <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">
-          Add photo
+        <button
+          type="button"
+          color="primary"
+          mat-raised-button
+          (click)="fileInput.click()"
+          data-qa="btn-create-post-add-photo"
+        >
+          {{ 'post.media.add_photo' | translate }}
         </button>
         <input hidden #fileInput type="file" id="file" [formControlName]="field.key" />
         <br />
@@ -192,7 +241,22 @@
     </div>
 
     <div class="form-controls-panel" *ngIf="!tasks.length">
-      <button color="primary" mat-raised-button [disabled]="form.invalid || form.disabled">
+      <button
+        color="primary"
+        mat-stroked-button
+        type="button"
+        data-qa="btn-create-post-previous"
+        (click)="previousPage()"
+      >
+        {{ 'app.previous' | translate }}
+      </button>
+      <button
+        color="primary"
+        mat-raised-button
+        type="submit"
+        [disabled]="form.invalid || form.disabled"
+        data-qa="btn-create-post-submit"
+      >
         {{ 'app.submit' | translate }}
       </button>
     </div>
@@ -202,15 +266,11 @@
     <h2>{{ task.translations[activeLanguage]?.label || task.label }}</h2>
 
     <div *ngIf="task.show_when_published">
-      <p translate="survey.task_visible_when_published">
-        This task will be visible when post is published
-      </p>
+      <p>{{ 'survey.task_visible_when_published' | translate }}</p>
     </div>
 
     <div *ngIf="task.task_is_internal_only">
-      <p>
-        This task is marked for internal use only. It is not seen by users when they create a post.
-      </p>
+      <p>{{ 'survey.marked_for_internal' | translate }}</p>
     </div>
 
     <div class="form-row">
@@ -221,7 +281,22 @@
     </div>
 
     <div class="form-controls-panel" *ngIf="i === tasks.length - 1">
-      <button color="primary" mat-raised-button [disabled]="form.invalid || form.disabled">
+      <button
+        color="primary"
+        mat-stroked-button
+        type="button"
+        data-qa="btn-create-post-previous"
+        (click)="previousPage()"
+      >
+        {{ 'app.previous' | translate }}
+      </button>
+      <button
+        color="primary"
+        mat-raised-button
+        type="submit"
+        [disabled]="form.invalid || form.disabled"
+        data-qa="btn-create-post-submit"
+      >
         {{ 'app.submit' | translate }}
       </button>
     </div>

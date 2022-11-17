@@ -119,7 +119,10 @@
     "newest_first": "Nejnovější první",
     "oldest_first": "Nejstarší první",
     "language": "Jazyk",
-    "select_language": "Zvolit jazyk"
+    "select_language": "Zvolit jazyk",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -238,6 +241,7 @@
     "visible_to": "Viditelné do"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Smazat úlohu",
     "duplicate_survey": "Duplikovat",
     "internal_use_task": "Úloha je určena pouze pro interní použití",
@@ -1434,6 +1438,7 @@
       "destroy_success": "Účet byl úspěšně odstraněn"
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "Tuto akci nelze vrátit zpět. Postupujte prosím opatrně.",
       "save_success": "Uložený zdroj",
       "save_error": "Nelze uložit zdroj, zkuste to znovu",
