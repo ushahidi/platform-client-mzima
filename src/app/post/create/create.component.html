@@ -207,17 +207,17 @@
         <button
           type="button"
           color="primary"
-          mat-raised-button
+          mat-stroked-button
           (click)="fileInput.click()"
-          data-qa="btn-create-post-add-photo"
+          data-qa="btn-create-post-upload"
         >
           {{ 'post.media.add_photo' | translate }}
+          <mat-icon svgIcon="plus"></mat-icon>
         </button>
         <input hidden #fileInput type="file" id="file" [formControlName]="field.key" />
         <br />
         <br />
       </ng-container>
-
       <ng-container *ngIf="field.input === 'video'">
         <mat-form-field appearance="outline">
           <input
@@ -226,8 +226,10 @@
             #videoInput
             (change)="
               videoPreview.src =
-                'https://www.youtube.com/embed/' +
-                videoInput.value.split('watch?v=')[1].split('&')[0]
+                videoInput.value.indexOf('youtube', 0) !== -1
+                  ? 'https://www.youtube.com/embed/' +
+                    videoInput.value.split('watch?v=')[1].split('&')[0]
+                  : 'https://player.vimeo.com/video/' + videoInput.value.split('.com/')[1]
             "
           />
         </mat-form-field>
