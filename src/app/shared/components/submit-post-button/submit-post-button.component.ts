@@ -37,7 +37,7 @@ export class SubmitPostButtonComponent implements OnInit {
         if (response?.type) {
           this.dialog.open(CreateComponent, {
             width: '100%',
-            maxWidth: '564px',
+            maxWidth: '607px',
             minWidth: '300px',
             maxHeight: '700px',
             minHeight: '350px',
