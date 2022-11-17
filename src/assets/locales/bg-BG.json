@@ -119,7 +119,10 @@
     "newest_first": "Новите първо",
     "oldest_first": "Старите първо",
     "language": "Език",
-    "select_language": "Избери език"
+    "select_language": "Избери език",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -238,6 +241,7 @@
     "visible_to": "Видимо за"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Изтрий задача",
     "duplicate_survey": "Копирай",
     "internal_use_task": "Задачата е само за вътрешна употреба",
@@ -1434,6 +1438,7 @@
       "destroy_success": "Акаунтът бе изтри успешно"
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "Това действие на може да се обърне. Моля продължете внимателно.",
       "save_success": "Запазен ресурс",
       "save_error": "Не успяхме да запазим ресурса, моля опитайте отново",

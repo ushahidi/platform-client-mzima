@@ -3,6 +3,7 @@ import { filter, map, Observable, Subject } from 'rxjs';
 
 export const enum EventType {
   SearchOptionSelected = 'SEARCH_OPTION_SELECTED',
+  AddPostButtonSubmit = 'ADD_POST_BUTTON_SUBMIT',
 }
 
 export interface BusEvent<T = any> {
