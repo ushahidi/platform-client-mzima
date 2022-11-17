@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { TranslateService } from '@ngx-translate/core';
+import { objectHelpers } from '@helpers';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -206,8 +207,7 @@ export class CreateComponent implements OnInit {
     for (const key in this.initialFormData) {
       this.initialFormData[key] = this.initialFormData[key]?.value || null;
     }
-
-    if (JSON.stringify(this.initialFormData) !== JSON.stringify(this.form.value)) {
+    if (!objectHelpers.objectsCompare(this.initialFormData, this.form.value)) {
       const confirmed = await this.confirmModalService.open({
         title: this.translate.instant('notify.default.data_has_not_been_saved'),
         description: this.translate.instant('notify.default.proceed_warning'),
