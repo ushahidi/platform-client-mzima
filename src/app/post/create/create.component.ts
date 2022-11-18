@@ -90,6 +90,8 @@ export class CreateComponent implements OnInit {
                 ? new Date()
                 : field.input === 'location'
                 ? { lat: -1.28569, lng: 36.832324 }
+                : field.input === 'number'
+                ? 0
                 : '');
             fields[field.key] = new FormControl(value, field.required ? Validators.required : null);
           }
@@ -115,17 +117,23 @@ export class CreateComponent implements OnInit {
         value: this.form.value[field.key],
       };
 
-      if (field.input === 'date' || field.input === 'datetime') {
-        value.value_meta = {
-          from_tz: dayjs.tz.guess(),
-        };
-      }
-
-      if (field.input === 'location') {
-        value.value = {
-          lat: this.form.value[field.key].lat,
-          lon: this.form.value[field.key].lng,
-        };
+      switch (field.input) {
+        case 'date':
+        case 'datetime':
+          value.value_meta = {
+            from_tz: dayjs.tz.guess(),
+          };
+          break;
+        case 'location':
+          value.value = {
+            lat: this.form.value[field.key].lat,
+            lon: this.form.value[field.key].lng,
+          };
+          break;
+        case 'tags':
+        case 'checkbox':
+          value.value = this.form.value[field.key] || [];
+          break;
       }
 
       return {
@@ -177,7 +185,9 @@ export class CreateComponent implements OnInit {
         this.form.enable();
       },
       complete: async () => {
-        const confirmed = await this.confirmModalService.open({
+        this.matDialogRef.close();
+        this.form.enable();
+        await this.confirmModalService.open({
           title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
           description: `<p>${this.translate.instant(
             'notify.confirm_modal.add_post_success.success_description',
@@ -186,9 +196,6 @@ export class CreateComponent implements OnInit {
             'notify.confirm_modal.add_post_success.success_button',
           ),
         });
-        if (!confirmed) return;
-        this.matDialogRef.close();
-        this.form.enable();
       },
     });
   }
