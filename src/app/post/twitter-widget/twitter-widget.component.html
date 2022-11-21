@@ -1,1 +1,6 @@
-<ngx-tweet [tweetId]="id"></ngx-tweet>
+<ng-content *ngIf="!isTwitterScriptLoading"></ng-content>
+<ng-container *ngIf="isTwitterFailed">
+  <h2>PUT FAILED IMAGE HERE</h2>
+</ng-container>
+
+<app-spinner class="post__twitter__spinner" *ngIf="isTwitterScriptLoading"></app-spinner>

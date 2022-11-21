@@ -44,7 +44,6 @@
     "ngx-lottie": "^9.1.0",
     "ngx-masonry": "^14.0.1",
     "ngx-quill": "^19.0.1",
-    "ngx-tweet": "^2.0.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "types-wm": "^1.1.0",

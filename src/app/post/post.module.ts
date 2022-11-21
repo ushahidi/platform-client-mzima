@@ -10,7 +10,6 @@ import { PostPreviewComponent } from './post-preview/post-preview.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { PostMetadataComponent } from './post-metadata/post-metadata.component';
 import { TwitterWidgetComponent } from './twitter-widget/twitter-widget.component';
-import { NgxTweetModule } from 'ngx-tweet';
 import { PostHeadComponent } from './post-head/post-head.component';
 
 @NgModule({
@@ -24,7 +23,7 @@ import { PostHeadComponent } from './post-head/post-head.component';
     TwitterWidgetComponent,
     PostHeadComponent,
   ],
-  imports: [CommonModule, SharedModule, PostRoutingModule, LeafletModule, NgxTweetModule],
+  imports: [CommonModule, SharedModule, PostRoutingModule, LeafletModule],
   exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent],
 })
 export class PostModule {}

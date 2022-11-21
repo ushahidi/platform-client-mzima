@@ -31,7 +31,6 @@
 
   <div class="post__twitter" *ngIf="post.source === 'Twitter' && post.data_source_message_id">
     <app-twitter-widget [id]="post.data_source_message_id"></app-twitter-widget>
-    <app-spinner class="post__twitter__spinner"></app-spinner>
   </div>
 
   <app-post-metadata [post]="post"></app-post-metadata>
