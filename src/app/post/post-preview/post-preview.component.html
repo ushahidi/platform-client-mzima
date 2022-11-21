@@ -1,17 +1,38 @@
 <div
   class="post"
   *ngIf="post"
-  [ngStyle]="{ '--color': post.color }"
-  [ngClass]="{ 'post--feed': feedView }"
+  (click)="postClicked($event)"
+  [ngStyle]="{ '--color': post.color || 'var(--color-neutral-100)' }"
+  [ngClass]="{
+    'post--feed': feedView,
+    'post--selectable': selectable
+  }"
 >
-  <app-post-metadata [post]="post"></app-post-metadata>
+  <div class="post__head">
+    <ng-container *ngIf="selectable">
+      <mat-checkbox [(ngModel)]="isChecked"></mat-checkbox>
+    </ng-container>
+    <app-post-head [post]="post"></app-post-head>
+  </div>
 
-  <div class="post__content">
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.content }}</p>
+  <div class="post__main">
+    <div class="post__visual" *ngIf="media && post.source !== 'Twitter'">
+      <img [src]="media.original_file_url" [alt]="post.title" />
+    </div>
+    <div class="post__content">
+      <h3 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h3>
+      <p *ngIf="post.title?.length && post.content?.length">{{ post.content }}</p>
+    </div>
   </div>
 
   <div class="post__more" *ngIf="!feedView">
-    <button mat-raised-button color="primary" (click)="showDetails()">Show more</button>
+    <button mat-button color="primary" (click)="showDetails()" disableRipple>Read more</button>
   </div>
+
+  <div class="post__twitter" *ngIf="post.source === 'Twitter' && post.data_source_message_id">
+    <app-twitter-widget [id]="post.data_source_message_id"></app-twitter-widget>
+    <app-spinner class="post__twitter__spinner"></app-spinner>
+  </div>
+
+  <app-post-metadata [post]="post"></app-post-metadata>
 </div>

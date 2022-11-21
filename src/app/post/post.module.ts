@@ -9,6 +9,9 @@ import { LocationSelectComponent } from './location-select/location-select.compo
 import { PostPreviewComponent } from './post-preview/post-preview.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { PostMetadataComponent } from './post-metadata/post-metadata.component';
+import { TwitterWidgetComponent } from './twitter-widget/twitter-widget.component';
+import { NgxTweetModule } from 'ngx-tweet';
+import { PostHeadComponent } from './post-head/post-head.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +21,10 @@ import { PostMetadataComponent } from './post-metadata/post-metadata.component';
     PostPreviewComponent,
     PostDetailsComponent,
     PostMetadataComponent,
+    TwitterWidgetComponent,
+    PostHeadComponent,
   ],
-  imports: [CommonModule, SharedModule, PostRoutingModule, LeafletModule],
+  imports: [CommonModule, SharedModule, PostRoutingModule, LeafletModule, NgxTweetModule],
   exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent],
 })
 export class PostModule {}

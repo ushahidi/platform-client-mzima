@@ -1,0 +1,36 @@
+<div class="post-head">
+  <button tabindex="-1" mat-icon-button class="post-head__control">
+    <mat-icon matPrefix svgIcon="share"></mat-icon>
+  </button>
+  <button tabindex="-1" mat-icon-button class="post-head__control" [matMenuTriggerFor]="actions">
+    <mat-icon matPrefix svgIcon="dots"></mat-icon>
+  </button>
+
+  <mat-menu #actions="matMenu" xPosition="before">
+    <button mat-menu-item>
+      <mat-icon svgIcon="edit"></mat-icon>
+      {{ 'app.edit' | translate }}
+    </button>
+    <button mat-menu-item>
+      <mat-icon svgIcon="collections"></mat-icon>
+      {{ 'set.add_to_collection' | translate }}
+    </button>
+    <hr />
+    <button mat-menu-item>
+      <mat-icon svgIcon="sort-up"></mat-icon>
+      Publish
+    </button>
+    <button mat-menu-item>
+      <mat-icon svgIcon="sort-up"></mat-icon>
+      Put under review
+    </button>
+    <button mat-menu-item>
+      <mat-icon svgIcon="sort-up"></mat-icon>
+      Archive
+    </button>
+    <button mat-menu-item>
+      <mat-icon svgIcon="sort-up"></mat-icon>
+      Delete
+    </button>
+  </mat-menu>
+</div>

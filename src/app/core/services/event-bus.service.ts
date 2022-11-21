@@ -3,6 +3,7 @@ import { filter, map, Observable, Subject } from 'rxjs';
 
 export const enum EventType {
   SearchOptionSelected = 'SEARCH_OPTION_SELECTED',
+  ToggleFiltersPanel = 'TOGGLE_FILTERS_PANEL',
 }
 
 export interface BusEvent<T = any> {
