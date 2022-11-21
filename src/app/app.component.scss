@@ -11,6 +11,7 @@ mat-sidenav-container {
 
 .content-wrapper {
   &:not(.content-wrapper--no-offset) {
+    height: 100vh;
     padding: 16px 48px 32px;
   }
 }

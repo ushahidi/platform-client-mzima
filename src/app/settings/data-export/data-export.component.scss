@@ -31,11 +31,16 @@
     margin-bottom: 1em;
 
     a {
-      color: #373e46;
+      color: var(--color-neutral-80);
 
       &:hover {
         color: #0a0b0d;
       }
     }
   }
+}
+
+.spinner {
+  display: block;
+  margin: 50px 0;
 }

@@ -112,7 +112,10 @@
     "newest_first": "Newest first",
     "oldest_first": "Oldest first",
     "language": "Language",
-    "select_language": "Select language"
+    "select_language": "Select language",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -229,6 +232,7 @@
     "visible_to": "Vizib pa"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Delete task",
     "duplicate_survey": "Duplicate",
     "internal_use_task": "Task is only for internal use",
@@ -1393,6 +1397,7 @@
       "destroy_success": "kont lan efase avek siksè"
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Resous ki anrejistre",
       "save_error": "Nou pa kapab anrejsitre resous, tanpri eseye ankò",

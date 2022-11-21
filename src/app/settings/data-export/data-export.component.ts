@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { CONST } from '@constants';
 import { FormInterface, ExportJobInterface } from '@models';
-import { TranslateService } from '@ngx-translate/core';
 import {
   ExportJobsService,
   FormsService,
-  NotificationService,
   PollingService,
   SessionService,
+  UsersService,
 } from '@services';
 
 @Component({
@@ -22,14 +22,14 @@ export class DataExportComponent implements OnInit {
   hxlApiKey = false;
   showProgress = false;
   exportView = true;
+  exportJobsReady = false;
 
   constructor(
     private formsService: FormsService,
     private sessionService: SessionService,
+    private usersService: UsersService,
     private exportJobsService: ExportJobsService,
     private pollingService: PollingService,
-    private notificationService: NotificationService,
-    private translate: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -37,14 +37,36 @@ export class DataExportComponent implements OnInit {
       this.forms = forms.results;
       this.attachFormAttributes();
     });
+    this.initUserSettings();
 
     this.hxlEnabled = !!this.sessionService.getFeatureConfigurations().hxl?.enabled;
     this.loadExportJobs();
   }
 
+  initUserSettings() {
+    const userId = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}userId`);
+    if (userId) {
+      this.usersService.getUserSettings(userId).subscribe({
+        next: (response) => {
+          this.hxlApiKey = response.results.some((setting: any) => {
+            return setting.config_key === 'hdx_api_key';
+          });
+        },
+      });
+    }
+  }
+
   loadExportJobs() {
-    this.exportJobsService.get().subscribe((jobs) => {
-      this.exportJobs = jobs.results.reverse();
+    this.exportJobsReady = false;
+    this.exportJobsService.get().subscribe({
+      next: (jobs) => {
+        this.exportJobs = jobs.reverse();
+        this.exportJobsReady = true;
+      },
+      error: (err) => {
+        console.error('Export failed: ', err);
+        this.exportJobsReady = true;
+      },
     });
   }
 

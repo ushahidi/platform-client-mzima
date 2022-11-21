@@ -119,7 +119,10 @@
     "newest_first": "Legújabb legelőre",
     "oldest_first": "Legrégebbi legelőre",
     "language": "nyelv",
-    "select_language": "Válassz nyelvet"
+    "select_language": "Válassz nyelvet",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -238,6 +241,7 @@
     "visible_to": "Látható"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Feladat törlése",
     "duplicate_survey": "Duplikálás",
     "internal_use_task": "Ez a feladat csak belső használatra készült",
@@ -1434,6 +1438,7 @@
       "destroy_success": "A fiók sikeresen eltávolításra került"
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "Ez a művelet nem vonható vissza. Kérjük, folytasd figyelmesen",
       "save_success": "Mentett erőforrás",
       "save_error": "Erőforrás mentése nem sikerült, kérlek próbáld újra",

@@ -1,17 +1,21 @@
-<section class="section">
-  <div class="create-button-container">
-    <button
-      type="button"
-      class="create-button"
-      color="primary"
-      mat-raised-button
-      [routerLink]="['create']"
-      data-qa="btn-add-role"
-    >
-      <mat-icon class="create-button-icon">create</mat-icon>
-      <span class="create-button-name">{{ 'role.add_role' | translate }}</span>
-    </button>
+<section class="roles">
+  <div class="roles-header">
+    <h2 class="roles-title">{{ 'app.roles' | translate }}</h2>
+    <div class="create-button-container">
+      <button
+        type="button"
+        class="create-button"
+        color="primary"
+        mat-raised-button
+        [routerLink]="['create']"
+        data-qa="btn-add-role"
+      >
+        <span class="create-button-name">{{ 'role.add_role' | translate }}</span>
+        <mat-icon svgIcon="pencil"></mat-icon>
+      </button>
+    </div>
   </div>
+
   <div class="roles-nav">
     <div
       class="roles-item"
@@ -20,7 +24,7 @@
       [data-qa]="'btn-' + role.display_name | lowercase"
     >
       <div class="item-icon-wrapper">
-        <mat-icon class="item-icon">home</mat-icon>
+        <mat-icon class="item-icon" svgIcon="users"></mat-icon>
       </div>
       <span class="roles-name">{{ role.display_name }}</span>
     </div>

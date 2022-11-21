@@ -10,6 +10,7 @@ import {
   PostsService,
   PostsV5Service,
 } from '@services';
+import { NgxMasonryComponent } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 
@@ -20,6 +21,7 @@ import { PostDetailsModalComponent } from '../map';
 })
 export class FeedComponent {
   @ViewChild('feed') public feed: ElementRef;
+  @ViewChild('masonry') public masonry: NgxMasonryComponent;
   public params: GeoJsonFilter = {
     limit: 9,
     offset: 0,
@@ -99,6 +101,7 @@ export class FeedComponent {
           if (this.feed.nativeElement.offsetHeight >= this.feed.nativeElement.scrollHeight) {
             this.loadMore();
           }
+          this.masonry.layout();
         }, 500);
       },
     });

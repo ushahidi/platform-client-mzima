@@ -21,6 +21,11 @@
   font-family: 'Lato', 'Arial', sans-serif;
 }
 
+.mat-typography,
+.mat-typography h2 {
+  font-family: 'Lato', 'Arial', sans-serif;
+}
+
 *,
 *::after,
 *::before {
@@ -61,6 +66,13 @@ body {
     width: 1em;
     height: 1em;
   }
+}
+
+section {
+  padding: 24px;
+  border-radius: 4px;
+  background: var(--color-light);
+  border: 1px solid var(--color-neutral-20);
 }
 
 .page-content {
@@ -132,6 +144,7 @@ a {
 .mat-drawer-container {
   .mat-drawer-content {
     position: static;
-    padding-top: 72px;
+    //padding-top: 72px;
+    margin-top: 72px;
   }
 }

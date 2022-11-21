@@ -30,4 +30,9 @@
 
 .form-controls-panel {
   margin-top: 16px;
+  justify-content: flex-end;
+}
+
+.form-controls-panel .mat-button-base {
+  padding: 0 25px;
 }

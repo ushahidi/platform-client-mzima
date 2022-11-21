@@ -20,20 +20,9 @@
 }
 
 .radio-group {
-  margin-bottom: 16px;
-
   &__content {
-    padding-top: 24px;
-    padding-left: 24px;
+    padding-left: 44px;
   }
-
-  + h3 {
-    margin-top: 24px;
-  }
-}
-
-.mat-radio-group + p {
-  margin-top: 8px;
 }
 
 .mat-radio-button {
@@ -49,6 +38,15 @@
 .mat-table {
   width: 100%;
   margin-bottom: 32px;
+
+  .mat-form-field-appearance-outline {
+    &::ng-deep {
+      .mat-form-field-wrapper {
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+    }
+  }
 }
 
 .seleted-file {
@@ -56,9 +54,9 @@
 }
 
 .survey-select {
-  font-weight: bold;
-
-  &__prefix {
-    font-weight: normal;
+  &::ng-deep {
+    .mat-select-placeholder {
+      font-weight: bold;
+    }
   }
 }

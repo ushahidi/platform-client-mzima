@@ -1,104 +1,143 @@
-<section class="section">
-  <!-- <h3 class="section-title">{{ 'nav.users' | translate }}</h3> -->
-
-  <div class="create-button-container">
-    <button type="button" color="primary" mat-raised-button [routerLink]="['create']">
-      {{ 'user.add_user' | translate }}
-      <mat-icon class="create-button-icon">create</mat-icon>
-    </button>
+<section class="users">
+  <div class="users-header">
+    <h2 class="users-title">{{ 'app.users' | translate }}</h2>
+    <div class="create-button-container">
+      <button
+        type="button"
+        class="create-button"
+        color="primary"
+        mat-raised-button
+        [routerLink]="['create']"
+        data-qa="btn-users-create-user"
+      >
+        <span class="create-button-name">{{ 'user.add_user' | translate }}</span>
+        <mat-icon svgIcon="pencil"></mat-icon>
+      </button>
+    </div>
   </div>
 
-  <form *ngIf="selection.selected.length" novalidate>
+  <form class="form" *ngIf="selection.selected.length" novalidate>
     <h4>{{ selection.selected.length }} selected</h4>
     <div class="head-panel">
       <div class="form-row">
         <mat-label>Change role</mat-label>
-        <mat-form-field appearance="outline">
-          <mat-select [(ngModel)]="selectedRole" name="role" disableOptionCentering>
-            <mat-option *ngFor="let role of (roleResponse$ | async)?.results" [value]="role.name">
-              {{ role.display_name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="form-role-container">
+          <mat-form-field appearance="outline" class="users-role-select" style="margin-right: 10px">
+            <mat-select
+              [(ngModel)]="selectedRole"
+              name="role"
+              disableOptionCentering
+              data-qa="users-role-select"
+            >
+              <mat-option
+                *ngFor="let role of (roleResponse$ | async)?.results"
+                [value]="role.name"
+                [data-qa]="role.name"
+              >
+                {{ role.display_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button
+            mat-raised-button
+            class="btn-users-change-role"
+            color="primary"
+            type="button"
+            [disabled]="!selectedRole"
+            data-qa="btn-users-change-role"
+            (click)="changeRole()"
+          >
+            Change Role
+          </button>
+        </div>
       </div>
-      <div class="group-elements">
-        <button
-          mat-raised-button
-          color="primary"
-          type="button"
-          [disabled]="!selectedRole"
-          (click)="changeRole()"
-        >
-          Change Role
-        </button>
-        <button mat-raised-button color="accent" type="button" (click)="deleteUsers()">
-          Delete
-        </button>
-      </div>
+
+      <button
+        mat-raised-button
+        class="btn-users-delete"
+        color="accent"
+        type="button"
+        data-qa="btn-users-delete"
+        (click)="deleteUsers()"
+      >
+        Delete
+      </button>
     </div>
   </form>
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox
-            (change)="$event ? masterToggle() : null"
-            [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()"
-          >
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox
-            (click)="$event.stopPropagation()"
-            (change)="$event ? selection.toggle(row) : null"
-            [checked]="selection.isSelected(row)"
-          >
-          </mat-checkbox>
-        </td>
-      </ng-container>
 
-      <ng-container matColumnDef="avatar">
-        <th mat-header-cell *matHeaderCellDef>Avatar</th>
-        <td mat-cell *matCellDef="let element">
-          <div class="avatar-wrapper">
-            <img
-              [src]="'https://www.gravatar.com/avatar/' + element.gravatar + '?d=retro'"
-              [alt]="element.realname"
-            />
-          </div>
-        </td>
-      </ng-container>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    *ngIf="!isLoading; else showLoader"
+    data-qa="users-table"
+  >
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="realname">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.realname }}</td>
-      </ng-container>
+    <ng-container matColumnDef="avatar">
+      <th mat-header-cell *matHeaderCellDef>Avatar</th>
+      <td mat-cell *matCellDef="let element">
+        <div class="avatar-wrapper">
+          <img
+            [src]="'https://www.gravatar.com/avatar/' + element.gravatar + '?d=retro'"
+            [alt]="element.realname"
+          />
+        </div>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>Email</th>
-        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-      </ng-container>
+    <ng-container matColumnDef="realname">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">
+        <span>{{ element.realname }}</span>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="role">
-        <th mat-header-cell *matHeaderCellDef>Role</th>
-        <td mat-cell *matCellDef="let element">{{ element.role }}</td>
-      </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        (click)="selection.toggle(row)"
-      ></tr>
-    </table>
-    <mat-paginator
-      showFirstLastButtons
-      [pageSizeOptions]="[10, 20, 30]"
-      [selectConfig]="{
-        disableOptionCentering: true
-      }"
-    >
-    </mat-paginator>
-  </div>
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef>Role</th>
+      <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [routerLink]="['update', row.id]"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    showFirstLastButtons
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 20, 30]"
+    [selectConfig]="{
+      disableOptionCentering: true
+    }"
+  >
+  </mat-paginator>
 </section>
+
+<ng-template #showLoader>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>

@@ -1,12 +1,20 @@
-.section {
-  &-title {
-    font-size: 36px;
+.users {
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    margin: 0;
   }
 
   .create-button {
+    text-transform: uppercase;
+
     &-container {
       display: flex;
-      margin-bottom: 30px;
       justify-content: flex-end;
     }
   }
@@ -15,6 +23,7 @@
 table {
   width: 100%;
 }
+
 tr.mat-row {
   height: 68px;
 }
@@ -30,6 +39,10 @@ tr.mat-row {
   }
 }
 
+.form {
+  margin-bottom: 10px;
+}
+
 .head-panel {
   display: flex;
   align-items: flex-end;
@@ -38,15 +51,31 @@ tr.mat-row {
   .form-row {
     max-width: 400px;
   }
-}
 
-.group-elements {
-  display: flex;
-  align-items: flex-start;
-  margin: 0 -8px 16px 16px;
-  justify-content: flex-start;
+  .form-role-container {
+    display: flex;
+  }
+
+  .users-role-select {
+    margin-right: 10px;
+    height: 40px;
+  }
 
   .mat-button-base {
     margin: 0 8px;
   }
+
+  .btn-users-change-role {
+    min-width: auto;
+  }
+
+  .btn-users-delete {
+    margin-bottom: 4px;
+  }
+}
+
+.spinner {
+  display: block;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
 }

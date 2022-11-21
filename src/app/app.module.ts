@@ -15,6 +15,7 @@ import { ConfigService, EnvService } from '@services';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 import { QuillModule } from 'ngx-quill';
+import { LottieModule } from 'ngx-lottie';
 
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
@@ -44,6 +45,10 @@ export const loadGoogleTagManagerProvider: FactoryProvider = {
   deps: [EnvService],
 };
 
+export function playerFactory(): any {
+  return import('lottie-web');
+}
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -72,6 +77,7 @@ export const loadGoogleTagManagerProvider: FactoryProvider = {
       },
     }),
     FormsModule,
+    LottieModule.forRoot({ player: playerFactory }),
   ],
   providers: [
     {

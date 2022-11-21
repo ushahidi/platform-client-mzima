@@ -8,9 +8,16 @@
     mat-raised-button
     (click)="clearImage()"
     translate="settings.delete_logo"
+    data-qa="btn-update-logo"
   ></button>
   <button color="primary" mat-raised-button>
     Update
-    <input name="file" type="file" (change)="uploadFile($event)" [required]="required" />
+    <input
+      name="file"
+      type="file"
+      (change)="uploadFile($event)"
+      [required]="required"
+      data-qa="btn-delete-logo"
+    />
   </button>
 </div>

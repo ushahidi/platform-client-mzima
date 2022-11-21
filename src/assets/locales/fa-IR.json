@@ -119,7 +119,10 @@
     "newest_first": "اول جدیدترها",
     "oldest_first": "اول قدیمی ترها",
     "language": "زبان",
-    "select_language": "انتخاب زبان"
+    "select_language": "انتخاب زبان",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -238,6 +241,7 @@
     "visible_to": "قابل مشاهده برای"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "حذف وظیفه",
     "duplicate_survey": "تکراری",
     "internal_use_task": "وظیفه فقط برای استفاده داخلی است",
@@ -1434,6 +1438,7 @@
       "destroy_success": "حساب با موفقیت حذف شد"
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "این کار قابل بازگشت نیست. لطفا با احتیاط ادامه دهید.",
       "save_success": "منبع ذخیره شد",
       "save_error": "امکان ذخیره پست وجود ندارد، لطفا دوباره امتحان کنید",

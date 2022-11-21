@@ -121,7 +121,10 @@
     "newest_first": "Newest first",
     "oldest_first": "Oldest first",
     "language": "Language",
-    "select_language": "Select language"
+    "select_language": "Select language",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -228,6 +231,7 @@
     "visible_to": "Visible To"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Delete task",
     "duplicate_survey": "Duplicate",
     "internal_use_task": "Task is only for internal use",
@@ -884,8 +888,8 @@
     "just_you": "Just you"
   },
   "webhook": {
-    "add_webhook": "Add Role",
-    "edit_webhook": "Edit Role",
+    "add_webhook": "Add Webhook",
+    "edit_webhook": "Edit Webhook",
     "uuid": "Webhook UUID",
     "name": "Name",
     "shared_secret": "Shared Secret",
@@ -1430,6 +1434,7 @@
       "destroy_success": "Account removed successfully"
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Saved resource",
       "save_error": "Unable to save resource, please try again",
@@ -1614,6 +1619,13 @@
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
       "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Success!",
+        "success_description": "Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.",
+        "success_button": "OK, sounds good"
+      }
     }
   },
   "empty": {

@@ -1,5 +1,7 @@
-<section class="section">
-  <h3 class="section-title">{{ 'user.add_user' | translate }}</h3>
+<section class="section user-profile">
+  <h3 class="section-title">
+    {{ isUpdate ? ('user.edit_user' | translate) : ('user.add_user' | translate) }}
+  </h3>
   <div class="page-content">
     <form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
       <div class="form-row">
@@ -23,7 +25,19 @@
           }}</mat-error>
         </mat-form-field>
       </div>
-      <div class="form-row" *ngIf="!isUpdate">
+      <div *ngIf="isUpdate && !isChangePassword" class="form-row">
+        <button
+          mat-raised-button
+          class="btn-change-role"
+          color="dark"
+          type="button"
+          data-qa="btn-user-change-password"
+          (click)="changePasswordToggle()"
+        >
+          {{ 'user.update_password' | translate }}
+        </button>
+      </div>
+      <div class="form-row" *ngIf="isChangePassword || !isUpdate">
         <mat-label>{{ 'user.password' | translate }}</mat-label>
         <mat-form-field appearance="outline">
           <input matInput formControlName="password" />
@@ -38,8 +52,8 @@
       <div class="form-row">
         <mat-label>{{ 'user.role' | translate }}</mat-label>
         <mat-form-field appearance="outline">
-          <mat-select formControlName="role" disableOptionCentering>
-            <mat-option *ngFor="let role of roles" [value]="role.name">
+          <mat-select formControlName="role" disableOptionCentering data-qa="user-role-select">
+            <mat-option *ngFor="let role of roles" [value]="role.name" [data-qa]="role.name">
               {{ role.display_name }}
             </mat-option>
           </mat-select>
@@ -47,7 +61,12 @@
       </div>
 
       <div class="form-controls-panel">
-        <button mat-stroked-button type="button" (click)="navigateToUsers()">
+        <button
+          mat-stroked-button
+          type="button"
+          data-qa="btn-user-cancel"
+          (click)="navigateToUsers()"
+        >
           <span>{{ 'app.cancel' | translate }}</span>
         </button>
         <button
@@ -55,11 +74,26 @@
           color="primary"
           class="role-button"
           type="submit"
+          data-qa="btn-user-save"
           [disabled]="form.invalid"
         >
           <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
         </button>
       </div>
     </form>
+  </div>
+
+  <div class="page-content" *ngIf="isUpdate">
+    <h2>{{ 'user.delete_this_user' | translate }}</h2>
+    <p [innerHTML]="'user.delete_user_desc' | translate"></p>
+    <button
+      mat-raised-button
+      type="button"
+      color="accent"
+      data-qa="btn-user-delete-user"
+      (click)="deleteUser()"
+    >
+      {{ 'user.delete_user' | translate }}
+    </button>
   </div>
 </section>

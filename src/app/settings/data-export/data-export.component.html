@@ -1,13 +1,13 @@
-<div class="page-content">
+<section class="data-export">
   <ng-container *ngIf="exportView; else fieldSelector">
     <h2 class="form-sheet-title" translate>
       {{ hxlEnabled ? 'data_export.title_hxl' : 'data_export.title' }}
     </h2>
     <p *ngIf="showProgress; else description" translate>data_export.export_progress</p>
     <mat-tab-group>
-      <mat-tab [label]="'data_export.export' | translate">
+      <mat-tab [label]="'data_export.export' | translate" data-qa="tab-export">
         <div class="tab-cover">
-          <div class="form-field" *ngIf="!hxlEnabled">
+          <div class="form-field" *ngIf="hxlEnabled && !hxlApiKey">
             <div class="alert">
               <p>{{ 'data_export.hxl_apikey_alert_1' | translate }}</p>
               <p>
@@ -26,15 +26,17 @@
               mat-raised-button
               (click)="exportAll()"
               [disabled]="showProgress"
+              data-qa="btn-export-all"
             >
               {{ 'data_export.all' | translate }}
             </button>
             <button
+              color="dark"
               type="button"
-              color="secondary"
               mat-raised-button
               (click)="selectFields()"
               [disabled]="showProgress"
+              data-qa="btn-select-fields"
             >
               {{ 'data_export.select_fields' | translate }}
             </button>
@@ -42,8 +44,8 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab [label]="'data_export.export_history' | translate">
-        <div class="tab-cover listing">
+      <mat-tab [label]="'data_export.export_history' | translate" data-qa="tab-export-history">
+        <div class="tab-cover listing" *ngIf="exportJobsReady; else showLoader">
           <div class="listing-item" *ngFor="let job of exportJobs">
             <div class="listing-item-primary">
               <strong class="listing-item__title">
@@ -51,16 +53,19 @@
                   {{ 'data_export.job' | translate: { jobId: job.id } }}
                 </a>
               </strong>
-              <p class="listing-item-secondary">
-                <strong>Status:</strong> {{ 'data_export.' + job.status | translate }}
-              </p>
+              <p
+                class="listing-item-secondary"
+                [innerHTML]="'data_export.' + job.status | translate"
+              ></p>
               <p
                 class="listing-item-secondary"
                 [innerHTML]="'data_export.created' | translate: { created: job.created }"
               ></p>
               <p
                 class="listing-item-secondary"
-                [innerHTML]="'data_export.expires' | translate: { expires: job.url_expiration }"
+                [innerHTML]="
+                  'data_export.expires' | translate: { expires: job.url_expiration || '' }
+                "
               ></p>
             </div>
           </div>
@@ -68,7 +73,7 @@
       </mat-tab>
     </mat-tab-group>
   </ng-container>
-</div>
+</section>
 <ng-template #fieldSelector>
   <h2 class="form-sheet-title" translate>data_export.select_fields_title</h2>
   <p translate>data_export.select_fields_desc</p>
@@ -87,10 +92,22 @@
     </div>
   </div>
   <div class="form-controls-panel">
-    <button type="button" color="secondary" mat-raised-button (click)="selectFields()">
+    <button
+      type="button"
+      color="secondary"
+      mat-raised-button
+      (click)="selectFields()"
+      data-qa="btn-cancel"
+    >
       {{ 'data_export.cancel' | translate }}
     </button>
-    <button type="button" color="primary" mat-raised-button (click)="exportSelected()">
+    <button
+      type="button"
+      color="primary"
+      mat-raised-button
+      (click)="exportSelected()"
+      data-qa="btn-export-selected"
+    >
       {{ 'data_export.export_selected' | translate }}
     </button>
   </div>
@@ -135,4 +152,8 @@
     </a>
     {{ 'data_export.account' | translate }}
   </p>
+</ng-template>
+
+<ng-template #showLoader>
+  <app-spinner class="spinner"></app-spinner>
 </ng-template>

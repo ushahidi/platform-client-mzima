@@ -119,7 +119,10 @@
     "newest_first": "Mais novos primeiro",
     "oldest_first": "Mais antigos primeiro",
     "language": "Idioma",
-    "select_language": "Selecionar Idioma"
+    "select_language": "Selecionar Idioma",
+    "add_new_post": "Add new post",
+    "previous": "Previous",
+    "choose_survey": "Choose survey"
   },
   "toolbar": {
     "searchbar": {
@@ -238,6 +241,7 @@
     "visible_to": "Visível para"
   },
   "survey": {
+    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Eliminar tarefa",
     "duplicate_survey": "Duplicar",
     "internal_use_task": "A tarefa é apenas para uso interno",
@@ -1434,6 +1438,7 @@
       "destroy_success": "Conta removida com sucesso"
     },
     "default": {
+      "data_has_not_been_saved": "The data has not been saved!",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Recurso salvo",
       "save_error": "Não foi possível salvar o recurso, tente novamente",
