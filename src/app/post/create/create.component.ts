@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -30,6 +30,7 @@ export class CreateComponent implements OnInit {
   public description: string;
   public title: string;
   private formId?: number;
+  public tasksFormArray = new FormArray([]);
   public tasks: any[];
   public activeLanguage: string;
   public initialFormData: any;
@@ -39,7 +40,7 @@ export class CreateComponent implements OnInit {
     private matDialogRef: MatDialogRef<CreateComponent>,
     private route: ActivatedRoute,
     private surveysService: SurveysService,
-    private formBuilder: FormBuilder,
+    // private formBuilder: FormBuilder,
     private postsV5Service: PostsV5Service,
     private router: Router,
     private translate: TranslateService,
@@ -65,39 +66,48 @@ export class CreateComponent implements OnInit {
     this.surveysService.getById(id).subscribe({
       next: (data) => {
         this.data = data;
+        this.tasks = data.result.tasks;
 
-        this.tasks = data.result.tasks.slice(1);
-
-        const tmpFields = data.result.tasks[0].fields.sort(
-          (a: any, b: any) => a.priority - b.priority,
-        );
-
-        this.fields = tmpFields;
-
+        // const arr: [] = [];
         let fields: any = {};
-        this.fields.map((field) => {
-          if (field.type === 'title') {
-            this.title = field.default;
-          }
-          if (field.type === 'description') {
-            this.description = field.default;
-          }
 
-          if (field.key) {
-            const value =
-              field.default ||
-              (field.input === 'date'
-                ? new Date()
-                : field.input === 'location'
-                ? { lat: -1.28569, lng: 36.832324 }
-                : field.input === 'number'
-                ? 0
-                : '');
-            fields[field.key] = new FormControl(value, field.required ? Validators.required : null);
-          }
-        });
+        for (const task of this.tasks) {
+          task.fields
+            .sort((a: any, b: any) => a.priority - b.priority)
+            .map((field: any) => {
+              if (field.type === 'title') {
+                this.title = field.default;
+              }
+              if (field.type === 'description') {
+                this.description = field.default;
+              }
 
-        this.form = this.formBuilder.group(fields);
+              if (field.key) {
+                const value =
+                  field.default ||
+                  (field.input === 'date'
+                    ? new Date()
+                    : field.input === 'location'
+                    ? { lat: -1.28569, lng: 36.832324 }
+                    : field.input === 'number'
+                    ? 0
+                    : '');
+                field.value = value;
+                // this.addTaskFormGroup(
+                //   field.key,
+                //   value,
+                //   field.required ? Validators.required : null,
+                // );
+                fields[field.key] = new FormControl(
+                  value,
+                  field.required ? Validators.required : null,
+                );
+              }
+            });
+        }
+        this.form = new FormGroup(fields);
+        console.log(this.form);
+        console.log(this.form.value);
         this.initialFormData = this.form.value;
       },
     });
@@ -108,96 +118,96 @@ export class CreateComponent implements OnInit {
   }
 
   public async submitPost(): Promise<void> {
-    if (this.form.disabled) return;
-
-    this.form.disable();
-
-    const fields = this.fields.map((field) => {
-      const value: any = {
-        value: this.form.value[field.key],
-      };
-
-      switch (field.input) {
-        case 'date':
-        case 'datetime':
-          value.value_meta = {
-            from_tz: dayjs.tz.guess(),
-          };
-          break;
-        case 'location':
-          value.value = {
-            lat: this.form.value[field.key].lat,
-            lon: this.form.value[field.key].lng,
-          };
-          break;
-        case 'tags':
-        case 'checkbox':
-          value.value = this.form.value[field.key] || [];
-          break;
-      }
-
-      return {
-        ...field,
-        value,
-      };
-    });
-
-    const postData = {
-      allowed_privileges: [
-        'read',
-        'create',
-        'update',
-        'delete',
-        'search',
-        'change_status',
-        'read_full',
-      ],
-      base_language: 'en',
-      completed_stages: [],
-      content: this.description,
-      description: '',
-      enabled_languages: {},
-      form_id: this.formId,
-      locale: 'en_US',
-      post_content: [
-        {
-          fields,
-          description: null,
-          form_id: this.formId,
-          id: 2,
-          label: 'Structure',
-          priority: 0,
-          required: false,
-          show_when_published: true,
-          task_is_internal_only: false,
-          translations: [],
-          type: 'post',
-        },
-      ],
-      post_date: new Date().toISOString(),
-      published_to: [],
-      title: this.title,
-      type: 'report',
-    };
-
-    this.postsV5Service.post(postData).subscribe({
-      error: () => {
-        this.form.enable();
-      },
-      complete: async () => {
-        this.matDialogRef.close();
-        this.form.enable();
-        await this.confirmModalService.open({
-          title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
-          description: `<p>${this.translate.instant(
-            'notify.confirm_modal.add_post_success.success_description',
-          )}</p>`,
-          buttonSuccess: this.translate.instant(
-            'notify.confirm_modal.add_post_success.success_button',
-          ),
-        });
-      },
-    });
+    console.log(this.form.value);
+    // if (this.form.disabled) return;
+    //
+    // this.form.disable();
+    //
+    // const fields = this.fields.map((field) => {
+    //   const value: any = {
+    //     value: this.form.value[field.key],
+    //   };
+    //
+    //   switch (field.input) {
+    //     case 'date':
+    //     case 'datetime':
+    //       value.value_meta = {
+    //         from_tz: dayjs.tz.guess(),
+    //       };
+    //       break;
+    //     case 'location':
+    //       value.value = {
+    //         lat: this.form.value[field.key].lat,
+    //         lon: this.form.value[field.key].lng,
+    //       };
+    //       break;
+    //     case 'tags':
+    //     case 'checkbox':
+    //       value.value = this.form.value[field.key] || [];
+    //       break;
+    //   }
+    //
+    //   return {
+    //     ...field,
+    //     value,
+    //   };
+    // });
+    //
+    // const postData = {
+    //   allowed_privileges: [
+    //     'read',
+    //     'create',
+    //     'update',
+    //     'delete',
+    //     'search',
+    //     'change_status',
+    //     'read_full',
+    //   ],
+    //   base_language: 'en',
+    //   completed_stages: [],
+    //   content: this.description,
+    //   description: '',
+    //   enabled_languages: {},
+    //   form_id: this.formId,
+    //   locale: 'en_US',
+    //   post_content: [
+    //     {
+    //       fields,
+    //       description: null,
+    //       form_id: this.formId,
+    //       id: 2,
+    //       label: 'Structure',
+    //       priority: 0,
+    //       required: false,
+    //       show_when_published: true,
+    //       task_is_internal_only: false,
+    //       translations: [],
+    //       type: 'post',
+    //     },
+    //   ],
+    //   post_date: new Date().toISOString(),
+    //   published_to: [],
+    //   title: this.title,
+    //   type: 'report',
+    // };
+    // this.postsV5Service.post(postData).subscribe({
+    //   error: () => {
+    //     this.form.enable();
+    //   },
+    //   complete: async () => {
+    //     this.matDialogRef.close();
+    //     this.form.enable();
+    //     await this.confirmModalService.open({
+    //       title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
+    //       description: `<p>${this.translate.instant(
+    //         'notify.confirm_modal.add_post_success.success_description',
+    //       )}</p>`,
+    //       buttonSuccess: this.translate.instant(
+    //         'notify.confirm_modal.add_post_success.success_button',
+    //       ),
+    //     });
+    //   },
+    // });
   }
 
   public onCheckChange(event: any, field: string) {
@@ -231,5 +241,29 @@ export class CreateComponent implements OnInit {
       type: EventType.AddPostButtonSubmit,
       payload: true,
     });
+  }
+
+  toggleAllSelection(fieldKey: string) {
+    console.log(this.form.controls[fieldKey].value.includes('all'));
+    if (this.form.controls[fieldKey].value.includes('all')) {
+      for (const task of this.tasks) {
+        task.fields.map((field: any) => {
+          if (field.key === fieldKey) {
+            const ids = field.options.map((el: any) => el.id);
+            this.form.controls[fieldKey].setValue(['all', ...ids]);
+          }
+        });
+      }
+    } else {
+      this.form.controls[fieldKey].setValue([]);
+    }
+  }
+
+  trackById(item: any): number {
+    return item.id;
+  }
+
+  relationSearch() {
+    console.log('relationSearch');
   }
 }

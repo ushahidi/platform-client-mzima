@@ -42,7 +42,8 @@
               "clone-deep",
               "dayjs",
               "quill",
-              "types-wm"
+              "types-wm",
+              "lottie-web"
             ]
           },
           "configurations": {

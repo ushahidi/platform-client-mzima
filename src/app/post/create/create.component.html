@@ -17,291 +17,304 @@
   [formGroup]="form"
   autocomplete="off"
   (ngSubmit)="submitPost()"
-  *ngIf="form && fields.length; else spinner"
+  *ngIf="form && tasks.length; else spinner"
 >
-  <div [ngStyle]="{ '--color': data?.result?.color }">
-    <div class="form-row" *ngFor="let field of fields">
-      <mat-label
-        >{{ field.label }} <span class="color-accent" *ngIf="field.required">*</span></mat-label
-      >
-      <span class="form-row__instruction" *ngIf="field.instructions">
-        {{ field.instructions }}
-      </span>
+  <div *ngFor="let task of tasks; let i = index" class="task-container">
+    <div [ngStyle]="{ '--color': data?.result?.color }">
+      <h2 class="task-label">{{ task.translations[activeLanguage]?.label || task.label }}</h2>
 
-      <ng-container
-        *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
-      >
-        <mat-form-field appearance="outline">
-          <input
-            matInput
-            [formControlName]="field.key"
-            *ngIf="field.type !== 'title'; else titleInput"
-          />
-          <ng-template #titleInput>
-            <input matInput [formControlName]="field.key" [(ngModel)]="title" />
-          </ng-template>
-        </mat-form-field>
-      </ng-container>
+      <div *ngIf="task.show_when_published">
+        <p>{{ 'survey.task_visible_when_published' | translate }}</p>
+      </div>
 
-      <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
-        <mat-form-field appearance="outline">
-          <textarea
-            matInput
-            cdkTextareaAutosize
-            cdkAutosizeMinRows="2"
-            cdkAutosizeMaxRows="5"
-            [(ngModel)]="description"
-            [formControlName]="field.key"
-            [data-qa]="'create-post-' + field.key"
-          >
-          </textarea>
-        </mat-form-field>
-      </ng-container>
+      <div *ngIf="task.task_is_internal_only">
+        <p>{{ 'survey.marked_for_internal' | translate }}</p>
+      </div>
 
-      <ng-container *ngIf="field.input === 'textarea'">
-        <mat-form-field appearance="outline">
-          <textarea
-            matInput
-            cdkTextareaAutosize
-            cdkAutosizeMinRows="2"
-            cdkAutosizeMaxRows="5"
-            [formControlName]="field.key"
-            [data-qa]="'create-post-' + field.key"
-          >
-          </textarea>
-        </mat-form-field>
-      </ng-container>
+      <div class="form-row" *ngFor="let field of task.fields; let i = index">
+        <!--        <pre>{{ field | json }}</pre>-->
 
-      <ng-container *ngIf="field.input === 'tags'">
-        <mat-selection-list
-          [formControlName]="field.key"
-          [data-qa]="'create-post-tags' + field.key"
+        <mat-label>
+          {{ field?.label }} <span class="color-accent" *ngIf="field?.required">*</span>
+        </mat-label>
+        <span class="form-row__instruction" *ngIf="field?.instructions">{{
+          field?.instructions
+        }}</span>
+
+        <ng-container
+          *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
         >
-          <mat-list-option color="primary" checkboxPosition="before">
-            <i>Select All</i>
-          </mat-list-option>
+          <mat-form-field appearance="outline">
+            <input matInput [formControlName]="field.key" />
+            <!--            <ng-template #titleInput>-->
+            <!--              <input-->
+            <!--                matInput-->
+            <!--                [(ngModel)]="title" [ngModelOptions]="{standalone: true}"/>-->
+            <!--            </ng-template>-->
+          </mat-form-field>
+        </ng-container>
 
-          <ng-container *ngFor="let option of field.options">
+        <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
+          <mat-form-field appearance="outline">
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+              cdkAutosizeMaxRows="5"
+              [formControlName]="field.key"
+              [data-qa]="'create-post-' + field.key"
+            >
+            </textarea>
+          </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'textarea'">
+          <mat-form-field appearance="outline">
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+              cdkAutosizeMaxRows="5"
+              [formControlName]="field.key"
+              [data-qa]="'create-post-' + field.key"
+            >
+            </textarea>
+          </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'tags'">
+          {{ form.get(field.key)?.value | json }}
+          <mat-selection-list
+            [formControlName]="field.key"
+            [data-qa]="'create-post-tags' + field.key"
+          >
             <mat-list-option
               color="primary"
-              [value]="option.id"
-              *ngIf="!option.parent_id"
               checkboxPosition="before"
-              [disabled]="!!option.children?.length"
-              [ngStyle]="{ '--color': option.color }"
-              [data-qa]="'create-post-tags' + option.id"
+              value="all"
+              aria-label="select all"
+              (click)="toggleAllSelection(field.key)"
             >
-              {{ option.tag }}
+              <i>Select All</i>
             </mat-list-option>
 
-            <div class="tags__group" *ngIf="option.children?.length">
-              <ng-container *ngFor="let childOption of getOptionsByParentId(field, option.id)">
-                <mat-list-option
-                  color="primary"
-                  [value]="childOption.id"
-                  checkboxPosition="before"
-                  [ngStyle]="{ '--color': childOption.color }"
-                  [data-qa]="'create-post-tags-group' + childOption.id"
-                >
-                  {{ childOption.tag }}
-                </mat-list-option>
-              </ng-container>
+            <ng-container *ngFor="let option of field.options; trackBy: trackById">
+              <mat-list-option
+                color="primary"
+                [value]="option.id"
+                *ngIf="!option.parent_id"
+                checkboxPosition="before"
+                [disabled]="!!option.children?.length"
+                [ngStyle]="{ '--color': option.color }"
+                [data-qa]="'create-post-tags' + option.id"
+              >
+                {{ option.tag }}
+              </mat-list-option>
+
+              <div class="tags__group" *ngIf="option.children?.length">
+                <ng-container *ngFor="let childOption of getOptionsByParentId(field, option.id)">
+                  <mat-list-option
+                    color="primary"
+                    [value]="childOption.id"
+                    checkboxPosition="before"
+                    [ngStyle]="{ '--color': childOption.color }"
+                    [data-qa]="'create-post-tags-group' + childOption.id"
+                  >
+                    {{ childOption.tag }}
+                  </mat-list-option>
+                </ng-container>
+              </div>
+            </ng-container>
+          </mat-selection-list>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'date'">
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [formControlName]="field.key"
+              (focus)="picker.open()"
+              #input
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+              [data-qa]="'create-post-date-toggle'"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker (closed)="input.blur()"></mat-datepicker>
+          </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'datetime'">
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              [ngxMatDatetimePicker]="picker"
+              [formControlName]="field.key"
+              (focus)="picker.open()"
+              #input
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="$any(picker)"
+              [data-qa]="'create-post-date-time-toggle' + field.key"
+            ></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker (closed)="input.blur()"></ngx-mat-datetime-picker>
+          </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'radio'">
+          <mat-radio-group
+            [attr.aria-label]="field.label"
+            [formControlName]="field.key"
+            [data-qa]="'create-post-radio' + field.key"
+          >
+            <div class="radio-button" *ngFor="let option of field.options">
+              <mat-radio-button [value]="option" [data-qa]="'create-post-radio-option' + option">
+                {{ option }}
+              </mat-radio-button>
             </div>
-          </ng-container>
-        </mat-selection-list>
-      </ng-container>
+          </mat-radio-group>
+        </ng-container>
 
-      <ng-container *ngIf="field.input === 'date'">
-        <mat-form-field appearance="outline">
-          <input
-            matInput
-            [matDatepicker]="picker"
+        <ng-container *ngIf="field.input === 'checkbox'">
+          <mat-selection-list
             [formControlName]="field.key"
-            (focus)="picker.open()"
-            #input
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-            [data-qa]="'create-post-date-toggle'"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker (closed)="input.blur()"></mat-datepicker>
-        </mat-form-field>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'datetime'">
-        <mat-form-field appearance="outline">
-          <input
-            matInput
-            [ngxMatDatetimePicker]="picker"
-            [formControlName]="field.key"
-            (focus)="picker.open()"
-            #input
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="$any(picker)"
-            [data-qa]="'create-post-date-time-toggle' + field.key"
-          ></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #picker (closed)="input.blur()"></ngx-mat-datetime-picker>
-        </mat-form-field>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'radio'">
-        <mat-radio-group
-          [attr.aria-label]="field.label"
-          [formControlName]="field.key"
-          [data-qa]="'create-post-radio' + field.key"
-        >
-          <div class="radio-button" *ngFor="let option of field.options">
-            <mat-radio-button [value]="option" [data-qa]="'create-post-radio-option' + option">
-              {{ option }}
-            </mat-radio-button>
-          </div>
-        </mat-radio-group>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'checkbox'">
-        <mat-selection-list
-          [formControlName]="field.key"
-          [data-qa]="'create-post-checkbox' + field.key"
-        >
-          <mat-list-option
-            color="primary"
-            [value]="option"
-            class="list-option"
-            checkboxPosition="before"
-            *ngFor="let option of field.options"
-            [data-qa]="'create-post-checkbox-option' + option"
+            [data-qa]="'create-post-checkbox' + field.key"
           >
-            {{ option }}
-          </mat-list-option>
-        </mat-selection-list>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'select'">
-        <mat-form-field appearance="outline">
-          <mat-select
-            [formControlName]="field.key"
-            disableOptionCentering
-            [data-qa]="'create-post-select' + field.key"
-          >
-            <mat-option
-              *ngFor="let option of field.options"
+            <mat-list-option
+              color="primary"
               [value]="option"
-              [data-qa]="'create-post-select-option' + option"
+              class="list-option"
+              checkboxPosition="before"
+              *ngFor="let option of field.options"
+              [data-qa]="'create-post-checkbox-option' + option"
             >
               {{ option }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </ng-container>
+            </mat-list-option>
+          </mat-selection-list>
+        </ng-container>
 
-      <ng-container *ngIf="field.input === 'number'">
-        <mat-form-field appearance="outline">
-          <input matInput [formControlName]="field.key" type="number" />
-        </mat-form-field>
-      </ng-container>
+        <ng-container *ngIf="field.input === 'select'">
+          <mat-form-field appearance="outline">
+            <mat-select
+              [formControlName]="field.key"
+              disableOptionCentering
+              [data-qa]="'create-post-select' + field.key"
+            >
+              <mat-option
+                *ngFor="let option of field.options"
+                [value]="option"
+                [data-qa]="'create-post-select-option' + option"
+              >
+                {{ option }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
 
-      <ng-container *ngIf="field.input === 'upload'">
-        <button
-          type="button"
-          color="primary"
-          mat-stroked-button
-          (click)="fileInput.click()"
-          data-qa="btn-create-post-upload"
-        >
-          {{ 'post.media.add_photo' | translate }}
-          <mat-icon svgIcon="plus"></mat-icon>
-        </button>
-        <input hidden #fileInput type="file" id="file" [formControlName]="field.key" />
-        <br />
-        <br />
-      </ng-container>
-      <ng-container *ngIf="field.input === 'video'">
-        <mat-form-field appearance="outline">
-          <input
-            matInput
-            [formControlName]="field.key"
-            #videoInput
-            (change)="
-              videoPreview.src =
-                videoInput.value.indexOf('youtube', 0) !== -1
-                  ? 'https://www.youtube.com/embed/' +
-                    videoInput.value.split('watch?v=')[1].split('&')[0]
-                  : 'https://player.vimeo.com/video/' + videoInput.value.split('.com/')[1]
-            "
-          />
-        </mat-form-field>
+        <ng-container *ngIf="field.input === 'number'">
+          <mat-form-field appearance="outline">
+            <input matInput [formControlName]="field.key" type="number" />
+          </mat-form-field>
+        </ng-container>
 
-        <iframe width="560" height="315" #videoPreview [hidden]="!videoInput.value.length"></iframe>
-      </ng-container>
+        <ng-container *ngIf="field.input === 'upload'">
+          <button
+            type="button"
+            color="primary"
+            mat-stroked-button
+            (click)="fileInput.click()"
+            data-qa="btn-create-post-upload"
+          >
+            {{ 'post.media.add_photo' | translate }}
+            <mat-icon svgIcon="plus"></mat-icon>
+          </button>
+          <input hidden #fileInput type="file" id="file" [formControlName]="field.key" />
+          <br />
+          <br />
+        </ng-container>
 
-      <ng-container *ngIf="field.input === 'location'">
-        <app-location-select [zoom]="12" [formControlName]="field.key"> </app-location-select>
-      </ng-container>
-    </div>
+        <ng-container *ngIf="field.input === 'video'">
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              [formControlName]="field.key"
+              #videoInput
+              (change)="
+                videoPreview.src =
+                  videoInput.value.indexOf('youtube', 0) !== -1
+                    ? 'https://www.youtube.com/embed/' +
+                      videoInput.value.split('watch?v=')[1].split('&')[0]
+                    : 'https://player.vimeo.com/video/' + videoInput.value.split('.com/')[1]
+              "
+            />
+          </mat-form-field>
+          <iframe
+            width="560"
+            height="315"
+            #videoPreview
+            [hidden]="!videoInput.value.length"
+          ></iframe>
+        </ng-container>
 
-    <div class="form-controls-panel" *ngIf="!tasks.length">
-      <button
-        color="primary"
-        mat-stroked-button
-        type="button"
-        data-qa="btn-create-post-previous"
-        (click)="previousPage()"
-      >
-        {{ 'app.previous' | translate }}
-      </button>
-      <button
-        color="primary"
-        mat-raised-button
-        type="submit"
-        [disabled]="form.invalid || form.disabled"
-        data-qa="btn-create-post-submit"
-      >
-        {{ 'app.submit' | translate }}
-      </button>
+        <ng-container *ngIf="field.input === 'location'">
+          <app-location-select [zoom]="12" [formControlName]="field.key"></app-location-select>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'relation'">
+          <p>{{ 'survey.related_post_info' | translate }}</p>
+          <mat-form-field appearance="outline">
+            <input matInput [formControlName]="field.key" />
+            <button
+              type="button"
+              color="primary"
+              mat-stroked-button
+              (click)="relationSearch()"
+              data-qa="btn-create-post-relation-search"
+            >
+              {{ 'post.media.add_photo' | translate }}
+              <mat-icon svgIcon="search"></mat-icon>
+            </button>
+          </mat-form-field>
+        </ng-container>
+      </div>
     </div>
   </div>
 
-  <div class="page-content" *ngFor="let task of tasks; let i = index">
-    <h2>{{ task.translations[activeLanguage]?.label || task.label }}</h2>
+  <!--  <div class="page-content" *ngFor="let task of tasks">-->
+  <!--    <h2>{{ task.translations[activeLanguage]?.label || task.label }}</h2>-->
 
-    <div *ngIf="task.show_when_published">
-      <p>{{ 'survey.task_visible_when_published' | translate }}</p>
-    </div>
+  <!--    <div *ngIf="task.show_when_published">-->
+  <!--      <p>{{ 'survey.task_visible_when_published' | translate }}</p>-->
+  <!--    </div>-->
 
-    <div *ngIf="task.task_is_internal_only">
-      <p>{{ 'survey.marked_for_internal' | translate }}</p>
-    </div>
+  <!--    <div *ngIf="task.task_is_internal_only">-->
+  <!--      <p>{{ 'survey.marked_for_internal' | translate }}</p>-->
+  <!--    </div>-->
 
-    <div class="form-row">
-      <mat-slide-toggle name="accept-survey" [required]="task.reqiured">
-        {{ 'post.task_completed' | translate }}
-        <span class="color-accent" *ngIf="task.required">*</span>
-      </mat-slide-toggle>
-    </div>
+  <!--    <div class="form-row">-->
+  <!--      <mat-slide-toggle name="accept-survey" [required]="task.reqiured">-->
+  <!--        {{ 'post.task_completed' | translate }}-->
+  <!--        <span class="color-accent" *ngIf="task.required">*</span>-->
+  <!--      </mat-slide-toggle>-->
+  <!--    </div>-->
+  <!--  </div>-->
 
-    <div class="form-controls-panel" *ngIf="i === tasks.length - 1">
-      <button
-        color="primary"
-        mat-stroked-button
-        type="button"
-        data-qa="btn-create-post-previous"
-        (click)="previousPage()"
-      >
-        {{ 'app.previous' | translate }}
-      </button>
-      <button
-        color="primary"
-        mat-raised-button
-        type="submit"
-        [disabled]="form.invalid || form.disabled"
-        data-qa="btn-create-post-submit"
-      >
-        {{ 'app.submit' | translate }}
-      </button>
-    </div>
+  <div class="form-controls-panel">
+    <button
+      color="primary"
+      mat-stroked-button
+      type="button"
+      data-qa="btn-create-post-previous"
+      (click)="previousPage()"
+    >
+      {{ 'app.previous' | translate }}
+    </button>
+    <button color="primary" mat-raised-button type="submit" data-qa="btn-create-post-submit">
+      {{ 'app.submit' | translate }}
+    </button>
   </div>
 </form>
 
