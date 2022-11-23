@@ -21,19 +21,32 @@
 >
   <div *ngFor="let task of tasks; let i = index" class="task-container">
     <div [ngStyle]="{ '--color': data?.result?.color }">
-      <h2 class="task-label">{{ task.translations[activeLanguage]?.label || task.label }}</h2>
+      <ng-container *ngIf="task.type !== 'post'">
+        <h2 class="task-label">{{ task.translations[activeLanguage]?.label || task.label }}</h2>
 
-      <div *ngIf="task.show_when_published">
-        <p>{{ 'survey.task_visible_when_published' | translate }}</p>
-      </div>
+        <div *ngIf="task.show_when_published">
+          <p>{{ 'survey.task_visible_when_published' | translate }}</p>
+        </div>
 
-      <div *ngIf="task.task_is_internal_only">
-        <p>{{ 'survey.marked_for_internal' | translate }}</p>
-      </div>
+        <div *ngIf="task.task_is_internal_only">
+          <p>{{ 'survey.marked_for_internal' | translate }}</p>
+        </div>
+
+        <div class="form-row">
+          <mat-slide-toggle
+            class="task-complete"
+            name="accept-survey"
+            [required]="task.reqiured"
+            labelPosition="before"
+            (change)="taskComplete(task, $event)"
+          >
+            {{ 'post.task_completed' | translate }}
+            <span class="color-accent" *ngIf="task.required">*</span>
+          </mat-slide-toggle>
+        </div>
+      </ng-container>
 
       <div class="form-row" *ngFor="let field of task.fields; let i = index">
-        <!--        <pre>{{ field | json }}</pre>-->
-
         <mat-label>
           {{ field?.label }} <span class="color-accent" *ngIf="field?.required">*</span>
         </mat-label>
@@ -46,11 +59,9 @@
         >
           <mat-form-field appearance="outline">
             <input matInput [formControlName]="field.key" />
-            <!--            <ng-template #titleInput>-->
-            <!--              <input-->
-            <!--                matInput-->
-            <!--                [(ngModel)]="title" [ngModelOptions]="{standalone: true}"/>-->
-            <!--            </ng-template>-->
+            <ng-template #titleInput>
+              <input matInput [(ngModel)]="title" [ngModelOptions]="{ standalone: true }" />
+            </ng-template>
           </mat-form-field>
         </ng-container>
 
@@ -83,49 +94,26 @@
         </ng-container>
 
         <ng-container *ngIf="field.input === 'tags'">
-          {{ form.get(field.key)?.value | json }}
-          <mat-selection-list
-            [formControlName]="field.key"
-            [data-qa]="'create-post-tags' + field.key"
-          >
-            <mat-list-option
-              color="primary"
-              checkboxPosition="before"
-              value="all"
-              aria-label="select all"
-              (click)="toggleAllSelection(field.key)"
-            >
-              <i>Select All</i>
-            </mat-list-option>
-
-            <ng-container *ngFor="let option of field.options; trackBy: trackById">
-              <mat-list-option
-                color="primary"
-                [value]="option.id"
-                *ngIf="!option.parent_id"
-                checkboxPosition="before"
-                [disabled]="!!option.children?.length"
-                [ngStyle]="{ '--color': option.color }"
-                [data-qa]="'create-post-tags' + option.id"
-              >
-                {{ option.tag }}
-              </mat-list-option>
-
-              <div class="tags__group" *ngIf="option.children?.length">
-                <ng-container *ngFor="let childOption of getOptionsByParentId(field, option.id)">
-                  <mat-list-option
-                    color="primary"
-                    [value]="childOption.id"
-                    checkboxPosition="before"
-                    [ngStyle]="{ '--color': childOption.color }"
-                    [data-qa]="'create-post-tags-group' + childOption.id"
-                  >
-                    {{ childOption.tag }}
-                  </mat-list-option>
-                </ng-container>
-              </div>
-            </ng-container>
-          </mat-selection-list>
+          <span class="related-post-list">
+            <ul>
+              <li>
+                <mat-checkbox
+                  [checked]="form.get(field.key)?.value.length === field.options.length"
+                  (change)="toggleAllSelection($event, task.fields, field.key)"
+                >
+                  {{ 'nav.select_all' | translate }}
+                </mat-checkbox>
+              </li>
+              <li *ngFor="let option of field.options; trackBy: trackById">
+                <mat-checkbox
+                  [checked]="form.get(field.key)?.value.includes(option.id)"
+                  (change)="onCheckChange($event, field.key, option.id)"
+                >
+                  {{ option.tag }}
+                </mat-checkbox>
+              </li>
+            </ul>
+          </span>
         </ng-container>
 
         <ng-container *ngIf="field.input === 'date'">
@@ -265,42 +253,67 @@
 
         <ng-container *ngIf="field.input === 'relation'">
           <p>{{ 'survey.related_post_info' | translate }}</p>
-          <mat-form-field appearance="outline">
-            <input matInput [formControlName]="field.key" />
+          <span class="related-post-selected" *ngIf="selectedRelatedPost">
+            {{ selectedRelatedPost.id }}: {{ selectedRelatedPost.title }}
+            <mat-icon class="trash"></mat-icon>
             <button
               type="button"
               color="primary"
               mat-stroked-button
-              (click)="relationSearch()"
+              data-qa="btn-create-post-delete-relation-post"
+              (click)="deleteRelatedPost(field, selectedRelatedPost.id)"
+            >
+              delete
+              <mat-icon class="trash"></mat-icon>
+            </button>
+          </span>
+
+          <div class="relation-container">
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="text"
+                [(ngModel)]="relationSearch"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </mat-form-field>
+            <button
+              type="button"
+              color="primary"
+              mat-stroked-button
+              class="relation-button-search"
+              (click)="relationSearchPosts()"
               data-qa="btn-create-post-relation-search"
             >
-              {{ 'post.media.add_photo' | translate }}
-              <mat-icon svgIcon="search"></mat-icon>
+              {{ 'post.relation.search' | translate }}
             </button>
+          </div>
+
+          <span class="related-post-list" *ngIf="relatedPosts?.length">
+            <ul>
+              <li *ngFor="let post of relatedPosts">
+                <mat-checkbox (change)="chooseRelatedPost($event, field, post)">
+                  {{ post.id }}: {{ post.title }}
+                </mat-checkbox>
+              </li>
+            </ul>
+          </span>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'markdown'">
+          <mat-form-field appearance="outline">
+            <textarea
+              matInput
+              [formControlName]="field.key"
+              cdkTextareaAutosize
+              cdkAutosizeMaxRows="5"
+              [placeholder]="field.default"
+            ></textarea>
           </mat-form-field>
         </ng-container>
       </div>
     </div>
   </div>
-
-  <!--  <div class="page-content" *ngFor="let task of tasks">-->
-  <!--    <h2>{{ task.translations[activeLanguage]?.label || task.label }}</h2>-->
-
-  <!--    <div *ngIf="task.show_when_published">-->
-  <!--      <p>{{ 'survey.task_visible_when_published' | translate }}</p>-->
-  <!--    </div>-->
-
-  <!--    <div *ngIf="task.task_is_internal_only">-->
-  <!--      <p>{{ 'survey.marked_for_internal' | translate }}</p>-->
-  <!--    </div>-->
-
-  <!--    <div class="form-row">-->
-  <!--      <mat-slide-toggle name="accept-survey" [required]="task.reqiured">-->
-  <!--        {{ 'post.task_completed' | translate }}-->
-  <!--        <span class="color-accent" *ngIf="task.required">*</span>-->
-  <!--      </mat-slide-toggle>-->
-  <!--    </div>-->
-  <!--  </div>-->
 
   <div class="form-controls-panel">
     <button
