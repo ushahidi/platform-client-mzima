@@ -6,12 +6,12 @@
       <mat-form-field appearance="outline">
         <input
           matInput
-          placeholder="{{ 'settings.deployment_name' }}"
+          placeholder="{{ 'settings.deployment_name' | translate }}"
           formControlName="name"
           required
         />
         <mat-error *ngIf="generalForm.get('name')?.invalid">
-          {{ generalForm.get('name')?.errors | json }}
+          {{ 'survey.fields.validation.required' | translate }}
         </mat-error>
       </mat-form-field>
     </div>
@@ -23,7 +23,7 @@
           cdkTextareaAutosize
           cdkAutosizeMinRows="2"
           cdkAutosizeMaxRows="5"
-          placeholder="{{ 'settings.site_description' }}"
+          placeholder="An optional one sentence description"
           formControlName="description"
         ></textarea>
       </mat-form-field>
@@ -43,7 +43,7 @@
       <mat-form-field appearance="outline">
         <input matInput placeholder="name@domain.com" formControlName="email" required />
         <mat-error *ngIf="generalForm.get('email')?.invalid">
-          {{ generalForm.get('email')?.errors | json }}
+          {{ 'survey.fields.validation.required' | translate }}
         </mat-error>
       </mat-form-field>
       <p class="small" translate>settings.site_email_note</p>
