@@ -78,7 +78,7 @@ export class PostsService extends ResourceService<any> {
   }
 
   public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
-    return super.get(url, { ...filter, ...this.postsFilters.value, has_location: 'all' }).pipe(
+    return super.get(url, { ...this.postsFilters.value, has_location: 'all', ...filter }).pipe(
       map((response) => {
         response.results.map((post: PostResult) => {
           post.source =

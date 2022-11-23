@@ -19,31 +19,11 @@
     <div class="form-row">
       <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
       <quill-editor [(ngModel)]="selectedFieldType.description"></quill-editor>
-      <!-- <mat-form-field appearance="standard">
-        <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
-        <input
-          matInput
-          [(ngModel)]="selectedFieldType.description"
-          placeholder="{{ 'form.field_name_placeholder' | translate }}"
-        />
-      </mat-form-field> -->
     </div>
 
     <!-- Has options -->
-    <div class="form-row" *ngIf="hasOptions">
+    <div class="row-container form-row" *ngIf="hasOptions">
       <mat-label>{{ 'form.field_options' | translate }} </mat-label>
-      <mat-form-field appearance="outline">
-        <input
-          matInput
-          [(ngModel)]="selectedFieldType.options[0]"
-          placeholder="{{ 'form.field_name_placeholder' | translate }}"
-        />
-
-        <div class="alert error" role="alert" *ngIf="!validateDuplicate()">
-          <p translate>survey.duplicate_option</p>
-        </div>
-      </mat-form-field>
-
       <div *ngFor="let opt of selectedFieldType.options; let i = index">
         <mat-form-field appearance="outline">
           <input
@@ -73,16 +53,19 @@
         </mat-form-field>
       </div>
 
+      <div class="alert error" role="alert" *ngIf="!validateDuplicate()">
+        <span translate>survey.duplicate_option</span>
+      </div>
+
       <button
         type="button"
         color="primary"
         mat-raised-button
-        class="button-secondary alt"
+        class="button-add-field"
         (click)="addOption(selectedFieldType)"
       >
         <i class="fa fa-plus"></i> <span translate>form.field_add_option</span>
       </button>
-      <br /><br />
     </div>
 
     <div class="form-row" *ngIf="selectedFieldType.input === 'tags'">
@@ -167,7 +150,13 @@
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
-  <button mat-raised-button type="button" (click)="addNewTask()" [disabled]="!validateDuplicate()">
+  <button
+    mat-raised-button
+    type="button"
+    color="primary"
+    (click)="addNewTask()"
+    [disabled]="!validateDuplicate()"
+  >
     {{ editMode ? ('app.update_and_close' | translate) : ('app.add_and_close' | translate) }}
   </button>
 </div>
