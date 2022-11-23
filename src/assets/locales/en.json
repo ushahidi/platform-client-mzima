@@ -1158,7 +1158,9 @@
         "placeholder": "Enter the title of your donation",
         "required": "Donation title is required"
       },
+      "description": "Enter text telling more about this donation",
       "wallet": {
+        "placeholder": "Enter a wallet address e.g $ilp.uphold.com/example",
         "required": "Donation wallet address is required"
       }
     },

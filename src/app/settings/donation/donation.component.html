@@ -8,13 +8,13 @@
         <mat-form-field appearance="outline">
           <input
             matInput
-            placeholder="{{ 'settings.donation.title.placeholder' }}"
+            placeholder="{{ 'settings.donation.title.placeholder' | translate }}"
             formControlName="title"
             required
             data-qa="title"
           />
           <mat-error *ngIf="donationForm.get('title')?.invalid">
-            {{ donationForm.get('title')?.errors | json }}
+            {{ 'settings.donation.title.required' | translate }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -28,7 +28,7 @@
             cdkTextareaAutosize
             cdkAutosizeMinRows="2"
             cdkAutosizeMaxRows="5"
-            placeholder="{{ 'settings.site_description' }}"
+            placeholder="{{ 'settings.donation.description' | translate }}"
             formControlName="description"
           ></textarea>
         </mat-form-field>
@@ -59,7 +59,7 @@
           <input
             data-qa="wallet"
             matInput
-            placeholder="{{ 'settings.donation.title.placeholder' }}"
+            placeholder="{{ 'settings.donation.wallet.placeholder' | translate }}"
             formControlName="wallet"
           />
         </mat-form-field>
