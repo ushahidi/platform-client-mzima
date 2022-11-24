@@ -34,38 +34,38 @@
     </div>
 
     <div class="form-controls-panel">
-      <button
-        mat-stroked-button
-        type="button"
-        (click)="navigateToRoles()"
-        data-qa="btn-cancel-role"
-      >
-        <span>{{ 'app.cancel' | translate }}</span>
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        class="role-button"
-        type="submit"
-        [disabled]="form.invalid"
-        data-qa="btn-save-role"
-      >
-        <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
-      </button>
+      <div>
+        <button
+          type="button"
+          color="accent"
+          mat-raised-button
+          (click)="deleteRole()"
+          data-qa="btn-delete-role"
+          *ngIf="isUpdate && !role?.protected"
+        >
+          <span>{{ 'role.delete' | translate }}</span>
+        </button>
+      </div>
+      <div>
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="navigateToRoles()"
+          data-qa="btn-cancel-role"
+        >
+          <span>{{ 'app.cancel' | translate }}</span>
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="role-button"
+          type="submit"
+          [disabled]="form.invalid"
+          data-qa="btn-save-role"
+        >
+          <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
+        </button>
+      </div>
     </div>
   </form>
-
-  <!-- <div class="page-content" *ngIf="isUpdate && !role?.protected"> -->
-  <h3>{{ 'role.delete_role' | translate }}</h3>
-  <p [innerHTML]="'role.delete_role_desc' | translate"></p>
-  <button
-    type="button"
-    color="accent"
-    mat-raised-button
-    (click)="deleteRole()"
-    data-qa="btn-delete-role"
-  >
-    <span>{{ 'role.delete' | translate }}</span>
-  </button>
-  <!-- </div> -->
 </section>

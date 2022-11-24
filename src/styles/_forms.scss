@@ -10,6 +10,9 @@
 }
 
 .mat-pseudo-checkbox {
+  margin-top: 3.5px;
+  margin-left: 3.5px;
+  margin-bottom: 3.5px;
   width: 21px !important;
   height: 21px !important;
   border-width: 2px !important;
@@ -28,13 +31,28 @@
     height: 6px !important;
     border-left-width: 2px !important;
   }
+
+  &.mat-pseudo-checkbox-disabled {
+    background: var(--color-neutral-50);
+  }
 }
 
 .mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
 .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,
 .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
 .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text {
-  padding-left: 12px !important;
+  padding-left: 11.5px !important;
+}
+
+.mat-list-base {
+  .mat-list-option {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .mat-list-item-disabled {
+    background: var(--color-neutral-10);
+  }
 }
 
 .mat-checkbox-checkmark-path {
@@ -186,7 +204,7 @@
 }
 
 .mat-calendar-body-selected {
-  color: #383e45;
+  color: var(--color-neutral-90);
   font-weight: 700;
   background-color: var(--color-primary-60);
 }
@@ -252,16 +270,16 @@
   .mat-list-item,
   .mat-list-option {
     .mat-list-item-content {
+      padding: 12px;
       flex-basis: 100%;
-      min-height: 40px;
-      padding: 10px 16px;
+      min-height: 52px;
     }
   }
 }
 
 .mat-list-base {
   .mat-list-option {
-    color: #383e45;
+    color: var(--color-neutral-90);
   }
 }
 
@@ -675,7 +693,7 @@
   }
 
   .mat-select-placeholder {
-    color: #383e45;
+    color: var(--color-neutral-90);
   }
 
   &[aria-expanded='true'] {

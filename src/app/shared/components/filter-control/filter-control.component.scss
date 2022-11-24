@@ -7,7 +7,7 @@
     padding: 8px;
     font-size: 14px;
     border-radius: 0;
-    color: #383e45;
+    color: var(--color-neutral-90);
     min-height: 100%;
     line-height: 17px;
     font-weight: normal;
@@ -43,7 +43,7 @@
       min-width: 25px;
       font-size: 14px;
       margin-left: 8px;
-      color: #383e45;
+      color: var(--color-neutral-90);
       line-height: 17px;
       text-align: center;
       border-radius: 4px;
@@ -55,7 +55,7 @@
 .radio-button {
   display: flex;
   font-size: 12px;
-  color: #383e45;
+  color: var(--color-neutral-90);
   line-height: 14px;
   align-items: center;
   justify-content: space-between;

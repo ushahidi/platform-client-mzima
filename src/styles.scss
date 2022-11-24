@@ -53,12 +53,11 @@ body {
 }
 
 a {
-  text-decoration: none;
-  color: var(--color-info);
-  transition: color 0.35s ease;
+  text-decoration: underline;
+  color: var(--color-primary-60);
 
   &:hover {
-    color: var(--color-info-shade);
+    text-decoration: none;
   }
 }
 
