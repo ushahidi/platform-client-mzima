@@ -1,0 +1,11 @@
+.label {
+  &--primary {
+    color: var(--color-neutral-100);
+    background-color: var(--color-primary-60);
+  }
+
+  &--archived {
+    color: var(--color-neutral-20);
+    background-color: #666666;
+  }
+}

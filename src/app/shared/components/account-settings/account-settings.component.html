@@ -91,7 +91,7 @@
       </mat-tab>
       <mat-tab label="{{ 'user_profile.nav.notifications' | translate }}">
         <div class="tab-content contacts-tab" *ngIf="!isLoading; else spinner" mat-dialog-content>
-          <h3 class="contacts-tab__title">{{ 'notification.contacts_heading' | translate }}</h3>
+          <h4 class="contacts-tab__title">{{ 'notification.contacts_heading' | translate }}</h4>
           <mat-accordion class="contacts">
             <mat-expansion-panel *ngFor="let contact of contacts" class="contact-item">
               <mat-expansion-panel-header>

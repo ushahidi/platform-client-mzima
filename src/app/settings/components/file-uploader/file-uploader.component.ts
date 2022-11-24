@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { Component, Input, Output } from '@angular/core';
 import { validateFile } from '@helpers';
 import { NotificationService } from '@services';
@@ -14,6 +14,7 @@ export class FileUploaderComponent {
   @Input() validation = 'image';
   @Output() fileUpload = new EventEmitter<File>();
   @Output() delete = new EventEmitter();
+  @ViewChild('input') public input: ElementRef<HTMLInputElement>;
 
   currentFile: any;
 
@@ -41,5 +42,9 @@ export class FileUploaderComponent {
   clearImage() {
     this.imageSrc = '';
     this.delete.emit(true);
+  }
+
+  public chooseFile(): void {
+    this.input.nativeElement.click();
   }
 }

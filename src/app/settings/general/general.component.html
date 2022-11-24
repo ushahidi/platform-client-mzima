@@ -1,103 +1,110 @@
-<section class="general">
-  <h2>General</h2>
-  <form (ngSubmit)="save()" [formGroup]="generalForm" novalidate>
-    <div class="form-row">
-      <mat-label translate>settings.deployment_name</mat-label>
-      <mat-form-field appearance="outline">
-        <input
-          matInput
-          placeholder="{{ 'settings.deployment_name' }}"
-          formControlName="name"
-          required
-        />
-        <mat-error *ngIf="generalForm.get('name')?.invalid">
-          {{ generalForm.get('name')?.errors | json }}
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="form-row">
-      <mat-label translate>settings.site_description</mat-label>
-      <mat-form-field appearance="outline">
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          cdkAutosizeMinRows="2"
-          cdkAutosizeMaxRows="5"
-          placeholder="{{ 'settings.site_description' }}"
-          formControlName="description"
-        ></textarea>
-      </mat-form-field>
-    </div>
-    <div class="form-row">
-      <mat-label translate>settings.deployment_logo</mat-label>
-      <app-file-uploader
-        class="logo__uploader"
-        [imageSrc]="siteConfig.image_header"
-        (fileUpload)="fileUploaded($event)"
-        (delete)="headerImageDeleted()"
-      >
-      </app-file-uploader>
-    </div>
-    <div class="form-row">
-      <mat-label translate>settings.site_email</mat-label>
-      <mat-form-field appearance="outline">
-        <input matInput placeholder="name@domain.com" formControlName="email" required />
-        <mat-error *ngIf="generalForm.get('email')?.invalid">
-          {{ generalForm.get('email')?.errors | json }}
-        </mat-error>
-      </mat-form-field>
-      <p class="small" translate>settings.site_email_note</p>
-    </div>
-    <div class="form-row">
-      <mat-label translate>settings.site_language</mat-label>
-      <mat-form-field appearance="outline">
-        <mat-select formControlName="language" disableOptionCentering>
-          <mat-option *ngFor="let lang of langService.getLanguages()" [value]="lang.code">
-            {{ lang.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+<h1>General</h1>
+<form (ngSubmit)="save()" [formGroup]="generalForm" novalidate>
+  <div class="form-row">
+    <mat-label translate>settings.deployment_name</mat-label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        placeholder="{{ 'settings.deployment_name' }}"
+        formControlName="name"
+        required
+      />
+      <mat-error *ngIf="generalForm.get('name')?.invalid">
+        {{ generalForm.get('name')?.errors | json }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-label translate>settings.site_description</mat-label>
+    <mat-form-field appearance="outline">
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="6"
+        cdkAutosizeMaxRows="10"
+        placeholder="{{ 'settings.site_description' }}"
+        formControlName="description"
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-label translate>settings.deployment_logo</mat-label>
+    <app-file-uploader
+      class="logo__uploader"
+      [imageSrc]="siteConfig.image_header"
+      (fileUpload)="fileUploaded($event)"
+      (delete)="headerImageDeleted()"
+    >
+    </app-file-uploader>
+  </div>
+  <div class="form-row">
+    <mat-label translate>settings.site_email</mat-label>
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="name@domain.com" formControlName="email" required />
+      <mat-error *ngIf="generalForm.get('email')?.invalid">
+        {{ generalForm.get('email')?.errors | json }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-label translate>settings.site_language</mat-label>
+    <mat-form-field appearance="outline">
+      <mat-select formControlName="language" disableOptionCentering>
+        <mat-option *ngFor="let lang of langService.getLanguages()" [value]="lang.code">
+          {{ lang.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
-    <!-- FIXME: isPrivateEnabled -->
-    <div class="form-row">
-      <mat-checkbox formControlName="private">{{
-        'settings.site_private' | translate
-      }}</mat-checkbox>
-      <p class="small" translate>settings.site_private_desc</p>
+  <div class="form-row">
+    <mat-label>Private settings:</mat-label>
+    <div class="checkbox-group">
+      <div class="checkbox">
+        <!-- FIXME: isPrivateEnabled -->
+        <mat-checkbox formControlName="private">
+          {{ 'settings.site_private' | translate }}
+        </mat-checkbox>
+        <p class="small" translate>settings.site_private_desc</p>
+      </div>
+      <div class="checkbox">
+        <!-- FIXME: isDisableRegistrationEnabled -->
+        <mat-checkbox translate formControlName="disable_registration">
+          {{ 'settings.site_disable_registration' | translate }}
+        </mat-checkbox>
+        <p translate="settings.site_disable_registration_desc"></p>
+      </div>
     </div>
-    <!-- FIXME: isDisableRegistrationEnabled -->
-    <div class="form-row">
-      <mat-checkbox translate formControlName="disable_registration">
-        {{ 'settings.site_disable_registration' | translate }}
-      </mat-checkbox>
-      <p translate="settings.site_disable_registration_desc"></p>
-    </div>
-  </form>
-  <br />
+  </div>
+</form>
+
+<div class="api-key">
   <div class="form-row" *ngIf="apiKey">
     <mat-label translate>API Key</mat-label>
-    <p translate>settings.api_key_desc</p>
-    <button type="button" mat-stroked-button (click)="generateApiKey()">
-      <span>Generate API Key</span>
-      <mat-icon class="icon-medium">
-        <svg class="iconic" role="img">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#key"></use>
-        </svg>
-      </mat-icon>
-    </button>
-    <span class="api-key">{{ apiKey.api_key }}</span>
-  </div>
-  <br />
+    <mat-form-field appearance="outline">
+      <input matInput [value]="apiKey.api_key" readonly />
 
-  <app-settings-map #mapSettings></app-settings-map>
+      <button matSuffix type="button" mat-icon-button (click)="copyToClipboard(apiKey.api_key)">
+        <mat-icon svgIcon="copy"></mat-icon>
+      </button>
 
-  <div class="form-controls-panel">
-    <button type="button" mat-stroked-button routerLink="/settings" data-qa="btn-cancel">
-      Cancel
-    </button>
-    <button type="button" color="primary" mat-raised-button (click)="save()" data-qa="btn-save">
-      Save
-    </button>
+      <mat-hint translate>settings.api_key_desc</mat-hint>
+    </mat-form-field>
   </div>
-</section>
+
+  <button type="button" mat-stroked-button (click)="generateApiKey()">
+    <span>Generate API Key</span>
+    <mat-icon svgIcon="key"></mat-icon>
+  </button>
+</div>
+
+<app-settings-map #mapSettings></app-settings-map>
+
+<div class="form-controls-panel">
+  <button type="button" mat-stroked-button routerLink="/settings" data-qa="btn-cancel">
+    Cancel
+  </button>
+  <button type="button" color="primary" mat-raised-button (click)="save()" data-qa="btn-save">
+    Save
+  </button>
+</div>

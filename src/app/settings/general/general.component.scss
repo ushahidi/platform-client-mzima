@@ -1,25 +1,26 @@
 .api-key {
-  color: #222;
-  line-height: 1;
-  font-size: 14px;
-  margin-left: 24px;
-  padding: 8px 16px;
-  border-radius: 18px;
-  background-color: #eee;
-  border: 1px solid #d6d5d2;
+  margin-bottom: 24px;
+
+  .form-row {
+    margin-bottom: 16px;
+  }
 }
 
-.deployment-logo {
-  height: 80px;
-  width: 80px;
-  border-radius: 100%;
-}
-
-.logo__uploader {
-  display: block;
-  margin-bottom: 16px;
+.logo {
+  &__uploader {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 24px;
+  }
 }
 
 .form-controls-panel {
-  margin-top: 16px;
+  left: 0;
+  right: 0;
+  bottom: -32px;
+  z-index: 50;
+  margin: -23px;
+  padding: 23px;
+  position: sticky;
+  background: var(--color-light);
 }

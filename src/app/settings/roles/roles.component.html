@@ -1,32 +1,26 @@
-<section class="roles">
-  <div class="roles-header">
-    <h2 class="roles-title">{{ 'app.roles' | translate }}</h2>
-    <div class="create-button-container">
-      <button
-        type="button"
-        class="create-button"
-        color="primary"
-        mat-raised-button
-        [routerLink]="['create']"
-        data-qa="btn-add-role"
-      >
-        <span class="create-button-name">{{ 'role.add_role' | translate }}</span>
-        <mat-icon svgIcon="pencil"></mat-icon>
-      </button>
-    </div>
-  </div>
+<div class="form-head-panel">
+  <h1>{{ 'app.roles' | translate }}</h1>
+  <button
+    type="button"
+    class="create-button"
+    color="primary"
+    mat-raised-button
+    [routerLink]="['create']"
+    data-qa="btn-add-role"
+  >
+    <span>{{ 'role.add_role' | translate }}</span>
+    <mat-icon svgIcon="pencil"></mat-icon>
+  </button>
+</div>
 
-  <div class="roles-nav">
-    <div
-      class="roles-item"
-      *ngFor="let role of (roleResponse$ | async)?.results"
-      [routerLink]="['update', role.id]"
-      [data-qa]="'btn-' + role.display_name | lowercase"
-    >
-      <div class="item-icon-wrapper">
-        <mat-icon class="item-icon" svgIcon="users"></mat-icon>
-      </div>
-      <span class="roles-name">{{ role.display_name }}</span>
-    </div>
-  </div>
-</section>
+<div class="roles">
+  <a
+    matRipple
+    class="role-item"
+    *ngFor="let role of (roleResponse$ | async)?.results"
+    [routerLink]="['update', role.id]"
+    [data-qa]="'btn-' + role.display_name | lowercase"
+  >
+    {{ role.display_name }}
+  </a>
+</div>

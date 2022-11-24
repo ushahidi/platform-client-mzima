@@ -14,7 +14,7 @@
   }
 
   &:not(:first-child) {
-    border-top: 1px solid rgba(var(--color-dark-rgb), 0.12);
+    border-top: 1px solid var(--color-neutral-20);
   }
 
   h3 {

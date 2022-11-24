@@ -6,14 +6,13 @@ mat-sidenav-container {
   width: 100%;
   max-width: 220px;
   border-right: none;
-  background-color: var(--color-dark-gray);
+  background-color: var(--color-neutral-100);
 }
 
 .content-wrapper {
   &:not(.content-wrapper--no-offset) {
-    //padding: 30px 20px;
-    height: 100vh;
     padding: 0;
+    height: 100%;
   }
 }
 

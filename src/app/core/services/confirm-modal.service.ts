@@ -29,7 +29,7 @@ export class ConfirmModalService {
       const dialogRef = this.dialog.open(ConfirmModalComponent, {
         data,
         width: '100%',
-        maxWidth: '564px',
+        maxWidth: '574px',
         minWidth: '300px',
         id: 'confirm-modal',
       });

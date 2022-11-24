@@ -20,4 +20,8 @@ export enum Icons {
   users = 'users',
   webhook = 'webhook',
   close = 'close',
+  photo = 'photo',
+  key = 'key',
+  copy = 'copy',
+  searchSmall = 'search-small',
 }

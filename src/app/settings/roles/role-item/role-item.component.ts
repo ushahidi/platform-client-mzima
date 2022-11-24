@@ -153,7 +153,7 @@ export class RoleItemComponent implements OnInit {
 
   public async deleteRole(): Promise<void> {
     const confirmed = await this.openConfirmModal(
-      this.role.display_name + ' role will be deleted!',
+      `Are you sure you want to Delete role ${this.role.display_name}?`,
       '<p>This action cannot be undone.</p><p>Are you sure?</p>',
     );
     if (!confirmed) return;

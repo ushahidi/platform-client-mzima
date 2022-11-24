@@ -8,7 +8,7 @@
   transition: background-color 0.35s ease;
 
   &--selected {
-    background: rgba(var(--color-primary-rgb), 0.05);
+    background: var(--color-primary-90);
   }
 
   &__checkbox {
@@ -31,7 +31,7 @@
       transition: color 0.35s ease;
 
       &:hover {
-        color: var(--color-primary-shade);
+        color: var(--color-primary-60);
       }
     }
   }
