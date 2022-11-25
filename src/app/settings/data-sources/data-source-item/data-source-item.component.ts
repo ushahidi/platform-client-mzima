@@ -18,12 +18,12 @@ import {
 import { combineLatest } from 'rxjs';
 
 @Component({
-  selector: 'app-data-source-form',
-  templateUrl: './data-source-form.component.html',
-  styleUrls: ['./data-source-form.component.scss'],
+  selector: 'app-data-source-item',
+  templateUrl: './data-source-item.component.html',
+  styleUrls: ['./data-source-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataSourceFormComponent implements AfterContentChecked, OnInit {
+export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   public provider: any;
   public surveyList: any[];
   public form: FormGroup = this.fb.group({});

@@ -6,10 +6,10 @@ import { MaterialModule } from '@shared';
 
 import { DataSourcesRoutingModule } from './data-sources-routing.module';
 import { DataSourcesComponent } from './data-sources.component';
-import { DataSourceFormComponent } from './data-source-form/data-source-form.component';
+import { DataSourceItemComponent } from './data-source-item/data-source-item.component';
 
 @NgModule({
-  declarations: [DataSourcesComponent, DataSourceFormComponent],
+  declarations: [DataSourcesComponent, DataSourceItemComponent],
   imports: [
     CommonModule,
     DataSourcesRoutingModule,

@@ -14,8 +14,6 @@ export class DataSourcesComponent implements OnInit {
   public surveyAttributesList: any;
   public isAllProvidersAdded: boolean;
 
-  provider: any;
-
   constructor(
     private dataSourcesService: DataSourcesService,
     private configService: ConfigService,
