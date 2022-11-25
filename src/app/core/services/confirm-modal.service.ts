@@ -10,6 +10,7 @@ interface ConfirmModalProps {
   description?: string;
   buttonSuccess?: string;
   confirmButtonText?: string;
+  cancelButtonText?: string;
 }
 
 @Injectable({
@@ -24,6 +25,7 @@ export class ConfirmModalService {
       description: params.description,
       buttonSuccess: params.buttonSuccess,
       confirmButtonText: params.confirmButtonText,
+      cancelButtonText: params.cancelButtonText,
     };
     return new Promise<boolean>((resolve, reject) => {
       const dialogRef = this.dialog.open(ConfirmModalComponent, {

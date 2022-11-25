@@ -1,71 +1,69 @@
-<section class="section">
-  <h1>{{ 'role.add_role' | translate }}</h1>
-  <form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
-    <div class="form-row">
-      <mat-label>{{ 'role.name' | translate }}</mat-label>
-      <mat-form-field appearance="outline">
-        <input matInput formControlName="display_name" (ngModelChange)="setName($event)" />
-      </mat-form-field>
-    </div>
-    <div class="form-row">
-      <mat-label>{{ 'role.description' | translate }}</mat-label>
-      <mat-form-field appearance="outline">
-        <input matInput formControlName="description" />
-      </mat-form-field>
-    </div>
+<h1>{{ 'role.add_role' | translate }}</h1>
+<form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
+  <div class="form-row">
+    <mat-label>{{ 'role.name' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input matInput formControlName="display_name" (ngModelChange)="setName($event)" />
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-label>{{ 'role.description' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input matInput formControlName="description" />
+    </mat-form-field>
+  </div>
 
-    <div class="form-row">
-      <mat-label>{{ 'role.permissions' | translate }}</mat-label>
-      <p [innerHTML]="'settings.roles.roles_description' | translate"></p>
-      <mat-selection-list data-qa="role-permissions-list">
-        <mat-list-option
-          color="primary"
-          class="list-option"
-          checkboxPosition="before"
-          *ngFor="let item of permissionsList"
-          [value]="item.name"
-          [selected]="item.checked"
-          [disabled]="userRole === role.name"
-          [data-qa]="item.test"
-        >
-          {{ item.name }}
-        </mat-list-option>
-      </mat-selection-list>
-    </div>
+  <div class="form-row">
+    <mat-label>{{ 'role.permissions' | translate }}</mat-label>
+    <p [innerHTML]="'settings.roles.roles_description' | translate"></p>
+    <mat-selection-list data-qa="role-permissions-list">
+      <mat-list-option
+        color="primary"
+        class="list-option"
+        checkboxPosition="before"
+        *ngFor="let item of permissionsList"
+        [value]="item.name"
+        [selected]="item.checked"
+        [disabled]="userRole === role.name"
+        [data-qa]="item.test"
+      >
+        {{ item.name }}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
 
-    <div class="form-controls-panel">
-      <div>
-        <button
-          type="button"
-          color="accent"
-          mat-raised-button
-          (click)="deleteRole()"
-          data-qa="btn-delete-role"
-          *ngIf="isUpdate && !role?.protected"
-        >
-          <span>{{ 'role.delete' | translate }}</span>
-        </button>
-      </div>
-      <div>
-        <button
-          mat-stroked-button
-          type="button"
-          (click)="navigateToRoles()"
-          data-qa="btn-cancel-role"
-        >
-          <span>{{ 'app.cancel' | translate }}</span>
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          class="role-button"
-          type="submit"
-          [disabled]="form.invalid"
-          data-qa="btn-save-role"
-        >
-          <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
-        </button>
-      </div>
+  <div class="form-controls-panel">
+    <div>
+      <button
+        type="button"
+        color="accent"
+        mat-raised-button
+        (click)="deleteRole()"
+        data-qa="btn-delete-role"
+        *ngIf="isUpdate && !role?.protected"
+      >
+        <span>{{ 'role.delete' | translate }}</span>
+      </button>
     </div>
-  </form>
-</section>
+    <div>
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="navigateToRoles()"
+        data-qa="btn-cancel-role"
+      >
+        <span>{{ 'app.cancel' | translate }}</span>
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="role-button"
+        type="submit"
+        [disabled]="form.invalid"
+        data-qa="btn-save-role"
+      >
+        <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
+      </button>
+    </div>
+  </div>
+</form>

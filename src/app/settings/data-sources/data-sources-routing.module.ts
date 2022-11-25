@@ -8,10 +8,13 @@ const routes: Routes = [
   {
     path: '',
     component: DataSourcesComponent,
-    children: [
-      { path: ':id', component: DataSourceFormComponent }, //
-    ],
   },
+  {
+    path: 'update/:id',
+    component: DataSourceFormComponent,
+    data: { breadcrumb: 'Data Source' },
+  },
+  { path: 'create', component: DataSourceFormComponent, data: { breadcrumb: 'Data Source' } },
 ];
 
 @NgModule({

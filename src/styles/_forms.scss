@@ -82,6 +82,10 @@
   margin: 0 0 24px;
   align-items: center;
   justify-content: space-between;
+
+  h1 {
+    margin-bottom: 0;
+  }
 }
 
 .form-controls-panel {
@@ -661,6 +665,8 @@
 }
 
 .mat-radio-group {
+  padding-top: 8px;
+
   .mat-radio-button {
     display: block;
   }
@@ -765,4 +771,31 @@
 
 .checkbox {
   padding: 12px;
+}
+
+.toggle {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 9px 16px;
+
+  &:not(:first-child) {
+    margin-top: 24px;
+  }
+
+  .mat-slide-toggle {
+    min-height: 24px;
+    line-height: inherit !important;
+  }
+
+  .mat-slide-toggle-bar {
+    width: 42px !important;
+    height: 20px !important;
+    margin-right: 16px !important;
+    border-radius: 10px !important;
+  }
+
+  .mat-slide-toggle-thumb-container {
+    width: 16px !important;
+    height: 16px !important;
+  }
 }
