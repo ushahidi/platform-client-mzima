@@ -67,6 +67,14 @@ export class PostsService extends ResourceService<any> {
     );
   }
 
+  override update(id: string | number, resource: any): Observable<any> {
+    return super.update(id, resource);
+  }
+
+  override delete(id: string | number): Observable<any> {
+    return super.delete(id);
+  }
+
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
     return super
       .get('geojson', { has_location: 'mapped', ...filter, ...this.postsFilters.value })
@@ -98,10 +106,14 @@ export class PostsService extends ResourceService<any> {
   }
 
   public getPostStatistics(queryParams?: any) {
+    const filters = { ...this.postsFilters.value };
+    delete filters['form[]'];
+    delete filters['source[]'];
+
     return super.get(
       'stats',
       queryParams ?? {
-        ...this.postsFilters.value,
+        ...filters,
         group_by: 'form',
         has_location: 'all',
         include_unmapped: true,
@@ -117,5 +129,12 @@ export class PostsService extends ResourceService<any> {
       }
     }
     this.postsFilters.next(newFilters);
+  }
+
+  public setSorting(sorting: any): void {
+    this.postsFilters.next({
+      ...this.postsFilters.value,
+      ...sorting,
+    });
   }
 }

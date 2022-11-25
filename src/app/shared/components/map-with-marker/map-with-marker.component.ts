@@ -20,6 +20,8 @@ import { pointIcon } from 'src/app/core/helpers/map';
 })
 export class MapWithMarkerComponent implements OnInit {
   @Input() public marker: { lat: number; lon: number };
+  @Input() public color: string = 'var(--color-neutral-100)';
+  @Input() public type: string = 'default';
 
   public mapReady = false;
   public mapConfig: MapConfigInterface;
@@ -52,7 +54,7 @@ export class MapWithMarkerComponent implements OnInit {
         lng: this.marker.lon,
       },
       {
-        icon: pointIcon(this.mapConfig.default_view!.color),
+        icon: pointIcon(this.color, this.type),
       },
     );
     this.mapLayers.push(mapMarker);

@@ -4,8 +4,8 @@
   min-width: 190px;
   list-style: none;
   align-items: center;
+  margin: 0 12px 24px -4px;
   justify-content: flex-start;
-  margin: -16px 12px 24px -4px;
 
   &__item {
     &:not(:first-child) {

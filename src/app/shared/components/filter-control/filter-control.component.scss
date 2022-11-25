@@ -175,9 +175,11 @@
     -webkit-overflow-scrolling: touch;
 
     &.mat-menu-panel {
-      border-radius: 0;
+      margin-top: 0;
       max-width: none;
       min-width: 160px;
+      box-shadow: none;
+      border-radius: 0;
       max-height: calc(60vh - 150px);
       width: calc((100vw - 440px) / 6);
     }
@@ -232,7 +234,7 @@
     box-shadow: none;
     border-style: solid;
     border-width: 0 1px 1px;
-    border-color: #e9e9ea;
+    border-color: var(--color-neutral-20);
 
     .mat-menu-content {
       padding: 0;
@@ -246,7 +248,7 @@
       min-height: 48px;
       line-height: 17px;
       padding: 8px 16px;
-      border-top: 1px solid #e9e9ea;
+      border-top: 1px solid var(--color-neutral-20);
     }
   }
 }

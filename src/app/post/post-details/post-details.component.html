@@ -1,117 +1,24 @@
 <div
   class="post"
   [ngClass]="{ 'post--feed': feedView }"
-  [ngStyle]="{ '--color': survey ? survey.color : 'transparent' }"
+  [ngStyle]="{ '--color': color || 'var(--color-neutral-100)' }"
 >
-  <ng-container *ngIf="post && !isSurveyLoading; else spinner">
-    <div class="post__survey" *ngIf="survey">
-      <h2>{{ survey.name }}</h2>
-      <p>{{ survey.description }}</p>
-    </div>
-
+  <ng-container *ngIf="post; else spinner">
     <div class="post__head">
-      <h2>{{ post.title }}</h2>
-      <ng-container *ngIf="!!userId">
-        <button mat-icon-button [matMenuTriggerFor]="menu">
-          <mat-icon>
-            <svg class="iconic" role="img">
-              <use
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                xlink:href="assets/sprites.svg#ellipses"
-              ></use>
-            </svg>
-          </mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button
-            mat-menu-item
-            [routerLink]="['/feed', post.id, 'edit']"
-            [disabled]="userId !== post.user_id"
-          >
-            <mat-icon>
-              <svg class="iconic" role="img">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  xlink:href="assets/sprites.svg#pencil"
-                ></use>
-              </svg>
-            </mat-icon>
-            {{ 'post.post_actions.edit' | translate }}
-          </button>
-          <button mat-menu-item (click)="addToCollection()">
-            <mat-icon>
-              <svg class="iconic" role="img">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  xlink:href="assets/sprites.svg#grid-three-up"
-                ></use>
-              </svg>
-            </mat-icon>
-            {{ 'set.add_to_collection' | translate }}
-          </button>
-          <button mat-menu-item>
-            <mat-icon>
-              <svg class="iconic" role="img">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  xlink:href="assets/sprites.svg#share"
-                ></use>
-              </svg>
-            </mat-icon>
-            {{ 'app.share' | translate }}
-          </button>
-          <hr />
-          <button mat-menu-item>
-            <mat-icon>
-              <svg class="iconic" role="img">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  xlink:href="assets/sprites.svg#globe"
-                ></use>
-              </svg>
-            </mat-icon>
-            {{ 'post.post_actions.publish' | translate }}
-          </button>
-          <button mat-menu-item>
-            <mat-icon>
-              <svg class="iconic" role="img">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  xlink:href="assets/sprites.svg#document"
-                ></use>
-              </svg>
-            </mat-icon>
-            {{ 'post.post_actions.put_under_review' | translate }}
-          </button>
-          <button mat-menu-item>
-            <mat-icon>
-              <svg class="iconic" role="img">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  xlink:href="assets/sprites.svg#box"
-                ></use>
-              </svg>
-            </mat-icon>
-            {{ 'post.post_actions.archive' | translate }}
-          </button>
-          <button mat-menu-item (click)="deletePost()" [disabled]="userId !== post.user_id">
-            <mat-icon>
-              <svg class="iconic" role="img">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  xlink:href="assets/sprites.svg#trash"
-                ></use>
-              </svg>
-            </mat-icon>
-            {{ 'post.post_actions.delete' | translate }}
-          </button>
-        </mat-menu>
-      </ng-container>
+      <app-post-head [post]="post"></app-post-head>
     </div>
 
-    <app-post-metadata [post]="post"></app-post-metadata>
+    <div class="post__visual" *ngIf="media && post.source !== 'Twitter'">
+      <img [src]="media.original_file_url" [alt]="post.title" />
+    </div>
 
-    <div class="post__description">
+    <div class="post__twitter" *ngIf="post.source === 'Twitter' && twitterId">
+      <app-twitter-widget [id]="twitterId"></app-twitter-widget>
+    </div>
+
+    <h2 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h2>
+
+    <div class="post__description" *ngIf="post.title?.length && post.content?.length">
       {{ post.content }}
     </div>
 
@@ -133,7 +40,13 @@
           </ng-container>
 
           <ng-container *ngIf="field.input === 'location'">
-            <app-map-with-marker class="map" [marker]="field.value.value"></app-map-with-marker>
+            <app-map-with-marker
+              class="map"
+              [marker]="field.value.value"
+              [color]="color || 'var(--color-neutral-100)'"
+              [type]="post.source?.toLowerCase() || 'default'"
+              tabindex="-1"
+            ></app-map-with-marker>
             <p>{{ field.value.value.lat }} {{ field.value.value.lon }}</p>
           </ng-container>
 
@@ -151,6 +64,8 @@
         </div>
       </ng-container>
     </ng-container>
+
+    <app-post-metadata [post]="post"></app-post-metadata>
   </ng-container>
 </div>
 

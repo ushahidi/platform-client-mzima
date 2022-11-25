@@ -23,11 +23,6 @@
 ::ng-deep {
   .multilevelselect {
     &__dropdown {
-      &.mat-menu-panel {
-        max-width: none;
-        max-height: 400px;
-      }
-
       .mat-tree {
         width: 602px;
         padding: 0 16px;

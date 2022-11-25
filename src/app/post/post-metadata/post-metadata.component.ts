@@ -10,15 +10,14 @@ export class PostMetadataComponent {
   @Input() post: PostResult | PostPropertiesInterface;
   author: string;
 
-  showAuthor() {
+  ngOnInit(): void {
+    this.getUsername();
+  }
+
+  private getUsername(): void {
     const authorNameOrContact =
       this.post.user?.realname || this.post.contact?.contact || this.post.author_realname;
 
-    if (authorNameOrContact === undefined) {
-      return false;
-    }
-
-    this.author = authorNameOrContact ? authorNameOrContact : 'Anonymous';
-    return true;
+    this.author = authorNameOrContact || 'Anonymous';
   }
 }

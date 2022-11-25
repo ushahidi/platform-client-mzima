@@ -14,4 +14,13 @@
 
 .spinner {
   margin: 0 auto;
+  width: var(--size, 100px) !important;
+  height: var(--size, 100px) !important;
+
+  &::ng-deep {
+    svg {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
 }

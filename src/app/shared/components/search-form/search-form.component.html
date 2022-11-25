@@ -1,10 +1,4 @@
-<form
-  novalidate
-  [formGroup]="form"
-  class="search-form"
-  (submit)="applyFilters()"
-  [ngClass]="{ 'search-form--map-view': isMapView }"
->
+<form novalidate [formGroup]="form" class="search-form" (submit)="applyFilters()">
   <mat-form-field appearance="outline" class="search-form__control">
     <mat-icon matPrefix svgIcon="search"></mat-icon>
     <input
@@ -33,15 +27,22 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <button type="button" mat-raised-button (click)="toggleFilters()" class="search-form__filters">
+  <button
+    type="button"
+    mat-raised-button
+    (click)="toggleFilters(!isFiltersVisible)"
+    class="search-form__filters"
+  >
     <mat-icon class="search-form__filters__icon" svgIcon="filters"></mat-icon>
     {{ 'app.filters' | translate }}
   </button>
 
-  <div class="search-form__main-filters" *ngIf="isMapView">
-    <span class="search-form__main-filters__total">Results: {{ total }}</span>
+  <div class="search-form__main-filters">
+    <span class="search-form__main-filters__total" *ngIf="total !== undefined"
+      >Results: {{ total }}</span
+    >
 
-    <div class="filter-group">
+    <div class="filter-group" *ngIf="surveyList?.length">
       <div class="filter-group__head">
         <label class="filter-group__title" for="surveys">{{ 'app.surveys' | translate }}</label>
         <button
@@ -75,11 +76,11 @@
       </div>
     </div>
 
-    <div class="filter-group">
+    <div class="filter-group" *ngIf="sources?.length">
       <div class="filter-group__head">
-        <label class="filter-group__title" for="source">{{
-          'global_filter.source' | translate
-        }}</label>
+        <label class="filter-group__title" for="source">
+          {{ 'global_filter.source' | translate }}
+        </label>
         <button
           mat-button
           type="button"
