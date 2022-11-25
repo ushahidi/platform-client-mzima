@@ -1,76 +1,76 @@
 <section class="surveys">
   <div class="surveys-header">
-    <h2 class="surveys-title">{{ 'app.surveys' | translate }}</h2>
+    <div class="create-button-container">
+      <h2 class="surveys-title">{{ 'app.surveys' | translate }}</h2>
+      <ng-container *ngIf="isShowActions">
+        <button
+          type="button"
+          class="action-button"
+          color="accent"
+          mat-raised-button
+          data-qa="btn-survey-delete"
+          (click)="deleteSurvey()"
+        >
+          <span class="create-button-name">{{ 'app.delete' | translate }}</span>
+        </button>
+        <button
+          type="button"
+          class="create-button"
+          color="primary"
+          mat-stroked-button
+          data-qa="btn-survey-duplicate"
+          [disabled]="selectedSurveys.length > 1"
+          (click)="duplicateSurvey()"
+        >
+          <span class="create-button-name">{{ 'survey.duplicate_survey' | translate }}</span>
+        </button>
+      </ng-container>
+    </div>
+
     <div class="create-button-container">
       <button
         type="button"
-        class="create-button"
+        color="primary"
+        mat-stroked-button
+        data-qa="btn-survey-action"
+        (click)="isShowActions = !isShowActions"
+      >
+        <span class="create-button-name">{{ 'settings.bulk_actions' | translate }}</span>
+      </button>
+      <button
+        type="button"
         color="primary"
         mat-raised-button
         [routerLink]="['create']"
-        data-qa="btn-webhook-create"
+        data-qa="btn-survey-create"
       >
         <span class="create-button-name">{{ 'settings.new_survey' | translate }}</span>
-        <mat-icon svgIcon="pencil"></mat-icon>
+        <mat-icon svgIcon="plus"></mat-icon>
       </button>
     </div>
   </div>
 
-  <div class="surveys-list" *ngIf="surveys; else loader">
-    <mat-accordion class="example-headers-align" multi>
-      <mat-expansion-panel
+  <div>
+    <app-spinner class="spinner" *ngIf="!surveys"></app-spinner>
+    <ul role="list" class="types-list" *ngIf="!!surveys" data-qa="survey-list">
+      <li
+        role="listitem"
+        class="type-item"
         *ngFor="let survey of surveys"
-        class="survey-item"
-        [ngStyle]="{ '--color': survey ? survey.color : 'transparent' }"
+        [ngStyle]="{ '--color': survey.color, 'padding-left': survey.color ? '12px' : '17px' }"
+        [data-qa]="'survey-item' + survey.id"
       >
-        <mat-expansion-panel-header class="survey-item__header">
-          <span class="survey-border"></span>
-          <mat-panel-title class="survey-title">
-            <strong>{{ survey.name }}</strong>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <div class="survey-description" [innerText]="survey.description"></div>
-        <p class="survey-languages">{{ getLanguages(survey.enabled_languages) }}</p>
-        <div class="item-button-container">
-          <button
-            type="button"
-            class="item-button"
-            mat-button
-            [routerLink]="['update', survey.id]"
-            data-qa="btn-update-survey"
-          >
-            <mat-icon class="item-button-icon">folder</mat-icon>
-            <span>{{ 'survey.view_detail' | translate }}</span>
-          </button>
-          <button
-            type="button"
-            class="item-button"
-            mat-button
-            (click)="duplicateSurvey(survey)"
-            data-qa="btn-duplicate-survey"
-          >
-            <mat-icon class="item-button-icon">file_copy</mat-icon>
-            <span>{{ 'survey.duplicate_survey' | translate }}</span>
-          </button>
-          <button
-            type="button"
-            class="item-button"
-            mat-button
-            color="accent"
-            (click)="deleteSurvey(survey)"
-            data-qa="btn-delete-survey"
-          >
-            <mat-icon class="item-button-icon">delete</mat-icon>
-            <span>{{ 'survey.delete.delete' | translate }}</span>
-          </button>
+        <div class="type-item-container">
+          <mat-checkbox
+            *ngIf="isShowActions"
+            (change)="selectSurveys($event, survey)"
+            class="type-item__checkbox"
+          ></mat-checkbox>
+          <span class="type-item__title" [routerLink]="['update', survey.id]">{{
+            survey.name
+          }}</span>
         </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-    <h2 *ngIf="surveys.length === 0">No surveys</h2>
+      </li>
+    </ul>
   </div>
 </section>
-
-<ng-template #loader>
-  <app-spinner class="spinner"></app-spinner>
-</ng-template>
