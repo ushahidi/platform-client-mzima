@@ -71,15 +71,9 @@
 
     app-twitter-widget {
       z-index: 5;
+      display: block;
+      height: 100%;
       position: relative;
-    }
-
-    &__spinner {
-      top: 50%;
-      left: 50%;
-      --size: 64px;
-      position: absolute;
-      transform: translate(-50%, -50%);
     }
   }
 
