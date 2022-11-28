@@ -112,8 +112,13 @@
     </div>
 
     <div class="form-row" *ngIf="form.get('form_id')?.value">
-      <p>{{ 'survey.choose_survey_field' | translate }}</p>
-      <p>{{ 'survey.choose_survey_field_desc' | translate }}</p>
+      <h2>{{ 'survey.choose_survey_field' | translate }}</h2>
+      <p>
+        {{
+          'survey.choose_survey_field_desc'
+            | translate: { datasource_type: getSurveyName(form.get('form_id')?.value) }
+        }}
+      </p>
 
       <table mat-table [dataSource]="fields" class="webhook__table" *ngIf="fields">
         <ng-container matColumnDef="type">

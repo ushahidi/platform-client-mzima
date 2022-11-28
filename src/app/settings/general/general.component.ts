@@ -139,6 +139,8 @@ export class GeneralComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
 
-    this.snackBar.open('Copied to clipboard', 'Ok');
+    this.snackBar.open('Copied to clipboard', 'Ok', {
+      duration: 2000,
+    });
   }
 }

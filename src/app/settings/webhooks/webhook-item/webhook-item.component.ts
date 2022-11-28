@@ -211,4 +211,8 @@ export class WebhookItemComponent implements OnInit {
       error: (err) => console.log(err),
     });
   }
+
+  public getSurveyName(id: number): string {
+    return this.surveyList.find((survey) => survey.id === id)?.name || '';
+  }
 }

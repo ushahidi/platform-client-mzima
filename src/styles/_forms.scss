@@ -452,12 +452,17 @@
 
   .mat-form-field-subscript-wrapper {
     top: auto;
-    margin-top: 8px;
+    margin-top: 0;
     font-size: 14px;
     position: static;
     line-height: 1.3;
     padding: 0 !important;
     color: var(--color-neutral-90);
+
+    .mat-hint,
+    .mat-error {
+      margin-top: 8px;
+    }
   }
 
   .mat-input-element {
