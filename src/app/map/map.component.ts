@@ -15,6 +15,7 @@ import {
 import {
   EventBusService,
   EventType,
+  MediaService,
   PostsService,
   PostsV5Service,
   SessionService,
@@ -49,6 +50,8 @@ export class MapComponent implements OnInit {
   };
 
   public leafletOptions: MapOptions;
+  public progress = 0;
+  public isFiltersVisible: boolean;
 
   constructor(
     private postsService: PostsService,
@@ -58,6 +61,7 @@ export class MapComponent implements OnInit {
     private dialog: MatDialog,
     private zone: NgZone,
     private eventBusService: EventBusService,
+    private mediaService: MediaService,
   ) {}
 
   ngOnInit() {
@@ -98,6 +102,14 @@ export class MapComponent implements OnInit {
         this.map.panTo({ lat: option.lat, lng: option.lon });
       },
     });
+
+    this.eventBusService.on(EventType.ToggleFiltersPanel).subscribe({
+      next: (isFiltersVisible) => {
+        setTimeout(() => {
+          this.isFiltersVisible = isFiltersVisible;
+        }, 1);
+      },
+    });
   }
 
   onMapReady(map: Map) {
@@ -129,7 +141,7 @@ export class MapComponent implements OnInit {
                     layer.bindPopup(popup, {
                       maxWidth: 360,
                       minWidth: 360,
-                      maxHeight: 320,
+                      maxHeight: window.innerHeight - 176,
                       closeButton: false,
                       className: 'pl-popup',
                     });
@@ -139,9 +151,24 @@ export class MapComponent implements OnInit {
                       next: (postV5) => {
                         comp.instance.details$.subscribe({
                           next: () => {
-                            this.showPostDetailsModal(postV5);
+                            this.showPostDetailsModal(
+                              postV5,
+                              post.color,
+                              post.data_source_message_id,
+                            );
                           },
                         });
+
+                        const mediaField = postV5.post_content[0].fields.find(
+                          (field: any) => field.type === 'media',
+                        );
+                        if (mediaField && mediaField.value?.value) {
+                          this.mediaService.getById(mediaField.value.value).subscribe({
+                            next: (media) => {
+                              comp.setInput('media', media);
+                            },
+                          });
+                        }
                       },
                     });
                   },
@@ -160,8 +187,12 @@ export class MapComponent implements OnInit {
       }
 
       if (posts.total > this.params.limit + this.params.offset) {
+        this.progress = ((this.params.limit + this.params.offset) / posts.total) * 100;
+
         this.params.offset = this.params.limit + this.params.offset;
         this.getPostsGeoJson();
+      } else {
+        this.progress = 100;
       }
 
       if (posts.features.length && this.params.offset <= this.params.limit) {
@@ -170,13 +201,14 @@ export class MapComponent implements OnInit {
     });
   }
 
-  private showPostDetailsModal(post: any): void {
+  private showPostDetailsModal(post: any, color: string, twitterId?: string): void {
     this.dialog.open(PostDetailsModalComponent, {
       width: '100%',
-      maxWidth: 640,
-      data: { post },
+      maxWidth: 576,
+      data: { post, color, twitterId },
       height: 'auto',
       maxHeight: '90vh',
+      panelClass: 'post-modal',
     });
   }
 }

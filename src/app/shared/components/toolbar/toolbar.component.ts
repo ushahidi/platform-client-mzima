@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 import { UserInterface } from '@models';
@@ -13,6 +13,8 @@ import { AccountSettingsComponent } from '../account-settings/account-settings.c
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
+  @Input() languages: any;
+  @Input() selectedLanguage: any;
   public isLoggedIn = false;
   public isDonateAvailable = false;
   private userData$ = this.session.currentUserData$;

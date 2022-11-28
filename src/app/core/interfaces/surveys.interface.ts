@@ -22,6 +22,7 @@ export interface SurveyItem {
   translations: any[];
   type: string;
   total?: number;
+  visible?: boolean;
 }
 
 export interface SurveyItemEnabledLanguages {

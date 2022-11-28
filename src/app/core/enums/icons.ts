@@ -20,4 +20,13 @@ export enum Icons {
   users = 'users',
   webhook = 'webhook',
   close = 'close',
+  dots = 'dots',
+  prev = 'prev',
+  next = 'next',
+  sorting = 'sorting',
+  sortUp = 'sort-up',
+  sortDown = 'sort-down',
+  edit = 'edit',
+  collections = 'collections',
+  delete = 'delete',
 }

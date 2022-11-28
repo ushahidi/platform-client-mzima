@@ -1,39 +1,31 @@
 <span class="post__border"></span>
 
-<div class="post__head">
-  <div class="post__head__item">
-    <span
-      class="post__status"
-      [ngClass]="{
-        'label--primary': post.status === 'draft',
-        'label--archived': post.status === 'archived'
-      }"
-    >
-      <ng-container *ngIf="post.status === 'published'">Published</ng-container>
-      <ng-container *ngIf="post.status === 'draft'">Under Review</ng-container>
-      <ng-container *ngIf="post.status === 'archived'">Archived</ng-container>
-    </span>
+<div class="post-info">
+  <div class="post-info__visual">
+    <img
+      alt="user avatar"
+      src="//www.gravatar.com/avatar/{{
+        post.user?.gravatar || '00000000000000000000000000000000'
+      }}?d=retro&s=40"
+    />
   </div>
+  <div class="post-info__content">
+    <span *ngIf="author" class="post-info__username">
+      {{ author }}
+    </span>
 
-  <div class="post__head__item">
-    <div class="post__user">
-      <div class="post__user__avatar">
-        <img
-          alt="user avatar"
-          src="//www.gravatar.com/avatar/{{
-            post.user?.gravatar || '00000000000000000000000000000000'
-          }}?d=retro&s=40"
-        />
+    <div class="post-info__list">
+      <span class="post-info__item">
+        {{ post.post_date | dateAgo }}
+      </span>
+
+      <div class="post-info__item">
+        <ng-container *ngIf="post.status === 'published'">Published</ng-container>
+        <ng-container *ngIf="post.status === 'draft'">Under Review</ng-container>
+        <ng-container *ngIf="post.status === 'archived'">Archived</ng-container>
       </div>
-      <strong *ngIf="showAuthor()" [ngClass]="{ post__user__name: showAuthor() }">
-        {{ author }}
-      </strong>
+
+      <span class="post-info__item">{{ 'post.source' | translate: { source: post.source } }}</span>
     </div>
   </div>
-
-  <div class="post__head__item">
-    <span class="post__time">{{ post.post_date | dateAgo }}</span>
-  </div>
-
-  <strong class="post__source">{{ 'post.source' | translate: { source: post.source } }}</strong>
 </div>

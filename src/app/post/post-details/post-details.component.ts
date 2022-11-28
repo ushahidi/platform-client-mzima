@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CategoryInterface, PostResult, SurveyItem } from '@models';
+import { CategoryInterface, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmModalService, SurveysService } from '@services';
+import { ConfirmModalService, MediaService } from '@services';
 import { CollectionsModalComponent } from 'src/app/shared/components';
 
 @Component({
@@ -14,26 +14,30 @@ export class PostDetailsComponent implements OnChanges {
   @Input() post?: PostResult;
   @Input() feedView: boolean;
   @Input() userId?: number | string;
-  public survey: SurveyItem;
-  public isSurveyLoading: boolean;
+  @Input() color?: string;
+  @Input() twitterId?: string;
+  public media?: any;
 
   constructor(
-    private surveysService: SurveysService,
     private dialog: MatDialog,
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
+    private mediaService: MediaService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post']) {
-      if (changes['post'].currentValue?.form_id) {
-        this.isSurveyLoading = true;
-        this.surveysService.getById(changes['post'].currentValue.form_id).subscribe({
-          next: (response) => {
-            this.survey = response.result;
-            this.isSurveyLoading = false;
-          },
-        });
+      if (changes['post'].currentValue?.post_content?.length) {
+        const mediaField = changes['post'].currentValue.post_content[0].fields.find(
+          (field: any) => field.type === 'media',
+        );
+        if (mediaField && mediaField.value?.value) {
+          this.mediaService.getById(mediaField.value.value).subscribe({
+            next: (media) => {
+              this.media = media;
+            },
+          });
+        }
       }
     }
   }

@@ -6,39 +6,57 @@
 }
 
 .feed-page {
-  display: flex;
-  //margin: -30px -20px;
-  margin: 35px 0;
-  justify-content: center;
-  height: calc(100vh - 72px);
+  padding: 0 0 0 210px;
+  height: calc(100vh - 120px);
 
-  &__column {
+  &--filters-visible {
+    padding-top: 56px;
+  }
+
+  &__controls-panel {
     display: flex;
-    flex: 1 1 100%;
-    overflow-y: auto;
-    max-height: 100%;
-    overflow-x: hidden;
-    position: relative;
-    //padding: 30px 20px;
-    padding: 30px 0;
-    flex-direction: column;
-    scroll-behavior: smooth;
-    justify-content: flex-start;
-    -webkit-overflow-scrolling: touch;
+    align-items: center;
+    margin: -16px -48px 0;
+    padding: 16px 48px 8px;
+    justify-content: space-between;
+    background: var(--color-neutral-10);
+  }
 
-    &--feed {
-      &:not(.feed-page__column--full-width) {
-        flex: 0 0 35%;
-        max-width: 480px;
-        margin-right: 20px;
+  &__controls {
+    display: flex;
+    margin: 0 -8px;
+    align-items: center;
+    justify-content: flex-end;
+
+    .mat-form-field {
+      width: 146px;
+
+      &::ng-deep {
+        .mat-form-field-wrapper {
+          padding-bottom: 0;
+        }
+
+        .mat-select-value {
+          padding-right: 0;
+          padding-left: 24px;
+        }
+
+        .mat-select-arrow-wrapper {
+          width: 32px;
+          height: 32px;
+          margin-left: 8px;
+          margin-right: 24px;
+        }
       }
     }
   }
 
-  &__feed {
-    width: 100%;
-    margin: 0 auto;
-    max-width: 480px;
+  &__control {
+    margin: 0 8px;
+
+    .mat-icon {
+      margin-left: 10px;
+    }
   }
 }
 
@@ -48,26 +66,10 @@
   margin-bottom: 16px;
 }
 
-.load-more-btn {
-  width: 100%;
-}
-
 .spinner {
   display: block;
   margin-top: 20vh;
   margin-bottom: 20vh;
-}
-
-.post {
-  right: 0;
-  display: block;
-  position: relative;
-  margin-bottom: 16px;
-  transition: right 0.35s ease;
-
-  &--selected {
-    right: -16px;
-  }
 }
 
 .post-details {
@@ -75,16 +77,41 @@
   min-height: 100%;
 }
 
-.feed-loader {
-  display: block;
-  margin-top: 32px;
-  margin-bottom: 24px;
-}
-
 .posts-empty {
+  width: 100%;
   display: block;
   margin: 20vh 0;
   font-size: 16px;
   line-height: 1.5;
   text-align: center;
+}
+
+.feed {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 48px 32px;
+  margin: 0 -48px -32px;
+  scroll-behavior: smooth;
+  height: calc(100% - 16px);
+  -webkit-overflow-scrolling: touch;
+
+  &__loading {
+    --size: 48px;
+    display: block;
+    margin-top: 24px;
+  }
+
+  &__load-more {
+    display: block;
+    margin: 0 auto;
+    min-width: 132px;
+    margin-top: 16px;
+  }
+}
+
+.post {
+  display: block;
+  position: relative;
+  margin: 0 8px 16px;
+  width: calc(33.3333% - 16px);
 }
