@@ -8,7 +8,11 @@
       <span>{{ 'app.share' | translate }}</span>
       <mat-icon class="toolbar__button__icon" svgIcon="share"></mat-icon>
     </button>
-    <app-language class="toolbar__language"></app-language>
+    <app-language
+      class="toolbar__language"
+      [languages]="languages"
+      [selectedLanguage]="selectedLanguage"
+    ></app-language>
   </div>
   <button
     mat-button

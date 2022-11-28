@@ -1,22 +1,124 @@
+.map-holder {
+  height: 100%;
+  position: relative;
+  margin: 0 0 0 220px;
+
+  &--filters-visible {
+    margin-top: 57px;
+    height: calc(100% - 57px);
+  }
+}
+
+.progress-bar {
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  position: absolute;
+}
+
 .map {
   z-index: 15;
+  height: 100%;
   min-height: 400px;
   position: relative;
-  margin: -30px -20px;
-  height: calc(100vh - 72px);
 }
 
 ::ng-deep {
   .pl-popup {
     .leaflet-popup-content-wrapper {
-      border-radius: 4px;
+      padding: 0;
+      box-shadow: none;
+      border-radius: 8px;
     }
 
     .leaflet-popup-content {
       margin: 0;
-      padding: 16px;
       border: none;
-      border-radius: 2px;
+      overflow-y: auto;
+      min-width: 464px;
+      overflow-x: hidden;
+      border-radius: 8px;
+      scroll-behavior: smooth;
+      padding: 20px 24px 16px 34px;
+      max-height: calc(100vh - 176px);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .leaflet-popup-tip {
+      padding: 0;
+      width: 16px;
+      height: 16px;
+      box-shadow: none;
+      margin-top: -8px;
+    }
+  }
+
+  .marker-cluster-small,
+  .marker-cluster-medium,
+  .marker-cluster-large {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    div {
+      margin: 0;
+      font-size: 12px;
+      font-family: inherit;
+    }
+  }
+
+  .marker-cluster-small,
+  .marker-cluster-medium {
+    border-radius: 50%;
+    width: 45px !important;
+    height: 45px !important;
+    margin-top: -22px !important;
+    margin-left: -22px !important;
+
+    div {
+      width: 27px;
+      height: 27px;
+      line-height: 27px;
+      border-radius: 50%;
+    }
+  }
+
+  .marker-cluster-small {
+    background: rgba(255, 195, 52, 0.23);
+
+    div {
+      background: var(--color-primary-60);
+    }
+  }
+
+  .marker-cluster-medium {
+    background: rgba(255, 174, 52, 0.23);
+
+    div {
+      background: #ffae34;
+    }
+  }
+
+  .marker-cluster-large {
+    width: 56px !important;
+    height: 56px !important;
+    margin-top: -28px !important;
+    margin-left: -28px !important;
+    background: rgba(255, 137, 52, 0.23);
+
+    div {
+      width: 34px;
+      height: 34px;
+      line-height: 34px;
+      background: #ff8934;
+    }
+  }
+
+  .marker-cluster {
+    span {
+      line-height: inherit;
     }
   }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroy$ } from '@helpers';
 import { FormAttributeInterface, SurveyItem, WebhookResultInterface } from '@models';
+import { TranslateService } from '@ngx-translate/core';
 import { FormsService, ConfirmModalService, SurveysService, WebhooksService } from '@services';
 
 @Component({
@@ -44,6 +45,7 @@ export class WebhookItemComponent implements OnInit {
   public surveyAttributesList: FormAttributeInterface[] = [];
   private controlFormIdData$ = this.form.controls['form_id'].valueChanges.pipe(takeUntilDestroy$());
   public isCreateWebhook = false;
+  public fields: any[];
 
   constructor(
     private route: ActivatedRoute,
@@ -53,21 +55,17 @@ export class WebhookItemComponent implements OnInit {
     private formsService: FormsService,
     private router: Router,
     private confirmModalService: ConfirmModalService,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
     this.getSurveys();
-    this.route.paramMap.subscribe({
-      next: (params: ParamMap) => {
-        if (params.get('id')) {
-          this.getWebhook(params.get('id')!);
-          this.isCreateWebhook = false;
-        } else {
-          this.isCreateWebhook = true;
-        }
-      },
-      error: (err) => console.log(err),
-    });
+    const webhookId = this.route.snapshot.paramMap.get('id');
+    if (webhookId === 'create') {
+      this.isCreateWebhook = true;
+    } else {
+      this.getWebhook(webhookId!);
+    }
 
     if (this.form.controls['form_id'].value)
       this.getSurveyAttributes(this.form.controls['form_id'].value);
@@ -101,7 +99,19 @@ export class WebhookItemComponent implements OnInit {
 
   private getSurveys(): void {
     this.surveysService.get().subscribe({
-      next: (response) => (this.surveyList = response.results),
+      next: (response) => {
+        this.surveyList = response.results;
+        this.fields = [
+          {
+            name: 'Source',
+            control: 'source_field_key',
+          },
+          {
+            name: this.translate.instant('settings.webhooks.destination'),
+            control: 'destination_field_key',
+          },
+        ];
+      },
       error: (err) => console.log(err),
     });
   }
@@ -200,5 +210,9 @@ export class WebhookItemComponent implements OnInit {
       next: () => this.navigateToWebhooks(),
       error: (err) => console.log(err),
     });
+  }
+
+  public getSurveyName(id: number): string {
+    return this.surveyList.find((survey) => survey.id === id)?.name || '';
   }
 }

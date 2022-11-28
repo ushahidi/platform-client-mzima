@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CONST } from '@constants';
 import { SurveyItem } from '@models';
 import { SurveysService } from '@services';
 
@@ -18,6 +19,10 @@ export class AddPostModalComponent {
     this.surveysService.get().subscribe({
       next: (types) => {
         this.types = types.results || [];
+        this.types.map((el) => {
+          el.visible =
+            el.everyone_can_create || !!localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`);
+        });
       },
     });
   }

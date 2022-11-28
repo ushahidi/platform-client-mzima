@@ -1,41 +1,113 @@
-<div class="feed-page">
-  <div
-    class="feed-page__column feed-page__column--feed"
-    [ngClass]="{ 'feed-page__column--full-width': !postDetails && !isPostLoading }"
-  >
-    <div class="feed-page__feed">
-      <strong class="counter" *ngIf="posts?.length"
-        >{{ posts?.length }} of {{ total }} posts</strong
-      >
-      <ng-container *ngIf="!isLoading || posts?.length; else loader">
-        <ng-container *ngIf="posts?.length; else postsEmpty">
-          <app-post-preview
-            class="post"
-            [post]="post"
-            [feedView]="true"
-            *ngFor="let post of posts"
-            (click)="showPostDetails(post.id.toString())"
-            [ngClass]="{ 'post--selected': post.id === postDetails?.id }"
+<div class="feed-page" [ngClass]="{ 'feed-page--filters-visible': isFiltersVisible }">
+  <div class="feed-page__controls-panel" *ngIf="posts.length">
+    <div class="feed-page__controls">
+      <ng-container *ngIf="isBulkOptionsVisible">
+        <button
+          color="accent"
+          mat-raised-button
+          class="feed-page__control"
+          (click)="deleteSelectedPosts()"
+          [disabled]="!selectedPosts.length"
+        >
+          Delete
+        </button>
+        <mat-form-field appearance="outline" class="feed-page__control">
+          <mat-select
+            name="filter"
+            disableOptionCentering
+            [(ngModel)]="selectedStatus"
+            [disabled]="!selectedPosts.length"
+            [placeholder]="'app.mark_as' | translate"
+            (selectionChange)="changePostsStatus($event)"
           >
-          </app-post-preview>
-        </ng-container>
-        <!-- <app-spinner class="feed-loader" *ngIf="isLoading"></app-spinner> -->
+            <mat-option *ngFor="let status of statuses" [value]="status.value">
+              {{ status.name | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-button (click)="selectAllPosts()" class="feed-page__control">
+          {{ 'post.select_all' | translate }}
+        </button>
+        <button
+          mat-button
+          class="feed-page__control"
+          (click)="deselectAllPosts()"
+          [disabled]="!selectedPosts.length"
+        >
+          Deselect all
+        </button>
       </ng-container>
+    </div>
+    <div class="feed-page__controls">
       <button
-        color="primary"
-        mat-raised-button
-        (click)="loadMore()"
-        class="load-more-btn"
-        [disabled]="isLoading"
-        *ngIf="posts?.length && posts?.length !== total"
+        mat-stroked-button
+        class="feed-page__control"
+        [ngClass]="{ active: isBulkOptionsVisible }"
+        (click)="toggleBulkOptions(!isBulkOptionsVisible)"
       >
-        Load more ({{ posts ? total - posts.length : 0 }})
+        Bulk actions
       </button>
+      <button class="feed-page__control" mat-stroked-button [matMenuTriggerFor]="sortingMenu">
+        Sorting
+        <mat-icon svgIcon="sorting"></mat-icon>
+      </button>
+
+      <mat-menu #sortingMenu="matMenu" xPosition="before">
+        <button
+          mat-menu-item
+          *ngFor="let sorting of sortingOptions"
+          (click)="sortPosts(sorting.value)"
+          [ngClass]="{
+            active:
+              activeSorting.order === sorting.value.order &&
+              activeSorting.orderby === sorting.value.orderby
+          }"
+        >
+          <mat-icon [svgIcon]="sorting.value.order === 'desc' ? 'sort-down' : 'sort-up'"></mat-icon>
+          {{ sorting.orderBy | translate }} ({{ sorting.order | translate }})
+        </button>
+      </mat-menu>
     </div>
   </div>
-  <div class="feed-page__column" *ngIf="postDetails || isPostLoading">
-    <app-post-details [feedView]="true" [post]="postDetails" [userId]="userId" class="post-details">
-    </app-post-details>
+
+  <div
+    #feed
+    class="feed"
+    (scroll)="onScroll($event)"
+    *ngIf="!isLoading || posts?.length; else loader"
+  >
+    <ng-container *ngIf="posts?.length; else postsEmpty">
+      <ngx-masonry [updateLayout]="updateMasonryLayout" [ordered]="true" #masonry>
+        <app-post-preview
+          class="post"
+          [post]="post"
+          ngxMasonryItem
+          [feedView]="true"
+          *ngFor="let post of posts"
+          (loaded)="refreshMasonry()"
+          (click)="showPostDetails(post)"
+          [selectable]="isBulkOptionsVisible"
+          [isChecked]="isPostChecked(post.id)"
+          (selected)="isPostSelected($event, post.id.toString())"
+          [ngClass]="{ 'post--selected': post.id === postDetails?.id }"
+        >
+        </app-post-preview>
+      </ngx-masonry>
+      <app-spinner class="feed__loading" *ngIf="isLoading"></app-spinner>
+      <button
+        mat-stroked-button
+        (click)="loadMore()"
+        class="feed__load-more"
+        *ngIf="
+          !isLoading &&
+          params.offset !== undefined &&
+          params.limit !== undefined &&
+          params.offset + params.limit < total
+        "
+      >
+        {{ 'app.load_more' | translate }}
+      </button>
+    </ng-container>
   </div>
 </div>
 

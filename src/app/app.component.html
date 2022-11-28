@@ -3,7 +3,10 @@
     <app-sidebar></app-sidebar>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-toolbar></app-toolbar>
+    <app-toolbar
+      [languages]="languages$ | async"
+      [selectedLanguage]="selectedLanguage$ | async"
+    ></app-toolbar>
     <div class="content-wrapper">
       <router-outlet></router-outlet>
     </div>

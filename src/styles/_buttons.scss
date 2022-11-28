@@ -64,11 +64,28 @@
 
 .mat-icon-button {
   font-size: 20px;
+  align-items: center;
+  display: flex !important;
+  justify-content: center;
 
   .mat-icon {
     display: block;
     margin: 0 auto;
     line-height: 1 !important;
+  }
+
+  &:not(.mat-button-disabled) {
+    background: var(--color-light);
+    color: var(--color-neutral-100);
+    border-color: var(--color-neutral-60);
+    transition: background-color 0.35s ease;
+
+    &.active,
+    &[aria-expanded='true'] {
+      &:not(.mat-button-disabled) {
+        background-color: var(--color-neutral-20);
+      }
+    }
   }
 }
 
@@ -218,6 +235,13 @@
 
     .mat-ripple-element {
       display: none;
+    }
+
+    &.active,
+    &[aria-expanded='true'] {
+      &:not(.mat-button-disabled) {
+        background-color: var(--color-neutral-20);
+      }
     }
   }
 

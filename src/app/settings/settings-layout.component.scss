@@ -13,6 +13,7 @@
   scroll-behavior: smooth;
   background: var(--color-light);
   -webkit-overflow-scrolling: touch;
+  --scrollbar-background: var(--color-light);
 }
 
 .settings-router {

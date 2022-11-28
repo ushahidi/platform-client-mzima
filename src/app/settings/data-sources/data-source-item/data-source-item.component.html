@@ -56,15 +56,15 @@
             {{ survey.name }}
           </mat-option>
         </mat-select>
+        <mat-hint>
+          Each of the survey's fields are listed below. Choose the data from
+          {{ provider?.name | titlecase }} that you'd like to use to populate each of those fields.
+        </mat-hint>
       </mat-form-field>
-      <mat-hint>
-        Each of the survey's fields are listed below. Choose the data from
-        {{ provider?.name | titlecase }} that you'd like to use to populate each of those fields.
-      </mat-hint>
     </div>
 
     <ng-container *ngIf="surveyAttributesList?.length">
-      <p>{{ 'survey.choose_survey_field' | translate }}</p>
+      <h2>{{ 'survey.choose_survey_field' | translate }}</h2>
       <p>{{ 'survey.choose_survey_field_desc' | translate }}</p>
       <table mat-table [dataSource]="provider.inbound_fields" class="survey__table">
         <ng-container matColumnDef="name">
@@ -106,13 +106,13 @@
 <form [formGroup]="form" *ngIf="provider?.options" (ngSubmit)="saveProviderData($event)">
   <div *ngFor="let control of provider.options">
     <ng-container *ngIf="control.input === 'read-only-text'">
-      <p *ngIf="control.label?.length">{{ control.label }}</p>
+      <h2 *ngIf="control.label?.length">{{ control.label }}</h2>
       <p *ngIf="control.description?.length" [innerHTML]="control.description"></p>
     </ng-container>
 
     <ng-container *ngIf="control.input !== 'read-only-text'">
       <div class="form-row">
-        <mat-label>{{ control.label }}<span class="color-accent">*</span></mat-label>
+        <mat-label>{{ control.label }}<span class="color-accent"> *</span></mat-label>
         <mat-form-field appearance="outline" *ngIf="control.input === 'text'">
           <input
             matInput

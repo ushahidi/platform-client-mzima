@@ -10,6 +10,7 @@ h1 {
   margin: -23px;
   padding: 23px;
   position: sticky;
+  border-radius: 0 0 4px 4px;
   justify-content: space-between;
   background: var(--color-light);
 }
@@ -25,7 +26,7 @@ h1 {
     width: 100%;
 
     .form-row {
-      margin: 12px 0 4px;
+      margin: 8px 0;
     }
   }
 }

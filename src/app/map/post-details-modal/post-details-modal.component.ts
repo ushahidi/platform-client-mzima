@@ -8,8 +8,12 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class PostDetailsModalComponent {
   public post: any;
+  public color: string;
+  public twitterId: string;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.post = data.post;
+    this.color = data.color;
+    this.twitterId = data.twitterId;
   }
 }

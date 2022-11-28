@@ -7,11 +7,13 @@ const routes: Routes = [
   {
     path: '',
     component: WebhooksComponent,
-    children: [
-      { path: 'create', component: WebhookItemComponent, data: { breadcrumb: 'Create webhook' } },
-      { path: ':id', component: WebhookItemComponent, data: { breadcrumb: 'Update webhook' } },
-    ],
   },
+  {
+    path: ':id',
+    component: WebhookItemComponent,
+    data: { breadcrumb: 'Update webhook' },
+  },
+  { path: 'create', component: WebhookItemComponent, data: { breadcrumb: 'Create webhook' } },
 ];
 
 @NgModule({

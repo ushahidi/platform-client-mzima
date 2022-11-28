@@ -1,0 +1,6 @@
+<ng-content *ngIf="!isTwitterScriptLoading"></ng-content>
+<ng-container *ngIf="isTwitterFailed">
+  <img class="tweet_failed" src="/assets/images/tweet.svg" alt="This tweet is unavailable" />
+</ng-container>
+
+<app-spinner class="spinner" *ngIf="isTwitterScriptLoading"></app-spinner>
