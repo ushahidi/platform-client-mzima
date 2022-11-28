@@ -124,7 +124,11 @@
     "select_language": "Select language",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "duplicate": "Duplicate"
+    "duplicate": "Duplicate",
+    "yes_delete": "Yes, delete",
+    "no_go_back": "No, go back",
+    "are_you_sure_you_want_to_delete": "Are you sure you want to Delete",
+    "action_cannot_be_undone": "<p>This action cannot be undone.</p><p>Are you sure?</p>"
   },
   "toolbar": {
     "searchbar": {
@@ -1382,7 +1386,7 @@
     "password": "Password",
     "new_password": "New Password",
     "register": "Register",
-    "role": "Role: ",
+    "role": "Role",
     "roles": "Roles",
     "saved_user": "User saved",
     "deleted_user": "User deleted",
@@ -1405,7 +1409,17 @@
         "minlength": "This password is too short",
         "maxlength": "This password is too long"
       }
-    }
+    },
+    "placeholder": {
+      "realname": "Enter your name...",
+      "email": "Enter email address...",
+      "password": "Enter password..."
+    },
+    "password_notify": "If you leave the field blank your password will not change",
+    "avatar": "Avatar",
+    "name": "Name",
+    "role": "Role",
+    "email": "Email"
   },
   "user_profile": {
     "title": "account settings",
@@ -1547,7 +1561,8 @@
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} users?",
       "bulk_destroy_success": "Users deleted",
       "bulk_role_change_confirm": "Are you sure you want to change the role of {{count}} users to {{role}}?",
-      "bulk_role_change_success": "User roles changed to {{role_name}}"
+      "bulk_role_change_success": "User roles changed to {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "Are you sure you want to delete {{username}}"
     },
     "video": {
       "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
@@ -1619,6 +1634,7 @@
       "upload_complete": "Upload complete. You should now see your tagged data in your HDX account."
     },
     "survey": {
+      "bulk_destroy_confirm": "Are you sure you want to delete {{count}} surveys?",
       "destroy_confirm": "Are you sure you want to delete this survey?",
       "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
     },

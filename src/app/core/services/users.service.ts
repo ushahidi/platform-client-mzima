@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { EnvService } from './env.service';
-import { UserInterface, UserResponse } from '@models';
+import { GeoJsonFilter, UserInterface, UserResponse } from '@models';
 import { ResourceService } from './resource.service';
 import { SessionService } from './session.service';
 
@@ -10,6 +10,9 @@ import { SessionService } from './session.service';
   providedIn: 'root',
 })
 export class UsersService extends ResourceService<any> {
+  private totalUsers = new Subject<number>();
+  public totalUsers$ = this.totalUsers.asObservable();
+
   constructor(
     protected override httpClient: HttpClient, //
     protected override env: EnvService,
@@ -60,8 +63,12 @@ export class UsersService extends ResourceService<any> {
     return super.update('me', data);
   }
 
-  public getUsers(url?: string): Observable<UserResponse> {
-    return super.get(url);
+  public getUsers(url: string, filter?: GeoJsonFilter): Observable<UserResponse> {
+    return super.get(url, filter).pipe(
+      tap((response) => {
+        this.totalUsers.next(response.total_count);
+      }),
+    );
   }
 
   public getUserSettings(id: string) {

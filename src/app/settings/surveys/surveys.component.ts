@@ -49,8 +49,13 @@ export class SurveysComponent implements OnInit {
 
   async deleteSurvey() {
     const confirmed = await this.confirmModalService.open({
-      title: this.translate.instant('notify.survey.destroy_confirm'),
+      title: this.translate.instant('notify.survey.destroy_confirm', {
+        count: this.selectedSurveys.length,
+      }),
       description: `<p>${this.translate.instant('notify.survey.destroy_confirm_desc')}</p>`,
+
+      confirmButtonText: this.translate.instant('app.yes_delete'),
+      cancelButtonText: this.translate.instant('app.no_go_back'),
     });
     if (!confirmed) return;
     const join = [];

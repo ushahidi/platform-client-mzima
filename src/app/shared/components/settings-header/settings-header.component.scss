@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 30px;
+  height: 42px;
 
   .create-button-container {
     display: flex;
@@ -16,10 +17,14 @@
 
     button {
       padding: 0 24px;
+      border: 1px solid var(--color-neutral-60);
 
       &:not(:last-child) {
         margin-right: 16px;
       }
+    }
+    .create-btn {
+      border: none;
     }
   }
 }
