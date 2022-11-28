@@ -1,0 +1,51 @@
+<div class="settings-container">
+  <div class="create-button-container">
+    <h2 class="setting-title">{{ settingsTitle | translate }}</h2>
+    <ng-container *ngIf="isShowActions">
+      <button
+        type="button"
+        color="accent"
+        mat-raised-button
+        data-qa="btn-settings-delete"
+        (click)="deleteEmit()"
+      >
+        <span class="create-button-name">{{ 'app.delete' | translate }}</span>
+      </button>
+      <button
+        *ngIf="isShowDuplicateButton"
+        type="button"
+        color="primary"
+        mat-stroked-button
+        data-qa="btn-settings-duplicate"
+        [disabled]="selectedItem.length > 1"
+        (click)="duplicateEmit()"
+      >
+        <span class="create-button-name">{{ 'app.duplicate' | translate }}</span>
+      </button>
+    </ng-container>
+  </div>
+
+  <div class="create-button-container">
+    <button
+      *ngIf="isShowActionsButton"
+      type="button"
+      color="primary"
+      mat-stroked-button
+      data-qa="btn-settings-action"
+      (click)="showActions()"
+    >
+      <span class="create-button-name">{{ 'settings.bulk_actions' | translate }}</span>
+    </button>
+    <button
+      type="button"
+      color="primary"
+      mat-raised-button
+      [routerLink]="['create']"
+      (click)="createEmit()"
+      data-qa="btn-settings-create"
+    >
+      <span class="create-button-name">{{ newButtonTitle | translate }}</span>
+      <mat-icon svgIcon="plus"></mat-icon>
+    </button>
+  </div>
+</div>

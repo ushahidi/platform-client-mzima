@@ -61,7 +61,7 @@
     "share": "Share",
     "specific_roles": "Specific roles...",
     "general": "General",
-    "surveys": "Survey",
+    "surveys": "Surveys",
     "add_survey": "Add Survey",
     "edit_survey": "Edit Survey",
     "data_sources": "Data Sources",
@@ -124,7 +124,7 @@
     "select_language": "Select language",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "duplicate": "Duplicate"
   },
   "toolbar": {
     "searchbar": {
@@ -231,6 +231,7 @@
     "visible_to": "Visible To"
   },
   "survey": {
+    "choose_survey": "Choose survey",
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Delete task",
     "duplicate_survey": "Duplicate",
@@ -1188,7 +1189,7 @@
     "map_default_longitude": "Default longitude",
     "map_default_zoom_level": "Default zoom level",
     "map_default_location": "Default location",
-    "new_survey": "New Survey",
+    "new_survey": "Add Survey",
     "send_targeted": "Send a targeted survey via SMS",
     "send_crowdsourced": "Go back to crowd-sourced survey",
     "site": "Site Settings",
@@ -1219,7 +1220,8 @@
       "name": {
         "required": "Site name is required"
       }
-    }
+    },
+    "bulk_actions": "Bulk actions"
   },
   "data_import": {
     "survey_field": "Survey field",

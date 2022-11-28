@@ -1,63 +1,36 @@
 .surveys {
-  &-header {
+  .types-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    columns: 2;
+  }
+
+  .type-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px;
-  }
+    height: 58px;
+    cursor: pointer;
+    padding: 15px 17px;
+    position: relative;
+    transition: color 0.35s ease;
+    margin-bottom: 8px;
+    background: var(--color-neutral-10);
+    border-radius: 4px;
+    border-left: 5px solid var(--color);
 
-  h2 {
-    margin: 0;
-  }
-
-  .create-button {
-    text-transform: uppercase;
-
-    &-container {
-      display: flex;
-      justify-content: flex-end;
+    &:hover {
+      color: var(--color-primary-60);
     }
   }
-}
 
-.surveys-list {
-  .survey {
-    margin-bottom: 20px;
-    padding: 5px;
+  .type-item-container {
     display: flex;
-    justify-content: space-between;
-
-    &-item {
-      position: relative;
-
-      &__header {
-        position: static;
-      }
-    }
-
-    &-border {
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 4px;
-      position: absolute;
-      background: var(--color);
-      border-radius: 4px 0 0 4px;
-    }
-
-    &-description {
-      margin-bottom: 5px;
-      font-style: italic;
-    }
+    align-items: center;
   }
-}
 
-.item-button-container {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.spinner {
-  display: block;
-  margin: 20vh 0;
+  .spinner {
+    display: block;
+    margin: 20vh 0;
+  }
 }
