@@ -1,54 +1,14 @@
 <section class="surveys">
-  <div class="surveys-header">
-    <div class="create-button-container">
-      <h2 class="surveys-title">{{ 'app.surveys' | translate }}</h2>
-      <ng-container *ngIf="isShowActions">
-        <button
-          type="button"
-          class="action-button"
-          color="accent"
-          mat-raised-button
-          data-qa="btn-survey-delete"
-          (click)="deleteSurvey()"
-        >
-          <span class="create-button-name">{{ 'app.delete' | translate }}</span>
-        </button>
-        <button
-          type="button"
-          class="create-button"
-          color="primary"
-          mat-stroked-button
-          data-qa="btn-survey-duplicate"
-          [disabled]="selectedSurveys.length > 1"
-          (click)="duplicateSurvey()"
-        >
-          <span class="create-button-name">{{ 'survey.duplicate_survey' | translate }}</span>
-        </button>
-      </ng-container>
-    </div>
-
-    <div class="create-button-container">
-      <button
-        type="button"
-        color="primary"
-        mat-stroked-button
-        data-qa="btn-survey-action"
-        (click)="isShowActions = !isShowActions"
-      >
-        <span class="create-button-name">{{ 'settings.bulk_actions' | translate }}</span>
-      </button>
-      <button
-        type="button"
-        color="primary"
-        mat-raised-button
-        [routerLink]="['create']"
-        data-qa="btn-survey-create"
-      >
-        <span class="create-button-name">{{ 'settings.new_survey' | translate }}</span>
-        <mat-icon svgIcon="plus"></mat-icon>
-      </button>
-    </div>
-  </div>
+  <app-settings-header
+    [settingsTitle]="'app.surveys'"
+    [newButtonTitle]="'settings.new_survey'"
+    [selectedItem]="selectedSurveys"
+    (isShowActionsChange)="showActions($event)"
+    (deleteCall)="deleteSurvey()"
+    (duplicateCall)="duplicateSurvey()"
+    (createCall)="createSurvey()"
+  >
+  </app-settings-header>
 
   <div>
     <app-spinner class="spinner" *ngIf="!surveys"></app-spinner>

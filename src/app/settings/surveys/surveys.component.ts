@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Router } from '@angular/router';
 import { SurveyItem, SurveyItemEnabledLanguages } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, SurveysService } from '@services';
@@ -19,6 +20,7 @@ export class SurveysComponent implements OnInit {
     private surveysService: SurveysService,
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -82,5 +84,13 @@ export class SurveysComponent implements OnInit {
       const index = this.selectedSurveys.findIndex((el: any) => el.id === survey.id);
       if (index > -1) this.selectedSurveys.splice(index, 1);
     }
+  }
+
+  public showActions(event: boolean) {
+    this.isShowActions = event;
+  }
+
+  public createSurvey() {
+    this.router.navigate(['settings/surveys/create']);
   }
 }

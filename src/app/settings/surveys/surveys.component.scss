@@ -1,30 +1,4 @@
 .surveys {
-  &-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px;
-  }
-
-  .create-button-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-
-    .surveys-title {
-      margin: 0 16px 0 0;
-      font-size: 24px;
-    }
-
-    button {
-      padding: 0 24px;
-
-      &:not(:last-child) {
-        margin-right: 16px;
-      }
-    }
-  }
-
   .types-list {
     margin: 0;
     padding: 0;
