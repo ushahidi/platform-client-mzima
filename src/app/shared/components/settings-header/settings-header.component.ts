@@ -10,6 +10,7 @@ export class SettingsHeaderComponent {
   @Input() newButtonTitle: string;
   @Input() selectedItem: any;
   @Input() isShowActionsButton = true;
+  @Input() isShowDuplicateButton = true;
   @Output() isShowActionsChange = new EventEmitter();
   @Output() deleteCall = new EventEmitter();
   @Output() duplicateCall = new EventEmitter();

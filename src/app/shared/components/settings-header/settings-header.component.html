@@ -12,6 +12,7 @@
         <span class="create-button-name">{{ 'app.delete' | translate }}</span>
       </button>
       <button
+        *ngIf="isShowDuplicateButton"
         type="button"
         color="primary"
         mat-stroked-button
