@@ -1,49 +1,28 @@
-.form {
-  margin-bottom: 30px;
-
-  .form-field {
-    margin-bottom: 10px;
-
-    &-flex {
-      justify-content: space-between;
-    }
-
-    & mat-form-field {
-      width: 100%;
-    }
-  }
-}
-
-.form-field {
-  table {
-    width: 100%;
-    max-width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #eee;
-  }
-
-  table thead {
-    color: #fff;
-    border-radius: 2px 2px 0 0;
-    background-color: #888;
-  }
-
-  table th,
-  table td {
-    text-align: left;
-    padding: 16px;
-  }
-
-  tbody tr:nth-child(odd) {
-    background-color: #eee;
-  }
-}
-
-.page-content {
-  margin: initial;
-  max-width: inherit;
+h1 {
+  margin-bottom: 32px;
 }
 
 .form-controls-panel {
-  justify-content: flex-end;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  bottom: -32px;
+  margin: -23px;
+  padding: 23px;
+  position: sticky;
+  border-radius: 0 0 4px 4px;
+  justify-content: space-between;
+  background: var(--color-light);
+}
+
+.webhook {
+  margin-bottom: 32px;
+
+  &__table {
+    width: 100%;
+
+    .form-row {
+      margin: 12px 0 4px;
+    }
+  }
 }

@@ -773,17 +773,23 @@
   padding: 12px;
 }
 
+.toggle-group {
+  .toggle {
+    &:not(:first-child) {
+      margin-top: 24px;
+    }
+  }
+}
+
 .toggle {
   font-size: 16px;
   line-height: 1.5;
   padding: 9px 16px;
 
-  &:not(:first-child) {
-    margin-top: 24px;
-  }
-
   .mat-slide-toggle {
     min-height: 24px;
+    margin-bottom: 0;
+    vertical-align: top;
     line-height: inherit !important;
   }
 
