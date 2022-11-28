@@ -1,0 +1,17 @@
+.post-head {
+  display: flex;
+  margin: 0 -8px;
+  align-items: center;
+  justify-content: flex-end;
+
+  &__control {
+    width: 32px;
+    height: 32px;
+    margin: 0 4px;
+    font-size: 24px;
+
+    .mat-icon {
+      font-size: inherit;
+    }
+  }
+}

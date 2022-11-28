@@ -18,8 +18,14 @@
     }
 
     .mat-expansion-panel-content {
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 300px;
       font-size: inherit;
       line-height: inherit;
+      white-space: pre-wrap;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
     }
   }
 

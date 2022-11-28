@@ -1,10 +1,18 @@
-<div
-  class="map"
-  *ngIf="mapReady"
-  leaflet
-  [leafletOptions]="leafletOptions"
-  [leafletLayers]="mapLayers"
-  [leafletFitBounds]="mapFitToBounds"
-  [leafletFitBoundsOptions]="fitBoundsOptions"
-  (leafletMapReady)="onMapReady($event)"
-></div>
+<div class="map-holder" [ngClass]="{ 'map-holder--filters-visible': isFiltersVisible }">
+  <mat-progress-bar
+    class="progress-bar"
+    mode="determinate"
+    [value]="progress"
+    *ngIf="progress < 100"
+  ></mat-progress-bar>
+  <div
+    class="map"
+    *ngIf="mapReady"
+    leaflet
+    [leafletOptions]="leafletOptions"
+    [leafletLayers]="mapLayers"
+    [leafletFitBounds]="mapFitToBounds"
+    [leafletFitBoundsOptions]="fitBoundsOptions"
+    (leafletMapReady)="onMapReady($event)"
+  ></div>
+</div>

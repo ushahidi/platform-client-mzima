@@ -1,5 +1,5 @@
 import { Component, RendererFactory2 } from '@angular/core';
-import { EnvService, LoaderService } from '@services';
+import { EnvService, LanguageService, LoaderService } from '@services';
 import { IconService } from './core/services/icon.service';
 
 @Component({
@@ -11,12 +11,15 @@ export class AppComponent {
   title = 'platform-client';
   public isShowLoader = false;
   private renderer = this.rendererFactory.createRenderer(null, null);
+  public languages$;
+  public selectedLanguage$;
 
   constructor(
     private loaderService: LoaderService, //
     private rendererFactory: RendererFactory2,
     protected env: EnvService,
     private iconService: IconService,
+    private languageService: LanguageService,
   ) {
     this.loaderService.isActive$.subscribe({
       next: (value) => {
@@ -26,6 +29,8 @@ export class AppComponent {
     if (this.env.environment.gtm_key) this.loadGtm();
 
     this.iconService.registerIcons();
+    this.selectedLanguage$ = this.languageService.selectedLanguage$;
+    this.languages$ = this.languageService.languages$;
   }
 
   private loadGtm() {

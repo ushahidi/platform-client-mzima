@@ -41,26 +41,10 @@ export const sources = [
 
 export const sortingOptions = [
   {
-    orderBy: 'global_filter.sort.orderby.post_date',
-    order: 'global_filter.sort.order.desc',
-    value: {
-      orderBy: 'post_date',
-      order: 'desc',
-    },
-  },
-  {
-    orderBy: 'global_filter.sort.orderby.post_date',
-    order: 'global_filter.sort.order.asc',
-    value: {
-      orderBy: 'post_date',
-      order: 'asc',
-    },
-  },
-  {
     orderBy: 'global_filter.sort.orderby.created',
     order: 'global_filter.sort.order.desc',
     value: {
-      orderBy: 'created',
+      orderby: 'created',
       order: 'desc',
     },
   },
@@ -68,7 +52,23 @@ export const sortingOptions = [
     orderBy: 'global_filter.sort.orderby.created',
     order: 'global_filter.sort.order.asc',
     value: {
-      orderBy: 'created',
+      orderby: 'created',
+      order: 'asc',
+    },
+  },
+  {
+    orderBy: 'global_filter.sort.orderby.post_date',
+    order: 'global_filter.sort.order.desc',
+    value: {
+      orderby: 'post_date',
+      order: 'desc',
+    },
+  },
+  {
+    orderBy: 'global_filter.sort.orderby.post_date',
+    order: 'global_filter.sort.order.asc',
+    value: {
+      orderby: 'post_date',
       order: 'asc',
     },
   },
@@ -76,7 +76,7 @@ export const sortingOptions = [
     orderBy: 'global_filter.sort.orderby.updated',
     order: 'global_filter.sort.order.desc',
     value: {
-      orderBy: 'updated',
+      orderby: 'updated',
       order: 'desc',
     },
   },
@@ -84,7 +84,7 @@ export const sortingOptions = [
     orderBy: 'global_filter.sort.orderby.updated',
     order: 'global_filter.sort.order.asc',
     value: {
-      orderBy: 'updated',
+      orderby: 'updated',
       order: 'asc',
     },
   },

@@ -11,6 +11,7 @@
 @import 'styles/buttons';
 @import 'styles/progress';
 @import 'styles/note';
+@import 'styles/menu';
 @import 'styles/pagination';
 @import 'styles/tabs';
 @import 'styles/forms';
@@ -27,10 +28,33 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: var(--scrollbar-color, var(--color-neutral-90));
+  border: 6px solid var(--scrollbar-background, var(--color-neutral-10));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-color, var(--color-neutral-90));
+}
+
 html,
 body {
   height: 100%;
   overscroll-behavior-y: none;
+}
+
+.mat-drawer-container {
+  background-color: var(--color-neutral-10);
 }
 
 .mat-icon {
@@ -75,7 +99,7 @@ a {
   direction: ltr;
   font-style: italic;
   line-height: 1.4;
-  border-left: 2px solid #ffc334;
+  border-left: 2px solid var(--color-primary-60);
   background-color: #fff3d7;
   margin-bottom: 16px;
   padding: 8px 16px;
@@ -94,6 +118,7 @@ a {
 
 .mat-drawer-container {
   .mat-drawer-content {
+    overflow: hidden;
     position: static;
     margin-top: 72px;
     height: calc(100% - 72px);

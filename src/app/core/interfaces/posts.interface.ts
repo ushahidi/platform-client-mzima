@@ -39,6 +39,7 @@ export interface PostPropertiesInterface {
   status?: string;
   contact?: any;
   source?: string;
+  data_source_message_id?: string;
 }
 
 export interface PostPropertiesUser {
@@ -60,7 +61,7 @@ export interface PostResult {
   contact?: string | any;
   content: string;
   created: Date;
-  data_source_message_id?: number;
+  data_source_message_id?: string;
   form: PostForm;
   id: number;
   locale: string;

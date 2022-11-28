@@ -288,11 +288,6 @@
 }
 
 .multilevelselect {
-  &.mat-menu-panel {
-    max-width: none;
-    max-height: 400px;
-  }
-
   .mat-tree {
     width: 602px;
     padding: 0 16px;
@@ -404,6 +399,7 @@
 
 .mat-form-field-appearance-outline {
   vertical-align: top;
+  --scrollbar-background: var(--color-light);
 
   .mat-form-field-outline {
     top: 0 !important;

@@ -10,26 +10,14 @@ export class PostMetadataComponent implements OnInit {
   @Input() post: PostResult | PostPropertiesInterface;
   author: string;
 
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor, @typescript-eslint/no-empty-function
-  constructor() {}
-
   ngOnInit(): void {
-    console.log('Post metadata component!');
+    this.getUsername();
   }
 
-  showAuthor() {
+  private getUsername(): void {
     const authorNameOrContact =
       this.post.user?.realname || this.post.contact?.contact || this.post.author_realname;
 
-    if (authorNameOrContact === undefined) {
-      return false;
-    }
-
-    if (authorNameOrContact !== undefined) {
-      this.author = authorNameOrContact ? authorNameOrContact : 'Anonymous';
-      return true;
-    }
-
-    return;
+    this.author = authorNameOrContact || 'Anonymous';
   }
 }

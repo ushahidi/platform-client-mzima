@@ -83,7 +83,7 @@ export class SearchFormComponent implements OnInit {
     this.getSavedFilters();
 
     const isFiltersVisible = localStorage.getItem('is_filters_visible');
-    this.isFiltersVisible = isFiltersVisible ? JSON.parse(isFiltersVisible) : false;
+    this.toggleFilters(isFiltersVisible ? JSON.parse(isFiltersVisible) : false);
 
     this.getSurveys();
 
@@ -168,7 +168,17 @@ export class SearchFormComponent implements OnInit {
 
     this.postsService.totalGeoPosts$.subscribe({
       next: (total) => {
-        this.total = total;
+        if (this.isMapView) {
+          this.total = total;
+        }
+      },
+    });
+
+    this.postsService.totalPosts$.subscribe({
+      next: (total) => {
+        if (!this.isMapView) {
+          this.total = total;
+        }
       },
     });
   }
@@ -405,9 +415,14 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
-  public toggleFilters(): void {
-    this.isFiltersVisible = !this.isFiltersVisible;
+  public toggleFilters(value: boolean): void {
+    if (value === this.isFiltersVisible) return;
+    this.isFiltersVisible = value;
     localStorage.setItem('is_filters_visible', JSON.stringify(this.isFiltersVisible));
+    this.eventBusService.next({
+      type: EventType.ToggleFiltersPanel,
+      payload: this.isFiltersVisible,
+    });
   }
 
   public clearFilter(filterName: string): void {

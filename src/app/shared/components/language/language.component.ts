@@ -1,8 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { CONST } from '@constants';
-import { LanguageInterface } from '@models';
-import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '@services';
 
 @Component({
@@ -11,30 +8,12 @@ import { LanguageService } from '@services';
   styleUrls: ['./language.component.scss'],
 })
 export class LanguageComponent {
-  private languageKey = `${CONST.LOCAL_STORAGE_PREFIX}language`;
-  public languages: LanguageInterface[] = this.languageService.getLanguages();
-  public selectedLanguage = localStorage.getItem(this.languageKey);
+  @Input() languages: any;
+  @Input() selectedLanguage: any;
 
-  constructor(
-    private translate: TranslateService, //
-    private languageService: LanguageService,
-  ) {
-    if (this.selectedLanguage === 'null' || this.selectedLanguage === null) {
-      this.selectedLanguage = 'en';
-      localStorage.setItem(this.languageKey, this.selectedLanguage);
-      this.setLanguage(this.selectedLanguage);
-    } else {
-      this.setLanguage(this.selectedLanguage);
-    }
-  }
+  constructor(private languageService: LanguageService) {}
 
-  setLanguage(lang: string) {
-    this.translate.setDefaultLang(lang);
-    this.translate.use(lang);
-  }
-
-  changeLanguage(e: MatSelectChange) {
-    this.translate.use(e.value);
-    localStorage.setItem(this.languageKey, e.value);
+  public changeLanguage(e: MatSelectChange) {
+    this.languageService.changeLanguage(e.value);
   }
 }

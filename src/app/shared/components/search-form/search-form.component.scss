@@ -25,27 +25,21 @@
   }
 
   &__filters-panel {
-    left: 0;
     right: 0;
     top: 100%;
+    left: 220px;
     display: flex;
     margin-top: 1px;
     position: absolute;
     transform-origin: 50% 0;
     background: var(--color-light);
     justify-content: space-between;
-    transition: opacity 0.35s ease, transform 0.35s ease;
 
     &:not(.search-form__filters-panel--open) {
       opacity: 0;
       top: -9999px;
       left: -9999px;
       transform: scaleY(0);
-      transition: all 0s ease 0.35s, opacity 0.35s ease, transform 0.35s ease;
-    }
-
-    .search-form--map-view & {
-      left: 220px;
     }
 
     &__item {
@@ -169,30 +163,10 @@
     &__total {
       display: block;
       font-size: 14px;
-      color: #323538;
       font-weight: 600;
       line-height: 17px;
       margin-bottom: 36px;
-    }
-  }
-
-  &__select {
-    height: 100%;
-    margin: 0 -8px;
-    vertical-align: top;
-    width: calc(100% + 16px);
-
-    &::ng-deep {
-      .mat-select-trigger {
-        height: 100%;
-        padding: 15px 8px;
-        justify-content: center;
-      }
-
-      .mat-select-value {
-        width: auto;
-        min-width: 40px;
-      }
+      color: var(--color-neutral-100);
     }
   }
 
@@ -330,9 +304,9 @@
     display: block;
     font-size: 12px;
     font-weight: 400;
-    color: #323538;
     line-height: 14px;
     text-transform: uppercase;
+    color: var(--color-neutral-100);
   }
 
   &__info {
@@ -388,8 +362,8 @@
       font-size: 12px;
       font-weight: 400;
       margin-left: 8px;
-      color: #323538;
       line-height: 14px;
+      color: var(--color-neutral-100);
     }
   }
 }
@@ -400,8 +374,8 @@
     padding-top: 10px;
     border-style: solid;
     border-width: 0 1px 1px;
-    border-color: #e9e9ea;
     border-radius: 0 0 10px 10px;
+    border-color: var(--color-neutral-20);
 
     .mat-option[aria-disabled='true'] {
       font-size: 16px;
