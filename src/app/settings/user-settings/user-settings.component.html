@@ -1,19 +1,19 @@
-<section class="user_settings">
-  <div class="main">
-    <div class="head">
-      <div class="logo-wrapper">
-        <img
-          class="field-logo"
-          src="assets/images/logo-hdx.png"
-          alt="Humanitarian Data Exchange logotype"
-        />
-      </div>
-      <h2>{{ 'settings.settings_list.user_settings' | translate }}</h2>
+<section class="user-settings">
+  <div class="user-settings__header">
+    <h2 class="user-settings__title">{{ 'settings.settings_list.user_settings' | translate }}</h2>
+    <div class="user-settings__logo-wrapper">
+      <img
+        class="field-logo"
+        src="assets/images/logo-hdx.png"
+        alt="{{ 'settings.user_settings.HDX' | translate }}"
+      />
     </div>
+  </div>
+  <div class="user-settings__information">
     <p>{{ 'settings.user_settings.user_settings_desc_1' | translate }}</p>
     <p>{{ 'settings.user_settings.user_settings_desc_2' | translate }}</p>
     <p>{{ 'settings.user_settings.user_settings_desc_3' | translate }}</p>
-    <a href="https://data.humdata.org/faq" target="_blank">
+    <a class="guide-link" href="https://data.humdata.org/faq" target="_blank">
       <mat-icon class="link-blue-icon">
         <svg class="iconic">
           <use
@@ -22,7 +22,7 @@
           ></use>
         </svg>
       </mat-icon>
-      <strong>View the guide to your API key</strong>
+      <strong>{{ 'settings.user_settings.view_guide' | translate }}</strong>
     </a>
   </div>
 
@@ -34,7 +34,7 @@
         <mat-form-field appearance="outline">
           <input
             matInput
-            placeholder="Please enter maintainer id"
+            placeholder="{{ 'settings.user_settings.please_enter_maintainer_id' | translate }}"
             formControlName="hdx_maintainer_id"
             required
           />
@@ -43,17 +43,16 @@
           }}</mat-error>
         </mat-form-field>
       </div>
-      <button
-        type="button"
-        color="primary"
-        mat-raised-button
-        (click)="saveMaintainerId()"
-        [disabled]="form.get('hdx_maintainer_id')?.invalid"
-      >
-        {{ 'app.save' | translate }}
-      </button>
+      <!--      <button-->
+      <!--        type="button"-->
+      <!--        color="primary"-->
+      <!--        mat-raised-button-->
+      <!--        (click)="saveMaintainerId()"-->
+      <!--        [disabled]="form.get('hdx_maintainer_id')?.invalid"-->
+      <!--      >-->
+      <!--        {{ 'app.save' | translate }}-->
+      <!--      </button>-->
     </div>
-
     <div class="form-field">
       <div class="form-row">
         <mat-label>{{ 'settings.user_settings.api_key' | translate }}</mat-label>
@@ -61,7 +60,7 @@
         <mat-form-field appearance="outline">
           <input
             matInput
-            placeholder="Please enter API key"
+            placeholder="{{ 'settings.user_settings.please_enter_api_key' | translate }}"
             formControlName="hdx_api_key"
             required
           />
@@ -70,12 +69,14 @@
           }}</mat-error>
         </mat-form-field>
       </div>
+    </div>
+    <div class="form-controls-panel">
       <button
         type="button"
         color="primary"
         mat-raised-button
-        (click)="saveApiKey()"
-        [disabled]="form.get('hdx_api_key')?.invalid"
+        (click)="saveInformation()"
+        [disabled]="form.invalid"
       >
         {{ 'app.save' | translate }}
       </button>
