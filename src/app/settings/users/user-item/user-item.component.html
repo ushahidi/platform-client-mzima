@@ -5,18 +5,26 @@
   <div class="page-content">
     <form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
       <div class="form-row">
-        <mat-label>{{ 'user.full_name' | translate }}</mat-label>
+        <mat-label>{{ 'user.full_name' | translate }} *</mat-label>
         <mat-form-field appearance="outline">
-          <input matInput formControlName="realname" />
+          <input
+            matInput
+            formControlName="realname"
+            [placeholder]="'user.placeholder.realname' | translate"
+          />
           <mat-error *ngIf="form.get('realname')?.hasError('required')">{{
             'user.valid.full_name.required' | translate
           }}</mat-error>
         </mat-form-field>
       </div>
       <div class="form-row">
-        <mat-label>{{ 'user.email' | translate }}</mat-label>
+        <mat-label>{{ 'user.email' | translate }} *</mat-label>
         <mat-form-field appearance="outline">
-          <input matInput formControlName="email" />
+          <input
+            matInput
+            formControlName="email"
+            [placeholder]="'user.placeholder.email' | translate"
+          />
           <mat-error *ngIf="form.get('email')?.hasError('required')">{{
             'user.valid.email.required' | translate
           }}</mat-error>
@@ -25,22 +33,19 @@
           }}</mat-error>
         </mat-form-field>
       </div>
-      <div *ngIf="isUpdate && !isChangePassword" class="form-row">
-        <button
-          mat-raised-button
-          class="btn-change-role"
-          color="dark"
-          type="button"
-          data-qa="btn-user-change-password"
-          (click)="changePasswordToggle()"
-        >
-          {{ 'user.update_password' | translate }}
-        </button>
-      </div>
-      <div class="form-row" *ngIf="isChangePassword || !isUpdate">
-        <mat-label>{{ 'user.password' | translate }}</mat-label>
+      <div class="form-row">
+        <mat-label
+          >{{ 'user.password' | translate }} *
+          <span class="password-notify" *ngIf="isUpdate"
+            >({{ 'user.password_notify' | translate }})</span
+          >
+        </mat-label>
         <mat-form-field appearance="outline">
-          <input matInput formControlName="password" />
+          <input
+            matInput
+            formControlName="password"
+            [placeholder]="'user.placeholder.password' | translate"
+          />
           <mat-error *ngIf="form.get('password')?.hasError('required')">{{
             'user.valid.password.required' | translate
           }}</mat-error>
@@ -50,7 +55,7 @@
         </mat-form-field>
       </div>
       <div class="form-row">
-        <mat-label>{{ 'user.role' | translate }}</mat-label>
+        <mat-label>{{ 'user.role' | translate }} *</mat-label>
         <mat-form-field appearance="outline">
           <mat-select formControlName="role" disableOptionCentering data-qa="user-role-select">
             <mat-option *ngFor="let role of roles" [value]="role.name" [data-qa]="role.name">
@@ -61,39 +66,40 @@
       </div>
 
       <div class="form-controls-panel">
-        <button
-          mat-stroked-button
-          type="button"
-          data-qa="btn-user-cancel"
-          (click)="navigateToUsers()"
-        >
-          <span>{{ 'app.cancel' | translate }}</span>
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          class="role-button"
-          type="submit"
-          data-qa="btn-user-save"
-          [disabled]="form.invalid"
-        >
-          <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
-        </button>
+        <div>
+          <button
+            *ngIf="isUpdate"
+            mat-raised-button
+            type="button"
+            color="accent"
+            data-qa="btn-user-delete-user"
+            (click)="deleteUser()"
+            [disabled]="isMyProfile"
+          >
+            {{ 'user.delete_user' | translate }}
+          </button>
+        </div>
+        <div>
+          <button
+            mat-stroked-button
+            type="button"
+            data-qa="btn-user-cancel"
+            (click)="navigateToUsers()"
+          >
+            <span>{{ 'app.cancel' | translate }}</span>
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            class="role-button"
+            type="submit"
+            data-qa="btn-user-save"
+            [disabled]="form.invalid"
+          >
+            <span>{{ 'app.save' | translate }}</span>
+          </button>
+        </div>
       </div>
     </form>
-  </div>
-
-  <div class="page-content" *ngIf="isUpdate">
-    <h2>{{ 'user.delete_this_user' | translate }}</h2>
-    <p [innerHTML]="'user.delete_user_desc' | translate"></p>
-    <button
-      mat-raised-button
-      type="button"
-      color="accent"
-      data-qa="btn-user-delete-user"
-      (click)="deleteUser()"
-    >
-      {{ 'user.delete_user' | translate }}
-    </button>
   </div>
 </section>

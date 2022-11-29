@@ -4,8 +4,13 @@
 
 .form-controls-panel {
   margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .user-profile .form-row {
   margin-bottom: 20px;
+}
+.password-notify {
+  font-size: 12px;
 }

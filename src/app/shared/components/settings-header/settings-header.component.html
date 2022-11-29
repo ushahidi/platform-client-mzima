@@ -7,21 +7,12 @@
         color="accent"
         mat-raised-button
         data-qa="btn-settings-delete"
+        class="delete-btn"
         (click)="deleteEmit()"
       >
         <span class="create-button-name">{{ 'app.delete' | translate }}</span>
       </button>
-      <button
-        *ngIf="isShowDuplicateButton"
-        type="button"
-        color="primary"
-        mat-stroked-button
-        data-qa="btn-settings-duplicate"
-        [disabled]="selectedItem.length > 1"
-        (click)="duplicateEmit()"
-      >
-        <span class="create-button-name">{{ 'app.duplicate' | translate }}</span>
-      </button>
+      <ng-content></ng-content>
     </ng-container>
   </div>
 
@@ -37,6 +28,7 @@
       <span class="create-button-name">{{ 'settings.bulk_actions' | translate }}</span>
     </button>
     <button
+      class="create-btn"
       type="button"
       color="primary"
       mat-raised-button

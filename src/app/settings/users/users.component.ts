@@ -1,11 +1,10 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { RoleResponse, UserResult } from '@models';
+import { Component, OnInit } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Router } from '@angular/router';
+import { GeoJsonFilter, UserResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, RolesService, UsersService } from '@services';
-import { forkJoin, Observable, take } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -13,94 +12,125 @@ import { forkJoin, Observable, take } from 'rxjs';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['select', 'avatar', 'realname', 'email', 'role'];
-  dataSource: MatTableDataSource<UserResult>;
-  selection: SelectionModel<UserResult> = new SelectionModel<UserResult>(true, []);
-  public roleResponse$: Observable<RoleResponse>;
-  selectedRole: string;
   isLoading = false;
+
+  users: UserResult[] = [];
+  selectedUsers: number[] = [];
+  public isShowActions = false;
+  public params: GeoJsonFilter = {
+    limit: 9,
+    offset: 0,
+    created_before_by_id: '',
+  };
+  public pagination = {
+    page: 1,
+    size: this.params.limit,
+  };
+  public total: number;
 
   constructor(
     private userService: UsersService,
     private rolesService: RolesService,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
+    private router: Router,
   ) {}
 
   public ngOnInit() {
-    this.getUsers();
-    this.getRoles();
+    this.getUsers(this.params);
+    this.userService.totalUsers$.subscribe({
+      next: (total) => (this.total = total),
+    });
   }
 
-  private getUsers() {
+  private getUsers(params: any, add?: boolean) {
+    if (!add) {
+      this.users = [];
+    }
     this.isLoading = true;
-    this.userService.getUsers().subscribe({
+    this.userService.getUsers('', { ...params }).subscribe({
       next: (response) => {
-        this.dataSource = new MatTableDataSource<UserResult>(response.results);
-        this.dataSource.paginator = this.paginator;
+        this.users = add ? [...this.users, ...response.results] : response.results;
         this.isLoading = false;
       },
     });
   }
 
-  private getRoles() {
-    this.roleResponse$ = this.rolesService.get();
-  }
-
-  public isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  public masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
-  }
-
   public async deleteUsers() {
     const confirmed = await this.openConfirmModal(
-      'User will be deleted!',
-      '<p>This action cannot be undone.</p><p>Are you sure?</p>',
+      this.translate.instant('notify.user.bulk_destroy_confirm', {
+        count: this.selectedUsers.length,
+      }),
+      this.translate.instant('app.action_cannot_be_undone'),
     );
     if (!confirmed) return;
-    const join = [];
-    for (const user of this.selection.selected) {
-      join.push(this.userService.deleteUser(user.id));
-    }
-    forkJoin(join)
-      .pipe(take(1))
-      .subscribe({
-        next: () => this.initialData(),
-        error: (e) => console.log(e),
-      });
-  }
-
-  public changeRole() {
-    const join = [];
-    for (const user of this.selection.selected) {
-      join.push(this.userService.updateUserById(user.id, { id: user.id, role: this.selectedRole }));
-    }
-    forkJoin(join)
-      .pipe(take(1))
-      .subscribe({
-        next: () => this.initialData(),
-        error: (e) => console.log(e),
-      });
-  }
-
-  private initialData() {
-    this.getUsers();
-    this.selectedRole = '';
-    this.selection.clear();
+    forkJoin(this.selectedUsers.map((userId) => this.userService.deleteUser(userId))).subscribe({
+      complete: () => {
+        this.getUsers(this.params);
+        this.selectedUsers = [];
+      },
+    });
   }
 
   private async openConfirmModal(title: string, description: string): Promise<boolean> {
     return this.confirmModalService.open({
       title: this.translate.instant(title),
       description: this.translate.instant(description),
+      confirmButtonText: this.translate.instant('app.yes_delete'),
+      cancelButtonText: this.translate.instant('app.no_go_back'),
     });
+  }
+
+  public showActions(event: boolean) {
+    this.isShowActions = event;
+    if (!event) this.selectedUsers = [];
+  }
+
+  public createUser() {
+    this.router.navigate(['settings/users/create']);
+  }
+
+  public selectUser(event: MatCheckboxChange, { id }: UserResult) {
+    if (event.checked) {
+      this.selectedUsers.push(id);
+    } else {
+      const index = this.selectedUsers.findIndex((userId) => userId === id);
+      if (index > -1) {
+        this.selectedUsers.splice(index, 1);
+      }
+    }
+  }
+
+  public selectAllUsers(event: MatCheckboxChange) {
+    if (event.checked) {
+      this.users.map((user) => {
+        if (this.selectedUsers.find((selectedUser) => selectedUser === user.id)) return;
+        this.selectedUsers.push(user.id);
+      });
+    } else {
+      this.selectedUsers = [];
+    }
+  }
+
+  public loadMore() {
+    if (
+      this.params.offset !== undefined &&
+      this.params.limit !== undefined &&
+      this.params.offset + this.params.limit < this.total
+    ) {
+      this.params.offset = this.params.offset + this.params.limit;
+      this.getUsers(this.params, true);
+    }
+  }
+
+  public onScroll(event: any): void {
+    console.log(event);
+    if (
+      !this.isLoading &&
+      event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32
+    ) {
+      console.log(1);
+      this.loadMore();
+    }
   }
 }

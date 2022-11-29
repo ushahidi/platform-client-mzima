@@ -5,9 +5,18 @@
     [selectedItem]="selectedSurveys"
     (isShowActionsChange)="showActions($event)"
     (deleteCall)="deleteSurvey()"
-    (duplicateCall)="duplicateSurvey()"
     (createCall)="createSurvey()"
   >
+    <button
+      type="button"
+      color="primary"
+      mat-stroked-button
+      data-qa="btn-settings-duplicate"
+      [disabled]="selectedSurveys.length > 1"
+      (click)="duplicateSurvey()"
+    >
+      <span class="create-button-name">{{ 'app.duplicate' | translate }}</span>
+    </button>
   </app-settings-header>
 
   <div>

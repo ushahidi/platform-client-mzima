@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '@services';
 
 @Component({
@@ -10,22 +11,26 @@ import { AuthService } from '@services';
 })
 export class LoginComponent {
   public form: FormGroup = this.formBuilder.group({
-    email: ['procoders@ushahidi.com', [Validators.required, Validators.email]],
-    password: ['TestUser123', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
   });
+  public loginError: string;
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private matDialogRef: MatDialogRef<LoginComponent>,
+    private translate: TranslateService,
   ) {}
 
   getErrorMessage(field: string) {
     if (this.form.controls[field].hasError('required')) {
-      return 'You must enter a value';
+      return this.translate.instant('contact.valid.email.required');
     }
 
-    return this.form.controls['email'].hasError('email') ? 'Not a valid email' : '';
+    return this.form.controls['email'].hasError('email')
+      ? this.translate.instant('contact.valid.email.not_valid')
+      : '';
   }
 
   cancel() {
@@ -39,8 +44,10 @@ export class LoginComponent {
       next: (response) => {
         this.matDialogRef.close(response);
       },
-      error: () => {
+      error: (err) => {
+        this.loginError = err.error.message;
         this.form.enable();
+        setTimeout(() => (this.loginError = ''), 4000);
       },
     });
   }
