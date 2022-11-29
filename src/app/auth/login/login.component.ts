@@ -10,8 +10,8 @@ import { AuthService } from '@services';
 })
 export class LoginComponent {
   public form: FormGroup = this.formBuilder.group({
-    email: ['procoders@ushahidi.com', [Validators.required, Validators.email]],
-    password: ['TestUser123', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
   });
 
   constructor(
