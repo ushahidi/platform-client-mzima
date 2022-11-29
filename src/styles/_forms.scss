@@ -178,8 +178,8 @@
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb,
 .mat-slide-toggle.mat-checked .mat-ripple-element {
+  box-shadow: none;
   background-color: var(--color-light);
-  box-shadow: 0 3px 7px rgba(var(--color-light-contrast-rgb), 0.12);
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
@@ -388,7 +388,7 @@
   height: 27px !important;
 
   .mat-slide-toggle.mat-checked & {
-    transform: translate3d(20px, 0, 0) !important;
+    transform: translate3d(18px, 0, 0) !important;
   }
 }
 
@@ -796,13 +796,13 @@
 
   .mat-slide-toggle-bar {
     width: 42px !important;
-    height: 20px !important;
+    height: 24px !important;
     margin-right: 16px !important;
-    border-radius: 10px !important;
+    border-radius: 12px !important;
   }
 
   .mat-slide-toggle-thumb-container {
-    width: 16px !important;
-    height: 16px !important;
+    width: 20px !important;
+    height: 20px !important;
   }
 }

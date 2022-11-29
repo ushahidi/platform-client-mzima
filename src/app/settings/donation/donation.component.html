@@ -1,94 +1,80 @@
-<section class="donation">
-  <h2>Setup Donation</h2>
-  <form class="form" (ngSubmit)="save()" [formGroup]="donationForm" novalidate>
-    <div class="form__step">
-      <h3>Donation Details</h3>
-      <div class="form-row">
-        <mat-label translate>settings.donation.title.label</mat-label>
-        <mat-form-field appearance="outline">
-          <input
-            matInput
-            placeholder="{{ 'settings.donation.title.placeholder' }}"
-            formControlName="title"
-            required
-            data-qa="title"
-          />
-          <mat-error *ngIf="donationForm.get('title')?.invalid">
-            {{ donationForm.get('title')?.errors | json }}
-          </mat-error>
-        </mat-form-field>
-      </div>
+<h1>Setup Donation</h1>
 
-      <div class="form-row">
-        <mat-label translate>Describe your donation</mat-label>
-        <mat-form-field appearance="outline">
-          <textarea
-            data-qa="description"
-            matInput
-            cdkTextareaAutosize
-            cdkAutosizeMinRows="2"
-            cdkAutosizeMaxRows="5"
-            placeholder="{{ 'settings.site_description' }}"
-            formControlName="description"
-          ></textarea>
-        </mat-form-field>
-      </div>
-
-      <div class="images">
-        <div class="image" *ngFor="let image of donationConfig.images">
-          <figure class="logo">
-            <img [src]="image.original_file_url" alt="Donation-image" />
-          </figure>
-          <button color="accent" mat-raised-button (click)="deleteImage(image.id)">
-            {{ 'app.delete' | translate }}
-          </button>
-        </div>
-      </div>
-      <h4>Attach an image</h4>
-      <button color="primary" mat-raised-button class="upload-button">
-        Upload
-        <input name="file" type="file" (change)="uploadFile($event)" data-qa="btn-upload" />
-      </button>
+<form (ngSubmit)="save()" [formGroup]="donationForm" novalidate>
+  <div class="form-row toggle-group">
+    <div class="toggle">
+      <mat-slide-toggle formControlName="enabled" data-qa="monetization-toggle">
+        {{ 'app.enable_monetization' | translate }}
+      </mat-slide-toggle>
     </div>
+  </div>
 
-    <div class="form__step">
-      <h3>Donation Wallet</h3>
-      <div class="form-row">
-        <mat-label translate>Wallet address</mat-label>
-        <mat-form-field appearance="outline">
-          <input
-            data-qa="wallet"
-            matInput
-            placeholder="{{ 'settings.donation.title.placeholder' }}"
-            formControlName="wallet"
-          />
-        </mat-form-field>
-        <p>
-          Please make sure you have your wallet set up on
-          <a target="_blank" href="https://uphold.com">uphold.com</a>
-          to set web monetization. If you don't have a wallet already please click
-          <a target="_blank" href="https://wallet.uphold.com/signup">here</a> to create one.
-        </p>
-      </div>
-    </div>
-    <mat-slide-toggle
-      class="monetization-toggle"
-      formControlName="enabled"
-      data-qa="monetization-toggle"
+  <div class="form-row">
+    <mat-label translate>settings.donation.title.label</mat-label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        placeholder="{{ 'settings.donation.title.placeholder' | translate }}"
+        formControlName="title"
+        required
+        data-qa="title"
+      />
+      <mat-error *ngIf="donationForm.get('title')?.invalid">
+        {{ donationForm.get('title')?.errors | json }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-label translate>Describe your donation</mat-label>
+    <mat-form-field appearance="outline">
+      <textarea
+        data-qa="description"
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="4"
+        cdkAutosizeMaxRows="8"
+        placeholder="This is a placeholder text telling more about this donation"
+        formControlName="description"
+      ></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-label>Donation images</mat-label>
+    <app-file-uploader
+      [multiple]="true"
+      [imageSrc]="images"
+      (fileUpload)="uploadFile($event)"
+      (delete)="imageDeleted($event)"
     >
-      {{ 'app.enable_monetization' | translate }}
-    </mat-slide-toggle>
-  </form>
-  <div class="alert" *ngIf="!donationConfig.enabled">
-    <p class="notice" translate="app.enable_monetization_info"></p>
+    </app-file-uploader>
   </div>
 
-  <div class="form-controls-panel">
-    <button type="button" mat-stroked-button routerLink="/settings" translate data-qa="btn-cancel">
-      Cancel
-    </button>
-    <button type="button" color="primary" mat-raised-button (click)="save()" data-qa="btn-save">
-      Save
-    </button>
+  <div class="form-row">
+    <mat-label translate>Wallet address</mat-label>
+    <mat-form-field appearance="outline">
+      <input
+        data-qa="wallet"
+        matInput
+        placeholder="Enter a wallet address e.g $ilp.uphold.com/example"
+        formControlName="wallet"
+      />
+      <mat-hint>
+        Please make sure you have your wallet set up on
+        <a target="_blank" href="https://uphold.com">uphold.com</a>
+        to set web monetization. If you don't have a wallet already please click
+        <a target="_blank" href="https://wallet.uphold.com/signup">here</a> to create one.
+      </mat-hint>
+    </mat-form-field>
   </div>
-</section>
+</form>
+
+<div class="form-controls-panel">
+  <button type="button" mat-stroked-button routerLink="/settings" translate data-qa="btn-cancel">
+    Cancel
+  </button>
+  <button type="button" color="primary" mat-raised-button (click)="save()" data-qa="btn-save">
+    Save
+  </button>
+</div>
