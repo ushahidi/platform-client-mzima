@@ -1059,7 +1059,10 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "Humanitarian Data Exchange",
+      "please_enter_maintainer_id": "Please enter maintainer id",
+      "please_enter_api_key": "Please enter API key"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",

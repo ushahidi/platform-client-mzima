@@ -76,8 +76,8 @@ export class UsersService extends ResourceService<any> {
     return super.get(url);
   }
 
-  public updateUserSettings(id: string, params: any) {
-    const config = 'settings';
+  public updateUserSettings(id: string, params: any, settingsId?: number) {
+    const config = settingsId ? `settings/${settingsId}` : 'settings';
     return super.update(id, params, config);
   }
 
