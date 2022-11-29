@@ -1,14 +1,26 @@
-.collection-item {
-  flex-basis: 330px;
-  margin-bottom: 15px;
-  padding: 20px;
-  cursor: pointer;
+.collection-list {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
+  flex-wrap: wrap;
+  margin: 0 -4px -24px;
+  justify-content: flex-start;
+}
+
+.collection-item {
+  display: flex;
+  font-size: 20px;
+  min-height: 74px;
+  font-weight: 700;
+  line-height: 1.28;
+  padding: 16px 24px;
+  margin: 0 4px 24px;
+  border-radius: 8px;
+  align-items: center;
+  text-decoration: none;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--color-black);
+  width: calc(50% - 8px);
+  background: var(--color-neutral-10);
 }
 
 .spinner {

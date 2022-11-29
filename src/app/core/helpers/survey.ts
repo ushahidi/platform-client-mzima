@@ -179,3 +179,14 @@ export const defaultTask = {
   ],
   is_public: true,
 };
+
+export const views = [
+  {
+    name: 'map',
+    display_name: 'views.map',
+  },
+  {
+    name: 'data',
+    display_name: 'views.data',
+  },
+];
