@@ -1,9 +1,21 @@
-.logo {
+.images {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin: 8px -8px -16px;
+  justify-content: flex-start;
+}
+
+.image {
+  width: 20%;
+  padding: 0 8px;
+  margin-bottom: 16px;
+}
+
+.preview {
   width: 100%;
   display: flex;
   overflow: hidden;
-  cursor: pointer;
-  max-width: 130px;
   border-radius: 50%;
   position: relative;
   align-items: center;
@@ -11,7 +23,12 @@
   margin-bottom: 16px;
   justify-content: center;
   color: var(--color-neutral-60);
-  background: var(--color-neutral-10);
+  background: var(--color-light);
+
+  &--empty {
+    cursor: pointer;
+    background: var(--color-neutral-10);
+  }
 
   &:before {
     content: '';
@@ -44,13 +61,11 @@
 }
 
 .buttons {
-  display: flex;
-  margin: 0 -8px;
-  align-items: flex-start;
-  justify-content: flex-start;
-
   .mat-button-base {
-    margin: 0 8px;
-    min-width: 130px;
+    width: 100%;
+
+    &:not(:first-child) {
+      margin-top: 8px;
+    }
   }
 }

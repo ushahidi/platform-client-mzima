@@ -1,27 +1,72 @@
-<div mat-ripple class="logo" (click)="chooseFile()">
-  <img [src]="imageSrc" alt="Deployment-logo" *ngIf="imageSrc" />
-  <mat-icon svgIcon="photo" *ngIf="!imageSrc"></mat-icon>
-  <input
-    #input
-    name="file"
-    type="file"
-    class="input"
-    (change)="uploadFile($event)"
-    [required]="required"
-    data-qa="btn-delete-logo"
-  />
-</div>
-<div class="buttons">
-  <button color="primary" type="button" mat-stroked-button (click)="chooseFile()">
-    Choose photo
-  </button>
-  <button
-    *ngIf="imageSrc"
-    color="accent"
-    type="button"
-    mat-raised-button
-    (click)="clearImage()"
-    translate="settings.delete_logo"
-    data-qa="btn-update-logo"
-  ></button>
+<div class="images">
+  <ng-container *ngIf="multiple">
+    <div class="image" *ngFor="let src of imageSrc; let i = index">
+      <div class="preview">
+        <img [src]="src" />
+      </div>
+      <div class="buttons">
+        <button
+          color="accent"
+          type="button"
+          mat-raised-button
+          translate="app.delete"
+          (click)="deleteImage(i)"
+          data-qa="btn-update-logo"
+        ></button>
+      </div>
+    </div>
+    <div class="image">
+      <div mat-ripple class="preview preview--empty" (click)="chooseFile()">
+        <mat-icon svgIcon="photo"></mat-icon>
+        <input
+          #input
+          name="file"
+          type="file"
+          class="input"
+          [required]="required"
+          data-qa="btn-delete-logo"
+          (change)="uploadFile($event)"
+        />
+      </div>
+      <div class="buttons">
+        <button color="primary" type="button" mat-stroked-button (click)="chooseFile()">
+          Add photo
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <div class="image" *ngIf="!multiple">
+    <div
+      mat-ripple
+      class="preview"
+      (click)="chooseFile()"
+      [ngClass]="{ 'preview--empty': !imageSrc }"
+    >
+      <img [src]="imageSrc" *ngIf="imageSrc?.length" />
+      <mat-icon svgIcon="photo" *ngIf="!imageSrc"></mat-icon>
+      <input
+        #input
+        name="file"
+        type="file"
+        class="input"
+        [required]="required"
+        data-qa="btn-delete-logo"
+        (change)="uploadFile($event)"
+      />
+    </div>
+    <div class="buttons">
+      <button color="primary" type="button" mat-stroked-button (click)="chooseFile()">
+        Choose photo
+      </button>
+      <button
+        type="button"
+        color="accent"
+        mat-raised-button
+        translate="app.delete"
+        (click)="deleteImage()"
+        *ngIf="imageSrc?.length"
+        data-qa="btn-update-logo"
+      ></button>
+    </div>
+  </div>
 </div>

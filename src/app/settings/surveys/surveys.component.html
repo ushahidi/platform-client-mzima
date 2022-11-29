@@ -1,36 +1,40 @@
-<section class="surveys">
-  <app-settings-header
-    [settingsTitle]="'app.surveys'"
-    [newButtonTitle]="'settings.new_survey'"
-    [selectedItem]="selectedSurveys"
-    (isShowActionsChange)="showActions($event)"
-    (deleteCall)="deleteSurvey()"
-    (duplicateCall)="duplicateSurvey()"
-    (createCall)="createSurvey()"
+<app-settings-header
+  [settingsTitle]="'app.surveys'"
+  [newButtonTitle]="'settings.new_survey'"
+  [selectedItem]="selectedSurveys"
+  (isShowActionsChange)="showActions($event)"
+  (deleteCall)="deleteSurvey()"
+  (createCall)="createSurvey()"
+>
+  <button
+    type="button"
+    color="primary"
+    mat-stroked-button
+    data-qa="btn-settings-duplicate"
+    [disabled]="selectedSurveys.length > 1"
+    (click)="duplicateSurvey()"
   >
-  </app-settings-header>
+    <span class="create-button-name">{{ 'app.duplicate' | translate }}</span>
+  </button>
+</app-settings-header>
 
-  <div>
-    <app-spinner class="spinner" *ngIf="!surveys"></app-spinner>
-    <ul role="list" class="types-list" *ngIf="!!surveys" data-qa="survey-list">
-      <li
-        role="listitem"
-        class="type-item"
-        *ngFor="let survey of surveys"
-        [ngStyle]="{ '--color': survey.color, 'padding-left': survey.color ? '12px' : '17px' }"
-        [data-qa]="'survey-item' + survey.id"
-      >
-        <div class="type-item-container">
-          <mat-checkbox
-            *ngIf="isShowActions"
-            (change)="selectSurveys($event, survey)"
-            class="type-item__checkbox"
-          ></mat-checkbox>
-          <span class="type-item__title" [routerLink]="['update', survey.id]">{{
-            survey.name
-          }}</span>
-        </div>
-      </li>
-    </ul>
-  </div>
-</section>
+<app-spinner class="spinner" *ngIf="!surveys"></app-spinner>
+<ul role="list" class="types-list" *ngIf="!!surveys" data-qa="survey-list">
+  <li
+    mat-ripple
+    role="listitem"
+    class="type-item"
+    *ngFor="let survey of surveys"
+    [routerLink]="['update', survey.id]"
+    [ngStyle]="{ '--color': survey.color }"
+    [data-qa]="'survey-item' + survey.id"
+  >
+    <mat-checkbox
+      *ngIf="isShowActions"
+      class="type-item__checkbox"
+      (click)="$event.stopPropagation()"
+      (change)="selectSurveys($event, survey)"
+    ></mat-checkbox>
+    {{ survey.name }}
+  </li>
+</ul>

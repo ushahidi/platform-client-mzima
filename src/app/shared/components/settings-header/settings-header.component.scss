@@ -1,25 +1,18 @@
-.settings-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 30px;
-
-  .create-button-container {
+.form-head-panel {
+  &__inner {
     display: flex;
-    justify-content: flex-end;
+    margin: 0 -8px;
     align-items: center;
+    justify-content: flex-start;
 
-    .setting-title {
-      margin: 0 26px 0 0;
-      font-size: 24px;
+    h1 {
+      margin-left: 8px;
+      margin-right: 8px;
     }
 
-    button {
-      padding: 0 24px;
-
-      &:not(:last-child) {
-        margin-right: 16px;
-      }
+    .mat-button-base {
+      margin-left: 8px;
+      margin-right: 8px;
     }
   }
 }

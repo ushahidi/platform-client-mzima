@@ -50,6 +50,7 @@ export class GeneralComponent implements OnInit {
 
   ngOnInit(): void {
     this.siteConfig = this.sessionService.getSiteConfigurations();
+
     this.generalForm.patchValue({
       name: this.siteConfig.name,
       description: this.siteConfig.description,
@@ -67,8 +68,9 @@ export class GeneralComponent implements OnInit {
     });
   }
 
-  fileUploaded(event: File) {
-    this.uploadedFile = event;
+  fileUploaded(event: any) {
+    this.siteConfig.image_header = event.dataURI;
+    this.uploadedFile = event.file;
   }
 
   headerImageDeleted() {

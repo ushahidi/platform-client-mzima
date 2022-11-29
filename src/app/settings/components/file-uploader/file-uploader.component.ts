@@ -12,26 +12,25 @@ export class FileUploaderComponent {
   @Input() required = false;
   @Input() imageSrc: any;
   @Input() validation = 'image';
+  @Input() multiple?: boolean;
   @Output() fileUpload = new EventEmitter<File>();
   @Output() delete = new EventEmitter();
   @ViewChild('input') public input: ElementRef<HTMLInputElement>;
 
-  currentFile: any;
-
   constructor(private notificationService: NotificationService) {}
 
   uploadFile($event: any) {
+    if (!$event.target.files[0]) return;
     if (validateFile($event.target.files[0])) {
       var reader = new FileReader();
       reader.onload = () => {
-        this.currentFile = {
+        const currentFile: any = {
           file: $event.target.files[0],
           dataURI: reader.result,
           changed: true,
           deleted: false,
         };
-        this.fileUpload.emit(this.currentFile.file);
-        this.imageSrc = reader.result;
+        this.fileUpload.emit(currentFile);
       };
       reader.readAsDataURL($event.target.files[0]);
     } else {
@@ -39,9 +38,8 @@ export class FileUploaderComponent {
     }
   }
 
-  clearImage() {
-    this.imageSrc = '';
-    this.delete.emit(true);
+  public deleteImage(index?: number) {
+    this.delete.emit(index || true);
   }
 
   public chooseFile(): void {
