@@ -99,6 +99,18 @@
     margin: 0 8px;
     min-width: 125px;
   }
+
+  &--sticky {
+    left: 0;
+    right: 0;
+    z-index: 50;
+    bottom: -32px;
+    margin: -23px;
+    padding: 23px;
+    position: sticky;
+    border-radius: 0 0 4px 4px;
+    background: var(--color-light);
+  }
 }
 
 .mat-form-field {

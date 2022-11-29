@@ -1,4 +1,4 @@
-<h1>{{ 'role.add_role' | translate }}</h1>
+<h1>{{ (isUpdate ? 'role.edit_role' : 'role.add_role') | translate }}</h1>
 <form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
   <div class="form-row">
     <mat-label>{{ 'role.name' | translate }}</mat-label>
@@ -32,7 +32,7 @@
     </mat-selection-list>
   </div>
 
-  <div class="form-controls-panel">
+  <div class="form-controls-panel form-controls-panel--sticky">
     <div>
       <button
         type="button"
