@@ -61,6 +61,11 @@ export class CreateCategoryFormComponent implements OnInit {
       next: (response) => {
         this.roleOptions = [
           {
+            name: this.translate.instant('role.only_me'),
+            value: 'onlyme',
+            icon: 'person',
+          },
+          {
             name: this.translate.instant('role.everyone'),
             value: 'everyone',
             icon: 'person',
@@ -84,9 +89,9 @@ export class CreateCategoryFormComponent implements OnInit {
 
     this.form.valueChanges.subscribe({
       next: (data) => {
-        if (!!this.activeLanguages.find((language) => language.code === data.language)) {
-          this.activeLanguages = [];
-        }
+        // if (!!this.activeLanguages.find((language) => language.code === data.language)) {
+        //   this.activeLanguages = [];
+        // }
         if (this.defaultLanguage?.code !== data.language) {
           this.defaultLanguage = this.languages.find((lang) => lang.code === data.language);
           this.selectedTranslation = this.defaultLanguage?.code;
@@ -136,9 +141,11 @@ export class CreateCategoryFormComponent implements OnInit {
         this.activeLanguages = this.languages.filter((language) =>
           translations.find((trans) => trans.id === language.code),
         );
+        console.log(this.activeLanguages);
         this.form.setControl('translations', this.fb.array(translations));
       }
     }
+    this.activeLanguages.push(this.defaultLanguage!);
   }
 
   public isRoleActive(roleName: string): boolean {
@@ -183,27 +190,27 @@ export class CreateCategoryFormComponent implements OnInit {
       maxWidth: 480,
       data: {
         languages: this.languages,
-        activeLanguages: [this.defaultLanguage, ...this.activeLanguages],
+        activeLanguages: this.activeLanguages,
+        defaultLanguage: this.defaultLanguage,
       },
     });
 
     dialogRef.afterClosed().subscribe({
-      next: (result: string[]) => {
+      next: (result: LanguageInterface[]) => {
         if (!result) return;
-        result.map((langCode) => {
-          const language = this.languages.find((lang) => lang.code === langCode);
-          if (this.activeLanguages.find((lang) => lang.code === langCode) || !language) return;
-          this.activeLanguages.push(language);
-        });
+        const defaultIndex = result.indexOf(this.defaultLanguage!);
+        result.splice(defaultIndex, 1);
+        this.activeLanguages = [this.defaultLanguage!, ...result];
       },
     });
   }
 
-  public chooseTranslation(languageCode?: string): void {
-    this.selectedTranslation = languageCode;
+  public chooseTranslation(lang: LanguageInterface): void {
+    console.log(lang);
+    this.selectedTranslation = lang.code;
 
     const translation: TranslationInterface = this.form.controls['translations'].value.find(
-      (trans: TranslationInterface) => trans.id === languageCode,
+      (trans: TranslationInterface) => trans.id === lang.code,
     );
     if (translation) {
       this.form.patchValue({

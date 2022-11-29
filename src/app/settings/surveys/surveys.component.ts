@@ -94,8 +94,4 @@ export class SurveysComponent implements OnInit {
   public showActions(event: boolean) {
     this.isShowActions = event;
   }
-
-  public createSurvey() {
-    this.router.navigate(['settings/surveys/create']);
-  }
 }

@@ -1,35 +1,7 @@
 <div class="category-item" [ngClass]="{ 'category-item--selected': isSelected }">
-  <mat-checkbox
-    [(ngModel)]="isSelected"
-    (change)="selectCategory()"
-    class="category-item__checkbox"
-  >
-  </mat-checkbox>
-  <div class="category-item__content">
-    <h4 class="category-item__title" [routerLink]="category.id.toString()">
-      <a [routerLink]="['/settings/categories', category.id]">
-        {{ category.tag }}
-      </a>
-    </h4>
-    <span class="category-item__language">{{
-      getLanguage(category.enabled_languages.default)
-    }}</span>
-  </div>
-  <div class="category-item__controls">
-    <button
-      color="accent"
-      mat-icon-button
-      aria-label="Delete category"
-      (click)="deleteCategory(category.id)"
-    >
-      <mat-icon>
-        <svg class="iconic">
-          <use
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            xlink:href="assets/sprites.svg#trash"
-          ></use>
-        </svg>
-      </mat-icon>
-    </button>
-  </div>
+  <h4 class="category-item__title" [routerLink]="category.id.toString()" [ngClass]="customClass">
+    <a [routerLink]="['/settings/categories', category.id]">
+      {{ category.tag }}
+    </a>
+  </h4>
 </div>

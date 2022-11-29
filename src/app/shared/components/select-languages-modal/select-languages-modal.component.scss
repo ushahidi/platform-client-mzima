@@ -1,20 +1,23 @@
-.info-msg {
+.types-list {
+  margin: 0;
+  padding: 0;
   display: flex;
-  padding: 8px 16px;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  list-style: none;
   justify-content: flex-start;
-  background-color: #fac4cb;
-  box-shadow: inset 2px 0 0 0 var(--color-accent);
+}
 
-  .mat-icon {
-    flex-shrink: 0;
-    line-height: 1;
-    font-size: 24px;
-    margin-right: 16px;
-    color: var(--color-accent);
-  }
-
-  &__content {
-    flex: 1 1 100%;
-  }
+.type-item {
+  display: flex;
+  cursor: pointer;
+  min-height: 46px;
+  padding: 8px 12px;
+  margin: 0 4px 8px;
+  position: relative;
+  border-radius: 4px;
+  align-items: center;
+  width: calc(50% - 8px);
+  transition: color 0.35s ease;
+  background: var(--color-neutral-10);
+  border-left: 5px solid var(--color, transparent);
 }

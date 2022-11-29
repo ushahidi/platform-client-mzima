@@ -71,20 +71,4 @@ export class CategoriesComponent {
   public getChildCategories(id: number): CategoryInterface[] {
     return this.categories.filter((category) => category.parent_id === id);
   }
-
-  public deselectAll(): void {
-    this.categoryItems.map((category) => {
-      category.deselect();
-    });
-  }
-
-  public selectAll(): void {
-    this.categoryItems.map((category) => {
-      category.select();
-    });
-  }
-
-  public createNewCategory(): void {
-    console.log('createNewCategory');
-  }
 }

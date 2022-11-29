@@ -1,11 +1,15 @@
 .category-item {
   z-index: 1;
-  padding: 8px;
+  padding: 13.5px 16px;
   display: flex;
   position: relative;
   align-items: flex-start;
   justify-content: flex-start;
   transition: background-color 0.35s ease;
+  background: var(--color-neutral-10);
+  margin-bottom: 8px;
+  border: 1px solid var(--color-neutral-20);
+  border-radius: 4px;
 
   &--selected {
     background: var(--color-primary-90);
@@ -21,7 +25,13 @@
   }
 
   &__title {
-    margin-bottom: 8px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 700;
+
+    &--lvl2 {
+      font-weight: 400;
+    }
 
     a {
       color: inherit;

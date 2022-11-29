@@ -10,6 +10,7 @@ import { ConfirmModalService } from '@services';
 })
 export class CategoryItemComponent {
   @Input() public category: CategoryInterface;
+  @Input() public customClass: string;
   @Output() selected = new EventEmitter<{ value: boolean; id: number }>();
   @Output() deleted = new EventEmitter<{ id: number }>();
   public isSelected: boolean;

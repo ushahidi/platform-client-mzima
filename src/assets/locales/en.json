@@ -116,7 +116,7 @@
     "nothing": "Nothing",
     "who_can_see_this": "Who can see this?",
     "add": "Add",
-    "add_new_category": "+ Add new category",
+    "add_new_category": "Add category",
     "sort_by": "Sort By ...",
     "newest_first": "Newest first",
     "oldest_first": "Oldest first",
@@ -232,7 +232,8 @@
     "step_required": "This task is required",
     "post_step": "Post",
     "type": "type",
-    "visible_to": "Visible To"
+    "visible_to": "Visible To",
+    "choose_language": "Choose language for translation"
   },
   "survey": {
     "choose_survey": "Choose survey",
@@ -893,7 +894,8 @@
     "delete_role": "Delete this role",
     "delete_role_desc": "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
     "everyone": "Everyone",
-    "just_you": "Just you"
+    "just_you": "Just you",
+    "only_me": "Only me"
   },
   "webhook": {
     "add_webhook": "Add Webhook",
@@ -983,11 +985,17 @@
       "icon": "Icon Name",
       "roles_help": "Only selected roles will be able to view this category."
     },
+    "placeholder": {
+      "name": "Enter name",
+      "descriptions": "Enter descriptions...",
+      "choose_parent_category": "Choose parent category..."
+    },
     "types": {
       "category": "Category",
       "status": "Status"
     },
-    "delete": "Delete"
+    "delete": "Delete",
+    "parent_category": "Parent category"
   },
   "tool": {
     "manage_forms": "Manage Forms",
@@ -1650,6 +1658,9 @@
         "success_description": "Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.",
         "success_button": "OK, sounds good"
       }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Do you really want to delete {{lang}} language"
     }
   },
   "empty": {

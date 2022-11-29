@@ -14,11 +14,15 @@
   }
 
   &__item {
-    border-bottom: 1px solid rgba(#000, 0.12);
-
+    //border-bottom: 1px solid rgba(#000, 0.12);
+    //font-weight: 700;
+    //font-size: 14px;
     &:first-child {
       .categories-list--lvl2 & {
-        border-top: 1px solid rgba(#000, 0.12);
+        .categories-list__item {
+          //font-weight: 400;
+        }
+        //border-top: 1px solid rgba(#000, 0.12);
       }
     }
 

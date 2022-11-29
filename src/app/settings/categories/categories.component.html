@@ -1,37 +1,10 @@
 <section class="categories">
-  <div class="selected-filters">
-    <h2 *ngIf="selectedCategories.length">{{ selectedCategories.length }} selected</h2>
-    <button
-      mat-mini-fab
-      color="primary"
-      routerLink="create"
-      *ngIf="!selectedCategories.length"
-      [attr.aria-label]="'add_new_category' | translate"
-    >
-      <mat-icon svgIcon="plus"></mat-icon>
-    </button>
-    <div class="selected-filters__controls">
-      <button mat-raised-button (click)="deselectAll()" *ngIf="selectedCategories.length">
-        Deselect
-      </button>
-      <button
-        mat-raised-button
-        (click)="selectAll()"
-        *ngIf="selectedCategories.length !== categories?.length"
-      >
-        Select All
-      </button>
-      <button
-        mat-mini-fab
-        color="accent"
-        (click)="deleteSelectedCategories()"
-        *ngIf="selectedCategories.length"
-        aria-label="Delete selected categories"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
-  </div>
+  <app-settings-header
+    [settingsTitle]="'app.categories'"
+    [newButtonTitle]="'app.add_new_category'"
+    [isShowActionsButton]="false"
+  >
+  </app-settings-header>
   <ul *ngIf="categories; else spinner" class="categories-list">
     <ng-container *ngFor="let category of categories">
       <li *ngIf="!category.parent_id" class="categories-list__item">
@@ -51,6 +24,7 @@
             <app-category-item
               #categoryItem
               [category]="category"
+              [customClass]="'category-item__title--lvl2'"
               (deleted)="deleteCategory($event)"
               (selected)="selectCategory($event)"
             >

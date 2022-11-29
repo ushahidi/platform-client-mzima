@@ -1,51 +1,67 @@
 <form class="create-form" [formGroup]="form" (submit)="submit()" novalidate>
   <div class="create-form__topbar">
-    <div class="create-form__topbar__tabs">
-      <button
-        type="button"
-        mat-raised-button
-        class="create-form__topbar__btn"
-        [disabled]="!activeLanguages.length"
-        (click)="chooseTranslation(defaultLanguage?.code)"
-        [color]="
-          !selectedTranslation || selectedTranslation === defaultLanguage?.code ? 'primary' : null
-        "
-      >
-        {{ defaultLanguage?.name }} (default)
-      </button>
-      <ng-container *ngFor="let language of activeLanguages">
-        <button
-          type="button"
-          mat-raised-button
-          class="create-form__topbar__btn"
-          (click)="chooseTranslation(language.code)"
-          [color]="selectedTranslation === language.code ? 'primary' : null"
-        >
-          {{ language.name }}
-          <mat-icon (click)="deleteTranslation($event, language.code)" svgIcon="close"></mat-icon>
-        </button>
-      </ng-container>
-    </div>
-
-    <button
-      type="button"
-      color="primary"
-      mat-raised-button
-      (click)="addTranslation()"
-      class="create-form__topbar__btn create-form__topbar__btn--add"
+    <app-settings-header
+      [settingsTitle]="'app.add_new_category'"
+      [newButtonTitle]="'translations.add_translation_lang'"
+      [isShowActionsButton]="false"
+      [isShowCreation]="false"
+      [isShowTranslation]="true"
+      [selectedLanguage]="defaultLanguage"
+      [languages]="activeLanguages"
+      (showLanguagesCall)="addTranslation()"
+      (selectLanguageCall)="chooseTranslation($event)"
     >
-      {{ 'translations.add_translation_lang' | translate }}
-      <mat-icon>add</mat-icon>
-    </button>
+    </app-settings-header>
+    <!--    <div class="create-form__topbar__tabs">-->
+    <!--      <button-->
+    <!--        type="button"-->
+    <!--        mat-raised-button-->
+    <!--        class="create-form__topbar__btn"-->
+    <!--        [disabled]="!activeLanguages.length"-->
+    <!--        (click)="chooseTranslation(defaultLanguage?.code)"-->
+    <!--        [color]="-->
+    <!--          !selectedTranslation || selectedTranslation === defaultLanguage?.code ? 'primary' : null-->
+    <!--        "-->
+    <!--      >-->
+    <!--        {{ defaultLanguage?.name }} (default)-->
+    <!--      </button>-->
+    <!--      <ng-container *ngFor="let language of activeLanguages">-->
+    <!--        <button-->
+    <!--          type="button"-->
+    <!--          mat-raised-button-->
+    <!--          class="create-form__topbar__btn"-->
+    <!--          (click)="chooseTranslation(language.code)"-->
+    <!--          [color]="selectedTranslation === language.code ? 'primary' : null"-->
+    <!--        >-->
+    <!--          {{ language.name }}-->
+    <!--          <mat-icon (click)="deleteTranslation($event, language.code)" svgIcon="close"></mat-icon>-->
+    <!--        </button>-->
+    <!--      </ng-container>-->
+    <!--    </div>-->
+
+    <!--    <button-->
+    <!--      type="button"-->
+    <!--      color="primary"-->
+    <!--      mat-raised-button-->
+    <!--      (click)="addTranslation()"-->
+    <!--      class="create-form__topbar__btn create-form__topbar__btn&#45;&#45;add"-->
+    <!--    >-->
+    <!--      {{ 'translations.add_translation_lang' | translate }}-->
+    <!--      <mat-icon>add</mat-icon>-->
+    <!--    </button>-->
   </div>
 
   <ng-container
     *ngIf="!selectedTranslation || selectedTranslation === defaultLanguage?.code; else translation"
   >
     <div class="form-row">
-      <mat-label>{{ 'category.editor.name' | translate }}</mat-label>
+      <mat-label>{{ 'category.editor.name' | translate }} *</mat-label>
       <mat-form-field appearance="outline">
-        <input matInput formControlName="name" />
+        <input
+          matInput
+          formControlName="name"
+          placeholder="{{ 'category.placeholder.name' | translate }}"
+        />
       </mat-form-field>
     </div>
 
@@ -53,6 +69,7 @@
       <mat-label>{{ 'category.editor.description' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <textarea
+          placeholder="{{ 'category.placeholder.descriptions' | translate }}"
           matInput
           cdkTextareaAutosize
           cdkAutosizeMinRows="2"
@@ -64,14 +81,16 @@
     </div>
 
     <div class="form-row">
-      <mat-label>{{ 'app.this_category_is_child_to' | translate }}</mat-label>
+      <mat-label>{{ 'category.parent_category' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <mat-select
           formControlName="is_child_to"
           (selectionChange)="parentChanged($event)"
           disableOptionCentering
         >
-          <mat-option value="">{{ 'app.nothing' | translate }}</mat-option>
+          <mat-option value="">{{
+            'category.placeholder.choose_parent_category' | translate
+          }}</mat-option>
           <mat-option [value]="category.id" *ngFor="let category of categories">
             {{ category.tag }}
           </mat-option>
@@ -79,22 +98,24 @@
       </mat-form-field>
     </div>
 
-    <div class="form-row">
-      <mat-label>{{ 'translations.category_select_default' | translate }}</mat-label>
-      <mat-form-field appearance="outline">
-        <mat-hint>{{ 'translations.default_lang_info' | translate }}</mat-hint>
-        <mat-select formControlName="language" disableOptionCentering>
-          <mat-option [value]="language.code" *ngFor="let language of languages">
-            {{ language.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+    <!--    <div class="form-row">-->
+    <!--      <mat-label>{{ 'translations.category_select_default' | translate }}</mat-label>-->
+    <!--      <mat-form-field appearance="outline">-->
+    <!--        <mat-hint>{{ 'translations.default_lang_info' | translate }}</mat-hint>-->
+    <!--        <mat-select formControlName="language" disableOptionCentering>-->
+    <!--          <mat-option [value]="language.code" *ngFor="let language of languages">-->
+    <!--            {{ language.name }}-->
+    <!--          </mat-option>-->
+    <!--        </mat-select>-->
+    <!--      </mat-form-field>-->
+    <!--    </div>-->
 
     <div class="form-row">
       <mat-label>{{ 'app.who_can_see_this_category' | translate }}</mat-label>
-      <app-group-checkbox-select [data]="roleOptions" formControlName="visible_to">
-      </app-group-checkbox-select>
+      <app-group-checkbox-select
+        [data]="roleOptions"
+        formControlName="visible_to"
+      ></app-group-checkbox-select>
       <div class="radio-buttons" *ngIf="form.value.parent">
         <p class="radio-buttons__info">
           <mat-icon>group</mat-icon>
@@ -106,34 +127,30 @@
 
   <ng-template #translation>
     <div class="form-row">
-      <mat-label
-        >{{ 'translations.edit_default_text' | translate }} {{ defaultLanguage?.name }}</mat-label
-      >
+      <mat-label>{{ 'category.editor.name' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <input matInput readonly disabled [value]="form.value.name" />
       </mat-form-field>
     </div>
 
     <div class="form-row">
-      <mat-label>{{ 'category.editor.name' | translate }}</mat-label>
+      <mat-label>{{ 'category.editor.name' | translate }}({{ selectedTranslation }})</mat-label>
       <mat-form-field appearance="outline">
         <input matInput formControlName="translate_name" />
       </mat-form-field>
     </div>
 
-    <hr />
-
     <div class="form-row">
-      <mat-label
-        >{{ 'translations.edit_default_text' | translate }} {{ defaultLanguage?.name }}</mat-label
-      >
+      <mat-label>{{ 'category.editor.description' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <input matInput readonly disabled [value]="form.value.description" />
       </mat-form-field>
     </div>
 
     <div class="form-row">
-      <mat-label>{{ 'category.editor.description' | translate }}</mat-label>
+      <mat-label
+        >{{ 'category.editor.description' | translate }} ({{ selectedTranslation }})</mat-label
+      >
       <mat-form-field appearance="outline">
         <input matInput formControlName="translate_description" />
       </mat-form-field>
