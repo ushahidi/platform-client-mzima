@@ -1707,7 +1707,8 @@
       "email": {
         "required": "An email address is required to receive notifications",
         "email": "This email address is invalid",
-        "maxlength": "This email address is too long"
+        "maxlength": "This email address is too long",
+        "not_valid": "This email is not valid"
       },
       "phone": {
         "required": "A phone number is required to receive notifications",
