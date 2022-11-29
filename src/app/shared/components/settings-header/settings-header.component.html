@@ -1,6 +1,6 @@
-<div class="settings-container">
-  <div class="create-button-container">
-    <h2 class="setting-title">{{ settingsTitle | translate }}</h2>
+<div class="form-head-panel">
+  <div class="form-head-panel__inner">
+    <h1>{{ settingsTitle | translate }}</h1>
     <ng-container *ngIf="isShowActions">
       <button
         type="button"
@@ -10,13 +10,12 @@
         class="delete-btn"
         (click)="deleteEmit()"
       >
-        <span class="create-button-name">{{ 'app.delete' | translate }}</span>
+        {{ 'app.delete' | translate }}
       </button>
       <ng-content></ng-content>
     </ng-container>
   </div>
-
-  <div class="create-button-container">
+  <div class="form-head-panel__inner">
     <button
       *ngIf="isShowActionsButton"
       type="button"
@@ -24,8 +23,9 @@
       mat-stroked-button
       data-qa="btn-settings-action"
       (click)="showActions()"
+      [ngClass]="{ active: isShowActions }"
     >
-      <span class="create-button-name">{{ 'settings.bulk_actions' | translate }}</span>
+      {{ 'settings.bulk_actions' | translate }}
     </button>
     <button
       class="create-btn"
@@ -36,7 +36,7 @@
       (click)="createEmit()"
       data-qa="btn-settings-create"
     >
-      <span class="create-button-name">{{ newButtonTitle | translate }}</span>
+      <span>{{ newButtonTitle | translate }}</span>
       <mat-icon svgIcon="plus"></mat-icon>
     </button>
   </div>
