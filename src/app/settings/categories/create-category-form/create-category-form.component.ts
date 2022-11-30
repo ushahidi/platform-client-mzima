@@ -18,14 +18,17 @@ export class CreateCategoryFormComponent implements OnInit {
   @Input() public loading: boolean;
   @Input() public category: CategoryInterface;
   @Output() formSubmit = new EventEmitter<any>();
+  @Output() deleteCall = new EventEmitter<any>();
   public categories: CategoryInterface[];
   public languages: LanguageInterface[] = this.languageService.getLanguages();
   public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
   public activeLanguages: LanguageInterface[] = [];
   public selectedTranslation?: string;
   public roleOptions: GroupCheckboxItemInterface[] = [];
+  public isUpdate = false;
 
   public form: FormGroup = this.fb.group({
+    id: ['', [Validators.required]],
     name: ['', [Validators.required]],
     description: [''],
     is_child_to: [''],
@@ -115,16 +118,21 @@ export class CreateCategoryFormComponent implements OnInit {
             translation.description = data.translate_description;
           }
         }
+
+        console.log(this.form.value);
       },
     });
   }
 
   ngOnInit(): void {
     if (this.category) {
+      this.isUpdate = !!this.category;
       this.form.patchValue({
+        id: this.category.id,
         name: this.category.tag,
         description: this.category.description,
         language: this.category.enabled_languages.default,
+        is_child_to: this.category.parent?.id || null,
       });
 
       if (this.category?.role?.length && this.category?.role?.length > 1) {
@@ -141,7 +149,6 @@ export class CreateCategoryFormComponent implements OnInit {
         this.activeLanguages = this.languages.filter((language) =>
           translations.find((trans) => trans.id === language.code),
         );
-        console.log(this.activeLanguages);
         this.form.setControl('translations', this.fb.array(translations));
       }
     }
@@ -250,5 +257,9 @@ export class CreateCategoryFormComponent implements OnInit {
     const visibleTo = parentCategory ? parentCategory?.role || [] : ['admin'];
     this.form.setControl('visible_to', this.fb.array(visibleTo));
     this.form.controls['parent'].setValue(parentCategory);
+  }
+
+  public deleteCategoryEmit() {
+    this.deleteCall.emit(true);
   }
 }

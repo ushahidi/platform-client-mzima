@@ -1,7 +1,7 @@
 <form class="create-form" [formGroup]="form" (submit)="submit()" novalidate>
   <div class="create-form__topbar">
     <app-settings-header
-      [settingsTitle]="'app.add_new_category'"
+      [settingsTitle]="isUpdate ? form.get('name')?.value : 'app.add_new_category'"
       [newButtonTitle]="'translations.add_translation_lang'"
       [isShowActionsButton]="false"
       [isShowCreation]="false"
@@ -12,43 +12,6 @@
       (selectLanguageCall)="chooseTranslation($event)"
     >
     </app-settings-header>
-    <!--    <div class="create-form__topbar__tabs">-->
-    <!--      <button-->
-    <!--        type="button"-->
-    <!--        mat-raised-button-->
-    <!--        class="create-form__topbar__btn"-->
-    <!--        [disabled]="!activeLanguages.length"-->
-    <!--        (click)="chooseTranslation(defaultLanguage?.code)"-->
-    <!--        [color]="-->
-    <!--          !selectedTranslation || selectedTranslation === defaultLanguage?.code ? 'primary' : null-->
-    <!--        "-->
-    <!--      >-->
-    <!--        {{ defaultLanguage?.name }} (default)-->
-    <!--      </button>-->
-    <!--      <ng-container *ngFor="let language of activeLanguages">-->
-    <!--        <button-->
-    <!--          type="button"-->
-    <!--          mat-raised-button-->
-    <!--          class="create-form__topbar__btn"-->
-    <!--          (click)="chooseTranslation(language.code)"-->
-    <!--          [color]="selectedTranslation === language.code ? 'primary' : null"-->
-    <!--        >-->
-    <!--          {{ language.name }}-->
-    <!--          <mat-icon (click)="deleteTranslation($event, language.code)" svgIcon="close"></mat-icon>-->
-    <!--        </button>-->
-    <!--      </ng-container>-->
-    <!--    </div>-->
-
-    <!--    <button-->
-    <!--      type="button"-->
-    <!--      color="primary"-->
-    <!--      mat-raised-button-->
-    <!--      (click)="addTranslation()"-->
-    <!--      class="create-form__topbar__btn create-form__topbar__btn&#45;&#45;add"-->
-    <!--    >-->
-    <!--      {{ 'translations.add_translation_lang' | translate }}-->
-    <!--      <mat-icon>add</mat-icon>-->
-    <!--    </button>-->
   </div>
 
   <ng-container
@@ -157,12 +120,32 @@
     </div>
   </ng-template>
 
-  <div class="create-form__controls">
-    <button mat-stroked-button type="button" routerLink="../">
-      {{ 'app.cancel' | translate }}
-    </button>
-    <button mat-raised-button color="primary" [disabled]="form.disabled || form.invalid || loading">
-      {{ 'app.save' | translate }}
-    </button>
+  <div class="form-controls-panel form-controls-panel--sticky">
+    <div>
+      <button
+        *ngIf="isUpdate"
+        mat-raised-button
+        type="button"
+        color="accent"
+        data-qa="btn-cetegory-delete"
+        (click)="deleteCategoryEmit()"
+      >
+        {{ 'user.delete_user' | translate }}
+      </button>
+    </div>
+    <div>
+      <button mat-stroked-button type="button" data-qa="btn-category-cancel" routerLink="../">
+        <span>{{ 'app.cancel' | translate }}</span>
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        data-qa="btn-category-save"
+        [disabled]="form.disabled || form.invalid || loading"
+      >
+        <span>{{ 'app.save' | translate }}</span>
+      </button>
+    </div>
   </div>
 </form>

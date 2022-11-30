@@ -8,13 +8,7 @@
   <ul *ngIf="categories; else spinner" class="categories-list">
     <ng-container *ngFor="let category of categories">
       <li *ngIf="!category.parent_id" class="categories-list__item">
-        <app-category-item
-          #categoryItem
-          [category]="category"
-          (deleted)="deleteCategory($event)"
-          (selected)="selectCategory($event)"
-        >
-        </app-category-item>
+        <app-category-item #categoryItem [category]="category"> </app-category-item>
 
         <ul *ngIf="category.children?.length" class="categories-list categories-list--lvl2">
           <li
@@ -25,8 +19,6 @@
               #categoryItem
               [category]="category"
               [customClass]="'category-item__title--lvl2'"
-              (deleted)="deleteCategory($event)"
-              (selected)="selectCategory($event)"
             >
             </app-category-item>
           </li>

@@ -1,7 +1,5 @@
-<div class="category-item" [ngClass]="{ 'category-item--selected': isSelected }">
+<div class="category-item" [routerLink]="['/settings/categories', category.id]">
   <h4 class="category-item__title" [routerLink]="category.id.toString()" [ngClass]="customClass">
-    <a [routerLink]="['/settings/categories', category.id]">
-      {{ category.tag }}
-    </a>
+    {{ category.tag }}
   </h4>
 </div>
