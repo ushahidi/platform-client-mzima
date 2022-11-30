@@ -1,11 +1,11 @@
 .color {
   &-primary {
-    color: var(--color-primary);
+    color: var(--color-primary-60);
   }
   &-accent {
     color: var(--color-accent);
   }
   &-dark {
-    color: var(--color-dark);
+    color: var(--color-neutral-100);
   }
 }

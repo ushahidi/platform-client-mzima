@@ -1,76 +1,74 @@
 .users {
-  &-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px;
+  &-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .user-item {
+    border-bottom: 1px solid var(--color-neutral-20);
+    cursor: pointer;
   }
 
-  h2 {
+  .user-item-header {
+    background: var(--color-neutral-20);
     margin: 0;
   }
 
-  .create-button {
-    text-transform: uppercase;
+  &-loading {
+    --size: 48px;
+    display: block;
+    margin-top: 24px;
+  }
 
-    &-container {
-      display: flex;
-      justify-content: flex-end;
-    }
+  &-load-more {
+    display: block;
+    min-width: 132px;
+    margin: 16px auto 0;
   }
 }
 
-table {
-  width: 100%;
-}
-
-tr.mat-row {
-  height: 68px;
-}
-
-.avatar-wrapper {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-  }
-}
-
-.form {
-  margin-bottom: 10px;
-}
-
-.head-panel {
+.user-item-container {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: center;
+  height: 37px;
+  margin: 3px 0;
 
-  .form-row {
-    max-width: 400px;
-  }
-
-  .form-role-container {
+  .column-checkbox {
+    flex: 1;
     display: flex;
+    justify-content: center;
   }
 
-  .users-role-select {
-    margin-right: 10px;
-    height: 40px;
-  }
+  .data-container {
+    flex: 10;
+    display: flex;
+    align-items: center;
 
-  .mat-button-base {
-    margin: 0 8px;
-  }
+    .column-avatar {
+      display: flex;
+      justify-content: center;
+    }
 
-  .btn-users-change-role {
-    min-width: auto;
-  }
+    .column-avatar,
+    .column-role {
+      flex: 1;
+    }
 
-  .btn-users-delete {
-    margin-bottom: 4px;
+    .column-name,
+    .column-email {
+      flex: 2;
+    }
+
+    .avatar-wrapper {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+      }
+    }
   }
 }
 

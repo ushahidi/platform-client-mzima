@@ -58,26 +58,6 @@
   }
 }
 
-.mat-raised-button {
-  color: var(--color-neutral-100);
-
-  &:hover {
-    background-color: var(--color-neutral-10);
-  }
-
-  .mat-ripple-element {
-    background-color: var(--color-neutral-20);
-  }
-
-  &.mat-button-disabled {
-    color: var(--color-neutral-70);
-
-    &.mat-button-disabled {
-      background-color: transparent;
-    }
-  }
-}
-
 .mat-mini-fab {
   font-size: 18px;
 }
@@ -114,14 +94,12 @@
   &.mat-flat-button,
   &.mat-raised-button,
   &.mat-mini-fab {
-    color: var(--color-dark);
-    background-color: var(--color-primary-60);
-
     &:hover {
       background-color: var(--color-primary-70);
     }
 
     .mat-ripple-element {
+      opacity: 1;
       background-color: var(--color-primary-50);
     }
 
@@ -129,12 +107,6 @@
       color: var(--color-neutral-70);
       background-color: var(--color-primary-90);
     }
-  }
-
-  &.mat-button,
-  &.mat-icon-button,
-  &.mat-stroked-button {
-    color: var(--color-primary);
   }
 }
 
@@ -144,14 +116,15 @@
   &.mat-raised-button,
   &.mat-mini-fab {
     color: var(--color-light);
-    background-color: var(--color-dark);
+    background-color: var(--color-neutral-100);
 
     &:hover {
       background-color: var(--color-neutral-100);
     }
 
     .mat-ripple-element {
-      background-color: var(--color-dark);
+      opacity: 1;
+      background-color: var(--color-neutral-100);
     }
 
     &.mat-button-disabled {
@@ -168,16 +141,6 @@
   &.mat-mini-fab {
     color: var(--color-info-contrast);
     background-color: var(--color-info);
-  }
-}
-
-.mat-secondary {
-  &.mat-fab,
-  &.mat-flat-button,
-  &.mat-raised-button,
-  &.mat-mini-fab {
-    color: var(--color-secondary-contrast);
-    background-color: var(--color-secondary);
   }
 }
 
@@ -242,8 +205,6 @@
   &.mat-button,
   &.mat-raised-button,
   &.mat-stroked-button {
-    font-size: 16px;
-    font-weight: 500;
     border-radius: 4px;
   }
 
@@ -259,8 +220,8 @@
 
 .mat-stroked-button {
   &:not(.mat-button-disabled) {
+    color: var(--color-black);
     background: var(--color-light);
-    color: var(--color-neutral-100);
     border-color: var(--color-neutral-60);
     transition: background-color 0.35s ease;
 

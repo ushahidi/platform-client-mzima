@@ -9,11 +9,23 @@
 
   &::ng-deep {
     a {
-      color: var(--color-primary);
+      text-decoration: underline;
+      color: var(--color-primary-60);
 
       &:hover {
-        color: var(--color-primary-shade);
+        text-decoration: none;
       }
+    }
+
+    .mat-expansion-panel-content {
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 300px;
+      font-size: inherit;
+      line-height: inherit;
+      white-space: pre-wrap;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
     }
   }
 
@@ -23,7 +35,7 @@
       font-size: 16px;
       padding-left: 0;
       padding-right: 0;
-      font-weight: 600;
+      font-weight: 700;
       line-height: calc(20 / 16 * 1);
 
       &-title {

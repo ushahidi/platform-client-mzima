@@ -8,54 +8,49 @@
   <mat-icon class="fab-button__icon">close</mat-icon>
 </button>
 
-<h1 mat-dialog-title>{{ 'form.select_language' | translate }}</h1>
+<h1 mat-dialog-title>{{ 'form.choose_language' | translate }}</h1>
 <div mat-dialog-content>
-  <div class="form-row">
-    <mat-label>{{ 'translations.select_language' | translate }}</mat-label>
-    <mat-form-field appearance="outline">
-      <mat-select
-        multiple
-        disableOptionCentering
-        [(value)]="selectedLanguages"
-        (selectionChange)="checkLanguages()"
-        [placeholder]="'translations.add_a_language' | translate"
-      >
-        <mat-option [value]="language.code" *ngFor="let language of data.languages">
-          {{ language.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="info-msg" *ngIf="errorLanguages.length">
-    <mat-icon>warning</mat-icon>
-    <span class="info-msg__body">
-      <p>
-        {{ 'translations.error_translation_exists' | translate }}
-        <strong>
-          (
-          <ng-container *ngFor="let lang of errorLanguages; let i = index">
-            {{ lang.name }}
-            <ng-container *ngIf="errorLanguages.length > 1 && errorLanguages.length - 1 !== i"
-              >,
-            </ng-container>
-          </ng-container>
-          )
-        </strong>
-      </p>
-      <button mat-button (click)="removeLanguagesWithErrors()">
-        {{ 'set.setzremove' | translate }}
-      </button>
-    </span>
-  </div>
+  <form>
+    <div class="form-row">
+      <mat-label>{{ 'global_filter.search' | translate }}</mat-label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          placeholder="{{ 'global_filter.search' | translate }}"
+          (input)="searchLanguage($event)"
+        />
+        <mat-icon matPrefix svgIcon="search"></mat-icon>
+      </mat-form-field>
+    </div>
+  </form>
+  <ul role="list" class="types-list" data-qa="survey-list">
+    <li
+      mat-ripple
+      role="listitem"
+      class="type-item"
+      [ngStyle]="{
+        color: data.defaultLanguage.name === language.name ? 'var(--color-neutral-60)' : 'initial'
+      }"
+      *ngFor="let language of languages"
+      [data-qa]="'survey-item' + language.code"
+    >
+      <mat-checkbox
+        [checked]="data.activeLanguages.includes(language)"
+        class="type-item__checkbox"
+        (click)="$event.stopPropagation()"
+        (change)="selectLanguage($event, language)"
+      ></mat-checkbox>
+      {{ language.name }}
+    </li>
+  </ul>
 </div>
 <div mat-dialog-actions align="end">
   <button mat-stroked-button mat-dialog-close>{{ 'app.cancel' | translate }}</button>
   <button
     color="primary"
     mat-raised-button
-    [mat-dialog-close]="selectedLanguages"
-    [disabled]="!!errorLanguages.length || !selectedLanguages.length"
+    [mat-dialog-close]="data.activeLanguages"
+    [disabled]="!data.activeLanguages.length"
   >
     {{ 'app.add' | translate }}
   </button>

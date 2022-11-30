@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../../shared';
+import { MaterialModule, SharedModule } from '../../shared';
 
 import { UserSettingsRoutingModule } from './user-settings-routing.module';
 import { UserSettingsComponent } from './user-settings.component';
@@ -15,6 +15,7 @@ import { UserSettingsComponent } from './user-settings.component';
     TranslateModule,
     MaterialModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
 })
 export class UserSettingsModule {}

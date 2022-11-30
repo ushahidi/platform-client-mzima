@@ -6,13 +6,14 @@ mat-sidenav-container {
   width: 100%;
   max-width: 220px;
   border-right: none;
-  background-color: var(--color-dark-gray);
+  background-color: var(--color-neutral-100);
+  --scrollbar-color: var(--color-neutral-60);
+  --scrollbar-background: var(--color-neutral-100);
 }
 
 .content-wrapper {
   &:not(.content-wrapper--no-offset) {
-    height: 100vh;
-    padding: 16px 48px 32px;
+    height: 100%;
   }
 }
 

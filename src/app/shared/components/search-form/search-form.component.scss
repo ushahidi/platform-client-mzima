@@ -47,7 +47,7 @@
       width: 16.6666%;
 
       &:not(:first-child) {
-        border-left: 1px solid #e3e9f8;
+        border-left: 1px solid var(--color-neutral-30);
       }
     }
 
@@ -63,7 +63,7 @@
       &__title {
         display: flex;
         font-size: 14px;
-        color: #383e45;
+        color: var(--color-neutral-90);
         min-height: 100%;
         padding: 15px 8px;
         line-height: 17px;
@@ -90,7 +90,11 @@
       }
 
       &:not(:first-child) {
-        border-left: 1px solid #e3e9f8;
+        border-left: 1px solid var(--color-neutral-30);
+      }
+
+      &:last-child {
+        border-bottom: 1px solid var(--color-neutral-30);
       }
 
       app-multilevel-select {
@@ -109,7 +113,7 @@
         font-weight: 400;
         font-size: 14px;
         line-height: 17px;
-        color: #383e45;
+        color: var(--color-neutral-90);
 
         &::ng-deep {
           .mat-date-range-input-separator {
@@ -178,6 +182,98 @@
   }
 }
 
+.form-control {
+  width: 100%;
+  height: 50px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #4e545b;
+  line-height: 1.6;
+  border-radius: 8px;
+  background: transparent;
+  transition: all 0.35s ease;
+  padding: 12px 12px 12px 48px;
+  border: 1px solid var(--color-neutral-20);
+}
+
+.sorting-btn {
+  z-index: 700;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.active-filters {
+  position: relative;
+
+  &:last-of-type {
+    margin-bottom: -8px;
+  }
+
+  &--saved {
+    padding-left: 8px;
+
+    &:before {
+      left: 0;
+      top: 16px;
+      content: '';
+      bottom: 24px;
+      position: absolute;
+      border-left: 1px solid #c8c8c8;
+    }
+  }
+
+  &__row {
+    display: flex;
+    margin: 0 -4px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    &:not(:first-child) {
+      .active-filters--saved & {
+        padding-left: 8px;
+
+        .active-filter {
+          &:after {
+            top: 50%;
+            width: 8px;
+            right: 100%;
+            content: '';
+            position: absolute;
+            border-top: 1px solid #c8c8c8;
+          }
+
+          &:first-child {
+            &:after {
+              width: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.active-filter {
+  line-height: 32px;
+  margin: 0 4px 8px;
+  border-radius: 16px;
+
+  &__icon {
+    margin-left: 8px;
+    color: var(--color-primary-60);
+  }
+
+  i {
+    vertical-align: initial;
+  }
+}
+
+.save-filters-button {
+  margin-top: 16px;
+  text-align: right;
+}
+
 .filter-group {
   &:not(:first-child) {
     margin-top: 32px;
@@ -218,14 +314,6 @@
     margin-top: 16px;
     line-height: 1.5;
     white-space: normal;
-
-    a {
-      color: var(--color-primary);
-
-      &:hover {
-        color: var(--color-primary-shade);
-      }
-    }
   }
 }
 
@@ -295,7 +383,7 @@
       font-weight: 400;
       padding-top: 12px;
       padding-bottom: 12px;
-      color: var(--color-dark);
+      color: var(--color-neutral-100);
 
       .mat-option-text {
         display: block;

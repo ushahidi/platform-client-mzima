@@ -45,6 +45,8 @@ export class CategoryComponent {
     const confirmed = await this.confirmModalService.open({
       title: this.translate.instant('notify.category.destroy_confirm'),
       description: `<p>${this.translate.instant('notify.category.destroy_confirm_desc')}</p>`,
+      confirmButtonText: this.translate.instant('app.yes_delete'),
+      cancelButtonText: this.translate.instant('app.no_go_back'),
     });
     if (!confirmed) return;
 

@@ -1,105 +1,25 @@
-<div class="alert">
-  <p class="notice">
-    <em translate>You can configure options for data sources, and then turn sources on and off.</em>
-  </p>
+<div class="form-head-panel">
+  <h1>Data Source</h1>
+  <button
+    type="button"
+    color="primary"
+    mat-raised-button
+    data-qa="btn-add-role"
+    [routerLink]="['create']"
+    *ngIf="!isAllProvidersAdded"
+  >
+    <span>Add source</span>
+    <mat-icon svgIcon="plus"></mat-icon>
+  </button>
 </div>
 
-<section class="data-sources">
-  <div class="data-source">
-    <ul class="data-source-item-list">
-      <li
-        class="data-source-item"
-        [ngClass]="{ 'control-on': dataSource.available_provider, active: dataSource.active }"
-        *ngFor="let dataSource of dataSourceList"
-        (click)="selectProvider(dataSource)"
-      >
-        {{ dataSource.name }}
-      </li>
-    </ul>
-  </div>
-
-  <div class="data-source-item-container">
-    <h2>{{ provider?.name | titlecase }}</h2>
-    <app-data-source-form
-      [provider]="provider"
-      [surveyList]="surveyList"
-      (formControlsChange)="saveProviderData($event)"
-      (formCancel)="getProvidersList()"
-    >
-      <ng-template #survey *ngIf="!provider?.visible_survey">
-        <div class="alert error">
-          <p class="notice">
-            <em translate>You need to configure this data source before you can enable it.</em>
-          </p>
-        </div>
-      </ng-template>
-
-      <ng-template #survey *ngIf="provider?.visible_survey">
-        <mat-slide-toggle
-          [(ngModel)]="provider.available_provider"
-          name="accept-survey"
-          (change)="changeAvailableProviders($event)"
-        >
-          {{ 'settings.data_sources.enable_provider_message' | translate }}
-        </mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="isImportToSurvey" name="import-to-survey">
-          {{ 'settings.data_sources.associate_with_form' | translate }}
-        </mat-slide-toggle>
-        <div class="source-destination-wrapper" *ngIf="isImportToSurvey">
-          <p>
-            Each of the survey's fields are listed below. Choose the data from
-            {{ provider?.name | titlecase }} that you'd like to use to populate each of those
-            fields.
-          </p>
-          <div class="form-row">
-            <mat-label>{{ 'settings.webhooks.use_webhook_for' | translate }} </mat-label>
-            <mat-form-field appearance="outline">
-              <mat-select (valueChange)="getSurveyAttributes($event)" disableOptionCentering>
-                <mat-option *ngFor="let survey of surveyList" [value]="survey.id">
-                  {{ survey.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="survey-fields" *ngIf="surveyAttributesList?.length">
-            <p>{{ 'survey.choose_survey_field' | translate }}</p>
-            <p>{{ 'survey.choose_survey_field_desc' | translate }}</p>
-            <table>
-              <thead>
-                <tr>
-                  <th>{{ provider?.name | titlecase }} data</th>
-                  <th>{{ 'survey.survey_field' | translate }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of provider.inbound_fields">
-                  <td>
-                    <span>{{ item.form_label | titlecase }}</span>
-                  </td>
-                  <td>
-                    <div class="form-row">
-                      <mat-label>Leave empty</mat-label>
-                      <mat-form-field appearance="outline">
-                        <mat-select disableOptionCentering>
-                          <ng-container *ngFor="let attribute of surveyAttributesList">
-                            <mat-option
-                              *ngIf="item.type === attribute.input"
-                              [value]="attribute?.key"
-                            >
-                              {{ attribute?.label }}
-                            </mat-option>
-                          </ng-container>
-                        </mat-select>
-                      </mat-form-field>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </ng-template>
-    </app-data-source-form>
-  </div>
-</section>
+<ng-container *ngFor="let dataSource of dataSourceList">
+  <a
+    matRipple
+    class="data-source-item"
+    *ngIf="dataSource.available_provider"
+    [routerLink]="['update', dataSource.id]"
+  >
+    {{ dataSource.name }}
+  </a>
+</ng-container>

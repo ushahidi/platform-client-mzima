@@ -6,8 +6,8 @@
 }
 
 .feed-page {
-  padding: 0 0 0 210px;
-  height: calc(100vh - 120px);
+  height: 100%;
+  margin: 0 0 0 220px;
 
   &--filters-visible {
     padding-top: 56px;
@@ -16,8 +16,7 @@
   &__controls-panel {
     display: flex;
     align-items: center;
-    margin: -16px -48px 0;
-    padding: 16px 48px 8px;
+    padding: 16px 24px 8px;
     justify-content: space-between;
     background: var(--color-neutral-10);
   }
@@ -89,10 +88,9 @@
 .feed {
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0 48px 32px;
-  margin: 0 -48px -32px;
   scroll-behavior: smooth;
-  height: calc(100% - 16px);
+  padding: 0 8px 16px 24px;
+  height: calc(100% - 64px);
   -webkit-overflow-scrolling: touch;
 
   &__loading {

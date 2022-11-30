@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CONST } from '@constants';
 import { RoleResult, UserInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, RolesService, UsersService } from '@services';
@@ -21,6 +22,7 @@ export class UserItemComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(7)]],
     role: ['', [Validators.required]],
   });
+  public isMyProfile = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,19 +41,17 @@ export class UserItemComponent implements OnInit {
     if (userId) this.getUserInformation(userId);
   }
 
-  changePasswordToggle() {
-    this.isChangePassword = !this.isChangePassword;
-    this.form.addControl(
-      'password',
-      this.fb.control('', [Validators.required, Validators.minLength(7)]),
-    );
-  }
-
   private getUserInformation(userId: string) {
     this.userService.getUserById(userId).subscribe({
       next: (response) => {
         this.fillInForm(response);
-        this.form.removeControl('password');
+        this.form.controls['password'].removeValidators([
+          Validators.required,
+          Validators.minLength(7),
+        ]);
+        this.form.controls['password'].updateValueAndValidity();
+        this.isMyProfile =
+          this.form.value.email === localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}email`);
       },
       error: (err) => console.log(err),
     });
@@ -84,19 +84,23 @@ export class UserItemComponent implements OnInit {
       password: this.form.value.password,
       role: this.form.value.role,
     };
-    if (!this.isUpdate) {
-      delete roleBody.id;
-      this.userService.createUser(roleBody).subscribe({
-        next: () => this.navigateToUsers(),
-        error: (err) => console.log(err),
-      });
-    } else {
-      if (!this.isChangePassword) delete roleBody.password;
-      this.userService.updateUserById(roleBody.id, roleBody).subscribe({
-        next: () => this.navigateToUsers(),
-        error: (err) => console.log(err),
-      });
-    }
+    !this.isUpdate ? this.createUser(roleBody) : this.updateUser(roleBody);
+  }
+
+  private createUser(roleBody: any) {
+    delete roleBody.id;
+    this.userService.createUser(roleBody).subscribe({
+      next: () => this.navigateToUsers(),
+      error: (err) => console.log(err),
+    });
+  }
+
+  private updateUser(roleBody: any) {
+    if (!this.form.value.password) delete roleBody.password;
+    this.userService.updateUserById(roleBody.id, roleBody).subscribe({
+      next: () => this.navigateToUsers(),
+      error: (err) => console.log(err),
+    });
   }
 
   navigateToUsers() {
@@ -105,8 +109,10 @@ export class UserItemComponent implements OnInit {
 
   public async deleteUser(): Promise<void> {
     const confirmed = await this.openConfirmModal(
-      this.form.value.realname + ' user will be deleted!',
-      '<p>This action cannot be undone.</p><p>Are you sure?</p>',
+      this.translate.instant('notify.user.are_you_sure_you_want_to_delete_user', {
+        username: this.form.value.realname,
+      }),
+      this.translate.instant('app.action_cannot_be_undone'),
     );
     if (!confirmed) return;
     await this.delete();
@@ -123,6 +129,8 @@ export class UserItemComponent implements OnInit {
     return this.confirm.open({
       title: this.translate.instant(title),
       description: this.translate.instant(description),
+      confirmButtonText: this.translate.instant('app.yes_delete'),
+      cancelButtonText: this.translate.instant('app.no_go_back'),
     });
   }
 }

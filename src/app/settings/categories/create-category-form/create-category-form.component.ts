@@ -18,14 +18,17 @@ export class CreateCategoryFormComponent implements OnInit {
   @Input() public loading: boolean;
   @Input() public category: CategoryInterface;
   @Output() formSubmit = new EventEmitter<any>();
+  @Output() deleteCall = new EventEmitter<any>();
   public categories: CategoryInterface[];
   public languages: LanguageInterface[] = this.languageService.getLanguages();
   public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
   public activeLanguages: LanguageInterface[] = [];
   public selectedTranslation?: string;
   public roleOptions: GroupCheckboxItemInterface[] = [];
+  public isUpdate = false;
 
   public form: FormGroup = this.fb.group({
+    id: ['', [Validators.required]],
     name: ['', [Validators.required]],
     description: [''],
     is_child_to: [''],
@@ -61,6 +64,11 @@ export class CreateCategoryFormComponent implements OnInit {
       next: (response) => {
         this.roleOptions = [
           {
+            name: this.translate.instant('role.only_me'),
+            value: 'onlyme',
+            icon: 'person',
+          },
+          {
             name: this.translate.instant('role.everyone'),
             value: 'everyone',
             icon: 'person',
@@ -84,9 +92,9 @@ export class CreateCategoryFormComponent implements OnInit {
 
     this.form.valueChanges.subscribe({
       next: (data) => {
-        if (!!this.activeLanguages.find((language) => language.code === data.language)) {
-          this.activeLanguages = [];
-        }
+        // if (!!this.activeLanguages.find((language) => language.code === data.language)) {
+        //   this.activeLanguages = [];
+        // }
         if (this.defaultLanguage?.code !== data.language) {
           this.defaultLanguage = this.languages.find((lang) => lang.code === data.language);
           this.selectedTranslation = this.defaultLanguage?.code;
@@ -110,16 +118,21 @@ export class CreateCategoryFormComponent implements OnInit {
             translation.description = data.translate_description;
           }
         }
+
+        console.log(this.form.value);
       },
     });
   }
 
   ngOnInit(): void {
     if (this.category) {
+      this.isUpdate = !!this.category;
       this.form.patchValue({
+        id: this.category.id,
         name: this.category.tag,
         description: this.category.description,
         language: this.category.enabled_languages.default,
+        is_child_to: this.category.parent?.id || null,
       });
 
       if (this.category?.role?.length && this.category?.role?.length > 1) {
@@ -139,6 +152,7 @@ export class CreateCategoryFormComponent implements OnInit {
         this.form.setControl('translations', this.fb.array(translations));
       }
     }
+    this.activeLanguages.push(this.defaultLanguage!);
   }
 
   public isRoleActive(roleName: string): boolean {
@@ -183,27 +197,27 @@ export class CreateCategoryFormComponent implements OnInit {
       maxWidth: 480,
       data: {
         languages: this.languages,
-        activeLanguages: [this.defaultLanguage, ...this.activeLanguages],
+        activeLanguages: this.activeLanguages,
+        defaultLanguage: this.defaultLanguage,
       },
     });
 
     dialogRef.afterClosed().subscribe({
-      next: (result: string[]) => {
+      next: (result: LanguageInterface[]) => {
         if (!result) return;
-        result.map((langCode) => {
-          const language = this.languages.find((lang) => lang.code === langCode);
-          if (this.activeLanguages.find((lang) => lang.code === langCode) || !language) return;
-          this.activeLanguages.push(language);
-        });
+        const defaultIndex = result.indexOf(this.defaultLanguage!);
+        result.splice(defaultIndex, 1);
+        this.activeLanguages = [this.defaultLanguage!, ...result];
       },
     });
   }
 
-  public chooseTranslation(languageCode?: string): void {
-    this.selectedTranslation = languageCode;
+  public chooseTranslation(lang: LanguageInterface): void {
+    console.log(lang);
+    this.selectedTranslation = lang.code;
 
     const translation: TranslationInterface = this.form.controls['translations'].value.find(
-      (trans: TranslationInterface) => trans.id === languageCode,
+      (trans: TranslationInterface) => trans.id === lang.code,
     );
     if (translation) {
       this.form.patchValue({
@@ -243,5 +257,9 @@ export class CreateCategoryFormComponent implements OnInit {
     const visibleTo = parentCategory ? parentCategory?.role || [] : ['admin'];
     this.form.setControl('visible_to', this.fb.array(visibleTo));
     this.form.controls['parent'].setValue(parentCategory);
+  }
+
+  public deleteCategoryEmit() {
+    this.deleteCall.emit(true);
   }
 }

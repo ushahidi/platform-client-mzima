@@ -1,17 +1,18 @@
 <div class="settings">
-  <div
+  <a
+    matRipple
     *ngFor="let item of settingsItems"
     [routerLink]="item.router"
     class="single-menu"
     [routerLinkActive]="'single-menu-active'"
     [data-qa]="'btn-' + item.router"
   >
-    <div class="item-header">
-      <mat-icon class="item-icon" svgIcon="{{ item.icon }}"></mat-icon>
-      <h2 class="item-header-title" translate>{{ item.title }}</h2>
+    <div class="single-menu__header">
+      <mat-icon class="single-menu__header__icon" svgIcon="{{ item.icon }}"></mat-icon>
+      <h3 class="single-menu__title" translate>{{ item.title }}</h3>
     </div>
-    <div class="item-content">
-      <p class="item-description" translate>{{ item.description }}</p>
+    <div class="single-menu__info">
+      <p translate>{{ item.description }}</p>
     </div>
-  </div>
+  </a>
 </div>

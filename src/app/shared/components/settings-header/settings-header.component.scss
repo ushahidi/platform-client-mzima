@@ -1,0 +1,21 @@
+.form-head-panel {
+  &__inner {
+    display: flex;
+    margin: 0 -8px;
+    align-items: center;
+    justify-content: flex-start;
+
+    h1 {
+      margin-left: 8px;
+      margin-right: 8px;
+    }
+
+    .mat-button-base {
+      margin-left: 8px;
+      margin-right: 8px;
+    }
+  }
+  .translate-container {
+    width: 190px;
+  }
+}

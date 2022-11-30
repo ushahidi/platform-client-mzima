@@ -40,6 +40,7 @@ import { DateAgoPipe, FilterValuePipe } from '@pipes';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { LottieAnimationComponent } from './components/lottie-animation/lottie-animation.component';
+import { SettingsHeaderComponent } from './components/settings-header/settings-header.component';
 
 const directives = [
   GtmDirective, //
@@ -91,8 +92,8 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, ...directives],
+  declarations: [...components, ...directives, SettingsHeaderComponent],
   imports: [...modules, LottieComponent],
-  exports: [...components, ...directives, ...modules],
+  exports: [...components, ...directives, ...modules, SettingsHeaderComponent],
 })
 export class SharedModule {}
