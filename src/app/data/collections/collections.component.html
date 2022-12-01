@@ -8,34 +8,122 @@
   <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
 </button>
 
-<h1 mat-dialog-title>{{ 'app.collection' | translate }}</h1>
+<ng-container *ngIf="isCreation; else collectionsView">
+  <h1 mat-dialog-title>{{ 'app.create_collection' | translate }}</h1>
 
-<form>
-  <div class="form-row">
-    <mat-label>{{ 'location.search' | translate }}</mat-label>
-    <mat-form-field appearance="outline">
-      <input matInput placeholder="{{ 'location.search' | translate }}" />
-      <mat-icon matPrefix svgIcon="search"></mat-icon>
-    </mat-form-field>
-  </div>
-</form>
-
-<ng-container *ngIf="!isLoading; else loader">
   <div mat-dialog-content>
-    <div *ngFor="let item of collectionList" class="collection-item">
-      <div class="collection-item__content">
-        <h3 class="collection-item__title">{{ item.name }}</h3>
-        <span class="collection-item__description">{{ item.description }}</span>
+    <form [formGroup]="collectionForm" novalidate>
+      <div class="form-row">
+        <mat-label>
+          {{ 'set.collection_name' | translate }} <span class="color-accent">*</span>
+        </mat-label>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            placeholder="{{ 'set.name_your_collection' | translate }}"
+            formControlName="name"
+            required
+          />
+          <mat-error *ngIf="collectionForm.get('name')?.invalid">
+            {{ collectionForm.get('name')?.errors | json }}
+          </mat-error>
+        </mat-form-field>
       </div>
-    </div>
+      <div class="form-row">
+        <mat-label translate>set.description</mat-label>
+        <mat-form-field appearance="outline">
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="3"
+            cdkAutosizeMaxRows="6"
+            formControlName="description"
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <div class="form-row" *ngIf="featuredEnabled">
+        <div class="toggle">
+          <mat-slide-toggle formControlName="featured" name="first-name">
+            {{ 'set.featured' | translate }}
+          </mat-slide-toggle>
+        </div>
+      </div>
+      <div class="form-row">
+        <mat-label>{{ 'app.who_can_see_this' | translate }}</mat-label>
+        <app-group-checkbox-select [data]="roleOptions" formControlName="visible_to">
+        </app-group-checkbox-select>
+      </div>
+      <div class="form-row">
+        <mat-label> {{ 'set.default_viewing_mode' | translate }}</mat-label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="view" disableOptionCentering>
+            <ng-container *ngFor="let view of views">
+              <mat-option [value]="view.name">
+                {{ view.display_name | translate }}
+              </mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
   </div>
 
   <mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" mat-dialog-close>
-      {{ 'form.save_and_close' | translate }}
+    <button mat-stroked-button mat-dialog-close>
+      {{ 'app.cancel' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="saveCollection()">
+      {{ 'app.save' | translate }}
     </button>
   </mat-dialog-actions>
 </ng-container>
+
+<ng-template #collectionsView>
+  <div class="head">
+    <h1 mat-dialog-title>{{ 'app.collection' | translate }}</h1>
+    <button
+      type="button"
+      color="primary"
+      mat-raised-button
+      (click)="addNewCollection()"
+      tabindex="-1"
+    >
+      <span>Add collection</span>
+      <mat-icon svgIcon="plus"></mat-icon>
+    </button>
+  </div>
+
+  <form>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="{{ 'location.search' | translate }}" />
+        <mat-icon matPrefix svgIcon="search"></mat-icon>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <ng-container *ngIf="!isLoading; else loader">
+    <div mat-dialog-content>
+      <div class="collection-list">
+        <div
+          matRipple
+          class="collection-item"
+          *ngFor="let item of collectionList"
+          (click)="goToCollection(item)"
+        >
+          <strong class="collection-item__title">{{ item.name }}</strong>
+          <span class="collection-item__description">{{ item.description }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" mat-dialog-close>
+      {{ 'form.save_and_close' | translate }}
+    </button>
+  </mat-dialog-actions> -->
+  </ng-container>
+</ng-template>
 
 <ng-template #loader>
   <app-spinner class="spinner"></app-spinner>

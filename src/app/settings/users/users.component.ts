@@ -86,10 +86,6 @@ export class UsersComponent implements OnInit {
     if (!event) this.selectedUsers = [];
   }
 
-  public createUser() {
-    this.router.navigate(['settings/users/create']);
-  }
-
   public selectUser(event: MatCheckboxChange, { id }: UserResult) {
     if (event.checked) {
       this.selectedUsers.push(id);

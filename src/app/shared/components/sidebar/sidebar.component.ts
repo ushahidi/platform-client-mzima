@@ -94,7 +94,7 @@ export class SidebarComponent implements OnInit {
 
   private openCollections(): void {
     const dialogRef = this.dialog.open(CollectionsComponent, {
-      width: '480px',
+      width: '560px',
     });
 
     dialogRef.afterClosed().subscribe({

@@ -42,7 +42,8 @@
               "dayjs",
               "quill",
               "types-wm",
-              "lottie-web"
+              "lottie-web",
+              "ev-emitter/ev-emitter"
             ]
           },
           "configurations": {

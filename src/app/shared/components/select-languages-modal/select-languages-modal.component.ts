@@ -1,8 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LanguageInterface } from '@models';
 
 export interface SelectLanguagesDialogData {
+  defaultLanguage: LanguageInterface;
   languages: LanguageInterface[];
   activeLanguages: LanguageInterface[];
 }
@@ -12,34 +14,31 @@ export interface SelectLanguagesDialogData {
   templateUrl: './select-languages-modal.component.html',
   styleUrls: ['./select-languages-modal.component.scss'],
 })
-export class SelectLanguagesModalComponent {
-  public selectedLanguages: string[] = [];
-  public errorLanguages: LanguageInterface[] = [];
+export class SelectLanguagesModalComponent implements OnInit {
+  public languages: LanguageInterface[];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: SelectLanguagesDialogData) {}
 
-  public checkLanguages(): void {
-    console.log(this.data.activeLanguages);
-    this.errorLanguages = [];
-    this.selectedLanguages.map((selectedLanguage) => {
-      const lang = this.data.activeLanguages.find(
-        (activeLanguage) => activeLanguage.code === selectedLanguage,
-      );
-      if (lang) {
-        this.errorLanguages.push(lang);
-      }
-    });
-
-    console.log(this.selectedLanguages);
+  ngOnInit() {
+    this.languages = this.data.languages;
   }
 
-  public removeLanguagesWithErrors(): void {
-    this.selectedLanguages = this.selectedLanguages.filter(
-      (selectedLanguage) =>
-        this.errorLanguages.findIndex(
-          (errorLanguage) => errorLanguage.code === selectedLanguage,
-        ) === -1,
-    );
-    this.checkLanguages();
+  searchLanguage(event: any) {
+    if (!event.target.value) {
+      console.log(this.data.languages);
+      this.languages = this.data.languages;
+    }
+    this.languages = this.data.languages.filter((el) => {
+      return el.name.toLowerCase().match(event.target.value);
+    });
+  }
+
+  async selectLanguage(event: MatCheckboxChange, lang: LanguageInterface) {
+    if (event.checked) {
+      this.data.activeLanguages.push(lang);
+    } else {
+      const index = this.data.activeLanguages.indexOf(lang);
+      this.data.activeLanguages.splice(index, 1);
+    }
   }
 }
