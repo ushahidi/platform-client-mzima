@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { validateFile } from '@helpers';
 import { DonationConfigInterface, SiteConfigInterface } from '@models';
-import {
-  ConfigService,
-  LoaderService,
-  MediaService,
-  NotificationService,
-  SessionService,
-} from '@services';
+import { ConfigService, LoaderService, MediaService, SessionService } from '@services';
 
 @Component({
   selector: 'app-donation',
@@ -16,7 +9,8 @@ import {
   styleUrls: ['./donation.component.scss'],
 })
 export class DonationComponent implements OnInit {
-  donationConfig: DonationConfigInterface;
+  public donationConfig: DonationConfigInterface;
+  public images: string[] = [];
   public donationForm: FormGroup = this.formBuilder.group({
     title: ['', [Validators.required]],
     description: ['', []],
@@ -29,12 +23,13 @@ export class DonationComponent implements OnInit {
     private sessionService: SessionService,
     private mediaService: MediaService,
     private loader: LoaderService,
-    private notificationService: NotificationService,
     private configService: ConfigService,
   ) {}
 
   ngOnInit(): void {
     this.donationConfig = this.sessionService.getSiteConfigurations().donation!;
+    this.images = this.donationConfig.images.map((image) => image.original_file_url);
+
     this.donationForm.patchValue({
       title: this.donationConfig.title,
       description: this.donationConfig.description,
@@ -48,30 +43,30 @@ export class DonationComponent implements OnInit {
   }
 
   uploadFile($event: any) {
-    if (validateFile($event.target.files[0])) {
-      this.loader.show();
-      var reader = new FileReader();
-      reader.onload = () => {
-        this.mediaService.uploadFile($event.target.files[0]).subscribe((result: any) => {
-          this.donationConfig.images.push({
-            id: result.id,
-            original_file_url: result.original_file_url,
-          });
-          this.loader.hide();
-        });
-      };
-      reader.readAsDataURL($event.target.files[0]);
-    } else {
-      this.notificationService.showError('post.media.error_in_upload');
-    }
+    this.loader.show();
+    this.mediaService.uploadFile($event.file).subscribe((result: any) => {
+      this.donationConfig.images.push({
+        id: result.id,
+        original_file_url: result.original_file_url,
+      });
+      this.images = this.donationConfig.images.map((image) => image.original_file_url);
+      this.loader.hide();
+    });
   }
 
   save() {
+    this.loader.show();
     const donation: DonationConfigInterface = Object.assign({}, this.donationForm.value, {
       images: this.donationConfig.images,
     });
     this.configService.update('site', { donation }).subscribe((res: SiteConfigInterface) => {
       this.donationConfig = res.donation!;
+      this.loader.hide();
     });
+  }
+
+  public imageDeleted(event: any): void {
+    this.donationConfig.images.splice(event, 1);
+    this.images = this.donationConfig.images.map((image) => image.original_file_url);
   }
 }

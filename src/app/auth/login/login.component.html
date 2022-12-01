@@ -32,6 +32,7 @@
       <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
     </mat-form-field>
   </div>
+  <mat-error *ngIf="loginError">{{ loginError }}</mat-error>
 
   <div mat-dialog-actions align="end">
     <button mat-stroked-button type="button" (click)="cancel()" data-qa="btn-cancel">

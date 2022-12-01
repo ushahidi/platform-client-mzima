@@ -7,12 +7,12 @@
     padding: 8px;
     font-size: 14px;
     border-radius: 0;
-    color: #383e45;
+    color: var(--color-neutral-90);
     min-height: 100%;
     line-height: 17px;
     font-weight: normal;
     box-shadow: none !important;
-    border-bottom: 1px solid #e3e9f8;
+    border-bottom: 1px solid var(--color-neutral-30);
 
     &[aria-expanded='true'] {
       border-bottom-color: transparent;
@@ -43,7 +43,7 @@
       min-width: 25px;
       font-size: 14px;
       margin-left: 8px;
-      color: #383e45;
+      color: var(--color-neutral-90);
       line-height: 17px;
       text-align: center;
       border-radius: 4px;
@@ -55,7 +55,7 @@
 .radio-button {
   display: flex;
   font-size: 12px;
-  color: #383e45;
+  color: var(--color-neutral-90);
   line-height: 14px;
   align-items: center;
   justify-content: space-between;
@@ -170,7 +170,7 @@
     box-shadow: none;
     border-style: solid;
     border-width: 0 1px 1px;
-    border-color: #e3e9f8;
+    border-color: var(--color-neutral-30);
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
 
@@ -282,7 +282,7 @@
           opacity: 1;
 
           .mat-form-field-outline-end {
-            box-shadow: 0 0 4px var(--color-primary);
+            box-shadow: 0 0 4px var(--color-primary-60);
           }
         }
       }

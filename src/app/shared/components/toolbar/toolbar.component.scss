@@ -8,9 +8,9 @@
   position: fixed;
   padding-left: 24px;
   padding-right: 24px;
-  color: var(--color-dark);
+  color: var(--color-black);
   background: var(--color-light);
-  border-bottom: 1px solid #e3e9f8;
+  border-bottom: 1px solid var(--color-neutral-30);
 
   &__controls {
     display: flex;
@@ -61,7 +61,7 @@
   white-space: normal;
   margin-right: -24px;
   padding: 0 24px 0 8px;
-  border-left: 1px solid #e3e9f8;
+  border-left: 1px solid var(--color-neutral-30);
 
   &__avatar {
     width: 32px;

@@ -13,6 +13,7 @@ import {
 import { mergeMap } from 'rxjs';
 import { ConfirmModalService } from '@services';
 import { SettingsMapComponent } from './settings-map/settings-map.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-general',
@@ -44,10 +45,12 @@ export class GeneralComponent implements OnInit {
     private translate: TranslateService,
     private apiKeyService: ApiKeyService,
     private confirmModalService: ConfirmModalService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
     this.siteConfig = this.sessionService.getSiteConfigurations();
+
     this.generalForm.patchValue({
       name: this.siteConfig.name,
       description: this.siteConfig.description,
@@ -65,8 +68,9 @@ export class GeneralComponent implements OnInit {
     });
   }
 
-  fileUploaded(event: File) {
-    this.uploadedFile = event;
+  fileUploaded(event: any) {
+    this.siteConfig.image_header = event.dataURI;
+    this.uploadedFile = event.file;
   }
 
   headerImageDeleted() {
@@ -122,5 +126,23 @@ export class GeneralComponent implements OnInit {
         return this.configService.update('map', this.mapSettings.mapConfig);
       }),
     );
+  }
+
+  public copyToClipboard(str: string): void {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = str;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+
+    this.snackBar.open('Copied to clipboard', 'Ok', {
+      duration: 2000,
+    });
   }
 }

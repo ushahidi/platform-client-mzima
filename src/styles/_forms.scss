@@ -2,14 +2,17 @@
 .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
 .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-60);
 }
 
 .mat-checkbox-checkmark {
-  fill: var(--color-primary-contrast);
+  fill: var(--color-neutral-100);
 }
 
 .mat-pseudo-checkbox {
+  margin-top: 3.5px;
+  margin-left: 3.5px;
+  margin-bottom: 3.5px;
   width: 21px !important;
   height: 21px !important;
   border-width: 2px !important;
@@ -28,39 +31,60 @@
     height: 6px !important;
     border-left-width: 2px !important;
   }
+
+  &.mat-pseudo-checkbox-disabled {
+    background: var(--color-neutral-50);
+  }
 }
 
 .mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
 .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,
 .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
 .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text {
-  padding-left: 12px !important;
+  padding-left: 11.5px !important;
+}
+
+.mat-list-base {
+  .mat-list-option {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .mat-list-item-disabled {
+    background: var(--color-neutral-10);
+  }
 }
 
 .mat-checkbox-checkmark-path {
-  stroke: var(--color-primary-contrast) !important;
+  stroke: var(--color-neutral-100) !important;
 }
 
 .mat-checkbox-mixedmark {
-  background-color: var(--color-primary-contrast);
+  background-color: var(--color-neutral-100);
 }
 
 .mat-primary {
-  .mat-pseudo-checkbox-checked,
-  .mat-pseudo-checkbox-indeterminate {
-    background-color: var(--color-primary);
-  }
-
   .mat-pseudo-checkbox {
     &:after {
-      border-bottom-color: var(--color-primary-contrast);
+      border-bottom-color: var(--color-neutral-100);
     }
   }
 
   .mat-pseudo-checkbox-checked {
     &:after {
-      border-left-color: var(--color-primary-contrast);
+      border-left-color: var(--color-neutral-100);
     }
+  }
+}
+
+.form-head-panel {
+  display: flex;
+  margin: 0 0 24px;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    margin-bottom: 0;
   }
 }
 
@@ -69,10 +93,23 @@
   margin: 0 -8px;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: flex-end;
 
   .mat-button-base {
     margin: 0 8px;
+    min-width: 125px;
+  }
+
+  &--sticky {
+    left: 0;
+    right: 0;
+    z-index: 50;
+    bottom: -32px;
+    margin: -23px;
+    padding: 23px;
+    position: sticky;
+    border-radius: 0 0 4px 4px;
+    background: var(--color-light);
   }
 }
 
@@ -94,7 +131,7 @@
   .mat-option {
     &.mat-selected {
       &:not(.mat-option-multiple) {
-        background-color: var(--color-gray);
+        background-color: var(--color-neutral-20);
       }
     }
   }
@@ -104,23 +141,23 @@
   &:hover,
   &:focus {
     &:not(.mat-option-disabled) {
-      background-color: var(--color-gray-tint);
+      background-color: var(--color-neutral-10);
     }
   }
 }
 
 .mat-form-field.mat-focused {
   .mat-form-field-label {
-    color: var(--color-primary);
+    color: var(--color-primary-60);
   }
 
   .mat-form-field-ripple {
-    background-color: var(--color-primary);
+    background-color: var(--color-primary-60);
   }
 
   &.mat-primary {
     .mat-select-arrow {
-      color: var(--color-dark);
+      color: var(--color-neutral-100);
     }
   }
 }
@@ -138,7 +175,7 @@
 
 .mat-radio-button.mat-accent.mat-radio-checked {
   .mat-radio-outer-circle {
-    border-color: var(--color-primary);
+    border-color: var(--color-primary-60);
   }
 }
 
@@ -148,25 +185,25 @@
   .mat-ripple-element:not(.mat-radio-persistent-ripple),
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
 .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-60);
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb,
 .mat-slide-toggle.mat-checked .mat-ripple-element {
+  box-shadow: none;
   background-color: var(--color-light);
-  box-shadow: 0 3px 7px rgba(var(--color-light-contrast-rgb), 0.12);
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-60);
 }
 
 .mat-step-header {
   .mat-step-icon-selected,
   .mat-step-icon-state-done,
   .mat-step-icon-state-edit {
-    color: var(--color-primary-contrast);
-    background-color: var(--color-primary);
+    color: var(--color-neutral-100);
+    background-color: var(--color-primary-60);
   }
 }
 
@@ -183,14 +220,14 @@
 }
 
 .mat-calendar-body-selected {
-  color: #383e45;
+  color: var(--color-neutral-90);
   font-weight: 700;
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-60);
 }
 
 .mat-calendar-body-in-range {
   &:before {
-    background: rgba(var(--color-primary-rgb), 0.2);
+    background: var(--color-primary-100);
   }
 }
 
@@ -201,7 +238,7 @@
         > .mat-calendar-body-cell-content {
           &:not(.mat-calendar-body-selected) {
             &:not(.mat-calendar-body-comparison-identical) {
-              background-color: rgba(var(--color-primary-rgb), 0.3);
+              background-color: var(--color-primary-90);
             }
           }
         }
@@ -216,7 +253,7 @@
     > .mat-calendar-body-cell-content {
       &:not(.mat-calendar-body-selected) {
         &:not(.mat-calendar-body-comparison-identical) {
-          background-color: rgba(var(--color-primary-rgb), 0.3);
+          background-color: var(--color-primary-90);
         }
       }
     }
@@ -233,8 +270,8 @@
   text-align: center;
   border-radius: 50%;
   display: inline-block;
-  background: var(--color-dark);
-  color: var(--color-dark-contrast);
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-10);
 }
 
 .mat-list-base.mat-selection-list {
@@ -249,16 +286,16 @@
   .mat-list-item,
   .mat-list-option {
     .mat-list-item-content {
+      padding: 12px;
       flex-basis: 100%;
-      min-height: 40px;
-      padding: 10px 16px;
+      min-height: 52px;
     }
   }
 }
 
 .mat-list-base {
   .mat-list-option {
-    color: #383e45;
+    color: var(--color-neutral-90);
   }
 }
 
@@ -298,7 +335,7 @@
 
 .form-row {
   flex: 1 1 100%;
-  margin-bottom: 4px;
+  margin-bottom: 24px;
 
   > mat-label {
     display: block;
@@ -306,7 +343,7 @@
     font-weight: 400;
     line-height: 1.5;
     margin-bottom: 4px;
-    color: var(--color-dark);
+    color: var(--color-neutral-100);
   }
 
   &--small {
@@ -340,7 +377,7 @@
   min-height: 32px;
   margin-bottom: 20px;
   height: auto !important;
-  color: var(--color-dark);
+  color: var(--color-neutral-100);
   line-height: 1.4 !important;
 }
 
@@ -363,7 +400,7 @@
   height: 27px !important;
 
   .mat-slide-toggle.mat-checked & {
-    transform: translate3d(20px, 0, 0) !important;
+    transform: translate3d(18px, 0, 0) !important;
   }
 }
 
@@ -373,8 +410,8 @@
 }
 
 .mat-form-field-appearance-outline {
-  font-size: 12px;
   vertical-align: top;
+  --scrollbar-background: var(--color-light);
 
   .mat-form-field-outline {
     top: 0 !important;
@@ -392,8 +429,8 @@
   }
 
   .mat-form-field-wrapper {
+    padding-bottom: 0;
     margin: 0 !important;
-    padding-bottom: 12px;
   }
 
   .mat-form-field-flex {
@@ -407,8 +444,6 @@
   .mat-form-field-infix {
     font-weight: 400;
     border-top: none;
-    font-size: 16px;
-    line-height: 1.6;
     padding-top: 0;
     padding-bottom: 0;
   }
@@ -424,10 +459,18 @@
   }
 
   .mat-form-field-subscript-wrapper {
-    font-size: 10px;
-    margin-top: 2px;
-    top: calc(100% - 12px);
+    top: auto;
+    margin-top: 0;
+    font-size: 14px;
+    position: static;
+    line-height: 1.3;
     padding: 0 !important;
+    color: var(--color-neutral-90);
+
+    .mat-hint,
+    .mat-error {
+      margin-top: 8px;
+    }
   }
 
   .mat-input-element {
@@ -435,9 +478,13 @@
     height: 24px;
     padding: 7px 21px;
     border-radius: 4px;
-    color: var(--color-dark);
     max-width: calc(100% - 45px);
     background: var(--color-light);
+    color: var(--color-neutral-100);
+
+    &[readonly='true'] {
+      color: var(--color-neutral-70);
+    }
 
     &::placeholder {
       opacity: 1;
@@ -465,13 +512,10 @@
     }
   }
 
-  textarea.mat-input-element.cdk-textarea-autosize {
-    min-height: 51px !important;
-  }
-
   .mat-select-trigger {
     margin: 1px;
     height: 38px;
+    border-radius: 4px;
     width: calc(100% - 2px);
     background: var(--color-light);
   }
@@ -539,7 +583,7 @@
   }
 
   .mat-datepicker-toggle-active {
-    color: var(--color-primary);
+    color: var(--color-primary-60);
   }
 }
 
@@ -634,6 +678,8 @@
 }
 
 .mat-radio-group {
+  padding-top: 8px;
+
   .mat-radio-button {
     display: block;
   }
@@ -647,7 +693,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
-  color: var(--color-dark);
+  color: var(--color-neutral-100);
 
   .mat-select-arrow-wrapper {
     width: 24px;
@@ -666,7 +712,7 @@
   }
 
   .mat-select-placeholder {
-    color: #383e45;
+    color: var(--color-neutral-90);
   }
 
   &[aria-expanded='true'] {
@@ -707,7 +753,7 @@
 .mat-checkbox-inner-container {
   width: 21px !important;
   height: 21px !important;
-  margin: 0 12px 0 0 !important;
+  margin: 3.5px 12px 3.5px 3.5px !important;
 }
 
 .mat-checkbox-background,
@@ -720,7 +766,55 @@
 }
 
 .mat-checkbox {
+  font-size: 16px;
+  line-height: 1.5;
+
   + p {
     margin-top: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.checkbox-group {
+  margin-top: 8px;
+}
+
+.checkbox {
+  padding: 12px;
+}
+
+.toggle-group {
+  .toggle {
+    &:not(:first-child) {
+      margin-top: 24px;
+    }
+  }
+}
+
+.toggle {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 9px 16px;
+
+  .mat-slide-toggle {
+    min-height: 24px;
+    margin-bottom: 0;
+    vertical-align: top;
+    line-height: inherit !important;
+  }
+
+  .mat-slide-toggle-bar {
+    width: 42px !important;
+    height: 24px !important;
+    margin-right: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .mat-slide-toggle-thumb-container {
+    width: 20px !important;
+    height: 20px !important;
   }
 }

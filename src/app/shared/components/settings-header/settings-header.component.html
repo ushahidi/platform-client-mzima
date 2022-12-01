@@ -1,0 +1,72 @@
+<div class="form-head-panel">
+  <div class="form-head-panel__inner">
+    <h1>{{ settingsTitle | translate }}</h1>
+    <ng-container *ngIf="isShowActions">
+      <button
+        type="button"
+        color="accent"
+        mat-raised-button
+        data-qa="btn-settings-delete"
+        class="delete-btn"
+        (click)="deleteEmit()"
+      >
+        {{ 'app.delete' | translate }}
+      </button>
+      <ng-content></ng-content>
+    </ng-container>
+  </div>
+  <div class="form-head-panel__inner" *ngIf="isShowCreation">
+    <button
+      *ngIf="isShowActionsButton"
+      type="button"
+      color="primary"
+      mat-stroked-button
+      data-qa="btn-settings-action"
+      (click)="showActions()"
+      [ngClass]="{ active: isShowActions }"
+    >
+      {{ 'settings.bulk_actions' | translate }}
+    </button>
+    <button
+      class="create-btn"
+      type="button"
+      color="primary"
+      mat-raised-button
+      [routerLink]="['create']"
+      data-qa="btn-settings-create"
+    >
+      <span>{{ newButtonTitle | translate }}</span>
+      <mat-icon svgIcon="plus"></mat-icon>
+    </button>
+  </div>
+
+  <div class="form-head-panel__inner" *ngIf="isShowTranslation">
+    <div class="translate-container">
+      <mat-form-field appearance="outline" class="feed-page__control">
+        <mat-select
+          name="language"
+          disableOptionCentering
+          [(ngModel)]="selectedLanguage"
+          [placeholder]="'app.mark_as' | translate"
+          (selectionChange)="selectLanguageEmit($event)"
+        >
+          <mat-option *ngFor="let language of languages" [value]="language">
+            {{ language?.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <button
+      class="create-btn"
+      type="button"
+      color="primary"
+      mat-raised-button
+      (click)="showLanguagesEmit()"
+      data-qa="btn-settings-create"
+    >
+      {{ newButtonTitle | translate }}
+      <mat-icon svgIcon="plus"></mat-icon>
+    </button>
+  </div>
+</div>

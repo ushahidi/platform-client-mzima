@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PostPropertiesInterface, PostResult } from '@models';
 
 @Component({
@@ -6,7 +6,7 @@ import { PostPropertiesInterface, PostResult } from '@models';
   templateUrl: './post-metadata.component.html',
   styleUrls: ['./post-metadata.component.scss'],
 })
-export class PostMetadataComponent {
+export class PostMetadataComponent implements OnInit {
   @Input() post: PostResult | PostPropertiesInterface;
   author: string;
 

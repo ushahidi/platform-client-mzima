@@ -1,20 +1,4 @@
 :root {
-  // primary
-  --color-primary: #f6c454;
-  --color-primary-rgb: 246, 196, 84;
-  --color-primary-contrast: #0e1a30;
-  --color-primary-contrast-rgb: rgb(14, 26, 48);
-  --color-primary-shade: #d8ac4a;
-  --color-primary-tint: #f7ca65;
-
-  // secondary
-  --color-secondary: #3c4ff5;
-  --color-secondary-rgb: 60, 79, 245;
-  --color-secondary-contrast: #ffffff;
-  --color-secondary-contrast-rgb: 255, 255, 255;
-  --color-secondary-shade: #3546d8;
-  --color-secondary-tint: #5061f6;
-
   // accent
   --color-accent: #962923;
   --color-accent-rgb: 150, 41, 35;
@@ -47,45 +31,13 @@
   --color-light-shade: #e0e0e0;
   --color-light-tint: #ffffff;
 
-  // black
-  --color-black: #000000;
-  --color-black-rgb: 0, 0, 0;
+  // light
+  --color-black: #181b21;
+  --color-black-rgb: 24, 27, 33;
   --color-black-contrast: #ffffff;
   --color-black-contrast-rgb: 255, 255, 255;
-  --color-black-shade: #000000;
-  --color-black-tint: #1a1a1a;
-
-  // dark
-  --color-dark: #181b21;
-  --color-dark-rgb: 24, 27, 33;
-  --color-dark-contrast: #ffffff;
-  --color-dark-contrast-rgb: 255, 255, 255;
-  --color-dark-shade: #15181d;
-  --color-dark-tint: #2f3237;
-
-  // dark gray
-  --color-dark-gray: #23282f;
-  --color-dark-gray-rgb: 35, 40, 47;
-  --color-dark-gray-contrast: #ffffff;
-  --color-dark-gray-contrast-rgb: 255, 255, 255;
-  --color-dark-gray-shade: #1f2329;
-  --color-dark-gray-tint: #393e44;
-
-  // light gray
-  --color-light-gray: #cbd0d6;
-  --color-light-gray-rgb: 203, 208, 214;
-  --color-light-gray-contrast: #000000;
-  --color-light-gray-contrast-rgb: 0, 0, 0;
-  --color-light-gray-shade: #b3b7bc;
-  --color-light-gray-tint: #d0d5da;
-
-  // gray
-  --color-gray: #f2f2f2;
-  --color-gray-rgb: 242, 242, 242;
-  --color-gray-contrast: #000000;
-  --color-gray-contrast-rgb: 0, 0, 0;
-  --color-gray-shade: #d5d5d5;
-  --color-gray-tint: #f3f3f3;
+  --color-black-shade: #15181d;
+  --color-black-tint: #2f3237;
 
   --color-primary-10: #33270a;
   --color-primary-20: #554111;
@@ -108,4 +60,6 @@
   --color-neutral-80: #6c7074;
   --color-neutral-90: #484c52;
   --color-neutral-100: #23282f;
+
+  --font-family: 'Lato', 'Arial', sans-serif;
 }

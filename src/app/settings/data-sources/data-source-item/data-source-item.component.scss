@@ -1,0 +1,23 @@
+h1 {
+  margin-bottom: 32px;
+}
+
+.form-controls-panel {
+  justify-content: space-between;
+}
+
+.mat-slide-toggle {
+  margin-bottom: 0;
+}
+
+.survey {
+  margin-bottom: 32px;
+
+  &__table {
+    width: 100%;
+
+    .form-row {
+      margin: 8px 0;
+    }
+  }
+}

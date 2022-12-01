@@ -1,11 +1,11 @@
 .map-holder {
+  height: 100%;
   position: relative;
-  height: calc(100vh - 72px);
-  margin: -16px -48px -32px 172px;
+  margin: 0 0 0 220px;
 
   &--filters-visible {
-    margin-top: 40px;
-    height: calc(100vh - 128px);
+    margin-top: 57px;
+    height: calc(100% - 57px);
   }
 }
 

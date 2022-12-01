@@ -22,13 +22,13 @@ table {
       border-radius: 15px;
 
       &--default {
-        color: var(--color-dark);
-        background-color: var(--color-gray);
+        color: var(--color-neutral-100);
+        background-color: var(--color-neutral-20);
       }
 
       &--primary {
-        color: var(--color-primary-contrast);
-        background-color: var(--color-primary);
+        color: var(--color-neutral-100);
+        background-color: var(--color-primary-60);
       }
     }
   }

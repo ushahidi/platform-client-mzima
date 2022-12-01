@@ -1,74 +1,25 @@
 .roles {
-  &-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -4px -24px;
+  justify-content: flex-start;
+}
 
-  h2 {
-    margin: 0;
-  }
-
-  .create-button {
-    text-transform: uppercase;
-
-    &-container {
-      display: flex;
-      justify-content: flex-end;
-    }
-  }
-
-  .roles-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-
-    @media (max-width: 575px) {
-      flex-direction: column;
-    }
-
-    .roles-item {
-      box-shadow: 0 10px 25px rgb(0 0 0 / 10%);
-      border-radius: 10px;
-      padding: 40px 20px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 250px;
-      justify-content: center;
-      flex-basis: 250px;
-      margin-right: 20px;
-      margin-bottom: 20px;
-
-      @media (max-width: 575px) {
-        width: 100%;
-      }
-
-      & .item-icon {
-        font-size: 30px;
-        width: 30px;
-        height: 30px;
-      }
-
-      & .item-icon-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: 1px solid #ddd;
-        padding: 3px;
-        margin-bottom: 20px;
-      }
-
-      & .roles-name {
-        font-size: 18px;
-        font-weight: 600;
-      }
-    }
-  }
+.role-item {
+  display: flex;
+  font-size: 20px;
+  min-height: 74px;
+  font-weight: 700;
+  line-height: 1.28;
+  padding: 8px 24px;
+  margin: 0 4px 24px;
+  text-align: center;
+  border-radius: 8px;
+  align-items: center;
+  text-decoration: none;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--color-black);
+  width: calc(33.3333% - 8px);
+  background: var(--color-neutral-10);
 }
