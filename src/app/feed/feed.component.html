@@ -9,7 +9,7 @@
           (click)="deleteSelectedPosts()"
           [disabled]="!selectedPosts.length"
         >
-          Delete
+          {{ 'app.delete' | translate }}
         </button>
         <mat-form-field appearance="outline" class="feed-page__control">
           <mat-select
@@ -34,7 +34,8 @@
           (click)="deselectAllPosts()"
           [disabled]="!selectedPosts.length"
         >
-          Deselect all
+          {{ 'nav.deselect' | translate }}
+          {{ 'nav.all' | translate }}
         </button>
       </ng-container>
     </div>
@@ -45,10 +46,10 @@
         [ngClass]="{ active: isBulkOptionsVisible }"
         (click)="toggleBulkOptions(!isBulkOptionsVisible)"
       >
-        Bulk actions
+        {{ 'post.modify.bulk_actions' | translate }}
       </button>
       <button class="feed-page__control" mat-stroked-button [matMenuTriggerFor]="sortingMenu">
-        Sorting
+        {{ 'global_filter.sorting' | translate }}
         <mat-icon svgIcon="sorting"></mat-icon>
       </button>
 

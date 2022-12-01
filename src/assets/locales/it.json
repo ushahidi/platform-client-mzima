@@ -432,6 +432,7 @@
       "all_collections": "Tutte le raccolte",
       "search_collections": "Cerca raccolte"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "Order",

@@ -449,6 +449,7 @@
       "all_collections": "toutes Collections",
       "search_collections": "Rechercher les Collections"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "Trier",

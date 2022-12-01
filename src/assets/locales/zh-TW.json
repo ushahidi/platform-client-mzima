@@ -449,6 +449,7 @@
       "all_collections": "所有集合",
       "search_collections": "搜尋集合"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "排序",

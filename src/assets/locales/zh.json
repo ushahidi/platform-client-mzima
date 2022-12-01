@@ -435,6 +435,7 @@
       "all_collections": "所有集合",
       "search_collections": "搜索收集"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "Order",

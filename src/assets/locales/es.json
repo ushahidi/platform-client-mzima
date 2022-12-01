@@ -449,6 +449,7 @@
       "all_collections": "Todas las colecciones",
       "search_collections": "Buscar colecciones"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "Pedido",

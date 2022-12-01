@@ -449,6 +449,7 @@
       "all_collections": "Все коллекции",
       "search_collections": "Поиск коллекций"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "Заявка",
