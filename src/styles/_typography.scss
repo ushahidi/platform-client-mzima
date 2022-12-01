@@ -11,7 +11,7 @@ $ushahidi-primary-palette: (
   ),
 );
 
-$ushahidi-accent-palette: (
+$ushahidi-acccent-palette: (
   400: var(--color-neutral-50),
   500: var(--color-neutral-40),
   600: var(--color-neutral-30),
@@ -22,8 +22,20 @@ $ushahidi-accent-palette: (
   ),
 );
 
+$ushahidi-warn-palette: (
+  400: var(--color-accent-shade),
+  500: var(--color-accent),
+  600: var(--color-accent-tint),
+  contrast: (
+    400: var(--color-accent-contrast),
+    500: var(--color-accent-contrast),
+    600: var(--color-accent-contrast),
+  ),
+);
+
 $ushahidi-primary: mat.define-palette($ushahidi-primary-palette, 400, 300, 500);
-$ushahidi-accent: mat.define-palette($ushahidi-accent-palette, 500, 400, 500);
+$ushahidi-acccent: mat.define-palette($ushahidi-acccent-palette, 500, 400, 500);
+$ushahidi-warn: mat.define-palette($ushahidi-warn-palette, 500, 400, 500);
 
 $ushahidi-typography: mat.define-typography-config(
   $font-family: var(--font-family),
@@ -38,7 +50,8 @@ $ushahidi-theme: mat.define-light-theme(
   (
     color: (
       primary: $ushahidi-primary,
-      accent: $ushahidi-accent,
+      accent: $ushahidi-acccent,
+      warn: $ushahidi-warn,
     ),
     typography: $ushahidi-typography,
   )
