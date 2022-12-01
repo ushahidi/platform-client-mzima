@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "There is",
     "unmapped_start_many": "There are",
-    "unmapped_one": "{{post_nb}} post",
-    "unmapped_many": "{{post_nb}} posts",
+    "unmapped_one": "{{ notShownPostsCount }} post",
+    "unmapped_many": "{{ notShownPostsCount }} posts",
     "unmapped_end": "not shown here because they don't include location information.",
+    "unmapped_none": "No posts without location information.",
     "more": "More",
     "keyword": "Keyword",
     "start_date": "Start Date",
@@ -531,7 +532,10 @@
     "date_range": "Date range",
     "who_its_visible_to": "Who it's visible to",
     "status": "Status",
-    "source": "Source"
+    "source": "Source",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Nothing; Show all posts",

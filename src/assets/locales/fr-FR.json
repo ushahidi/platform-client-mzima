@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "C'est",
     "unmapped_start_many": "Ce sont",
-    "unmapped_one": "{{post_nb}} publication",
-    "unmapped_many": "{{post_nb}} publications",
+    "unmapped_one": "{{ notShownPostsCount }} publication",
+    "unmapped_many": "{{ notShownPostsCount }} publications",
     "unmapped_end": "Non indiqué car ne contient pas d'information de localisation.",
+    "unmapped_none": "No posts without location information.",
     "more": "Plus",
     "keyword": "Mot clé",
     "start_date": "Date de début",
@@ -531,7 +532,10 @@
     "date_range": "Plage de date",
     "who_its_visible_to": "Pour qui c'est visible",
     "status": "Status",
-    "source": "Source"
+    "source": "Source",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Rien à afficher; Afficher toutes les publications",

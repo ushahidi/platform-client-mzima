@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "Есть",
     "unmapped_start_many": "Есть",
-    "unmapped_one": "{{post_nb}} публикаций",
-    "unmapped_many": "{{post_nb}} публикаций",
+    "unmapped_one": "{{ notShownPostsCount }} публикаций",
+    "unmapped_many": "{{ notShownPostsCount }} публикаций",
     "unmapped_end": "не отображаются, так как в них нет информации о местоположении.",
+    "unmapped_none": "No posts without location information.",
     "more": "Ещё",
     "keyword": "Ключевое слово",
     "start_date": "Начальная дата",
@@ -531,7 +532,10 @@
     "date_range": "Диапазон дат",
     "who_its_visible_to": "Пользователи, для которых доступен просмотр",
     "status": "Статус",
-    "source": "Source"
+    "source": "Source",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Нет; показать все публикации",

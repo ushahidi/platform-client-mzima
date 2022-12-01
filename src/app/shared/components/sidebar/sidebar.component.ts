@@ -7,6 +7,7 @@ import { MenuInterface, UserMenuInterface } from '@models';
 import { CollectionsComponent } from '@data';
 import { takeUntilDestroy$ } from '@helpers';
 import { EnumGtmEvent, EnumGtmSource } from '@enums';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -28,6 +29,7 @@ export class SidebarComponent implements OnInit {
     private authService: AuthService,
     private gtmTracking: GtmTrackingService,
     private router: Router,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -42,26 +44,56 @@ export class SidebarComponent implements OnInit {
 
   private initMenu() {
     this.menu = [
-      { label: 'Map view', router: 'map', icon: 'marker', visible: true },
-      { label: 'Data view', router: 'feed', icon: 'data', visible: true },
-      { label: 'Activity', router: 'activity', icon: 'activity', visible: true },
-      { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isAdmin },
+      {
+        label: 'views.map',
+        router: 'map',
+        icon: 'marker',
+        visible: true,
+      },
+      {
+        label: 'views.data',
+        router: 'feed',
+        icon: 'data',
+        visible: true,
+      },
+      {
+        label: 'views.activity',
+        router: 'activity',
+        icon: 'activity',
+        visible: true,
+      },
+      {
+        label: 'nav.settings',
+        router: 'settings',
+        icon: 'settings',
+        visible: this.isAdmin,
+      },
     ];
     this.userMenu = [
       {
-        label: 'Collections',
+        label: 'nav.collections',
         icon: 'collections',
         visible: true,
         action: () => this.openCollections(),
       },
-      { label: 'Log in', icon: 'login', visible: !this.isLoggedIn, action: () => this.openLogin() },
       {
-        label: 'Sign up',
+        label: 'nav.login',
+        icon: 'login',
+        visible: !this.isLoggedIn,
+        action: () => this.openLogin(),
+      },
+      {
+        label: 'nav.register',
         icon: 'signup',
         visible: !this.isLoggedIn && this.canRegister,
         action: () => this.openSignup(),
       },
-      { label: 'Log out', icon: 'logout', visible: this.isLoggedIn, action: () => this.logout() },
+      {
+        label: 'nav.logout',
+        icon: 'logout',
+        visible: this.isLoggedIn,
+        action: () => this.logout(),
+      },
     ];
   }
 
@@ -103,6 +135,7 @@ export class SidebarComponent implements OnInit {
   }
 
   registerPage(event: MouseEvent, router: string, label: string) {
+    label = this.translate.instant(label);
     event.preventDefault();
     this.gtmTracking.registerEvent(
       {

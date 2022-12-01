@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "Zde je",
     "unmapped_start_many": "Zde jsou",
-    "unmapped_one": "{{post_nb}} příspěvek",
-    "unmapped_many": "{{post_nb}} příspěvky",
+    "unmapped_one": "{{ notShownPostsCount }} příspěvek",
+    "unmapped_many": "{{ notShownPostsCount }} příspěvky",
     "unmapped_end": "zde nejsou zobrazeny, protože neobsahují informace o poloze.",
+    "unmapped_none": "No posts without location information.",
     "more": "Více",
     "keyword": "Klíčové slovo",
     "start_date": "Datum začátku",
@@ -531,7 +532,10 @@
     "date_range": "Časové období",
     "who_its_visible_to": "Kdo je viditelný",
     "status": "Stav",
-    "source": "Zdroj"
+    "source": "Zdroj",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Nic; Zobrazit všechny příspěvky",

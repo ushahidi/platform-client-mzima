@@ -488,9 +488,10 @@
     },
     "unmapped_start_one": "There is",
     "unmapped_start_many": "There are",
-    "unmapped_one": "{{post_nb}} post",
-    "unmapped_many": "{{post_nb}} posts",
+    "unmapped_one": "{{ notShownPostsCount }} post",
+    "unmapped_many": "{{ notShownPostsCount }} posts",
     "unmapped_end": "not shown here because they don't include location information.",
+    "unmapped_none": "No posts without location information.",
     "more": "Thêm nữa",
     "keyword": "Từ khóa",
     "start_date": "Ngày khởi đầu",
@@ -514,7 +515,10 @@
     "date_range": "Phạm vi ngày",
     "who_its_visible_to": "Ai có thể xem được cái này",
     "status": "Trạng thái",
-    "source": "Source"
+    "source": "Source",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Không có gì. Cho xem tất cả bài đăng.",

@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "يوجد",
     "unmapped_start_many": "يوجد",
-    "unmapped_one": "مشاركة {{post_nb}} ",
-    "unmapped_many": "{{post_nb}} منشورات",
+    "unmapped_one": "مشاركة {{ notShownPostsCount }} ",
+    "unmapped_many": "{{ notShownPostsCount }} منشورات",
     "unmapped_end": "غير مكتوب هنا لانهم لايشملون معلومات عن الموقع",
+    "unmapped_none": "No posts without location information.",
     "more": "المزيد",
     "keyword": "كلمة مفتاحية",
     "start_date": "تاريخ البدء",
@@ -531,7 +532,10 @@
     "date_range": "نطاق التاريخ",
     "who_its_visible_to": "من يظهر لـ",
     "status": "الحالة",
-    "source": "مصدر"
+    "source": "مصدر",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "لا شيء: إظهار كل المنشورات",

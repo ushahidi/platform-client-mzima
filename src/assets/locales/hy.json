@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "Կա",
     "unmapped_start_many": "Կան",
-    "unmapped_one": "{{post_nb}} գրառում",
-    "unmapped_many": "{{post_nb}} գրառում",
+    "unmapped_one": "{{ notShownPostsCount }} գրառում",
+    "unmapped_many": "{{ notShownPostsCount }} գրառում",
     "unmapped_end": "Ցուցադրված չեն գտնվելու վայրի վերաբերյալ տեղեկատվության բացակայության պատճառով",
+    "unmapped_none": "No posts without location information.",
     "more": "Ավելին",
     "keyword": "Բանալի բառ",
     "start_date": "Սկիզբ",
@@ -531,7 +532,10 @@
     "date_range": "Ամսաթվերի միջակայք",
     "who_its_visible_to": "Ում համար է սա տեսանելի",
     "status": "Կարգավիճակ",
-    "source": "Աղբյուր"
+    "source": "Աղբյուր",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Ոչինչ; Ցույց տալ բոլոր գրառումները",

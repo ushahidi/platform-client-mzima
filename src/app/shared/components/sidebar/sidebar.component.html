@@ -32,7 +32,10 @@
               ></use>
             </svg>
           </mat-icon>
-          <span class="sidebar-menu-button__title">{{ item.label }}</span>
+          <span class="sidebar-menu-button__title">
+            {{ item.label | translate }}
+            {{ 'post.view' | translate | lowercase }}
+          </span>
         </a>
       </ng-container>
     </div>
@@ -53,7 +56,7 @@
               ></use>
             </svg>
           </mat-icon>
-          <span class="sidebar-menu-button__title">{{ item.label }}</span>
+          <span class="sidebar-menu-button__title">{{ item.label | translate }}</span>
         </a>
       </ng-container>
     </div>

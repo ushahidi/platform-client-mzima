@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "Има",
     "unmapped_start_many": "Има",
-    "unmapped_one": "{{post_nb}} публикация",
-    "unmapped_many": "{{post_nb}} публикации",
+    "unmapped_one": "{{ notShownPostsCount }} публикация",
+    "unmapped_many": "{{ notShownPostsCount }} публикации",
     "unmapped_end": "не е показано тук, защото не включват информация за местоположение.",
+    "unmapped_none": "No posts without location information.",
     "more": "Повече",
     "keyword": "Ключови думи",
     "start_date": "Начална дата",
@@ -531,7 +532,10 @@
     "date_range": "Период",
     "who_its_visible_to": "За кого е видимо",
     "status": "Статус",
-    "source": "Източник"
+    "source": "Източник",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Нищо. Покажи всички публикации",

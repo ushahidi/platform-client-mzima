@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "Il y a ",
     "unmapped_start_many": "Il y a ",
-    "unmapped_one": "{{post_nb}} publication",
-    "unmapped_many": "{{post_nb}} posts",
+    "unmapped_one": "{{ notShownPostsCount }} publication",
+    "unmapped_many": "{{ notShownPostsCount }} posts",
     "unmapped_end": "not shown here because they don't include location information.",
+    "unmapped_none": "No posts without location information.",
     "more": "plus",
     "keyword": "Mot-clé",
     "start_date": "Date de démarrage",
@@ -531,7 +532,10 @@
     "date_range": "Période",
     "who_its_visible_to": "à qui est-ce visible",
     "status": "Statut",
-    "source": "Source"
+    "source": "Source",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Néant ; Afficher toutes les publications",

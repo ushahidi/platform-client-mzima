@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "Hay",
     "unmapped_start_many": "Hay",
-    "unmapped_one": "{{post_nb}} publicación",
-    "unmapped_many": "{{post_nb}} publicaciones",
+    "unmapped_one": "{{ notShownPostsCount }} publicación",
+    "unmapped_many": "{{ notShownPostsCount }} publicaciones",
     "unmapped_end": "no se muestran aquí porque no incluyen información de ubicación.",
+    "unmapped_none": "No posts without location information.",
     "more": "Más",
     "keyword": "Keyword",
     "start_date": "Fecha de inicio",
@@ -531,7 +532,10 @@
     "date_range": "Rango de fechas",
     "who_its_visible_to": "Visible para",
     "status": "Estado",
-    "source": "Fuente"
+    "source": "Fuente",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Nada; mostrar todas las publicaciones",

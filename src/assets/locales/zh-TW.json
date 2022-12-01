@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "有",
     "unmapped_start_many": "有",
-    "unmapped_one": "{{post_nb}} 筆資料",
-    "unmapped_many": "{{post_nb}} 筆資料",
+    "unmapped_one": "{{ notShownPostsCount }} 筆資料",
+    "unmapped_many": "{{ notShownPostsCount }} 筆資料",
     "unmapped_end": "not shown here because they don't include location information.",
+    "unmapped_none": "No posts without location information.",
     "more": "更多",
     "keyword": "關鍵字",
     "start_date": "開始日期",
@@ -531,7 +532,10 @@
     "date_range": "日期範圍",
     "who_its_visible_to": "誰可以看到",
     "status": "狀態",
-    "source": "Source"
+    "source": "Source",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "無：顯示所有資料",

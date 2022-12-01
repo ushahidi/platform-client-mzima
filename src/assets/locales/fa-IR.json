@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "اینجا هست",
     "unmapped_start_many": "اینجا هست",
-    "unmapped_one": "{{post_nb}} نوشته",
-    "unmapped_many": "{{post_nb}} نوشته ها",
+    "unmapped_one": "{{ notShownPostsCount }} نوشته",
+    "unmapped_many": "{{ notShownPostsCount }} نوشته ها",
     "unmapped_end": "اینجا نمایش داده نمیشود چون حاوی اطلاعات مکان نیست.",
+    "unmapped_none": "No posts without location information.",
     "more": "بیشتر",
     "keyword": "کلیدواژه",
     "start_date": "تاریخ شروع",
@@ -531,7 +532,10 @@
     "date_range": "بازه زمانی",
     "who_its_visible_to": "برای چه کسی قابل مشاهده است",
     "status": "وضعیت",
-    "source": "منبع"
+    "source": "منبع",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "هیچ چیز؛ نمایش همه نوشته ها",

@@ -491,9 +491,10 @@
     },
     "unmapped_start_one": "There is",
     "unmapped_start_many": "There are",
-    "unmapped_one": "{{post_nb}} post",
-    "unmapped_many": "{{post_nb}} posts",
+    "unmapped_one": "{{ notShownPostsCount }} post",
+    "unmapped_many": "{{ notShownPostsCount }} posts",
     "unmapped_end": "not shown here because they don't include location information.",
+    "unmapped_none": "No posts without location information.",
     "more": "更多",
     "keyword": "关键词",
     "start_date": "开始日期",
@@ -517,7 +518,10 @@
     "date_range": "日期范围",
     "who_its_visible_to": "对谁可见",
     "status": "状态",
-    "source": "Source"
+    "source": "Source",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "无结果；显示所有帖子",

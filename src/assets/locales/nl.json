@@ -505,9 +505,10 @@
     },
     "unmapped_start_one": "Er is",
     "unmapped_start_many": "Er zijn",
-    "unmapped_one": "{{post_nb}} plaatsing",
-    "unmapped_many": "{{post_nb}} plaatsingen",
+    "unmapped_one": "{{ notShownPostsCount }} plaatsing",
+    "unmapped_many": "{{ notShownPostsCount }} plaatsingen",
     "unmapped_end": "worden niet getoond omdat ze geen locatiegegevens bevatten.",
+    "unmapped_none": "No posts without location information.",
     "more": "Meer",
     "keyword": "Term",
     "start_date": "Startdatum",
@@ -531,7 +532,10 @@
     "date_range": "Datumbereik",
     "who_its_visible_to": "Voor wie het zichtbaar is",
     "status": "Status",
-    "source": "Bron"
+    "source": "Bron",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Niets, toon alle plaatsingen",
