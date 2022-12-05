@@ -18,6 +18,8 @@
     "created_by": "Created by {{author}}",
     "date_created": "Date created",
     "date_updated": "Date updated",
+    "choose_photo": "Choose photo",
+    "insert_text_here": "Insert text here...",
     "documentation": {
       "title": "Documentation",
       "description": "Learn how to set up, configure, and manage your Ushahidi deployment."
@@ -1061,6 +1063,14 @@
       "donation": "Donation",
       "donation_desc": "Create and manage the donations people can make towards your organisation."
     },
+    "general_settings": {
+      "generate_api_key": "Generate API Key",
+      "private_settings": "Private settings:",
+      "api_key": "API Key",
+      "placeholder": {
+        "pick_location": "Pick Location..."
+      }
+    },
     "user_settings": {
       "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
       "user_settings_desc_2": "Once set up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
@@ -1084,6 +1094,7 @@
       "destination": "Destination"
     },
     "data_sources": {
+      "add_source": "Add source",
       "associate_with_form": "Import to survey",
       "associate_with_form_desc": "All incoming data from {{provider}} will be used to create responses to the survey you choose",
       "data_sources": "Data Sources",

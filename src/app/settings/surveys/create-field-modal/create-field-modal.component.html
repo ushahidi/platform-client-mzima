@@ -18,7 +18,10 @@
 
     <div class="form-row">
       <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
-      <quill-editor [(ngModel)]="selectedFieldType.description"></quill-editor>
+      <quill-editor
+        [(ngModel)]="selectedFieldType.description"
+        placeholder="{{ 'app.insert_text_here' | translate }}"
+      ></quill-editor>
     </div>
 
     <!-- Has options -->
