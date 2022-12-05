@@ -2,40 +2,17 @@
   &::ng-deep {
     .mat-tab-header {
       margin-bottom: 21px;
-      border-bottom: none;
       padding-right: 64px;
     }
 
     .mat-tab-labels {
       margin: 0 -8px;
-      padding-bottom: 3px;
-      justify-content: flex-start;
     }
 
     .mat-tab-label {
-      opacity: 1;
-      height: 40px;
       margin: 0 8px;
       font-size: 24px;
-      line-height: 1.2;
-      min-width: 140px;
       font-weight: 700;
-      background: none !important;
-      transition: color 0.35s ease;
-      color: var(--color-neutral-60);
-
-      &:hover,
-      &.mat-tab-label-active {
-        color: var(--color-black);
-      }
-    }
-
-    .mat-ink-bar {
-      height: 3px;
-    }
-
-    .mat-tab-header-pagination {
-      display: none;
     }
   }
 }
