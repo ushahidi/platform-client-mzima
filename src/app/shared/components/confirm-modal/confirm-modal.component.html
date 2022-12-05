@@ -1,3 +1,13 @@
+<button
+  mat-stroked-button
+  mat-dialog-close
+  class="modal__close-btn"
+  tabindex="-1"
+  aria-label="{{ 'modal.button.close' | translate }}"
+>
+  <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
+</button>
+
 <div class="confirm">
   <app-lottie-animation
     *ngIf="data.buttonSuccess"
