@@ -11,7 +11,7 @@ export interface CollectionResult {
   featured: boolean;
   id: number;
   name: string;
-  role?: string;
+  role?: string[];
   updated?: string;
   url?: string;
   user_id?: string;
