@@ -33,4 +33,5 @@ export enum Icons {
   key = 'key',
   copy = 'copy',
   searchSmall = 'search-small',
+  auth = 'auth',
 }

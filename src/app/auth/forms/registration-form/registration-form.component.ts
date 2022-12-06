@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@services';
+import { RegexHelper } from '../../../core/helpers/regex';
 
 @Component({
   selector: 'app-registration-form',
@@ -12,7 +13,7 @@ export class RegistrationFormComponent {
   public isPasswordVisible = false;
   public form: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.pattern(RegexHelper.emailRegex)]],
     password: ['', [Validators.required]],
     agreement: [false, [Validators.required]],
   });
@@ -24,7 +25,7 @@ export class RegistrationFormComponent {
       return 'You must enter a value';
     }
 
-    return this.form.controls['email'].hasError('email') ? 'Not a valid email' : '';
+    return this.form.controls['email'].hasError('pattern') ? 'Not a valid email' : '';
   }
 
   togglePasswordVisible() {
