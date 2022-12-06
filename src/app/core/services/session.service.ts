@@ -119,6 +119,7 @@ export class SessionService {
     });
     this.currentUser = Object.assign({}, this.currentUser, user);
     this._currentUserData$.next(this.currentUser);
+    this._isLogged.next(!!this.currentUser.userId);
   }
 
   setSessionData(session: SessionTokenInterface) {
@@ -151,6 +152,7 @@ export class SessionService {
     });
     this.currentUser = {};
     this._currentUserData$.next(this.currentUser);
+    this._isLogged.next(!!this.currentUser.userId);
   }
 
   isFeatureEnabled(feature: keyof FeaturesConfigInterface) {

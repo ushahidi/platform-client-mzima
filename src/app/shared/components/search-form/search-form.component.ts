@@ -12,6 +12,7 @@ import {
   PostsService,
   SurveysService,
   EventType,
+  SessionService,
 } from '@services';
 import { BehaviorSubject, debounceTime, filter, forkJoin, map, Subject } from 'rxjs';
 import { SavedsearchesService } from 'src/app/core/services/savedsearches.service';
@@ -67,6 +68,7 @@ export class SearchFormComponent implements OnInit {
   private readonly searchSubject = new Subject<string>();
   public citiesOptions: BehaviorSubject<(SearchResponse | any)[]>;
   public notShownPostsCount: number;
+  isLoggedIn = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -78,6 +80,7 @@ export class SearchFormComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private searchService: SearchService,
+    private session: SessionService,
     private eventBusService: EventBusService,
   ) {
     this.getSavedFilters();
@@ -188,6 +191,8 @@ export class SearchFormComponent implements OnInit {
     this.statuses.map((status) => {
       status.name = this.translate.instant(status.name);
     });
+
+    this.session.isLogged$.subscribe((isLogged) => (this.isLoggedIn = isLogged));
   }
 
   public getSurveys(): void {

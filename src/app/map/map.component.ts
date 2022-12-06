@@ -169,6 +169,7 @@ export class MapComponent implements OnInit {
                             },
                           });
                         }
+                        layer.openPopup(); // This one is for fit popup in view
                       },
                     });
                   },

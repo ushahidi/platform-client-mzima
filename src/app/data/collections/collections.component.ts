@@ -161,6 +161,7 @@ export class CollectionsComponent implements OnInit {
   saveCollection() {
     const collectionData = this.collectionForm.value;
     collectionData.role = collectionData.visible_to.options;
+    delete collectionData.visible_to;
     this.session.currentUserData$.subscribe((userData) => {
       collectionData.user_id = userData.userId;
 

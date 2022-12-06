@@ -116,6 +116,7 @@
       title="Saved filters"
       [type]="filterType.Select"
       [options]="savedsearches"
+      [canEdit]="isLoggedIn"
       (editOption)="saveSearch($event)"
       [(ngModel)]="activeSavedSearchValue"
       [ngModelOptions]="{ standalone: true }"
