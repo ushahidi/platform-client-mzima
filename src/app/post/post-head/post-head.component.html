@@ -1,8 +1,19 @@
 <div class="post-head">
-  <button tabindex="-1" mat-icon-button class="post-head__control">
+  <button
+    tabindex="-1"
+    mat-icon-button
+    (click)="$event.stopPropagation()"
+    class="post-head__control"
+  >
     <mat-icon matPrefix svgIcon="share"></mat-icon>
   </button>
-  <button tabindex="-1" mat-icon-button class="post-head__control" [matMenuTriggerFor]="actions">
+  <button
+    tabindex="-1"
+    mat-icon-button
+    (click)="$event.stopPropagation()"
+    class="post-head__control"
+    [matMenuTriggerFor]="actions"
+  >
     <mat-icon matPrefix svgIcon="dots"></mat-icon>
   </button>
 

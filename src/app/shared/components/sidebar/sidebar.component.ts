@@ -41,7 +41,7 @@ export class SidebarComponent implements OnInit {
 
   private initMenu() {
     this.menu = [
-      { label: 'Map view', router: 'map', icon: 'marker', visible: true },
+      { label: 'Map view', router: 'map', icon: 'map', visible: true },
       { label: 'Data view', router: 'feed', icon: 'data', visible: true },
       { label: 'Activity', router: 'activity', icon: 'activity', visible: true },
       { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isAdmin },
@@ -55,13 +55,13 @@ export class SidebarComponent implements OnInit {
       },
       {
         label: 'Log in',
-        icon: 'login',
+        icon: 'auth',
         visible: !this.isLoggedIn && !this.canRegister,
         action: () => this.openLogin(),
       },
       {
         label: 'Log in / Sign up',
-        icon: 'signup',
+        icon: 'auth',
         visible: !this.isLoggedIn && this.canRegister,
         action: () => this.openLogin(),
       },

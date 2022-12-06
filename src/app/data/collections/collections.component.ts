@@ -38,6 +38,7 @@ export class CollectionsComponent implements OnInit {
   });
   roleOptions: any;
   tmpCollectionToEditId = 0;
+  isLoggedIn = true;
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
@@ -51,8 +52,18 @@ export class CollectionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.session.currentUserData$.subscribe((userData) => {
+      this.isLoggedIn = !!userData.userId;
+      if (this.isLoggedIn) {
+        this.initRoles();
+      }
+    });
+
     this.getCollections();
     this.featuredEnabled = true; //hasPermission Manage Posts
+  }
+
+  private initRoles() {
     this.rolesService.get().subscribe({
       next: (response) => {
         this.roleOptions = [
