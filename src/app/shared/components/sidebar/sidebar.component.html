@@ -24,14 +24,6 @@
           (click)="registerPage($event, item.router, item.label)"
           [data-qa]="'btn-' + item.icon"
         >
-          <mat-icon class="sidebar-menu-button__icon">
-            <svg class="iconic" role="img">
-              <use
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                [attr.xlink:href]="'assets/menu-icons.svg#' + item.icon"
-              ></use>
-            </svg>
-          </mat-icon>
           <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
           <span class="sidebar-menu-button__title">{{ item.label }}</span>
         </a>
