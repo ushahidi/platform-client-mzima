@@ -1,26 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '@services';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  selector: 'app-registration-form',
+  templateUrl: './registration-form.component.html',
+  styleUrls: ['./registration-form.component.scss'],
 })
-export class RegisterComponent {
-  isPasswordVisible = false;
+export class RegistrationFormComponent {
+  @Output() registered = new EventEmitter();
+  public isPasswordVisible = false;
   public form: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
+    agreement: [false, [Validators.required]],
   });
 
-  constructor(
-    private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private matDialogRef: MatDialogRef<RegisterComponent>,
-  ) {}
+  constructor(private authService: AuthService, private formBuilder: FormBuilder) {}
 
   getErrorMessage(field: string) {
     if (this.form.controls[field].hasError('required')) {
@@ -28,10 +25,6 @@ export class RegisterComponent {
     }
 
     return this.form.controls['email'].hasError('email') ? 'Not a valid email' : '';
-  }
-
-  cancel() {
-    this.matDialogRef.close();
   }
 
   togglePasswordVisible() {
@@ -43,7 +36,7 @@ export class RegisterComponent {
     this.form.disable();
     this.authService.signup({ email, password, realname: name }).subscribe({
       next: (response) => {
-        this.matDialogRef.close(response);
+        this.registered.emit(response);
       },
       error: () => {
         this.form.enable();

@@ -8,7 +8,78 @@
   <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
 </button>
 
-<ng-container *ngIf="isCreation; else collectionsView">
+<ng-container *ngIf="currentView === CollectionView.List; else createForm">
+  <div class="head">
+    <h1 mat-dialog-title>{{ 'app.collection' | translate }}</h1>
+    <button
+      type="button"
+      color="primary"
+      mat-raised-button
+      (click)="addNewCollection()"
+      tabindex="-1"
+    >
+      <span>Add collection</span>
+      <mat-icon svgIcon="plus"></mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="searchForm" (ngSubmit)="getCollections(searchForm.get('query')?.value)">
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          placeholder="{{ 'location.search' | translate }}"
+          name="query"
+          formControlName="query"
+        />
+        <mat-icon matPrefix svgIcon="search"></mat-icon>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <ng-container *ngIf="!isLoading; else loader">
+    <div mat-dialog-content>
+      <div class="collection-list">
+        <div
+          matRipple
+          class="collection-item"
+          *ngFor="let item of collectionList"
+          (click)="goToCollection(item)"
+        >
+          <div class="collection-item__actions">
+            <button
+              tabindex="-1"
+              mat-icon-button
+              class="collection-item__control"
+              (click)="editCollection(item, $event)"
+            >
+              <mat-icon matPrefix svgIcon="edit"></mat-icon>
+            </button>
+            <button
+              tabindex="-1"
+              mat-icon-button
+              class="collection-item__control"
+              (click)="deleteCollection(item, $event)"
+            >
+              <mat-icon matPrefix svgIcon="close"></mat-icon>
+            </button>
+          </div>
+
+          <strong class="collection-item__title">{{ item.name }}</strong>
+          <span class="collection-item__description">{{ item.description }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" mat-dialog-close>
+      {{ 'form.save_and_close' | translate }}
+    </button>
+  </mat-dialog-actions> -->
+  </ng-container>
+</ng-container>
+
+<ng-template #createForm>
   <h1 mat-dialog-title>{{ 'app.create_collection' | translate }}</h1>
 
   <div mat-dialog-content>
@@ -76,53 +147,6 @@
       {{ 'app.save' | translate }}
     </button>
   </mat-dialog-actions>
-</ng-container>
-
-<ng-template #collectionsView>
-  <div class="head">
-    <h1 mat-dialog-title>{{ 'app.collection' | translate }}</h1>
-    <button
-      type="button"
-      color="primary"
-      mat-raised-button
-      (click)="addNewCollection()"
-      tabindex="-1"
-    >
-      <span>Add collection</span>
-      <mat-icon svgIcon="plus"></mat-icon>
-    </button>
-  </div>
-
-  <form>
-    <div class="form-row">
-      <mat-form-field appearance="outline">
-        <input matInput placeholder="{{ 'location.search' | translate }}" />
-        <mat-icon matPrefix svgIcon="search"></mat-icon>
-      </mat-form-field>
-    </div>
-  </form>
-
-  <ng-container *ngIf="!isLoading; else loader">
-    <div mat-dialog-content>
-      <div class="collection-list">
-        <div
-          matRipple
-          class="collection-item"
-          *ngFor="let item of collectionList"
-          (click)="goToCollection(item)"
-        >
-          <strong class="collection-item__title">{{ item.name }}</strong>
-          <span class="collection-item__description">{{ item.description }}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- <mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" mat-dialog-close>
-      {{ 'form.save_and_close' | translate }}
-    </button>
-  </mat-dialog-actions> -->
-  </ng-container>
 </ng-template>
 
 <ng-template #loader>

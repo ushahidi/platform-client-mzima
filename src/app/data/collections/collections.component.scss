@@ -28,6 +28,16 @@
   color: var(--color-neutral-80);
   background: var(--color-neutral-10);
 
+  &__actions {
+    display: flex;
+    margin: 0 -8px;
+    align-items: center;
+    justify-content: flex-end;
+    .mat-icon {
+      font-size: inherit;
+    }
+  }
+
   &__title {
     display: block;
     font-size: 14px;

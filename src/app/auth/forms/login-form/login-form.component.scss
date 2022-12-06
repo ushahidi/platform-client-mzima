@@ -1,0 +1,12 @@
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-error {
+  display: block;
+  font-size: 16px;
+  min-height: 24px;
+  line-height: 1.5;
+}

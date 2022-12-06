@@ -1,8 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from '@services';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -10,45 +7,20 @@ import { AuthService } from '@services';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  public form: FormGroup = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
-  });
-  public loginError: string;
+  public isSignupActive: boolean;
 
   constructor(
-    private authService: AuthService,
-    private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) private data: any,
     private matDialogRef: MatDialogRef<LoginComponent>,
-    private translate: TranslateService,
-  ) {}
-
-  getErrorMessage(field: string) {
-    if (this.form.controls[field].hasError('required')) {
-      return this.translate.instant('contact.valid.email.required');
-    }
-
-    return this.form.controls['email'].hasError('email')
-      ? this.translate.instant('contact.valid.email.not_valid')
-      : '';
+  ) {
+    this.isSignupActive = this.data.isSignupActive;
   }
 
-  cancel() {
+  public cancel() {
     this.matDialogRef.close('cancel');
   }
 
-  login() {
-    const { email, password } = this.form.value;
-    this.form.disable();
-    this.authService.login(email, password).subscribe({
-      next: (response) => {
-        this.matDialogRef.close(response);
-      },
-      error: (err) => {
-        this.loginError = err.error.message;
-        this.form.enable();
-        setTimeout(() => (this.loginError = ''), 4000);
-      },
-    });
+  public loggined(state: boolean): void {
+    this.matDialogRef.close(state);
   }
 }
