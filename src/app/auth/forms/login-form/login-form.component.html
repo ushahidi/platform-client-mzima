@@ -1,0 +1,47 @@
+<form novalidate [formGroup]="form" (ngSubmit)="login()">
+  <div class="form-row">
+    <mat-label>{{ 'user.email' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="pat@example.com" formControlName="email" required />
+      <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-label>{{ 'user.password' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        placeholder="pat@example.com"
+        formControlName="password"
+        required
+        type="password"
+      />
+      <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row controls">
+    <div class="checkbox">
+      <mat-checkbox> Remember me on this device. </mat-checkbox>
+    </div>
+
+    <button mat-button>Forgot password?</button>
+  </div>
+
+  <mat-error class="form-error">{{ loginError }}</mat-error>
+
+  <div mat-dialog-actions align="end">
+    <ng-content select="[btn-cancel]"></ng-content>
+
+    <button
+      type="submit"
+      color="primary"
+      mat-raised-button
+      [disabled]="form.invalid || form.disabled"
+      data-qa="btn-login"
+    >
+      {{ 'nav.login' | translate }}
+    </button>
+  </div>
+</form>

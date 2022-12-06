@@ -4,7 +4,7 @@
       {{ hxlEnabled ? 'data_export.title_hxl' : 'data_export.title' }}
     </h2>
     <p *ngIf="showProgress; else description" translate>data_export.export_progress</p>
-    <mat-tab-group>
+    <mat-tab-group dynamicHeight disableRipple disablePagination animationDuration="0ms">
       <mat-tab [label]="'data_export.export' | translate" data-qa="tab-export">
         <div class="tab-cover">
           <div class="form-field" *ngIf="hxlEnabled && !hxlApiKey">

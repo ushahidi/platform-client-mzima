@@ -1,18 +1,29 @@
 .confirm {
+  text-align: center;
+  padding: 56px 0 14px;
+
   &-title {
-    display: flex;
+    font-size: 24px;
     font-weight: 700;
-    min-height: 60px;
-    margin-bottom: 12px;
-    align-items: center;
-    color: var(--color-black);
-    justify-content: flex-start;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--color-dark);
+  }
+  &-description {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-dark);
+    text-align: center;
+    line-height: 1.5;
+
+    p {
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
-  &-description {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.5;
-    color: var(--color-neutral-90);
+  .mat-dialog-actions {
+    margin-top: 24px;
   }
 }

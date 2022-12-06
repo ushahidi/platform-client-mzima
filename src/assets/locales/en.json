@@ -1409,7 +1409,7 @@
     "passwordreset_confirm_instructions": "If your email exists in our database, you will receive a password recovery email soon.",
     "token": "Password reset token",
     "valid": {
-      "full_name": {
+      "name": {
         "required": "Display name is required",
         "maxlength": "Display name is too long"
       },

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SessionService, AuthService, GtmTrackingService } from '@services';
-import { LoginComponent, RegisterComponent } from '@auth';
+import { LoginComponent } from '@auth';
 import { MenuInterface, UserMenuInterface } from '@models';
 import { CollectionsComponent } from '@data';
 import { takeUntilDestroy$ } from '@helpers';
@@ -34,15 +34,14 @@ export class SidebarComponent implements OnInit {
     this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
       this.isAdmin = userData.role === 'admin';
+      this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
       this.initMenu();
     });
-
-    this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
   }
 
   private initMenu() {
     this.menu = [
-      { label: 'Map view', router: 'map', icon: 'marker', visible: true },
+      { label: 'Map view', router: 'map', icon: 'map', visible: true },
       { label: 'Data view', router: 'feed', icon: 'data', visible: true },
       { label: 'Activity', router: 'activity', icon: 'activity', visible: true },
       { label: 'Settings', router: 'settings', icon: 'settings', visible: this.isAdmin },
@@ -54,12 +53,17 @@ export class SidebarComponent implements OnInit {
         visible: true,
         action: () => this.openCollections(),
       },
-      { label: 'Log in', icon: 'login', visible: !this.isLoggedIn, action: () => this.openLogin() },
       {
-        label: 'Sign up',
-        icon: 'signup',
+        label: 'Log in',
+        icon: 'auth',
+        visible: !this.isLoggedIn && !this.canRegister,
+        action: () => this.openLogin(),
+      },
+      {
+        label: 'Log in / Sign up',
+        icon: 'auth',
         visible: !this.isLoggedIn && this.canRegister,
-        action: () => this.openSignup(),
+        action: () => this.openLogin(),
       },
       { label: 'Log out', icon: 'logout', visible: this.isLoggedIn, action: () => this.logout() },
     ];
@@ -68,22 +72,25 @@ export class SidebarComponent implements OnInit {
   private openLogin(): void {
     this.dialog.open(LoginComponent, {
       width: '100%',
-      maxWidth: 480,
+      maxWidth: 576,
+      data: {
+        isSignupActive: this.canRegister,
+      },
     });
   }
 
-  private openSignup(): void {
-    const dialogRef = this.dialog.open(RegisterComponent, {
-      width: '100%',
-      maxWidth: 480,
-    });
+  // private openSignup(): void {
+  //   const dialogRef = this.dialog.open(RegisterComponent, {
+  //     width: '100%',
+  //     maxWidth: 480,
+  //   });
 
-    dialogRef.afterClosed().subscribe((isSuccess) => {
-      if (isSuccess) {
-        this.openLogin();
-      }
-    });
-  }
+  //   dialogRef.afterClosed().subscribe((isSuccess) => {
+  //     if (isSuccess) {
+  //       this.openLogin();
+  //     }
+  //   });
+  // }
 
   private openCollections(): void {
     const dialogRef = this.dialog.open(CollectionsComponent, {
