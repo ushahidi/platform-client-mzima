@@ -1,62 +1,115 @@
+.head {
+  display: flex;
+  margin-bottom: 24px;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    margin-bottom: 0;
+  }
+}
+
 .metadata {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  display: flex;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  align-items: center;
+  color: var(--color-black);
+  justify-content: flex-start;
 
-  > li {
-    margin-bottom: 8px;
-    display: inline-block;
-    vertical-align: middle;
+  &__title {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    align-items: center;
+    text-overflow: ellipsis;
+    justify-content: flex-start;
+    max-width: calc(50% - 48px);
 
-    &:not(:last-child) {
-      &:after {
-        opacity: 0.7;
-        margin: 0 4px;
-        content: '\2192';
-        display: inline-block;
+    .mat-icon {
+      font-size: 32px;
+      margin-right: 4px;
+    }
+  }
+
+  &__separator {
+    line-height: 1;
+    margin: 0 32px;
+    font-size: 24px;
+  }
+
+  .mat-icon {
+    width: 1em;
+    height: 1em;
+
+    &::ng-deep {
+      svg {
+        display: block;
       }
     }
   }
 }
 
-.radio-group {
-  &__content {
-    padding-left: 44px;
-  }
-}
-
-.mat-radio-button {
-  .mat-icon {
-    width: 1em;
-    height: 1em;
-    line-height: 1;
-    font-size: 16px;
-    margin-right: 4px;
-  }
-}
-
 .mat-table {
-  width: 100%;
   margin-bottom: 32px;
 
   .mat-form-field-appearance-outline {
     &::ng-deep {
       .mat-form-field-wrapper {
-        padding-top: 8px;
-        padding-bottom: 8px;
+        padding-top: 5px;
+        padding-bottom: 5px;
       }
     }
   }
 }
 
-.seleted-file {
-  margin-left: 16px;
+.mat-radio-group {
+  &::ng-deep {
+    .mat-radio-label {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+  }
 }
 
-.survey-select {
-  &::ng-deep {
-    .mat-select-placeholder {
-      font-weight: bold;
+.radio-button {
+  font-size: 16px;
+  margin-top: 8px;
+  font-weight: 500;
+  line-height: 1.25;
+
+  &__content {
+    padding-top: 16px;
+    padding-left: 44px;
+
+    .mat-radio-group {
+      display: block;
+      padding-top: 0;
+      margin-top: -8px;
+    }
+
+    .radio-button {
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.table-description {
+  font-size: 14px;
+  line-height: 1.3;
+  margin-bottom: 24px;
+  color: var(--color-neutral-90);
+
+  .form-label {
+    margin-bottom: 8px;
+  }
+
+  p {
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }
