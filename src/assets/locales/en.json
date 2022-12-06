@@ -19,6 +19,9 @@
     "date_created": "Date created",
     "date_updated": "Date updated",
     "choose_photo": "Choose photo",
+    "change_file": "Change file",
+    "upload_fie": "Upload file",
+    "add_all_fields": "Add all fields",
     "insert_text_here": "Insert text here...",
     "documentation": {
       "title": "Documentation",
@@ -1219,10 +1222,24 @@
         "placeholder": "Enter the title of your donation",
         "required": "Donation title is required"
       },
-      "description": "Enter text telling more about this donation",
+      "description": {
+        "label": "Describe your donation",
+        "placeholder": "Enter text telling more about this donation"
+      },
+      "images": {
+        "label": "Donation images"
+      },
       "wallet": {
+        "label":  "Wallet address",
         "placeholder": "Enter a wallet address e.g $ilp.uphold.com/example",
         "required": "Donation wallet address is required"
+      },
+      "info": {
+        "start_one": "Please make sure you have your wallet set up on",
+        "start_two": "to set web monetization.",
+        "start_three": "If you don't have a wallet already please click",
+        "here": "here",
+        "end": "to create one."
       }
     },
     "roles": {

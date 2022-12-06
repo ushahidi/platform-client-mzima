@@ -20,13 +20,13 @@
         data-qa="title"
       />
       <mat-error *ngIf="donationForm.get('title')?.invalid">
-        {{ donationForm.get('title')?.errors | json }}
+        {{ 'settings.donation.title.required' | translate }}
       </mat-error>
     </mat-form-field>
   </div>
 
   <div class="form-row">
-    <mat-label translate>Describe your donation</mat-label>
+    <mat-label translate>{{ 'settings.donation.description.label' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <textarea
         data-qa="description"
@@ -34,14 +34,14 @@
         cdkTextareaAutosize
         cdkAutosizeMinRows="4"
         cdkAutosizeMaxRows="8"
-        placeholder="{{ 'settings.donation.description' | translate }}"
+        placeholder="{{ 'settings.donation.description.placeholder' | translate }}"
         formControlName="description"
       ></textarea>
     </mat-form-field>
   </div>
 
   <div class="form-row">
-    <mat-label>Donation images</mat-label>
+    <mat-label translate>settings.donation.images.label</mat-label>
     <app-file-uploader
       [multiple]="true"
       [imageSrc]="images"
@@ -52,7 +52,7 @@
   </div>
 
   <div class="form-row">
-    <mat-label translate>Wallet address</mat-label>
+    <mat-label translate>settings.donation.wallet.label</mat-label>
     <mat-form-field appearance="outline">
       <input
         data-qa="wallet"
@@ -61,10 +61,14 @@
         formControlName="wallet"
       />
       <mat-hint>
-        Please make sure you have your wallet set up on
+        {{ 'settings.donation.info.start_one' | translate }}
         <a target="_blank" href="https://uphold.com">uphold.com</a>
-        to set web monetization. If you don't have a wallet already please click
-        <a target="_blank" href="https://wallet.uphold.com/signup">here</a> to create one.
+        {{ 'settings.donation.info.start_two' | translate }}
+        {{ 'settings.donation.info.start_three' | translate }}
+        <a target="_blank" href="https://wallet.uphold.com/signup">{{
+          'settings.donation.info.here' | translate
+        }}</a>
+        {{ 'settings.donation.info.end' | translate }}
       </mat-hint>
     </mat-form-field>
   </div>
@@ -72,9 +76,9 @@
 
 <div class="form-controls-panel form-controls-panel--sticky">
   <button type="button" mat-stroked-button routerLink="/settings" translate data-qa="btn-cancel">
-    Cancel
+    {{ 'app.cancel' | translate }}
   </button>
   <button type="button" color="primary" mat-raised-button (click)="save()" data-qa="btn-save">
-    Save
+    {{ 'app.save' | translate }}
   </button>
 </div>

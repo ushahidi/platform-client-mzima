@@ -8,7 +8,7 @@
       </ng-template>
       <div class="form-row">
         <button color="dark" mat-raised-button class="upload-button" data-qa="btn-upload">
-          {{ selectedFile ? 'Change' : 'Upload' }} file
+          {{ selectedFile ? 'app.change_file' : 'app.upload_file' }}
           <input name="file" type="file" accept=".csv" (change)="uploadFile($event)" />
         </button>
         <span class="seleted-file" *ngIf="selectedFile">{{ selectedFile.name }}</span>
