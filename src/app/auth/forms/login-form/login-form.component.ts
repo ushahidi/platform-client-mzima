@@ -24,13 +24,18 @@ export class LoginFormComponent {
   ) {}
 
   getErrorMessage(field: string) {
-    if (this.form.controls[field].hasError('required')) {
-      return this.translate.instant('contact.valid.email.required');
+    switch (field) {
+      case 'email':
+        return this.form.controls['email'].hasError('pattern')
+          ? this.translate.instant('user.valid.email.email')
+          : this.form.controls['email'].hasError('required')
+          ? this.translate.instant('user.valid.email.required')
+          : '';
+      case 'password':
+        return this.form.controls['password'].hasError('required')
+          ? this.translate.instant('user.valid.password.required')
+          : '';
     }
-
-    return this.form.controls['email'].hasError('pattern')
-      ? this.translate.instant('contact.valid.email.not_valid')
-      : '';
   }
 
   login() {

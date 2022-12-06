@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '@services';
 import { regexHelper } from '@helpers';
 
@@ -18,14 +19,27 @@ export class RegistrationFormComponent {
     agreement: [false, [Validators.required]],
   });
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
+    private translate: TranslateService,
+  ) {}
 
   getErrorMessage(field: string) {
-    if (this.form.controls[field].hasError('required')) {
-      return 'You must enter a value';
+    switch (field) {
+      case 'name':
+      case 'password':
+      case 'agreement':
+        return this.form.controls[field].hasError('required')
+          ? this.translate.instant(`user.valid.${field}.required`)
+          : '';
+      case 'email':
+        return this.form.controls['email'].hasError('pattern')
+          ? this.translate.instant('user.valid.email.email')
+          : this.form.controls['email'].hasError('required')
+          ? this.translate.instant('user.valid.email.required')
+          : '';
     }
-
-    return this.form.controls['email'].hasError('pattern') ? 'Not a valid email' : '';
   }
 
   togglePasswordVisible() {
