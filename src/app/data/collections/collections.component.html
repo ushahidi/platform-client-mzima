@@ -50,7 +50,7 @@
           <div class="collection-item__actions" *ngIf="isLoggedIn">
             <button
               tabindex="-1"
-              mat-icon-button
+              mat-raised-button
               class="collection-item__control"
               (click)="editCollection(item, $event)"
             >
@@ -58,7 +58,7 @@
             </button>
             <button
               tabindex="-1"
-              mat-icon-button
+              mat-raised-button
               class="collection-item__control"
               (click)="deleteCollection(item, $event)"
             >
