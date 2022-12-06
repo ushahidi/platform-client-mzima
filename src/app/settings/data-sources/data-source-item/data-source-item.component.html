@@ -103,8 +103,10 @@
   </ng-container>
 </div>
 
-<form [formGroup]="form" *ngIf="provider?.options" (ngSubmit)="saveProviderData($event)">
-  <div *ngFor="let control of provider.options">
+<form [formGroup]="form" *ngIf="provider?.control_options" (ngSubmit)="saveProviderData($event)">
+  <div *ngFor="let control of provider.control_options">
+    <!-- {{control | json}} -->
+
     <ng-container *ngIf="control.input === 'read-only-text'">
       <h2 *ngIf="control.label?.length">{{ control.label }}</h2>
       <p *ngIf="control.description?.length" [innerHTML]="control.description"></p>
@@ -117,7 +119,7 @@
           <input
             matInput
             [placeholder]="control.description"
-            [formControlName]="control.form_label"
+            [formControlName]="control.control_label"
             [type]="control.input"
             required
           />
@@ -127,8 +129,9 @@
           ></mat-hint>
           <mat-error
             *ngIf="
-              (form.get(control.form_label)?.touched || form.get(control.form_label)?.dirty) &&
-              form.get(control.form_label)?.hasError('required')
+              (form.get(control.control_label)?.touched ||
+                form.get(control.control_label)?.dirty) &&
+              form.get(control.control_label)?.hasError('required')
             "
           >
             This field is required
@@ -138,9 +141,9 @@
         <mat-radio-group
           aria-label="Select an option"
           *ngIf="control.input === 'radio'"
-          [formControlName]="control.form_label"
+          [formControlName]="control.control_label"
         >
-          <mat-radio-button *ngFor="let item of control.options" [value]="item">
+          <mat-radio-button *ngFor="let item of control.control_options" [value]="item">
             {{ item }}
           </mat-radio-button>
         </mat-radio-group>

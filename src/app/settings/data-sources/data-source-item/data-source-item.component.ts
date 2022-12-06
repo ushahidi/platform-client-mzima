@@ -16,6 +16,7 @@ import {
   SurveysService,
 } from '@services';
 import { combineLatest } from 'rxjs';
+import { DataSourceOptions } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-data-source-item',
@@ -47,7 +48,21 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     private formsService: FormsService,
   ) {}
 
+  getAvailableProviders(providers: any) {
+    const tempProviders: any[] = [];
+    for (const key in providers) {
+      tempProviders.push({
+        id: key.toLowerCase(),
+        name: key.toLowerCase(),
+        type: providers[key as keyof typeof providers],
+      });
+    }
+    return tempProviders.filter((provider) => !provider.type);
+  }
+
   ngOnInit(): void {
+    console.log('DataSourceItemComponent');
+
     this.currentProviderId = this.route.snapshot.paramMap.get('id');
     if (!this.currentProviderId) {
       this.onCreating = true;
@@ -65,27 +80,36 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   private getProviders(): void {
     const tempControls: any[] = [];
     const dataSourceData$ = this.configService.getProvidersData();
-    const dataSourceList$ = this.dataSourcesService.get();
+    const dataSourceList$ = this.dataSourcesService.getDataSource();
     combineLatest([dataSourceData$, dataSourceList$]).subscribe({
       next: ([dataSourceData, dataSourceList]) => {
         this.allProvidersData = dataSourceData;
-        for (const dataSourceKey in dataSourceData) {
+        this.availableProviders = this.getAvailableProviders(this.allProvidersData.providers);
+
+        for (const dataSourceKey in dataSourceData.providers) {
           const item = dataSourceList.results.find((el: { id: string }) => el.id === dataSourceKey);
+
           if (item) {
-            const dataSourceDataItem = dataSourceData[item.id];
+            const dataSourceDataItem = dataSourceData.providers[item.id];
             for (const dataKey in item.options) {
-              const ctrl = item.options[dataKey];
-              if (ctrl.rules) ctrl.rules = ctrl.rules.map((el: any) => ({ [el]: true }));
-              ctrl.form_label = dataKey;
-              if (dataSourceDataItem.hasOwnProperty(dataKey) && dataSourceKey === item.id) {
-                ctrl.value = dataSourceDataItem[dataKey] || null;
+              const key = dataKey as string;
+              const ctrl = item.options[key as keyof DataSourceOptions];
+              if (ctrl?.rules) {
+                const rule = ctrl.rules.map((el: string) => ({ [el]: true }));
+                ctrl.control_rules = rule;
+                ctrl.control_label = dataKey;
+
+                if (dataSourceDataItem.hasOwnProperty(dataKey) && dataSourceKey === item.id) {
+                  ctrl.control_value = dataSourceDataItem[dataKey] || null;
+                }
               }
             }
-            item.options = Object.values(item.options);
-            item.available_provider = dataSourceData.providers[dataSourceKey];
-            item.visible_survey = !!Object.keys(dataSourceData[dataSourceKey]).length;
 
-            let inboundFieldsArr = [];
+            item.control_options = Object.values(item.options);
+            item.available_provider = dataSourceData.providers[dataSourceKey] || false;
+            item.visible_survey = !!Object.keys(dataSourceData[dataSourceKey] || {}).length;
+
+            let inboundFieldsArr: any[] = [];
             for (const dataKey in item.inbound_fields) {
               inboundFieldsArr.push({
                 form_label: dataKey.toLowerCase(),
@@ -97,6 +121,10 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
           }
         }
         this.dataSourceList = tempControls.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
+
+        console.log(this.dataSourceList);
+
+        // console.log(this.availableProviders);
         this.setCurrentProvider();
       },
     });
@@ -104,13 +132,11 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
 
   public setCurrentProvider(providerId?: string): void {
     if (!this.currentProviderId && !providerId) {
-      this.availableProviders = this.dataSourceList.filter(
-        (provider) => !provider.available_provider,
-      );
       this.currentProviderId = this.availableProviders[0]?.id as string;
     }
 
     const id = this.currentProviderId || providerId;
+    console.log(id);
 
     if (id) {
       this.provider = this.dataSourceList.find((provider) => provider.id === id);
@@ -118,7 +144,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
       this.createForm(this.provider);
       this.addControlsToForm('id', this.fb.control(this.provider.id, Validators.required));
     } else {
-      this.router.navigate(['/settings/data-sources']);
+      // this.router.navigate(['/settings/data-sources']);
     }
   }
 
@@ -139,7 +165,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   }
 
   private createForm(provider: any) {
-    this.createControls(provider.options);
+    this.createControls(provider.control_options);
     this.createControls(provider.inbound_fields);
   }
 
@@ -149,12 +175,12 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     }
   }
 
-  private createControls(controls: any) {
+  private createControls(controls: any[]) {
     for (const control of controls) {
       const validatorsToAdd = [];
 
-      if (control?.rules) {
-        for (const [key] of Object.entries(control.rules)) {
+      if (control?.control_rules) {
+        for (const [key] of Object.entries(control.control_rules)) {
           switch (key) {
             case 'required':
               validatorsToAdd.push(Validators.required);
@@ -164,7 +190,10 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
           }
         }
       }
-      this.addControlsToForm(control.form_label, this.fb.control(control.value, validatorsToAdd));
+      this.addControlsToForm(
+        control.control_label,
+        this.fb.control(control.control_value, validatorsToAdd),
+      );
     }
   }
 

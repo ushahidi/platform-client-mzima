@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DataSource } from '../interfaces';
 import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
 
@@ -23,7 +24,7 @@ export class DataSourcesService extends ResourceService<any> {
     return 'dataproviders';
   }
 
-  override get(): Observable<any> {
+  getDataSource(): Observable<DataSource> {
     return super.get();
   }
 }
