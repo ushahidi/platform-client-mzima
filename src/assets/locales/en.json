@@ -894,6 +894,10 @@
     "edit_role": "Edit Role",
     "name": "Name",
     "description": "Description",
+    "placeholder": {
+      "name": "Enter role name",
+      "description": "Enter role description"
+    },
     "save": "Save Role",
     "save_add_another": "Save & Add Another",
     "permissions": "Permissions",
@@ -982,6 +986,11 @@
     "deleted_tags": "Categories deleted.",
     "manage_tags": "Manage Categories",
     "edit_tag": "Edit Category",
+    "validation": {
+      "required": {
+        "name": "Category name is required"
+      }
+    },
     "editor": {
       "name": "Category Name",
       "slug": "Category Link",
@@ -1091,7 +1100,24 @@
       "use_webhook_for": "Use webhook for",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
-      "destination": "Destination"
+      "destination": "Destination",
+      "placeholder": {
+        "name": "Please enter webhook name",
+        "shared_secret": "Please enter shared secret",
+        "api_url": "Please enter api url"
+      },
+      "validation": {
+        "required": {
+          "name": "Webhook name is required",
+          "shared_secret": "Shared secret key is required",
+          "api_url": "API URL required",
+          "event_type": "Event type is required",
+          "event_entity": "Event entity is required"
+        },
+        "please_provide_valid_api_url": "Please provide valid API URL",
+        "secret_key_cannot_be_less_start": "Shared secret key can not less than",
+        "secret_key_cannot_be_less_end": "characters"
+      }
     },
     "data_sources": {
       "add_source": "Add source",
@@ -1205,8 +1231,11 @@
       "manage_users": "Manage Users",
       "manage_posts": "Manage Posts",
       "manage_settings": "Manage Settings",
-      "bulk_data_import": "Bulk Data Import and Export",
-      "edit_own_posts": "Edit their own posts",
+      "bulk_data_import_and_export": "Bulk Data Import and Export",
+      "edit_their_own_posts": "Edit Their Own Posts",
+      "manage_collections_and_saved_searches": "Manage Collections and Saved Searches",
+      "delete_posts": "Delete Posts",
+      "delete_their_own_posts": "Delete Their Own Posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
       "roles_description": "These options control what this type of role can make changes to. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Visit our support guides to find out more."

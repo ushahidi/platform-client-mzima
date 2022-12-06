@@ -1177,8 +1177,8 @@
       "manage_users": "Upravljaj korisnicima",
       "manage_posts": "Upravljaj postovima",
       "manage_settings": "Upravljaj postavkama",
-      "bulk_data_import": "Skupni uvoz i izvoz podataka",
-      "edit_own_posts": "Uredi njihove vlastite postove",
+      "bulk_data_import_and_export": "Skupni uvoz i izvoz podataka",
+      "edit_their_own_posts": "Uredi njihove vlastite postove",
       "registred_member": "Registrirani član",
       "administrator": "Administrator",
       "roles_description": "Ove opcije kontroliraju čemu ova vrsta uloge može raditi promjene. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Posjetite naše upute podrške kako bi saznali više."

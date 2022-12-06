@@ -1177,8 +1177,8 @@
       "manage_users": "Управлявай потребителите",
       "manage_posts": "Управлявай публикациите",
       "manage_settings": "Управлявай настройките",
-      "bulk_data_import": "Сваляне и качване на всички данни",
-      "edit_own_posts": "Променят своите публикации",
+      "bulk_data_import_and_export": "Сваляне и качване на всички данни",
+      "edit_their_own_posts": "Променят своите публикации",
       "registred_member": "Регистриран член",
       "administrator": "Администратор",
       "roles_description": "Тези опции контролират какъв тип роли може да променят. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Посетете нашите ръководства, за да научите повече."

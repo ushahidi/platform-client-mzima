@@ -1177,8 +1177,8 @@
       "manage_users": "Benutzer verwalten",
       "manage_posts": "Manage Posts",
       "manage_settings": "Mangage Settings",
-      "bulk_data_import": "Bulk Data Import and Export",
-      "edit_own_posts": "Edit their own posts",
+      "bulk_data_import_and_export": "Bulk Data Import and Export",
+      "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
       "roles_description": "These options control what this type of role can make changes to. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Visit our support guides to find out more."

@@ -1177,8 +1177,8 @@
       "manage_users": "Spravovat uživatele",
       "manage_posts": "Správa příspěvků",
       "manage_settings": "Správa nastavení",
-      "bulk_data_import": "Import a export hromadných dat",
-      "edit_own_posts": "Upravit si vlastní příspěvky",
+      "bulk_data_import_and_export": "Import a export hromadných dat",
+      "edit_their_own_posts": "Upravit si vlastní příspěvky",
       "registred_member": "Registrovaný člen",
       "administrator": "Správce",
       "roles_description": "Tyto možnosti nastavují, jaké může tento typ role provádět změny. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Navštivte naše příručky podpory, kde najdete další informace."
