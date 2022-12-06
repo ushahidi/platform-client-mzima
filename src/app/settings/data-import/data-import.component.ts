@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { omit, clone, invert, keys, includes } from 'lodash';
 import { FormAttributeInterface, FormCSVInterface, FormInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -44,6 +45,7 @@ export class DataImportComponent implements OnInit {
     private pollingService: PollingService,
     private loader: LoaderService,
     private router: Router,
+    private route: ActivatedRoute,
     private confirm: ConfirmModalService,
     private formsService: FormsService,
   ) {}
@@ -124,7 +126,13 @@ export class DataImportComponent implements OnInit {
   }
 
   private remapColumns() {
-    return [];
+    let map: any = invert(clone(this.maps_to));
+    map = omit(map, '');
+    const mKeys = keys(map);
+    this.uploadedCSV.columns.forEach((col, i) => {
+      map[i] = includes(mKeys, i.toString()) ? map[i] : null;
+    });
+    return map;
   }
 
   finish() {
@@ -145,7 +153,7 @@ export class DataImportComponent implements OnInit {
       this.importService.import({ id: this.uploadedCSV.id, action: 'import' }).subscribe({
         next: () => {
           this.pollingService.getImportJobs();
-          this.router.navigate(['results']);
+          this.router.navigate(['results'], { relativeTo: this.route });
         },
         error: (err) => {
           this.notification.showError(err);
