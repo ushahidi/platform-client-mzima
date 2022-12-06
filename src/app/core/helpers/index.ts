@@ -6,4 +6,4 @@ export * as searchFormHelper from './search-form';
 export * as colorPickerHelper from './color-picker';
 export * as envHelper from './environment';
 export * as objectHelpers from './object-helpers';
-export * as RegexHelper from './regex';
+export * as regexHelper from './regex';

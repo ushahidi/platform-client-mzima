@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '@services';
-import { RegexHelper } from '../../../core/helpers/regex';
+import { regexHelper } from '@helpers';
 
 @Component({
   selector: 'app-login-form',
@@ -12,7 +12,7 @@ import { RegexHelper } from '../../../core/helpers/regex';
 export class LoginFormComponent {
   @Output() loggined = new EventEmitter();
   public form: FormGroup = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.pattern(RegexHelper.emailRegex)]],
+    email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
     password: ['', [Validators.required]],
   });
   public loginError: string;
