@@ -33,4 +33,9 @@ export enum Icons {
   key = 'key',
   copy = 'copy',
   searchSmall = 'search-small',
+  download = 'download',
+  externalLink = 'external-link',
+  arrowRight = 'arrow-right',
+  documentCsv = 'document-csv',
+  survey = 'survey',
 }

@@ -1,46 +1,42 @@
-.tab-cover {
-  overflow: hidden;
-}
+.description {
+  max-width: 654px;
+  margin-bottom: 32px;
 
-.form-controls-panel {
-  margin-top: 32px;
-}
-
-.listing-item {
-  margin: 0 -24px;
-  font-size: 12px;
-  padding: 16px 24px;
-
-  &:not(:first-child) {
-    border-top: 1px solid #eee;
-  }
-
-  p {
-    margin-bottom: 8px;
-  }
-
-  &-primary {
-    margin: 0 auto;
-    max-width: 480px;
-  }
-
-  &__title {
-    display: block;
-    font-size: 16px;
-    line-height: 1.2;
-    margin-bottom: 1em;
-
-    a {
-      color: var(--color-neutral-80);
-
-      &:hover {
-        color: #0a0b0d;
-      }
+  a {
+    .mat-icon {
+      width: 1em;
+      height: 1em;
+      line-height: 1;
+      margin: -3px 0;
+      font-size: 24px;
+      vertical-align: top;
     }
+  }
+}
+
+.mat-column-download {
+  text-align: center;
+}
+
+.download-btn {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  min-width: 0;
+  display: flex;
+  margin: 0 auto;
+  line-height: 32px;
+  border-radius: 50%;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  .mat-icon {
+    font-size: 24px;
   }
 }
 
 .spinner {
   display: block;
-  margin: 50px 0;
+  margin: 150px 0;
 }
