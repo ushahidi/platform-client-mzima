@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { surveyHelper } from '@helpers';
+import { surveyHelper, takeUntilDestroy$ } from '@helpers';
 import { CollectionResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { CollectionsService, ConfirmModalService, RolesService, SessionService } from '@services';
@@ -21,6 +21,7 @@ enum CollectionView {
 export class CollectionsComponent implements OnInit {
   CollectionView = CollectionView;
   public collectionList: CollectionResult[];
+  userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
   public isLoading: boolean;
   views = surveyHelper.views;
   query = '';
@@ -38,6 +39,7 @@ export class CollectionsComponent implements OnInit {
   });
   roleOptions: any;
   tmpCollectionToEditId = 0;
+  isLoggedIn = false;
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
@@ -51,8 +53,18 @@ export class CollectionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.userData$.subscribe((userData) => {
+      this.isLoggedIn = !!userData.userId;
+
+      if (this.isLoggedIn) {
+        this.initRoles();
+      }
+    });
     this.getCollections();
     this.featuredEnabled = true; //hasPermission Manage Posts
+  }
+
+  private initRoles() {
     this.rolesService.get().subscribe({
       next: (response) => {
         this.roleOptions = [
