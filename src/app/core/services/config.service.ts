@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MapConfigInterface } from '@models';
-import { forkJoin, lastValueFrom, Observable, tap } from 'rxjs';
+import { forkJoin, lastValueFrom, map, Observable, tap } from 'rxjs';
 import { SessionService } from './session.service';
 import { EnvService } from './env.service';
 
@@ -72,12 +72,25 @@ export class ConfigService {
     return lastValueFrom(forkJoin([this.getSite(), this.getFeatures(), this.getMap()]));
   }
 
-  public getProvidersData(): Observable<any> {
-    return this.httpClient.get<any>(
-      `${
-        this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
-      }/data-provider`,
-    );
+  public getProvidersData(isAllData = false): Observable<any> {
+    return this.httpClient
+      .get<any>(
+        `${
+          this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
+        }/data-provider`,
+      )
+      .pipe(
+        map((data) => {
+          let providers: any[] = [];
+          for (const dataKey in data.providers) {
+            providers.push({
+              label: dataKey.toLowerCase(),
+              value: data.providers[dataKey],
+            });
+          }
+          return isAllData ? data : providers;
+        }),
+      );
   }
 
   public updateProviders(providers: any): Observable<any> {

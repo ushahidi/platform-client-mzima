@@ -7,3 +7,4 @@ export * as colorPickerHelper from './color-picker';
 export * as envHelper from './environment';
 export * as objectHelpers from './object-helpers';
 export * as regexHelper from './regex';
+export * as arrayHelpers from './array-helpers';

@@ -14,9 +14,9 @@
       [(ngModel)]="currentProviderId"
       (selectionChange)="setCurrentProvider($event.value)"
     >
-      <ng-container *ngFor="let provider of availableProviders">
-        <mat-option [value]="provider.id">
-          {{ provider.name }}
+      <ng-container *ngFor="let provider of providersData?.providers | keyvalue">
+        <mat-option [value]="provider.key" *ngIf="!provider.value">
+          {{ provider.key }}
         </mat-option>
       </ng-container>
     </mat-select>
@@ -30,7 +30,7 @@
   </mat-form-field>
 </div>
 
-<div class="survey" *ngIf="provider?.visible_survey">
+<div class="survey" *ngIf="provider">
   <div class="form-row toggle-group">
     <div class="toggle">
       <mat-slide-toggle
@@ -42,17 +42,23 @@
       </mat-slide-toggle>
     </div>
     <div class="toggle">
-      <mat-slide-toggle name="import-to-survey" [(ngModel)]="isImportToSurvey">
+      <mat-slide-toggle name="import-to-survey" [(ngModel)]="provider.visible_survey">
         {{ 'settings.data_sources.associate_with_form' | translate }}
       </mat-slide-toggle>
     </div>
   </div>
-  <ng-container *ngIf="isImportToSurvey">
+  <ng-container *ngIf="provider.visible_survey">
     <div class="form-row">
-      <mat-label>{{ 'settings.webhooks.use_webhook_for' | translate }} </mat-label>
-      <mat-form-field appearance="outline">
-        <mat-select (valueChange)="getSurveyAttributes($event)" disableOptionCentering>
-          <mat-option *ngFor="let survey of surveyList" [value]="survey.id">
+      <mat-label>
+        <span>{{ 'data_import.import_to' | translate }}</span>
+        <strong>
+          <span *ngIf="!selectedSurvey?.id">{{ 'data_import.which_survey' | translate }}</span>
+          <span *ngIf="selectedSurvey?.id">{{ selectedSurvey.name }}</span>
+        </strong>
+      </mat-label>
+      <mat-form-field appearance="outline" *ngIf="surveyList.length">
+        <mat-select [(ngModel)]="selectedSurvey" (selectionChange)="getSurveyAttributes($event)">
+          <mat-option *ngFor="let survey of surveyList" [value]="survey">
             {{ survey.name }}
           </mat-option>
         </mat-select>
@@ -66,7 +72,7 @@
     <ng-container *ngIf="surveyAttributesList?.length">
       <h2>{{ 'survey.choose_survey_field' | translate }}</h2>
       <p>{{ 'survey.choose_survey_field_desc' | translate }}</p>
-      <table mat-table [dataSource]="provider.inbound_fields" class="survey__table">
+      <table mat-table [dataSource]="provider.control_inbound_fields" class="survey__table">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>{{ provider?.name | titlecase }} data</th>
           <td mat-cell *matCellDef="let element">
@@ -103,7 +109,7 @@
   </ng-container>
 </div>
 
-<form [formGroup]="form" *ngIf="provider?.control_options" (ngSubmit)="saveProviderData($event)">
+<form [formGroup]="form" *ngIf="provider?.control_options" (ngSubmit)="saveProviderData()">
   <div *ngFor="let control of provider.control_options">
     <!-- {{control | json}} -->
 
@@ -115,13 +121,12 @@
     <ng-container *ngIf="control.input !== 'read-only-text'">
       <div class="form-row">
         <mat-label>{{ control.label }}<span class="color-accent"> *</span></mat-label>
-        <mat-form-field appearance="outline" *ngIf="control.input === 'text'">
+        <mat-form-field *ngIf="control.input === 'text'" appearance="outline">
           <input
             matInput
             [placeholder]="control.description"
             [formControlName]="control.control_label"
             [type]="control.input"
-            required
           />
           <mat-hint
             *ngIf="control.description?.length"
@@ -139,11 +144,11 @@
         </mat-form-field>
 
         <mat-radio-group
-          aria-label="Select an option"
           *ngIf="control.input === 'radio'"
+          aria-label="Select an option"
           [formControlName]="control.control_label"
         >
-          <mat-radio-button *ngFor="let item of control.control_options" [value]="item">
+          <mat-radio-button *ngFor="let item of control.options" [value]="item">
             {{ item }}
           </mat-radio-button>
         </mat-radio-group>

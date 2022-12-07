@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataSourceConfigInterface } from '@models';
+// import { DataSourceConfigInterface } from '@models';
 import {
   ConfigService,
   ConfirmModalService,
@@ -15,8 +15,8 @@ import {
   FormsService,
   SurveysService,
 } from '@services';
+import { arrayHelpers } from '@helpers';
 import { combineLatest } from 'rxjs';
-import { DataSourceOptions } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-data-source-item',
@@ -29,12 +29,15 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   public surveyList: any[];
   public form: FormGroup = this.fb.group({});
   public dataSourceList: any[];
-  private allProvidersData: DataSourceConfigInterface;
+  // private allProvidersData: DataSourceConfigInterface;
   public isImportToSurvey = true;
+  public selectedSurvey: any;
   public surveyAttributesList: any;
   public currentProviderId: string | null;
   public availableProviders: any[];
   public onCreating: boolean;
+
+  providersData: any;
 
   constructor(
     private fb: FormBuilder,
@@ -57,103 +60,62 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
         type: providers[key as keyof typeof providers],
       });
     }
-    return tempProviders.filter((provider) => !provider.type);
+    return arrayHelpers.sortArray(tempProviders.filter((provider) => !provider.type));
   }
 
   ngOnInit(): void {
-    console.log('DataSourceItemComponent');
-
     this.currentProviderId = this.route.snapshot.paramMap.get('id');
     if (!this.currentProviderId) {
       this.onCreating = true;
     }
     this.getProviders();
-    this.getSurveys();
-  }
-
-  private getSurveys(): void {
-    this.surveysService.get().subscribe({
-      next: (response) => (this.surveyList = response.results),
-    });
   }
 
   private getProviders(): void {
-    const tempControls: any[] = [];
-    const dataSourceData$ = this.configService.getProvidersData();
-    const dataSourceList$ = this.dataSourcesService.getDataSource();
-    combineLatest([dataSourceData$, dataSourceList$]).subscribe({
-      next: ([dataSourceData, dataSourceList]) => {
-        this.allProvidersData = dataSourceData;
-        this.availableProviders = this.getAvailableProviders(this.allProvidersData.providers);
+    const providers$ = this.configService.getProvidersData(true);
+    const surveys$ = this.surveysService.get();
+    const dataSources$ = this.dataSourcesService.getDataSource();
 
-        for (const dataSourceKey in dataSourceData.providers) {
-          const item = dataSourceList.results.find((el: { id: string }) => el.id === dataSourceKey);
-
-          if (item) {
-            const dataSourceDataItem = dataSourceData.providers[item.id];
-            for (const dataKey in item.options) {
-              const key = dataKey as string;
-              const ctrl = item.options[key as keyof DataSourceOptions];
-              if (ctrl?.rules) {
-                const rule = ctrl.rules.map((el: string) => ({ [el]: true }));
-                ctrl.control_rules = rule;
-                ctrl.control_label = dataKey;
-
-                if (dataSourceDataItem.hasOwnProperty(dataKey) && dataSourceKey === item.id) {
-                  ctrl.control_value = dataSourceDataItem[dataKey] || null;
-                }
-              }
-            }
-
-            item.control_options = Object.values(item.options);
-            item.available_provider = dataSourceData.providers[dataSourceKey] || false;
-            item.visible_survey = !!Object.keys(dataSourceData[dataSourceKey] || {}).length;
-
-            let inboundFieldsArr: any[] = [];
-            for (const dataKey in item.inbound_fields) {
-              inboundFieldsArr.push({
-                form_label: dataKey.toLowerCase(),
-                type: item.inbound_fields[dataKey],
-              });
-            }
-            item.inbound_fields = inboundFieldsArr;
-            tempControls.push(item);
-          }
-        }
-        this.dataSourceList = tempControls.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
-
-        console.log(this.dataSourceList);
-
-        // console.log(this.availableProviders);
+    combineLatest([providers$, surveys$, dataSources$]).subscribe({
+      next: ([providersData, surveys, dataSources]) => {
+        this.providersData = providersData;
+        this.availableProviders = this.getAvailableProviders(this.providersData.providers);
+        this.surveyList = surveys.results;
+        this.dataSourceList = this.dataSourcesService.combineDataSource(
+          providersData,
+          dataSources,
+          this.surveyList,
+        );
         this.setCurrentProvider();
       },
     });
   }
 
-  public setCurrentProvider(providerId?: string): void {
+  public setCurrentProvider(providerId?: any): void {
     if (!this.currentProviderId && !providerId) {
       this.currentProviderId = this.availableProviders[0]?.id as string;
     }
-
     const id = this.currentProviderId || providerId;
-    console.log(id);
-
     if (id) {
       this.provider = this.dataSourceList.find((provider) => provider.id === id);
       this.removeControls(this.form.controls);
       this.createForm(this.provider);
       this.addControlsToForm('id', this.fb.control(this.provider.id, Validators.required));
+      this.getSurveyAttributes(this.provider.selected_survey);
+
+      console.log(this.provider);
     } else {
       // this.router.navigate(['/settings/data-sources']);
     }
   }
 
-  public getSurveyAttributes(id: number): void {
+  public getSurveyAttributes(survey: any): void {
+    this.selectedSurvey = survey;
     const queryParams = {
       order: 'asc',
       orderby: 'priority',
     };
-    this.formsService.getAttributes(id.toString(), queryParams).subscribe({
+    this.formsService.getAttributes(survey.id, queryParams).subscribe({
       next: (response) => {
         this.surveyAttributesList = response;
       },
@@ -166,7 +128,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
 
   private createForm(provider: any) {
     this.createControls(provider.control_options);
-    this.createControls(provider.inbound_fields);
+    this.createControls(provider.control_inbound_fields);
   }
 
   private removeControls(controls: any) {
@@ -201,6 +163,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     this.form.addControl(name, control);
   }
 
+  // TODO: add translate
   public async turnOffDataSource(): Promise<void> {
     const confirmed = await this.confirmModalService.open({
       title: `Are you sure you want to Delete ${this.provider.name} Data Source?`,
@@ -216,16 +179,53 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
 
   // TODO: Check the API when an endpoint object check will be added
   public changeAvailableProviders(event: any): void {
-    const providers = JSON.parse(JSON.stringify(this.allProvidersData.providers));
-    providers[this.provider.id] = event.checked;
-    const body = { providers };
-    console.log(body);
+    // const providers = JSON.parse(JSON.stringify(this.providersData.providers));
+    // providers[this.provider.id] = event.checked;
+    // console.log(providers);
+
+    // const body = { providers };
+    // console.log(body);
+
+    this.providersData.providers[this.provider.id] = event.checked;
+    console.log('providersData', this.providersData);
+
+    // allowed_privileges: ['read', 'create', 'update', 'delete', 'search']
+    // authenticable-providers:  {gmail: true}
+    // email: {incoming_type: 'IMAP', incoming_server: 'asdf', incoming_port: 3, incoming_security: 'SSL', incoming_username: 'sadf', …}
+    // frontlinesms: {server_url: 'https://server.url.com/', key: '6187c7f5-7195-4039-9fa5-6980094d3a9f', secret: '1234567890', form_id: undefined}
+    // gmail: {redirect_uri: 'urn:ietf:wg:oauth:2.0:oob', authenticated: false}
+    // id: "data-provider"
+    // nexmo: {from: 'sdfasdf', api_key: 'sdfas', api_secret: 'asfd'}
+    // providers: {smssync: true, email: false, outgoingemail: true, twilio: true, nexmo: true, …}
+    // smssync: {secret: 'dsfsdfasdf'}
+    // twilio: {}
+    // twitter: {consumer_key: 'ds', consumer_secret: 'ss', oauth_access_token: 'ss', oauth_access_token_secret: 'ss', twitter_search_terms: 's'}
+    // url: "https://tuxpiper.api.ushahidi.io/api/v3/config/data-provider"
+
     // this.configService.updateProviders(providers).subscribe(() => this.getProvidersList());
   }
 
   // TODO: Check the API when an endpoint object check will be added
-  public saveProviderData(event: any): void {
-    console.log('submit > formControls', event);
+  public saveProviderData(): void {
+    console.log('submit > formControls', this.form.value);
+
+    // allowed_privileges: ['read', 'create', 'update', 'delete', 'search']
+    // authenticable-providers : {gmail: true}
+    // email : {incoming_type: 'IMAP', incoming_server: 'asdf', incoming_port: 3, incoming_security: 'SSL', incoming_username: 'sadf', …}
+    // frontlinesms : {server_url: 'https://server.url.com/', key: '6187c7f5-7195-4039-9fa5-6980094d3a9f', secret: '1234567890'}
+    // gmail : {redirect_uri: 'urn:ietf:wg:oauth:2.0:oob', authenticated: false}
+    // id : "data-provider"
+    // nexmo : {from: 'sdfasdf', api_key: 'sdfas', api_secret: 'asfd'}
+    // providers : {smssync: true, email: true, outgoingemail: true, twilio: true, nexmo: true, …}
+    // smssync : {secret: 'dsfsdfasdf'}
+    // twilio : {}
+    // twitter : {consumer_key: 'ds', consumer_secret: 'ss', oauth_access_token: 'ss', oauth_access_token_secret: 'ss', twitter_search_terms: 's'}
+    // url : "https://tuxpiper.api.ushahidi.io/api/v3/config/data-provider"
+
+    console.log('dataSourceList', this.dataSourceList);
+
+    console.log('providersData', this.providersData);
+
     // this.configService.updateProviders(providersData).subscribe(() => this.getProvidersList());
   }
 }
