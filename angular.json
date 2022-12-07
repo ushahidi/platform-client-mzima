@@ -41,6 +41,7 @@
               "clone-deep",
               "dayjs",
               "quill",
+              "lodash",
               "types-wm",
               "lottie-web",
               "ev-emitter/ev-emitter"
