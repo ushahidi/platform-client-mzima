@@ -2,7 +2,7 @@
   <div class="form-sheet" *ngIf="importFinished; else notFinished">
     <div class="form-sheet-summary">
       <h2 class="form-sheet-title">{{ 'data_import.import_complete' | translate }}</h2>
-      <p>{{ 'data_import.complete_info' | translate: { filename } }}</p>
+      <div [innerHTML]="'data_import.complete_info' | translate: { filename }"></div>
     </div>
 
     <div class="form-field">
@@ -10,15 +10,15 @@
         type="button"
         color="primary"
         mat-raised-button
-        [routerLink]="['collections', collectionId]"
+        [routerLink]="['/', 'collections', collectionId]"
       >
-        {{ 'data_import.import_another' | translate }}
+        {{ 'data_import.see_imported_posts' | translate }}
       </button>
       <button
         type="button"
         color="primary"
         mat-raised-button
-        [routerLink]="['settings/data-import']"
+        [routerLink]="['/settings/data-import']"
       >
         {{ 'data_import.import_another' | translate }}
       </button>
@@ -39,7 +39,7 @@
         type="button"
         color="primary"
         mat-raised-button
-        [routerLink]="['settings/data-import']"
+        [routerLink]="['/settings/data-import']"
       >
         {{ 'data_import.import_another' | translate }}
       </button>

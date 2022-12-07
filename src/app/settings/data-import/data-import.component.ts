@@ -152,8 +152,11 @@ export class DataImportComponent implements OnInit {
     this.importService.update(this.uploadedCSV.id, this.uploadedCSV).subscribe(() => {
       this.importService.import({ id: this.uploadedCSV.id, action: 'import' }).subscribe({
         next: () => {
-          this.pollingService.getImportJobs();
-          this.router.navigate(['results'], { relativeTo: this.route });
+          // this.pollingService.getImportJobs();
+          this.router.navigate(['results'], {
+            relativeTo: this.route,
+            queryParams: { job: this.uploadedCSV.id },
+          });
         },
         error: (err) => {
           this.notification.showError(err);
