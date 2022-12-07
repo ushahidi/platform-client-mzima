@@ -10,12 +10,15 @@
   <div class="form-row">
     <mat-label>{{ 'user.password' | translate }}</mat-label>
     <mat-form-field appearance="outline">
+      <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisible()">
+        <mat-icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
+      </button>
       <input
         matInput
-        placeholder="pat@example.com"
+        placeholder="{{ 'user.placeholder.password' | translate }}"
         formControlName="password"
         required
-        type="password"
+        [type]="isPasswordVisible ? 'text' : 'password'"
       />
       <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
     </mat-form-field>

@@ -1408,6 +1408,7 @@
     "passwordreset_instructions": "Enter your email to request a password reset",
     "passwordreset_confirm_instructions": "If your email exists in our database, you will receive a password recovery email soon.",
     "token": "Password reset token",
+    "name_will_be_a_display_name": "The name you enter will be a display name.",
     "valid": {
       "name": {
         "required": "Display name is required",
@@ -1415,13 +1416,14 @@
       },
       "email": {
         "required": "Email address is required",
-        "email": "This email address is invalid",
+        "pattern": "This email address is invalid",
         "maxlength": "This email address is too long"
       },
       "password": {
         "required": "Password is required",
         "minlength": "This password is too short",
-        "maxlength": "This password is too long"
+        "maxlength": "This password is too long",
+        "weak": "This password is very weak"
       }
     },
     "placeholder": {
@@ -1733,7 +1735,8 @@
     "title": "Ushahidi Terms of Service",
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
     "agree": "I agree to Ushahidi's Terms of Service.",
-    "accept_and_continue": "Accept and Continue"
+    "accept_and_continue": "Accept and Continue",
+    "i_agree": "I agree to Ushahidi <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a> the\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>."
   },
   "translations": {
     "languages": "Languages",
