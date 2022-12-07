@@ -97,13 +97,6 @@ const modules = [
 @NgModule({
   declarations: [...components, ...directives],
   imports: [...modules, LottieComponent],
-  exports: [
-    ...components,
-    ...directives,
-    ...modules,
-    SettingsHeaderComponent,
-    PasswordStrengthComponent,
-    PasswordStrengthComponent,
-  ],
+  exports: [...components, ...directives, ...modules],
 })
 export class SharedModule {}
