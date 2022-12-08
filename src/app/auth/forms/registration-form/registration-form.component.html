@@ -9,7 +9,7 @@
         required
       />
       <mat-error *ngIf="form.get('name')?.invalid">{{ getErrorMessage('name') }}</mat-error>
-      <mat-hint>The name you enter will be a display name.</mat-hint>
+      <mat-hint>{{ 'user.name_will_be_a_display_name' | translate }}</mat-hint>
     </mat-form-field>
   </div>
   <div class="form-row">
@@ -29,7 +29,7 @@
     <mat-label>{{ 'user.password' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
       <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisible()">
-        <mat-icon svgIcon="eye"></mat-icon>
+        <mat-icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
       </button>
       <input
         matInput
@@ -40,13 +40,13 @@
       />
       <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
     </mat-form-field>
+    <app-password-strength [passwordToCheck]="form.value.password"></app-password-strength>
   </div>
 
   <div class="form-row">
     <div class="checkbox">
       <mat-checkbox formControlName="agreement" required>
-        I agree to Ushahidi <a href="#" target="_blank">Privacy Policy</a> the
-        <a href="#" target="_blank">Terms and Conditions</a>.
+        <span [innerHTML]="'terms_of_service.i_agree' | translate"></span>
       </mat-checkbox>
     </div>
   </div>
