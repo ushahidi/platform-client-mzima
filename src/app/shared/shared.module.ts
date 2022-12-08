@@ -41,6 +41,7 @@ import { DateAgoPipe, FilterValuePipe } from '@pipes';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { LottieAnimationComponent } from './components/lottie-animation/lottie-animation.component';
+import { PasswordStrengthComponent } from './components/password-strength/password-strength.component';
 
 const directives = [
   GtmDirective, //
@@ -75,6 +76,7 @@ const components = [
   DonationButtonComponent,
   LottieAnimationComponent,
   SettingsHeaderComponent,
+  PasswordStrengthComponent,
 ];
 
 const modules = [
