@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '@services';
 import { regexHelper } from '@helpers';
 
@@ -15,30 +14,25 @@ export class RegistrationFormComponent {
   public form: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
-    password: ['', [Validators.required]],
+    password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
     agreement: [false, [Validators.required]],
   });
 
-  constructor(
-    private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private translate: TranslateService,
-  ) {}
+  constructor(private authService: AuthService, private formBuilder: FormBuilder) {}
 
   getErrorMessage(field: string) {
     switch (field) {
       case 'name':
-      case 'password':
       case 'agreement':
-        return this.form.controls[field].hasError('required')
-          ? this.translate.instant(`user.valid.${field}.required`)
-          : '';
+        return this.authService.getControlError(this.form, field, ['required']);
       case 'email':
-        return this.form.controls['email'].hasError('pattern')
-          ? this.translate.instant('user.valid.email.email')
-          : this.form.controls['email'].hasError('required')
-          ? this.translate.instant('user.valid.email.required')
-          : '';
+        return this.authService.getControlError(this.form, field, ['required', 'pattern']);
+      case 'password':
+        return this.authService.getControlError(this.form, field, [
+          'required',
+          'minlength',
+          'maxlength',
+        ]);
     }
   }
 

@@ -36,11 +36,8 @@ export class SubmitPostButtonComponent implements OnInit {
       next: (response) => {
         if (response?.type) {
           this.dialog.open(CreateComponent, {
-            width: '100%',
-            maxWidth: '607px',
-            minWidth: '300px',
-            maxHeight: '700px',
-            minHeight: '350px',
+            height: '95vh',
+            width: '615px',
             data: response.type,
           });
           // this.router.navigate(['/post/create', response.type]);
