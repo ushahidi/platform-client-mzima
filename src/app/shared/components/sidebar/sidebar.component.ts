@@ -39,6 +39,13 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  createRouterLink(route: string) {
+    if (route !== 'map' && route !== 'feed') return route;
+    return this.router.url.includes('collection')
+      ? `${route}/collection/${this.router.url.split('/').pop() || ''}`
+      : route;
+  }
+
   private initMenu() {
     this.menu = [
       { label: 'Map view', router: 'map', icon: 'map', visible: true },

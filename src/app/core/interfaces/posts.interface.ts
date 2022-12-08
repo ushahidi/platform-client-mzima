@@ -14,6 +14,7 @@ export interface GeoJsonFilter {
   order?: 'desc' | 'asc';
   order_unlocked_on_top?: boolean;
   orderby?: string;
+  set?: string;
   reactToFilters?: boolean;
   date_after?: Date | string;
   date_before?: Date | string;
@@ -36,7 +37,7 @@ export interface PostPropertiesInterface {
   slug: string;
   user?: PostPropertiesUser;
   author_realname?: string;
-  status?: string;
+  status?: PostStatus;
   contact?: any;
   source?: string;
   data_source_message_id?: string;
@@ -50,6 +51,12 @@ export interface PostPropertiesUser {
 }
 export interface PostApiResponse extends ApiResponse {
   results: PostResult[];
+}
+
+export enum PostStatus {
+  Published = 'published',
+  Draft = 'draft',
+  Archived = 'archived',
 }
 
 export interface PostResult {
@@ -73,7 +80,7 @@ export interface PostResult {
   sets: [];
   slug: string;
   source?: string;
-  status: string;
+  status: PostStatus;
   tags: PostTag[];
   title: string;
   type: string;

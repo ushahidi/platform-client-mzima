@@ -9,6 +9,14 @@ const routes: Routes = [
     component: FeedComponent,
     children: [{ path: ':id/edit', component: EditFeedItemComponent }],
   },
+  { path: 'collection', redirectTo: '' },
+  {
+    path: 'collection/:id',
+    component: FeedComponent,
+    data: {
+      view: 'collection',
+    },
+  },
 ];
 
 @NgModule({
