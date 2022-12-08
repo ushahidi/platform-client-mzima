@@ -29,6 +29,7 @@ import {
   FilterControlComponent,
   DonationButtonComponent,
   SettingsHeaderComponent,
+  CollectionItemComponent,
 } from './components';
 import { MaterialModule } from './material/material.module';
 import {
@@ -77,6 +78,7 @@ const components = [
   LottieAnimationComponent,
   SettingsHeaderComponent,
   PasswordStrengthComponent,
+  CollectionItemComponent,
 ];
 
 const modules = [

@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
@@ -118,7 +117,7 @@ export class CollectionsComponent implements OnInit {
   }
 
   isPostInCollection(collection: CollectionResult) {
-    return this.post.sets.some((set) => set === collection.id.toString());
+    return this.post?.sets.some((set) => set === collection.id.toString());
   }
 
   //   function postInCollection(collection) {
@@ -131,16 +130,15 @@ export class CollectionsComponent implements OnInit {
   //     return $scope.posts.length === 1 ? _.contains($scope.posts[0].sets, String(collection.id)) : false;
   // }
 
-  onCheckChange(event: MatCheckboxChange, item: CollectionResult) {
-    if (event.checked) {
+  onCheckChange(isChecked: boolean, item: CollectionResult) {
+    if (isChecked) {
       this.collectionsService.addToCollection(item.id, this.post.id).subscribe();
     } else {
       this.collectionsService.removeFromCollection(item.id, this.post.id).subscribe();
     }
   }
 
-  async deleteCollection(collection: CollectionResult, event: Event) {
-    event?.stopPropagation();
+  async deleteCollection(collection: CollectionResult) {
     const confirmed = await this.confirm.open({
       title: collection.name,
       description: this.translate.instant('notify.collection.delete_collection_confirm'),
@@ -167,8 +165,7 @@ export class CollectionsComponent implements OnInit {
     }
   }
 
-  editCollection(collection: CollectionResult, event: Event) {
-    event?.stopPropagation();
+  editCollection(collection: CollectionResult) {
     this.collectionForm.patchValue({
       name: collection.name,
       description: collection.description,

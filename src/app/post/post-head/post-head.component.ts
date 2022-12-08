@@ -30,7 +30,8 @@ export class PostHeadComponent {
 
   addToCollection() {
     const dialogRef = this.dialog.open(CollectionsComponent, {
-      width: '560px',
+      width: '100%',
+      maxWidth: '768px',
       data: this.post,
     });
 

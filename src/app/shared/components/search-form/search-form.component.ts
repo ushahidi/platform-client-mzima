@@ -201,6 +201,8 @@ export class SearchFormComponent implements OnInit {
     });
 
     this.session.isLogged$.subscribe((isLogged) => (this.isLoggedIn = isLogged));
+
+    this.session.isFiltersVisible$.subscribe((isVisible) => (this.isFiltersVisible = isVisible));
   }
 
   private getCollectionInfo(id: string) {
