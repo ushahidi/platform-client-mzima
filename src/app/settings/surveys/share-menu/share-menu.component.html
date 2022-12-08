@@ -5,51 +5,43 @@
   </mat-form-field>
 </div>
 
-<a
-  target="_blank"
-  class="share-item"
-  mat-raised-button
-  [href]="
-    'https://www.facebook.com/sharer/sharer.php?u=' + shareUrlEncoded + '&amp;src=sdkpreparse'
-  "
->
-  <span class="share-item__icon">
-    <img class="icon" src="assets/images/facebook.png" alt="" />
-  </span>
-  Facebook
-</a>
+<div class="form-row">
+  <mat-label>HTML</mat-label>
+  <mat-form-field appearance="outline">
+    <textarea matInput readonly cdkTextareaAutosize cdkAutosizeMaxRows="10">{{ embed }}</textarea>
+    <button class="copy" type="button" (click)="copyToClipboard(embed)" matSuffix mat-raised-button>
+      <mat-icon svgIcon="copy"></mat-icon>
+    </button>
+  </mat-form-field>
+</div>
 
-<a
-  target="_blank"
-  class="share-item"
-  mat-raised-button
-  [href]="'https://twitter.com/intent/tweet?url=' + shareUrlEncoded"
->
-  <span class="share-item__icon">
-    <img class="icon" src="assets/images/twitter.png" alt="" />
-  </span>
-  Twitter
-</a>
+<div class="form-row">
+  <a
+    target="_blank"
+    class="share-item"
+    mat-raised-button
+    [href]="'https://twitter.com/intent/tweet?url=' + shareUrlEncoded"
+  >
+    <mat-icon class="share-item__icon" svgIcon="twitter"></mat-icon>
+    Twitter
+  </a>
+</div>
 
-<mat-expansion-panel>
-  <mat-expansion-panel-header>
-    <mat-panel-title> Configure </mat-panel-title>
-  </mat-expansion-panel-header>
-  <div class="embed-input">
-    <div class="form-row">
-      <mat-label>HTML</mat-label>
-      <mat-form-field appearance="outline">
-        <textarea matInput readonly cdkTextareaAutosize cdkAutosizeMaxRows="10">
-  &lt;iframe width="560" height="315" src="{{
-            shareUrl
-          }}" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</textarea
-        >
-      </mat-form-field>
-    </div>
-  </div>
-</mat-expansion-panel>
+<div class="form-row">
+  <a
+    target="_blank"
+    class="share-item"
+    mat-raised-button
+    [href]="
+      'https://www.facebook.com/sharer/sharer.php?u=' + shareUrlEncoded + '&amp;src=sdkpreparse'
+    "
+  >
+    <mat-icon class="share-item__icon" svgIcon="facebook"></mat-icon>
+    Facebook
+  </a>
+</div>
 
-<button mat-raised-button class="share-item">
+<!-- <button mat-raised-button class="share-item">
   <mat-icon class="share-item__icon">
     <svg class="iconic" role="img">
       <use
@@ -59,4 +51,4 @@
     </svg>
   </mat-icon>
   {{ 'app.export_to_csv' | translate }}
-</button>
+</button> -->

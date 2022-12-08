@@ -1,24 +1,27 @@
+.fields-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -8px;
+  justify-content: flex-start;
+}
+
 .list-item {
   padding: 8px;
   cursor: pointer;
+  font-size: 14px;
+  line-height: 1.3;
   user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -webkit-user-drag: none;
-  -webkit-tap-highlight-color: transparent;
-
-  &::ng-deep {
-    .mat-ripple-element {
-      position: absolute;
-    }
-  }
-
-  &:not(:first-child) {
-    border-top: 1px solid var(--color-neutral-20);
-  }
+  margin: 0 8px 16px;
+  width: calc(50% - 16px);
+  color: var(--color-neutral-90);
+  background: var(--color-neutral-10);
+  box-shadow: inset 0 0 0 1px var(--color-neutral-10);
 
   h3 {
+    font-size: 16px;
+    line-height: 1.5;
     margin-bottom: 4px;
+    color: var(--color-black);
   }
 
   p {
@@ -61,12 +64,12 @@ quill-editor {
   margin-top: 60px;
 }
 
-.row-container {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 30px;
-}
+.form-row {
+  &__item {
+    margin-bottom: 8px;
+  }
 
-.button-add-field {
-  width: fit-content;
+  .form-head-panel {
+    margin-bottom: 8px;
+  }
 }
