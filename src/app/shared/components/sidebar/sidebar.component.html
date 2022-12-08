@@ -19,7 +19,7 @@
           mat-raised-button
           *ngIf="item.visible"
           class="sidebar-menu-button"
-          [routerLink]="item.router"
+          [routerLink]="createRouterLink(item.router)"
           routerLinkActive="sidebar-menu-button--active"
           (click)="registerPage($event, item.router, item.label)"
           [data-qa]="'btn-' + item.icon"

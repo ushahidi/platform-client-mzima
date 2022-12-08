@@ -26,6 +26,7 @@ import { ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
 import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -33,11 +34,12 @@ import { PostPreviewComponent } from '../post/post-preview/post-preview.componen
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  private params = {
+  private params: any = {
     limit: 200,
     offset: 0,
   };
   public map: Map;
+  collectionId = '';
   postsCollection: GeoJsonPostsResponse;
   mapLayers: any[] = [];
   mapReady = false;
@@ -59,12 +61,23 @@ export class MapComponent implements OnInit {
     private view: ViewContainerRef,
     private sessionService: SessionService,
     private dialog: MatDialog,
+    private route: ActivatedRoute,
     private zone: NgZone,
     private eventBusService: EventBusService,
     private mediaService: MediaService,
   ) {}
 
   ngOnInit() {
+    if (this.route.snapshot.data['view'] === 'collection') {
+      this.collectionId = this.route.snapshot.paramMap.get('id')!;
+      this.params.set = this.collectionId;
+      this.postsService.applyFilters({ set: this.collectionId });
+    } else {
+      this.collectionId = '';
+      this.params.set = '';
+      this.postsService.applyFilters({ set: [] });
+    }
+
     this.mapConfig = this.sessionService.getMapConfigurations();
 
     const currentLayer =

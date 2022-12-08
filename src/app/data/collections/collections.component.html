@@ -10,9 +10,11 @@
 
 <ng-container *ngIf="currentView === CollectionView.List; else createForm">
   <div class="head">
-    <h1 mat-dialog-title>{{ 'app.collection' | translate }}</h1>
+    <h1 mat-dialog-title>
+      {{ post ? ('set.add_to_collection' | translate) : ('app.collection' | translate) }}
+    </h1>
     <button
-      *ngIf="isLoggedIn"
+      *ngIf="isLoggedIn && !post"
       type="button"
       color="primary"
       mat-raised-button
@@ -47,6 +49,17 @@
           *ngFor="let item of collectionList"
           (click)="goToCollection(item)"
         >
+          <div
+            class="collection-item__checkbox"
+            *ngIf="post?.id"
+            (click)="$event.stopPropagation()"
+          >
+            <mat-checkbox
+              [checked]="isPostInCollection(item)"
+              (change)="onCheckChange($event, item)"
+            >
+            </mat-checkbox>
+          </div>
           <div class="collection-item__actions" *ngIf="isLoggedIn">
             <button
               tabindex="-1"

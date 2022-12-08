@@ -4,7 +4,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationStart, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
-import { CategoryInterface, Savedsearch, SurveyItem } from '@models';
+import { CategoryInterface, CollectionResult, Savedsearch, SurveyItem } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import {
   CategoriesService,
@@ -13,6 +13,7 @@ import {
   SurveysService,
   EventType,
   SessionService,
+  CollectionsService,
 } from '@services';
 import { BehaviorSubject, debounceTime, filter, forkJoin, map, Subject } from 'rxjs';
 import { SavedsearchesService } from 'src/app/core/services/savedsearches.service';
@@ -53,6 +54,7 @@ export class SearchFormComponent implements OnInit {
       },
     ],
   });
+  collectionInfo?: CollectionResult;
   public activeFilters: any;
   public savedsearches: Savedsearch[];
   public statuses = searchFormHelper.statuses;
@@ -75,6 +77,7 @@ export class SearchFormComponent implements OnInit {
     private savedsearchesService: SavedsearchesService,
     private surveysService: SurveysService,
     private categoriesService: CategoriesService,
+    private collectionsService: CollectionsService,
     private dialog: MatDialog,
     private postsService: PostsService,
     private router: Router,
@@ -111,7 +114,7 @@ export class SearchFormComponent implements OnInit {
 
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
-        this.isMapView = params.url === '/map';
+        this.isMapView = params.url.includes('/map');
       },
     });
 
@@ -164,7 +167,13 @@ export class SearchFormComponent implements OnInit {
     });
 
     this.postsService.postsFilters$.subscribe({
-      next: () => {
+      next: (res) => {
+        const collectionId = typeof res.set === 'string' ? res.set : '';
+        if (collectionId) {
+          this.getCollectionInfo(collectionId);
+        } else {
+          this.collectionInfo = undefined;
+        }
         this.getPostsStatistic();
       },
     });
@@ -193,6 +202,20 @@ export class SearchFormComponent implements OnInit {
     });
 
     this.session.isLogged$.subscribe((isLogged) => (this.isLoggedIn = isLogged));
+  }
+
+  private getCollectionInfo(id: string) {
+    this.collectionsService.getById(id).subscribe((coll) => {
+      this.collectionInfo = coll;
+    });
+  }
+
+  clearCollection() {
+    if (this.isMapView) {
+      this.router.navigate(['/map']);
+    } else {
+      this.router.navigate(['/feed']);
+    }
   }
 
   public getSurveys(): void {
