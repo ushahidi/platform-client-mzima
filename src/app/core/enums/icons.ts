@@ -8,6 +8,7 @@ export enum Icons {
   pencil = 'pencil',
   arrowDownThin = 'arrow-down-thin',
   eye = 'eye',
+  eyeOpen = 'eye-open',
   categories = 'categories',
   configure = 'configure',
   dataSource = 'data-source',
@@ -45,4 +46,7 @@ export enum Icons {
   arrowRight = 'arrow-right',
   documentCsv = 'document-csv',
   survey = 'survey',
+  dragHandle = 'drag-handle',
+  twitter = 'twitter',
+  facebook = 'facebook',
 }
