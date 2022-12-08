@@ -23,10 +23,12 @@ export class SessionService {
 
   private readonly _currentUserData$ = new BehaviorSubject<UserInterface>({});
   private readonly _isLogged = new BehaviorSubject<boolean>(false);
+  private readonly _isFiltersVisible = new BehaviorSubject<boolean>(false);
 
   readonly currentSessionData$ = this._currentSessionData$.asObservable();
   readonly currentUserData$ = this._currentUserData$.asObservable();
   readonly isLogged$ = this._isLogged.asObservable();
+  readonly isFiltersVisible$ = this._isFiltersVisible.asObservable();
 
   private currentSessionData: SessionTokenInterface = {
     accessToken: '',
@@ -90,6 +92,9 @@ export class SessionService {
       localStorage.getItem(this.localStorageNameMapper('grantType')) || '';
     this.currentSessionData.tokenType =
       localStorage.getItem(this.localStorageNameMapper('tokenType')) || '';
+
+    const isFiltersVisible = localStorage.getItem(this.localStorageNameMapper('isFiltersVisible'));
+    this._isFiltersVisible.next(isFiltersVisible ? JSON.parse(isFiltersVisible) : false);
 
     this._currentSessionData$.next(this.currentSessionData);
   }
@@ -157,5 +162,10 @@ export class SessionService {
 
   isFeatureEnabled(feature: keyof FeaturesConfigInterface) {
     return this.currentConfig.features[feature];
+  }
+
+  toggleFiltersVisibility(newValue: boolean) {
+    localStorage.setItem(this.localStorageNameMapper('isFiltersVisible'), newValue as any);
+    this._isFiltersVisible.next(newValue);
   }
 }

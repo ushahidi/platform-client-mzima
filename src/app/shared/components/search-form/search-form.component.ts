@@ -88,9 +88,6 @@ export class SearchFormComponent implements OnInit {
   ) {
     this.getSavedFilters();
 
-    const isFiltersVisible = localStorage.getItem('is_filters_visible');
-    this.toggleFilters(isFiltersVisible ? JSON.parse(isFiltersVisible) : false);
-
     this.getSurveys();
 
     this.categoriesService.get().subscribe({
@@ -168,11 +165,13 @@ export class SearchFormComponent implements OnInit {
 
     this.postsService.postsFilters$.subscribe({
       next: (res) => {
-        const collectionId = typeof res.set === 'string' ? res.set : '';
-        if (collectionId) {
-          this.getCollectionInfo(collectionId);
-        } else {
-          this.collectionInfo = undefined;
+        if (res.set) {
+          const collectionId = typeof res.set === 'string' ? res.set : '';
+          if (collectionId) {
+            this.getCollectionInfo(collectionId);
+          } else {
+            this.collectionInfo = undefined;
+          }
         }
         this.getPostsStatistic();
       },
@@ -446,11 +445,7 @@ export class SearchFormComponent implements OnInit {
   public toggleFilters(value: boolean): void {
     if (value === this.isFiltersVisible) return;
     this.isFiltersVisible = value;
-    localStorage.setItem('is_filters_visible', JSON.stringify(this.isFiltersVisible));
-    this.eventBusService.next({
-      type: EventType.ToggleFiltersPanel,
-      payload: this.isFiltersVisible,
-    });
+    this.session.toggleFiltersVisibility(value);
   }
 
   public clearFilter(filterName: string): void {

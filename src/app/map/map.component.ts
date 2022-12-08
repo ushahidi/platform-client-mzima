@@ -116,7 +116,7 @@ export class MapComponent implements OnInit {
       },
     });
 
-    this.eventBusService.on(EventType.ToggleFiltersPanel).subscribe({
+    this.sessionService.isFiltersVisible$.subscribe({
       next: (isFiltersVisible) => {
         setTimeout(() => {
           this.isFiltersVisible = isFiltersVisible;

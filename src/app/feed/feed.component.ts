@@ -3,13 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult } from '@models';
-import {
-  ConfirmModalService,
-  EventBusService,
-  EventType,
-  PostsService,
-  PostsV5Service,
-} from '@services';
+import { ConfirmModalService, PostsService, PostsV5Service, SessionService } from '@services';
 import { NgxMasonryComponent } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
@@ -54,7 +48,7 @@ export class FeedComponent {
     private postsService: PostsService,
     private route: ActivatedRoute,
     private postsV5Service: PostsV5Service,
-    private eventBusService: EventBusService,
+    private session: SessionService,
     private confirmModalService: ConfirmModalService,
     private dialog: MatDialog,
   ) {
@@ -90,7 +84,7 @@ export class FeedComponent {
       },
     });
 
-    this.eventBusService.on(EventType.ToggleFiltersPanel).subscribe({
+    this.session.isFiltersVisible$.subscribe({
       next: (isFiltersVisible) => {
         setTimeout(() => {
           this.isFiltersVisible = isFiltersVisible;
