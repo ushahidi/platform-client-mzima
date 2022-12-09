@@ -120,16 +120,6 @@ export class CollectionsComponent implements OnInit {
     return this.post?.sets.some((set) => set === collection.id.toString());
   }
 
-  //   function postInCollection(collection) {
-  //     // If we are dealing with a single model we want to mark
-  //     // all collections it exists in as checked
-  //     // If we are dealing with multiple posts the user
-  //     // does not have the option to remove posts from collections only to add
-
-  //     // TODO figure out to set newly created checkbox checked once it's been addToCollection
-  //     return $scope.posts.length === 1 ? _.contains($scope.posts[0].sets, String(collection.id)) : false;
-  // }
-
   onCheckChange(isChecked: boolean, item: CollectionResult) {
     if (isChecked) {
       this.collectionsService.addToCollection(item.id, this.post.id).subscribe();

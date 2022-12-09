@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { CollectionResult } from '@models';
 
 @Component({
@@ -15,10 +14,6 @@ export class CollectionItemComponent {
   @Output() public checkedChange = new EventEmitter<boolean>();
   @Output() public edit = new EventEmitter<Event>();
   @Output() public delete = new EventEmitter<Event>();
-
-  public onCheckChange(event: MatCheckboxChange): void {
-    this.checkedChange.emit(event.checked);
-  }
 
   public editCollection(event: Event): void {
     event.stopPropagation();

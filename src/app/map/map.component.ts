@@ -68,6 +68,10 @@ export class MapComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.route.params.subscribe(() => {
+      this.initCollection();
+    });
+
     if (this.route.snapshot.data['view'] === 'collection') {
       this.collectionId = this.route.snapshot.paramMap.get('id')!;
       this.params.set = this.collectionId;
@@ -123,6 +127,18 @@ export class MapComponent implements OnInit {
         }, 1);
       },
     });
+  }
+
+  initCollection() {
+    if (this.route.snapshot.data['view'] === 'collection') {
+      this.collectionId = this.route.snapshot.paramMap.get('id')!;
+      this.params.set = this.collectionId;
+      this.postsService.applyFilters({ set: this.collectionId });
+    } else {
+      this.collectionId = '';
+      this.params.set = '';
+      this.postsService.applyFilters({ set: [] });
+    }
   }
 
   onMapReady(map: Map) {

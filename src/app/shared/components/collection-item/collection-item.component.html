@@ -5,9 +5,9 @@
   [ngClass]="{ 'collection-item--has-checkbox': selectable }"
 >
   <div *ngIf="selectable" class="collection-item__checkbox">
-    <mat-checkbox [checked]="checked" (change)="onCheckChange($event)"> </mat-checkbox>
+    <mat-checkbox [checked]="checked"> </mat-checkbox>
   </div>
-  <div class="collection-item__actions" *ngIf="actions">
+  <div class="collection-item__actions" *ngIf="actions && !selectable">
     <button
       tabindex="-1"
       mat-raised-button

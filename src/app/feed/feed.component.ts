@@ -52,15 +52,9 @@ export class FeedComponent {
     private confirmModalService: ConfirmModalService,
     private dialog: MatDialog,
   ) {
-    if (this.route.snapshot.data['view'] === 'collection') {
-      this.collectionId = this.route.snapshot.paramMap.get('id')!;
-      this.params.set = this.collectionId;
-      this.postsService.applyFilters({ set: this.collectionId });
-    } else {
-      this.collectionId = '';
-      this.params.set = '';
-      this.postsService.applyFilters({ set: [] });
-    }
+    this.route.params.subscribe(() => {
+      this.initCollection();
+    });
 
     this.route.queryParams.subscribe({
       next: (params: Params) => {
@@ -91,6 +85,18 @@ export class FeedComponent {
         }, 1);
       },
     });
+  }
+
+  initCollection() {
+    if (this.route.snapshot.data['view'] === 'collection') {
+      this.collectionId = this.route.snapshot.paramMap.get('id')!;
+      this.params.set = this.collectionId;
+      this.postsService.applyFilters({ set: this.collectionId });
+    } else {
+      this.collectionId = '';
+      this.params.set = '';
+      this.postsService.applyFilters({ set: [] });
+    }
   }
 
   private getPosts(params: any, add?: boolean): void {

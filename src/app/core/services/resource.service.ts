@@ -79,6 +79,6 @@ export abstract class ResourceService<T> {
 
   delete(id: string | number, config?: string): Observable<any> {
     const apiUrl = config ? `${this.apiUrl}/${id}/${config}` : `${this.apiUrl}/${id}`;
-    return this.httpClient.delete(`${apiUrl}/${id}`, this.options);
+    return this.httpClient.delete(`${apiUrl}`, this.options);
   }
 }
