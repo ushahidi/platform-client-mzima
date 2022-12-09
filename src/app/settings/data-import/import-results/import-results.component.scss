@@ -1,0 +1,36 @@
+h1 {
+  margin-bottom: 16px;
+}
+
+.progress {
+  top: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
+
+.form-controls-panel {
+  margin-top: 16px;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.completed {
+  text-align: center;
+
+  h1 {
+    margin-bottom: 24px;
+  }
+
+  .form-controls-panel {
+    margin-top: 40px;
+  }
+}
+
+.visual {
+  display: block;
+  margin-bottom: 16px;
+}

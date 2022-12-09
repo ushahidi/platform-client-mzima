@@ -10,9 +10,11 @@
 
 <ng-container *ngIf="currentView === CollectionView.List; else createForm">
   <div class="head">
-    <h1 mat-dialog-title>{{ 'app.collection' | translate }}</h1>
+    <h1 mat-dialog-title>
+      {{ post ? ('set.add_to_collection' | translate) : ('app.collection' | translate) }}
+    </h1>
     <button
-      *ngIf="isLoggedIn"
+      *ngIf="isLoggedIn && !post"
       type="button"
       color="primary"
       mat-raised-button
@@ -41,34 +43,19 @@
   <ng-container *ngIf="!isLoading; else loader">
     <div mat-dialog-content>
       <div class="collection-list">
-        <div
-          matRipple
-          class="collection-item"
-          *ngFor="let item of collectionList"
+        <app-collection-item
+          [collection]="item"
+          [actions]="isLoggedIn"
+          class="collection-list__item"
+          (edit)="editCollection(item)"
           (click)="goToCollection(item)"
+          [selectable]="post && !!post.id"
+          (delete)="deleteCollection(item)"
+          *ngFor="let item of collectionList"
+          [checked]="isPostInCollection(item)"
+          (checkedChange)="onCheckChange($event, item)"
         >
-          <div class="collection-item__actions" *ngIf="isLoggedIn">
-            <button
-              tabindex="-1"
-              mat-raised-button
-              class="collection-item__control"
-              (click)="editCollection(item, $event)"
-            >
-              <mat-icon matPrefix svgIcon="edit"></mat-icon>
-            </button>
-            <button
-              tabindex="-1"
-              mat-raised-button
-              class="collection-item__control"
-              (click)="deleteCollection(item, $event)"
-            >
-              <mat-icon matPrefix svgIcon="close"></mat-icon>
-            </button>
-          </div>
-
-          <strong class="collection-item__title">{{ item.name }}</strong>
-          <span class="collection-item__description">{{ item.description }}</span>
-        </div>
+        </app-collection-item>
       </div>
     </div>
 

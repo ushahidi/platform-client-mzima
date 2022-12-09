@@ -47,6 +47,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
   @Input() public options: any[];
   @Input() public type: FilterType;
   @Input() public title: string;
+  @Input() public canEdit?: boolean;
   @Input() public fields: string[] = ['id', 'name'];
   @Output() public filterChange = new EventEmitter();
   @Output() public editOption = new EventEmitter();

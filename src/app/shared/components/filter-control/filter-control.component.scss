@@ -55,9 +55,9 @@
 .radio-button {
   display: flex;
   font-size: 12px;
-  color: var(--color-neutral-90);
   line-height: 14px;
   align-items: center;
+  color: var(--color-neutral-90);
   justify-content: space-between;
 
   .mat-radio-button {
@@ -106,6 +106,10 @@
       margin: 0;
       font-size: 1em;
     }
+  }
+
+  &__content {
+    padding-left: 24px;
   }
 }
 

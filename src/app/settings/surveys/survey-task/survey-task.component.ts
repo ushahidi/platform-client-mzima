@@ -1,5 +1,13 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { CONST } from '@constants';
@@ -24,6 +32,8 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   @Input() task: SurveyItemTask;
   @Input() survey: SurveyItem;
   @Input() roles: RoleResult[];
+  @Input() isMain: boolean;
+  @Output() colorSelected = new EventEmitter();
 
   surveyId: string;
   selectedRoles: GroupCheckboxValueInterface = {
@@ -170,8 +180,8 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   addField() {
     const dialogRef = this.dialog.open(CreateFieldModalComponent, {
       width: '100%',
-      maxWidth: '564px',
-      minWidth: '300px',
+      maxWidth: 576,
+      minWidth: 300,
       data: {
         surveyId: this.surveyId,
       },
@@ -193,8 +203,8 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   editField(selectedFieldType: any) {
     const dialogRef = this.dialog.open(CreateFieldModalComponent, {
       width: '100%',
-      maxWidth: '564px',
-      minWidth: '300px',
+      maxWidth: 576,
+      minWidth: 300,
       data: {
         selectedFieldType,
         surveyId: this.surveyId,
@@ -212,5 +222,9 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
         }
       },
     });
+  }
+
+  public colorChanged(): void {
+    this.colorSelected.emit(this.selectedColor);
   }
 }

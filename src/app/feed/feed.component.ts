@@ -3,13 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult } from '@models';
-import {
-  ConfirmModalService,
-  EventBusService,
-  EventType,
-  PostsService,
-  PostsV5Service,
-} from '@services';
+import { ConfirmModalService, PostsService, PostsV5Service, SessionService } from '@services';
 import { NgxMasonryComponent } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
@@ -31,6 +25,7 @@ export class FeedComponent {
     page: 1,
     size: this.params.limit,
   };
+  collectionId = '';
   public posts: any[] = [];
   public isLoading = false;
   public activePostId: any;
@@ -53,10 +48,14 @@ export class FeedComponent {
     private postsService: PostsService,
     private route: ActivatedRoute,
     private postsV5Service: PostsV5Service,
-    private eventBusService: EventBusService,
+    private session: SessionService,
     private confirmModalService: ConfirmModalService,
     private dialog: MatDialog,
   ) {
+    this.route.params.subscribe(() => {
+      this.initCollection();
+    });
+
     this.route.queryParams.subscribe({
       next: (params: Params) => {
         const id: string = params['id'] || '';
@@ -79,13 +78,25 @@ export class FeedComponent {
       },
     });
 
-    this.eventBusService.on(EventType.ToggleFiltersPanel).subscribe({
+    this.session.isFiltersVisible$.subscribe({
       next: (isFiltersVisible) => {
         setTimeout(() => {
           this.isFiltersVisible = isFiltersVisible;
         }, 1);
       },
     });
+  }
+
+  initCollection() {
+    if (this.route.snapshot.data['view'] === 'collection') {
+      this.collectionId = this.route.snapshot.paramMap.get('id')!;
+      this.params.set = this.collectionId;
+      this.postsService.applyFilters({ set: this.collectionId });
+    } else {
+      this.collectionId = '';
+      this.params.set = '';
+      this.postsService.applyFilters({ set: [] });
+    }
   }
 
   private getPosts(params: any, add?: boolean): void {
@@ -98,10 +109,10 @@ export class FeedComponent {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
         setTimeout(() => {
           this.isLoading = false;
-          if (this.feed.nativeElement.offsetHeight >= this.feed.nativeElement.scrollHeight) {
+          if (this.feed?.nativeElement.offsetHeight >= this.feed?.nativeElement.scrollHeight) {
             this.loadMore();
           }
-          this.masonry.layout();
+          this.masonry?.layout();
         }, 500);
       },
     });

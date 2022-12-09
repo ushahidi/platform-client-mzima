@@ -41,4 +41,12 @@ export enum Icons {
   map = 'map',
   help = 'help',
   settings = 'settings',
+  download = 'download',
+  externalLink = 'external-link',
+  arrowRight = 'arrow-right',
+  documentCsv = 'document-csv',
+  survey = 'survey',
+  dragHandle = 'drag-handle',
+  twitter = 'twitter',
+  facebook = 'facebook',
 }

@@ -39,6 +39,13 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  createRouterLink(route: string) {
+    if (route !== 'map' && route !== 'feed') return route;
+    return this.router.url.includes('collection')
+      ? `${route}/collection/${this.router.url.split('/').pop() || ''}`
+      : route;
+  }
+
   private initMenu() {
     this.menu = [
       { label: 'Map view', router: 'map', icon: 'map', visible: true },
@@ -94,7 +101,8 @@ export class SidebarComponent implements OnInit {
 
   private openCollections(): void {
     const dialogRef = this.dialog.open(CollectionsComponent, {
-      width: '560px',
+      width: '100%',
+      maxWidth: '768px',
     });
 
     dialogRef.afterClosed().subscribe({

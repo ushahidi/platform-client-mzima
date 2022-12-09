@@ -1,0 +1,69 @@
+.collection-item {
+  font-size: 12px;
+  line-height: 1.3;
+  min-height: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--color-neutral-80);
+  background: var(--color-neutral-10);
+
+  &__actions {
+    top: 13px;
+    right: 16px;
+    display: flex;
+    margin: 0 -4px;
+    position: absolute;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__control {
+    font-size: 20px;
+    padding: 0;
+    width: 1em;
+    height: 1em;
+    min-width: 0;
+    display: flex;
+    margin: 0 4px;
+    line-height: 1em;
+    border-radius: 50%;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background: none;
+
+    .mat-icon {
+      font-size: 1em;
+    }
+  }
+
+  &__title {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.6;
+    padding-right: 60px;
+    color: var(--color-black);
+
+    .collection-item--has-checkbox & {
+      display: flex;
+      min-height: 28px;
+      padding-left: 36px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+
+  &__checkbox {
+    top: 12px;
+    left: 16px;
+    position: absolute;
+
+    &::ng-deep {
+      .mat-checkbox-inner-container {
+        margin-right: 3.5px !important;
+      }
+    }
+  }
+}

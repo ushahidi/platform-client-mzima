@@ -22,14 +22,16 @@
         cdkTextareaAutosize
         cdkAutosizeMinRows="2"
         cdkAutosizeMaxRows="5"
-        placeholder="{{ 'survey.describe_this_task' }}"
+        placeholder="{{ 'survey.describe_this_task' | translate }}"
         [(ngModel)]="newTask.description"
       ></textarea>
     </mat-form-field>
   </div>
-  <mat-slide-toggle [(ngModel)]="newTask.required">
-    {{ 'survey.require_section' | translate }}
-  </mat-slide-toggle>
+  <div class="toggle">
+    <mat-slide-toggle [(ngModel)]="newTask.required">
+      {{ 'survey.require_section' | translate }}
+    </mat-slide-toggle>
+  </div>
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
@@ -37,6 +39,6 @@
     {{ 'app.cancel' | translate }}
   </button>
   <button type="submit" color="primary" mat-raised-button (click)="addNewTask()">
-    {{ 'app.add_and_close' | translate }}
+    {{ 'app.add' | translate }}
   </button>
 </div>
