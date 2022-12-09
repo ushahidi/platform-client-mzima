@@ -8,7 +8,7 @@
   <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
 </button>
 
-<div class="confirm">
+<div [ngClass]="{ confirm: data.buttonSuccess }">
   <app-lottie-animation
     *ngIf="data.buttonSuccess"
     [path]="'/assets/lottie/success-animation.json'"

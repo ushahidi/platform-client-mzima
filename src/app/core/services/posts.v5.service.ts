@@ -20,6 +20,10 @@ export class PostsV5Service extends ResourceService<any> {
     return 'posts';
   }
 
+  updateStatus(id: string | number, status: string) {
+    return super.patch(id, { status });
+  }
+
   override getById(id: string | number): Observable<any> {
     return super.getById(id).pipe(
       map((response) => {

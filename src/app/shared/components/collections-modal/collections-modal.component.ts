@@ -25,7 +25,7 @@ export class CollectionsModalComponent {
       orderby: 'created',
       order: 'desc',
     };
-    this.collectionsService.getCollections('', params).subscribe({
+    this.collectionsService.getCollections(params).subscribe({
       next: (response) => {
         this.collectionList = response.results;
         this.loading = false;

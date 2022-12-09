@@ -1,60 +1,40 @@
-<div class="page-content">
-  <div class="form-sheet" *ngIf="importFinished; else notFinished">
-    <div class="form-sheet-summary">
-      <h2 class="form-sheet-title">{{ 'data_import.import_complete' | translate }}</h2>
-      <p>{{ 'data_import.complete_info' | translate: { filename } }}</p>
-    </div>
+<div class="completed" *ngIf="importFinished; else notFinished">
+  <app-lottie-animation
+    class="visual"
+    [path]="'/assets/lottie/success-animation.json'"
+  ></app-lottie-animation>
 
-    <div class="form-field">
-      <button
-        type="button"
-        color="primary"
-        mat-raised-button
-        [routerLink]="['collections', collectionId]"
-      >
-        {{ 'data_import.import_another' | translate }}
-      </button>
-      <button
-        type="button"
-        color="primary"
-        mat-raised-button
-        [routerLink]="['settings/data-import']"
-      >
-        {{ 'data_import.import_another' | translate }}
-      </button>
-    </div>
+  <h1>{{ 'data_import.import_complete' | translate }}</h1>
+  <div class="description">
+    <p>The data from your CSV spreadsheet was successfully imported.</p>
+  </div>
+
+  <div class="form-controls-panel">
+    <button type="button" mat-stroked-button [routerLink]="['collections', collectionId]">
+      {{ 'data_import.see_imported_posts' | translate }}
+    </button>
+    <button type="button" color="primary" mat-raised-button [routerLink]="['settings/data-import']">
+      {{ 'data_import.import_another' | translate }}
+    </button>
   </div>
 </div>
 
 <ng-template #notFinished>
-  <div class="form-sheet">
-    <div class="form-sheet-summary">
-      <h2 class="form-sheet-title">{{ 'data_import.nearly_complete' | translate }}</h2>
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      <p>{{ 'data_import.finish_info' | translate }}</p>
-    </div>
+  <mat-progress-bar class="progress" mode="indeterminate"></mat-progress-bar>
+  <h1>{{ 'data_import.nearly_complete' | translate }}</h1>
+  <div class="description">
+    <p>{{ 'data_import.finish_info' | translate }}</p>
+  </div>
 
-    <div class="form-field">
-      <button
-        type="button"
-        color="primary"
-        mat-raised-button
-        [routerLink]="['settings/data-import']"
-      >
-        {{ 'data_import.import_another' | translate }}
-      </button>
-    </div>
+  <div class="form-controls-panel">
+    <button *ngIf="document.magic" type="button" mat-stroked-button (click)="getPollingInfo()">
+      Get Polling Info
+    </button>
+    <button type="button" color="primary" mat-raised-button [routerLink]="['settings/data-import']">
+      {{ 'data_import.import_another' | translate }}
+    </button>
   </div>
   <!-- TODO: FIXME: DEBUG INFO -->
   <pre>{{ pollingInfo | json }}</pre>
-  <button
-    *ngIf="document.magic"
-    type="button"
-    color="secondary"
-    mat-raised-button
-    (click)="getPollingInfo()"
-  >
-    Get Polling Info
-  </button>
   <!-- EOF Debug -->
 </ng-template>

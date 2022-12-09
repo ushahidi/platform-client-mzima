@@ -34,7 +34,12 @@
             >
               {{ option[fields[1]] }}
             </mat-radio-button>
-            <button class="edit-btn" mat-icon-button (click)="editOption.emit(option)">
+            <button
+              *ngIf="canEdit"
+              class="edit-btn"
+              mat-icon-button
+              (click)="editOption.emit(option)"
+            >
               <mat-icon svgIcon="pencil"></mat-icon>
             </button>
           </div>

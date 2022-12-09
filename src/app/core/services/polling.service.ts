@@ -47,6 +47,11 @@ export class PollingService implements OnDestroy {
     });
   }
 
+  getImportJobsById(jobs: string[]) {
+    const q = jobs.map((j) => this.dataImportService.getById(j));
+    this.startImportPolling(q);
+  }
+
   private startImportPolling(queries: Observable<any>[]) {
     this.currentPool.importing = queries.length;
     const nextQueries: Observable<any>[] = [];

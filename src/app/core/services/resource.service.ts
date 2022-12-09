@@ -70,7 +70,15 @@ export abstract class ResourceService<T> {
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
-  delete(id: string | number): Observable<any> {
-    return this.httpClient.delete(`${this.apiUrl}/${id}`, this.options);
+  patch(id: string | number, resource: T, config?: string) {
+    const apiUrl = config ? `${this.apiUrl}/${id}/${config}` : `${this.apiUrl}/${id}`;
+    return this.httpClient
+      .patch(apiUrl, this.toServerModel(resource), this.options)
+      .pipe(map((json) => this.fromServerModel(json)));
+  }
+
+  delete(id: string | number, config?: string): Observable<any> {
+    const apiUrl = config ? `${this.apiUrl}/${id}/${config}` : `${this.apiUrl}/${id}`;
+    return this.httpClient.delete(`${apiUrl}`, this.options);
   }
 }

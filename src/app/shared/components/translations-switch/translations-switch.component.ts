@@ -42,7 +42,7 @@ export class TranslationsSwitchComponent implements OnInit {
   public addTranslation(): void {
     const dialogRef = this.dialog.open(SelectLanguagesModalComponent, {
       width: '100%',
-      maxWidth: 480,
+      maxWidth: 576,
       data: {
         languages: this.languages,
         activeLanguages: [this.defaultLanguage, ...this.activeLanguages],

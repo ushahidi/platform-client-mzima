@@ -38,9 +38,29 @@
   </button>
 
   <div class="search-form__main-filters">
-    <span class="search-form__main-filters__total" *ngIf="total !== undefined"
-      >Results: {{ total }}</span
-    >
+    <span class="search-form__main-filters__total" *ngIf="total !== undefined">
+      Results: {{ total }}
+    </span>
+
+    <div class="collection-info" *ngIf="collectionInfo">
+      <span class="collection-info__title">
+        Collection
+        {{ collectionInfo.name }}
+        <button
+          mat-button
+          type="button"
+          color="primary"
+          (click)="clearCollection()"
+          class="filter-group__head__button"
+        >
+          {{ 'nav.clear' | translate }}
+        </button>
+      </span>
+
+      <div class="collection-info__description" *ngIf="collectionInfo.description?.length">
+        {{ collectionInfo.description }}
+      </div>
+    </div>
 
     <div class="filter-group" *ngIf="surveyList?.length">
       <div class="filter-group__head">
@@ -116,6 +136,7 @@
       title="Saved filters"
       [type]="filterType.Select"
       [options]="savedsearches"
+      [canEdit]="isLoggedIn"
       (editOption)="saveSearch($event)"
       [(ngModel)]="activeSavedSearchValue"
       [ngModelOptions]="{ standalone: true }"

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
-import { CollectionResult } from '@models';
+import { CollectionResult, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { CollectionsService, ConfirmModalService, RolesService, SessionService } from '@services';
 
@@ -42,6 +42,7 @@ export class CollectionsComponent implements OnInit {
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
+    @Inject(MAT_DIALOG_DATA) public post: PostResult,
     private collectionsService: CollectionsService,
     private confirm: ConfirmModalService,
     private formBuilder: FormBuilder,
@@ -97,12 +98,17 @@ export class CollectionsComponent implements OnInit {
 
   getCollections(query = '') {
     this.isLoading = true;
-    const params = {
+    let params: any = {
       orderby: 'created',
       order: 'desc',
       q: query,
     };
-    this.collectionsService.getCollections('', params).subscribe({
+
+    if (this.post?.id) {
+      params.editableBy = 'me';
+    }
+
+    this.collectionsService.getCollections(params).subscribe({
       next: (response) => {
         this.collectionList = response.results;
         this.isLoading = false;
@@ -110,8 +116,19 @@ export class CollectionsComponent implements OnInit {
     });
   }
 
-  async deleteCollection(collection: CollectionResult, event: Event) {
-    event?.stopPropagation();
+  isPostInCollection(collection: CollectionResult) {
+    return this.post?.sets.some((set) => set === collection.id.toString());
+  }
+
+  onCheckChange(isChecked: boolean, item: CollectionResult) {
+    if (isChecked) {
+      this.collectionsService.addToCollection(item.id, this.post.id).subscribe();
+    } else {
+      this.collectionsService.removeFromCollection(item.id, this.post.id).subscribe();
+    }
+  }
+
+  async deleteCollection(collection: CollectionResult) {
     const confirmed = await this.confirm.open({
       title: collection.name,
       description: this.translate.instant('notify.collection.delete_collection_confirm'),
@@ -138,8 +155,7 @@ export class CollectionsComponent implements OnInit {
     }
   }
 
-  editCollection(collection: CollectionResult, event: Event) {
-    event?.stopPropagation();
+  editCollection(collection: CollectionResult) {
     this.collectionForm.patchValue({
       name: collection.name,
       description: collection.description,
@@ -153,7 +169,12 @@ export class CollectionsComponent implements OnInit {
 
   goToCollection(collection: CollectionResult) {
     this.matDialogRef.close();
-    this.router.navigate([`/`, collection.view === 'map' ? 'map' : 'feed']);
+    this.router.navigate([
+      `/`,
+      collection.view === 'map' ? 'map' : 'feed',
+      'collection',
+      collection.id,
+    ]);
     // var viewParam = collection.view !== 'map' ? 'data' : 'map';
     // $state.go(`posts.${viewParam}.collection`, {collectionId: collection.id}, {reload: true});
   }
@@ -161,6 +182,7 @@ export class CollectionsComponent implements OnInit {
   saveCollection() {
     const collectionData = this.collectionForm.value;
     collectionData.role = collectionData.visible_to.options;
+    delete collectionData.visible_to;
     this.session.currentUserData$.subscribe((userData) => {
       collectionData.user_id = userData.userId;
 
