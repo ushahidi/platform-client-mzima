@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { DataSourceConfigInterface } from '@models';
+import { TranslateService } from '@ngx-translate/core';
 import {
   ConfigService,
   ConfirmModalService,
@@ -29,8 +29,6 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   public surveyList: any[];
   public form: FormGroup = this.fb.group({});
   public dataSourceList: any[];
-  // private allProvidersData: DataSourceConfigInterface;
-  public isImportToSurvey = true;
   public selectedSurvey: any;
   public surveyAttributesList: any;
   public currentProviderId: string | null;
@@ -49,6 +47,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     private confirmModalService: ConfirmModalService,
     private surveysService: SurveysService,
     private formsService: FormsService,
+    private translate: TranslateService,
   ) {}
 
   getAvailableProviders(providers: any) {
@@ -102,14 +101,14 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
       this.createForm(this.provider);
       this.addControlsToForm('id', this.fb.control(this.provider.id, Validators.required));
       this.getSurveyAttributes(this.provider.selected_survey);
-
-      console.log(this.provider);
     } else {
-      // this.router.navigate(['/settings/data-sources']);
+      this.router.navigate(['/settings/data-sources']);
     }
   }
 
   public getSurveyAttributes(survey: any): void {
+    if (!survey) return;
+    this.form.patchValue({ form_id: survey });
     this.selectedSurvey = survey;
     const queryParams = {
       order: 'asc',
@@ -118,6 +117,11 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     this.formsService.getAttributes(survey.id, queryParams).subscribe({
       next: (response) => {
         this.surveyAttributesList = response;
+        for (const el of this.provider.control_inbound_fields) {
+          this.form.patchValue({
+            [el.control_label]: this.checkKeyFields(el.control_value),
+          });
+        }
       },
     });
   }
@@ -127,6 +131,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   }
 
   private createForm(provider: any) {
+    this.addControlsToForm('form_id', this.fb.control(this.provider.selected_survey));
     this.createControls(provider.control_options);
     this.createControls(provider.control_inbound_fields);
   }
@@ -163,69 +168,87 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     this.form.addControl(name, control);
   }
 
-  // TODO: add translate
-  public async turnOffDataSource(): Promise<void> {
-    const confirmed = await this.confirmModalService.open({
-      title: `Are you sure you want to Delete ${this.provider.name} Data Source?`,
-      description:
-        '<p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Remember, you won’t be able to redo this action.</p>',
-      confirmButtonText: 'Yes, delete',
-      cancelButtonText: 'No, go back',
-    });
-    if (!confirmed) return;
-
-    console.log('remove: ', this.provider);
-  }
-
-  // TODO: Check the API when an endpoint object check will be added
-  public changeAvailableProviders(event: any): void {
-    // const providers = JSON.parse(JSON.stringify(this.providersData.providers));
-    // providers[this.provider.id] = event.checked;
-    // console.log(providers);
-
-    // const body = { providers };
-    // console.log(body);
+  public async turnOffDataSource(event: any): Promise<void> {
+    if (!event.checked) {
+      this.providersData.providers[this.provider.id] = event.checked;
+      const confirmed = await this.confirmModalService.open({
+        title: this.translate.instant(`settings.data_sources.provider_name`, {
+          providerName: this.provider.name,
+        }),
+        description: this.translate.instant(
+          'settings.data_sources.do_you_really_want_to_disconnect',
+        ),
+        confirmButtonText: this.translate.instant('app.yes_delete'),
+        cancelButtonText: this.translate.instant('app.no_go_back'),
+      });
+      if (!confirmed) {
+        this.provider.available_provider = true;
+        return;
+      }
+    }
 
     this.providersData.providers[this.provider.id] = event.checked;
-    console.log('providersData', this.providersData);
-
-    // allowed_privileges: ['read', 'create', 'update', 'delete', 'search']
-    // authenticable-providers:  {gmail: true}
-    // email: {incoming_type: 'IMAP', incoming_server: 'asdf', incoming_port: 3, incoming_security: 'SSL', incoming_username: 'sadf', …}
-    // frontlinesms: {server_url: 'https://server.url.com/', key: '6187c7f5-7195-4039-9fa5-6980094d3a9f', secret: '1234567890', form_id: undefined}
-    // gmail: {redirect_uri: 'urn:ietf:wg:oauth:2.0:oob', authenticated: false}
-    // id: "data-provider"
-    // nexmo: {from: 'sdfasdf', api_key: 'sdfas', api_secret: 'asfd'}
-    // providers: {smssync: true, email: false, outgoingemail: true, twilio: true, nexmo: true, …}
-    // smssync: {secret: 'dsfsdfasdf'}
-    // twilio: {}
-    // twitter: {consumer_key: 'ds', consumer_secret: 'ss', oauth_access_token: 'ss', oauth_access_token_secret: 'ss', twitter_search_terms: 's'}
-    // url: "https://tuxpiper.api.ushahidi.io/api/v3/config/data-provider"
-
-    // this.configService.updateProviders(providers).subscribe(() => this.getProvidersList());
+    this.configService.updateProviders(this.providersData).subscribe(() => {
+      this.router.navigate(['/settings/data-sources']);
+    });
+    this.onCreating = false;
   }
 
-  // TODO: Check the API when an endpoint object check will be added
   public saveProviderData(): void {
-    console.log('submit > formControls', this.form.value);
+    if (this.form.value.form_id) {
+      for (const field of this.provider.control_inbound_fields) {
+        this.form.patchValue({
+          [field.control_label]: this.fillForApi(
+            this.filterAttributes('key', this.form.controls[field.control_label].value),
+          ),
+        });
+      }
+    }
 
-    // allowed_privileges: ['read', 'create', 'update', 'delete', 'search']
-    // authenticable-providers : {gmail: true}
-    // email : {incoming_type: 'IMAP', incoming_server: 'asdf', incoming_port: 3, incoming_security: 'SSL', incoming_username: 'sadf', …}
-    // frontlinesms : {server_url: 'https://server.url.com/', key: '6187c7f5-7195-4039-9fa5-6980094d3a9f', secret: '1234567890'}
-    // gmail : {redirect_uri: 'urn:ietf:wg:oauth:2.0:oob', authenticated: false}
-    // id : "data-provider"
-    // nexmo : {from: 'sdfasdf', api_key: 'sdfas', api_secret: 'asfd'}
-    // providers : {smssync: true, email: true, outgoingemail: true, twilio: true, nexmo: true, …}
-    // smssync : {secret: 'dsfsdfasdf'}
-    // twilio : {}
-    // twitter : {consumer_key: 'ds', consumer_secret: 'ss', oauth_access_token: 'ss', oauth_access_token_secret: 'ss', twitter_search_terms: 's'}
-    // url : "https://tuxpiper.api.ushahidi.io/api/v3/config/data-provider"
+    for (const provider in this.providersData) {
+      if (provider === this.form.value.id) {
+        for (const providerKey in this.providersData[provider]) {
+          this.providersData[provider][providerKey] = this.form.value[providerKey];
+        }
+        if (this.provider.visible_survey) {
+          this.providersData[provider].form_id = this.form.value.form_id.id;
+          if (this.providersData[provider].form_id) {
+            let obj: any = {};
+            for (const field of this.provider.control_inbound_fields) {
+              obj[field.key] = this.form.value[field.control_label];
+            }
+            this.providersData[provider].inbound_fields = obj;
+          }
+        } else {
+          delete this.providersData[provider].form_id;
+          delete this.providersData[provider].inbound_fields;
+        }
+      }
+    }
 
-    console.log('dataSourceList', this.dataSourceList);
+    this.configService.updateProviders(this.providersData).subscribe(() => {
+      this.router.navigate(['/settings/data-sources']);
+    });
+  }
 
-    console.log('providersData', this.providersData);
+  private checkKeyFields(field: string): any {
+    if (field === 'title' || field === 'content') {
+      return this.filterAttributes('type', field === 'title' ? field : 'description')?.key;
+    } else if (field) {
+      return field.replace(/values./gi, '');
+    }
+  }
 
-    // this.configService.updateProviders(providersData).subscribe(() => this.getProvidersList());
+  private filterAttributes(param: string, value: string) {
+    return this.surveyAttributesList.find((el: any) => el[param] === value);
+  }
+
+  private fillForApi(obj: any): string {
+    if (!obj) return '';
+    if (obj.type === 'title' || obj.type === 'description') {
+      return obj.type === 'title' ? obj.type : 'content';
+    } else {
+      return `values.${obj.key}`;
+    }
   }
 }

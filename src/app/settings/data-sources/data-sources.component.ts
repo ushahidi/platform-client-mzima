@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '@services';
+import { ConfigService, DataSourcesService } from '@services';
 import { arrayHelpers } from '@helpers';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-data-sources',
@@ -11,19 +12,24 @@ export class DataSourcesComponent implements OnInit {
   public isAllProvidersAdded: boolean;
   public providersData: any;
 
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    private dataSourcesService: DataSourcesService,
+  ) {}
 
   ngOnInit() {
     this.getProvidersList();
   }
 
   public getProvidersList() {
-    this.configService.getProvidersData().subscribe({
-      next: (providers) => {
-        this.providersData = arrayHelpers.sortArray(providers, 'label');
-        this.isAllProvidersAdded = !!this.providersData.filter((el: any) => !el.value);
-        console.log(this.isAllProvidersAdded);
-      },
-    });
+    this.dataSourcesService
+      .getDataSource()
+      .pipe(switchMap((dataSources) => this.configService.getProvidersData(false, dataSources)))
+      .subscribe({
+        next: (providers) => {
+          this.providersData = arrayHelpers.sortArray(providers, 'label');
+          this.isAllProvidersAdded = !!this.providersData.filter((el: any) => !el.value);
+        },
+      });
   }
 }

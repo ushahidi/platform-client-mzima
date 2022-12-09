@@ -47,7 +47,7 @@
           name="language"
           disableOptionCentering
           [(ngModel)]="selectedLanguage"
-          [placeholder]="'app.mark_as' | translate"
+          [placeholder]="'select_language' | translate"
           (selectionChange)="selectLanguageEmit($event)"
         >
           <mat-option *ngFor="let language of languages" [value]="language">

@@ -45,6 +45,11 @@ const routes: Routes = [
     title: 'post.posts',
     loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
   },
+  {
+    path: '**',
+    redirectTo: 'map',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

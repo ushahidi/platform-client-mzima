@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { arrayHelpers } from '@helpers';
+import { DataSource, DataSourceOptions } from '@models';
 import { map, Observable } from 'rxjs';
-import { DataSource, DataSourceOptions } from '../interfaces';
 import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
-import { arrayHelpers } from '@helpers';
 
 @Injectable({
   providedIn: 'root',
@@ -41,32 +41,29 @@ export class DataSourcesService extends ResourceService<any> {
           const key = dataKey as string;
           const ctrl = item.options[key as keyof DataSourceOptions];
           if (ctrl?.rules) {
-            const rule = ctrl.rules.map((el: string) => ({ [el]: true }));
-            ctrl.control_rules = rule;
+            ctrl.control_rules = ctrl.rules.map((el: string) => ({ [el]: true }));
           }
           ctrl!.control_label = dataKey;
           if (dataSourceDataItem?.hasOwnProperty(dataKey) && dataSourceKey === item.id) {
             ctrl!.control_value = dataSourceDataItem[dataKey] || null;
           }
         }
-
         item.control_options = Object.values(item.options);
-        item.available_provider = providersData[dataSourceKey] || false;
-        // item.visible_survey = !!providersData[dataSourceKey]?.form_id;
-        // item.form_id = providersData[dataSourceKey]?.form_id || null;
-        // item.selected_survey = surveyList.find(
-        //   (el: { id: string }) => el.id === providersData[dataSourceKey]?.form_id,
-        // ) || null;
-        item.visible_survey = !!1;
-        item.form_id = 1;
-
-        item.selected_survey = surveyList.find((el: any) => el.id === 1) || null;
+        item.available_provider = providersData.providers[dataSourceKey] || false;
+        item.visible_survey = !!providersData[dataSourceKey]?.form_id;
+        item.form_id = providersData[dataSourceKey]?.form_id || null;
+        item.selected_survey =
+          surveyList.find((el: any) => el.id === providersData[dataSourceKey]?.form_id) || null;
 
         let inboundFieldsArr: any[] = [];
         for (const dataKey in item.inbound_fields) {
           inboundFieldsArr.push({
-            form_label: dataKey.toLowerCase(),
+            control_label: dataKey.toLowerCase(),
             type: item.inbound_fields[dataKey],
+            key: dataKey,
+            control_value: providersData[dataSourceKey]?.inbound_fields
+              ? providersData[dataSourceKey]?.inbound_fields[dataKey]
+              : null,
           });
         }
         item.control_inbound_fields = inboundFieldsArr;

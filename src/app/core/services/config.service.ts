@@ -72,7 +72,7 @@ export class ConfigService {
     return lastValueFrom(forkJoin([this.getSite(), this.getFeatures(), this.getMap()]));
   }
 
-  public getProvidersData(isAllData = false): Observable<any> {
+  public getProvidersData(isAllData = false, dataSources?: any): Observable<any> {
     return this.httpClient
       .get<any>(
         `${
@@ -83,10 +83,15 @@ export class ConfigService {
         map((data) => {
           let providers: any[] = [];
           for (const dataKey in data.providers) {
-            providers.push({
-              label: dataKey.toLowerCase(),
-              value: data.providers[dataKey],
-            });
+            if (dataSources?.length) {
+              for (const { id } of dataSources) {
+                if (dataKey === id) {
+                  providers = [...providers, this.addToProviderSArray(dataKey, data)];
+                }
+              }
+            } else {
+              providers = [...providers, this.addToProviderSArray(dataKey, data)];
+            }
           }
           return isAllData ? data : providers;
         }),
@@ -100,5 +105,12 @@ export class ConfigService {
       }/data-provider`,
       providers,
     );
+  }
+
+  private addToProviderSArray(dataKey: string, data: any) {
+    return {
+      label: dataKey.toLowerCase(),
+      value: data.providers[dataKey],
+    };
   }
 }

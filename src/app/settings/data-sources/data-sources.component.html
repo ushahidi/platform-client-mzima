@@ -12,14 +12,19 @@
     <mat-icon svgIcon="plus"></mat-icon>
   </button>
 </div>
-
-<ng-container *ngFor="let provider of providersData">
-  <a
-    matRipple
-    class="data-source-item"
-    *ngIf="provider.value"
-    [routerLink]="['update', provider.label]"
-  >
-    {{ provider.label | titlecase }}
-  </a>
+<ng-container *ngIf="providersData?.length; else showLoader">
+  <div *ngFor="let provider of providersData">
+    <a
+      matRipple
+      class="data-source-item"
+      *ngIf="provider.value"
+      [routerLink]="['update', provider.label]"
+    >
+      {{ provider.label | titlecase }}
+    </a>
+  </div>
 </ng-container>
+
+<ng-template #showLoader>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>
