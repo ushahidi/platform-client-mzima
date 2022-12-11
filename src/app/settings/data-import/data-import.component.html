@@ -1,7 +1,9 @@
 <div class="head">
   <h1>{{ 'app.import' | translate }}</h1>
   <button mat-raised-button color="primary" class="upload-button" data-qa="btn-upload">
-    <span>{{ selectedFile ? 'Change' : 'Upload' }} CSV file</span>
+    <span>{{
+      selectedFile ? 'data_import.change_csv_file' : ('data_import.upload_csv_file' | translate)
+    }}</span>
     <mat-icon svgIcon="plus"></mat-icon>
     <input name="file" type="file" accept=".csv" (change)="uploadFile($event)" />
   </button>
@@ -17,7 +19,7 @@
       data-qa="select-survey"
       disableOptionCentering
       [(value)]="selectedForm"
-      placeholder="Choose survey..."
+      placeholder="{{ 'app.choose_survey' | translate }}"
       (selectionChange)="formChanged()"
     >
       <mat-option *ngFor="let option of forms$ | async" [value]="option">
@@ -41,7 +43,7 @@
   </div>
 
   <div class="form-row">
-    <mat-label>Choose status to imported posts:</mat-label>
+    <mat-label>{{ 'data_import.choose_status_to_imported_posts' | translate }}</mat-label>
     <mat-radio-group
       data-qa="radio-option"
       [(ngModel)]="statusOption"
@@ -61,12 +63,9 @@
 
             <!--// IF the chosen survey has tasks that must be completed before its posts can be published //-->
             <p *ngIf="hasRequiredTask">
-              Your survey, <strong>{{ selectedForm.name }}</strong>
-              , includes tasks that typically must be completed for each post before they can be
-              marked 'published.' During this import, all of your imported posts will have their
-              tasks marked as 'incomplete', while still allowing their status to be marked as
-              'published.' If you edit any of these posts after they've been imported, however,
-              you'll be asked to complete those tasks before re-publishing them.
+              {{ 'data_import.has_tasks_required_start' | translate }}
+              <strong>{{ selectedForm.name }}</strong>
+              {{ 'data_import.has_tasks_required_end' | translate }}
             </p>
             <!--// END IF //-->
 
@@ -96,7 +95,7 @@
                 <mat-select
                   [(ngModel)]="selectedStatus"
                   disableOptionCentering
-                  placeholder="Choose..."
+                  placeholder="{{ 'app.choose' | translate }}"
                 >
                   <mat-option *ngFor="let column of uploadedCSV.columns; let i = index" [value]="i">
                     {{ column }}
