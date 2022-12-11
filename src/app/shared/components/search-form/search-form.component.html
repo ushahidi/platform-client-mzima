@@ -39,7 +39,7 @@
 
   <div class="search-form__main-filters">
     <span class="search-form__main-filters__total" *ngIf="total !== undefined">
-      Results: {{ total }}
+      {{ 'post.search_results' | translate }} {{ total }}
     </span>
 
     <div class="collection-info" *ngIf="collectionInfo">
@@ -90,9 +90,18 @@
         </mat-list-option>
       </mat-selection-list>
 
-      <div class="filter-group__info" *ngIf="notShownPostsCount > 0">
-        There are <a [routerLink]="['feed']">{{ notShownPostsCount }} posts</a> not shown here
-        because they don't include location information.
+      <div class="filter-group__info">
+        <span *ngIf="notShownPostsCount <= 0">{{ 'global_filter.unmapped_none' | translate }}</span>
+        <span *ngIf="notShownPostsCount === 1">{{
+          'global_filter.unmapped_start_one' | translate
+        }}</span>
+        <span *ngIf="notShownPostsCount >= 2">{{
+          'global_filter.unmapped_start_many' | translate
+        }}</span>
+        <a [routerLink]="['feed']" *ngIf="notShownPostsCount >= 1">
+          {{ notShownPostsCount }} post{{ notShownPostsCount >= 2 ? 's' : '' }}
+        </a>
+        <span *ngIf="notShownPostsCount >= 1">{{ 'global_filter.unmapped_end' | translate }}</span>
       </div>
     </div>
 
@@ -133,7 +142,7 @@
     [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
   >
     <app-filter-control
-      title="Saved filters"
+      title="{{ 'global_filter.saved_filters' | translate }}"
       [type]="filterType.Select"
       [options]="savedsearches"
       [canEdit]="isLoggedIn"
@@ -152,7 +161,7 @@
         class="save-filter-button small"
       >
         <mat-icon svgIcon="plus" class="save-filter-button__icon"></mat-icon>
-        Save new filter
+        {{ 'global_filter.save_new_filter' | translate }}
       </button>
     </app-filter-control>
 
@@ -208,7 +217,7 @@
         class="search-form__button"
         (click)="resetSavedFilter()"
       >
-        Clear All
+        {{ 'global_filter.clear_all_filters' | translate }}
       </button>
     </div>
   </div>
