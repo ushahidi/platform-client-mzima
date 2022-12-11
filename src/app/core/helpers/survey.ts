@@ -101,7 +101,7 @@ export const surveyFields = [
     description: 'survey.video_desc',
   },
   {
-    label: 'Markdown',
+    label: 'survey.markdown',
     type: 'markdown',
     input: 'markdown',
     description: 'survey.markdown_desc',

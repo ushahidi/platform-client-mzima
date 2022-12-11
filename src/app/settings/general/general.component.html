@@ -1,4 +1,4 @@
-<h1>General</h1>
+<h1>{{ 'settings.settings_list.general' | translate }}</h1>
 <form (ngSubmit)="save()" [formGroup]="generalForm" novalidate>
   <div class="form-row">
     <mat-label translate>settings.deployment_name</mat-label>
@@ -57,7 +57,7 @@
   </div>
 
   <div class="form-row">
-    <mat-label>Private settings:</mat-label>
+    <mat-label>{{ 'settings.general_settings.private_settings' | translate }}</mat-label>
     <div class="checkbox-group">
       <div class="checkbox">
         <!-- FIXME: isPrivateEnabled -->
@@ -79,7 +79,7 @@
 
 <div class="api-key">
   <div class="form-row" *ngIf="apiKey">
-    <mat-label translate>API Key</mat-label>
+    <mat-label translate>{{ 'settings.general_settings.api_key' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <input matInput [value]="apiKey.api_key" readonly />
 
@@ -92,7 +92,7 @@
   </div>
 
   <button type="button" mat-stroked-button (click)="generateApiKey()">
-    <span>Generate API Key</span>
+    <span>{{ 'settings.general_settings.generate_api_key' | translate }}</span>
     <mat-icon svgIcon="key"></mat-icon>
   </button>
 </div>
@@ -101,9 +101,9 @@
 
 <div class="form-controls-panel form-controls-panel--sticky">
   <button type="button" mat-stroked-button routerLink="/settings" data-qa="btn-cancel">
-    Cancel
+    {{ 'app.cancel' | translate }}
   </button>
   <button type="button" color="primary" mat-raised-button (click)="save()" data-qa="btn-save">
-    Save
+    {{ 'app.save' | translate }}
   </button>
 </div>

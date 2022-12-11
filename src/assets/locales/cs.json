@@ -449,6 +449,7 @@
       "all_collections": "Všechny kolekce",
       "search_collections": "Hledat kolekce"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "Řazení",
@@ -505,9 +506,10 @@
     },
     "unmapped_start_one": "Zde je",
     "unmapped_start_many": "Zde jsou",
-    "unmapped_one": "{{post_nb}} příspěvek",
-    "unmapped_many": "{{post_nb}} příspěvky",
+    "unmapped_one": "{{ notShownPostsCount }} příspěvek",
+    "unmapped_many": "{{ notShownPostsCount }} příspěvky",
     "unmapped_end": "zde nejsou zobrazeny, protože neobsahují informace o poloze.",
+    "unmapped_none": "No posts without location information.",
     "more": "Více",
     "keyword": "Klíčové slovo",
     "start_date": "Datum začátku",
@@ -531,7 +533,10 @@
     "date_range": "Časové období",
     "who_its_visible_to": "Kdo je viditelný",
     "status": "Stav",
-    "source": "Zdroj"
+    "source": "Zdroj",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Nic; Zobrazit všechny příspěvky",
@@ -1172,8 +1177,8 @@
       "manage_users": "Spravovat uživatele",
       "manage_posts": "Správa příspěvků",
       "manage_settings": "Správa nastavení",
-      "bulk_data_import": "Import a export hromadných dat",
-      "edit_own_posts": "Upravit si vlastní příspěvky",
+      "bulk_data_import_and_export": "Import a export hromadných dat",
+      "edit_their_own_posts": "Upravit si vlastní příspěvky",
       "registred_member": "Registrovaný člen",
       "administrator": "Správce",
       "roles_description": "Tyto možnosti nastavují, jaké může tento typ role provádět změny. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Navštivte naše příručky podpory, kde najdete další informace."

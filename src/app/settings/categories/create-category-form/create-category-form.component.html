@@ -27,6 +27,9 @@
           placeholder="{{ 'category.placeholder.name' | translate }}"
         />
       </mat-form-field>
+      <mat-error *ngIf="form.get('name')?.hasError('required')">{{
+        'category.validation.required.name' | translate
+      }}</mat-error>
     </div>
 
     <div class="form-row">

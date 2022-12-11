@@ -449,6 +449,7 @@
       "all_collections": "Sve kolekcije",
       "search_collections": "Pretraži kolekcije"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "Redoslijed",
@@ -505,9 +506,10 @@
     },
     "unmapped_start_one": "Tamo je",
     "unmapped_start_many": "Postoji",
-    "unmapped_one": "{{post_nb}} post",
-    "unmapped_many": "{{post_nb}} postovi",
+    "unmapped_one": "{{ notShownPostsCount }} post",
+    "unmapped_many": "{{ notShownPostsCount }} postovi",
     "unmapped_end": "nisu prikazani ovdje jer ne sadrže lokacijske informacije.",
+    "unmapped_none": "No posts without location information.",
     "more": "Više",
     "keyword": "Ključna riječ",
     "start_date": "Početni datum",
@@ -531,7 +533,10 @@
     "date_range": "Datumski raspon",
     "who_its_visible_to": "Kome je vidljivo",
     "status": "Status",
-    "source": "Izvor"
+    "source": "Izvor",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Ništa; Prikaži sve postove",
@@ -1172,8 +1177,8 @@
       "manage_users": "Upravljaj korisnicima",
       "manage_posts": "Upravljaj postovima",
       "manage_settings": "Upravljaj postavkama",
-      "bulk_data_import": "Skupni uvoz i izvoz podataka",
-      "edit_own_posts": "Uredi njihove vlastite postove",
+      "bulk_data_import_and_export": "Skupni uvoz i izvoz podataka",
+      "edit_their_own_posts": "Uredi njihove vlastite postove",
       "registred_member": "Registrirani član",
       "administrator": "Administrator",
       "roles_description": "Ove opcije kontroliraju čemu ova vrsta uloge može raditi promjene. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Posjetite naše upute podrške kako bi saznali više."

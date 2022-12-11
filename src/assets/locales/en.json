@@ -12,12 +12,17 @@
     "collection": "Collection",
     "collections": "Collections",
     "create_collection": "Create collection",
+    "add_collection": "Add collection",
     "export_to_csv": "Export filtered data",
     "create_new": "Create new",
     "create_new_survey": "Create new survey",
     "created_by": "Created by {{author}}",
     "date_created": "Date created",
     "date_updated": "Date updated",
+    "choose_photo": "Choose photo",
+    "choose": "Choose...",
+    "add_all_fields": "Add all fields",
+    "insert_text_here": "Insert text here...",
     "documentation": {
       "title": "Documentation",
       "description": "Learn how to set up, configure, and manage your Ushahidi deployment."
@@ -446,6 +451,7 @@
       "all_collections": "All Collections",
       "search_collections": "Search Collections"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "Order",
@@ -502,9 +508,10 @@
     },
     "unmapped_start_one": "There is",
     "unmapped_start_many": "There are",
-    "unmapped_one": "{{post_nb}} post",
-    "unmapped_many": "{{post_nb}} posts",
+    "unmapped_one": "{{ notShownPostsCount }} post",
+    "unmapped_many": "{{ notShownPostsCount }} posts",
     "unmapped_end": "not shown here because they don't include location information.",
+    "unmapped_none": "No posts without location information.",
     "more": "More",
     "keyword": "Keyword",
     "start_date": "Start Date",
@@ -528,7 +535,10 @@
     "date_range": "Date range",
     "who_its_visible_to": "Who it's visible to",
     "status": "Status",
-    "source": "Source"
+    "source": "Source",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Nothing; Show all posts",
@@ -566,6 +576,12 @@
   "modal": {
     "button": {
       "close": "Close"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "Web monetization is enabled on this website. Thank you for your donation. You have donated",
+      "thank_you_for_your_donation_end": "so far",
+      "web_monetization_text": "Ushahidi deployments are now web monetization enabled. Web monetization is a way of supporting the websites you love without playing advertisers game. All you need is to get your browser setup. Click the link below to learn how you can donate.",
+      "how_can_i_donate": "How can I donate?"
     }
   },
   "nav": {
@@ -726,6 +742,7 @@
     "delete_post": "Delete post",
     "delete_this_post": "Delete this post",
     "delete_post_desc": "<strong>If you delete this post</strong>, all of its comments will also be deleted. Proceed with caution.",
+    "read_more": "Read more",
     "post_actions": {
       "edit": "Edit",
       "delete": "Delete",
@@ -887,6 +904,10 @@
     "edit_role": "Edit Role",
     "name": "Name",
     "description": "Description",
+    "placeholder": {
+      "name": "Enter role name",
+      "description": "Enter role description"
+    },
     "save": "Save Role",
     "save_add_another": "Save & Add Another",
     "permissions": "Permissions",
@@ -975,6 +996,11 @@
     "deleted_tags": "Categories deleted.",
     "manage_tags": "Manage Categories",
     "edit_tag": "Edit Category",
+    "validation": {
+      "required": {
+        "name": "Category name is required"
+      }
+    },
     "editor": {
       "name": "Category Name",
       "slug": "Category Link",
@@ -1056,6 +1082,14 @@
       "donation": "Donation",
       "donation_desc": "Create and manage the donations people can make towards your organisation."
     },
+    "general_settings": {
+      "generate_api_key": "Generate API Key",
+      "private_settings": "Private settings:",
+      "api_key": "API Key",
+      "placeholder": {
+        "pick_location": "Pick Location..."
+      }
+    },
     "user_settings": {
       "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
       "user_settings_desc_2": "Once set up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
@@ -1076,12 +1110,30 @@
       "use_webhook_for": "Use webhook for",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
-      "destination": "Destination"
+      "destination": "Destination",
+      "placeholder": {
+        "name": "Please enter webhook name",
+        "shared_secret": "Please enter shared secret",
+        "api_url": "Please enter api url"
+      },
+      "validation": {
+        "required": {
+          "name": "Webhook name is required",
+          "shared_secret": "Shared secret key is required",
+          "api_url": "API URL required",
+          "event_type": "Event type is required",
+          "event_entity": "Event entity is required"
+        },
+        "please_provide_valid_api_url": "Please provide valid API URL",
+        "secret_key_cannot_be_less_start": "Shared secret key can not less than",
+        "secret_key_cannot_be_less_end": "characters"
+      }
     },
     "data_sources": {
       "type_of_data_source": "Type of Data Source",
       "provider_name": "{{providerName}} Data Source?",
       "do_you_really_want_to_disconnect": "Do you really want to disconnect your provider?",
+      "add_source": "Add source",
       "associate_with_form": "Import to survey",
       "associate_with_form_desc": "All incoming data from {{provider}} will be used to create responses to the survey you choose",
       "data_sources": "Data Sources",
@@ -1180,8 +1232,24 @@
         "placeholder": "Enter the title of your donation",
         "required": "Donation title is required"
       },
+      "description": {
+        "label": "Describe your donation",
+        "placeholder": "Enter text telling more about this donation"
+      },
+      "images": {
+        "label": "Donation images"
+      },
       "wallet": {
+        "label":  "Wallet address",
+        "placeholder": "Enter a wallet address e.g $ilp.uphold.com/example",
         "required": "Donation wallet address is required"
+      },
+      "info": {
+        "start_one": "Please make sure you have your wallet set up on",
+        "start_two": "to set web monetization.",
+        "start_three": "If you don't have a wallet already please click",
+        "here": "here",
+        "end": "to create one."
       }
     },
     "roles": {
@@ -1190,8 +1258,11 @@
       "manage_users": "Manage Users",
       "manage_posts": "Manage Posts",
       "manage_settings": "Manage Settings",
-      "bulk_data_import": "Bulk Data Import and Export",
-      "edit_own_posts": "Edit their own posts",
+      "bulk_data_import_and_export": "Bulk Data Import and Export",
+      "edit_their_own_posts": "Edit Their Own Posts",
+      "manage_collections_and_saved_searches": "Manage Collections and Saved Searches",
+      "delete_posts": "Delete Posts",
+      "delete_their_own_posts": "Delete Their Own Posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
       "roles_description": "These options control what this type of role can make changes to. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Visit our support guides to find out more."
@@ -1257,6 +1328,7 @@
     "import_another_csv": "Import another CSV file",
     "import_complete": "Your import is complete",
     "complete_info": "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
+    "get_polling_info": "Get Polling Info",
     "import_another": "Import another CSV file",
     "nearly_complete": "Your import is nearly complete",
     "finish_info": "The data from your CSV spreadsheet is still being processed. You're welcome to leave this page or wait until the process is complete. Either way, we'll notify you when your data is ready.",
@@ -1274,6 +1346,11 @@
     "file_csv": "CSV file",
     "import_csv": "Import CSV",
     "import_to": "Import to ",
+    "change_csv_file": "Change CSV file",
+    "upload_csv_file": "Upload CSV file",
+    "choose_status_to_imported_posts": "Choose status to imported posts:",
+    "has_tasks_required_start": "Your survey",
+    "has_tasks_required_end": ", includes tasks that typically must be completed for each post before they can be marked 'published.' During this import, all of your imported posts will have their tasks marked as 'incomplete', while still allowing their status to be marked as 'published.' If you edit any of these posts after they've been imported, however, you'll be asked to complete those tasks before re-publishing them.",
     "choose_csv_file": "Choose CSV file",
     "organize_data": "Organize data",
     "organize_your_imported_data": "Assign CSV columns to post fields",

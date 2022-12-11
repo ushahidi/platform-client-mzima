@@ -6,7 +6,7 @@
 
   <h1>{{ 'data_import.import_complete' | translate }}</h1>
   <div class="description">
-    <p>The data from your CSV spreadsheet was successfully imported.</p>
+    <p>{{ 'data_import.complete_info' | translate }}</p>
   </div>
 
   <div class="form-controls-panel">
@@ -28,7 +28,7 @@
 
   <div class="form-controls-panel">
     <button *ngIf="document.magic" type="button" mat-stroked-button (click)="getPollingInfo()">
-      Get Polling Info
+      {{ 'data_import.get_polling_info' | translate }}
     </button>
     <button type="button" color="primary" mat-raised-button [routerLink]="['settings/data-import']">
       {{ 'data_import.import_another' | translate }}

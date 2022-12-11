@@ -45,9 +45,8 @@ export class SettingsComponent {
       router: 'user-settings',
     },
     {
-      title: 'Export and tag data',
-      description:
-        'Export your data as a CSV file or assign tags and attributes to your data and upload directly to a Humanitarian Data Exchange (HDX) account or export as a tagged CSV file.',
+      title: 'settings.settings_list.export_hxl',
+      description: 'settings.settings_list.export_desc_hxl',
       icon: 'export',
       router: 'data-export',
     },

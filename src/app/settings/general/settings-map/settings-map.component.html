@@ -2,7 +2,10 @@
   <div class="form-row">
     <mat-label translate>survey.location</mat-label>
     <mat-form-field appearance="outline">
-      <input matInput placeholder="Pick Location..." />
+      <input
+        matInput
+        placeholder="{{ 'settings.general_settings.placeholder.pick_location' | translate }}"
+      />
 
       <button matSuffix type="button" mat-icon-button>
         <mat-icon svgIcon="search-small"></mat-icon>

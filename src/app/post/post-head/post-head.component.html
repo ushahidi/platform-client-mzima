@@ -21,7 +21,7 @@
   <mat-menu #actions="matMenu" xPosition="before">
     <button mat-menu-item>
       <mat-icon svgIcon="edit"></mat-icon>
-      {{ 'app.edit' | translate }}
+      {{ 'post.post_actions.edit' | translate }}
     </button>
     <button mat-menu-item (click)="addToCollection()">
       <mat-icon svgIcon="collections"></mat-icon>
@@ -30,19 +30,19 @@
     <hr />
     <button mat-menu-item (click)="publish()" *ngIf="post.status !== PostStatus.Published">
       <mat-icon svgIcon="sort-up"></mat-icon>
-      Publish
+      {{ 'post.post_actions.publish' | translate }}
     </button>
     <button mat-menu-item (click)="underReview()" *ngIf="post.status !== PostStatus.Draft">
       <mat-icon svgIcon="sort-up"></mat-icon>
-      Put under review
+      {{ 'post.post_actions.put_under_review' | translate }}
     </button>
     <button mat-menu-item (click)="archive()" *ngIf="post.status !== PostStatus.Archived">
       <mat-icon svgIcon="sort-up"></mat-icon>
-      Archive
+      {{ 'post.post_actions.archive' | translate }}
     </button>
     <button mat-menu-item (click)="delete()">
       <mat-icon svgIcon="sort-up"></mat-icon>
-      Delete
+      {{ 'post.post_actions.delete' | translate }}
     </button>
   </mat-menu>
 </div>
