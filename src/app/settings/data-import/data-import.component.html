@@ -2,7 +2,7 @@
   <h1>{{ 'app.import' | translate }}</h1>
   <button mat-raised-button color="primary" class="upload-button" data-qa="btn-upload">
     <span>{{
-      selectedFile ? 'data_import.change_csv_file' : ('data_import.upload_csv_file' | translate)
+      selectedFile ? ('data_import.change_csv_file' | translate) : ('data_import.upload_csv_file' | translate)
     }}</span>
     <mat-icon svgIcon="plus"></mat-icon>
     <input name="file" type="file" accept=".csv" (change)="uploadFile($event)" />
