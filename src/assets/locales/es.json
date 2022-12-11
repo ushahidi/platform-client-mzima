@@ -449,6 +449,7 @@
       "all_collections": "Todas las colecciones",
       "search_collections": "Buscar colecciones"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "Pedido",
@@ -505,9 +506,10 @@
     },
     "unmapped_start_one": "Hay",
     "unmapped_start_many": "Hay",
-    "unmapped_one": "{{post_nb}} publicación",
-    "unmapped_many": "{{post_nb}} publicaciones",
+    "unmapped_one": "{{ notShownPostsCount }} publicación",
+    "unmapped_many": "{{ notShownPostsCount }} publicaciones",
     "unmapped_end": "no se muestran aquí porque no incluyen información de ubicación.",
+    "unmapped_none": "No posts without location information.",
     "more": "Más",
     "keyword": "Keyword",
     "start_date": "Fecha de inicio",
@@ -531,7 +533,10 @@
     "date_range": "Rango de fechas",
     "who_its_visible_to": "Visible para",
     "status": "Estado",
-    "source": "Fuente"
+    "source": "Fuente",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Nada; mostrar todas las publicaciones",
@@ -1172,8 +1177,8 @@
       "manage_users": "Administrar Usuarios",
       "manage_posts": "Administrar publicaciones",
       "manage_settings": "Administrar ajustes",
-      "bulk_data_import": "Importar y exportar datos en bloque",
-      "edit_own_posts": "Editar sus propias publicaciones",
+      "bulk_data_import_and_export": "Importar y exportar datos en bloque",
+      "edit_their_own_posts": "Editar sus propias publicaciones",
       "registred_member": "Miembro registrado",
       "administrator": "Administrador",
       "roles_description": "Estas opciones controlan los cambios que pueden hacer este tipo de roles. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\"> Consulte nuestras guías de apoyo para saber más."

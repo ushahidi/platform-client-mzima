@@ -449,6 +449,7 @@
       "all_collections": "Toutes les collections",
       "search_collections": "Rechercher des collections"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "Trier",
@@ -505,9 +506,10 @@
     },
     "unmapped_start_one": "C'est",
     "unmapped_start_many": "Ce sont",
-    "unmapped_one": "{{post_nb}} publication",
-    "unmapped_many": "{{post_nb}} publications",
+    "unmapped_one": "{{ notShownPostsCount }} publication",
+    "unmapped_many": "{{ notShownPostsCount }} publications",
     "unmapped_end": "Non indiqué car ne contient pas d'information de localisation.",
+    "unmapped_none": "No posts without location information.",
     "more": "Plus",
     "keyword": "Mot clé",
     "start_date": "Date de début",
@@ -531,7 +533,10 @@
     "date_range": "Plage de date",
     "who_its_visible_to": "Pour qui c'est visible",
     "status": "Status",
-    "source": "Source"
+    "source": "Source",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Rien à afficher; Afficher toutes les publications",
@@ -1172,8 +1177,8 @@
       "manage_users": "Administrer les utilisateurs",
       "manage_posts": "Administrer les publications",
       "manage_settings": "Administer les paramètes",
-      "bulk_data_import": "Importation et exportation de données en vrac",
-      "edit_own_posts": "Modifier leurs propres messages",
+      "bulk_data_import_and_export": "Importation et exportation de données en vrac",
+      "edit_their_own_posts": "Modifier leurs propres messages",
       "registred_member": "Membre inscrit",
       "administrator": "Administrateur",
       "roles_description": "Ces options contrôlent les modifications que ce type de rôle peut apporter. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\"> Consultez nos guides d'assistance pour en savoir plus."

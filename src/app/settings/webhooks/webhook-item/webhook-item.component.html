@@ -4,8 +4,15 @@
   <div class="form-row">
     <mat-label>{{ 'webhook.name' | translate }} <span class="color-accent">*</span></mat-label>
     <mat-form-field appearance="outline">
-      <input matInput placeholder="Please enter webhook name" formControlName="name" required />
-      <mat-error *ngIf="form.get('name')?.hasError('required')">Webhook name is required</mat-error>
+      <input
+        matInput
+        placeholder="{{ 'settings.webhooks.placeholder.name' | translate }}"
+        formControlName="name"
+        required
+      />
+      <mat-error *ngIf="form.get('name')?.hasError('required')">{{
+        'settings.webhooks.validation.required.name' | translate
+      }}</mat-error>
     </mat-form-field>
   </div>
 
@@ -16,16 +23,17 @@
     <mat-form-field appearance="outline">
       <input
         matInput
-        placeholder="Please enter shared secret"
+        placeholder="{{ 'settings.webhooks.placeholder.shared_secret' | translate }}"
         formControlName="shared_secret"
         required
       />
       <mat-error *ngIf="form.get('shared_secret')?.hasError('required')">
-        Shared secret key is required
+        {{ 'settings.webhooks.validation.required.shared_secret' | translate }}
       </mat-error>
       <mat-error *ngIf="form.get('shared_secret')?.hasError('minlength')">
-        Shared secret key can not less then
-        {{ form.get('shared_secret')?.errors?.['minlength']['requiredLength'] }} characters.
+        {{ 'settings.webhooks.validation.secret_key_cannot_be_less_start' | translate }}
+        {{ form.get('shared_secret')?.errors?.['minlength']['requiredLength'] }}
+        {{ 'settings.webhooks.validation.secret_key_cannot_be_less_end' | translate }}
       </mat-error>
     </mat-form-field>
   </div>
@@ -33,10 +41,17 @@
   <div class="form-row">
     <mat-label>{{ 'webhook.url' | translate }} <span class="color-accent">*</span></mat-label>
     <mat-form-field appearance="outline">
-      <input matInput placeholder="Please enter api url" formControlName="url" required />
-      <mat-error *ngIf="form.get('url')?.hasError('required')">API URL id required</mat-error>
+      <input
+        matInput
+        placeholder="{{ 'settings.webhooks.placeholder.api_url' | translate }}"
+        formControlName="url"
+        required
+      />
+      <mat-error *ngIf="form.get('url')?.hasError('required')">{{
+        'settings.webhooks.validation.required.api_url' | translate
+      }}</mat-error>
       <mat-error *ngIf="form.get('url')?.hasError('pattern')">
-        Please provide valid API URL
+        {{ 'settings.webhooks.validation.please_provide_valid_api_url' | translate }}
       </mat-error>
     </mat-form-field>
   </div>
@@ -55,7 +70,9 @@
           {{ event.name }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('event_type')?.invalid">Event type is required</mat-error>
+      <mat-error *ngIf="form.get('event_type')?.invalid">{{
+        'settings.webhooks.validation.required.event_type' | translate
+      }}</mat-error>
     </mat-form-field>
   </div>
 
@@ -77,7 +94,9 @@
           {{ entity.name }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('entity_type')?.invalid">Event entity is required</mat-error>
+      <mat-error *ngIf="form.get('entity_type')?.invalid">{{
+        'settings.webhooks.validation.required.event_entity' | translate
+      }}</mat-error>
     </mat-form-field>
   </div>
 

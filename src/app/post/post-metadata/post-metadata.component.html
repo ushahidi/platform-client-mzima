@@ -20,9 +20,13 @@
       </span>
 
       <div class="post-info__item">
-        <ng-container *ngIf="post.status === 'published'">Published</ng-container>
-        <ng-container *ngIf="post.status === 'draft'">Under Review</ng-container>
-        <ng-container *ngIf="post.status === 'archived'">Archived</ng-container>
+        <ng-container *ngIf="post.status === 'published'">{{
+          'post.published' | translate
+        }}</ng-container>
+        <ng-container *ngIf="post.status === 'draft'">{{ 'post.draft' | translate }}</ng-container>
+        <ng-container *ngIf="post.status === 'archived'">{{
+          'post.archived' | translate
+        }}</ng-container>
       </div>
 
       <span class="post-info__item">{{ 'post.source' | translate: { source: post.source } }}</span>

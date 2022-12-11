@@ -449,6 +449,7 @@
       "all_collections": "Minden gyűjtemény",
       "search_collections": "Gyűjtemények keresése"
     },
+    "sorting": "Sorting",
     "sort": {
       "order": {
         "filter_type_tag": "Sorrend",
@@ -505,9 +506,10 @@
     },
     "unmapped_start_one": "Van",
     "unmapped_start_many": "Van",
-    "unmapped_one": "{{post_nb}} bejegyzés",
-    "unmapped_many": "{{post_nb}} bejegyzés",
+    "unmapped_one": "{{ notShownPostsCount }} bejegyzés",
+    "unmapped_many": "{{ notShownPostsCount }} bejegyzés",
     "unmapped_end": "nincs itt feltüntetve helyi információ hiányában",
+    "unmapped_none": "No posts without location information.",
     "more": "További",
     "keyword": "Kulcsszó",
     "start_date": "Kezdő dátum",
@@ -531,7 +533,10 @@
     "date_range": "Dátum tartomány",
     "who_its_visible_to": "Kinek látható",
     "status": "Állapot",
-    "source": "Forrás"
+    "source": "Forrás",
+    "saved_filters": "Saved filters",
+    "save_new_filter": "Save new filter",
+    "clear_all_filters": "Clear all filters"
   },
   "graph": {
     "all_posts": "Semmi; Minden bejegyzés mutatása",
@@ -1172,8 +1177,8 @@
       "manage_users": "Felhasználók kezelése",
       "manage_posts": "Bejegyzések kezelése",
       "manage_settings": "Beállítások menedzselése",
-      "bulk_data_import": "Nagymennyiségű adat importja és exportja",
-      "edit_own_posts": "A saját bejegyzéseit szerkeszthetik",
+      "bulk_data_import_and_export": "Nagymennyiségű adat importja és exportja",
+      "edit_their_own_posts": "A saját bejegyzéseit szerkeszthetik",
       "registred_member": "Regisztrált tag",
       "administrator": "Adminisztrátor",
       "roles_description": "Ezen lehetőségek által lehet vezérelni, hogy ez a típusú szerep miben végezhet változtatásokat. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Keresd fel a támogatással kapcsolatos útmutatónkat még több információért."
