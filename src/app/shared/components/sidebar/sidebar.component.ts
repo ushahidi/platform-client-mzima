@@ -53,7 +53,7 @@ export class SidebarComponent implements OnInit {
       {
         label: 'views.map',
         router: 'map',
-        icon: 'marker',
+        icon: 'map',
         visible: true,
       },
       {
