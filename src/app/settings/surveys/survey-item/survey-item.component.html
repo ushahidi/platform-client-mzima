@@ -1,108 +1,120 @@
 <form
-  class="form-container"
   novalidate
   [formGroup]="form"
+  class="main-form"
   (ngSubmit)="save()"
   [ngStyle]="{
-    '--color': this.form.get('color')?.value ? this.form.get('color')?.value : 'transparent'
+    '--color': this.form.get('color')?.value
   }"
 >
-  <span class="survey-item-border"></span>
-  <app-translations-switch
-    [selectedLanguages]="this.form.get('enabled_languages')?.value.available"
-    (addTranslationChange)="setAvailableLanguages($event)"
-    (chooseTranslationChange)="chooseTranslation($event)"
-    (deleteTranslationChange)="deleteTranslation($event)"
+  <span class="main-form__border"></span>
+  <app-settings-header
+    [settingsTitle]="(!isEdit ? 'app.add_survey' : 'app.edit_survey') | translate"
+    [newButtonTitle]="'translations.add_translation_lang'"
+    [isShowActionsButton]="false"
+    [isShowCreation]="false"
+    [isShowTranslation]="true"
+    [selectedLanguage]="defaultLanguage"
+    [languages]="activeLanguages"
+    (showLanguagesCall)="addTranslation()"
+    (selectLanguageCall)="chooseTranslation($event)"
   >
-  </app-translations-switch>
-
-  <div class="form-row">
-    <mat-label>{{ 'survey.survey_name' | translate }}</mat-label>
-    <mat-form-field appearance="outline">
-      <input matInput formControlName="name" [placeholder]="'survey.survey_name' | translate" />
-      <mat-error *ngIf="form.get('name')?.invalid">
-        {{ 'survey.fields.validation.required' | translate }}
-      </mat-error>
-    </mat-form-field>
-  </div>
-
-  <div class="form-row" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
-    <mat-label> {{ 'survey.survey_name' | translate }} ({{ selectLanguageCode }}) </mat-label>
-    <mat-form-field appearance="outline">
-      <input
-        matInput
-        [placeholder]="'survey.survey_name' | translate"
-        [value]="this.form.get('translations')?.value[selectLanguageCode]?.name"
-        (change)="setTranslates(selectLanguageCode, 'name', $event)"
-      />
-    </mat-form-field>
-  </div>
-
-  <div class="form-row">
-    <mat-label>{{ 'survey.description' | translate }}</mat-label>
-    <mat-form-field appearance="outline">
-      <textarea
-        matInput
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="2"
-        cdkAutosizeMaxRows="5"
-        [placeholder]="'survey.description' | translate"
-        formControlName="description"
-      >
-      </textarea>
-    </mat-form-field>
-  </div>
-
-  <div class="form-row" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
-    <mat-label> {{ 'survey.description' | translate }} ({{ selectLanguageCode }}) </mat-label>
-    <mat-form-field appearance="outline">
-      <textarea
-        matInput
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="2"
-        cdkAutosizeMaxRows="5"
-        [placeholder]="'survey.description' | translate"
-        [value]="this.form.get('translations')?.value[selectLanguageCode]?.description"
-        (change)="setTranslates(selectLanguageCode, 'description', $event)"
-      >
-      </textarea>
-    </mat-form-field>
-  </div>
+  </app-settings-header>
 
   <app-survey-task
     #configTask
     [task]="mainPost"
     [roles]="roles"
+    [isMain]="true"
     [survey]="surveyObject"
     (surveyChange)="updateForm($event)"
     *ngIf="mainPost"
-  ></app-survey-task>
+    (colorSelected)="setNewColor($event)"
+  >
+    <ng-container survey-info>
+      <div class="form-row">
+        <mat-label>{{ 'survey.survey_name' | translate }}</mat-label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="name" [placeholder]="'survey.survey_name' | translate" />
+          <mat-error *ngIf="form.get('name')?.invalid">
+            {{ 'survey.fields.validation.required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
+        <mat-label> {{ 'survey.survey_name' | translate }} ({{ selectLanguageCode }}) </mat-label>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [placeholder]="'survey.survey_name' | translate"
+            [value]="this.form.get('translations')?.value[selectLanguageCode]?.name"
+            (change)="setTranslates(selectLanguageCode, 'name', $event)"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-label>{{ 'survey.description' | translate }}</mat-label>
+        <mat-form-field appearance="outline">
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="5"
+            [placeholder]="'survey.description' | translate"
+            formControlName="description"
+          >
+          </textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
+        <mat-label> {{ 'survey.description' | translate }} ({{ selectLanguageCode }}) </mat-label>
+        <mat-form-field appearance="outline">
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="5"
+            [placeholder]="'survey.description' | translate"
+            [value]="this.form.get('translations')?.value[selectLanguageCode]?.description"
+            (change)="setTranslates(selectLanguageCode, 'description', $event)"
+          >
+          </textarea>
+        </mat-form-field>
+      </div>
+    </ng-container>
+  </app-survey-task>
 </form>
 
-<div class="form-container" *ngFor="let task of additionalTasks">
-  <app-survey-task [task]="task"></app-survey-task>
-</div>
-
-<div class="form-container form-container--add-task">
-  <button type="button" mat-raised-button (click)="addTask()" class="add-task-button" color="dark">
-    {{ 'survey.add_task' | translate }}
-    <mat-icon>add</mat-icon>
+<div class="form-head-panel">
+  <h1>Tasks</h1>
+  <button type="button" mat-stroked-button (click)="addTask()">
+    <span>{{ 'survey.add_task' | translate }}</span>
+    <mat-icon svgIcon="plus"></mat-icon>
   </button>
 </div>
 
-<div class="form-container form-container--buttons">
-  <div mat-dialog-actions align="end" class="mat-dialog-actions">
-    <button mat-stroked-button type="button" (click)="cancel()">
-      {{ 'app.cancel' | translate }}
-    </button>
-    <button
-      type="submit"
-      color="primary"
-      mat-raised-button
-      [disabled]="form.invalid || form.disabled"
-      (click)="save()"
-    >
-      {{ (isEdit ? 'app.save' : 'app.add_survey') | translate }}
-    </button>
-  </div>
+<ng-container *ngIf="additionalTasks?.length; else noTasks">
+  <app-survey-task *ngFor="let task of additionalTasks" [task]="task"></app-survey-task>
+</ng-container>
+
+<ng-template #noTasks>
+  <div class="form-row empty">No tasks</div>
+</ng-template>
+
+<div class="form-controls-panel form-controls-panel--sticky">
+  <button mat-stroked-button type="button" (click)="cancel()">
+    {{ 'app.cancel' | translate }}
+  </button>
+  <button
+    type="submit"
+    color="primary"
+    mat-raised-button
+    [disabled]="form.invalid || form.disabled"
+    (click)="save()"
+  >
+    {{ (isEdit ? 'app.save' : 'app.add_survey') | translate }}
+  </button>
 </div>

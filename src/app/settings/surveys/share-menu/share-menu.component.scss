@@ -1,22 +1,13 @@
 .share-item {
-  width: 100%;
-  display: block;
+  font-size: 16px;
   text-align: left;
-  padding: 12px 8px;
-  line-height: 24px;
-  margin-bottom: 8px;
+  line-height: 1.5;
+  padding: 4px 8px;
+  display: inline-block;
 
   &__icon {
-    font-size: 24px;
+    font-size: 32px;
     margin-right: 8px;
-    display: inline-block;
-
-    img {
-      width: 1em;
-      height: 1em;
-      display: block;
-      object-fit: contain;
-    }
   }
 
   &::ng-deep {
@@ -28,30 +19,15 @@
   }
 }
 
-.mat-expansion-panel {
-  margin-bottom: 8px;
-
-  &-header {
-    &-title {
-      font-size: 14px;
-    }
-  }
-
-  &::ng-deep {
-    .mat-expansion-indicator {
-      line-height: 1;
-      margin-top: -4px;
-    }
-  }
-}
-
-.embed-input {
-  margin: 0 auto;
-  max-width: 548px;
-
-  textarea {
-    resize: none;
-    font-size: 16px;
-    line-height: calc(20 / 16 * 1);
-  }
+.copy {
+  padding: 0;
+  width: 1em;
+  height: 1em;
+  min-width: 0;
+  display: flex;
+  font-size: 32px;
+  line-height: 1em;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }

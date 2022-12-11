@@ -38,9 +38,29 @@
   </button>
 
   <div class="search-form__main-filters">
-    <span class="search-form__main-filters__total" *ngIf="total !== undefined"
-      >{{ 'post.search_results' | translate }} {{ total }}</span
-    >
+    <span class="search-form__main-filters__total" *ngIf="total !== undefined">
+      Results: {{ total }}
+    </span>
+
+    <div class="collection-info" *ngIf="collectionInfo">
+      <span class="collection-info__title">
+        Collection
+        {{ collectionInfo.name }}
+        <button
+          mat-button
+          type="button"
+          color="primary"
+          (click)="clearCollection()"
+          class="filter-group__head__button"
+        >
+          {{ 'nav.clear' | translate }}
+        </button>
+      </span>
+
+      <div class="collection-info__description" *ngIf="collectionInfo.description?.length">
+        {{ collectionInfo.description }}
+      </div>
+    </div>
 
     <div class="filter-group" *ngIf="surveyList?.length">
       <div class="filter-group__head">
@@ -70,18 +90,9 @@
         </mat-list-option>
       </mat-selection-list>
 
-      <div class="filter-group__info">
-        <span *ngIf="notShownPostsCount <= 0">{{ 'global_filter.unmapped_none' | translate }}</span>
-        <span *ngIf="notShownPostsCount === 1">{{
-          'global_filter.unmapped_start_one' | translate
-        }}</span>
-        <span *ngIf="notShownPostsCount >= 2">{{
-          'global_filter.unmapped_start_many' | translate
-        }}</span>
-        <a [routerLink]="['feed']" *ngIf="notShownPostsCount >= 1">
-          {{ notShownPostsCount }} post{{ notShownPostsCount >= 2 ? 's' : '' }}
-        </a>
-        <span *ngIf="notShownPostsCount >= 1">{{ 'global_filter.unmapped_end' | translate }}</span>
+      <div class="filter-group__info" *ngIf="notShownPostsCount > 0">
+        There are <a [routerLink]="['feed']">{{ notShownPostsCount }} posts</a> not shown here
+        because they don't include location information.
       </div>
     </div>
 
@@ -122,9 +133,10 @@
     [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
   >
     <app-filter-control
-      title="{{ 'global_filter.saved_filters' | translate }}"
+      title="Saved filters"
       [type]="filterType.Select"
       [options]="savedsearches"
+      [canEdit]="isLoggedIn"
       (editOption)="saveSearch($event)"
       [(ngModel)]="activeSavedSearchValue"
       [ngModelOptions]="{ standalone: true }"
@@ -140,7 +152,7 @@
         class="save-filter-button small"
       >
         <mat-icon svgIcon="plus" class="save-filter-button__icon"></mat-icon>
-        {{ 'global_filter.save_new_filter' | translate }}
+        Save new filter
       </button>
     </app-filter-control>
 
@@ -196,7 +208,7 @@
         class="search-form__button"
         (click)="resetSavedFilter()"
       >
-        {{ 'global_filter.clear_all_filters' | translate }}
+        Clear All
       </button>
     </div>
   </div>

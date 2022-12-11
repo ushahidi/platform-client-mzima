@@ -1,104 +1,123 @@
-<section class="data-export">
-  <ng-container *ngIf="exportView; else fieldSelector">
-    <h2 class="form-sheet-title" translate>
-      {{ hxlEnabled ? 'data_export.title_hxl' : 'data_export.title' }}
-    </h2>
+<ng-container *ngIf="exportView; else fieldSelector">
+  <h1 translate>
+    {{ hxlEnabled ? 'data_export.title_hxl' : 'data_export.title' }}
+  </h1>
+  <div class="description">
     <p *ngIf="showProgress; else description" translate>data_export.export_progress</p>
-    <mat-tab-group>
-      <mat-tab [label]="'data_export.export' | translate" data-qa="tab-export">
-        <div class="tab-cover">
-          <div class="form-field" *ngIf="hxlEnabled && !hxlApiKey">
-            <div class="alert">
-              <p>{{ 'data_export.hxl_apikey_alert_1' | translate }}</p>
-              <p>
-                {{ 'data_export.hxl_apikey_alert_2' | translate }}
-                <a [routerLink]="['/settings/user-settings']" class="link-blue">
-                  {{ 'data_export.hxl_configure' | translate }}
-                </a>
-                {{ 'data_export.hxl_apikey_alert_3' | translate }}
-              </p>
-            </div>
-          </div>
-          <div class="form-controls-panel">
-            <button
-              type="button"
-              color="primary"
-              mat-raised-button
-              (click)="exportAll()"
-              [disabled]="showProgress"
-              data-qa="btn-export-all"
-            >
-              {{ 'data_export.all' | translate }}
-            </button>
-            <button
-              color="dark"
-              type="button"
-              mat-raised-button
-              (click)="selectFields()"
-              [disabled]="showProgress"
-              data-qa="btn-select-fields"
-            >
-              {{ 'data_export.select_fields' | translate }}
-            </button>
-            <!-- <button  type="button" color="secondary" [routerLink]="['/settings/']" class="button" role="button" *ngIf="hxlEnabled" [disabled]="showProgress || !hxlApiKey" >{{'data_export.tags_attributes' | translate}}</button> -->
-          </div>
+  </div>
+  <mat-tab-group dynamicHeight disableRipple disablePagination animationDuration="0ms">
+    <mat-tab [label]="'data_export.export' | translate" data-qa="tab-export">
+      <ng-container *ngIf="hxlEnabled && !hxlApiKey">
+        <div class="alert">
+          <p>{{ 'data_export.hxl_apikey_alert_1' | translate }}</p>
+          <p>
+            {{ 'data_export.hxl_apikey_alert_2' | translate }}
+            <a [routerLink]="['/settings/user-settings']" class="link-blue">
+              {{ 'data_export.hxl_configure' | translate }}
+            </a>
+            {{ 'data_export.hxl_apikey_alert_3' | translate }}
+          </p>
         </div>
-      </mat-tab>
-      <mat-tab [label]="'data_export.export_history' | translate" data-qa="tab-export-history">
-        <div class="tab-cover listing" *ngIf="exportJobsReady; else showLoader">
-          <div class="listing-item" *ngFor="let job of exportJobs">
-            <div class="listing-item-primary">
-              <strong class="listing-item__title">
-                <a [href]="job.url" target="_blank">
-                  {{ 'data_export.job' | translate: { jobId: job.id } }}
-                </a>
-              </strong>
-              <p
-                class="listing-item-secondary"
-                [innerHTML]="'data_export.' + job.status | translate"
-              ></p>
-              <p
-                class="listing-item-secondary"
-                [innerHTML]="'data_export.created' | translate: { created: job.created }"
-              ></p>
-              <p
-                class="listing-item-secondary"
-                [innerHTML]="
-                  'data_export.expires' | translate: { expires: job.url_expiration || '' }
-                "
-              ></p>
-            </div>
-          </div>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-  </ng-container>
-</section>
+      </ng-container>
+      <div class="form-controls-panel">
+        <button
+          type="button"
+          mat-stroked-button
+          (click)="selectFields()"
+          [disabled]="showProgress"
+          data-qa="btn-select-fields"
+        >
+          {{ 'data_export.select_fields' | translate }}
+        </button>
+        <button
+          type="button"
+          color="primary"
+          mat-raised-button
+          (click)="exportAll()"
+          [disabled]="showProgress"
+          data-qa="btn-export-all"
+        >
+          {{ 'data_export.all' | translate }}
+        </button>
+        <!-- <button  type="button" color="secondary" [routerLink]="['/settings/']" class="button" role="button" *ngIf="hxlEnabled" [disabled]="showProgress || !hxlApiKey" >{{'data_export.tags_attributes' | translate}}</button> -->
+      </div>
+    </mat-tab>
+    <mat-tab [label]="'data_export.export_history' | translate" data-qa="tab-export-history">
+      <ng-container *ngIf="exportJobsReady; else showLoader">
+        <table mat-table [dataSource]="exportJobs">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>{{ 'app.name' | translate }}</th>
+            <td mat-cell *matCellDef="let job">
+              <span class="title">{{ 'data_export.job' | translate: { jobId: job.id } }} </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>{{ 'global_filter.status' | translate }}</th>
+            <td mat-cell *matCellDef="let job">{{ job.status | titlecase }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="created">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ 'global_filter.sort.orderby.created' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let job">{{ job.created }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="expires">
+            <th mat-header-cell *matHeaderCellDef>Expires</th>
+            <td mat-cell [align]="!job.url_expiration ? 'center' : 'left'" *matCellDef="let job">
+              {{ job.url_expiration || '-' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="download">
+            <th mat-header-cell *matHeaderCellDef align="center">Download</th>
+            <td mat-cell align="center" *matCellDef="let job">
+              <a download [href]="job.url" mat-raised-button class="download-btn">
+                <mat-icon svgIcon="download"></mat-icon>
+              </a>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="['name', 'status', 'created', 'expires', 'download']"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: ['name', 'status', 'created', 'expires', 'download']"
+          ></tr>
+        </table>
+      </ng-container>
+    </mat-tab>
+  </mat-tab-group>
+</ng-container>
+
 <ng-template #fieldSelector>
-  <h2 class="form-sheet-title" translate>data_export.select_fields_title</h2>
-  <p translate>data_export.select_fields_desc</p>
+  <h1 translate>data_export.select_fields_title</h1>
+  <div class="description">
+    <p translate>data_export.select_fields_desc</p>
+  </div>
 
   <div class="form-row" *ngFor="let form of forms">
-    <h3>{{ form.name }}</h3>
-    <div *ngIf="form.attributes">
-      <mat-checkbox (change)="selectAll(form)" [checked]="isAllSelected(form)">
-        <i>{{ 'category.select_all' | translate }}</i>
-      </mat-checkbox>
-    </div>
-    <div *ngFor="let attribute of form.attributes">
-      <mat-checkbox [value]="attribute.key" [(ngModel)]="fieldsMap[form.id][attribute.key]">
-        {{ attribute.label }}
-      </mat-checkbox>
+    <mat-label>{{ form.name }}</mat-label>
+    <div class="checkbox-group">
+      <div class="checkbox" *ngIf="form.attributes">
+        <mat-checkbox (change)="selectAll(form)" [checked]="isAllSelected(form)">
+          <i>{{ 'category.select_all' | translate }}</i>
+        </mat-checkbox>
+      </div>
+      <div class="checkbox" *ngFor="let attribute of form.attributes">
+        <mat-checkbox [value]="attribute.key" [(ngModel)]="fieldsMap[form.id][attribute.key]">
+          {{ attribute.label }}
+        </mat-checkbox>
+      </div>
     </div>
   </div>
-  <div class="form-controls-panel">
-    <button
-      type="button"
-      color="secondary"
-      mat-raised-button
-      (click)="selectFields()"
-      data-qa="btn-cancel"
-    >
+
+  <div class="form-controls-panel form-controls-panel--sticky">
+    <button type="button" mat-stroked-button (click)="selectFields()" data-qa="btn-cancel">
       {{ 'data_export.cancel' | translate }}
     </button>
     <button
@@ -118,11 +137,7 @@
   <p *ngIf="hxlEnabled">
     {{ 'data_export.description_hxl' | translate }}
     <a href="https://hxlstandard.org/standard/1-1final/tagging/" class="link-blue" target="_blank">
-      <mat-icon>
-        <svg class="iconic" role="img">
-          <use xlink:href="assets/sprites.svg#external-link"></use>
-        </svg>
-      </mat-icon>
+      <mat-icon svgIcon="external-link"></mat-icon>
       {{ 'data_export.hxl_tags' | translate }} </a
     >,
     <a
@@ -131,22 +146,14 @@
       target="_blank"
     >
       <strong>
-        <mat-icon>
-          <svg class="iconic" role="img">
-            <use xlink:href="assets/sprites.svg#external-link"></use>
-          </svg>
-        </mat-icon>
+        <mat-icon svgIcon="external-link"></mat-icon>
         {{ 'data_export.hxl_attributes' | translate }}
       </strong>
     </a>
     {{ 'data_export.and_choose' | translate }}
     <a href="https://data.humdata.org/" class="link-blue" target="_blank">
       <strong>
-        <mat-icon>
-          <svg class="iconic" role="img">
-            <use xlink:href="assets/sprites.svg#external-link"></use>
-          </svg>
-        </mat-icon>
+        <mat-icon svgIcon="external-link"></mat-icon>
         {{ 'data_export.HDX' | translate }}
       </strong>
     </a>

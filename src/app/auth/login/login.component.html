@@ -9,43 +9,19 @@
   <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
 </button>
 
-<strong mat-dialog-title>{{ 'nav.login' | translate }}</strong>
-<form novalidate [formGroup]="form" (ngSubmit)="login()">
-  <div class="form-row">
-    <mat-label>{{ 'user.email' | translate }}</mat-label>
-    <mat-form-field appearance="outline">
-      <input matInput placeholder="pat@example.com" formControlName="email" required />
-      <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
-    </mat-form-field>
-  </div>
-
-  <div class="form-row">
-    <mat-label>{{ 'user.password' | translate }}</mat-label>
-    <mat-form-field appearance="outline">
-      <input
-        matInput
-        placeholder="pat@example.com"
-        formControlName="password"
-        required
-        type="password"
-      />
-      <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
-    </mat-form-field>
-  </div>
-  <mat-error *ngIf="loginError">{{ loginError }}</mat-error>
-
-  <div mat-dialog-actions align="end">
-    <button mat-stroked-button type="button" (click)="cancel()" data-qa="btn-cancel">
-      {{ 'app.cancel' | translate }}
-    </button>
-    <button
-      type="submit"
-      color="primary"
-      mat-raised-button
-      [disabled]="form.invalid || form.disabled"
-      data-qa="btn-login"
-    >
-      {{ 'nav.login' | translate }}
-    </button>
-  </div>
-</form>
+<mat-tab-group class="tabs" dynamicHeight disableRipple disablePagination animationDuration="0ms">
+  <mat-tab [label]="'nav.login' | translate">
+    <app-login-form (loggined)="loggined($event)">
+      <button btn-cancel mat-stroked-button type="button" (click)="cancel()" data-qa="btn-cancel">
+        {{ 'app.cancel' | translate }}
+      </button>
+    </app-login-form>
+  </mat-tab>
+  <mat-tab [label]="'nav.registration' | translate" *ngIf="isSignupActive">
+    <app-registration-form>
+      <button btn-cancel mat-stroked-button type="button" (click)="cancel()" data-qa="btn-cancel">
+        {{ 'app.cancel' | translate }}
+      </button>
+    </app-registration-form>
+  </mat-tab>
+</mat-tab-group>

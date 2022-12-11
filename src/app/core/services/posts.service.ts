@@ -10,6 +10,7 @@ export interface PostFilters {
   order?: string;
   order_unlocked_on_top?: boolean;
   orderby?: string;
+  set: string;
   'source[]'?: string[];
   'tags[]'?: number[];
   'status[]'?: string[];
@@ -24,6 +25,7 @@ export class PostsService extends ResourceService<any> {
   private defaultPostsFilters: GeoJsonFilter = {
     order: 'desc',
     orderby: 'created',
+    set: '',
     order_unlocked_on_top: true,
     reactToFilters: true,
     'source[]': [],

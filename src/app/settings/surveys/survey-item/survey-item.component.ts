@@ -3,8 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
-import { RoleResult, SurveyItemTask } from '@models';
-import { FormsService, NotificationService, RolesService, SurveysService } from '@services';
+import { LanguageInterface, RoleResult, SurveyItemTask } from '@models';
+import {
+  FormsService,
+  LanguageService,
+  NotificationService,
+  RolesService,
+  SurveysService,
+} from '@services';
+import { SelectLanguagesModalComponent } from 'src/app/shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
 
@@ -45,6 +52,9 @@ export class SurveyItemComponent implements OnInit {
   additionalTasks: SurveyItemTask[] = [];
   mainPost: SurveyItemTask;
   surveyObject: any;
+  public languages: LanguageInterface[] = this.languageService.getLanguages();
+  public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
+  public activeLanguages: LanguageInterface[] = this.defaultLanguage ? [this.defaultLanguage] : [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,6 +65,7 @@ export class SurveyItemComponent implements OnInit {
     private formsService: FormsService,
     private rolesService: RolesService,
     private notification: NotificationService,
+    private languageService: LanguageService,
   ) {}
 
   public ngOnInit(): void {
@@ -104,22 +115,40 @@ export class SurveyItemComponent implements OnInit {
     return this.form.controls[name];
   }
 
-  public setAvailableLanguages(languageCode: string): void {
-    this.getFormControl('enabled_languages').value.available.push(languageCode);
-    const param = {
-      ...this.getFormControl('translations').value,
-      [languageCode]: {
-        name: '',
-        description: '',
+  public addTranslation(): void {
+    const dialogRef = this.dialog.open(SelectLanguagesModalComponent, {
+      width: '100%',
+      maxWidth: 576,
+      data: {
+        languages: this.languages,
+        activeLanguages: this.activeLanguages,
+        defaultLanguage: this.defaultLanguage,
       },
-    };
-    this.form.patchValue({
-      translations: param,
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (selectedLanguages: LanguageInterface[]) => {
+        if (!selectedLanguages) return;
+        this.getFormControl('enabled_languages').value.available = selectedLanguages
+          .filter((language) => language.code !== this.defaultLanguage?.code)
+          .map((language) => language.code);
+        let translations: any = {};
+        selectedLanguages
+          .filter((language) => language.code !== this.defaultLanguage?.code)
+          .map((language) => {
+            translations[language.code] = {
+              name: this.getFormControl('translations').value[language.code]?.name || '',
+              description:
+                this.getFormControl('translations').value[language.code]?.description || '',
+            };
+          });
+        this.getFormControl('translations').setValue(translations);
+      },
     });
   }
 
-  public chooseTranslation(languageCode: string): void {
-    this.selectLanguageCode = languageCode;
+  public chooseTranslation(language: LanguageInterface): void {
+    this.selectLanguageCode = language.code;
     this.name = this.description = '';
   }
 
@@ -131,22 +160,6 @@ export class SurveyItemComponent implements OnInit {
           ...translations[key],
           [field]: event.target.value,
         };
-        this.form.patchValue({
-          translations: translations,
-        });
-      }
-    }
-  }
-
-  public async deleteTranslation(languageCode: string): Promise<void> {
-    this.getFormControl('enabled_languages').value.available = this.getFormControl(
-      'enabled_languages',
-    ).value.available.filter((el: any) => el !== languageCode);
-
-    const translations = this.getFormControl('translations').value;
-    for (const key in translations) {
-      if (key === languageCode) {
-        delete translations[key];
         this.form.patchValue({
           translations: translations,
         });
@@ -211,8 +224,8 @@ export class SurveyItemComponent implements OnInit {
   addTask() {
     const dialogRef = this.dialog.open(CreateTaskModalComponent, {
       width: '100%',
-      maxWidth: '564px',
-      minWidth: '300px',
+      maxWidth: 576,
+      minWidth: 300,
     });
 
     dialogRef.afterClosed().subscribe({
@@ -253,5 +266,9 @@ export class SurveyItemComponent implements OnInit {
     return availableLangs.every((language) => {
       return translations[language]?.name;
     });
+  }
+
+  public setNewColor(color: string): void {
+    this.form.patchValue({ color });
   }
 }

@@ -1,7 +1,7 @@
 <div class="sidebar">
-  <a target="_blank" class="sidebar__logo" href="https://www.ushahidi.com/">
+  <span class="sidebar__logo">
     <img src="assets/images/ushahidi-logo.svg" alt="ushahidi" width="172" height="40" />
-  </a>
+  </span>
 
   <div class="sidebar__info">
     <app-company-info
@@ -19,23 +19,13 @@
           mat-raised-button
           *ngIf="item.visible"
           class="sidebar-menu-button"
-          [routerLink]="item.router"
+          [routerLink]="createRouterLink(item.router)"
           routerLinkActive="sidebar-menu-button--active"
           (click)="registerPage($event, item.router, item.label)"
           [data-qa]="'btn-' + item.icon"
         >
-          <mat-icon class="sidebar-menu-button__icon">
-            <svg class="iconic" role="img">
-              <use
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                [attr.xlink:href]="'assets/menu-icons.svg#' + item.icon"
-              ></use>
-            </svg>
-          </mat-icon>
-          <span class="sidebar-menu-button__title">
-            {{ item.label | translate }}
-            {{ 'post.view' | translate | lowercase }}
-          </span>
+          <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
+          <span class="sidebar-menu-button__title">{{ item.label }}</span>
         </a>
       </ng-container>
     </div>
@@ -48,15 +38,8 @@
           (click)="item.action()"
           [data-qa]="'btn-' + item.icon"
         >
-          <mat-icon class="sidebar-menu-button__icon">
-            <svg class="iconic" role="img">
-              <use
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                [attr.xlink:href]="'assets/menu-icons.svg#' + item.icon"
-              ></use>
-            </svg>
-          </mat-icon>
-          <span class="sidebar-menu-button__title">{{ item.label | translate }}</span>
+          <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
+          <span class="sidebar-menu-button__title">{{ item.label }}</span>
         </a>
       </ng-container>
     </div>

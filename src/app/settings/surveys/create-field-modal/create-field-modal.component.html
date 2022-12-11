@@ -25,9 +25,17 @@
     </div>
 
     <!-- Has options -->
-    <div class="row-container form-row" *ngIf="hasOptions">
-      <mat-label>{{ 'form.field_options' | translate }} </mat-label>
-      <div *ngFor="let opt of selectedFieldType.options; let i = index">
+    <div class="form-row" *ngIf="hasOptions">
+      <div class="form-head-panel">
+        <mat-label class="form-label">{{ 'form.field_options' | translate }} </mat-label>
+
+        <button type="button" mat-stroked-button (click)="addOption(selectedFieldType)">
+          <span translate>form.field_add_option</span>
+          <mat-icon svgIcon="plus"></mat-icon>
+        </button>
+      </div>
+
+      <div class="form-row__item" *ngFor="let opt of selectedFieldType.options; let i = index">
         <mat-form-field appearance="outline">
           <input
             matInput
@@ -44,31 +52,14 @@
             class="button-flat button-beta"
             *ngIf="selectedFieldType.options.length > 1"
           >
-            <mat-icon>
-              <svg class="iconic" role="img">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  xlink:href="assets/sprites.svg#trash"
-                ></use>
-              </svg>
-            </mat-icon>
+            <mat-icon svgIcon="delete"></mat-icon>
           </button>
         </mat-form-field>
       </div>
 
-      <div class="alert error" role="alert" *ngIf="!validateDuplicate()">
-        <span translate>survey.duplicate_option</span>
-      </div>
-
-      <button
-        type="button"
-        color="primary"
-        mat-raised-button
-        class="button-add-field"
-        (click)="addOption(selectedFieldType)"
-      >
-        <i class="fa fa-plus"></i> <span translate>form.field_add_option</span>
-      </button>
+      <mat-error role="alert" *ngIf="!validateDuplicate()" translate>
+        survey.duplicate_option
+      </mat-error>
     </div>
 
     <div class="form-row" *ngIf="selectedFieldType.input === 'tags'">
@@ -92,23 +83,32 @@
     </div>
 
     <div class="form-row">
-      <mat-slide-toggle *ngIf="onlyOptional" [(ngModel)]="selectedFieldType.required">
-        {{ 'survey.required' | translate }}
-      </mat-slide-toggle>
+      <div class="toggle">
+        <mat-slide-toggle *ngIf="onlyOptional" [(ngModel)]="selectedFieldType.required">
+          {{ 'survey.required' | translate }}
+        </mat-slide-toggle>
+      </div>
 
-      <mat-slide-toggle *ngIf="canDisableCaption" [(ngModel)]="selectedFieldType.config.hasCaption">
-        {{ 'survey.collect_image_caption' | translate }}
-        <p class="init active" *ngIf="!selectedFieldType.config?.hasCaption">
-          <small translate>survey.disable_caption_field_explanation</small>
-        </p>
-      </mat-slide-toggle>
+      <div class="toggle">
+        <mat-slide-toggle
+          *ngIf="canDisableCaption"
+          [(ngModel)]="selectedFieldType.config.hasCaption"
+        >
+          {{ 'survey.collect_image_caption' | translate }}
+          <p class="init active" *ngIf="!selectedFieldType.config?.hasCaption">
+            <small translate>survey.disable_caption_field_explanation</small>
+          </p>
+        </mat-slide-toggle>
+      </div>
 
-      <mat-slide-toggle *ngIf="canMakePrivate" [(ngModel)]="selectedFieldType.response_private">
-        {{ 'survey.make_response_private' | translate }}
-        <p class="init active" *ngIf="selectedFieldType.response_private">
-          <small translate>survey.response_private_desc</small>
-        </p>
-      </mat-slide-toggle>
+      <div class="toggle">
+        <mat-slide-toggle *ngIf="canMakePrivate" [(ngModel)]="selectedFieldType.response_private">
+          {{ 'survey.make_response_private' | translate }}
+          <p class="init active" *ngIf="selectedFieldType.response_private">
+            <small translate>survey.response_private_desc</small>
+          </p>
+        </mat-slide-toggle>
+      </div>
     </div>
 
     <div class="form-row" *ngIf="canDisplay">
@@ -153,6 +153,9 @@
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
+  <button type="button" mat-dialog-close mat-stroked-button>
+    {{ 'app.cancel' | translate }}
+  </button>
   <button
     mat-raised-button
     type="button"
@@ -160,14 +163,16 @@
     (click)="addNewTask()"
     [disabled]="!validateDuplicate()"
   >
-    {{ editMode ? ('app.update_and_close' | translate) : ('app.add_and_close' | translate) }}
+    {{ (editMode ? 'app.update' : 'app.save') | translate }}
   </button>
 </div>
 
 <ng-template #allFields>
-  <div *ngFor="let field of fields" class="list-item" (click)="selectField(field)" matRipple>
-    <h3>{{ field.label | translate }}</h3>
-    <p>{{ field.description | translate }}</p>
+  <div class="fields-list">
+    <div matRipple class="list-item" *ngFor="let field of fields" (click)="selectField(field)">
+      <h3>{{ field.label | translate }}</h3>
+      <p>{{ field.description | translate }}</p>
+    </div>
   </div>
 </ng-template>
 

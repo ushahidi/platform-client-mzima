@@ -28,6 +28,8 @@ import {
   CompanyInfoComponent,
   FilterControlComponent,
   DonationButtonComponent,
+  SettingsHeaderComponent,
+  CollectionItemComponent,
 } from './components';
 import { MaterialModule } from './material/material.module';
 import {
@@ -40,7 +42,7 @@ import { DateAgoPipe, FilterValuePipe } from '@pipes';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { LottieAnimationComponent } from './components/lottie-animation/lottie-animation.component';
-import { SettingsHeaderComponent } from './components/settings-header/settings-header.component';
+import { PasswordStrengthComponent } from './components/password-strength/password-strength.component';
 
 const directives = [
   GtmDirective, //
@@ -74,6 +76,9 @@ const components = [
   FilterControlComponent,
   DonationButtonComponent,
   LottieAnimationComponent,
+  SettingsHeaderComponent,
+  PasswordStrengthComponent,
+  CollectionItemComponent,
 ];
 
 const modules = [
@@ -92,8 +97,8 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, ...directives, SettingsHeaderComponent],
+  declarations: [...components, ...directives],
   imports: [...modules, LottieComponent],
-  exports: [...components, ...directives, ...modules, SettingsHeaderComponent],
+  exports: [...components, ...directives, ...modules],
 })
 export class SharedModule {}

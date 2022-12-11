@@ -1,0 +1,31 @@
+<div
+  matRipple
+  class="collection-item"
+  (click)="selectable && changeChecked($event)"
+  [ngClass]="{ 'collection-item--has-checkbox': selectable }"
+>
+  <div *ngIf="selectable" class="collection-item__checkbox">
+    <mat-checkbox [checked]="checked"> </mat-checkbox>
+  </div>
+  <div class="collection-item__actions" *ngIf="actions && !selectable">
+    <button
+      tabindex="-1"
+      mat-raised-button
+      class="collection-item__control"
+      (click)="editCollection($event)"
+    >
+      <mat-icon matPrefix svgIcon="edit"></mat-icon>
+    </button>
+    <button
+      tabindex="-1"
+      mat-raised-button
+      class="collection-item__control"
+      (click)="deleteCollection($event)"
+    >
+      <mat-icon matPrefix svgIcon="delete"></mat-icon>
+    </button>
+  </div>
+
+  <strong class="collection-item__title">{{ collection.name }}</strong>
+  <span class="collection-item__description">{{ collection.description }}</span>
+</div>

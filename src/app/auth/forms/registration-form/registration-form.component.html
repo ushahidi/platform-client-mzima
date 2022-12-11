@@ -1,56 +1,59 @@
-<button
-  mat-stroked-button
-  mat-dialog-close
-  class="modal__close-btn"
-  tabindex="-1"
-  aria-label="{{ 'modal.button.close' | translate }}"
-  data-qa="btn-close"
->
-  <mat-icon class="fab-button__icon">close</mat-icon>
-</button>
-
-<strong mat-dialog-title>{{ 'nav.register' | translate }}</strong>
 <form novalidate [formGroup]="form" (ngSubmit)="signup()">
   <div class="form-row">
-    <mat-label>{{ 'user.full_name' | translate }}</mat-label>
+    <mat-label>{{ 'user.name' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
       <input
         matInput
-        placeholder="{{ 'user.full_name' | translate }}"
+        placeholder="{{ 'user.placeholder.realname' | translate }}"
         formControlName="name"
         required
       />
       <mat-error *ngIf="form.get('name')?.invalid">{{ getErrorMessage('name') }}</mat-error>
+      <mat-hint>{{ 'user.name_will_be_a_display_name' | translate }}</mat-hint>
     </mat-form-field>
   </div>
   <div class="form-row">
-    <mat-label>{{ 'user.email' | translate }}</mat-label>
+    <mat-label>{{ 'user.email' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
-      <input matInput placeholder="pat@example.com" formControlName="email" required />
+      <input
+        matInput
+        placeholder="{{ 'user.placeholder.email' | translate }}"
+        formControlName="email"
+        required
+      />
       <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
     </mat-form-field>
   </div>
 
   <div class="form-row">
-    <mat-label>{{ 'user.password' | translate }}</mat-label>
+    <mat-label>{{ 'user.password' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
       <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisible()">
-        <mat-icon svgIcon="eye"></mat-icon>
+        <mat-icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
       </button>
       <input
         matInput
         formControlName="password"
         required
+        placeholder="{{ 'user.placeholder.password' | translate }}"
         [type]="isPasswordVisible ? 'text' : 'password'"
       />
       <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
     </mat-form-field>
+    <app-password-strength [passwordToCheck]="form.value.password"></app-password-strength>
+  </div>
+
+  <div class="form-row">
+    <div class="checkbox">
+      <mat-checkbox formControlName="agreement" required>
+        <span [innerHTML]="'terms_of_service.i_agree' | translate"></span>
+      </mat-checkbox>
+    </div>
   </div>
 
   <div mat-dialog-actions align="end">
-    <button mat-stroked-button type="button" (click)="cancel()" data-qa="btn-cancel">
-      {{ 'app.cancel' | translate }}
-    </button>
+    <ng-content select="[btn-cancel]"></ng-content>
+
     <button
       type="submit"
       color="primary"

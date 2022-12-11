@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { mergeMap, Observable } from 'rxjs';
 import { CONST } from '@constants';
 import { EnvService, ResourceService, SessionService } from '@services';
@@ -14,6 +16,7 @@ export class AuthService extends ResourceService<any> {
     protected override env: EnvService,
     private sessionService: SessionService,
     private userService: UsersService,
+    private translate: TranslateService,
   ) {
     super(httpClient, env);
   }
@@ -74,5 +77,13 @@ export class AuthService extends ResourceService<any> {
   public logout() {
     this.sessionService.clearSessionData();
     this.sessionService.clearUserData();
+  }
+
+  public getControlError(form: FormGroup, field: string, errorCodes: string[]) {
+    for (const errorCode of errorCodes) {
+      if (form.controls[field].hasError(errorCode)) {
+        return this.translate.instant(`user.valid.${field}.${errorCode}`);
+      }
+    }
   }
 }
