@@ -12,6 +12,7 @@
     "collection": "Collection",
     "collections": "Collections",
     "create_collection": "Create collection",
+    "add_collection": "Add collection",
     "export_to_csv": "Export filtered data",
     "create_new": "Create new",
     "create_new_survey": "Create new survey",
@@ -576,6 +577,12 @@
   "modal": {
     "button": {
       "close": "Close"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "Web monetization is enabled on this website. Thank you for your donation. You have donated",
+      "thank_you_for_your_donation_end": "so far",
+      "web_monetization_text": "Ushahidi deployments are now web monetization enabled. Web monetization is a way of supporting the websites you love without playing advertisers game. All you need is to get your browser setup. Click the link below to learn how you can donate.",
+      "how_can_i_donate": "How can I donate?"
     }
   },
   "nav": {
@@ -736,6 +743,7 @@
     "delete_post": "Delete post",
     "delete_this_post": "Delete this post",
     "delete_post_desc": "<strong>If you delete this post</strong>, all of its comments will also be deleted. Proceed with caution.",
+    "read_more": "Read more",
     "post_actions": {
       "edit": "Edit",
       "delete": "Delete",
