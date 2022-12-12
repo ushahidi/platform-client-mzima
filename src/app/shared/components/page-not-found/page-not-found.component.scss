@@ -2,7 +2,7 @@
   height: 100vh;
   background: url(/assets/images/logo-bottom-bg.svg) 50% 95% repeat-x;
 
-  &--container {
+  &__container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,18 +10,18 @@
     height: 70vh;
   }
 
-  &--title {
+  &__title {
     font-size: 100px;
     font-weight: 800;
     margin-bottom: 0;
 
-    &_404 {
+    &-404 {
       font-size: 200px;
       margin-right: 30px;
     }
   }
 
-  &--description {
+  &__description {
     font-size: 16px;
     font-weight: 400;
     margin-bottom: 32px;

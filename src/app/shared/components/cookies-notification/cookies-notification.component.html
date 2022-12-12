@@ -1,0 +1,34 @@
+<div class="cookies-notification" *ngIf="showCookies">
+  <div class="cookies-notification__body">
+    <div class="cookies-notification__body-icon">
+      <mat-icon class="sidebar-menu-button__icon" [svgIcon]="'cookies'"></mat-icon>
+    </div>
+    <div class="cookies-notification__body-description">
+      <p>{{ 'cookies.we_use_cookies' | translate }}</p>
+      <p [innerHTML]="'cookies.cookies_privacy' | translate"></p>
+    </div>
+  </div>
+
+  <div class="cookies-notification__buttons">
+    <button
+      class="cookies-notification__buttons-decline"
+      type="button"
+      color="dark"
+      mat-raised-button
+      data-qa="button-decline-cookies"
+      (click)="decline()"
+    >
+      {{ 'cookies.decline' | translate }}
+    </button>
+    <button
+      class="cookies-notification__buttons"
+      type="button"
+      color="primary"
+      mat-raised-button
+      data-qa="button-accept-cookies"
+      (click)="accept()"
+    >
+      {{ 'cookies.accept_cookies' | translate }}
+    </button>
+  </div>
+</div>

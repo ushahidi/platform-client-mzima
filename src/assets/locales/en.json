@@ -135,6 +135,12 @@
     "are_you_sure_you_want_to_delete": "Are you sure you want to Delete",
     "action_cannot_be_undone": "<p>This action cannot be undone.</p><p>Are you sure?</p>"
   },
+  "cookies": {
+    "we_use_cookies": "Howdy! We use cookies to make your experience better.",
+    "cookies_privacy": "If you want to know more or withdraw your consent, please go to our <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>.",
+    "decline": "Decline",
+    "accept_cookies": "Accept cookies"
+  },
   "404": {
     "404": "404",
     "error": "error",
