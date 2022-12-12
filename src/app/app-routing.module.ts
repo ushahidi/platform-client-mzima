@@ -7,8 +7,8 @@ import { PageNotFoundComponent } from './shared/components/page-not-found/page-n
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
-    data: { breadcrumb: 'views.map' },
+    redirectTo: 'map',
+    pathMatch: 'full',
   },
   {
     path: 'map',

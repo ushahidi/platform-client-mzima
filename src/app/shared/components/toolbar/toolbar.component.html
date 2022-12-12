@@ -1,7 +1,7 @@
 <mat-toolbar class="toolbar">
   <!-- <app-breadcrumb></app-breadcrumb> -->
   <h1 class="toolbar__page-title" data-qa="page-title">
-    {{ pageTitle }}
+    {{ pageNotFound ? ('app.page-not-found' | translate) : pageTitle }}
     {{ pageNotFound ? '' : ('post.view' | translate | lowercase) }}
   </h1>
   <div class="toolbar__controls">
