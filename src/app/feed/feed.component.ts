@@ -229,7 +229,6 @@ export class FeedComponent {
   }
 
   public onScroll(event: any): void {
-    console.log('onScroll');
     if (
       !this.isLoading &&
       event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32
@@ -239,7 +238,6 @@ export class FeedComponent {
   }
 
   public loadMore(): void {
-    console.log('loadMore', this.params);
     if (
       this.params.offset !== undefined &&
       this.params.limit !== undefined &&
