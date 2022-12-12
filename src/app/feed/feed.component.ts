@@ -109,7 +109,10 @@ export class FeedComponent {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
         setTimeout(() => {
           this.isLoading = false;
-          if (this.feed?.nativeElement.offsetHeight >= this.feed?.nativeElement.scrollHeight) {
+          if (
+            this.feed?.nativeElement.offsetHeight &&
+            this.feed?.nativeElement.offsetHeight >= this.feed?.nativeElement.scrollHeight
+          ) {
             this.loadMore();
           }
           this.masonry?.layout();
@@ -226,6 +229,7 @@ export class FeedComponent {
   }
 
   public onScroll(event: any): void {
+    console.log('onScroll');
     if (
       !this.isLoading &&
       event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32
@@ -235,6 +239,7 @@ export class FeedComponent {
   }
 
   public loadMore(): void {
+    console.log('loadMore', this.params);
     if (
       this.params.offset !== undefined &&
       this.params.limit !== undefined &&

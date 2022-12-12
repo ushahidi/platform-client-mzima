@@ -21,7 +21,7 @@ import {
   SessionService,
 } from '@services';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
-import { mapHelper } from '@helpers';
+import { mapHelper, takeUntilDestroy$ } from '@helpers';
 import { ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
@@ -51,6 +51,8 @@ export class MapComponent implements OnInit {
     animate: true,
   };
 
+  filtersSubscription$ = this.postsService.postsFilters$.pipe(takeUntilDestroy$());
+
   public leafletOptions: MapOptions;
   public progress = 0;
   public isFiltersVisible: boolean;
@@ -72,16 +74,6 @@ export class MapComponent implements OnInit {
       this.initCollection();
     });
 
-    if (this.route.snapshot.data['view'] === 'collection') {
-      this.collectionId = this.route.snapshot.paramMap.get('id')!;
-      this.params.set = this.collectionId;
-      this.postsService.applyFilters({ set: this.collectionId });
-    } else {
-      this.collectionId = '';
-      this.params.set = '';
-      this.postsService.applyFilters({ set: [] });
-    }
-
     this.mapConfig = this.sessionService.getMapConfigurations();
 
     const currentLayer =
@@ -100,7 +92,7 @@ export class MapComponent implements OnInit {
 
     this.mapReady = true;
 
-    this.postsService.postsFilters$.subscribe({
+    this.filtersSubscription$.subscribe({
       next: () => {
         this.mapLayers.map((layer) => {
           this.map.removeLayer(layer);
