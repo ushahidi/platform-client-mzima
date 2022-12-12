@@ -27,6 +27,7 @@ export class BreadcrumbService {
     breadcrumbs: Breadcrumb[],
   ) {
     if (route) {
+      const instance = route.data['breadcrumb'];
       const routeUrl = parentUrl.concat(route.url.map((url) => url.path));
 
       if (route.data['breadcrumb']) {
@@ -34,6 +35,7 @@ export class BreadcrumbService {
         const breadcrumb = {
           label: this.getLabel(route.data),
           url: '/' + routeUrl.join('/'),
+          instance,
         };
         breadcrumbs.push(breadcrumb);
       }

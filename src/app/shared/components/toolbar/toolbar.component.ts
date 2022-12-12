@@ -15,9 +15,10 @@ import { AccountSettingsComponent } from '../account-settings/account-settings.c
 export class ToolbarComponent implements OnInit {
   @Input() languages: any;
   @Input() selectedLanguage: any;
+  private userData$ = this.session.currentUserData$;
+  public pageNotFound = false;
   public isLoggedIn = false;
   public isDonateAvailable = false;
-  private userData$ = this.session.currentUserData$;
   public profile: UserInterface;
   public showSearchForm: boolean;
   public pageTitle: string;
@@ -33,12 +34,14 @@ export class ToolbarComponent implements OnInit {
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       const url = router.routerState.snapshot.url;
-      this.showSearchForm = url.indexOf('/map') > -1 || url.indexOf('/feed') > -1;
+      this.showSearchForm =
+        url.indexOf('/') > -1 || url.indexOf('/map') > -1 || url.indexOf('/feed') > -1;
     });
 
     this.breadcrumbService.breadcrumbs$.subscribe({
       next: (res) => {
         this.pageTitle = res[0]?.label;
+        this.pageNotFound = this.pageTitle === 'Page not found';
       },
     });
   }

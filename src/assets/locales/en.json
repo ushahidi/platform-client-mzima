@@ -48,6 +48,7 @@
     },
     "forbidden": "Sorry, you're not allowed to do that.",
     "404": "That URL doesn't exist",
+    "page-not-found": "Page not found",
     "get_notifications": "Get notifications",
     "turn_off_notifications": "Turn off notifications",
     "load_more": "Load more",
@@ -107,7 +108,6 @@
     "key": "Key",
     "survey_web_address": "Your survey's web address",
     "default_value": "Default value (optional):",
-    "fields": "Fields",
     "select_one": "Select One",
     "sort_and_filter": "Sort & filter",
     "saved_search": "Saved Search",
@@ -134,6 +134,12 @@
     "no_go_back": "No, go back",
     "are_you_sure_you_want_to_delete": "Are you sure you want to Delete",
     "action_cannot_be_undone": "<p>This action cannot be undone.</p><p>Are you sure?</p>"
+  },
+  "404": {
+    "404": "404",
+    "error": "error",
+    "description": "Oops... Sorry, we can’t find the page that you’re looking for. <br> Please search by another phrase or go back to the Map View.",
+    "button": "Go to the Map View"
   },
   "toolbar": {
     "searchbar": {
