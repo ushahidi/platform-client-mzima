@@ -14,6 +14,7 @@
     </app-settings-header>
   </div>
 
+  <!--  <ng-container>-->
   <ng-container
     *ngIf="!selectedTranslation || selectedTranslation === defaultLanguage?.code; else translation"
   >
@@ -45,55 +46,11 @@
         </textarea>
       </mat-form-field>
     </div>
-
-    <div class="form-row">
-      <mat-label>{{ 'category.parent_category' | translate }}</mat-label>
-      <mat-form-field appearance="outline">
-        <mat-select
-          formControlName="is_child_to"
-          (selectionChange)="parentChanged($event)"
-          disableOptionCentering
-        >
-          <mat-option value="">{{
-            'category.placeholder.choose_parent_category' | translate
-          }}</mat-option>
-          <mat-option [value]="category.id" *ngFor="let category of categories">
-            {{ category.tag }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <!--    <div class="form-row">-->
-    <!--      <mat-label>{{ 'translations.category_select_default' | translate }}</mat-label>-->
-    <!--      <mat-form-field appearance="outline">-->
-    <!--        <mat-hint>{{ 'translations.default_lang_info' | translate }}</mat-hint>-->
-    <!--        <mat-select formControlName="language" disableOptionCentering>-->
-    <!--          <mat-option [value]="language.code" *ngFor="let language of languages">-->
-    <!--            {{ language.name }}-->
-    <!--          </mat-option>-->
-    <!--        </mat-select>-->
-    <!--      </mat-form-field>-->
-    <!--    </div>-->
-
-    <div class="form-row">
-      <mat-label>{{ 'app.who_can_see_this_category' | translate }}</mat-label>
-      <app-group-checkbox-select
-        [data]="roleOptions"
-        formControlName="visible_to"
-      ></app-group-checkbox-select>
-      <div class="radio-buttons" *ngIf="form.value.parent">
-        <p class="radio-buttons__info">
-          <mat-icon>group</mat-icon>
-          {{ 'category.child_permissions' | translate }}
-        </p>
-      </div>
-    </div>
   </ng-container>
 
   <ng-template #translation>
     <div class="form-row">
-      <mat-label>{{ 'category.editor.name' | translate }}</mat-label>
+      <mat-label>{{ 'category.editor.name' | translate }} *</mat-label>
       <mat-form-field appearance="outline">
         <input matInput readonly disabled [value]="form.value.name" />
       </mat-form-field>
@@ -115,13 +72,46 @@
 
     <div class="form-row">
       <mat-label
-        >{{ 'category.editor.description' | translate }} ({{ selectedTranslation }})</mat-label
-      >
+        >{{ 'category.editor.description' | translate }} ({{ selectedTranslation }})
+      </mat-label>
       <mat-form-field appearance="outline">
         <input matInput formControlName="translate_description" />
       </mat-form-field>
     </div>
   </ng-template>
+
+  <div class="form-row">
+    <mat-label>{{ 'category.parent_category' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <mat-select
+        formControlName="is_child_to"
+        (selectionChange)="parentChanged($event)"
+        disableOptionCentering
+      >
+        <mat-option value="">{{
+          'category.placeholder.choose_parent_category' | translate
+        }}</mat-option>
+        <mat-option [value]="category.id" *ngFor="let category of categories">
+          {{ category.tag }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-label>{{ 'app.who_can_see_this_category' | translate }}</mat-label>
+    <app-group-checkbox-select
+      [data]="roleOptions"
+      formControlName="visible_to"
+    ></app-group-checkbox-select>
+    <div class="radio-buttons" *ngIf="form.value.parent">
+      <p class="radio-buttons__info">
+        <mat-icon>group</mat-icon>
+        {{ 'category.child_permissions' | translate }}
+      </p>
+    </div>
+  </div>
+  <!--  </ng-container>-->
 
   <div class="form-controls-panel form-controls-panel--sticky">
     <div>
