@@ -1,0 +1,63 @@
+.cookies-notification {
+  right: 30px;
+  bottom: 24px;
+  display: flex;
+  z-index: 5000;
+  position: fixed;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-neutral-100);
+  width: 80%;
+  margin: auto;
+  color: var(--color-neutral-40);
+  border-radius: 8px;
+  padding: 24px 25px;
+
+  &__body {
+    display: flex;
+
+    &-icon {
+      margin-right: 20.3px;
+      width: 43.3px;
+      height: 43.4px;
+
+      ::ng-deep {
+        mat-icon {
+          width: 100%;
+          height: 100%;
+
+          svg {
+            width: 43.3px;
+            height: 43.4px;
+          }
+        }
+      }
+    }
+
+    &-description {
+      font-size: 16px;
+
+      p {
+        margin-bottom: 0;
+
+        &:first-child {
+          margin-bottom: 2px;
+        }
+
+        ::ng-deep {
+          a {
+            color: var(--color-neutral-40);
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+
+  &__buttons {
+    &-decline {
+      margin-right: 16px;
+      border: 1px solid var(--color-neutral-40);
+    }
+  }
+}

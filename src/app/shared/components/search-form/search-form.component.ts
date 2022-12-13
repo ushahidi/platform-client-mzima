@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,6 +29,7 @@ import { SaveSearchModalComponent } from '../save-search-modal/save-search-modal
   styleUrls: ['./search-form.component.scss'],
 })
 export class SearchFormComponent implements OnInit {
+  @Input() pageNotFound = false;
   public _array = Array;
   public filterType = FilterType;
   public form: FormGroup = this.formBuilder.group({

@@ -43,6 +43,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { LottieAnimationComponent } from './components/lottie-animation/lottie-animation.component';
 import { PasswordStrengthComponent } from './components/password-strength/password-strength.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { CookiesNotificationComponent } from './components/cookies-notification/cookies-notification.component';
 
 const directives = [
   GtmDirective, //
@@ -79,6 +81,8 @@ const components = [
   SettingsHeaderComponent,
   PasswordStrengthComponent,
   CollectionItemComponent,
+  PageNotFoundComponent,
+  CookiesNotificationComponent,
 ];
 
 const modules = [
