@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CollectionsComponent } from '@data';
 import { PostPropertiesInterface, PostResult, PostStatus } from '@models';
@@ -9,7 +9,7 @@ import { ConfirmModalService, PostsService, PostsV5Service, SessionService } fro
   templateUrl: './post-head.component.html',
   styleUrls: ['./post-head.component.scss'],
 })
-export class PostHeadComponent {
+export class PostHeadComponent implements OnInit {
   PostStatus = PostStatus;
   @Input() public post: PostResult | PostPropertiesInterface;
   isActionsAvailable = false;

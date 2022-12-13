@@ -51,6 +51,11 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
     data: { breadcrumb: 'nav.resetpassword' },
   },
+  {
+    path: '**',
+    redirectTo: 'map',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
