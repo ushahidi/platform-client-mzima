@@ -62,8 +62,11 @@ export class AccountSettingsComponent implements OnInit {
       role: [''],
       display_name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
+      confirmPassword: [
+        '',
+        [Validators.required, Validators.minLength(8), Validators.maxLength(64)],
+      ],
     },
     { validators: this.checkPasswords },
   );

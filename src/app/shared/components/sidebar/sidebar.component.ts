@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SessionService, AuthService, GtmTrackingService } from '@services';
+import {
+  SessionService,
+  AuthService,
+  GtmTrackingService,
+  EventBusService,
+  EventType,
+} from '@services';
 import { LoginComponent } from '@auth';
 import { MenuInterface, UserMenuInterface } from '@models';
 import { CollectionsComponent } from '@data';
@@ -30,6 +36,7 @@ export class SidebarComponent implements OnInit {
     private gtmTracking: GtmTrackingService,
     private router: Router,
     private translate: TranslateService,
+    private eventBusService: EventBusService,
   ) {}
 
   ngOnInit() {
@@ -38,6 +45,10 @@ export class SidebarComponent implements OnInit {
       this.isAdmin = userData.role === 'admin';
       this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
       this.initMenu();
+    });
+
+    this.eventBusService.on(EventType.OpenLoginModal).subscribe({
+      next: () => this.openLogin(),
     });
   }
 
@@ -112,19 +123,6 @@ export class SidebarComponent implements OnInit {
       },
     });
   }
-
-  // private openSignup(): void {
-  //   const dialogRef = this.dialog.open(RegisterComponent, {
-  //     width: '100%',
-  //     maxWidth: 480,
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((isSuccess) => {
-  //     if (isSuccess) {
-  //       this.openLogin();
-  //     }
-  //   });
-  // }
 
   private openCollections(): void {
     const dialogRef = this.dialog.open(CollectionsComponent, {

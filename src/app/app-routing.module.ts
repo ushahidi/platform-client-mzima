@@ -42,6 +42,12 @@ const routes: Routes = [
     data: { breadcrumb: 'post.posts' },
   },
   {
+    path: 'reset',
+    title: 'reset',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    data: { breadcrumb: 'nav.resetpassword' },
+  },
+  {
     path: '**',
     pathMatch: 'full',
     component: PageNotFoundComponent,
