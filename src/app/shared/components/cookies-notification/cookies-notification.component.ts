@@ -10,7 +10,6 @@ export class CookiesNotificationComponent implements OnInit {
   public showCookies = true;
 
   ngOnInit() {
-    console.log(!localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`));
     this.showCookies = !localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`);
   }
 
