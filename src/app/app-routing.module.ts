@@ -45,6 +45,12 @@ const routes: Routes = [
     title: 'post.posts',
     loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
   },
+  {
+    path: 'reset',
+    title: 'reset',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    data: { breadcrumb: 'nav.resetpassword' },
+  },
 ];
 
 @NgModule({
