@@ -341,7 +341,7 @@
     "who_can_add": "Who can add to this survey",
     "survey_field": "Survey field",
     "choose_survey_field": "Choose what should be assigned to each survey field",
-    "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
+    "choose_survey_field_descchoose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "Who can contribute to fields in this task",
     "view_detail": "Detail",
     "delete": {
@@ -1142,6 +1142,9 @@
       }
     },
     "data_sources": {
+      "type_of_data_source": "Type of Data Source",
+      "provider_name": "{{providerName}} Data Source?",
+      "do_you_really_want_to_disconnect": "Do you really want to disconnect your provider?",
       "add_source": "Add source",
       "associate_with_form": "Import to survey",
       "associate_with_form_desc": "All incoming data from {{provider}} will be used to create responses to the survey you choose",

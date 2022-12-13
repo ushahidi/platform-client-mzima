@@ -109,7 +109,10 @@ export class FeedComponent {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
         setTimeout(() => {
           this.isLoading = false;
-          if (this.feed?.nativeElement.offsetHeight >= this.feed?.nativeElement.scrollHeight) {
+          if (
+            this.feed?.nativeElement.offsetHeight &&
+            this.feed?.nativeElement.offsetHeight >= this.feed?.nativeElement.scrollHeight
+          ) {
             this.loadMore();
           }
           this.masonry?.layout();

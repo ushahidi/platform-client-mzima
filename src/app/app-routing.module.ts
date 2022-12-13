@@ -22,7 +22,6 @@ const routes: Routes = [
   },
   {
     path: 'feed',
-    title: 'post.posts',
     loadChildren: () => import('./feed/feed.module').then((m) => m.FeedModule),
     data: { breadcrumb: 'views.data' },
   },
@@ -40,6 +39,7 @@ const routes: Routes = [
   {
     path: 'post',
     loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
+    data: { breadcrumb: 'post.posts' },
   },
   {
     path: '**',

@@ -6,20 +6,25 @@
     mat-raised-button
     data-qa="btn-add-role"
     [routerLink]="['create']"
-    *ngIf="!isAllProvidersAdded"
+    *ngIf="isAllProvidersAdded"
   >
     <span>Add source</span>
     <mat-icon svgIcon="plus"></mat-icon>
   </button>
 </div>
-
-<ng-container *ngFor="let dataSource of dataSourceList">
-  <a
-    matRipple
-    class="data-source-item"
-    *ngIf="dataSource.available_provider"
-    [routerLink]="['update', dataSource.id]"
-  >
-    {{ dataSource.name }}
-  </a>
+<ng-container *ngIf="providersData?.length; else showLoader">
+  <div *ngFor="let provider of providersData">
+    <a
+      matRipple
+      class="data-source-item"
+      *ngIf="provider.value"
+      [routerLink]="['update', provider.label]"
+    >
+      {{ provider.label | titlecase }}
+    </a>
+  </div>
 </ng-container>
+
+<ng-template #showLoader>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>
