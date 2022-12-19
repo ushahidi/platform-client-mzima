@@ -13,20 +13,17 @@
       placeholder="Choose Data Source..."
       [(ngModel)]="currentProviderId"
       (selectionChange)="setCurrentProvider($event.value)"
+      data-qa="select-provider"
     >
-      <ng-container *ngFor="let provider of providersData?.providers | keyvalue">
-        <mat-option [value]="provider.key" *ngIf="!provider.value">
+      <ng-container
+        *ngFor="let provider of providersData?.providers | keyvalue"
+        data-qa="available-provider"
+      >
+        <mat-option [value]="provider.key" *ngIf="!provider.value" [data-qa]="provider.key">
           {{ provider.key }}
         </mat-option>
       </ng-container>
     </mat-select>
-    <mat-error
-      *ngIf="
-        (form.get('id')?.touched || form.get('id')?.dirty) && form.get('id')?.hasError('required')
-      "
-    >
-      {{ 'form.field_required' | translate }}
-    </mat-error>
   </mat-form-field>
 </div>
 
@@ -37,12 +34,17 @@
         name="accept-survey"
         [(ngModel)]="provider.available_provider"
         (change)="turnOffDataSource($event)"
+        data-qa="toogle-available-provider"
       >
         {{ 'settings.data_sources.enable_provider_message' | translate }}
       </mat-slide-toggle>
     </div>
     <div class="toggle">
-      <mat-slide-toggle name="import-to-survey" [(ngModel)]="provider.visible_survey">
+      <mat-slide-toggle
+        name="import-to-survey"
+        [(ngModel)]="provider.visible_survey"
+        data-qa="toogle-import-to-survey"
+      >
         {{ 'settings.data_sources.associate_with_form' | translate }}
       </mat-slide-toggle>
     </div>
@@ -60,8 +62,12 @@
         </strong>
       </mat-label>
       <mat-form-field appearance="outline" *ngIf="surveyList.length">
-        <mat-select formControlName="form_id" (selectionChange)="getSurveyAttributes($event.value)">
-          <mat-option *ngFor="let survey of surveyList" [value]="survey">
+        <mat-select
+          formControlName="form_id"
+          (selectionChange)="getSurveyAttributes($event.value)"
+          data-qa="survey-select"
+        >
+          <mat-option *ngFor="let survey of surveyList" [value]="survey" [data-qa]="survey.name">
             {{ survey.name }}
           </mat-option>
         </mat-select>
@@ -76,7 +82,12 @@
     <ng-container *ngIf="surveyAttributesList?.length">
       <h2>{{ 'survey.choose_survey_field' | translate }}</h2>
       <p>{{ 'survey.choose_survey_field_desc' | translate }}</p>
-      <table mat-table [dataSource]="provider.control_inbound_fields" class="survey__table">
+      <table
+        mat-table
+        [dataSource]="provider.control_inbound_fields"
+        class="survey__table"
+        data-qa="survey-table"
+      >
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>{{ provider?.name | titlecase }} data</th>
           <td mat-cell *matCellDef="let element">
@@ -87,17 +98,20 @@
           <th mat-header-cell *matHeaderCellDef>{{ 'survey.survey_field' | translate }}</th>
           <td mat-cell *matCellDef="let element">
             <div class="form-row">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" data-qa="source-select">
                 <mat-select
                   [formControlName]="element.control_label"
                   disableOptionCentering
                   [placeholder]="'data_import.leave_empty' | translate"
-                  data-qa="source-select"
+                  [data-qa]="element.control_label"
                 >
                   <mat-option [value]="null">
                     {{ 'data_import.leave_empty' | translate }}
                   </mat-option>
-                  <div *ngFor="let attribute of surveyAttributesList">
+                  <div
+                    *ngFor="let attribute of surveyAttributesList"
+                    data-qa="survey-attributes-list"
+                  >
                     <mat-option
                       *ngIf="element.type === attribute.input"
                       [value]="attribute?.key"
@@ -120,7 +134,7 @@
 
   <br />
 
-  <div *ngFor="let control of provider?.control_options">
+  <div *ngFor="let control of provider?.control_options" data-qa="provider-options">
     <ng-container *ngIf="control.input === 'read-only-text'">
       <h2 *ngIf="control.label?.length">{{ control.label }}</h2>
       <p *ngIf="control.description?.length" [innerHTML]="control.description"></p>
@@ -129,12 +143,17 @@
     <ng-container *ngIf="control.input !== 'read-only-text'">
       <div class="form-row">
         <mat-label>{{ control.label }}<span class="color-accent"> *</span></mat-label>
-        <mat-form-field *ngIf="control.input === 'text'" appearance="outline">
+        <mat-form-field
+          *ngIf="control.input === 'text'"
+          appearance="outline"
+          data-qa="control-type-text"
+        >
           <input
             matInput
             [placeholder]="control.description"
             [formControlName]="control.control_label"
             [type]="control.input"
+            [data-qa]="'control-text' + control.control_label"
           />
           <mat-hint
             *ngIf="control.description?.length"
@@ -155,8 +174,13 @@
           *ngIf="control.input === 'radio'"
           aria-label="Select an option"
           [formControlName]="control.control_label"
+          data-qa="control-type-radio"
         >
-          <mat-radio-button *ngFor="let item of control.options" [value]="item">
+          <mat-radio-button
+            *ngFor="let item of control.options"
+            [value]="item"
+            [data-qa]="'control-text' + item"
+          >
             {{ item }}
           </mat-radio-button>
         </mat-radio-group>
@@ -171,17 +195,28 @@
         type="button"
         color="accent"
         (click)="turnOffDataSource($event)"
-        translate
         *ngIf="!onCreating"
+        data-qa="btn-provider-delete"
       >
         {{ 'app.delete' | translate }}
       </button>
     </div>
     <div>
-      <button mat-stroked-button type="button" routerLink="/settings/data-sources" translate>
+      <button
+        mat-stroked-button
+        type="button"
+        routerLink="/settings/data-sources"
+        data-qa="btn-provider-cancel"
+      >
         {{ 'app.cancel' | translate }}
       </button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" translate>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+        data-qa="btn-provider-save"
+      >
         {{ 'app.save' | translate }}
       </button>
     </div>
