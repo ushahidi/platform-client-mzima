@@ -15,9 +15,10 @@ import { AccountSettingsComponent } from '../account-settings/account-settings.c
 export class ToolbarComponent implements OnInit {
   @Input() languages: any;
   @Input() selectedLanguage: any;
+  private userData$ = this.session.currentUserData$;
+  public pageNotFound = false;
   public isLoggedIn = false;
   public isDonateAvailable = false;
-  private userData$ = this.session.currentUserData$;
   public profile: UserInterface;
   public showSearchForm: boolean;
   public pageTitle: string;
@@ -39,6 +40,7 @@ export class ToolbarComponent implements OnInit {
     this.breadcrumbService.breadcrumbs$.subscribe({
       next: (res) => {
         this.pageTitle = res[0]?.label;
+        this.pageNotFound = res[0]?.instance === 'app.page-not-found';
       },
     });
   }

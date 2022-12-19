@@ -1,0 +1,21 @@
+<div class="form-page">
+  <div class="restore-password-form">
+    <ng-container *ngIf="!isPasswordRestored; else success">
+      <h1>Enter your new password</h1>
+      <app-restore-password-form (passwordRestored)="passwordRestored()">
+      </app-restore-password-form>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #success>
+  <div class="success-msg">
+    <app-lottie-animation class="visual" [path]="'/assets/lottie/success-animation.json'">
+    </app-lottie-animation>
+    <h1 mat-dialog-title>Your password was successfully changed</h1>
+    <p>Now you can login with new credentials</p>
+    <button type="button" color="primary" mat-raised-button (click)="openLoginModal()">
+      {{ 'nav.login' | translate }}
+    </button>
+  </div>
+</ng-template>

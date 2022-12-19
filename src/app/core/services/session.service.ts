@@ -152,10 +152,12 @@ export class SessionService {
   }
 
   clearUserData() {
+    const cookies = sessionStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`);
     Object.keys(this.currentUser).forEach((key) => {
       localStorage.removeItem(this.localStorageNameMapper(key));
     });
     this.currentUser = {};
+    if (cookies) sessionStorage.setItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`, cookies);
     this._currentUserData$.next(this.currentUser);
     this._isLogged.next(!!this.currentUser.userId);
   }

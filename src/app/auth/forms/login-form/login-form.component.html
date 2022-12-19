@@ -25,11 +25,11 @@
   </div>
 
   <div class="form-row controls">
-    <div class="checkbox">
+    <!-- <div class="checkbox">
       <mat-checkbox> Remember me on this device. </mat-checkbox>
-    </div>
+    </div> -->
 
-    <button mat-button>Forgot password?</button>
+    <button (click)="restorePassword()" mat-button type="button">Forgot password?</button>
   </div>
 
   <mat-error class="form-error">{{ loginError }}</mat-error>

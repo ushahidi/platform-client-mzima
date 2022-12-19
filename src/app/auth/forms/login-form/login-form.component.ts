@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '@services';
+import { AuthService, EventBusService, EventType } from '@services';
 import { regexHelper } from '@helpers';
+import { MatDialog } from '@angular/material/dialog';
+import { ForgotPasswordComponent } from '../../forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-login-form',
@@ -17,7 +19,12 @@ export class LoginFormComponent {
   public loginError: string;
   public isPasswordVisible = false;
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
+    private dialog: MatDialog,
+    private eventBusService: EventBusService,
+  ) {}
 
   getErrorMessage(field: string) {
     switch (field) {
@@ -45,5 +52,20 @@ export class LoginFormComponent {
 
   togglePasswordVisible() {
     this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  public async restorePassword(): Promise<void> {
+    this.dialog.closeAll();
+    const dialogRef = this.dialog.open(ForgotPasswordComponent, {
+      width: '100%',
+      maxWidth: 576,
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.eventBusService.next({
+        type: EventType.OpenLoginModal,
+        payload: true,
+      });
+    });
   }
 }

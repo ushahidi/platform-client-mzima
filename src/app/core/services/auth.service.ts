@@ -74,6 +74,20 @@ export class AuthService extends ResourceService<any> {
     );
   }
 
+  resetPassword(payload: { email: string }) {
+    return this.httpClient.post(
+      `${this.env.environment.backend_url}${this.env.environment.api_v3}passwordreset`,
+      payload,
+    );
+  }
+
+  restorePassword(payload: { token: string; password: string }) {
+    return this.httpClient.post(
+      `${this.env.environment.backend_url}${this.env.environment.api_v3}passwordreset/confirm`,
+      payload,
+    );
+  }
+
   public logout() {
     this.sessionService.clearSessionData();
     this.sessionService.clearUserData();
