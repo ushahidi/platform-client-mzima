@@ -98,7 +98,7 @@ export class SaveSearchModalComponent implements OnInit {
 
   public async deleteSavedfilter(): Promise<void> {
     const confirmed = await this.confirmModalService.open({
-      title: 'Are you sure you want to delete this saved filter?',
+      title: this.translate.instant('global_filter.delete_this_saved_filter'),
       description: `<p>${this.translate.instant('notify.default.proceed_warning')}</p>`,
     });
 

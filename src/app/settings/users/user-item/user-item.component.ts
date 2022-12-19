@@ -31,7 +31,7 @@ export class UserItemComponent implements OnInit {
     private userService: UsersService,
     private rolesService: RolesService,
     private translate: TranslateService,
-    private confirm: ConfirmModalService,
+    private confirmModalService: ConfirmModalService,
   ) {}
 
   ngOnInit(): void {
@@ -108,12 +108,14 @@ export class UserItemComponent implements OnInit {
   }
 
   public async deleteUser(): Promise<void> {
-    const confirmed = await this.openConfirmModal(
-      this.translate.instant('notify.user.are_you_sure_you_want_to_delete_user', {
+    const confirmed = await this.confirmModalService.open({
+      title: this.translate.instant('notify.user.are_you_sure_you_want_to_delete_user', {
         username: this.form.value.realname,
       }),
-      this.translate.instant('app.action_cannot_be_undone'),
-    );
+      description: this.translate.instant('app.action_cannot_be_undone'),
+      confirmButtonText: this.translate.instant('app.yes_delete'),
+      cancelButtonText: this.translate.instant('app.no_go_back'),
+    });
     if (!confirmed) return;
     await this.delete();
   }
@@ -122,15 +124,6 @@ export class UserItemComponent implements OnInit {
     this.userService.deleteUser(this.form.value.id).subscribe({
       next: () => this.navigateToUsers(),
       error: (err) => console.log(err),
-    });
-  }
-
-  private async openConfirmModal(title: string, description: string): Promise<boolean> {
-    return this.confirm.open({
-      title: this.translate.instant(title),
-      description: this.translate.instant(description),
-      confirmButtonText: this.translate.instant('app.yes_delete'),
-      cancelButtonText: this.translate.instant('app.no_go_back'),
     });
   }
 }

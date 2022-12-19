@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult } from '@models';
+import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, PostsService, PostsV5Service, SessionService } from '@services';
 import { NgxMasonryComponent } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
@@ -51,6 +52,7 @@ export class FeedComponent {
     private session: SessionService,
     private confirmModalService: ConfirmModalService,
     private dialog: MatDialog,
+    private translate: TranslateService,
   ) {
     this.route.params.subscribe(() => {
       this.initCollection();
@@ -189,9 +191,10 @@ export class FeedComponent {
 
   public async deleteSelectedPosts(): Promise<void> {
     const confirmed = await this.confirmModalService.open({
-      title: `Are you sure you want to Delete (${this.selectedPosts.length}) posts?`,
-      description:
-        'Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Remember, you won’t be able to undo this action. ',
+      title: `${this.translate.instant(
+        'app.are_you_sure_you_want_to_delete',
+      )} ${this.translate.instant('post.post_count', { count: this.selectedPosts.length })}?`,
+      description: this.translate.instant('app.action_cannot_be_undone'),
     });
     if (!confirmed) return;
 

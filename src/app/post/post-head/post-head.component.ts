@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CollectionsComponent } from '@data';
 import { PostPropertiesInterface, PostResult, PostStatus } from '@models';
+import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, PostsService, PostsV5Service, SessionService } from '@services';
 
 @Component({
@@ -20,6 +21,7 @@ export class PostHeadComponent implements OnInit {
     private postsService: PostsService,
     private dialog: MatDialog,
     private confirmModalService: ConfirmModalService,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -65,7 +67,7 @@ export class PostHeadComponent implements OnInit {
 
   async delete() {
     const confirmed = await this.confirmModalService.open({
-      title: 'notify.post.destroy_confirm',
+      title: this.translate.instant('notify.post.destroy_confirm'),
     });
     if (!confirmed) return;
 

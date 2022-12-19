@@ -68,8 +68,11 @@ export class TranslationsSwitchComponent implements OnInit {
 
   public async deleteTranslation(event: Event, languageCode?: string): Promise<void> {
     event.stopPropagation();
+    const language = this.languages.find((lang) => lang.code === languageCode);
     const confirmed = await this.confirmModalService.open({
-      title: 'Are you sure you want to remove this language and all the translations?',
+      title: this.translate.instant('notify.do_you_really_want_to_delete_language', {
+        lang: language!.name,
+      }),
       description: `<p>${this.translate.instant('notify.default.proceed_warning')}</p>`,
     });
     if (!confirmed) return;

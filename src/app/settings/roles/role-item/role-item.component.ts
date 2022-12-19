@@ -153,10 +153,12 @@ export class RoleItemComponent implements OnInit {
   }
 
   public async deleteRole(): Promise<void> {
-    const confirmed = await this.openConfirmModal(
-      `Are you sure you want to Delete role ${this.role.display_name}?`,
-      '<p>This action cannot be undone.</p><p>Are you sure?</p>',
-    );
+    const confirmed = await this.confirmModalService.open({
+      title: this.translate.instant('role.are_you_sure_you_want_to_delete_role', {
+        roleName: this.role.display_name,
+      }),
+      description: this.translate.instant('app.action_cannot_be_undone'),
+    });
     if (!confirmed) return;
     await this.delete();
   }
@@ -165,13 +167,6 @@ export class RoleItemComponent implements OnInit {
     this.rolesService.delete(this.role.id).subscribe({
       next: () => this.navigateToRoles(),
       error: (err) => console.log(err),
-    });
-  }
-
-  private async openConfirmModal(title: string, description: string): Promise<boolean> {
-    return this.confirmModalService.open({
-      title: this.translate.instant(title),
-      description: this.translate.instant(description),
     });
   }
 }
