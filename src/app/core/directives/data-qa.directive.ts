@@ -5,7 +5,7 @@ import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
   selector: '[data-qa]',
 })
 export class DataQaDirective implements AfterViewInit {
-  @Input('data-qa') dataQa: string | number;
+  @Input('data-qa') dataQa: any;
 
   constructor(private elRef: ElementRef<HTMLElement>) {}
 
