@@ -1,0 +1,23 @@
+.panel {
+  display: flex;
+  margin-bottom: 16px;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    margin-bottom: 0;
+    font-weight: 700;
+  }
+
+  &__controls {
+    display: flex;
+    margin: 0 -8px;
+    align-items: center;
+    justify-content: flex-start;
+
+    .form-row {
+      margin: 0 8px;
+      max-width: 164px;
+    }
+  }
+}

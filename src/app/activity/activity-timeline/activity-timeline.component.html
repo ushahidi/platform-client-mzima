@@ -1,39 +1,27 @@
-<div class="chart-container">
-  <h2>Activity over time</h2>
-  <div class="form-row">
-    <mat-label>Select filter</mat-label>
-    <mat-form-field appearance="outline">
-      <mat-select
-        [(ngModel)]="selectedFilter"
-        (selectionChange)="change($event)"
-        name="filter"
-        disableOptionCentering
-      >
-        <mat-option *ngFor="let filter of filters" [value]="filter.value">
-          {{ filter.displayNane }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <mat-checkbox
-    class="example-margin"
-    [(ngModel)]="cumulativeTotal"
-    (change)="changeCumulativeTotal()"
-  >
-    Show cumulative totals
-  </mat-checkbox>
+<app-chart-head
+  (filterChanged)="change($event)"
+  (dateChanged)="dateChange($event)"
+  [title]="'activity.activity_over_time' | translate"
+  [selectedFilter]="selectedFilter"
+  [filters]="filters"
+>
+</app-chart-head>
+
+<div class="chart">
   <ngx-charts-line-chart
-    [view]="[550, 300]"
     [scheme]="colorScheme"
     [legend]="legend"
+    [legendTitle]="''"
     [legendPosition]="below"
     [xAxis]="xAxis"
     [yAxis]="yAxis"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
     [results]="data"
+    [timeline]="false"
+    [rotateXAxisTicks]="false"
   >
+    <ng-template #tooltipTemplate let-model="model">
+      This is the single point tooltip template
+      <pre>{{ model | json }}</pre>
+    </ng-template>
   </ngx-charts-line-chart>
 </div>

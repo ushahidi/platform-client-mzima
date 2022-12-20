@@ -1,29 +1,16 @@
-<div class="chart-container">
-  <h2>Activity by volume</h2>
-  <div class="form-row">
-    <mat-label>Select filter</mat-label>
-    <mat-form-field appearance="outline">
-      <mat-select
-        [(ngModel)]="selectedFilter"
-        (selectionChange)="change($event)"
-        name="filter"
-        disableOptionCentering
-      >
-        <mat-option *ngFor="let filter of filters" [value]="filter.value">
-          {{ filter.displayNane }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <ngx-charts-bar-vertical
-    [view]="[550, 300]"
-    [scheme]="colorScheme"
-    [results]="data"
-    [xAxis]="true"
-    [yAxis]="true"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"
-    [yAxisLabel]="'Post count'"
-  >
+<app-chart-head
+  (filterChanged)="change($event)"
+  (dateChanged)="dateChange($event)"
+  [title]="'activity.activity_by_volume' | translate"
+  [selectedFilter]="selectedFilter"
+  [filters]="filters"
+>
+</app-chart-head>
+
+<div class="chart">
+  <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="data" [xAxis]="true" [yAxis]="true">
+    <ng-template #tooltipTemplate let-model="model">
+      <span class="chart__tooltip">{{ model.value }} posts</span>
+    </ng-template>
   </ngx-charts-bar-vertical>
 </div>

@@ -671,10 +671,10 @@
     "yesterday": "Yesterday"
   },
   "views": {
-    "map": "Map",
+    "map": "Map view",
     "list": "Timeline",
     "activity": "Activity",
-    "data": "Data"
+    "data": "Data view"
   },
   "post": {
     "post_count": "{{count}} posts",
