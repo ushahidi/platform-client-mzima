@@ -1,0 +1,46 @@
+<div class="panel">
+  <h1>{{ title }}</h1>
+
+  <div class="panel__controls">
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-select
+          name="filter"
+          disableOptionCentering
+          placeholder="Select range"
+          [(ngModel)]="selectedRange"
+          (selectionChange)="rangeChange($event)"
+        >
+          <mat-option [value]="filter.value" *ngFor="let filter of ranges">
+            {{ filter.displayNane }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-select
+          name="filter"
+          disableOptionCentering
+          placeholder="Select filter"
+          [(ngModel)]="selectedFilter"
+          (selectionChange)="change($event)"
+        >
+          <mat-option [value]="filter.value" *ngFor="let filter of filters">
+            {{ filter.displayNane }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- <div class="checkbox">
+      <mat-checkbox
+        [(ngModel)]="cumulativeTotal"
+        (change)="changeCumulativeTotal()"
+      >
+        Show cumulative totals
+      </mat-checkbox>
+    </div> -->
+  </div>
+</div>

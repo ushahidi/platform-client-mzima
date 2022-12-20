@@ -19,13 +19,18 @@
 
     .mat-expansion-panel-content {
       overflow-y: auto;
+      min-height: 140px;
       overflow-x: hidden;
-      max-height: 300px;
       font-size: inherit;
       line-height: inherit;
       white-space: pre-wrap;
       scroll-behavior: smooth;
+      max-height: calc(100vh - 546px);
       -webkit-overflow-scrolling: touch;
+
+      @media screen and (min-height: 860px) {
+        max-height: 300px;
+      }
     }
   }
 

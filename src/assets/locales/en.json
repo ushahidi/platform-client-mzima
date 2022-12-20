@@ -670,10 +670,10 @@
     "yesterday": "Yesterday"
   },
   "views": {
-    "map": "Map",
+    "map": "Map view",
     "list": "Timeline",
     "activity": "Activity",
-    "data": "Data"
+    "data": "Data view"
   },
   "post": {
     "see_more_plural": "See {{newPostsCount}} new posts",

@@ -16,6 +16,7 @@
   <ul role="list" class="types-list" *ngIf="!!types" data-qa="add-post-modal-surveys">
     <li *ngFor="let type of types">
       <div
+        matRipple
         *ngIf="type.visible"
         role="listitem"
         [ngStyle]="{ '--color': type.color }"

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
 import { PostsService } from '@services';
 import { ScaleType } from '@swimlane/ngx-charts';
 import { Color } from '@swimlane/ngx-charts/lib/utils/color-sets';
+import { ManipulateType } from 'dayjs';
 
 @Component({
   selector: 'app-bar-chart',
@@ -10,23 +10,22 @@ import { Color } from '@swimlane/ngx-charts/lib/utils/color-sets';
   styleUrls: ['./bar-chart.component.scss', '../activity.component.scss'],
 })
 export class BarChartComponent implements OnInit {
-  data: any[] = [];
-  selectedFilter: string = 'status';
-  colorScheme: Color = {
+  public data: any[] = [];
+  public selectedFilter: string = 'tags';
+  public colorScheme: Color = {
     name: 'Custom color',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
+    domain: ['#FFEBBB'],
   };
-  filters = [
-    { displayNane: 'Status', value: 'status' },
-    { displayNane: 'Survey', value: 'form' },
+  public dateRange: ManipulateType;
+  public filters = [
     { displayNane: 'Categories', value: 'tags' },
+    { displayNane: 'Survey', value: 'form' },
+    { displayNane: 'Status', value: 'status' },
   ];
 
-  constructor(
-    private postsService: PostsService, //
-  ) {}
+  constructor(private postsService: PostsService) {}
 
   public ngOnInit() {
     this.getPostStatistics(this.selectedFilter);
@@ -45,7 +44,13 @@ export class BarChartComponent implements OnInit {
     });
   }
 
-  public change(e: MatSelectChange) {
-    this.getPostStatistics(e.value);
+  public change(value: string) {
+    this.selectedFilter = value;
+    this.getPostStatistics(this.selectedFilter);
+  }
+
+  public dateChange(date: ManipulateType): void {
+    this.dateRange = date;
+    this.getPostStatistics(this.selectedFilter);
   }
 }

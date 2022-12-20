@@ -1,15 +1,17 @@
 <div class="sidebar">
-  <span class="sidebar__logo">
-    <img src="assets/images/ushahidi-logo.svg" alt="ushahidi" width="172" height="40" />
-  </span>
+  <div>
+    <span class="sidebar__logo">
+      <img src="assets/images/ushahidi-logo.svg" alt="ushahidi" width="172" height="40" />
+    </span>
 
-  <div class="sidebar__info">
-    <app-company-info
-      [title]="siteConfig.name"
-      [logo]="siteConfig.image_header"
-      [description]="siteConfig.description"
-    ></app-company-info>
-    <app-submit-post-button class="sidebar__add-post-btn"></app-submit-post-button>
+    <div class="sidebar__info">
+      <app-company-info
+        [title]="siteConfig.name"
+        [logo]="siteConfig.image_header"
+        [description]="siteConfig.description"
+      ></app-company-info>
+      <app-submit-post-button class="sidebar__add-post-btn"></app-submit-post-button>
+    </div>
   </div>
 
   <div class="sidebar__controls">
@@ -27,7 +29,6 @@
           <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
           <span class="sidebar-menu-button__title">
             {{ item.label | translate }}
-            {{ 'post.view' | translate | lowercase }}
           </span>
         </a>
       </ng-container>
