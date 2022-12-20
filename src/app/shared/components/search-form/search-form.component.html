@@ -4,28 +4,20 @@
     <input
       matInput
       [(ngModel)]="searchQuery"
-      [matAutocomplete]="cities"
-      (ngModelChange)="searchOnMap()"
+      (ngModelChange)="searchPosts()"
       class="search-form__form-control"
       [ngModelOptions]="{ standalone: true }"
       [placeholder]="'global_filter.search' | translate"
     />
-    <mat-autocomplete
-      autoActiveFirstOption
-      autoSelectActiveOption
-      #cities="matAutocomplete"
-      [displayWith]="displayFn"
-      class="search-autocomplete"
-      (optionSelected)="optionSelected($event)"
+    <button
+      matSuffix
+      type="button"
+      mat-icon-button
+      *ngIf="searchQuery?.length"
+      (click)="clearPostsResults()"
     >
-      <mat-option
-        [value]="option"
-        *ngFor="let option of citiesOptions | async"
-        [disabled]="option.disabled"
-      >
-        {{ option.display_name }}
-      </mat-option>
-    </mat-autocomplete>
+      <mat-icon svgIcon="close"></mat-icon>
+    </button>
   </mat-form-field>
   <button
     type="button"
