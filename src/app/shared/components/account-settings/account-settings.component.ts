@@ -216,7 +216,7 @@ export class AccountSettingsComponent implements OnInit {
 
   public async deleteContact(id: number): Promise<void> {
     const confirmed = await this.confirmModalService.open({
-      title: 'Are you sure you want to delete this account?',
+      title: this.translate.instant('user.are_you_sure_you_want_to_delete_this_account'),
       description: this.translate.instant('notify.default.proceed_warning'),
     });
     if (!confirmed) return;

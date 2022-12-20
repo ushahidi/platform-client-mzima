@@ -57,27 +57,20 @@ export class UsersComponent implements OnInit {
   }
 
   public async deleteUsers() {
-    const confirmed = await this.openConfirmModal(
-      this.translate.instant('notify.user.bulk_destroy_confirm', {
+    const confirmed = this.confirmModalService.open({
+      title: this.translate.instant('notify.user.bulk_destroy_confirm', {
         count: this.selectedUsers.length,
       }),
-      this.translate.instant('app.action_cannot_be_undone'),
-    );
+      description: this.translate.instant('app.action_cannot_be_undone'),
+      confirmButtonText: this.translate.instant('app.yes_delete'),
+      cancelButtonText: this.translate.instant('app.no_go_back'),
+    });
     if (!confirmed) return;
     forkJoin(this.selectedUsers.map((userId) => this.userService.deleteUser(userId))).subscribe({
       complete: () => {
         this.getUsers(this.params);
         this.selectedUsers = [];
       },
-    });
-  }
-
-  private async openConfirmModal(title: string, description: string): Promise<boolean> {
-    return this.confirmModalService.open({
-      title: this.translate.instant(title),
-      description: this.translate.instant(description),
-      confirmButtonText: this.translate.instant('app.yes_delete'),
-      cancelButtonText: this.translate.instant('app.no_go_back'),
     });
   }
 
