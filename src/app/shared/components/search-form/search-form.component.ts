@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,7 +17,6 @@ import {
 } from '@services';
 import { BehaviorSubject, debounceTime, filter, forkJoin, map, Subject } from 'rxjs';
 import { SavedsearchesService } from 'src/app/core/services/savedsearches.service';
-import { SearchService } from 'src/app/core/services/search.service';
 import { FilterType } from '../filter-control/filter-control.component';
 import { SearchResponse } from '../location-selection/location-selection.component';
 import { MultilevelSelectOption } from '../multilevel-select/multilevel-select.component';
@@ -29,7 +28,6 @@ import { SaveSearchModalComponent } from '../save-search-modal/save-search-modal
   styleUrls: ['./search-form.component.scss'],
 })
 export class SearchFormComponent implements OnInit {
-  @Input() pageNotFound = false;
   public _array = Array;
   public filterType = FilterType;
   public form: FormGroup = this.formBuilder.group({
@@ -83,7 +81,6 @@ export class SearchFormComponent implements OnInit {
     private postsService: PostsService,
     private router: Router,
     private translate: TranslateService,
-    private searchService: SearchService,
     private session: SessionService,
     private eventBusService: EventBusService,
   ) {
@@ -118,49 +115,17 @@ export class SearchFormComponent implements OnInit {
 
     this.form.valueChanges.subscribe({
       next: (values) => {
-        const filters: any = {
-          'source[]': values.source,
-          'status[]': values.status,
-          'form[]': values.form,
-          'tags[]': values.tags,
-          date_after: values.date.start ? new Date(values.date.start).toISOString() : null,
-          date_before: values.date.end ? new Date(values.date.end).toISOString() : null,
-          q: values.query,
-          center_point:
-            values.center_point?.location?.lat && values.center_point?.location?.lng
-              ? [values.center_point.location.lat, values.center_point.location.lng].join(',')
-              : null,
-          within_km: values.center_point.distance,
-        };
-
-        this.activeFilters = {};
-        for (const key in filters) {
-          if (!filters[key] && !filters[key]?.length) continue;
-          this.activeFilters[key] = filters[key];
-        }
-
+        this.getActiveFilters(values);
         this.applyFilters();
       },
     });
 
     this.citiesOptions = new BehaviorSubject<any[]>([]);
 
-    this.searchSubject.pipe(debounceTime(350)).subscribe({
-      next: (query: string) => {
-        this.searchService.get(query).subscribe({
-          next: (response: SearchResponse[]) => {
-            if (response?.length) {
-              this.citiesOptions.next(response);
-            } else {
-              this.citiesOptions.next([
-                {
-                  disabled: true,
-                  display_name: 'No results... Try to search by another phrase. ',
-                },
-              ]);
-            }
-          },
-        });
+    this.searchSubject.pipe(debounceTime(700)).subscribe({
+      next: () => {
+        this.getActiveFilters(this.form.value);
+        this.applyFilters();
       },
     });
 
@@ -204,6 +169,29 @@ export class SearchFormComponent implements OnInit {
     this.session.isLogged$.subscribe((isLogged) => (this.isLoggedIn = isLogged));
 
     this.session.isFiltersVisible$.subscribe((isVisible) => (this.isFiltersVisible = isVisible));
+  }
+
+  private getActiveFilters(values: any): void {
+    const filters: any = {
+      'source[]': values.source,
+      'status[]': values.status,
+      'form[]': values.form,
+      'tags[]': values.tags,
+      date_after: values.date.start ? new Date(values.date.start).toISOString() : null,
+      date_before: values.date.end ? new Date(values.date.end).toISOString() : null,
+      q: this.searchQuery,
+      center_point:
+        values.center_point?.location?.lat && values.center_point?.location?.lng
+          ? [values.center_point.location.lat, values.center_point.location.lng].join(',')
+          : null,
+      within_km: values.center_point.distance,
+    };
+
+    this.activeFilters = {};
+    for (const key in filters) {
+      if (!filters[key] && !filters[key]?.length) continue;
+      this.activeFilters[key] = filters[key];
+    }
   }
 
   private getCollectionInfo(id: string) {
@@ -455,7 +443,7 @@ export class SearchFormComponent implements OnInit {
     this.form.controls[filterName].patchValue('');
   }
 
-  public searchOnMap(): void {
+  public searchPosts(): void {
     if (typeof this.searchQuery !== 'string') return;
     this.searchSubject.next(this.searchQuery);
   }
@@ -469,5 +457,10 @@ export class SearchFormComponent implements OnInit {
       type: EventType.SearchOptionSelected,
       payload: event.option.value,
     });
+  }
+
+  public clearPostsResults(): void {
+    this.searchQuery = '';
+    this.searchPosts();
   }
 }

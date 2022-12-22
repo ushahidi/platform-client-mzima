@@ -1,9 +1,16 @@
 .sidebar {
   height: 100%;
+  display: flex;
   font-size: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
   line-height: 14px;
   --side-offset: 24px;
+  flex-direction: column;
+  scroll-behavior: smooth;
+  justify-content: space-between;
   color: var(--color-neutral-50);
+  -webkit-overflow-scrolling: touch;
   padding: 24px var(--side-offset) 20px;
 
   &__logo {

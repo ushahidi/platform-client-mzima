@@ -674,10 +674,10 @@
     "feed": "Feed posts"
   },
   "views": {
-    "map": "Map",
+    "map": "Map view",
     "list": "Timeline",
     "activity": "Activity",
-    "data": "Data"
+    "data": "Data view"
   },
   "share": {
     "share_deployment": "Share deployment",

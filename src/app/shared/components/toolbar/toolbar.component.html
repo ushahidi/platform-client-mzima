@@ -1,12 +1,10 @@
 <mat-toolbar class="toolbar">
   <!-- <app-breadcrumb></app-breadcrumb> -->
   <h1 class="toolbar__page-title" data-qa="page-title">
-    {{ pageNotFound ? ('app.page-not-found' | translate) : pageTitle }}
-    {{ pageNotFound ? '' : ('post.view' | translate | lowercase) }}
+    {{ pageTitle | translate }}
   </h1>
   <div class="toolbar__controls">
-    <app-search-form class="search-form" [pageNotFound]="pageNotFound" *ngIf="showSearchForm">
-    </app-search-form>
+    <app-search-form class="search-form" *ngIf="showSearchForm"> </app-search-form>
     <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
     <button color="dark" mat-raised-button class="toolbar__button" (click)="openShare()">
       <span>{{ 'app.share' | translate }}</span>
