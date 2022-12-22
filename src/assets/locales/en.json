@@ -668,13 +668,24 @@
     "user": "User",
     "users": "Users",
     "views": "Views",
-    "yesterday": "Yesterday"
+    "yesterday": "Yesterday",
+    "map": "Map",
+    "data": "Data",
+    "feed": "Feed posts"
   },
   "views": {
     "map": "Map",
     "list": "Timeline",
     "activity": "Activity",
     "data": "Data"
+  },
+  "share": {
+    "share_deployment": "Share deployment",
+    "web_address": "You survey's web address",
+    "embed_on_websites": "HTML embed on websites",
+    "copied": "Copied!",
+    "share_on_twitter": "Share on Twitter",
+    "share_on_facebook": "Share on Facebook"
   },
   "post": {
     "post_count": "{{count}} posts",

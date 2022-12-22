@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Meta } from '@angular/platform-browser';
 import { CategoryInterface, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, MediaService } from '@services';
@@ -10,7 +11,7 @@ import { CollectionsModalComponent } from 'src/app/shared/components';
   templateUrl: './post-details.component.html',
   styleUrls: ['./post-details.component.scss'],
 })
-export class PostDetailsComponent implements OnChanges {
+export class PostDetailsComponent implements OnChanges, OnDestroy {
   @Input() post?: PostResult;
   @Input() feedView: boolean;
   @Input() userId?: number | string;
@@ -23,11 +24,13 @@ export class PostDetailsComponent implements OnChanges {
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
     private mediaService: MediaService,
+    private metaService: Meta,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post']) {
       if (changes['post'].currentValue?.post_content?.length) {
+        this.setMetaData(this.post!);
         const mediaField = changes['post'].currentValue.post_content[0].fields.find(
           (field: any) => field.type === 'media',
         );
@@ -68,5 +71,18 @@ export class PostDetailsComponent implements OnChanges {
     });
     if (!confirmed) return;
     console.log('FIXME: delete post');
+  }
+
+  private setMetaData(post: PostResult) {
+    this.metaService.updateTag({ property: 'og:title', content: post.title });
+    this.metaService.updateTag({ property: 'og:description', content: post.content });
+  }
+
+  ngOnDestroy() {
+    this.metaService.updateTag({
+      property: 'og:title',
+      content: sessionStorage.getItem('ogTitle')!,
+    });
+    this.metaService.removeTag("property='og:description'");
   }
 }

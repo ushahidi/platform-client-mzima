@@ -6,6 +6,7 @@ import { AuthService, BreadcrumbService, SessionService } from '@services';
 import { filter } from 'rxjs';
 import { DonationModalComponent } from 'src/app/settings';
 import { AccountSettingsComponent } from '../account-settings/account-settings.component';
+import { ShareModalComponent } from '../share-modal/share-modal.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -67,5 +68,12 @@ export class ToolbarComponent implements OnInit {
 
   public logout(): void {
     this.authService.logout();
+  }
+
+  public openShare() {
+    this.dialog.open(ShareModalComponent, {
+      width: '100%',
+      maxWidth: 564,
+    });
   }
 }
