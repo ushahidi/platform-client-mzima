@@ -15,7 +15,6 @@ const routes: Routes = [
     loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
     data: {
       breadcrumb: 'nav.map',
-      title: 'nav.map',
       ogTitle: 'nav.map',
     },
   },
@@ -24,7 +23,6 @@ const routes: Routes = [
     loadChildren: () => import('./data/data.module').then((m) => m.DataModule),
     data: {
       breadcrumb: 'nav.data',
-      title: 'nav.data',
       ogTitle: 'nav.data',
     },
   },
