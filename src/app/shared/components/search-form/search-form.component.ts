@@ -70,6 +70,7 @@ export class SearchFormComponent implements OnInit {
   private readonly searchSubject = new Subject<string>();
   public citiesOptions: BehaviorSubject<(SearchResponse | any)[]>;
   public notShownPostsCount: number;
+  public showSources: boolean;
   isLoggedIn = false;
 
   constructor(
@@ -239,6 +240,8 @@ export class SearchFormComponent implements OnInit {
                 return acc + value.total;
               }, 0)),
         );
+
+        this.showSources = !!this.sources?.find((source) => source.total > 0);
       },
     });
   }

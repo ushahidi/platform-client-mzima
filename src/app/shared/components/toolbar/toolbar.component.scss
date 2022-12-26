@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .toolbar {
   top: 0;
   right: 0;
@@ -11,6 +13,21 @@
   color: var(--color-black);
   background: var(--color-light);
   border-bottom: 1px solid var(--color-neutral-30);
+
+  @include breakpoint-max($laptop-small) {
+    left: 200px;
+    height: 64px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  h1 {
+    @include breakpoint-max($laptop-small) {
+      display: none;
+      // font-size: 16px;
+      // line-height: 1.4;
+    }
+  }
 
   &__controls {
     display: flex;
@@ -26,6 +43,10 @@
   &__button {
     min-width: 125px;
     margin-left: 16px;
+
+    @include breakpoint-max($laptop-small) {
+      margin-left: 8px;
+    }
 
     &::ng-deep {
       .mat-button-wrapper {
@@ -63,16 +84,28 @@
   padding: 0 24px 0 8px;
   border-left: 1px solid var(--color-neutral-30);
 
+  @include breakpoint-max($laptop-small) {
+    min-width: 106px;
+  }
+
   &__avatar {
     width: 32px;
     height: 32px;
     margin-left: 12px;
     object-fit: contain;
     border-radius: 50%;
+
+    @include breakpoint-max($laptop-small) {
+      margin-left: 0;
+    }
   }
 
   &__main {
     max-width: calc(100% - 44px);
+
+    @include breakpoint-max($laptop-small) {
+      display: none;
+    }
   }
 
   &__name {

@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .head {
   display: flex;
   margin-bottom: 24px;
@@ -37,6 +39,10 @@
     line-height: 1;
     margin: 0 32px;
     font-size: 24px;
+
+    @include breakpoint-max($laptop-small) {
+      margin: 0 24px;
+    }
   }
 
   .mat-icon {
@@ -82,6 +88,10 @@
   &__content {
     padding-top: 16px;
     padding-left: 44px;
+
+    @include breakpoint-max($laptop-small) {
+      padding-left: 24px;
+    }
 
     .mat-radio-group {
       display: block;

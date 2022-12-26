@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .settings-layout {
   display: flex;
   height: 100%;
@@ -14,6 +16,11 @@
   background: var(--color-light);
   -webkit-overflow-scrolling: touch;
   --scrollbar-background: var(--color-light);
+
+  @include breakpoint-max($laptop-small) {
+    flex-basis: 240px;
+    padding: 16px 8px;
+  }
 }
 
 .settings-router {
@@ -25,4 +32,8 @@
   padding: 24px 32px 32px;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+
+  @include breakpoint-max($laptop-small) {
+    padding: 16px;
+  }
 }

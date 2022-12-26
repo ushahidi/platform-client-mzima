@@ -106,10 +106,16 @@
     z-index: 50;
     bottom: -32px;
     position: sticky;
-    padding: 8px 23px 23px;
+    padding: 8px 15px 23px;
     margin: -8px -23px -23px;
     border-radius: 0 0 4px 4px;
     background: var(--color-light);
+
+    @include breakpoint-max($laptop-small) {
+      bottom: -22px;
+      padding: 8px 7px 15px;
+      margin: -8px -15px -15px;
+    }
   }
 }
 
@@ -764,6 +770,10 @@
 
 .checkbox {
   padding: 12px;
+
+  @include breakpoint-max($laptop-small) {
+    padding: 8px;
+  }
 }
 
 .toggle-group {

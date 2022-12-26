@@ -35,6 +35,10 @@
     background: var(--color-light);
     justify-content: space-between;
 
+    @include breakpoint-max($laptop-small) {
+      left: 0;
+    }
+
     &:not(.search-form__filters-panel--open) {
       opacity: 0;
       top: -9999px;
@@ -46,79 +50,29 @@
       flex-shrink: 0;
       width: 16.6666%;
 
-      &:not(:first-child) {
-        border-left: 1px solid var(--color-neutral-30);
-      }
-    }
-
-    &__group {
-      flex-shrink: 0;
-      width: 16.6666%;
-      position: relative;
-
-      &--controls {
-        padding: 8px 16px;
-      }
-
-      &__title {
-        display: flex;
-        font-size: 14px;
-        color: var(--color-neutral-90);
-        min-height: 100%;
-        padding: 15px 8px;
-        line-height: 17px;
-        vertical-align: top;
-        align-items: center;
-        justify-content: center;
-      }
-
-      &__arrow {
-        width: 1em;
-        height: 1em;
-        flex-shrink: 0;
-        line-height: 1;
-        display: block;
-        font-size: 24px;
-        margin-left: 8px;
-        background: url(/assets/images/select-arrow.svg) 50% 50% / contain no-repeat;
-      }
-
-      &__dropdown {
-        left: 0;
-        top: 100%;
-        position: absolute;
-      }
-
-      &:not(:first-child) {
-        border-left: 1px solid var(--color-neutral-30);
-      }
-
       &:last-child {
-        border-bottom: 1px solid var(--color-neutral-30);
-      }
-
-      app-multilevel-select {
-        height: 100%;
-        display: block;
-
-        &::ng-deep {
-          .multilevelselect {
-            height: 100%;
-            padding: 15px 8px;
-          }
+        @include breakpoint-max($laptop) {
+          width: 18%;
         }
       }
 
-      .mat-date-range-input {
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 17px;
-        color: var(--color-neutral-90);
+      &:not(:last-child) {
+        @include breakpoint-max($laptop) {
+          width: 16.4%;
+        }
+      }
 
-        &::ng-deep {
-          .mat-date-range-input-separator {
-            display: none;
-          }
+      &:not(:first-child) {
+        border-left: 1px solid var(--color-neutral-30);
+      }
+
+      &--controls {
+        padding: 8px 16px;
+        border-bottom: 1px solid var(--color-neutral-30);
+
+        @include breakpoint-max($laptop-small) {
+          padding-left: 8px;
+          padding-right: 8px;
         }
       }
     }
@@ -128,6 +82,10 @@
     flex-shrink: 0;
     min-width: 105px;
     margin-left: 16px;
+
+    @include breakpoint-max($laptop-small) {
+      margin-left: 8px;
+    }
 
     &::ng-deep {
       .mat-button-wrapper {
@@ -159,6 +117,16 @@
     height: calc(100vh - 73px);
     background: var(--color-light);
     -webkit-overflow-scrolling: touch;
+
+    @include breakpoint-max($laptop-small) {
+      width: 200px;
+      height: calc(100vh - 64px);
+
+      .search-form--filters-open & {
+        margin-top: 56px;
+        height: calc(100vh - 118px);
+      }
+    }
 
     &__total {
       display: block;
@@ -203,7 +171,9 @@
 }
 
 .collection-info {
-  margin-top: -26px;
+  &:not(:first-child) {
+    margin-top: -26px;
+  }
 
   &__title {
     display: block;
@@ -358,6 +328,11 @@
     width: calc(100% + 30px);
     background: var(--color-neutral-10);
 
+    @include breakpoint-max($laptop-small) {
+      font-size: 12px;
+      line-height: 14px;
+    }
+
     &:not(:first-child) {
       margin-top: 8px;
     }
@@ -372,6 +347,11 @@
       .mat-list-item-content {
         min-height: 40px;
         padding: 8px 15px;
+
+        @include breakpoint-max($laptop-small) {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
       }
     }
 
