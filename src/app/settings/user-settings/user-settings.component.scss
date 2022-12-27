@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .information {
   margin-bottom: 32px;
 
@@ -16,6 +18,10 @@
 .logo-wrapper {
   max-width: 220px;
   margin-left: 16px;
+
+  @include breakpoint-max($laptop-small) {
+    max-width: 164px;
+  }
 
   img {
     display: block;

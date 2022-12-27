@@ -13,45 +13,69 @@ const routes: Routes = [
   {
     path: 'map',
     loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
-    data: { breadcrumb: 'views.map' },
+    data: {
+      breadcrumb: 'nav.map',
+      ogTitle: 'nav.map',
+    },
   },
   {
     path: 'data',
     loadChildren: () => import('./data/data.module').then((m) => m.DataModule),
-    data: { breadcrumb: 'views.data' },
+    data: {
+      breadcrumb: 'nav.data',
+      ogTitle: 'nav.data',
+    },
   },
   {
     path: 'feed',
     loadChildren: () => import('./feed/feed.module').then((m) => m.FeedModule),
-    data: { breadcrumb: 'views.data' },
+    data: {
+      breadcrumb: 'nav.feed',
+      ogTitle: 'nav.feed',
+    },
   },
   {
     path: 'activity',
     loadChildren: () => import('./activity/activity.module').then((m) => m.ActivityModule),
-    data: { breadcrumb: 'views.activity' },
+    data: {
+      breadcrumb: 'nav.activity',
+      ogTitle: 'nav.activity',
+    },
   },
   {
     path: 'settings',
     loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
     canActivate: [AdminGuard],
-    data: { breadcrumb: 'nav.settings' },
+    data: {
+      breadcrumb: 'nav.settings',
+      ogTitle: 'nav.settings',
+    },
   },
   {
     path: 'post',
     loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
-    data: { breadcrumb: 'post.posts' },
+    data: {
+      breadcrumb: 'nav.posts',
+      ogTitle: 'nav.posts',
+    },
   },
   {
     path: 'reset',
     title: 'reset',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-    data: { breadcrumb: 'nav.resetpassword' },
+    data: {
+      breadcrumb: 'nav.resetpassword',
+      ogTitle: 'nav.resetpassword',
+    },
   },
   {
     path: '**',
     pathMatch: 'full',
     component: PageNotFoundComponent,
-    data: { breadcrumb: 'app.page-not-found' },
+    data: {
+      breadcrumb: 'app.page-not-found',
+      ogTitle: 'app.page-not-found',
+    },
   },
 ];
 

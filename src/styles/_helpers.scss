@@ -1,3 +1,30 @@
+// breakpoints
+
+$mobile: 768px;
+$tablet: 1024px;
+$laptop-small: 1366px;
+$laptop: 1439px;
+
+// breakpoints mixin
+
+@mixin breakpoint-max($rule) {
+  @media only screen and (max-width: #{$rule}) {
+    @content;
+  }
+}
+
+@mixin breakpoint-min($rule) {
+  @media only screen and (min-width: #{$rule + 1}) {
+    @content;
+  }
+}
+
+@mixin breakpoint-min-max($rule) {
+  @media only screen and (max-width: #{$rule}) and (min-width: #{$rule + 1}) {
+    @content;
+  }
+}
+
 @mixin optional-at-root($sel) {
   @at-root #{if(not &, $sel, selector-append(&, $sel))} {
     @content;

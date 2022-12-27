@@ -1,11 +1,13 @@
+@import '/src/styles/helpers';
+
 .filter-control {
   height: 100%;
   position: relative;
 
   &__button {
     width: 100%;
-    padding: 8px;
     font-size: 14px;
+    padding: 8px 4px;
     border-radius: 0;
     color: var(--color-neutral-90);
     min-height: 100%;
@@ -30,8 +32,14 @@
     }
 
     &__arrow {
-      margin-left: 8px;
+      font-size: 24px;
+      margin-left: 8px !important;
       transition: transform 0.35s ease;
+
+      @include breakpoint-max($laptop-small) {
+        font-size: 20px;
+        margin-left: 4px !important;
+      }
 
       .filter-control__button[aria-expanded='true'] & {
         transform: rotate(180deg);
@@ -48,6 +56,14 @@
       text-align: center;
       border-radius: 4px;
       background: rgba(255, 195, 52, 0.3);
+
+      @include breakpoint-max($laptop-small) {
+        padding: 2px;
+        min-width: 16px;
+        font-size: 10px;
+        margin-left: 4px;
+        line-height: 12px;
+      }
     }
   }
 }

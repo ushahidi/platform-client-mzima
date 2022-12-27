@@ -1,7 +1,7 @@
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { APP_INITIALIZER, ErrorHandler, FactoryProvider, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Meta } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
@@ -88,6 +88,7 @@ export function playerFactory(): any {
     loadConfigProvider,
     { provide: ErrorHandler, useClass: ErrorsHandler },
     loadGoogleTagManagerProvider,
+    Meta,
   ],
   bootstrap: [AppComponent],
 })

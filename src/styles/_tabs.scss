@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .mat-tab-header {
   margin-bottom: 24px;
   border-bottom: none;
@@ -22,6 +24,11 @@
     background: none !important;
     transition: color 0.35s ease;
     color: var(--color-neutral-60);
+
+    @include breakpoint-max($laptop-small) {
+      font-size: 18px;
+      min-width: 128px;
+    }
 
     &:hover,
     &.mat-tab-label-active {

@@ -49,5 +49,7 @@ export enum Icons {
   dragHandle = 'drag-handle',
   twitter = 'twitter',
   facebook = 'facebook',
+  twitterFill = 'twitter-fill',
+  facebookFill = 'facebook-fill',
   cookies = 'cookies',
 }

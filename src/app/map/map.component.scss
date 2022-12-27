@@ -1,11 +1,17 @@
+@import '/src/styles/helpers';
+
 .map-holder {
   height: 100%;
   position: relative;
   margin: 0 0 0 220px;
 
+  @include breakpoint-max($laptop-small) {
+    margin-left: 200px;
+  }
+
   &--filters-visible {
-    margin-top: 57px;
-    height: calc(100% - 57px);
+    margin-top: 56px;
+    height: calc(100% - 56px);
   }
 }
 

@@ -8,7 +8,7 @@
   --side-offset: 24px;
   flex-direction: column;
   scroll-behavior: smooth;
-  justify-content: space-between;
+  // justify-content: space-between;
   color: var(--color-neutral-50);
   -webkit-overflow-scrolling: touch;
   padding: 24px var(--side-offset) 20px;
@@ -77,7 +77,7 @@
 
   &--active {
     color: var(--color-primary-60);
-    background-color: var(--color-neutral-100);
+    background-color: var(--color-black);
     border-left-color: var(--color-primary-60);
   }
 

@@ -1,0 +1,73 @@
+.share-modal {
+  .form-row {
+    position: relative;
+  }
+
+  .html-embed {
+    width: 88%;
+  }
+
+  .success {
+    background: var(--color-white);
+    opacity: 0.1;
+  }
+
+  .copy {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translate(0, -50%);
+    cursor: pointer;
+
+    &-success {
+      position: absolute;
+      width: 100%;
+      height: 86px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 4px;
+      border: 1px solid var(--color-neutral-30);
+    }
+  }
+
+  ::ng-deep {
+    .copy svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .twitter-icon svg,
+    .facebook-icon svg {
+      width: 32px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .twitter {
+      &-btn {
+        width: 47%;
+      }
+
+      &-icon {
+        margin-left: 12px;
+      }
+    }
+
+    .facebook {
+      &-btn {
+        width: 47%;
+      }
+
+      &-icon {
+        margin-left: 18px;
+      }
+    }
+  }
+}

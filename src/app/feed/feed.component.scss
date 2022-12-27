@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 ::ng-deep {
   app-feed-item {
     display: block;
@@ -9,6 +11,10 @@
   height: 100%;
   margin: 0 0 0 220px;
 
+  @include breakpoint-max($laptop-small) {
+    margin-left: 200px;
+  }
+
   &--filters-visible {
     padding-top: 56px;
   }
@@ -19,6 +25,11 @@
     padding: 16px 24px 8px;
     justify-content: space-between;
     background: var(--color-neutral-10);
+
+    @include breakpoint-max($laptop-small) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 
   &__controls {
@@ -27,8 +38,17 @@
     align-items: center;
     justify-content: flex-end;
 
+    @include breakpoint-max($laptop-small) {
+      margin-left: -4px;
+      margin-right: -4px;
+    }
+
     .mat-form-field {
       width: 146px;
+
+      @include breakpoint-max($laptop-small) {
+        width: 132px;
+      }
 
       &::ng-deep {
         .mat-form-field-wrapper {
@@ -38,6 +58,10 @@
         .mat-select-value {
           padding-right: 0;
           padding-left: 24px;
+
+          @include breakpoint-max($laptop-small) {
+            padding-left: 16px;
+          }
         }
 
         .mat-select-arrow-wrapper {
@@ -45,6 +69,10 @@
           height: 32px;
           margin-left: 8px;
           margin-right: 24px;
+
+          @include breakpoint-max($laptop-small) {
+            margin-right: 8px;
+          }
         }
       }
     }
@@ -52,6 +80,19 @@
 
   &__control {
     margin: 0 8px;
+
+    @include breakpoint-max($laptop-small) {
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    &--sorting {
+      .feed-page__controls-panel--bulk-visible & {
+        @include breakpoint-max($laptop-small) {
+          display: none;
+        }
+      }
+    }
 
     .mat-icon {
       margin-left: 10px;
@@ -93,6 +134,11 @@
   height: calc(100% - 64px);
   -webkit-overflow-scrolling: touch;
 
+  @include breakpoint-max($laptop-small) {
+    padding-right: 0;
+    padding-left: 16px;
+  }
+
   &__loading {
     --size: 48px;
     display: block;
@@ -112,4 +158,8 @@
   position: relative;
   margin: 0 8px 16px;
   width: calc(33.3333% - 16px);
+
+  @include breakpoint-max($laptop-small) {
+    width: calc(50% - 16px);
+  }
 }
