@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { GtmDirective, DataQaInputDirective, DataQaDirective } from '@directives';
 import { LottieComponent } from 'ngx-lottie';
+import { ShareModule } from 'ngx-sharebuttons';
 
 import {
   SidebarComponent,
@@ -45,6 +46,7 @@ import { LottieAnimationComponent } from './components/lottie-animation/lottie-a
 import { PasswordStrengthComponent } from './components/password-strength/password-strength.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { CookiesNotificationComponent } from './components/cookies-notification/cookies-notification.component';
+import { ShareModalComponent } from './components/share-modal/share-modal.component';
 
 const directives = [
   GtmDirective, //
@@ -83,6 +85,7 @@ const components = [
   CollectionItemComponent,
   PageNotFoundComponent,
   CookiesNotificationComponent,
+  ShareModalComponent,
 ];
 
 const modules = [
@@ -98,6 +101,7 @@ const modules = [
   TranslateModule,
   LeafletModule,
   ColorPickerModule,
+  ShareModule,
 ];
 
 @NgModule({

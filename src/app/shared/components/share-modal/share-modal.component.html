@@ -1,0 +1,56 @@
+<section class="share-modal">
+  <button
+    mat-stroked-button
+    mat-dialog-close
+    class="modal__close-btn"
+    tabindex="-1"
+    aria-label="{{ 'modal.button.close' | translate }}"
+  >
+    <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
+  </button>
+
+  <strong mat-dialog-title>{{ 'share.share_deployment' | translate }}</strong>
+
+  <div mat-dialog-content>
+    <div class="form-row">
+      <mat-label>{{ 'share.web_address' | translate }}</mat-label>
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="address" (input)="changeAddress($event)" />
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-label>{{ 'share.embed_on_websites' | translate }}</mat-label>
+      <div class="copy-success" *ngIf="copySuccess">{{ 'share.copied' | translate }}</div>
+      <div [ngClass]="{ success: copySuccess }">
+        <mat-form-field appearance="outline">
+          <textarea
+            class="html-embed"
+            matInput
+            disabled
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="3"
+            cdkAutosizeMaxRows="6"
+            [(ngModel)]="htmlEmbed"
+          >
+          </textarea>
+          <mat-icon
+            (click)="copyToClipboard()"
+            class="fab-button__icon copy"
+            svgIcon="copy"
+          ></mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="twitter-btn" mat-stroked-button shareButton="twitter" url="{{ address }}">
+        {{ 'share.share_on_twitter' | translate }}
+        <mat-icon class="fab-button__icon twitter-icon" svgIcon="twitter-fill"></mat-icon>
+      </button>
+      <button class="facebook-btn" mat-stroked-button shareButton="facebook" url="{{ address }}">
+        {{ 'share.share_on_facebook' | translate }}
+        <mat-icon class="fab-button__icon facebook-icon" svgIcon="facebook-fill"></mat-icon>
+      </button>
+    </div>
+  </div>
+</section>
