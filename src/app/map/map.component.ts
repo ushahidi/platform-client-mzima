@@ -12,6 +12,7 @@ import {
   MapOptions,
   Map,
 } from 'leaflet';
+import 'leaflet.markercluster';
 import {
   EventBusService,
   EventType,
@@ -20,7 +21,7 @@ import {
   PostsV5Service,
   SessionService,
 } from '@services';
-import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
+import { GeoJsonPostsResponse, MapConfigInterface, UserInterface } from '@models';
 import { mapHelper, takeUntilDestroy$ } from '@helpers';
 import { ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -56,6 +57,9 @@ export class MapComponent implements OnInit {
   public leafletOptions: MapOptions;
   public progress = 0;
   public isFiltersVisible: boolean;
+
+  private userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
+  public user: UserInterface;
 
   constructor(
     private postsService: PostsService,
@@ -119,6 +123,14 @@ export class MapComponent implements OnInit {
         }, 1);
       },
     });
+
+    this.getUserData();
+  }
+
+  private getUserData(): void {
+    this.userData$.subscribe({
+      next: (userData) => (this.user = userData),
+    });
   }
 
   initCollection() {
@@ -143,6 +155,9 @@ export class MapComponent implements OnInit {
       const geoPosts = geoJSON(posts, {
         pointToLayer: mapHelper.pointToLayer,
         onEachFeature: (feature, layer) => {
+          layer.on('mouseout', () => {
+            layer.unbindPopup();
+          });
           layer.on('click', () => {
             this.zone.run(() => {
               if (layer instanceof FeatureGroup) {
@@ -156,6 +171,7 @@ export class MapComponent implements OnInit {
                 this.postsService.getById(feature.properties.id).subscribe({
                   next: (post) => {
                     comp.setInput('post', post);
+                    comp.setInput('user', this.user);
 
                     const popup: Content = comp.location.nativeElement;
 

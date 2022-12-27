@@ -45,6 +45,7 @@ export class SessionService {
     permissions: '',
     gravatar: '',
     language: '',
+    allowed_privileges: [],
   };
 
   private currentConfig: SessionConfigInterface = {

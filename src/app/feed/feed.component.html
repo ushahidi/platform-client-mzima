@@ -91,6 +91,7 @@
           [isChecked]="isPostChecked(post.id)"
           (selected)="isPostSelected($event, post.id.toString())"
           [ngClass]="{ 'post--selected': post.id === postDetails?.id }"
+          [user]="user"
         >
         </app-post-preview>
       </ngx-masonry>

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { surveyHelper } from '@helpers';
 import { CollectionResult, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { CollectionsService, ConfirmModalService, RolesService, SessionService } from '@services';
+import { Subject, takeUntil } from 'rxjs';
 
 enum CollectionView {
   List = 'list',
@@ -18,7 +19,7 @@ enum CollectionView {
   templateUrl: './collections.component.html',
   styleUrls: ['./collections.component.scss'],
 })
-export class CollectionsComponent implements OnInit {
+export class CollectionsComponent implements OnInit, OnDestroy {
   CollectionView = CollectionView;
   public collectionList: CollectionResult[];
   public isLoading: boolean;
@@ -39,6 +40,10 @@ export class CollectionsComponent implements OnInit {
   roleOptions: any;
   tmpCollectionToEditId = 0;
   isLoggedIn = true;
+  // TODO: Fix takeUntilDestroy$() with material components
+  // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
+  public destroy$ = new Subject<void>();
+  private userData$ = this.session.currentUserData$.pipe(takeUntil(this.destroy$));
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
@@ -53,7 +58,7 @@ export class CollectionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.session.currentUserData$.subscribe((userData) => {
+    this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
       if (this.isLoggedIn) {
         this.initRoles();
@@ -62,6 +67,11 @@ export class CollectionsComponent implements OnInit {
 
     this.getCollections();
     this.featuredEnabled = true; //hasPermission Manage Posts
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initRoles() {
@@ -183,7 +193,7 @@ export class CollectionsComponent implements OnInit {
     const collectionData = this.collectionForm.value;
     collectionData.role = collectionData.visible_to.options;
     delete collectionData.visible_to;
-    this.session.currentUserData$.subscribe((userData) => {
+    this.userData$.subscribe((userData) => {
       collectionData.user_id = userData.userId;
 
       if (this.currentView === CollectionView.Create) {
