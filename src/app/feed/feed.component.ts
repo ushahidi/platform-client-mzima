@@ -1,20 +1,22 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult, UserInterface } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, PostsService, PostsV5Service, SessionService } from '@services';
 import { NgxMasonryComponent } from 'ngx-masonry';
-import { forkJoin, Subject, takeUntil } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 
+@UntilDestroy()
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss'],
 })
-export class FeedComponent implements OnInit, OnDestroy {
+export class FeedComponent implements OnInit {
   @ViewChild('feed') public feed: ElementRef;
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
   public params: GeoJsonFilter = {
@@ -46,8 +48,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   public updateMasonryLayout: boolean;
   // TODO: Fix takeUntilDestroy$() with material components
   // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
-  public destroy$ = new Subject<void>();
-  private userData$ = this.session.currentUserData$.pipe(takeUntil(this.destroy$));
+  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
   public user: UserInterface;
 
   constructor(
@@ -96,11 +97,6 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getUserData();
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   private getUserData(): void {

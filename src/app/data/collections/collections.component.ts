@@ -1,12 +1,12 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
 import { CollectionResult, PostResult } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { CollectionsService, ConfirmModalService, RolesService, SessionService } from '@services';
-import { Subject, takeUntil } from 'rxjs';
 
 enum CollectionView {
   List = 'list',
@@ -14,12 +14,13 @@ enum CollectionView {
   Edit = 'edit',
 }
 
+@UntilDestroy()
 @Component({
   selector: 'app-collections',
   templateUrl: './collections.component.html',
   styleUrls: ['./collections.component.scss'],
 })
-export class CollectionsComponent implements OnInit, OnDestroy {
+export class CollectionsComponent implements OnInit {
   CollectionView = CollectionView;
   public collectionList: CollectionResult[];
   public isLoading: boolean;
@@ -42,8 +43,7 @@ export class CollectionsComponent implements OnInit, OnDestroy {
   isLoggedIn = true;
   // TODO: Fix takeUntilDestroy$() with material components
   // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
-  public destroy$ = new Subject<void>();
-  private userData$ = this.session.currentUserData$.pipe(takeUntil(this.destroy$));
+  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
@@ -67,11 +67,6 @@ export class CollectionsComponent implements OnInit, OnDestroy {
 
     this.getCollections();
     this.featuredEnabled = true; //hasPermission Manage Posts
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   private initRoles() {

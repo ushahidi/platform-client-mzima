@@ -1,24 +1,25 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 import { UserInterface } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AuthService, BreadcrumbService, SessionService } from '@services';
-import { filter, Subject, takeUntil } from 'rxjs';
+import { filter } from 'rxjs';
 import { DonationModalComponent } from 'src/app/settings';
 import { AccountSettingsComponent } from '../account-settings/account-settings.component';
 
+@UntilDestroy()
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent implements OnInit, OnDestroy {
+export class ToolbarComponent implements OnInit {
   @Input() languages: any;
   @Input() selectedLanguage: any;
   // TODO: Fix takeUntilDestroy$() with material components
   // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
-  public destroy$ = new Subject<void>();
-  private userData$ = this.session.currentUserData$.pipe(takeUntil(this.destroy$));
+  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
   public isLoggedIn = false;
   public isDonateAvailable = false;
   public profile: UserInterface;
@@ -51,11 +52,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       this.profile = userData;
       this.isLoggedIn = !!userData.userId;
     });
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   public showDonation(): void {
