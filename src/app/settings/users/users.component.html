@@ -10,58 +10,71 @@
 
   <div class="users-container">
     <app-spinner class="spinner" *ngIf="!users"></app-spinner>
-    <ul role="list" class="users-list" *ngIf="users">
-      <li class="user-item">
-        <div class="user-item-container user-item-header">
-          <div class="column-checkbox">
+
+    <table mat-table [dataSource]="users" class="users-table">
+      <ng-container matColumnDef="checkbox">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="users-table__checkbox">
             <mat-checkbox
               *ngIf="isShowActions"
-              [checked]="selectedUsers.length === users.length"
+              (click)="$event.stopPropagation()"
               (change)="selectAllUsers($event)"
+              [checked]="selectedUsers.length === users.length"
             >
             </mat-checkbox>
           </div>
-          <div class="data-container">
-            <span class="column-avatar">{{ 'user.avatar' | translate }}</span>
-            <span class="column-name">{{ 'user.name' | translate }}</span>
-            <span class="column-role">{{ 'user.role' | translate }}</span>
-            <span class="column-email">{{ 'user.email' | translate }}</span>
-          </div>
-        </div>
-      </li>
-      <li
-        class="user-item"
-        role="listitem"
-        *ngFor="let user of users"
-        [data-qa]="'user-item' + user.id"
-      >
-        <div class="user-item-container">
-          <div class="column-checkbox">
+        </th>
+        <td mat-cell *matCellDef="let user">
+          <div class="users-table__checkbox">
             <mat-checkbox
               *ngIf="isShowActions"
-              [checked]="selectedUsers.includes(user.id)"
+              (click)="$event.stopPropagation()"
               (change)="selectUser($event, user)"
+              [checked]="selectedUsers.includes(user.id)"
             >
             </mat-checkbox>
           </div>
-          <div class="data-container" [routerLink]="['update', user.id]">
-            <div class="column-avatar">
-              <div class="avatar-wrapper">
-                <img
-                  [src]="'https://www.gravatar.com/avatar/' + user.gravatar + '?d=retro'"
-                  [alt]="user.realname"
-                />
-              </div>
-            </div>
-            <span class="column-name type-item__title">
-              {{ user.realname }}
-            </span>
-            <span class="column-role">{{ user.role }}</span>
-            <span class="column-email">{{ user.email }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="avatar">
+        <th mat-header-cell *matHeaderCellDef>{{ 'user.avatar' | translate }}</th>
+        <td mat-cell *matCellDef="let user">
+          <div class="users-table__avatar">
+            <img
+              [src]="'https://www.gravatar.com/avatar/' + user.gravatar + '?d=retro'"
+              [alt]="user.realname"
+            />
           </div>
-        </div>
-      </li>
-    </ul>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>{{ 'user.name' | translate }}</th>
+        <td mat-cell *matCellDef="let user">
+          <strong class="users-table__username">{{ user.realname }}</strong>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>{{ 'user.role' | translate }}</th>
+        <td mat-cell *matCellDef="let user">{{ user.role }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>{{ 'user.email' | translate }}</th>
+        <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['checkbox', 'avatar', 'name', 'role', 'email']"></tr>
+      <tr
+        mat-row
+        [data-qa]="'user-item' + user.id"
+        [routerLink]="['update', user.id]"
+        *matRowDef="let user; columns: ['checkbox', 'avatar', 'name', 'role', 'email']"
+      ></tr>
+    </table>
+
     <app-spinner class="users-loading" *ngIf="isLoading"></app-spinner>
     <button
       mat-stroked-button

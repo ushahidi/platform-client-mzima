@@ -1,5 +1,9 @@
 <div class="feed-page" [ngClass]="{ 'feed-page--filters-visible': isFiltersVisible }">
-  <div class="feed-page__controls-panel" *ngIf="posts.length">
+  <div
+    *ngIf="posts.length"
+    class="feed-page__controls-panel"
+    [ngClass]="{ 'feed-page__controls-panel--bulk-visible': isBulkOptionsVisible }"
+  >
     <div class="feed-page__controls">
       <ng-container *ngIf="isBulkOptionsVisible">
         <button
@@ -48,7 +52,11 @@
       >
         {{ 'post.modify.bulk_actions' | translate }}
       </button>
-      <button class="feed-page__control" mat-stroked-button [matMenuTriggerFor]="sortingMenu">
+      <button
+        mat-stroked-button
+        [matMenuTriggerFor]="sortingMenu"
+        class="feed-page__control feed-page__control--sorting"
+      >
         {{ 'global_filter.sorting' | translate }}
         <mat-icon svgIcon="sorting"></mat-icon>
       </button>

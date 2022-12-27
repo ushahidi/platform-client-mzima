@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .images {
   display: flex;
   flex-wrap: wrap;
@@ -7,9 +9,14 @@
 }
 
 .image {
-  max-width: 200px;
+  width: 100%;
   padding: 0 8px;
+  max-width: 200px;
   margin-bottom: 16px;
+
+  @include breakpoint-max($laptop-small) {
+    max-width: 160px;
+  }
 }
 
 .preview {

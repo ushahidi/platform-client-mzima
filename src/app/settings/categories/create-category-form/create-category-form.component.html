@@ -1,7 +1,7 @@
 <form class="create-form" [formGroup]="form" (submit)="submit()" novalidate>
   <div class="create-form__topbar">
     <app-settings-header
-      [settingsTitle]="isUpdate ? form.get('name')?.value : 'app.add_new_category'"
+      [settingsTitle]="isUpdate ? 'app.edit_category' : 'app.add_new_category'"
       [newButtonTitle]="'translations.add_translation_lang'"
       [isShowActionsButton]="false"
       [isShowCreation]="false"

@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 mat-sidenav-container {
   height: 100%;
 }
@@ -9,6 +11,10 @@ mat-sidenav-container {
   background-color: var(--color-neutral-100);
   --scrollbar-color: var(--color-neutral-60);
   --scrollbar-background: var(--color-neutral-100);
+
+  @include breakpoint-max($laptop-small) {
+    max-width: 200px;
+  }
 }
 
 .content-wrapper {

@@ -1,4 +1,10 @@
-<form novalidate [formGroup]="form" class="search-form" (submit)="applyFilters()">
+<form
+  novalidate
+  [formGroup]="form"
+  class="search-form"
+  (submit)="applyFilters()"
+  [ngClass]="{ 'search-form--filters-open': isFiltersVisible }"
+>
   <mat-form-field appearance="outline" class="search-form__control">
     <mat-icon matPrefix svgIcon="search"></mat-icon>
     <input
@@ -97,7 +103,7 @@
       </div>
     </div>
 
-    <div class="filter-group" *ngIf="sources?.length">
+    <div class="filter-group" *ngIf="sources?.length && showSources">
       <div class="filter-group__head">
         <label class="filter-group__title" for="source">
           {{ 'global_filter.source' | translate }}
@@ -200,7 +206,7 @@
     >
     </app-filter-control>
 
-    <div class="search-form__filters-panel__group search-form__filters-panel__group--controls">
+    <div class="search-form__filters-panel__item search-form__filters-panel__item--controls">
       <button
         color="dark"
         type="button"

@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .mat-table {
   width: 100%;
   font-size: 14px;
@@ -12,12 +14,25 @@
     padding-left: 32px;
     padding-right: 32px;
 
+    @include breakpoint-max($laptop-small) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
     &:first-of-type {
       padding-left: 32px;
+
+      @include breakpoint-max($laptop-small) {
+        padding-left: 16px;
+      }
     }
 
     &:last-of-type {
       padding-right: 32px;
+
+      @include breakpoint-max($laptop-small) {
+        padding-right: 16px;
+      }
     }
   }
 
@@ -28,6 +43,12 @@
   td.mat-cell,
   td.mat-footer-cell {
     border-bottom-color: var(--color-neutral-20);
+  }
+
+  td.mat-cell {
+    @include breakpoint-max($laptop-small) {
+      font-size: 12px;
+    }
   }
 
   .mat-header-row {
@@ -50,5 +71,9 @@
 
   .title {
     font-size: 16px;
+
+    @include breakpoint-max($laptop-small) {
+      font-size: 14px;
+    }
   }
 }
