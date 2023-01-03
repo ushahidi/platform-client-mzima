@@ -41,6 +41,7 @@ export interface PostPropertiesInterface {
   contact?: any;
   source?: string;
   data_source_message_id?: string;
+  allowed_privileges: String[];
 }
 
 export interface PostPropertiesUser {

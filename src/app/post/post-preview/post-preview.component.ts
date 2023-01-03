@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PostPropertiesInterface } from '@models';
+import { PostPropertiesInterface, UserInterface } from '@models';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 })
 export class PostPreviewComponent {
   @Input() public post: PostPropertiesInterface;
+  @Input() public user: UserInterface;
   @Input() public feedView?: boolean;
   @Input() public media?: any;
   @Input() public selectable?: boolean;

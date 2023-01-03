@@ -2,12 +2,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 import { UserInterface } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AuthService, BreadcrumbService, SessionService } from '@services';
 import { filter } from 'rxjs';
 import { DonationModalComponent } from 'src/app/settings';
 import { AccountSettingsComponent } from '../account-settings/account-settings.component';
 import { ShareModalComponent } from '../share-modal/share-modal.component';
 
+@UntilDestroy()
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -16,7 +18,9 @@ import { ShareModalComponent } from '../share-modal/share-modal.component';
 export class ToolbarComponent implements OnInit {
   @Input() languages: any;
   @Input() selectedLanguage: any;
-  private userData$ = this.session.currentUserData$;
+  // TODO: Fix takeUntilDestroy$() with material components
+  // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
+  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
   public isLoggedIn = false;
   public isDonateAvailable = false;
   public profile: UserInterface;

@@ -38,6 +38,7 @@ export class UsersService extends ResourceService<any> {
           email: userData.email,
           role: userData.role,
           permissions: userData.permissions,
+          allowed_privileges: userData.allowed_privileges,
           gravatar: userData.gravatar,
           language: userData.language,
         });

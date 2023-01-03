@@ -16,6 +16,7 @@ import {
   MarkerClusterGroupOptions,
   tileLayer,
 } from 'leaflet';
+import 'leaflet.markercluster';
 import { pointIcon } from 'src/app/core/helpers/map';
 
 @Component({

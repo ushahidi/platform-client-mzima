@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
 import { CollectionResult, PostResult } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { CollectionsService, ConfirmModalService, RolesService, SessionService } from '@services';
 
@@ -13,6 +14,7 @@ enum CollectionView {
   Edit = 'edit',
 }
 
+@UntilDestroy()
 @Component({
   selector: 'app-collections',
   templateUrl: './collections.component.html',
@@ -39,6 +41,9 @@ export class CollectionsComponent implements OnInit {
   roleOptions: any;
   tmpCollectionToEditId = 0;
   isLoggedIn = true;
+  // TODO: Fix takeUntilDestroy$() with material components
+  // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
+  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
@@ -53,7 +58,7 @@ export class CollectionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.session.currentUserData$.subscribe((userData) => {
+    this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
       if (this.isLoggedIn) {
         this.initRoles();
@@ -183,7 +188,7 @@ export class CollectionsComponent implements OnInit {
     const collectionData = this.collectionForm.value;
     collectionData.role = collectionData.visible_to.options;
     delete collectionData.visible_to;
-    this.session.currentUserData$.subscribe((userData) => {
+    this.userData$.subscribe((userData) => {
       collectionData.user_id = userData.userId;
 
       if (this.currentView === CollectionView.Create) {
