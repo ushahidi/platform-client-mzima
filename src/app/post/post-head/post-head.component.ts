@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { CollectionsComponent } from '@data';
 import { PostPropertiesInterface, PostResult, PostStatus, UserInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,6 +23,7 @@ export class PostHeadComponent {
     private dialog: MatDialog,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
+    private router: Router,
   ) {}
 
   addToCollection() {
@@ -69,5 +71,9 @@ export class PostHeadComponent {
       this.post = res;
       this.postsService.applyFilters({});
     });
+  }
+
+  editPost() {
+    this.router.navigate(['/post/edit', this.post.id]);
   }
 }

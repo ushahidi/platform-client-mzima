@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { AddPostModalComponent, CreateComponent } from '@post';
+import { AddPostModalComponent } from '@post';
 import { ConfirmModalService, EventBusService, EventType } from '@services';
 
 @Component({
@@ -35,12 +35,7 @@ export class SubmitPostButtonComponent implements OnInit {
     dialogRef.afterClosed().subscribe({
       next: (response) => {
         if (response?.type) {
-          this.dialog.open(CreateComponent, {
-            height: '95vh',
-            width: '615px',
-            data: response.type,
-          });
-          // this.router.navigate(['/post/create', response.type]);
+          this.router.navigate(['/post/create', response.type]);
         }
       },
     });
