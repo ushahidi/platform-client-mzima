@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { CollectionsComponent } from '@data';
 import { PostPropertiesInterface, PostResult, PostStatus } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,6 +23,7 @@ export class PostHeadComponent implements OnInit {
     private dialog: MatDialog,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -75,5 +77,9 @@ export class PostHeadComponent implements OnInit {
       this.post = res;
       this.postsService.applyFilters({});
     });
+  }
+
+  editPost() {
+    this.router.navigate(['/post/edit', this.post.id]);
   }
 }

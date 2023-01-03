@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SuccessAnimationComponent } from './logo-animation.component';
+import { LottieAnimationComponent } from './lottie-animation.component';
 
 describe('LogoAnimationComponent', () => {
-  let component: SuccessAnimationComponent;
-  let fixture: ComponentFixture<SuccessAnimationComponent>;
+  let component: LottieAnimationComponent;
+  let fixture: ComponentFixture<LottieAnimationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SuccessAnimationComponent],
+      declarations: [LottieAnimationComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SuccessAnimationComponent);
+    fixture = TestBed.createComponent(LottieAnimationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
