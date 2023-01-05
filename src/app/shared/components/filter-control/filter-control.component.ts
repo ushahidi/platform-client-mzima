@@ -71,6 +71,10 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
     };
   };
 
+  isEditable(option: any) {
+    return option.allowed_privileges.includes('update') && this.value === option.id;
+  }
+
   public treeControl = new FlatTreeControl<CategoryFlatNode>(
     (node) => node.level,
     (node) => node.expandable,
@@ -91,16 +95,19 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
   onTouched = () => {};
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (
-      this.type === FilterType.Multilevelselect &&
-      changes['options'] &&
-      changes['options'].currentValue
-    ) {
-      this.dataSource = new MatTreeFlatDataSource(
-        this.treeControl,
-        this.treeFlattener,
-        changes['options'].currentValue || [],
-      );
+    if (changes['options']?.currentValue) {
+      if (this.type === FilterType.Multilevelselect) {
+        this.dataSource = new MatTreeFlatDataSource(
+          this.treeControl,
+          this.treeFlattener,
+          changes['options'].currentValue || [],
+        );
+      } else {
+        this.options.map((opt) => {
+          opt.checked = opt.id === this.value;
+          return opt;
+        });
+      }
     }
   }
 

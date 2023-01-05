@@ -5,7 +5,15 @@ import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmModalService, PostsService, PostsV5Service, SessionService } from '@services';
+import {
+  ConfirmModalService,
+  EventBusService,
+  EventType,
+  PostsService,
+  PostsV5Service,
+  SavedsearchesService,
+  SessionService,
+} from '@services';
 import { NgxMasonryComponent } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
@@ -29,6 +37,7 @@ export class FeedComponent implements OnInit {
     size: this.params.limit,
   };
   collectionId = '';
+  searchId = '';
   public posts: any[] = [];
   public isLoading = false;
   public activePostId: any;
@@ -59,6 +68,8 @@ export class FeedComponent implements OnInit {
     private confirmModalService: ConfirmModalService,
     private dialog: MatDialog,
     private translate: TranslateService,
+    private savedSearchesService: SavedsearchesService,
+    private eventBusService: EventBusService,
   ) {
     this.route.params.subscribe(() => {
       this.initCollection();
@@ -110,10 +121,23 @@ export class FeedComponent implements OnInit {
       this.collectionId = this.route.snapshot.paramMap.get('id')!;
       this.params.set = this.collectionId;
       this.postsService.applyFilters({ set: this.collectionId });
+      this.searchId = '';
     } else {
       this.collectionId = '';
       this.params.set = '';
-      this.postsService.applyFilters({ set: [] });
+      if (this.route.snapshot.data['view'] === 'search') {
+        this.searchId = this.route.snapshot.paramMap.get('id')!;
+        this.savedSearchesService.getById(this.searchId).subscribe((sSearch) => {
+          this.postsService.applyFilters(Object.assign(sSearch.filter, { set: [] }));
+          this.eventBusService.next({
+            type: EventType.SavedSearchInit,
+            payload: this.searchId,
+          });
+        });
+      } else {
+        this.searchId = '';
+        this.postsService.applyFilters({ set: [] });
+      }
     }
   }
 

@@ -29,5 +29,6 @@ export { DataSourcesService } from './data-sources.service';
 export { GtmTrackingService } from './gtm-tracking.service';
 export { ContactsService } from './contacts.service';
 export { DonationService } from './donation.service';
+export { SavedsearchesService } from './savedsearches.service';
 export { UshahidiPageTitleStrategy } from './page-title.service';
 export { TwitterService } from './twitter.service';
