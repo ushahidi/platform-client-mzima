@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { surveyHelper } from '@helpers';
+import { surveyHelper, formHelper } from '@helpers';
 import { CollectionResult, PostResult } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
@@ -146,26 +146,12 @@ export class CollectionsComponent implements OnInit {
     });
   }
 
-  private tmpMapRoleToVisible(role?: string[]) {
-    if (role && role.length > 0) {
-      return {
-        value: 'specific',
-        options: role,
-      };
-    } else {
-      return {
-        value: 'everyone',
-        options: [],
-      };
-    }
-  }
-
   editCollection(collection: CollectionResult) {
     this.collectionForm.patchValue({
       name: collection.name,
       description: collection.description,
       featured: collection.featured,
-      visible_to: this.tmpMapRoleToVisible(collection.role),
+      visible_to: formHelper.mapRoleToVisible(collection.role),
       view: collection.view,
     });
     this.tmpCollectionToEditId = collection.id;
