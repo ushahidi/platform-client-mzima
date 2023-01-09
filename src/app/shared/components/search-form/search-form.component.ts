@@ -55,7 +55,7 @@ export class SearchFormComponent implements OnInit {
   });
   collectionInfo?: CollectionResult;
   public activeFilters: any;
-  public savedsearches: Savedsearch[];
+  public savedSearches: Savedsearch[];
   public statuses = searchFormHelper.statuses;
   public surveyList: SurveyItem[] = [];
   public sources = searchFormHelper.sources;
@@ -86,8 +86,24 @@ export class SearchFormComponent implements OnInit {
     private eventBusService: EventBusService,
   ) {
     this.getSavedFilters();
-
     this.getSurveys();
+
+    if (localStorage.getItem(this.session.localStorageNameMapper('filters'))) {
+      const filters = JSON.parse(
+        localStorage.getItem(this.session.localStorageNameMapper('filters'))!,
+      );
+      this.updateForm(filters);
+      this.getActiveFilters(filters);
+      this.applyFilters();
+    }
+
+    if (localStorage.getItem(this.session.localStorageNameMapper('activeSavedSearch'))) {
+      this.activeSavedSearch = JSON.parse(
+        localStorage.getItem(this.session.localStorageNameMapper('activeSavedSearch'))!,
+      );
+      this.activeSavedSearchValue = this.activeSavedSearch!.id || null;
+      this.preparingSavedFilter();
+    }
 
     this.categoriesService.get().subscribe({
       next: (response) => {
@@ -116,6 +132,10 @@ export class SearchFormComponent implements OnInit {
 
     this.form.valueChanges.subscribe({
       next: (values) => {
+        localStorage.setItem(
+          this.session.localStorageNameMapper('filters'),
+          JSON.stringify(values),
+        );
         this.getActiveFilters(values);
         this.applyFilters();
       },
@@ -294,7 +314,13 @@ export class SearchFormComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
-          this.savedsearches = response.results;
+          this.savedSearches = response.results;
+          this.savedSearches.map((search) => {
+            return (search.checked = !!(
+              this.activeSavedSearch && search.id === this.activeSavedSearch!.id
+            ));
+          });
+          console.log(this.savedSearches);
         },
       });
   }
@@ -375,14 +401,22 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
-  async applySavedFilter(value: number | null) {
-    if (value) {
-      if (this.savedsearches) {
-        this.activeSavedSearch = this.savedsearches.find((search) => search.id === value);
-      } else {
-        this.activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
-      }
+  async setSavedFilter(value: number) {
+    if (this.savedSearches) {
+      this.activeSavedSearch = this.savedSearches.find((search) => search.id === value);
+      localStorage.setItem(
+        this.session.localStorageNameMapper('activeSavedSearch'),
+        JSON.stringify(this.activeSavedSearch),
+      );
+    } else {
+      this.activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
+      console.log('else', this.activeSavedSearch);
+    }
+  }
 
+  async applySavedFilter(value: number) {
+    if (value) {
+      await this.setSavedFilter(value);
       this.router.navigate([
         `/`,
         this.activeSavedSearch?.view === 'map' ? 'map' : 'feed',
@@ -390,6 +424,7 @@ export class SearchFormComponent implements OnInit {
         value,
       ]);
     } else {
+      localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
       this.router.navigate([`/`, 'map']);
     }
   }
@@ -397,16 +432,16 @@ export class SearchFormComponent implements OnInit {
   async getSavedValues(value: number) {
     this.activeSavedSearchValue = value;
     if (value === null) {
+      localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
       this.resetForm();
       return;
     }
 
-    if (this.savedsearches) {
-      this.activeSavedSearch = this.savedsearches.find((search) => search.id === value);
-    } else {
-      this.activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
-    }
+    await this.setSavedFilter(value);
+    this.preparingSavedFilter();
+  }
 
+  private preparingSavedFilter() {
     if (this.activeSavedSearch) {
       if (
         this.activeSavedSearch.filter.form &&
@@ -442,6 +477,7 @@ export class SearchFormComponent implements OnInit {
   public resetSavedFilter(): void {
     this.activeSavedSearch = undefined;
     this.activeSavedSearchValue = null;
+    localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
     this.resetForm();
     this.router.navigate(['/map']);
   }
@@ -502,5 +538,13 @@ export class SearchFormComponent implements OnInit {
   public clearPostsResults(): void {
     this.searchQuery = '';
     this.searchPosts();
+  }
+
+  private updateForm(filters: any) {
+    Object.keys(filters).forEach((key: string) => {
+      if (this.form.controls[key]) {
+        this.form.controls[key].patchValue(filters[key]);
+      }
+    });
   }
 }
