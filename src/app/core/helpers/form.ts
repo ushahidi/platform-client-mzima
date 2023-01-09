@@ -9,3 +9,17 @@ export class FormErrorStateMatcher implements ErrorStateMatcher {
     return invalidCtrl || invalidParent;
   }
 }
+
+export const mapRoleToVisible = (role?: string[]) => {
+  if (role && role.length > 0) {
+    return {
+      value: 'specific',
+      options: role,
+    };
+  } else {
+    return {
+      value: 'everyone',
+      options: [],
+    };
+  }
+};
