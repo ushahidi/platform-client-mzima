@@ -59,6 +59,9 @@ export class FeedComponent implements OnInit {
   // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
   private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
   public user: UserInterface;
+  private filters = JSON.parse(
+    localStorage.getItem(this.session.localStorageNameMapper('filters'))!,
+  );
 
   constructor(
     private postsService: PostsService,
@@ -136,7 +139,7 @@ export class FeedComponent implements OnInit {
         });
       } else {
         this.searchId = '';
-        this.postsService.applyFilters({ set: [] });
+        this.postsService.applyFilters({ set: [], ...this.filters });
       }
     }
   }

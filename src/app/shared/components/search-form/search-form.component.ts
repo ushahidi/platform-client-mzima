@@ -95,6 +95,11 @@ export class SearchFormComponent implements OnInit {
       this.updateForm(filters);
       this.getActiveFilters(filters);
       this.applyFilters();
+    } else {
+      localStorage.setItem(
+        this.session.localStorageNameMapper('filters'),
+        JSON.stringify(this.form.value),
+      );
     }
 
     if (localStorage.getItem(this.session.localStorageNameMapper('activeSavedSearch'))) {
@@ -320,7 +325,6 @@ export class SearchFormComponent implements OnInit {
               this.activeSavedSearch && search.id === this.activeSavedSearch!.id
             ));
           });
-          console.log(this.savedSearches);
         },
       });
   }

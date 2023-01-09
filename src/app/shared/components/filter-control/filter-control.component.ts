@@ -102,11 +102,6 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
           this.treeFlattener,
           changes['options'].currentValue || [],
         );
-      } else {
-        // this.options.map((opt) => {
-        //   opt.checked = opt.id === this.value;
-        //   return opt;
-        // });
       }
     }
   }
