@@ -16,6 +16,7 @@
   >
     <ng-container [ngSwitch]="type">
       <ng-container *ngSwitchCase="filterType.Select">
+        <ng-content select="[suffix]"></ng-content>
         <mat-radio-group
           [(ngModel)]="value"
           (ngModelChange)="valueChanged()"
@@ -35,7 +36,7 @@
               {{ option[fields[1]] }}
             </mat-radio-button>
             <button
-              *ngIf="canEdit"
+              *ngIf="canEdit && isEditable(option)"
               class="edit-btn"
               mat-icon-button
               (click)="editOption.emit(option)"

@@ -140,10 +140,11 @@
     [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
   >
     <app-filter-control
+      *ngIf="isLoggedIn"
       title="{{ 'global_filter.saved_filters' | translate }}"
       [type]="filterType.Select"
       [options]="savedsearches"
-      [canEdit]="isLoggedIn"
+      [canEdit]="isEditAvailable"
       (editOption)="saveSearch($event)"
       [(ngModel)]="activeSavedSearchValue"
       [ngModelOptions]="{ standalone: true }"
@@ -152,7 +153,8 @@
       [badge]="activeSavedSearchValue ? 1 : null"
     >
       <button
-        postfix
+        *ngIf="canCreateSearch"
+        suffix
         mat-button
         color="primary"
         (click)="saveSearch()"

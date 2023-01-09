@@ -20,6 +20,7 @@ import {
   PostsService,
   PostsV5Service,
   SessionService,
+  SavedsearchesService,
 } from '@services';
 import { GeoJsonPostsResponse, MapConfigInterface, UserInterface } from '@models';
 import { mapHelper, takeUntilDestroy$ } from '@helpers';
@@ -41,6 +42,7 @@ export class MapComponent implements OnInit {
   };
   public map: Map;
   collectionId = '';
+  searchId = '';
   postsCollection: GeoJsonPostsResponse;
   mapLayers: any[] = [];
   mapReady = false;
@@ -71,13 +73,14 @@ export class MapComponent implements OnInit {
     private zone: NgZone,
     private eventBusService: EventBusService,
     private mediaService: MediaService,
+    private savedSearchesService: SavedsearchesService,
   ) {}
 
   ngOnInit() {
     this.route.params.subscribe(() => {
       this.initCollection();
     });
-
+    this.initFilterListener();
     this.mapConfig = this.sessionService.getMapConfigurations();
 
     const currentLayer =
@@ -95,19 +98,6 @@ export class MapComponent implements OnInit {
     this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
 
     this.mapReady = true;
-
-    this.filtersSubscription$.subscribe({
-      next: () => {
-        this.mapLayers.map((layer) => {
-          this.map.removeLayer(layer);
-          this.markerClusterData.removeLayer(layer);
-        });
-
-        this.mapLayers = [];
-
-        this.getPostsGeoJson();
-      },
-    });
 
     this.eventBusService.on(EventType.SearchOptionSelected).subscribe({
       next: (option) => {
@@ -127,6 +117,25 @@ export class MapComponent implements OnInit {
     this.getUserData();
   }
 
+  private initFilterListener() {
+    this.filtersSubscription$.subscribe({
+      next: () => {
+        if (this.route.snapshot.data['view'] === 'search' && !this.searchId) return;
+        if (this.route.snapshot.data['view'] === 'collection' && !this.collectionId) return;
+
+        this.params.offset = 0;
+        this.mapLayers.map((layer) => {
+          this.map.removeLayer(layer);
+          this.markerClusterData.removeLayer(layer);
+        });
+
+        this.mapLayers = [];
+
+        this.getPostsGeoJson();
+      },
+    });
+  }
+
   private getUserData(): void {
     this.userData$.subscribe({
       next: (userData) => (this.user = userData),
@@ -138,10 +147,23 @@ export class MapComponent implements OnInit {
       this.collectionId = this.route.snapshot.paramMap.get('id')!;
       this.params.set = this.collectionId;
       this.postsService.applyFilters({ set: this.collectionId });
+      this.searchId = '';
     } else {
       this.collectionId = '';
       this.params.set = '';
-      this.postsService.applyFilters({ set: [] });
+      if (this.route.snapshot.data['view'] === 'search') {
+        this.searchId = this.route.snapshot.paramMap.get('id')!;
+        this.savedSearchesService.getById(this.searchId).subscribe((sSearch) => {
+          this.postsService.applyFilters(Object.assign(sSearch.filter, { set: [] }));
+          this.eventBusService.next({
+            type: EventType.SavedSearchInit,
+            payload: this.searchId,
+          });
+        });
+      } else {
+        this.searchId = '';
+        this.postsService.applyFilters({ set: [] });
+      }
     }
   }
 

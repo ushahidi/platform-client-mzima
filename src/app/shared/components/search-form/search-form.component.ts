@@ -15,7 +15,7 @@ import {
   SessionService,
   CollectionsService,
 } from '@services';
-import { BehaviorSubject, debounceTime, filter, forkJoin, map, Subject } from 'rxjs';
+import { BehaviorSubject, debounceTime, filter, forkJoin, lastValueFrom, map, Subject } from 'rxjs';
 import { SavedsearchesService } from 'src/app/core/services/savedsearches.service';
 import { FilterType } from '../filter-control/filter-control.component';
 import { SearchResponse } from '../location-selection/location-selection.component';
@@ -168,6 +168,9 @@ export class SearchFormComponent implements OnInit {
     });
 
     this.session.isLogged$.subscribe((isLogged) => (this.isLoggedIn = isLogged));
+    this.eventBusService.on(EventType.SavedSearchInit).subscribe((sSearch) => {
+      this.getSavedValues(parseFloat(sSearch));
+    });
 
     this.session.isFiltersVisible$.subscribe((isVisible) => (this.isFiltersVisible = isVisible));
   }
@@ -254,6 +257,14 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
+  get isEditAvailable() {
+    return this.form.dirty && this.isLoggedIn;
+  }
+
+  get canCreateSearch() {
+    return this.isLoggedIn && this.form.dirty && !this.collectionInfo;
+  }
+
   private getSavedFilters(): void {
     this.savedsearchesService
       .get()
@@ -267,12 +278,14 @@ export class SearchFormComponent implements OnInit {
             if (search.filter?.center_point || search.filter?.within_km) {
               const latLng = search.filter.center_point?.split(',');
               search.filter.center_point = {
-                location: {
-                  lat: Number(latLng[0]),
-                  lng: Number(latLng[1]),
-                },
                 distance: search.filter.within_km || 1,
               };
+              if (latLng) {
+                search.filter.center_point.location = {
+                  lat: parseFloat(latLng[0]),
+                  lng: parseFloat(latLng[1]),
+                };
+              }
             }
           });
 
@@ -362,14 +375,37 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
-  public applySavedFilter(value: number | null): void {
+  async applySavedFilter(value: number | null) {
+    if (value) {
+      if (this.savedsearches) {
+        this.activeSavedSearch = this.savedsearches.find((search) => search.id === value);
+      } else {
+        this.activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
+      }
+
+      this.router.navigate([
+        `/`,
+        this.activeSavedSearch?.view === 'map' ? 'map' : 'feed',
+        'search',
+        value,
+      ]);
+    } else {
+      this.router.navigate([`/`, 'map']);
+    }
+  }
+
+  async getSavedValues(value: number) {
     this.activeSavedSearchValue = value;
     if (value === null) {
       this.resetForm();
       return;
     }
 
-    this.activeSavedSearch = this.savedsearches.find((search) => search.id === value);
+    if (this.savedsearches) {
+      this.activeSavedSearch = this.savedsearches.find((search) => search.id === value);
+    } else {
+      this.activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
+    }
 
     if (this.activeSavedSearch) {
       if (
@@ -407,6 +443,7 @@ export class SearchFormComponent implements OnInit {
     this.activeSavedSearch = undefined;
     this.activeSavedSearchValue = null;
     this.resetForm();
+    this.router.navigate(['/map']);
   }
 
   public applyFilters(): void {

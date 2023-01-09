@@ -5,6 +5,7 @@ export const enum EventType {
   SearchOptionSelected = 'SEARCH_OPTION_SELECTED',
   AddPostButtonSubmit = 'ADD_POST_BUTTON_SUBMIT',
   OpenLoginModal = 'OPEN_LOGIN_MODAL',
+  SavedSearchInit = 'SAVED_SEARCH_INIT',
 }
 
 export interface BusEvent<T = any> {
