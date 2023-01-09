@@ -123,7 +123,7 @@ export class FeedComponent implements OnInit {
     if (this.route.snapshot.data['view'] === 'collection') {
       this.collectionId = this.route.snapshot.paramMap.get('id')!;
       this.params.set = this.collectionId;
-      this.postsService.applyFilters({ set: this.collectionId });
+      this.postsService.applyFilters({ set: this.collectionId, ...this.filters });
       this.searchId = '';
     } else {
       this.collectionId = '';
