@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CONST } from '@constants';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,9 +22,8 @@ export class RoleItemComponent implements OnInit {
   public form: FormGroup = this.fb.group({
     display_name: ['', [Validators.required]],
     description: [''],
-    permissions: this.fb.array([], [Validators.required]),
-    allowed_privileges: this.fb.array([]),
-    id: [0],
+    permissions: [[], [Validators.required]],
+    id: [null],
     name: ['', [Validators.required]],
     protected: [false],
     url: [''],
@@ -62,13 +61,7 @@ export class RoleItemComponent implements OnInit {
         if (this.isUpdate) {
           this.fillInForm(role);
 
-          for (const privileges of role.allowed_privileges) {
-            this.addData(privileges, this.privilegesControl);
-          }
-
           for (const permission of role.permissions) {
-            this.addData(permission, this.permissionsControl);
-
             this.permissionsList.reduce((acc, el: any) => {
               return el.name === permission ? [...acc, (el.checked = true)] : [...acc, el];
             }, []);
@@ -91,37 +84,8 @@ export class RoleItemComponent implements OnInit {
       name: role.name,
       protected: role.protected,
       url: role.url,
+      permissions: role.permissions,
     });
-  }
-
-  private addData(value: string, collections: FormArray) {
-    if (!collections.value.includes(value)) {
-      collections.push(this.fb.control(value));
-    }
-  }
-
-  private get permissionsControl() {
-    return this.form.controls['permissions'] as FormArray;
-  }
-
-  private get privilegesControl() {
-    return this.form.controls['allowed_privileges'] as FormArray;
-  }
-
-  public onCheckChange(event: any, field: string) {
-    const formArray: FormArray = this.form.get(field) as FormArray;
-    if (event.checked) {
-      formArray.push(new FormControl(event.source.value));
-    } else {
-      let i: number = 0;
-      formArray.controls.forEach((ctrl: any) => {
-        if (ctrl.value == event.source.value) {
-          formArray.removeAt(i);
-          return;
-        }
-        i++;
-      });
-    }
   }
 
   public navigateToRoles(): void {
