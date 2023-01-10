@@ -26,7 +26,7 @@ export enum FilterType {
 interface CategoryFlatNode {
   expandable: boolean;
   name: string;
-  id: string | string;
+  id: string;
   level: number;
 }
 
@@ -102,11 +102,6 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
           this.treeFlattener,
           changes['options'].currentValue || [],
         );
-      } else {
-        this.options.map((opt) => {
-          opt.checked = opt.id === this.value;
-          return opt;
-        });
       }
     }
   }

@@ -18,4 +18,5 @@ export interface Savedsearch {
   user_id?: number;
   view?: string;
   view_options?: any;
+  checked?: boolean;
 }

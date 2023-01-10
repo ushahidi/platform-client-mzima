@@ -45,6 +45,7 @@
     </div>
     <div class="feed-page__controls">
       <button
+        *ngIf="user?.allowed_privileges?.includes('update')"
         mat-stroked-button
         class="feed-page__control"
         [ngClass]="{ active: isBulkOptionsVisible }"
