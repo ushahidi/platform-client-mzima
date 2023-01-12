@@ -71,7 +71,6 @@ export class SaveSearchModalComponent implements OnInit {
         ];
 
         if (this.data?.search) {
-          console.log('this.data?.search', this.data.search);
           this.form.patchValue({
             name: this.data.search.name,
             description: this.data.search.description,
