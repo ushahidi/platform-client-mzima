@@ -21,7 +21,7 @@
     <button
       mat-menu-item
       *ngIf="
-        post?.allowed_privileges!.includes('update') && user?.allowed_privileges!.includes('update')
+        post?.allowed_privileges?.includes('update') && user?.allowed_privileges?.includes('update')
       "
     >
       <mat-icon svgIcon="edit"></mat-icon>
@@ -50,7 +50,7 @@
       mat-menu-item
       (click)="delete()"
       *ngIf="
-        post?.allowed_privileges!.includes('delete') && user?.allowed_privileges!.includes('delete')
+        post?.allowed_privileges?.includes('delete') && user?.allowed_privileges?.includes('delete')
       "
     >
       <mat-icon svgIcon="sort-up"></mat-icon>

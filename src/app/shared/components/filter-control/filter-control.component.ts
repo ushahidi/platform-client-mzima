@@ -110,7 +110,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
 
   public writeValue(value: any) {
     if (this.type === this.filterType.Daterange) {
-      this.value = new DateRange<Date>(value.start, value.end);
+      this.value = new DateRange<Date>(new Date(value.start), new Date(value.end));
     } else {
       this.value = value;
     }
