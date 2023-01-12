@@ -47,7 +47,9 @@ export const getMapLayers = () => {
   return {
     baselayers: {
       satellite: mapboxStaticTiles('Satellite', 'mapbox/satellite-v9'),
+      MapQuestAerial: mapboxStaticTiles('Satellite', 'mapbox/satellite-v9'),
       streets: mapboxStaticTiles('Streets', 'mapbox/streets-v11'),
+      MapQuest: mapboxStaticTiles('Streets', 'mapbox/streets-v11'),
       hOSM: {
         name: 'Humanitarian',
         url: '//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
