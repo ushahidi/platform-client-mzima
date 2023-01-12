@@ -191,11 +191,7 @@
       [type]="filterType.Daterange"
       class="search-form__filters-panel__item"
       [title]="'global_filter.date_range' | translate"
-      [badge]="
-        form.controls['date'].value?.start?.length || form.controls['date'].value?.start?.length
-          ? 1
-          : null
-      "
+      [badge]="form.controls['date'].value?.start || form.controls['date'].value?.end ? 1 : null"
     >
     </app-filter-control>
 
@@ -204,7 +200,7 @@
       formControlName="center_point"
       class="search-form__filters-panel__item"
       [title]="'global_filter.location' | translate"
-      [badge]="form.controls['center_point'].value?.length ? 1 : null"
+      [badge]="form.controls['center_point'].value ? 1 : null"
     >
     </app-filter-control>
 
