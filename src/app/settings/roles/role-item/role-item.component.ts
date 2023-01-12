@@ -65,9 +65,9 @@ export class RoleItemComponent implements OnInit {
           };
         });
         if (this.isUpdate) {
-          this.fillInForm(this.role);
+          this.fillInForm(role);
 
-          for (const permission of this.role?.permissions) {
+          for (const permission of role.permissions) {
             this.permissionsList.reduce((acc, el: any) => {
               return el.name === permission ? [...acc, (el.checked = true)] : [...acc, el];
             }, []);
