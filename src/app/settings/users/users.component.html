@@ -1,4 +1,4 @@
-<section class="users" (scroll)="onScroll($event)">
+<section class="users">
   <app-settings-header
     [settingsTitle]="'app.users'"
     [newButtonTitle]="'user.add_user'"
@@ -8,72 +8,79 @@
   >
   </app-settings-header>
 
-  <div class="users-container">
+  <div
+    class="users-container"
+    #user
+    (scroll)="onScroll($event)"
+    *ngIf="!isLoading || users?.length; else loader"
+  >
     <app-spinner class="spinner" *ngIf="!users"></app-spinner>
 
-    <table mat-table [dataSource]="users" class="users-table">
-      <ng-container matColumnDef="checkbox">
-        <th mat-header-cell *matHeaderCellDef>
-          <div class="users-table__checkbox">
-            <mat-checkbox
-              *ngIf="isShowActions"
-              (click)="$event.stopPropagation()"
-              (change)="selectAllUsers($event)"
-              [checked]="selectedUsers.length === users.length"
-            >
-            </mat-checkbox>
-          </div>
-        </th>
-        <td mat-cell *matCellDef="let user">
-          <div class="users-table__checkbox">
-            <mat-checkbox
-              *ngIf="isShowActions"
-              (click)="$event.stopPropagation()"
-              (change)="selectUser($event, user)"
-              [checked]="selectedUsers.includes(user.id)"
-            >
-            </mat-checkbox>
-          </div>
-        </td>
-      </ng-container>
+    <ng-container *ngIf="users?.length; else usersEmpty">
+      <table mat-table [dataSource]="users" class="users-table">
+        <ng-container matColumnDef="checkbox">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="users-table__checkbox">
+              <mat-checkbox
+                *ngIf="isShowActions"
+                (click)="$event.stopPropagation()"
+                (change)="selectAllUsers($event)"
+                [checked]="selectedUsers.length === users.length"
+              >
+              </mat-checkbox>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let user">
+            <div class="users-table__checkbox">
+              <mat-checkbox
+                *ngIf="isShowActions"
+                (click)="$event.stopPropagation()"
+                (change)="selectUser($event, user)"
+                [checked]="selectedUsers.includes(user.id)"
+              >
+              </mat-checkbox>
+            </div>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="avatar">
-        <th mat-header-cell *matHeaderCellDef>{{ 'user.avatar' | translate }}</th>
-        <td mat-cell *matCellDef="let user">
-          <div class="users-table__avatar">
-            <img
-              [src]="'https://www.gravatar.com/avatar/' + user.gravatar + '?d=retro'"
-              [alt]="user.realname"
-            />
-          </div>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="avatar">
+          <th mat-header-cell *matHeaderCellDef>{{ 'user.avatar' | translate }}</th>
+          <td mat-cell *matCellDef="let user">
+            <div class="users-table__avatar">
+              <img
+                [src]="'https://www.gravatar.com/avatar/' + user.gravatar + '?d=retro'"
+                [alt]="user.realname"
+              />
+            </div>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>{{ 'user.name' | translate }}</th>
-        <td mat-cell *matCellDef="let user">
-          <strong class="users-table__username">{{ user.realname }}</strong>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>{{ 'user.name' | translate }}</th>
+          <td mat-cell *matCellDef="let user">
+            <strong class="users-table__username">{{ user.realname }}</strong>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="role">
-        <th mat-header-cell *matHeaderCellDef>{{ 'user.role' | translate }}</th>
-        <td mat-cell *matCellDef="let user">{{ user.role }}</td>
-      </ng-container>
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>{{ 'user.role' | translate }}</th>
+          <td mat-cell *matCellDef="let user">{{ user.role }}</td>
+        </ng-container>
 
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>{{ 'user.email' | translate }}</th>
-        <td mat-cell *matCellDef="let user">{{ user.email }}</td>
-      </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>{{ 'user.email' | translate }}</th>
+          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="['checkbox', 'avatar', 'name', 'role', 'email']"></tr>
-      <tr
-        mat-row
-        [data-qa]="'user-item' + user.id"
-        [routerLink]="['update', user.id]"
-        *matRowDef="let user; columns: ['checkbox', 'avatar', 'name', 'role', 'email']"
-      ></tr>
-    </table>
+        <tr mat-header-row *matHeaderRowDef="['checkbox', 'avatar', 'name', 'role', 'email']"></tr>
+        <tr
+          mat-row
+          [data-qa]="'user-item' + user.id"
+          [routerLink]="['update', user.id]"
+          *matRowDef="let user; columns: ['checkbox', 'avatar', 'name', 'role', 'email']"
+        ></tr>
+      </table>
+    </ng-container>
 
     <app-spinner class="users-loading" *ngIf="isLoading"></app-spinner>
     <button
@@ -91,6 +98,10 @@
     </button>
   </div>
 </section>
+
+<ng-template #loader>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>
 
 <ng-template #usersEmpty>
   <span class="posts-empty">{{ 'post.no_posts_yet' | translate }}</span>

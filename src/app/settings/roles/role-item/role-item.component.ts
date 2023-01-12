@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CONST } from '@constants';
@@ -6,6 +6,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { combineLatest } from 'rxjs';
 import { RoleResult } from '@models';
 import { PermissionsService, RolesService, ConfirmModalService } from '@services';
+
+const PERMISSIONS = {
+  EDIT_THEIR_OWN_POSTS: 'Edit Their Own Posts',
+  DELETE_THEIR_OWN_POSTS: 'Delete Their Own Posts',
+};
 
 @Component({
   selector: 'app-role-item',
@@ -37,6 +42,7 @@ export class RoleItemComponent implements OnInit {
     private permissionsService: PermissionsService,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -86,6 +92,7 @@ export class RoleItemComponent implements OnInit {
       url: role.url,
       permissions: role.permissions,
     });
+    this.changeDetectorRef.detectChanges();
   }
 
   public navigateToRoles(): void {
@@ -132,5 +139,14 @@ export class RoleItemComponent implements OnInit {
       next: () => this.navigateToRoles(),
       error: (err) => console.log(err),
     });
+  }
+
+  public selectedItems(selectedPermissions: any) {
+    if (selectedPermissions.includes(PERMISSIONS.DELETE_THEIR_OWN_POSTS)) {
+      if (!selectedPermissions.find((el: string) => el === PERMISSIONS.EDIT_THEIR_OWN_POSTS)) {
+        selectedPermissions.push(PERMISSIONS.EDIT_THEIR_OWN_POSTS);
+        this.form.patchValue({ permissions: selectedPermissions });
+      }
+    }
   }
 }
