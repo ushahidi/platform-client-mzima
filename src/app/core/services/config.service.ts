@@ -56,10 +56,10 @@ export class ConfigService {
       )
       .pipe(
         tap((data) => {
-          if ((data.default_view?.baselayer as string) === 'MapQuest') {
+          if (data.default_view?.baselayer === 'MapQuest') {
             data.default_view.baselayer = 'streets';
           }
-          if ((data.default_view?.baselayer as string) === 'MapQuestAerial') {
+          if (data.default_view?.baselayer === 'MapQuestAerial') {
             data.default_view.baselayer = 'satellite';
           }
           this.sessionService.setConfigurations('map', data);
