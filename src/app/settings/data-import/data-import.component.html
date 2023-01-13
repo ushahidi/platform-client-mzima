@@ -21,7 +21,7 @@
       data-qa="select-survey"
       disableOptionCentering
       [(value)]="selectedForm"
-      placeholder="{{ 'app.choose_survey' | translate }}"
+      placeholder="{{ 'survey.choose_survey' | translate }}"
       (selectionChange)="formChanged()"
     >
       <mat-option *ngFor="let option of forms$ | async" [value]="option">
