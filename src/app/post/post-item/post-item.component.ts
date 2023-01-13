@@ -156,7 +156,7 @@ export class PostItemComponent implements OnInit {
             value: this.form.value[field.key],
           };
 
-          if (field.type === 'title') this.title = this.form.value[field.key];
+          // if (field.type === 'title') this.title = this.form.value[field.key]; // title is ngModel standalone
           if (field.type === 'description') this.description = this.form.value[field.key];
 
           switch (field.input) {
