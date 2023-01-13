@@ -200,7 +200,7 @@
       formControlName="center_point"
       class="search-form__filters-panel__item"
       [title]="'global_filter.location' | translate"
-      [badge]="form.controls['center_point'].value ? 1 : null"
+      [badge]="form.controls['center_point'].value.location?.lat ? 1 : null"
     >
     </app-filter-control>
 
