@@ -1,4 +1,6 @@
-<h1>{{ (isCreateWebhook ? 'app.add_webhook' : 'app.edit_webhook') | translate }}</h1>
+<h1 *ngIf="isDesktop">
+  {{ (isCreateWebhook ? 'app.add_webhook' : 'app.edit_webhook') | translate }}
+</h1>
 
 <form class="form" *ngIf="form" [formGroup]="form" (ngSubmit)="save()" novalidate>
   <div class="form-row">
@@ -176,6 +178,7 @@
     </div>
   </div>
 
+  <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <div>
       <button
@@ -186,8 +189,10 @@
         (click)="openDialog()"
         *ngIf="!isCreateWebhook"
         [disabled]="!form.get('id')?.value"
+        class="delete-button"
       >
-        {{ 'app.delete' | translate }}
+        <ng-container *ngIf="isDesktop">{{ 'app.delete' | translate }}</ng-container>
+        <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
       </button>
     </div>
     <div>

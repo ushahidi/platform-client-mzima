@@ -230,7 +230,7 @@ export class MapComponent implements OnInit {
       data: { post, color, twitterId },
       height: 'auto',
       maxHeight: '90vh',
-      panelClass: 'post-modal',
+      panelClass: ['modal', 'post-modal'],
     });
   }
 }

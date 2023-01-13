@@ -7,21 +7,23 @@
 >
 </app-chart-head>
 
-<div class="chart">
-  <ngx-charts-line-chart
-    [scheme]="colorScheme"
-    [legend]="legend"
-    [legendTitle]="''"
-    [legendPosition]="below"
-    [xAxis]="xAxis"
-    [yAxis]="yAxis"
-    [results]="data"
-    [timeline]="false"
-    [rotateXAxisTicks]="false"
-  >
-    <ng-template #tooltipTemplate let-model="model">
-      This is the single point tooltip template
-      <pre>{{ model | json }}</pre>
-    </ng-template>
-  </ngx-charts-line-chart>
+<div class="chart-cover">
+  <div class="chart">
+    <ngx-charts-line-chart
+      [scheme]="colorScheme"
+      [legend]="legend"
+      [legendTitle]="''"
+      [legendPosition]="below"
+      [xAxis]="xAxis"
+      [yAxis]="yAxis"
+      [results]="data"
+      [timeline]="false"
+      [rotateXAxisTicks]="false"
+    >
+      <ng-template #tooltipTemplate let-model="model">
+        This is the single point tooltip template
+        <pre>{{ model | json }}</pre>
+      </ng-template>
+    </ngx-charts-line-chart>
+  </div>
 </div>

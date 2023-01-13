@@ -182,6 +182,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       width: '100%',
       maxWidth: 576,
       minWidth: 300,
+      panelClass: 'modal',
       data: {
         surveyId: this.surveyId,
       },
@@ -205,6 +206,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       width: '100%',
       maxWidth: 576,
       minWidth: 300,
+      panelClass: 'modal',
       data: {
         selectedFieldType,
         surveyId: this.surveyId,

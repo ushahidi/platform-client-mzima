@@ -6,6 +6,10 @@
   align-items: center;
   justify-content: space-between;
 
+  @include breakpoint-max($tablet) {
+    justify-content: flex-end;
+  }
+
   h1 {
     margin-bottom: 0;
   }
@@ -20,6 +24,13 @@
   color: var(--color-black);
   justify-content: flex-start;
 
+  @include breakpoint-max($tablet) {
+    min-width: 200px;
+    display: inline-flex;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
   &__title {
     display: flex;
     overflow: hidden;
@@ -28,6 +39,10 @@
     text-overflow: ellipsis;
     justify-content: flex-start;
     max-width: calc(50% - 48px);
+
+    @include breakpoint-max($tablet) {
+      max-width: none;
+    }
 
     .mat-icon {
       font-size: 32px;
@@ -43,11 +58,18 @@
     @include breakpoint-max($laptop-small) {
       margin: 0 24px;
     }
+
+    @include breakpoint-max($tablet) {
+      margin: 8px 0;
+      align-self: center;
+      transform: rotate(90deg);
+    }
   }
 
   .mat-icon {
     width: 1em;
     height: 1em;
+    flex-shrink: 0;
 
     &::ng-deep {
       svg {

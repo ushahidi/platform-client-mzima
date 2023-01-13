@@ -1,5 +1,5 @@
 <div class="form-head-panel">
-  <h1>{{ 'settings.settings_list.user_settings' | translate }}</h1>
+  <h1 *ngIf="isDesktop">{{ 'settings.settings_list.user_settings' | translate }}</h1>
   <div class="logo-wrapper">
     <img src="assets/images/logo-hdx.png" alt="{{ 'settings.user_settings.HDX' | translate }}" />
   </div>
@@ -61,7 +61,18 @@
       </mat-error>
     </mat-form-field>
   </div>
+  <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
+    <button
+      translate
+      type="button"
+      mat-stroked-button
+      *ngIf="!isDesktop"
+      data-qa="btn-cancel"
+      routerLink="/settings"
+    >
+      {{ 'app.cancel' | translate }}
+    </button>
     <button
       type="button"
       color="primary"

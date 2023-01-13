@@ -10,7 +10,7 @@
   <span class="main-form__border"></span>
   <app-settings-header
     [settingsTitle]="(!isEdit ? 'app.add_survey' : 'app.edit_survey') | translate"
-    [newButtonTitle]="'translations.add_translation_lang'"
+    [newButtonTitle]="isDesktop ? 'translations.add_translation_lang' : 'Translation'"
     [isShowActionsButton]="false"
     [isShowCreation]="false"
     [isShowTranslation]="true"
@@ -103,6 +103,8 @@
 <ng-template #noTasks>
   <div class="form-row empty">No tasks</div>
 </ng-template>
+
+<div class="form-controls-spacer" *ngIf="!isDesktop"></div>
 
 <div class="form-controls-panel form-controls-panel--sticky">
   <button mat-stroked-button type="button" (click)="cancel()">

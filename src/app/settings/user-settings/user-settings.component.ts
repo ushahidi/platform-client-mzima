@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONST } from '@constants';
-import { UsersService } from '@services';
+import { UsersService, BreakpointService } from '@services';
 import dayjs from 'dayjs';
 import { forkJoin } from 'rxjs';
 
@@ -26,11 +26,19 @@ export class UserSettingsComponent implements OnInit {
     api_created: ['', [Validators.required]],
     api_url: ['', [Validators.required]],
   });
+  public isDesktop = false;
 
   constructor(
-    private formBuilder: FormBuilder, //
+    private formBuilder: FormBuilder,
     private usersService: UsersService,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit() {
     this.getSettingsHDX();

@@ -7,6 +7,7 @@ import {
   PollingService,
   SessionService,
   UsersService,
+  BreakpointService,
 } from '@services';
 
 @Component({
@@ -23,6 +24,7 @@ export class DataExportComponent implements OnInit {
   showProgress = false;
   exportView = true;
   exportJobsReady = false;
+  public isDesktop = false;
 
   constructor(
     private formsService: FormsService,
@@ -30,7 +32,14 @@ export class DataExportComponent implements OnInit {
     private usersService: UsersService,
     private exportJobsService: ExportJobsService,
     private pollingService: PollingService,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit() {
     this.formsService.get().subscribe((forms) => {

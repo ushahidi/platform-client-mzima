@@ -1,7 +1,8 @@
 <div class="location-select">
-  <h4 class="location-select__title">City or address</h4>
+  <h4 class="location-select__title" *ngIf="isDesktop">City or address</h4>
 
   <div class="form-row">
+    <mat-label *ngIf="!isDesktop">City or address</mat-label>
     <mat-form-field appearance="outline" class="form-control location-control">
       <input
         matInput
@@ -35,16 +36,19 @@
     </mat-form-field>
   </div>
 
-  <mat-form-field appearance="outline">
-    <mat-select
-      placeholder="Distance"
-      disableOptionCentering
-      [(ngModel)]="location_distance"
-      (ngModelChange)="changeDistance()"
-    >
-      <mat-option [value]="option.value" *ngFor="let option of distanceOptions">
-        {{ option.label | translate }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div class="form-row">
+    <mat-label *ngIf="!isDesktop">Viewing mode</mat-label>
+    <mat-form-field appearance="outline">
+      <mat-select
+        placeholder="Distance"
+        disableOptionCentering
+        [(ngModel)]="location_distance"
+        (ngModelChange)="changeDistance()"
+      >
+        <mat-option [value]="option.value" *ngFor="let option of distanceOptions">
+          {{ option.label | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>

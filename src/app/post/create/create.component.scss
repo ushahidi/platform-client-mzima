@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .spinner {
   display: block;
   margin: 20vh auto;
@@ -31,16 +33,34 @@
 .form-controls-panel {
   margin-top: 16px;
   justify-content: flex-end;
+
+  @include breakpoint-max($tablet) {
+    margin: 0 -16px;
+    padding: 12px 11px;
+    border-top: 1px solid var(--color-neutral-20);
+  }
 }
 
-.form-controls-panel .mat-button-base {
-  padding: 0 25px;
+.content {
+  @include breakpoint-max($tablet) {
+    padding: 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-left: -16px;
+    margin-right: -16px;
+    scroll-behavior: smooth;
+    height: calc(100vh - 152px);
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .task-container {
-  border: 1px solid var(--color-neutral-30);
-  padding: 20px;
   margin-bottom: 20px;
+
+  @include breakpoint-min($tablet) {
+    padding: 20px;
+    border: 1px solid var(--color-neutral-30);
+  }
 }
 
 .relation {
@@ -80,6 +100,77 @@
     ul li {
       list-style: none;
       padding-top: 15px;
+    }
+  }
+}
+
+.head {
+  @include breakpoint-max($tablet) {
+    height: 80px;
+    display: flex;
+    margin: 0 -16px;
+    padding: 0 16px;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid var(--color-neutral-30);
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.28;
+      margin: 0 !important;
+    }
+  }
+}
+
+::ng-deep {
+  @include breakpoint-max($tablet) {
+    .create-post-modal {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
+
+      .mat-dialog-container {
+        padding: 0 16px !important;
+        border-radius: 0 !important;
+
+        .modal {
+          &__close-btn {
+            top: 20px;
+          }
+        }
+      }
+
+      .mat-dialog-content {
+        margin-left: -16px !important;
+        margin-right: -16px !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        max-height: calc(100% - 160px) !important;
+
+        &.create-form {
+          padding-top: 16px;
+          padding-bottom: 16px;
+          max-height: calc(100% - 80px);
+        }
+      }
+
+      .mat-dialog-container {
+        overflow: visible;
+      }
+
+      .mat-dialog-actions {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 25;
+        position: fixed;
+        margin: 0 !important;
+        min-height: 48px !important;
+        padding: 12px 16px !important;
+        background: var(--color-light);
+        border-top: 1px solid var(--color-neutral-20);
+      }
     }
   }
 }

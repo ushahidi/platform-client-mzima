@@ -5,7 +5,13 @@ import { Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
 import { CollectionResult, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { CollectionsService, ConfirmModalService, RolesService, SessionService } from '@services';
+import {
+  CollectionsService,
+  ConfirmModalService,
+  RolesService,
+  SessionService,
+  BreakpointService,
+} from '@services';
 
 enum CollectionView {
   List = 'list',
@@ -39,6 +45,7 @@ export class CollectionsComponent implements OnInit {
   roleOptions: any;
   tmpCollectionToEditId = 0;
   isLoggedIn = true;
+  isDesktop = false;
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
@@ -50,6 +57,7 @@ export class CollectionsComponent implements OnInit {
     private router: Router,
     private session: SessionService,
     private rolesService: RolesService,
+    private breakpointService: BreakpointService,
   ) {}
 
   ngOnInit() {
@@ -62,6 +70,12 @@ export class CollectionsComponent implements OnInit {
 
     this.getCollections();
     this.featuredEnabled = true; //hasPermission Manage Posts
+
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
   }
 
   private initRoles() {

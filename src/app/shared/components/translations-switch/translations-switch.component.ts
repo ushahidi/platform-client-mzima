@@ -43,6 +43,7 @@ export class TranslationsSwitchComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectLanguagesModalComponent, {
       width: '100%',
       maxWidth: 576,
+      panelClass: 'modal',
       data: {
         languages: this.languages,
         activeLanguages: [this.defaultLanguage, ...this.activeLanguages],

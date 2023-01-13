@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { takeUntilDestroy$ } from '@helpers';
 import { WebhookResultInterface } from '@models';
-import { WebhooksService } from '@services';
+import { WebhooksService, BreakpointService } from '@services';
 
 @Component({
   selector: 'app-webhooks',
@@ -11,10 +11,18 @@ import { WebhooksService } from '@services';
 export class WebhooksComponent implements OnInit {
   webhookList: WebhookResultInterface[] = [];
   webhookState$ = this.webhooksService.changeWebhookState$.pipe(takeUntilDestroy$());
+  public isDesktop = false;
 
   constructor(
-    private webhooksService: WebhooksService, //
-  ) {}
+    private webhooksService: WebhooksService,
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit() {
     this.getWebhookList();

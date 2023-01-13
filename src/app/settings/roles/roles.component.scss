@@ -1,5 +1,13 @@
 @import '/src/styles/helpers';
 
+.form-head-panel {
+  @include breakpoint-max($tablet) {
+    display: flex;
+    margin-bottom: 24px;
+    justify-content: flex-end;
+  }
+}
+
 .roles {
   display: flex;
   flex-wrap: wrap;
@@ -32,5 +40,13 @@
   @include breakpoint-max($laptop-small) {
     font-size: 18px;
     margin-bottom: 16px;
+  }
+
+  @include breakpoint-max($tablet) {
+    width: calc(50% - 8px);
+  }
+
+  @include breakpoint-max($mobile) {
+    width: calc(100% - 8px);
   }
 }

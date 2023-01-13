@@ -8,3 +8,4 @@ export * as envHelper from './environment';
 export * as objectHelpers from './object-helpers';
 export * as regexHelper from './regex';
 export * as arrayHelpers from './array-helpers';
+export * as menuHelper from './menu';

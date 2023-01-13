@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { Router } from '@angular/router';
 import { GeoJsonFilter, UserResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmModalService, RolesService, UsersService } from '@services';
+import { ConfirmModalService, UsersService, BreakpointService } from '@services';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -27,14 +26,20 @@ export class UsersComponent implements OnInit {
     size: this.params.limit,
   };
   public total: number;
+  public isDesktop = false;
 
   constructor(
     private userService: UsersService,
-    private rolesService: RolesService,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
-    private router: Router,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   public ngOnInit() {
     this.getUsers(this.params);
@@ -57,7 +62,7 @@ export class UsersComponent implements OnInit {
   }
 
   public async deleteUsers() {
-    const confirmed = this.confirmModalService.open({
+    const confirmed = await this.confirmModalService.open({
       title: this.translate.instant('notify.user.bulk_destroy_confirm', {
         count: this.selectedUsers.length,
       }),

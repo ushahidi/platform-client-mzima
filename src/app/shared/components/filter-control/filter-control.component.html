@@ -1,171 +1,233 @@
 <div class="filter-control">
-  <button type="button" mat-raised-button [matMenuTriggerFor]="menu" class="filter-control__button">
-    <span>{{ title }}</span>
-    <span class="filter-control__button__count" *ngIf="badge">{{ badge }}</span>
-    <mat-icon class="filter-control__button__arrow" svgIcon="arrow-down-thin"></mat-icon>
-  </button>
+  <ng-container *ngIf="isDesktop; else button">
+    <button
+      type="button"
+      mat-raised-button
+      [matMenuTriggerFor]="menu"
+      class="filter-control__button"
+    >
+      <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
+    </button>
 
-  <mat-menu
-    #menu="matMenu"
-    [class]="
-      'filter-control-menu' +
-      (type === filterType.Daterange || type === filterType.Location
-        ? ' filter-control-menu--wide'
-        : '')
-    "
-  >
-    <ng-container [ngSwitch]="type">
-      <ng-container *ngSwitchCase="filterType.Select">
-        <mat-radio-group
-          [(ngModel)]="value"
-          (ngModelChange)="valueChanged()"
-          (change)="filterChange.emit($event.value)"
-        >
-          <div class="radio-button">
-            <mat-radio-button>
-              {{ 'graph.none' | translate }}
-            </mat-radio-button>
-          </div>
-          <div class="radio-button" *ngFor="let option of options">
-            <mat-radio-button
-              [value]="option[fields[0]]"
-              [checked]="option.checked"
-              [disabled]="option.disabled"
-            >
-              {{ option[fields[1]] }}
-            </mat-radio-button>
-            <button
-              *ngIf="canEdit"
-              class="edit-btn"
-              mat-icon-button
-              (click)="editOption.emit(option)"
-            >
-              <mat-icon svgIcon="pencil"></mat-icon>
-            </button>
-          </div>
-        </mat-radio-group>
-        <ng-content select="[postfix]"></ng-content>
-      </ng-container>
+    <mat-menu
+      #menu="matMenu"
+      [class]="
+        'filter-control-menu' +
+        (type === filterType.Daterange || type === filterType.Location
+          ? ' filter-control-menu--wide'
+          : '')
+      "
+    >
+      <ng-container *ngTemplateOutlet="control"></ng-container>
+    </mat-menu>
+  </ng-container>
+</div>
 
-      <ng-container *ngSwitchCase="filterType.Multiselect">
-        <mat-selection-list
-          [(ngModel)]="value"
-          (ngModelChange)="valueChanged()"
-          (click)="$event.stopPropagation()"
-          (selectionChange)="filterChange.emit($event)"
-        >
-          <mat-list-option
-            color="primary"
-            class="checkbox-option"
-            checkboxPosition="before"
+<ng-template #control>
+  <ng-container [ngSwitch]="type">
+    <ng-container *ngSwitchCase="filterType.Select">
+      <mat-radio-group
+        [(ngModel)]="value"
+        (ngModelChange)="valueChanged()"
+        (change)="filterChange.emit($event.value)"
+      >
+        <div class="radio-button">
+          <mat-radio-button>
+            {{ 'graph.none' | translate }}
+          </mat-radio-button>
+        </div>
+        <div class="radio-button" *ngFor="let option of options">
+          <mat-radio-button
             [value]="option[fields[0]]"
-            [selected]="option.checked"
+            [checked]="option.checked"
             [disabled]="option.disabled"
-            *ngFor="let option of options"
           >
             {{ option[fields[1]] }}
-          </mat-list-option>
-        </mat-selection-list>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="filterType.Multilevelselect">
-        <mat-tree
-          [dataSource]="dataSource"
-          [treeControl]="treeControl"
-          class="multilevelselect-filter"
-        >
-          <mat-selection-list [(ngModel)]="value" (selectionChange)="valueChanged()">
-            <mat-tree-node *matTreeNodeDef="let option">
-              <mat-list-option
-                color="primary"
-                [value]="option[fields[0]]"
-                checkboxPosition="before"
-                (click)="$event.stopPropagation()"
-                class="multilevelselect-filter__option"
-              >
-                {{ option[fields[1]] }}
-              </mat-list-option>
-            </mat-tree-node>
-            <mat-tree-node
-              (click)="$event.stopPropagation()"
-              *matTreeNodeDef="let option; when: hasChild"
-            >
-              <mat-list-option
-                color="primary"
-                checkboxPosition="before"
-                [value]="option[fields[0]]"
-                (click)="$event.stopPropagation()"
-                class="multilevelselect-filter__option"
-              >
-                {{ option[fields[1]] }}
-              </mat-list-option>
-              <button
-                mat-icon-button
-                matTreeNodeToggle
-                class="multilevelselect-filter__option__arrow"
-                [attr.aria-label]="'Toggle ' + option[fields[1]]"
-                [ngClass]="{
-                  'multilevelselect-filter__option__arrow--open': treeControl.isExpanded(option)
-                }"
-              >
-                <mat-icon svgIcon="arrow-down"></mat-icon>
-              </button>
-            </mat-tree-node>
-          </mat-selection-list>
-        </mat-tree>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="filterType.Daterange">
-        <div class="daterange" *ngIf="value" (click)="$event.stopPropagation()">
-          <div class="daterange__inputs">
-            <div class="form-row form-row--small">
-              <mat-label>{{ 'global_filter.filter_tabs.date_after' | translate }}</mat-label>
-              <mat-form-field
-                appearance="outline"
-                [ngClass]="{ 'daterange__input--focused': !value.start }"
-              >
-                <input
-                  matInput
-                  autocomplete="off"
-                  class="daterange__input"
-                  placeholder="DD-MM-YYYY"
-                  [(ngModel)]="calendarValue.start"
-                  (ngModelChange)="calendarInputChangeHandle()"
-                />
-              </mat-form-field>
-            </div>
-            <div class="form-row form-row--small">
-              <mat-label>{{ 'global_filter.filter_tabs.date_before' | translate }}</mat-label>
-              <mat-form-field
-                appearance="outline"
-                [ngClass]="{ 'daterange__input--focused': value.start && !value.end }"
-              >
-                <input
-                  matInput
-                  autocomplete="off"
-                  class="daterange__input"
-                  placeholder="DD-MM-YYYY"
-                  [disabled]="!value.start"
-                  [(ngModel)]="calendarValue.end"
-                  (ngModelChange)="calendarInputChangeHandle()"
-                />
-              </mat-form-field>
-            </div>
-          </div>
-          <mat-calendar #calendar [selected]="value" (selectedChange)="selectedChange($event)">
-          </mat-calendar>
+          </mat-radio-button>
+          <button
+            *ngIf="canEdit"
+            class="edit-btn"
+            mat-icon-button
+            (click)="editOption.emit(option)"
+          >
+            <mat-icon svgIcon="pencil"></mat-icon>
+          </button>
         </div>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="filterType.Location">
-        <app-location-selection
-          [(ngModel)]="value"
-          class="location-select"
-          (ngModelChange)="valueChanged()"
-          (click)="$event.stopPropagation()"
-        >
-        </app-location-selection>
-      </ng-container>
+      </mat-radio-group>
+      <ng-content select="[postfix]"></ng-content>
     </ng-container>
-  </mat-menu>
-</div>
+
+    <ng-container *ngSwitchCase="filterType.Multiselect">
+      <mat-selection-list
+        [(ngModel)]="value"
+        (ngModelChange)="valueChanged()"
+        (click)="$event.stopPropagation()"
+        (selectionChange)="filterChange.emit($event)"
+      >
+        <mat-list-option
+          color="primary"
+          class="checkbox-option"
+          checkboxPosition="before"
+          [value]="option[fields[0]]"
+          [selected]="option.checked"
+          [disabled]="option.disabled"
+          *ngFor="let option of options"
+        >
+          {{ option[fields[1]] }}
+        </mat-list-option>
+      </mat-selection-list>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="filterType.Multilevelselect">
+      <mat-tree
+        [dataSource]="dataSource"
+        [treeControl]="treeControl"
+        class="multilevelselect-filter"
+      >
+        <mat-selection-list [(ngModel)]="value" (selectionChange)="valueChanged()">
+          <mat-tree-node *matTreeNodeDef="let option">
+            <mat-list-option
+              color="primary"
+              [value]="option[fields[0]]"
+              checkboxPosition="before"
+              (click)="$event.stopPropagation()"
+              class="multilevelselect-filter__option"
+            >
+              {{ option[fields[1]] }}
+            </mat-list-option>
+          </mat-tree-node>
+          <mat-tree-node
+            (click)="$event.stopPropagation()"
+            *matTreeNodeDef="let option; when: hasChild"
+          >
+            <mat-list-option
+              color="primary"
+              checkboxPosition="before"
+              [value]="option[fields[0]]"
+              (click)="$event.stopPropagation()"
+              class="multilevelselect-filter__option"
+            >
+              {{ option[fields[1]] }}
+            </mat-list-option>
+            <button
+              mat-icon-button
+              matTreeNodeToggle
+              class="multilevelselect-filter__option__arrow"
+              [attr.aria-label]="'Toggle ' + option[fields[1]]"
+              [ngClass]="{
+                'multilevelselect-filter__option__arrow--open': treeControl.isExpanded(option)
+              }"
+            >
+              <mat-icon svgIcon="arrow-down"></mat-icon>
+            </button>
+          </mat-tree-node>
+        </mat-selection-list>
+      </mat-tree>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="filterType.Daterange">
+      <div class="daterange" *ngIf="value" (click)="$event.stopPropagation()">
+        <div class="daterange__inputs">
+          <div class="form-row form-row--small">
+            <mat-label>{{ 'global_filter.filter_tabs.date_after' | translate }}</mat-label>
+            <mat-form-field
+              appearance="outline"
+              [ngClass]="{ 'daterange__input--focused': !value.start }"
+            >
+              <input
+                matInput
+                autocomplete="off"
+                class="daterange__input"
+                placeholder="DD-MM-YYYY"
+                [(ngModel)]="calendarValue.start"
+                (ngModelChange)="calendarInputChangeHandle()"
+              />
+            </mat-form-field>
+          </div>
+          <div class="form-row form-row--small">
+            <mat-label>{{ 'global_filter.filter_tabs.date_before' | translate }}</mat-label>
+            <mat-form-field
+              appearance="outline"
+              [ngClass]="{ 'daterange__input--focused': value.start && !value.end }"
+            >
+              <input
+                matInput
+                autocomplete="off"
+                class="daterange__input"
+                placeholder="DD-MM-YYYY"
+                [disabled]="!value.start"
+                [(ngModel)]="calendarValue.end"
+                (ngModelChange)="calendarInputChangeHandle()"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-calendar #calendar [selected]="value" (selectedChange)="selectedChange($event)">
+        </mat-calendar>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="filterType.Location">
+      <app-location-selection
+        [(ngModel)]="value"
+        class="location-select"
+        (ngModelChange)="valueChanged()"
+        (click)="$event.stopPropagation()"
+      >
+      </app-location-selection>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #buttonContent>
+  <span>{{ title }}</span>
+  <span class="filter-control__button__count" *ngIf="badge">{{ badge }}</span>
+  <mat-icon
+    class="filter-control__button__arrow"
+    [svgIcon]="isDesktop ? 'arrow-down-thin' : 'arrow-down'"
+  ></mat-icon>
+</ng-template>
+
+<ng-template #button>
+  <button
+    type="button"
+    mat-raised-button
+    (click)="toggleModal(true)"
+    class="filter-control__button"
+  >
+    <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
+  </button>
+
+  <div class="filter-modal" *ngIf="isModalOpen">
+    <div class="filter-modal__head">
+      <button type="button" mat-icon-button class="filter-modal__back" (click)="toggleModal(false)">
+        <mat-icon svgIcon="back"></mat-icon>
+      </button>
+      <h1>{{ title }}</h1>
+    </div>
+
+    <div class="filter-modal__content">
+      <ng-container *ngTemplateOutlet="control"></ng-container>
+    </div>
+
+    <div class="filter-modal__controls">
+      <button
+        type="button"
+        mat-stroked-button
+        (click)="clearFilter()"
+        class="filter-modal__control"
+      >
+        {{ 'nav.clear' | translate }}
+      </button>
+      <button
+        type="button"
+        color="primary"
+        (click)="apply()"
+        mat-raised-button
+        class="filter-modal__control"
+      >
+        {{ 'app.apply_filters' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>

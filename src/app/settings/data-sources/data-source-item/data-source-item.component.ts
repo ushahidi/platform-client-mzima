@@ -14,9 +14,11 @@ import {
   DataSourcesService,
   FormsService,
   SurveysService,
+  BreakpointService,
 } from '@services';
 import { arrayHelpers } from '@helpers';
 import { combineLatest } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-data-source-item',
@@ -34,6 +36,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   public currentProviderId: string | null;
   public availableProviders: any[];
   public onCreating: boolean;
+  public isDesktop = false;
 
   providersData: any;
 
@@ -48,7 +51,15 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     private surveysService: SurveysService,
     private formsService: FormsService,
     private translate: TranslateService,
-  ) {}
+    private breakpointService: BreakpointService,
+    private location: Location,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   getAvailableProviders(providers: any) {
     const tempProviders: any[] = [];
@@ -249,6 +260,14 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
       return obj.type === 'title' ? obj.type : 'content';
     } else {
       return `values.${obj.key}`;
+    }
+  }
+
+  public back() {
+    if (this.isDesktop) {
+      this.router.navigate(['settings/data-sources']);
+    } else {
+      this.location.back();
     }
   }
 }

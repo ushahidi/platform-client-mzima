@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DonationConfigInterface, SiteConfigInterface } from '@models';
-import { ConfigService, LoaderService, MediaService, SessionService } from '@services';
+import {
+  ConfigService,
+  LoaderService,
+  MediaService,
+  SessionService,
+  BreakpointService,
+} from '@services';
 
 @Component({
   selector: 'app-donation',
@@ -17,6 +23,7 @@ export class DonationComponent implements OnInit {
     wallet: ['', []],
     enabled: [false, []],
   });
+  public isDesktop = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,7 +31,14 @@ export class DonationComponent implements OnInit {
     private mediaService: MediaService,
     private loader: LoaderService,
     private configService: ConfigService,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.donationConfig = this.sessionService.getSiteConfigurations().donation!;

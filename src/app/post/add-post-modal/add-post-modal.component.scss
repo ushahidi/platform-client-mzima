@@ -1,8 +1,13 @@
+@import '/src/styles/helpers';
+
 .types-list {
   margin: 0;
   padding: 0;
   list-style: none;
-  columns: 2;
+
+  @include breakpoint-min($tablet) {
+    columns: 2;
+  }
 }
 
 .type-item {

@@ -31,3 +31,5 @@ export { ContactsService } from './contacts.service';
 export { DonationService } from './donation.service';
 export { UshahidiPageTitleStrategy } from './page-title.service';
 export { TwitterService } from './twitter.service';
+export { BreakpointService } from './breakpoint.service';
+export { SearchService } from './search.service';

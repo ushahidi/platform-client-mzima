@@ -7,11 +7,12 @@ import {
   GtmTrackingService,
   EventBusService,
   EventType,
+  BreakpointService,
 } from '@services';
 import { LoginComponent } from '@auth';
-import { MenuInterface, UserMenuInterface } from '@models';
+import { UserMenuInterface } from '@models';
 import { CollectionsComponent } from '@data';
-import { takeUntilDestroy$ } from '@helpers';
+import { takeUntilDestroy$, menuHelper } from '@helpers';
 import { EnumGtmEvent, EnumGtmSource } from '@enums';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -23,11 +24,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class SidebarComponent implements OnInit {
   isLoggedIn = false;
   isAdmin = false;
-  public menu: MenuInterface[] = [];
+  public menu = menuHelper.menu;
   public userMenu: UserMenuInterface[] = [];
   userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
   public siteConfig = this.sessionService.getSiteConfigurations();
   public canRegister = false;
+  public isDesktop = false;
+  public isInnerPage = false;
 
   constructor(
     private dialog: MatDialog,
@@ -37,7 +40,20 @@ export class SidebarComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private eventBusService: EventBusService,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+
+    this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
+      next: (option) => {
+        this.isInnerPage = Boolean(option.inner);
+      },
+    });
+  }
 
   ngOnInit() {
     this.userData$.subscribe((userData) => {
@@ -60,32 +76,6 @@ export class SidebarComponent implements OnInit {
   }
 
   private initMenu() {
-    this.menu = [
-      {
-        label: 'views.map',
-        router: 'map',
-        icon: 'map',
-        visible: true,
-      },
-      {
-        label: 'views.data',
-        router: 'feed',
-        icon: 'data',
-        visible: true,
-      },
-      {
-        label: 'views.activity',
-        router: 'activity',
-        icon: 'activity',
-        visible: true,
-      },
-      {
-        label: 'nav.settings',
-        router: 'settings',
-        icon: 'settings',
-        visible: this.isAdmin,
-      },
-    ];
     this.userMenu = [
       {
         label: 'nav.collections',
@@ -118,6 +108,7 @@ export class SidebarComponent implements OnInit {
     this.dialog.open(LoginComponent, {
       width: '100%',
       maxWidth: 576,
+      panelClass: ['modal', 'login-modal'],
       data: {
         isSignupActive: this.canRegister,
       },
@@ -127,7 +118,8 @@ export class SidebarComponent implements OnInit {
   private openCollections(): void {
     const dialogRef = this.dialog.open(CollectionsComponent, {
       width: '100%',
-      maxWidth: '768px',
+      maxWidth: 768,
+      panelClass: 'modal',
     });
 
     dialogRef.afterClosed().subscribe({

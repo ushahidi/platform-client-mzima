@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .collection-item {
   cursor: pointer;
   font-size: 12px;
@@ -9,6 +11,10 @@
   color: var(--color-neutral-80);
   background: var(--color-neutral-10);
 
+  @include breakpoint-max($tablet) {
+    font-size: 14px;
+  }
+
   &__actions {
     top: 13px;
     right: 16px;
@@ -17,6 +23,11 @@
     position: absolute;
     align-items: center;
     justify-content: flex-end;
+
+    @include breakpoint-max($tablet) {
+      margin-left: -6px;
+      margin-right: -6px;
+    }
   }
 
   &__control {
@@ -34,6 +45,12 @@
     justify-content: center;
     background: none;
 
+    @include breakpoint-max($tablet) {
+      font-size: 22px;
+      margin-left: 6px;
+      margin-right: 6px;
+    }
+
     .mat-icon {
       font-size: 1em;
     }
@@ -45,7 +62,14 @@
     font-weight: 500;
     line-height: 1.6;
     padding-right: 60px;
+    word-break: break-word;
     color: var(--color-black);
+
+    @include breakpoint-max($tablet) {
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
 
     .collection-item--has-checkbox & {
       display: flex;

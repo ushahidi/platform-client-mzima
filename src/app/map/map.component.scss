@@ -9,9 +9,16 @@
     margin-left: 200px;
   }
 
+  @include breakpoint-max($tablet) {
+    margin-left: 0;
+    height: calc(100vh - 160px);
+  }
+
   &--filters-visible {
-    margin-top: 56px;
-    height: calc(100% - 56px);
+    @include breakpoint-min($tablet) {
+      margin-top: 56px;
+      height: calc(100% - 56px);
+    }
   }
 }
 
@@ -49,6 +56,13 @@
       padding: 20px 24px 16px 34px;
       max-height: calc(100vh - 176px);
       -webkit-overflow-scrolling: touch;
+
+      @include breakpoint-max($mobile) {
+        width: 464px;
+        min-width: 0;
+        padding: 16px 16px 12px 26px;
+        max-width: calc(100vw - 32px);
+      }
     }
 
     .leaflet-popup-tip {

@@ -5,7 +5,13 @@ import { CONST } from '@constants';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest } from 'rxjs';
 import { RoleResult } from '@models';
-import { PermissionsService, RolesService, ConfirmModalService } from '@services';
+import {
+  PermissionsService,
+  RolesService,
+  ConfirmModalService,
+  BreakpointService,
+} from '@services';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-role-item',
@@ -29,6 +35,7 @@ export class RoleItemComponent implements OnInit {
     protected: [false],
     url: [''],
   });
+  public isDesktop = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,7 +45,15 @@ export class RoleItemComponent implements OnInit {
     private permissionsService: PermissionsService,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
-  ) {}
+    private breakpointService: BreakpointService,
+    private location: Location,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.userRole = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`) || '';
@@ -125,7 +140,11 @@ export class RoleItemComponent implements OnInit {
   }
 
   public navigateToRoles(): void {
-    this.router.navigate(['settings/roles']);
+    if (this.isDesktop) {
+      this.router.navigate(['settings/roles']);
+    } else {
+      this.location.back();
+    }
   }
 
   public save(): void {

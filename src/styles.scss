@@ -31,34 +31,43 @@
   box-sizing: border-box;
 }
 
-::-webkit-scrollbar {
-  width: 16px;
-  height: 16px;
-}
+@include breakpoint-min($tablet) {
+  ::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+  }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  background: var(--scrollbar-color, var(--color-neutral-90));
-  border: 6px solid var(--scrollbar-background, var(--color-neutral-10));
-}
+  ::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: var(--scrollbar-color, var(--color-neutral-90));
+    border: 6px solid var(--scrollbar-background, var(--color-neutral-10));
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-color, var(--color-neutral-90));
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-color, var(--color-neutral-90));
+  }
 }
 
 html,
 body {
   height: 100%;
-  overscroll-behavior-x: none;
-  overscroll-behavior-y: none;
+
+  @include breakpoint-min($tablet) {
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+  }
+}
+
+body {
+  background-color: var(--color-neutral-10);
 }
 
 .mat-drawer-container {
-  background-color: var(--color-neutral-10);
+  background-color: transparent;
 }
 
 .mat-icon {
@@ -134,6 +143,12 @@ a {
     @include breakpoint-max($laptop-small) {
       margin-top: 64px;
       height: calc(100% - 64px);
+    }
+
+    @include breakpoint-max($tablet) {
+      height: auto;
+      margin-top: 0;
+      margin-left: 0 !important;
     }
   }
 }

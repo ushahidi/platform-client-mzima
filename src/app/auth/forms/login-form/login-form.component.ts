@@ -59,6 +59,7 @@ export class LoginFormComponent {
     const dialogRef = this.dialog.open(ForgotPasswordComponent, {
       width: '100%',
       maxWidth: 576,
+      panelClass: ['modal', 'forgot-password-modal'],
     });
 
     dialogRef.afterClosed().subscribe(() => {

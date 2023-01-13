@@ -12,6 +12,7 @@ import {
   PostsService,
   PostsV5Service,
   SurveysService,
+  BreakpointService,
 } from '@services';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -44,6 +45,7 @@ export class CreateComponent implements OnInit {
   public selectedRelatedPost: any;
   private completeStages: number[] = [];
   private fieldsFormArray = ['tags'];
+  public isDesktop = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public type: number,
@@ -57,7 +59,14 @@ export class CreateComponent implements OnInit {
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
     private eventBusService: EventBusService,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.formId = this.type;

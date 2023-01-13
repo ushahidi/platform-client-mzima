@@ -35,6 +35,7 @@ export class PostHeadComponent implements OnInit {
       width: '100%',
       maxWidth: '768px',
       data: this.post,
+      panelClass: 'modal',
     });
 
     dialogRef.afterClosed().subscribe({

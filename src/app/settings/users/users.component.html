@@ -11,7 +11,7 @@
   <div class="users-container">
     <app-spinner class="spinner" *ngIf="!users"></app-spinner>
 
-    <table mat-table [dataSource]="users" class="users-table">
+    <table mat-table [dataSource]="users" class="users-table" *ngIf="isDesktop; else userList">
       <ng-container matColumnDef="checkbox">
         <th mat-header-cell *matHeaderCellDef>
           <div class="users-table__checkbox">
@@ -75,6 +75,32 @@
       ></tr>
     </table>
 
+    <ng-template #userList>
+      <div class="user-list">
+        <div class="user-item" *ngFor="let user of users" [routerLink]="['update', user.id]">
+          <div class="user-item__visual">
+            <img
+              [src]="'https://www.gravatar.com/avatar/' + user.gravatar + '?d=retro'"
+              [alt]="user.realname"
+            />
+          </div>
+          <div class="user-item__content">
+            <strong class="user-item__username">{{ user.realname }}</strong>
+            <span class="user-item__role">{{ user.role }}</span>
+            <span class="user-item__email">{{ user.email }}</span>
+          </div>
+          <mat-checkbox
+            *ngIf="isShowActions"
+            class="user-item__checkbox"
+            (click)="$event.stopPropagation()"
+            (change)="selectUser($event, user)"
+            [checked]="selectedUsers.includes(user.id)"
+          >
+          </mat-checkbox>
+        </div>
+      </div>
+    </ng-template>
+
     <app-spinner class="users-loading" *ngIf="isLoading"></app-spinner>
     <button
       mat-stroked-button
@@ -90,6 +116,7 @@
       {{ 'app.load_more' | translate }}
     </button>
   </div>
+  <div class="actions-spacer" *ngIf="isShowActions && !isDesktop"></div>
 </section>
 
 <ng-template #usersEmpty>

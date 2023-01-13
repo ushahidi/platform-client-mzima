@@ -1,11 +1,15 @@
+@import '/src/styles/helpers';
+
 .task {
   &:not(.task--main) {
-    padding: 24px;
-    margin-left: -7px;
-    margin-right: -7px;
-    border-radius: 4px;
-    margin-bottom: 24px;
-    box-shadow: inset 0 0 0 1px var(--color-neutral-20);
+    @include breakpoint-min($tablet) {
+      padding: 24px;
+      margin-left: -7px;
+      margin-right: -7px;
+      border-radius: 4px;
+      margin-bottom: 24px;
+      box-shadow: inset 0 0 0 1px var(--color-neutral-20);
+    }
   }
 }
 
@@ -13,6 +17,10 @@
   display: block;
   max-width: 100%;
   overflow: hidden;
+
+  @include breakpoint-max($tablet) {
+    margin-bottom: 24px;
+  }
 
   + .form-controls-panel {
     margin-top: 24px;
@@ -30,6 +38,11 @@
   color: var(--color-neutral-100);
   background: var(--color-neutral-10);
   box-shadow: inset 0 0 0 1px var(--color-neutral-10);
+
+  @include breakpoint-max($tablet) {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 
   &:not(:first-child) {
     margin-top: 16px;
@@ -68,6 +81,10 @@
     flex-direction: column;
     justify-content: center;
 
+    @include breakpoint-max($tablet) {
+      font-size: 32px;
+    }
+
     .mat-icon {
       font-size: 1em;
     }
@@ -80,6 +97,10 @@
     flex-shrink: 0;
     font-size: 24px;
     margin-right: 12px;
+
+    @include breakpoint-max($tablet) {
+      margin-right: 8px;
+    }
   }
 }
 

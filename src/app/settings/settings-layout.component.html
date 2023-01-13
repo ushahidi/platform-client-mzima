@@ -1,7 +1,7 @@
 <div class="settings-layout">
-  <app-settings class="settings-menu"></app-settings>
-  <div class="settings-router">
-    <div class="page-content">
+  <app-settings class="settings-menu" *ngIf="isDesktop || !isInnerPage"></app-settings>
+  <div class="settings-router" *ngIf="isDesktop || isInnerPage">
+    <div [ngClass]="{ 'page-content': isDesktop }">
       <router-outlet></router-outlet>
     </div>
   </div>

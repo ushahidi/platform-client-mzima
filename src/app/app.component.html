@@ -1,5 +1,5 @@
-<mat-sidenav-container>
-  <mat-sidenav class="sidebar" mode="side" opened disableClose>
+<mat-sidenav-container class="main" [ngClass]="{ 'main--inner': !isDesktop && isInnerPage }">
+  <mat-sidenav opened mode="side" disableClose class="sidebar">
     <app-sidebar></app-sidebar>
   </mat-sidenav>
   <mat-sidenav-content>

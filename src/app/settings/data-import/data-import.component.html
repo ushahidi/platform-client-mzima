@@ -1,5 +1,5 @@
 <div class="head">
-  <h1>{{ 'app.import' | translate }}</h1>
+  <h1 *ngIf="isDesktop">{{ 'app.import' | translate }}</h1>
   <button mat-raised-button color="primary" class="upload-button" data-qa="btn-upload">
     <span>{{
       selectedFile
@@ -164,6 +164,7 @@
     </table>
   </ng-container>
 
+  <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <button type="button" mat-stroked-button (click)="cancelImport()" data-qa="btn-cancel-import">
       {{ 'app.cancel' | translate }}

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { AddPostModalComponent, CreateComponent } from '@post';
-import { ConfirmModalService, EventBusService, EventType } from '@services';
+import { EventBusService, EventType, BreakpointService } from '@services';
 
 @Component({
   selector: 'app-submit-post-button',
@@ -11,13 +9,19 @@ import { ConfirmModalService, EventBusService, EventType } from '@services';
   styleUrls: ['./submit-post-button.component.scss'],
 })
 export class SubmitPostButtonComponent implements OnInit {
+  public isDesktop = false;
+
   constructor(
     private dialog: MatDialog,
-    private router: Router,
-    private translate: TranslateService,
-    private confirmModalService: ConfirmModalService,
     private eventBusService: EventBusService,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit() {
     this.eventBusService.on(EventType.AddPostButtonSubmit).subscribe({
@@ -28,8 +32,8 @@ export class SubmitPostButtonComponent implements OnInit {
   public async addPost(): Promise<void> {
     const dialogRef = this.dialog.open(AddPostModalComponent, {
       width: '100%',
-      maxWidth: '615px',
-      minWidth: '300px',
+      maxWidth: 615,
+      panelClass: 'modal',
     });
 
     dialogRef.afterClosed().subscribe({
@@ -39,8 +43,8 @@ export class SubmitPostButtonComponent implements OnInit {
             height: '95vh',
             width: '615px',
             data: response.type,
+            panelClass: ['modal', 'create-post-modal'],
           });
-          // this.router.navigate(['/post/create', response.type]);
         }
       },
     });

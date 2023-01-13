@@ -1,10 +1,11 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CONST } from '@constants';
 import { RoleResult, UserInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmModalService, RolesService, UsersService } from '@services';
+import { ConfirmModalService, RolesService, UsersService, BreakpointService } from '@services';
 
 @Component({
   selector: 'app-user-item',
@@ -23,6 +24,7 @@ export class UserItemComponent implements OnInit {
     role: ['', [Validators.required]],
   });
   public isMyProfile = false;
+  public isDesktop = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +34,15 @@ export class UserItemComponent implements OnInit {
     private rolesService: RolesService,
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
-  ) {}
+    private breakpointService: BreakpointService,
+    private location: Location,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.getRoles();
@@ -104,7 +114,11 @@ export class UserItemComponent implements OnInit {
   }
 
   navigateToUsers() {
-    this.router.navigate(['settings/users']);
+    if (this.isDesktop) {
+      this.router.navigate(['settings/users']);
+    } else {
+      this.location.back();
+    }
   }
 
   public async deleteUser(): Promise<void> {

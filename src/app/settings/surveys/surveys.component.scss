@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .types-list {
   margin: 0;
   padding: 0;
@@ -20,6 +22,19 @@
   transition: color 0.35s ease;
   background: var(--color-neutral-10);
   border-left: 5px solid var(--color, transparent);
+
+  @include breakpoint-max($tablet) {
+    border-left-width: 4px;
+    box-shadow: inset 0 0 0 1px var(--color-neutral-20);
+  }
+
+  @include breakpoint-max($mobile) {
+    width: calc(100% - 8px);
+  }
+}
+
+.actions-spacer {
+  height: 68px;
 }
 
 .spinner {

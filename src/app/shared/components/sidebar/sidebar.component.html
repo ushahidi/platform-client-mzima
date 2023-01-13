@@ -1,11 +1,12 @@
-<div class="sidebar">
-  <div>
-    <span class="sidebar__logo">
+<div class="sidebar" *ngIf="isDesktop || !isInnerPage">
+  <div class="sidebar__main">
+    <span class="sidebar__logo" *ngIf="isDesktop">
       <img src="assets/images/ushahidi-logo.svg" alt="ushahidi" width="172" height="40" />
     </span>
 
     <div class="sidebar__info">
       <app-company-info
+        *ngIf="isDesktop"
         [title]="siteConfig.name"
         [logo]="siteConfig.image_header"
         [description]="siteConfig.description"
@@ -19,12 +20,12 @@
       <ng-container *ngFor="let item of menu">
         <a
           mat-raised-button
-          *ngIf="item.visible"
           class="sidebar-menu-button"
+          [data-qa]="'btn-' + item.icon"
+          *ngIf="!item.adminGuard || isAdmin"
           [routerLink]="createRouterLink(item.router)"
           routerLinkActive="sidebar-menu-button--active"
           (click)="registerPage($event, item.router, item.label)"
-          [data-qa]="'btn-' + item.icon"
         >
           <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
           <span class="sidebar-menu-button__title">
@@ -33,7 +34,7 @@
         </a>
       </ng-container>
     </div>
-    <div class="sidebar__menu">
+    <div class="sidebar__menu" *ngIf="isDesktop">
       <ng-container *ngFor="let item of userMenu">
         <a
           mat-raised-button

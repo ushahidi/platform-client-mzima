@@ -1,4 +1,6 @@
-<h1>{{ isUpdate ? ('user.edit_user' | translate) : ('user.add_user' | translate) }}</h1>
+<h1 *ngIf="isDesktop">
+  {{ isUpdate ? ('user.edit_user' | translate) : ('user.add_user' | translate) }}
+</h1>
 
 <form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
   <div class="form-row">
@@ -58,6 +60,7 @@
     </mat-form-field>
   </div>
 
+  <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <div>
       <button
@@ -67,8 +70,10 @@
         color="accent"
         data-qa="btn-user-delete-user"
         (click)="deleteUser()"
+        class="delete-button"
       >
-        {{ 'user.delete_user' | translate }}
+        <ng-container *ngIf="isDesktop">{{ 'user.delete_user' | translate }}</ng-container>
+        <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
       </button>
     </div>
     <div>

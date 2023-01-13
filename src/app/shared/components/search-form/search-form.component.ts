@@ -14,6 +14,7 @@ import {
   EventType,
   SessionService,
   CollectionsService,
+  BreakpointService,
 } from '@services';
 import { BehaviorSubject, debounceTime, filter, forkJoin, map, Subject } from 'rxjs';
 import { SavedsearchesService } from 'src/app/core/services/savedsearches.service';
@@ -71,6 +72,7 @@ export class SearchFormComponent implements OnInit {
   public notShownPostsCount: number;
   public showSources: boolean;
   isLoggedIn = false;
+  public isDesktop = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -84,7 +86,14 @@ export class SearchFormComponent implements OnInit {
     private translate: TranslateService,
     private session: SessionService,
     private eventBusService: EventBusService,
+    private breakpointService: BreakpointService,
   ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+
     this.getSavedFilters();
 
     this.getSurveys();
@@ -296,6 +305,7 @@ export class SearchFormComponent implements OnInit {
       maxWidth: 576,
       height: 'auto',
       maxHeight: '90vh',
+      panelClass: 'modal',
       data: {
         search,
       },
@@ -411,6 +421,11 @@ export class SearchFormComponent implements OnInit {
 
   public applyFilters(): void {
     this.postsService.applyFilters(this.activeFilters);
+  }
+
+  public applyAndClose(): void {
+    this.applyFilters();
+    this.toggleFilters(false);
   }
 
   public resetForm(filters: any = {}): void {

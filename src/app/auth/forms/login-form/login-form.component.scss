@@ -1,7 +1,21 @@
+@import '/src/styles/helpers';
+
 .controls {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  @include breakpoint-max($tablet) {
+    margin-top: -16px;
+
+    .mat-button {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 44px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
 }
 
 .form-error {

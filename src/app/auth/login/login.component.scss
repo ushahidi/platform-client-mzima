@@ -1,18 +1,89 @@
+@import '/src/styles/helpers';
+
 .tabs {
   &::ng-deep {
     .mat-tab-header {
       margin-bottom: 21px;
       padding-right: 64px;
+
+      @include breakpoint-max($tablet) {
+        padding-right: 0;
+        margin-bottom: 32px;
+      }
     }
 
     .mat-tab-labels {
       margin: 0 -8px;
+
+      @include breakpoint-max($tablet) {
+        justify-content: center;
+      }
     }
 
     .mat-tab-label {
       margin: 0 8px;
       font-size: 24px;
       font-weight: 700;
+    }
+  }
+
+  &--single {
+    &::ng-deep {
+      .mat-ink-bar {
+        display: none !important;
+      }
+
+      .mat-tab-label {
+        min-width: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .mat-tab-labels {
+        @include breakpoint-max($tablet) {
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  @include breakpoint-max($tablet) {
+    .login-modal {
+      height: 100%;
+      width: 100% !important;
+      max-width: none !important;
+
+      .mat-dialog-container {
+        border-radius: 0 !important;
+        padding: 96px 24px 120px !important;
+
+        .modal {
+          &__close-btn {
+            top: 32px;
+            right: 24px;
+            position: fixed;
+          }
+        }
+      }
+
+      .mat-dialog-actions {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        z-index: 25;
+        position: fixed;
+        min-height: 56px !important;
+        background: var(--color-light);
+        padding: 8px 24px 56px !important;
+
+        .mat-raised-button {
+          min-width: 100%;
+          line-height: 56px;
+        }
+      }
     }
   }
 }

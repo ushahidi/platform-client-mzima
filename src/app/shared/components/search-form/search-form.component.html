@@ -28,11 +28,12 @@
   <button
     type="button"
     mat-raised-button
-    (click)="toggleFilters(!isFiltersVisible)"
     class="search-form__filters"
+    *ngIf="isDesktop || isMapView"
+    (click)="toggleFilters(!isFiltersVisible)"
   >
     <mat-icon class="search-form__filters__icon" svgIcon="filters"></mat-icon>
-    {{ 'app.filters' | translate }}
+    <span>{{ 'app.filters' | translate }}</span>
   </button>
 
   <div class="search-form__main-filters">
@@ -137,86 +138,142 @@
 
   <div
     class="search-form__filters-panel"
+    *ngIf="isDesktop || isFiltersVisible"
     [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
   >
-    <app-filter-control
-      title="{{ 'global_filter.saved_filters' | translate }}"
-      [type]="filterType.Select"
-      [options]="savedsearches"
-      [canEdit]="isLoggedIn"
-      (editOption)="saveSearch($event)"
-      [(ngModel)]="activeSavedSearchValue"
-      [ngModelOptions]="{ standalone: true }"
-      (filterChange)="applySavedFilter($event)"
-      class="search-form__filters-panel__item"
-      [badge]="activeSavedSearchValue ? 1 : null"
-    >
+    <div class="search-form__filters-panel__head" *ngIf="!isDesktop">
+      <h3>Filters and sorting</h3>
       <button
-        postfix
-        mat-button
-        color="primary"
-        (click)="saveSearch()"
-        class="save-filter-button small"
-      >
-        <mat-icon svgIcon="plus" class="save-filter-button__icon"></mat-icon>
-        {{ 'global_filter.save_new_filter' | translate }}
-      </button>
-    </app-filter-control>
-
-    <app-filter-control
-      [options]="statuses"
-      formControlName="status"
-      [fields]="['value', 'name']"
-      [type]="filterType.Multiselect"
-      class="search-form__filters-panel__item"
-      [title]="'global_filter.status' | translate"
-      [badge]="form.controls['status'].value?.length || null"
-    >
-    </app-filter-control>
-
-    <app-filter-control
-      formControlName="tags"
-      [options]="categoriesData"
-      [type]="filterType.Multilevelselect"
-      [title]="'app.categories' | translate"
-      class="search-form__filters-panel__item"
-      [badge]="form.controls['tags'].value?.length || null"
-    >
-    </app-filter-control>
-
-    <app-filter-control
-      formControlName="date"
-      [type]="filterType.Daterange"
-      class="search-form__filters-panel__item"
-      [title]="'global_filter.date_range' | translate"
-      [badge]="
-        form.controls['date'].value?.start?.length || form.controls['date'].value?.start?.length
-          ? 1
-          : null
-      "
-    >
-    </app-filter-control>
-
-    <app-filter-control
-      [type]="filterType.Location"
-      formControlName="center_point"
-      class="search-form__filters-panel__item"
-      [title]="'global_filter.location' | translate"
-      [badge]="form.controls['center_point'].value?.length ? 1 : null"
-    >
-    </app-filter-control>
-
-    <div class="search-form__filters-panel__item search-form__filters-panel__item--controls">
-      <button
-        color="dark"
-        type="button"
         mat-stroked-button
-        [disabled]="form.disabled"
-        class="search-form__button"
-        (click)="resetSavedFilter()"
+        (click)="toggleFilters(false)"
+        class="search-form__filters-panel__head__close"
+        [attr.aria-label]="'modal.button.close' | translate"
       >
-        {{ 'global_filter.clear_all_filters' | translate }}
+        <mat-icon class="fab-button__icon">close</mat-icon>
       </button>
+    </div>
+
+    <div class="search-form__filters-panel__inner">
+      <ng-container *ngIf="!isDesktop">
+        <app-filter-control
+          [options]="surveyList"
+          formControlName="form"
+          [fields]="['id', 'name']"
+          (clear)="clearFilter('form')"
+          [type]="filterType.Multiselect"
+          [title]="'app.surveys' | translate"
+          class="search-form__filters-panel__item"
+          [badge]="form.controls['form'].value?.length || null"
+        >
+        </app-filter-control>
+
+        <app-filter-control
+          [options]="sources"
+          formControlName="source"
+          [fields]="['value', 'name']"
+          [type]="filterType.Multiselect"
+          (clear)="clearFilter('source')"
+          class="search-form__filters-panel__item"
+          [title]="'global_filter.source' | translate"
+          [badge]="form.controls['source'].value?.length || null"
+        >
+        </app-filter-control>
+      </ng-container>
+
+      <app-filter-control
+        title="{{ 'global_filter.saved_filters' | translate }}"
+        [type]="filterType.Select"
+        [options]="savedsearches"
+        [canEdit]="isLoggedIn"
+        (clear)="applySavedFilter(null)"
+        (editOption)="saveSearch($event)"
+        [(ngModel)]="activeSavedSearchValue"
+        [ngModelOptions]="{ standalone: true }"
+        (filterChange)="applySavedFilter($event)"
+        class="search-form__filters-panel__item"
+        [badge]="activeSavedSearchValue ? 1 : null"
+      >
+        <button
+          postfix
+          mat-button
+          color="primary"
+          (click)="saveSearch()"
+          class="save-filter-button small"
+        >
+          <mat-icon svgIcon="plus" class="save-filter-button__icon"></mat-icon>
+          {{ 'global_filter.save_new_filter' | translate }}
+        </button>
+      </app-filter-control>
+
+      <app-filter-control
+        [options]="statuses"
+        formControlName="status"
+        [fields]="['value', 'name']"
+        [type]="filterType.Multiselect"
+        (clear)="clearFilter('status')"
+        class="search-form__filters-panel__item"
+        [title]="'global_filter.status' | translate"
+        [badge]="form.controls['status'].value?.length || null"
+      >
+      </app-filter-control>
+
+      <app-filter-control
+        formControlName="tags"
+        [options]="categoriesData"
+        (clear)="clearFilter('tags')"
+        [type]="filterType.Multilevelselect"
+        [title]="'app.categories' | translate"
+        class="search-form__filters-panel__item"
+        [badge]="form.controls['tags'].value?.length || null"
+      >
+      </app-filter-control>
+
+      <app-filter-control
+        formControlName="date"
+        [type]="filterType.Daterange"
+        (clear)="clearFilter('date')"
+        class="search-form__filters-panel__item"
+        [title]="'global_filter.date_range' | translate"
+        [badge]="
+          form.controls['date'].value?.start?.length || form.controls['date'].value?.start?.length
+            ? 1
+            : null
+        "
+      >
+      </app-filter-control>
+
+      <app-filter-control
+        [type]="filterType.Location"
+        formControlName="center_point"
+        (clear)="clearFilter('center_point')"
+        class="search-form__filters-panel__item"
+        [title]="'global_filter.location' | translate"
+        [badge]="form.controls['center_point'].value?.length ? 1 : null"
+      >
+      </app-filter-control>
+
+      <div class="search-form__filters-panel__item search-form__filters-panel__item--controls">
+        <button
+          type="button"
+          mat-stroked-button
+          [disabled]="form.disabled"
+          class="search-form__button"
+          (click)="resetSavedFilter()"
+        >
+          {{ 'global_filter.clear_all_filters' | translate }}
+        </button>
+        <button
+          type="button"
+          color="primary"
+          *ngIf="!isDesktop"
+          mat-raised-button
+          (click)="applyAndClose()"
+          [disabled]="form.disabled"
+          class="search-form__button"
+        >
+          Apply filters
+        </button>
+      </div>
     </div>
   </div>
 </form>

@@ -1,7 +1,19 @@
 @import '/src/styles/helpers';
 
-mat-sidenav-container {
-  height: 100%;
+.main {
+  @include breakpoint-min($tablet) {
+    height: 100%;
+  }
+
+  @include breakpoint-max($tablet) {
+    min-height: 100%;
+    padding-top: 80px;
+    padding-bottom: 80px;
+
+    &--inner {
+      padding-bottom: 0;
+    }
+  }
 }
 
 .sidebar {
@@ -15,6 +27,15 @@ mat-sidenav-container {
   @include breakpoint-max($laptop-small) {
     max-width: 200px;
   }
+
+  @include breakpoint-max($tablet) {
+    right: 0;
+    top: auto;
+    position: fixed;
+    max-width: none;
+    overflow: visible;
+    z-index: 500 !important;
+  }
 }
 
 .content-wrapper {
@@ -25,6 +46,12 @@ mat-sidenav-container {
 
 ::ng-deep {
   .mat-drawer-inner-container {
-    overflow: hidden !important;
+    @include breakpoint-min($tablet) {
+      overflow: hidden !important;
+    }
+
+    @include breakpoint-max($tablet) {
+      overflow: visible !important;
+    }
   }
 }

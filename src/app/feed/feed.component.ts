@@ -4,7 +4,13 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmModalService, PostsService, PostsV5Service, SessionService } from '@services';
+import {
+  ConfirmModalService,
+  PostsService,
+  PostsV5Service,
+  SessionService,
+  BreakpointService,
+} from '@services';
 import { NgxMasonryComponent } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
@@ -44,6 +50,7 @@ export class FeedComponent {
     orderby: 'created',
   };
   public updateMasonryLayout: boolean;
+  public isDesktop = false;
 
   constructor(
     private postsService: PostsService,
@@ -53,7 +60,14 @@ export class FeedComponent {
     private confirmModalService: ConfirmModalService,
     private dialog: MatDialog,
     private translate: TranslateService,
+    private breakpointService: BreakpointService,
   ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+
     this.route.params.subscribe(() => {
       this.initCollection();
     });
@@ -112,6 +126,7 @@ export class FeedComponent {
         setTimeout(() => {
           this.isLoading = false;
           if (
+            this.isDesktop &&
             this.feed?.nativeElement.offsetHeight &&
             this.feed?.nativeElement.offsetHeight >= this.feed?.nativeElement.scrollHeight
           ) {
@@ -149,7 +164,7 @@ export class FeedComponent {
       data: { color: post.color, twitterId: post.data_source_message_id },
       height: 'auto',
       maxHeight: '90vh',
-      panelClass: 'post-modal',
+      panelClass: ['modal', 'post-modal'],
     });
 
     this.postsV5Service.getById(post.id).subscribe({
@@ -166,10 +181,8 @@ export class FeedComponent {
     }
   }
 
-  public changePostsStatus(event: any): void {
-    forkJoin(
-      this.selectedPosts.map((p) => this.postsService.update(p, { status: event.value })),
-    ).subscribe({
+  public changePostsStatus(status: string): void {
+    forkJoin(this.selectedPosts.map((p) => this.postsService.update(p, { status }))).subscribe({
       complete: () => {
         this.getPosts(this.params);
         this.selectedStatus = undefined;
@@ -232,9 +245,16 @@ export class FeedComponent {
   }
 
   public onScroll(event: any): void {
+    console.log('onScroll');
+
+    console.log(event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight);
+
     if (
       !this.isLoading &&
-      event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32
+      ((this.isDesktop &&
+        event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32) ||
+        (!this.isDesktop &&
+          event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight))
     ) {
       this.loadMore();
     }
@@ -249,5 +269,11 @@ export class FeedComponent {
       this.params.offset = this.params.offset + this.params.limit;
       this.getPosts(this.params, true);
     }
+  }
+
+  public toggleFilters(value: boolean): void {
+    if (value === this.isFiltersVisible) return;
+    this.isFiltersVisible = value;
+    this.session.toggleFiltersVisibility(value);
   }
 }

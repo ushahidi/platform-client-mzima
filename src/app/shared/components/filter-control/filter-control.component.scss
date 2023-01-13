@@ -4,8 +4,13 @@
   height: 100%;
   position: relative;
 
+  @include breakpoint-max($tablet) {
+    height: auto;
+  }
+
   &__button {
     width: 100%;
+    display: block;
     font-size: 14px;
     padding: 8px 4px;
     border-radius: 0;
@@ -16,6 +21,17 @@
     box-shadow: none !important;
     border-bottom: 1px solid var(--color-neutral-30);
 
+    @include breakpoint-max($tablet) {
+      border: none;
+      font-size: 12px;
+      min-height: 48px;
+      text-align: left;
+      line-height: 1.5;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 8px 64px 8px 16px;
+    }
+
     &[aria-expanded='true'] {
       border-bottom-color: transparent;
     }
@@ -23,6 +39,10 @@
     &::ng-deep {
       .mat-button-wrapper {
         justify-content: center;
+
+        @include breakpoint-max($tablet) {
+          position: static;
+        }
       }
     }
 
@@ -37,8 +57,18 @@
       transition: transform 0.35s ease;
 
       @include breakpoint-max($laptop-small) {
-        font-size: 20px;
-        margin-left: 4px !important;
+        @include breakpoint-min($tablet) {
+          font-size: 20px;
+          margin-left: 4px !important;
+        }
+      }
+
+      @include breakpoint-max($tablet) {
+        top: 50%;
+        right: 16px;
+        position: absolute;
+        margin-top: -0.5em;
+        transform: rotate(-90deg);
       }
 
       .filter-control__button[aria-expanded='true'] & {
@@ -58,11 +88,20 @@
       background: rgba(255, 195, 52, 0.3);
 
       @include breakpoint-max($laptop-small) {
-        padding: 2px;
-        min-width: 16px;
-        font-size: 10px;
-        margin-left: 4px;
-        line-height: 12px;
+        @include breakpoint-min($tablet) {
+          padding: 2px;
+          min-width: 16px;
+          font-size: 10px;
+          margin-left: 4px;
+          line-height: 12px;
+        }
+      }
+
+      @include breakpoint-max($tablet) {
+        padding: 4px;
+        font-size: 14px;
+        min-width: 32px;
+        line-height: 24px;
       }
     }
   }
@@ -76,6 +115,15 @@
   color: var(--color-neutral-90);
   justify-content: space-between;
 
+  @include breakpoint-max($tablet) {
+    font-size: 16px;
+    line-height: 1.5;
+
+    &:not(:first-child) {
+      margin-top: 16px;
+    }
+  }
+
   .mat-radio-button {
     flex: 1 1 100%;
 
@@ -84,16 +132,37 @@
         min-height: 36px;
         padding: 4px 16px;
         white-space: normal;
+
+        @include breakpoint-max($tablet) {
+          margin: 0 -16px;
+          min-height: 48px;
+          padding: 8px 16px;
+          width: calc(100% + 32px);
+        }
+      }
+
+      .mat-radio-label-content {
+        @include breakpoint-max($tablet) {
+          padding-left: 11.5px;
+        }
       }
 
       .mat-radio-container {
         --radio-size: 16px;
         width: var(--radio-size);
         height: var(--radio-size);
+
+        @include breakpoint-max($tablet) {
+          --radio-size: 21px;
+        }
       }
 
       .mat-radio-outer-circle {
         border-width: 1px;
+
+        @include breakpoint-max($tablet) {
+          border-width: 2px;
+        }
       }
 
       .mat-radio-outer-circle,
@@ -130,19 +199,31 @@
 }
 
 .multilevelselect-filter {
+  .mat-tree-node {
+    @include breakpoint-max($tablet) {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+  }
+
   &__option {
     flex: 1 1 50%;
 
     &::ng-deep {
       .mat-list-item-content {
         padding: 4px 0 4px 16px;
+
+        @include breakpoint-max($tablet) {
+          padding: 8px 16px;
+        }
       }
 
       .mat-pseudo-checkbox {
         margin-right: 8px;
-      }
 
-      .mat-icon-button {
+        @include breakpoint-max($tablet) {
+          margin-right: 11px;
+        }
       }
     }
 
@@ -156,6 +237,11 @@
       flex-direction: column;
       justify-content: center;
       transition: transform 0.35s ease;
+
+      @include breakpoint-max($tablet) {
+        font-size: 40px;
+        margin-right: -16px;
+      }
 
       &--open {
         transform: rotate(180deg);
@@ -181,6 +267,11 @@
 .checkbox-option {
   font-size: 12px;
   line-height: 14px;
+
+  @include breakpoint-max($tablet) {
+    font-size: 16px;
+    line-height: 1.5;
+  }
 }
 
 ::ng-deep {
@@ -200,7 +291,7 @@
       min-width: 160px;
       box-shadow: none;
       border-radius: 0;
-      max-height: calc(60vh - 150px);
+      max-height: calc(100vh - 150px);
       width: calc((100vw - 440px) / 6);
     }
 
@@ -237,6 +328,12 @@
       flex: 1 1 100%;
       min-height: 0;
 
+      @include breakpoint-max($tablet) {
+        &:not(:first-child) {
+          margin-top: 16px;
+        }
+      }
+
       &[aria-level='2'] {
         margin-left: 16px;
       }
@@ -247,6 +344,10 @@
       min-height: 40px;
       align-items: center;
       justify-content: flex-start;
+
+      @include breakpoint-max($tablet) {
+        min-height: 48px;
+      }
     }
   }
 
@@ -274,7 +375,9 @@
 }
 
 .daterange {
-  padding: 8px 16px;
+  @include breakpoint-min($tablet) {
+    padding: 8px 16px;
+  }
 
   &__inputs {
     display: flex;
@@ -337,5 +440,92 @@
 
 .location-select {
   display: block;
-  padding: 16px 16px 0;
+
+  @include breakpoint-min($tablet) {
+    padding: 16px 16px 0;
+  }
+}
+
+.filter-modal {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 150;
+  position: fixed;
+  background: var(--color-light);
+
+  &__head {
+    height: 80px;
+    display: flex;
+    padding: 8px 16px;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid var(--color-neutral-30);
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 0;
+      font-weight: 700;
+      line-height: 1.28;
+    }
+  }
+
+  &__back {
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    font-size: 40px;
+    margin-right: 8px;
+
+    .mat-icon {
+      font-size: 1em;
+    }
+  }
+
+  &__content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding: 16px 16px 80px;
+    max-height: calc(100% - 80px);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &__controls {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    position: fixed;
+    padding: 12px 11px;
+    align-items: center;
+    border-bottom: none;
+    background: var(--color-light);
+    justify-content: space-between;
+    border-top: 1px solid var(--color-neutral-30);
+  }
+
+  &__control {
+    margin: 0 5px;
+    flex: 1 1 calc(100% - 10px);
+  }
+}
+
+.mat-list-base {
+  @include breakpoint-max($tablet) {
+    padding-top: 0;
+  }
+}
+
+.mat-list-option {
+  @include breakpoint-max($tablet) {
+    margin-left: -16px;
+    margin-right: -16px;
+    width: calc(100% + 32px) !important;
+
+    &:not(:first-child) {
+      margin-top: 16px;
+    }
+  }
 }

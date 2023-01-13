@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BreakpointService } from '@services';
 
 @Component({
   selector: 'app-login',
@@ -8,12 +9,19 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class LoginComponent {
   public isSignupActive: boolean;
+  public isDesktop = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private matDialogRef: MatDialogRef<LoginComponent>,
+    private breakpointService: BreakpointService,
   ) {
     this.isSignupActive = this.data.isSignupActive;
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
   }
 
   public cancel() {

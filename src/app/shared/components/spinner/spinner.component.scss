@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .overlay {
   top: 0;
   left: 0;
@@ -16,6 +18,11 @@
   margin: 0 auto;
   width: var(--size, 100px) !important;
   height: var(--size, 100px) !important;
+
+  @include breakpoint-max($mobile) {
+    width: var(--size, 64px) !important;
+    height: var(--size, 64px) !important;
+  }
 
   &::ng-deep {
     svg {

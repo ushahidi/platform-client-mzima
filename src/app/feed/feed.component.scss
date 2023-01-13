@@ -9,10 +9,13 @@
 
 .feed-page {
   height: 100%;
-  margin: 0 0 0 220px;
 
-  @include breakpoint-max($laptop-small) {
-    margin-left: 200px;
+  @include breakpoint-min($tablet) {
+    margin: 0 0 0 220px;
+
+    @include breakpoint-max($laptop-small) {
+      margin-left: 200px;
+    }
   }
 
   &--filters-visible {
@@ -30,6 +33,12 @@
       padding-left: 16px;
       padding-right: 16px;
     }
+
+    @include breakpoint-max($tablet) {
+      display: block;
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
   }
 
   &__controls {
@@ -41,6 +50,31 @@
     @include breakpoint-max($laptop-small) {
       margin-left: -4px;
       margin-right: -4px;
+    }
+
+    @include breakpoint-max($tablet) {
+      justify-content: space-between;
+    }
+
+    &--actions {
+      @include breakpoint-max($tablet) {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        z-index: 500;
+        position: fixed;
+        min-height: 88px;
+        padding: 8px 16px;
+        background: var(--color-neutral-10);
+        border-top: 1px solid var(--color-neutral-40);
+      }
+    }
+
+    &__inner {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
     }
 
     .mat-form-field {
@@ -86,16 +120,33 @@
       margin-right: 4px;
     }
 
+    @include breakpoint-max($tablet) {
+      display: flex;
+      min-width: 64px;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+
+      &--bulk {
+        flex: 1 1 100%;
+        max-width: 320px;
+      }
+    }
+
     &--sorting {
       .feed-page__controls-panel--bulk-visible & {
         @include breakpoint-max($laptop-small) {
-          display: none;
+          @include breakpoint-min($tablet) {
+            display: none;
+          }
         }
       }
     }
 
     .mat-icon {
-      margin-left: 10px;
+      &:not(:first-child) {
+        margin-left: 10px;
+      }
     }
   }
 }
@@ -139,17 +190,38 @@
     padding-left: 16px;
   }
 
+  @include breakpoint-max($tablet) {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 48px;
+    height: calc(100vh - 240px);
+  }
+
+  @include breakpoint-max($mobile) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
   &__loading {
     --size: 48px;
     display: block;
     margin-top: 24px;
+
+    @include breakpoint-max($tablet) {
+      margin-top: 16px;
+      margin-bottom: 32px;
+    }
   }
 
   &__load-more {
     display: block;
-    margin: 0 auto;
     min-width: 132px;
-    margin-top: 16px;
+    margin: 16px auto 0;
+
+    @include breakpoint-max($tablet) {
+      margin-top: 8px;
+      margin-bottom: 32px;
+    }
   }
 }
 
@@ -161,5 +233,47 @@
 
   @include breakpoint-max($laptop-small) {
     width: calc(50% - 16px);
+  }
+
+  @include breakpoint-max($mobile) {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.menu-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 18px;
+  line-height: 1.25;
+}
+
+::ng-deep {
+  .statuses-menu {
+    min-width: 187px;
+    max-width: 187px;
+
+    &__backdrop {
+      background: rgba(var(--color-black-rgb), 0.15);
+    }
+
+    .mat-menu-content {
+      padding: 26px 32px 16px;
+    }
+
+    .mat-menu-item {
+      min-height: 40px;
+      max-width: none;
+      padding-left: 32px;
+      padding-right: 32px;
+      margin-left: -32px;
+      margin-right: -32px;
+      width: calc(100% + 64px);
+
+      &:not(:first-of-type) {
+        margin-top: 8px;
+      }
+    }
   }
 }

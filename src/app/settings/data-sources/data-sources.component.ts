@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService, DataSourcesService } from '@services';
+import { ConfigService, DataSourcesService, BreakpointService } from '@services';
 import { arrayHelpers } from '@helpers';
 import { switchMap } from 'rxjs';
 
@@ -11,11 +11,19 @@ import { switchMap } from 'rxjs';
 export class DataSourcesComponent implements OnInit {
   public isAllProvidersAdded: boolean;
   public providersData: any;
+  public isDesktop = false;
 
   constructor(
     private configService: ConfigService,
     private dataSourcesService: DataSourcesService,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit() {
     this.getProvidersList();

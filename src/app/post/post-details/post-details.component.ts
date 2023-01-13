@@ -58,6 +58,7 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
       maxWidth: 480,
       height: 'auto',
       maxHeight: '90vh',
+      panelClass: 'modal',
       data: {
         title: this.translate.instant('app.edit_collection'),
       },

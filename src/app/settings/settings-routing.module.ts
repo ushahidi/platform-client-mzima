@@ -7,11 +7,11 @@ const routes: Routes = [
     path: '',
     component: SettingsLayoutComponent,
     children: [
-      {
-        path: '',
-        redirectTo: 'general',
-        pathMatch: 'full',
-      },
+      // {
+      //   path: '',
+      //   redirectTo: 'general',
+      //   pathMatch: 'full',
+      // },
       {
         path: 'general',
         loadChildren: () => import('./general/general.module').then((m) => m.GeneralModule),

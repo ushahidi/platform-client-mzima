@@ -6,6 +6,6 @@
   class="submit-post-button"
   data-qa="btn-add-new-post"
 >
-  <span>{{ 'app.add_new_post' | translate }}</span>
+  <span *ngIf="isDesktop">{{ 'app.add_new_post' | translate }}</span>
   <mat-icon svgIcon="plus"></mat-icon>
 </button>
