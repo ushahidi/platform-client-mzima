@@ -11,6 +11,7 @@ import {
   EventBusService,
   EventType,
 } from '@services';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter } from 'rxjs';
 import { DonationModalComponent } from 'src/app/settings';
 import { AccountSettingsComponent } from '../account-settings/account-settings.component';
@@ -21,6 +22,7 @@ import { CollectionsComponent } from '@data';
 import { LoginComponent } from '@auth';
 import { Location } from '@angular/common';
 
+@UntilDestroy()
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -29,7 +31,9 @@ import { Location } from '@angular/common';
 export class ToolbarComponent implements OnInit {
   @Input() languages: any;
   @Input() selectedLanguage: any;
-  private userData$ = this.session.currentUserData$;
+  // TODO: Fix takeUntilDestroy$() with material components
+  // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
+  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
   public isLoggedIn = false;
   public isDonateAvailable = false;
   public profile: UserInterface;

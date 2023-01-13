@@ -9,13 +9,31 @@ const routes: Routes = [
     component: FeedComponent,
     children: [{ path: ':id/edit', component: EditFeedItemComponent }],
   },
-  { path: 'collection', redirectTo: '' },
   {
-    path: 'collection/:id',
-    component: FeedComponent,
-    data: {
-      view: 'collection',
-    },
+    path: 'collection',
+    redirectTo: '',
+    children: [
+      {
+        path: ':id',
+        component: FeedComponent,
+        data: {
+          view: 'collection',
+        },
+      },
+    ],
+  },
+  {
+    path: 'search',
+    redirectTo: '',
+    children: [
+      {
+        path: ':id',
+        component: FeedComponent,
+        data: {
+          view: 'search',
+        },
+      },
+    ],
   },
 ];
 

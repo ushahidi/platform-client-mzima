@@ -12,7 +12,7 @@
     <ng-container *ngIf="selectable">
       <mat-checkbox [(ngModel)]="isChecked"></mat-checkbox>
     </ng-container>
-    <app-post-head [post]="post"></app-post-head>
+    <app-post-head [post]="post" [user]="user"></app-post-head>
   </div>
 
   <div class="post__main">
@@ -24,8 +24,15 @@
       <p *ngIf="post.title?.length && post.content?.length">{{ post.content }}</p>
     </div>
   </div>
-
-  <div class="post__more" *ngIf="!feedView">
+  <div
+    class="post__more"
+    *ngIf="
+      !feedView &&
+      (user?.allowed_privileges
+        ? user?.allowed_privileges!.includes('read_full')
+        : post.allowed_privileges.includes('read_full'))
+    "
+  >
     <button mat-button color="primary" (click)="showDetails()" disableRipple>
       {{ 'post.read_more' | translate }}
     </button>

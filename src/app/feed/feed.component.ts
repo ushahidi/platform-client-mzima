@@ -1,13 +1,17 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
 import { searchFormHelper } from '@helpers';
-import { GeoJsonFilter, PostResult } from '@models';
+import { GeoJsonFilter, PostResult, UserInterface } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
   ConfirmModalService,
+  EventBusService,
+  EventType,
   PostsService,
   PostsV5Service,
+  SavedsearchesService,
   SessionService,
   BreakpointService,
 } from '@services';
@@ -15,12 +19,13 @@ import { NgxMasonryComponent } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 
+@UntilDestroy()
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss'],
 })
-export class FeedComponent {
+export class FeedComponent implements OnInit {
   @ViewChild('feed') public feed: ElementRef;
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
   public params: GeoJsonFilter = {
@@ -33,6 +38,7 @@ export class FeedComponent {
     size: this.params.limit,
   };
   collectionId = '';
+  searchId = '';
   public posts: any[] = [];
   public isLoading = false;
   public activePostId: any;
@@ -50,6 +56,13 @@ export class FeedComponent {
     orderby: 'created',
   };
   public updateMasonryLayout: boolean;
+  // TODO: Fix takeUntilDestroy$() with material components
+  // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
+  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
+  public user: UserInterface;
+  private filters = JSON.parse(
+    localStorage.getItem(this.session.localStorageNameMapper('filters'))!,
+  );
   public isDesktop = false;
 
   constructor(
@@ -60,6 +73,8 @@ export class FeedComponent {
     private confirmModalService: ConfirmModalService,
     private dialog: MatDialog,
     private translate: TranslateService,
+    private savedSearchesService: SavedsearchesService,
+    private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
   ) {
     this.breakpointService.isDesktop.subscribe({
@@ -103,15 +118,38 @@ export class FeedComponent {
     });
   }
 
+  ngOnInit() {
+    this.getUserData();
+  }
+
+  private getUserData(): void {
+    this.userData$.subscribe({
+      next: (userData) => (this.user = userData),
+    });
+  }
+
   initCollection() {
     if (this.route.snapshot.data['view'] === 'collection') {
       this.collectionId = this.route.snapshot.paramMap.get('id')!;
       this.params.set = this.collectionId;
-      this.postsService.applyFilters({ set: this.collectionId });
+      this.postsService.applyFilters({ set: this.collectionId, ...this.filters });
+      this.searchId = '';
     } else {
       this.collectionId = '';
       this.params.set = '';
-      this.postsService.applyFilters({ set: [] });
+      if (this.route.snapshot.data['view'] === 'search') {
+        this.searchId = this.route.snapshot.paramMap.get('id')!;
+        this.savedSearchesService.getById(this.searchId).subscribe((sSearch) => {
+          this.postsService.applyFilters(Object.assign(sSearch.filter, { set: [] }));
+          this.eventBusService.next({
+            type: EventType.SavedSearchInit,
+            payload: this.searchId,
+          });
+        });
+      } else {
+        this.searchId = '';
+        this.postsService.applyFilters({ set: [], ...this.filters });
+      }
     }
   }
 

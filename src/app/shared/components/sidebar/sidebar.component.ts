@@ -70,9 +70,16 @@ export class SidebarComponent implements OnInit {
 
   createRouterLink(route: string) {
     if (route !== 'map' && route !== 'feed') return route;
-    return this.router.url.includes('collection')
-      ? `${route}/collection/${this.router.url.split('/').pop() || ''}`
-      : route;
+
+    if (this.router.url.includes('collection')) {
+      return `${route}/collection/${this.router.url.split('/').pop() || ''}`;
+    }
+
+    if (this.router.url.includes('search')) {
+      return `${route}/search/${this.router.url.split('/').pop() || ''}`;
+    }
+
+    return route;
   }
 
   private initMenu() {

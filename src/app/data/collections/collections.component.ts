@@ -2,8 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { surveyHelper } from '@helpers';
+import { surveyHelper, formHelper } from '@helpers';
 import { CollectionResult, PostResult } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
   CollectionsService,
@@ -19,6 +20,7 @@ enum CollectionView {
   Edit = 'edit',
 }
 
+@UntilDestroy()
 @Component({
   selector: 'app-collections',
   templateUrl: './collections.component.html',
@@ -45,6 +47,9 @@ export class CollectionsComponent implements OnInit {
   roleOptions: any;
   tmpCollectionToEditId = 0;
   isLoggedIn = true;
+  // TODO: Fix takeUntilDestroy$() with material components
+  // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
+  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
   isDesktop = false;
 
   constructor(
@@ -61,7 +66,7 @@ export class CollectionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.session.currentUserData$.subscribe((userData) => {
+    this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
       if (this.isLoggedIn) {
         this.initRoles();
@@ -155,26 +160,12 @@ export class CollectionsComponent implements OnInit {
     });
   }
 
-  private tmpMapRoleToVisible(role?: string[]) {
-    if (role && role.length > 0) {
-      return {
-        value: 'specific',
-        options: role,
-      };
-    } else {
-      return {
-        value: 'everyone',
-        options: [],
-      };
-    }
-  }
-
   editCollection(collection: CollectionResult) {
     this.collectionForm.patchValue({
       name: collection.name,
       description: collection.description,
       featured: collection.featured,
-      visible_to: this.tmpMapRoleToVisible(collection.role),
+      visible_to: formHelper.mapRoleToVisible(collection.role),
       view: collection.view,
     });
     this.tmpCollectionToEditId = collection.id;
@@ -197,7 +188,7 @@ export class CollectionsComponent implements OnInit {
     const collectionData = this.collectionForm.value;
     collectionData.role = collectionData.visible_to.options;
     delete collectionData.visible_to;
-    this.session.currentUserData$.subscribe((userData) => {
+    this.userData$.subscribe((userData) => {
       collectionData.user_id = userData.userId;
 
       if (this.currentView === CollectionView.Create) {

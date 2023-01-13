@@ -16,7 +16,7 @@ import {
   CollectionsService,
   BreakpointService,
 } from '@services';
-import { BehaviorSubject, debounceTime, filter, forkJoin, map, Subject } from 'rxjs';
+import { BehaviorSubject, debounceTime, filter, forkJoin, lastValueFrom, map, Subject } from 'rxjs';
 import { SavedsearchesService } from 'src/app/core/services/savedsearches.service';
 import { FilterType } from '../filter-control/filter-control.component';
 import { SearchResponse } from '../location-selection/location-selection.component';
@@ -56,7 +56,7 @@ export class SearchFormComponent implements OnInit {
   });
   collectionInfo?: CollectionResult;
   public activeFilters: any;
-  public savedsearches: Savedsearch[];
+  public savedSearches: Savedsearch[];
   public statuses = searchFormHelper.statuses;
   public surveyList: SurveyItem[] = [];
   public sources = searchFormHelper.sources;
@@ -95,8 +95,29 @@ export class SearchFormComponent implements OnInit {
     });
 
     this.getSavedFilters();
-
     this.getSurveys();
+
+    if (localStorage.getItem(this.session.localStorageNameMapper('filters'))) {
+      const filters = JSON.parse(
+        localStorage.getItem(this.session.localStorageNameMapper('filters'))!,
+      );
+      this.updateForm(filters);
+      this.getActiveFilters(filters);
+      this.applyFilters();
+    } else {
+      localStorage.setItem(
+        this.session.localStorageNameMapper('filters'),
+        JSON.stringify(this.form.value),
+      );
+    }
+
+    if (localStorage.getItem(this.session.localStorageNameMapper('activeSavedSearch'))) {
+      this.activeSavedSearch = JSON.parse(
+        localStorage.getItem(this.session.localStorageNameMapper('activeSavedSearch'))!,
+      );
+      this.activeSavedSearchValue = this.activeSavedSearch!.id || null;
+      this.preparingSavedFilter();
+    }
 
     this.categoriesService.get().subscribe({
       next: (response) => {
@@ -125,6 +146,10 @@ export class SearchFormComponent implements OnInit {
 
     this.form.valueChanges.subscribe({
       next: (values) => {
+        localStorage.setItem(
+          this.session.localStorageNameMapper('filters'),
+          JSON.stringify(values),
+        );
         this.getActiveFilters(values);
         this.applyFilters();
       },
@@ -177,6 +202,9 @@ export class SearchFormComponent implements OnInit {
     });
 
     this.session.isLogged$.subscribe((isLogged) => (this.isLoggedIn = isLogged));
+    this.eventBusService.on(EventType.SavedSearchInit).subscribe((sSearch) => {
+      this.getSavedValues(parseFloat(sSearch));
+    });
 
     this.session.isFiltersVisible$.subscribe((isVisible) => (this.isFiltersVisible = isVisible));
   }
@@ -263,6 +291,14 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
+  get isEditAvailable() {
+    return this.form.dirty && this.isLoggedIn;
+  }
+
+  get canCreateSearch() {
+    return this.isLoggedIn && this.form.dirty && !this.collectionInfo;
+  }
+
   private getSavedFilters(): void {
     this.savedsearchesService
       .get()
@@ -276,12 +312,14 @@ export class SearchFormComponent implements OnInit {
             if (search.filter?.center_point || search.filter?.within_km) {
               const latLng = search.filter.center_point?.split(',');
               search.filter.center_point = {
-                location: {
-                  lat: Number(latLng[0]),
-                  lng: Number(latLng[1]),
-                },
                 distance: search.filter.within_km || 1,
               };
+              if (latLng) {
+                search.filter.center_point.location = {
+                  lat: parseFloat(latLng[0]),
+                  lng: parseFloat(latLng[1]),
+                };
+              }
             }
           });
 
@@ -290,7 +328,12 @@ export class SearchFormComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
-          this.savedsearches = response.results;
+          this.savedSearches = response.results;
+          this.savedSearches.map((search) => {
+            return (search.checked = !!(
+              this.activeSavedSearch && search.id === this.activeSavedSearch!.id
+            ));
+          });
         },
       });
   }
@@ -372,15 +415,47 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
-  public applySavedFilter(value: number | null): void {
+  async setSavedFilter(value: number) {
+    if (this.savedSearches) {
+      this.activeSavedSearch = this.savedSearches.find((search) => search.id === value);
+      localStorage.setItem(
+        this.session.localStorageNameMapper('activeSavedSearch'),
+        JSON.stringify(this.activeSavedSearch),
+      );
+    } else {
+      this.activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
+      console.log('else', this.activeSavedSearch);
+    }
+  }
+
+  async applySavedFilter(value: number | null) {
+    if (value) {
+      await this.setSavedFilter(value);
+      this.router.navigate([
+        `/`,
+        this.activeSavedSearch?.view === 'map' ? 'map' : 'feed',
+        'search',
+        value,
+      ]);
+    } else {
+      localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
+      this.router.navigate([`/`, 'map']);
+    }
+  }
+
+  async getSavedValues(value: number) {
     this.activeSavedSearchValue = value;
     if (value === null) {
+      localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
       this.resetForm();
       return;
     }
 
-    this.activeSavedSearch = this.savedsearches.find((search) => search.id === value);
+    await this.setSavedFilter(value);
+    this.preparingSavedFilter();
+  }
 
+  private preparingSavedFilter() {
     if (this.activeSavedSearch) {
       if (
         this.activeSavedSearch.filter.form &&
@@ -416,7 +491,9 @@ export class SearchFormComponent implements OnInit {
   public resetSavedFilter(): void {
     this.activeSavedSearch = undefined;
     this.activeSavedSearchValue = null;
+    localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
     this.resetForm();
+    this.router.navigate(['/map']);
   }
 
   public applyFilters(): void {
@@ -480,5 +557,13 @@ export class SearchFormComponent implements OnInit {
   public clearPostsResults(): void {
     this.searchQuery = '';
     this.searchPosts();
+  }
+
+  private updateForm(filters: any) {
+    Object.keys(filters).forEach((key: string) => {
+      if (this.form.controls[key]) {
+        this.form.controls[key].patchValue(filters[key]);
+      }
+    });
   }
 }

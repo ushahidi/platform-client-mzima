@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddPostModalComponent, CreateComponent } from '@post';
+import { Router } from '@angular/router';
+import { AddPostModalComponent } from '@post';
 import { EventBusService, EventType, BreakpointService } from '@services';
 
 @Component({
@@ -15,6 +16,7 @@ export class SubmitPostButtonComponent implements OnInit {
     private dialog: MatDialog,
     private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
+    private router: Router,
   ) {
     this.breakpointService.isDesktop.subscribe({
       next: (isDesktop) => {
@@ -39,12 +41,7 @@ export class SubmitPostButtonComponent implements OnInit {
     dialogRef.afterClosed().subscribe({
       next: (response) => {
         if (response?.type) {
-          this.dialog.open(CreateComponent, {
-            height: '95vh',
-            width: '615px',
-            data: response.type,
-            panelClass: ['modal', 'create-post-modal'],
-          });
+          this.router.navigate(['/post/create', response.type]);
         }
       },
     });

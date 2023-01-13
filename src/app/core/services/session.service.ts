@@ -45,6 +45,7 @@ export class SessionService {
     permissions: '',
     gravatar: '',
     language: '',
+    allowed_privileges: [],
   };
 
   private currentConfig: SessionConfigInterface = {
@@ -152,12 +153,15 @@ export class SessionService {
   }
 
   clearUserData() {
-    const cookies = sessionStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`);
+    const cookies = sessionStorage.getItem(this.localStorageNameMapper('cookies'));
+    const filters = sessionStorage.getItem(this.localStorageNameMapper('filters'));
     Object.keys(this.currentUser).forEach((key) => {
       localStorage.removeItem(this.localStorageNameMapper(key));
     });
+    localStorage.removeItem(this.localStorageNameMapper('activeSavedSearch'));
     this.currentUser = {};
-    if (cookies) sessionStorage.setItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`, cookies);
+    if (cookies) sessionStorage.setItem(this.localStorageNameMapper('cookies'), cookies);
+    if (filters) sessionStorage.setItem(this.localStorageNameMapper('filters'), filters);
     this._currentUserData$.next(this.currentUser);
     this._isLogged.next(!!this.currentUser.userId);
   }

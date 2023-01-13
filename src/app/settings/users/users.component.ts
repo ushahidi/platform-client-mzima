@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { GeoJsonFilter, UserResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,6 +11,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
+  @ViewChild('user') public userRef: ElementRef;
   isLoading = false;
 
   users: UserResult[] = [];
@@ -56,7 +57,15 @@ export class UsersComponent implements OnInit {
     this.userService.getUsers('', { ...params }).subscribe({
       next: (response) => {
         this.users = add ? [...this.users, ...response.results] : response.results;
-        this.isLoading = false;
+        setTimeout(() => {
+          this.isLoading = false;
+          if (
+            this.userRef?.nativeElement.offsetHeight &&
+            this.userRef?.nativeElement.offsetHeight >= this.userRef?.nativeElement.scrollHeight
+          ) {
+            this.loadMore();
+          }
+        });
       },
     });
   }
@@ -118,12 +127,10 @@ export class UsersComponent implements OnInit {
   }
 
   public onScroll(event: any): void {
-    console.log(event);
     if (
       !this.isLoading &&
       event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32
     ) {
-      console.log(1);
       this.loadMore();
     }
   }

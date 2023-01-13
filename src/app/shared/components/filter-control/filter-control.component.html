@@ -26,6 +26,7 @@
 <ng-template #control>
   <ng-container [ngSwitch]="type">
     <ng-container *ngSwitchCase="filterType.Select">
+      <ng-content select="[suffix]"></ng-content>
       <mat-radio-group
         [(ngModel)]="value"
         (ngModelChange)="valueChanged()"

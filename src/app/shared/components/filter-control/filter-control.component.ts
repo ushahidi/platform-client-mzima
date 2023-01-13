@@ -27,7 +27,7 @@ export enum FilterType {
 interface CategoryFlatNode {
   expandable: boolean;
   name: string;
-  id: string | string;
+  id: string;
   level: number;
 }
 
@@ -83,6 +83,10 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
     };
   };
 
+  isEditable(option: any) {
+    return option.allowed_privileges.includes('update') && this.value === option.id;
+  }
+
   public treeControl = new FlatTreeControl<CategoryFlatNode>(
     (node) => node.level,
     (node) => node.expandable,
@@ -103,16 +107,14 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
   onTouched = () => {};
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (
-      this.type === FilterType.Multilevelselect &&
-      changes['options'] &&
-      changes['options'].currentValue
-    ) {
-      this.dataSource = new MatTreeFlatDataSource(
-        this.treeControl,
-        this.treeFlattener,
-        changes['options'].currentValue || [],
-      );
+    if (changes['options']?.currentValue) {
+      if (this.type === FilterType.Multilevelselect) {
+        this.dataSource = new MatTreeFlatDataSource(
+          this.treeControl,
+          this.treeFlattener,
+          changes['options'].currentValue || [],
+        );
+      }
     }
   }
 
@@ -120,7 +122,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
 
   public writeValue(value: any) {
     if (this.type === this.filterType.Daterange) {
-      this.value = new DateRange<Date>(value.start, value.end);
+      this.value = new DateRange<Date>(new Date(value.start), new Date(value.end));
     } else {
       this.value = value;
     }

@@ -4,13 +4,31 @@ import { MapComponent } from './map.component';
 
 const routes: Routes = [
   { path: '', component: MapComponent },
-  { path: 'collection', redirectTo: '' },
   {
-    path: 'collection/:id',
-    component: MapComponent,
-    data: {
-      view: 'collection',
-    },
+    path: 'collection',
+    redirectTo: '',
+    children: [
+      {
+        path: ':id',
+        component: MapComponent,
+        data: {
+          view: 'collection',
+        },
+      },
+    ],
+  },
+  {
+    path: 'search',
+    redirectTo: '',
+    children: [
+      {
+        path: ':id',
+        component: MapComponent,
+        data: {
+          view: 'search',
+        },
+      },
+    ],
   },
 ];
 

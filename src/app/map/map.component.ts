@@ -12,6 +12,7 @@ import {
   MapOptions,
   Map,
 } from 'leaflet';
+import 'leaflet.markercluster';
 import {
   EventBusService,
   EventType,
@@ -19,8 +20,9 @@ import {
   PostsService,
   PostsV5Service,
   SessionService,
+  SavedsearchesService,
 } from '@services';
-import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
+import { GeoJsonPostsResponse, MapConfigInterface, UserInterface } from '@models';
 import { mapHelper, takeUntilDestroy$ } from '@helpers';
 import { ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -40,6 +42,7 @@ export class MapComponent implements OnInit {
   };
   public map: Map;
   collectionId = '';
+  searchId = '';
   postsCollection: GeoJsonPostsResponse;
   mapLayers: any[] = [];
   mapReady = false;
@@ -57,6 +60,9 @@ export class MapComponent implements OnInit {
   public progress = 0;
   public isFiltersVisible: boolean;
 
+  private userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
+  public user: UserInterface;
+
   constructor(
     private postsService: PostsService,
     private postsV5Service: PostsV5Service,
@@ -67,13 +73,14 @@ export class MapComponent implements OnInit {
     private zone: NgZone,
     private eventBusService: EventBusService,
     private mediaService: MediaService,
+    private savedSearchesService: SavedsearchesService,
   ) {}
 
   ngOnInit() {
     this.route.params.subscribe(() => {
       this.initCollection();
     });
-
+    this.initFilterListener();
     this.mapConfig = this.sessionService.getMapConfigurations();
 
     const currentLayer =
@@ -92,19 +99,6 @@ export class MapComponent implements OnInit {
 
     this.mapReady = true;
 
-    this.filtersSubscription$.subscribe({
-      next: () => {
-        this.mapLayers.map((layer) => {
-          this.map.removeLayer(layer);
-          this.markerClusterData.removeLayer(layer);
-        });
-
-        this.mapLayers = [];
-
-        this.getPostsGeoJson();
-      },
-    });
-
     this.eventBusService.on(EventType.SearchOptionSelected).subscribe({
       next: (option) => {
         this.map.setZoom(12);
@@ -119,6 +113,33 @@ export class MapComponent implements OnInit {
         }, 1);
       },
     });
+
+    this.getUserData();
+  }
+
+  private initFilterListener() {
+    this.filtersSubscription$.subscribe({
+      next: () => {
+        if (this.route.snapshot.data['view'] === 'search' && !this.searchId) return;
+        if (this.route.snapshot.data['view'] === 'collection' && !this.collectionId) return;
+
+        this.params.offset = 0;
+        this.mapLayers.map((layer) => {
+          this.map.removeLayer(layer);
+          this.markerClusterData.removeLayer(layer);
+        });
+
+        this.mapLayers = [];
+
+        this.getPostsGeoJson();
+      },
+    });
+  }
+
+  private getUserData(): void {
+    this.userData$.subscribe({
+      next: (userData) => (this.user = userData),
+    });
   }
 
   initCollection() {
@@ -126,10 +147,23 @@ export class MapComponent implements OnInit {
       this.collectionId = this.route.snapshot.paramMap.get('id')!;
       this.params.set = this.collectionId;
       this.postsService.applyFilters({ set: this.collectionId });
+      this.searchId = '';
     } else {
       this.collectionId = '';
       this.params.set = '';
-      this.postsService.applyFilters({ set: [] });
+      if (this.route.snapshot.data['view'] === 'search') {
+        this.searchId = this.route.snapshot.paramMap.get('id')!;
+        this.savedSearchesService.getById(this.searchId).subscribe((sSearch) => {
+          this.postsService.applyFilters(Object.assign(sSearch.filter, { set: [] }));
+          this.eventBusService.next({
+            type: EventType.SavedSearchInit,
+            payload: this.searchId,
+          });
+        });
+      } else {
+        this.searchId = '';
+        this.postsService.applyFilters({ set: [] });
+      }
     }
   }
 
@@ -143,6 +177,9 @@ export class MapComponent implements OnInit {
       const geoPosts = geoJSON(posts, {
         pointToLayer: mapHelper.pointToLayer,
         onEachFeature: (feature, layer) => {
+          layer.on('mouseout', () => {
+            layer.unbindPopup();
+          });
           layer.on('click', () => {
             this.zone.run(() => {
               if (layer instanceof FeatureGroup) {
@@ -156,6 +193,7 @@ export class MapComponent implements OnInit {
                 this.postsService.getById(feature.properties.id).subscribe({
                   next: (post) => {
                     comp.setInput('post', post);
+                    comp.setInput('user', this.user);
 
                     const popup: Content = comp.location.nativeElement;
 

@@ -88,7 +88,8 @@ export class PostsService extends ResourceService<any> {
   }
 
   public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
-    return super.get(url, { ...this.postsFilters.value, has_location: 'all', ...filter }).pipe(
+    const tmpParams = { ...this.postsFilters.value, has_location: 'all', ...filter };
+    return super.get(url, this.postParamsMapper(tmpParams)).pipe(
       map((response) => {
         response.results.map((post: PostResult) => {
           post.source =
@@ -105,6 +106,49 @@ export class PostsService extends ResourceService<any> {
         this.totalPosts.next(response.total_count);
       }),
     );
+  }
+
+  private postParamsMapper(params: any) {
+    // TODO: REWORK THIS!! Created to make current API work as expected
+    if (params.date?.start) {
+      params.date_after = params.date.start;
+      params.date_before = params.date.end;
+      delete params.date;
+    } else {
+      delete params.date;
+    }
+
+    if (params.center_point?.location?.lat) {
+      params.within_km = params.center_point.distance;
+      params.center_point = `${params.center_point.location.lat},${params.center_point.location.lng}`;
+    } else {
+      delete params.center_point;
+    }
+    delete params.set;
+
+    if (params.form && params.form[0] === 'none') {
+      delete params.form;
+    }
+
+    if (params['form[]'] && params['form[]'][0] === 'none') {
+      delete params['form[]'];
+    }
+
+    if (params.status?.length) {
+      params['status[]'] = params.status;
+      delete params.status;
+    }
+    if (params.source?.length) {
+      params['source[]'] = params.source;
+      delete params.source;
+    }
+
+    if (params.tags?.length) {
+      params['tags[]'] = params.tags;
+      delete params.tags;
+    }
+
+    return params;
   }
 
   public getPostStatistics(queryParams?: any) {

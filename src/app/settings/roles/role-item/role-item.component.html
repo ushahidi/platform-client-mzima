@@ -25,7 +25,11 @@
   <div class="form-row">
     <mat-label>{{ 'role.permissions' | translate }}</mat-label>
     <p [innerHTML]="'settings.roles.roles_description' | translate"></p>
-    <mat-selection-list data-qa="role-permissions-list">
+    <mat-selection-list
+      data-qa="role-permissions-list"
+      formControlName="permissions"
+      (ngModelChange)="selectedItems($event)"
+    >
       <mat-list-option
         color="primary"
         class="list-option"

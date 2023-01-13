@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeoJsonFilter, PostResult } from '@models';
@@ -12,7 +12,6 @@ import {
   PostsService,
   PostsV5Service,
   SurveysService,
-  BreakpointService,
 } from '@services';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -24,11 +23,11 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss'],
+  selector: 'app-post-item',
+  templateUrl: './post-item.component.html',
+  styleUrls: ['./post-item.component.scss'],
 })
-export class CreateComponent implements OnInit {
+export class PostItemComponent implements OnInit {
   public data: any;
   public form: FormGroup;
   public description: string;
@@ -45,11 +44,10 @@ export class CreateComponent implements OnInit {
   public selectedRelatedPost: any;
   private completeStages: number[] = [];
   private fieldsFormArray = ['tags'];
-  public isDesktop = false;
+  public surveyName: string;
+  private postId?: number;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public type: number,
-    private matDialogRef: MatDialogRef<CreateComponent>,
     private route: ActivatedRoute,
     private surveysService: SurveysService,
     private formBuilder: FormBuilder,
@@ -59,20 +57,32 @@ export class CreateComponent implements OnInit {
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
     private eventBusService: EventBusService,
-    private breakpointService: BreakpointService,
-  ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
+    private location: Location,
+  ) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      if (params.get('type')) {
+        this.formId = Number(params.get('type'));
+        this.loadData(this.formId);
+      }
+      if (params.get('id')) {
+        this.postId = Number(params.get('id'));
+        this.loadPostData(this.postId);
+      }
+    });
+    this.translate.onLangChange.subscribe((newLang) => {
+      this.activeLanguage = newLang.lang;
     });
   }
 
-  ngOnInit(): void {
-    this.formId = this.type;
-    this.loadData(this.formId);
-    this.translate.onLangChange.subscribe((newLang) => {
-      this.activeLanguage = newLang.lang;
+  // TODO: For edit post. Need update backend response
+  private loadPostData(postId: number) {
+    this.postsV5Service.getById(postId).subscribe({
+      next: (post) => {
+        this.formId = post.form_id;
+        // this.loadData(this.typeId, post);
+      },
     });
   }
 
@@ -82,6 +92,7 @@ export class CreateComponent implements OnInit {
       next: (data) => {
         this.data = data;
         this.tasks = data.result.tasks;
+        this.surveyName = data.result.name;
 
         let fields: any = {};
         for (const task of this.tasks) {
@@ -145,7 +156,7 @@ export class CreateComponent implements OnInit {
             value: this.form.value[field.key],
           };
 
-          if (field.type === 'title') this.title = this.form.value[field.key];
+          // if (field.type === 'title') this.title = this.form.value[field.key]; // title is ngModel standalone
           if (field.type === 'description') this.description = this.form.value[field.key];
 
           switch (field.input) {
@@ -227,7 +238,6 @@ export class CreateComponent implements OnInit {
         this.form.enable();
       },
       complete: async () => {
-        this.matDialogRef.close();
         this.form.enable();
         await this.confirmModalService.open({
           title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
@@ -238,6 +248,7 @@ export class CreateComponent implements OnInit {
             'notify.confirm_modal.add_post_success.success_button',
           ),
         });
+        this.backNavigation();
       },
     });
   }
@@ -255,11 +266,15 @@ export class CreateComponent implements OnInit {
       if (!confirmed) return;
     }
 
-    this.matDialogRef.close();
+    this.backNavigation();
     this.eventBusService.next({
       type: EventType.AddPostButtonSubmit,
       payload: true,
     });
+  }
+
+  public backNavigation(): void {
+    this.location.back();
   }
 
   public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {

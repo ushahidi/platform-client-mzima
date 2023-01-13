@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { CollectionsComponent } from '@data';
-import { PostPropertiesInterface, PostResult, PostStatus } from '@models';
+import { PostPropertiesInterface, PostResult, PostStatus, UserInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, PostsService, PostsV5Service, SessionService } from '@services';
 
@@ -10,10 +11,10 @@ import { ConfirmModalService, PostsService, PostsV5Service, SessionService } fro
   templateUrl: './post-head.component.html',
   styleUrls: ['./post-head.component.scss'],
 })
-export class PostHeadComponent implements OnInit {
+export class PostHeadComponent {
   PostStatus = PostStatus;
   @Input() public post: PostResult | PostPropertiesInterface;
-  isActionsAvailable = false;
+  @Input() public user: UserInterface;
 
   constructor(
     private session: SessionService,
@@ -22,13 +23,8 @@ export class PostHeadComponent implements OnInit {
     private dialog: MatDialog,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
+    private router: Router,
   ) {}
-
-  ngOnInit() {
-    this.session.isLogged$.subscribe((isLogged) => {
-      this.isActionsAvailable = isLogged;
-    });
-  }
 
   addToCollection() {
     const dialogRef = this.dialog.open(CollectionsComponent, {
@@ -76,5 +72,9 @@ export class PostHeadComponent implements OnInit {
       this.post = res;
       this.postsService.applyFilters({});
     });
+  }
+
+  editPost() {
+    this.router.navigate(['/post/edit', this.post.id]);
   }
 }

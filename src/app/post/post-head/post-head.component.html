@@ -8,7 +8,6 @@
     <mat-icon matPrefix svgIcon="share"></mat-icon>
   </button>
   <button
-    *ngIf="isActionsAvailable"
     tabindex="-1"
     mat-icon-button
     (click)="$event.stopPropagation()"
@@ -19,7 +18,12 @@
   </button>
 
   <mat-menu #actions="matMenu" xPosition="before">
-    <button mat-menu-item>
+    <button
+      mat-menu-item
+      *ngIf="
+        post?.allowed_privileges?.includes('update') && user?.allowed_privileges?.includes('update')
+      "
+    >
       <mat-icon svgIcon="edit"></mat-icon>
       {{ 'post.post_actions.edit' | translate }}
     </button>
@@ -27,20 +31,28 @@
       <mat-icon svgIcon="collections"></mat-icon>
       {{ 'set.add_to_collection' | translate }}
     </button>
-    <hr />
-    <button mat-menu-item (click)="publish()" *ngIf="post.status !== PostStatus.Published">
-      <mat-icon svgIcon="sort-up"></mat-icon>
-      {{ 'post.post_actions.publish' | translate }}
-    </button>
-    <button mat-menu-item (click)="underReview()" *ngIf="post.status !== PostStatus.Draft">
-      <mat-icon svgIcon="sort-up"></mat-icon>
-      {{ 'post.post_actions.put_under_review' | translate }}
-    </button>
-    <button mat-menu-item (click)="archive()" *ngIf="post.status !== PostStatus.Archived">
-      <mat-icon svgIcon="sort-up"></mat-icon>
-      {{ 'post.post_actions.archive' | translate }}
-    </button>
-    <button mat-menu-item (click)="delete()">
+    <ng-container *ngIf="post.allowed_privileges!.includes('change_status')">
+      <hr />
+      <button mat-menu-item (click)="publish()" *ngIf="post.status !== PostStatus.Published">
+        <mat-icon svgIcon="sort-up"></mat-icon>
+        {{ 'post.post_actions.publish' | translate }}
+      </button>
+      <button mat-menu-item (click)="underReview()" *ngIf="post.status !== PostStatus.Draft">
+        <mat-icon svgIcon="sort-up"></mat-icon>
+        {{ 'post.post_actions.put_under_review' | translate }}
+      </button>
+      <button mat-menu-item (click)="archive()" *ngIf="post.status !== PostStatus.Archived">
+        <mat-icon svgIcon="sort-up"></mat-icon>
+        {{ 'post.post_actions.archive' | translate }}
+      </button>
+    </ng-container>
+    <button
+      mat-menu-item
+      (click)="delete()"
+      *ngIf="
+        post?.allowed_privileges?.includes('delete') && user?.allowed_privileges?.includes('delete')
+      "
+    >
       <mat-icon svgIcon="sort-up"></mat-icon>
       {{ 'post.post_actions.delete' | translate }}
     </button>
