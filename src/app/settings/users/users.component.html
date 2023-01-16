@@ -78,6 +78,7 @@
           [data-qa]="'user-item' + user.id"
           [routerLink]="['update', user.id]"
           *matRowDef="let user; columns: ['checkbox', 'avatar', 'name', 'role', 'email']"
+          class="user-item__row"
         ></tr>
       </table>
     </ng-container>

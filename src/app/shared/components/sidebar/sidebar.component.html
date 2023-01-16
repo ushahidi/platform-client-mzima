@@ -22,7 +22,7 @@
           mat-raised-button
           class="sidebar-menu-button"
           [data-qa]="'btn-' + item.icon"
-          *ngIf="!item.adminGuard || isAdmin"
+          *ngIf="!item.adminGuard || isHost"
           [routerLink]="createRouterLink(item.router)"
           routerLinkActive="sidebar-menu-button--active"
           (click)="registerPage($event, item.router, item.label)"

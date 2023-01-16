@@ -1,5 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {
+  AdminGuard,
+  CombinedGuard,
+  DataImportExportGuard,
+  ManageSettingsGuard,
+  ManageUsersGuard,
+} from '@guards';
 import { SettingsLayoutComponent } from './settings-layout.component';
 
 const routes: Routes = [
@@ -7,70 +14,103 @@ const routes: Routes = [
     path: '',
     component: SettingsLayoutComponent,
     children: [
-      // {
-      //   path: '',
-      //   redirectTo: 'general',
-      //   pathMatch: 'full',
-      // },
       {
         path: 'general',
         loadChildren: () => import('./general/general.module').then((m) => m.GeneralModule),
-        data: { breadcrumb: 'General' },
+        canActivate: [CombinedGuard],
+        data: {
+          breadcrumb: 'General',
+          guards: [AdminGuard, ManageSettingsGuard],
+        },
       },
       {
         path: 'surveys',
         loadChildren: () => import('./surveys/surveys.module').then((m) => m.SurveysModule),
-        data: { breadcrumb: 'Surveys' },
+        canActivate: [CombinedGuard],
+        data: {
+          breadcrumb: 'Surveys',
+          guards: [AdminGuard, ManageSettingsGuard],
+        },
       },
       {
         path: 'data-sources',
         loadChildren: () =>
           import('./data-sources/data-sources.module').then((m) => m.DataSourcesModule),
-        data: { breadcrumb: 'Data sources' },
+        canActivate: [CombinedGuard],
+        data: {
+          breadcrumb: 'Data sources',
+          guards: [AdminGuard, ManageSettingsGuard],
+        },
       },
       {
         path: 'data-import',
         loadChildren: () =>
           import('./data-import/data-import.module').then((m) => m.DataImportModule),
-        data: { breadcrumb: 'Data import' },
+        canActivate: [CombinedGuard],
+        data: {
+          breadcrumb: 'Data import',
+          guards: [AdminGuard, DataImportExportGuard],
+        },
       },
       {
         path: 'donation',
         loadChildren: () => import('./donation/donation.module').then((m) => m.DonationModule),
-        data: { breadcrumb: 'Donation' },
+        canActivate: [CombinedGuard],
+        data: {
+          breadcrumb: 'Donation',
+          guards: [AdminGuard, ManageSettingsGuard],
+        },
       },
       {
         path: 'user-settings',
         loadChildren: () =>
           import('./user-settings/user-settings.module').then((m) => m.UserSettingsModule),
-        data: { breadcrumb: 'User settings' },
+        canActivate: [CombinedGuard],
+        data: {
+          breadcrumb: 'Configure HDX API',
+          guards: [AdminGuard, ManageUsersGuard, ManageSettingsGuard, DataImportExportGuard],
+        },
       },
       {
         path: 'data-export',
         loadChildren: () =>
           import('./data-export/data-export.module').then((m) => m.DataExportModule),
-        data: { breadcrumb: 'Data export' },
+        canActivate: [CombinedGuard],
+        data: {
+          breadcrumb: 'Data export',
+          guards: [AdminGuard, DataImportExportGuard],
+        },
       },
       {
         path: 'users',
         loadChildren: () => import('./users/users.module').then((m) => m.UsersModule),
-        data: { breadcrumb: 'Users' },
+        canActivate: [CombinedGuard],
+        data: {
+          breadcrumb: 'Users',
+          guards: [AdminGuard, ManageUsersGuard],
+        },
       },
       {
         path: 'roles',
         loadChildren: () => import('./roles/roles.module').then((m) => m.RolesModule),
+        canActivate: [CombinedGuard],
         data: { breadcrumb: 'Roles' },
       },
       {
         path: 'categories',
         loadChildren: () =>
           import('./categories/categories.module').then((m) => m.CategoriesModule),
-        data: { breadcrumb: 'Categories' },
+        canActivate: [CombinedGuard],
+        data: { breadcrumb: 'Categories', guards: [AdminGuard, ManageSettingsGuard] },
       },
       {
         path: 'webhooks',
         loadChildren: () => import('./webhooks/webhooks.module').then((m) => m.WebhooksModule),
-        data: { breadcrumb: 'Webhooks' },
+        canActivate: [CombinedGuard],
+        data: {
+          breadcrumb: 'Webhooks',
+          guards: [AdminGuard, ManageSettingsGuard],
+        },
       },
     ],
   },

@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { LoginComponent } from '@auth';
+import { CollectionsComponent } from '@data';
+import { EnumGtmEvent, EnumGtmSource, Roles } from '@enums';
+import { menuHelper, takeUntilDestroy$ } from '@helpers';
+import { UserMenuInterface } from '@models';
+import { TranslateService } from '@ngx-translate/core';
 import {
-  SessionService,
   AuthService,
-  GtmTrackingService,
+  BreakpointService,
   EventBusService,
   EventType,
-  BreakpointService,
+  GtmTrackingService,
+  SessionService,
 } from '@services';
-import { LoginComponent } from '@auth';
-import { UserMenuInterface } from '@models';
-import { CollectionsComponent } from '@data';
-import { takeUntilDestroy$, menuHelper } from '@helpers';
-import { EnumGtmEvent, EnumGtmSource } from '@enums';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,7 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class SidebarComponent implements OnInit {
   isLoggedIn = false;
-  isAdmin = false;
+  public isHost = false;
   public menu = menuHelper.menu;
   public userMenu: UserMenuInterface[] = [];
   userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
@@ -58,7 +58,13 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
-      this.isAdmin = userData.role === 'admin';
+      const hostRoles = [
+        Roles.admin,
+        Roles.manage_users,
+        Roles.manage_settings,
+        Roles.manage_import_export,
+      ];
+      this.isHost = hostRoles.includes(<Roles>userData.role!);
       this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
       this.initMenu();
     });

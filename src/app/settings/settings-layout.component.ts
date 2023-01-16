@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { BreakpointService, EventBusService, EventType } from '@services';
+import { Roles } from '@enums';
+import { takeUntilDestroy$ } from '@helpers';
+import { UserInterface } from '@models';
+import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 import { filter } from 'rxjs';
 
 @Component({
@@ -11,20 +14,38 @@ import { filter } from 'rxjs';
 export class SettingsLayoutComponent {
   public isDesktop = false;
   public isInnerPage = false;
+  public userData: UserInterface;
+  private isDesktop$ = this.breakpointService.isDesktop.pipe(takeUntilDestroy$());
+  private userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
 
   constructor(
     private breakpointService: BreakpointService,
     private router: Router,
     private eventBusService: EventBusService,
+    private sessionService: SessionService,
   ) {
-    this.breakpointService.isDesktop.subscribe({
+    this.userData$.subscribe({
+      next: (userData) => (this.userData = userData),
+    });
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
 
         this.checkIsInnerPage();
 
         if (this.isDesktop && !this.isInnerPage) {
-          this.router.navigate(['settings/general']);
+          switch (this.userData.role) {
+            case Roles.admin:
+            case Roles.manage_settings:
+              this.router.navigate(['settings/general']);
+              break;
+            case Roles.manage_users:
+              this.router.navigate(['settings/user-settings']);
+              break;
+            case Roles.manage_import_export:
+              this.router.navigate(['settings/data-import']);
+              break;
+          }
         }
       },
     });
