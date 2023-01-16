@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .mat-button-base {
   .mat-icon {
     width: 1em;
@@ -34,6 +36,10 @@
 .mat-raised-button,
 .mat-stroked-button {
   box-shadow: none !important;
+
+  @include breakpoint-max($tablet) {
+    font-size: 18px;
+  }
 
   .mat-icon {
     &:not(:last-child) {
@@ -162,7 +168,7 @@
 
     &.mat-button-disabled {
       color: var(--color-neutral-70);
-      background-color: var(--color-primary-90);
+      background-color: var(--color-neutral-30);
     }
   }
 
@@ -211,10 +217,18 @@
   &.mat-button,
   &.mat-raised-button {
     line-height: 40px;
+
+    @include breakpoint-max($tablet) {
+      line-height: 48px;
+    }
   }
 
   &.mat-stroked-button {
     line-height: 38px;
+
+    @include breakpoint-max($tablet) {
+      line-height: 46px;
+    }
   }
 }
 

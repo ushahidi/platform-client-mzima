@@ -1,10 +1,17 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroy$ } from '@helpers';
 import { FormAttributeInterface, SurveyItem, WebhookResultInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { FormsService, ConfirmModalService, SurveysService, WebhooksService } from '@services';
+import {
+  FormsService,
+  ConfirmModalService,
+  SurveysService,
+  WebhooksService,
+  BreakpointService,
+} from '@services';
 
 @Component({
   selector: 'app-webhook-item',
@@ -46,6 +53,7 @@ export class WebhookItemComponent implements OnInit {
   private controlFormIdData$ = this.form.controls['form_id'].valueChanges.pipe(takeUntilDestroy$());
   public isCreateWebhook = false;
   public fields: any[];
+  public isDesktop = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,7 +64,15 @@ export class WebhookItemComponent implements OnInit {
     private router: Router,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
-  ) {}
+    private breakpointService: BreakpointService,
+    private location: Location,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.getSurveys();
@@ -186,7 +202,11 @@ export class WebhookItemComponent implements OnInit {
 
   private navigateToWebhooks() {
     this.webhooksService.setState(true);
-    this.router.navigate(['/settings/webhooks']);
+    if (this.isDesktop) {
+      this.router.navigate(['/settings/webhooks']);
+    } else {
+      this.location.back();
+    }
   }
 
   private deleteFormFields(fields: Array<string>) {

@@ -1,9 +1,17 @@
+import { Location } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { CategoryInterface, TranslationInterface, LanguageInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { CategoriesService, LanguageService, RolesService, ConfirmModalService } from '@services';
+import {
+  CategoriesService,
+  LanguageService,
+  RolesService,
+  ConfirmModalService,
+  BreakpointService,
+} from '@services';
 import {
   GroupCheckboxItemInterface,
   SelectLanguagesModalComponent,
@@ -26,6 +34,7 @@ export class CreateCategoryFormComponent implements OnInit {
   public selectedTranslation?: string;
   public roleOptions: GroupCheckboxItemInterface[] = [];
   public isUpdate = false;
+  public isDesktop = false;
 
   public form: FormGroup = this.fb.group({
     id: ['', [Validators.required]],
@@ -53,7 +62,16 @@ export class CreateCategoryFormComponent implements OnInit {
     private dialog: MatDialog,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
+    private breakpointService: BreakpointService,
+    private router: Router,
+    private location: Location,
   ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+
     this.categoriesService.get().subscribe({
       next: (data) => {
         this.categories = data.results.filter((cat: CategoryInterface) => !cat.parent_id);
@@ -195,6 +213,7 @@ export class CreateCategoryFormComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectLanguagesModalComponent, {
       width: '100%',
       maxWidth: 576,
+      panelClass: 'modal',
       data: {
         languages: this.languages,
         activeLanguages: this.activeLanguages,
@@ -264,5 +283,13 @@ export class CreateCategoryFormComponent implements OnInit {
 
   public deleteCategoryEmit() {
     this.deleteCall.emit(true);
+  }
+
+  public back() {
+    if (this.isDesktop) {
+      this.router.navigate(['settings/categories']);
+    } else {
+      this.location.back();
+    }
   }
 }

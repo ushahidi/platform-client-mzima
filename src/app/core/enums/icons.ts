@@ -52,4 +52,7 @@ export enum Icons {
   twitterFill = 'twitter-fill',
   facebookFill = 'facebook-fill',
   cookies = 'cookies',
+  hamburger = 'hamburger',
+  account = 'account',
+  back = 'back',
 }

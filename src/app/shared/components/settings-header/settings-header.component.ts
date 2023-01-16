@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
+import { BreakpointService } from '@services';
 
 @Component({
   selector: 'app-settings-header',
@@ -21,6 +22,15 @@ export class SettingsHeaderComponent {
   @Output() showLanguagesCall = new EventEmitter();
   @Output() selectLanguageCall = new EventEmitter();
   public isShowActions = false;
+  public isDesktop = false;
+
+  constructor(private breakpointService: BreakpointService) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   public deleteEmit() {
     this.deleteCall.emit(true);

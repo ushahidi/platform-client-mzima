@@ -34,6 +34,7 @@ export class ConfirmModalService {
         maxWidth: '574px',
         minWidth: '300px',
         id: 'confirm-modal',
+        panelClass: ['modal', 'confirm-modal'],
       });
 
       dialogRef.afterClosed().subscribe({

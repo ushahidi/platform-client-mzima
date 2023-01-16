@@ -1,6 +1,8 @@
+@import '/src/styles/helpers';
+
 .map-holder {
   z-index: 0;
-  min-height: 300px;
+  min-height: 325px;
   position: relative;
 
   &:before {
@@ -34,5 +36,9 @@
     margin-left: 8px;
     margin-right: 8px;
     width: calc(50% - 16px);
+
+    @include breakpoint-max($mobile) {
+      width: calc(100% - 16px);
+    }
   }
 }

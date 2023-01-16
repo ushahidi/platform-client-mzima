@@ -4,7 +4,10 @@
     class="feed-page__controls-panel"
     [ngClass]="{ 'feed-page__controls-panel--bulk-visible': isBulkOptionsVisible }"
   >
-    <div class="feed-page__controls">
+    <div
+      class="feed-page__controls feed-page__controls--actions"
+      *ngIf="isDesktop || isBulkOptionsVisible"
+    >
       <ng-container *ngIf="isBulkOptionsVisible">
         <button
           color="accent"
@@ -13,70 +16,114 @@
           (click)="deleteSelectedPosts()"
           [disabled]="!selectedPosts.length"
         >
-          {{ 'app.delete' | translate }}
+          <span *ngIf="isDesktop">{{ 'app.delete' | translate }}</span>
+          <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
         </button>
-        <mat-form-field appearance="outline" class="feed-page__control">
-          <mat-select
-            name="filter"
-            disableOptionCentering
-            [(ngModel)]="selectedStatus"
-            [disabled]="!selectedPosts.length"
-            [placeholder]="'app.mark_as' | translate"
-            (selectionChange)="changePostsStatus($event)"
+        <ng-container *ngIf="!isDesktop">
+          <span class="feed-page__controls__info"
+            >{{ selectedPosts.length }}/{{ posts.length }} Selected</span
           >
-            <mat-option *ngFor="let status of statuses" [value]="status.value">
+          <button
+            mat-stroked-button
+            class="feed-page__control"
+            [disabled]="!selectedPosts.length"
+            [matMenuTriggerFor]="statusesMenu"
+          >
+            <mat-icon svgIcon="dots"></mat-icon>
+          </button>
+          <mat-menu
+            #statusesMenu="matMenu"
+            xPosition="after"
+            class="statuses-menu"
+            backdropClass="statuses-menu__backdrop"
+          >
+            <h3 class="menu-title">{{ 'app.mark_as' | translate }}</h3>
+            <button
+              mat-menu-item
+              *ngFor="let status of statuses"
+              (click)="changePostsStatus(status.value)"
+            >
               {{ status.name | translate }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <button mat-button (click)="selectAllPosts()" class="feed-page__control">
-          {{ 'post.select_all' | translate }}
-        </button>
-        <button
-          mat-button
-          class="feed-page__control"
-          (click)="deselectAllPosts()"
-          [disabled]="!selectedPosts.length"
-        >
-          {{ 'nav.deselect' | translate }}
-          {{ 'nav.all' | translate }}
-        </button>
+            </button>
+          </mat-menu>
+        </ng-container>
+        <ng-container *ngIf="isDesktop">
+          <mat-form-field appearance="outline" class="feed-page__control">
+            <mat-select
+              name="filter"
+              disableOptionCentering
+              [(ngModel)]="selectedStatus"
+              [disabled]="!selectedPosts.length"
+              [placeholder]="'app.mark_as' | translate"
+              (selectionChange)="changePostsStatus($event.value)"
+            >
+              <mat-option *ngFor="let status of statuses" [value]="status.value">
+                {{ status.name | translate }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-button (click)="selectAllPosts()" class="feed-page__control">
+            {{ 'post.select_all' | translate }}
+          </button>
+          <button
+            mat-button
+            class="feed-page__control"
+            (click)="deselectAllPosts()"
+            [disabled]="!selectedPosts.length"
+          >
+            {{ 'nav.deselect' | translate }}
+            {{ 'nav.all' | translate }}
+          </button>
+        </ng-container>
       </ng-container>
     </div>
     <div class="feed-page__controls">
       <button
         *ngIf="user?.allowed_privileges?.includes('update')"
         mat-stroked-button
-        class="feed-page__control"
         [ngClass]="{ active: isBulkOptionsVisible }"
         (click)="toggleBulkOptions(!isBulkOptionsVisible)"
+        class="feed-page__control feed-page__control--bulk"
       >
         {{ 'post.modify.bulk_actions' | translate }}
       </button>
-      <button
-        mat-stroked-button
-        [matMenuTriggerFor]="sortingMenu"
-        class="feed-page__control feed-page__control--sorting"
-      >
-        {{ 'global_filter.sorting' | translate }}
-        <mat-icon svgIcon="sorting"></mat-icon>
-      </button>
-
-      <mat-menu #sortingMenu="matMenu" xPosition="before">
+      <div class="feed-page__controls__inner">
         <button
-          mat-menu-item
-          *ngFor="let sorting of sortingOptions"
-          (click)="sortPosts(sorting.value)"
-          [ngClass]="{
-            active:
-              activeSorting.order === sorting.value.order &&
-              activeSorting.orderby === sorting.value.orderby
-          }"
+          mat-stroked-button
+          [matMenuTriggerFor]="sortingMenu"
+          class="feed-page__control feed-page__control--sorting"
         >
-          <mat-icon [svgIcon]="sorting.value.order === 'desc' ? 'sort-down' : 'sort-up'"></mat-icon>
-          {{ sorting.orderBy | translate }} ({{ sorting.order | translate }})
+          <span *ngIf="isDesktop">{{ 'global_filter.sorting' | translate }}</span>
+          <mat-icon svgIcon="sorting"></mat-icon>
         </button>
-      </mat-menu>
+
+        <mat-menu #sortingMenu="matMenu" xPosition="before">
+          <button
+            mat-menu-item
+            *ngFor="let sorting of sortingOptions"
+            (click)="sortPosts(sorting.value)"
+            [ngClass]="{
+              active:
+                activeSorting.order === sorting.value.order &&
+                activeSorting.orderby === sorting.value.orderby
+            }"
+          >
+            <mat-icon
+              [svgIcon]="sorting.value.order === 'desc' ? 'sort-down' : 'sort-up'"
+            ></mat-icon>
+            {{ sorting.orderBy | translate }} ({{ sorting.order | translate }})
+          </button>
+        </mat-menu>
+
+        <button
+          *ngIf="!isDesktop"
+          mat-stroked-button
+          class="feed-page__control"
+          (click)="toggleFilters(!isFiltersVisible)"
+        >
+          <mat-icon class="search-form__filters__icon" svgIcon="filters"></mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 

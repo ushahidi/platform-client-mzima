@@ -28,37 +28,100 @@
     right: 0;
     top: 100%;
     left: 220px;
-    display: flex;
     margin-top: 1px;
     position: absolute;
-    transform-origin: 50% 0;
     background: var(--color-light);
-    justify-content: space-between;
 
     @include breakpoint-max($laptop-small) {
       left: 0;
+    }
+
+    @include breakpoint-max($tablet) {
+      top: 0;
+      bottom: 0;
+      z-index: 800;
+      margin-top: 0;
+      position: fixed;
+      background: var(--color-light);
     }
 
     &:not(.search-form__filters-panel--open) {
       opacity: 0;
       top: -9999px;
       left: -9999px;
-      transform: scaleY(0);
+      right: 9999px;
+
+      @include breakpoint-max($tablet) {
+        bottom: 9999px;
+      }
+    }
+
+    &__inner {
+      display: flex;
+      justify-content: space-between;
+
+      @include breakpoint-max($tablet) {
+        display: block;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-top: 16px;
+        padding-bottom: 80px;
+        scroll-behavior: smooth;
+        height: calc(100% - 80px);
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+
+    &__head {
+      display: flex;
+      padding: 0 16px;
+      min-height: 80px;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-neutral-30);
+
+      &__close {
+        padding: 0;
+        height: 40px;
+        display: flex;
+        min-width: 40px;
+        font-size: 32px;
+        margin: 0 0 0 24px;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      h3 {
+        font-weight: 700;
+        color: var(--color-black);
+      }
     }
 
     &__item {
       flex-shrink: 0;
-      width: 16.6666%;
 
-      &:last-child {
-        @include breakpoint-max($laptop) {
-          width: 18%;
+      @include breakpoint-min($tablet) {
+        flex: 1 1 16.6666%;
+
+        &:last-child {
+          @include breakpoint-max($laptop) {
+            flex-basis: 18%;
+          }
+        }
+
+        &:not(:last-child) {
+          @include breakpoint-max($laptop) {
+            flex-basis: 16.4%;
+          }
         }
       }
 
-      &:not(:last-child) {
-        @include breakpoint-max($laptop) {
-          width: 16.4%;
+      @include breakpoint-max($mobile) {
+        display: block;
+
+        &:not(:first-child) {
+          margin-top: 16px;
         }
       }
 
@@ -74,6 +137,20 @@
           padding-left: 8px;
           padding-right: 8px;
         }
+
+        @include breakpoint-max($tablet) {
+          left: 0;
+          right: 0;
+          bottom: 0;
+          display: flex;
+          position: fixed;
+          padding: 12px 11px;
+          align-items: center;
+          border-bottom: none;
+          background: var(--color-light);
+          justify-content: space-between;
+          border-top: 1px solid var(--color-neutral-30);
+        }
       }
     }
   }
@@ -87,19 +164,30 @@
       margin-left: 8px;
     }
 
+    @include breakpoint-max($tablet) {
+      right: 16px;
+      min-width: 150px;
+      position: absolute;
+      top: calc(100% + 16px);
+      box-shadow: inset 0 0 0 1px var(--color-neutral-60) !important;
+    }
+
     &::ng-deep {
       .mat-button-wrapper {
         justify-content: center;
+
+        @include breakpoint-max($tablet) {
+          flex-direction: row-reverse;
+        }
       }
     }
 
     &__icon {
       flex-shrink: 0;
-      font-size: 30px;
-      margin-right: 3px;
 
-      &:last-child {
-        margin-left: 0;
+      @include breakpoint-max($tablet) {
+        margin-left: 10px;
+        margin-right: 0 !important;
       }
     }
   }
@@ -128,6 +216,10 @@
       }
     }
 
+    @include breakpoint-max($tablet) {
+      display: none;
+    }
+
     &__total {
       display: block;
       font-size: 14px;
@@ -141,6 +233,11 @@
   &__button {
     width: 100%;
     text-align: center;
+
+    @include breakpoint-max($tablet) {
+      margin: 0 5px;
+      flex: 1 1 calc(100% - 10px);
+    }
 
     &::ng-deep {
       .mat-button-wrapper {
@@ -406,6 +503,14 @@
   padding-left: 16px;
   padding-right: 16px;
 
+  @include breakpoint-max($tablet) {
+    font-size: 16px;
+    margin-top: 16px;
+    margin-left: -16px;
+    margin-right: -16px;
+    width: calc(100% + 32px);
+  }
+
   &.small {
     .save-filter-button {
       &__icon {
@@ -415,6 +520,12 @@
           margin-left: 0;
         }
       }
+    }
+  }
+
+  .mat-icon {
+    @include breakpoint-max($tablet) {
+      font-size: 20px;
     }
   }
 }

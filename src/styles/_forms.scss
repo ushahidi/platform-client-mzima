@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
 .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
@@ -83,6 +85,10 @@
   align-items: center;
   justify-content: space-between;
 
+  @include breakpoint-max($tablet) {
+    margin-bottom: 16px;
+  }
+
   h1 {
     margin-bottom: 0;
   }
@@ -98,6 +104,15 @@
   .mat-button-base {
     margin: 0 8px;
     min-width: 125px;
+
+    @include breakpoint-max($tablet) {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    @include breakpoint-max($mobile) {
+      min-width: 115px;
+    }
   }
 
   &--sticky {
@@ -116,6 +131,23 @@
       padding: 8px 7px 15px;
       margin: -8px -15px -15px;
     }
+
+    @include breakpoint-max($tablet) {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0;
+      position: fixed;
+      flex-wrap: nowrap;
+      padding: 11px 11px 12px;
+      border-top: 1px solid var(--color-neutral-20);
+    }
+  }
+}
+
+.form-controls-spacer {
+  @include breakpoint-max($tablet) {
+    height: 72px;
   }
 }
 
@@ -274,6 +306,11 @@
       padding: 12px;
       flex-basis: 100%;
       min-height: 52px;
+
+      @include breakpoint-max($tablet) {
+        min-height: 48px;
+        padding: 8px 16px;
+      }
     }
   }
 }
@@ -331,6 +368,10 @@
 .form-row {
   flex: 1 1 100%;
   margin-bottom: 24px;
+
+  // @include breakpoint-max($tablet) {
+  //   margin-bottom: 32px;
+  // }
 
   &--small {
     > mat-label {
@@ -451,7 +492,7 @@
     position: static;
     line-height: 1.3;
     padding: 0 !important;
-    color: var(--color-neutral-90);
+    color: var(--color-neutral-80) !important;
 
     .mat-hint,
     .mat-error {
@@ -467,6 +508,11 @@
     max-width: calc(100% - 45px);
     background: var(--color-light);
     color: var(--color-neutral-100);
+
+    @include breakpoint-max($tablet) {
+      padding: 11px 23px;
+      max-width: calc(100% - 48px);
+    }
 
     &[readonly='true'] {
       color: var(--color-neutral-70);
@@ -504,10 +550,18 @@
     border-radius: 4px;
     width: calc(100% - 2px);
     background: var(--color-light);
+
+    @include breakpoint-max($tablet) {
+      height: 46px;
+    }
   }
 
   .mat-select-value {
     padding: 7px 7px 7px 21px;
+
+    @include breakpoint-max($tablet) {
+      padding: 11px 11px 11px 24px;
+    }
   }
 
   .mat-select-arrow-wrapper {
@@ -683,9 +737,13 @@
 
   .mat-select-arrow-wrapper {
     width: 24px;
-    //height: 24px;
+    height: 24px;
     flex-shrink: 0;
     //margin: 0 16px;
+
+    @include breakpoint-max($tablet) {
+      width: 32px;
+    }
   }
 
   .mat-select-arrow {
@@ -734,12 +792,22 @@
 
 .mat-checkbox-layout {
   align-items: center !important;
+
+  @include breakpoint-max($tablet) {
+    white-space: normal !important;
+    align-items: flex-start !important;
+  }
 }
 
 .mat-checkbox-inner-container {
   width: 21px !important;
   height: 21px !important;
   margin: 3.5px 12px 3.5px 3.5px !important;
+
+  @include breakpoint-max($tablet) {
+    margin-top: 1.5px !important;
+    margin-bottom: 1.5px !important;
+  }
 }
 
 .mat-checkbox-background,
@@ -758,6 +826,10 @@
   + p {
     margin-top: 8px;
 
+    @include breakpoint-max($tablet) {
+      color: var(--color-neutral-90);
+    }
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -766,6 +838,14 @@
 
 .checkbox-group {
   margin-top: 8px;
+
+  .checkbox {
+    &:not(:first-child) {
+      @include breakpoint-max($tablet) {
+        margin-top: 24px;
+      }
+    }
+  }
 }
 
 .checkbox {
@@ -773,6 +853,10 @@
 
   @include breakpoint-max($laptop-small) {
     padding: 8px;
+  }
+
+  @include breakpoint-max($tablet) {
+    padding: 0;
   }
 }
 

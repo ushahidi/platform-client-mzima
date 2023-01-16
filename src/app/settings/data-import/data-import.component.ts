@@ -10,6 +10,7 @@ import {
   LoaderService,
   NotificationService,
   PollingService,
+  BreakpointService,
 } from '@services';
 import { forkJoin, Observable } from 'rxjs';
 
@@ -37,6 +38,7 @@ export class DataImportComponent implements OnInit {
   statusOption: string;
   selectedStatus: PostStatus;
   displayedColumns: string[] = ['survey', 'csv'];
+  public isDesktop = false;
 
   constructor(
     private importService: DataImportService,
@@ -48,7 +50,14 @@ export class DataImportComponent implements OnInit {
     private route: ActivatedRoute,
     private confirm: ConfirmModalService,
     private formsService: FormsService,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit() {
     this.forms$ = this.formsService.getFresh();
@@ -120,7 +129,11 @@ export class DataImportComponent implements OnInit {
           this.translateService.instant('notify.data_import.csv_import_cancel'),
         );
         this.importService.delete(this.uploadedCSV.id).subscribe(() => {
-          this.router.navigate([`/settings/data-import`]);
+          if (this.isDesktop) {
+            this.router.navigate([`/settings/data-import`]);
+          } else {
+            this.router.navigate([`/settings`]);
+          }
         });
       });
   }

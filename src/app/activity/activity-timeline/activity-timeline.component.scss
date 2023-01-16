@@ -1,6 +1,30 @@
+@import '/src/styles/helpers';
+
+.chart-cover {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  --scrollbar-background: var(--color-light);
+
+  @include breakpoint-max($tablet) {
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
 .chart {
   height: 360px;
-  margin-bottom: 74px;
+  min-width: 640px;
+  margin-bottom: 48px;
+
+  @include breakpoint-max($tablet) {
+    height: 420px;
+  }
 
   &::ng-deep {
     .ngx-charts-outer {

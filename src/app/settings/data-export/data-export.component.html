@@ -19,6 +19,7 @@
           </p>
         </div>
       </ng-container>
+      <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
       <div class="form-controls-panel">
         <button
           type="button"
@@ -43,7 +44,7 @@
       </div>
     </mat-tab>
     <mat-tab [label]="'data_export.export_history' | translate" data-qa="tab-export-history">
-      <ng-container *ngIf="exportJobsReady; else showLoader">
+      <div class="history-table" *ngIf="exportJobsReady; else showLoader">
         <table mat-table [dataSource]="exportJobs">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>{{ 'app.name' | translate }}</th>
@@ -89,7 +90,7 @@
             *matRowDef="let row; columns: ['name', 'status', 'created', 'expires', 'download']"
           ></tr>
         </table>
-      </ng-container>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </ng-container>
@@ -116,6 +117,7 @@
     </div>
   </div>
 
+  <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <button type="button" mat-stroked-button (click)="selectFields()" data-qa="btn-cancel">
       {{ 'data_export.cancel' | translate }}

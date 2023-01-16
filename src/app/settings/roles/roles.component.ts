@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RoleResponse } from '@models';
 import { Observable } from 'rxjs';
-import { RolesService } from '@services';
+import { RolesService, BreakpointService } from '@services';
 
 @Component({
   selector: 'app-roles',
@@ -10,8 +10,15 @@ import { RolesService } from '@services';
 })
 export class RolesComponent implements OnInit {
   public roleResponse$: Observable<RoleResponse>;
+  public isDesktop = false;
 
-  constructor(private rolesService: RolesService) {}
+  constructor(private rolesService: RolesService, private breakpointService: BreakpointService) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit() {
     this.getRoles();

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { BehaviorSubject, debounceTime, Subject } from 'rxjs';
-import { SearchService } from 'src/app/core/services/search.service';
+import { SearchService, BreakpointService } from '@services';
 
 interface LatLng {
   lat?: number;
@@ -73,8 +73,9 @@ export class LocationSelectionComponent implements ControlValueAccessor {
   public location_distance: number;
   public citiesOptions: BehaviorSubject<SearchResponse[]>;
   public searchQuery?: SearchResponse;
+  public isDesktop: boolean;
 
-  constructor(private searchService: SearchService) {
+  constructor(private searchService: SearchService, private breakpointService: BreakpointService) {
     this.citiesOptions = new BehaviorSubject<any[]>([]);
 
     this.searchSubject.pipe(debounceTime(350)).subscribe({
@@ -84,6 +85,12 @@ export class LocationSelectionComponent implements ControlValueAccessor {
             this.citiesOptions.next(response);
           },
         });
+      },
+    });
+
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
       },
     });
   }

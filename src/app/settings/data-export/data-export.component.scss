@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .description {
   max-width: 654px;
   margin-bottom: 32px;
@@ -39,4 +41,17 @@
 .spinner {
   display: block;
   margin: 150px 0;
+}
+
+.history-table {
+  @include breakpoint-max($mobile) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
+    .mat-table {
+      min-width: 680px;
+    }
+  }
 }

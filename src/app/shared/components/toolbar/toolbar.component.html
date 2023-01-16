@@ -1,27 +1,32 @@
 <mat-toolbar class="toolbar">
   <!-- <app-breadcrumb></app-breadcrumb> -->
-  <h1 class="toolbar__page-title" data-qa="page-title">
+  <button mat-icon-button (click)="back()" class="toolbar__back" *ngIf="!isDesktop && isInnerPage">
+    <mat-icon svgIcon="back"></mat-icon>
+  </button>
+  <h1 class="toolbar__page-title" data-qa="page-title" *ngIf="isDesktop || !showSearchForm">
     {{ pageTitle | translate }}
   </h1>
   <div class="toolbar__controls">
     <app-search-form class="search-form" *ngIf="showSearchForm"> </app-search-form>
-    <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
-    <button color="dark" mat-raised-button class="toolbar__button" (click)="openShare()">
-      <span>{{ 'app.share' | translate }}</span>
-      <mat-icon class="toolbar__button__icon" svgIcon="share"></mat-icon>
-    </button>
-    <app-language
-      class="toolbar__language"
-      [languages]="languages"
-      [selectedLanguage]="selectedLanguage"
-    ></app-language>
+    <ng-container *ngIf="isDesktop">
+      <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
+      <button color="dark" mat-raised-button class="toolbar__button" (click)="openShare()">
+        <span>{{ 'app.share' | translate }}</span>
+        <mat-icon class="toolbar__button__icon" svgIcon="share"></mat-icon>
+      </button>
+      <app-language
+        class="toolbar__language"
+        [languages]="languages"
+        [selectedLanguage]="selectedLanguage"
+      ></app-language>
+    </ng-container>
   </div>
   <button
     mat-button
-    *ngIf="isLoggedIn"
     class="account-info"
-    [matMenuTriggerFor]="accountMenu"
     data-qa="account-info"
+    *ngIf="isLoggedIn && isDesktop"
+    [matMenuTriggerFor]="accountMenu"
   >
     <div class="account-info__main">
       <span class="account-info__name">{{ profile.realname }}</span>
@@ -36,7 +41,72 @@
     />
     <mat-icon class="account-info__arrow" svgIcon="arrow-down"></mat-icon>
   </button>
+  <button
+    mat-button
+    class="burger"
+    *ngIf="!isDesktop"
+    aria-label="Open menu"
+    (click)="toggleBurgerMenu()"
+  >
+    <mat-icon svgIcon="hamburger"></mat-icon>
+  </button>
 </mat-toolbar>
+
+<div class="menu" *ngIf="!isDesktop" [ngClass]="{ 'menu--open': isBurgerMenuOpen }">
+  <div class="menu__head">
+    <div class="menu__logo">
+      <img src="assets/images/ushahidi-logo.svg" alt="ushahidi" width="177" height="54" />
+    </div>
+    <button
+      mat-stroked-button
+      class="menu__head__close"
+      (click)="toggleBurgerMenu(false)"
+      [attr.aria-label]="'modal.button.close' | translate"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="menu__body">
+    <app-company-info
+      [title]="siteConfig.name"
+      [logo]="siteConfig.image_header"
+      [description]="siteConfig.description"
+    ></app-company-info>
+
+    <div class="mobile-menu">
+      <ng-container *ngFor="let item of menu">
+        <hr *ngIf="item.separator" />
+        <a
+          mat-raised-button
+          *ngIf="item.visible"
+          (click)="item.action()"
+          class="mobile-menu-button"
+          [data-qa]="'btn-' + item.icon"
+        >
+          <mat-icon class="mobile-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
+          <span class="mobile-menu-button__title">
+            {{ item.label | translate }}
+          </span>
+        </a>
+      </ng-container>
+      <hr />
+      <a mat-raised-button class="mobile-menu-button"> Privacy Policy </a>
+      <a mat-raised-button class="mobile-menu-button"> Terms and Conditions </a>
+    </div>
+  </div>
+
+  <div class="menu__footer">
+    <app-donation-button
+      class="menu__footer__button"
+      *ngIf="isDonateAvailable"
+    ></app-donation-button>
+    <button mat-stroked-button (click)="openShare()" class="menu__footer__button">
+      <span>{{ 'app.share' | translate }}</span>
+      <mat-icon svgIcon="share"></mat-icon>
+    </button>
+  </div>
+</div>
 
 <mat-menu #accountMenu="matMenu" class="account-menu">
   <button mat-menu-item (click)="openSettings()">{{ 'nav.account_settings' | translate }}</button>

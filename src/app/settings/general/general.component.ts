@@ -9,6 +9,7 @@ import {
   LoaderService,
   MediaService,
   SessionService,
+  BreakpointService,
 } from '@services';
 import { mergeMap } from 'rxjs';
 import { ConfirmModalService } from '@services';
@@ -34,6 +35,7 @@ export class GeneralComponent implements OnInit {
   siteConfig: any;
   apiKey: ApiKeyResult;
   uploadedFile?: File;
+  public isDesktop = false;
 
   constructor(
     private sessionService: SessionService,
@@ -46,7 +48,14 @@ export class GeneralComponent implements OnInit {
     private apiKeyService: ApiKeyService,
     private confirmModalService: ConfirmModalService,
     private clipboard: ClipboardService,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.siteConfig = this.sessionService.getSiteConfigurations();

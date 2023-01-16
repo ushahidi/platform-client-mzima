@@ -1,4 +1,4 @@
-<h1>{{ 'settings.settings_list.general' | translate }}</h1>
+<h1 *ngIf="isDesktop">{{ 'settings.settings_list.general' | translate }}</h1>
 <form (ngSubmit)="save()" [formGroup]="generalForm" novalidate>
   <div class="form-row">
     <mat-label translate>settings.deployment_name</mat-label>
@@ -20,8 +20,8 @@
       <textarea
         matInput
         cdkTextareaAutosize
-        cdkAutosizeMinRows="6"
         cdkAutosizeMaxRows="10"
+        [cdkAutosizeMinRows]="isDesktop ? 6 : 3"
         placeholder="{{ 'settings.site_description' }}"
         formControlName="description"
       ></textarea>
@@ -99,6 +99,7 @@
 
 <app-settings-map #mapSettings></app-settings-map>
 
+<div class="form-controls-spacer" *ngIf="!isDesktop"></div>
 <div class="form-controls-panel form-controls-panel--sticky">
   <button type="button" mat-stroked-button routerLink="/settings" data-qa="btn-cancel">
     {{ 'app.cancel' | translate }}

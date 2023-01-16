@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LanguageInterface } from '@models';
+import { BreakpointService } from '@services';
 
 export interface SelectLanguagesDialogData {
   defaultLanguage: LanguageInterface;
@@ -16,8 +17,18 @@ export interface SelectLanguagesDialogData {
 })
 export class SelectLanguagesModalComponent implements OnInit {
   public languages: LanguageInterface[];
+  public isDesktop = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: SelectLanguagesDialogData) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: SelectLanguagesDialogData,
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit() {
     this.languages = this.data.languages;

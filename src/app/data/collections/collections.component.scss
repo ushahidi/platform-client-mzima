@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .head {
   display: flex;
   padding-right: 56px;
@@ -5,8 +7,21 @@
   margin-bottom: 16px;
   justify-content: space-between;
 
+  @include breakpoint-max($tablet) {
+    height: 80px;
+    margin: 0 -16px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--color-neutral-30);
+  }
+
   h1 {
     margin-bottom: 0 !important;
+
+    @include breakpoint-max($tablet) {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.28;
+    }
   }
 }
 
@@ -16,9 +31,19 @@
   margin: 0 -8px -24px;
   justify-content: flex-start;
 
+  @include breakpoint-max($mobile) {
+    margin: 0;
+    display: block;
+  }
+
   &__item {
     margin: 0 8px 16px;
     width: calc(50% - 16px);
+
+    @include breakpoint-max($mobile) {
+      width: auto;
+      margin: 0 12px;
+    }
   }
 }
 
@@ -26,4 +51,76 @@
   display: block;
   margin-top: 200px;
   margin-bottom: 200px;
+}
+
+::ng-deep {
+  @include breakpoint-max($tablet) {
+    .collections-modal {
+      height: 100%;
+      width: 100% !important;
+      max-width: none !important;
+
+      .mat-dialog-container {
+        padding: 0 16px !important;
+        border-radius: 0 !important;
+
+        .modal {
+          &__close-btn {
+            top: 20px;
+          }
+        }
+      }
+
+      .mat-dialog-content {
+        margin-left: -16px !important;
+        margin-right: -16px !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        max-height: calc(100% - 160px) !important;
+
+        &.create-form {
+          padding-top: 16px;
+          padding-bottom: 16px;
+          max-height: calc(100% - 80px);
+        }
+      }
+
+      .mat-dialog-container {
+        overflow: visible;
+      }
+
+      .mat-dialog-actions {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 25;
+        position: fixed;
+        margin: 0 !important;
+        min-height: 48px !important;
+        padding: 12px 16px !important;
+        background: var(--color-light);
+        border-top: 1px solid var(--color-neutral-20);
+      }
+    }
+  }
+}
+
+.search-form {
+  @include breakpoint-max($tablet) {
+    display: flex;
+    padding-top: 16px;
+    align-items: center;
+    padding-bottom: 16px;
+    justify-content: space-between;
+
+    .form-row {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .mat-button-base {
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
+  }
 }

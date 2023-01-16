@@ -13,6 +13,7 @@ import { DateRange } from '@angular/material/datepicker';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { BreakpointService } from '@services';
 dayjs.extend(customParseFormat);
 
 export enum FilterType {
@@ -51,6 +52,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
   @Input() public fields: string[] = ['id', 'name'];
   @Output() public filterChange = new EventEmitter();
   @Output() public editOption = new EventEmitter();
+  @Output() public clear = new EventEmitter();
   @ViewChild('calendar') public calendar: any;
   public value: any;
   public calendarValue = {
@@ -61,6 +63,16 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
 
   public touched = false;
   public disabled = false;
+  public isDesktop: boolean;
+  public isModalOpen: boolean;
+
+  constructor(private breakpointService: BreakpointService) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   private _transformer = (node: any, level: number) => {
     return {
@@ -166,5 +178,18 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
     }
 
     this.value = new DateRange<Date>(start, end);
+  }
+
+  public toggleModal(value?: boolean): void {
+    this.isModalOpen = value ?? !this.isModalOpen;
+  }
+
+  public apply(): void {
+    this.toggleModal(false);
+    this.filterChange.emit(true);
+  }
+
+  public clearFilter(): void {
+    this.clear.emit();
   }
 }

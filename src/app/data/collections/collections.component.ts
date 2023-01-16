@@ -6,7 +6,13 @@ import { surveyHelper, formHelper } from '@helpers';
 import { CollectionResult, PostResult } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { CollectionsService, ConfirmModalService, RolesService, SessionService } from '@services';
+import {
+  CollectionsService,
+  ConfirmModalService,
+  RolesService,
+  SessionService,
+  BreakpointService,
+} from '@services';
 
 enum CollectionView {
   List = 'list',
@@ -44,6 +50,7 @@ export class CollectionsComponent implements OnInit {
   // TODO: Fix takeUntilDestroy$() with material components
   // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
   private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
+  isDesktop = false;
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
@@ -55,6 +62,7 @@ export class CollectionsComponent implements OnInit {
     private router: Router,
     private session: SessionService,
     private rolesService: RolesService,
+    private breakpointService: BreakpointService,
   ) {}
 
   ngOnInit() {
@@ -67,6 +75,12 @@ export class CollectionsComponent implements OnInit {
 
     this.getCollections();
     this.featuredEnabled = true; //hasPermission Manage Posts
+
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
   }
 
   private initRoles() {

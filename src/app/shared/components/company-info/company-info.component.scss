@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .company-info {
   color: inherit;
   font-size: 12px;
@@ -6,6 +8,12 @@
   background: none;
   line-height: 1.3;
   margin: 0 -10px 12px;
+
+  @include breakpoint-max($tablet) {
+    margin: 0;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--color-neutral-90);
+  }
 
   &::ng-deep {
     a {
@@ -29,6 +37,10 @@
 
       @media screen and (min-height: 860px) {
         max-height: 300px;
+      }
+
+      @include breakpoint-max($tablet) {
+        max-height: 260px;
       }
     }
   }
@@ -92,5 +104,15 @@
     display: block;
     margin-right: 8px;
     object-fit: contain;
+  }
+}
+
+.mat-expansion-panel {
+  &:not(.mat-expanded):not([aria-disabled='true']) {
+    .mat-expansion-panel-header {
+      &:hover {
+        background-color: transparent;
+      }
+    }
   }
 }

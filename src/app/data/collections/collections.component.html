@@ -14,7 +14,7 @@
       {{ post ? ('set.add_to_collection' | translate) : ('app.collection' | translate) }}
     </h1>
     <button
-      *ngIf="isLoggedIn && !post"
+      *ngIf="isLoggedIn && !post && isDesktop"
       type="button"
       color="primary"
       mat-raised-button
@@ -26,7 +26,11 @@
     </button>
   </div>
 
-  <form [formGroup]="searchForm" (ngSubmit)="getCollections(searchForm.get('query')?.value)">
+  <form
+    class="search-form"
+    [formGroup]="searchForm"
+    (ngSubmit)="getCollections(searchForm.get('query')?.value)"
+  >
     <div class="form-row">
       <mat-form-field appearance="outline">
         <input
@@ -38,6 +42,17 @@
         <mat-icon matPrefix svgIcon="search"></mat-icon>
       </mat-form-field>
     </div>
+    <button
+      *ngIf="isLoggedIn && !post && !isDesktop"
+      type="button"
+      color="primary"
+      mat-raised-button
+      (click)="addNewCollection()"
+      tabindex="-1"
+    >
+      <span>{{ 'app.add' | translate }}</span>
+      <mat-icon svgIcon="plus"></mat-icon>
+    </button>
   </form>
 
   <ng-container *ngIf="!isLoading; else loader">
@@ -68,9 +83,11 @@
 </ng-container>
 
 <ng-template #createForm>
-  <h1 mat-dialog-title>{{ 'app.create_collection' | translate }}</h1>
+  <div class="head">
+    <h1 mat-dialog-title>{{ 'app.create_collection' | translate }}</h1>
+  </div>
 
-  <div mat-dialog-content>
+  <div mat-dialog-content class="create-form">
     <form [formGroup]="collectionForm" novalidate>
       <div class="form-row">
         <mat-label>

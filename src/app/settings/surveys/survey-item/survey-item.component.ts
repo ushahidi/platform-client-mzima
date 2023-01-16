@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +11,7 @@ import {
   NotificationService,
   RolesService,
   SurveysService,
+  BreakpointService,
 } from '@services';
 import { SelectLanguagesModalComponent } from 'src/app/shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
@@ -55,6 +57,7 @@ export class SurveyItemComponent implements OnInit {
   public languages: LanguageInterface[] = this.languageService.getLanguages();
   public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
   public activeLanguages: LanguageInterface[] = this.defaultLanguage ? [this.defaultLanguage] : [];
+  public isDesktop = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -66,7 +69,15 @@ export class SurveyItemComponent implements OnInit {
     private rolesService: RolesService,
     private notification: NotificationService,
     private languageService: LanguageService,
-  ) {}
+    private breakpointService: BreakpointService,
+    private location: Location,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   public ngOnInit(): void {
     this.initRoles();
@@ -119,6 +130,7 @@ export class SurveyItemComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectLanguagesModalComponent, {
       width: '100%',
       maxWidth: 576,
+      panelClass: ['modal', 'select-languages-modal'],
       data: {
         languages: this.languages,
         activeLanguages: this.activeLanguages,
@@ -218,7 +230,11 @@ export class SurveyItemComponent implements OnInit {
   }
 
   public cancel() {
-    this.router.navigate(['settings/surveys']);
+    if (this.isDesktop) {
+      this.router.navigate(['settings/surveys']);
+    } else {
+      this.location.back();
+    }
   }
 
   addTask() {
@@ -226,6 +242,7 @@ export class SurveyItemComponent implements OnInit {
       width: '100%',
       maxWidth: 576,
       minWidth: 300,
+      panelClass: 'modal',
     });
 
     dialogRef.afterClosed().subscribe({

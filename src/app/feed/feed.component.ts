@@ -13,6 +13,7 @@ import {
   PostsV5Service,
   SavedsearchesService,
   SessionService,
+  BreakpointService,
 } from '@services';
 import { NgxMasonryComponent } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
@@ -62,6 +63,7 @@ export class FeedComponent implements OnInit {
   private filters = JSON.parse(
     localStorage.getItem(this.session.localStorageNameMapper('filters'))!,
   );
+  public isDesktop = false;
 
   constructor(
     private postsService: PostsService,
@@ -73,7 +75,14 @@ export class FeedComponent implements OnInit {
     private translate: TranslateService,
     private savedSearchesService: SavedsearchesService,
     private eventBusService: EventBusService,
+    private breakpointService: BreakpointService,
   ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+
     this.route.params.subscribe(() => {
       this.initCollection();
     });
@@ -155,6 +164,7 @@ export class FeedComponent implements OnInit {
         setTimeout(() => {
           this.isLoading = false;
           if (
+            this.isDesktop &&
             this.feed?.nativeElement.offsetHeight &&
             this.feed?.nativeElement.offsetHeight >= this.feed?.nativeElement.scrollHeight
           ) {
@@ -192,7 +202,7 @@ export class FeedComponent implements OnInit {
       data: { color: post.color, twitterId: post.data_source_message_id },
       height: 'auto',
       maxHeight: '90vh',
-      panelClass: 'post-modal',
+      panelClass: ['modal', 'post-modal'],
     });
 
     this.postsV5Service.getById(post.id).subscribe({
@@ -209,10 +219,8 @@ export class FeedComponent implements OnInit {
     }
   }
 
-  public changePostsStatus(event: any): void {
-    forkJoin(
-      this.selectedPosts.map((p) => this.postsService.update(p, { status: event.value })),
-    ).subscribe({
+  public changePostsStatus(status: string): void {
+    forkJoin(this.selectedPosts.map((p) => this.postsService.update(p, { status }))).subscribe({
       complete: () => {
         this.getPosts(this.params);
         this.selectedStatus = undefined;
@@ -275,9 +283,16 @@ export class FeedComponent implements OnInit {
   }
 
   public onScroll(event: any): void {
+    console.log('onScroll');
+
+    console.log(event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight);
+
     if (
       !this.isLoading &&
-      event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32
+      ((this.isDesktop &&
+        event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32) ||
+        (!this.isDesktop &&
+          event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight))
     ) {
       this.loadMore();
     }
@@ -292,5 +307,11 @@ export class FeedComponent implements OnInit {
       this.params.offset = this.params.offset + this.params.limit;
       this.getPosts(this.params, true);
     }
+  }
+
+  public toggleFilters(value: boolean): void {
+    if (value === this.isFiltersVisible) return;
+    this.isFiltersVisible = value;
+    this.session.toggleFiltersVisibility(value);
   }
 }

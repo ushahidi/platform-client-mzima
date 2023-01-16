@@ -1,4 +1,4 @@
-<h1>{{ (isUpdate ? 'role.edit_role' : 'role.add_role') | translate }}</h1>
+<h1 *ngIf="isDesktop">{{ (isUpdate ? 'role.edit_role' : 'role.add_role') | translate }}</h1>
 <form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
   <div class="form-row">
     <mat-label>{{ 'role.name' | translate }}</mat-label>
@@ -45,6 +45,7 @@
     </mat-selection-list>
   </div>
 
+  <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <div>
       <button
@@ -54,8 +55,10 @@
         (click)="deleteRole()"
         data-qa="btn-delete-role"
         *ngIf="isUpdate && !role?.protected"
+        class="delete-button"
       >
-        <span>{{ 'role.delete' | translate }}</span>
+        <ng-container *ngIf="isDesktop">{{ 'role.delete' | translate }}</ng-container>
+        <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
       </button>
     </div>
     <div>
@@ -75,7 +78,12 @@
         [disabled]="form.invalid"
         data-qa="btn-save-role"
       >
-        <span>{{ (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate }}</span>
+        <ng-container *ngIf="isDesktop">{{
+          (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate
+        }}</ng-container>
+        <ng-container *ngIf="!isDesktop">{{
+          (isUpdate ? 'app.update' : 'app.save') | translate
+        }}</ng-container>
       </button>
     </div>
   </div>

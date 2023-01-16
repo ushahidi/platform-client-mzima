@@ -1,3 +1,13 @@
+@import '/src/styles/helpers';
+
 .submit-post-button {
   width: 100%;
+
+  @include breakpoint-max($tablet) {
+    width: 64px;
+    height: 64px;
+    line-height: 1;
+    border-radius: 50%;
+    filter: drop-shadow(0 4px 12px rgba(var(--color-light-contrast-rgb), 0.25));
+  }
 }

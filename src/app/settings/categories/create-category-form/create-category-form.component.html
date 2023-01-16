@@ -2,7 +2,7 @@
   <div class="create-form__topbar">
     <app-settings-header
       [settingsTitle]="isUpdate ? 'app.edit_category' : 'app.add_new_category'"
-      [newButtonTitle]="'translations.add_translation_lang'"
+      [newButtonTitle]="isDesktop ? 'translations.add_translation_lang' : 'Translation'"
       [isShowActionsButton]="false"
       [isShowCreation]="false"
       [isShowTranslation]="true"
@@ -113,6 +113,7 @@
   </div>
   <!--  </ng-container>-->
 
+  <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <div>
       <button
@@ -122,12 +123,14 @@
         color="accent"
         data-qa="btn-cetegory-delete"
         (click)="deleteCategoryEmit()"
+        class="delete-button"
       >
-        {{ 'category.delete_category' | translate }}
+        <ng-container *ngIf="isDesktop">{{ 'category.delete_category' | translate }}</ng-container>
+        <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
       </button>
     </div>
     <div>
-      <button mat-stroked-button type="button" data-qa="btn-category-cancel" routerLink="../">
+      <button mat-stroked-button type="button" data-qa="btn-category-cancel" (click)="back()">
         <span>{{ 'app.cancel' | translate }}</span>
       </button>
       <button

@@ -31,6 +31,7 @@ export class PostHeadComponent {
       width: '100%',
       maxWidth: '768px',
       data: this.post,
+      panelClass: 'modal',
     });
 
     dialogRef.afterClosed().subscribe({

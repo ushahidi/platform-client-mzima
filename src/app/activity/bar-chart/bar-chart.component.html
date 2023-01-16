@@ -7,10 +7,12 @@
 >
 </app-chart-head>
 
-<div class="chart">
-  <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="data" [xAxis]="true" [yAxis]="true">
-    <ng-template #tooltipTemplate let-model="model">
-      <span class="chart__tooltip">{{ model.value }} posts</span>
-    </ng-template>
-  </ngx-charts-bar-vertical>
+<div class="chart-cover">
+  <div class="chart">
+    <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="data" [xAxis]="true" [yAxis]="true">
+      <ng-template #tooltipTemplate let-model="model">
+        <span class="chart__tooltip">{{ model.value }} posts</span>
+      </ng-template>
+    </ngx-charts-bar-vertical>
+  </div>
 </div>

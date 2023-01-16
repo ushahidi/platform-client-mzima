@@ -1,14 +1,16 @@
 @import '/src/styles/helpers';
 
 .main-form {
-  padding: 24px;
-  position: relative;
-  border-radius: 4px;
-  margin: 0 -7px 24px;
-  box-shadow: inset 0 0 0 1px var(--color-neutral-10);
+  @include breakpoint-min($tablet) {
+    padding: 24px;
+    position: relative;
+    border-radius: 4px;
+    margin: 0 -7px 24px;
+    box-shadow: inset 0 0 0 1px var(--color-neutral-10);
 
-  @include breakpoint-max($laptop-small) {
-    padding: 16px;
+    @include breakpoint-max($laptop-small) {
+      padding: 16px;
+    }
   }
 
   &__border {
@@ -20,6 +22,17 @@
     pointer-events: none;
     background: var(--color);
     border-radius: 4px 0 0 4px;
+
+    @include breakpoint-max($tablet) {
+      top: 89px;
+      left: 16px;
+      right: 16px;
+      z-index: 50;
+      height: 6px;
+      width: auto;
+      bottom: auto;
+      border-radius: 3px;
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 <ng-container *ngIf="webhookList">
   <div class="form-head-panel">
-    <h1>{{ 'app.webhooks' | translate }}</h1>
+    <h1 *ngIf="isDesktop">{{ 'app.webhooks' | translate }}</h1>
     <button
       type="button"
       color="primary"

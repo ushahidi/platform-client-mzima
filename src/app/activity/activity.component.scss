@@ -1,23 +1,42 @@
+@import '/src/styles/helpers';
+
 .activity-page {
-  padding: 24px;
-  overflow-y: auto;
-  max-height: 100%;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  @include breakpoint-min($tablet) {
+    padding: 24px;
+    overflow-y: auto;
+    max-height: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
 
   .page-content {
-    padding: 0;
-    margin: 0 auto;
-    max-width: 1054px;
+    @include breakpoint-min($tablet) {
+      padding: 0;
+      margin: 0 auto;
+      max-width: 1054px;
+    }
+
+    @include breakpoint-max($tablet) {
+      box-shadow: none;
+    }
   }
 }
 
 .chart-item {
   display: block;
-  padding: 32px 24px 16px;
+
+  @include breakpoint-min($tablet) {
+    padding: 32px 24px 16px;
+  }
 
   &:not(:first-child) {
-    border-top: 1px solid var(--color-neutral-20);
+    @include breakpoint-min($tablet) {
+      border-top: 1px solid var(--color-neutral-20);
+    }
+
+    @include breakpoint-max($tablet) {
+      margin-top: 32px;
+    }
   }
 }

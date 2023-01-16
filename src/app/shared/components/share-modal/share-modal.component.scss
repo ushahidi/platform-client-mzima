@@ -47,26 +47,29 @@
 
   .buttons {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 -8px -8px;
+    justify-content: flex-start;
 
     .twitter {
       &-btn {
-        width: 47%;
+        margin: 0 8px 8px;
+        // width: calc(50% - 8px);
       }
 
       &-icon {
-        margin-left: 12px;
+        margin-left: 8px;
       }
     }
 
     .facebook {
       &-btn {
-        width: 47%;
+        margin: 0 8px 8px;
+        // width: calc(50% - 8px);
       }
 
       &-icon {
-        margin-left: 18px;
+        margin-left: 8px;
       }
     }
   }

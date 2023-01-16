@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { Router } from '@angular/router';
 import { SurveyItem, SurveyItemEnabledLanguages } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmModalService, SurveysService } from '@services';
+import { ConfirmModalService, SurveysService, BreakpointService } from '@services';
 import { forkJoin, take } from 'rxjs';
 
 @Component({
@@ -15,13 +14,20 @@ export class SurveysComponent implements OnInit {
   public surveys: SurveyItem[];
   public selectedSurveys: SurveyItem[] = [];
   public isShowActions = false;
+  public isDesktop = false;
 
   constructor(
     private surveysService: SurveysService,
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
-    private router: Router,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.getSurveys();

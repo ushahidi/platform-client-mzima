@@ -43,6 +43,7 @@ export class DonationButtonComponent implements OnInit {
     this.dialog.open(DonationModalComponent, {
       width: '100%',
       maxWidth: 564,
+      panelClass: 'modal',
     });
   }
 }

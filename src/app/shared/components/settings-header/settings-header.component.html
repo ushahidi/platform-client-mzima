@@ -1,6 +1,9 @@
 <div class="form-head-panel">
-  <div class="form-head-panel__inner">
-    <h1>{{ settingsTitle | translate }}</h1>
+  <div
+    class="form-head-panel__inner form-head-panel__inner--actions"
+    *ngIf="isShowActions || isDesktop"
+  >
+    <h1 *ngIf="isDesktop">{{ settingsTitle | translate }}</h1>
     <ng-container *ngIf="isShowActions">
       <button
         type="button"
@@ -15,7 +18,11 @@
       <ng-content></ng-content>
     </ng-container>
   </div>
-  <div class="form-head-panel__inner" *ngIf="isShowCreation">
+  <div
+    class="form-head-panel__inner"
+    *ngIf="isShowCreation"
+    [ngClass]="{ 'form-head-panel__inner--single': !isShowActionsButton }"
+  >
     <button
       *ngIf="isShowActionsButton"
       type="button"

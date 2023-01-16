@@ -9,17 +9,38 @@
   <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
 </button>
 
-<mat-tab-group class="tabs" dynamicHeight disableRipple disablePagination animationDuration="0ms">
+<mat-tab-group
+  class="tabs"
+  dynamicHeight
+  disableRipple
+  disablePagination
+  animationDuration="0ms"
+  [ngClass]="{ 'tabs--single': !isSignupActive }"
+>
   <mat-tab [label]="'nav.login' | translate">
     <app-login-form (loggined)="loggined($event)">
-      <button btn-cancel mat-stroked-button type="button" (click)="cancel()" data-qa="btn-cancel">
+      <button
+        btn-cancel
+        mat-stroked-button
+        type="button"
+        (click)="cancel()"
+        data-qa="btn-cancel"
+        *ngIf="isDesktop"
+      >
         {{ 'app.cancel' | translate }}
       </button>
     </app-login-form>
   </mat-tab>
   <mat-tab [label]="'nav.registration' | translate" *ngIf="isSignupActive">
     <app-registration-form>
-      <button btn-cancel mat-stroked-button type="button" (click)="cancel()" data-qa="btn-cancel">
+      <button
+        btn-cancel
+        mat-stroked-button
+        type="button"
+        (click)="cancel()"
+        data-qa="btn-cancel"
+        *ngIf="isDesktop"
+      >
         {{ 'app.cancel' | translate }}
       </button>
     </app-registration-form>

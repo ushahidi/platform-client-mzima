@@ -1,4 +1,4 @@
-<h1>
+<h1 *ngIf="isDesktop">
   {{
     (provider && !onCreating ? 'Edit ' + provider.name + ' Data Source' : 'Add Data Source')
       | translate
@@ -188,6 +188,7 @@
     </ng-container>
   </div>
 
+  <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <div>
       <button
@@ -196,18 +197,15 @@
         color="accent"
         (click)="turnOffDataSource($event)"
         *ngIf="!onCreating"
+        class="delete-button"
         data-qa="btn-provider-delete"
       >
-        {{ 'app.delete' | translate }}
+        <ng-container *ngIf="isDesktop">{{ 'app.delete' | translate }}</ng-container>
+        <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
       </button>
     </div>
     <div>
-      <button
-        mat-stroked-button
-        type="button"
-        routerLink="/settings/data-sources"
-        data-qa="btn-provider-cancel"
-      >
+      <button mat-stroked-button type="button" (click)="back()" data-qa="btn-provider-cancel">
         {{ 'app.cancel' | translate }}
       </button>
       <button

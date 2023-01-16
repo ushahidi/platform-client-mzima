@@ -2,7 +2,14 @@ import { Component, OnInit, RendererFactory2 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { EnvService, LanguageService, LoaderService } from '@services';
+import {
+  EnvService,
+  LanguageService,
+  LoaderService,
+  EventBusService,
+  EventType,
+  BreakpointService,
+} from '@services';
 import { filter } from 'rxjs';
 import { IconService } from './core/services/icon.service';
 
@@ -17,6 +24,8 @@ export class AppComponent implements OnInit {
   private renderer = this.rendererFactory.createRenderer(null, null);
   public languages$;
   public selectedLanguage$;
+  public isDesktop = false;
+  public isInnerPage = false;
 
   constructor(
     private loaderService: LoaderService, //
@@ -29,6 +38,8 @@ export class AppComponent implements OnInit {
     private titleService: Title,
     private metaService: Meta,
     private translate: TranslateService,
+    private eventBusService: EventBusService,
+    private breakpointService: BreakpointService,
   ) {
     this.loaderService.isActive$.subscribe({
       next: (value) => {
@@ -40,6 +51,18 @@ export class AppComponent implements OnInit {
     this.iconService.registerIcons();
     this.selectedLanguage$ = this.languageService.selectedLanguage$;
     this.languages$ = this.languageService.languages$;
+
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+
+    this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
+      next: (option) => {
+        this.isInnerPage = Boolean(option.inner);
+      },
+    });
   }
 
   ngOnInit() {
