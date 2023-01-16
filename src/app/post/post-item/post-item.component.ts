@@ -315,7 +315,6 @@ export class PostItemComponent implements OnInit {
     this.isSearching = true;
     this.postsService.getPosts('', params).subscribe({
       next: (data) => {
-        console.log(this.relatedPosts);
         this.relatedPosts = data.results;
         this.isSearching = false;
       },

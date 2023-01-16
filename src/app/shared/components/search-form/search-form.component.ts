@@ -202,7 +202,6 @@ export class SearchFormComponent implements OnInit {
     });
 
     this.session.currentUserData$.subscribe((userData) => {
-      console.log('this.isLoggedIn = !!userData.id', userData);
       this.isLoggedIn = !!userData.userId;
     });
     this.eventBusService.on(EventType.SavedSearchInit).subscribe((sSearch) => {
@@ -427,7 +426,6 @@ export class SearchFormComponent implements OnInit {
       );
     } else {
       this.activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
-      console.log('else', this.activeSavedSearch);
     }
   }
 

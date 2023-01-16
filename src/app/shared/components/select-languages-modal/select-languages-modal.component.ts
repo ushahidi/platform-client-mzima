@@ -36,7 +36,6 @@ export class SelectLanguagesModalComponent implements OnInit {
 
   searchLanguage(event: any) {
     if (!event.target.value) {
-      console.log(this.data.languages);
       this.languages = this.data.languages;
     }
     this.languages = this.data.languages.filter((el) => {

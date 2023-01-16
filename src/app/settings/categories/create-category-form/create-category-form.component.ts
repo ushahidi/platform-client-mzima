@@ -136,8 +136,6 @@ export class CreateCategoryFormComponent implements OnInit {
             translation.description = data.translate_description;
           }
         }
-
-        console.log(this.form.value);
       },
     });
   }
