@@ -46,7 +46,7 @@
             {{ option[fields[1]] }}
           </mat-radio-button>
           <button
-            *ngIf="canEdit"
+            *ngIf="canEdit && isEditable(option)"
             class="edit-btn"
             mat-icon-button
             (click)="editOption.emit(option)"

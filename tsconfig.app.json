@@ -6,9 +6,11 @@
   },
   "files": [
     "src/main.ts",
-    "src/polyfills.ts"
+    "src/polyfills.ts",
+    "./cypress.config.ts"
   ],
   "include": [
     "src/**/*.d.ts"
-  ]
+  ],
+  "exclude": ["./cypress.config.ts"]
 }

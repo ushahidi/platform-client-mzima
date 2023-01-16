@@ -15,9 +15,9 @@ import {
   SessionService,
   CollectionsService,
   BreakpointService,
+  SavedsearchesService,
 } from '@services';
 import { BehaviorSubject, debounceTime, filter, forkJoin, lastValueFrom, map, Subject } from 'rxjs';
-import { SavedsearchesService } from 'src/app/core/services/savedsearches.service';
 import { FilterType } from '../filter-control/filter-control.component';
 import { SearchResponse } from '../location-selection/location-selection.component';
 import { MultilevelSelectOption } from '../multilevel-select/multilevel-select.component';
@@ -201,7 +201,9 @@ export class SearchFormComponent implements OnInit {
       status.name = this.translate.instant(status.name);
     });
 
-    this.session.isLogged$.subscribe((isLogged) => (this.isLoggedIn = isLogged));
+    this.session.currentUserData$.subscribe((userData) => {
+      this.isLoggedIn = !!userData.userId;
+    });
     this.eventBusService.on(EventType.SavedSearchInit).subscribe((sSearch) => {
       this.getSavedValues(parseFloat(sSearch));
     });
@@ -382,7 +384,7 @@ export class SearchFormComponent implements OnInit {
           filter: filters,
           name: result.name,
           description: result.description,
-          featured: result.featured,
+          featured: result.visible_to.value === 'only_me',
           role: result.visible_to.value === 'specific' ? result.visible_to.options : ['admin'],
           view: result.defaultViewingMode,
         };
@@ -424,7 +426,6 @@ export class SearchFormComponent implements OnInit {
       );
     } else {
       this.activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
-      console.log('else', this.activeSavedSearch);
     }
   }
 

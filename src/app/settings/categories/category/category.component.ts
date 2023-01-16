@@ -25,7 +25,6 @@ export class CategoryComponent {
     this.categoriesService.getById(this.categoryId).subscribe({
       next: (data) => {
         this.category = data.result;
-        console.log('category: ', this.category);
       },
     });
   }
