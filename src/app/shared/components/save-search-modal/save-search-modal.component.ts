@@ -74,7 +74,9 @@ export class SaveSearchModalComponent implements OnInit {
           this.form.patchValue({
             name: this.data.search.name,
             description: this.data.search.description,
-            visible_to: formHelper.mapRoleToVisible(this.data.search.role),
+            visible_to: this.data.search.featured
+              ? { value: 'only_me', options: [] }
+              : formHelper.mapRoleToVisible(this.data.search.role),
             featured: this.data.search.featured,
             defaultViewingMode: this.data.search.view,
           });
