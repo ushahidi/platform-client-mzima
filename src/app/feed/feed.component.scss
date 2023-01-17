@@ -11,10 +11,10 @@
   height: 100%;
 
   @include breakpoint-min($tablet) {
-    margin: 0 0 0 220px;
+    margin-inline-start: 220px;
 
     @include breakpoint-max($laptop-small) {
-      margin-left: 200px;
+      margin-inline-start: 200px;
     }
   }
 

@@ -2,29 +2,29 @@
 
 .toolbar {
   top: 0;
-  right: 0;
   width: auto;
-  left: 220px;
   height: 72px;
   z-index: 100;
   position: fixed;
   padding-left: 24px;
   padding-right: 24px;
+  inset-inline-end: 0;
   color: var(--color-black);
+  inset-inline-start: 220px;
   background: var(--color-light);
   border-bottom: 1px solid var(--color-neutral-30);
 
   @include breakpoint-max($laptop-small) {
-    left: 200px;
     height: 64px;
     padding-left: 16px;
     padding-right: 16px;
+    inset-inline-start: 200px;
   }
 
   @include breakpoint-max($tablet) {
-    left: 0;
     height: 80px;
     z-index: 600;
+    inset-inline-start: 0;
   }
 
   &__back {
@@ -47,10 +47,10 @@
 
   &__button {
     min-width: 125px;
-    margin-left: 16px;
+    margin-inline-start: 16px;
 
     @include breakpoint-max($laptop-small) {
-      margin-left: 8px;
+      margin-inline-start: 8px;
     }
 
     &::ng-deep {
@@ -63,7 +63,7 @@
   &__language {
     width: 81px;
     display: block;
-    margin-left: 16px;
+    margin-inline-start: 16px;
   }
 
   &__page-title {
@@ -88,16 +88,19 @@
 .account-info {
   height: 100%;
   flex-shrink: 0;
+  padding-top: 0;
   font-size: 14px;
   min-width: 236px;
   font-weight: 400;
   max-width: 250px;
   line-height: 17px;
+  padding-bottom: 0;
   text-align: right;
-  margin-left: 16px;
   white-space: normal;
-  margin-right: -24px;
-  padding: 0 24px 0 8px;
+  margin-inline-end: -24px;
+  padding-inline-end: 24px;
+  margin-inline-start: 16px;
+  padding-inline-start: 8px;
   border-left: 1px solid var(--color-neutral-30);
 
   @include breakpoint-max($laptop-small) {
@@ -107,12 +110,12 @@
   &__avatar {
     width: 32px;
     height: 32px;
-    margin-left: 12px;
     object-fit: contain;
     border-radius: 50%;
+    margin-inline-start: 12px;
 
     @include breakpoint-max($laptop-small) {
-      margin-left: 0;
+      margin-inline-start: 0;
     }
   }
 

@@ -557,10 +557,16 @@
   }
 
   .mat-select-value {
-    padding: 7px 7px 7px 21px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-inline-end: 7px;
+    padding-inline-start: 21px;
 
     @include breakpoint-max($tablet) {
-      padding: 11px 11px 11px 24px;
+      padding-top: 11px;
+      padding-bottom: 11px;
+      padding-inline-end: 11px;
+      padding-inline-start: 24px;
     }
   }
 

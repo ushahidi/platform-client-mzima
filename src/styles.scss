@@ -139,16 +139,26 @@ a {
     position: static;
     margin-top: 72px;
     height: calc(100% - 72px);
+    margin-inline-start: 220px !important;
+
+    html:not(.rtl) & {
+      margin-right: 0 !important;
+    }
+
+    html.rtl & {
+      margin-left: 0 !important;
+    }
 
     @include breakpoint-max($laptop-small) {
       margin-top: 64px;
       height: calc(100% - 64px);
+      margin-inline-start: 200px !important;
     }
 
     @include breakpoint-max($tablet) {
       height: auto;
       margin-top: 0;
-      margin-left: 0 !important;
+      margin-inline-start: 0 !important;
     }
   }
 }

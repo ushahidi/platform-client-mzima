@@ -53,13 +53,13 @@
 
     &__arrow {
       font-size: 24px;
-      margin-left: 8px !important;
       transition: transform 0.35s ease;
+      margin-inline-start: 8px !important;
 
       @include breakpoint-max($laptop-small) {
         @include breakpoint-min($tablet) {
           font-size: 20px;
-          margin-left: 4px !important;
+          margin-inline-start: 4px !important;
         }
       }
 
@@ -211,18 +211,24 @@
 
     &::ng-deep {
       .mat-list-item-content {
-        padding: 4px 0 4px 16px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-inline-end: 0;
+        padding-inline-start: 16px;
 
         @include breakpoint-max($tablet) {
-          padding: 8px 16px;
+          padding-top: 8px;
+          padding-bottom: 8px;
+          padding-inline-end: 16px;
+          padding-inline-start: 16px;
         }
       }
 
       .mat-pseudo-checkbox {
-        margin-right: 8px;
+        margin-inline-end: 8px;
 
         @include breakpoint-max($tablet) {
-          margin-right: 11px;
+          margin-inline-end: 11px;
         }
       }
     }
@@ -240,7 +246,7 @@
 
       @include breakpoint-max($tablet) {
         font-size: 40px;
-        margin-right: -16px;
+        margin-inline-end: -16px;
       }
 
       &--open {
