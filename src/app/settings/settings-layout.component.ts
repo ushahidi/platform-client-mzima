@@ -35,14 +35,14 @@ export class SettingsLayoutComponent {
 
         if (this.isDesktop && !this.isInnerPage) {
           switch (this.userData.role) {
-            case Roles.ADMIN:
-            case Roles.MANAGE_SETTINGS:
+            case Roles.Admin:
+            case Roles.ManageSettings:
               this.router.navigate(['settings/general']);
               break;
-            case Roles.MANAGE_USERS:
+            case Roles.ManageUsers:
               this.router.navigate(['settings/user-settings']);
               break;
-            case Roles.MANAGE_IMPORT_EXPORT:
+            case Roles.ManageImportExport:
               this.router.navigate(['settings/data-import']);
               break;
           }

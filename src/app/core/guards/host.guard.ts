@@ -10,10 +10,10 @@ export class HostGuard implements CanActivate {
   canActivate(): boolean {
     const role = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`);
     const hostRoles = [
-      Roles.ADMIN,
-      Roles.MANAGE_USERS,
-      Roles.MANAGE_SETTINGS,
-      Roles.MANAGE_IMPORT_EXPORT,
+      Roles.Admin,
+      Roles.ManageUsers,
+      Roles.ManageSettings,
+      Roles.ManageImportExport,
     ];
     return hostRoles.includes(<Roles>role);
   }

@@ -59,10 +59,10 @@ export class SidebarComponent implements OnInit {
     this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
       const hostRoles = [
-        Roles.ADMIN,
-        Roles.MANAGE_USERS,
-        Roles.MANAGE_SETTINGS,
-        Roles.MANAGE_IMPORT_EXPORT,
+        Roles.Admin,
+        Roles.ManageUsers,
+        Roles.ManageSettings,
+        Roles.ManageImportExport,
       ];
       this.isHost = hostRoles.includes(<Roles>userData.role!);
       this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;

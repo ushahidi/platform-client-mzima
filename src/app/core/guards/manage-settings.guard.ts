@@ -9,6 +9,6 @@ import { Roles } from '@enums';
 export class ManageSettingsGuard implements CanActivate {
   canActivate(): boolean {
     const role = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`);
-    return role === Roles.MANAGE_SETTINGS;
+    return role === Roles.ManageSettings;
   }
 }
