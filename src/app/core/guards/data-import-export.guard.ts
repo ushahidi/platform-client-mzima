@@ -9,6 +9,6 @@ import { Roles } from '@enums';
 export class DataImportExportGuard implements CanActivate {
   canActivate(): boolean {
     const role = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`);
-    return role === Roles.manage_import_export;
+    return role === Roles.MANAGE_IMPORT_EXPORT;
   }
 }

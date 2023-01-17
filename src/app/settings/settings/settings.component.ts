@@ -24,10 +24,10 @@ export class SettingsComponent implements OnInit {
   public settingsItems: SettingsItem[] = [];
 
   ngOnInit() {
-    this.isAdmin = this.userRole === Roles.admin;
-    this.isManageUsers = this.userRole === Roles.manage_users;
-    this.isManageSettings = this.userRole === Roles.manage_settings;
-    this.isManageImportExport = this.userRole === Roles.manage_import_export;
+    this.isAdmin = this.userRole === Roles.ADMIN;
+    this.isManageUsers = this.userRole === Roles.MANAGE_USERS;
+    this.isManageSettings = this.userRole === Roles.MANAGE_SETTINGS;
+    this.isManageImportExport = this.userRole === Roles.MANAGE_IMPORT_EXPORT;
     this.initMenu();
   }
 

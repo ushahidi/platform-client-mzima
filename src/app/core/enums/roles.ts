@@ -1,6 +1,6 @@
 export enum Roles {
-  admin = 'admin',
-  manage_users = 'manage users',
-  manage_settings = 'manage settings',
-  manage_import_export = 'data import && export',
+  ADMIN = 'admin',
+  MANAGE_USERS = 'manage users',
+  MANAGE_SETTINGS = 'manage settings',
+  MANAGE_IMPORT_EXPORT = 'data import && export',
 }
