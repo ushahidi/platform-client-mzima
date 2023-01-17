@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, TitleStrategy } from '@angular/router';
-import { AdminGuard } from '@guards';
 import { UshahidiPageTitleStrategy } from '@services';
+import { HostGuard } from '@guards';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -45,7 +45,7 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
-    canActivate: [AdminGuard],
+    canActivate: [HostGuard],
     data: {
       breadcrumb: 'nav.settings',
       ogTitle: 'nav.settings',

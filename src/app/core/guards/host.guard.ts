@@ -6,9 +6,15 @@ import { Roles } from '@enums';
 @Injectable({
   providedIn: 'root',
 })
-export class AdminGuard implements CanActivate {
+export class HostGuard implements CanActivate {
   canActivate(): boolean {
     const role = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`);
-    return role === Roles.Admin;
+    const hostRoles = [
+      Roles.Admin,
+      Roles.ManageUsers,
+      Roles.ManageSettings,
+      Roles.ManageImportExport,
+    ];
+    return hostRoles.includes(<Roles>role);
   }
 }
