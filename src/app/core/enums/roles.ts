@@ -3,4 +3,5 @@ export enum Roles {
   ManageUsers = 'manage users',
   ManageSettings = 'manage settings',
   ManageImportExport = 'data import && export',
+  ManagePost = 'manage post',
 }
