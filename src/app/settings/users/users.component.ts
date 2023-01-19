@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { GeoJsonFilter, UserResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, UsersService, BreakpointService } from '@services';
 import { LazyLoadEvent } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -11,6 +12,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
+  @ViewChild('dt') dt: Table;
   public isLoading = false;
   public users: UserResult[] = [];
   public selectedUsers: UserResult[] = [];
@@ -20,6 +22,7 @@ export class UsersComponent implements OnInit {
     offset: 0,
     created_before_by_id: '',
     order: 'asc',
+    q: '',
   };
   public total: number;
   public isDesktop = false;
@@ -45,10 +48,9 @@ export class UsersComponent implements OnInit {
 
   public getUsers(event?: LazyLoadEvent) {
     this.isLoading = true;
-    if (event) {
-      this.params.offset = event?.first || 0;
-      this.params.order = event?.sortOrder === 1 ? 'asc' : 'desc';
-    }
+    this.params.offset = event?.first || 0;
+    this.params.order = event?.sortOrder === 1 ? 'asc' : 'desc' || 'asc';
+    this.params.q = event?.globalFilter || '';
     this.userService.getUsers('', { ...this.params }).subscribe({
       next: (response) => {
         this.users = response.results;
@@ -80,5 +82,9 @@ export class UsersComponent implements OnInit {
   public showActions(event: boolean) {
     this.isShowActions = event;
     if (!event) this.selectedUsers = [];
+  }
+
+  public globalSearch(event: any) {
+    this.dt.filterGlobal(event.target.value, 'contains');
   }
 }

@@ -12,6 +12,7 @@
     <app-spinner class="spinner" *ngIf="!users"></app-spinner>
     <div class="card">
       <p-table
+        #dt
         [value]="users"
         [lazy]="true"
         (onLazyLoad)="getUsers($event)"
@@ -27,6 +28,19 @@
         [rowHover]="true"
         [globalFilterFields]="['realname', 'role', 'email']"
       >
+        <ng-template pTemplate="caption">
+          <div class="table-header">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="globalSearch($event)"
+                placeholder="{{ 'user.search_by_name' | translate }}"
+              />
+            </span>
+          </div>
+        </ng-template>
         <ng-template pTemplate="header">
           <tr>
             <th style="width: 4rem">
