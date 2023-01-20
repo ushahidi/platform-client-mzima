@@ -164,6 +164,16 @@
           class="search-form__filters-panel__item"
           [badge]="form.controls['form'].value?.length || null"
         >
+          <div class="clear-button" suffix>
+            <button
+              mat-button
+              color="primary"
+              (click)="clearFilter('form')"
+              class="filter-group__head__button"
+            >
+              {{ 'nav.clear' | translate }}
+            </button>
+          </div>
         </app-filter-control>
 
         <app-filter-control
@@ -176,6 +186,16 @@
           [title]="'global_filter.source' | translate"
           [badge]="form.controls['source'].value?.length || null"
         >
+          <div class="clear-button" suffix>
+            <button
+              mat-button
+              color="primary"
+              (click)="clearFilter('source')"
+              class="filter-group__head__button"
+            >
+              {{ 'nav.clear' | translate }}
+            </button>
+          </div>
         </app-filter-control>
       </ng-container>
 
@@ -216,6 +236,17 @@
         [title]="'global_filter.status' | translate"
         [badge]="form.controls['status'].value?.length || null"
       >
+        <div class="clear-button" suffix>
+          <button
+            mat-button
+            color="primary"
+            (click)="clearFilter('status')"
+            class="filter-group__head__button"
+          >
+            {{ 'nav.clear' | translate }}
+          </button>
+        </div>
+        <span prefix> 22222</span>
       </app-filter-control>
 
       <app-filter-control
@@ -227,6 +258,16 @@
         class="search-form__filters-panel__item"
         [badge]="form.controls['tags'].value?.length || null"
       >
+        <div class="clear-button" suffix>
+          <button
+            mat-button
+            color="primary"
+            class="filter-group__head__button"
+            (click)="clearFilter('tags')"
+          >
+            {{ 'nav.clear' | translate }}
+          </button>
+        </div>
       </app-filter-control>
 
       <app-filter-control
@@ -237,6 +278,16 @@
         [title]="'global_filter.date_range' | translate"
         [badge]="form.controls['date'].value?.start || form.controls['date'].value?.end ? 1 : null"
       >
+        <div class="clear-button" suffix>
+          <button
+            mat-button
+            color="primary"
+            class="filter-group__head__button"
+            (click)="clearFilter('date')"
+          >
+            {{ 'nav.clear' | translate }}
+          </button>
+        </div>
       </app-filter-control>
 
       <app-filter-control

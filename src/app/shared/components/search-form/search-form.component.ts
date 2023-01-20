@@ -203,6 +203,7 @@ export class SearchFormComponent implements OnInit {
 
     this.session.currentUserData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
+      this.getSavedFilters();
     });
     this.eventBusService.on(EventType.SavedSearchInit).subscribe((sSearch) => {
       this.getSavedValues(parseFloat(sSearch));
