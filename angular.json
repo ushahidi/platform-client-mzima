@@ -45,6 +45,7 @@
               "dayjs",
               "quill",
               "lodash",
+              "rfdc",
               "types-wm",
               "lottie-web",
               "ev-emitter/ev-emitter"
