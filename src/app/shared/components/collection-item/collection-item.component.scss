@@ -17,7 +17,7 @@
 
   &__actions {
     top: 13px;
-    right: 16px;
+    inset-inline-end: 16px;
     display: flex;
     margin: 0 -4px;
     position: absolute;
@@ -61,8 +61,8 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 1.6;
-    padding-right: 60px;
     word-break: break-word;
+    padding-inline-end: 60px;
     color: var(--color-black);
 
     @include breakpoint-max($tablet) {
@@ -74,20 +74,20 @@
     .collection-item--has-checkbox & {
       display: flex;
       min-height: 28px;
-      padding-left: 36px;
       align-items: center;
+      padding-inline-start: 36px;
       justify-content: flex-start;
     }
   }
 
   &__checkbox {
     top: 12px;
-    left: 16px;
     position: absolute;
+    inset-inline-start: 16px;
 
     &::ng-deep {
       .mat-checkbox-inner-container {
-        margin-right: 3.5px !important;
+        margin-inline-end: 3.5px !important;
       }
     }
   }

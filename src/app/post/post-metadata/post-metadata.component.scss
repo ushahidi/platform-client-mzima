@@ -19,10 +19,10 @@
     overflow: hidden;
     position: relative;
     border-radius: 50%;
-    margin-right: 16px;
+    margin-inline-end: 16px;
 
     @include breakpoint-max($tablet) {
-      margin-right: 8px;
+      margin-inline-end: 8px;
     }
 
     &:before {
@@ -89,12 +89,13 @@
 .post {
   &__border {
     top: 0;
-    left: 0;
     bottom: 0;
     width: 10px;
     position: absolute;
+    inset-inline-start: 0;
     background: var(--color);
-    border-radius: 8px 0 0 8px;
+    border-end-start-radius: 8px;
+    border-start-start-radius: 8px;
 
     @include breakpoint-max($tablet) {
       width: 8px;

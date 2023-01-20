@@ -25,11 +25,12 @@
       border: none;
       font-size: 12px;
       min-height: 48px;
-      text-align: left;
       line-height: 1.5;
+      text-align: start;
       letter-spacing: 0.04em;
+      padding-inline-end: 64px;
       text-transform: uppercase;
-      padding: 8px 64px 8px 16px;
+      padding-inline-start: 16px;
     }
 
     &[aria-expanded='true'] {
@@ -65,9 +66,9 @@
 
       @include breakpoint-max($tablet) {
         top: 50%;
-        right: 16px;
         position: absolute;
         margin-top: -0.5em;
+        inset-inline-end: 16px;
         transform: rotate(-90deg);
       }
 
@@ -80,7 +81,7 @@
       padding: 4px;
       min-width: 25px;
       font-size: 14px;
-      margin-left: 8px;
+      margin-inline-start: 8px;
       color: var(--color-neutral-90);
       line-height: 17px;
       text-align: center;
@@ -92,7 +93,7 @@
           padding: 2px;
           min-width: 16px;
           font-size: 10px;
-          margin-left: 4px;
+          margin-inline-start: 4px;
           line-height: 12px;
         }
       }
@@ -482,7 +483,7 @@
     height: 1em;
     line-height: 1;
     font-size: 40px;
-    margin-right: 8px;
+    margin-inline-end: 8px;
 
     .mat-icon {
       font-size: 1em;
@@ -532,6 +533,14 @@
 
     &:not(:first-child) {
       margin-top: 16px;
+    }
+  }
+}
+
+::ng-deep {
+  html.rtl {
+    .filter-control__button__arrow {
+      transform: rotate(90deg);
     }
   }
 }

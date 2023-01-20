@@ -84,12 +84,15 @@
         padding: 0;
         height: 40px;
         display: flex;
+        margin-top: 0;
         min-width: 40px;
         font-size: 32px;
-        margin: 0 0 0 24px;
+        margin-bottom: 0;
         align-items: center;
+        margin-inline-end: 0;
         flex-direction: column;
         justify-content: center;
+        margin-inline-start: 24px;
       }
 
       h3 {
@@ -117,7 +120,7 @@
         }
       }
 
-      @include breakpoint-max($mobile) {
+      @include breakpoint-max($tablet) {
         display: block;
 
         &:not(:first-child) {
@@ -205,6 +208,7 @@
     height: calc(100vh - 73px);
     background: var(--color-light);
     -webkit-overflow-scrolling: touch;
+    --scrollbar-background: var(--color-light);
 
     @include breakpoint-max($laptop-small) {
       width: 200px;

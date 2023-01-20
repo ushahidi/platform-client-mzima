@@ -54,7 +54,6 @@ export class AppComponent implements OnInit {
 
     this.languageService.isRTL$.subscribe({
       next: (isRTL) => {
-        console.log('isRTL: ', isRTL);
         if (this.isRTL !== isRTL) {
           this.isRTL = isRTL;
           const html: HTMLElement = document.getElementsByTagName('html')[0];

@@ -2,9 +2,9 @@
 
 .head {
   display: flex;
-  padding-right: 56px;
   align-items: center;
   margin-bottom: 16px;
+  padding-inline-end: 56px;
   justify-content: space-between;
 
   @include breakpoint-max($tablet) {

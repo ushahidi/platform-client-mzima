@@ -1,5 +1,9 @@
 @import '/src/styles/helpers';
 
+.cdk-global-overlay-wrapper {
+  direction: inherit;
+}
+
 .mat-dialog {
   &-title {
     font-size: 24px;
@@ -55,7 +59,6 @@
         top: 24px;
         padding: 0;
         z-index: 75;
-        right: 24px;
         width: 40px;
         height: 40px;
         min-width: 0;
@@ -64,11 +67,12 @@
         position: absolute;
         align-items: center;
         flex-direction: column;
+        inset-inline-end: 24px;
         justify-content: center;
 
         @include breakpoint-max($tablet) {
           top: 16px;
-          right: 16px;
+          inset-inline-end: 16px;
         }
 
         .mat-icon {

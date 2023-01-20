@@ -3,14 +3,14 @@
 ::ng-deep {
   .post-modal {
     .mat-dialog-container {
-      padding-left: 34px;
+      padding-inline-start: 34px;
       border-radius: 8px !important;
 
       @include breakpoint-max($tablet) {
         overflow-y: auto;
         overflow-x: hidden;
-        padding-left: 26px;
-        padding-right: 16px;
+        padding-inline-start: 26px;
+        padding-inline-end: 16px;
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
       }
