@@ -1,8 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { GeoJsonFilter, UserResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, UsersService, BreakpointService } from '@services';
+import { LazyLoadEvent } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -11,20 +12,17 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  @ViewChild('user') public userRef: ElementRef;
-  isLoading = false;
-
-  users: UserResult[] = [];
-  selectedUsers: number[] = [];
+  @ViewChild('dt') dt: Table;
+  public isLoading = false;
+  public users: UserResult[] = [];
+  public selectedUsers: UserResult[] = [];
   public isShowActions = false;
   public params: GeoJsonFilter = {
-    limit: 9,
+    limit: 10,
     offset: 0,
     created_before_by_id: '',
-  };
-  public pagination = {
-    page: 1,
-    size: this.params.limit,
+    order: 'asc',
+    q: '',
   };
   public total: number;
   public isDesktop = false;
@@ -34,39 +32,32 @@ export class UsersComponent implements OnInit {
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
     private breakpointService: BreakpointService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
+      next: (isDesktop) => (this.isDesktop = isDesktop),
     });
   }
 
   public ngOnInit() {
-    this.getUsers(this.params);
     this.userService.totalUsers$.subscribe({
       next: (total) => (this.total = total),
     });
+    this.cdr.detectChanges();
   }
 
-  private getUsers(params: any, add?: boolean) {
-    if (!add) {
-      this.users = [];
-    }
+  public getUsers(event?: LazyLoadEvent) {
     this.isLoading = true;
-    this.userService.getUsers('', { ...params }).subscribe({
+    this.params.offset = event?.first || 0;
+    this.params.order = event?.sortOrder === 1 ? 'asc' : 'desc' || 'asc';
+    this.params.q = event?.globalFilter || '';
+    this.userService.getUsers('', { ...this.params }).subscribe({
       next: (response) => {
-        this.users = add ? [...this.users, ...response.results] : response.results;
-        setTimeout(() => {
-          this.isLoading = false;
-          if (
-            this.userRef?.nativeElement.offsetHeight &&
-            this.userRef?.nativeElement.offsetHeight >= this.userRef?.nativeElement.scrollHeight
-          ) {
-            this.loadMore();
-          }
-        });
+        this.users = response.results;
+        this.isLoading = false;
+        this.cdr.detectChanges();
       },
+      error: (err) => console.log(err),
     });
   }
 
@@ -80,9 +71,9 @@ export class UsersComponent implements OnInit {
       cancelButtonText: this.translate.instant('app.no_go_back'),
     });
     if (!confirmed) return;
-    forkJoin(this.selectedUsers.map((userId) => this.userService.deleteUser(userId))).subscribe({
+    forkJoin(this.selectedUsers.map((user) => this.userService.deleteUser(user.id))).subscribe({
       complete: () => {
-        this.getUsers(this.params);
+        this.getUsers();
         this.selectedUsers = [];
       },
     });
@@ -93,45 +84,7 @@ export class UsersComponent implements OnInit {
     if (!event) this.selectedUsers = [];
   }
 
-  public selectUser(event: MatCheckboxChange, { id }: UserResult) {
-    if (event.checked) {
-      this.selectedUsers.push(id);
-    } else {
-      const index = this.selectedUsers.findIndex((userId) => userId === id);
-      if (index > -1) {
-        this.selectedUsers.splice(index, 1);
-      }
-    }
-  }
-
-  public selectAllUsers(event: MatCheckboxChange) {
-    if (event.checked) {
-      this.users.map((user) => {
-        if (this.selectedUsers.find((selectedUser) => selectedUser === user.id)) return;
-        this.selectedUsers.push(user.id);
-      });
-    } else {
-      this.selectedUsers = [];
-    }
-  }
-
-  public loadMore() {
-    if (
-      this.params.offset !== undefined &&
-      this.params.limit !== undefined &&
-      this.params.offset + this.params.limit < this.total
-    ) {
-      this.params.offset = this.params.offset + this.params.limit;
-      this.getUsers(this.params, true);
-    }
-  }
-
-  public onScroll(event: any): void {
-    if (
-      !this.isLoading &&
-      event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32
-    ) {
-      this.loadMore();
-    }
+  public globalSearch(event: any) {
+    this.dt.filterGlobal(event.target.value, 'contains');
   }
 }
