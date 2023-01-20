@@ -25,15 +25,15 @@
   }
 
   &__filters-panel {
-    right: 0;
     top: 100%;
-    left: 220px;
     margin-top: 1px;
     position: absolute;
+    inset-inline-end: 0;
+    inset-inline-start: 220px;
     background: var(--color-light);
 
     @include breakpoint-max($laptop-small) {
-      left: 0;
+      inset-inline-start: 0;
     }
 
     @include breakpoint-max($tablet) {
@@ -48,8 +48,8 @@
     &:not(.search-form__filters-panel--open) {
       opacity: 0;
       top: -9999px;
-      left: -9999px;
-      right: 9999px;
+      inset-inline-start: -9999px;
+      inset-block-end: 9999px;
 
       @include breakpoint-max($tablet) {
         bottom: 9999px;
@@ -84,12 +84,15 @@
         padding: 0;
         height: 40px;
         display: flex;
+        margin-top: 0;
         min-width: 40px;
         font-size: 32px;
-        margin: 0 0 0 24px;
+        margin-bottom: 0;
         align-items: center;
+        margin-inline-end: 0;
         flex-direction: column;
         justify-content: center;
+        margin-inline-start: 24px;
       }
 
       h3 {
@@ -117,7 +120,7 @@
         }
       }
 
-      @include breakpoint-max($mobile) {
+      @include breakpoint-max($tablet) {
         display: block;
 
         &:not(:first-child) {
@@ -158,10 +161,10 @@
   &__filters {
     flex-shrink: 0;
     min-width: 105px;
-    margin-left: 16px;
+    margin-inline-start: 16px;
 
     @include breakpoint-max($laptop-small) {
-      margin-left: 8px;
+      margin-inline-start: 8px;
     }
 
     @include breakpoint-max($tablet) {
@@ -186,14 +189,13 @@
       flex-shrink: 0;
 
       @include breakpoint-max($tablet) {
-        margin-left: 10px;
-        margin-right: 0 !important;
+        margin-inline-start: 10px;
+        margin-inline-end: 0 !important;
       }
     }
   }
 
   &__main-filters {
-    left: 0;
     top: 100%;
     width: 220px;
     overflow-y: auto;
@@ -201,10 +203,12 @@
     overflow-x: hidden;
     padding: 20px 15px;
     position: absolute;
+    inset-inline-start: 0;
     scroll-behavior: smooth;
     height: calc(100vh - 73px);
     background: var(--color-light);
     -webkit-overflow-scrolling: touch;
+    --scrollbar-background: var(--color-light);
 
     @include breakpoint-max($laptop-small) {
       width: 200px;
@@ -385,7 +389,10 @@
       font-weight: 700;
       line-height: 14px;
       text-decoration: underline;
-      margin: -2px -4px -2px 14px;
+      margin-top: -2px;
+      margin-bottom: -2px;
+      margin-inline-end: -4px;
+      margin-inline-start: 14px;
 
       &:hover {
         text-decoration: none;
@@ -464,8 +471,8 @@
     &__total {
       font-size: 12px;
       font-weight: 400;
-      margin-left: 8px;
       line-height: 14px;
+      margin-inline-start: 8px;
       color: var(--color-neutral-100);
     }
   }

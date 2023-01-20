@@ -46,14 +46,16 @@
     z-index: 50;
     display: flex;
     position: sticky;
+    padding-top: 4px;
     margin-bottom: 8px;
+    padding-bottom: 4px;
     align-items: flex-start;
-    padding: 4px 36px 4px 0;
+    padding-inline-end: 36px;
     justify-content: flex-end;
     background: var(--color-light);
 
     @include breakpoint-max($tablet) {
-      padding-right: 44px;
+      padding-inline-end: 48px;
     }
   }
 
@@ -123,7 +125,7 @@
     height: 1em;
     line-height: 1;
     font-size: 12px;
-    margin-right: 8px;
+    margin-inline-end: 8px;
   }
 }
 

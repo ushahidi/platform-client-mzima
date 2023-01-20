@@ -26,9 +26,10 @@ export class AppComponent implements OnInit {
   public selectedLanguage$;
   public isDesktop = false;
   public isInnerPage = false;
+  public isRTL?: boolean;
 
   constructor(
-    private loaderService: LoaderService, //
+    private loaderService: LoaderService,
     private rendererFactory: RendererFactory2,
     protected env: EnvService,
     private iconService: IconService,
@@ -50,6 +51,23 @@ export class AppComponent implements OnInit {
 
     this.iconService.registerIcons();
     this.selectedLanguage$ = this.languageService.selectedLanguage$;
+
+    this.languageService.isRTL$.subscribe({
+      next: (isRTL) => {
+        if (this.isRTL !== isRTL) {
+          this.isRTL = isRTL;
+          const html: HTMLElement = document.getElementsByTagName('html')[0];
+          if (isRTL) {
+            html.classList.add('rtl');
+            html.setAttribute('dir', 'rtl');
+          } else {
+            html.classList.remove('rtl');
+            html.removeAttribute('dir');
+          }
+        }
+      },
+    });
+
     this.languages$ = this.languageService.languages$;
 
     this.breakpointService.isDesktop.subscribe({

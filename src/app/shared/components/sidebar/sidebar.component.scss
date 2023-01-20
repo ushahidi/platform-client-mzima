@@ -46,6 +46,11 @@
     border-color: var(--color-neutral-90);
     margin: 0 calc(var(--side-offset) * -1) 8px;
 
+    @include breakpoint-max($laptop-small) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
     @include breakpoint-max($tablet) {
       left: 50%;
       padding: 0;
@@ -79,9 +84,9 @@
   width: 100%;
   color: inherit;
   font-size: 16px;
-  text-align: left;
   border-radius: 0;
   line-height: 1.6;
+  text-align: start;
   font-weight: normal;
   border-style: solid;
   background: transparent;
@@ -93,7 +98,10 @@
   transition-property: color, background-color, border-color;
 
   @include breakpoint-min($tablet) {
-    padding: 9px var(--side-offset) 9px calc(var(--side-offset) - 4px);
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-inline-start: calc(var(--side-offset) - 4px);
+    padding-inline-end: var(--side-offset);
   }
 
   @include breakpoint-max($tablet) {
@@ -160,12 +168,14 @@
 
   &__icon {
     font-size: 30px;
+    margin-inline-end: 12px;
     margin-right: 12px !important;
 
     @include breakpoint-max($tablet) {
       font-size: 32px;
       margin-bottom: 4px;
       margin-right: 0 !important;
+      margin-inline-end: 0 !important;
     }
 
     img {

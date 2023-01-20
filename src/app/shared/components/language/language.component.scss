@@ -36,17 +36,17 @@
     font-size: 14px;
     font-weight: 700;
     line-height: 1.2;
-    padding-left: 11px;
     position: relative;
     align-items: center;
     text-transform: uppercase;
+    padding-inline-start: 11px;
     justify-content: space-between;
 
     &__arrow {
       flex-shrink: 0;
       line-height: 1;
       font-size: 24px;
-      margin-left: 8px;
+      margin-inline-start: 8px;
     }
   }
 
@@ -62,8 +62,8 @@
     &__flag {
       width: 30px;
       height: 20px;
-      margin-right: 5px;
       object-fit: contain;
+      margin-inline-end: 5px;
       object-position: 0 50%;
     }
   }

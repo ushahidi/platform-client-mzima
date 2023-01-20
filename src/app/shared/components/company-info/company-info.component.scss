@@ -55,7 +55,7 @@
       line-height: calc(20 / 16 * 1);
 
       &-title {
-        margin-right: 28px;
+        margin-inline-end: 28px;
         color: var(--color-light);
       }
     }
@@ -73,13 +73,13 @@
     justify-content: flex-start;
 
     &__arrow {
-      right: 0;
       top: 50%;
       width: 1em;
       height: 1em;
       font-size: 30px;
       margin-top: -0.5em;
       position: absolute;
+      inset-inline-end: 0;
       transition: transform 0.35s ease;
 
       .company-info.mat-expanded & {
@@ -102,8 +102,8 @@
     height: 40px;
     flex-shrink: 0;
     display: block;
-    margin-right: 8px;
     object-fit: contain;
+    margin-inline-end: 8px;
   }
 }
 

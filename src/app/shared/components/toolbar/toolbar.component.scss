@@ -2,36 +2,39 @@
 
 .toolbar {
   top: 0;
-  right: 0;
   width: auto;
-  left: 220px;
   height: 72px;
   z-index: 100;
   position: fixed;
   padding-left: 24px;
   padding-right: 24px;
+  inset-inline-end: 0;
   color: var(--color-black);
+  inset-inline-start: 220px;
   background: var(--color-light);
   border-bottom: 1px solid var(--color-neutral-30);
 
   @include breakpoint-max($laptop-small) {
-    left: 200px;
     height: 64px;
     padding-left: 16px;
     padding-right: 16px;
+    inset-inline-start: 200px;
   }
 
   @include breakpoint-max($tablet) {
-    left: 0;
     height: 80px;
     z-index: 600;
+    inset-inline-start: 0;
   }
 
   &__back {
     width: 32px;
     height: 32px;
+    margin-top: 0;
+    margin-bottom: 0;
     line-height: 32px;
-    margin: 0 8px 0 0;
+    margin-inline-end: 8px;
+    margin-inline-start: 0;
   }
 
   &__controls {
@@ -47,10 +50,10 @@
 
   &__button {
     min-width: 125px;
-    margin-left: 16px;
+    margin-inline-start: 16px;
 
     @include breakpoint-max($laptop-small) {
-      margin-left: 8px;
+      margin-inline-start: 8px;
     }
 
     &::ng-deep {
@@ -63,7 +66,7 @@
   &__language {
     width: 81px;
     display: block;
-    margin-left: 16px;
+    margin-inline-start: 16px;
   }
 
   &__page-title {
@@ -88,16 +91,19 @@
 .account-info {
   height: 100%;
   flex-shrink: 0;
+  padding-top: 0;
   font-size: 14px;
   min-width: 236px;
   font-weight: 400;
   max-width: 250px;
   line-height: 17px;
+  padding-bottom: 0;
   text-align: right;
-  margin-left: 16px;
   white-space: normal;
-  margin-right: -24px;
-  padding: 0 24px 0 8px;
+  margin-inline-end: -24px;
+  padding-inline-end: 24px;
+  margin-inline-start: 16px;
+  padding-inline-start: 8px;
   border-left: 1px solid var(--color-neutral-30);
 
   @include breakpoint-max($laptop-small) {
@@ -107,12 +113,12 @@
   &__avatar {
     width: 32px;
     height: 32px;
-    margin-left: 12px;
     object-fit: contain;
     border-radius: 50%;
+    margin-inline-start: 12px;
 
     @include breakpoint-max($laptop-small) {
-      margin-left: 0;
+      margin-inline-start: 0;
     }
   }
 
@@ -160,11 +166,14 @@
   padding: 0;
   display: flex;
   height: 48px;
+  margin-top: 0;
   min-width: 48px;
+  margin-bottom: 0;
   align-items: center;
-  margin: 0 -8px 0 36px;
   flex-direction: column;
   justify-content: center;
+  margin-inline-end: -8px;
+  margin-inline-start: 36px;
 }
 
 .menu {
@@ -200,12 +209,15 @@
       padding: 0;
       height: 40px;
       display: flex;
+      margin-top: 0;
       min-width: 40px;
       font-size: 32px;
-      margin: 0 0 0 24px;
+      margin-bottom: 0;
       align-items: center;
+      margin-inline-end: 0;
       flex-direction: column;
       justify-content: center;
+      margin-inline-start: 24px;
       color: var(--color-neutral-40);
       background: var(--color-black);
       border-color: var(--color-neutral-90);
@@ -257,9 +269,17 @@
   padding: 0 16px;
   font-size: 16px;
   border-radius: 0;
-  text-align: left;
   font-weight: 400;
+  text-align: start;
   line-height: 56px;
   color: var(--color-neutral-50);
   background: var(--color-neutral-100);
+}
+
+::ng-deep {
+  html.rtl {
+    .toolbar__back .mat-icon {
+      transform: scaleX(-1);
+    }
+  }
 }

@@ -11,10 +11,10 @@
   height: 100%;
 
   @include breakpoint-min($tablet) {
-    margin: 0 0 0 220px;
+    margin-inline-start: 220px;
 
     @include breakpoint-max($laptop-small) {
-      margin-left: 200px;
+      margin-inline-start: 200px;
     }
   }
 
@@ -90,22 +90,22 @@
         }
 
         .mat-select-value {
-          padding-right: 0;
-          padding-left: 24px;
+          padding-inline-end: 0;
+          padding-inline-start: 24px;
 
           @include breakpoint-max($laptop-small) {
-            padding-left: 16px;
+            padding-inline-start: 16px;
           }
         }
 
         .mat-select-arrow-wrapper {
           width: 32px;
           height: 32px;
-          margin-left: 8px;
-          margin-right: 24px;
+          margin-inline-start: 8px;
+          margin-inline-end: 24px;
 
           @include breakpoint-max($laptop-small) {
-            margin-right: 8px;
+            margin-inline-end: 8px;
           }
         }
       }
@@ -145,7 +145,7 @@
 
     .mat-icon {
       &:not(:first-child) {
-        margin-left: 10px;
+        margin-inline-start: 10px;
       }
     }
   }
@@ -181,25 +181,27 @@
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
-  padding: 0 8px 16px 24px;
+  padding-bottom: 16px;
+  padding-inline-end: 8px;
+  padding-inline-start: 24px;
   height: calc(100% - 64px);
   -webkit-overflow-scrolling: touch;
 
   @include breakpoint-max($laptop-small) {
-    padding-right: 0;
-    padding-left: 16px;
+    padding-inline-end: 0;
+    padding-inline-start: 16px;
   }
 
   @include breakpoint-max($tablet) {
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-inline-start: 8px;
+    padding-inline-end: 8px;
     padding-bottom: 48px;
     height: calc(100vh - 240px);
   }
 
   @include breakpoint-max($mobile) {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-inline-start: 16px;
+    padding-inline-end: 16px;
   }
 
   &__loading {

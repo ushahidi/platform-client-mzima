@@ -15,13 +15,14 @@ export class LanguageService {
   private languageKey = `${CONST.LOCAL_STORAGE_PREFIX}language`;
 
   private initialLanguage = localStorage.getItem(this.languageKey);
-  private selectedLanguage = new BehaviorSubject<any>('');
+  private selectedLanguage = new BehaviorSubject<string>('');
   public selectedLanguage$ = this.selectedLanguage.asObservable();
+  private isRTL = new BehaviorSubject<boolean | undefined>(false);
+  public isRTL$ = this.isRTL.asObservable();
 
   constructor(private translate: TranslateService) {
     if (this.initialLanguage === 'null' || this.initialLanguage === null) {
       this.initialLanguage = 'en';
-      this.selectedLanguage.next('en');
       localStorage.setItem(this.languageKey, this.initialLanguage);
       this.setLanguage(this.initialLanguage);
     } else {
@@ -49,11 +50,13 @@ export class LanguageService {
     this.translate.setDefaultLang(lang);
     this.translate.use(lang);
     this.selectedLanguage.next(lang);
+    this.isRTL.next(this.languages.value.find((l) => l.code === lang)?.rtl);
   }
 
   changeLanguage(value: string) {
     this.translate.use(value);
     localStorage.setItem(this.languageKey, value);
     this.selectedLanguage.next(value);
+    this.isRTL.next(this.languages.value.find((l) => l.code === value)?.rtl);
   }
 }

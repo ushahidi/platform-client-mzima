@@ -34,18 +34,7 @@ export class SettingsLayoutComponent {
         this.checkIsInnerPage();
 
         if (this.isDesktop && !this.isInnerPage) {
-          switch (this.userData.role) {
-            case Roles.Admin:
-            case Roles.ManageSettings:
-              this.router.navigate(['settings/general']);
-              break;
-            case Roles.ManageUsers:
-              this.router.navigate(['settings/user-settings']);
-              break;
-            case Roles.ManageImportExport:
-              this.router.navigate(['settings/data-import']);
-              break;
-          }
+          this.navigateToInnerPage();
         }
       },
     });
@@ -53,8 +42,26 @@ export class SettingsLayoutComponent {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe({
       next: () => {
         this.checkIsInnerPage();
+        if (this.isDesktop && !this.isInnerPage) {
+          this.navigateToInnerPage();
+        }
       },
     });
+  }
+
+  private navigateToInnerPage(): void {
+    switch (this.userData.role) {
+      case Roles.Admin:
+      case Roles.ManageSettings:
+        this.router.navigate(['settings/general']);
+        break;
+      case Roles.ManageUsers:
+        this.router.navigate(['settings/user-settings']);
+        break;
+      case Roles.ManageImportExport:
+        this.router.navigate(['settings/data-import']);
+        break;
+    }
   }
 
   private checkIsInnerPage(): void {

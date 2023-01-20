@@ -43,7 +43,7 @@
 .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,
 .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
 .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text {
-  padding-left: 11.5px !important;
+  padding-inline-start: 11.5px !important;
 }
 
 .mat-list-base {
@@ -416,18 +416,23 @@
 .mat-slide-toggle-bar {
   width: 51px !important;
   height: 31px !important;
-  margin-right: 16px !important;
   border-radius: 15px !important;
+  margin-inline-end: 16px !important;
 }
 
 .mat-slide-toggle-thumb-container {
   top: 2px !important;
-  left: 2px !important;
   width: 27px !important;
+  right: auto !important;
   height: 27px !important;
+  inset-inline-start: 2px !important;
 
   .mat-slide-toggle.mat-checked & {
     transform: translate3d(18px, 0, 0) !important;
+
+    [dir='rtl'] & {
+      transform: translate3d(-18px, 0, 0) !important;
+    }
   }
 }
 
@@ -483,6 +488,7 @@
   .mat-form-field-outline-end {
     border-radius: 4px !important;
     border-left-style: solid !important;
+    border-right-style: solid !important;
   }
 
   .mat-form-field-subscript-wrapper {
@@ -557,10 +563,16 @@
   }
 
   .mat-select-value {
-    padding: 7px 7px 7px 21px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-inline-end: 7px;
+    padding-inline-start: 21px;
 
     @include breakpoint-max($tablet) {
-      padding: 11px 11px 11px 24px;
+      padding-top: 11px;
+      padding-bottom: 11px;
+      padding-inline-end: 11px;
+      padding-inline-start: 24px;
     }
   }
 
@@ -802,7 +814,10 @@
 .mat-checkbox-inner-container {
   width: 21px !important;
   height: 21px !important;
-  margin: 3.5px 12px 3.5px 3.5px !important;
+  margin-top: 3.5px !important;
+  margin-bottom: 3.5px !important;
+  margin-inline-end: 12px !important;
+  margin-inline-start: 3.5px !important;
 
   @include breakpoint-max($tablet) {
     margin-top: 1.5px !important;
@@ -883,8 +898,8 @@
   .mat-slide-toggle-bar {
     width: 42px !important;
     height: 24px !important;
-    margin-right: 16px !important;
     border-radius: 12px !important;
+    margin-inline-end: 16px !important;
   }
 
   .mat-slide-toggle-thumb-container {

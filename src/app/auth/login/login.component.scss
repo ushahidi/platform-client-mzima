@@ -4,11 +4,11 @@
   &::ng-deep {
     .mat-tab-header {
       margin-bottom: 21px;
-      padding-right: 64px;
+      padding-inline-end: 64px;
 
       @include breakpoint-max($tablet) {
-        padding-right: 0;
         margin-bottom: 32px;
+        padding-inline-end: 0;
       }
     }
 
@@ -62,8 +62,8 @@
         .modal {
           &__close-btn {
             top: 32px;
-            right: 24px;
             position: fixed;
+            inset-inline-end: 24px;
           }
         }
       }
