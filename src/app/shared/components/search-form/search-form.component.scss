@@ -529,3 +529,10 @@
     }
   }
 }
+
+.clear-button {
+  display: flex;
+  padding: 8px 14px;
+  align-items: center;
+  justify-content: flex-end;
+}
