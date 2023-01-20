@@ -1538,7 +1538,8 @@
     "password_notify": "If you leave the field blank your password will not change",
     "avatar": "Avatar",
     "name": "Name",
-    "email": "Email"
+    "email": "Email",
+    "search_by_name": "Search by name"
   },
   "user_profile": {
     "title": "account settings",

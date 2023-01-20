@@ -8,121 +8,95 @@
   >
   </app-settings-header>
 
-  <div
-    class="users-container"
-    #user
-    (scroll)="onScroll($event)"
-    *ngIf="!isLoading || users?.length; else loader"
-  >
+  <div class="users-container" *ngIf="!isLoading || users?.length; else loader">
     <app-spinner class="spinner" *ngIf="!users"></app-spinner>
-
-    <ng-container *ngIf="users?.length; else usersEmpty">
-      <table mat-table [dataSource]="users" class="users-table" *ngIf="isDesktop; else userList">
-        <ng-container matColumnDef="checkbox">
-          <th mat-header-cell *matHeaderCellDef>
-            <div class="users-table__checkbox">
-              <mat-checkbox
-                *ngIf="isShowActions"
-                (click)="$event.stopPropagation()"
-                (change)="selectAllUsers($event)"
-                [checked]="selectedUsers.length === users.length"
-              >
-              </mat-checkbox>
-            </div>
-          </th>
-          <td mat-cell *matCellDef="let user">
-            <div class="users-table__checkbox">
-              <mat-checkbox
-                *ngIf="isShowActions"
-                (click)="$event.stopPropagation()"
-                (change)="selectUser($event, user)"
-                [checked]="selectedUsers.includes(user.id)"
-              >
-              </mat-checkbox>
-            </div>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="avatar">
-          <th mat-header-cell *matHeaderCellDef>{{ 'user.avatar' | translate }}</th>
-          <td mat-cell *matCellDef="let user">
-            <div class="users-table__avatar">
-              <img
-                [src]="'https://www.gravatar.com/avatar/' + user.gravatar + '?d=retro'"
-                [alt]="user.realname"
+    <div class="card">
+      <p-table
+        #dt
+        [value]="users"
+        [lazy]="true"
+        (onLazyLoad)="getUsers($event)"
+        dataKey="id"
+        sortField="realname"
+        [sortOrder]="1"
+        [(selection)]="selectedUsers"
+        [filterDelay]="0"
+        [paginator]="true"
+        [rows]="10"
+        [totalRecords]="total"
+        [loading]="isLoading"
+        [rowHover]="true"
+        [globalFilterFields]="['realname', 'role', 'email']"
+      >
+        <ng-template pTemplate="caption">
+          <div class="table-header">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="globalSearch($event)"
+                placeholder="{{ 'user.search_by_name' | translate }}"
               />
-            </div>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>{{ 'user.name' | translate }}</th>
-          <td mat-cell *matCellDef="let user">
-            <strong class="users-table__username">{{ user.realname }}</strong>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="role">
-          <th mat-header-cell *matHeaderCellDef>{{ 'user.role' | translate }}</th>
-          <td mat-cell *matCellDef="let user">{{ user.role }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef>{{ 'user.email' | translate }}</th>
-          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="['checkbox', 'avatar', 'name', 'role', 'email']"></tr>
-        <tr
-          mat-row
-          [data-qa]="'user-item' + user.id"
-          [routerLink]="['update', user.id]"
-          *matRowDef="let user; columns: ['checkbox', 'avatar', 'name', 'role', 'email']"
-          class="user-item__row"
-        ></tr>
-      </table>
-    </ng-container>
-
-    <ng-template #userList>
-      <div class="user-list">
-        <div class="user-item" *ngFor="let user of users" [routerLink]="['update', user.id]">
-          <div class="user-item__visual">
-            <img
-              [src]="'https://www.gravatar.com/avatar/' + user.gravatar + '?d=retro'"
-              [alt]="user.realname"
-            />
+            </span>
           </div>
-          <div class="user-item__content">
-            <strong class="user-item__username">{{ user.realname }}</strong>
-            <span class="user-item__role">{{ user.role }}</span>
-            <span class="user-item__email">{{ user.email }}</span>
-          </div>
-          <mat-checkbox
-            *ngIf="isShowActions"
-            class="user-item__checkbox"
-            (click)="$event.stopPropagation()"
-            (change)="selectUser($event, user)"
-            [checked]="selectedUsers.includes(user.id)"
-          >
-          </mat-checkbox>
-        </div>
-      </div>
-    </ng-template>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 4rem">
+              <p-tableHeaderCheckbox *ngIf="isShowActions"></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="realname" style="min-width: 14rem">
+              {{ 'user.name' | translate }}
+              <p-sortIcon field="realname"></p-sortIcon>
+            </th>
+            <th pSortableColumn="role" style="min-width: 14rem">
+              {{ 'user.role' | translate }}
+              <p-sortIcon field="role"></p-sortIcon>
+            </th>
+            <th pSortableColumn="email" style="min-width: 14rem">
+              {{ 'user.email' | translate }}
+              <p-sortIcon field="email"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
 
+        <ng-template pTemplate="body" let-user>
+          <tr class="p-selectable-row">
+            <td>
+              <p-tableCheckbox *ngIf="isShowActions" [value]="user"></p-tableCheckbox>
+            </td>
+            <td [routerLink]="['update', user.id]">
+              <span class="p-column-title">{{ 'user.name' | translate }}</span>
+              <div class="users-table__avatar-container">
+                <div class="users-table__avatar">
+                  <img
+                    [src]="'https://www.gravatar.com/avatar/' + user.gravatar + '?d=retro'"
+                    [alt]="user.realname"
+                  />
+                </div>
+                <span class="image-text">{{ user.realname }}</span>
+              </div>
+            </td>
+            <td [routerLink]="['update', user.id]">
+              <span class="p-column-title">{{ 'user.role' | translate }}</span>
+              {{ user.role }}
+            </td>
+            <td [routerLink]="['update', user.id]">
+              <span class="p-column-title">{{ 'user.email' | translate }}</span>
+              {{ user.email }}
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">{{ 'empty.user' | translate }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
     <app-spinner class="users-loading" *ngIf="isLoading"></app-spinner>
-    <button
-      mat-stroked-button
-      (click)="loadMore()"
-      class="users-load-more"
-      *ngIf="
-        !isLoading &&
-        params.offset !== undefined &&
-        params.limit !== undefined &&
-        params.offset + params.limit < total
-      "
-    >
-      {{ 'app.load_more' | translate }}
-    </button>
   </div>
   <div class="actions-spacer" *ngIf="isShowActions && !isDesktop"></div>
 </section>
@@ -132,5 +106,5 @@
 </ng-template>
 
 <ng-template #usersEmpty>
-  <span class="posts-empty">{{ 'post.no_posts_yet' | translate }}</span>
+  <span class="posts-empty">{{ 'empty.user' | translate }}</span>
 </ng-template>
