@@ -13,6 +13,8 @@
     <div class="card">
       <p-table
         #dt
+        responsiveLayout="stack"
+        breakpoint="680px"
         [value]="users"
         [lazy]="true"
         (onLazyLoad)="getUsers($event)"
