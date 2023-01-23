@@ -15,7 +15,7 @@
     height: 1em;
     flex-shrink: 0;
     font-size: 24px;
-    margin-left: 8px;
+    margin-inline-start: 8px;
     background: url(/assets/images/select-arrow.svg) 50% 50% / contain no-repeat;
   }
 }
@@ -41,7 +41,7 @@
 
       &__dropdown {
         .mat-pseudo-checkbox {
-          margin-right: 12px;
+          margin-inline-end: 12px;
         }
       }
     }

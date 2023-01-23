@@ -197,9 +197,6 @@ export class SearchFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMapView = this.router.url === '/map';
-    this.statuses.map((status) => {
-      status.name = this.translate.instant(status.name);
-    });
 
     this.session.currentUserData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;

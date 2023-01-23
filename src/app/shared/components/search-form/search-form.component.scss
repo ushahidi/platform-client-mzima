@@ -268,7 +268,7 @@
 .sorting-btn {
   z-index: 700;
   flex-shrink: 0;
-  margin-left: 16px;
+  margin-inline-start: 16px;
 }
 
 .collection-info {
@@ -286,7 +286,7 @@
     color: var(--color-neutral-100);
 
     .filter-group__head__button {
-      margin-left: 0;
+      margin-inline-start: 0;
     }
   }
 
@@ -357,7 +357,7 @@
   border-radius: 16px;
 
   &__icon {
-    margin-left: 8px;
+    margin-inline-start: 8px;
     color: var(--color-primary-60);
   }
 
@@ -521,10 +521,10 @@
   &.small {
     .save-filter-button {
       &__icon {
-        margin-right: 8px;
+        margin-inline-end: 8px;
 
         &:last-child {
-          margin-left: 0;
+          margin-inline-start: 0;
         }
       }
     }

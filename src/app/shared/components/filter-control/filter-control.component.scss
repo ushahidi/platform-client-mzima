@@ -186,7 +186,7 @@
     width: 1em;
     height: 1em;
     font-size: 21px;
-    margin-right: 8px;
+    margin-inline-end: 8px;
 
     .mat-icon {
       margin: 0;
@@ -342,7 +342,7 @@
       }
 
       &[aria-level='2'] {
-        margin-left: 16px;
+        margin-inline-start: 16px;
       }
     }
 
@@ -540,7 +540,17 @@
 ::ng-deep {
   html.rtl {
     .filter-control__button__arrow {
-      transform: rotate(90deg);
+      @include breakpoint-max($tablet) {
+        transform: rotate(90deg);
+      }
+    }
+
+    .filter-modal__back {
+      .mat-icon {
+        @include breakpoint-max($tablet) {
+          transform: rotate(180deg);
+        }
+      }
     }
   }
 }

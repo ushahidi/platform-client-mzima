@@ -52,14 +52,14 @@
 
       .legend-label {
         overflow: hidden;
-        margin: 0 8px 0 0;
+        margin-inline: 0 8px 0 0;
         font-size: inherit;
         position: relative;
         border-radius: 4px;
         color: var(--color-black);
 
         &:last-child {
-          margin-right: 0;
+          margin-inline-end: 0;
         }
 
         .active {

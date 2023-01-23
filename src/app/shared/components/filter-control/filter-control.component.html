@@ -43,7 +43,7 @@
             [checked]="option.checked"
             [disabled]="option.disabled"
           >
-            {{ option[fields[1]] }}
+            {{ option[fields[1]] | translate }}
           </mat-radio-button>
           <button
             *ngIf="canEdit && isEditable(option)"
@@ -74,7 +74,7 @@
           [disabled]="option.disabled"
           *ngFor="let option of options"
         >
-          {{ option[fields[1]] }}
+          {{ option[fields[1]] | translate }}
         </mat-list-option>
       </mat-selection-list>
     </ng-container>
@@ -94,7 +94,7 @@
               (click)="$event.stopPropagation()"
               class="multilevelselect-filter__option"
             >
-              {{ option[fields[1]] }}
+              {{ option[fields[1]] | translate }}
             </mat-list-option>
           </mat-tree-node>
           <mat-tree-node
@@ -108,13 +108,13 @@
               (click)="$event.stopPropagation()"
               class="multilevelselect-filter__option"
             >
-              {{ option[fields[1]] }}
+              {{ option[fields[1]] | translate }}
             </mat-list-option>
             <button
               mat-icon-button
               matTreeNodeToggle
               class="multilevelselect-filter__option__arrow"
-              [attr.aria-label]="'Toggle ' + option[fields[1]]"
+              [attr.aria-label]="'Toggle ' + option[fields[1]] | translate"
               [ngClass]="{
                 'multilevelselect-filter__option__arrow--open': treeControl.isExpanded(option)
               }"

@@ -18,7 +18,7 @@
 
   &__checkbox {
     margin-top: 2px;
-    margin-right: 8px;
+    margin-inline-end: 8px;
   }
 
   &__content {
@@ -48,6 +48,6 @@
   }
 
   &__controls {
-    margin-left: 24px;
+    margin-inline-start: 24px;
   }
 }

@@ -14,8 +14,9 @@ import {
   SavedsearchesService,
   SessionService,
   BreakpointService,
+  LanguageService,
 } from '@services';
-import { NgxMasonryComponent } from 'ngx-masonry';
+import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 
@@ -64,6 +65,16 @@ export class FeedComponent implements OnInit {
     localStorage.getItem(this.session.localStorageNameMapper('filters'))!,
   );
   public isDesktop = false;
+  private isRTL?: boolean;
+  public masonryOptions: NgxMasonryOptions = {
+    originLeft: false,
+    percentPosition: true,
+    resize: true,
+    gutter: 0,
+    columnWidth: 3,
+    fitWidth: false,
+    horizontalOrder: true,
+  };
 
   constructor(
     private postsService: PostsService,
@@ -76,6 +87,7 @@ export class FeedComponent implements OnInit {
     private savedSearchesService: SavedsearchesService,
     private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
+    private languageService: LanguageService,
   ) {
     this.breakpointService.isDesktop.subscribe({
       next: (isDesktop) => {
@@ -115,6 +127,25 @@ export class FeedComponent implements OnInit {
           this.isFiltersVisible = isFiltersVisible;
         }, 1);
       },
+    });
+
+    this.languageService.isRTL$.subscribe({
+      next: (isRTL) => {
+        if (this.isRTL !== isRTL) {
+          this.isRTL = isRTL;
+          this.masonryOptions.originLeft = !this.isRTL;
+        }
+      },
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1366) {
+        this.masonryOptions.columnWidth = 3;
+      } else if (window.innerWidth <= 768) {
+        this.masonryOptions.columnWidth = 1;
+      } else {
+        this.masonryOptions.columnWidth = 2;
+      }
     });
   }
 
