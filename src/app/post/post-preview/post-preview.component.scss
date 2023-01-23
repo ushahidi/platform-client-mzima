@@ -34,7 +34,7 @@
 
     &::ng-deep {
       .mat-checkbox-inner-container {
-        margin-right: 0 !important;
+        margin-inline-end: 0 !important;
       }
     }
 
@@ -52,7 +52,7 @@
     flex: 0 0 45%;
     overflow: hidden;
     max-width: 178px;
-    margin-right: 8px;
+    margin-inline-end: 8px;
     min-height: 168px;
     border-radius: 4px;
     position: relative;

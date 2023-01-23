@@ -13,7 +13,7 @@
 
 .mat-pseudo-checkbox {
   margin-top: 3.5px;
-  margin-left: 3.5px;
+  margin-inline-start: 3.5px;
   margin-bottom: 3.5px;
   width: 21px !important;
   height: 21px !important;
@@ -282,7 +282,7 @@
   height: 16px;
   flex: 0 0 16px;
   font-size: 10px;
-  margin-left: 4px;
+  margin-inline-start: 4px;
   line-height: 16px;
   text-align: center;
   border-radius: 50%;
@@ -781,7 +781,7 @@
 .mat-select-panel-wrap {
   .mat-select-panel {
     margin-top: 44px;
-    margin-left: 16px;
+    margin-inline-start: 16px;
     border-radius: 6px;
     min-width: 100% !important;
     box-shadow: none !important;

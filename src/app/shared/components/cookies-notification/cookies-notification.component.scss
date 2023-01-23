@@ -17,7 +17,7 @@
     display: flex;
 
     &-icon {
-      margin-right: 20.3px;
+      margin-inline-end: 20.3px;
       width: 43.3px;
       height: 43.4px;
 
@@ -56,7 +56,7 @@
 
   &__buttons {
     &-decline {
-      margin-right: 16px;
+      margin-inline-end: 16px;
       border: 1px solid var(--color-neutral-40);
     }
   }
