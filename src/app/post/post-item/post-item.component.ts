@@ -46,13 +46,14 @@ export class PostItemComponent implements OnInit {
   private fieldsFormArray = ['tags'];
   public surveyName: string;
   private postId?: number;
+  private post?: any;
 
   constructor(
     private route: ActivatedRoute,
     private surveysService: SurveysService,
     private formBuilder: FormBuilder,
     private postsV5Service: PostsV5Service,
-    private postsService: PostsService,
+    private postsV3Service: PostsService,
     private router: Router,
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
@@ -81,14 +82,15 @@ export class PostItemComponent implements OnInit {
     this.postsV5Service.getById(postId).subscribe({
       next: (post) => {
         this.formId = post.form_id;
-        // this.loadData(this.typeId, post);
+        this.post = post;
+        this.loadData(this.formId!, post.post_content);
       },
     });
   }
 
-  private loadData(id?: number | null) {
-    if (!id) return;
-    this.surveysService.getById(id).subscribe({
+  private loadData(formId: number | null, updateContent?: []) {
+    if (!formId) return;
+    this.surveysService.getById(formId).subscribe({
       next: (data) => {
         this.data = data;
         this.tasks = data.result.tasks;
@@ -129,8 +131,41 @@ export class PostItemComponent implements OnInit {
         }
         this.form = new FormGroup(fields);
         this.initialFormData = this.form.value;
+
+        if (updateContent) {
+          this.updateForm(updateContent);
+        }
       },
     });
+  }
+
+  private updateForm(updateValues: any) {
+    for (const { fields } of updateValues) {
+      for (const { type, input, key, value } of fields) {
+        this.form.patchValue({ [key]: value });
+        if (input === 'tags') {
+          const formArray: FormArray = this.form.get(key) as FormArray;
+          for (const val of value) {
+            formArray.push(new FormControl(val.id));
+          }
+        }
+        if (input === 'location') {
+          this.form.patchValue({ [key]: { lat: value.value.lat, lng: value.value.lon } });
+        }
+        if (input === 'datetime' || input === 'date') {
+          this.form.patchValue({ [key]: new Date(value?.value) });
+        }
+        if (type === 'title') {
+          this.form.patchValue({ [key]: this.post.title });
+        }
+        if (type === 'description') {
+          this.form.patchValue({ [key]: this.post.content });
+        }
+        if (input === 'radio') {
+          this.form.patchValue({ [key]: value.value });
+        }
+      }
+    }
   }
 
   private addFormArray(value: string, field: any) {
@@ -156,7 +191,7 @@ export class PostItemComponent implements OnInit {
             value: this.form.value[field.key],
           };
 
-          // if (field.type === 'title') this.title = this.form.value[field.key]; // title is ngModel standalone
+          if (field.type === 'title') this.title = this.form.value[field.key];
           if (field.type === 'description') this.description = this.form.value[field.key];
 
           switch (field.input) {
@@ -233,24 +268,34 @@ export class PostItemComponent implements OnInit {
       type: 'report',
     };
 
-    this.postsV5Service.post(postData).subscribe({
-      error: () => {
-        this.form.enable();
-      },
-      complete: async () => {
-        this.form.enable();
-        await this.confirmModalService.open({
-          title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
-          description: `<p>${this.translate.instant(
-            'notify.confirm_modal.add_post_success.success_description',
-          )}</p>`,
-          buttonSuccess: this.translate.instant(
-            'notify.confirm_modal.add_post_success.success_button',
-          ),
-        });
-        this.backNavigation();
-      },
+    if (this.postId) {
+      postData.post_date = this.post.post_date;
+      this.postsV5Service.update(this.postId, postData).subscribe({
+        error: () => this.form.enable(),
+        complete: async () => {
+          await this.postComplete();
+        },
+      });
+    } else {
+      this.postsV5Service.post(postData).subscribe({
+        error: () => this.form.enable(),
+        complete: async () => {
+          await this.postComplete();
+        },
+      });
+    }
+  }
+
+  async postComplete() {
+    this.form.enable();
+    await this.confirmModalService.open({
+      title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
+      description: `<p>${this.translate.instant(
+        'notify.confirm_modal.add_post_success.success_description',
+      )}</p>`,
+      buttonSuccess: this.translate.instant('notify.confirm_modal.add_post_success.success_button'),
     });
+    this.backNavigation();
   }
 
   public async previousPage() {
@@ -313,7 +358,7 @@ export class PostItemComponent implements OnInit {
       'status[]': [],
     };
     this.isSearching = true;
-    this.postsService.getPosts('', params).subscribe({
+    this.postsV3Service.getPosts('', params).subscribe({
       next: (data) => {
         this.relatedPosts = data.results;
         this.isSearching = false;

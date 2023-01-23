@@ -44,4 +44,7 @@ export class PostsV5Service extends ResourceService<any> {
   override post(params: any): Observable<any> {
     return super.post(params);
   }
+  override update(postId: number, params: any): Observable<any> {
+    return super.update(postId, params);
+  }
 }

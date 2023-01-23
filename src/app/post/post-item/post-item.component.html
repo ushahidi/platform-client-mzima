@@ -48,14 +48,7 @@
               *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
             >
               <mat-form-field appearance="outline">
-                <input
-                  matInput
-                  [formControlName]="field.key"
-                  *ngIf="field.type !== 'title'; else titleInput"
-                />
-                <ng-template #titleInput>
-                  <input matInput [(ngModel)]="title" [ngModelOptions]="{ standalone: true }" />
-                </ng-template>
+                <input matInput [formControlName]="field.key" />
               </mat-form-field>
             </ng-container>
 
@@ -67,7 +60,7 @@
                   cdkAutosizeMinRows="2"
                   cdkAutosizeMaxRows="5"
                   [formControlName]="field.key"
-                  [data-qa]="'create-post-' + field.key"
+                  [data-qa]="'post-item-' + field.key"
                 >
                 </textarea>
               </mat-form-field>
@@ -81,13 +74,14 @@
                   cdkAutosizeMinRows="2"
                   cdkAutosizeMaxRows="5"
                   [formControlName]="field.key"
-                  [data-qa]="'create-post-' + field.key"
+                  [data-qa]="'post-item-' + field.key"
                 >
                 </textarea>
               </mat-form-field>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'tags'">
+              tags
               <span class="related-post-list">
                 <ul>
                   <li>
@@ -164,6 +158,7 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'checkbox'">
+              checkbox
               <mat-selection-list
                 [formControlName]="field.key"
                 [data-qa]="'post-item-post-checkbox' + field.key"
@@ -211,7 +206,7 @@
                 color="primary"
                 mat-stroked-button
                 (click)="fileInput.click()"
-                data-qa="btn-create-post-upload"
+                data-qa="btn-post-item-upload"
               >
                 {{ 'post.media.add_photo' | translate }}
                 <mat-icon svgIcon="plus"></mat-icon>
@@ -257,7 +252,7 @@
                   type="button"
                   color="primary"
                   mat-stroked-button
-                  data-qa="btn-create-post-delete-relation-post"
+                  data-qa="btn-post-item-delete-relation-post"
                   (click)="deleteRelatedPost(field, selectedRelatedPost.id)"
                 >
                   delete
@@ -280,7 +275,7 @@
                   mat-stroked-button
                   class="relation-button-search"
                   (click)="relationSearchPosts()"
-                  data-qa="btn-create-post-relation-search"
+                  data-qa="btn-post-item-relation-search"
                 >
                   {{ 'post.relation.search' | translate }}
                 </button>
@@ -317,12 +312,12 @@
           color="primary"
           mat-stroked-button
           type="button"
-          data-qa="btn-create-post-previous"
+          data-qa="btn-post-item-previous"
           (click)="previousPage()"
         >
           {{ 'app.cancel' | translate }}
         </button>
-        <button color="primary" mat-raised-button type="submit" data-qa="btn-create-post-submit">
+        <button color="primary" mat-raised-button type="submit" data-qa="btn-post-item-submit">
           {{ 'app.submit' | translate }}
         </button>
       </div>
