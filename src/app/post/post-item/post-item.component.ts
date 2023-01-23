@@ -143,7 +143,14 @@ export class PostItemComponent implements OnInit {
     for (const { fields } of updateValues) {
       for (const { type, input, key, value } of fields) {
         this.form.patchValue({ [key]: value });
-        if (input === 'tags') {
+        if (input === 'checkbox') {
+          const data = [];
+          for (const val of value) {
+            data.push(val?.id);
+          }
+          this.form.patchValue({ [key]: data });
+        }
+        if (input === 'tags' || input === 'checkbox') {
           const formArray: FormArray = this.form.get(key) as FormArray;
           for (const val of value) {
             formArray.push(new FormControl(val?.id));
