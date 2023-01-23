@@ -146,11 +146,11 @@ export class PostItemComponent implements OnInit {
         if (input === 'tags') {
           const formArray: FormArray = this.form.get(key) as FormArray;
           for (const val of value) {
-            formArray.push(new FormControl(val.id));
+            formArray.push(new FormControl(val?.id));
           }
         }
         if (input === 'location') {
-          this.form.patchValue({ [key]: { lat: value.value.lat, lng: value.value.lon } });
+          this.form.patchValue({ [key]: { lat: value?.value.lat, lng: value?.value.lon } });
         }
         if (input === 'datetime' || input === 'date') {
           this.form.patchValue({ [key]: new Date(value?.value) });
@@ -162,7 +162,7 @@ export class PostItemComponent implements OnInit {
           this.form.patchValue({ [key]: this.post.content });
         }
         if (input === 'radio') {
-          this.form.patchValue({ [key]: value.value });
+          this.form.patchValue({ [key]: value?.value });
         }
       }
     }
