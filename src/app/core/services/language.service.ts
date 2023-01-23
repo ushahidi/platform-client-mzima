@@ -46,17 +46,21 @@ export class LanguageService {
     }
   }
 
-  setLanguage(lang: string) {
+  private setLanguage(lang: string) {
     this.translate.setDefaultLang(lang);
     this.translate.use(lang);
     this.selectedLanguage.next(lang);
-    this.isRTL.next(this.languages.value.find((l) => l.code === lang)?.rtl);
+    this.changeDirection(lang);
   }
 
-  changeLanguage(value: string) {
+  public changeLanguage(value: string) {
     this.translate.use(value);
     localStorage.setItem(this.languageKey, value);
     this.selectedLanguage.next(value);
+    this.changeDirection(value);
+  }
+
+  private changeDirection(value: string) {
     this.isRTL.next(this.languages.value.find((l) => l.code === value)?.rtl);
   }
 }
