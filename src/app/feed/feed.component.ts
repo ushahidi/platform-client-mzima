@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -79,6 +79,7 @@ export class FeedComponent implements OnInit {
   constructor(
     private postsService: PostsService,
     private route: ActivatedRoute,
+    private router: Router,
     private postsV5Service: PostsV5Service,
     private session: SessionService,
     private confirmModalService: ConfirmModalService,
@@ -151,6 +152,14 @@ export class FeedComponent implements OnInit {
 
   ngOnInit() {
     this.getUserData();
+
+    this.eventBusService.on(EventType.DeleteCollection).subscribe({
+      next: (colId) => {
+        if (Number(colId) === Number(this.collectionId)) {
+          this.router.navigate(['/feed']);
+        }
+      },
+    });
   }
 
   private getUserData(): void {

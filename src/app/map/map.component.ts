@@ -28,7 +28,7 @@ import { ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
 import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -70,6 +70,7 @@ export class MapComponent implements OnInit {
     private sessionService: SessionService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
+    private router: Router,
     private zone: NgZone,
     private eventBusService: EventBusService,
     private mediaService: MediaService,
@@ -103,6 +104,14 @@ export class MapComponent implements OnInit {
       next: (option) => {
         this.map.setZoom(12);
         this.map.panTo({ lat: option.lat, lng: option.lon });
+      },
+    });
+
+    this.eventBusService.on(EventType.DeleteCollection).subscribe({
+      next: (colId) => {
+        if (Number(colId) === Number(this.collectionId)) {
+          this.router.navigate(['/map']);
+        }
       },
     });
 

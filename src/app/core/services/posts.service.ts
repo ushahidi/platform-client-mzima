@@ -124,7 +124,10 @@ export class PostsService extends ResourceService<any> {
     } else {
       delete params.center_point;
     }
-    delete params.set;
+
+    if (!params.set) {
+      delete params.set;
+    }
 
     if (params.form && params.form[0] === 'none') {
       delete params.form;

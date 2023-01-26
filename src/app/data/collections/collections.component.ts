@@ -12,6 +12,8 @@ import {
   RolesService,
   SessionService,
   BreakpointService,
+  EventBusService,
+  EventType,
 } from '@services';
 
 enum CollectionView {
@@ -59,6 +61,7 @@ export class CollectionsComponent implements OnInit {
     private confirm: ConfirmModalService,
     private formBuilder: FormBuilder,
     private translate: TranslateService,
+    private eventBus: EventBusService,
     private router: Router,
     private session: SessionService,
     private rolesService: RolesService,
@@ -156,6 +159,7 @@ export class CollectionsComponent implements OnInit {
     if (!confirmed) return;
 
     this.collectionsService.delete(collection.id).subscribe(() => {
+      this.eventBus.next({ type: EventType.DeleteCollection, payload: collection.id });
       this.collectionList = this.collectionList.filter((c) => c.id !== collection.id);
     });
   }

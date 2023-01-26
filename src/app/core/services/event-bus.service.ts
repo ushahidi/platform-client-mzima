@@ -6,6 +6,7 @@ export const enum EventType {
   AddPostButtonSubmit = 'ADD_POST_BUTTON_SUBMIT',
   OpenLoginModal = 'OPEN_LOGIN_MODAL',
   SavedSearchInit = 'SAVED_SEARCH_INIT',
+  DeleteCollection = 'DELETE_COLLECTION',
   IsSettingsInnerPage = 'IS_SETTINGS_INNER_PAGE',
 }
 
