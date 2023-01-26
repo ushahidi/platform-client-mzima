@@ -5,6 +5,7 @@ import { CollectionsComponent } from '@data';
 import { PostPropertiesInterface, PostResult, PostStatus, UserInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, PostsService, PostsV5Service, SessionService } from '@services';
+import { ShareModalComponent } from 'src/app/shared/components/share-modal/share-modal.component';
 
 @Component({
   selector: 'app-post-head',
@@ -74,7 +75,19 @@ export class PostHeadComponent {
     });
   }
 
-  editPost() {
+  public editPost() {
     this.router.navigate(['/post/edit', this.post.id]);
+  }
+
+  public sharePost() {
+    event?.stopPropagation();
+    this.dialog.open(ShareModalComponent, {
+      width: '100%',
+      maxWidth: 564,
+      panelClass: 'modal',
+      data: {
+        postId: this.post.id,
+      },
+    });
   }
 }
