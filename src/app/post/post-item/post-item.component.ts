@@ -140,37 +140,63 @@ export class PostItemComponent implements OnInit {
     });
   }
 
-  private updateForm(updateValues: any) {
+  private handleTags(key: string, value: any) {
+    const formArray = this.form.get(key) as FormArray;
+    value.forEach((val: { id: any }) => formArray.push(new FormControl(val?.id)));
+  }
+
+  private handleCheckbox(key: string, value: any) {
+    const data = value.map((val: { id: any }) => val?.id);
+    this.form.patchValue({ [key]: data });
+  }
+
+  private handleLocation(key: string, value: any) {
+    this.form.patchValue({ [key]: { lat: value?.value.lat, lng: value?.value.lon } });
+  }
+
+  private handleDate(key: string, value: any) {
+    this.form.patchValue({ [key]: new Date(value?.value) });
+  }
+
+  private handleRadio(key: string, value: any) {
+    this.form.patchValue({ [key]: value?.value });
+  }
+
+  private handleTitle(key: string) {
+    this.form.patchValue({ [key]: this.post.title });
+  }
+
+  private handleDescription(key: string) {
+    this.form.patchValue({ [key]: this.post.content });
+  }
+
+  private updateForm(updateValues: any[]) {
+    type InputHandlerType = 'tags' | 'checkbox' | 'location' | 'date' | 'datetime' | 'radio';
+    type TypeHandlerType = 'title' | 'description';
+
+    const inputHandlers: { [key in InputHandlerType]: (key: string, value: any) => void } = {
+      tags: this.handleTags.bind(this),
+      checkbox: this.handleCheckbox.bind(this),
+      location: this.handleLocation.bind(this),
+      date: this.handleDate.bind(this),
+      datetime: this.handleDate.bind(this),
+      radio: this.handleRadio.bind(this),
+    };
+
+    const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
+      title: this.handleTitle.bind(this),
+      description: this.handleDescription.bind(this),
+    };
+
     for (const { fields } of updateValues) {
       for (const { type, input, key, value } of fields) {
         this.form.patchValue({ [key]: value });
-        switch (input) {
-          case 'tags':
-          case 'checkbox':
-            const formArray: FormArray = this.form.get(key) as FormArray;
-            for (const val of value) {
-              formArray.push(new FormControl(val?.id));
-            }
-            break;
-          case 'location':
-            this.form.patchValue({ [key]: { lat: value?.value.lat, lng: value?.value.lon } });
-            break;
-          case 'date':
-          case 'datetime':
-            this.form.patchValue({ [key]: new Date(value?.value) });
-            break;
-          case 'radio':
-            this.form.patchValue({ [key]: value?.value });
-            break;
+        if (inputHandlers[input as InputHandlerType]) {
+          inputHandlers[input as InputHandlerType](key, value);
         }
 
-        switch (type) {
-          case 'title':
-            this.form.patchValue({ [key]: this.post.title });
-            break;
-          case 'description':
-            this.form.patchValue({ [key]: this.post.content });
-            break;
+        if (typeHandlers[type as TypeHandlerType]) {
+          typeHandlers[type as TypeHandlerType](key);
         }
       }
     }
