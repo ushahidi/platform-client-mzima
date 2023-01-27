@@ -90,6 +90,7 @@ export class FeedComponent implements OnInit {
   constructor(
     private postsService: PostsService,
     private route: ActivatedRoute,
+    private router: Router,
     private postsV5Service: PostsV5Service,
     private session: SessionService,
     private confirmModalService: ConfirmModalService,
@@ -174,6 +175,14 @@ export class FeedComponent implements OnInit {
 
   ngOnInit() {
     this.getUserData();
+
+    this.eventBusService.on(EventType.DeleteCollection).subscribe({
+      next: (colId) => {
+        if (Number(colId) === Number(this.collectionId)) {
+          this.router.navigate(['/feed']);
+        }
+      },
+    });
   }
 
   private getUserData(): void {
