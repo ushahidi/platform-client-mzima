@@ -86,6 +86,7 @@ export class FeedComponent implements OnInit {
   }
   public currentPage = 1;
   public itemsPerPage = 9;
+  postsFilters$ = this.postsService.postsFilters$.pipe(untilDestroyed(this));
 
   constructor(
     private postsService: PostsService,
@@ -127,7 +128,7 @@ export class FeedComponent implements OnInit {
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.mode = params['mode'] ? params['mode'] : FeedModeEnum.Tiles;
 
-        this.postsService.postsFilters$.subscribe({
+        this.postsFilters$.subscribe({
           next: () => {
             this.posts = [];
             this.params.offset = (this.currentPage - 1) * (this.params.limit ?? 0);
@@ -244,7 +245,7 @@ export class FeedComponent implements OnInit {
 
   public showPostDetails(post: any): void {
     if (this.isDesktop) {
-      this.router.navigate(['/feed/post', post.id], {
+      this.router.navigate(['feed', post.id, 'view'], {
         queryParams: {
           mode: FeedModeEnum.Post,
         },
@@ -370,7 +371,7 @@ export class FeedComponent implements OnInit {
   public switchMode(mode: FeedModeEnum): void {
     this.mode = mode;
     if (this.mode === FeedModeEnum.Post) {
-      this.router.navigate(['/feed', this.posts[0].id], {
+      this.router.navigate(['/feed', this.posts[0].id, 'view'], {
         queryParams: {
           mode: this.mode,
         },

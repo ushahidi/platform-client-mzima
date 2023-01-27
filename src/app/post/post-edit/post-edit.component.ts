@@ -23,11 +23,11 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 @Component({
-  selector: 'app-post-item',
-  templateUrl: './post-item.component.html',
-  styleUrls: ['./post-item.component.scss'],
+  selector: 'app-post-edit',
+  templateUrl: './post-edit.component.html',
+  styleUrls: ['./post-edit.component.scss'],
 })
-export class PostItemComponent implements OnInit {
+export class PostEditComponent implements OnInit {
   public data: any;
   public form: FormGroup;
   public description: string;
