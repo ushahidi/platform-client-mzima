@@ -100,7 +100,6 @@ export class FeedComponent implements OnInit {
     private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
     private languageService: LanguageService,
-    private router: Router,
   ) {
     this.breakpointService.isDesktop.subscribe({
       next: (isDesktop) => {
