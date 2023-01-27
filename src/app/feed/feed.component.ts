@@ -2,8 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
-import { GeoJsonFilter, PostResult, UserInterface } from '@models';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { GeoJsonFilter, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import {
   ConfirmModalService,
@@ -19,17 +18,17 @@ import {
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
+import { MainViewComponent } from '../shared/components/main-view.component';
 
-@UntilDestroy()
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss'],
 })
-export class FeedComponent implements OnInit {
+export class FeedComponent extends MainViewComponent implements OnInit {
   @ViewChild('feed') public feed: ElementRef;
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
-  public params: GeoJsonFilter = {
+  public override params: GeoJsonFilter = {
     limit: 9,
     offset: 0,
     created_before_by_id: '',
@@ -38,8 +37,6 @@ export class FeedComponent implements OnInit {
     page: 1,
     size: this.params.limit,
   };
-  collectionId = '';
-  searchId = '';
   public posts: any[] = [];
   public isLoading = false;
   public activePostId: any;
@@ -57,13 +54,6 @@ export class FeedComponent implements OnInit {
     orderby: 'created',
   };
   public updateMasonryLayout: boolean;
-  // TODO: Fix takeUntilDestroy$() with material components
-  // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
-  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
-  public user: UserInterface;
-  private filters = JSON.parse(
-    localStorage.getItem(this.session.localStorageNameMapper('filters'))!,
-  );
   public isDesktop = false;
   private isRTL?: boolean;
   public masonryOptions: NgxMasonryOptions = {
@@ -77,19 +67,20 @@ export class FeedComponent implements OnInit {
   };
 
   constructor(
-    private postsService: PostsService,
-    private route: ActivatedRoute,
-    private router: Router,
+    protected override router: Router,
+    protected override route: ActivatedRoute,
+    protected override postsService: PostsService,
+    protected override savedSearchesService: SavedsearchesService,
+    protected override eventBusService: EventBusService,
+    protected override sessionService: SessionService,
     private postsV5Service: PostsV5Service,
-    private session: SessionService,
     private confirmModalService: ConfirmModalService,
     private dialog: MatDialog,
     private translate: TranslateService,
-    private savedSearchesService: SavedsearchesService,
-    private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
     private languageService: LanguageService,
   ) {
+    super(router, route, postsService, savedSearchesService, eventBusService, sessionService);
     this.breakpointService.isDesktop.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
@@ -122,7 +113,7 @@ export class FeedComponent implements OnInit {
       },
     });
 
-    this.session.isFiltersVisible$.subscribe({
+    this.sessionService.isFiltersVisible$.subscribe({
       next: (isFiltersVisible) => {
         setTimeout(() => {
           this.isFiltersVisible = isFiltersVisible;
@@ -160,37 +151,6 @@ export class FeedComponent implements OnInit {
         }
       },
     });
-  }
-
-  private getUserData(): void {
-    this.userData$.subscribe({
-      next: (userData) => (this.user = userData),
-    });
-  }
-
-  initCollection() {
-    if (this.route.snapshot.data['view'] === 'collection') {
-      this.collectionId = this.route.snapshot.paramMap.get('id')!;
-      this.params.set = this.collectionId;
-      this.postsService.applyFilters({ set: this.collectionId, ...this.filters });
-      this.searchId = '';
-    } else {
-      this.collectionId = '';
-      this.params.set = '';
-      if (this.route.snapshot.data['view'] === 'search') {
-        this.searchId = this.route.snapshot.paramMap.get('id')!;
-        this.savedSearchesService.getById(this.searchId).subscribe((sSearch) => {
-          this.postsService.applyFilters(Object.assign(sSearch.filter, { set: [] }));
-          this.eventBusService.next({
-            type: EventType.SavedSearchInit,
-            payload: this.searchId,
-          });
-        });
-      } else {
-        this.searchId = '';
-        this.postsService.applyFilters({ set: [], ...this.filters });
-      }
-    }
   }
 
   private getPosts(params: any, add?: boolean): void {
@@ -352,6 +312,6 @@ export class FeedComponent implements OnInit {
   public toggleFilters(value: boolean): void {
     if (value === this.isFiltersVisible) return;
     this.isFiltersVisible = value;
-    this.session.toggleFiltersVisibility(value);
+    this.sessionService.toggleFiltersVisibility(value);
   }
 }

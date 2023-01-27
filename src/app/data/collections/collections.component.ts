@@ -49,8 +49,6 @@ export class CollectionsComponent implements OnInit {
   roleOptions: any;
   tmpCollectionToEditId = 0;
   isLoggedIn = true;
-  // TODO: Fix takeUntilDestroy$() with material components
-  // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
   private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
   isDesktop = false;
 
