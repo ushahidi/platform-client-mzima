@@ -49,21 +49,13 @@
     display: flex;
     flex-wrap: wrap;
     margin: 0 -8px -8px;
-    justify-content: flex-start;
+    justify-content: space-between;
 
-    .twitter {
-      &-btn {
-        margin: 0 8px 8px;
-      }
-
-      &-icon {
-        margin-inline-start: 8px;
-      }
-    }
-
+    .twitter,
     .facebook {
       &-btn {
         margin: 0 8px 8px;
+        width: 45%;
       }
 
       &-icon {

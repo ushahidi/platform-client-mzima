@@ -26,7 +26,7 @@ export class ShareModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.address = this.postId
-      ? `${window.location.href}?postId=${this.postId}`
+      ? `${window.location.href}/${this.postId}/view`
       : window.location.href;
     this.htmlEmbed = `<iframe width="${this.width}" height="${this.height}" src="${this.address}" frameborder="0" allowfullscreen></iframe>`;
   }

@@ -76,7 +76,7 @@ export class PostHeadComponent {
   }
 
   public editPost() {
-    this.router.navigate(['/post/edit', this.post.id]);
+    this.router.navigateByUrl(`/post/${this.post.id}/edit`);
   }
 
   public sharePost() {
