@@ -77,7 +77,6 @@ export class PostItemComponent implements OnInit {
     });
   }
 
-  // TODO: For edit post. Need update backend response
   private loadPostData(postId: number) {
     this.postsV5Service.getById(postId).subscribe({
       next: (post) => {
@@ -101,15 +100,17 @@ export class PostItemComponent implements OnInit {
           task.fields
             .sort((a: any, b: any) => a.priority - b.priority)
             .map((field: any) => {
-              if (field.type === 'title') {
-                this.title = field.default;
-              }
-              if (field.type === 'description') {
-                this.description = field.default;
-              }
-              if (field.type === 'relation') {
-                this.relationConfigForm = field.config.input.form;
-                this.relationConfigKey = field.key;
+              switch (field.type) {
+                case 'title':
+                  this.title = field.default;
+                  break;
+                case 'description':
+                  this.description = field.default;
+                  break;
+                case 'relation':
+                  this.relationConfigForm = field.config.input.form;
+                  this.relationConfigKey = field.key;
+                  break;
               }
 
               if (field.key) {
@@ -139,37 +140,63 @@ export class PostItemComponent implements OnInit {
     });
   }
 
-  private updateForm(updateValues: any) {
+  private handleTags(key: string, value: any) {
+    const formArray = this.form.get(key) as FormArray;
+    value.forEach((val: { id: any }) => formArray.push(new FormControl(val?.id)));
+  }
+
+  private handleCheckbox(key: string, value: any) {
+    const data = value.map((val: { id: any }) => val?.id);
+    this.form.patchValue({ [key]: data });
+  }
+
+  private handleLocation(key: string, value: any) {
+    this.form.patchValue({ [key]: { lat: value?.value.lat, lng: value?.value.lon } });
+  }
+
+  private handleDate(key: string, value: any) {
+    this.form.patchValue({ [key]: new Date(value?.value) });
+  }
+
+  private handleRadio(key: string, value: any) {
+    this.form.patchValue({ [key]: value?.value });
+  }
+
+  private handleTitle(key: string) {
+    this.form.patchValue({ [key]: this.post.title });
+  }
+
+  private handleDescription(key: string) {
+    this.form.patchValue({ [key]: this.post.content });
+  }
+
+  private updateForm(updateValues: any[]) {
+    type InputHandlerType = 'tags' | 'checkbox' | 'location' | 'date' | 'datetime' | 'radio';
+    type TypeHandlerType = 'title' | 'description';
+
+    const inputHandlers: { [key in InputHandlerType]: (key: string, value: any) => void } = {
+      tags: this.handleTags.bind(this),
+      checkbox: this.handleCheckbox.bind(this),
+      location: this.handleLocation.bind(this),
+      date: this.handleDate.bind(this),
+      datetime: this.handleDate.bind(this),
+      radio: this.handleRadio.bind(this),
+    };
+
+    const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
+      title: this.handleTitle.bind(this),
+      description: this.handleDescription.bind(this),
+    };
+
     for (const { fields } of updateValues) {
       for (const { type, input, key, value } of fields) {
         this.form.patchValue({ [key]: value });
-        if (input === 'checkbox') {
-          const data = [];
-          for (const val of value) {
-            data.push(val?.id);
-          }
-          this.form.patchValue({ [key]: data });
+        if (inputHandlers[input as InputHandlerType]) {
+          inputHandlers[input as InputHandlerType](key, value);
         }
-        if (input === 'tags' || input === 'checkbox') {
-          const formArray: FormArray = this.form.get(key) as FormArray;
-          for (const val of value) {
-            formArray.push(new FormControl(val?.id));
-          }
-        }
-        if (input === 'location') {
-          this.form.patchValue({ [key]: { lat: value?.value.lat, lng: value?.value.lon } });
-        }
-        if (input === 'datetime' || input === 'date') {
-          this.form.patchValue({ [key]: new Date(value?.value) });
-        }
-        if (type === 'title') {
-          this.form.patchValue({ [key]: this.post.title });
-        }
-        if (type === 'description') {
-          this.form.patchValue({ [key]: this.post.content });
-        }
-        if (input === 'radio') {
-          this.form.patchValue({ [key]: value?.value });
+
+        if (typeHandlers[type as TypeHandlerType]) {
+          typeHandlers[type as TypeHandlerType](key);
         }
       }
     }
@@ -252,15 +279,6 @@ export class PostItemComponent implements OnInit {
     this.preparationData();
 
     const postData = {
-      allowed_privileges: [
-        'read',
-        'create',
-        'update',
-        'delete',
-        'search',
-        'change_status',
-        'read_full',
-      ],
       base_language: 'en',
       completed_stages: this.completeStages,
       content: this.description,
@@ -276,7 +294,7 @@ export class PostItemComponent implements OnInit {
     };
 
     if (this.postId) {
-      postData.post_date = this.post.post_date;
+      postData.post_date = this.post.post_date || new Date().toISOString();
       this.postsV5Service.update(this.postId, postData).subscribe({
         error: () => this.form.enable(),
         complete: async () => {
@@ -318,15 +336,15 @@ export class PostItemComponent implements OnInit {
       if (!confirmed) return;
     }
 
-    this.backNavigation();
+    this.backNavigation(true);
     this.eventBusService.next({
       type: EventType.AddPostButtonSubmit,
       payload: true,
     });
   }
 
-  public backNavigation(): void {
-    this.location.back();
+  public backNavigation(isBack = false): void {
+    isBack ? this.location.back() : this.router.navigate(['/feed']);
   }
 
   public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {

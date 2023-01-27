@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Roles } from '@enums';
 import { takeUntilDestroy$ } from '@helpers';
 import { UserInterface } from '@models';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
-import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-settings-layout',
@@ -33,15 +32,6 @@ export class SettingsLayoutComponent {
 
         this.checkIsInnerPage();
 
-        if (this.isDesktop && !this.isInnerPage) {
-          this.navigateToInnerPage();
-        }
-      },
-    });
-
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe({
-      next: () => {
-        this.checkIsInnerPage();
         if (this.isDesktop && !this.isInnerPage) {
           this.navigateToInnerPage();
         }

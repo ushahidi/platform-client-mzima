@@ -9,7 +9,7 @@ const routes: Routes = [
     data: { breadcrumb: 'Create Post' },
   },
   {
-    path: 'edit/:id',
+    path: ':id/edit',
     component: PostItemComponent,
     data: { breadcrumb: 'Edit Post' },
   },
