@@ -6,9 +6,17 @@ import { FeedRoutingModule } from './feed-routing.module';
 import { EditFeedItemComponent } from './edit-feed-item/edit-feed-item.component';
 import { PostModule } from '../post/post.module';
 import { NgxMasonryModule } from 'ngx-masonry';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [FeedComponent, EditFeedItemComponent],
-  imports: [CommonModule, SharedModule, FeedRoutingModule, PostModule, NgxMasonryModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    FeedRoutingModule,
+    PostModule,
+    NgxMasonryModule,
+    NgxPaginationModule,
+  ],
 })
 export class FeedModule {}

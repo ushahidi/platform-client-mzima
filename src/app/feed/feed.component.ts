@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -19,6 +19,11 @@ import {
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
+
+enum FeedModeEnum {
+  Tiles = 'TILES',
+  Post = 'POST',
+}
 
 @UntilDestroy()
 @Component({
@@ -42,6 +47,7 @@ export class FeedComponent implements OnInit {
   searchId = '';
   public posts: any[] = [];
   public isLoading = false;
+  public mode: FeedModeEnum = FeedModeEnum.Tiles;
   public activePostId: any;
   public total: number;
   public postDetails?: PostResult;
@@ -75,6 +81,11 @@ export class FeedComponent implements OnInit {
     fitWidth: false,
     horizontalOrder: true,
   };
+  public get FeedModeEnum(): typeof FeedModeEnum {
+    return FeedModeEnum;
+  }
+  public currentPage = 1;
+  public itemsPerPage = 9;
 
   constructor(
     private postsService: PostsService,
@@ -88,10 +99,19 @@ export class FeedComponent implements OnInit {
     private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
     private languageService: LanguageService,
+    private router: Router,
   ) {
     this.breakpointService.isDesktop.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
+        if (!this.isDesktop) {
+          this.router.navigate(['/feed'], {
+            queryParams: {
+              mode: FeedModeEnum.Tiles,
+            },
+            queryParamsHandling: 'merge',
+          });
+        }
       },
     });
 
@@ -104,11 +124,13 @@ export class FeedComponent implements OnInit {
         const id: string = params['id'] || '';
         this.params.created_before_by_id = id;
         id?.length ? this.getPost(id) : (this.postDetails = undefined);
+        this.currentPage = params['page'] ? Number(params['page']) : 1;
+        this.mode = params['mode'] ? params['mode'] : FeedModeEnum.Tiles;
 
         this.postsService.postsFilters$.subscribe({
           next: () => {
             this.posts = [];
-            this.params.offset = 0;
+            this.params.offset = (this.currentPage - 1) * (this.params.limit ?? 0);
             this.getPosts(this.params);
           },
         });
@@ -139,13 +161,14 @@ export class FeedComponent implements OnInit {
     });
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 1366) {
-        this.masonryOptions.columnWidth = 3;
-      } else if (window.innerWidth <= 768) {
-        this.masonryOptions.columnWidth = 1;
-      } else {
-        this.masonryOptions.columnWidth = 2;
-      }
+      this.masonryOptions.columnWidth =
+        this.mode === FeedModeEnum.Tiles
+          ? window.innerWidth > 1366
+            ? 3
+            : window.innerWidth <= 768
+            ? 1
+            : 2
+          : 1;
     });
   }
 
@@ -194,13 +217,6 @@ export class FeedComponent implements OnInit {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
         setTimeout(() => {
           this.isLoading = false;
-          if (
-            this.isDesktop &&
-            this.feed?.nativeElement.offsetHeight &&
-            this.feed?.nativeElement.offsetHeight >= this.feed?.nativeElement.scrollHeight
-          ) {
-            this.loadMore();
-          }
           this.masonry?.layout();
         }, 500);
       },
@@ -227,20 +243,29 @@ export class FeedComponent implements OnInit {
   }
 
   public showPostDetails(post: any): void {
-    const postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-      width: '100%',
-      maxWidth: 576,
-      data: { color: post.color, twitterId: post.data_source_message_id },
-      height: 'auto',
-      maxHeight: '90vh',
-      panelClass: ['modal', 'post-modal'],
-    });
+    if (this.isDesktop) {
+      this.router.navigate(['/feed/post', post.id], {
+        queryParams: {
+          mode: FeedModeEnum.Post,
+        },
+        queryParamsHandling: 'merge',
+      });
+    } else {
+      const postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+        width: '100%',
+        maxWidth: 576,
+        data: { color: post.color, twitterId: post.data_source_message_id },
+        height: 'auto',
+        maxHeight: '90vh',
+        panelClass: ['modal', 'post-modal'],
+      });
 
-    this.postsV5Service.getById(post.id).subscribe({
-      next: (postV5: PostResult) => {
-        postDetailsModal.componentInstance.post = postV5;
-      },
-    });
+      this.postsV5Service.getById(post.id).subscribe({
+        next: (postV5: PostResult) => {
+          postDetailsModal.componentInstance.post = postV5;
+        },
+      });
+    }
   }
 
   public toggleBulkOptions(state: boolean): void {
@@ -313,21 +338,17 @@ export class FeedComponent implements OnInit {
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 
-  public onScroll(event: any): void {
-    console.log('onScroll');
-
-    console.log(event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight);
-
-    if (
-      !this.isLoading &&
-      ((this.isDesktop &&
-        event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32) ||
-        (!this.isDesktop &&
-          event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight))
-    ) {
-      this.loadMore();
-    }
-  }
+  // public onScroll(event: any): void {
+  //   if (
+  //     !this.isLoading &&
+  //     ((this.isDesktop &&
+  //       event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32) ||
+  //       (!this.isDesktop &&
+  //         event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight))
+  //   ) {
+  //     this.loadMore();
+  //   }
+  // }
 
   public loadMore(): void {
     if (
@@ -344,5 +365,36 @@ export class FeedComponent implements OnInit {
     if (value === this.isFiltersVisible) return;
     this.isFiltersVisible = value;
     this.session.toggleFiltersVisibility(value);
+  }
+
+  public switchMode(mode: FeedModeEnum): void {
+    this.mode = mode;
+    if (this.mode === FeedModeEnum.Post) {
+      this.router.navigate(['/feed', this.posts[0].id], {
+        queryParams: {
+          mode: this.mode,
+        },
+        queryParamsHandling: 'merge',
+      });
+    } else {
+      this.router.navigate(['/feed'], {
+        queryParams: {
+          mode: this.mode,
+        },
+        queryParamsHandling: 'merge',
+      });
+    }
+  }
+
+  public changePage(page: number): void {
+    this.toggleBulkOptions(false);
+    this.currentPage = page;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        page: this.currentPage,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 }

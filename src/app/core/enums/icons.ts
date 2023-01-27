@@ -55,4 +55,8 @@ export enum Icons {
   hamburger = 'hamburger',
   account = 'account',
   back = 'back',
+  tiles = 'tiles',
+  sidebar = 'sidebar',
+  refresh = 'refresh',
+  editPost = 'edit-post',
 }

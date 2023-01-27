@@ -74,7 +74,8 @@ export class PostHeadComponent {
     });
   }
 
-  editPost() {
+  editPost(event: Event) {
+    event.stopPropagation();
     this.router.navigate(['/post/edit', this.post.id]);
   }
 }
