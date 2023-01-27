@@ -55,7 +55,7 @@
     background: var(--color-light);
 
     @include breakpoint-max($tablet) {
-      padding-inline-end: 48px;
+      padding-inline-end: 60px;
     }
   }
 

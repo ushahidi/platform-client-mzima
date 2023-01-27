@@ -27,9 +27,13 @@
 
     .feed-page--post-view & {
       display: flex;
+      padding: 0 16px;
       align-items: flex-start;
-      padding-inline-start: 16px;
       justify-content: flex-start;
+
+      @include breakpoint-max($laptop-small) {
+        padding: 0 8px;
+      }
     }
   }
 
@@ -44,16 +48,29 @@
     height: calc(100% - 64px - 56px);
     -webkit-overflow-scrolling: touch;
 
+    @include breakpoint-max($laptop-small) {
+      padding-bottom: 16px;
+    }
+
     &::ng-deep {
       .post {
         padding: 24px;
         min-height: 100%;
         background: var(--color-light);
 
+        @include breakpoint-max($laptop-small) {
+          padding: 16px;
+        }
+
         &__head {
           position: static;
           padding-inline-end: 0;
         }
+      }
+
+      .post-head {
+        margin-left: -8px;
+        margin-right: -8px;
       }
     }
   }
@@ -191,6 +208,11 @@
     align-items: center;
     padding: 16px 24px 0;
     justify-content: space-between;
+
+    @include breakpoint-max($laptop-small) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 
   &__results-info {
@@ -280,6 +302,11 @@
     width: 337px;
     border-radius: 4px;
     padding-bottom: 24px;
+
+    @include breakpoint-max($laptop-small) {
+      width: 280px;
+      padding-bottom: 16px;
+    }
   }
 
   &__posts {
@@ -287,6 +314,10 @@
       padding: 16px 16px 24px;
       background: var(--color-light);
       --scrollbar-background: var(--color-light);
+
+      @include breakpoint-max($laptop-small) {
+        padding: 8px 8px 16px;
+      }
     }
   }
 
@@ -312,6 +343,10 @@
 
     .feed--post-view & {
       margin-top: 16px;
+
+      @include breakpoint-max($laptop-small) {
+        margin-top: 8px;
+      }
     }
 
     @include breakpoint-max($tablet) {

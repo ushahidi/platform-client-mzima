@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult, UserInterface } from '@models';
@@ -86,6 +86,8 @@ export class FeedComponent implements OnInit {
   }
   public currentPage = 1;
   public itemsPerPage = 9;
+  public activePastId: string;
+  private postDetailsModal: MatDialogRef<PostDetailsModalComponent>;
   postsFilters$ = this.postsService.postsFilters$.pipe(untilDestroyed(this));
 
   constructor(
@@ -106,14 +108,28 @@ export class FeedComponent implements OnInit {
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
         if (!this.isDesktop) {
-          this.router.navigate(['/feed'], {
+          this.router.navigate([], {
+            relativeTo: this.route,
             queryParams: {
               mode: FeedModeEnum.Tiles,
             },
             queryParamsHandling: 'merge',
           });
+
+          if (this.activePastId) {
+            this.showPostModal(this.activePastId);
+          }
+        } else {
+          this.postDetailsModal?.close();
         }
       },
+    });
+
+    this.route.firstChild?.params.subscribe((params) => {
+      this.activePastId = params['id'];
+      if (this.activePastId && !this.isDesktop) {
+        this.showPostModal(this.activePastId);
+      }
     });
 
     this.route.params.subscribe(() => {
@@ -122,9 +138,9 @@ export class FeedComponent implements OnInit {
 
     this.route.queryParams.subscribe({
       next: (params: Params) => {
-        const id: string = params['id'] || '';
-        this.params.created_before_by_id = id;
-        id?.length ? this.getPost(id) : (this.postDetails = undefined);
+        // const id: string = params['id'] || '';
+        // this.params.created_before_by_id = id;
+        // id?.length ? this.getPost(id) : (this.postDetails = undefined);
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.mode = params['mode'] ? params['mode'] : FeedModeEnum.Tiles;
 
@@ -260,7 +276,7 @@ export class FeedComponent implements OnInit {
         queryParamsHandling: 'merge',
       });
     } else {
-      const postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+      this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
         width: '100%',
         maxWidth: 576,
         data: { color: post.color, twitterId: post.data_source_message_id },
@@ -271,7 +287,7 @@ export class FeedComponent implements OnInit {
 
       this.postsV5Service.getById(post.id).subscribe({
         next: (postV5: PostResult) => {
-          postDetailsModal.componentInstance.post = postV5;
+          this.postDetailsModal.componentInstance.post = postV5;
         },
       });
     }
@@ -404,6 +420,14 @@ export class FeedComponent implements OnInit {
         page: this.currentPage,
       },
       queryParamsHandling: 'merge',
+    });
+  }
+
+  public showPostModal(id: string): void {
+    this.postsService.getById(id).subscribe({
+      next: (post: any) => {
+        this.showPostDetails(post);
+      },
     });
   }
 }
