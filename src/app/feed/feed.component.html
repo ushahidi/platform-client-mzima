@@ -2,7 +2,7 @@
   class="feed-page"
   [ngClass]="{
     'feed-page--filters-visible': isFiltersVisible,
-    'feed-page--post-view': mode === FeedModeEnum.Post
+    'feed-page--post-view': mode === FeedMode.Post
   }"
 >
   <ng-container *ngIf="posts.length">
@@ -11,16 +11,16 @@
       <div class="feed-page__mode-switcher">
         <button
           mat-icon-button
-          [disabled]="mode === FeedModeEnum.Tiles"
-          (click)="switchMode(FeedModeEnum.Tiles)"
+          [disabled]="mode === FeedMode.Tiles"
+          (click)="switchMode(FeedMode.Tiles)"
           class="feed-page__mode-switcher__button"
         >
           <mat-icon svgIcon="tiles"></mat-icon>
         </button>
         <button
           mat-icon-button
-          [disabled]="mode === FeedModeEnum.Post"
-          (click)="switchMode(FeedModeEnum.Post)"
+          [disabled]="mode === FeedMode.Post"
+          (click)="switchMode(FeedMode.Post)"
           class="feed-page__mode-switcher__button"
         >
           <mat-icon svgIcon="sidebar"></mat-icon>
@@ -211,7 +211,7 @@
         </div>
       </ng-container>
     </div>
-    <div class="feed-page__post" *ngIf="mode === FeedModeEnum.Post">
+    <div class="feed-page__post" *ngIf="mode === FeedMode.Post">
       <router-outlet></router-outlet>
     </div>
   </div>

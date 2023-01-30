@@ -20,7 +20,7 @@ import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 
-enum FeedModeEnum {
+enum FeedMode {
   Tiles = 'TILES',
   Post = 'POST',
 }
@@ -47,7 +47,7 @@ export class FeedComponent implements OnInit {
   searchId = '';
   public posts: any[] = [];
   public isLoading = false;
-  public mode: FeedModeEnum = FeedModeEnum.Tiles;
+  public mode: FeedMode = FeedMode.Tiles;
   public activePostId: any;
   public total: number;
   public postDetails?: PostResult;
@@ -81,9 +81,7 @@ export class FeedComponent implements OnInit {
     fitWidth: false,
     horizontalOrder: true,
   };
-  public get FeedModeEnum(): typeof FeedModeEnum {
-    return FeedModeEnum;
-  }
+  FeedMode = FeedMode;
   public currentPage = 1;
   public itemsPerPage = 9;
   public activePastId: string;
@@ -111,7 +109,7 @@ export class FeedComponent implements OnInit {
           this.router.navigate([], {
             relativeTo: this.route,
             queryParams: {
-              mode: FeedModeEnum.Tiles,
+              mode: FeedMode.Tiles,
             },
             queryParamsHandling: 'merge',
           });
@@ -179,7 +177,7 @@ export class FeedComponent implements OnInit {
 
     window.addEventListener('resize', () => {
       this.masonryOptions.columnWidth =
-        this.mode === FeedModeEnum.Tiles
+        this.mode === FeedMode.Tiles
           ? window.innerWidth > 1366
             ? 3
             : window.innerWidth <= 768
@@ -271,7 +269,7 @@ export class FeedComponent implements OnInit {
     if (this.isDesktop) {
       this.router.navigate(['feed', post.id, 'view'], {
         queryParams: {
-          mode: FeedModeEnum.Post,
+          mode: FeedMode.Post,
         },
         queryParamsHandling: 'merge',
       });
@@ -398,9 +396,9 @@ export class FeedComponent implements OnInit {
     this.session.toggleFiltersVisibility(value);
   }
 
-  public switchMode(mode: FeedModeEnum): void {
+  public switchMode(mode: FeedMode): void {
     this.mode = mode;
-    if (this.mode === FeedModeEnum.Post) {
+    if (this.mode === FeedMode.Post) {
       this.router.navigate(['/feed', this.posts[0].id, 'view'], {
         queryParams: {
           mode: this.mode,
