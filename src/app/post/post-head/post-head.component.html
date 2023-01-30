@@ -2,11 +2,9 @@
   <button
     tabindex="-1"
     mat-icon-button
+    *ngIf="editable"
     (click)="editPost($event)"
     class="post-head__control"
-    *ngIf="
-      post?.allowed_privileges?.includes('update') && user?.allowed_privileges?.includes('update')
-    "
   >
     <mat-icon matPrefix svgIcon="edit-post"></mat-icon>
   </button>
@@ -49,13 +47,7 @@
         {{ 'post.post_actions.archive' | translate }}
       </button>
     </ng-container>
-    <button
-      mat-menu-item
-      (click)="delete()"
-      *ngIf="
-        post?.allowed_privileges?.includes('delete') && user?.allowed_privileges?.includes('delete')
-      "
-    >
+    <button mat-menu-item *ngIf="deleteable" (click)="deletePost()">
       <mat-icon svgIcon="sort-up"></mat-icon>
       {{ 'post.post_actions.delete' | translate }}
     </button>

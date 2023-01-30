@@ -24,6 +24,6 @@ import { PostHeadComponent } from './post-head/post-head.component';
     PostHeadComponent,
   ],
   imports: [CommonModule, SharedModule, PostRoutingModule, LeafletModule],
-  exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent],
+  exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent, PostEditComponent],
 })
 export class PostModule {}

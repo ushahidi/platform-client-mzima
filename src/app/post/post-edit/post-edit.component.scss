@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .post-item-page {
   padding: 24px;
   max-height: 100%;
@@ -7,6 +9,17 @@
   position: relative;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+
+  @include breakpoint-max($tablet) {
+    padding: 0;
+
+    &::ng-deep {
+      .page-content {
+        padding: 16px;
+        box-shadow: none;
+      }
+    }
+  }
 }
 
 .page-content {

@@ -1,4 +1,12 @@
-import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -18,7 +26,9 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   @Input() userId?: number | string;
   @Input() color?: string;
   @Input() twitterId?: string;
+  @Output() edit = new EventEmitter();
   public media?: any;
+  public allowed_privileges: string | string[];
 
   constructor(
     private dialog: MatDialog,
@@ -33,6 +43,8 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
       if (params['id']) {
         this.post = undefined;
 
+        this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
+
         this.postsV5Service.getById(params['id']).subscribe({
           next: (postV5: PostResult) => {
             this.post = postV5;
@@ -44,6 +56,7 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post']) {
+      this.allowed_privileges = this.post?.allowed_privileges ?? '';
       if (changes['post'].currentValue?.post_content?.length) {
         this.setMetaData(this.post!);
         const mediaField = changes['post'].currentValue.post_content[0].fields.find(

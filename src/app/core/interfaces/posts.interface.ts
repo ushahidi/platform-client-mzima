@@ -41,7 +41,7 @@ export interface PostPropertiesInterface {
   contact?: any;
   source?: string;
   data_source_message_id?: string;
-  allowed_privileges: String[];
+  allowed_privileges: string[];
 }
 
 export interface PostPropertiesUser {
@@ -61,7 +61,7 @@ export enum PostStatus {
 }
 
 export interface PostResult {
-  allowed_privileges: String[];
+  allowed_privileges: string[];
   author_email?: string;
   author_realname?: string;
   color: string;

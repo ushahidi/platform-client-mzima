@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -6,6 +14,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeoJsonFilter, PostResult } from '@models';
 import {
+  BreakpointService,
   ConfirmModalService,
   EventBusService,
   EventType,
@@ -27,7 +36,10 @@ dayjs.extend(timezone);
   templateUrl: './post-edit.component.html',
   styleUrls: ['./post-edit.component.scss'],
 })
-export class PostEditComponent implements OnInit {
+export class PostEditComponent implements OnInit, OnChanges {
+  @Input() public postInput: any;
+  @Output() cancel = new EventEmitter();
+  @Output() updated = new EventEmitter();
   public data: any;
   public form: FormGroup;
   public description: string;
@@ -47,6 +59,7 @@ export class PostEditComponent implements OnInit {
   public surveyName: string;
   private postId?: number;
   private post?: any;
+  private isDesktop: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,7 +72,14 @@ export class PostEditComponent implements OnInit {
     private confirmModalService: ConfirmModalService,
     private eventBusService: EventBusService,
     private location: Location,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -75,6 +95,15 @@ export class PostEditComponent implements OnInit {
     this.translate.onLangChange.subscribe((newLang) => {
       this.activeLanguage = newLang.lang;
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['postInput'] && changes['postInput'].currentValue) {
+      this.post = this.postInput;
+      this.formId = this.post.form_id;
+      this.postId = this.post.id;
+      this.loadData(this.formId!, this.post.post_content);
+    }
   }
 
   private loadPostData(postId: number) {
@@ -320,7 +349,8 @@ export class PostEditComponent implements OnInit {
       )}</p>`,
       buttonSuccess: this.translate.instant('notify.confirm_modal.add_post_success.success_button'),
     });
-    this.backNavigation();
+
+    this.isDesktop ? this.backNavigation() : this.updated.emit();
   }
 
   public async previousPage() {
@@ -336,11 +366,15 @@ export class PostEditComponent implements OnInit {
       if (!confirmed) return;
     }
 
-    this.backNavigation(true);
-    this.eventBusService.next({
-      type: EventType.AddPostButtonSubmit,
-      payload: true,
-    });
+    if (this.isDesktop) {
+      this.backNavigation(true);
+      this.eventBusService.next({
+        type: EventType.AddPostButtonSubmit,
+        payload: true,
+      });
+    } else {
+      this.cancel.emit();
+    }
   }
 
   public backNavigation(isBack = false): void {

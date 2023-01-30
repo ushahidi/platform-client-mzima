@@ -142,7 +142,7 @@ export class FeedComponent implements OnInit {
         // this.params.created_before_by_id = id;
         // id?.length ? this.getPost(id) : (this.postDetails = undefined);
         this.currentPage = params['page'] ? Number(params['page']) : 1;
-        this.mode = params['mode'] ? params['mode'] : FeedModeEnum.Tiles;
+        this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedModeEnum.Tiles;
 
         this.postsFilters$.subscribe({
           next: () => {
@@ -248,18 +248,18 @@ export class FeedComponent implements OnInit {
     });
   }
 
-  private getPost(postId: string): void {
-    this.postDetails = undefined;
-    this.isPostLoading = true;
-    this.postsV5Service.getById(postId).subscribe({
-      next: (post: PostResult) => {
-        this.postDetails = post;
-      },
-      complete: () => {
-        this.isPostLoading = false;
-      },
-    });
-  }
+  // private getPost(postId: string): void {
+  //   this.postDetails = undefined;
+  //   this.isPostLoading = true;
+  //   this.postsV5Service.getById(postId).subscribe({
+  //     next: (post: PostResult) => {
+  //       this.postDetails = post;
+  //     },
+  //     complete: () => {
+  //       this.isPostLoading = false;
+  //     },
+  //   });
+  // }
 
   public pageChanged(page: any): void {
     this.pagination.page = page;
@@ -283,6 +283,12 @@ export class FeedComponent implements OnInit {
         height: 'auto',
         maxHeight: '90vh',
         panelClass: ['modal', 'post-modal'],
+      });
+
+      this.postDetailsModal.afterClosed().subscribe((data) => {
+        if (data?.update) {
+          this.getPosts(this.params);
+        }
       });
 
       this.postsV5Service.getById(post.id).subscribe({
@@ -428,6 +434,33 @@ export class FeedComponent implements OnInit {
       next: (post: any) => {
         this.showPostDetails(post);
       },
+    });
+  }
+
+  public editPost(post: any): void {
+    this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+      width: '100%',
+      maxWidth: 576,
+      data: {
+        editable: true,
+        color: post.color,
+        twitterId: post.data_source_message_id,
+      },
+      height: 'auto',
+      maxHeight: '90vh',
+      panelClass: ['modal', 'post-modal'],
+    });
+
+    this.postsV5Service.getById(post.id).subscribe({
+      next: (postV5: PostResult) => {
+        this.postDetailsModal.componentInstance.post = postV5;
+      },
+    });
+
+    this.postDetailsModal.afterClosed().subscribe((data) => {
+      if (data?.update) {
+        this.getPosts(this.params);
+      }
     });
   }
 }
