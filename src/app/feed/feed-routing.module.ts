@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PostDetailsComponent } from '../post/post-details/post-details.component';
-import { PostEditComponent } from '../post/post-edit/post-edit.component';
+import { PostDetailsComponent, PostEditComponent } from '@post';
 import { FeedComponent } from './feed.component';
 
 const routes: Routes = [
@@ -12,10 +11,16 @@ const routes: Routes = [
       {
         path: ':id/view',
         component: PostDetailsComponent,
+        data: {
+          ogTitle: 'nav.feed',
+        },
       },
       {
         path: ':id/edit',
         component: PostEditComponent,
+        data: {
+          ogTitle: 'nav.feed',
+        },
       },
     ],
   },
