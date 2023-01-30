@@ -88,6 +88,8 @@ export class PostHeadComponent {
       panelClass: 'modal',
       data: {
         postId: this.post.id,
+        title: this.post.title,
+        description: this.post.content,
       },
     });
   }

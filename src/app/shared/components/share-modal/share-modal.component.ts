@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 interface DataShareModal {
   postId: number;
+  title: string;
+  description: string;
 }
 
 @Component({
@@ -18,10 +20,15 @@ export class ShareModalComponent implements OnInit {
   public copySuccess = false;
   public width = 560;
   public height = 315;
+  public title: string;
+  public description: string;
+  public sliceDescription = 100;
   private postId: number;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DataShareModal, private clipboard: Clipboard) {
     this.postId = data?.postId;
+    this.title = data?.title;
+    this.description = this.trimText(data?.description, this.sliceDescription);
   }
 
   ngOnInit(): void {
@@ -39,5 +46,9 @@ export class ShareModalComponent implements OnInit {
   public copyToClipboard() {
     this.copySuccess = this.clipboard.copy(this.htmlEmbed);
     setTimeout(() => (this.copySuccess = !this.copySuccess), 2000);
+  }
+
+  private trimText(text: string, length: number) {
+    return text.length > length ? `${text.substring(0, length)}...` : text;
   }
 }

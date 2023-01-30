@@ -112,6 +112,15 @@ export class AppComponent implements OnInit {
       let route = this.getChild(this.activatedRoute);
 
       route.data.subscribe((data: any) => {
+        this.metaService.updateTag({ name: 'twitter:card', content: 'summary' });
+        this.metaService.updateTag({
+          name: 'twitter:title',
+          content: this.translate.instant(data.ogTitle),
+        });
+        this.metaService.updateTag({
+          name: 'twitter:description',
+          content: this.translate.instant(data.ogTitle),
+        });
         data.description
           ? this.metaService.updateTag({
               name: 'description',
