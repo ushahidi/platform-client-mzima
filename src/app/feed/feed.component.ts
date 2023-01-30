@@ -140,7 +140,7 @@ export class FeedComponent implements OnInit {
         // this.params.created_before_by_id = id;
         // id?.length ? this.getPost(id) : (this.postDetails = undefined);
         this.currentPage = params['page'] ? Number(params['page']) : 1;
-        this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedModeEnum.Tiles;
+        this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedMode.Tiles;
 
         this.postsFilters$.subscribe({
           next: () => {

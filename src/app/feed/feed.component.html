@@ -157,7 +157,7 @@
 
   <div class="feed-page__main">
     <!-- (scroll)="onScroll($event)" -->
-    <div #feed class="feed" [ngClass]="{ 'feed--post-view': mode === FeedModeEnum.Post }">
+    <div #feed class="feed" [ngClass]="{ 'feed--post-view': mode === FeedMode.Post }">
       <ng-container *ngIf="!isLoading || posts?.length; else loader">
         <div class="feed__posts" *ngIf="posts?.length; else postsEmpty">
           <ngx-masonry
@@ -205,7 +205,7 @@
           <pagination-controls
             class="pagination"
             (pageChange)="changePage($event)"
-            *ngIf="mode === FeedModeEnum.Tiles"
+            *ngIf="mode === FeedMode.Tiles"
           >
           </pagination-controls>
         </div>
