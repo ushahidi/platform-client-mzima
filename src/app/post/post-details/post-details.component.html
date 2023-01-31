@@ -5,7 +5,17 @@
 >
   <ng-container *ngIf="post; else spinner">
     <div class="post__head">
-      <app-post-head [post]="post"></app-post-head>
+      <app-post-head
+        [post]="post"
+        (edit)="edit.emit()"
+        [editable]="
+          allowed_privileges.includes('update') && post.allowed_privileges.includes('update')
+        "
+        [deleteable]="
+          allowed_privileges.includes('delete') && post.allowed_privileges.includes('delete')
+        "
+      >
+      </app-post-head>
     </div>
 
     <div class="post__visual" *ngIf="media && post.source !== 'Twitter'">

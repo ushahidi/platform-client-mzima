@@ -1,13 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EditFeedItemComponent } from './edit-feed-item/edit-feed-item.component';
+import { PostDetailsComponent, PostEditComponent } from '@post';
 import { FeedComponent } from './feed.component';
 
 const routes: Routes = [
   {
     path: '',
     component: FeedComponent,
-    children: [{ path: ':id/edit', component: EditFeedItemComponent }],
+    children: [
+      {
+        path: ':id/view',
+        component: PostDetailsComponent,
+        data: {
+          ogTitle: 'nav.feed',
+        },
+      },
+      {
+        path: ':id/edit',
+        component: PostEditComponent,
+        data: {
+          ogTitle: 'nav.feed',
+        },
+      },
+    ],
   },
   {
     path: 'collection',

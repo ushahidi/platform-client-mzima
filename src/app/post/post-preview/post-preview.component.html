@@ -12,7 +12,17 @@
     <ng-container *ngIf="selectable">
       <mat-checkbox [(ngModel)]="isChecked"></mat-checkbox>
     </ng-container>
-    <app-post-head [post]="post" [user]="user"></app-post-head>
+    <app-post-head
+      [post]="post"
+      (edit)="edit.emit()"
+      [editable]="
+        allowed_privileges.includes('update') && post.allowed_privileges.includes('update')
+      "
+      [deleteable]="
+        allowed_privileges.includes('delete') && post.allowed_privileges.includes('delete')
+      "
+    >
+    </app-post-head>
   </div>
 
   <div class="post__main">

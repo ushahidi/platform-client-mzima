@@ -41,13 +41,28 @@
         </mat-form-field>
       </div>
     </div>
-
     <div class="buttons">
-      <button class="twitter-btn" mat-stroked-button shareButton="twitter" url="{{ address }}">
+      <button
+        class="twitter-btn"
+        mat-stroked-button
+        [autoSetMeta]="true"
+        [title]="title ? title : ''"
+        [description]="description"
+        shareButton="twitter"
+        [url]="address"
+      >
         {{ 'share.share_on_twitter' | translate }}
         <mat-icon class="fab-button__icon twitter-icon" svgIcon="twitter-fill"></mat-icon>
       </button>
-      <button class="facebook-btn" mat-stroked-button shareButton="facebook" url="{{ address }}">
+      <button
+        class="facebook-btn"
+        mat-stroked-button
+        [autoSetMeta]="true"
+        [title]="title ? title : ''"
+        [description]="description"
+        shareButton="facebook"
+        [url]="address"
+      >
         {{ 'share.share_on_facebook' | translate }}
         <mat-icon class="fab-button__icon facebook-icon" svgIcon="facebook-fill"></mat-icon>
       </button>

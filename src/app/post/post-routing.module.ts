@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PostItemComponent } from './post-item/post-item.component';
+import { PostEditComponent } from './post-edit/post-edit.component';
 
 const routes: Routes = [
   {
     path: 'create/:type',
-    component: PostItemComponent,
+    component: PostEditComponent,
     data: { breadcrumb: 'Create Post' },
   },
   {
-    path: 'edit/:id',
-    component: PostItemComponent,
+    path: ':id/edit',
+    component: PostEditComponent,
     data: { breadcrumb: 'Edit Post' },
   },
 ];
