@@ -18,34 +18,66 @@
   <div class="sidebar__controls">
     <div class="sidebar__menu">
       <ng-container *ngFor="let item of menu">
-        <a
-          mat-raised-button
-          class="sidebar-menu-button"
-          [data-qa]="'btn-' + item.icon"
-          *ngIf="!item.adminGuard || isHost"
-          [routerLink]="createRouterLink(item.router)"
-          routerLinkActive="sidebar-menu-button--active"
-          (click)="registerPage($event, item.router, item.label)"
-        >
-          <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
-          <span class="sidebar-menu-button__title">
-            {{ item.label | translate }}
-          </span>
-        </a>
+        <ng-container *ngIf="!item.hidden">
+          <a
+            mat-raised-button
+            class="sidebar-menu-button"
+            [data-qa]="'btn-' + item.icon"
+            *ngIf="item.router; else menuAction"
+            [routerLink]="createRouterLink(item.router)"
+            routerLinkActive="sidebar-menu-button--active"
+            (click)="registerPage($event, item.router, item.label)"
+          >
+            <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
+            <span class="sidebar-menu-button__title">
+              {{ item.label | translate }}
+            </span>
+          </a>
+          <ng-template #menuAction>
+            <button
+              mat-raised-button
+              class="sidebar-menu-button"
+              [data-qa]="'btn-' + item.icon"
+              (click)="item.action && item.action()"
+            >
+              <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
+              <span class="sidebar-menu-button__title">
+                {{ item.label | translate }}
+              </span>
+            </button>
+          </ng-template>
+        </ng-container>
       </ng-container>
     </div>
     <div class="sidebar__menu" *ngIf="isDesktop">
       <ng-container *ngFor="let item of userMenu">
-        <a
-          mat-raised-button
-          *ngIf="item.visible"
-          class="sidebar-menu-button"
-          (click)="item.action()"
-          [data-qa]="'btn-' + item.icon"
-        >
-          <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
-          <span class="sidebar-menu-button__title">{{ item.label | translate }}</span>
-        </a>
+        <ng-container *ngIf="item.visible">
+          <button
+            mat-raised-button
+            (click)="item.action()"
+            class="sidebar-menu-button"
+            [data-qa]="'btn-' + item.icon"
+            *ngIf="item.action; else menuLink"
+          >
+            <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
+            <span class="sidebar-menu-button__title">{{ item.label | translate }}</span>
+          </button>
+          <ng-template #menuLink>
+            <a
+              mat-raised-button
+              class="sidebar-menu-button"
+              [data-qa]="'btn-' + item.icon"
+              (click)="item.action && item.action()"
+              routerLinkActive="sidebar-menu-button--active"
+              [routerLink]="item.router && createRouterLink(item.router)"
+            >
+              <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
+              <span class="sidebar-menu-button__title">
+                {{ item.label | translate }}
+              </span>
+            </a>
+          </ng-template>
+        </ng-container>
       </ng-container>
     </div>
   </div>

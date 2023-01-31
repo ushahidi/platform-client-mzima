@@ -22,3 +22,4 @@ export * from './filter-control/filter-control.component';
 export * from './donation-button/donation-button.component';
 export * from './settings-header/settings-header.component';
 export * from './collection-item/collection-item.component';
+export * from './support-modal/support-modal.component';

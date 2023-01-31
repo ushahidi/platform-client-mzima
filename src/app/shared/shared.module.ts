@@ -31,6 +31,7 @@ import {
   DonationButtonComponent,
   SettingsHeaderComponent,
   CollectionItemComponent,
+  SupportModalComponent,
 } from './components';
 import { MaterialModule } from './material/material.module';
 import {
@@ -86,6 +87,7 @@ const components = [
   PageNotFoundComponent,
   CookiesNotificationComponent,
   ShareModalComponent,
+  SupportModalComponent,
 ];
 
 const modules = [

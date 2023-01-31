@@ -80,9 +80,9 @@
         <a
           mat-raised-button
           *ngIf="item.visible"
-          (click)="item.action()"
           class="mobile-menu-button"
           [data-qa]="'btn-' + item.icon"
+          (click)="item.action && item.action()"
         >
           <mat-icon class="mobile-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
           <span class="mobile-menu-button__title">

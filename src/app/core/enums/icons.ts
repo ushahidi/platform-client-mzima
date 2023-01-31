@@ -59,4 +59,6 @@ export enum Icons {
   sidebar = 'sidebar',
   refresh = 'refresh',
   editPost = 'edit-post',
+  info = 'info',
+  tooltip = 'tooltip',
 }
