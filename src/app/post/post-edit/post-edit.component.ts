@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -6,6 +14,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeoJsonFilter, PostResult } from '@models';
 import {
+  BreakpointService,
   ConfirmModalService,
   EventBusService,
   EventType,
@@ -23,11 +32,14 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 @Component({
-  selector: 'app-post-item',
-  templateUrl: './post-item.component.html',
-  styleUrls: ['./post-item.component.scss'],
+  selector: 'app-post-edit',
+  templateUrl: './post-edit.component.html',
+  styleUrls: ['./post-edit.component.scss'],
 })
-export class PostItemComponent implements OnInit {
+export class PostEditComponent implements OnInit, OnChanges {
+  @Input() public postInput: any;
+  @Output() cancel = new EventEmitter();
+  @Output() updated = new EventEmitter();
   public data: any;
   public form: FormGroup;
   public description: string;
@@ -46,19 +58,28 @@ export class PostItemComponent implements OnInit {
   private fieldsFormArray = ['tags'];
   public surveyName: string;
   private postId?: number;
+  private post?: any;
+  private isDesktop: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private surveysService: SurveysService,
     private formBuilder: FormBuilder,
     private postsV5Service: PostsV5Service,
-    private postsService: PostsService,
+    private postsV3Service: PostsService,
     private router: Router,
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
     private eventBusService: EventBusService,
     private location: Location,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -76,19 +97,28 @@ export class PostItemComponent implements OnInit {
     });
   }
 
-  // TODO: For edit post. Need update backend response
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['postInput'] && changes['postInput'].currentValue) {
+      this.post = this.postInput;
+      this.formId = this.post.form_id;
+      this.postId = this.post.id;
+      this.loadData(this.formId!, this.post.post_content);
+    }
+  }
+
   private loadPostData(postId: number) {
     this.postsV5Service.getById(postId).subscribe({
       next: (post) => {
         this.formId = post.form_id;
-        // this.loadData(this.typeId, post);
+        this.post = post;
+        this.loadData(this.formId!, post.post_content);
       },
     });
   }
 
-  private loadData(id?: number | null) {
-    if (!id) return;
-    this.surveysService.getById(id).subscribe({
+  private loadData(formId: number | null, updateContent?: []) {
+    if (!formId) return;
+    this.surveysService.getById(formId).subscribe({
       next: (data) => {
         this.data = data;
         this.tasks = data.result.tasks;
@@ -99,15 +129,17 @@ export class PostItemComponent implements OnInit {
           task.fields
             .sort((a: any, b: any) => a.priority - b.priority)
             .map((field: any) => {
-              if (field.type === 'title') {
-                this.title = field.default;
-              }
-              if (field.type === 'description') {
-                this.description = field.default;
-              }
-              if (field.type === 'relation') {
-                this.relationConfigForm = field.config.input.form;
-                this.relationConfigKey = field.key;
+              switch (field.type) {
+                case 'title':
+                  this.title = field.default;
+                  break;
+                case 'description':
+                  this.description = field.default;
+                  break;
+                case 'relation':
+                  this.relationConfigForm = field.config.input.form;
+                  this.relationConfigKey = field.key;
+                  break;
               }
 
               if (field.key) {
@@ -129,8 +161,74 @@ export class PostItemComponent implements OnInit {
         }
         this.form = new FormGroup(fields);
         this.initialFormData = this.form.value;
+
+        if (updateContent) {
+          this.updateForm(updateContent);
+        }
       },
     });
+  }
+
+  private handleTags(key: string, value: any) {
+    const formArray = this.form.get(key) as FormArray;
+    value.forEach((val: { id: any }) => formArray.push(new FormControl(val?.id)));
+  }
+
+  private handleCheckbox(key: string, value: any) {
+    const data = value.map((val: { id: any }) => val?.id);
+    this.form.patchValue({ [key]: data });
+  }
+
+  private handleLocation(key: string, value: any) {
+    this.form.patchValue({ [key]: { lat: value?.value.lat, lng: value?.value.lon } });
+  }
+
+  private handleDate(key: string, value: any) {
+    this.form.patchValue({ [key]: new Date(value?.value) });
+  }
+
+  private handleRadio(key: string, value: any) {
+    this.form.patchValue({ [key]: value?.value });
+  }
+
+  private handleTitle(key: string) {
+    this.form.patchValue({ [key]: this.post.title });
+  }
+
+  private handleDescription(key: string) {
+    this.form.patchValue({ [key]: this.post.content });
+  }
+
+  private updateForm(updateValues: any[]) {
+    type InputHandlerType = 'tags' | 'checkbox' | 'location' | 'date' | 'datetime' | 'radio';
+    type TypeHandlerType = 'title' | 'description';
+
+    const inputHandlers: { [key in InputHandlerType]: (key: string, value: any) => void } = {
+      tags: this.handleTags.bind(this),
+      checkbox: this.handleCheckbox.bind(this),
+      location: this.handleLocation.bind(this),
+      date: this.handleDate.bind(this),
+      datetime: this.handleDate.bind(this),
+      radio: this.handleRadio.bind(this),
+    };
+
+    const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
+      title: this.handleTitle.bind(this),
+      description: this.handleDescription.bind(this),
+    };
+
+    for (const { fields } of updateValues) {
+      for (const { type, input, key, value } of fields) {
+        this.form.patchValue({ [key]: value });
+        if (inputHandlers[input as InputHandlerType]) {
+          inputHandlers[input as InputHandlerType](key, value);
+        }
+
+        if (typeHandlers[type as TypeHandlerType]) {
+          typeHandlers[type as TypeHandlerType](key);
+        }
+      }
+    }
   }
 
   private addFormArray(value: string, field: any) {
@@ -156,7 +254,7 @@ export class PostItemComponent implements OnInit {
             value: this.form.value[field.key],
           };
 
-          // if (field.type === 'title') this.title = this.form.value[field.key]; // title is ngModel standalone
+          if (field.type === 'title') this.title = this.form.value[field.key];
           if (field.type === 'description') this.description = this.form.value[field.key];
 
           switch (field.input) {
@@ -210,15 +308,6 @@ export class PostItemComponent implements OnInit {
     this.preparationData();
 
     const postData = {
-      allowed_privileges: [
-        'read',
-        'create',
-        'update',
-        'delete',
-        'search',
-        'change_status',
-        'read_full',
-      ],
       base_language: 'en',
       completed_stages: this.completeStages,
       content: this.description,
@@ -233,24 +322,35 @@ export class PostItemComponent implements OnInit {
       type: 'report',
     };
 
-    this.postsV5Service.post(postData).subscribe({
-      error: () => {
-        this.form.enable();
-      },
-      complete: async () => {
-        this.form.enable();
-        await this.confirmModalService.open({
-          title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
-          description: `<p>${this.translate.instant(
-            'notify.confirm_modal.add_post_success.success_description',
-          )}</p>`,
-          buttonSuccess: this.translate.instant(
-            'notify.confirm_modal.add_post_success.success_button',
-          ),
-        });
-        this.backNavigation();
-      },
+    if (this.postId) {
+      postData.post_date = this.post.post_date || new Date().toISOString();
+      this.postsV5Service.update(this.postId, postData).subscribe({
+        error: () => this.form.enable(),
+        complete: async () => {
+          await this.postComplete();
+        },
+      });
+    } else {
+      this.postsV5Service.post(postData).subscribe({
+        error: () => this.form.enable(),
+        complete: async () => {
+          await this.postComplete();
+        },
+      });
+    }
+  }
+
+  async postComplete() {
+    this.form.enable();
+    await this.confirmModalService.open({
+      title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
+      description: `<p>${this.translate.instant(
+        'notify.confirm_modal.add_post_success.success_description',
+      )}</p>`,
+      buttonSuccess: this.translate.instant('notify.confirm_modal.add_post_success.success_button'),
     });
+
+    this.isDesktop ? this.backNavigation() : this.updated.emit();
   }
 
   public async previousPage() {
@@ -266,15 +366,19 @@ export class PostItemComponent implements OnInit {
       if (!confirmed) return;
     }
 
-    this.backNavigation();
-    this.eventBusService.next({
-      type: EventType.AddPostButtonSubmit,
-      payload: true,
-    });
+    if (this.isDesktop) {
+      this.backNavigation(true);
+      this.eventBusService.next({
+        type: EventType.AddPostButtonSubmit,
+        payload: true,
+      });
+    } else {
+      this.cancel.emit();
+    }
   }
 
-  public backNavigation(): void {
-    this.location.back();
+  public backNavigation(isBack = false): void {
+    isBack ? this.location.back() : this.router.navigate(['/feed']);
   }
 
   public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {
@@ -313,7 +417,7 @@ export class PostItemComponent implements OnInit {
       'status[]': [],
     };
     this.isSearching = true;
-    this.postsService.getPosts('', params).subscribe({
+    this.postsV3Service.getPosts('', params).subscribe({
       next: (data) => {
         this.relatedPosts = data.results;
         this.isSearching = false;

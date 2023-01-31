@@ -22,6 +22,67 @@
     padding-top: 56px;
   }
 
+  &__main {
+    height: 100%;
+
+    .feed-page--post-view & {
+      display: flex;
+      padding: 0 16px;
+      align-items: flex-start;
+      justify-content: flex-start;
+
+      @include breakpoint-max($laptop-small) {
+        padding: 0 8px;
+      }
+    }
+  }
+
+  &__post {
+    width: 100%;
+    overflow-y: auto;
+    margin-left: 8px;
+    overflow-x: hidden;
+    border-radius: 4px;
+    padding-bottom: 24px;
+    scroll-behavior: smooth;
+    height: calc(100% - 64px - 56px);
+    -webkit-overflow-scrolling: touch;
+
+    @include breakpoint-max($laptop-small) {
+      padding-bottom: 16px;
+    }
+
+    &::ng-deep {
+      .post {
+        padding: 24px;
+        min-height: 100%;
+        background: var(--color-light);
+
+        @include breakpoint-max($laptop-small) {
+          padding: 16px;
+        }
+
+        &__head {
+          position: static;
+          padding-inline-end: 0;
+        }
+      }
+
+      .post-head {
+        margin-left: -8px;
+        margin-right: -8px;
+      }
+
+      .post-item-page {
+        padding: 0;
+
+        .form-controls-panel {
+          bottom: 0;
+        }
+      }
+    }
+  }
+
   &__controls-panel {
     display: flex;
     align-items: center;
@@ -149,6 +210,45 @@
       }
     }
   }
+
+  &__info-panel {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px 0;
+    justify-content: space-between;
+
+    @include breakpoint-max($laptop-small) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
+  &__results-info {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--color-neutral-100);
+  }
+
+  &__mode-switcher {
+    display: flex;
+    align-items: center;
+    margin: 0 -4px 0 20px;
+    justify-content: flex-start;
+
+    &__button {
+      width: 40px;
+      height: 40px;
+      margin: 0 4px;
+      border-radius: 4px;
+      color: var(--color-black);
+
+      &.mat-button-disabled {
+        background-color: var(--color-neutral-20);
+      }
+    }
+  }
 }
 
 .counter {
@@ -178,13 +278,14 @@
 }
 
 .feed {
+  flex-shrink: 0;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
-  padding-bottom: 16px;
+  padding-bottom: 32px;
   padding-inline-end: 8px;
   padding-inline-start: 24px;
-  height: calc(100% - 64px);
+  height: calc(100% - 64px - 56px);
   -webkit-overflow-scrolling: touch;
 
   @include breakpoint-max($laptop-small) {
@@ -195,13 +296,37 @@
   @include breakpoint-max($tablet) {
     padding-inline-start: 8px;
     padding-inline-end: 8px;
-    padding-bottom: 48px;
+    padding-bottom: 64px;
     height: calc(100vh - 240px);
   }
 
   @include breakpoint-max($mobile) {
     padding-inline-start: 16px;
     padding-inline-end: 16px;
+  }
+
+  &--post-view {
+    padding: 0;
+    width: 337px;
+    border-radius: 4px;
+    padding-bottom: 24px;
+
+    @include breakpoint-max($laptop-small) {
+      width: 280px;
+      padding-bottom: 16px;
+    }
+  }
+
+  &__posts {
+    .feed--post-view & {
+      padding: 16px 16px 24px;
+      background: var(--color-light);
+      --scrollbar-background: var(--color-light);
+
+      @include breakpoint-max($laptop-small) {
+        padding: 8px 8px 16px;
+      }
+    }
   }
 
   &__loading {
@@ -218,7 +343,19 @@
   &__load-more {
     display: block;
     min-width: 132px;
-    margin: 16px auto 0;
+    font-size: 14px;
+    line-height: 1.6;
+    font-weight: 500;
+    margin: 24px auto 0;
+    letter-spacing: -0.005em;
+
+    .feed--post-view & {
+      margin-top: 16px;
+
+      @include breakpoint-max($laptop-small) {
+        margin-top: 8px;
+      }
+    }
 
     @include breakpoint-max($tablet) {
       margin-top: 8px;
@@ -238,6 +375,12 @@
   }
 
   @include breakpoint-max($mobile) {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .feed--post-view & {
     width: 100%;
     margin-left: 0;
     margin-right: 0;

@@ -9,5 +9,16 @@
 </button>
 
 <mat-dialog-content class="post">
-  <app-post-details [post]="post" [color]="color" [twitterId]="twitterId"></app-post-details>
+  <app-post-details
+    [post]="post"
+    [color]="color"
+    [twitterId]="twitterId"
+    (edit)="handleEditPost()"
+    *ngIf="!editable; else editPost"
+  >
+  </app-post-details>
 </mat-dialog-content>
+
+<ng-template #editPost>
+  <app-post-edit [postInput]="post" (cancel)="cancel()" (updated)="updated()"> </app-post-edit>
+</ng-template>

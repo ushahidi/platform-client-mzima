@@ -2,7 +2,17 @@
   <button
     tabindex="-1"
     mat-icon-button
-    (click)="$event.stopPropagation()"
+    *ngIf="editable"
+    (click)="editPost($event)"
+    class="post-head__control"
+  >
+    <mat-icon matPrefix svgIcon="edit-post"></mat-icon>
+  </button>
+
+  <button
+    tabindex="-1"
+    mat-icon-button
+    (click)="sharePost()"
     class="post-head__control post-head__control--share"
   >
     <mat-icon matPrefix svgIcon="share"></mat-icon>
@@ -11,22 +21,13 @@
     tabindex="-1"
     mat-icon-button
     (click)="$event.stopPropagation()"
-    class="post-head__control"
+    class="post-head__control post-head__control--dots"
     [matMenuTriggerFor]="actions"
   >
     <mat-icon matPrefix svgIcon="dots"></mat-icon>
   </button>
 
   <mat-menu #actions="matMenu" xPosition="before">
-    <button
-      mat-menu-item
-      *ngIf="
-        post?.allowed_privileges?.includes('update') && user?.allowed_privileges?.includes('update')
-      "
-    >
-      <mat-icon svgIcon="edit"></mat-icon>
-      {{ 'post.post_actions.edit' | translate }}
-    </button>
     <button mat-menu-item (click)="addToCollection()">
       <mat-icon svgIcon="collections"></mat-icon>
       {{ 'set.add_to_collection' | translate }}
@@ -46,13 +47,7 @@
         {{ 'post.post_actions.archive' | translate }}
       </button>
     </ng-container>
-    <button
-      mat-menu-item
-      (click)="delete()"
-      *ngIf="
-        post?.allowed_privileges?.includes('delete') && user?.allowed_privileges?.includes('delete')
-      "
-    >
+    <button mat-menu-item *ngIf="deleteable" (click)="deletePost()">
       <mat-icon svgIcon="sort-up"></mat-icon>
       {{ 'post.post_actions.delete' | translate }}
     </button>

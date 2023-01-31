@@ -1,9 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
+import { UntilDestroy } from '@ngneat/until-destroy';
+
 import {
   ConfirmModalService,
   EventBusService,
@@ -20,6 +22,12 @@ import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 import { MainViewComponent } from '../shared/components/main-view.component';
 
+enum FeedMode {
+  Tiles = 'TILES',
+  Post = 'POST',
+}
+
+@UntilDestroy()
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
@@ -39,6 +47,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   };
   public posts: any[] = [];
   public isLoading = false;
+  public mode: FeedMode = FeedMode.Tiles;
   public activePostId: any;
   public total: number;
   public postDetails?: PostResult;
@@ -65,6 +74,12 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     fitWidth: false,
     horizontalOrder: true,
   };
+  FeedMode = FeedMode;
+  public currentPage = 1;
+  public itemsPerPage = 9;
+  public activePastId: string;
+  private postDetailsModal: MatDialogRef<PostDetailsModalComponent>;
+  postsFilters$ = this.postsService.postsFilters$.pipe(untilDestroyed(this));
 
   constructor(
     protected override router: Router,
@@ -84,7 +99,29 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.breakpointService.isDesktop.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
+        if (!this.isDesktop) {
+          this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: {
+              mode: FeedMode.Tiles,
+            },
+            queryParamsHandling: 'merge',
+          });
+
+          if (this.activePastId) {
+            this.showPostModal(this.activePastId);
+          }
+        } else {
+          this.postDetailsModal?.close();
+        }
       },
+    });
+
+    this.route.firstChild?.params.subscribe((params) => {
+      this.activePastId = params['id'];
+      if (this.activePastId && !this.isDesktop) {
+        this.showPostModal(this.activePastId);
+      }
     });
 
     this.route.params.subscribe(() => {
@@ -93,14 +130,16 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.route.queryParams.subscribe({
       next: (params: Params) => {
-        const id: string = params['id'] || '';
-        this.params.created_before_by_id = id;
-        id?.length ? this.getPost(id) : (this.postDetails = undefined);
+        // const id: string = params['id'] || '';
+        // this.params.created_before_by_id = id;
+        // id?.length ? this.getPost(id) : (this.postDetails = undefined);
+        this.currentPage = params['page'] ? Number(params['page']) : 1;
+        this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedMode.Tiles;
 
-        this.postsService.postsFilters$.subscribe({
+        this.postsFilters$.subscribe({
           next: () => {
             this.posts = [];
-            this.params.offset = 0;
+            this.params.offset = (this.currentPage - 1) * (this.params.limit ?? 0);
             this.getPosts(this.params);
           },
         });
@@ -131,13 +170,14 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     });
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 1366) {
-        this.masonryOptions.columnWidth = 3;
-      } else if (window.innerWidth <= 768) {
-        this.masonryOptions.columnWidth = 1;
-      } else {
-        this.masonryOptions.columnWidth = 2;
-      }
+      this.masonryOptions.columnWidth =
+        this.mode === FeedMode.Tiles
+          ? window.innerWidth > 1366
+            ? 3
+            : window.innerWidth <= 768
+            ? 1
+            : 2
+          : 1;
     });
   }
 
@@ -163,31 +203,24 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
         setTimeout(() => {
           this.isLoading = false;
-          if (
-            this.isDesktop &&
-            this.feed?.nativeElement.offsetHeight &&
-            this.feed?.nativeElement.offsetHeight >= this.feed?.nativeElement.scrollHeight
-          ) {
-            this.loadMore();
-          }
           this.masonry?.layout();
         }, 500);
       },
     });
   }
 
-  private getPost(postId: string): void {
-    this.postDetails = undefined;
-    this.isPostLoading = true;
-    this.postsV5Service.getById(postId).subscribe({
-      next: (post: PostResult) => {
-        this.postDetails = post;
-      },
-      complete: () => {
-        this.isPostLoading = false;
-      },
-    });
-  }
+  // private getPost(postId: string): void {
+  //   this.postDetails = undefined;
+  //   this.isPostLoading = true;
+  //   this.postsV5Service.getById(postId).subscribe({
+  //     next: (post: PostResult) => {
+  //       this.postDetails = post;
+  //     },
+  //     complete: () => {
+  //       this.isPostLoading = false;
+  //     },
+  //   });
+  // }
 
   public pageChanged(page: any): void {
     this.pagination.page = page;
@@ -196,20 +229,35 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public showPostDetails(post: any): void {
-    const postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-      width: '100%',
-      maxWidth: 576,
-      data: { color: post.color, twitterId: post.data_source_message_id },
-      height: 'auto',
-      maxHeight: '90vh',
-      panelClass: ['modal', 'post-modal'],
-    });
+    if (this.isDesktop) {
+      this.router.navigate(['feed', post.id, 'view'], {
+        queryParams: {
+          mode: FeedMode.Post,
+        },
+        queryParamsHandling: 'merge',
+      });
+    } else {
+      this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+        width: '100%',
+        maxWidth: 576,
+        data: { color: post.color, twitterId: post.data_source_message_id },
+        height: 'auto',
+        maxHeight: '90vh',
+        panelClass: ['modal', 'post-modal'],
+      });
 
-    this.postsV5Service.getById(post.id).subscribe({
-      next: (postV5: PostResult) => {
-        postDetailsModal.componentInstance.post = postV5;
-      },
-    });
+      this.postDetailsModal.afterClosed().subscribe((data) => {
+        if (data?.update) {
+          this.getPosts(this.params);
+        }
+      });
+
+      this.postsV5Service.getById(post.id).subscribe({
+        next: (postV5: PostResult) => {
+          this.postDetailsModal.componentInstance.post = postV5;
+        },
+      });
+    }
   }
 
   public toggleBulkOptions(state: boolean): void {
@@ -282,21 +330,17 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 
-  public onScroll(event: any): void {
-    console.log('onScroll');
-
-    console.log(event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight);
-
-    if (
-      !this.isLoading &&
-      ((this.isDesktop &&
-        event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32) ||
-        (!this.isDesktop &&
-          event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight))
-    ) {
-      this.loadMore();
-    }
-  }
+  // public onScroll(event: any): void {
+  //   if (
+  //     !this.isLoading &&
+  //     ((this.isDesktop &&
+  //       event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32) ||
+  //       (!this.isDesktop &&
+  //         event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight))
+  //   ) {
+  //     this.loadMore();
+  //   }
+  // }
 
   public loadMore(): void {
     if (
@@ -313,5 +357,71 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     if (value === this.isFiltersVisible) return;
     this.isFiltersVisible = value;
     this.sessionService.toggleFiltersVisibility(value);
+  }
+
+  public switchMode(mode: FeedMode): void {
+    this.mode = mode;
+    if (this.mode === FeedMode.Post) {
+      this.router.navigate(['/feed', this.posts[0].id, 'view'], {
+        queryParams: {
+          mode: this.mode,
+        },
+        queryParamsHandling: 'merge',
+      });
+    } else {
+      this.router.navigate(['/feed'], {
+        queryParams: {
+          mode: this.mode,
+        },
+        queryParamsHandling: 'merge',
+      });
+    }
+  }
+
+  public changePage(page: number): void {
+    this.toggleBulkOptions(false);
+    this.currentPage = page;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        page: this.currentPage,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  public showPostModal(id: string): void {
+    this.postsService.getById(id).subscribe({
+      next: (post: any) => {
+        this.showPostDetails(post);
+      },
+    });
+  }
+
+  public editPost(post: any): void {
+    this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+      width: '100%',
+      maxWidth: 576,
+      data: {
+        editable: true,
+        color: post.color,
+        twitterId: post.data_source_message_id,
+      },
+      height: 'auto',
+      maxHeight: '90vh',
+      panelClass: ['modal', 'post-modal'],
+    });
+
+    this.postsV5Service.getById(post.id).subscribe({
+      next: (postV5: PostResult) => {
+        this.postDetailsModal.componentInstance.post = postV5;
+      },
+    });
+
+    this.postDetailsModal.afterClosed().subscribe((data) => {
+      if (data?.update) {
+        this.getPosts(this.params);
+      }
+    });
   }
 }

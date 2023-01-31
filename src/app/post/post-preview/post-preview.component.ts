@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PostPropertiesInterface, UserInterface } from '@models';
 import { Subject } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
   templateUrl: './post-preview.component.html',
   styleUrls: ['./post-preview.component.scss'],
 })
-export class PostPreviewComponent {
+export class PostPreviewComponent implements OnInit {
   @Input() public post: PostPropertiesInterface;
   @Input() public user: UserInterface;
   @Input() public feedView?: boolean;
@@ -15,8 +15,14 @@ export class PostPreviewComponent {
   @Input() public selectable?: boolean;
   @Input() public isChecked?: boolean;
   @Output() selected = new EventEmitter();
+  @Output() edit = new EventEmitter();
   private details = new Subject<boolean>();
   public details$ = this.details.asObservable();
+  public allowed_privileges: string | string[];
+
+  ngOnInit() {
+    this.allowed_privileges = this.post?.allowed_privileges ?? '';
+  }
 
   public showDetails(): void {
     this.details.next(true);
