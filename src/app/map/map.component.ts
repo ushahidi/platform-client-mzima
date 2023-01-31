@@ -1,48 +1,42 @@
-import { Component, NgZone, OnInit } from '@angular/core';
-import {
-  control,
-  tileLayer,
-  geoJSON,
-  FitBoundsOptions,
-  LatLngBounds,
-  FeatureGroup,
-  Content,
-  MarkerClusterGroup,
-  MarkerClusterGroupOptions,
-  MapOptions,
-  Map,
-} from 'leaflet';
-import 'leaflet.markercluster';
+import { Component, NgZone, OnInit, ViewContainerRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { mapHelper, takeUntilDestroy$ } from '@helpers';
+import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
 import {
   EventBusService,
   EventType,
   MediaService,
   PostsService,
   PostsV5Service,
-  SessionService,
   SavedsearchesService,
+  SessionService,
 } from '@services';
-import { GeoJsonPostsResponse, MapConfigInterface, UserInterface } from '@models';
-import { mapHelper, takeUntilDestroy$ } from '@helpers';
-import { ViewContainerRef } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
+import { MainViewComponent } from '@shared';
+import {
+  Content,
+  control,
+  FeatureGroup,
+  FitBoundsOptions,
+  geoJSON,
+  LatLngBounds,
+  Map,
+  MapOptions,
+  MarkerClusterGroup,
+  MarkerClusterGroupOptions,
+  tileLayer,
+} from 'leaflet';
+import 'leaflet.markercluster';
 import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
-  private params: any = {
-    limit: 200,
-    offset: 0,
-  };
+export class MapComponent extends MainViewComponent implements OnInit {
   public map: Map;
-  collectionId = '';
-  searchId = '';
   postsCollection: GeoJsonPostsResponse;
   mapLayers: any[] = [];
   mapReady = false;
@@ -60,22 +54,21 @@ export class MapComponent implements OnInit {
   public progress = 0;
   public isFiltersVisible: boolean;
 
-  private userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
-  public user: UserInterface;
-
   constructor(
-    private postsService: PostsService,
+    protected override router: Router,
+    protected override route: ActivatedRoute,
+    protected override postsService: PostsService,
+    protected override savedSearchesService: SavedsearchesService,
+    protected override eventBusService: EventBusService,
+    protected override sessionService: SessionService,
     private postsV5Service: PostsV5Service,
     private view: ViewContainerRef,
-    private sessionService: SessionService,
     private dialog: MatDialog,
-    private route: ActivatedRoute,
-    private router: Router,
     private zone: NgZone,
-    private eventBusService: EventBusService,
     private mediaService: MediaService,
-    private savedSearchesService: SavedsearchesService,
-  ) {}
+  ) {
+    super(router, route, postsService, savedSearchesService, eventBusService, sessionService);
+  }
 
   ngOnInit() {
     this.route.params.subscribe(() => {
@@ -107,14 +100,6 @@ export class MapComponent implements OnInit {
       },
     });
 
-    this.eventBusService.on(EventType.DeleteCollection).subscribe({
-      next: (colId) => {
-        if (Number(colId) === Number(this.collectionId)) {
-          this.router.navigate(['/map']);
-        }
-      },
-    });
-
     this.sessionService.isFiltersVisible$.subscribe({
       next: (isFiltersVisible) => {
         setTimeout(() => {
@@ -123,6 +108,7 @@ export class MapComponent implements OnInit {
       },
     });
 
+    this.initCollectionRemoveListener();
     this.getUserData();
   }
 
@@ -143,37 +129,6 @@ export class MapComponent implements OnInit {
         this.getPostsGeoJson();
       },
     });
-  }
-
-  private getUserData(): void {
-    this.userData$.subscribe({
-      next: (userData) => (this.user = userData),
-    });
-  }
-
-  initCollection() {
-    if (this.route.snapshot.data['view'] === 'collection') {
-      this.collectionId = this.route.snapshot.paramMap.get('id')!;
-      this.params.set = this.collectionId;
-      this.postsService.applyFilters({ set: this.collectionId });
-      this.searchId = '';
-    } else {
-      this.collectionId = '';
-      this.params.set = '';
-      if (this.route.snapshot.data['view'] === 'search') {
-        this.searchId = this.route.snapshot.paramMap.get('id')!;
-        this.savedSearchesService.getById(this.searchId).subscribe((sSearch) => {
-          this.postsService.applyFilters(Object.assign(sSearch.filter, { set: [] }));
-          this.eventBusService.next({
-            type: EventType.SavedSearchInit,
-            payload: this.searchId,
-          });
-        });
-      } else {
-        this.searchId = '';
-        this.postsService.applyFilters({ set: [] });
-      }
-    }
   }
 
   onMapReady(map: Map) {

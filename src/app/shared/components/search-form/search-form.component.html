@@ -250,6 +250,7 @@
       </app-filter-control>
 
       <app-filter-control
+        *ngIf="categoriesData?.length"
         formControlName="tags"
         [options]="categoriesData"
         (clear)="clearFilter('tags')"

@@ -166,6 +166,10 @@ export class ToolbarComponent implements OnInit {
       width: '100%',
       maxWidth: 564,
       panelClass: 'modal',
+      data: {
+        title: this.translate.instant(this.pageTitle),
+        description: this.translate.instant(this.pageTitle),
+      },
     });
   }
 

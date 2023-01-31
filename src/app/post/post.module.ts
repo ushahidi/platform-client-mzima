@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostRoutingModule } from './post-routing.module';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { PostItemComponent } from './post-item/post-item.component';
+import { PostEditComponent } from './post-edit/post-edit.component';
 import { AddPostModalComponent } from './add-post-modal/add-post-modal.component';
 import { SharedModule } from '@shared';
 import { LocationSelectComponent } from './location-select/location-select.component';
@@ -14,7 +14,7 @@ import { PostHeadComponent } from './post-head/post-head.component';
 
 @NgModule({
   declarations: [
-    PostItemComponent,
+    PostEditComponent,
     AddPostModalComponent,
     LocationSelectComponent,
     PostPreviewComponent,
@@ -24,6 +24,6 @@ import { PostHeadComponent } from './post-head/post-head.component';
     PostHeadComponent,
   ],
   imports: [CommonModule, SharedModule, PostRoutingModule, LeafletModule],
-  exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent],
+  exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent, PostEditComponent],
 })
 export class PostModule {}

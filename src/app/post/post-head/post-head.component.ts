@@ -1,10 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CollectionsComponent } from '@data';
 import { PostPropertiesInterface, PostResult, PostStatus, UserInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmModalService, PostsService, PostsV5Service, SessionService } from '@services';
+import {
+  BreakpointService,
+  ConfirmModalService,
+  PostsService,
+  PostsV5Service,
+  SessionService,
+} from '@services';
+import { ShareModalComponent } from 'src/app/shared/components/share-modal/share-modal.component';
 
 @Component({
   selector: 'app-post-head',
@@ -15,6 +22,10 @@ export class PostHeadComponent {
   PostStatus = PostStatus;
   @Input() public post: PostResult | PostPropertiesInterface;
   @Input() public user: UserInterface;
+  @Input() public editable: boolean;
+  @Input() public deleteable: boolean;
+  @Output() edit = new EventEmitter();
+  public isDesktop = false;
 
   constructor(
     private session: SessionService,
@@ -24,7 +35,14 @@ export class PostHeadComponent {
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
     private router: Router,
-  ) {}
+    private breakpointService: BreakpointService,
+  ) {
+    this.breakpointService.isDesktop.subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
+      },
+    });
+  }
 
   addToCollection() {
     const dialogRef = this.dialog.open(CollectionsComponent, {
@@ -62,7 +80,7 @@ export class PostHeadComponent {
     });
   }
 
-  async delete() {
+  async deletePost() {
     const confirmed = await this.confirmModalService.open({
       title: this.translate.instant('notify.post.destroy_confirm'),
     });
@@ -74,7 +92,24 @@ export class PostHeadComponent {
     });
   }
 
-  editPost() {
-    this.router.navigate(['/post/edit', this.post.id]);
+  public editPost(event: Event) {
+    event.stopPropagation();
+    this.isDesktop
+      ? this.router.navigateByUrl(`/feed/${this.post.id}/edit?mode=POST`)
+      : this.edit.emit();
+  }
+
+  public sharePost() {
+    event?.stopPropagation();
+    this.dialog.open(ShareModalComponent, {
+      width: '100%',
+      maxWidth: 564,
+      panelClass: 'modal',
+      data: {
+        postId: this.post.id,
+        title: this.post.title,
+        description: this.post.content,
+      },
+    });
   }
 }
