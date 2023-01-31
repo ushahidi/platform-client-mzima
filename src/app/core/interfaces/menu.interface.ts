@@ -1,8 +1,10 @@
 export interface MenuInterface {
   label: string;
-  router: string;
+  router?: string;
   icon: string;
-  adminGuard: boolean;
+  adminGuard?: boolean;
+  action?: Function;
+  hidden?: boolean;
 }
 
 export interface UserMenuInterface {
@@ -10,5 +12,6 @@ export interface UserMenuInterface {
   icon: string;
   visible: boolean;
   separator?: boolean;
-  action: Function;
+  router?: string;
+  action?: Function;
 }

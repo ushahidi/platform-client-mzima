@@ -55,4 +55,5 @@ export enum Icons {
   hamburger = 'hamburger',
   account = 'account',
   back = 'back',
+  info = 'info',
 }

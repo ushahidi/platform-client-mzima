@@ -21,6 +21,7 @@ import { EnumGtmEvent, EnumGtmSource } from '@enums';
 import { CollectionsComponent } from '@data';
 import { LoginComponent } from '@auth';
 import { Location } from '@angular/common';
+import { SupportModalComponent } from '../support-modal/support-modal.component';
 
 @UntilDestroy()
 @Component({
@@ -108,7 +109,7 @@ export class ToolbarComponent implements OnInit {
         label: 'Help&Support',
         icon: 'auth',
         visible: true,
-        action: () => {},
+        action: () => this.openSupportModal(),
       },
       {
         label: 'My account',
@@ -221,5 +222,13 @@ export class ToolbarComponent implements OnInit {
 
   public back(): void {
     this.location.back();
+  }
+
+  public openSupportModal(): void {
+    this.dialog.open(SupportModalComponent, {
+      width: '100%',
+      maxWidth: 768,
+      panelClass: ['modal', 'support-modal'],
+    });
   }
 }

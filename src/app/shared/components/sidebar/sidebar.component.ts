@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { LoginComponent } from '@auth';
 import { CollectionsComponent } from '@data';
 import { EnumGtmEvent, EnumGtmSource, Roles } from '@enums';
-import { menuHelper, takeUntilDestroy$ } from '@helpers';
-import { UserMenuInterface } from '@models';
+import { takeUntilDestroy$ } from '@helpers';
+import { MenuInterface, UserMenuInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import {
   AuthService,
@@ -15,6 +15,7 @@ import {
   GtmTrackingService,
   SessionService,
 } from '@services';
+import { SupportModalComponent } from '../support-modal/support-modal.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -24,13 +25,13 @@ import {
 export class SidebarComponent implements OnInit {
   isLoggedIn = false;
   public isHost = false;
-  public menu = menuHelper.menu;
   public userMenu: UserMenuInterface[] = [];
   userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
   public siteConfig = this.sessionService.getSiteConfigurations();
   public canRegister = false;
   public isDesktop = false;
   public isInnerPage = false;
+  public menu: MenuInterface[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -45,6 +46,7 @@ export class SidebarComponent implements OnInit {
     this.breakpointService.isDesktop.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
+        this.initNavigationMenu();
       },
     });
 
@@ -74,6 +76,39 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  private initNavigationMenu(): void {
+    this.menu = [
+      {
+        label: 'views.map',
+        router: 'map',
+        icon: 'map',
+      },
+      {
+        label: 'views.data',
+        router: 'feed',
+        icon: 'data',
+      },
+      {
+        label: 'views.activity',
+        router: 'activity',
+        icon: 'activity',
+      },
+      {
+        label: 'nav.collections',
+        icon: 'collections',
+        hidden: !this.isDesktop,
+        action: () => this.openCollections(),
+      },
+      {
+        label: 'nav.settings',
+        icon: 'settings',
+        adminGuard: true,
+        router: 'settings',
+        hidden: this.isDesktop,
+      },
+    ];
+  }
+
   createRouterLink(route: string) {
     if (route !== 'map' && route !== 'feed') return route;
 
@@ -91,10 +126,10 @@ export class SidebarComponent implements OnInit {
   private initMenu() {
     this.userMenu = [
       {
-        label: 'nav.collections',
-        icon: 'collections',
-        visible: true,
-        action: () => this.openCollections(),
+        label: 'nav.settings',
+        icon: 'settings',
+        visible: this.isLoggedIn,
+        router: 'settings/general',
       },
       {
         label: 'nav.login',
@@ -109,10 +144,10 @@ export class SidebarComponent implements OnInit {
         action: () => this.openLogin(),
       },
       {
-        label: 'nav.logout',
-        icon: 'logout',
-        visible: this.isLoggedIn,
-        action: () => this.logout(),
+        label: 'Help&Support',
+        icon: 'info',
+        visible: true,
+        action: () => this.openSupportModal(),
       },
     ];
   }
@@ -158,5 +193,13 @@ export class SidebarComponent implements OnInit {
       },
       GtmTrackingService.MapPath(`/${router}`),
     );
+  }
+
+  public openSupportModal(): void {
+    this.dialog.open(SupportModalComponent, {
+      width: '100%',
+      maxWidth: 768,
+      panelClass: ['modal', 'support-modal'],
+    });
   }
 }

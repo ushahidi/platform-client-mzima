@@ -1,0 +1,18 @@
+<button
+  mat-stroked-button
+  mat-dialog-close
+  class="modal__close-btn"
+  tabindex="-1"
+  aria-label="{{ 'modal.button.close' | translate }}"
+>
+  <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
+</button>
+
+<strong mat-dialog-title>Help & Support</strong>
+
+<div mat-dialog-content>
+  <div matRipple class="menu-item" (click)="item.action()" *ngFor="let item of menu">
+    <h4 class="menu-item__title">{{ item.title }}</h4>
+    <p>{{ item.description }}</p>
+  </div>
+</div>
