@@ -11,7 +11,19 @@
 <ng-container *ngIf="currentView === CollectionView.List; else createForm">
   <div class="head">
     <h1 mat-dialog-title>
-      {{ post ? ('set.add_to_collection' | translate) : ('app.collection' | translate) }}
+      {{
+        post ? ('set.add_to_collection' | translate) : ('app.collection' | translate)
+      }}&nbsp;<button
+        class="tooltip-btn"
+        tabindex="-1"
+        mat-icon-button
+        matTooltipPosition="after"
+        matTooltip="
+          To organise the deployment, you are able to create Collections. Just choose name, write a description and choose viewing mode - it is that simple!
+        "
+      >
+        <mat-icon svgIcon="tooltip"></mat-icon>
+      </button>
     </h1>
     <button
       *ngIf="isLoggedIn && !post && isDesktop"

@@ -56,4 +56,5 @@ export enum Icons {
   account = 'account',
   back = 'back',
   info = 'info',
+  tooltip = 'tooltip',
 }
