@@ -25,6 +25,11 @@ interface AccountTypeInterface {
   value: AccountTypeEnum;
 }
 
+interface AccountNotificationTypeInterface {
+  group: string;
+  types: string[];
+}
+
 @Component({
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
@@ -47,6 +52,17 @@ export class AccountSettingsComponent implements OnInit {
     {
       name: 'Phone',
       value: AccountTypeEnum.Phone,
+    },
+  ];
+  // TODO: There is no logic for this functionality
+  public notificationType: AccountNotificationTypeInterface[] = [
+    {
+      group: 'Collection',
+      types: ['Nature of incident'],
+    },
+    {
+      group: 'Saved filters',
+      types: ['Need translations'],
     },
   ];
 

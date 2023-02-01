@@ -9,9 +9,6 @@
     <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
   </button>
 
-  <strong mat-dialog-title>
-    {{ profile.realname }} <small>{{ 'user_profile.title' | translate }}</small>
-  </strong>
   <div class="content">
     <mat-tab-group
       [(selectedIndex)]="selectedTabIndex"
@@ -19,7 +16,7 @@
       dynamicHeight
       animationDuration="0ms"
     >
-      <mat-tab label="{{ 'user_profile.nav.general' | translate }}">
+      <mat-tab label="{{ 'user_profile.nav.account_settings' | translate }}">
         <div class="tab-content" *ngIf="!isLoading; else spinner" mat-dialog-content>
           <form novalidate [formGroup]="profileForm" (ngSubmit)="updateProfile()">
             <div class="form-row">
@@ -89,89 +86,116 @@
           </form>
         </div>
       </mat-tab>
-      <mat-tab label="{{ 'user_profile.nav.notifications' | translate }}">
-        <div class="tab-content contacts-tab" *ngIf="!isLoading; else spinner" mat-dialog-content>
-          <h4 class="contacts-tab__title">{{ 'notification.contacts_heading' | translate }}</h4>
-          <mat-accordion class="contacts">
-            <mat-expansion-panel *ngFor="let contact of contacts" class="contact-item">
+      <mat-tab label="{{ 'user_profile.nav.notifications_settings' | translate }}">
+        <div class="tab-content" *ngIf="!isLoading; else spinner" mat-dialog-content>
+          <mat-accordion class="contacts" multi>
+            <mat-expansion-panel class="contacts-tab" expanded>
               <mat-expansion-panel-header>
-                {{ contact.contact }}
-                <span class="contact-item__is-active" *ngIf="contact.can_notify"></span>
+                <h4 class="contacts-tab__title">
+                  {{ 'notification.contacts_heading' | translate }}
+                </h4>
               </mat-expansion-panel-header>
 
-              <mat-slide-toggle
-                [(ngModel)]="contact.can_notify"
-                (ngModelChange)="isContactsChanged = true"
-              >
-                {{ 'notification.send_to_address' | translate }}
-              </mat-slide-toggle>
+              <mat-accordion class="contacts">
+                <mat-expansion-panel *ngFor="let contact of contacts" class="contact-item">
+                  <mat-expansion-panel-header>
+                    <span class="contacts-tab__title">{{ contact.contact }}</span>
+                    <span class="contact-item__is-active" *ngIf="contact.can_notify"></span>
+                  </mat-expansion-panel-header>
 
-              <div class="form-row">
-                <mat-label>{{ 'contact.edit_email_address' | translate }}</mat-label>
-                <mat-form-field appearance="outline">
-                  <input
-                    matInput
-                    [(ngModel)]="contact.contact"
+                  <mat-slide-toggle
+                    [(ngModel)]="contact.can_notify"
                     (ngModelChange)="isContactsChanged = true"
-                  />
-                </mat-form-field>
-              </div>
+                  >
+                    {{ 'notification.send_to_address' | translate }}
+                  </mat-slide-toggle>
 
-              <div class="contact-item__buttons">
-                <button color="accent" mat-raised-button (click)="deleteContact(contact.id)">
-                  {{ 'contact.button.delete' | translate }}
-                </button>
-              </div>
-            </mat-expansion-panel>
-            <mat-expansion-panel
-              (opened)="isAddAccountFormOpen = true"
-              (closed)="isAddAccountFormOpen = false"
-              class="contact-item contact-item--add-new"
-            >
-              <mat-expansion-panel-header>
-                {{ 'contact.button.add' | translate }}
-              </mat-expansion-panel-header>
-
-              <form novalidate (ngSubmit)="addAccount()" [formGroup]="addAccountForm">
-                <mat-radio-group formControlName="type" (change)="accountFormatChanged($event)">
-                  <div class="radio-button" *ngFor="let accountType of accountTypes">
-                    <mat-radio-button [value]="accountType.value">
-                      {{ accountType.name }}
-                    </mat-radio-button>
+                  <div class="form-row">
+                    <mat-label>{{ 'contact.edit_email_address' | translate }}</mat-label>
+                    <mat-form-field appearance="outline">
+                      <input
+                        matInput
+                        [(ngModel)]="contact.contact"
+                        (ngModelChange)="isContactsChanged = true"
+                      />
+                    </mat-form-field>
                   </div>
-                </mat-radio-group>
 
-                <div class="form-row">
-                  <mat-label>{{
-                    (addAccountForm.controls['type'].value === 'email'
-                      ? 'contact.add_email_address'
-                      : 'contact.add_phone_number'
-                    ) | translate
-                  }}</mat-label>
-                  <mat-form-field appearance="outline">
-                    <input
-                      matInput
-                      formControlName="name"
-                      [placeholder]="
+                  <div class="contact-item__buttons">
+                    <button color="accent" mat-raised-button (click)="deleteContact(contact.id)">
+                      {{ 'contact.button.delete' | translate }}
+                    </button>
+                  </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel
+                  (opened)="isAddAccountFormOpen = true"
+                  (closed)="isAddAccountFormOpen = false"
+                  class="contact-item contact-item--add-new"
+                >
+                  <mat-expansion-panel-header>
+                    <span class="contacts-tab__title">{{ 'contact.button.add' | translate }}</span>
+                  </mat-expansion-panel-header>
+
+                  <form novalidate (ngSubmit)="addAccount()" [formGroup]="addAccountForm">
+                    <mat-radio-group formControlName="type" (change)="accountFormatChanged($event)">
+                      <div class="radio-button" *ngFor="let accountType of accountTypes">
+                        <mat-radio-button [value]="accountType.value">
+                          {{ accountType.name }}
+                        </mat-radio-button>
+                      </div>
+                    </mat-radio-group>
+
+                    <div class="form-row">
+                      <mat-label>{{
                         (addAccountForm.controls['type'].value === 'email'
                           ? 'contact.add_email_address'
                           : 'contact.add_phone_number'
                         ) | translate
-                      "
-                    />
-                  </mat-form-field>
-                </div>
+                      }}</mat-label>
+                      <mat-form-field appearance="outline">
+                        <input
+                          matInput
+                          formControlName="name"
+                          [placeholder]="
+                            (addAccountForm.controls['type'].value === 'email'
+                              ? 'contact.add_email_address'
+                              : 'contact.add_phone_number'
+                            ) | translate
+                          "
+                        />
+                      </mat-form-field>
+                    </div>
 
-                <button
-                  color="primary"
-                  mat-raised-button
-                  [disabled]="
-                    addAccountForm.invalid || addAccountForm.pristine || addAccountForm.disabled
-                  "
-                >
-                  Add account
-                </button>
-              </form>
+                    <button
+                      color="primary"
+                      mat-raised-button
+                      [disabled]="
+                        addAccountForm.invalid || addAccountForm.pristine || addAccountForm.disabled
+                      "
+                    >
+                      Add account
+                    </button>
+                  </form>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel class="contacts-tab" expanded>
+              <mat-expansion-panel-header>
+                <h4 class="contacts-tab__title">
+                  {{ 'notification.what_you_get_notification_about' | translate }}
+                </h4>
+              </mat-expansion-panel-header>
+
+              <div class="contacts">
+                <div *ngFor="let typeElement of notificationType" class="contact-item type-group">
+                  <span class="type-group__title">{{ typeElement.group }}</span>
+                  <div class="type-group__options" *ngFor="let type of typeElement.types">
+                    <span class="type-group__option">{{ type }}</span>
+                    <mat-icon class="type-group__option-icon" svgIcon="delete"></mat-icon>
+                  </div>
+                </div>
+              </div>
             </mat-expansion-panel>
           </mat-accordion>
         </div>

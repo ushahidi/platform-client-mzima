@@ -138,13 +138,13 @@ export class SidebarComponent implements OnInit {
         action: () => this.openLogin(),
       },
       {
-        label: 'Log in / Sign up',
+        label: 'nav.login_register',
         icon: 'auth',
         visible: !this.isLoggedIn && this.canRegister,
         action: () => this.openLogin(),
       },
       {
-        label: 'Help&Support',
+        label: 'nav.help_support',
         icon: 'info',
         visible: true,
         action: () => this.openSupportModal(),
