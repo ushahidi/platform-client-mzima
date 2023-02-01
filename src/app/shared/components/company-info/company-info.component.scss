@@ -32,11 +32,11 @@
       line-height: inherit;
       white-space: pre-wrap;
       scroll-behavior: smooth;
-      max-height: calc(100vh - 546px);
+      max-height: calc(100vh - 564px);
       -webkit-overflow-scrolling: touch;
 
       @media screen and (min-height: 860px) {
-        max-height: 300px;
+        max-height: 280px;
       }
 
       @include breakpoint-max($tablet) {

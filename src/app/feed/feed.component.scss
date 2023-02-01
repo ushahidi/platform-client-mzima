@@ -45,7 +45,7 @@
     border-radius: 4px;
     padding-bottom: 24px;
     scroll-behavior: smooth;
-    height: calc(100% - 64px - 56px);
+    height: calc(100% - 64px - 60px);
     -webkit-overflow-scrolling: touch;
 
     @include breakpoint-max($laptop-small) {
@@ -213,8 +213,8 @@
 
   &__info-panel {
     display: flex;
-    align-items: center;
-    padding: 16px 24px 0;
+    padding: 20px 24px 0;
+    align-items: flex-start;
     justify-content: space-between;
 
     @include breakpoint-max($laptop-small) {
@@ -245,6 +245,7 @@
       color: var(--color-black);
 
       &.mat-button-disabled {
+        color: var(--color-black);
         background-color: var(--color-neutral-20);
       }
     }
@@ -285,7 +286,7 @@
   padding-bottom: 32px;
   padding-inline-end: 8px;
   padding-inline-start: 24px;
-  height: calc(100% - 64px - 56px);
+  height: calc(100% - 64px - 60px);
   -webkit-overflow-scrolling: touch;
 
   @include breakpoint-max($laptop-small) {
@@ -370,7 +371,7 @@
   margin: 0 8px 16px;
   width: calc(33.3333% - 18px);
 
-  @include breakpoint-max($laptop-small) {
+  @media screen and (max-width: 1640px) {
     width: calc(50% - 18px);
   }
 

@@ -10,7 +10,7 @@
 
 <ng-container *ngIf="currentView === CollectionView.List; else createForm">
   <div class="head">
-    <h1 mat-dialog-title>
+    <strong mat-dialog-title>
       {{
         post ? ('set.add_to_collection' | translate) : ('app.collection' | translate)
       }}&nbsp;<button
@@ -24,7 +24,7 @@
       >
         <mat-icon svgIcon="tooltip"></mat-icon>
       </button>
-    </h1>
+    </strong>
     <button
       *ngIf="isLoggedIn && !post && isDesktop"
       type="button"
@@ -96,7 +96,7 @@
 
 <ng-template #createForm>
   <div class="head">
-    <h1 mat-dialog-title>{{ 'app.create_collection' | translate }}</h1>
+    <strong mat-dialog-title>{{ 'app.create_collection' | translate }}</strong>
   </div>
 
   <div mat-dialog-content class="create-form">

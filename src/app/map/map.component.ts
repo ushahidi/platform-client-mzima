@@ -159,17 +159,6 @@ export class MapComponent extends MainViewComponent implements OnInit {
                     comp.setInput('post', post);
                     comp.setInput('user', this.user);
 
-                    const popup: Content = comp.location.nativeElement;
-
-                    layer.bindPopup(popup, {
-                      maxWidth: 360,
-                      minWidth: 360,
-                      maxHeight: window.innerHeight - 176,
-                      closeButton: false,
-                      className: 'pl-popup',
-                    });
-                    layer.openPopup();
-
                     this.postsV5Service.getById(feature.properties.id).subscribe({
                       next: (postV5) => {
                         comp.instance.details$.subscribe({
@@ -192,6 +181,16 @@ export class MapComponent extends MainViewComponent implements OnInit {
                             },
                           });
                         }
+                        const popup: Content = comp.location.nativeElement;
+
+                        layer.bindPopup(popup, {
+                          maxWidth: 360,
+                          minWidth: 360,
+                          maxHeight: window.innerHeight - 176,
+                          closeButton: false,
+                          className: 'pl-popup',
+                        });
+
                         layer.openPopup(); // This one is for fit popup in view
                       },
                     });
