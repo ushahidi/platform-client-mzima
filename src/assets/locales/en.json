@@ -634,6 +634,8 @@
     "home": "Home",
     "login": "Log in",
     "logout": "Log out",
+    "login_register": "Log in / Sign up",
+    "help_support": "Help & Support",
     "registration": "Sign up",
     "register": "Sign up",
     "map_settings": "Map Settings",
@@ -1550,8 +1552,8 @@
       "cancel": "Cancel"
     },
     "nav": {
-      "general": "General",
-      "notifications": "Notifications"
+      "account_settings": "Account settings",
+      "notifications_settings": "Notifications settings"
     }
   },
   "user_create": {
@@ -1800,7 +1802,8 @@
     "send_to_address": "Send notifications to this address",
     "button": {
       "delete": "Delete notification"
-    }
+    },
+    "what_you_get_notification_about": "What you get notification about"
   },
   "contact": {
     "edit": "Edit",
@@ -2600,3 +2603,4 @@
     "adminUserLimitReached": "limit:{{:admin}}"
   }
 }
+
