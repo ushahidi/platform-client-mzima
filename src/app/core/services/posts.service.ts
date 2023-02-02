@@ -78,13 +78,13 @@ export class PostsService extends ResourceService<any> {
   }
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
-    return super
-      .get('geojson', { has_location: 'mapped', ...filter, ...this.postsFilters.value })
-      .pipe(
-        tap((res) => {
-          this.totalGeoPosts.next(res.total);
-        }),
-      );
+    const tmpParams = { ...this.postsFilters.value, has_location: 'mapped', ...filter };
+
+    return super.get('geojson', this.postParamsMapper(tmpParams)).pipe(
+      tap((res) => {
+        this.totalGeoPosts.next(res.total);
+      }),
+    );
   }
 
   public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
@@ -156,13 +156,11 @@ export class PostsService extends ResourceService<any> {
 
   public getPostStatistics(queryParams?: any) {
     const filters = { ...this.postsFilters.value };
-    delete filters['form[]'];
-    delete filters['source[]'];
 
     return super.get(
       'stats',
       queryParams ?? {
-        ...filters,
+        ...this.postParamsMapper(filters),
         group_by: 'form',
         has_location: 'all',
         include_unmapped: true,

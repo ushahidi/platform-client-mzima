@@ -69,14 +69,21 @@
 
   &__twitter {
     height: 216px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 8px 24px;
+    overflow: auto;
+    padding-top: 8px;
     position: relative;
-    margin: 0 -24px 8px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
     scroll-behavior: smooth;
+    padding-inline-end: 8px;
+    margin-inline-end: -12px;
     -webkit-overflow-scrolling: touch;
     --scrollbar-background: var(--color-light);
+
+    @include breakpoint-max($tablet) {
+      padding-inline-end: 0;
+      margin-inline-end: 0;
+    }
 
     app-twitter-widget {
       z-index: 5;

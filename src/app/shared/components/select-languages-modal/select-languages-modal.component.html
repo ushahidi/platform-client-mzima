@@ -8,7 +8,9 @@
   <mat-icon class="fab-button__icon">close</mat-icon>
 </button>
 
-<h1 mat-dialog-title>{{ isDesktop ? ('form.choose_language' | translate) : 'Choose language' }}</h1>
+<strong mat-dialog-title>{{
+  isDesktop ? ('form.choose_language' | translate) : 'Choose language'
+}}</strong>
 <form class="search-form">
   <div class="form-row">
     <mat-form-field appearance="outline">
