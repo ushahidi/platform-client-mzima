@@ -33,7 +33,7 @@ export class SearchFormComponent implements OnInit {
   public filterType = FilterType;
   public form: FormGroup = this.formBuilder.group({
     query: [],
-    status: [['published', 'draft']],
+    status: [[]],
     tags: [],
     source: [],
     form: [],
@@ -507,7 +507,7 @@ export class SearchFormComponent implements OnInit {
   public resetForm(filters: any = {}): void {
     this.form.patchValue({
       query: '',
-      status: ['published', 'draft'],
+      status: [],
       tags: [],
       source: [],
       form: [],

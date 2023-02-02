@@ -28,7 +28,7 @@ export class DataComponent implements OnInit, AfterViewInit {
     order_unlocked_on_top: true,
     orderby: 'created',
     'source[]': ['sms', 'twitter', 'web', 'email'],
-    'status[]': ['published', 'draft'],
+    'status[]': [],
   };
   postList: any[] = [];
 
