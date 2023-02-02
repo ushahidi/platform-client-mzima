@@ -31,7 +31,7 @@ export class PostsService extends ResourceService<any> {
     'source[]': [],
     'tags[]': [],
     'form[]': [],
-    'status[]': ['published', 'draft'],
+    'status[]': [],
   };
   private postsFilters = new BehaviorSubject<any>(this.defaultPostsFilters);
   public postsFilters$ = this.postsFilters.asObservable();

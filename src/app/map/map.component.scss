@@ -13,13 +13,6 @@
     margin-inline-start: 0;
     height: calc(100vh - 160px);
   }
-
-  &--filters-visible {
-    @include breakpoint-min($tablet) {
-      margin-top: 56px;
-      height: calc(100% - 56px);
-    }
-  }
 }
 
 .progress-bar {
