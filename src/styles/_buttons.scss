@@ -36,6 +36,9 @@
 .mat-raised-button,
 .mat-stroked-button {
   box-shadow: none !important;
+  border-width: 3px;
+  border-color: transparent;
+  border-style: solid;
 
   @include breakpoint-max($tablet) {
     font-size: 18px;

@@ -139,6 +139,13 @@
     color: var(--color-primary-60);
   }
 
+  &:focus {
+    color: var(--color-primary-60);
+    border-width: 0 0 0 4px;
+    border-style: dotted;
+    border-color: var(--color-primary-60);
+  }
+
   &::ng-deep {
     .mat-ripple-element {
       background-color: var(--color-neutral-100);

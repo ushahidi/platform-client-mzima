@@ -3,6 +3,18 @@
 .submit-post-button {
   width: 100%;
 
+  &:focus {
+    //color: var(--color-primary-60);
+    //border-width: 2px;
+    //border-style: dotted;
+    background-color: var(--color-primary-70);
+    border-style: double;
+    border-color: var(--color-neutral-40);
+    &:before {
+      content: '';
+    }
+  }
+
   @include breakpoint-max($tablet) {
     width: 64px;
     height: 64px;
