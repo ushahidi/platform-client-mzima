@@ -1,4 +1,10 @@
-<div class="map-holder" [ngClass]="{ 'map-holder--filters-visible': isFiltersVisible }">
+<div
+  class="map-holder"
+  [ngClass]="{
+    'map-holder--filters-visible': isFiltersVisible,
+    'map-holder--no-offset': !isMainFiltersOpen
+  }"
+>
   <mat-progress-bar
     class="progress-bar"
     mode="determinate"

@@ -41,12 +41,11 @@
 
   <div
     class="search-form__main-filters"
-    [ngClass]="{ 'search-form__main-filters--closed': !isMainFiltersOpen && isFeedView }"
+    [ngClass]="{ 'search-form__main-filters--closed': !isMainFiltersOpen }"
   >
     <button
       type="button"
       mat-icon-button
-      *ngIf="isFeedView"
       (click)="toggleMainFilters()"
       class="search-form__main-filters__toggle-btn"
     >
@@ -78,83 +77,85 @@
         </div>
       </div>
 
-      <div class="filter-group" *ngIf="surveyList?.length">
-        <div class="filter-group__head">
-          <label class="filter-group__title" for="surveys">{{ 'app.surveys' | translate }}</label>
-          <button
-            mat-button
-            type="button"
-            color="primary"
-            (click)="clearFilter('form')"
-            class="filter-group__head__button"
-          >
-            {{ 'nav.clear' | translate }}
-          </button>
-        </div>
-        <mat-selection-list name="surveys" class="selection-list" formControlName="form">
-          <mat-list-option
-            color="primary"
-            [value]="survey.id"
-            checkboxPosition="before"
-            class="selection-list__option"
-            *ngFor="let survey of surveyList"
-            [ngStyle]="{ '--color': survey.color }"
-          >
-            <span class="selection-list__option__border"></span>
-            {{ survey.name }}
-            <span class="selection-list__option__total">{{ survey.total || 0 }}</span>
-          </mat-list-option>
-        </mat-selection-list>
-
-        <div class="filter-group__info">
-          <span *ngIf="notShownPostsCount <= 0">{{
-            'global_filter.unmapped_none' | translate
-          }}</span>
-          <span *ngIf="notShownPostsCount === 1">{{
-            'global_filter.unmapped_start_one' | translate
-          }}</span>
-          <span *ngIf="notShownPostsCount >= 2">{{
-            'global_filter.unmapped_start_many' | translate
-          }}</span>
-          <a [routerLink]="['feed']" *ngIf="notShownPostsCount >= 1">
-            {{ notShownPostsCount }} post{{ notShownPostsCount >= 2 ? 's' : '' }}
-          </a>
-          <span *ngIf="notShownPostsCount >= 1">{{
-            'global_filter.unmapped_end' | translate
-          }}</span>
-        </div>
-      </div>
-
-      <div class="filter-group" *ngIf="sources?.length && showSources">
-        <div class="filter-group__head">
-          <label class="filter-group__title" for="source">
-            {{ 'global_filter.source' | translate }}
-          </label>
-          <button
-            mat-button
-            type="button"
-            color="primary"
-            (click)="clearFilter('source')"
-            class="filter-group__head__button"
-          >
-            {{ 'nav.clear' | translate }}
-          </button>
-        </div>
-        <mat-selection-list name="source" class="selection-list" formControlName="source">
-          <ng-container *ngFor="let source of sources">
+      <ng-container *ngIf="surveysLoaded; else loader">
+        <div class="filter-group" *ngIf="surveyList?.length">
+          <div class="filter-group__head">
+            <label class="filter-group__title" for="surveys">{{ 'app.surveys' | translate }}</label>
+            <button
+              mat-button
+              type="button"
+              color="primary"
+              (click)="clearFilter('form')"
+              class="filter-group__head__button"
+            >
+              {{ 'nav.clear' | translate }}
+            </button>
+          </div>
+          <mat-selection-list name="surveys" class="selection-list" formControlName="form">
             <mat-list-option
               color="primary"
-              [value]="source.value"
-              *ngIf="source.total > 0"
+              [value]="survey.id"
               checkboxPosition="before"
               class="selection-list__option"
+              *ngFor="let survey of surveyList"
+              [ngStyle]="{ '--color': survey.color }"
             >
-              {{ source.name }}
-              <span class="selection-list__option__total">{{ source.total }}</span>
+              <span class="selection-list__option__border"></span>
+              {{ survey.name }}
+              <span class="selection-list__option__total">{{ survey.total || 0 }}</span>
             </mat-list-option>
-          </ng-container>
-        </mat-selection-list>
-      </div>
+          </mat-selection-list>
+
+          <div class="filter-group__info">
+            <span *ngIf="notShownPostsCount <= 0">{{
+              'global_filter.unmapped_none' | translate
+            }}</span>
+            <span *ngIf="notShownPostsCount === 1">{{
+              'global_filter.unmapped_start_one' | translate
+            }}</span>
+            <span *ngIf="notShownPostsCount >= 2">{{
+              'global_filter.unmapped_start_many' | translate
+            }}</span>
+            <a [routerLink]="['feed']" *ngIf="notShownPostsCount >= 1">
+              {{ notShownPostsCount }} post{{ notShownPostsCount >= 2 ? 's' : '' }}
+            </a>
+            <span *ngIf="notShownPostsCount >= 1">{{
+              'global_filter.unmapped_end' | translate
+            }}</span>
+          </div>
+        </div>
+
+        <div class="filter-group" *ngIf="sources?.length && showSources">
+          <div class="filter-group__head">
+            <label class="filter-group__title" for="source">
+              {{ 'global_filter.source' | translate }}
+            </label>
+            <button
+              mat-button
+              type="button"
+              color="primary"
+              (click)="clearFilter('source')"
+              class="filter-group__head__button"
+            >
+              {{ 'nav.clear' | translate }}
+            </button>
+          </div>
+          <mat-selection-list name="source" class="selection-list" formControlName="source">
+            <ng-container *ngFor="let source of sources">
+              <mat-list-option
+                color="primary"
+                [value]="source.value"
+                *ngIf="source.total > 0"
+                checkboxPosition="before"
+                class="selection-list__option"
+              >
+                {{ source.name }}
+                <span class="selection-list__option__total">{{ source.total }}</span>
+              </mat-list-option>
+            </ng-container>
+          </mat-selection-list>
+        </div>
+      </ng-container>
     </div>
   </div>
   <div
@@ -348,3 +349,7 @@
     </div>
   </div>
 </form>
+
+<ng-template #loader>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>

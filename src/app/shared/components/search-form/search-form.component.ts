@@ -65,7 +65,6 @@ export class SearchFormComponent implements OnInit {
   public activeSavedSearchValue: number | null = null;
   public total: number;
   public isMapView: boolean;
-  public isFeedView: boolean;
   public isFiltersVisible: boolean;
   public searchQuery: string;
   private readonly searchSubject = new Subject<string>();
@@ -75,6 +74,7 @@ export class SearchFormComponent implements OnInit {
   isLoggedIn = false;
   public isDesktop = false;
   public isMainFiltersOpen = true;
+  public surveysLoaded: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -143,7 +143,6 @@ export class SearchFormComponent implements OnInit {
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
         this.isMapView = params.url.includes('/map');
-        this.isFeedView = params.url.includes('/feed');
       },
     });
 
@@ -208,7 +207,6 @@ export class SearchFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMapView = this.router.url.includes('/map');
-    this.isFeedView = this.router.url.includes('/feed');
 
     this.session.currentUserData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
@@ -259,6 +257,8 @@ export class SearchFormComponent implements OnInit {
   }
 
   public getSurveys(): void {
+    this.surveysLoaded = false;
+
     forkJoin([this.surveysService.get(), this.postsService.getPostStatistics()]).subscribe({
       next: (responses) => {
         const values = responses[1].totals.find((total: any) => total.key === 'form')?.values;
@@ -278,6 +278,8 @@ export class SearchFormComponent implements OnInit {
                 return acc + value.total;
               }, 0)),
         );
+
+        this.surveysLoaded = true;
 
         this.showSources = !!this.sources?.find((source) => source.total > 0);
       },
