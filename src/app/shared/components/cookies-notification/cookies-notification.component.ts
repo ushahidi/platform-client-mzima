@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CONST } from '@constants';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-cookies-notification',
@@ -8,21 +8,27 @@ import { CONST } from '@constants';
 })
 export class CookiesNotificationComponent implements OnInit {
   public showCookies = true;
+  readonly COOKIE_NAME = 'CookieAccepted';
+
+  constructor(private cookieService: CookieService) {}
 
   ngOnInit() {
-    this.showCookies = !localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`);
+    this.cookieService.check(this.COOKIE_NAME);
   }
 
   public accept() {
-    if (sessionStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`)) {
-      sessionStorage.removeItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`);
-    }
-    localStorage.setItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`, 'true');
-    this.showCookies = !localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`);
+    this.cookieService.set(
+      this.COOKIE_NAME,
+      new Date().toISOString(),
+      365,
+      undefined,
+      undefined,
+      true,
+    );
+    this.showCookies = false;
   }
 
   public decline() {
-    sessionStorage.setItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`, 'true');
-    this.showCookies = !sessionStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}cookies`);
+    this.showCookies = false;
   }
 }

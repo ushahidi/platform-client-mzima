@@ -3,14 +3,19 @@
 .map-holder {
   height: 100%;
   position: relative;
-  margin-inline-start: 220px;
+  transition: transform 0.35s ease;
 
-  @include breakpoint-max($laptop-small) {
-    margin-inline-start: 200px;
+  &:not(.map-holder--no-offset) {
+    @include breakpoint-min($tablet) {
+      transform: translateX(110px);
+
+      @include breakpoint-max($laptop-small) {
+        transform: translateX(100px);
+      }
+    }
   }
 
   @include breakpoint-max($tablet) {
-    margin-inline-start: 0;
     height: calc(100vh - 160px);
   }
 }

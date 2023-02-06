@@ -612,3 +612,9 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+.spinner {
+  --size: 48px;
+  display: block;
+  margin: calc(50vh - 160px) auto 0;
+}

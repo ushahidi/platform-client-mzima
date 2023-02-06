@@ -16,6 +16,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 import { QuillModule } from 'ngx-quill';
 import { LottieModule } from 'ngx-lottie';
+import { CookieService } from 'ngx-cookie-service';
 
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
@@ -89,6 +90,7 @@ export function playerFactory(): any {
     { provide: ErrorHandler, useClass: ErrorsHandler },
     loadGoogleTagManagerProvider,
     Meta,
+    CookieService,
   ],
   bootstrap: [AppComponent],
 })

@@ -53,6 +53,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   public leafletOptions: MapOptions;
   public progress = 0;
   public isFiltersVisible: boolean;
+  public isMainFiltersOpen: boolean;
 
   constructor(
     protected override router: Router,
@@ -104,6 +105,14 @@ export class MapComponent extends MainViewComponent implements OnInit {
       next: (isFiltersVisible) => {
         setTimeout(() => {
           this.isFiltersVisible = isFiltersVisible;
+        }, 1);
+      },
+    });
+
+    this.sessionService.isMainFiltersHidden$.subscribe({
+      next: (isMainFiltersHidden: boolean) => {
+        setTimeout(() => {
+          this.isMainFiltersOpen = !isMainFiltersHidden;
         }, 1);
       },
     });
