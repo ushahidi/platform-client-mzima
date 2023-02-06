@@ -11,23 +11,17 @@ import { forkJoin, take } from 'rxjs';
   styleUrls: ['./surveys.component.scss'],
 })
 export class SurveysComponent implements OnInit {
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public surveys: SurveyItem[];
   public selectedSurveys: SurveyItem[] = [];
   public isShowActions = false;
-  public isDesktop = false;
 
   constructor(
     private surveysService: SurveysService,
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
     private breakpointService: BreakpointService,
-  ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getSurveys();

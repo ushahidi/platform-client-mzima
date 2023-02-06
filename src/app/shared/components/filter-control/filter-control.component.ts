@@ -54,6 +54,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
   @Output() public editOption = new EventEmitter();
   @Output() public clear = new EventEmitter();
   @ViewChild('calendar') public calendar: any;
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public value: any;
   public calendarValue = {
     start: '',
@@ -63,16 +64,9 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
 
   public touched = false;
   public disabled = false;
-  public isDesktop: boolean;
   public isModalOpen: boolean;
 
-  constructor(private breakpointService: BreakpointService) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  constructor(private breakpointService: BreakpointService) {}
 
   private _transformer = (node: any, level: number) => {
     return {

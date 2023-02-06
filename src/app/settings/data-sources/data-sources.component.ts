@@ -9,21 +9,15 @@ import { switchMap } from 'rxjs';
   styleUrls: ['./data-sources.component.scss'],
 })
 export class DataSourcesComponent implements OnInit {
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public isAllProvidersAdded: boolean;
   public providersData: any;
-  public isDesktop = false;
 
   constructor(
     private configService: ConfigService,
     private dataSourcesService: DataSourcesService,
     private breakpointService: BreakpointService,
-  ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.getProvidersList();

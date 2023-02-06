@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CategoryInterface, TranslationInterface, LanguageInterface } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
   CategoriesService,
@@ -17,6 +18,7 @@ import {
   SelectLanguagesModalComponent,
 } from 'src/app/shared/components';
 
+@UntilDestroy()
 @Component({
   selector: 'app-create-category-form',
   templateUrl: './create-category-form.component.html',
@@ -27,6 +29,7 @@ export class CreateCategoryFormComponent implements OnInit {
   @Input() public category: CategoryInterface;
   @Output() formSubmit = new EventEmitter<any>();
   @Output() deleteCall = new EventEmitter<any>();
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   public categories: CategoryInterface[];
   public languages: LanguageInterface[] = this.languageService.getLanguages();
   public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
@@ -66,7 +69,7 @@ export class CreateCategoryFormComponent implements OnInit {
     private router: Router,
     private location: Location,
   ) {
-    this.breakpointService.isDesktop.subscribe({
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

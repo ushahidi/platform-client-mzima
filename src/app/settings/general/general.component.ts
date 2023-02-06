@@ -23,6 +23,7 @@ import { ClipboardService } from 'src/app/core/services/clipboard.service';
 })
 export class GeneralComponent implements OnInit {
   @ViewChild('mapSettings') mapSettings: SettingsMapComponent;
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public generalForm: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required]],
     description: ['', []],
@@ -35,7 +36,6 @@ export class GeneralComponent implements OnInit {
   siteConfig: any;
   apiKey: ApiKeyResult;
   uploadedFile?: File;
-  public isDesktop = false;
 
   constructor(
     private sessionService: SessionService,
@@ -49,13 +49,7 @@ export class GeneralComponent implements OnInit {
     private confirmModalService: ConfirmModalService,
     private clipboard: ClipboardService,
     private breakpointService: BreakpointService,
-  ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.siteConfig = this.sessionService.getSiteConfigurations();

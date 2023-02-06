@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { omit, clone, invert, keys, includes } from 'lodash';
 import { FormAttributeInterface, FormCSVInterface, FormInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,6 +20,8 @@ enum PostStatus {
   Draft = 'draft',
   Archived = 'archived',
 }
+
+@UntilDestroy()
 @Component({
   selector: 'app-data-import',
   templateUrl: './data-import.component.html',
@@ -26,7 +29,7 @@ enum PostStatus {
 })
 export class DataImportComponent implements OnInit {
   PostStatus = PostStatus;
-
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   selectedFile: File;
   selectedForm: FormInterface;
   forms$: Observable<FormInterface[]>;
@@ -52,7 +55,7 @@ export class DataImportComponent implements OnInit {
     private formsService: FormsService,
     private breakpointService: BreakpointService,
   ) {
-    this.breakpointService.isDesktop.subscribe({
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

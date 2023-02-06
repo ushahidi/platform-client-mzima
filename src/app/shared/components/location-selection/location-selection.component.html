@@ -1,8 +1,12 @@
 <div class="location-select">
-  <h4 class="location-select__title" *ngIf="isDesktop">City or address</h4>
+  <h4 class="location-select__title" *ngIf="isDesktop$ | async">
+    {{ 'global_filter.city_or_address' | translate }}
+  </h4>
 
   <div class="form-row">
-    <mat-label *ngIf="!isDesktop">City or address</mat-label>
+    <mat-label *ngIf="!(isDesktop$ | async)!">{{
+      'global_filter.city_or_address' | translate
+    }}</mat-label>
     <mat-form-field appearance="outline" class="form-control location-control">
       <input
         matInput
@@ -37,7 +41,9 @@
   </div>
 
   <div class="form-row">
-    <mat-label *ngIf="!isDesktop">Viewing mode</mat-label>
+    <mat-label *ngIf="!(isDesktop$ | async)!">{{
+      'global_filter.viewing_mode' | translate
+    }}</mat-label>
     <mat-form-field appearance="outline">
       <mat-select
         placeholder="Distance"

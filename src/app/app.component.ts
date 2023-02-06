@@ -26,10 +26,10 @@ export class AppComponent implements OnInit {
   public isShowLoader = false;
   private renderer = this.rendererFactory.createRenderer(null, null);
   private languages$ = this.languageService.languages$.pipe(untilDestroyed(this));
-  private isDesktop$ = this.breakpointService.isDesktop.pipe(untilDestroyed(this));
+  private isRTL$ = this.languageService.isRTL$.pipe(untilDestroyed(this));
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public languages: LanguageInterface[];
   public selectedLanguage$;
-  public isDesktop = false;
   public isInnerPage = false;
   public isRTL?: boolean;
 
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     this.iconService.registerIcons();
     this.selectedLanguage$ = this.languageService.selectedLanguage$;
 
-    this.languageService.isRTL$.subscribe({
+    this.isRTL$.subscribe({
       next: (isRTL) => {
         if (this.isRTL !== isRTL) {
           this.isRTL = isRTL;
@@ -78,10 +78,6 @@ export class AppComponent implements OnInit {
       this.languages = langs.sort((lang) => {
         return lang.code == initialLanguage ? -1 : 0;
       });
-    });
-
-    this.isDesktop$.subscribe({
-      next: (isDesktop) => (this.isDesktop = isDesktop),
     });
 
     this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
@@ -119,20 +115,12 @@ export class AppComponent implements OnInit {
 
       route.data.subscribe((data: any) => {
         this.metaService.updateTag({ name: 'twitter:card', content: 'summary' });
-        this.metaService.updateTag({
-          name: 'twitter:title',
-          content: this.translate.instant(data.ogTitle),
-        });
-        this.metaService.updateTag({
-          name: 'twitter:description',
-          content: this.translate.instant(data.ogTitle),
-        });
         data.description
           ? this.metaService.updateTag({
               name: 'description',
               content: this.translate.instant(data.description),
             })
-          : this.metaService.removeTag("name='description'");
+          : this.removeTags(['description']);
 
         data.ogUrl
           ? this.metaService.updateTag({ property: 'og:url', content: data.ogUrl })
@@ -140,24 +128,33 @@ export class AppComponent implements OnInit {
 
         data.ogTitle
           ? this.saveOgTitle(data.ogTitle)
-          : this.metaService.removeTag("property='og:title'");
+          : this.removeTags(['og:title', 'twitter:title', 'twitter:description']);
 
         data.ogDescription
           ? this.metaService.updateTag({
               property: 'og:description',
               content: this.translate.instant(data.ogDescription),
             })
-          : this.metaService.removeTag("property='og:description'");
+          : this.removeTags(['og:description']);
 
         data.ogImage
           ? this.metaService.updateTag({ property: 'og:image', content: data.ogImage })
-          : this.metaService.removeTag("property='og:image'");
+          : this.removeTags(['og:image']);
       });
     });
   }
 
   private saveOgTitle(ogTitle: string) {
-    this.metaService.updateTag({ property: 'og:title', content: this.translate.instant(ogTitle) });
+    const title = this.translate.instant(ogTitle);
+    this.metaService.updateTag({ property: 'og:title', content: title });
+    this.metaService.updateTag({ name: 'twitter:title', content: title });
+    this.metaService.updateTag({ name: 'twitter:description', content: title });
     sessionStorage.setItem('ogTitle', this.translate.instant(ogTitle));
+  }
+
+  private removeTags(tags: string[]) {
+    for (const tag of tags) {
+      this.metaService.removeTag(`property='${tag}'`);
+    }
   }
 }

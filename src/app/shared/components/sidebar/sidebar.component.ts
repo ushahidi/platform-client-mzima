@@ -26,7 +26,8 @@ export class SidebarComponent implements OnInit {
   isLoggedIn = false;
   public isHost = false;
   public userMenu: UserMenuInterface[] = [];
-  userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
+  private userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(takeUntilDestroy$());
   public siteConfig = this.sessionService.getSiteConfigurations();
   public canRegister = false;
   public isDesktop = false;
@@ -43,7 +44,7 @@ export class SidebarComponent implements OnInit {
     private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
   ) {
-    this.breakpointService.isDesktop.subscribe({
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
         this.initNavigationMenu();

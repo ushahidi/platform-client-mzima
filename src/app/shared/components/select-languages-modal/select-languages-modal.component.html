@@ -9,7 +9,7 @@
 </button>
 
 <strong mat-dialog-title>{{
-  isDesktop ? ('form.choose_language' | translate) : 'Choose language'
+  (isDesktop$ | async) ? ('form.choose_language' | translate) : 'Choose language'
 }}</strong>
 <form class="search-form">
   <div class="form-row">

@@ -36,6 +36,8 @@ enum FeedMode {
 export class FeedComponent extends MainViewComponent implements OnInit {
   @ViewChild('feed') public feed: ElementRef;
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
+  postsFilters$ = this.postsService.postsFilters$.pipe(untilDestroyed(this));
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   public override params: GeoJsonFilter = {
     limit: 9,
     offset: 0,
@@ -79,7 +81,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public itemsPerPage = 9;
   public activePastId: string;
   private postDetailsModal: MatDialogRef<PostDetailsModalComponent>;
-  postsFilters$ = this.postsService.postsFilters$.pipe(untilDestroyed(this));
   public isMainFiltersOpen: boolean;
 
   constructor(
@@ -97,7 +98,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     private languageService: LanguageService,
   ) {
     super(router, route, postsService, savedSearchesService, eventBusService, sessionService);
-    this.breakpointService.isDesktop.subscribe({
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
         if (!this.isDesktop) {

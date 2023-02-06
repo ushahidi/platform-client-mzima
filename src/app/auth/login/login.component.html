@@ -25,7 +25,7 @@
         type="button"
         (click)="cancel()"
         data-qa="btn-cancel"
-        *ngIf="isDesktop"
+        *ngIf="isDesktop$ | async"
       >
         {{ 'app.cancel' | translate }}
       </button>
@@ -39,7 +39,7 @@
         type="button"
         (click)="cancel()"
         data-qa="btn-cancel"
-        *ngIf="isDesktop"
+        *ngIf="isDesktop$ | async"
       >
         {{ 'app.cancel' | translate }}
       </button>

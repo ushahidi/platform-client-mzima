@@ -32,7 +32,7 @@
     type="button"
     mat-raised-button
     class="search-form__filters"
-    *ngIf="isDesktop || isMapView"
+    *ngIf="(isDesktop$ | async) || isMapView"
     (click)="toggleFilters(!isFiltersVisible)"
   >
     <mat-icon class="search-form__filters__icon" svgIcon="filters"></mat-icon>
@@ -159,10 +159,10 @@
   </div>
   <div
     class="search-form__filters-panel"
-    *ngIf="isDesktop || isFiltersVisible"
+    *ngIf="(isDesktop$ | async) || isFiltersVisible"
     [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
   >
-    <div class="search-form__filters-panel__head" *ngIf="!isDesktop">
+    <div class="search-form__filters-panel__head" *ngIf="!(isDesktop$ | async)!">
       <h3>Filters and sorting</h3>
       <button
         mat-stroked-button
@@ -175,7 +175,7 @@
     </div>
 
     <div class="search-form__filters-panel__inner">
-      <ng-container *ngIf="!isDesktop">
+      <ng-container *ngIf="!(isDesktop$ | async)!">
         <app-filter-control
           [options]="surveyList"
           formControlName="form"
@@ -336,7 +336,7 @@
         <button
           type="button"
           color="primary"
-          *ngIf="!isDesktop"
+          *ngIf="!(isDesktop$ | async)!"
           mat-raised-button
           (click)="applyAndClose()"
           [disabled]="form.disabled"

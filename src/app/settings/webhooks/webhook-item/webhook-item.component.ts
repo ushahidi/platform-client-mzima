@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroy$ } from '@helpers';
 import { FormAttributeInterface, SurveyItem, WebhookResultInterface } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
   FormsService,
@@ -13,12 +14,14 @@ import {
   BreakpointService,
 } from '@services';
 
+@UntilDestroy()
 @Component({
   selector: 'app-webhook-item',
   templateUrl: './webhook-item.component.html',
   styleUrls: ['./webhook-item.component.scss'],
 })
 export class WebhookItemComponent implements OnInit {
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   private webhook: WebhookResultInterface;
   public form: FormGroup = this.formBuilder.group({
     allowed_privileges: [''],
@@ -67,7 +70,7 @@ export class WebhookItemComponent implements OnInit {
     private breakpointService: BreakpointService,
     private location: Location,
   ) {
-    this.breakpointService.isDesktop.subscribe({
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

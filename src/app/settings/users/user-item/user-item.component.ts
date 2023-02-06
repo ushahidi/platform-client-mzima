@@ -4,9 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CONST } from '@constants';
 import { RoleResult, UserInterface } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, RolesService, UsersService, BreakpointService } from '@services';
 
+@UntilDestroy()
 @Component({
   selector: 'app-user-item',
   templateUrl: './user-item.component.html',
@@ -14,6 +16,7 @@ import { ConfirmModalService, RolesService, UsersService, BreakpointService } fr
 })
 export class UserItemComponent implements OnInit {
   public isChangePassword = false;
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   public isUpdate = false;
   public roles: RoleResult[];
   public form: FormGroup = this.fb.group({
@@ -37,7 +40,7 @@ export class UserItemComponent implements OnInit {
     private breakpointService: BreakpointService,
     private location: Location,
   ) {
-    this.breakpointService.isDesktop.subscribe({
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

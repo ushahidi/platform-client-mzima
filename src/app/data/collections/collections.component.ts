@@ -30,6 +30,8 @@ enum CollectionView {
 })
 export class CollectionsComponent implements OnInit {
   CollectionView = CollectionView;
+  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public collectionList: CollectionResult[];
   public isLoading: boolean;
   views = surveyHelper.views;
@@ -49,8 +51,6 @@ export class CollectionsComponent implements OnInit {
   roleOptions: any;
   tmpCollectionToEditId = 0;
   isLoggedIn = true;
-  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
-  isDesktop = false;
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
@@ -76,12 +76,6 @@ export class CollectionsComponent implements OnInit {
 
     this.getCollections();
     this.featuredEnabled = true; //hasPermission Manage Posts
-
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
   }
 
   private initRoles() {

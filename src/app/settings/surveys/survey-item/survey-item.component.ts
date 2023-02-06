@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
 import { LanguageInterface, RoleResult, SurveyItemTask } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   FormsService,
   LanguageService,
@@ -17,6 +18,7 @@ import { SelectLanguagesModalComponent } from 'src/app/shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
 
+@UntilDestroy()
 @Component({
   selector: 'app-survey-item',
   templateUrl: './survey-item.component.html',
@@ -24,6 +26,7 @@ import { SurveyTaskComponent } from '../survey-task/survey-task.component';
 })
 export class SurveyItemComponent implements OnInit {
   @ViewChild('configTask') configTask: SurveyTaskComponent;
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   public selectLanguageCode: string;
   public description: string;
   public name: string;
@@ -72,7 +75,7 @@ export class SurveyItemComponent implements OnInit {
     private breakpointService: BreakpointService,
     private location: Location,
   ) {
-    this.breakpointService.isDesktop.subscribe({
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

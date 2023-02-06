@@ -13,6 +13,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeoJsonFilter, PostResult } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   BreakpointService,
   ConfirmModalService,
@@ -31,6 +32,7 @@ import { objectHelpers } from '@helpers';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
+@UntilDestroy()
 @Component({
   selector: 'app-post-edit',
   templateUrl: './post-edit.component.html',
@@ -40,6 +42,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   @Input() public postInput: any;
   @Output() cancel = new EventEmitter();
   @Output() updated = new EventEmitter();
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   public data: any;
   public form: FormGroup;
   public description: string;
@@ -74,7 +77,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     private location: Location,
     private breakpointService: BreakpointService,
   ) {
-    this.breakpointService.isDesktop.subscribe({
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

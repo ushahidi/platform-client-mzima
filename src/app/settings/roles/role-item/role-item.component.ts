@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CONST } from '@constants';
 import { Roles } from '@enums';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest } from 'rxjs';
 import { RoleResult } from '@models';
@@ -19,12 +20,14 @@ const PERMISSIONS = {
   DELETE_THEIR_OWN_POSTS: 'Delete Their Own Posts',
 };
 
+@UntilDestroy()
 @Component({
   selector: 'app-role-item',
   templateUrl: './role-item.component.html',
   styleUrls: ['./role-item.component.scss'],
 })
 export class RoleItemComponent implements OnInit {
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   public permissionsList: any[] = [];
   public role: RoleResult;
   public roles: RoleResult[];
@@ -54,7 +57,7 @@ export class RoleItemComponent implements OnInit {
     private location: Location,
     private changeDetectorRef: ChangeDetectorRef,
   ) {
-    this.breakpointService.isDesktop.subscribe({
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

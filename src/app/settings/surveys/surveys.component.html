@@ -38,4 +38,4 @@
   </li>
 </ul>
 
-<div class="actions-spacer" *ngIf="!isDesktop && isShowActions"></div>
+<div class="actions-spacer" *ngIf="!(isDesktop$ | async)! && isShowActions"></div>

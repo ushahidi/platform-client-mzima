@@ -1,5 +1,5 @@
 <div class="filter-control">
-  <ng-container *ngIf="isDesktop; else button">
+  <ng-container *ngIf="isDesktop$ | async; else button">
     <button
       type="button"
       mat-raised-button
@@ -185,7 +185,7 @@
   <span class="filter-control__button__count" *ngIf="badge">{{ badge }}</span>
   <mat-icon
     class="filter-control__button__arrow"
-    [svgIcon]="isDesktop ? 'arrow-down-thin' : 'arrow-down'"
+    [svgIcon]="(isDesktop$ | async) ? 'arrow-down-thin' : 'arrow-down'"
   ></mat-icon>
 </ng-template>
 

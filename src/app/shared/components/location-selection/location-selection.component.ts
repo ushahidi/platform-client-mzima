@@ -42,6 +42,7 @@ export interface SearchResponse {
   ],
 })
 export class LocationSelectionComponent implements ControlValueAccessor {
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public touched = false;
   public disabled = false;
   public location: LatLng;
@@ -73,7 +74,6 @@ export class LocationSelectionComponent implements ControlValueAccessor {
   public location_distance: number;
   public citiesOptions: BehaviorSubject<SearchResponse[]>;
   public searchQuery?: SearchResponse;
-  public isDesktop: boolean;
 
   constructor(private searchService: SearchService, private breakpointService: BreakpointService) {
     this.citiesOptions = new BehaviorSubject<any[]>([]);
@@ -85,12 +85,6 @@ export class LocationSelectionComponent implements ControlValueAccessor {
             this.citiesOptions.next(response);
           },
         });
-      },
-    });
-
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
       },
     });
   }
