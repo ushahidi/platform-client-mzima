@@ -80,6 +80,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public activePastId: string;
   private postDetailsModal: MatDialogRef<PostDetailsModalComponent>;
   postsFilters$ = this.postsService.postsFilters$.pipe(untilDestroyed(this));
+  public isMainFiltersOpen: boolean;
 
   constructor(
     protected override router: Router,
@@ -178,6 +179,14 @@ export class FeedComponent extends MainViewComponent implements OnInit {
             ? 1
             : 2
           : 1;
+    });
+
+    this.sessionService.isMainFiltersHidden$.subscribe({
+      next: (isMainFiltersHidden: boolean) => {
+        setTimeout(() => {
+          this.isMainFiltersOpen = !isMainFiltersHidden;
+        }, 1);
+      },
     });
   }
 
