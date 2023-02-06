@@ -29,11 +29,20 @@
     margin-top: 1px;
     position: absolute;
     inset-inline-end: 0;
-    inset-inline-start: 220px;
+    width: calc(100% - 220px);
+    // inset-inline-start: 220px;
+    transition: width 0.35s ease;
     background: var(--color-light);
 
+    @include breakpoint-min($laptop-small) {
+      .search-form:not(.search-form--main-filters-open) & {
+        width: 100%;
+        // inset-inline-start: 0;
+      }
+    }
+
     @include breakpoint-max($laptop-small) {
-      inset-inline-start: 0;
+      width: 100%;
     }
 
     @include breakpoint-max($tablet) {
@@ -49,7 +58,7 @@
       opacity: 0;
       top: -9999px;
       inset-inline-start: -9999px;
-      inset-block-end: 9999px;
+      // inset-block-end: 9999px;
 
       @include breakpoint-max($tablet) {
         bottom: 9999px;
@@ -198,17 +207,14 @@
   &__main-filters {
     top: 100%;
     width: 220px;
-    overflow-y: auto;
     margin-top: 1px;
-    overflow-x: hidden;
-    padding: 20px 15px;
     position: absolute;
     inset-inline-start: 0;
-    scroll-behavior: smooth;
     height: calc(100vh - 73px);
     background: var(--color-light);
-    -webkit-overflow-scrolling: touch;
+    transition: transform 0.35s ease;
     --scrollbar-background: var(--color-light);
+    border-right: 1px solid var(--color-neutral-20);
 
     @include breakpoint-max($laptop-small) {
       width: 200px;
@@ -222,6 +228,55 @@
 
     @include breakpoint-max($tablet) {
       display: none;
+    }
+
+    &--closed {
+      pointer-events: none;
+      transform: translateX(calc(-100% + 10px));
+    }
+
+    &__inner {
+      overflow-y: auto;
+      max-height: 100%;
+      overflow-x: hidden;
+      padding: 20px 15px;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+
+      .search-form__main-filters--closed & {
+        overflow: hidden;
+      }
+    }
+
+    &__toggle-btn {
+      top: 0;
+      width: 40px;
+      height: 56px;
+      line-height: 1;
+      font-size: 24px;
+      margin-top: -1px;
+      position: absolute;
+      border-style: solid;
+      pointer-events: auto;
+      inset-inline-start: 100%;
+      border-radius: 0 28px 28px 0;
+      border: 1px solid var(--color-neutral-20);
+      border-inline-start-width: 0;
+
+      .search-form--filters-open & {
+        @include breakpoint-min($laptop-small) {
+          top: 57px;
+        }
+      }
+
+      .mat-icon {
+        font-size: inherit;
+        transition: transform 0.35s ease;
+
+        .search-form__main-filters:not(.search-form__main-filters--closed) & {
+          transform: scaleX(-1) translateX(4px);
+        }
+      }
     }
 
     &__total {
@@ -497,6 +552,20 @@
 
       .mat-option-text {
         display: block;
+      }
+    }
+  }
+
+  html.rtl {
+    .search-form {
+      &__main-filters {
+        &--closed {
+          transform: translateX(calc(100% - 10px));
+        }
+
+        &__toggle-btn {
+          transform: rotate(180deg);
+        }
       }
     }
   }

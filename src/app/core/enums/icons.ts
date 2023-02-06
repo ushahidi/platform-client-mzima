@@ -61,4 +61,5 @@ export enum Icons {
   editPost = 'edit-post',
   info = 'info',
   tooltip = 'tooltip',
+  angleRight = 'angle-right',
 }
