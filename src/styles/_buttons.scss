@@ -32,6 +32,10 @@
   }
 }
 
+.mat-raised-button:focus {
+  background: var(--color-primary-50);
+}
+
 .mat-button,
 .mat-raised-button,
 .mat-stroked-button {
