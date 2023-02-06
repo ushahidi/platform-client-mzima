@@ -17,6 +17,10 @@
       border-top: 0;
     }
 
+    .mat-focused .mat-icon {
+      transform: rotate(180deg);
+    }
+
     .mat-select-arrow-wrapper {
       display: none;
     }
@@ -39,7 +43,7 @@
     position: relative;
     align-items: center;
     text-transform: uppercase;
-    padding-inline-start: 11px;
+    // padding-inline-start: 11px;
     justify-content: space-between;
 
     &__arrow {
@@ -47,6 +51,7 @@
       line-height: 1;
       font-size: 24px;
       margin-inline-start: 8px;
+      transition: transform 0.35s ease;
     }
   }
 

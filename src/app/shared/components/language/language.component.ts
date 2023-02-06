@@ -1,11 +1,17 @@
 import { Component, Input } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
+import { MAT_SELECT_CONFIG, MatSelectChange } from '@angular/material/select';
 import { LanguageService } from '@services';
 
 @Component({
   selector: 'app-language',
   templateUrl: './language.component.html',
   styleUrls: ['./language.component.scss'],
+  providers: [
+    {
+      provide: MAT_SELECT_CONFIG,
+      useValue: { overlayPanelClass: 'language-list' },
+    },
+  ],
 })
 export class LanguageComponent {
   @Input() languages: any;

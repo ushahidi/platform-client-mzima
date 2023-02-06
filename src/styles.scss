@@ -172,3 +172,12 @@ a {
 .cdk-overlay-connected-position-bounding-box {
   direction: inherit;
 }
+
+.language-list {
+  margin-top: 34px;
+  margin-left: 60px;
+
+  .mat-select-panel-wrap .mat-select-panel {
+    margin-top: 0;
+  }
+}

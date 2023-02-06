@@ -1,6 +1,8 @@
 import { Component, OnInit, RendererFactory2 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { LanguageInterface } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
   EnvService,
@@ -13,6 +15,7 @@ import {
 import { filter } from 'rxjs';
 import { IconService } from './core/services/icon.service';
 
+@UntilDestroy()
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,7 +25,9 @@ export class AppComponent implements OnInit {
   title = 'platform-client';
   public isShowLoader = false;
   private renderer = this.rendererFactory.createRenderer(null, null);
-  public languages$;
+  private languages$ = this.languageService.languages$.pipe(untilDestroyed(this));
+  private isDesktop$ = this.breakpointService.isDesktop.pipe(untilDestroyed(this));
+  public languages: LanguageInterface[];
   public selectedLanguage$;
   public isDesktop = false;
   public isInnerPage = false;
@@ -68,18 +73,19 @@ export class AppComponent implements OnInit {
       },
     });
 
-    this.languages$ = this.languageService.languages$;
+    this.languages$.subscribe((langs) => {
+      const initialLanguage = this.languageService.initialLanguage;
+      this.languages = langs.sort((lang) => {
+        return lang.code == initialLanguage ? -1 : 0;
+      });
+    });
 
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
+    this.isDesktop$.subscribe({
+      next: (isDesktop) => (this.isDesktop = isDesktop),
     });
 
     this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
-      next: (option) => {
-        this.isInnerPage = Boolean(option.inner);
-      },
+      next: (option) => (this.isInnerPage = Boolean(option.inner)),
     });
   }
 
