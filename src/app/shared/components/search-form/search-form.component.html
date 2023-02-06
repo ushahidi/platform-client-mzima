@@ -3,7 +3,10 @@
   [formGroup]="form"
   class="search-form"
   (submit)="applyFilters()"
-  [ngClass]="{ 'search-form--filters-open': isFiltersVisible }"
+  [ngClass]="{
+    'search-form--filters-open': isFiltersVisible,
+    'search-form--main-filters-open': isMainFiltersOpen
+  }"
 >
   <mat-form-field appearance="outline" class="search-form__control">
     <mat-icon matPrefix svgIcon="search"></mat-icon>
@@ -36,103 +39,122 @@
     <span>{{ 'app.filters' | translate }}</span>
   </button>
 
-  <div class="search-form__main-filters">
-    <span class="search-form__main-filters__total" *ngIf="total !== undefined">
-      {{ 'post.search_results' | translate }} {{ total }}
-    </span>
+  <div
+    class="search-form__main-filters"
+    [ngClass]="{ 'search-form__main-filters--closed': !isMainFiltersOpen && isFeedView }"
+  >
+    <button
+      type="button"
+      mat-icon-button
+      *ngIf="isFeedView"
+      (click)="toggleMainFilters()"
+      class="search-form__main-filters__toggle-btn"
+    >
+      <mat-icon svgIcon="angle-right"></mat-icon>
+    </button>
 
-    <div class="collection-info" *ngIf="collectionInfo">
-      <span class="collection-info__title">
-        Collection
-        {{ collectionInfo.name }}
-        <button
-          mat-button
-          type="button"
-          color="primary"
-          (click)="clearCollection()"
-          class="filter-group__head__button"
-        >
-          {{ 'nav.clear' | translate }}
-        </button>
+    <div class="search-form__main-filters__inner">
+      <span class="search-form__main-filters__total" *ngIf="total !== undefined">
+        {{ 'post.search_results' | translate }} {{ total }}
       </span>
 
-      <div class="collection-info__description" *ngIf="collectionInfo.description?.length">
-        {{ collectionInfo.description }}
-      </div>
-    </div>
+      <div class="collection-info" *ngIf="collectionInfo">
+        <span class="collection-info__title">
+          Collection
+          {{ collectionInfo.name }}
+          <button
+            mat-button
+            type="button"
+            color="primary"
+            (click)="clearCollection()"
+            class="filter-group__head__button"
+          >
+            {{ 'nav.clear' | translate }}
+          </button>
+        </span>
 
-    <div class="filter-group" *ngIf="surveyList?.length">
-      <div class="filter-group__head">
-        <label class="filter-group__title" for="surveys">{{ 'app.surveys' | translate }}</label>
-        <button
-          mat-button
-          type="button"
-          color="primary"
-          (click)="clearFilter('form')"
-          class="filter-group__head__button"
-        >
-          {{ 'nav.clear' | translate }}
-        </button>
+        <div class="collection-info__description" *ngIf="collectionInfo.description?.length">
+          {{ collectionInfo.description }}
+        </div>
       </div>
-      <mat-selection-list name="surveys" class="selection-list" formControlName="form">
-        <mat-list-option
-          color="primary"
-          [value]="survey.id"
-          checkboxPosition="before"
-          class="selection-list__option"
-          *ngFor="let survey of surveyList"
-          [ngStyle]="{ '--color': survey.color }"
-        >
-          <span class="selection-list__option__border"></span>
-          {{ survey.name }}
-          <span class="selection-list__option__total">{{ survey.total || 0 }}</span>
-        </mat-list-option>
-      </mat-selection-list>
 
-      <div class="filter-group__info">
-        <span *ngIf="notShownPostsCount <= 0">{{ 'global_filter.unmapped_none' | translate }}</span>
-        <span *ngIf="notShownPostsCount === 1">{{
-          'global_filter.unmapped_start_one' | translate
-        }}</span>
-        <span *ngIf="notShownPostsCount >= 2">{{
-          'global_filter.unmapped_start_many' | translate
-        }}</span>
-        <a [routerLink]="['feed']" *ngIf="notShownPostsCount >= 1">
-          {{ notShownPostsCount }} post{{ notShownPostsCount >= 2 ? 's' : '' }}
-        </a>
-        <span *ngIf="notShownPostsCount >= 1">{{ 'global_filter.unmapped_end' | translate }}</span>
-      </div>
-    </div>
-
-    <div class="filter-group" *ngIf="sources?.length && showSources">
-      <div class="filter-group__head">
-        <label class="filter-group__title" for="source">
-          {{ 'global_filter.source' | translate }}
-        </label>
-        <button
-          mat-button
-          type="button"
-          color="primary"
-          (click)="clearFilter('source')"
-          class="filter-group__head__button"
-        >
-          {{ 'nav.clear' | translate }}
-        </button>
-      </div>
-      <mat-selection-list name="source" class="selection-list" formControlName="source">
-        <ng-container *ngFor="let source of sources">
+      <div class="filter-group" *ngIf="surveyList?.length">
+        <div class="filter-group__head">
+          <label class="filter-group__title" for="surveys">{{ 'app.surveys' | translate }}</label>
+          <button
+            mat-button
+            type="button"
+            color="primary"
+            (click)="clearFilter('form')"
+            class="filter-group__head__button"
+          >
+            {{ 'nav.clear' | translate }}
+          </button>
+        </div>
+        <mat-selection-list name="surveys" class="selection-list" formControlName="form">
           <mat-list-option
             color="primary"
-            [value]="source.value"
-            *ngIf="source.total > 0"
+            [value]="survey.id"
             checkboxPosition="before"
             class="selection-list__option"
+            *ngFor="let survey of surveyList"
+            [ngStyle]="{ '--color': survey.color }"
           >
-            {{ source.name }}
-            <span class="selection-list__option__total">{{ source.total }}</span>
+            <span class="selection-list__option__border"></span>
+            {{ survey.name }}
+            <span class="selection-list__option__total">{{ survey.total || 0 }}</span>
           </mat-list-option>
-        </ng-container>
-      </mat-selection-list>
+        </mat-selection-list>
+
+        <div class="filter-group__info">
+          <span *ngIf="notShownPostsCount <= 0">{{
+            'global_filter.unmapped_none' | translate
+          }}</span>
+          <span *ngIf="notShownPostsCount === 1">{{
+            'global_filter.unmapped_start_one' | translate
+          }}</span>
+          <span *ngIf="notShownPostsCount >= 2">{{
+            'global_filter.unmapped_start_many' | translate
+          }}</span>
+          <a [routerLink]="['feed']" *ngIf="notShownPostsCount >= 1">
+            {{ notShownPostsCount }} post{{ notShownPostsCount >= 2 ? 's' : '' }}
+          </a>
+          <span *ngIf="notShownPostsCount >= 1">{{
+            'global_filter.unmapped_end' | translate
+          }}</span>
+        </div>
+      </div>
+
+      <div class="filter-group" *ngIf="sources?.length && showSources">
+        <div class="filter-group__head">
+          <label class="filter-group__title" for="source">
+            {{ 'global_filter.source' | translate }}
+          </label>
+          <button
+            mat-button
+            type="button"
+            color="primary"
+            (click)="clearFilter('source')"
+            class="filter-group__head__button"
+          >
+            {{ 'nav.clear' | translate }}
+          </button>
+        </div>
+        <mat-selection-list name="source" class="selection-list" formControlName="source">
+          <ng-container *ngFor="let source of sources">
+            <mat-list-option
+              color="primary"
+              [value]="source.value"
+              *ngIf="source.total > 0"
+              checkboxPosition="before"
+              class="selection-list__option"
+            >
+              {{ source.name }}
+              <span class="selection-list__option__total">{{ source.total }}</span>
+            </mat-list-option>
+          </ng-container>
+        </mat-selection-list>
+      </div>
     </div>
   </div>
   <div

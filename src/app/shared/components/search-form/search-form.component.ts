@@ -65,6 +65,7 @@ export class SearchFormComponent implements OnInit {
   public activeSavedSearchValue: number | null = null;
   public total: number;
   public isMapView: boolean;
+  public isFeedView: boolean;
   public isFiltersVisible: boolean;
   public searchQuery: string;
   private readonly searchSubject = new Subject<string>();
@@ -73,6 +74,7 @@ export class SearchFormComponent implements OnInit {
   public showSources: boolean;
   isLoggedIn = false;
   public isDesktop = false;
+  public isMainFiltersOpen = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -141,6 +143,7 @@ export class SearchFormComponent implements OnInit {
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
         this.isMapView = params.url.includes('/map');
+        this.isFeedView = params.url.includes('/feed');
       },
     });
 
@@ -193,10 +196,19 @@ export class SearchFormComponent implements OnInit {
         }
       },
     });
+
+    this.session.isMainFiltersHidden$.subscribe({
+      next: (isMainFiltersHidden: boolean) => {
+        setTimeout(() => {
+          this.isMainFiltersOpen = !isMainFiltersHidden;
+        }, 1);
+      },
+    });
   }
 
   ngOnInit(): void {
-    this.isMapView = this.router.url === '/map';
+    this.isMapView = this.router.url.includes('/map');
+    this.isFeedView = this.router.url.includes('/feed');
 
     this.session.currentUserData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
@@ -564,5 +576,9 @@ export class SearchFormComponent implements OnInit {
         this.form.controls[key].patchValue(filters[key]);
       }
     });
+  }
+
+  public toggleMainFilters(): void {
+    this.session.toggleMainFiltersVisibility(this.isMainFiltersOpen);
   }
 }

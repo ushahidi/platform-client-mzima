@@ -24,11 +24,13 @@ export class SessionService {
   private readonly _currentUserData$ = new BehaviorSubject<UserInterface>({});
   private readonly _isLogged = new BehaviorSubject<boolean>(false);
   private readonly _isFiltersVisible = new BehaviorSubject<boolean>(false);
+  private readonly _isMainFiltersHidden = new BehaviorSubject<boolean>(false);
 
   readonly currentSessionData$ = this._currentSessionData$.asObservable();
   readonly currentUserData$ = this._currentUserData$.asObservable();
   readonly isLogged$ = this._isLogged.asObservable();
   readonly isFiltersVisible$ = this._isFiltersVisible.asObservable();
+  readonly isMainFiltersHidden$ = this._isMainFiltersHidden.asObservable();
 
   private currentSessionData: SessionTokenInterface = {
     accessToken: '',
@@ -96,6 +98,11 @@ export class SessionService {
 
     const isFiltersVisible = localStorage.getItem(this.localStorageNameMapper('isFiltersVisible'));
     this._isFiltersVisible.next(isFiltersVisible ? JSON.parse(isFiltersVisible) : false);
+
+    const isMainFiltersHidden = localStorage.getItem(
+      this.localStorageNameMapper('main_filters_closed'),
+    );
+    this._isMainFiltersHidden.next(isMainFiltersHidden ? JSON.parse(isMainFiltersHidden) : false);
 
     this._currentSessionData$.next(this.currentSessionData);
   }
@@ -173,5 +180,10 @@ export class SessionService {
   toggleFiltersVisibility(newValue: boolean) {
     localStorage.setItem(this.localStorageNameMapper('isFiltersVisible'), newValue as any);
     this._isFiltersVisible.next(newValue);
+  }
+
+  toggleMainFiltersVisibility(newValue: boolean) {
+    localStorage.setItem(this.localStorageNameMapper('main_filters_closed'), newValue as any);
+    this._isMainFiltersHidden.next(newValue);
   }
 }

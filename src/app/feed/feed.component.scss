@@ -11,10 +11,16 @@
   height: 100%;
 
   @include breakpoint-min($tablet) {
-    margin-inline-start: 220px;
+    transition: margin-inline-start 0.35s ease;
+  }
 
-    @include breakpoint-max($laptop-small) {
-      margin-inline-start: 200px;
+  &:not(.feed-page--no-offset) {
+    @include breakpoint-min($tablet) {
+      margin-inline-start: 220px;
+
+      @include breakpoint-max($laptop-small) {
+        margin-inline-start: 200px;
+      }
     }
   }
 
@@ -213,13 +219,14 @@
 
   &__info-panel {
     display: flex;
-    padding: 20px 24px 0;
+    padding-top: 20px;
+    padding-inline-start: 60px;
+    padding-inline-end: 24px;
     align-items: flex-start;
     justify-content: space-between;
 
     @include breakpoint-max($laptop-small) {
-      padding-left: 16px;
-      padding-right: 16px;
+      padding-inline-end: 16px;
     }
   }
 
@@ -234,7 +241,8 @@
   &__mode-switcher {
     display: flex;
     align-items: center;
-    margin: 0 -4px 0 20px;
+    margin-inline-start: 20px;
+    margin-inline-end: -4px;
     justify-content: flex-start;
 
     &__button {

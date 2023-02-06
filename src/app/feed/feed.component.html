@@ -2,7 +2,8 @@
   class="feed-page"
   [ngClass]="{
     'feed-page--filters-visible': isFiltersVisible,
-    'feed-page--post-view': mode === FeedMode.Post
+    'feed-page--post-view': mode === FeedMode.Post,
+    'feed-page--no-offset': !isMainFiltersOpen
   }"
 >
   <ng-container *ngIf="posts.length">
