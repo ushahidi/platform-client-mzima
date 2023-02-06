@@ -33,7 +33,7 @@
       <span class="account-info__email">{{ profile.email }}</span>
     </div>
     <img
-      alt="user avatar"
+      [alt]="profile.realname"
       class="account-info__avatar"
       src="//www.gravatar.com/avatar/{{
         profile.gravatar || '00000000000000000000000000000000'
