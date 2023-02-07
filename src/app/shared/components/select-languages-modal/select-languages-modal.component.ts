@@ -16,19 +16,13 @@ export interface SelectLanguagesDialogData {
   styleUrls: ['./select-languages-modal.component.scss'],
 })
 export class SelectLanguagesModalComponent implements OnInit {
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public languages: LanguageInterface[];
-  public isDesktop = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: SelectLanguagesDialogData,
     private breakpointService: BreakpointService,
-  ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.languages = this.data.languages;

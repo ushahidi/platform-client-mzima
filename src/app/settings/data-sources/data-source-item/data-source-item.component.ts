@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
   ConfigService,
@@ -20,6 +21,7 @@ import { arrayHelpers } from '@helpers';
 import { combineLatest } from 'rxjs';
 import { Location } from '@angular/common';
 
+@UntilDestroy()
 @Component({
   selector: 'app-data-source-item',
   templateUrl: './data-source-item.component.html',
@@ -27,6 +29,7 @@ import { Location } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataSourceItemComponent implements AfterContentChecked, OnInit {
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   public provider: any;
   public surveyList: any[];
   public form: FormGroup = this.fb.group({});
@@ -54,7 +57,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     private breakpointService: BreakpointService,
     private location: Location,
   ) {
-    this.breakpointService.isDesktop.subscribe({
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

@@ -1,7 +1,7 @@
 <mat-sidenav-container
   [dir]="isRTL ? 'rtl' : 'ltr'"
   class="main"
-  [ngClass]="{ 'main--inner': !isDesktop && isInnerPage }"
+  [ngClass]="{ 'main--inner': !(isDesktop$ | async)! && isInnerPage }"
 >
   <mat-sidenav opened mode="side" disableClose class="sidebar">
     <app-sidebar></app-sidebar>

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CollectionsComponent } from '@data';
 import { PostPropertiesInterface, PostResult, PostStatus, UserInterface } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
   BreakpointService,
@@ -13,6 +14,7 @@ import {
 } from '@services';
 import { ShareModalComponent } from 'src/app/shared/components/share-modal/share-modal.component';
 
+@UntilDestroy()
 @Component({
   selector: 'app-post-head',
   templateUrl: './post-head.component.html',
@@ -20,6 +22,7 @@ import { ShareModalComponent } from 'src/app/shared/components/share-modal/share
 })
 export class PostHeadComponent {
   PostStatus = PostStatus;
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   @Input() public post: PostResult | PostPropertiesInterface;
   @Input() public user: UserInterface;
   @Input() public editable: boolean;
@@ -37,7 +40,7 @@ export class PostHeadComponent {
     private router: Router,
     private breakpointService: BreakpointService,
   ) {
-    this.breakpointService.isDesktop.subscribe({
+    this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

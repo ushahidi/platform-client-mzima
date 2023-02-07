@@ -15,7 +15,7 @@ export class SettingsLayoutComponent {
   public isDesktop = false;
   public isInnerPage = false;
   public userData: UserInterface;
-  private isDesktop$ = this.breakpointService.isDesktop.pipe(takeUntilDestroy$());
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(takeUntilDestroy$());
   private userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
 
   constructor(

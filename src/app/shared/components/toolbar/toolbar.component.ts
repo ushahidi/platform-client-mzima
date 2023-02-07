@@ -35,12 +35,12 @@ export class ToolbarComponent implements OnInit {
   // TODO: Fix takeUntilDestroy$() with material components
   // private userData$ = this.session.currentUserData$.pipe(takeUntilDestroy$());
   private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public isLoggedIn = false;
   public isDonateAvailable = false;
   public profile: UserInterface;
   public showSearchForm: boolean;
   public pageTitle: string;
-  public isDesktop = false;
   public isBurgerMenuOpen = false;
   public siteConfig = this.sessionService.getSiteConfigurations();
   public menu: UserMenuInterface[];
@@ -71,12 +71,6 @@ export class ToolbarComponent implements OnInit {
     this.breadcrumbService.breadcrumbs$.subscribe({
       next: (res) => {
         this.pageTitle = res[res.length - 1]?.instance;
-      },
-    });
-
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
       },
     });
 

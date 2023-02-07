@@ -1,9 +1,9 @@
 <div class="form-head-panel">
   <div
     class="form-head-panel__inner form-head-panel__inner--actions"
-    *ngIf="isShowActions || isDesktop"
+    *ngIf="isShowActions || (isDesktop$ | async)"
   >
-    <h1 *ngIf="isDesktop">{{ settingsTitle | translate }}</h1>
+    <h1 *ngIf="isDesktop$ | async">{{ settingsTitle | translate }}</h1>
     <ng-container *ngIf="isShowActions">
       <button
         type="button"

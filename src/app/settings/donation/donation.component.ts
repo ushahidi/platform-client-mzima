@@ -15,6 +15,7 @@ import {
   styleUrls: ['./donation.component.scss'],
 })
 export class DonationComponent implements OnInit {
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public donationConfig: DonationConfigInterface;
   public images: string[] = [];
   public donationForm: FormGroup = this.formBuilder.group({
@@ -23,7 +24,6 @@ export class DonationComponent implements OnInit {
     wallet: ['', []],
     enabled: [false, []],
   });
-  public isDesktop = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,13 +32,7 @@ export class DonationComponent implements OnInit {
     private loader: LoaderService,
     private configService: ConfigService,
     private breakpointService: BreakpointService,
-  ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.donationConfig = this.sessionService.getSiteConfigurations().donation!;

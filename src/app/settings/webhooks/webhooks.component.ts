@@ -11,18 +11,12 @@ import { WebhooksService, BreakpointService } from '@services';
 export class WebhooksComponent implements OnInit {
   webhookList: WebhookResultInterface[] = [];
   webhookState$ = this.webhooksService.changeWebhookState$.pipe(takeUntilDestroy$());
-  public isDesktop = false;
+  public isDesktop$ = this.breakpointService.isDesktop$;
 
   constructor(
     private webhooksService: WebhooksService,
     private breakpointService: BreakpointService,
-  ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.getWebhookList();

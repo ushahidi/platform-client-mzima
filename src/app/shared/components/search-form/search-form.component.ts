@@ -29,6 +29,7 @@ import { SaveSearchModalComponent } from '../save-search-modal/save-search-modal
   styleUrls: ['./search-form.component.scss'],
 })
 export class SearchFormComponent implements OnInit {
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public _array = Array;
   public filterType = FilterType;
   public form: FormGroup = this.formBuilder.group({
@@ -72,7 +73,6 @@ export class SearchFormComponent implements OnInit {
   public notShownPostsCount: number;
   public showSources: boolean;
   isLoggedIn = false;
-  public isDesktop = false;
   public isMainFiltersOpen = true;
   public surveysLoaded: boolean;
 
@@ -90,12 +90,6 @@ export class SearchFormComponent implements OnInit {
     private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
   ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-
     this.getSavedFilters();
     this.getSurveys();
 

@@ -14,7 +14,7 @@
   <p>{{ donationConfig.description }}</p>
   <div class="images">
     <div class="image" *ngFor="let image of donationConfig.images">
-      <img [src]="image.original_file_url" />
+      <img [src]="image.original_file_url" [alt]="'app.donation' | translate" />
     </div>
   </div>
 

@@ -3,7 +3,7 @@
 <div class="post-info">
   <div class="post-info__visual">
     <img
-      alt="user avatar"
+      [alt]="post.user?.realname"
       src="//www.gravatar.com/avatar/{{
         post.user?.gravatar || '00000000000000000000000000000000'
       }}?d=retro&s=40"

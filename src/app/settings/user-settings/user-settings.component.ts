@@ -12,7 +12,7 @@ import { forkJoin } from 'rxjs';
 })
 export class UserSettingsComponent implements OnInit {
   private userId = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}userId`);
-
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public form: FormGroup = this.formBuilder.group({
     user: ['', [Validators.required]],
     hdx_maintainer_id: ['', [Validators.required]],
@@ -26,19 +26,12 @@ export class UserSettingsComponent implements OnInit {
     api_created: ['', [Validators.required]],
     api_url: ['', [Validators.required]],
   });
-  public isDesktop = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private usersService: UsersService,
     private breakpointService: BreakpointService,
-  ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.getSettingsHDX();

@@ -9,16 +9,10 @@ import { RolesService, BreakpointService } from '@services';
   styleUrls: ['./roles.component.scss'],
 })
 export class RolesComponent implements OnInit {
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public roleResponse$: Observable<RoleResponse>;
-  public isDesktop = false;
 
-  constructor(private rolesService: RolesService, private breakpointService: BreakpointService) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  constructor(private rolesService: RolesService, private breakpointService: BreakpointService) {}
 
   ngOnInit() {
     this.getRoles();

@@ -7,16 +7,10 @@ import { BreakpointService } from '@services';
   styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent {
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public isPasswordSent: boolean;
-  public isDesktop = false;
 
-  constructor(private breakpointService: BreakpointService) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  constructor(private breakpointService: BreakpointService) {}
 
   public submitted(state: boolean | string): void {
     this.isPasswordSent = state === 'sent';

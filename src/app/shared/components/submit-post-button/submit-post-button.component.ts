@@ -10,20 +10,14 @@ import { EventBusService, EventType, BreakpointService } from '@services';
   styleUrls: ['./submit-post-button.component.scss'],
 })
 export class SubmitPostButtonComponent implements OnInit {
-  public isDesktop = false;
+  public isDesktop$ = this.breakpointService.isDesktop$;
 
   constructor(
     private dialog: MatDialog,
     private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
     private router: Router,
-  ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.eventBusService.on(EventType.AddPostButtonSubmit).subscribe({

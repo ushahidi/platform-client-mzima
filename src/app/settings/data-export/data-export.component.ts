@@ -16,6 +16,7 @@ import {
   styleUrls: ['./data-export.component.scss'],
 })
 export class DataExportComponent implements OnInit {
+  public isDesktop$ = this.breakpointService.isDesktop$;
   forms: FormInterface[] = [];
   fieldsMap: any = {};
   exportJobs: ExportJobInterface[] = [];
@@ -24,7 +25,6 @@ export class DataExportComponent implements OnInit {
   showProgress = false;
   exportView = true;
   exportJobsReady = false;
-  public isDesktop = false;
 
   constructor(
     private formsService: FormsService,
@@ -33,13 +33,7 @@ export class DataExportComponent implements OnInit {
     private exportJobsService: ExportJobsService,
     private pollingService: PollingService,
     private breakpointService: BreakpointService,
-  ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.formsService.get().subscribe((forms) => {

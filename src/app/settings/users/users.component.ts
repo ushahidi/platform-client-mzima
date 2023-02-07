@@ -13,6 +13,7 @@ import { forkJoin } from 'rxjs';
 })
 export class UsersComponent implements OnInit {
   @ViewChild('dt') dt: Table;
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public isLoading = false;
   public users: UserResult[] = [];
   public selectedUsers: UserResult[] = [];
@@ -25,7 +26,6 @@ export class UsersComponent implements OnInit {
     q: '',
   };
   public total: number;
-  public isDesktop = false;
 
   constructor(
     private userService: UsersService,
@@ -33,11 +33,7 @@ export class UsersComponent implements OnInit {
     private translate: TranslateService,
     private breakpointService: BreakpointService,
     private cdr: ChangeDetectorRef,
-  ) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => (this.isDesktop = isDesktop),
-    });
-  }
+  ) {}
 
   public ngOnInit() {
     this.userService.totalUsers$.subscribe({

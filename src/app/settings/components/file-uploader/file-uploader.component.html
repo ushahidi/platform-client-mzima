@@ -2,7 +2,7 @@
   <ng-container *ngIf="multiple">
     <div class="image" *ngFor="let src of imageSrc; let i = index">
       <div class="preview">
-        <img [src]="src" />
+        <img [src]="src" [alt]="'app.file_uploader' | translate" />
       </div>
       <div class="buttons">
         <button
@@ -42,7 +42,7 @@
       (click)="chooseFile()"
       [ngClass]="{ 'preview--empty': !imageSrc }"
     >
-      <img [src]="imageSrc" *ngIf="imageSrc?.length" />
+      <img [src]="imageSrc" *ngIf="imageSrc?.length" [alt]="'app.preview_image' | translate" />
       <mat-icon svgIcon="photo" *ngIf="!imageSrc"></mat-icon>
       <input
         #input

@@ -135,7 +135,12 @@
     "are_you_sure_you_want_to_delete": "Are you sure you want to Delete",
     "action_cannot_be_undone": "<p>This action cannot be undone.</p><p>Are you sure?</p>",
     "you_are_not_authorized": "You are not authorized",
-    "lost_internet_connection": "Lost internet connection"
+    "lost_internet_connection": "Lost internet connection",
+    "tweet_is_unavailable": "This tweet is unavailable",
+    "file_uploader": "File uploader",
+    "preview_image": "Preview image",
+    "privacy_policy": "Privacy Policy",
+    "terms_and_conditions": "Terms and Conditions"
   },
   "cookies": {
     "we_use_cookies": "Howdy! We use cookies to make your experience better.",
@@ -533,6 +538,8 @@
     "end_date_placeholder": "April 25, 2014",
     "location": "Location",
     "location_placeholder": "Enter city or address",
+    "city_or_address": "City or address",
+    "viewing_mode": "Viewing mode",
     "within_km": "Within",
     "km": "Km",
     "within_km_placeholder": "Distance",

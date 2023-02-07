@@ -100,7 +100,7 @@
     </div>
     <app-spinner class="users-loading" *ngIf="isLoading"></app-spinner>
   </div>
-  <div class="actions-spacer" *ngIf="isShowActions && !isDesktop"></div>
+  <div class="actions-spacer" *ngIf="isShowActions && !(isDesktop$ | async)!"></div>
 </section>
 
 <ng-template #loader>

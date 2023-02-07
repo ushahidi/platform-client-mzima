@@ -21,16 +21,10 @@ export class SettingsHeaderComponent {
   @Output() deleteCall = new EventEmitter();
   @Output() showLanguagesCall = new EventEmitter();
   @Output() selectLanguageCall = new EventEmitter();
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public isShowActions = false;
-  public isDesktop = false;
 
-  constructor(private breakpointService: BreakpointService) {
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-  }
+  constructor(private breakpointService: BreakpointService) {}
 
   public deleteEmit() {
     this.deleteCall.emit(true);

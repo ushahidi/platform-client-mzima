@@ -8,8 +8,8 @@ import { BreakpointService } from '@services';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  public isDesktop$ = this.breakpointService.isDesktop$;
   public isSignupActive: boolean;
-  public isDesktop = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -17,11 +17,6 @@ export class LoginComponent {
     private breakpointService: BreakpointService,
   ) {
     this.isSignupActive = this.data.isSignupActive;
-    this.breakpointService.isDesktop.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
   }
 
   public cancel() {
