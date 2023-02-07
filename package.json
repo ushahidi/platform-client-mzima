@@ -93,5 +93,6 @@
   },
   "overrides": {
     "autoprefixer": "10.4.5"
-  }
+  },
+  "license": "AGPL-3.0-only"
 }
