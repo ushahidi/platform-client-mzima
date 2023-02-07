@@ -184,10 +184,7 @@ export class SidebarComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe({
-      next: (response) => {
-        response ? console.log(response) : null;
-        this.removeFocusFromMenuItem('collection');
-      },
+      next: () => this.removeFocusFromMenuItem('collection'),
     });
   }
 
