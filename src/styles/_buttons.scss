@@ -32,10 +32,6 @@
   }
 }
 
-.mat-raised-button:focus {
-  background: var(--color-primary-50);
-}
-
 .mat-button,
 .mat-raised-button,
 .mat-stroked-button {
@@ -121,6 +117,13 @@
       background-color: var(--color-primary-90);
     }
   }
+
+  &.mat-raised-button {
+    &:focus,
+    &:active {
+      background: var(--color-primary-50);
+    }
+  }
 }
 
 .mat-dark {
@@ -186,6 +189,13 @@
 
     &:hover {
       color: var(--color-accent-tint);
+    }
+  }
+
+  &.mat-raised-button {
+    &:focus,
+    &:active {
+      background: #7c1d18;
     }
   }
 }
