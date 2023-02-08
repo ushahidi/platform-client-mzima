@@ -1772,6 +1772,11 @@
         "success": "Success!",
         "success_description": "Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.",
         "success_button": "OK, sounds good"
+      },
+      "deleted": {
+        "success": "Success!",
+        "success_description": "You've permanently deleted {{count}} posts.",
+        "success_button": "OK, sounds good"
       }
     },
     "language": {
