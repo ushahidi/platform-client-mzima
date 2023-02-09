@@ -5,6 +5,7 @@ export interface MenuInterface {
   adminGuard?: boolean;
   action?: Function;
   hidden?: boolean;
+  ref?: string;
 }
 
 export interface UserMenuInterface {
@@ -14,4 +15,5 @@ export interface UserMenuInterface {
   separator?: boolean;
   router?: string;
   action?: Function;
+  ref?: string;
 }
