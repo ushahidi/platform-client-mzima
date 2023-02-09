@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClipboardService {
-  constructor(private snackBar: MatSnackBar) {}
+  // constructor(private snackBar: MatSnackBar) {}
 
   public copy(str: string): void {
     const selBox = document.createElement('textarea');
@@ -20,8 +20,10 @@ export class ClipboardService {
     document.execCommand('copy');
     document.body.removeChild(selBox);
 
-    this.snackBar.open('Copied to clipboard', 'Ok', {
-      duration: 2000,
-    });
+    console.log('Copied to clipboard');
+
+    // this.snackBar.open('Copied to clipboard', 'Ok', {
+    //   duration: 2000,
+    // });
   }
 }

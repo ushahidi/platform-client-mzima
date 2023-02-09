@@ -1,114 +1,112 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRippleModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
-import { GtmDirective, DataQaInputDirective, DataQaDirective } from '@directives';
-import { LottieComponent } from 'ngx-lottie';
-import { ShareModule } from 'ngx-sharebuttons';
-
-import {
-  SidebarComponent,
-  ToolbarComponent,
-  LogoComponent,
-  BreadcrumbComponent,
-  SubmitPostButtonComponent,
-  SelectLanguagesModalComponent,
-  SpinnerComponent,
-  ConfirmModalComponent,
-  LanguageComponent,
-  MapWithMarkerComponent,
-  CollectionsModalComponent,
-  SnackbarComponent,
-  SearchFormComponent,
-  SaveSearchModalComponent,
-  LocationSelectionComponent,
-  AccountSettingsComponent,
-  MultilevelSelectComponent,
-  GroupCheckboxSelectComponent,
-  ColorPickerComponent,
-  CompanyInfoComponent,
-  FilterControlComponent,
-  DonationButtonComponent,
-  SettingsHeaderComponent,
-  CollectionItemComponent,
-  SupportModalComponent,
-} from './components';
-import { MaterialModule } from './material/material.module';
-import {
-  NgxMatDatetimePickerModule,
-  NgxMatNativeDateModule,
-  NgxMatTimepickerModule,
-} from '@angular-material-components/datetime-picker';
+import { CollectionsComponent } from '@data';
 import { TranslateModule } from '@ngx-translate/core';
-import { DateAgoPipe, FilterValuePipe } from '@pipes';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { LottieAnimationComponent } from './components/lottie-animation/lottie-animation.component';
-import { PasswordStrengthComponent } from './components/password-strength/password-strength.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { CookiesNotificationComponent } from './components/cookies-notification/cookies-notification.component';
-import { ShareModalComponent } from './components/share-modal/share-modal.component';
-
-const directives = [
-  GtmDirective, //
-  DataQaInputDirective,
-  DataQaDirective,
-];
+import { ShareModule } from 'ngx-sharebuttons';
+import {
+  AccountSettingsModalComponent,
+  CollectionsModalComponent,
+  CompanyInfoComponent,
+  ConfirmModalComponent,
+  CookiesNotificationComponent,
+  DonationButtonComponent,
+  LanguageComponent,
+  PageNotFoundComponent,
+  SaveSearchModalComponent,
+  SearchFormComponent,
+  SelectLanguagesModalComponent,
+  ShareModalComponent,
+  SidebarComponent,
+  SnackbarComponent,
+  SubmitPostButtonComponent,
+  SupportModalComponent,
+  ToolbarComponent,
+} from './components';
+import { CollectionItemModule } from './components/collection-item/collection-item.module';
+import { FilterControlModule } from './components/filter-control/filter-control.module';
+import { GroupCheckboxSelectModule } from './components/group-checkbox-select/group-checkbox-select.module';
+import { LottieAnimationModule } from './components/lottie-animation/lottie-animation.module';
+import { SpinnerModule } from './components/spinner/spinner.module';
+import { DirectiveModule } from './directive.module';
 
 const components = [
   SidebarComponent,
   ToolbarComponent,
-  LogoComponent,
-  BreadcrumbComponent,
   SubmitPostButtonComponent,
   LanguageComponent,
-  SpinnerComponent,
-  ConfirmModalComponent,
-  SelectLanguagesModalComponent,
-  DateAgoPipe,
-  MapWithMarkerComponent,
-  CollectionsModalComponent,
-  SnackbarComponent,
   SearchFormComponent,
-  SaveSearchModalComponent,
-  FilterValuePipe,
-  LocationSelectionComponent,
-  AccountSettingsComponent,
-  MultilevelSelectComponent,
-  GroupCheckboxSelectComponent,
-  ColorPickerComponent,
   CompanyInfoComponent,
-  FilterControlComponent,
   DonationButtonComponent,
-  LottieAnimationComponent,
-  SettingsHeaderComponent,
-  PasswordStrengthComponent,
-  CollectionItemComponent,
-  PageNotFoundComponent,
   CookiesNotificationComponent,
+  AccountSettingsModalComponent,
+  CollectionsModalComponent,
+  ConfirmModalComponent,
+  SaveSearchModalComponent,
+  SelectLanguagesModalComponent,
   ShareModalComponent,
+  SnackbarComponent,
   SupportModalComponent,
+  CollectionsComponent,
+  PageNotFoundComponent,
 ];
 
 const modules = [
   CommonModule,
-  MaterialModule,
+  RouterModule,
   ReactiveFormsModule,
   FormsModule,
-  RouterModule,
-  NgxMatTimepickerModule,
-  NgxMatDatetimePickerModule,
-  NgxMatNativeDateModule,
-  FormsModule,
   TranslateModule,
-  LeafletModule,
   ColorPickerModule,
+  FilterControlModule,
+  SpinnerModule,
+  DirectiveModule,
+  LottieAnimationModule,
+  GroupCheckboxSelectModule,
   ShareModule,
+  CollectionItemModule,
+];
+
+const material = [
+  MatButtonModule,
+  MatIconModule,
+  MatToolbarModule,
+  MatMenuModule,
+  MatExpansionModule,
+  MatSelectModule,
+  MatInputModule,
+  MatListModule,
+  MatTabsModule,
+  MatDialogModule,
+  MatRadioModule,
+  MatCheckboxModule,
+  MatProgressBarModule,
+  MatRippleModule,
+  MatTooltipModule,
+  MatSlideToggleModule,
 ];
 
 @NgModule({
-  declarations: [...components, ...directives],
-  imports: [...modules, LottieComponent],
-  exports: [...components, ...directives, ...modules],
+  declarations: [...components],
+  imports: [...modules, ...material],
+  exports: [...components, ...modules, ...material],
 })
 export class SharedModule {}

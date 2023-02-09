@@ -1,6 +1,6 @@
 <ng-container *ngIf="mapConfig">
   <div class="form-row">
-    <mat-label translate>survey.location</mat-label>
+    <mat-label>{{ 'survey.location' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <input
         matInput
@@ -27,7 +27,7 @@
 
   <div class="inputs">
     <div class="form-row">
-      <mat-label translate>settings.map_default_latitude</mat-label>
+      <mat-label>{{ 'settings.map_default_latitude' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <input
           type="number"
@@ -40,7 +40,7 @@
     </div>
 
     <div class="form-row">
-      <mat-label translate>settings.map_default_longitude</mat-label>
+      <mat-label>{{ 'settings.map_default_longitude' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <input
           type="number"
@@ -53,7 +53,7 @@
     </div>
 
     <div class="form-row">
-      <mat-label translate>settings.map_default_baselayer</mat-label>
+      <mat-label>{{ 'settings.map_default_baselayer' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <mat-select
           disableOptionCentering
@@ -68,7 +68,7 @@
     </div>
 
     <div class="form-row">
-      <mat-label translate>settings.map_default_zoom_level</mat-label>
+      <mat-label>{{ 'settings.map_default_zoom_level' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <input
           type="number"

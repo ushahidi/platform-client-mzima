@@ -21,8 +21,8 @@
     <div class="snackbar__buttons" *ngIf="data.buttons?.length">
       <button
         mat-raised-button
-        [color]="button.color"
         *ngFor="let button of data.buttons"
+        [color]="button.color"
         (click)="closeSnackbar(button.handler)"
       >
         {{ button.text! | translate }}

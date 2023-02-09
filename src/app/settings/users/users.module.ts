@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
-import { SharedModule } from '@shared';
+import { TranslateModule } from '@ngx-translate/core';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -11,6 +15,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
 import { TableModule } from 'primeng/table';
+import { SettingsHeaderModule } from '../../shared/components/settings-header/settings-header.module';
+import { SpinnerModule } from '../../shared/components/spinner/spinner.module';
+import { DirectiveModule } from '../../shared/directive.module';
 
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
@@ -22,7 +29,6 @@ import { UserItemComponent } from './user-item/user-item.component';
     CommonModule,
     UsersRoutingModule,
     FormsModule,
-    SharedModule,
     MatSortModule,
     NgxPaginationModule,
     ProgressBarModule,
@@ -32,6 +38,15 @@ import { UserItemComponent } from './user-item/user-item.component';
     DropdownModule,
     SliderModule,
     ButtonModule,
+    SettingsHeaderModule,
+    SpinnerModule,
+    TranslateModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    DirectiveModule,
+    MatButtonModule,
+    MatIconModule,
   ],
 })
 export class UsersModule {}

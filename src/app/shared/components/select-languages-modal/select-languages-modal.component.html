@@ -24,7 +24,7 @@
   </div>
 </form>
 <div mat-dialog-content>
-  <ul role="list" class="types-list" data-qa="survey-list">
+  <ul role="list" class="types-list" [data-qa]="'survey-list'">
     <li role="listitem" class="type-item" *ngFor="let language of languages">
       <mat-checkbox
         [data-qa]="'survey-item' + language.code"
