@@ -13,7 +13,7 @@ export class CookiesNotificationComponent implements OnInit {
   constructor(private cookieService: CookieService) {}
 
   ngOnInit() {
-    this.cookieService.check(this.COOKIE_NAME);
+    this.showCookies = !this.cookieService.check(this.COOKIE_NAME);
   }
 
   public accept() {

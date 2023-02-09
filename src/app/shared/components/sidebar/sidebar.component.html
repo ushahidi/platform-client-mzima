@@ -20,6 +20,7 @@
       <ng-container *ngFor="let item of menu">
         <ng-container *ngIf="!item.hidden">
           <a
+            [id]="item.ref"
             mat-raised-button
             class="sidebar-menu-button"
             [data-qa]="'btn-' + item.icon"
@@ -35,6 +36,7 @@
           </a>
           <ng-template #menuAction>
             <button
+              [id]="item.ref"
               mat-raised-button
               class="sidebar-menu-button"
               [data-qa]="'btn-' + item.icon"
@@ -53,6 +55,7 @@
       <ng-container *ngFor="let item of userMenu">
         <ng-container *ngIf="item.visible">
           <button
+            [id]="item.ref"
             mat-raised-button
             (click)="item.action()"
             class="sidebar-menu-button"
@@ -64,6 +67,7 @@
           </button>
           <ng-template #menuLink>
             <a
+              [id]="item.ref"
               mat-raised-button
               class="sidebar-menu-button"
               [data-qa]="'btn-' + item.icon"

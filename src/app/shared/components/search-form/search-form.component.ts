@@ -446,7 +446,7 @@ export class SearchFormComponent implements OnInit {
       ]);
     } else {
       localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
-      this.router.navigate([`/`, 'map']);
+      this.resetSavedFilter();
     }
   }
 
@@ -500,7 +500,7 @@ export class SearchFormComponent implements OnInit {
     this.activeSavedSearchValue = null;
     localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
     this.resetForm();
-    this.router.navigate(['/map']);
+    this.clearCollection();
   }
 
   public applyFilters(): void {

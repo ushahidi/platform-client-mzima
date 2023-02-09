@@ -142,10 +142,6 @@
   &:focus {
     color: var(--color-primary-60);
     border-color: var(--color-primary-60);
-
-    &:not(.sidebar-menu-button--active) {
-      border-style: dotted;
-    }
   }
 
   &::ng-deep {

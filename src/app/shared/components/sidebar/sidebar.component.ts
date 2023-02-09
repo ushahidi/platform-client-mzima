@@ -83,22 +83,26 @@ export class SidebarComponent implements OnInit {
         label: 'views.map',
         router: 'map',
         icon: 'map',
+        ref: 'map',
       },
       {
         label: 'views.data',
         router: 'feed',
         icon: 'data',
+        ref: 'feed',
       },
       {
         label: 'views.activity',
         router: 'activity',
         icon: 'activity',
+        ref: 'activity',
       },
       {
         label: 'nav.collections',
         icon: 'collections',
         hidden: !this.isDesktop,
         action: () => this.openCollections(),
+        ref: 'collection',
       },
       {
         label: 'nav.settings',
@@ -106,6 +110,7 @@ export class SidebarComponent implements OnInit {
         adminGuard: true,
         router: 'settings',
         hidden: this.isDesktop,
+        ref: 'settings',
       },
     ];
   }
@@ -131,36 +136,43 @@ export class SidebarComponent implements OnInit {
         icon: 'settings',
         visible: this.isLoggedIn,
         router: 'settings/general',
+        ref: 'settings',
       },
       {
         label: 'nav.login',
         icon: 'auth',
         visible: !this.isLoggedIn && !this.canRegister,
         action: () => this.openLogin(),
+        ref: 'auth',
       },
       {
         label: 'nav.login_register',
         icon: 'auth',
         visible: !this.isLoggedIn && this.canRegister,
         action: () => this.openLogin(),
+        ref: 'auth',
       },
       {
         label: 'nav.help_support',
         icon: 'info',
         visible: true,
         action: () => this.openSupportModal(),
+        ref: 'support',
       },
     ];
   }
 
   private openLogin(): void {
-    this.dialog.open(LoginComponent, {
+    const dialogRef = this.dialog.open(LoginComponent, {
       width: '100%',
       maxWidth: 576,
       panelClass: ['modal', 'login-modal'],
       data: {
         isSignupActive: this.canRegister,
       },
+    });
+    dialogRef.afterClosed().subscribe({
+      next: () => this.removeFocusFromMenuItem('auth'),
     });
   }
 
@@ -172,15 +184,8 @@ export class SidebarComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe({
-      next: (response) => {
-        response ? console.log(response) : null;
-      },
+      next: () => this.removeFocusFromMenuItem('collection'),
     });
-  }
-
-  private logout() {
-    this.authService.logout();
-    this.router.navigate(['/']);
   }
 
   registerPage(event: MouseEvent, router: string, label: string) {
@@ -197,10 +202,17 @@ export class SidebarComponent implements OnInit {
   }
 
   public openSupportModal(): void {
-    this.dialog.open(SupportModalComponent, {
+    const dialogRef = this.dialog.open(SupportModalComponent, {
       width: '100%',
       maxWidth: 768,
       panelClass: ['modal', 'support-modal'],
     });
+    dialogRef.afterClosed().subscribe({
+      next: () => this.removeFocusFromMenuItem('support'),
+    });
+  }
+
+  private removeFocusFromMenuItem(ref: string) {
+    document.getElementById(ref)!.blur();
   }
 }
