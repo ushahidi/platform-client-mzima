@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NavigationStart, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { CategoryInterface, CollectionResult, Savedsearch, SurveyItem } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
   CategoriesService,
@@ -23,6 +24,7 @@ import { SearchResponse } from '../location-selection/location-selection.compone
 import { MultilevelSelectOption } from '../multilevel-select/multilevel-select.component';
 import { SaveSearchModalComponent } from '../save-search-modal/save-search-modal.component';
 
+@UntilDestroy()
 @Component({
   selector: 'app-search-form',
   templateUrl: './search-form.component.html',
@@ -30,6 +32,10 @@ import { SaveSearchModalComponent } from '../save-search-modal/save-search-modal
 })
 export class SearchFormComponent implements OnInit {
   public isDesktop$ = this.breakpointService.isDesktop$;
+  private postsFilters$ = this.postsService.postsFilters$.pipe(untilDestroyed(this));
+  private totalGeoPosts$ = this.postsService.totalGeoPosts$.pipe(untilDestroyed(this));
+  private totalPosts$ = this.postsService.totalPosts$.pipe(untilDestroyed(this));
+  private isMainFiltersHidden$ = this.session.isMainFiltersHidden$.pipe(untilDestroyed(this));
   public _array = Array;
   public filterType = FilterType;
   public form: FormGroup = this.formBuilder.group({
@@ -115,24 +121,7 @@ export class SearchFormComponent implements OnInit {
       this.preparingSavedFilter();
     }
 
-    this.categoriesService.get().subscribe({
-      next: (response) => {
-        this.categoriesData = response?.results?.map((category: CategoryInterface) => {
-          return {
-            id: category.id,
-            name: category.tag,
-            children: response?.results
-              ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
-              .map((cat: CategoryInterface) => {
-                return {
-                  id: cat.id,
-                  name: cat.tag,
-                };
-              }),
-          };
-        });
-      },
-    });
+    this.getCategories();
 
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
@@ -160,7 +149,7 @@ export class SearchFormComponent implements OnInit {
       },
     });
 
-    this.postsService.postsFilters$.subscribe({
+    this.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: (res) => {
         if (res.set) {
           const collectionId = typeof res.set === 'string' ? res.set : '';
@@ -172,29 +161,59 @@ export class SearchFormComponent implements OnInit {
         }
         this.getPostsStatistic();
       },
+      error: (err) => console.log('postsFilters:', err),
     });
 
-    this.postsService.totalGeoPosts$.subscribe({
+    this.totalGeoPosts$.subscribe({
       next: (total) => {
         if (this.isMapView) {
           this.total = total;
         }
       },
+      error: (err) => console.log('totalGeoPosts:', err),
     });
 
-    this.postsService.totalPosts$.subscribe({
+    this.totalPosts$.subscribe({
       next: (total) => {
         if (!this.isMapView) {
           this.total = total;
         }
       },
+      error: (err) => console.log('totalPosts:', err),
     });
 
-    this.session.isMainFiltersHidden$.subscribe({
+    this.isMainFiltersHidden$.subscribe({
       next: (isMainFiltersHidden: boolean) => {
         setTimeout(() => {
           this.isMainFiltersOpen = !isMainFiltersHidden;
         }, 1);
+      },
+      error: (err) => console.log('isMainFiltersHidden:', err),
+    });
+  }
+
+  private getCategories() {
+    this.categoriesService.get().subscribe({
+      next: (response) => {
+        this.categoriesData = response?.results?.map((category: CategoryInterface) => {
+          return {
+            id: category.id,
+            name: category.tag,
+            children: response?.results
+              ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
+              .map((cat: CategoryInterface) => {
+                return {
+                  id: cat.id,
+                  name: cat.tag,
+                };
+              }),
+          };
+        });
+      },
+      error: (err) => {
+        if (err.message.match(/Http failure response for/)) {
+          setTimeout(() => this.getCategories(), 2000);
+        }
       },
     });
   }
@@ -237,8 +256,11 @@ export class SearchFormComponent implements OnInit {
   }
 
   private getCollectionInfo(id: string) {
-    this.collectionsService.getById(id).subscribe((coll) => {
-      this.collectionInfo = coll;
+    this.collectionsService.getById(id).subscribe({
+      next: (coll) => {
+        this.collectionInfo = coll;
+      },
+      error: (err) => console.log('getCollectionInfo:', err),
     });
   }
 
@@ -250,6 +272,7 @@ export class SearchFormComponent implements OnInit {
     }
   }
 
+  // Http failure response for
   public getSurveys(): void {
     this.surveysLoaded = false;
 
@@ -276,6 +299,11 @@ export class SearchFormComponent implements OnInit {
         this.surveysLoaded = true;
 
         this.showSources = !!this.sources?.find((source) => source.total > 0);
+      },
+      error: (err) => {
+        if (err.message.match(/Http failure response for/)) {
+          setTimeout(() => this.getSurveys(), 2000);
+        }
       },
     });
   }
@@ -342,6 +370,11 @@ export class SearchFormComponent implements OnInit {
               this.activeSavedSearch && search.id === this.activeSavedSearch!.id
             ));
           });
+        },
+        error: (err) => {
+          if (err.message.match(/Http failure response for/)) {
+            setTimeout(() => this.getSavedFilters(), 2000);
+          }
         },
       });
   }
