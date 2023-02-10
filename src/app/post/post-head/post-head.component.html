@@ -39,16 +39,13 @@
         {{ 'post.post_actions.publish' | translate }}
       </button>
       <button mat-menu-item (click)="underReview()" *ngIf="post.status !== PostStatus.Draft">
-        <mat-icon svgIcon="sort-up"></mat-icon>
         {{ 'post.post_actions.put_under_review' | translate }}
       </button>
       <button mat-menu-item (click)="archive()" *ngIf="post.status !== PostStatus.Archived">
-        <mat-icon svgIcon="sort-up"></mat-icon>
         {{ 'post.post_actions.archive' | translate }}
       </button>
     </ng-container>
     <button mat-menu-item *ngIf="deleteable" (click)="deletePost()">
-      <mat-icon svgIcon="sort-up"></mat-icon>
       {{ 'post.post_actions.delete' | translate }}
     </button>
   </mat-menu>
