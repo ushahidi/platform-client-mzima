@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { GtmDirective, DataQaInputDirective, DataQaDirective } from '@directives';
 import { LottieComponent } from 'ngx-lottie';
 import { ShareModule } from 'ngx-sharebuttons';
+import { NgxCustomTourModule } from 'ngx-custom-tour';
 
 import {
   SidebarComponent,
@@ -32,6 +33,7 @@ import {
   SettingsHeaderComponent,
   CollectionItemComponent,
   SupportModalComponent,
+  OnboardingComponent,
 } from './components';
 import { MaterialModule } from './material/material.module';
 import {
@@ -88,6 +90,7 @@ const components = [
   CookiesNotificationComponent,
   ShareModalComponent,
   SupportModalComponent,
+  OnboardingComponent,
 ];
 
 const modules = [
@@ -104,6 +107,7 @@ const modules = [
   LeafletModule,
   ColorPickerModule,
   ShareModule,
+  NgxCustomTourModule,
 ];
 
 @NgModule({

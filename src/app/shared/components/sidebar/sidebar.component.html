@@ -16,13 +16,14 @@
   </div>
 
   <nav class="sidebar__controls">
-    <div class="sidebar__menu">
+    <div class="sidebar__menu" id="sidebar-menu">
       <ng-container *ngFor="let item of menu">
         <ng-container *ngIf="!item.hidden">
           <a
             mat-raised-button
             class="sidebar-menu-button"
             [data-qa]="'btn-' + item.icon"
+            [id]="'sidebar-btn-' + item.icon"
             *ngIf="item.router; else menuAction"
             [routerLink]="createRouterLink(item.router)"
             routerLinkActive="sidebar-menu-button--active"
@@ -38,6 +39,7 @@
               mat-raised-button
               class="sidebar-menu-button"
               [data-qa]="'btn-' + item.icon"
+              [id]="'sidebar-btn-' + item.icon"
               (click)="item.action && item.action()"
             >
               <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
@@ -58,6 +60,7 @@
             class="sidebar-menu-button"
             [data-qa]="'btn-' + item.icon"
             *ngIf="item.action; else menuLink"
+            [id]="'sidebar-menu-button-' + item.icon"
           >
             <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
             <span class="sidebar-menu-button__title">{{ item.label | translate }}</span>
@@ -68,6 +71,7 @@
               class="sidebar-menu-button"
               [data-qa]="'btn-' + item.icon"
               (click)="item.action && item.action()"
+              [id]="'sidebar-menu-button-' + item.icon"
               routerLinkActive="sidebar-menu-button--active"
               [routerLink]="item.router && createRouterLink(item.router)"
             >

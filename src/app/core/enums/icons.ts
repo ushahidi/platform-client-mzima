@@ -62,4 +62,7 @@ export enum Icons {
   info = 'info',
   tooltip = 'tooltip',
   angleRight = 'angle-right',
+  greeting = 'greeting',
+  marker = 'marker',
+  clapper = 'clapper',
 }
