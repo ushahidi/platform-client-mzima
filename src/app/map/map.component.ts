@@ -234,7 +234,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
       },
       error: (err) => {
         if (err.message.match(/Http failure response for/)) {
-          setTimeout(() => this.getPostsGeoJson(), 2000);
+          setTimeout(() => this.getPostsGeoJson(), 5000);
         }
       },
     });

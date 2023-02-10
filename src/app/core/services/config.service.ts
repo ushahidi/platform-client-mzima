@@ -33,7 +33,7 @@ export class ConfigService {
           next: (data) => {
             this.sessionService.setConfigurations('site', data);
           },
-          error: () => setTimeout(() => this.getSite(), 2000),
+          error: () => setTimeout(() => this.getSite(), 5000),
         }),
       );
   }
@@ -50,7 +50,7 @@ export class ConfigService {
           next: (data) => {
             this.sessionService.setConfigurations('features', data);
           },
-          error: () => setTimeout(() => this.getFeatures(), 2000),
+          error: () => setTimeout(() => this.getFeatures(), 5000),
         }),
       );
   }
@@ -71,7 +71,7 @@ export class ConfigService {
             }
             this.sessionService.setConfigurations('map', data);
           },
-          error: () => setTimeout(() => this.getMap(), 2000),
+          error: () => setTimeout(() => this.getMap(), 5000),
         }),
       );
   }

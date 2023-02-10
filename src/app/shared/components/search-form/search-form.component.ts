@@ -272,7 +272,6 @@ export class SearchFormComponent implements OnInit {
     }
   }
 
-  // Http failure response for
   public getSurveys(): void {
     this.surveysLoaded = false;
 
@@ -302,7 +301,7 @@ export class SearchFormComponent implements OnInit {
       },
       error: (err) => {
         if (err.message.match(/Http failure response for/)) {
-          setTimeout(() => this.getSurveys(), 2000);
+          setTimeout(() => this.getSurveys(), 5000);
         }
       },
     });
@@ -373,7 +372,7 @@ export class SearchFormComponent implements OnInit {
         },
         error: (err) => {
           if (err.message.match(/Http failure response for/)) {
-            setTimeout(() => this.getSavedFilters(), 2000);
+            setTimeout(() => this.getSavedFilters(), 5000);
           }
         },
       });
