@@ -17,6 +17,24 @@ import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluste
 import { QuillModule } from 'ngx-quill';
 import { LottieModule } from 'ngx-lottie';
 import { CookieService } from 'ngx-cookie-service';
+import { RouterModule } from '@angular/router';
+import * as Sentry from '@sentry/angular';
+import { BrowserTracing } from '@sentry/tracing';
+
+Sentry.init({
+  dsn: 'https://bb6763efc0434bc0bc7e2c85c1a7e359@o38921.ingest.sentry.io/4504671331024896',
+  integrations: [
+    new BrowserTracing({
+      tracePropagationTargets: ['localhost', 'https://yourserver.io/api'],
+      routingInstrumentation: Sentry.routingInstrumentation,
+    }),
+  ],
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
@@ -81,6 +99,22 @@ export function playerFactory(): any {
     LottieModule.forRoot({ player: playerFactory }),
   ],
   providers: [
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: true,
+      }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [RouterModule],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps: [Sentry.TraceService],
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
