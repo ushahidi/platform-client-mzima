@@ -2,14 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { LoggingService } from '@services';
 
 @Injectable()
 export class ErrorsHandlerService implements ErrorHandler {
   constructor(private injector: Injector) {}
 
   handleError(error: Error | HttpErrorResponse) {
-    const logger = this.injector.get(LoggingService);
     const translate = this.injector.get(TranslateService);
 
     if (!navigator.onLine) {
@@ -24,9 +22,8 @@ export class ErrorsHandlerService implements ErrorHandler {
           console.error('Http Error: ' + error.message);
         }
       } else {
-        console.error('Client Error: ' + error.message);
+        console.error(`%cClient Error: %c${error.message}`, 'color: #bada55', 'color: error');
       }
-      logger.logError(error);
     }
   }
 
