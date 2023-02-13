@@ -7,10 +7,10 @@
   overflow-y: auto;
   overflow-x: hidden;
   line-height: 14px;
+  position: relative;
   --side-offset: 24px;
   flex-direction: column;
   scroll-behavior: smooth;
-  // justify-content: space-between;
   color: var(--color-neutral-50);
   -webkit-overflow-scrolling: touch;
 
@@ -89,12 +89,12 @@
   text-align: start;
   font-weight: normal;
   border-style: solid;
-  background: transparent;
   border-width: 0 0 0 4px;
   border-color: transparent;
   transition-duration: 0.35s;
   box-shadow: none !important;
   transition-timing-function: ease;
+  background: var(--color-neutral-100);
   transition-property: color, background-color, border-color;
 
   @include breakpoint-min($tablet) {
