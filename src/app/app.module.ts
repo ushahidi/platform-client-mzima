@@ -25,7 +25,7 @@ Sentry.init({
   dsn: 'https://bb6763efc0434bc0bc7e2c85c1a7e359@o38921.ingest.sentry.io/4504671331024896',
   integrations: [
     new BrowserTracing({
-      tracePropagationTargets: ['localhost', 'https://yourserver.io/api'],
+      tracePropagationTargets: [],
       routingInstrumentation: Sentry.routingInstrumentation,
     }),
   ],
