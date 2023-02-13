@@ -109,12 +109,12 @@ export function playerFactory(): any {
       provide: Sentry.TraceService,
       deps: [RouterModule],
     },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: () => () => {},
-      deps: [Sentry.TraceService],
-      multi: true,
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: () => () => {},
+    //   deps: [Sentry.TraceService],
+    //   multi: true,
+    // },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
