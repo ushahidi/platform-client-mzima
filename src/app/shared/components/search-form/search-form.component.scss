@@ -449,6 +449,11 @@
       margin-inline-end: -4px;
       margin-inline-start: 14px;
 
+      @include breakpoint-max($tablet) {
+        font-size: 14px;
+        line-height: 16px;
+      }
+
       &:hover {
         text-decoration: none;
       }
