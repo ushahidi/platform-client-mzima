@@ -16,7 +16,7 @@ import { QuillModule } from 'ngx-quill';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
-import { ErrorsHandler } from './core/handlers/errors-handler';
+import { ErrorsHandlerService } from './core/handlers/errors-handler.service';
 import { AuthInterceptor } from './core/interceptors';
 
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
@@ -90,7 +90,7 @@ export function playerFactory(): any {
       multi: true,
     },
     loadConfigProvider,
-    { provide: ErrorHandler, useClass: ErrorsHandler },
+    { provide: ErrorHandler, useClass: ErrorsHandlerService },
     loadGoogleTagManagerProvider,
     Meta,
     CookieService,
