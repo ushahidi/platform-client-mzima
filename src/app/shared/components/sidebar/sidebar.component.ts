@@ -217,6 +217,7 @@ export class SidebarComponent implements OnInit {
   }
 
   private removeFocusFromMenuItem(ref: string) {
-    if (ref) document.getElementById(ref)!.blur();
+    const refElement = document.getElementById(ref);
+    if (refElement) refElement.blur();
   }
 }
