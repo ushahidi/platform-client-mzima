@@ -14,7 +14,7 @@
     border-bottom: 1px solid var(--color-neutral-30);
   }
 
-  h1 {
+  .mat-dialog-title {
     flex: 1 1 100%;
     margin-bottom: 0 !important;
 
@@ -23,6 +23,11 @@
       font-weight: 700;
       line-height: 1.28;
     }
+  }
+
+  .mat-button-base {
+    flex-shrink: 0;
+    margin-inline-start: 16px;
   }
 }
 
