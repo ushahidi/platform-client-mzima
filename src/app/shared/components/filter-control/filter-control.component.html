@@ -1,6 +1,7 @@
 <div class="filter-control">
   <ng-container *ngIf="isDesktop$ | async; else button">
     <button
+      #button
       type="button"
       mat-raised-button
       [matMenuTriggerFor]="menu"
@@ -18,7 +19,17 @@
           : '')
       "
     >
-      <ng-container *ngTemplateOutlet="control"></ng-container>
+      <div
+        class="menu-content"
+        [ngStyle]="{
+          width:
+            (type === filterType.Daterange || type === filterType.Location
+              ? buttonWidth * 2
+              : buttonWidth) + 'px'
+        }"
+      >
+        <ng-container *ngTemplateOutlet="control"></ng-container>
+      </div>
     </mat-menu>
   </ng-container>
 </div>

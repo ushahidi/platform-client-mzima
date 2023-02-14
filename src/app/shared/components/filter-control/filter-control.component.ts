@@ -1,5 +1,6 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -14,6 +15,8 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { BreakpointService } from '@services';
+import { MatButton } from '@angular/material/button';
+import { fromEvent } from 'rxjs';
 dayjs.extend(customParseFormat);
 
 export enum FilterType {
@@ -43,7 +46,7 @@ interface CategoryFlatNode {
     },
   ],
 })
-export class FilterControlComponent implements ControlValueAccessor, OnChanges {
+export class FilterControlComponent implements ControlValueAccessor, OnChanges, AfterViewInit {
   @Input() public badge?: string | number | null;
   @Input() public options: any[];
   @Input() public type: FilterType;
@@ -54,6 +57,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
   @Output() public editOption = new EventEmitter();
   @Output() public clear = new EventEmitter();
   @ViewChild('calendar') public calendar: any;
+  @ViewChild('button') public button: MatButton;
   public isDesktop$ = this.breakpointService.isDesktop$;
   public value: any;
   public calendarValue = {
@@ -65,8 +69,21 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges {
   public touched = false;
   public disabled = false;
   public isModalOpen: boolean;
+  public buttonWidth = 200;
 
   constructor(private breakpointService: BreakpointService) {}
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.buttonWidth = this.button._elementRef.nativeElement.clientWidth;
+    }, 500);
+
+    fromEvent(window, 'resize').subscribe({
+      next: () => {
+        this.buttonWidth = this.button._elementRef.nativeElement.clientWidth;
+      },
+    });
+  }
 
   private _transformer = (node: any, level: number) => {
     return {

@@ -21,7 +21,7 @@
   width: 100%;
   max-width: 220px;
   border-right: none;
-  z-index: initial !important;
+  z-index: 1000 !important;
   background-color: var(--color-neutral-100);
   --scrollbar-color: var(--color-neutral-60);
   --scrollbar-background: var(--color-neutral-100);

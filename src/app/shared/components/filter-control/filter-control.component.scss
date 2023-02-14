@@ -298,13 +298,14 @@
       min-width: 180px;
       box-shadow: none;
       border-radius: 0;
+      min-width: 200px;
+      margin-left: -1px;
       max-height: calc(100vh - 150px);
-      width: calc((100vw - 440px) / 6);
     }
 
     &--wide {
       &.mat-menu-panel {
-        width: calc((100vw - 440px) / 3);
+        min-width: 400px;
       }
     }
 
