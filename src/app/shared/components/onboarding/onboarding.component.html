@@ -2,7 +2,7 @@
   <tour-step
     [order]="i"
     *ngIf="!step.hidden"
-    class="onboarding-step"
+    class="onboarding-step selector-{{ step.selector }} order-{{ i }}"
     [selector]="step.selector"
     [isFooterVisible]="false"
     [position]="step.position ?? ''"
