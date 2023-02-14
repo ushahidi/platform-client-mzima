@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { EventBusService, EventType } from '@services';
 
 @Component({
   selector: 'app-support-modal',
@@ -37,7 +38,11 @@ export class SupportModalComponent {
       title: 'Onboarding',
       description: 'Take a look at the Ushahidi onboarding again.',
       action: () => {
-        console.log('Show onboarding');
+        this.eventBusService.next({
+          type: EventType.ShowOnboarding,
+          payload: true,
+        });
+        this.closeModal();
       },
     },
     {
@@ -53,6 +58,7 @@ export class SupportModalComponent {
   constructor(
     private translate: TranslateService,
     private matDialogRef: MatDialogRef<SupportModalComponent>,
+    private eventBusService: EventBusService,
   ) {}
 
   private closeModal(): void {

@@ -11,6 +11,7 @@
 
 <strong mat-dialog-title>
   {{ (!!data.search ? 'set.update_savedsearch' : 'set.create_savedsearch') | translate }}
+  {{ !!data.search ? 'Update Saved Filter' : 'Create Saved Filter' }}
 </strong>
 
 <form novalidate [formGroup]="form" (ngSubmit)="formSubmit()">

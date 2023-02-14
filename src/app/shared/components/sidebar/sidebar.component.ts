@@ -56,6 +56,10 @@ export class SidebarComponent implements OnInit {
         this.isInnerPage = Boolean(option.inner);
       },
     });
+
+    this.eventBusService.on(EventType.OpenSupportModal).subscribe({
+      next: () => this.openSupportModal(),
+    });
   }
 
   ngOnInit() {

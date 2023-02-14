@@ -92,6 +92,14 @@ export class PostHeadComponent {
     this.postsV5Service.delete(this.post.id).subscribe((res) => {
       this.post = res;
       this.postsService.applyFilters({});
+      this.confirmModalService.open({
+        title: this.translate.instant('notify.confirm_modal.deleted.success'),
+        description: `<p>${this.translate.instant(
+          'notify.confirm_modal.deleted.success_description',
+          { count: 1 },
+        )}</p>`,
+        buttonSuccess: this.translate.instant('notify.confirm_modal.deleted.success_button'),
+      });
     });
   }
 

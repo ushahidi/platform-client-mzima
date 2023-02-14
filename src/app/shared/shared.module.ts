@@ -22,6 +22,8 @@ import { CollectionsComponent } from '@data';
 import { TranslateModule } from '@ngx-translate/core';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ShareModule } from 'ngx-sharebuttons';
+import { NgxCustomTourModule } from 'ngx-custom-tour';
+
 import {
   AccountSettingsModalComponent,
   CollectionsModalComponent,
@@ -39,6 +41,7 @@ import {
   SnackbarComponent,
   SubmitPostButtonComponent,
   SupportModalComponent,
+  OnboardingComponent,
   ToolbarComponent,
 } from './components';
 import { CollectionItemModule } from './components/collection-item/collection-item.module';
@@ -65,6 +68,7 @@ const components = [
   ShareModalComponent,
   SnackbarComponent,
   SupportModalComponent,
+  OnboardingComponent,
   CollectionsComponent,
   PageNotFoundComponent,
 ];
@@ -82,6 +86,7 @@ const modules = [
   LottieAnimationModule,
   GroupCheckboxSelectModule,
   ShareModule,
+  NgxCustomTourModule,
   CollectionItemModule,
 ];
 

@@ -47,6 +47,7 @@ export class CollectionsComponent implements OnInit {
     featured: [false, []],
     visible_to: [false, []],
     view: ['map', []],
+    is_notifications_enabled: [true, []],
   });
   roleOptions: any;
   tmpCollectionToEditId = 0;
@@ -211,5 +212,13 @@ export class CollectionsComponent implements OnInit {
 
   addNewCollection() {
     this.currentView = CollectionView.Create;
+  }
+
+  public closeModal(): void {
+    if (this.currentView !== CollectionView.List) {
+      this.currentView = CollectionView.List;
+    } else {
+      this.matDialogRef.close();
+    }
   }
 }

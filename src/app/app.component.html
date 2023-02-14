@@ -1,3 +1,5 @@
+<app-onboarding *ngIf="!isOnboardingDone && (isDesktop$ | async)"></app-onboarding>
+
 <mat-sidenav-container
   [dir]="isRTL ? 'rtl' : 'ltr'"
   class="main"

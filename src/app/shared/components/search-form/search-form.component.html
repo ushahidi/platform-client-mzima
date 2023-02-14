@@ -40,6 +40,7 @@
   </button>
 
   <div
+    data-filter-highlight
     class="search-form__main-filters"
     [ngClass]="{ 'search-form__main-filters--closed': !isMainFiltersOpen }"
   >
@@ -159,6 +160,7 @@
     </div>
   </div>
   <div
+    data-filter-highlight
     class="search-form__filters-panel"
     *ngIf="(isDesktop$ | async) || isFiltersVisible"
     [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"

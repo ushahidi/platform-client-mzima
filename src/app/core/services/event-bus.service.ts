@@ -5,9 +5,11 @@ export const enum EventType {
   SearchOptionSelected = 'SEARCH_OPTION_SELECTED',
   AddPostButtonSubmit = 'ADD_POST_BUTTON_SUBMIT',
   OpenLoginModal = 'OPEN_LOGIN_MODAL',
+  OpenSupportModal = 'OPEN_SUPPORT_MODAL',
   SavedSearchInit = 'SAVED_SEARCH_INIT',
   DeleteCollection = 'DELETE_COLLECTION',
   IsSettingsInnerPage = 'IS_SETTINGS_INNER_PAGE',
+  ShowOnboarding = 'SHOW_ONBOARDING',
 }
 
 export interface BusEvent<T = any> {
