@@ -50,6 +50,7 @@ import { GroupCheckboxSelectModule } from './components/group-checkbox-select/gr
 import { LottieAnimationModule } from './components/lottie-animation/lottie-animation.module';
 import { SpinnerModule } from './components/spinner/spinner.module';
 import { DirectiveModule } from './directive.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const components = [
   SidebarComponent,
@@ -107,6 +108,7 @@ const material = [
   MatRippleModule,
   MatTooltipModule,
   MatSlideToggleModule,
+  MatSnackBarModule,
 ];
 
 @NgModule({

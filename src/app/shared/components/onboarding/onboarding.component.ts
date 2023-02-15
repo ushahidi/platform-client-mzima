@@ -11,6 +11,7 @@ interface OnboardingStep {
   selector?: string | string[];
   position?: string;
   hidden?: boolean;
+  dynamic?: boolean;
 }
 
 @Component({
@@ -38,16 +39,12 @@ export class OnboardingComponent implements AfterViewInit {
         if (this.activeStep === data.order) return;
         this.activeStep = data.order;
 
-        if (data.order === 2) {
+        if (data.order === 1 || data.order === 2 || data.order === 5) {
           this.router.navigate(['/map']);
         }
 
         if (data.order === 3) {
           this.router.navigate(['/feed']);
-          setTimeout(() => {
-            this.customTourService.updateHighlightedElements();
-            this.isHidden = false;
-          }, 1000);
         }
 
         if (data.order === 4) {
@@ -56,6 +53,13 @@ export class OnboardingComponent implements AfterViewInit {
 
         if (data.order === 6) {
           this.router.navigate(['/settings']);
+        }
+
+        if (this.onboardingSteps[data.order].dynamic) {
+          setTimeout(() => {
+            this.customTourService.updateHighlightedElements();
+            this.isHidden = false;
+          }, 1000);
         }
       },
     });
@@ -79,7 +83,9 @@ export class OnboardingComponent implements AfterViewInit {
     this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
       this.username = userData.realname;
-      this.initOnboardingSteps();
+      if (!this.onboardingSteps) {
+        this.initOnboardingSteps();
+      }
     });
 
     this.eventBusService.on(EventType.ShowOnboarding).subscribe({
@@ -138,6 +144,7 @@ export class OnboardingComponent implements AfterViewInit {
           '<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>',
         selector: '.feed-page__control--sorting',
         position: 'left',
+        dynamic: true,
       },
       {
         title: 'Activity',
@@ -172,13 +179,16 @@ export class OnboardingComponent implements AfterViewInit {
   }
 
   public nextStep(): void {
-    if (this.activeStep === 2) {
+    if (this.onboardingSteps[this.activeStep + 1]?.dynamic) {
       this.isHidden = true;
     }
     this.customTourService.showNext();
   }
 
   public prevStep(): void {
+    if (this.onboardingSteps[this.activeStep - 1]?.dynamic) {
+      this.isHidden = true;
+    }
     this.customTourService.showPrev();
   }
 
