@@ -31,11 +31,11 @@ interface AccountNotificationTypeInterface {
 }
 
 @Component({
-  selector: 'app-account-settings',
-  templateUrl: './account-settings.component.html',
-  styleUrls: ['./account-settings.component.scss'],
+  selector: 'app-account-settings-modal',
+  templateUrl: './account-settings-modal.component.html',
+  styleUrls: ['./account-settings-modal.component.scss'],
 })
-export class AccountSettingsComponent implements OnInit {
+export class AccountSettingsModalComponent implements OnInit {
   public profile: UserInterface;
   public contacts: ContactsInterface[];
   public isUpdatingPassword = false;
@@ -98,7 +98,7 @@ export class AccountSettingsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
-    private matDialogRef: MatDialogRef<AccountSettingsComponent>,
+    private matDialogRef: MatDialogRef<AccountSettingsModalComponent>,
   ) {}
 
   ngOnInit(): void {

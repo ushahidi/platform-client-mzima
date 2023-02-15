@@ -86,14 +86,16 @@
       <div class="toggle">
         <mat-slide-toggle [(ngModel)]="task.required" name="accept-survey">
           {{ 'survey.required' | translate }}
-          <p *ngIf="task.required"><small translate>survey.required_desc</small></p>
+          <p *ngIf="task.required">
+            <small>{{ 'survey.required_desc' | translate }}</small>
+          </p>
         </mat-slide-toggle>
       </div>
       <div class="toggle">
         <mat-slide-toggle [(ngModel)]="task.task_is_internal_only" name="import-to-survey">
           {{ 'survey.internal_use_task' | translate }}
           <p *ngIf="task.task_is_internal_only">
-            <small translate>survey.internal_use_task_desc</small>
+            <small>{{ 'survey.internal_use_task_desc' | translate }}</small>
           </p>
         </mat-slide-toggle>
       </div>
@@ -101,7 +103,7 @@
         <mat-slide-toggle [(ngModel)]="task.show_when_published" name="import-to-survey">
           {{ 'survey.show_this_task_to' | translate }}
           <p *ngIf="task.show_when_published">
-            <small translate>survey.show_this_task_to_desc</small>
+            <small>{{ 'survey.show_this_task_to_desc' | translate }}</small>
           </p>
         </mat-slide-toggle>
       </div>
@@ -113,25 +115,29 @@
             <mat-slide-toggle [(ngModel)]="survey.require_approval" name="accept-survey">
               {{ 'survey.require_review' | translate }}
             </mat-slide-toggle>
-            <p class="toggle__description" translate>survey.require_review_desc</p>
+            <p class="toggle__description">{{ 'survey.require_review_desc' | translate }}</p>
           </div>
           <div class="toggle">
             <mat-slide-toggle [(ngModel)]="survey.hide_author" name="import-to-survey">
               {{ 'survey.hide_author_information' | translate }}
             </mat-slide-toggle>
-            <p class="toggle__description" translate>survey.hide_author_information_desc</p>
+            <p class="toggle__description">
+              {{ 'survey.hide_author_information_desc' | translate }}
+            </p>
           </div>
           <div class="toggle" *ngIf="anonymiseReportersEnabled">
             <mat-slide-toggle [(ngModel)]="survey.hide_location" name="import-to-survey">
               {{ 'survey.hide_location_information' | translate }}
             </mat-slide-toggle>
-            <p class="toggle__description" translate>survey.hide_location_information_desc</p>
+            <p class="toggle__description">
+              {{ 'survey.hide_location_information_desc' | translate }}
+            </p>
           </div>
           <div class="toggle" *ngIf="anonymiseReportersEnabled">
             <mat-slide-toggle [(ngModel)]="survey.hide_time" name="import-to-survey">
               {{ 'survey.hide_time_information' | translate }}
             </mat-slide-toggle>
-            <p class="toggle__description" translate>survey.hide_time_information_desc</p>
+            <p class="toggle__description">{{ 'survey.hide_time_information_desc' | translate }}</p>
           </div>
         </div>
         <div class="form-row">

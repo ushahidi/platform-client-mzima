@@ -15,7 +15,7 @@
       type="button"
       color="dark"
       mat-raised-button
-      data-qa="button-decline-cookies"
+      [data-qa]="'button-decline-cookies'"
       (click)="decline()"
     >
       {{ 'cookies.decline' | translate }}
@@ -25,7 +25,7 @@
       type="button"
       color="primary"
       mat-raised-button
-      data-qa="button-accept-cookies"
+      [data-qa]="'button-accept-cookies'"
       (click)="accept()"
     >
       {{ 'cookies.accept_cookies' | translate }}

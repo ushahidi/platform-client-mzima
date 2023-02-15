@@ -4,7 +4,7 @@
   class="modal__close-btn"
   tabindex="-1"
   aria-label="{{ 'modal.button.close' | translate }}"
-  data-qa="btn-add-post-modal-close"
+  [data-qa]="'btn-add-post-modal-close'"
 >
   <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
 </button>
@@ -13,7 +13,7 @@
 
 <div mat-dialog-content>
   <app-spinner class="spinner" *ngIf="!types"></app-spinner>
-  <ul role="list" class="types-list" *ngIf="!!types" data-qa="add-post-modal-surveys">
+  <ul role="list" class="types-list" *ngIf="!!types" [data-qa]="'add-post-modal-surveys'">
     <li *ngFor="let type of types">
       <div
         matRipple

@@ -1,11 +1,11 @@
 <div class="head">
   <h1 *ngIf="isDesktop">{{ 'app.import' | translate }}</h1>
-  <button mat-raised-button color="primary" class="upload-button" data-qa="btn-upload">
-    <span>{{
-      selectedFile
-        ? ('data_import.change_csv_file' | translate)
-        : ('data_import.upload_csv_file' | translate)
-    }}</span>
+  <button mat-raised-button color="primary" class="upload-button" [data-qa]="'btn-upload'">
+    <span>
+      {{
+        (selectedFile ? 'data_import.change_csv_file' : 'data_import.upload_csv_file') | translate
+      }}</span
+    >
     <mat-icon svgIcon="plus"></mat-icon>
     <input name="file" type="file" accept=".csv" (change)="uploadFile($event)" />
   </button>
@@ -18,7 +18,7 @@
   >
   <mat-form-field appearance="outline">
     <mat-select
-      data-qa="select-survey"
+      [data-qa]="'select-survey'"
       disableOptionCentering
       [(value)]="selectedForm"
       placeholder="{{ 'survey.choose_survey' | translate }}"
@@ -47,7 +47,7 @@
   <div class="form-row">
     <mat-label>{{ 'data_import.choose_status_to_imported_posts' | translate }}</mat-label>
     <mat-radio-group
-      data-qa="radio-option"
+      [data-qa]="'radio-option'"
       [(ngModel)]="statusOption"
       [attr.aria-label]="'data_import.imported_posts_status' | translate"
     >
@@ -56,7 +56,7 @@
           {{ 'data_import.marked_as' | translate }}
         </mat-radio-button>
         <div *ngIf="statusOption === 'mark_as'" class="radio-button__content">
-          <mat-radio-group [(ngModel)]="selectedStatus" data-qa="radio-status">
+          <mat-radio-group [(ngModel)]="selectedStatus" [data-qa]="'radio-status'">
             <div class="radio-button">
               <mat-radio-button [value]="PostStatus.Published">
                 {{ 'post.published' | translate }}
@@ -143,7 +143,7 @@
         <td mat-cell *matCellDef="let attribute">
           <mat-form-field appearance="outline">
             <mat-select
-              data-qa="select-columns"
+              [data-qa]="'select-columns'"
               disableOptionCentering
               [(ngModel)]="maps_to[attribute.key]"
               [placeholder]="'data_import.leave_empty' | translate"
@@ -166,10 +166,21 @@
 
   <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
-    <button type="button" mat-stroked-button (click)="cancelImport()" data-qa="btn-cancel-import">
+    <button
+      type="button"
+      mat-stroked-button
+      (click)="cancelImport()"
+      [data-qa]="'btn-cancel-import'"
+    >
       {{ 'app.cancel' | translate }}
     </button>
-    <button type="button" color="primary" mat-raised-button (click)="finish()" data-qa="btn-finish">
+    <button
+      type="button"
+      color="primary"
+      mat-raised-button
+      (click)="finish()"
+      [data-qa]="'btn-finish'"
+    >
       {{ 'app.import' | translate }}
     </button>
   </div>

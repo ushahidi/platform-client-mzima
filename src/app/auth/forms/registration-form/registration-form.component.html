@@ -59,7 +59,7 @@
       color="primary"
       mat-raised-button
       [disabled]="form.invalid || form.disabled"
-      data-qa="btn-register"
+      [data-qa]="'btn-register'"
     >
       {{ 'nav.register' | translate }}
     </button>

@@ -1,13 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { TranslateModule } from '@ngx-translate/core';
+import { DirectiveModule } from '@shared';
 import { MapRoutingModule } from './map-routing.module';
 import { MapComponent } from './map.component';
-import { SharedModule } from '../shared/shared.module';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
 import { PostModule } from '../post/post.module';
 
 @NgModule({
   declarations: [MapComponent, PostDetailsModalComponent],
-  imports: [CommonModule, MapRoutingModule, SharedModule, PostModule],
+  imports: [
+    CommonModule,
+    MapRoutingModule,
+    PostModule,
+    MatProgressBarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    LeafletModule,
+    TranslateModule,
+    DirectiveModule,
+  ],
 })
 export class MapModule {}

@@ -36,6 +36,7 @@ export interface GroupCheckboxValueInterface {
 })
 export class GroupCheckboxSelectComponent implements ControlValueAccessor {
   @Input() data: GroupCheckboxItemInterface[] = [];
+  @Input() isIconVisible = false;
   public value: GroupCheckboxValueInterface = {
     value: '',
     options: [],

@@ -5,7 +5,6 @@ import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-
 import {
   ConfirmModalService,
   EventBusService,
@@ -20,7 +19,7 @@ import {
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
-import { MainViewComponent } from '../shared/components/main-view.component';
+import { MainViewComponent } from '@shared';
 
 enum FeedMode {
   Tiles = 'TILES',
@@ -132,9 +131,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.route.queryParams.subscribe({
       next: (params: Params) => {
-        // const id: string = params['id'] || '';
-        // this.params.created_before_by_id = id;
-        // id?.length ? this.getPost(id) : (this.postDetails = undefined);
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedMode.Tiles;
 
@@ -218,19 +214,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       },
     });
   }
-
-  // private getPost(postId: string): void {
-  //   this.postDetails = undefined;
-  //   this.isPostLoading = true;
-  //   this.postsV5Service.getById(postId).subscribe({
-  //     next: (post: PostResult) => {
-  //       this.postDetails = post;
-  //     },
-  //     complete: () => {
-  //       this.isPostLoading = false;
-  //     },
-  //   });
-  // }
 
   public pageChanged(page: any): void {
     this.pagination.page = page;
@@ -348,18 +331,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public refreshMasonry(): void {
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
-
-  // public onScroll(event: any): void {
-  //   if (
-  //     !this.isLoading &&
-  //     ((this.isDesktop &&
-  //       event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 32) ||
-  //       (!this.isDesktop &&
-  //         event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight))
-  //   ) {
-  //     this.loadMore();
-  //   }
-  // }
 
   public loadMore(): void {
     if (

@@ -1,12 +1,10 @@
 <ng-container *ngIf="exportView; else fieldSelector">
-  <h1 translate>
-    {{ hxlEnabled ? 'data_export.title_hxl' : 'data_export.title' }}
-  </h1>
+  <h1>{{ (hxlEnabled ? 'data_export.title_hxl' : 'data_export.title') | translate }}</h1>
   <div class="description">
-    <p *ngIf="showProgress; else description" translate>data_export.export_progress</p>
+    <p *ngIf="showProgress; else description">{{ 'data_export.export_progress' | translate }}</p>
   </div>
   <mat-tab-group dynamicHeight disableRipple disablePagination animationDuration="0ms">
-    <mat-tab [label]="'data_export.export' | translate" data-qa="tab-export">
+    <mat-tab [label]="'data_export.export' | translate" [data-qa]="'tab-export'">
       <ng-container *ngIf="hxlEnabled && !hxlApiKey">
         <div class="alert">
           <p>{{ 'data_export.hxl_apikey_alert_1' | translate }}</p>
@@ -26,7 +24,7 @@
           mat-stroked-button
           (click)="selectFields()"
           [disabled]="showProgress"
-          data-qa="btn-select-fields"
+          [data-qa]="'btn-select-fields'"
         >
           {{ 'data_export.select_fields' | translate }}
         </button>
@@ -36,14 +34,13 @@
           mat-raised-button
           (click)="exportAll()"
           [disabled]="showProgress"
-          data-qa="btn-export-all"
+          [data-qa]="'btn-export-all'"
         >
           {{ 'data_export.all' | translate }}
         </button>
-        <!-- <button  type="button" color="secondary" [routerLink]="['/settings/']" class="button" role="button" *ngIf="hxlEnabled" [disabled]="showProgress || !hxlApiKey" >{{'data_export.tags_attributes' | translate}}</button> -->
       </div>
     </mat-tab>
-    <mat-tab [label]="'data_export.export_history' | translate" data-qa="tab-export-history">
+    <mat-tab [label]="'data_export.export_history' | translate" [data-qa]="'tab-export-history'">
       <div class="history-table" *ngIf="exportJobsReady; else showLoader">
         <table mat-table [dataSource]="exportJobs">
           <ng-container matColumnDef="name">
@@ -96,9 +93,9 @@
 </ng-container>
 
 <ng-template #fieldSelector>
-  <h1 translate>data_export.select_fields_title</h1>
+  <h1>{{ 'data_export.select_fields_title' | translate }}</h1>
   <div class="description">
-    <p translate>data_export.select_fields_desc</p>
+    <p>{{ 'data_export.select_fields_desc' | translate }}</p>
   </div>
 
   <div class="form-row" *ngFor="let form of forms">
@@ -119,7 +116,7 @@
 
   <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
-    <button type="button" mat-stroked-button (click)="selectFields()" data-qa="btn-cancel">
+    <button type="button" mat-stroked-button (click)="selectFields()" [data-qa]="'btn-cancel'">
       {{ 'data_export.cancel' | translate }}
     </button>
     <button
@@ -127,7 +124,7 @@
       color="primary"
       mat-raised-button
       (click)="exportSelected()"
-      data-qa="btn-export-selected"
+      [data-qa]="'btn-export-selected'"
     >
       {{ 'data_export.export_selected' | translate }}
     </button>
@@ -135,7 +132,7 @@
 </ng-template>
 
 <ng-template #description>
-  <p translate *ngIf="!hxlEnabled">data_export.description</p>
+  <p *ngIf="!hxlEnabled">{{ 'data_export.description' | translate }}</p>
   <p *ngIf="hxlEnabled">
     {{ 'data_export.description_hxl' | translate }}
     <a href="https://hxlstandard.org/standard/1-1final/tagging/" class="link-blue" target="_blank">

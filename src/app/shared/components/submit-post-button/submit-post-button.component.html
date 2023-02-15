@@ -4,7 +4,7 @@
   aria-label="Add post"
   color="primary"
   class="submit-post-button"
-  data-qa="btn-add-new-post"
+  [data-qa]="'btn-add-new-post'"
 >
   <span *ngIf="isDesktop$ | async">{{ 'app.add_new_post' | translate }}</span>
   <mat-icon svgIcon="plus"></mat-icon>

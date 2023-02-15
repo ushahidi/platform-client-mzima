@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService, EventBusService, EventType } from '@services';
 import { regexHelper } from '@helpers';
-import { MatDialog } from '@angular/material/dialog';
-import { ForgotPasswordComponent } from '../../forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from '@auth';
 
 @Component({
   selector: 'app-login-form',

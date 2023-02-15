@@ -4,6 +4,7 @@
   class="modal__close-btn"
   tabindex="-1"
   aria-label="{{ 'modal.button.close' | translate }}"
+  [data-qa]="'btn-close'"
 >
   <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
 </button>
@@ -29,22 +30,17 @@
     <button
       *ngIf="data.buttonSuccess"
       mat-raised-button
-      [mat-dialog-close]="true"
+      mat-dialog-close
       color="primary"
-      data-qa="btn-confirm-success"
+      [data-qa]="'btn-confirm-success'"
     >
       <span>{{ data.buttonSuccess }}</span>
     </button>
     <ng-container *ngIf="!data.buttonSuccess">
-      <button mat-stroked-button mat-dialog-close data-qa="btn-confirm-cancel">
+      <button mat-stroked-button mat-dialog-close [data-qa]="'btn-confirm-cancel'">
         {{ data.cancelButtonText || ('app.cancel' | translate) }}
       </button>
-      <button
-        mat-raised-button
-        [mat-dialog-close]="true"
-        color="primary"
-        data-qa="btn-confirm-delete"
-      >
+      <button mat-raised-button mat-dialog-close color="primary" [data-qa]="'btn-confirm-delete'">
         {{ data.confirmButtonText || ('app.delete' | translate) }}
       </button>
     </ng-container>

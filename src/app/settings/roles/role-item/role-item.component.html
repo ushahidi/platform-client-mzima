@@ -1,5 +1,5 @@
 <h1 *ngIf="isDesktop">{{ (isUpdate ? 'role.edit_role' : 'role.add_role') | translate }}</h1>
-<form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
+<form class="form" [formGroup]="form" (ngSubmit)="save()" novalidate>
   <div class="form-row">
     <mat-label>{{ 'role.name' | translate }}</mat-label>
     <mat-form-field appearance="outline">
@@ -26,7 +26,7 @@
     <mat-label>{{ 'role.permissions' | translate }}</mat-label>
     <p [innerHTML]="'settings.roles.roles_description' | translate"></p>
     <mat-selection-list
-      data-qa="role-permissions-list"
+      [data-qa]="'role-permissions-list'"
       formControlName="permissions"
       (ngModelChange)="selectedItems($event)"
     >
@@ -53,7 +53,7 @@
         color="accent"
         mat-raised-button
         (click)="deleteRole()"
-        data-qa="btn-delete-role"
+        [data-qa]="'btn-delete-role'"
         *ngIf="isUpdate && !role?.protected"
         class="delete-button"
       >
@@ -66,7 +66,7 @@
         mat-stroked-button
         type="button"
         (click)="navigateToRoles()"
-        data-qa="btn-cancel-role"
+        [data-qa]="'btn-cancel-role'"
       >
         <span>{{ 'app.cancel' | translate }}</span>
       </button>
@@ -76,7 +76,7 @@
         class="role-button"
         type="submit"
         [disabled]="form.invalid"
-        data-qa="btn-save-role"
+        [data-qa]="'btn-save-role'"
       >
         <ng-container *ngIf="isDesktop">{{
           (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ResetComponent } from './reset/reset.component';
+import { ResetComponent } from '@auth';
 
 const routes: Routes = [{ path: '', component: ResetComponent }];
 
