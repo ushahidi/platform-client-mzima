@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ClipboardService } from 'src/app/core/services/clipboard.service';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-share-menu',
@@ -12,9 +12,10 @@ export class ShareMenuComponent implements OnInit {
   shareUrl: string = '';
   shareUrlEncoded: any;
   hasPermission = true;
+  public copySuccess = false;
   public embed = `<iframe width="560" height="315" src="https://mzima.staging.ush.zone/posts/create/1" frameborder="0" allowfullscreen></iframe>`;
 
-  constructor(private clipboard: ClipboardService) {}
+  constructor(private clipboard: Clipboard) {}
 
   ngOnInit(): void {
     if (this.postId) {
@@ -33,6 +34,7 @@ export class ShareMenuComponent implements OnInit {
   }
 
   public copyToClipboard(str: string): void {
-    this.clipboard.copy(str);
+    this.copySuccess = this.clipboard.copy(str);
+    setTimeout(() => (this.copySuccess = !this.copySuccess), 2000);
   }
 }

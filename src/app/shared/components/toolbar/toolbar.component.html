@@ -1,5 +1,4 @@
 <mat-toolbar class="toolbar">
-  <!-- <app-breadcrumb></app-breadcrumb> -->
   <button
     mat-icon-button
     (click)="back()"
@@ -10,7 +9,7 @@
   </button>
   <h1
     class="toolbar__page-title"
-    data-qa="page-title"
+    [data-qa]="'page-title'"
     *ngIf="(isDesktop$ | async) || !showSearchForm"
   >
     {{ pageTitle | translate }}
@@ -33,7 +32,7 @@
   <button
     mat-button
     class="account-info"
-    data-qa="account-info"
+    [data-qa]="'account-info'"
     *ngIf="isLoggedIn && (isDesktop$ | async)"
     [matMenuTriggerFor]="accountMenu"
   >

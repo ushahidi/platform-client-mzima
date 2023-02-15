@@ -11,7 +11,7 @@
           mat-raised-button
           translate="app.delete"
           (click)="deleteImage(i)"
-          data-qa="btn-update-logo"
+          [data-qa]="'btn-update-logo'"
         ></button>
       </div>
     </div>
@@ -24,7 +24,7 @@
           type="file"
           class="input"
           [required]="required"
-          data-qa="btn-delete-logo"
+          [data-qa]="'btn-delete-logo'"
           (change)="uploadFile($event)"
         />
       </div>
@@ -50,7 +50,7 @@
         type="file"
         class="input"
         [required]="required"
-        data-qa="btn-delete-logo"
+        [data-qa]="'btn-delete-logo'"
         (change)="uploadFile($event)"
       />
     </div>
@@ -65,7 +65,7 @@
         translate="app.delete"
         (click)="deleteImage()"
         *ngIf="imageSrc?.length"
-        data-qa="btn-update-logo"
+        [data-qa]="'btn-update-logo'"
       ></button>
     </div>
   </div>

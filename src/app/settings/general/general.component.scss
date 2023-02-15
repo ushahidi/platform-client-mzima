@@ -8,5 +8,14 @@
   }
 }
 
-.form-controls-panel {
+.copy {
+  position: relative;
+
+  &-success {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 7px;
+    color: var(--color-success);
+  }
 }

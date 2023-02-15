@@ -4,11 +4,13 @@
   class="modal__close-btn"
   tabindex="-1"
   aria-label="{{ 'modal.button.close' | translate }}"
+  [data-qa]="'btn-close'"
 >
   <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
 </button>
 
 <strong mat-dialog-title>
+  {{ (!!data.search ? 'set.update_saved_filter' : 'set.create_saved_filter') | translate }}
   {{ !!data.search ? 'Update Saved Filter' : 'Create Saved Filter' }}
 </strong>
 

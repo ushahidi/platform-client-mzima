@@ -1,8 +1,8 @@
 <h1 *ngIf="isDesktop">
-  {{ isUpdate ? ('user.edit_user' | translate) : ('user.add_user' | translate) }}
+  {{ (isUpdate ? 'user.edit_user' : 'user.add_user') | translate }}
 </h1>
 
-<form class="form" (ngSubmit)="save()" [formGroup]="form" novalidate>
+<form class="form" [formGroup]="form" (ngSubmit)="save()" novalidate>
   <div class="form-row">
     <mat-label>{{ 'user.full_name' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
@@ -52,7 +52,7 @@
   <div class="form-row">
     <mat-label>{{ 'user.role' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
-      <mat-select formControlName="role" disableOptionCentering data-qa="user-role-select">
+      <mat-select formControlName="role" disableOptionCentering [data-qa]="'user-role-select'">
         <mat-option *ngFor="let role of roles" [value]="role.name" [data-qa]="role.name">
           {{ role.display_name }}
         </mat-option>
@@ -68,7 +68,7 @@
         mat-raised-button
         type="button"
         color="accent"
-        data-qa="btn-user-delete-user"
+        [data-qa]="'btn-user-delete-user'"
         (click)="deleteUser()"
         class="delete-button"
       >
@@ -80,7 +80,7 @@
       <button
         mat-stroked-button
         type="button"
-        data-qa="btn-user-cancel"
+        [data-qa]="'btn-user-cancel'"
         (click)="navigateToUsers()"
       >
         <span>{{ 'app.cancel' | translate }}</span>
@@ -90,7 +90,7 @@
         color="primary"
         class="role-button"
         type="submit"
-        data-qa="btn-user-save"
+        [data-qa]="'btn-user-save'"
         [disabled]="form.invalid"
       >
         <span>{{ 'app.save' | translate }}</span>

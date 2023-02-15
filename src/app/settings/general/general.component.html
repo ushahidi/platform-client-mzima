@@ -1,7 +1,7 @@
 <h1 *ngIf="isDesktop$ | async">{{ 'settings.settings_list.general' | translate }}</h1>
-<form (ngSubmit)="save()" [formGroup]="generalForm" novalidate>
+<form [formGroup]="generalForm" (ngSubmit)="save()" novalidate>
   <div class="form-row">
-    <mat-label translate>settings.deployment_name</mat-label>
+    <mat-label>{{ 'settings.deployment_name' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <input
         matInput
@@ -15,20 +15,20 @@
     </mat-form-field>
   </div>
   <div class="form-row">
-    <mat-label translate>settings.site_description</mat-label>
+    <mat-label>{{ 'settings.site_description' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <textarea
         matInput
         cdkTextareaAutosize
         cdkAutosizeMaxRows="10"
         [cdkAutosizeMinRows]="(isDesktop$ | async) ? 6 : 3"
-        placeholder="{{ 'settings.site_description' }}"
+        placeholder="{{ 'settings.site_description' | translate }}"
         formControlName="description"
       ></textarea>
     </mat-form-field>
   </div>
   <div class="form-row">
-    <mat-label translate>settings.deployment_logo</mat-label>
+    <mat-label>{{ 'settings.deployment_logo' | translate }}</mat-label>
     <app-file-uploader
       [imageSrc]="siteConfig.image_header"
       (fileUpload)="fileUploaded($event)"
@@ -37,7 +37,7 @@
     </app-file-uploader>
   </div>
   <div class="form-row">
-    <mat-label translate>settings.site_email</mat-label>
+    <mat-label>{{ 'settings.site_email' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <input matInput placeholder="name@domain.com" formControlName="email" required />
       <mat-error *ngIf="generalForm.get('email')?.invalid">
@@ -46,7 +46,7 @@
     </mat-form-field>
   </div>
   <div class="form-row">
-    <mat-label translate>settings.site_language</mat-label>
+    <mat-label>{{ 'settings.site_language' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <mat-select formControlName="language" disableOptionCentering>
         <mat-option *ngFor="let lang of langService.getLanguages()" [value]="lang.code">
@@ -64,11 +64,11 @@
         <mat-checkbox formControlName="private">
           {{ 'settings.site_private' | translate }}
         </mat-checkbox>
-        <p class="small" translate>settings.site_private_desc</p>
+        <p class="small">{{ 'settings.site_private_desc' | translate }}</p>
       </div>
       <div class="checkbox">
         <!-- FIXME: isDisableRegistrationEnabled -->
-        <mat-checkbox translate formControlName="disable_registration">
+        <mat-checkbox formControlName="disable_registration">
           {{ 'settings.site_disable_registration' | translate }}
         </mat-checkbox>
         <p translate="settings.site_disable_registration_desc"></p>
@@ -79,15 +79,22 @@
 
 <div class="api-key">
   <div class="form-row" *ngIf="apiKey">
-    <mat-label translate>{{ 'settings.general_settings.api_key' | translate }}</mat-label>
-    <mat-form-field appearance="outline">
+    <mat-label>{{ 'settings.general_settings.api_key' | translate }}</mat-label>
+    <mat-form-field appearance="outline" class="copy">
       <input matInput [value]="apiKey.api_key" readonly />
+      <div class="copy-success" *ngIf="copySuccess">{{ 'share.copied' | translate }}</div>
 
-      <button matSuffix type="button" mat-icon-button (click)="copyToClipboard(apiKey.api_key)">
+      <button
+        matSuffix
+        type="button"
+        mat-icon-button
+        (click)="copyToClipboard(apiKey.api_key)"
+        [disabled]="copySuccess"
+      >
         <mat-icon svgIcon="copy"></mat-icon>
       </button>
 
-      <mat-hint translate>settings.api_key_desc</mat-hint>
+      <mat-hint>{{ 'settings.api_key_desc' | translate }}</mat-hint>
     </mat-form-field>
   </div>
 
@@ -101,10 +108,10 @@
 
 <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
 <div class="form-controls-panel form-controls-panel--sticky">
-  <button type="button" mat-stroked-button routerLink="/settings" data-qa="btn-cancel">
+  <button type="button" mat-stroked-button routerLink="/settings" [data-qa]="'btn-cancel'">
     {{ 'app.cancel' | translate }}
   </button>
-  <button type="button" color="primary" mat-raised-button (click)="save()" data-qa="btn-save">
+  <button type="button" color="primary" mat-raised-button (click)="save()" [data-qa]="'btn-save'">
     {{ 'app.save' | translate }}
   </button>
 </div>
