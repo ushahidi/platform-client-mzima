@@ -22,7 +22,8 @@ import * as Sentry from '@sentry/angular';
 import { BrowserTracing } from '@sentry/tracing';
 
 Sentry.init({
-  dsn: 'https://bb6763efc0434bc0bc7e2c85c1a7e359@o38921.ingest.sentry.io/4504671331024896',
+  dsn: EnvService.EVN.sentry_dsn,
+  debug: EnvService.EVN.sentry_dsn,
   integrations: [
     new BrowserTracing({
       tracePropagationTargets: [],
