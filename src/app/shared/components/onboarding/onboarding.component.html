@@ -1,0 +1,61 @@
+<ng-container *ngFor="let step of onboardingSteps; let i = index">
+  <tour-step
+    [order]="i"
+    *ngIf="!step.hidden"
+    class="onboarding-step selector-{{ step.selector }} order-{{ i }}"
+    [selector]="step.selector"
+    [isFooterVisible]="false"
+    [position]="step.position ?? ''"
+  >
+    <div class="onboarding-step__head">
+      <h2>{{ step.title }}</h2>
+      <mat-icon
+        class="onboarding-step__head__icon"
+        *ngIf="step.icon"
+        [svgIcon]="step.icon"
+      ></mat-icon>
+      <button
+        mat-stroked-button
+        data-qa="btn-close"
+        (click)="finishOnboarding()"
+        class="onboarding-step__close-btn"
+        attr.aria-label="{{ 'modal.button.close' | translate }}"
+      >
+        <mat-icon svgIcon="close"></mat-icon>
+      </button>
+    </div>
+    <div class="onboarding-step__content">
+      <div
+        [innerHTML]="step.content"
+        *ngIf="i !== onboardingSteps.length - 1; else finalStepContent"
+      ></div>
+    </div>
+    <div class="onboarding-step__footer">
+      <button
+        type="button"
+        mat-stroked-button
+        (click)="prevStep()"
+        *ngIf="i > 0 && i !== onboardingSteps.length - 1"
+      >
+        Previous
+      </button>
+      <button type="button" color="primary" mat-raised-button (click)="nextStep()">
+        <ng-container *ngIf="i === 0 || i === onboardingSteps.length - 1; else nextStepText"
+          >OK, sound good</ng-container
+        >
+        <ng-template #nextStepText>Next step</ng-template>
+      </button>
+    </div>
+  </tour-step>
+</ng-container>
+
+<ng-template #finalStepContent>
+  <p>
+    How exciting! Now you know the most important features and you’re ready to start using Ushahidi
+    platform.
+  </p>
+  <p>
+    Remember, in case of any question, don’t hesitate to reach out to our team by
+    <a (click)="openSupportModal()">Help&Support</a>.
+  </p>
+</ng-template>

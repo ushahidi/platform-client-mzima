@@ -11,6 +11,7 @@ import {
   EventBusService,
   EventType,
   BreakpointService,
+  SessionService,
 } from '@services';
 import { filter } from 'rxjs';
 import { IconService } from './core/services/icon.service';
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit {
   public selectedLanguage$;
   public isInnerPage = false;
   public isRTL?: boolean;
+  public isOnboardingDone = false;
 
   constructor(
     private loaderService: LoaderService,
@@ -46,6 +48,7 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
+    private sessionService: SessionService,
   ) {
     this.loaderService.isActive$.subscribe({
       next: (value) => {
@@ -83,6 +86,15 @@ export class AppComponent implements OnInit {
     this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
       next: (option) => (this.isInnerPage = Boolean(option.inner)),
     });
+
+    this.eventBusService.on(EventType.ShowOnboarding).subscribe({
+      next: () => (this.isOnboardingDone = false),
+    });
+
+    const isOnboardingDone = localStorage.getItem(
+      this.sessionService.localStorageNameMapper('is_onboarding_done'),
+    );
+    this.isOnboardingDone = isOnboardingDone ? JSON.parse(isOnboardingDone) : false;
   }
 
   ngOnInit() {
