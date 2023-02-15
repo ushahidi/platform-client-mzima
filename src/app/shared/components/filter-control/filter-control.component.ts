@@ -120,11 +120,13 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['options']?.currentValue) {
       if (this.type === FilterType.Multilevelselect) {
-        this.dataSource = new MatTreeFlatDataSource(
-          this.treeControl,
-          this.treeFlattener,
-          changes['options'].currentValue || [],
-        );
+        setTimeout(() => {
+          this.dataSource = new MatTreeFlatDataSource(
+            this.treeControl,
+            this.treeFlattener,
+            changes['options'].currentValue || [],
+          );
+        }, 10);
       }
     }
   }

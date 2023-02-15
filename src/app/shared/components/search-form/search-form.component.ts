@@ -81,6 +81,7 @@ export class SearchFormComponent implements OnInit {
   isLoggedIn = false;
   public isMainFiltersOpen = true;
   public surveysLoaded: boolean;
+  public isOnboardingActive: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -215,6 +216,14 @@ export class SearchFormComponent implements OnInit {
           setTimeout(() => this.getCategories(), 2000);
         }
       },
+    });
+
+    this.eventBusService.on(EventType.ShowOnboarding).subscribe({
+      next: () => (this.isOnboardingActive = true),
+    });
+
+    this.eventBusService.on(EventType.FinishOnboarding).subscribe({
+      next: () => (this.isOnboardingActive = false),
     });
   }
 

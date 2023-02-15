@@ -42,7 +42,7 @@
   <div
     data-filter-highlight
     class="search-form__main-filters"
-    [ngClass]="{ 'search-form__main-filters--closed': !isMainFiltersOpen }"
+    [ngClass]="{ 'search-form__main-filters--closed': !isMainFiltersOpen && !isOnboardingActive }"
   >
     <button
       type="button"
