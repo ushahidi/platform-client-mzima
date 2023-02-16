@@ -75,12 +75,12 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.buttonWidth = this.button._elementRef.nativeElement.clientWidth;
+      this.buttonWidth = this.button._elementRef?.nativeElement.clientWidth ?? 0;
     }, 500);
 
     fromEvent(window, 'resize').subscribe({
       next: () => {
-        this.buttonWidth = this.button._elementRef.nativeElement.clientWidth;
+        this.buttonWidth = this.button._elementRef?.nativeElement.clientWidth ?? 0;
       },
     });
   }

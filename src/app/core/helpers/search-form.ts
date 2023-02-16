@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const statuses = [
   {
     value: 'published',
@@ -89,3 +91,31 @@ export const sortingOptions = [
     },
   },
 ];
+
+export const DEFAULT_FILTERS = {
+  query: [''],
+  status: [[]],
+  tags: [[]],
+  source: [[]],
+  form: [[]],
+  place: [''],
+  date: [
+    {
+      start: '',
+      end: '',
+    },
+  ],
+  center_point: [
+    {
+      location: {
+        lat: null,
+        lng: null,
+      },
+      distance: 1,
+    },
+  ],
+};
+
+export const compareForms = (form1: any, form2: any) => {
+  return !_.isEqual(form1, form2);
+};
