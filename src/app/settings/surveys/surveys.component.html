@@ -9,7 +9,7 @@
     type="button"
     color="primary"
     mat-stroked-button
-    data-qa="btn-settings-duplicate"
+    [data-qa]="'btn-settings-duplicate'"
     [disabled]="selectedSurveys.length > 1"
     (click)="duplicateSurvey()"
   >
@@ -18,7 +18,7 @@
 </app-settings-header>
 
 <app-spinner class="spinner" *ngIf="!surveys"></app-spinner>
-<ul role="list" class="types-list" *ngIf="!!surveys" data-qa="survey-list">
+<ul role="list" class="types-list" *ngIf="!!surveys" [data-qa]="'survey-list'">
   <li
     mat-ripple
     role="listitem"

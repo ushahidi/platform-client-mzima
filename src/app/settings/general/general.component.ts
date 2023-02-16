@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { ApiKeyResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -14,7 +15,6 @@ import {
 import { mergeMap } from 'rxjs';
 import { ConfirmModalService } from '@services';
 import { SettingsMapComponent } from './settings-map/settings-map.component';
-import { ClipboardService } from 'src/app/core/services/clipboard.service';
 
 @Component({
   selector: 'app-general',
@@ -32,7 +32,7 @@ export class GeneralComponent implements OnInit {
     private: [false, []],
     disable_registration: [false, []],
   });
-
+  public copySuccess = false;
   siteConfig: any;
   apiKey: ApiKeyResult;
   uploadedFile?: File;
@@ -47,7 +47,7 @@ export class GeneralComponent implements OnInit {
     private translate: TranslateService,
     private apiKeyService: ApiKeyService,
     private confirmModalService: ConfirmModalService,
-    private clipboard: ClipboardService,
+    private clipboard: Clipboard,
     private breakpointService: BreakpointService,
   ) {}
 
@@ -132,6 +132,7 @@ export class GeneralComponent implements OnInit {
   }
 
   public copyToClipboard(str: string): void {
-    this.clipboard.copy(str);
+    this.copySuccess = this.clipboard.copy(str);
+    setTimeout(() => (this.copySuccess = !this.copySuccess), 2000);
   }
 }

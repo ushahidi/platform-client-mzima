@@ -1,20 +1,20 @@
 <div class="page-not-found">
   <div class="page-not-found__container">
-    <p class="page-not-found__title" data-qa="page-not-found-title">
+    <p class="page-not-found__title" [data-qa]="'page-not-found-title'">
       <span class="page-not-found__title-404">{{ '404.404' | translate }}</span>
       {{ '404.error' | translate }}
     </p>
     <p
       class="page-not-found__description"
       [innerHTML]="'404.description' | translate"
-      data-qa="page-not-found-description"
+      [data-qa]="'page-not-found-description'"
     ></p>
     <button
       type="button"
       color="primary"
       mat-raised-button
       (click)="goToMap()"
-      data-qa="button-go-to-map"
+      [data-qa]="'button-go-to-map'"
     >
       <span>{{ '404.button' | translate }}</span>
     </button>

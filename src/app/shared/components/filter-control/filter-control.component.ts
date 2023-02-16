@@ -75,12 +75,12 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.buttonWidth = this.button._elementRef.nativeElement.clientWidth;
+      this.buttonWidth = this.button._elementRef?.nativeElement.clientWidth ?? 0;
     }, 500);
 
     fromEvent(window, 'resize').subscribe({
       next: () => {
-        this.buttonWidth = this.button._elementRef.nativeElement.clientWidth;
+        this.buttonWidth = this.button._elementRef?.nativeElement.clientWidth ?? 0;
       },
     });
   }
@@ -120,11 +120,13 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['options']?.currentValue) {
       if (this.type === FilterType.Multilevelselect) {
-        this.dataSource = new MatTreeFlatDataSource(
-          this.treeControl,
-          this.treeFlattener,
-          changes['options'].currentValue || [],
-        );
+        setTimeout(() => {
+          this.dataSource = new MatTreeFlatDataSource(
+            this.treeControl,
+            this.treeFlattener,
+            changes['options'].currentValue || [],
+          );
+        }, 10);
       }
     }
   }

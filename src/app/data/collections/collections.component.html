@@ -4,6 +4,7 @@
   class="modal__close-btn"
   tabindex="-1"
   attr.aria-label="{{ 'modal.button.close' | translate }}"
+  [data-qa]="'btn-close'"
 >
   <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
 </button>
@@ -11,9 +12,8 @@
 <ng-container *ngIf="currentView === CollectionView.List; else createForm">
   <div class="head">
     <strong mat-dialog-title>
-      {{
-        post ? ('set.add_to_collection' | translate) : ('app.collection' | translate)
-      }}&nbsp;<button
+      {{ (post ? 'set.add_to_collection' : 'app.collection') | translate }}
+      <button
         class="tooltip-btn"
         tabindex="-1"
         mat-icon-button
@@ -85,12 +85,6 @@
         </app-collection-item>
       </div>
     </div>
-
-    <!-- <mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" mat-dialog-close>
-      {{ 'form.save_and_close' | translate }}
-    </button>
-  </mat-dialog-actions> -->
   </ng-container>
 </ng-container>
 
@@ -123,7 +117,7 @@
         </mat-form-field>
       </div>
       <div class="form-row">
-        <mat-label translate>set.description</mat-label>
+        <mat-label>{{ 'set.description' | translate }}</mat-label>
         <mat-form-field appearance="outline">
           <textarea
             matInput

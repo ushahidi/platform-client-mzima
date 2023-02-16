@@ -11,6 +11,7 @@ interface OnboardingStep {
   selector?: string | string[];
   position?: string;
   hidden?: boolean;
+  dynamic?: boolean;
 }
 
 @Component({
@@ -23,6 +24,9 @@ export class OnboardingComponent implements AfterViewInit {
   private userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
   public onboardingSteps: OnboardingStep[];
   private username?: string;
+  public isFiltersVisible: boolean;
+  private activeStep: number;
+  public isHidden: boolean;
 
   constructor(
     private router: Router,
@@ -32,12 +36,31 @@ export class OnboardingComponent implements AfterViewInit {
   ) {
     this.customTourService.showingStep$.subscribe({
       next: (data) => {
+        if (this.activeStep === data.order) return;
+        this.activeStep = data.order;
+
+        if (data.order === 1 || data.order === 2 || data.order === 5) {
+          this.router.navigate(['/map']);
+        }
+
         if (data.order === 3) {
           this.router.navigate(['/feed']);
-          setTimeout(() => {
-            this.customTourService.updateHighlightedElements();
-          }, 100);
         }
+
+        if (data.order === 4) {
+          this.router.navigate(['/activity']);
+        }
+
+        if (data.order === 6) {
+          this.router.navigate(['/settings']);
+        }
+
+        // if (this.onboardingSteps[data.order].dynamic) {
+        //   setTimeout(() => {
+        //     this.customTourService.updateHighlightedElements();
+        //     this.isHidden = false;
+        //   }, 1000);
+        // }
       },
     });
 
@@ -47,17 +70,43 @@ export class OnboardingComponent implements AfterViewInit {
           this.sessionService.localStorageNameMapper('is_onboarding_done'),
           JSON.stringify(true),
         );
+
+        this.eventBusService.next({
+          type: EventType.FinishOnboarding,
+          payload: true,
+        });
+
+        this.router.navigate(['/map']);
       },
     });
 
     this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
       this.username = userData.realname;
-      this.initOnboardingSteps();
+      if (!this.onboardingSteps) {
+        this.initOnboardingSteps();
+      }
     });
 
     this.eventBusService.on(EventType.ShowOnboarding).subscribe({
       next: () => this.initOnboarding(),
+    });
+
+    this.eventBusService.on(EventType.FeedPostsLoaded).subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.customTourService.updateHighlightedElements();
+          this.isHidden = false;
+        }, 100);
+      },
+    });
+
+    this.sessionService.isFiltersVisible$.subscribe({
+      next: (isFiltersVisible) => {
+        setTimeout(() => {
+          this.isFiltersVisible = isFiltersVisible;
+        }, 1);
+      },
     });
   }
 
@@ -104,6 +153,7 @@ export class OnboardingComponent implements AfterViewInit {
           '<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>',
         selector: '.feed-page__control--sorting',
         position: 'left',
+        dynamic: true,
       },
       {
         title: 'Activity',
@@ -138,10 +188,16 @@ export class OnboardingComponent implements AfterViewInit {
   }
 
   public nextStep(): void {
+    if (this.onboardingSteps[this.activeStep + 1]?.dynamic) {
+      this.isHidden = true;
+    }
     this.customTourService.showNext();
   }
 
   public prevStep(): void {
+    if (this.onboardingSteps[this.activeStep - 1]?.dynamic) {
+      this.isHidden = true;
+    }
     this.customTourService.showPrev();
   }
 

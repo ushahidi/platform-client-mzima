@@ -623,3 +623,18 @@
   display: block;
   margin: calc(50vh - 160px) auto 0;
 }
+
+.no-saved-filters {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 8px 16px;
+  white-space: normal;
+  color: var(--color-neutral-90);
+
+  @include breakpoint-max($tablet) {
+    font-size: 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

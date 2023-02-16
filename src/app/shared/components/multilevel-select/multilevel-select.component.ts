@@ -12,7 +12,7 @@ export interface MultilevelSelectOption {
 interface CategoryFlatNode {
   expandable: boolean;
   name: string;
-  id: string | string;
+  id: string;
   level: number;
 }
 

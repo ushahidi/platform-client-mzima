@@ -29,8 +29,11 @@ export class ConfigService {
         `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/site`,
       )
       .pipe(
-        tap((data) => {
-          this.sessionService.setConfigurations('site', data);
+        tap({
+          next: (data) => {
+            this.sessionService.setConfigurations('site', data);
+          },
+          error: () => setTimeout(() => this.getSite(), 5000),
         }),
       );
   }
@@ -43,8 +46,11 @@ export class ConfigService {
         }/features`,
       )
       .pipe(
-        tap((data) => {
-          this.sessionService.setConfigurations('features', data);
+        tap({
+          next: (data) => {
+            this.sessionService.setConfigurations('features', data);
+          },
+          error: () => setTimeout(() => this.getFeatures(), 5000),
         }),
       );
   }
@@ -55,14 +61,17 @@ export class ConfigService {
         `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/map`,
       )
       .pipe(
-        tap((data) => {
-          if (data.default_view?.baselayer === 'MapQuest') {
-            data.default_view.baselayer = 'streets';
-          }
-          if (data.default_view?.baselayer === 'MapQuestAerial') {
-            data.default_view.baselayer = 'satellite';
-          }
-          this.sessionService.setConfigurations('map', data);
+        tap({
+          next: (data) => {
+            if (data.default_view?.baselayer === 'MapQuest') {
+              data.default_view.baselayer = 'streets';
+            }
+            if (data.default_view?.baselayer === 'MapQuestAerial') {
+              data.default_view.baselayer = 'satellite';
+            }
+            this.sessionService.setConfigurations('map', data);
+          },
+          error: () => setTimeout(() => this.getMap(), 5000),
         }),
       );
   }

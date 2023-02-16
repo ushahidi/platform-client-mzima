@@ -1,23 +1,23 @@
 <h1 *ngIf="isDesktop$ | async">Setup Donation</h1>
 
-<form (ngSubmit)="save()" [formGroup]="donationForm" novalidate>
+<form [formGroup]="donationForm" (ngSubmit)="save()" novalidate>
   <div class="form-row toggle-group">
     <div class="toggle">
-      <mat-slide-toggle formControlName="enabled" data-qa="monetization-toggle">
+      <mat-slide-toggle formControlName="enabled" [data-qa]="'monetization-toggle'">
         {{ 'app.enable_monetization' | translate }}
       </mat-slide-toggle>
     </div>
   </div>
 
   <div class="form-row">
-    <mat-label translate>settings.donation.title.label</mat-label>
+    <mat-label>{{ 'settings.donation.title.label' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <input
         matInput
         placeholder="{{ 'settings.donation.title.placeholder' | translate }}"
         formControlName="title"
         required
-        data-qa="title"
+        [data-qa]="'title'"
       />
       <mat-error *ngIf="donationForm.get('title')?.invalid">
         {{ 'settings.donation.title.required' | translate }}
@@ -26,10 +26,10 @@
   </div>
 
   <div class="form-row">
-    <mat-label translate>{{ 'settings.donation.description.label' | translate }}</mat-label>
+    <mat-label>{{ 'settings.donation.description.label' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <textarea
-        data-qa="description"
+        [data-qa]="'description'"
         matInput
         cdkTextareaAutosize
         cdkAutosizeMinRows="4"
@@ -41,7 +41,7 @@
   </div>
 
   <div class="form-row">
-    <mat-label translate>settings.donation.images.label</mat-label>
+    <mat-label>{{ 'settings.donation.images.label' | translate }}</mat-label>
     <app-file-uploader
       [multiple]="true"
       [imageSrc]="images"
@@ -52,10 +52,10 @@
   </div>
 
   <div class="form-row">
-    <mat-label translate>settings.donation.wallet.label</mat-label>
+    <mat-label>{{ 'settings.donation.wallet.label' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <input
-        data-qa="wallet"
+        [data-qa]="'wallet'"
         matInput
         placeholder="{{ 'settings.donation.wallet.placeholder' | translate }}"
         formControlName="wallet"
@@ -76,10 +76,10 @@
 
 <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
 <div class="form-controls-panel form-controls-panel--sticky">
-  <button type="button" mat-stroked-button routerLink="/settings" translate data-qa="btn-cancel">
+  <button type="button" mat-stroked-button routerLink="/settings" [data-qa]="'btn-cancel'">
     {{ 'app.cancel' | translate }}
   </button>
-  <button type="button" color="primary" mat-raised-button (click)="save()" data-qa="btn-save">
+  <button type="button" color="primary" mat-raised-button (click)="save()" [data-qa]="'btn-save'">
     {{ 'app.save' | translate }}
   </button>
 </div>

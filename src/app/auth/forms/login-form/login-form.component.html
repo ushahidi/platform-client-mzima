@@ -25,10 +25,6 @@
   </div>
 
   <div class="form-row controls">
-    <!-- <div class="checkbox">
-      <mat-checkbox> Remember me on this device. </mat-checkbox>
-    </div> -->
-
     <button (click)="restorePassword()" mat-button type="button">Forgot password?</button>
   </div>
 
@@ -42,7 +38,7 @@
       color="primary"
       mat-raised-button
       [disabled]="form.invalid || form.disabled"
-      data-qa="btn-login"
+      [data-qa]="'btn-login'"
     >
       {{ 'nav.login' | translate }}
     </button>

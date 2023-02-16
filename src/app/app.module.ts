@@ -1,22 +1,24 @@
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, ErrorHandler, FactoryProvider, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserModule, Meta } from '@angular/platform-browser';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedModule } from '@shared';
-import { ErrorsHandler } from './core/handlers/errors-handler';
-import { AuthInterceptor } from './core/interceptors';
-import { AuthModule } from './auth/auth.module';
-import { ConfigService, EnvService } from '@services';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
-import { QuillModule } from 'ngx-quill';
-import { LottieModule } from 'ngx-lottie';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ConfigService, EnvService } from '@services';
+import { SharedModule, SpinnerModule } from '@shared';
 import { CookieService } from 'ngx-cookie-service';
+import { LottieModule } from 'ngx-lottie';
+import { QuillModule } from 'ngx-quill';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
+import { ErrorsHandlerService } from './core/handlers/errors-handler.service';
+import { AuthInterceptor } from './core/interceptors';
+
 import { RouterModule } from '@angular/router';
 import * as Sentry from '@sentry/angular';
 import { BrowserTracing } from '@sentry/tracing';
@@ -102,6 +104,8 @@ export function playerFactory(): any {
     }),
     FormsModule,
     LottieModule.forRoot({ player: playerFactory }),
+    MatSidenavModule,
+    SpinnerModule,
   ],
   providers: [
     {
@@ -126,7 +130,7 @@ export function playerFactory(): any {
       multi: true,
     },
     loadConfigProvider,
-    { provide: ErrorHandler, useClass: ErrorsHandler },
+    { provide: ErrorHandler, useClass: ErrorsHandlerService },
     loadGoogleTagManagerProvider,
     Meta,
     CookieService,
