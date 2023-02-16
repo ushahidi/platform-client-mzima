@@ -11,6 +11,7 @@ export const enum EventType {
   IsSettingsInnerPage = 'IS_SETTINGS_INNER_PAGE',
   ShowOnboarding = 'SHOW_ONBOARDING',
   FinishOnboarding = 'FINISH_ONBOARDING',
+  FeedPostsLoaded = 'FEED_POSTS_LOADED',
 }
 
 export interface BusEvent<T = any> {

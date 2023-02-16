@@ -55,12 +55,12 @@ export class OnboardingComponent implements AfterViewInit {
           this.router.navigate(['/settings']);
         }
 
-        if (this.onboardingSteps[data.order].dynamic) {
-          setTimeout(() => {
-            this.customTourService.updateHighlightedElements();
-            this.isHidden = false;
-          }, 1000);
-        }
+        // if (this.onboardingSteps[data.order].dynamic) {
+        //   setTimeout(() => {
+        //     this.customTourService.updateHighlightedElements();
+        //     this.isHidden = false;
+        //   }, 1000);
+        // }
       },
     });
 
@@ -90,6 +90,15 @@ export class OnboardingComponent implements AfterViewInit {
 
     this.eventBusService.on(EventType.ShowOnboarding).subscribe({
       next: () => this.initOnboarding(),
+    });
+
+    this.eventBusService.on(EventType.FeedPostsLoaded).subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.customTourService.updateHighlightedElements();
+          this.isHidden = false;
+        }, 100);
+      },
     });
 
     this.sessionService.isFiltersVisible$.subscribe({

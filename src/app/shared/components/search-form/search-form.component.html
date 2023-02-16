@@ -248,7 +248,7 @@
           <mat-icon svgIcon="plus" class="save-filter-button__icon"></mat-icon>
           {{ 'global_filter.save_new_filter' | translate }}
         </button>
-        <span postfix *ngIf="savedSearches?.length === 0"
+        <span class="no-saved-filters" postfix *ngIf="savedSearches?.length === 0"
           >No saved filters. Saved filter(s) will appear here for you to select once made
           available.</span
         >
