@@ -21,9 +21,13 @@ import { RouterModule } from '@angular/router';
 import * as Sentry from '@sentry/angular';
 import { BrowserTracing } from '@sentry/tracing';
 
+import envObj from '../env.json';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+let { sentry_dsn, sentry_debug_mode } = envObj;
+
 Sentry.init({
-  // dsn: EnvService.EVN.sentry_dsn,
-  // debug: EnvService.EVN.sentry_dsn,
+  dsn: sentry_dsn,
+  debug: sentry_debug_mode,
   integrations: [
     new BrowserTracing({
       tracePropagationTargets: [],
