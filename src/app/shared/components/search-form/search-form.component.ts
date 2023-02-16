@@ -36,6 +36,8 @@ export class SearchFormComponent implements OnInit {
   private totalGeoPosts$ = this.postsService.totalGeoPosts$.pipe(untilDestroyed(this));
   private totalPosts$ = this.postsService.totalPosts$.pipe(untilDestroyed(this));
   private isMainFiltersHidden$ = this.session.isMainFiltersHidden$.pipe(untilDestroyed(this));
+  private userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
+  private isFiltersVisible$ = this.session.isFiltersVisible$.pipe(untilDestroyed(this));
   public _array = Array;
   public filterType = FilterType;
   public form: FormGroup = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS);
@@ -130,7 +132,7 @@ export class SearchFormComponent implements OnInit {
       },
     });
 
-    this.postsFilters$.pipe(untilDestroyed(this)).subscribe({
+    this.postsFilters$.subscribe({
       next: (res) => {
         if (res.set) {
           const collectionId = typeof res.set === 'string' ? res.set : '';
@@ -173,6 +175,35 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
+  ngOnInit(): void {
+    this.eventBusInit();
+
+    this.isMapView = this.router.url.includes('/map');
+
+    this.userData$.subscribe((userData) => {
+      this.isLoggedIn = !!userData.userId;
+      this.getSavedFilters();
+    });
+
+    this.isFiltersVisible$.subscribe((isVisible) => (this.isFiltersVisible = isVisible));
+  }
+
+  private eventBusInit() {
+    this.eventBusService.on(EventType.SavedSearchInit).subscribe({
+      next: async (sSearch) => {
+        await this.getSavedValues(parseFloat(sSearch));
+      },
+    });
+
+    this.eventBusService.on(EventType.ShowOnboarding).subscribe({
+      next: () => (this.isOnboardingActive = true),
+    });
+
+    this.eventBusService.on(EventType.FinishOnboarding).subscribe({
+      next: () => (this.isOnboardingActive = false),
+    });
+  }
+
   private getCategories() {
     this.categoriesService.get().subscribe({
       next: (response) => {
@@ -197,28 +228,6 @@ export class SearchFormComponent implements OnInit {
         }
       },
     });
-
-    this.eventBusService.on(EventType.ShowOnboarding).subscribe({
-      next: () => (this.isOnboardingActive = true),
-    });
-
-    this.eventBusService.on(EventType.FinishOnboarding).subscribe({
-      next: () => (this.isOnboardingActive = false),
-    });
-  }
-
-  ngOnInit(): void {
-    this.isMapView = this.router.url.includes('/map');
-
-    this.session.currentUserData$.subscribe((userData) => {
-      this.isLoggedIn = !!userData.userId;
-      this.getSavedFilters();
-    });
-    this.eventBusService.on(EventType.SavedSearchInit).subscribe((sSearch) => {
-      this.getSavedValues(parseFloat(sSearch));
-    });
-
-    this.session.isFiltersVisible$.subscribe((isVisible) => (this.isFiltersVisible = isVisible));
   }
 
   private getActiveFilters(values: any): void {
@@ -268,6 +277,7 @@ export class SearchFormComponent implements OnInit {
       next: (responses) => {
         const values = responses[1].totals.find((total: any) => total.key === 'form')?.values;
         this.surveyList = responses[0].results;
+        this.surveyList.map((survey) => (survey.checked = true));
 
         values.map((value: any) => {
           const survey = this.surveyList.find((s) => s.id === value.id);
@@ -554,7 +564,6 @@ export class SearchFormComponent implements OnInit {
   }
 
   public searchPosts(): void {
-    if (typeof this.searchQuery !== 'string') return;
     this.searchSubject.next(this.searchQuery);
   }
 
@@ -584,5 +593,9 @@ export class SearchFormComponent implements OnInit {
 
   public toggleMainFilters(): void {
     this.session.toggleMainFiltersVisibility(this.isMainFiltersOpen);
+  }
+
+  surveyChanged(event: any) {
+    console.log('surveyChanged', event);
   }
 }
