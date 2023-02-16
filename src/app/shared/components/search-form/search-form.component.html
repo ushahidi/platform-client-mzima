@@ -225,7 +225,6 @@
       </ng-container>
 
       <app-filter-control
-        *ngIf="isLoggedIn"
         title="{{ 'global_filter.saved_filters' | translate }}"
         [type]="filterType.Select"
         [options]="savedSearches"
@@ -249,6 +248,10 @@
           <mat-icon svgIcon="plus" class="save-filter-button__icon"></mat-icon>
           {{ 'global_filter.save_new_filter' | translate }}
         </button>
+        <span postfix *ngIf="savedSearches?.length === 0"
+          >No saved filters. Saved filter(s) will appear here for you to select once made
+          available.</span
+        >
       </app-filter-control>
 
       <app-filter-control

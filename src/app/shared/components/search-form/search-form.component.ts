@@ -38,29 +38,7 @@ export class SearchFormComponent implements OnInit {
   private isMainFiltersHidden$ = this.session.isMainFiltersHidden$.pipe(untilDestroyed(this));
   public _array = Array;
   public filterType = FilterType;
-  public form: FormGroup = this.formBuilder.group({
-    query: [],
-    status: [[]],
-    tags: [],
-    source: [],
-    form: [],
-    place: [''],
-    date: [
-      {
-        start: '',
-        end: '',
-      },
-    ],
-    center_point: [
-      {
-        location: {
-          lat: null,
-          lng: null,
-        },
-        distance: 1,
-      },
-    ],
-  });
+  public form: FormGroup = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS);
   collectionInfo?: CollectionResult;
   public activeFilters: any;
   public savedSearches: Savedsearch[];
@@ -82,6 +60,8 @@ export class SearchFormComponent implements OnInit {
   public isMainFiltersOpen = true;
   public surveysLoaded: boolean;
   public isOnboardingActive: boolean;
+
+  private defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -340,7 +320,11 @@ export class SearchFormComponent implements OnInit {
   }
 
   get canCreateSearch() {
-    return this.isLoggedIn && this.form.dirty && !this.collectionInfo;
+    return (
+      this.isLoggedIn &&
+      !this.collectionInfo &&
+      searchFormHelper.compareForms(this.form.value, this.defaultFormValue)
+    );
   }
 
   private getSavedFilters(): void {
@@ -501,6 +485,7 @@ export class SearchFormComponent implements OnInit {
 
     await this.setSavedFilter(value);
     this.preparingSavedFilter();
+    this.defaultFormValue = this.form.value;
   }
 
   private preparingSavedFilter() {
@@ -542,6 +527,7 @@ export class SearchFormComponent implements OnInit {
     localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
     this.resetForm();
     this.clearCollection();
+    this.defaultFormValue = this.form.value;
   }
 
   public applyFilters(): void {
@@ -554,26 +540,7 @@ export class SearchFormComponent implements OnInit {
   }
 
   public resetForm(filters: any = {}): void {
-    this.form.patchValue({
-      query: '',
-      status: [],
-      tags: [],
-      source: [],
-      form: [],
-      date: {
-        start: '',
-        end: '',
-      },
-      place: '',
-      center_point: {
-        location: {
-          lat: null,
-          lng: null,
-        },
-        distance: 1,
-      },
-      ...filters,
-    });
+    this.form.patchValue(Object.assign(searchFormHelper.DEFAULT_FILTERS, filters));
   }
 
   public toggleFilters(value: boolean): void {
