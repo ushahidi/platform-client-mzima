@@ -5,12 +5,7 @@
     </span>
 
     <div class="sidebar__info">
-      <app-company-info
-        *ngIf="isDesktop"
-        [title]="siteConfig.name"
-        [logo]="siteConfig.image_header"
-        [description]="siteConfig.description"
-      ></app-company-info>
+      <app-company-info *ngIf="isDesktop"></app-company-info>
       <app-submit-post-button class="sidebar__add-post-btn"></app-submit-post-button>
     </div>
   </div>

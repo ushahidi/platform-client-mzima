@@ -167,7 +167,7 @@ export class OnboardingComponent implements AfterViewInit {
         title: 'Collections',
         icon: 'collections',
         content:
-          '<p>To organise the deployment, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>',
+          '<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>',
         selector: '#sidebar-btn-collections',
         position: 'right',
       },
