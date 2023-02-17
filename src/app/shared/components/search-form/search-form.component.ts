@@ -563,7 +563,7 @@ export class SearchFormComponent implements OnInit {
   public resetForm(filters: any = {}): void {
     this.form.patchValue({
       query: '',
-      status: [],
+      status: ['published', 'draft'],
       tags: [],
       source: [],
       form: [],
