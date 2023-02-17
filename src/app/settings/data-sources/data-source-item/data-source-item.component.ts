@@ -33,11 +33,11 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   public provider: any;
   public surveyList: any[];
   public form: FormGroup = this.fb.group({});
-  public dataSourceList: any[];
+  private dataSourceList: any[];
   public selectedSurvey: any;
   public surveyAttributesList: any;
   public currentProviderId: string | null;
-  public availableProviders: any[];
+  private availableProviders: any[];
   public onCreating: boolean;
   public isDesktop = false;
 
@@ -64,7 +64,15 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     });
   }
 
-  getAvailableProviders(providers: any) {
+  ngOnInit(): void {
+    this.currentProviderId = this.route.snapshot.paramMap.get('id');
+    if (!this.currentProviderId) {
+      this.onCreating = true;
+    }
+    this.getProviders();
+  }
+
+  private getAvailableProviders(providers: any) {
     const tempProviders: any[] = [];
     for (const key in providers) {
       tempProviders.push({
@@ -74,14 +82,6 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
       });
     }
     return arrayHelpers.sortArray(tempProviders.filter((provider) => !provider.type));
-  }
-
-  ngOnInit(): void {
-    this.currentProviderId = this.route.snapshot.paramMap.get('id');
-    if (!this.currentProviderId) {
-      this.onCreating = true;
-    }
-    this.getProviders();
   }
 
   private getProviders(): void {
@@ -106,7 +106,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
 
   public setCurrentProvider(providerId?: any): void {
     if (!this.currentProviderId && !providerId) {
-      this.currentProviderId = this.availableProviders[0]?.id as string;
+      this.currentProviderId = this.availableProviders[1]?.id as string;
     }
     const id = this.currentProviderId || providerId;
     if (id) {
