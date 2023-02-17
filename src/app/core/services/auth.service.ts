@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { mergeMap, Observable } from 'rxjs';
 import { CONST } from '@constants';
@@ -17,6 +18,7 @@ export class AuthService extends ResourceService<any> {
     private sessionService: SessionService,
     private userService: UsersService,
     private translate: TranslateService,
+    private router: Router,
   ) {
     super(httpClient, env);
   }
@@ -91,6 +93,7 @@ export class AuthService extends ResourceService<any> {
   public logout() {
     this.sessionService.clearSessionData();
     this.sessionService.clearUserData();
+    this.router.navigate(['/map']);
   }
 
   public getControlError(form: FormGroup, field: string, errorCodes: string[]) {
