@@ -561,7 +561,26 @@ export class SearchFormComponent implements OnInit {
   }
 
   public resetForm(filters: any = {}): void {
-    this.form.patchValue(Object.assign(searchFormHelper.DEFAULT_FILTERS, filters));
+    this.form.patchValue({
+      query: '',
+      status: ['published', 'draft'],
+      tags: [],
+      source: [],
+      form: [],
+      date: {
+        start: '',
+        end: '',
+      },
+      place: '',
+      center_point: {
+        location: {
+          lat: null,
+          lng: null,
+        },
+        distance: 1,
+      },
+      ...filters,
+    });
   }
 
   public toggleFilters(value: boolean): void {

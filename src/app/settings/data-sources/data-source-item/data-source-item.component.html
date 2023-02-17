@@ -6,7 +6,10 @@
 </h1>
 
 <div class="form-row" *ngIf="onCreating">
-  <mat-label>{{ 'type_of_data_source' | translate }} <span class="color-accent">*</span></mat-label>
+  <mat-label
+    >{{ 'settings.data_sources.type_of_data_source' | translate }}
+    <span class="color-accent">*</span></mat-label
+  >
   <mat-form-field appearance="outline">
     <mat-select
       disableOptionCentering
@@ -15,10 +18,7 @@
       (selectionChange)="setCurrentProvider($event.value)"
       [data-qa]="'select-provider'"
     >
-      <ng-container
-        *ngFor="let provider of providersData?.providers | keyvalue"
-        [data-qa]="'available-provider'"
-      >
+      <ng-container *ngFor="let provider of providersData?.providers | keyvalue">
         <mat-option [value]="provider.key" *ngIf="!provider.value" [data-qa]="provider.key">
           {{ provider.key }}
         </mat-option>
