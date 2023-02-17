@@ -109,7 +109,7 @@
             >
               <span class="selection-list__option__border"></span>
               {{ survey.name }}
-              <span class="selection-list__option__total">{{ survey.total || 0 }}</span>
+              <span class="selection-list__option__total">{{ survey.total }}</span>
             </mat-list-option>
           </mat-selection-list>
 
@@ -150,6 +150,7 @@
           <mat-selection-list name="source" class="selection-list" formControlName="source">
             <ng-container *ngFor="let source of sources">
               <mat-list-option
+                [selected]="source.checked"
                 *ngIf="source.total > 0"
                 color="primary"
                 [value]="source.value"
