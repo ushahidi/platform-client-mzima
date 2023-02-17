@@ -1,6 +1,6 @@
 <button
   mat-stroked-button
-  mat-dialog-close
+  mat-dialog-close="false"
   class="modal__close-btn"
   tabindex="-1"
   aria-label="{{ 'modal.button.close' | translate }}"
@@ -160,7 +160,7 @@
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
-  <button type="button" mat-dialog-close mat-stroked-button>
+  <button type="button" mat-dialog-close="false" mat-stroked-button>
     {{ 'app.cancel' | translate }}
   </button>
   <button
