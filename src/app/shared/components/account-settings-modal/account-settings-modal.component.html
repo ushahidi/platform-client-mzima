@@ -1,7 +1,7 @@
 <ng-container *ngIf="profile !== undefined; else spinner">
   <button
     mat-stroked-button
-    mat-dialog-close
+    mat-dialog-close="false"
     class="modal__close-btn"
     tabindex="-1"
     aria-label="{{ 'modal.button.close' | translate }}"
@@ -205,7 +205,7 @@
   </div>
 
   <mat-dialog-actions align="end">
-    <button mat-stroked-button mat-dialog-close>
+    <button mat-stroked-button mat-dialog-close="false">
       {{ 'app.cancel' | translate }}
     </button>
     <button
