@@ -145,7 +145,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   }
 
   private createForm(provider: any) {
-    this.addControlsToForm('form_id', this.fb.control(this.provider.selected_survey));
+    this.addControlsToForm('form_id', this.fb.control(this.provider?.selected_survey));
     this.createControls(provider.control_options);
     this.createControls(provider.control_inbound_fields);
   }
