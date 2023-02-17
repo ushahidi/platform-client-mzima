@@ -157,6 +157,9 @@ export class PostsService extends ResourceService<any> {
   public getPostStatistics(queryParams?: any) {
     const filters = { ...this.postsFilters.value };
 
+    delete filters.form;
+    delete filters['form[]'];
+
     return super.get(
       'stats',
       queryParams ?? {

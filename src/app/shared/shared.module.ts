@@ -48,6 +48,7 @@ import { CollectionItemModule } from './components/collection-item/collection-it
 import { FilterControlModule } from './components/filter-control/filter-control.module';
 import { GroupCheckboxSelectModule } from './components/group-checkbox-select/group-checkbox-select.module';
 import { LottieAnimationModule } from './components/lottie-animation/lottie-animation.module';
+import { MainViewComponent } from './components/main-view.component';
 import { SpinnerModule } from './components/spinner/spinner.module';
 import { DirectiveModule } from './directive.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -72,6 +73,7 @@ const components = [
   OnboardingComponent,
   CollectionsComponent,
   PageNotFoundComponent,
+  MainViewComponent,
 ];
 
 const modules = [
