@@ -40,7 +40,7 @@ export class CreateCategoryFormComponent implements OnInit {
   public isDesktop = false;
 
   public form: FormGroup = this.fb.group({
-    id: ['', [Validators.required]],
+    id: [''],
     name: ['', [Validators.required]],
     description: [''],
     is_child_to: [''],

@@ -112,6 +112,7 @@ export const surveyFields = [
     cardinality: 0,
     input: 'tags',
     description: 'settings.settings_list.categories_desc',
+    options: [],
   },
 ];
 
