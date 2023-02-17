@@ -41,7 +41,6 @@ export class RoleItemComponent implements OnInit {
     id: [null],
     name: ['', [Validators.required]],
     protected: [false],
-    url: [''],
   });
   public isDesktop = false;
 
