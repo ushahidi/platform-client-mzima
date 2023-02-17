@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  DonationConfigInterface,
   FeaturesConfigInterface,
   MapConfigInterface,
   SessionConfigInterface,
@@ -25,12 +26,14 @@ export class SessionService {
   private readonly _isLogged = new BehaviorSubject<boolean>(false);
   private readonly _isFiltersVisible = new BehaviorSubject<boolean>(false);
   private readonly _isMainFiltersHidden = new BehaviorSubject<boolean>(false);
+  private readonly _deploymentInfo = new BehaviorSubject<any>(false);
 
   readonly currentSessionData$ = this._currentSessionData$.asObservable();
   readonly currentUserData$ = this._currentUserData$.asObservable();
   readonly isLogged$ = this._isLogged.asObservable();
   readonly isFiltersVisible$ = this._isFiltersVisible.asObservable();
   readonly isMainFiltersHidden$ = this._isMainFiltersHidden.asObservable();
+  readonly deploymentInfo$ = this._deploymentInfo.asObservable();
 
   private currentSessionData: SessionTokenInterface = {
     accessToken: '',
@@ -70,6 +73,10 @@ export class SessionService {
     return this.currentConfig.site;
   }
 
+  setSiteDonationConfigurations(donation: DonationConfigInterface) {
+    this.currentConfig.site.donation = donation;
+  }
+
   getFeatureConfigurations() {
     return this.currentConfig.features;
   }
@@ -83,6 +90,11 @@ export class SessionService {
     data: FeaturesConfigInterface | SiteConfigInterface | MapConfigInterface,
   ) {
     this.currentConfig[type] = data as any;
+    this._deploymentInfo.next({
+      title: this.currentConfig['site']?.name ?? '',
+      description: this.currentConfig['site']?.description ?? '',
+      logo: this.currentConfig['site']?.image_header ?? '',
+    });
   }
 
   loadSessionDataFromLocalStorage() {

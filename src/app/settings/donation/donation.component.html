@@ -76,7 +76,13 @@
 
 <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
 <div class="form-controls-panel form-controls-panel--sticky">
-  <button type="button" mat-stroked-button routerLink="/settings" [data-qa]="'btn-cancel'">
+  <button
+    type="button"
+    mat-stroked-button
+    routerLink="/settings"
+    [data-qa]="'btn-cancel'"
+    *ngIf="!(isDesktop$ | async)!"
+  >
     {{ 'app.cancel' | translate }}
   </button>
   <button type="button" color="primary" mat-raised-button (click)="save()" [data-qa]="'btn-save'">

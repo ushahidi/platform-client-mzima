@@ -68,7 +68,8 @@ export class DonationComponent implements OnInit {
       images: this.donationConfig.images,
     });
     this.configService.update('site', { donation }).subscribe((res: SiteConfigInterface) => {
-      this.donationConfig = res.donation!;
+      this.sessionService.setSiteDonationConfigurations(res.donation!);
+      this.donationConfig = this.sessionService.getSiteConfigurations().donation!;
       this.loader.hide();
     });
   }
