@@ -11,6 +11,7 @@
         mat-raised-button
         [data-qa]="'btn-settings-delete'"
         class="delete-btn"
+        [disabled]="!selectedItem.length"
         (click)="deleteEmit()"
       >
         {{ 'app.delete' | translate }}
