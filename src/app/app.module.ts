@@ -19,30 +19,6 @@ import { AuthModule } from './auth/auth.module';
 import { ErrorsHandlerService } from './core/handlers/errors-handler.service';
 import { AuthInterceptor } from './core/interceptors';
 
-import { RouterModule } from '@angular/router';
-import * as Sentry from '@sentry/angular';
-import { BrowserTracing } from '@sentry/tracing';
-
-import envObj from '../env.json';
-// eslint-disable-next-line @typescript-eslint/naming-convention
-let { sentry_dsn, sentry_debug_mode } = envObj;
-
-Sentry.init({
-  dsn: sentry_dsn,
-  debug: sentry_debug_mode,
-  integrations: [
-    new BrowserTracing({
-      tracePropagationTargets: [],
-      routingInstrumentation: Sentry.routingInstrumentation,
-    }),
-  ],
-
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-});
-
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
     envService.initEnv().then(() => {
@@ -108,22 +84,6 @@ export function playerFactory(): any {
     SpinnerModule,
   ],
   providers: [
-    {
-      provide: ErrorHandler,
-      useValue: Sentry.createErrorHandler({
-        showDialog: true,
-      }),
-    },
-    {
-      provide: Sentry.TraceService,
-      deps: [RouterModule],
-    },
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: () => () => {},
-    //   deps: [Sentry.TraceService],
-    //   multi: true,
-    // },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
