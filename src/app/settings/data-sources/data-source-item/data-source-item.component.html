@@ -6,14 +6,14 @@
 </h1>
 
 <div class="form-row" *ngIf="onCreating">
-  <mat-label
-    >{{ 'settings.data_sources.type_of_data_source' | translate }}
-    <span class="color-accent">*</span></mat-label
-  >
+  <mat-label>
+    {{ 'settings.data_sources.type_of_data_source' | translate }}
+    <span class="color-accent">*</span>
+  </mat-label>
   <mat-form-field appearance="outline">
     <mat-select
       disableOptionCentering
-      placeholder="Choose Data Source..."
+      [placeholder]="'settings.data_sources.choose_data_source' | translate"
       [(ngModel)]="currentProviderId"
       (selectionChange)="setCurrentProvider($event.value)"
       [data-qa]="'select-provider'"
