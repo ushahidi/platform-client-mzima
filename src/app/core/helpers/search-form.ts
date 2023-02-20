@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const statuses = [
   {
     value: 'published',
@@ -21,21 +23,25 @@ export const sources = [
     name: 'Email',
     value: 'email',
     total: 0,
+    checked: true,
   },
   {
     name: 'SMS',
     value: 'sms',
     total: 0,
+    checked: true,
   },
   {
     name: 'Twitter',
     value: 'twitter',
     total: 0,
+    checked: true,
   },
   {
     name: 'Web',
     value: 'web',
     total: 0,
+    checked: true,
   },
 ];
 
@@ -89,3 +95,31 @@ export const sortingOptions = [
     },
   },
 ];
+
+export const DEFAULT_FILTERS = {
+  query: [''],
+  status: [['published', 'draft']],
+  tags: [[]],
+  source: [[]],
+  form: [[]],
+  place: [''],
+  date: [
+    {
+      start: '',
+      end: '',
+    },
+  ],
+  center_point: [
+    {
+      location: {
+        lat: null,
+        lng: null,
+      },
+      distance: 1,
+    },
+  ],
+};
+
+export const compareForms = (form1: any, form2: any) => {
+  return !_.isEqual(form1, form2);
+};

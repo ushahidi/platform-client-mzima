@@ -49,10 +49,17 @@ export class SurveysComponent implements OnInit {
 
   async deleteSurvey() {
     const confirmed = await this.confirmModalService.open({
-      title: this.translate.instant('notify.survey.destroy_confirm', {
-        count: this.selectedSurveys.length,
-      }),
-      description: `<p>${this.translate.instant('notify.survey.destroy_confirm_desc')}</p>`,
+      title:
+        this.selectedSurveys.length > 1
+          ? 'Are you sure you want to delete selected surveys?'
+          : this.translate.instant('notify.survey.destroy_confirm'),
+      description: `
+        <p>${
+          this.selectedSurveys.length > 1
+            ? 'Deleting these surveys will remove it from database. This action cannot be undone.'
+            : this.translate.instant('notify.survey.destroy_confirm_desc')
+        }</p>
+      `,
 
       confirmButtonText: this.translate.instant('app.yes_delete'),
       cancelButtonText: this.translate.instant('app.no_go_back'),
@@ -65,7 +72,10 @@ export class SurveysComponent implements OnInit {
     forkJoin(join)
       .pipe(take(1))
       .subscribe({
-        next: () => this.getSurveys(),
+        next: () => {
+          this.getSurveys();
+          this.selectedSurveys = [];
+        },
         error: (e) => console.log(e),
       });
   }

@@ -9,8 +9,9 @@
         type="button"
         color="accent"
         mat-raised-button
-        data-qa="btn-settings-delete"
+        [data-qa]="'btn-settings-delete'"
         class="delete-btn"
+        [disabled]="!selectedItem.length"
         (click)="deleteEmit()"
       >
         {{ 'app.delete' | translate }}
@@ -28,7 +29,7 @@
       type="button"
       color="primary"
       mat-stroked-button
-      data-qa="btn-settings-action"
+      [data-qa]="'btn-settings-action'"
       (click)="showActions()"
       [ngClass]="{ active: isShowActions }"
     >
@@ -40,7 +41,7 @@
       color="primary"
       mat-raised-button
       [routerLink]="['create']"
-      data-qa="btn-settings-create"
+      [data-qa]="'btn-settings-create'"
     >
       <span>{{ newButtonTitle | translate }}</span>
       <mat-icon svgIcon="plus"></mat-icon>
@@ -70,7 +71,7 @@
       color="primary"
       mat-raised-button
       (click)="showLanguagesEmit()"
-      data-qa="btn-settings-create"
+      [data-qa]="'btn-settings-create'"
     >
       {{ newButtonTitle | translate }}
       <mat-icon svgIcon="plus"></mat-icon>

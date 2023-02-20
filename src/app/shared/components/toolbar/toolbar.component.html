@@ -1,5 +1,4 @@
 <mat-toolbar class="toolbar">
-  <!-- <app-breadcrumb></app-breadcrumb> -->
   <button
     mat-icon-button
     (click)="back()"
@@ -10,7 +9,7 @@
   </button>
   <h1
     class="toolbar__page-title"
-    data-qa="page-title"
+    [data-qa]="'page-title'"
     *ngIf="(isDesktop$ | async) || !showSearchForm"
   >
     {{ pageTitle | translate }}
@@ -19,7 +18,13 @@
     <app-search-form class="search-form" *ngIf="showSearchForm"> </app-search-form>
     <ng-container *ngIf="isDesktop$ | async">
       <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
-      <button color="dark" mat-raised-button class="toolbar__button" (click)="openShare()">
+      <button
+        color="dark"
+        mat-raised-button
+        (click)="openShare()"
+        class="toolbar__button"
+        *ngIf="!isSettingsPage"
+      >
         <span>{{ 'app.share' | translate }}</span>
         <mat-icon class="toolbar__button__icon" svgIcon="share"></mat-icon>
       </button>
@@ -33,7 +38,7 @@
   <button
     mat-button
     class="account-info"
-    data-qa="account-info"
+    [data-qa]="'account-info'"
     *ngIf="isLoggedIn && (isDesktop$ | async)"
     [matMenuTriggerFor]="accountMenu"
   >
@@ -77,11 +82,7 @@
   </div>
 
   <div class="menu__body">
-    <app-company-info
-      [title]="siteConfig.name"
-      [logo]="siteConfig.image_header"
-      [description]="siteConfig.description"
-    ></app-company-info>
+    <app-company-info></app-company-info>
 
     <div class="mobile-menu">
       <ng-container *ngFor="let item of menu">

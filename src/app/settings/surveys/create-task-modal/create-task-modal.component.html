@@ -1,11 +1,18 @@
-<button mat-stroked-button mat-dialog-close class="modal__close-btn" tabindex="-1">
+<button
+  mat-stroked-button
+  mat-dialog-close="false"
+  class="modal__close-btn"
+  tabindex="-1"
+  aria-label="{{ 'modal.button.close' | translate }}"
+  [data-qa]="'btn-close'"
+>
   <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
 </button>
 
 <strong mat-dialog-title>{{ 'survey.add_task' | translate }}</strong>
 <mat-dialog-content class="post">
   <div class="form-row">
-    <mat-label translate>{{ 'survey.task_name' | translate }}</mat-label>
+    <mat-label>{{ 'survey.task_name' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <input
         matInput
@@ -15,7 +22,7 @@
     </mat-form-field>
   </div>
   <div class="form-row">
-    <mat-label translate>{{ 'survey.task_description' | translate }}</mat-label>
+    <mat-label>{{ 'survey.task_description' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <textarea
         matInput

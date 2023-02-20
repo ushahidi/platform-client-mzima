@@ -1,4 +1,11 @@
-<button mat-stroked-button mat-dialog-close class="modal__close-btn" tabindex="-1">
+<button
+  mat-stroked-button
+  mat-dialog-close="false"
+  class="modal__close-btn"
+  tabindex="-1"
+  aria-label="{{ 'modal.button.close' | translate }}"
+  [data-qa]="'btn-close'"
+>
   <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
 </button>
 
@@ -30,7 +37,7 @@
         <mat-label class="form-label">{{ 'form.field_options' | translate }} </mat-label>
 
         <button type="button" mat-stroked-button (click)="addOption(selectedFieldType)">
-          <span translate>form.field_add_option</span>
+          <span>{{ 'form.field_add_option' | translate }}</span>
           <mat-icon svgIcon="plus"></mat-icon>
         </button>
       </div>
@@ -57,8 +64,8 @@
         </mat-form-field>
       </div>
 
-      <mat-error role="alert" *ngIf="!validateDuplicate()" translate>
-        survey.duplicate_option
+      <mat-error role="alert" *ngIf="!validateDuplicate()">
+        {{ 'survey.duplicate_option' | translate }}
       </mat-error>
     </div>
 
@@ -96,7 +103,7 @@
         >
           {{ 'survey.collect_image_caption' | translate }}
           <p class="init active" *ngIf="!selectedFieldType.config?.hasCaption">
-            <small translate>survey.disable_caption_field_explanation</small>
+            <small>{{ 'survey.disable_caption_field_explanation' | translate }}</small>
           </p>
         </mat-slide-toggle>
       </div>
@@ -105,7 +112,7 @@
         <mat-slide-toggle *ngIf="canMakePrivate" [(ngModel)]="selectedFieldType.response_private">
           {{ 'survey.make_response_private' | translate }}
           <p class="init active" *ngIf="selectedFieldType.response_private">
-            <small translate>survey.response_private_desc</small>
+            <small>{{ 'survey.response_private_desc' | translate }}</small>
           </p>
         </mat-slide-toggle>
       </div>
@@ -153,7 +160,7 @@
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
-  <button type="button" mat-dialog-close mat-stroked-button>
+  <button type="button" mat-dialog-close="false" mat-stroked-button>
     {{ 'app.cancel' | translate }}
   </button>
   <button

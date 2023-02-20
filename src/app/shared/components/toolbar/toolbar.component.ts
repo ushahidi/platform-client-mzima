@@ -14,7 +14,7 @@ import {
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter } from 'rxjs';
 import { DonationModalComponent } from 'src/app/settings';
-import { AccountSettingsComponent } from '../account-settings/account-settings.component';
+import { AccountSettingsModalComponent } from '../account-settings-modal/account-settings-modal.component';
 import { ShareModalComponent } from '../share-modal/share-modal.component';
 import { TranslateService } from '@ngx-translate/core';
 import { EnumGtmEvent, EnumGtmSource } from '@enums';
@@ -47,6 +47,7 @@ export class ToolbarComponent implements OnInit {
   public isAdmin = false;
   public canRegister = false;
   public isInnerPage = false;
+  public isSettingsPage = false;
 
   constructor(
     private session: SessionService,
@@ -66,6 +67,7 @@ export class ToolbarComponent implements OnInit {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       const url = router.routerState.snapshot.url;
       this.showSearchForm = url.indexOf('/map') > -1 || url.indexOf('/feed') > -1;
+      this.isSettingsPage = url.indexOf('/settings') > -1;
     });
 
     this.breadcrumbService.breadcrumbs$.subscribe({
@@ -144,7 +146,7 @@ export class ToolbarComponent implements OnInit {
 
   public openSettings(): void {
     this.toggleBurgerMenu(false);
-    this.dialog.open(AccountSettingsComponent, {
+    this.dialog.open(AccountSettingsModalComponent, {
       width: '100%',
       maxWidth: 800,
       panelClass: 'modal',

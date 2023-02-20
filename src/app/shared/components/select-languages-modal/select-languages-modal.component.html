@@ -1,6 +1,6 @@
 <button
   mat-stroked-button
-  mat-dialog-close
+  mat-dialog-close="false"
   class="modal__close-btn"
   tabindex="-1"
   aria-label="{{ 'modal.button.close' | translate }}"
@@ -24,7 +24,7 @@
   </div>
 </form>
 <div mat-dialog-content>
-  <ul role="list" class="types-list" data-qa="survey-list">
+  <ul role="list" class="types-list" [data-qa]="'survey-list'">
     <li role="listitem" class="type-item" *ngFor="let language of languages">
       <mat-checkbox
         [data-qa]="'survey-item' + language.code"
@@ -40,7 +40,7 @@
   </ul>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-stroked-button mat-dialog-close>{{ 'app.cancel' | translate }}</button>
+  <button mat-stroked-button mat-dialog-close="false">{{ 'app.cancel' | translate }}</button>
   <button
     color="primary"
     mat-raised-button

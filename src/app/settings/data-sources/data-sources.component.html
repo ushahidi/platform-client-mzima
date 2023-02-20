@@ -4,7 +4,7 @@
     type="button"
     color="primary"
     mat-raised-button
-    data-qa="btn-add-provider"
+    [data-qa]="'btn-add-provider'"
     [routerLink]="['create']"
     *ngIf="isAllProvidersAdded"
   >
@@ -13,7 +13,7 @@
   </button>
 </div>
 <ng-container *ngIf="providersData?.length; else showLoader">
-  <div *ngFor="let provider of providersData" data-qa="providers-list">
+  <div *ngFor="let provider of providersData" [data-qa]="'providers-list'">
     <a
       matRipple
       class="data-source-item"

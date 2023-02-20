@@ -11,6 +11,10 @@
     margin-bottom: 16px;
     color: var(--color-dark);
 
+    @include breakpoint-min($tablet) {
+      padding-right: 48px;
+    }
+
     @include breakpoint-max($tablet) {
       font-size: 20px;
       line-height: 1.28;

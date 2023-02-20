@@ -10,6 +10,8 @@ export const enum EventType {
   DeleteCollection = 'DELETE_COLLECTION',
   IsSettingsInnerPage = 'IS_SETTINGS_INNER_PAGE',
   ShowOnboarding = 'SHOW_ONBOARDING',
+  FinishOnboarding = 'FINISH_ONBOARDING',
+  FeedPostsLoaded = 'FEED_POSTS_LOADED',
 }
 
 export interface BusEvent<T = any> {

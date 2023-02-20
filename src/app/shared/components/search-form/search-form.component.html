@@ -42,7 +42,7 @@
   <div
     data-filter-highlight
     class="search-form__main-filters"
-    [ngClass]="{ 'search-form__main-filters--closed': !isMainFiltersOpen }"
+    [ngClass]="{ 'search-form__main-filters--closed': !isMainFiltersOpen && !isOnboardingActive }"
   >
     <button
       type="button"
@@ -92,18 +92,24 @@
               {{ 'nav.clear' | translate }}
             </button>
           </div>
-          <mat-selection-list name="surveys" class="selection-list" formControlName="form">
+          <mat-selection-list
+            (selectionChange)="surveyChanged($event)"
+            name="surveys"
+            class="selection-list"
+            formControlName="form"
+          >
             <mat-list-option
+              *ngFor="let survey of surveyList"
+              [selected]="survey.checked"
               color="primary"
               [value]="survey.id"
               checkboxPosition="before"
               class="selection-list__option"
-              *ngFor="let survey of surveyList"
               [ngStyle]="{ '--color': survey.color }"
             >
               <span class="selection-list__option__border"></span>
               {{ survey.name }}
-              <span class="selection-list__option__total">{{ survey.total || 0 }}</span>
+              <span class="selection-list__option__total">{{ survey.total }}</span>
             </mat-list-option>
           </mat-selection-list>
 
@@ -144,9 +150,10 @@
           <mat-selection-list name="source" class="selection-list" formControlName="source">
             <ng-container *ngFor="let source of sources">
               <mat-list-option
+                [selected]="source.checked"
+                *ngIf="source.total > 0"
                 color="primary"
                 [value]="source.value"
-                *ngIf="source.total > 0"
                 checkboxPosition="before"
                 class="selection-list__option"
               >
@@ -225,7 +232,6 @@
       </ng-container>
 
       <app-filter-control
-        *ngIf="isLoggedIn"
         title="{{ 'global_filter.saved_filters' | translate }}"
         [type]="filterType.Select"
         [options]="savedSearches"
@@ -249,6 +255,10 @@
           <mat-icon svgIcon="plus" class="save-filter-button__icon"></mat-icon>
           {{ 'global_filter.save_new_filter' | translate }}
         </button>
+        <span class="no-saved-filters" postfix *ngIf="savedSearches?.length === 0"
+          >No saved filters. Saved filter(s) will appear here for you to select once made
+          available.</span
+        >
       </app-filter-control>
 
       <app-filter-control

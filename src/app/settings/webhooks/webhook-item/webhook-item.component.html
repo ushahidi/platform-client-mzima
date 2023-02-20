@@ -66,7 +66,7 @@
       <mat-select
         formControlName="event_type"
         disableOptionCentering
-        data-qa="webhook-event-select"
+        [data-qa]="'webhook-event-select'"
       >
         <mat-option *ngFor="let event of eventList" [value]="event.value" [data-qa]="event.value">
           {{ event.name }}
@@ -86,7 +86,7 @@
       <mat-select
         formControlName="entity_type"
         disableOptionCentering
-        data-qa="webhook-entity-select"
+        [data-qa]="'webhook-entity-select'"
       >
         <mat-option
           *ngFor="let entity of entityList"
@@ -107,7 +107,7 @@
       <mat-slide-toggle
         formControlName="is_source_destination"
         name="first-name"
-        data-qa="source-destination-toogle"
+        [data-qa]="'source-destination-toogle'"
       >
         {{ 'settings.webhooks.enable_source_destination' | translate }}
       </mat-slide-toggle>
@@ -124,7 +124,7 @@
         </span>
       </mat-label>
       <mat-form-field appearance="outline">
-        <mat-select formControlName="form_id" disableOptionCentering data-qa="survey-select">
+        <mat-select formControlName="form_id" disableOptionCentering [data-qa]="'survey-select'">
           <mat-option *ngFor="let survey of surveyList" [value]="survey.id" [data-qa]="survey.name">
             {{ survey.name }}
           </mat-option>
@@ -157,7 +157,7 @@
                 <mat-select
                   [formControlName]="element.control"
                   disableOptionCentering
-                  data-qa="source-select"
+                  [data-qa]="'source-select'"
                 >
                   <mat-option
                     *ngFor="let attribute of surveyAttributesList"
@@ -185,7 +185,7 @@
         type="button"
         color="accent"
         mat-raised-button
-        data-qa="btn-webhook-delete"
+        [data-qa]="'btn-webhook-delete'"
         (click)="openDialog()"
         *ngIf="!isCreateWebhook"
         [disabled]="!form.get('id')?.value"
@@ -196,24 +196,17 @@
       </button>
     </div>
     <div>
-      <button
-        mat-stroked-button
-        type="button"
-        data-qa="btn-webhook-cancel"
-        (click)="cancel()"
-        translate
-      >
+      <button mat-stroked-button type="button" [data-qa]="'btn-webhook-cancel'" (click)="cancel()">
         {{ 'app.cancel' | translate }}
       </button>
       <button
         mat-raised-button
         color="primary"
         type="submit"
-        translate
-        data-qa="btn-webhook-save"
+        [data-qa]="'btn-webhook-save'"
         [disabled]="form.invalid"
       >
-        {{ (isCreateWebhook ? 'app.save' : 'app.edit') | translate | translate }}
+        {{ (isCreateWebhook ? 'app.save' : 'app.edit') | translate }}
       </button>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <div class="form-row">
-  <mat-label translate>app.survey_web_address</mat-label>
+  <mat-label>{{ 'app.survey_web_address' | translate }}</mat-label>
   <mat-form-field appearance="outline">
     <input type="url" matInput [value]="shareUrl" readonly="true" />
   </mat-form-field>
@@ -7,9 +7,17 @@
 
 <div class="form-row">
   <mat-label>HTML</mat-label>
-  <mat-form-field appearance="outline">
+  <div class="copy-success" *ngIf="copySuccess">{{ 'share.copied' | translate }}</div>
+  <mat-form-field appearance="outline" class="copy" [ngClass]="{ success: copySuccess }">
     <textarea matInput readonly cdkTextareaAutosize cdkAutosizeMaxRows="10">{{ embed }}</textarea>
-    <button class="copy" type="button" (click)="copyToClipboard(embed)" matSuffix mat-raised-button>
+    <button
+      class="copy-button"
+      type="button"
+      (click)="copyToClipboard(embed)"
+      matSuffix
+      mat-raised-button
+      [disabled]="copySuccess"
+    >
       <mat-icon svgIcon="copy"></mat-icon>
     </button>
   </mat-form-field>
