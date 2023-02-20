@@ -1165,6 +1165,7 @@
       }
     },
     "data_sources": {
+      "choose_data_source": "Choose Data Source...",
       "type_of_data_source": "Type of Data Source",
       "provider_name": "{{providerName}} Data Source?",
       "do_you_really_want_to_disconnect": "Do you really want to disconnect your provider?",
