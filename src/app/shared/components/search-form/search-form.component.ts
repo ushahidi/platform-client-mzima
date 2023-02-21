@@ -213,7 +213,8 @@ export class SearchFormComponent implements OnInit {
   private getCategories() {
     this.categoriesService.get().subscribe({
       next: (response) => {
-        this.categoriesData = response?.results?.map((category: CategoryInterface) => {
+        const mainResults = response?.results.filter((c: CategoryInterface) => !c.parent_id);
+        this.categoriesData = mainResults?.map((category: CategoryInterface) => {
           return {
             id: category.id,
             name: category.tag,
