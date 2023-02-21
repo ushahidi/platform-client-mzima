@@ -37,7 +37,7 @@
       <span>{{ data.buttonSuccess }}</span>
     </button>
     <ng-container *ngIf="!data.buttonSuccess">
-      <button mat-stroked-button mat-dialog-close="false" [data-qa]="'btn-confirm-cancel'">
+      <button mat-stroked-button [mat-dialog-close]="false" [data-qa]="'btn-confirm-cancel'">
         {{ data.cancelButtonText || ('app.cancel' | translate) }}
       </button>
       <button

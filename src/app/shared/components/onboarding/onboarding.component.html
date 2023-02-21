@@ -43,7 +43,13 @@
       >
         Previous
       </button>
-      <button type="button" color="primary" mat-raised-button (click)="nextStep()">
+      <button
+        type="button"
+        color="primary"
+        mat-raised-button
+        (click)="nextStep()"
+        [id]="'onboarding-button-' + step.icon"
+      >
         <ng-container *ngIf="i === 0 || i === onboardingSteps.length - 1; else nextStepText">
           OK, sound good
         </ng-container>

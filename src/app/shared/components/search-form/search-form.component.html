@@ -334,6 +334,16 @@
         [title]="'global_filter.location' | translate"
         [badge]="form.controls['center_point'].value.location?.lat ? 1 : null"
       >
+        <div class="clear-button" suffix>
+          <button
+            mat-button
+            color="primary"
+            class="filter-group__head__button"
+            (click)="clearFilter('center_point')"
+          >
+            {{ 'nav.clear' | translate }}
+          </button>
+        </div>
       </app-filter-control>
 
       <div class="search-form__filters-panel__item search-form__filters-panel__item--controls">
