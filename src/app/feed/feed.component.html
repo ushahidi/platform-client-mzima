@@ -12,6 +12,7 @@
       <div class="feed-page__mode-switcher">
         <button
           mat-icon-button
+          id="switcher-button-tiles"
           [disabled]="mode === FeedMode.Tiles"
           (click)="switchMode(FeedMode.Tiles)"
           class="feed-page__mode-switcher__button"
@@ -20,6 +21,7 @@
         </button>
         <button
           mat-icon-button
+          id="switcher-button-post"
           [disabled]="mode === FeedMode.Post"
           (click)="switchMode(FeedMode.Post)"
           class="feed-page__mode-switcher__button"
