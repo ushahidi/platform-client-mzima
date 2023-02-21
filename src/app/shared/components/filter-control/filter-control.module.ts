@@ -13,6 +13,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { TranslateModule } from '@ngx-translate/core';
 import { LocationSelectionModule } from '../location-selection/location-selection.module';
 import { FilterControlComponent } from './filter-control.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [FilterControlComponent],
@@ -29,6 +30,7 @@ import { FilterControlComponent } from './filter-control.component';
     MatInputModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatCheckboxModule,
     LocationSelectionModule,
   ],
   exports: [FilterControlComponent],

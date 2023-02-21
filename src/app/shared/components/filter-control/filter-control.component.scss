@@ -208,7 +208,16 @@
   }
 
   &__option {
-    flex: 1 1 50%;
+    width: 100%;
+    display: block;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: normal;
+    color: var(--color-neutral-90);
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-inline-start: 12px;
+    padding-inline-end: 16px;
 
     &::ng-deep {
       .mat-list-item-content {
