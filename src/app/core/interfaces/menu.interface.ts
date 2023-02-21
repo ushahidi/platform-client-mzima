@@ -16,4 +16,5 @@ export interface UserMenuInterface {
   router?: string;
   action?: Function;
   ref?: string;
+  adminGuard?: boolean;
 }

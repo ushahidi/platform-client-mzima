@@ -298,14 +298,23 @@
       min-width: 180px;
       box-shadow: none;
       border-radius: 0;
-      min-width: 200px;
       margin-left: -1px;
       max-height: calc(100vh - 150px);
+
+      .menu-content {
+        @include breakpoint-min($tablet) {
+          min-width: 160px;
+        }
+      }
     }
 
     &--wide {
       &.mat-menu-panel {
-        min-width: 400px;
+        .menu-content {
+          @include breakpoint-min($tablet) {
+            min-width: 320px;
+          }
+        }
       }
     }
 

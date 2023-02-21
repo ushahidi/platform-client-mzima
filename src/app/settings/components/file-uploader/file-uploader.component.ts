@@ -39,7 +39,7 @@ export class FileUploaderComponent {
   }
 
   public deleteImage(index?: number) {
-    this.delete.emit(index || true);
+    this.delete.emit(index ?? true);
   }
 
   public chooseFile(): void {

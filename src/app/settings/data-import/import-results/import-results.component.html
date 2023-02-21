@@ -6,14 +6,19 @@
 
   <h1>{{ 'data_import.import_complete' | translate }}</h1>
   <div class="description">
-    <p>{{ 'data_import.complete_info' | translate }}</p>
+    <p [innerHTML]="'data_import.complete_info' | translate: { filename: filename }"></p>
   </div>
 
   <div class="form-controls-panel">
-    <button type="button" mat-stroked-button [routerLink]="['collections', collectionId]">
+    <button type="button" mat-stroked-button [routerLink]="['/collections', collectionId]">
       {{ 'data_import.see_imported_posts' | translate }}
     </button>
-    <button type="button" color="primary" mat-raised-button [routerLink]="['settings/data-import']">
+    <button
+      type="button"
+      color="primary"
+      mat-raised-button
+      [routerLink]="['/settings/data-import']"
+    >
       {{ 'data_import.import_another' | translate }}
     </button>
   </div>
@@ -30,7 +35,12 @@
     <button *ngIf="document.magic" type="button" mat-stroked-button (click)="getPollingInfo()">
       {{ 'data_import.get_polling_info' | translate }}
     </button>
-    <button type="button" color="primary" mat-raised-button [routerLink]="['settings/data-import']">
+    <button
+      type="button"
+      color="primary"
+      mat-raised-button
+      [routerLink]="['/settings/data-import']"
+    >
       {{ 'data_import.import_another' | translate }}
     </button>
   </div>
