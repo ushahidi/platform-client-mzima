@@ -11,7 +11,6 @@
 
 <strong mat-dialog-title>
   {{ (!!data.search ? 'set.update_saved_filter' : 'set.create_saved_filter') | translate }}
-  {{ !!data.search ? 'Update Saved Filter' : 'Create Saved Filter' }}
 </strong>
 
 <form novalidate [formGroup]="form" (ngSubmit)="formSubmit()">
@@ -66,7 +65,12 @@
     <button type="button" (click)="cancel()" mat-stroked-button>
       {{ 'app.cancel' | translate }}
     </button>
-    <button color="primary" mat-raised-button [disabled]="form.invalid || form.disabled">
+    <button
+      color="primary"
+      mat-raised-button
+      [disabled]="form.invalid || form.disabled"
+      id="apply-saved-filters"
+    >
       {{ 'app.apply_filters' | translate }}
     </button>
   </div>

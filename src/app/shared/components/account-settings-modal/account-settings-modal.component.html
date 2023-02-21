@@ -17,7 +17,10 @@
       dynamicHeight
       animationDuration="0ms"
     >
-      <mat-tab label="{{ 'user_profile.nav.account_settings' | translate }}">
+      <mat-tab
+        label="{{ 'user_profile.nav.account_settings' | translate }}"
+        labelClass="profile-tab-account-settings"
+      >
         <div class="tab-content" *ngIf="!isLoading; else spinner" mat-dialog-content>
           <form novalidate [formGroup]="profileForm" (ngSubmit)="updateProfile()">
             <div class="form-row">
@@ -87,7 +90,11 @@
           </form>
         </div>
       </mat-tab>
-      <mat-tab label="{{ 'user_profile.nav.notifications_settings' | translate }}">
+      <mat-tab
+        label="{{ 'user_profile.nav.notifications_settings' | translate }}"
+        labelClass="profile-tab-norifications"
+        id="profile-tab-norifications"
+      >
         <div class="tab-content" *ngIf="!isLoading; else spinner" mat-dialog-content>
           <mat-accordion class="contacts" multi>
             <mat-expansion-panel class="contacts-tab" expanded>
