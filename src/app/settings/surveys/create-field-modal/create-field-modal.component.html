@@ -1,6 +1,6 @@
 <button
   mat-stroked-button
-  mat-dialog-close="false"
+  [mat-dialog-close]="false"
   class="modal__close-btn"
   tabindex="-1"
   aria-label="{{ 'modal.button.close' | translate }}"
@@ -13,10 +13,11 @@
 <mat-dialog-content>
   <ng-container *ngIf="selectedFieldType; else allFields">
     <div class="form-row">
-      <mat-label>{{ 'app.name' | translate }} </mat-label>
+      <mat-label>{{ 'app.name' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <input
           matInput
+          required
           [(ngModel)]="selectedFieldType.label"
           placeholder="{{ 'form.field_name_placeholder' | translate }}"
         />
@@ -160,7 +161,7 @@
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
-  <button type="button" mat-dialog-close="false" mat-stroked-button>
+  <button type="button" [mat-dialog-close]="false" mat-stroked-button>
     {{ 'app.cancel' | translate }}
   </button>
   <button
@@ -168,7 +169,7 @@
     type="button"
     color="primary"
     (click)="addNewTask()"
-    [disabled]="!validateDuplicate()"
+    [disabled]="!selectedFieldType?.label?.length || !validateDuplicate()"
   >
     {{ (editMode ? 'app.update' : 'app.save') | translate }}
   </button>
