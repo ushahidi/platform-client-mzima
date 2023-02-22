@@ -213,7 +213,8 @@ export class SearchFormComponent implements OnInit {
   private getCategories() {
     this.categoriesService.get().subscribe({
       next: (response) => {
-        this.categoriesData = response?.results?.map((category: CategoryInterface) => {
+        const mainResults = response?.results.filter((c: CategoryInterface) => !c.parent_id);
+        this.categoriesData = mainResults?.map((category: CategoryInterface) => {
           return {
             id: category.id,
             name: category.tag,
@@ -548,7 +549,7 @@ export class SearchFormComponent implements OnInit {
     localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
     this.resetForm();
     this.clearCollection();
-    this.defaultFormValue = this.form.value;
+    this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
   }
 
   public applyFilters(): void {
@@ -565,8 +566,8 @@ export class SearchFormComponent implements OnInit {
       query: '',
       status: ['published', 'draft'],
       tags: [],
-      source: [],
-      form: [],
+      source: this.sources.map((s) => s.value),
+      form: this.surveyList.map((s) => s.id),
       date: {
         start: '',
         end: '',
