@@ -50,9 +50,9 @@
             <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
           </button>
           <ng-container *ngIf="!isDesktop">
-            <span class="feed-page__controls__info"
-              >{{ selectedPosts.length }}/{{ posts.length }} Selected</span
-            >
+            <span class="feed-page__controls__info">
+              {{ selectedPosts.length }}/{{ posts.length }} Selected
+            </span>
             <button
               mat-stroked-button
               class="feed-page__control"
@@ -87,7 +87,11 @@
                 [placeholder]="'app.mark_as' | translate"
                 (selectionChange)="changePostsStatus($event.value)"
               >
-                <mat-option *ngFor="let status of statuses" [value]="status.value">
+                <mat-option
+                  *ngFor="let status of statuses"
+                  [value]="status.value"
+                  [class]="'select-option-' + status.value"
+                >
                   {{ status.name | translate }}
                 </mat-option>
               </mat-select>
