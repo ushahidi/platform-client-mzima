@@ -116,7 +116,9 @@ export class CreateFieldModalComponent implements OnInit {
   selectField(field: Partial<FormAttributeInterface>) {
     this.selectedFieldType = { ...field };
     this.selectedFieldType.label = this.translate.instant(this.selectedFieldType.label);
-    this.selectedFieldType.description = this.translate.instant(this.selectedFieldType.description);
+    this.selectedFieldType.instructions = this.translate.instant(
+      this.selectedFieldType.instructions,
+    );
     this.hasOptions = ['checkbox', 'radio', 'select'].some(
       (a) => a === this.selectedFieldType.input,
     );
