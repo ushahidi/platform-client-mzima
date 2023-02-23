@@ -13,10 +13,11 @@
 <mat-dialog-content>
   <ng-container *ngIf="selectedFieldType; else allFields">
     <div class="form-row">
-      <mat-label>{{ 'app.name' | translate }} </mat-label>
+      <mat-label>{{ 'app.name' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <input
           matInput
+          required
           [(ngModel)]="selectedFieldType.label"
           placeholder="{{ 'form.field_name_placeholder' | translate }}"
         />
@@ -36,17 +37,18 @@
       <div class="form-head-panel">
         <mat-label class="form-label">{{ 'form.field_options' | translate }} </mat-label>
 
-        <button type="button" mat-stroked-button (click)="addOption(selectedFieldType)">
+        <button type="button" mat-stroked-button (click)="addOption()">
           <span>{{ 'form.field_add_option' | translate }}</span>
           <mat-icon svgIcon="plus"></mat-icon>
         </button>
       </div>
 
-      <div class="form-row__item" *ngFor="let opt of selectedFieldType.options; let i = index">
+      <div class="form-row__item" *ngFor="let opt of tmp; let i = index">
         <mat-form-field appearance="outline">
           <input
             matInput
-            [(ngModel)]="selectedFieldType.options[i]"
+            [(ngModel)]="tmp[i].value"
+            (ngModelChange)="onChange($event, i)"
             placeholder="{{ 'form.field_name_placeholder' | translate }}"
           />
 
@@ -168,7 +170,7 @@
     type="button"
     color="primary"
     (click)="addNewTask()"
-    [disabled]="!validateDuplicate()"
+    [disabled]="!selectedFieldType?.label?.length || !validateDuplicate()"
   >
     {{ (editMode ? 'app.update' : 'app.save') | translate }}
   </button>
