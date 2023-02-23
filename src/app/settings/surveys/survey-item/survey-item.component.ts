@@ -17,6 +17,7 @@ import {
 import { SelectLanguagesModalComponent } from 'src/app/shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
+import _ from 'lodash';
 
 @UntilDestroy()
 @Component({
@@ -103,7 +104,8 @@ export class SurveyItemComponent implements OnInit {
     this.surveyObject = this.form.value;
 
     if (isNew) {
-      this.form.patchValue({ tasks: [surveyHelper.defaultTask] });
+      const defaultTask = _.cloneDeep(surveyHelper.defaultTask);
+      this.form.patchValue({ tasks: [defaultTask] });
     }
 
     this.mainPost = this.form
