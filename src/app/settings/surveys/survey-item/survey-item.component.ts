@@ -221,10 +221,16 @@ export class SurveyItemComponent implements OnInit {
       });
 
       const request = Object.assign({}, this.form.value, this.configTask.getConfigOptions());
-      this.surveysService.saveSurvey(request, this.surveyId).subscribe((response) => {
-        this.updateForm(response.result);
-        this.saveRoles(response.result.id);
-        this.router.navigate(['settings/surveys']);
+      this.surveysService.saveSurvey(request, this.surveyId).subscribe({
+        next: (response) => {
+          this.updateForm(response.result);
+          this.saveRoles(response.result.id);
+          this.router.navigate(['settings/surveys']);
+        },
+        error: (err) => {
+          console.error(err);
+          this.notification.showError(JSON.stringify(err));
+        },
       });
     } else {
       this.notification
