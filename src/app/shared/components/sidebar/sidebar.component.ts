@@ -139,6 +139,7 @@ export class SidebarComponent implements OnInit {
         label: 'nav.settings',
         icon: 'settings',
         visible: this.isLoggedIn,
+        adminGuard: true,
         router: 'settings',
         ref: 'settings',
       },

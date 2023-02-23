@@ -22,6 +22,7 @@ export class CreateFieldModalComponent implements OnInit {
   availableSurveys: SurveyItem[] = [];
   surveyId: string;
   hasOptions = false;
+  tmp: any[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -41,6 +42,8 @@ export class CreateFieldModalComponent implements OnInit {
       if (this.selectedFieldType.input === 'relation') {
         this.loadAvailableSurveys();
       }
+
+      this.tmp = this.selectedFieldType.options.map((opt: string) => ({ val: opt }));
     }
 
     this.surveyId = this.data?.surveyId;
@@ -74,6 +77,10 @@ export class CreateFieldModalComponent implements OnInit {
 
   cancel() {
     this.matDialogRef.close();
+  }
+
+  onChange($event: string, i: any) {
+    this.selectedFieldType.options[i] = $event;
   }
 
   get onlyOptional() {
@@ -127,11 +134,13 @@ export class CreateFieldModalComponent implements OnInit {
 
   removeOption(i: any) {
     this.selectedFieldType.options.splice(i, 1);
+    this.tmp = this.selectedFieldType.options.map((opt: string) => ({ value: opt }));
   }
 
-  addOption(attribute: FormAttributeInterface) {
-    if (!attribute.options) attribute.options = [];
-    attribute.options.push('');
+  addOption() {
+    if (!this.selectedFieldType.options) this.selectedFieldType.options = [];
+    this.selectedFieldType.options.push('');
+    this.tmp = this.selectedFieldType.options.map((opt: string) => ({ value: opt }));
   }
 
   validateDuplicate() {
