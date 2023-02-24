@@ -74,7 +74,6 @@ export class UserItemComponent implements OnInit {
     this.rolesService.get().subscribe({
       next: (response) => {
         this.roles = response.results;
-        this.form.patchValue({ role: this.roles.find((el) => el.name === 'user')?.name });
       },
       error: (err) => console.log(err),
     });
