@@ -16,6 +16,7 @@
     [twitterId]="twitterId"
     (edit)="handleEditPost()"
     *ngIf="!editable; else editPost"
+    (statusChanged)="statusChangedHandle()"
   >
   </app-post-details>
 </mat-dialog-content>

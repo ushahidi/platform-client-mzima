@@ -297,18 +297,29 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     const count = this.selectedPosts.length;
     forkJoin(this.selectedPosts.map((p) => this.postsService.delete(p))).subscribe({
       complete: () => {
-        this.getPosts(this.params);
-        this.selectedPosts = [];
-        this.confirmModalService.open({
-          title: this.translate.instant('notify.confirm_modal.deleted.success'),
-          description: `<p>${this.translate.instant(
-            'notify.confirm_modal.deleted.success_description',
-            { count },
-          )}</p>`,
-          buttonSuccess: this.translate.instant('notify.confirm_modal.deleted.success_button'),
-        });
+        this.postDeleted(count);
       },
     });
+  }
+
+  public postDeleted(count?: number): void {
+    this.getPosts(this.params);
+    this.selectedPosts = [];
+    if (count) {
+      this.confirmModalService.open({
+        title: this.translate.instant('notify.confirm_modal.deleted.success'),
+        description: `<p>${this.translate.instant(
+          'notify.confirm_modal.deleted.success_description',
+          { count },
+        )}</p>`,
+        buttonSuccess: this.translate.instant('notify.confirm_modal.deleted.success_button'),
+      });
+    }
+  }
+
+  public postStatusChanged(): void {
+    this.getPosts(this.params);
+    this.selectedPosts = [];
   }
 
   public isPostSelected(isChecked: boolean, id: string): void {
