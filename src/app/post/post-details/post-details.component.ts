@@ -12,7 +12,7 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryInterface, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmModalService, MediaService, PostsV5Service } from '@services';
+import { MediaService, PostsV5Service } from '@services';
 import { CollectionsModalComponent } from 'src/app/shared/components';
 
 @Component({
@@ -27,13 +27,14 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   @Input() color?: string;
   @Input() twitterId?: string;
   @Output() edit = new EventEmitter();
+  @Output() statusChanged = new EventEmitter();
   public media?: any;
   public allowed_privileges: string | string[];
+  public postId: string;
 
   constructor(
     private dialog: MatDialog,
     private translate: TranslateService,
-    private confirmModalService: ConfirmModalService,
     private mediaService: MediaService,
     private metaService: Meta,
     private route: ActivatedRoute,
@@ -45,11 +46,9 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
 
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
 
-        this.postsV5Service.getById(params['id']).subscribe({
-          next: (postV5: PostResult) => {
-            this.post = postV5;
-          },
-        });
+        this.postId = params['id'];
+
+        this.getPost();
       }
     });
   }
@@ -73,6 +72,15 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     }
   }
 
+  private getPost(): void {
+    if (!this.postId) return;
+    this.postsV5Service.getById(this.postId).subscribe({
+      next: (postV5: PostResult) => {
+        this.post = postV5;
+      },
+    });
+  }
+
   public isParentCategory(
     categories: CategoryInterface[] | undefined,
     category_id: number,
@@ -93,18 +101,14 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     });
   }
 
-  public async deletePost(): Promise<void> {
-    const confirmed = await this.confirmModalService.open({
-      title: this.translate.instant('notify.post.destroy_confirm'),
-      description: this.translate.instant('notify.default.proceed_warning'),
-    });
-    if (!confirmed) return;
-    console.log('FIXME: delete post');
-  }
-
   private setMetaData(post: PostResult) {
     this.metaService.updateTag({ property: 'og:title', content: post.title });
     this.metaService.updateTag({ property: 'og:description', content: post.content });
+  }
+
+  public statusChangedHandle(): void {
+    this.getPost();
+    this.statusChanged.emit();
   }
 
   ngOnDestroy() {

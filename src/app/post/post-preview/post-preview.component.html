@@ -21,6 +21,8 @@
       [deleteable]="
         allowed_privileges.includes('delete') && post.allowed_privileges.includes('delete')
       "
+      (deleted)="deletedHandle()"
+      (statusChanged)="statusChangedHandle()"
     >
     </app-post-head>
   </div>

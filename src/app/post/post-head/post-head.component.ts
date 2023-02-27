@@ -5,13 +5,7 @@ import { CollectionsComponent } from '@data';
 import { PostPropertiesInterface, PostResult, PostStatus, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BreakpointService,
-  ConfirmModalService,
-  PostsService,
-  PostsV5Service,
-  SessionService,
-} from '@services';
+import { BreakpointService, ConfirmModalService, PostsV5Service, SessionService } from '@services';
 import { ShareModalComponent } from 'src/app/shared/components/share-modal/share-modal.component';
 
 @UntilDestroy()
@@ -28,12 +22,13 @@ export class PostHeadComponent {
   @Input() public editable: boolean;
   @Input() public deleteable: boolean;
   @Output() edit = new EventEmitter();
+  @Output() deleted = new EventEmitter();
+  @Output() statusChanged = new EventEmitter();
   public isDesktop = false;
 
   constructor(
     private session: SessionService,
     private postsV5Service: PostsV5Service,
-    private postsService: PostsService,
     private dialog: MatDialog,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
@@ -64,22 +59,22 @@ export class PostHeadComponent {
 
   underReview() {
     this.postsV5Service.updateStatus(this.post.id, PostStatus.Draft).subscribe((res) => {
-      this.post = res;
-      this.postsService.applyFilters({});
+      this.post = res.result;
+      this.statusChanged.emit();
     });
   }
 
   publish() {
     this.postsV5Service.updateStatus(this.post.id, PostStatus.Published).subscribe((res) => {
-      this.post = res;
-      this.postsService.applyFilters({});
+      this.post = res.result;
+      this.statusChanged.emit();
     });
   }
 
   archive() {
     this.postsV5Service.updateStatus(this.post.id, PostStatus.Archived).subscribe((res) => {
-      this.post = res;
-      this.postsService.applyFilters({});
+      this.post = res.result;
+      this.statusChanged.emit();
     });
   }
 
@@ -91,7 +86,7 @@ export class PostHeadComponent {
 
     this.postsV5Service.delete(this.post.id).subscribe((res) => {
       this.post = res;
-      this.postsService.applyFilters({});
+      this.deleted.emit();
       this.confirmModalService.open({
         title: this.translate.instant('notify.confirm_modal.deleted.success'),
         description: `<p>${this.translate.instant(
