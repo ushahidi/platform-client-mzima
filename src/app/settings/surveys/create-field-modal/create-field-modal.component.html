@@ -75,6 +75,7 @@
       <ng-container *ngIf="availableCategories; else spinner">
         <app-multilevel-select
           [(ngModel)]="categories"
+          [placeholder]="'survey.select_categories' | translate"
           [data]="availableCategories"
           [label]="'category.which_categories' | translate"
         >
@@ -85,6 +86,7 @@
     <div class="form-row" *ngIf="selectedFieldType.input === 'relation'">
       <app-multilevel-select
         [(ngModel)]="selectedFieldType.config.input.form"
+        [placeholder]="'survey.select_related_post' | translate"
         [data]="availableSurveys"
         [label]="'survey.field_allowed_relation_survey' | translate"
       >
@@ -180,7 +182,7 @@
   <div class="fields-list">
     <div matRipple class="list-item" *ngFor="let field of fields" (click)="selectField(field)">
       <h3>{{ field.label | translate }}</h3>
-      <p>{{ field.description | translate }}</p>
+      <p>{{ field.instructions | translate }}</p>
     </div>
   </div>
 </ng-template>
