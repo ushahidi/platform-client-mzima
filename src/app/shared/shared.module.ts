@@ -52,6 +52,7 @@ import { MainViewComponent } from './components/main-view.component';
 import { SpinnerModule } from './components/spinner/spinner.module';
 import { DirectiveModule } from './directive.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AddPostModalComponent } from '@post';
 
 const components = [
   SidebarComponent,
@@ -74,6 +75,7 @@ const components = [
   CollectionsComponent,
   PageNotFoundComponent,
   MainViewComponent,
+  AddPostModalComponent,
 ];
 
 const modules = [

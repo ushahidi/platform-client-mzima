@@ -21,7 +21,6 @@ import { DirectiveModule, MapWithMarkerModule, PipeModule, SpinnerModule } from 
 import { PostRoutingModule } from './post-routing.module';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { PostEditComponent } from './post-edit/post-edit.component';
-import { AddPostModalComponent } from './add-post-modal/add-post-modal.component';
 import { LocationSelectComponent } from './location-select/location-select.component';
 import { PostPreviewComponent } from './post-preview/post-preview.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
@@ -32,7 +31,6 @@ import { PostHeadComponent } from './post-head/post-head.component';
 @NgModule({
   declarations: [
     PostEditComponent,
-    AddPostModalComponent,
     LocationSelectComponent,
     PostPreviewComponent,
     PostDetailsComponent,
