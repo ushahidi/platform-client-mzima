@@ -13,16 +13,15 @@ import { MultilevelSelectOption } from 'src/app/shared/components';
   styleUrls: ['./create-field-modal.component.scss'],
 })
 export class CreateFieldModalComponent implements OnInit {
-  fields = surveyHelper.surveyFields;
-  selectedFieldType: any;
-  editMode = false;
-  label: any;
-  availableCategories: MultilevelSelectOption[];
-  categories: any = [];
-  availableSurveys: SurveyItem[] = [];
-  surveyId: string;
-  hasOptions = false;
-  tmp: any[] = [];
+  private surveyId: string;
+  public fields = surveyHelper.surveyFields;
+  public selectedFieldType: any;
+  public editMode = false;
+  public availableCategories: MultilevelSelectOption[];
+  public categories: any = [];
+  public availableSurveys: SurveyItem[] = [];
+  public hasOptions = false;
+  public tmp: any[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -121,9 +120,11 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   public selectField(field: Partial<FormAttributeInterface>) {
-    this.selectedFieldType = field;
+    this.selectedFieldType = { ...field };
     this.selectedFieldType.label = this.translate.instant(this.selectedFieldType.label);
-    this.selectedFieldType.description = this.translate.instant(this.selectedFieldType.description);
+    this.selectedFieldType.instructions = this.translate.instant(
+      this.selectedFieldType.instructions,
+    );
     this.setHasOptionValidate();
     this.checkLoadAvailableSurveys();
   }

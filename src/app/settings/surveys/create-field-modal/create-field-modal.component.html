@@ -27,7 +27,7 @@
     <div class="form-row">
       <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
       <quill-editor
-        [(ngModel)]="selectedFieldType.description"
+        [(ngModel)]="selectedFieldType.instructions"
         placeholder="{{ 'app.insert_text_here' | translate }}"
       ></quill-editor>
     </div>
@@ -182,7 +182,7 @@
   <div class="fields-list">
     <div matRipple class="list-item" *ngFor="let field of fields" (click)="selectField(field)">
       <h3>{{ field.label | translate }}</h3>
-      <p>{{ field.description | translate }}</p>
+      <p>{{ field.instructions | translate }}</p>
     </div>
   </div>
 </ng-template>
