@@ -34,49 +34,49 @@ export class CreateFieldModalComponent implements OnInit {
 
   ngOnInit() {
     if (this.data?.selectedFieldType) {
-      this.selectedFieldType = this.data.selectedFieldType;
-      this.editMode = true;
-      this.hasOptions = ['checkbox', 'radio', 'select'].some(
-        (a) => a === this.selectedFieldType.input,
-      );
-      if (this.selectedFieldType.input === 'relation') {
-        this.loadAvailableSurveys();
-      }
-
-      this.tmp = this.selectedFieldType.options.map((opt: string) => ({ val: opt }));
+      this.editField();
     }
-
     this.surveyId = this.data?.surveyId;
+    this.getCategories();
+  }
 
+  private editField() {
+    this.selectedFieldType = this.data.selectedFieldType;
+    this.editMode = true;
+    this.setHasOptionValidate();
+    this.checkLoadAvailableSurveys();
+    this.setTempSelectedFieldType();
+  }
+
+  private getCategories() {
+    const array: MultilevelSelectOption[] = [];
     this.categoriesService
       .get()
       .pipe(
         map((res) => {
-          return res?.results?.map((category: CategoryInterface) => {
-            return {
-              id: category.id,
-              name: category.tag,
-              children: res?.results
-                ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
-                .map((cat: CategoryInterface) => {
-                  return {
-                    id: cat.id,
-                    name: cat.tag,
-                  };
-                }),
-            };
-          });
+          for (const category of res?.results) {
+            if (!category.parent_id) {
+              array.push({
+                id: category.id,
+                name: category.tag,
+                children: res?.results
+                  ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
+                  .map((cat: CategoryInterface) => {
+                    return {
+                      id: cat.id,
+                      name: cat.tag,
+                    };
+                  }),
+              });
+            }
+          }
+          return array;
         }),
       )
       .subscribe({
-        next: (response) => {
-          this.availableCategories = response;
-        },
+        next: (response) => (this.availableCategories = response),
+        error: (err) => console.log(err),
       });
-  }
-
-  cancel() {
-    this.matDialogRef.close();
   }
 
   onChange($event: string, i: any) {
@@ -116,36 +116,44 @@ export class CreateFieldModalComponent implements OnInit {
     });
   }
 
-  addNewTask() {
+  public addNewTask() {
     this.matDialogRef.close(this.selectedFieldType);
   }
 
-  selectField(field: Partial<FormAttributeInterface>) {
-    this.selectedFieldType = { ...field };
+  public selectField(field: Partial<FormAttributeInterface>) {
+    this.selectedFieldType = field;
     this.selectedFieldType.label = this.translate.instant(this.selectedFieldType.label);
-    this.selectedFieldType.instructions = this.translate.instant(
-      this.selectedFieldType.instructions,
-    );
+    this.selectedFieldType.description = this.translate.instant(this.selectedFieldType.description);
+    this.setHasOptionValidate();
+    this.checkLoadAvailableSurveys();
+  }
+
+  private checkLoadAvailableSurveys() {
+    if (this.selectedFieldType.input === 'relation') this.loadAvailableSurveys();
+  }
+
+  public removeOption(i: any) {
+    this.selectedFieldType.options.splice(i, 1);
+    this.setTempSelectedFieldType();
+  }
+
+  public addOption() {
+    if (!this.selectedFieldType.options) this.selectedFieldType.options = [];
+    this.selectedFieldType.options.push('');
+    this.setTempSelectedFieldType();
+  }
+
+  private setTempSelectedFieldType() {
+    this.tmp = this.selectedFieldType.options.map((opt: string) => ({ value: opt }));
+  }
+
+  private setHasOptionValidate() {
     this.hasOptions = ['checkbox', 'radio', 'select'].some(
       (a) => a === this.selectedFieldType.input,
     );
-    if (field.input === 'relation') {
-      this.loadAvailableSurveys();
-    }
   }
 
-  removeOption(i: any) {
-    this.selectedFieldType.options.splice(i, 1);
-    this.tmp = this.selectedFieldType.options.map((opt: string) => ({ value: opt }));
-  }
-
-  addOption() {
-    if (!this.selectedFieldType.options) this.selectedFieldType.options = [];
-    this.selectedFieldType.options.push('');
-    this.tmp = this.selectedFieldType.options.map((opt: string) => ({ value: opt }));
-  }
-
-  validateDuplicate() {
+  public validateDuplicate() {
     if (surveyHelper.fieldCanHaveOptions(this.selectedFieldType)) {
       return surveyHelper.areOptionsUnique(this.selectedFieldType.options);
     }

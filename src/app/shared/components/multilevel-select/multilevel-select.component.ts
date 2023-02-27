@@ -12,7 +12,7 @@ export interface MultilevelSelectOption {
 interface CategoryFlatNode {
   expandable: boolean;
   name: string;
-  id: string;
+  id: string | number;
   level: number;
 }
 
@@ -37,6 +37,16 @@ export class MultilevelSelectComponent implements ControlValueAccessor, OnChange
   public disabled = false;
   public value: string = '';
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']) {
+      this.dataSource = new MatTreeFlatDataSource(
+        this.treeControl,
+        this.treeFlattener,
+        changes['data'].currentValue || [],
+      );
+    }
+  }
+
   private _transformer = (node: any, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -58,16 +68,6 @@ export class MultilevelSelectComponent implements ControlValueAccessor, OnChange
     (node) => node.children,
   );
   public dataSource: any;
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
-      this.dataSource = new MatTreeFlatDataSource(
-        this.treeControl,
-        this.treeFlattener,
-        changes['data'].currentValue || [],
-      );
-    }
-  }
 
   onTouched = () => {};
 

@@ -1,7 +1,6 @@
 .multilevelselect {
   display: flex;
   align-items: center;
-  justify-content: center;
 
   &__control {
     font-size: 14px;
@@ -11,13 +10,16 @@
   }
 
   &__arrow {
-    width: 1em;
-    height: 1em;
     flex-shrink: 0;
+    line-height: 1;
     font-size: 24px;
     margin-inline-start: 8px;
-    background: url(/assets/images/select-arrow.svg) 50% 50% / contain no-repeat;
+    transition: transform 0.35s ease;
   }
+}
+
+.open .multilevelselect__arrow {
+  transform: rotate(180deg);
 }
 
 ::ng-deep {
@@ -26,6 +28,7 @@
       .mat-tree {
         width: 602px;
         padding: 0 16px;
+        background: transparent;
       }
 
       .mat-list-option {
