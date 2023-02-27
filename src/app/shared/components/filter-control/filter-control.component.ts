@@ -138,6 +138,10 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public writeValue(value: any) {
     if (this.type === this.filterType.Daterange) {
       this.value = new DateRange<Date>(new Date(value.start), new Date(value.end));
+      this.calendarValue = {
+        start: dayjs(this.value.start).format('DD-MM-YYYY'),
+        end: this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : '',
+      };
     } else {
       this.value = value;
     }
@@ -164,6 +168,9 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   }
 
   public selectedChange(date: any): void {
+    // utc adapter
+    date = dayjs(date).add(dayjs(date).utcOffset(), 'minute').toDate();
+
     if (!this.value.start) {
       this.value.start = date;
     } else if (!this.value.end && date > this.value.start) {
