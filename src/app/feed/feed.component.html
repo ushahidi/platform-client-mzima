@@ -90,7 +90,7 @@
                 <mat-option
                   *ngFor="let status of statuses"
                   [value]="status.value"
-                  [class]="'select-option-' + status.value"
+                  [id]="'select-option-' + status.value"
                 >
                   {{ status.name | translate }}
                 </mat-option>
