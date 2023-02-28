@@ -59,7 +59,7 @@
     mat-button
     class="burger"
     *ngIf="!(isDesktop$ | async)!"
-    aria-label="Open menu"
+    [attr.aria-label]="'nav.open_menu' | translate"
     (click)="toggleBurgerMenu()"
   >
     <mat-icon svgIcon="hamburger"></mat-icon>

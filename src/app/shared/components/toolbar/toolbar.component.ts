@@ -102,13 +102,13 @@ export class ToolbarComponent implements OnInit {
         action: () => this.openCollections(),
       },
       {
-        label: 'Help&Support',
+        label: 'nav.help_support',
         icon: 'auth',
         visible: true,
         action: () => this.openSupportModal(),
       },
       {
-        label: 'My account',
+        label: 'nav.my_account',
         icon: 'account',
         visible: this.isLoggedIn,
         action: () => this.openSettings(),
@@ -127,7 +127,7 @@ export class ToolbarComponent implements OnInit {
         action: () => this.openLogin(),
       },
       {
-        label: 'Log in / Sign up',
+        label: 'nav.login_register',
         icon: 'auth',
         visible: !this.isLoggedIn && this.canRegister,
         action: () => this.openLogin(),

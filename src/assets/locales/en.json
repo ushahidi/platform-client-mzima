@@ -612,6 +612,8 @@
     }
   },
   "nav": {
+    "open_menu": "Open menu",
+    "my_account": "My account",
     "404": "Whoops",
     "about": "About",
     "activity": "Activity",
