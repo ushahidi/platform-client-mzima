@@ -102,18 +102,10 @@ export class SidebarComponent implements OnInit {
         ref: 'activity',
       },
       {
-        label: 'nav.collections',
-        icon: 'collections',
-        hidden: !this.isDesktop,
-        action: () => this.openCollections(),
-        ref: 'collection',
-      },
-      {
         label: 'nav.settings',
         icon: 'settings',
         adminGuard: true,
         router: 'settings',
-        hidden: this.isDesktop,
         ref: 'settings',
       },
     ];
@@ -136,12 +128,11 @@ export class SidebarComponent implements OnInit {
   private initMenu() {
     this.userMenu = [
       {
-        label: 'nav.settings',
-        icon: 'settings',
-        visible: this.isLoggedIn,
-        adminGuard: true,
-        router: 'settings',
-        ref: 'settings',
+        label: 'nav.collections',
+        icon: 'collections',
+        visible: this.isDesktop,
+        action: () => this.openCollections(),
+        ref: 'collection',
       },
       {
         label: 'nav.login',
