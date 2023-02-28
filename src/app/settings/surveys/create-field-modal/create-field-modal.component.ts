@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CategoriesService, SurveysService } from '@services';
 import { map } from 'rxjs';
 import { MultilevelSelectOption } from 'src/app/shared/components';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-create-field-modal',
@@ -14,7 +15,7 @@ import { MultilevelSelectOption } from 'src/app/shared/components';
 })
 export class CreateFieldModalComponent implements OnInit {
   private surveyId: string;
-  public fields = surveyHelper.surveyFields;
+  public fields = _.cloneDeep(surveyHelper.surveyFields);
   public selectedFieldType: any;
   public editMode = false;
   public availableCategories: MultilevelSelectOption[];
@@ -37,14 +38,13 @@ export class CreateFieldModalComponent implements OnInit {
       this.editField();
     }
     this.surveyId = this.data?.surveyId;
-    this.getCategories();
   }
 
   private editField() {
     this.selectedFieldType = this.data.selectedFieldType;
     this.editMode = true;
     this.setHasOptionValidate();
-    this.checkLoadAvailableSurveys();
+    this.checkLoadAvailableData(this.selectedFieldType.input);
     this.setTempSelectedFieldType();
   }
 
@@ -129,17 +129,22 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   public selectField(field: Partial<FormAttributeInterface>) {
-    this.selectedFieldType = { ...field };
+    this.selectedFieldType = _.cloneDeep(field);
     this.selectedFieldType.label = this.translate.instant(this.selectedFieldType.label);
     this.selectedFieldType.instructions = this.translate.instant(
       this.selectedFieldType.instructions,
     );
     this.setHasOptionValidate();
-    this.checkLoadAvailableSurveys();
+    this.checkLoadAvailableData(this.selectedFieldType.input);
   }
 
-  private checkLoadAvailableSurveys() {
-    if (this.selectedFieldType.input === 'relation') this.loadAvailableSurveys();
+  private checkLoadAvailableData(input: string) {
+    switch (input) {
+      case 'relation':
+        return this.loadAvailableSurveys();
+      case 'tags':
+        return this.getCategories();
+    }
   }
 
   public removeOption(i: any) {

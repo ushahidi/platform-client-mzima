@@ -184,8 +184,6 @@ export class SurveyItemComponent implements OnInit {
     }
   }
 
-  removeInterimIds() {}
-
   initRoles() {
     this.rolesService.get().subscribe((response) => {
       this.roles = response.results;
@@ -215,7 +213,6 @@ export class SurveyItemComponent implements OnInit {
   public save() {
     const defaultLang: any[] = this.configTask.selectedLanguage;
     if (this.validateAttributeOptionTranslations() && this.validateAttributeOptionTranslations()) {
-      this.removeInterimIds();
       this.form.patchValue({
         base_language: defaultLang,
       });
