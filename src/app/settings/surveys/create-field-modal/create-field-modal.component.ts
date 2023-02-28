@@ -15,7 +15,7 @@ import _ from 'lodash';
 })
 export class CreateFieldModalComponent implements OnInit {
   private surveyId: string;
-  public fields = surveyHelper.surveyFields;
+  public fields = _.cloneDeep(surveyHelper.surveyFields);
   public selectedFieldType: any;
   public editMode = false;
   public availableCategories: MultilevelSelectOption[];
