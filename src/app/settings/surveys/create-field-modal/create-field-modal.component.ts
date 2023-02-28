@@ -22,6 +22,7 @@ export class CreateFieldModalComponent implements OnInit {
   public availableSurveys: SurveyItem[] = [];
   public hasOptions = false;
   public tmp: any[] = [];
+  public emptyTitleOption = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -80,6 +81,14 @@ export class CreateFieldModalComponent implements OnInit {
 
   onChange($event: string, i: any) {
     this.selectedFieldType.options[i] = $event;
+    this.checkForEmptyOptions();
+  }
+
+  private checkForEmptyOptions() {
+    if (this.selectedFieldType.options.length) {
+      this.emptyTitleOption = !!this.selectedFieldType.options.filter((el: string) => el === '')
+        .length;
+    }
   }
 
   get onlyOptional() {
@@ -142,6 +151,7 @@ export class CreateFieldModalComponent implements OnInit {
     if (!this.selectedFieldType.options) this.selectedFieldType.options = [];
     this.selectedFieldType.options.push('');
     this.setTempSelectedFieldType();
+    this.checkForEmptyOptions();
   }
 
   private setTempSelectedFieldType() {
