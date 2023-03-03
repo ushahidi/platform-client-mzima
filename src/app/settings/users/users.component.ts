@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GeoJsonFilter, UserResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, UsersService, BreakpointService } from '@services';
@@ -18,9 +19,10 @@ export class UsersComponent implements OnInit {
   public users: UserResult[] = [];
   public selectedUsers: UserResult[] = [];
   public isShowActions = false;
+  public currentPage = 0;
   public params: GeoJsonFilter = {
     limit: 10,
-    offset: 0,
+    offset: this.currentPage * 10,
     created_before_by_id: '',
     order: 'asc',
     q: '',
@@ -33,7 +35,11 @@ export class UsersComponent implements OnInit {
     private translate: TranslateService,
     private breakpointService: BreakpointService,
     private cdr: ChangeDetectorRef,
-  ) {}
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) {
+    this.currentPage = Number(this.activatedRoute.snapshot.queryParams['page'] ?? 1) - 1;
+  }
 
   public ngOnInit() {
     this.userService.totalUsers$.subscribe({
@@ -44,9 +50,19 @@ export class UsersComponent implements OnInit {
 
   public getUsers(event?: LazyLoadEvent) {
     this.isLoading = true;
-    this.params.offset = event?.first || 0;
+    this.currentPage = (event?.first ?? 0) / 10;
+    this.params.offset = this.currentPage * 10;
     this.params.order = event?.sortOrder === 1 ? 'asc' : 'desc' || 'asc';
     this.params.q = event?.globalFilter || '';
+
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: {
+        page: this.currentPage + 1,
+      },
+      queryParamsHandling: 'merge',
+    });
+
     this.userService.getUsers('', { ...this.params }).subscribe({
       next: (response) => {
         this.users = response.results;
@@ -69,7 +85,11 @@ export class UsersComponent implements OnInit {
     if (!confirmed) return;
     forkJoin(this.selectedUsers.map((user) => this.userService.deleteUser(user.id))).subscribe({
       complete: () => {
-        this.getUsers();
+        this.getUsers({
+          first: this.params.offset,
+          sortOrder: this.params.order === 'asc' ? 1 : 0,
+          globalFilter: this.params.q,
+        });
         this.selectedUsers = [];
       },
     });

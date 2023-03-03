@@ -1,6 +1,6 @@
 <button
   mat-stroked-button
-  mat-dialog-close
+  [mat-dialog-close]="false"
   class="modal__close-btn"
   tabindex="-1"
   aria-label="{{ 'modal.button.close' | translate }}"
@@ -13,10 +13,11 @@
 <mat-dialog-content>
   <ng-container *ngIf="selectedFieldType; else allFields">
     <div class="form-row">
-      <mat-label>{{ 'app.name' | translate }} </mat-label>
+      <mat-label>{{ 'app.name' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <input
           matInput
+          required
           [(ngModel)]="selectedFieldType.label"
           placeholder="{{ 'form.field_name_placeholder' | translate }}"
         />
@@ -26,7 +27,7 @@
     <div class="form-row">
       <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
       <quill-editor
-        [(ngModel)]="selectedFieldType.description"
+        [(ngModel)]="selectedFieldType.instructions"
         placeholder="{{ 'app.insert_text_here' | translate }}"
       ></quill-editor>
     </div>
@@ -36,17 +37,18 @@
       <div class="form-head-panel">
         <mat-label class="form-label">{{ 'form.field_options' | translate }} </mat-label>
 
-        <button type="button" mat-stroked-button (click)="addOption(selectedFieldType)">
+        <button type="button" mat-stroked-button (click)="addOption()">
           <span>{{ 'form.field_add_option' | translate }}</span>
           <mat-icon svgIcon="plus"></mat-icon>
         </button>
       </div>
 
-      <div class="form-row__item" *ngFor="let opt of selectedFieldType.options; let i = index">
+      <div class="form-row__item" *ngFor="let opt of tmp; let i = index">
         <mat-form-field appearance="outline">
           <input
             matInput
-            [(ngModel)]="selectedFieldType.options[i]"
+            [(ngModel)]="tmp[i].value"
+            (ngModelChange)="onChange($event, i)"
             placeholder="{{ 'form.field_name_placeholder' | translate }}"
           />
 
@@ -73,6 +75,7 @@
       <ng-container *ngIf="availableCategories; else spinner">
         <app-multilevel-select
           [(ngModel)]="categories"
+          [placeholder]="'survey.select_categories' | translate"
           [data]="availableCategories"
           [label]="'category.which_categories' | translate"
         >
@@ -83,6 +86,7 @@
     <div class="form-row" *ngIf="selectedFieldType.input === 'relation'">
       <app-multilevel-select
         [(ngModel)]="selectedFieldType.config.input.form"
+        [placeholder]="'survey.select_related_post' | translate"
         [data]="availableSurveys"
         [label]="'survey.field_allowed_relation_survey' | translate"
       >
@@ -160,7 +164,7 @@
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
-  <button type="button" mat-dialog-close mat-stroked-button>
+  <button type="button" [mat-dialog-close]="false" mat-stroked-button>
     {{ 'app.cancel' | translate }}
   </button>
   <button
@@ -168,7 +172,7 @@
     type="button"
     color="primary"
     (click)="addNewTask()"
-    [disabled]="!validateDuplicate()"
+    [disabled]="!selectedFieldType?.label?.length || !validateDuplicate() || emptyTitleOption"
   >
     {{ (editMode ? 'app.update' : 'app.save') | translate }}
   </button>
@@ -178,7 +182,7 @@
   <div class="fields-list">
     <div matRipple class="list-item" *ngFor="let field of fields" (click)="selectField(field)">
       <h3>{{ field.label | translate }}</h3>
-      <p>{{ field.description | translate }}</p>
+      <p>{{ field.instructions | translate }}</p>
     </div>
   </div>
 </ng-template>

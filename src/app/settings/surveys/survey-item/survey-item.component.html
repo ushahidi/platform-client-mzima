@@ -89,7 +89,7 @@
 </form>
 
 <div class="form-head-panel">
-  <h1>Tasks</h1>
+  <h1>{{ 'survey.tasks' | translate }}</h1>
   <button type="button" mat-stroked-button (click)="addTask()">
     <span>{{ 'survey.add_task' | translate }}</span>
     <mat-icon svgIcon="plus"></mat-icon>
@@ -101,7 +101,7 @@
 </ng-container>
 
 <ng-template #noTasks>
-  <div class="form-row empty">No tasks</div>
+  <div class="form-row empty">{{ 'survey.no_tasks' | translate }}</div>
 </ng-template>
 
 <div class="form-controls-spacer" *ngIf="!isDesktop"></div>

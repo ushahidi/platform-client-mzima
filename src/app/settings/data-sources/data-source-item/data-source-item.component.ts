@@ -33,15 +33,16 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   public provider: any;
   public surveyList: any[];
   public form: FormGroup = this.fb.group({});
-  public dataSourceList: any[];
+  private dataSourceList: any[];
   public selectedSurvey: any;
   public surveyAttributesList: any;
   public currentProviderId: string | null;
-  public availableProviders: any[];
+  private availableProviders: any[];
   public onCreating: boolean;
   public isDesktop = false;
 
   providersData: any;
+  cloneProviders: any;
 
   constructor(
     private fb: FormBuilder,
@@ -64,7 +65,15 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     });
   }
 
-  getAvailableProviders(providers: any) {
+  ngOnInit(): void {
+    this.currentProviderId = this.route.snapshot.paramMap.get('id');
+    if (!this.currentProviderId) {
+      this.onCreating = true;
+    }
+    this.getProviders();
+  }
+
+  private getAvailableProviders(providers: any) {
     const tempProviders: any[] = [];
     for (const key in providers) {
       tempProviders.push({
@@ -76,14 +85,6 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     return arrayHelpers.sortArray(tempProviders.filter((provider) => !provider.type));
   }
 
-  ngOnInit(): void {
-    this.currentProviderId = this.route.snapshot.paramMap.get('id');
-    if (!this.currentProviderId) {
-      this.onCreating = true;
-    }
-    this.getProviders();
-  }
-
   private getProviders(): void {
     const providers$ = this.configService.getProvidersData(true);
     const surveys$ = this.surveysService.get();
@@ -92,6 +93,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     combineLatest([providers$, surveys$, dataSources$]).subscribe({
       next: ([providersData, surveys, dataSources]) => {
         this.providersData = providersData;
+        this.cloneProviders = JSON.parse(JSON.stringify(this.providersData));
         this.availableProviders = this.getAvailableProviders(this.providersData.providers);
         this.surveyList = surveys.results;
         this.dataSourceList = this.dataSourcesService.combineDataSource(
@@ -106,7 +108,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
 
   public setCurrentProvider(providerId?: any): void {
     if (!this.currentProviderId && !providerId) {
-      this.currentProviderId = this.availableProviders[0]?.id as string;
+      this.currentProviderId = this.availableProviders[1]?.id as string;
     }
     const id = this.currentProviderId || providerId;
     if (id) {
@@ -145,7 +147,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   }
 
   private createForm(provider: any) {
-    this.addControlsToForm('form_id', this.fb.control(this.provider.selected_survey));
+    this.addControlsToForm('form_id', this.fb.control(this.provider?.selected_survey));
     this.createControls(provider.control_options);
     this.createControls(provider.control_inbound_fields);
   }
@@ -161,8 +163,8 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
       const validatorsToAdd = [];
 
       if (control?.control_rules) {
-        for (const [key] of Object.entries(control.control_rules)) {
-          switch (key) {
+        for (const rule of control.control_rules) {
+          switch (Object.keys(rule).join()) {
             case 'required':
               validatorsToAdd.push(Validators.required);
               break;
@@ -184,7 +186,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
 
   public async turnOffDataSource(event: any): Promise<void> {
     if (!event.checked) {
-      this.providersData.providers[this.provider.id] = event.checked;
+      this.cloneProviders.providers[this.provider.id] = event.checked;
       const confirmed = await this.confirmModalService.open({
         title: this.translate.instant(`settings.data_sources.provider_name`, {
           providerName: this.provider.name,
@@ -201,11 +203,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
       }
     }
 
-    this.providersData.providers[this.provider.id] = event.checked;
-    this.configService.updateProviders(this.providersData).subscribe(() => {
-      this.router.navigate(['/settings/data-sources']);
-    });
-    this.onCreating = false;
+    this.cloneProviders.providers[this.provider.id] = event.checked;
   }
 
   public saveProviderData(): void {
@@ -219,28 +217,43 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
       }
     }
 
-    for (const provider in this.providersData) {
-      if (provider === this.form.value.id) {
-        for (const providerKey in this.providersData[provider]) {
-          this.providersData[provider][providerKey] = this.form.value[providerKey];
-        }
-        if (this.provider.visible_survey) {
-          this.providersData[provider].form_id = this.form.value.form_id.id;
-          if (this.providersData[provider].form_id) {
-            let obj: any = {};
-            for (const field of this.provider.control_inbound_fields) {
-              obj[field.key] = this.form.value[field.control_label];
-            }
-            this.providersData[provider].inbound_fields = obj;
-          }
-        } else {
-          delete this.providersData[provider].form_id;
-          delete this.providersData[provider].inbound_fields;
-        }
+    if (this.cloneProviders[this.form.value.id]) {
+      for (const providerKey in this.cloneProviders[this.form.value.id]) {
+        this.cloneProviders[this.form.value.id][providerKey] = this.form.value[providerKey];
       }
+      if (this.provider.visible_survey) {
+        this.cloneProviders[this.form.value.id].form_id = this.form.value.form_id.id;
+        if (this.cloneProviders[this.form.value.id].form_id) {
+          let obj: any = {};
+          for (const field of this.provider.control_inbound_fields) {
+            obj[field.key] = this.form.value[field.control_label];
+          }
+          this.cloneProviders[this.form.value.id].inbound_fields = obj;
+        }
+      } else {
+        delete this.cloneProviders[this.form.value.id].form_id;
+        delete this.cloneProviders[this.form.value.id].inbound_fields;
+      }
+    } else {
+      let provider: any = {};
+      provider[this.form.value.id] = this.form.value;
+      if (this.provider.visible_survey) {
+        provider[this.form.value.id].form_id = this.form.value.form_id.id;
+        if (provider[this.form.value.id].form_id) {
+          let obj: any = {};
+          for (const field of this.provider.control_inbound_fields) {
+            obj[field.key] = this.form.value[field.control_label];
+          }
+          provider[this.form.value.id].inbound_fields = obj;
+        }
+      } else {
+        delete provider[this.form.value.id].form_id;
+        delete provider[this.form.value.id].inbound_fields;
+      }
+      this.cloneProviders = { ...this.cloneProviders, ...provider };
     }
 
-    this.configService.updateProviders(this.providersData).subscribe(() => {
+    this.configService.updateProviders(this.cloneProviders).subscribe(() => {
       this.router.navigate(['/settings/data-sources']);
     });
   }

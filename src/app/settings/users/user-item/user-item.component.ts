@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CONST } from '@constants';
 import { RoleResult, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -31,7 +31,6 @@ export class UserItemComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private fb: FormBuilder,
     private userService: UsersService,
     private rolesService: RolesService,
@@ -74,7 +73,6 @@ export class UserItemComponent implements OnInit {
     this.rolesService.get().subscribe({
       next: (response) => {
         this.roles = response.results;
-        this.form.patchValue({ role: this.roles.find((el) => el.name === 'user')?.name });
       },
       error: (err) => console.log(err),
     });
@@ -117,11 +115,7 @@ export class UserItemComponent implements OnInit {
   }
 
   navigateToUsers() {
-    if (this.isDesktop) {
-      this.router.navigate(['settings/users']);
-    } else {
-      this.location.back();
-    }
+    this.location.back();
   }
 
   public async deleteUser(): Promise<void> {

@@ -17,6 +17,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { BreakpointService } from '@services';
 import { MatButton } from '@angular/material/button';
 import { fromEvent } from 'rxjs';
+import { SelectionModel } from '@angular/cdk/collections';
 dayjs.extend(customParseFormat);
 
 export enum FilterType {
@@ -70,6 +71,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public disabled = false;
   public isModalOpen: boolean;
   public buttonWidth = 200;
+  public checklistSelection = new SelectionModel<CategoryFlatNode>(true);
 
   constructor(private breakpointService: BreakpointService) {}
 
@@ -136,6 +138,10 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public writeValue(value: any) {
     if (this.type === this.filterType.Daterange) {
       this.value = new DateRange<Date>(new Date(value.start), new Date(value.end));
+      this.calendarValue = {
+        start: dayjs(this.value.start).format('DD-MM-YYYY'),
+        end: this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : '',
+      };
     } else {
       this.value = value;
     }
@@ -162,6 +168,9 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   }
 
   public selectedChange(date: any): void {
+    // utc adapter
+    date = dayjs(date).add(dayjs(date).utcOffset(), 'minute').toDate();
+
     if (!this.value.start) {
       this.value.start = date;
     } else if (!this.value.end && date > this.value.start) {
@@ -204,5 +213,75 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
 
   public clearFilter(): void {
     this.clear.emit();
+  }
+
+  public descendantsAllSelected(option: CategoryFlatNode): boolean {
+    const descendants = this.treeControl.getDescendants(option);
+    const descAllSelected =
+      descendants.length > 0 &&
+      descendants.every((child) => {
+        return this.checklistSelection.isSelected(child);
+      });
+    return descAllSelected;
+  }
+
+  public categorySelectionToggle(node: CategoryFlatNode): void {
+    this.checklistSelection.toggle(node);
+    const descendants = this.treeControl.getDescendants(node);
+    this.checklistSelection.isSelected(node)
+      ? this.checklistSelection.select(...descendants)
+      : this.checklistSelection.deselect(...descendants);
+
+    descendants.forEach((child) => this.checklistSelection.isSelected(child));
+    this.checkAllParentsSelection(node);
+  }
+
+  public categoryLeafSelectionToggle(option: CategoryFlatNode): void {
+    this.checklistSelection.toggle(option);
+    this.checkAllParentsSelection(option);
+  }
+
+  private checkAllParentsSelection(option: CategoryFlatNode): void {
+    let parent: CategoryFlatNode | null = this.getParentNode(option);
+    while (parent) {
+      this.checkRootNodeSelection(parent);
+      parent = this.getParentNode(parent);
+    }
+  }
+
+  private getParentNode(option: CategoryFlatNode): CategoryFlatNode | null {
+    const currentLevel = this.getLevel(option);
+
+    if (currentLevel < 1) {
+      return null;
+    }
+
+    const startIndex = this.treeControl.dataNodes.indexOf(option) - 1;
+
+    for (let i = startIndex; i >= 0; i--) {
+      const currentNode = this.treeControl.dataNodes[i];
+
+      if (this.getLevel(currentNode) < currentLevel) {
+        return currentNode;
+      }
+    }
+    return null;
+  }
+
+  private getLevel = (option: CategoryFlatNode) => option.level;
+
+  private checkRootNodeSelection(option: CategoryFlatNode): void {
+    const nodeSelected = this.checklistSelection.isSelected(option);
+    const descendants = this.treeControl.getDescendants(option);
+    const descAllSelected =
+      descendants.length > 0 &&
+      descendants.every((child) => {
+        return this.checklistSelection.isSelected(child);
+      });
+    if (nodeSelected && !descAllSelected) {
+      this.checklistSelection.deselect(option);
+    } else if (!nodeSelected && descAllSelected) {
+      this.checklistSelection.select(option);
+    }
   }
 }

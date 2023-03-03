@@ -37,4 +37,10 @@ export class PostDetailsModalComponent {
       update: true,
     });
   }
+
+  public statusChangedHandle(): void {
+    this.matDialogRef.close({
+      statusChanged: true,
+    });
+  }
 }

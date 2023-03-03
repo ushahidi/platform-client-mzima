@@ -29,7 +29,7 @@
       <ng-content *ngIf="isPost" select="[survey-info]"></ng-content>
 
       <div class="form-head-panel">
-        <h2>Fields:</h2>
+        <h2>{{ 'survey.fields.fields_title' | translate }}:</h2>
         <button type="button" mat-stroked-button (click)="addField()">
           <span>{{ 'form.add_field' | translate }}</span>
           <mat-icon svgIcon="plus"></mat-icon>
@@ -74,7 +74,7 @@
         </div>
       </div>
       <ng-template #noFields>
-        <div class="form-row empty">No fields</div>
+        <div class="form-row empty">{{ 'survey.no_fields' | translate }}</div>
       </ng-template>
 
       <div class="form-controls-panel" *ngIf="!isPost">
@@ -149,7 +149,7 @@
         </div>
 
         <app-color-picker
-          label="Select color"
+          [label]="'survey.select_color' | translate"
           [(ngModel)]="selectedColor"
           (ngModelChange)="colorChanged()"
           color-container="survey"

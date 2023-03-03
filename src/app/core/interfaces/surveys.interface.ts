@@ -23,6 +23,7 @@ export interface SurveyItem {
   type: string;
   total?: number;
   visible?: boolean;
+  checked?: boolean;
 }
 
 export interface SurveyItemEnabledLanguages {

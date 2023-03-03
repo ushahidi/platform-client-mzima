@@ -42,7 +42,10 @@ export class MainViewComponent {
     if (this.route.snapshot.data['view'] === 'collection') {
       this.collectionId = this.route.snapshot.paramMap.get('id')!;
       this.params.set = this.collectionId;
-      this.postsService.applyFilters({ set: this.collectionId, ...this.filters });
+      this.postsService.applyFilters({
+        set: this.collectionId,
+        ...this.normalizeFilter(this.filters),
+      });
       this.searchId = '';
     } else {
       this.collectionId = '';
@@ -58,9 +61,28 @@ export class MainViewComponent {
         });
       } else {
         this.searchId = '';
-        this.postsService.applyFilters({ set: [], ...this.filters });
+        this.postsService.applyFilters({
+          set: [],
+          ...this.normalizeFilter(this.filters),
+        });
       }
     }
+  }
+
+  private normalizeFilter(values: any) {
+    const filters = {
+      ...values,
+      'form[]': values.form,
+      'source[]': values.source,
+      'status[]': values.status,
+      'tags[]': values.tags,
+    };
+
+    delete filters.form;
+    delete filters.source;
+    delete filters.status;
+    delete filters.tags;
+    return filters;
   }
 
   getUserData(): void {

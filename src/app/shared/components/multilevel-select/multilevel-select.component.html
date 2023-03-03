@@ -1,8 +1,13 @@
-<div class="multilevelselect">
-  <span [matMenuTriggerFor]="menu" class="multilevelselect__control">
+<div
+  class="multilevelselect"
+  [matMenuTriggerFor]="menu"
+  #t="matMenuTrigger"
+  [class.open]="t.menuOpen"
+>
+  <span class="multilevelselect__control">
     {{ value || placeholder }}
   </span>
-  <span class="multilevelselect__arrow"></span>
+  <mat-icon svgIcon="arrow-down" class="multilevelselect__arrow"></mat-icon>
 </div>
 
 <mat-menu class="multilevelselect__dropdown" #menu="matMenu">

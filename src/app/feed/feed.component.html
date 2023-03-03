@@ -12,6 +12,7 @@
       <div class="feed-page__mode-switcher">
         <button
           mat-icon-button
+          id="switcher-button-tiles"
           [disabled]="mode === FeedMode.Tiles"
           (click)="switchMode(FeedMode.Tiles)"
           class="feed-page__mode-switcher__button"
@@ -20,6 +21,7 @@
         </button>
         <button
           mat-icon-button
+          id="switcher-button-post"
           [disabled]="mode === FeedMode.Post"
           (click)="switchMode(FeedMode.Post)"
           class="feed-page__mode-switcher__button"
@@ -48,9 +50,9 @@
             <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
           </button>
           <ng-container *ngIf="!isDesktop">
-            <span class="feed-page__controls__info"
-              >{{ selectedPosts.length }}/{{ posts.length }} Selected</span
-            >
+            <span class="feed-page__controls__info">
+              {{ selectedPosts.length }}/{{ posts.length }} Selected
+            </span>
             <button
               mat-stroked-button
               class="feed-page__control"
@@ -85,7 +87,11 @@
                 [placeholder]="'app.mark_as' | translate"
                 (selectionChange)="changePostsStatus($event.value)"
               >
-                <mat-option *ngFor="let status of statuses" [value]="status.value">
+                <mat-option
+                  *ngFor="let status of statuses"
+                  [value]="status.value"
+                  [id]="'select-option-' + status.value"
+                >
                   {{ status.name | translate }}
                 </mat-option>
               </mat-select>
@@ -174,10 +180,12 @@
               ngxMasonryItem
               [feedView]="true"
               (edit)="editPost(post)"
+              (deleted)="postDeleted()"
               (loaded)="refreshMasonry()"
               (click)="showPostDetails(post)"
               [selectable]="isBulkOptionsVisible"
               [isChecked]="isPostChecked(post.id)"
+              (statusChanged)="postStatusChanged()"
               (selected)="isPostSelected($event, post.id.toString())"
               [ngClass]="{ 'post--selected': post.id === postDetails?.id }"
               *ngFor="

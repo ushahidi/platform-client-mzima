@@ -92,18 +92,24 @@
               {{ 'nav.clear' | translate }}
             </button>
           </div>
-          <mat-selection-list name="surveys" class="selection-list" formControlName="form">
+          <mat-selection-list
+            (selectionChange)="surveyChanged($event)"
+            name="surveys"
+            class="selection-list"
+            formControlName="form"
+          >
             <mat-list-option
+              *ngFor="let survey of surveyList"
+              [selected]="survey.checked"
               color="primary"
               [value]="survey.id"
               checkboxPosition="before"
               class="selection-list__option"
-              *ngFor="let survey of surveyList"
               [ngStyle]="{ '--color': survey.color }"
             >
               <span class="selection-list__option__border"></span>
               {{ survey.name }}
-              <span class="selection-list__option__total">{{ survey.total || 0 }}</span>
+              <span class="selection-list__option__total">{{ survey.total }}</span>
             </mat-list-option>
           </mat-selection-list>
 
@@ -144,9 +150,10 @@
           <mat-selection-list name="source" class="selection-list" formControlName="source">
             <ng-container *ngFor="let source of sources">
               <mat-list-option
+                [selected]="source.checked"
+                *ngIf="source.total > 0"
                 color="primary"
                 [value]="source.value"
-                *ngIf="source.total > 0"
                 checkboxPosition="before"
                 class="selection-list__option"
               >
@@ -327,6 +334,16 @@
         [title]="'global_filter.location' | translate"
         [badge]="form.controls['center_point'].value.location?.lat ? 1 : null"
       >
+        <div class="clear-button" suffix>
+          <button
+            mat-button
+            color="primary"
+            class="filter-group__head__button"
+            (click)="clearFilter('center_point')"
+          >
+            {{ 'nav.clear' | translate }}
+          </button>
+        </div>
       </app-filter-control>
 
       <div class="search-form__filters-panel__item search-form__filters-panel__item--controls">

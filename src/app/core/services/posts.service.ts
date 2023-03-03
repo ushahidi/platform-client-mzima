@@ -121,7 +121,7 @@ export class PostsService extends ResourceService<any> {
     if (params.center_point?.location?.lat) {
       params.within_km = params.center_point.distance;
       params.center_point = `${params.center_point.location.lat},${params.center_point.location.lng}`;
-    } else {
+    } else if (!params.center_point?.length) {
       delete params.center_point;
     }
 
@@ -156,6 +156,9 @@ export class PostsService extends ResourceService<any> {
 
   public getPostStatistics(queryParams?: any) {
     const filters = { ...this.postsFilters.value };
+
+    delete filters.form;
+    delete filters['form[]'];
 
     return super.get(
       'stats',

@@ -47,6 +47,7 @@ export class ToolbarComponent implements OnInit {
   public isAdmin = false;
   public canRegister = false;
   public isInnerPage = false;
+  public isSettingsPage = false;
 
   constructor(
     private session: SessionService,
@@ -66,6 +67,7 @@ export class ToolbarComponent implements OnInit {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       const url = router.routerState.snapshot.url;
       this.showSearchForm = url.indexOf('/map') > -1 || url.indexOf('/feed') > -1;
+      this.isSettingsPage = url.indexOf('/settings') > -1;
     });
 
     this.breadcrumbService.breadcrumbs$.subscribe({
@@ -100,13 +102,13 @@ export class ToolbarComponent implements OnInit {
         action: () => this.openCollections(),
       },
       {
-        label: 'Help&Support',
+        label: 'nav.help_support',
         icon: 'auth',
         visible: true,
         action: () => this.openSupportModal(),
       },
       {
-        label: 'My account',
+        label: 'nav.my_account',
         icon: 'account',
         visible: this.isLoggedIn,
         action: () => this.openSettings(),
@@ -125,7 +127,7 @@ export class ToolbarComponent implements OnInit {
         action: () => this.openLogin(),
       },
       {
-        label: 'Log in / Sign up',
+        label: 'nav.login_register',
         icon: 'auth',
         visible: !this.isLoggedIn && this.canRegister,
         action: () => this.openLogin(),

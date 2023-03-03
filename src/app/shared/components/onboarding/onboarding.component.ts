@@ -136,7 +136,7 @@ export class OnboardingComponent implements AfterViewInit {
         icon: 'marker',
         content:
           '<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>',
-        selector: ['#sidebar-btn-data', '#sidebar-btn-map'],
+        selector: ['[data-onboard-id="sidebar-btn-data"]', '[data-onboard-id="sidebar-btn-map"]'],
         position: 'right',
       },
       {
@@ -160,15 +160,15 @@ export class OnboardingComponent implements AfterViewInit {
         icon: 'activity',
         content:
           '<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>',
-        selector: '#sidebar-btn-activity',
+        selector: '[data-onboard-id="sidebar-btn-activity"]',
         position: 'right',
       },
       {
         title: 'Collections',
         icon: 'collections',
         content:
-          '<p>To organise the deployment, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>',
-        selector: '#sidebar-btn-collections',
+          '<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>',
+        selector: '[data-onboard-id="sidebar-btn-collections"]',
         position: 'right',
       },
       {
@@ -176,7 +176,7 @@ export class OnboardingComponent implements AfterViewInit {
         icon: 'settings',
         content:
           '<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>',
-        selector: '#sidebar-menu-button-settings',
+        selector: '[data-onboard-id="sidebar-menu-button-settings"]',
         position: 'right',
         hidden: !this.isLoggedIn,
       },
