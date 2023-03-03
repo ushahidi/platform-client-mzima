@@ -90,7 +90,7 @@
                 <mat-option
                   *ngFor="let status of statuses"
                   [value]="status.value"
-                  [class]="'select-option-' + status.value"
+                  [id]="'select-option-' + status.value"
                 >
                   {{ status.name | translate }}
                 </mat-option>
@@ -180,10 +180,12 @@
               ngxMasonryItem
               [feedView]="true"
               (edit)="editPost(post)"
+              (deleted)="postDeleted()"
               (loaded)="refreshMasonry()"
               (click)="showPostDetails(post)"
               [selectable]="isBulkOptionsVisible"
               [isChecked]="isPostChecked(post.id)"
+              (statusChanged)="postStatusChanged()"
               (selected)="isPostSelected($event, post.id.toString())"
               [ngClass]="{ 'post--selected': post.id === postDetails?.id }"
               *ngFor="

@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService, FormsService, LanguageService } from '@services';
 import { GroupCheckboxItemInterface, GroupCheckboxValueInterface } from 'src/app/shared/components';
 import { CreateFieldModalComponent } from '../create-field-modal/create-field-modal.component';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-survey-task',
@@ -208,7 +209,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       minWidth: 300,
       panelClass: 'modal',
       data: {
-        selectedFieldType,
+        selectedFieldType: _.cloneDeep(selectedFieldType),
         surveyId: this.surveyId,
       },
     });

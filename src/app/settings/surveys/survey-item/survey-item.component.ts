@@ -17,6 +17,7 @@ import {
 import { SelectLanguagesModalComponent } from 'src/app/shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
+import _ from 'lodash';
 
 @UntilDestroy()
 @Component({
@@ -103,7 +104,8 @@ export class SurveyItemComponent implements OnInit {
     this.surveyObject = this.form.value;
 
     if (isNew) {
-      this.form.patchValue({ tasks: [surveyHelper.defaultTask] });
+      const defaultTask = _.cloneDeep(surveyHelper.defaultTask);
+      this.form.patchValue({ tasks: [defaultTask] });
     }
 
     this.mainPost = this.form
@@ -182,8 +184,6 @@ export class SurveyItemComponent implements OnInit {
     }
   }
 
-  removeInterimIds() {}
-
   initRoles() {
     this.rolesService.get().subscribe((response) => {
       this.roles = response.results;
@@ -213,16 +213,21 @@ export class SurveyItemComponent implements OnInit {
   public save() {
     const defaultLang: any[] = this.configTask.selectedLanguage;
     if (this.validateAttributeOptionTranslations() && this.validateAttributeOptionTranslations()) {
-      this.removeInterimIds();
       this.form.patchValue({
         base_language: defaultLang,
       });
 
       const request = Object.assign({}, this.form.value, this.configTask.getConfigOptions());
-      this.surveysService.saveSurvey(request, this.surveyId).subscribe((response) => {
-        this.updateForm(response.result);
-        this.saveRoles(response.result.id);
-        this.router.navigate(['settings/surveys']);
+      this.surveysService.saveSurvey(request, this.surveyId).subscribe({
+        next: (response) => {
+          this.updateForm(response.result);
+          this.saveRoles(response.result.id);
+          this.router.navigate(['settings/surveys']);
+        },
+        error: (err) => {
+          console.error(err);
+          this.notification.showError(JSON.stringify(err));
+        },
       });
     } else {
       this.notification

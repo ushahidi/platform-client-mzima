@@ -40,9 +40,12 @@
             <mat-label>
               {{ field?.label }} <span class="color-accent" *ngIf="field?.required">*</span>
             </mat-label>
-            <span class="form-row__instruction" *ngIf="field?.instructions">{{
-              field?.instructions
-            }}</span>
+            <span
+              class="form-row__instruction"
+              *ngIf="field?.instructions"
+              [innerHTML]="field?.instructions"
+            >
+            </span>
 
             <ng-container
               *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"

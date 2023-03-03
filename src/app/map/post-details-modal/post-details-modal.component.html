@@ -1,6 +1,6 @@
 <button
   mat-stroked-button
-  mat-dialog-close="false"
+  [mat-dialog-close]="false"
   class="modal__close-btn"
   tabindex="-1"
   aria-label="{{ 'modal.button.close' | translate }}"
@@ -16,6 +16,7 @@
     [twitterId]="twitterId"
     (edit)="handleEditPost()"
     *ngIf="!editable; else editPost"
+    (statusChanged)="statusChangedHandle()"
   >
   </app-post-details>
 </mat-dialog-content>

@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CategoriesService, SurveysService } from '@services';
 import { map } from 'rxjs';
 import { MultilevelSelectOption } from 'src/app/shared/components';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-create-field-modal',
@@ -13,15 +14,16 @@ import { MultilevelSelectOption } from 'src/app/shared/components';
   styleUrls: ['./create-field-modal.component.scss'],
 })
 export class CreateFieldModalComponent implements OnInit {
-  fields = surveyHelper.surveyFields;
-  selectedFieldType: any;
-  editMode = false;
-  label: any;
-  availableCategories: MultilevelSelectOption[];
-  categories: any = [];
-  availableSurveys: SurveyItem[] = [];
-  surveyId: string;
-  hasOptions = false;
+  private surveyId: string;
+  public fields = _.cloneDeep(surveyHelper.surveyFields);
+  public selectedFieldType: any;
+  public editMode = false;
+  public availableCategories: MultilevelSelectOption[];
+  public categories: any = [];
+  public availableSurveys: SurveyItem[] = [];
+  public hasOptions = false;
+  public tmp: any[] = [];
+  public emptyTitleOption = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -33,47 +35,60 @@ export class CreateFieldModalComponent implements OnInit {
 
   ngOnInit() {
     if (this.data?.selectedFieldType) {
-      this.selectedFieldType = this.data.selectedFieldType;
-      this.editMode = true;
-      this.hasOptions = ['checkbox', 'radio', 'select'].some(
-        (a) => a === this.selectedFieldType.input,
-      );
-      if (this.selectedFieldType.input === 'relation') {
-        this.loadAvailableSurveys();
-      }
+      this.editField();
     }
-
     this.surveyId = this.data?.surveyId;
+  }
 
+  private editField() {
+    this.selectedFieldType = this.data.selectedFieldType;
+    this.editMode = true;
+    this.setHasOptionValidate();
+    this.checkLoadAvailableData(this.selectedFieldType.input);
+    this.setTempSelectedFieldType();
+  }
+
+  private getCategories() {
+    const array: MultilevelSelectOption[] = [];
     this.categoriesService
       .get()
       .pipe(
         map((res) => {
-          return res?.results?.map((category: CategoryInterface) => {
-            return {
-              id: category.id,
-              name: category.tag,
-              children: res?.results
-                ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
-                .map((cat: CategoryInterface) => {
-                  return {
-                    id: cat.id,
-                    name: cat.tag,
-                  };
-                }),
-            };
-          });
+          for (const category of res?.results) {
+            if (!category.parent_id) {
+              array.push({
+                id: category.id,
+                name: category.tag,
+                children: res?.results
+                  ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
+                  .map((cat: CategoryInterface) => {
+                    return {
+                      id: cat.id,
+                      name: cat.tag,
+                    };
+                  }),
+              });
+            }
+          }
+          return array;
         }),
       )
       .subscribe({
-        next: (response) => {
-          this.availableCategories = response;
-        },
+        next: (response) => (this.availableCategories = response),
+        error: (err) => console.log(err),
       });
   }
 
-  cancel() {
-    this.matDialogRef.close();
+  onChange($event: string, i: any) {
+    this.selectedFieldType.options[i] = $event;
+    this.checkForEmptyOptions();
+  }
+
+  private checkForEmptyOptions() {
+    if (this.selectedFieldType.options.length) {
+      this.emptyTitleOption = !!this.selectedFieldType.options.filter((el: string) => el === '')
+        .length;
+    }
   }
 
   get onlyOptional() {
@@ -109,32 +124,52 @@ export class CreateFieldModalComponent implements OnInit {
     });
   }
 
-  addNewTask() {
+  public addNewTask() {
     this.matDialogRef.close(this.selectedFieldType);
   }
 
-  selectField(field: Partial<FormAttributeInterface>) {
-    this.selectedFieldType = { ...field };
+  public selectField(field: Partial<FormAttributeInterface>) {
+    this.selectedFieldType = _.cloneDeep(field);
     this.selectedFieldType.label = this.translate.instant(this.selectedFieldType.label);
-    this.selectedFieldType.description = this.translate.instant(this.selectedFieldType.description);
-    this.hasOptions = ['checkbox', 'radio', 'select'].some(
-      (a) => a === this.selectedFieldType.input,
+    this.selectedFieldType.instructions = this.translate.instant(
+      this.selectedFieldType.instructions,
     );
-    if (field.input === 'relation') {
-      this.loadAvailableSurveys();
+    this.setHasOptionValidate();
+    this.checkLoadAvailableData(this.selectedFieldType.input);
+  }
+
+  private checkLoadAvailableData(input: string) {
+    switch (input) {
+      case 'relation':
+        return this.loadAvailableSurveys();
+      case 'tags':
+        return this.getCategories();
     }
   }
 
-  removeOption(i: any) {
+  public removeOption(i: any) {
     this.selectedFieldType.options.splice(i, 1);
+    this.setTempSelectedFieldType();
   }
 
-  addOption(attribute: FormAttributeInterface) {
-    if (!attribute.options) attribute.options = [];
-    attribute.options.push('');
+  public addOption() {
+    if (!this.selectedFieldType.options) this.selectedFieldType.options = [];
+    this.selectedFieldType.options.push('');
+    this.setTempSelectedFieldType();
+    this.checkForEmptyOptions();
   }
 
-  validateDuplicate() {
+  private setTempSelectedFieldType() {
+    this.tmp = this.selectedFieldType.options.map((opt: string) => ({ value: opt }));
+  }
+
+  private setHasOptionValidate() {
+    this.hasOptions = ['checkbox', 'radio', 'select'].some(
+      (a) => a === this.selectedFieldType.input,
+    );
+  }
+
+  public validateDuplicate() {
     if (surveyHelper.fieldCanHaveOptions(this.selectedFieldType)) {
       return surveyHelper.areOptionsUnique(this.selectedFieldType.options);
     }

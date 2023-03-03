@@ -29,6 +29,7 @@
         [loading]="isLoading"
         [rowHover]="true"
         [globalFilterFields]="['realname', 'role', 'email']"
+        [first]="currentPage * 10"
       >
         <ng-template pTemplate="caption">
           <div class="table-header">

@@ -16,6 +16,8 @@ export class PostPreviewComponent implements OnInit {
   @Input() public isChecked?: boolean;
   @Output() selected = new EventEmitter();
   @Output() edit = new EventEmitter();
+  @Output() deleted = new EventEmitter();
+  @Output() statusChanged = new EventEmitter();
   private details = new Subject<boolean>();
   public details$ = this.details.asObservable();
   public allowed_privileges: string | string[];
@@ -34,5 +36,13 @@ export class PostPreviewComponent implements OnInit {
       this.isChecked = !this.isChecked;
       this.selected.emit(this.isChecked);
     }
+  }
+
+  public deletedHandle(): void {
+    this.deleted.emit();
+  }
+
+  public statusChangedHandle(): void {
+    this.statusChanged.emit();
   }
 }

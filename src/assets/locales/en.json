@@ -260,6 +260,11 @@
     "choose_language": "Choose language for translation"
   },
   "survey": {
+    "no_tasks": "No tasks",
+    "select_categories": "Select categories",
+    "select_related_post": "Select related post",
+    "no_fields": "No fields",
+    "select_color": "Select color",
     "choose_survey": "Choose survey",
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Delete task",
@@ -376,6 +381,7 @@
       }
     },
     "fields": {
+      "fields_title": "Fields",
       "validation": {
         "required": "Required fields are missing, these fields are marked with an *."
       }
@@ -606,6 +612,8 @@
     }
   },
   "nav": {
+    "open_menu": "Open menu",
+    "my_account": "My account",
     "404": "Whoops",
     "about": "About",
     "activity": "Activity",
