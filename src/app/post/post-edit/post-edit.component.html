@@ -52,26 +52,6 @@
               </mat-form-field>
             </ng-container>
 
-            <!-- <ng-container
-              *ngIf="field.input === 'text' && field.type === 'title'"
-            >
-              <mat-form-field appearance="outline">
-                <input
-                  matInput
-                  [formControlName]="field.key"
-                  minlength="2"
-                  />
-              </mat-form-field>
-            </ng-container>
-
-            <ng-container
-              *ngIf="field.input === 'text' && field.type === 'varchar'"
-            >
-              <mat-form-field appearance="outline">
-                <input matInput [formControlName]="field.key"/>
-              </mat-form-field>
-            </ng-container> -->
-
             <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
               <mat-form-field appearance="outline">
                 <textarea
