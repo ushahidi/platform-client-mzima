@@ -242,7 +242,12 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private addFormControl(value: string, field: any) {
-    return new FormControl(value, field.required ? Validators.required : null);
+    // console.log({ field, value });
+    if (field.type === 'title') {
+      return new FormControl(value, [Validators.required, Validators.minLength(2)]);
+    } else {
+      return new FormControl(value, field.required ? Validators.required : null);
+    }
   }
 
   public getOptionsByParentId(field: any, parent_id: number): any[] {
@@ -325,6 +330,8 @@ export class PostEditComponent implements OnInit, OnChanges {
       type: 'report',
     };
 
+    if (!this.form.valid) this.form.markAllAsTouched();
+
     if (this.postId) {
       postData.post_date = this.post.post_date || new Date().toISOString();
       this.postsV5Service.update(this.postId, postData).subscribe({
@@ -337,6 +344,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       this.postsV5Service.post(postData).subscribe({
         error: () => this.form.enable(),
         complete: async () => {
+          // console.log('Submit possible!');
           await this.postComplete();
         },
       });
