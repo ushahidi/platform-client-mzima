@@ -337,7 +337,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     };
 
     if (!this.form.valid) this.form.markAllAsTouched();
-    this.preventSubmitWhenTheresNoBackendValidation();
+    this.preventSubmitIncaseTheresNoBackendValidation();
 
     if (this.postId) {
       postData.post_date = this.post.post_date || new Date().toISOString();
@@ -360,7 +360,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     }
   }
 
-  public preventSubmitWhenTheresNoBackendValidation() {
+  public preventSubmitIncaseTheresNoBackendValidation() {
     /** Extra check to prevent form submission before hand
      * incase any field shows error but has no backend validation **/
     this.form.enable();
