@@ -19,7 +19,6 @@ import {
   ConfirmModalService,
   EventBusService,
   EventType,
-  FormValidator,
   PostsService,
   PostsV5Service,
   SurveysService,
@@ -29,6 +28,7 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { TranslateService } from '@ngx-translate/core';
 import { objectHelpers } from '@helpers';
+import { formValidators } from '@helpers';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -65,6 +65,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   private post?: any;
   private isDesktop: boolean;
   public atLeastOneFieldHasValidationError: boolean;
+  public formValidator = new formValidators.FormValidator();
 
   constructor(
     private route: ActivatedRoute,
@@ -78,7 +79,6 @@ export class PostEditComponent implements OnInit, OnChanges {
     private eventBusService: EventBusService,
     private location: Location,
     private breakpointService: BreakpointService,
-    public formValidator: FormValidator,
   ) {
     this.isDesktop$.subscribe({
       next: (isDesktop) => {
