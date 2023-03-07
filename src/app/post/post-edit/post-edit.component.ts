@@ -19,6 +19,7 @@ import {
   ConfirmModalService,
   EventBusService,
   EventType,
+  FormValidator,
   PostsService,
   PostsV5Service,
   SurveysService,
@@ -77,6 +78,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     private eventBusService: EventBusService,
     private location: Location,
     private breakpointService: BreakpointService,
+    public formValidator: FormValidator,
   ) {
     this.isDesktop$.subscribe({
       next: (isDesktop) => {
@@ -246,6 +248,9 @@ export class PostEditComponent implements OnInit, OnChanges {
     // console.log({ field, value });
     if (field.type === 'title') {
       return new FormControl(value, [Validators.required, Validators.minLength(2)]);
+    } else if (field.input === 'video') {
+      const fieldRequired: any = field.required ? Validators.required : null;
+      return new FormControl(value, [fieldRequired, this.formValidator.videoValidator]);
     } else {
       return new FormControl(value, field.required ? Validators.required : null);
     }
@@ -363,7 +368,8 @@ export class PostEditComponent implements OnInit, OnChanges {
       this.atLeastOneFieldHasValidationError = task.fields.some((field: any) => {
         return (
           this.form.get(field.key)?.hasError('required') ||
-          this.form.get(field.key)?.hasError('minlength')
+          this.form.get(field.key)?.hasError('minlength') ||
+          this.form.get(field.key)?.hasError('invalidvideourl')
         );
       });
     }
