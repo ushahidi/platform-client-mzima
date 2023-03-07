@@ -19,6 +19,7 @@ import {
   ConfirmModalService,
   EventBusService,
   EventType,
+  FormValidator,
   PostsService,
   PostsV5Service,
   SurveysService,
@@ -63,6 +64,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   private postId?: number;
   private post?: any;
   private isDesktop: boolean;
+  public atLeastOneFieldHasValidationError: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -76,6 +78,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     private eventBusService: EventBusService,
     private location: Location,
     private breakpointService: BreakpointService,
+    public formValidator: FormValidator,
   ) {
     this.isDesktop$.subscribe({
       next: (isDesktop) => {
@@ -245,6 +248,9 @@ export class PostEditComponent implements OnInit, OnChanges {
     // console.log({ field, value });
     if (field.type === 'title') {
       return new FormControl(value, [Validators.required, Validators.minLength(2)]);
+    } else if (field.input === 'video') {
+      const fieldRequired: any = field.required ? Validators.required : null;
+      return new FormControl(value, [fieldRequired, this.formValidator.videoValidator]);
     } else {
       return new FormControl(value, field.required ? Validators.required : null);
     }
@@ -331,6 +337,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     };
 
     if (!this.form.valid) this.form.markAllAsTouched();
+    this.preventSubmitIncaseTheresNoBackendValidation();
 
     if (this.postId) {
       postData.post_date = this.post.post_date || new Date().toISOString();
@@ -341,12 +348,29 @@ export class PostEditComponent implements OnInit, OnChanges {
         },
       });
     } else {
-      this.postsV5Service.post(postData).subscribe({
-        error: () => this.form.enable(),
-        complete: async () => {
-          // console.log('Submit possible!');
-          await this.postComplete();
-        },
+      if (!this.atLeastOneFieldHasValidationError) {
+        this.postsV5Service.post(postData).subscribe({
+          error: () => this.form.enable(),
+          complete: async () => {
+            // console.log('Submit possible!');
+            await this.postComplete();
+          },
+        });
+      }
+    }
+  }
+
+  public preventSubmitIncaseTheresNoBackendValidation() {
+    /** Extra check to prevent form submission before hand
+     * incase any field shows error but has no backend validation **/
+    this.form.enable();
+    for (let task of this.tasks) {
+      this.atLeastOneFieldHasValidationError = task.fields.some((field: any) => {
+        return (
+          this.form.get(field.key)?.hasError('required') ||
+          this.form.get(field.key)?.hasError('minlength') ||
+          this.form.get(field.key)?.hasError('invalidvideourl')
+        );
       });
     }
   }

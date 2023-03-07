@@ -223,15 +223,17 @@
                   matInput
                   [formControlName]="field.key"
                   #videoInput
-                  (change)="
-                    videoPreview.src =
-                      videoInput.value.indexOf('youtube', 0) !== -1
-                        ? 'https://www.youtube.com/embed/' +
-                          videoInput.value.split('watch?v=')[1].split('&')[0]
-                        : 'https://player.vimeo.com/video/' + videoInput.value.split('.com/')[1]
-                  "
+                  (input)="videoPreview.src = formValidator.videoUrlPreview(videoInput)"
                 />
               </mat-form-field>
+              <mat-error
+                *ngIf="
+                  form.get(field.key)?.hasError('invalidvideourl') &&
+                  !form.get(field.key)?.hasError('required')
+                "
+              >
+                Invalid video embed url
+              </mat-error>
               <iframe
                 width="560"
                 height="315"
