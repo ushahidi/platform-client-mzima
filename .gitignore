@@ -10,6 +10,7 @@
 
 # Node
 /node_modules
+apps/mobile-mzima-client/node_modules
 npm-debug.log
 yarn-error.log
 
@@ -45,3 +46,5 @@ Thumbs.db
 
 # Cypress videos
 cypress/videos/*
+
+.angular

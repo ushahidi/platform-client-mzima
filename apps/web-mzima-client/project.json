@@ -1,0 +1,115 @@
+{
+  "name": "web-mzima-client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/web-mzima-client/src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/web-mzima-client",
+        "index": "apps/web-mzima-client/src/index.html",
+        "main": "apps/web-mzima-client/src/main.ts",
+        "polyfills": "apps/web-mzima-client/src/polyfills.ts",
+        "tsConfig": "apps/web-mzima-client/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/web-mzima-client/src/favicon.ico",
+          "apps/web-mzima-client/src/assets",
+          "apps/web-mzima-client/src/env.json"
+        ],
+        "styles": [
+          "node_modules/primeicons/primeicons.css",
+          "node_modules/primeng/resources/themes/saga-blue/theme.css",
+          "node_modules/primeng/resources/primeng.min.css",
+          "node_modules/leaflet/dist/leaflet.css",
+          "node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
+          "node_modules/leaflet.markercluster/dist/MarkerCluster.css",
+          "node_modules/ngx-custom-tour/styles/styles.scss",
+          "apps/web-mzima-client/src/styles.scss"
+        ],
+        "scripts": [],
+        "allowedCommonJsDependencies": [
+          "leaflet",
+          "leaflet.markercluster",
+          "clone-deep",
+          "dayjs",
+          "quill",
+          "lodash",
+          "rfdc",
+          "types-wm",
+          "lottie-web",
+          "ev-emitter/ev-emitter"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/web-mzima-client/src/environments/environment.ts",
+              "with": "apps/web-mzima-client/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "web-mzima-client:build:production"
+        },
+        "development": {
+          "browserTarget": "web-mzima-client:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "web-mzima-client:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/web-mzima-client/**/*.ts", "apps/web-mzima-client/**/*.html"],
+        "eslintConfig": ".eslintrc.json"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/web-mzima-client"],
+      "options": {
+        "jestConfig": "apps/web-mzima-client/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

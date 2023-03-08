@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-ng build --aot true
+##!/usr/bin/env sh
+#. "$(dirname -- "$0")/_/husky.sh"
+#
+#nx run mobile-app:build:production
