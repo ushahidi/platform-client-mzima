@@ -1,4 +1,7 @@
-import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+} from '@angular-material-components/datetime-picker';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -65,6 +68,7 @@ import { PostHeadComponent } from './post-head/post-head.component';
     MatSelectModule,
     MatMenuModule,
     PipeModule,
+    NgxMatNativeDateModule,
   ],
   exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent, PostEditComponent],
 })
