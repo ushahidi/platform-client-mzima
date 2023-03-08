@@ -355,6 +355,8 @@
     "choose_survey_field_descchoose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "Who can contribute to fields in this task",
     "view_detail": "Detail",
+    "no_options_for_this_field": "No options for this field",
+    "add_options_first": "Add options first",
     "delete": {
       "desc": "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
       "delete": "Delete survey",

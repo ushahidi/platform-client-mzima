@@ -180,7 +180,13 @@
 
 <ng-template #allFields>
   <div class="fields-list">
-    <div matRipple class="list-item" *ngFor="let field of fields" (click)="selectField(field)">
+    <div
+      matRipple
+      class="list-item"
+      *ngFor="let field of fields"
+      (click)="(field.input !== 'tags' || availableCategories?.length) && selectField(field)"
+      [ngClass]="{ 'list-item--disabled': field.input === 'tags' && !availableCategories?.length }"
+    >
       <h3>{{ field.label | translate }}</h3>
       <p>{{ field.instructions | translate }}</p>
     </div>
