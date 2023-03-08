@@ -17,7 +17,7 @@
       "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
     },
     "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.js"]
     }
   },
 
@@ -36,5 +36,5 @@
       "style": "scss"
     }
   },
-  "defaultProject": "web-app"
+  "defaultProject": "web-mzima-client"
 }

@@ -98,8 +98,10 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["apps/web-mzima-client/**/*.ts", "apps/web-mzima-client/**/*.html"],
-        "eslintConfig": ".eslintrc.json"
+        "lintFilePatterns": [
+          "apps/web-mzima-client/src/**/*.ts",
+          "apps/web-mzima-client/src/**/*.html"
+        ]
       }
     },
     "test": {
