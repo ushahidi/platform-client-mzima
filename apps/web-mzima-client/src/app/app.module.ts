@@ -1,14 +1,5 @@
-import {
-  HTTP_INTERCEPTORS,
-  HttpClient,
-  HttpClientModule,
-} from '@angular/common/http';
-import {
-  APP_INITIALIZER,
-  ErrorHandler,
-  FactoryProvider,
-  NgModule,
-} from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, ErrorHandler, FactoryProvider, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserModule, Meta } from '@angular/platform-browser';
@@ -76,16 +67,16 @@ export function playerFactory(): any {
         toolbar: [
           ['bold', 'italic', 'underline', 'strike'],
           ['link'],
-          [{ list: 'ordered' }, { list: 'bullet' }]
-        ]
-      }
+          [{ list: 'ordered' }, { list: 'bullet' }],
+        ],
+      },
     }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
+        deps: [HttpClient],
+      },
     }),
     FormsModule,
     LottieModule.forRoot({ player: playerFactory }),

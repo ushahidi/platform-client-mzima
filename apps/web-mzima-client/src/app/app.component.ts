@@ -52,6 +52,7 @@ export class AppComponent implements OnInit {
     this.languages$ = this.languageService.languages$.pipe(untilDestroyed(this));
     this.isRTL$ = this.languageService.isRTL$.pipe(untilDestroyed(this));
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+    this.selectedLanguage$ = this.languageService.selectedLanguage$.pipe(untilDestroyed(this));
 
     this.loaderService.isActive$.subscribe({
       next: (value) => {
@@ -61,7 +62,6 @@ export class AppComponent implements OnInit {
     if (this.env.environment.gtm_key) this.loadGtm();
 
     this.iconService.registerIcons();
-    this.selectedLanguage$ = this.languageService.selectedLanguage$;
 
     this.isRTL$.subscribe({
       next: (isRTL) => {
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
     });
 
     const isOnboardingDone = localStorage.getItem(
-      this.sessionService.getLocalStorageNameMapper('is_onboarding_done'),
+      this.sessionService.getLocalStorageNameMapper('is_onboarding_done')!,
     );
     this.isOnboardingDone = isOnboardingDone ? JSON.parse(isOnboardingDone) : false;
   }
