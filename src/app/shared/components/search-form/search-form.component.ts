@@ -2,11 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { NavigationStart, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
-import { CategoryInterface, CollectionResult, Savedsearch, SurveyItem } from '@models';
+import {
+  AccountNotificationsInterface,
+  CategoryInterface,
+  CollectionResult,
+  Savedsearch,
+  SurveyItem,
+} from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { TranslateService } from '@ngx-translate/core';
 import {
   CategoriesService,
   EventBusService,
@@ -17,6 +23,7 @@ import {
   CollectionsService,
   BreakpointService,
   SavedsearchesService,
+  NotificationsService,
 } from '@services';
 import { BehaviorSubject, debounceTime, filter, forkJoin, lastValueFrom, map, Subject } from 'rxjs';
 import { FilterType } from '../filter-control/filter-control.component';
@@ -67,6 +74,9 @@ export class SearchFormComponent implements OnInit {
   public activeSaved = localStorage.getItem(
     this.session.localStorageNameMapper('activeSavedSearch'),
   );
+  public notification?: AccountNotificationsInterface;
+  public isNotificationsOn: boolean;
+  public isNotificationLoading: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -77,10 +87,10 @@ export class SearchFormComponent implements OnInit {
     private dialog: MatDialog,
     private postsService: PostsService,
     private router: Router,
-    private translate: TranslateService,
     private session: SessionService,
     private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
+    private notificationsService: NotificationsService,
   ) {
     this.getSavedFilters();
     this.getSurveys();
@@ -101,6 +111,7 @@ export class SearchFormComponent implements OnInit {
       this.activeSavedSearch = JSON.parse(this.activeSaved!);
       this.activeSavedSearchValue = this.activeSavedSearch!.id || null;
       this.preparingSavedFilter();
+      this.checkSavedSearchNotifications();
     }
 
     this.getCategories();
@@ -261,9 +272,23 @@ export class SearchFormComponent implements OnInit {
   }
 
   private getCollectionInfo(id: string) {
+    if (this.isLoggedIn) {
+      this.isNotificationLoading = true;
+      this.notificationsService.get(id).subscribe({
+        next: (response) => {
+          this.notification = response.results[0];
+          this.isNotificationsOn = !!this.notification;
+          this.isNotificationLoading = false;
+        },
+      });
+    }
+
     this.collectionsService.getById(id).subscribe({
       next: (coll) => {
         this.collectionInfo = coll;
+        this.activeSavedSearch = undefined;
+        this.activeSavedSearchValue = null;
+        localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
       },
       error: (err) => console.log('getCollectionInfo:', err),
     });
@@ -466,6 +491,19 @@ export class SearchFormComponent implements OnInit {
               },
             });
         }
+
+        if (search) {
+          this.notificationsService.get(String(search.id)).subscribe({
+            next: (response) => {
+              const notification = response.results[0];
+              if (!notification && result.is_notifications_enabled) {
+                this.notificationsService.post({ set: String(search.id) }).subscribe();
+              } else if (notification && !result.is_notifications_enabled) {
+                this.notificationsService.delete(notification.id).subscribe();
+              }
+            },
+          });
+        }
       },
     });
   }
@@ -473,12 +511,14 @@ export class SearchFormComponent implements OnInit {
   async setSavedFilter(value: number) {
     if (this.savedSearches) {
       this.activeSavedSearch = this.savedSearches.find((search) => search.id === value);
+      this.checkSavedSearchNotifications();
       localStorage.setItem(
         this.session.localStorageNameMapper('activeSavedSearch'),
         JSON.stringify(this.activeSavedSearch),
       );
     } else {
       this.activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
+      this.checkSavedSearchNotifications();
     }
   }
 
@@ -544,11 +584,8 @@ export class SearchFormComponent implements OnInit {
   }
 
   public resetSavedFilter(): void {
-    this.activeSavedSearch = undefined;
-    this.activeSavedSearchValue = null;
-    localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
+    this.clearSavedFilter();
     this.resetForm();
-    this.clearCollection();
     this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
   }
 
@@ -633,5 +670,56 @@ export class SearchFormComponent implements OnInit {
       arr.push(...this.surveyList.filter((el) => el.id === element));
     }
     this.total = this.getTotal(arr);
+  }
+
+  public clearSavedFilter(): void {
+    this.activeSavedSearch = undefined;
+    this.activeSavedSearchValue = null;
+    localStorage.removeItem(this.session.localStorageNameMapper('activeSavedSearch'));
+    this.clearCollection();
+    this.notification = undefined;
+    this.isNotificationLoading = false;
+    this.isNotificationsOn = false;
+  }
+
+  public changeNorificationStatus(event: MatSlideToggleChange, set: string): void {
+    if (event.checked && !this.notification) {
+      this.isNotificationLoading = true;
+      this.notificationsService.post({ set }).subscribe({
+        next: (notification) => {
+          this.notification = notification;
+          this.isNotificationLoading = false;
+        },
+        error: () => {
+          this.notification = undefined;
+          this.isNotificationLoading = false;
+        },
+      });
+    } else if (!event.checked && this.notification) {
+      this.isNotificationLoading = true;
+      this.notificationsService.delete(this.notification.id).subscribe({
+        next: () => {
+          this.notification = undefined;
+          this.isNotificationLoading = false;
+        },
+        error: () => {
+          this.notification = undefined;
+          this.isNotificationLoading = false;
+        },
+      });
+    }
+  }
+
+  private checkSavedSearchNotifications(): void {
+    if (!this.activeSavedSearch) return;
+
+    this.isNotificationLoading = true;
+    this.notificationsService.get(String(this.activeSavedSearch.id)).subscribe({
+      next: (response) => {
+        this.notification = response.results[0];
+        this.isNotificationsOn = !!this.notification;
+        this.isNotificationLoading = false;
+      },
+    });
   }
 }

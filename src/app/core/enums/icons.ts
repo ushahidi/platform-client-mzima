@@ -65,4 +65,5 @@ export enum Icons {
   greeting = 'greeting',
   marker = 'marker',
   clapper = 'clapper',
+  collectionEdit = 'collection-edit',
 }

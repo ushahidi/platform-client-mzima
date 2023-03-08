@@ -20,3 +20,4 @@ export * from './data-source.interface';
 export * from './savedsearches-response.interface';
 export * from './gtm-track.interface';
 export * from './contacts.interface';
+export * from './account-notification.interface';
