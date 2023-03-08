@@ -215,13 +215,12 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe({
-      next: (response) => {
+      next: (response: FormAttributeInterface) => {
         if (response) {
-          this.taskFields.map((field) => {
-            if (field.id === response.id) {
-              field = response;
-            }
-          });
+          const index = this.taskFields.findIndex((field) => field.id === response.id);
+          if (index !== -1) {
+            this.taskFields[index] = response;
+          }
         }
       },
     });
