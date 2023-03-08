@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { surveyHelper } from '@helpers';
 import { CategoryInterface, FormAttributeInterface, SurveyItem } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { CategoriesService, SurveysService } from '@services';
+import { CategoriesService, SurveysService, NotificationService } from '@services';
 import { map } from 'rxjs';
 import { MultilevelSelectOption } from 'src/app/shared/components';
 import _ from 'lodash';
@@ -18,7 +18,7 @@ export class CreateFieldModalComponent implements OnInit {
   public fields = _.cloneDeep(surveyHelper.surveyFields);
   public selectedFieldType: any;
   public editMode = false;
-  public availableCategories: MultilevelSelectOption[];
+  public availableCategories?: MultilevelSelectOption[];
   public categories: any = [];
   public availableSurveys: SurveyItem[] = [];
   public hasOptions = false;
@@ -31,6 +31,7 @@ export class CreateFieldModalComponent implements OnInit {
     private translate: TranslateService,
     private categoriesService: CategoriesService,
     private surveysService: SurveysService,
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit() {
@@ -38,6 +39,7 @@ export class CreateFieldModalComponent implements OnInit {
       this.editField();
     }
     this.surveyId = this.data?.surveyId;
+    this.getCategories();
   }
 
   private editField() {
@@ -125,6 +127,10 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   public addNewTask() {
+    if (this.hasOptions && !this.selectedFieldType.options?.length) {
+      this.notificationService.showError(this.translate.instant('survey.add_options_first'));
+      return;
+    }
     this.matDialogRef.close(this.selectedFieldType);
   }
 
@@ -142,8 +148,6 @@ export class CreateFieldModalComponent implements OnInit {
     switch (input) {
       case 'relation':
         return this.loadAvailableSurveys();
-      case 'tags':
-        return this.getCategories();
     }
   }
 

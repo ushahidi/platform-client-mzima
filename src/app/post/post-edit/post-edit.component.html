@@ -84,7 +84,7 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'tags'">
-              <span class="related-post-list">
+              <span class="related-post-list" *ngIf="field.options?.length; else noOptions">
                 <ul>
                   <li>
                     <mat-checkbox
@@ -146,6 +146,7 @@
               <mat-radio-group
                 [attr.aria-label]="field.label"
                 [formControlName]="field.key"
+                *ngIf="field.options?.length; else noOptions"
                 [data-qa]="'post-item-post-radio' + field.key"
               >
                 <div class="radio-button" *ngFor="let option of field.options">
@@ -162,6 +163,7 @@
             <ng-container *ngIf="field.input === 'checkbox'">
               <mat-selection-list
                 [formControlName]="field.key"
+                *ngIf="field.options?.length; else noOptions"
                 [data-qa]="'post-item-post-checkbox' + field.key"
               >
                 <mat-list-option
@@ -178,7 +180,7 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'select'">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" *ngIf="field.options?.length; else noOptions">
                 <mat-select
                   [formControlName]="field.key"
                   disableOptionCentering
@@ -328,4 +330,8 @@
 
 <ng-template #spinner>
   <app-spinner class="spinner"></app-spinner>
+</ng-template>
+
+<ng-template #noOptions>
+  <span class="no-options">{{ 'survey.no_options_for_this_field' | translate }}</span>
 </ng-template>
