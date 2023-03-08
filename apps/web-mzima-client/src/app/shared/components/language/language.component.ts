@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MAT_SELECT_CONFIG, MatSelectChange } from '@angular/material/select';
-import {LanguageService} from "../../../core/services/language.service";
-// import { LanguageService } from '@services';
+import { LanguageService } from '../../../core/services/language.service';
 
 @Component({
   selector: 'app-language',

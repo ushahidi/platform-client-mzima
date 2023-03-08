@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-// import { ConfigService, DataSourcesService, BreakpointService } from '@services';
 import { arrayHelpers } from '@helpers';
-import { Observable, switchMap } from "rxjs";
-import {ConfigService} from "../../core/services/config.service";
-import {DataSourcesService} from "../../core/services/data-sources.service";
-import {BreakpointService} from "../../core/services/breakpoint.service";
+import { Observable, switchMap } from 'rxjs';
+import { ConfigService } from '../../core/services/config.service';
+import { DataSourcesService } from '../../core/services/data-sources.service';
+import { BreakpointService } from '@services';
 
 @Component({
   selector: 'app-data-sources',

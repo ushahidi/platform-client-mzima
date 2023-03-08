@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { CONST } from '@constants';
 import { SurveyItem } from '@models';
-import {SurveysService} from "../../core/services/surveys.service";
-// import { SurveysService } from '@services';
+import { SurveysService } from '../../core/services/surveys.service';
 
 @Component({
   selector: 'app-add-post-modal',

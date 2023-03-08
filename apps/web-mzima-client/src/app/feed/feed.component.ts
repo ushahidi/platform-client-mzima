@@ -5,29 +5,17 @@ import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-// import {
-//   ConfirmModalService,
-//   EventBusService,
-//   EventType,
-//   PostsService,
-//   PostsV5Service,
-//   SavedsearchesService,
-//   SessionService,
-//   BreakpointService,
-//   LanguageService,
-// } from '@services';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 import { MainViewComponent } from '@shared';
-import {PostsService} from "../core/services/posts.service";
-import {SavedsearchesService} from "../core/services/savedsearches.service";
-import {EventBusService, EventType} from "../core/services/event-bus.service";
-import {SessionService} from "../core/services/session.service";
-import {PostsV5Service} from "../core/services/posts.v5.service";
-import {ConfirmModalService} from "../core/services/confirm-modal.service";
-import {BreakpointService} from "../core/services/breakpoint.service";
-import {LanguageService} from "../core/services/language.service";
+import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
+import { PostsService } from '../core/services/posts.service';
+import { SavedsearchesService } from '../core/services/savedsearches.service';
+import { PostsV5Service } from '../core/services/posts.v5.service';
+import { ConfirmModalService } from '../core/services/confirm-modal.service';
+import { LanguageService } from '../core/services/language.service';
+
 
 enum FeedMode {
   Tiles = 'TILES',
@@ -43,8 +31,6 @@ enum FeedMode {
 export class FeedComponent extends MainViewComponent implements OnInit {
   @ViewChild('feed') public feed: ElementRef;
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
-  postsFilters$ = this.postsService.postsFilters$.pipe(untilDestroyed(this));
-  private isDesktop$: Observable<boolean>;
   public override params: GeoJsonFilter = {
     limit: 9,
     offset: 0,
@@ -105,8 +91,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     private languageService: LanguageService,
   ) {
     super(router, route, postsService, savedSearchesService, eventBusService, sessionService);
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
-    this.isDesktop$.subscribe({
+    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
         if (!this.isDesktop) {
@@ -143,7 +128,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedMode.Tiles;
 
-        this.postsFilters$.subscribe({
+        this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
           next: () => {
             this.posts = [];
             this.params.offset = (this.currentPage - 1) * (this.params.limit ?? 0);

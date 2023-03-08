@@ -2,10 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LanguageInterface } from '@models';
-import {BreakpointService} from "../../../core/services/breakpoint.service";
-import { Observable } from "rxjs";
-import { untilDestroyed } from "@ngneat/until-destroy";
-// import { BreakpointService } from '@services';
+import { Observable } from 'rxjs';
+import { untilDestroyed } from '@ngneat/until-destroy';
+import { BreakpointService } from '@services';
 
 export interface SelectLanguagesDialogData {
   defaultLanguage: LanguageInterface;

@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
-// import { SessionService } from '@services';
 import {
   control,
   FitBoundsOptions,
@@ -12,7 +11,7 @@ import {
   marker,
 } from 'leaflet';
 import { pointIcon } from '../../../core/helpers/map';
-import {SessionService} from "../../../core/services/session.service";
+import { SessionService } from '../../../core/services/session.service';
 
 @Component({
   selector: 'app-map-with-marker',
@@ -39,9 +38,7 @@ export class MapWithMarkerComponent implements OnInit {
     this.mapConfig = this.sessionService.getMapConfigurations();
 
     const currentLayer =
-      mapHelper.getMapLayers().baselayers[
-        this.mapConfig.default_view!.baselayer
-      ];
+      mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
     this.leafletOptions = {
       scrollWheelZoom: true,
@@ -58,7 +55,7 @@ export class MapWithMarkerComponent implements OnInit {
       },
       {
         icon: pointIcon(this.color, this.type),
-      }
+      },
     );
     this.mapLayers.push(mapMarker);
 

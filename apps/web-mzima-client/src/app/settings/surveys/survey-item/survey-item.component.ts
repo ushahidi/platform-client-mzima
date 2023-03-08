@@ -6,24 +6,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
 import { LanguageInterface, RoleResult, SurveyItemTask } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-// import {
-//   FormsService,
-//   LanguageService,
-//   NotificationService,
-//   RolesService,
-//   SurveysService,
-//   BreakpointService,
-// } from '@services';
+import { BreakpointService } from '@services';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
+import { SurveysService } from '../../../core/services/surveys.service';
+import { FormsService } from '../../../core/services/forms.service';
+import { RolesService } from '../../../core/services/roles.service';
+import { NotificationService } from '../../../core/services/notification.service';
+import { LanguageService } from '../../../core/services/language.service';
 import _ from 'lodash';
-import {SurveysService} from "../../../core/services/surveys.service";
-import {FormsService} from "../../../core/services/forms.service";
-import {RolesService} from "../../../core/services/roles.service";
-import {NotificationService} from "../../../core/services/notification.service";
-import {LanguageService} from "../../../core/services/language.service";
-import {BreakpointService} from "../../../core/services/breakpoint.service";
 
 @UntilDestroy()
 @Component({
@@ -33,9 +25,7 @@ import {BreakpointService} from "../../../core/services/breakpoint.service";
 })
 export class SurveyItemComponent implements OnInit {
   @ViewChild('configTask') configTask: SurveyTaskComponent;
-  private isDesktop$ = this.breakpointService.isDesktop$.pipe(
-    untilDestroyed(this)
-  );
+  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   public selectLanguageCode: string;
   public description: string;
   public name: string;
@@ -67,12 +57,8 @@ export class SurveyItemComponent implements OnInit {
   mainPost: SurveyItemTask;
   surveyObject: any;
   public languages: LanguageInterface[] = this.languageService.getLanguages();
-  public defaultLanguage?: LanguageInterface = this.languages.find(
-    (lang) => lang.code === 'en'
-  );
-  public activeLanguages: LanguageInterface[] = this.defaultLanguage
-    ? [this.defaultLanguage]
-    : [];
+  public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
+  public activeLanguages: LanguageInterface[] = this.defaultLanguage ? [this.defaultLanguage] : [];
   public isDesktop = false;
 
   constructor(
@@ -86,7 +72,7 @@ export class SurveyItemComponent implements OnInit {
     private notification: NotificationService,
     private languageService: LanguageService,
     private breakpointService: BreakpointService,
-    private location: Location
+    private location: Location,
   ) {
     this.isDesktop$.subscribe({
       next: (isDesktop) => {
@@ -127,9 +113,7 @@ export class SurveyItemComponent implements OnInit {
       .get('tasks')
       ?.value.filter((t: SurveyItemTask) => t.type === 'task');
     this.form.controls['tasks'].valueChanges.subscribe((change) => {
-      this.additionalTasks = change.filter(
-        (t: SurveyItemTask) => t.type === 'task'
-      );
+      this.additionalTasks = change.filter((t: SurveyItemTask) => t.type === 'task');
     });
   }
 
@@ -160,21 +144,17 @@ export class SurveyItemComponent implements OnInit {
     dialogRef.afterClosed().subscribe({
       next: (selectedLanguages: LanguageInterface[]) => {
         if (!selectedLanguages) return;
-        this.getFormControl('enabled_languages').value.available =
-          selectedLanguages
-            .filter((language) => language.code !== this.defaultLanguage?.code)
-            .map((language) => language.code);
+        this.getFormControl('enabled_languages').value.available = selectedLanguages
+          .filter((language) => language.code !== this.defaultLanguage?.code)
+          .map((language) => language.code);
         const translations: any = {};
         selectedLanguages
           .filter((language) => language.code !== this.defaultLanguage?.code)
           .map((language) => {
             translations[language.code] = {
-              name:
-                this.getFormControl('translations').value[language.code]
-                  ?.name || '',
+              name: this.getFormControl('translations').value[language.code]?.name || '',
               description:
-                this.getFormControl('translations').value[language.code]
-                  ?.description || '',
+                this.getFormControl('translations').value[language.code]?.description || '',
             };
           });
         this.getFormControl('translations').setValue(translations);
@@ -209,11 +189,9 @@ export class SurveyItemComponent implements OnInit {
   }
 
   saveRoles(formId: string) {
-    const selectedRoles = this.configTask.selectedRoles.options?.map(
-      (r: any) => {
-        return this.roles.find((role) => role.name === r);
-      }
-    );
+    const selectedRoles = this.configTask.selectedRoles.options?.map((r: any) => {
+      return this.roles.find((role) => role.name === r);
+    });
     const admin: any = this.roles.find((r: any) => r.name === 'admin');
     if (
       !this.getFormControl('everyone_can_create').value &&
@@ -225,7 +203,7 @@ export class SurveyItemComponent implements OnInit {
       this.formsService
         .updateRoles(
           formId,
-          selectedRoles.map((r: any) => r?.id)
+          selectedRoles.map((r: any) => r?.id),
         )
         .subscribe();
     }
@@ -233,19 +211,12 @@ export class SurveyItemComponent implements OnInit {
 
   public save() {
     const defaultLang: any[] = this.configTask.selectedLanguage;
-    if (
-      this.validateAttributeOptionTranslations() &&
-      this.validateAttributeOptionTranslations()
-    ) {
+    if (this.validateAttributeOptionTranslations() && this.validateAttributeOptionTranslations()) {
       this.form.patchValue({
         base_language: defaultLang,
       });
 
-      const request = Object.assign(
-        {},
-        this.form.value,
-        this.configTask.getConfigOptions()
-      );
+      const request = Object.assign({}, this.form.value, this.configTask.getConfigOptions());
       this.surveysService.saveSurvey(request, this.surveyId).subscribe({
         next: (response) => {
           this.updateForm(response.result);
@@ -293,8 +264,7 @@ export class SurveyItemComponent implements OnInit {
   }
 
   validateAttributeOptionTranslations() {
-    const availableLangs: any[] =
-      this.getFormControl('enabled_languages').value.available;
+    const availableLangs: any[] = this.getFormControl('enabled_languages').value.available;
     const tasks: SurveyItemTask[] = this.getFormControl('tasks').value;
 
     return availableLangs.every((language) => {
@@ -304,9 +274,7 @@ export class SurveyItemComponent implements OnInit {
             surveyHelper.fieldHasTranslations(f, language) &&
             surveyHelper.fieldCanHaveOptions(f)
           ) {
-            return surveyHelper.areOptionsUnique(
-              Object.values(f.translations[language].options)
-            );
+            return surveyHelper.areOptionsUnique(Object.values(f.translations[language].options));
           } else {
             return true;
           }
@@ -316,8 +284,7 @@ export class SurveyItemComponent implements OnInit {
   }
 
   validateSurveyTranslations() {
-    const availableLangs: any[] =
-      this.getFormControl('enabled_languages').value.available;
+    const availableLangs: any[] = this.getFormControl('enabled_languages').value.available;
     const translations = this.getFormControl('translations').value;
 
     return availableLangs.every((language) => {

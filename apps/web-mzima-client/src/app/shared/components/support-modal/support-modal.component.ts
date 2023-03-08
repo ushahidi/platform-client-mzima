@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import {EventBusService, EventType} from "../../../core/services/event-bus.service";
-// import { EventBusService, EventType } from '@services';
+import { EventBusService, EventType } from '@services';
 
 @Component({
   selector: 'app-support-modal',

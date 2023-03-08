@@ -3,11 +3,9 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Roles } from '@enums';
 import { takeUntilDestroy$ } from '@helpers';
 import { UserInterface } from '@models';
-// import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
+import { BreakpointService, EventBusService, EventType } from '@services';
 import { filter } from 'rxjs';
-import {BreakpointService} from "../core/services/breakpoint.service";
-import {EventBusService, EventType} from "../core/services/event-bus.service";
-import {SessionService} from "../core/services/session.service";
+import { SessionService } from '../core/services/session.service';
 
 @Component({
   selector: 'app-settings-layout',

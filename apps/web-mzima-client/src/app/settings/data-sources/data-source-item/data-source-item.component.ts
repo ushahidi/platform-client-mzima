@@ -12,12 +12,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { arrayHelpers } from '@helpers';
 import { combineLatest } from 'rxjs';
 import { Location } from '@angular/common';
-import {FormsService} from "../../../core/services/forms.service";
-import {ConfigService} from "../../../core/services/config.service";
-import {DataSourcesService} from "../../../core/services/data-sources.service";
-import {ConfirmModalService} from "../../../core/services/confirm-modal.service";
-import {SurveysService} from "../../../core/services/surveys.service";
-import {BreakpointService} from "../../../core/services/breakpoint.service";
+import { FormsService } from '../../../core/services/forms.service';
+import { ConfigService } from '../../../core/services/config.service';
+import { DataSourcesService } from '../../../core/services/data-sources.service';
+import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
+import { SurveysService } from '../../../core/services/surveys.service';
+import { BreakpointService } from '@services';
 
 @UntilDestroy()
 @Component({
@@ -27,7 +27,6 @@ import {BreakpointService} from "../../../core/services/breakpoint.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataSourceItemComponent implements AfterContentChecked, OnInit {
-  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   public provider: any;
   public surveyList: any[];
   public form: FormGroup = this.fb.group({});
@@ -56,7 +55,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     private breakpointService: BreakpointService,
     private location: Location,
   ) {
-    this.isDesktop$.subscribe({
+    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

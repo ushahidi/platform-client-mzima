@@ -3,12 +3,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { surveyHelper } from '@helpers';
 import { CategoryInterface, FormAttributeInterface, SurveyItem } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-// import { CategoriesService, SurveysService } from '@services';
 import { map } from 'rxjs';
 import { MultilevelSelectOption } from '../../../shared/components';
+import { CategoriesService } from '../../../core/services/categories.service';
+import { SurveysService } from '../../../core/services/surveys.service';
 import _ from 'lodash';
-import {CategoriesService} from "../../../core/services/categories.service";
-import {SurveysService} from "../../../core/services/surveys.service";
 
 @Component({
   selector: 'app-create-field-modal',
@@ -32,7 +31,7 @@ export class CreateFieldModalComponent implements OnInit {
     private matDialogRef: MatDialogRef<CreateFieldModalComponent>,
     private translate: TranslateService,
     private categoriesService: CategoriesService,
-    private surveysService: SurveysService
+    private surveysService: SurveysService,
   ) {}
 
   ngOnInit() {
@@ -62,9 +61,7 @@ export class CreateFieldModalComponent implements OnInit {
                 id: category.id,
                 name: category.tag,
                 children: res?.results
-                  ?.filter(
-                    (cat: CategoryInterface) => cat.parent_id === category.id
-                  )
+                  ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
                   .map((cat: CategoryInterface) => {
                     return {
                       id: cat.id,
@@ -75,7 +72,7 @@ export class CreateFieldModalComponent implements OnInit {
             }
           }
           return array;
-        })
+        }),
       )
       .subscribe({
         next: (response) => (this.availableCategories = response),
@@ -90,9 +87,8 @@ export class CreateFieldModalComponent implements OnInit {
 
   private checkForEmptyOptions() {
     if (this.selectedFieldType.options.length) {
-      this.emptyTitleOption = !!this.selectedFieldType.options.filter(
-        (el: string) => el === ''
-      ).length;
+      this.emptyTitleOption = !!this.selectedFieldType.options.filter((el: string) => el === '')
+        .length;
     }
   }
 
@@ -113,17 +109,11 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   get canDisableCaption() {
-    return (
-      this.selectedFieldType.type === 'media' &&
-      this.selectedFieldType.input === 'upload'
-    );
+    return this.selectedFieldType.type === 'media' && this.selectedFieldType.input === 'upload';
   }
 
   get canDisplay() {
-    return (
-      this.selectedFieldType.input !== 'upload' &&
-      this.selectedFieldType.type !== 'tags'
-    );
+    return this.selectedFieldType.input !== 'upload' && this.selectedFieldType.type !== 'tags';
   }
 
   private loadAvailableSurveys() {
@@ -141,11 +131,9 @@ export class CreateFieldModalComponent implements OnInit {
 
   public selectField(field: Partial<FormAttributeInterface>) {
     this.selectedFieldType = _.cloneDeep(field);
-    this.selectedFieldType.label = this.translate.instant(
-      this.selectedFieldType.label
-    );
+    this.selectedFieldType.label = this.translate.instant(this.selectedFieldType.label);
     this.selectedFieldType.instructions = this.translate.instant(
-      this.selectedFieldType.instructions
+      this.selectedFieldType.instructions,
     );
     this.setHasOptionValidate();
     this.checkLoadAvailableData(this.selectedFieldType.input);
@@ -180,7 +168,7 @@ export class CreateFieldModalComponent implements OnInit {
 
   private setHasOptionValidate() {
     this.hasOptions = ['checkbox', 'radio', 'select'].some(
-      (a) => a === this.selectedFieldType.input
+      (a) => a === this.selectedFieldType.input,
     );
   }
 

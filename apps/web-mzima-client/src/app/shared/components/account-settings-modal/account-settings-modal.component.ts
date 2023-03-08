@@ -12,11 +12,10 @@ import { MatRadioChange } from '@angular/material/radio';
 import { formHelper } from '@helpers';
 import { ContactsInterface, UserDataInterface, UserInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-// import { UsersService, ContactsService, ConfirmModalService } from '@services';
 import { forkJoin } from 'rxjs';
-import {UsersService} from "../../../core/services/users.service";
-import {ContactsService} from "../../../core/services/contacts.service";
-import {ConfirmModalService} from "../../../core/services/confirm-modal.service";
+import { UsersService } from '../../../core/services/users.service';
+import { ContactsService } from '../../../core/services/contacts.service';
+import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 
 enum AccountTypeEnum {
   Email = 'email',

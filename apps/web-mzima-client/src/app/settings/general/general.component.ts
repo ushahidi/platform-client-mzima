@@ -3,27 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { ApiKeyResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-// import {
-//   ApiKeyService,
-//   ConfigService,
-//   LanguageService,
-//   LoaderService,
-//   MediaService,
-//   SessionService,
-//   BreakpointService,
-//   ConfirmModalService,
-// } from '@services';
-import { mergeMap, Observable } from "rxjs";
+import { SessionService, BreakpointService } from '@services';
+import { mergeMap, Observable } from 'rxjs';
 import { SettingsMapComponent } from './settings-map/settings-map.component';
-import {SessionService} from "../../core/services/session.service";
-import {MediaService} from "../../core/services/media.service";
-import {ConfigService} from "../../core/services/config.service";
-import {LoaderService} from "../../core/services/loader.service";
-import {LanguageService} from "../../core/services/language.service";
-import {ApiKeyService} from "../../core/services/api-key.service";
-import {ConfirmModalService} from "../../core/services/confirm-modal.service";
-import {BreakpointService} from "../../core/services/breakpoint.service";
-import { untilDestroyed } from "@ngneat/until-destroy";
+import { MediaService } from '../../core/services/media.service';
+import { ConfigService } from '../../core/services/config.service';
+import { LoaderService } from '../../core/services/loader.service';
+import { LanguageService } from '../../core/services/language.service';
+import { ApiKeyService } from '../../core/services/api-key.service';
+import { ConfirmModalService } from '../../core/services/confirm-modal.service';
+import { untilDestroyed } from '@ngneat/until-destroy';
 
 @Component({
   selector: 'app-general',

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CONST } from '@constants';
-// import { UsersService, BreakpointService } from '@services';
 import dayjs from 'dayjs';
-import { forkJoin, Observable } from "rxjs";
-import {UsersService} from "../../core/services/users.service";
-import {BreakpointService} from "../../core/services/breakpoint.service";
-import { untilDestroyed } from "@ngneat/until-destroy";
+import { forkJoin, Observable } from 'rxjs';
+import { BreakpointService } from '@services';
+import { UsersService } from '../../core/services/users.service';
+import { untilDestroyed } from '@ngneat/until-destroy';
 
 @Component({
   selector: 'app-user-settings',
@@ -26,18 +25,18 @@ export class UserSettingsComponent implements OnInit {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.userId = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}userId`)!;
     this.form = this.formBuilder.group({
-        user: ['', [Validators.required]],
-        hdx_maintainer_id: ['', [Validators.required]],
-        maintainer_privileges: ['', [Validators.required]],
-        maintainer_id: ['', [Validators.required]],
-        maintainer_created: ['', [Validators.required]],
-        maintainer_url: ['', [Validators.required]],
-        hdx_api_key: ['', [Validators.required]],
-        api_privileges: ['', [Validators.required]],
-        api_id: ['', [Validators.required]],
-        api_created: ['', [Validators.required]],
-        api_url: ['', [Validators.required]],
-      });
+      user: ['', [Validators.required]],
+      hdx_maintainer_id: ['', [Validators.required]],
+      maintainer_privileges: ['', [Validators.required]],
+      maintainer_id: ['', [Validators.required]],
+      maintainer_created: ['', [Validators.required]],
+      maintainer_url: ['', [Validators.required]],
+      hdx_api_key: ['', [Validators.required]],
+      api_privileges: ['', [Validators.required]],
+      api_id: ['', [Validators.required]],
+      api_created: ['', [Validators.required]],
+      api_url: ['', [Validators.required]],
+    });
   }
 
   ngOnInit() {

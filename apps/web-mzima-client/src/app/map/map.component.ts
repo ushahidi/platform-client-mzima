@@ -3,15 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { mapHelper, takeUntilDestroy$ } from '@helpers';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
-// import {
-//   EventBusService,
-//   EventType,
-//   MediaService,
-//   PostsService,
-//   PostsV5Service,
-//   SavedsearchesService,
-//   SessionService,
-// } from '@services';
 import { MainViewComponent } from '@shared';
 import {
   Content,
@@ -30,12 +21,12 @@ import 'leaflet.markercluster';
 import { Observable } from 'rxjs';
 import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
-import {PostsService} from "../core/services/posts.service";
-import {SavedsearchesService} from "../core/services/savedsearches.service";
-import {EventBusService, EventType} from "../core/services/event-bus.service";
-import {SessionService} from "../core/services/session.service";
-import {PostsV5Service} from "../core/services/posts.v5.service";
-import {MediaService} from "../core/services/media.service";
+import { PostsService } from '../core/services/posts.service';
+import { SavedsearchesService } from '../core/services/savedsearches.service';
+import { PostsV5Service } from '../core/services/posts.v5.service';
+import { MediaService } from '../core/services/media.service';
+import { SessionService, EventBusService, EventType } from '@services';
+
 
 @Component({
   selector: 'app-map',

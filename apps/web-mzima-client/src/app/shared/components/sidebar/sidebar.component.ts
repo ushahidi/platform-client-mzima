@@ -13,7 +13,7 @@ import {
   EventBusService,
   EventType,
   GtmTrackingService,
-  SessionService
+  SessionService,
 } from '@services';
 import { Observable } from 'rxjs';
 import { SupportModalComponent } from '../support-modal/support-modal.component';
@@ -21,7 +21,7 @@ import { SupportModalComponent } from '../support-modal/support-modal.component'
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
   isLoggedIn = false;
@@ -43,7 +43,7 @@ export class SidebarComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private eventBusService: EventBusService,
-    private breakpointService: BreakpointService
+    private breakpointService: BreakpointService,
   ) {
     this.userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(takeUntilDestroy$());
@@ -54,17 +54,17 @@ export class SidebarComponent implements OnInit {
           this.isDesktop = isDesktop;
           this.initNavigationMenu();
         }
-      }
+      },
     });
 
     this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
       next: (option) => {
         this.isInnerPage = Boolean(option.inner);
-      }
+      },
     });
 
     this.eventBusService.on(EventType.OpenSupportModal).subscribe({
-      next: () => this.openSupportModal()
+      next: () => this.openSupportModal(),
     });
   }
 
@@ -75,7 +75,7 @@ export class SidebarComponent implements OnInit {
         Roles.Admin,
         Roles.ManageUsers,
         Roles.ManageSettings,
-        Roles.ManageImportExport
+        Roles.ManageImportExport,
       ];
       this.isHost = hostRoles.includes(<Roles>userData.role!);
       this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
@@ -83,7 +83,7 @@ export class SidebarComponent implements OnInit {
     });
 
     this.eventBusService.on(EventType.OpenLoginModal).subscribe({
-      next: () => this.openLogin()
+      next: () => this.openLogin(),
     });
   }
 
@@ -93,27 +93,27 @@ export class SidebarComponent implements OnInit {
         label: 'views.map',
         router: 'map',
         icon: 'map',
-        ref: 'map'
+        ref: 'map',
       },
       {
         label: 'views.data',
         router: 'feed',
         icon: 'data',
-        ref: 'feed'
+        ref: 'feed',
       },
       {
         label: 'views.activity',
         router: 'activity',
         icon: 'activity',
-        ref: 'activity'
+        ref: 'activity',
       },
       {
         label: 'nav.settings',
         icon: 'settings',
         adminGuard: true,
         router: 'settings',
-        ref: 'settings'
-      }
+        ref: 'settings',
+      },
     ];
   }
 
@@ -121,11 +121,11 @@ export class SidebarComponent implements OnInit {
     if (route !== 'map' && route !== 'feed') return route;
 
     if (this.router.url.includes('collection')) {
-      return `${ route }/collection/${ this.router.url.split('/').pop() || '' }`;
+      return `${route}/collection/${this.router.url.split('/').pop() || ''}`;
     }
 
     if (this.router.url.includes('search')) {
-      return `${ route }/search/${ this.router.url.split('/').pop() || '' }`;
+      return `${route}/search/${this.router.url.split('/').pop() || ''}`;
     }
 
     return route;
@@ -138,29 +138,29 @@ export class SidebarComponent implements OnInit {
         icon: 'collections',
         visible: this.isDesktop,
         action: () => this.openCollections(),
-        ref: 'collection'
+        ref: 'collection',
       },
       {
         label: 'nav.login',
         icon: 'auth',
         visible: !this.isLoggedIn && !this.canRegister,
         action: () => this.openLogin(),
-        ref: 'auth'
+        ref: 'auth',
       },
       {
         label: 'nav.login_register',
         icon: 'auth',
         visible: !this.isLoggedIn && this.canRegister,
         action: () => this.openLogin(),
-        ref: 'auth'
+        ref: 'auth',
       },
       {
         label: 'nav.help_support',
         icon: 'info',
         visible: true,
         action: () => this.openSupportModal(),
-        ref: 'support'
-      }
+        ref: 'support',
+      },
     ];
   }
 
@@ -170,11 +170,11 @@ export class SidebarComponent implements OnInit {
       maxWidth: 576,
       panelClass: ['modal', 'login-modal'],
       data: {
-        isSignupActive: this.canRegister
-      }
+        isSignupActive: this.canRegister,
+      },
     });
     dialogRef.afterClosed().subscribe({
-      next: () => this.removeFocusFromMenuItem('auth')
+      next: () => this.removeFocusFromMenuItem('auth'),
     });
   }
 
@@ -182,11 +182,11 @@ export class SidebarComponent implements OnInit {
     const dialogRef = this.dialog.open(CollectionsComponent, {
       width: '100%',
       maxWidth: 768,
-      panelClass: 'modal'
+      panelClass: 'modal',
     });
 
     dialogRef.afterClosed().subscribe({
-      next: () => this.removeFocusFromMenuItem('collection')
+      next: () => this.removeFocusFromMenuItem('collection'),
     });
   }
 
@@ -207,10 +207,10 @@ export class SidebarComponent implements OnInit {
     const dialogRef = this.dialog.open(SupportModalComponent, {
       width: '100%',
       maxWidth: 768,
-      panelClass: ['modal', 'support-modal']
+      panelClass: ['modal', 'support-modal'],
     });
     dialogRef.afterClosed().subscribe({
-      next: () => this.removeFocusFromMenuItem('support')
+      next: () => this.removeFocusFromMenuItem('support'),
     });
   }
 

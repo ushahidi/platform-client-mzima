@@ -7,8 +7,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {TwitterService} from "../../core/services/twitter.service";
-// import { TwitterService } from '@services';
+import { TwitterService } from '../../core/services/twitter.service';
 
 @Component({
   selector: 'app-twitter-widget',

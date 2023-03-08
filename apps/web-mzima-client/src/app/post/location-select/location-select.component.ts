@@ -63,18 +63,13 @@ export class LocationSelectComponent implements OnInit, ControlValueAccessor {
 
   disabled = false;
 
-  constructor(
-    private sessionService: SessionService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private sessionService: SessionService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.mapConfig = this.sessionService.getMapConfigurations();
 
     const currentLayer =
-      mapHelper.getMapLayers().baselayers[
-        this.mapConfig.default_view!.baselayer
-      ];
+      mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
     this.leafletOptions = {
       scrollWheelZoom: true,

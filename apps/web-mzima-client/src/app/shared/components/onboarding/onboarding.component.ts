@@ -1,11 +1,10 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
-// import { EventBusService, EventType, SessionService } from '@services';
+import { UserInterface } from '@models';
+import { EventBusService, EventType, SessionService } from '@services';
 import { NgxCustomTourService } from 'ngx-custom-tour';
-import { takeUntilDestroy$ } from '@helpers';
-import {SessionService} from "../../../core/services/session.service";
-import {EventBusService, EventType} from "../../../core/services/event-bus.service";
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Observable } from 'rxjs';
 
 interface OnboardingStep {
   title?: string;
@@ -25,7 +24,6 @@ interface OnboardingStep {
 })
 export class OnboardingComponent implements AfterViewInit {
   public isLoggedIn = false;
-  private userData$ = this.sessionService?.getCurrentUserData().pipe(untilDestroyed(this));
   public onboardingSteps: OnboardingStep[];
   private username?: string;
   public isFiltersVisible: boolean;
@@ -38,7 +36,7 @@ export class OnboardingComponent implements AfterViewInit {
     private sessionService: SessionService,
     private eventBusService: EventBusService,
   ) {
-    this.customTourService.showingStep$.subscribe({
+    this.customTourService.showingStep$.pipe(untilDestroyed(this)).subscribe({
       next: (data) => {
         if (this.activeStep === data.order) return;
         this.activeStep = data.order;
@@ -84,7 +82,7 @@ export class OnboardingComponent implements AfterViewInit {
       },
     });
 
-    this.userData$.subscribe((userData) => {
+    this.sessionService?.getCurrentUserData().pipe(untilDestroyed(this)).subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
       this.username = userData.realname;
       if (!this.onboardingSteps) {

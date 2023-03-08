@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface, MapViewInterface } from '@models';
-// import { SessionService } from '@services';
+import { SessionService } from '@services';
 import {
   control,
   DragEndEvent,
@@ -14,7 +14,6 @@ import {
   tileLayer,
 } from 'leaflet';
 import { pointIcon } from '../../../core/helpers/map';
-import {SessionService} from "../../../core/services/session.service";
 
 @Component({
   selector: 'app-settings-map',

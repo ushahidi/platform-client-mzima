@@ -1,8 +1,7 @@
 import { ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { Component, Input, Output } from '@angular/core';
 import { validateFile } from '@helpers';
-import {NotificationService} from "../../../core/services/notification.service";
-// import { NotificationService } from '@services';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-file-uploader',

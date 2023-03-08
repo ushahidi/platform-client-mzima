@@ -7,21 +7,10 @@ import { CollectionResult, PostResult, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import {
-  // CollectionsService,
-  // ConfirmModalService,
-  // RolesService,
-  SessionService,
-  BreakpointService,
-  EventBusService,
-  EventType,
-} from '@services';
+import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
 import { CollectionsService } from '../../core/services/collections.service';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { RolesService } from '../../core/services/roles.service';
-// import { SessionService } from '../../core/services/session.service';
-// import { BreakpointService } from '../../core/services/breakpoint.service';
-// import { EventBusService, EventType } from '../../core/services/event-bus.service';
 
 enum CollectionView {
   List = 'list',
@@ -45,17 +34,8 @@ export class CollectionsComponent implements OnInit {
   query = '';
   currentView: CollectionView = CollectionView.List;
   featuredEnabled = false;
-  searchForm: FormGroup = this.formBuilder.group({
-    query: ['', []],
-  });
-  collectionForm: FormGroup = this.formBuilder.group({
-    name: ['', [Validators.required]],
-    description: ['', []],
-    featured: [false, []],
-    visible_to: [false, []],
-    view: ['map', []],
-    is_notifications_enabled: [true, []],
-  });
+  searchForm: FormGroup;
+  collectionForm: FormGroup;
   roleOptions: any;
   tmpCollectionToEditId = 0;
   isLoggedIn = true;

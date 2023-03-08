@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Meta } from '@angular/platform-browser';
-// import { DonationService, SessionService } from '@services';
 import { DonationModalComponent } from '../../../settings';
-import {SessionService} from "../../../core/services/session.service";
-import {DonationService} from "../../../core/services/donation.service";
+import { SessionService } from '../../../core/services/session.service';
+import { DonationService } from '../../../core/services/donation.service';
 
 @Component({
   selector: 'app-donation-button',
@@ -19,16 +18,13 @@ export class DonationButtonComponent implements OnInit {
     private dialog: MatDialog,
     private session: SessionService,
     public donationService: DonationService,
-    private meta: Meta
+    private meta: Meta,
   ) {}
 
   ngOnInit() {
-    this.isDonationEnabled =
-      !!this.session.getSiteConfigurations().donation?.enabled;
+    this.isDonationEnabled = !!this.session.getSiteConfigurations().donation?.enabled;
     if (this.isDonationEnabled) {
-      this.setPaymentPointer(
-        this.session.getSiteConfigurations().donation?.wallet
-      );
+      this.setPaymentPointer(this.session.getSiteConfigurations().donation?.wallet);
       this.donationService.setupMonetization();
       this.donationService.donate$.subscribe((donationInfo) => {
         this.donationInfo = donationInfo;

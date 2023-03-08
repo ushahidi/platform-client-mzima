@@ -30,6 +30,13 @@ module.exports = {
             style: 'kebab-case',
           },
         ],
+        '@typescript-eslint/no-unused-expressions': 'off',
+        '@typescript-eslint/lines-between-class-members': 'off',
+        '@typescript-eslint/dot-notation': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/member-ordering': 'off',
+        '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
       },
     },
     {

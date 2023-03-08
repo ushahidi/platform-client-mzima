@@ -1,24 +1,17 @@
-import {Location} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {takeUntilDestroy$} from '@helpers';
-import {FormAttributeInterface, SurveyItem, WebhookResultInterface} from '@models';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {TranslateService} from '@ngx-translate/core';
-// import {
-//   // FormsService,
-//   ConfirmModalService,
-//   SurveysService,
-//   WebhooksService,
-//   BreakpointService,
-// } from '@services';
-import {FormsService} from "../../../core/services/forms.service";
-import {WebhooksService} from "../../../core/services/webhooks.service";
-import {SurveysService} from "../../../core/services/surveys.service";
-import {ConfirmModalService} from "../../../core/services/confirm-modal.service";
-import {BreakpointService} from "../../../core/services/breakpoint.service";
-import { Observable } from "rxjs";
+import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { takeUntilDestroy$ } from '@helpers';
+import { FormAttributeInterface, SurveyItem, WebhookResultInterface } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { TranslateService } from '@ngx-translate/core';
+import { BreakpointService } from '@services';
+import { FormsService } from '../../../core/services/forms.service';
+import { WebhooksService } from '../../../core/services/webhooks.service';
+import { SurveysService } from '../../../core/services/surveys.service';
+import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
+import { Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -31,10 +24,10 @@ export class WebhookItemComponent implements OnInit {
   private webhook: WebhookResultInterface;
   public form: FormGroup;
   public eventList = [
-    {name: 'Create', value: 'create'},
-    {name: 'Update', value: 'update'},
+    { name: 'Create', value: 'create' },
+    { name: 'Update', value: 'update' },
   ];
-  public entityList = [{name: 'Post', value: 'post'}];
+  public entityList = [{ name: 'Post', value: 'post' }];
   public surveyList: SurveyItem[] = [];
   public surveyAttributesList: FormAttributeInterface[] = [];
   private controlFormIdData$: Observable<any>;

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DonationConfigInterface } from '@models';
-import {SessionService} from "../../../core/services/session.service";
-import {DonationService} from "../../../core/services/donation.service";
-// import { DonationService, SessionService } from '@services';
+import { SessionService } from '../../../core/services/session.service';
+import { DonationService } from '../../../core/services/donation.service';
 
 @Component({
   selector: 'app-donation-modal',

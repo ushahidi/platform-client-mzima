@@ -6,11 +6,10 @@ import { CONST } from '@constants';
 import { RoleResult, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import {UsersService} from "../../../core/services/users.service";
-import {RolesService} from "../../../core/services/roles.service";
-import {ConfirmModalService} from "../../../core/services/confirm-modal.service";
-import {BreakpointService} from "../../../core/services/breakpoint.service";
-// import { ConfirmModalService, RolesService, UsersService, BreakpointService } from '@services';
+import { UsersService } from '../../../core/services/users.service';
+import { RolesService } from '../../../core/services/roles.service';
+import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
+import { BreakpointService } from '@services';
 
 @UntilDestroy()
 @Component({

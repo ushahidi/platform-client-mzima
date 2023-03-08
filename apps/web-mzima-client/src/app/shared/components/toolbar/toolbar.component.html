@@ -17,7 +17,7 @@
   <div class="toolbar__controls">
     <app-search-form class="search-form" *ngIf="showSearchForm"></app-search-form>
     <ng-container *ngIf="isDesktop$ | async">
-<!--      <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>-->
+      <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
       <button
         color="dark"
         mat-raised-button
@@ -109,10 +109,10 @@
   </div>
 
   <div class="menu__footer">
-<!--    <app-donation-button-->
-<!--      class="menu__footer__button"-->
-<!--      *ngIf="isDonateAvailable"-->
-<!--    ></app-donation-button>-->
+    <app-donation-button
+      class="menu__footer__button"
+      *ngIf="isDonateAvailable"
+    ></app-donation-button>
     <button mat-stroked-button (click)="openShare()" class="menu__footer__button">
       <span>{{ 'app.share' | translate }}</span>
       <mat-icon svgIcon="share"></mat-icon>

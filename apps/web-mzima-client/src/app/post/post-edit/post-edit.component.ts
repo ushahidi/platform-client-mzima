@@ -14,27 +14,16 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeoJsonFilter, PostResult } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-// import {
-//   BreakpointService,
-//   ConfirmModalService,
-//   EventBusService,
-//   EventType,
-//   PostsService,
-//   PostsV5Service,
-//   SurveysService,
-// } from '@services';
+import { BreakpointService, EventBusService, EventType } from '@services';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { TranslateService } from '@ngx-translate/core';
 import { objectHelpers } from '@helpers';
-import { Observable } from 'rxjs';
-import {BreakpointService} from "../../core/services/breakpoint.service";
-import {SurveysService} from "../../core/services/surveys.service";
-import {PostsV5Service} from "../../core/services/posts.v5.service";
-import {PostsService} from "../../core/services/posts.service";
-import {ConfirmModalService} from "../../core/services/confirm-modal.service";
-import {EventBusService, EventType} from "../../core/services/event-bus.service";
+import { SurveysService } from '../../core/services/surveys.service';
+import { PostsV5Service } from '../../core/services/posts.v5.service';
+import { PostsService } from '../../core/services/posts.service';
+import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -49,7 +38,6 @@ export class PostEditComponent implements OnInit, OnChanges {
   @Input() public postInput: any;
   @Output() cancel = new EventEmitter();
   @Output() updated = new EventEmitter();
-  private isDesktop$: Observable<boolean>;
   public data: any;
   public form: FormGroup;
   public description: string;
@@ -84,8 +72,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     private location: Location,
     private breakpointService: BreakpointService,
   ) {
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
-    this.isDesktop$.subscribe({
+    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

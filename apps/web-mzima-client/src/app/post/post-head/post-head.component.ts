@@ -2,21 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CollectionsComponent } from '@data';
-import {
-  PostPropertiesInterface,
-  PostResult,
-  PostStatus,
-  UserInterface,
-} from '@models';
+import { PostPropertiesInterface, PostResult, PostStatus, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BreakpointService,
-  ConfirmModalService,
-  PostsV5Service,
-  SessionService,
-} from '@services';
+import { BreakpointService, SessionService } from '@services';
 import { ShareModalComponent } from '../../shared/components';
+import { PostsV5Service } from '../../core/services/posts.v5.service';
+import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 
 @UntilDestroy()
 @Component({
@@ -26,9 +18,6 @@ import { ShareModalComponent } from '../../shared/components';
 })
 export class PostHeadComponent {
   PostStatus = PostStatus;
-  private isDesktop$ = this.breakpointService.isDesktop$.pipe(
-    untilDestroyed(this)
-  );
   @Input() public post: PostResult | PostPropertiesInterface;
   @Input() public user: UserInterface;
   @Input() public editable: boolean;
@@ -45,12 +34,9 @@ export class PostHeadComponent {
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
     private router: Router,
-    private breakpointService: BreakpointService
+    private breakpointService: BreakpointService,
   ) {
-  this.isDesktop$ = this.breakpointService.isDesktop$.pipe(
-      untilDestroyed(this)
-    );
-    this.isDesktop$.subscribe({
+    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },
@@ -73,30 +59,24 @@ export class PostHeadComponent {
   }
 
   underReview() {
-    this.postsV5Service
-      .updateStatus(this.post.id, PostStatus.Draft)
-      .subscribe((res) => {
-        this.post = res.result;
-        this.statusChanged.emit();
-      });
+    this.postsV5Service.updateStatus(this.post.id, PostStatus.Draft).subscribe((res) => {
+      this.post = res.result;
+      this.statusChanged.emit();
+    });
   }
 
   publish() {
-    this.postsV5Service
-      .updateStatus(this.post.id, PostStatus.Published)
-      .subscribe((res) => {
-        this.post = res.result;
-        this.statusChanged.emit();
-      });
+    this.postsV5Service.updateStatus(this.post.id, PostStatus.Published).subscribe((res) => {
+      this.post = res.result;
+      this.statusChanged.emit();
+    });
   }
 
   archive() {
-    this.postsV5Service
-      .updateStatus(this.post.id, PostStatus.Archived)
-      .subscribe((res) => {
-        this.post = res.result;
-        this.statusChanged.emit();
-      });
+    this.postsV5Service.updateStatus(this.post.id, PostStatus.Archived).subscribe((res) => {
+      this.post = res.result;
+      this.statusChanged.emit();
+    });
   }
 
   async deletePost() {
@@ -112,11 +92,9 @@ export class PostHeadComponent {
         title: this.translate.instant('notify.confirm_modal.deleted.success'),
         description: `<p>${this.translate.instant(
           'notify.confirm_modal.deleted.success_description',
-          { count: 1 }
+          { count: 1 },
         )}</p>`,
-        buttonSuccess: this.translate.instant(
-          'notify.confirm_modal.deleted.success_button'
-        ),
+        buttonSuccess: this.translate.instant('notify.confirm_modal.deleted.success_button'),
       });
     });
   }

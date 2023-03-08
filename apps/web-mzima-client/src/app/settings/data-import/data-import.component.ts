@@ -4,23 +4,14 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { omit, clone, invert, keys, includes } from 'lodash';
 import { FormAttributeInterface, FormCSVInterface, FormInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-// import {
-//   ConfirmModalService,
-//   DataImportService,
-//   FormsService,
-//   LoaderService,
-//   NotificationService,
-//   PollingService,
-//   BreakpointService,
-// } from '@services';
 import { forkJoin, Observable } from 'rxjs';
-import {DataImportService} from "../../core/services/data-import.service";
-import {NotificationService} from "../../core/services/notification.service";
-import {PollingService} from "../../core/services/polling.service";
-import {LoaderService} from "../../core/services/loader.service";
-import {ConfirmModalService} from "../../core/services/confirm-modal.service";
-import {FormsService} from "../../core/services/forms.service";
-import {BreakpointService} from "../../core/services/breakpoint.service";
+import { DataImportService } from '../../core/services/data-import.service';
+import { NotificationService } from '../../core/services/notification.service';
+import { PollingService } from '../../core/services/polling.service';
+import { LoaderService } from '../../core/services/loader.service';
+import { ConfirmModalService } from '../../core/services/confirm-modal.service';
+import { FormsService } from '../../core/services/forms.service';
+import { BreakpointService } from '@services';
 
 enum PostStatus {
   Published = 'published',
@@ -36,7 +27,6 @@ enum PostStatus {
 })
 export class DataImportComponent implements OnInit {
   PostStatus = PostStatus;
-  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   selectedFile: File;
   selectedForm: FormInterface;
   forms$: Observable<FormInterface[]>;
@@ -62,7 +52,7 @@ export class DataImportComponent implements OnInit {
     private formsService: FormsService,
     private breakpointService: BreakpointService,
   ) {
-    this.isDesktop$.subscribe({
+    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },

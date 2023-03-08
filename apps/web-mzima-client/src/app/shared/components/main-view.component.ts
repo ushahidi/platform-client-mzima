@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Observable } from 'rxjs';
 import {
   EventBusService,
   EventType,
@@ -25,7 +24,6 @@ export class MainViewComponent {
   };
   filters;
   public user: UserInterface;
-  userData$: Observable<UserInterface>;
 
   constructor(
     protected router: Router,
@@ -38,7 +36,6 @@ export class MainViewComponent {
     this.filters = JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
     );
-    this.userData$ = this.sessionService.currentUserData$.pipe(untilDestroyed(this));
   }
 
   initCollection() {
@@ -89,7 +86,7 @@ export class MainViewComponent {
   }
 
   getUserData(): void {
-    this.userData$.subscribe({
+    this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: (userData) => (this.user = userData),
     });
   }

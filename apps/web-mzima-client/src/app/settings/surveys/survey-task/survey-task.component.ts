@@ -19,18 +19,15 @@ import {
   SurveyItemTask,
 } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-// import { ConfirmModalService,
-//   // FormsService,
-//   LanguageService } from '@services';
 import {
   GroupCheckboxItemInterface,
   GroupCheckboxValueInterface,
 } from '../../../shared/components';
 import { CreateFieldModalComponent } from '../create-field-modal/create-field-modal.component';
+import { FormsService } from '../../../core/services/forms.service';
+import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
+import { LanguageService } from '../../../core/services/language.service';
 import _ from 'lodash';
-import {FormsService} from "../../../core/services/forms.service";
-import {ConfirmModalService} from "../../../core/services/confirm-modal.service";
-import {LanguageService} from "../../../core/services/language.service";
 
 @Component({
   selector: 'app-survey-task',
@@ -65,7 +62,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private languageService: LanguageService,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -132,9 +129,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   private initLanguages() {
     this.languagesToSelect = this.languageService.getLanguages();
 
-    const language = localStorage.getItem(
-      `${CONST.LOCAL_STORAGE_PREFIX}language`
-    );
+    const language = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}language`);
 
     if (!this.survey.enabled_languages) {
       this.survey.enabled_languages = {
@@ -177,9 +172,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   async deleteField(index: number) {
     const confirmed = await this.confirm.open({
       title: this.translate.instant('notify.form.delete_attribute_confirm'),
-      description: `<p>${this.translate.instant(
-        'notify.form.delete_attribute_confirm_desc'
-      )}</p>`,
+      description: `<p>${this.translate.instant('notify.form.delete_attribute_confirm_desc')}</p>`,
     });
     if (!confirmed) return;
 
@@ -211,9 +204,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   }
 
   canDelete(field: FormAttributeInterface) {
-    return this.isPost
-      ? field.type !== 'title' && field.type !== 'description'
-      : true;
+    return this.isPost ? field.type !== 'title' && field.type !== 'description' : true;
   }
 
   editField(selectedFieldType: any) {

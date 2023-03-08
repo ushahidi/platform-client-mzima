@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { takeUntilDestroy$ } from '@helpers';
 import { WebhookResultInterface } from '@models';
-import {WebhooksService} from "../../core/services/webhooks.service";
-import {BreakpointService} from "../../core/services/breakpoint.service";
-import { Observable } from "rxjs";
-import { untilDestroyed } from "@ngneat/until-destroy";
-// import { WebhooksService, BreakpointService } from '@services';
+import { WebhooksService } from '../../core/services/webhooks.service';
+import { Observable } from 'rxjs';
+import { BreakpointService } from '@services';
 
 @Component({
   selector: 'app-webhooks',

@@ -1,8 +1,7 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { CategoryInterface } from '@models';
-// import { CategoriesService } from '@services';
 import { CategoryItemComponent } from './category-item/category-item.component';
-import {CategoriesService} from "../../core/services/categories.service";
+import { CategoriesService } from '../../core/services/categories.service';
 
 @Component({
   selector: 'app-categories',

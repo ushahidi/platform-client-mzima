@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { SurveyItem, SurveyItemEnabledLanguages } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-// import { ConfirmModalService, SurveysService, BreakpointService } from '@services';
-import { forkJoin, Observable, take } from "rxjs";
-import {SurveysService} from "../../core/services/surveys.service";
-import {ConfirmModalService} from "../../core/services/confirm-modal.service";
-import {BreakpointService} from "../../core/services/breakpoint.service";
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { BreakpointService } from '@services';
+import { forkJoin, Observable, take } from 'rxjs';
+import { SurveysService } from '../../core/services/surveys.service';
+import { ConfirmModalService } from '../../core/services/confirm-modal.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({

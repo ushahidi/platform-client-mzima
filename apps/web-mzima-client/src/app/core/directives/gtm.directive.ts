@@ -1,5 +1,5 @@
 import { AfterViewInit, Directive, ElementRef, HostListener, Input } from '@angular/core';
-// import { GtmTrackingService } from '@services';
+import { GtmTrackingService } from '@services';
 import { EnumGtmEvent, EnumGtmGroup, EnumGtmSource } from '@enums';
 
 @Directive({
@@ -10,7 +10,7 @@ export class GtmDirective implements AfterViewInit {
 
   constructor(
     private elRef: ElementRef,
-    // private gtmTrackingService: GtmTrackingService,
+    private gtmTrackingService: GtmTrackingService,
   ) {}
 
   ngAfterViewInit(): void {
@@ -22,18 +22,17 @@ export class GtmDirective implements AfterViewInit {
     this.elRef.nativeElement.setAttribute('data-group', this.appGtm.group || EnumGtmGroup.General);
   }
 
-  // TODO: gtmTracking
   @HostListener('click', ['$event.target'])
   onClick(): void {
-    // this.gtmTrackingService.registerEvent(
-    //   {
-    //     event: EnumGtmEvent.GroupClick,
-    //     source: this.appGtm.source || EnumGtmSource.Anywhere,
-    //   },
-    //   GtmTrackingService.MapGroup(
-    //     this.appGtm.group || EnumGtmGroup.General,
-    //     this.elRef.nativeElement.innerText,
-    //   ),
-    // );
+    this.gtmTrackingService.registerEvent(
+      {
+        event: EnumGtmEvent.GroupClick,
+        source: this.appGtm.source || EnumGtmSource.Anywhere,
+      },
+      GtmTrackingService.MapGroup(
+        this.appGtm.group || EnumGtmGroup.General,
+        this.elRef.nativeElement.innerText,
+      ),
+    );
   }
 }

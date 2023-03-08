@@ -2,20 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DonationConfigInterface, SiteConfigInterface } from '@models';
-import {SessionService} from "../../core/services/session.service";
-import {MediaService} from "../../core/services/media.service";
-import {LoaderService} from "../../core/services/loader.service";
-import {ConfigService} from "../../core/services/config.service";
-import {BreakpointService} from "../../core/services/breakpoint.service";
-import { Observable } from "rxjs";
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-// import {
-//   ConfigService,
-//   LoaderService,
-//   MediaService,
-//   SessionService,
-//   BreakpointService,
-// } from '@services';
+import { MediaService } from '../../core/services/media.service';
+import { LoaderService } from '../../core/services/loader.service';
+import { ConfigService } from '../../core/services/config.service';
+import { Observable } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { SessionService, BreakpointService } from '@services';
 
 @UntilDestroy()
 @Component({

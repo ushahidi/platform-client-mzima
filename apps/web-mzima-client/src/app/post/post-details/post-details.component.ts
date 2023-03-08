@@ -12,10 +12,9 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryInterface, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-// import { MediaService, PostsV5Service } from '@services';
 import { CollectionsModalComponent } from '../../shared/components';
-import {PostsV5Service} from "../../core/services/posts.v5.service";
-import {MediaService} from "../../core/services/media.service";
+import { PostsV5Service } from '../../core/services/posts.v5.service';
+import { MediaService } from '../../core/services/media.service';
 
 @Component({
   selector: 'app-post-details',
@@ -40,14 +39,13 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     private mediaService: MediaService,
     private metaService: Meta,
     private route: ActivatedRoute,
-    private postsV5Service: PostsV5Service
+    private postsV5Service: PostsV5Service,
   ) {
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.post = undefined;
 
-        this.allowed_privileges =
-          localStorage.getItem('USH_allowed_privileges') ?? '';
+        this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
 
         this.postId = params['id'];
 
@@ -61,10 +59,8 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
       this.allowed_privileges = this.post?.allowed_privileges ?? '';
       if (changes['post'].currentValue?.post_content?.length) {
         this.setMetaData(this.post!);
-        const mediaField = changes[
-          'post'
-        ].currentValue.post_content[0].fields.find(
-          (field: any) => field.type === 'media'
+        const mediaField = changes['post'].currentValue.post_content[0].fields.find(
+          (field: any) => field.type === 'media',
         );
         if (mediaField && mediaField.value?.value) {
           this.mediaService.getById(mediaField.value.value).subscribe({
@@ -88,11 +84,9 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
 
   public isParentCategory(
     categories: CategoryInterface[] | undefined,
-    category_id: number
+    category_id: number,
   ): boolean {
-    return !!categories?.find(
-      (category: CategoryInterface) => category.parent_id === category_id
-    );
+    return !!categories?.find((category: CategoryInterface) => category.parent_id === category_id);
   }
 
   public addToCollection(): void {

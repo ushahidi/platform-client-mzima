@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { SessionService } from '@services';
+import { SessionService } from '../../../core/services/session.service';
 
 @Component({
   selector: 'app-company-info',
   templateUrl: './company-info.component.html',
-  styleUrls: ['./company-info.component.scss']
+  styleUrls: ['./company-info.component.scss'],
 })
 export class CompanyInfoComponent {
   public logo: string;
@@ -22,7 +22,7 @@ export class CompanyInfoComponent {
         this.title = deploymentInfo.title;
         this.description = deploymentInfo.description;
         this.logo = deploymentInfo.logo;
-      }
+      },
     });
   }
 

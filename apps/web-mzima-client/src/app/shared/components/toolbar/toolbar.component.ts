@@ -12,9 +12,10 @@ import {
   AuthService,
   BreadcrumbService,
   BreakpointService,
-  EventBusService, EventType,
+  EventBusService,
+  EventType,
   GtmTrackingService,
-  SessionService
+  SessionService,
 } from '@services';
 import { filter, Observable } from 'rxjs';
 import { DonationModalComponent } from '../../../settings';
@@ -26,7 +27,7 @@ import { SupportModalComponent } from '../support-modal/support-modal.component'
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
   @Input() languages: any;
@@ -57,7 +58,7 @@ export class ToolbarComponent implements OnInit {
     private translate: TranslateService,
     private gtmTracking: GtmTrackingService,
     private eventBusService: EventBusService,
-    private location: Location
+    private location: Location,
   ) {
     this.userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
@@ -71,13 +72,13 @@ export class ToolbarComponent implements OnInit {
     });
 
     this.breadcrumbService.breadcrumbs$.subscribe({
-      next: (res) => (this.pageTitle = res[res.length - 1]?.instance)
+      next: (res) => (this.pageTitle = res[res.length - 1]?.instance),
     });
 
     this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
       next: (option) => {
         this.isInnerPage = Boolean(option.inner);
-      }
+      },
     });
   }
 
@@ -97,39 +98,39 @@ export class ToolbarComponent implements OnInit {
         label: 'nav.collections',
         icon: 'collections',
         visible: true,
-        action: () => this.openCollections()
+        action: () => this.openCollections(),
       },
       {
         label: 'nav.help_support',
         icon: 'auth',
         visible: true,
-        action: () => this.openSupportModal()
+        action: () => this.openSupportModal(),
       },
       {
         label: 'nav.my_account',
         icon: 'account',
         visible: this.isLoggedIn,
         action: () => this.openSettings(),
-        separator: true
+        separator: true,
       },
       {
         label: 'nav.logout',
         icon: 'logout',
         visible: this.isLoggedIn,
-        action: () => this.logout()
+        action: () => this.logout(),
       },
       {
         label: 'nav.login',
         icon: 'auth',
         visible: !this.isLoggedIn && !this.canRegister,
-        action: () => this.openLogin()
+        action: () => this.openLogin(),
       },
       {
         label: 'nav.login_register',
         icon: 'auth',
         visible: !this.isLoggedIn && this.canRegister,
-        action: () => this.openLogin()
-      }
+        action: () => this.openLogin(),
+      },
     ];
   }
 
@@ -138,7 +139,7 @@ export class ToolbarComponent implements OnInit {
     this.dialog.open(DonationModalComponent, {
       width: '100%',
       maxWidth: 564,
-      panelClass: 'modal'
+      panelClass: 'modal',
     });
   }
 
@@ -147,7 +148,7 @@ export class ToolbarComponent implements OnInit {
     this.dialog.open(AccountSettingsModalComponent, {
       width: '100%',
       maxWidth: 800,
-      panelClass: 'modal'
+      panelClass: 'modal',
     });
   }
 
@@ -162,8 +163,8 @@ export class ToolbarComponent implements OnInit {
       panelClass: 'modal',
       data: {
         title: this.translate.instant(this.pageTitle),
-        description: this.translate.instant(this.pageTitle)
-      }
+        description: this.translate.instant(this.pageTitle),
+      },
     });
   }
 
@@ -174,7 +175,7 @@ export class ToolbarComponent implements OnInit {
   createRouterLink(route: string) {
     if (route !== 'map' && route !== 'feed') return route;
     return this.router.url.includes('collection')
-      ? `${ route }/collection/${ this.router.url.split('/').pop() || '' }`
+      ? `${route}/collection/${this.router.url.split('/').pop() || ''}`
       : route;
   }
 
@@ -185,9 +186,9 @@ export class ToolbarComponent implements OnInit {
       {
         event: EnumGtmEvent.PageView,
         // @ts-ignore
-        source: EnumGtmSource[label]
+        source: EnumGtmSource[label],
       },
-      GtmTrackingService.MapPath(`/${ router }`)
+      GtmTrackingService.MapPath(`/${router}`),
     );
   }
 
@@ -196,13 +197,13 @@ export class ToolbarComponent implements OnInit {
     const dialogRef = this.dialog.open(CollectionsComponent, {
       width: '100%',
       maxWidth: '768px',
-      panelClass: ['modal', 'collections-modal']
+      panelClass: ['modal', 'collections-modal'],
     });
 
     dialogRef.afterClosed().subscribe({
       next: (response) => {
         response ? console.log(response) : null;
-      }
+      },
     });
   }
 
@@ -213,8 +214,8 @@ export class ToolbarComponent implements OnInit {
       maxWidth: 576,
       panelClass: ['modal', 'login-modal'],
       data: {
-        isSignupActive: this.canRegister
-      }
+        isSignupActive: this.canRegister,
+      },
     });
   }
 
@@ -226,7 +227,7 @@ export class ToolbarComponent implements OnInit {
     this.dialog.open(SupportModalComponent, {
       width: '100%',
       maxWidth: 768,
-      panelClass: ['modal', 'support-modal']
+      panelClass: ['modal', 'support-modal'],
     });
   }
 }

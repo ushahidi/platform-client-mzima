@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {CategoriesService} from "../../../core/services/categories.service";
-// import { CategoriesService } from '@services';
+import { CategoriesService } from '../../../core/services/categories.service';
 
 @Component({
   selector: 'app-create',

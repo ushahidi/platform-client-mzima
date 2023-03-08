@@ -2,10 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { MatDialog } from '@angular/material/dialog';
 import { LanguageInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-// import { ConfirmModalService, LanguageService } from '@services';
 import { SelectLanguagesModalComponent } from '../select-languages-modal/select-languages-modal.component';
-import {LanguageService} from "../../../core/services/language.service";
-import {ConfirmModalService} from "../../../core/services/confirm-modal.service";
+import { LanguageService } from '../../../core/services/language.service';
+import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 
 @Component({
   selector: 'app-translations-switch',
