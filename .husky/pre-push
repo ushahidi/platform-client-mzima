@@ -1,4 +1,4 @@
-##!/usr/bin/env sh
-#. "$(dirname -- "$0")/_/husky.sh"
-#
-#nx run mobile-app:build:production
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+nx run web-mzima-client:build:production

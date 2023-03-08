@@ -15,13 +15,11 @@ import { ColorPickerComponentModule } from '../../shared/components/color-picker
 import { GroupCheckboxSelectModule } from '../../shared/components/group-checkbox-select/group-checkbox-select.module';
 import { MultilevelSelectModule } from '../../shared/components/multilevel-select/multilevel-select.module';
 import { SettingsHeaderModule } from '../../shared/components/settings-header/settings-header.module';
-import { SpinnerModule } from '../../shared/components/spinner/spinner.module';
-import { DirectiveModule } from '../../shared/directive.module';
+import { DirectiveModule, SpinnerModule, TranslationsSwitchModule } from '@shared';
 
 import { SurveysRoutingModule } from './surveys-routing.module';
 import { SurveysComponent } from './surveys.component';
 import { SurveyItemComponent } from './survey-item/survey-item.component';
-import { TranslationsSwitchModule } from '@shared';
 import { SurveyTaskComponent } from './survey-task/survey-task.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';

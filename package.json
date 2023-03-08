@@ -1,7 +1,7 @@
 {
   "name": "mzima-client",
   "version": "0.0.0",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "scripts": {
     "web:serve": "nx serve web-mzima-client",
     "web:build": "nx run web-mzima-client:build:production",
@@ -109,5 +109,8 @@
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "~4.7.2"
+  },
+  "overrides": {
+    "autoprefixer": "10.4.5"
   }
 }

@@ -8,8 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
-import { SpinnerModule } from '../../shared/components/spinner/spinner.module';
-import { DirectiveModule } from '../../shared/directive.module';
+import { DirectiveModule, SpinnerModule } from '@shared';
 
 import { DataExportRoutingModule } from './data-export-routing.module';
 import { DataExportComponent } from './data-export.component';

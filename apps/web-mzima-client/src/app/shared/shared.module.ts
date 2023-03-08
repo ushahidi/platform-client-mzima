@@ -23,6 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ShareModule } from 'ngx-sharebuttons';
 import { NgxCustomTourModule } from 'ngx-custom-tour';
+import { DonationModalComponent } from '../settings';
 
 import {
   AccountSettingsModalComponent,
@@ -76,6 +77,7 @@ const components = [
   PageNotFoundComponent,
   MainViewComponent,
   AddPostModalComponent,
+  DonationModalComponent,
 ];
 
 const modules = [

@@ -10,12 +10,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { GroupCheckboxSelectModule } from '../../shared/components/group-checkbox-select/group-checkbox-select.module';
 import { SettingsHeaderModule } from '../../shared/components/settings-header/settings-header.module';
-import { SpinnerModule } from '../../shared/components/spinner/spinner.module';
-import { DirectiveModule } from '../../shared/directive.module';
+import { DirectiveModule, SpinnerModule } from '@shared';
 import { CategoriesRoutingModule } from './categories-routing.module';
 import { CategoriesComponent } from './categories.component';
 import { CreateComponent } from './create/create.component';
-import { CreateCategoryFormComponent } from '../../settings/categories/create-category-form/create-category-form.component';
+import { CreateCategoryFormComponent } from './create-category-form/create-category-form.component';
 import { CategoryItemComponent } from './category-item/category-item.component';
 import { CategoryComponent } from './category/category.component';
 

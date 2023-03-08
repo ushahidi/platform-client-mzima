@@ -16,8 +16,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
 import { TableModule } from 'primeng/table';
 import { SettingsHeaderModule } from '../../shared/components/settings-header/settings-header.module';
-import { SpinnerModule } from '../../shared/components/spinner/spinner.module';
-import { DirectiveModule } from '../../shared/directive.module';
+import { DirectiveModule, SpinnerModule } from '@shared';
 
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';

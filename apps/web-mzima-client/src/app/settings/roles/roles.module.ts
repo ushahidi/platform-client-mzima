@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { DirectiveModule } from '../../shared/directive.module';
+import { DirectiveModule } from '@shared';
 import { RoleItemComponent } from './role-item/role-item.component';
 
 import { RolesRoutingModule } from './roles-routing.module';
