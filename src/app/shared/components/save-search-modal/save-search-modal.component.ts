@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmModalService, RolesService } from '@services';
-import { Savedsearch } from '@models';
+import { ConfirmModalService, NotificationsService, RolesService } from '@services';
+import { AccountNotificationsInterface, Savedsearch } from '@models';
 import { GroupCheckboxItemInterface } from '../group-checkbox-select/group-checkbox-select.component';
 import { formHelper } from '@helpers';
 
@@ -29,8 +29,10 @@ export class SaveSearchModalComponent implements OnInit {
     ],
     featured: [false],
     defaultViewingMode: ['map'],
+    is_notifications_enabled: [false],
   });
   public roleOptions: GroupCheckboxItemInterface[] = [];
+  private notification: AccountNotificationsInterface;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -39,6 +41,7 @@ export class SaveSearchModalComponent implements OnInit {
     private rolesService: RolesService,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
+    private notificationsService: NotificationsService,
   ) {}
 
   ngOnInit(): void {
@@ -81,6 +84,15 @@ export class SaveSearchModalComponent implements OnInit {
             defaultViewingMode: this.data.search.view,
           });
         }
+      },
+    });
+
+    this.notificationsService.get(String(this.data.search.id)).subscribe({
+      next: (response) => {
+        this.notification = response.results[0];
+        this.form.patchValue({
+          is_notifications_enabled: !!this.notification,
+        });
       },
     });
   }

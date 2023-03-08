@@ -149,7 +149,7 @@ export class ToolbarComponent implements OnInit {
     this.dialog.open(AccountSettingsModalComponent, {
       width: '100%',
       maxWidth: 800,
-      panelClass: 'modal',
+      panelClass: ['modal', 'account-settings-modal'],
     });
   }
 

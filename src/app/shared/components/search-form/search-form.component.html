@@ -59,9 +59,11 @@
       </span>
 
       <div class="collection-info" *ngIf="collectionInfo">
-        <span class="collection-info__title">
-          Collection
-          {{ collectionInfo.name }}
+        <div class="collection-info__head">
+          <span class="collection-info__title">
+            {{ 'app.collection' | translate }}
+            "{{ collectionInfo.name }}"
+          </span>
           <button
             mat-button
             type="button"
@@ -71,10 +73,54 @@
           >
             {{ 'nav.clear' | translate }}
           </button>
-        </span>
+        </div>
+
+        <mat-slide-toggle
+          *ngIf="isLoggedIn"
+          class="notifications-toggle"
+          [(ngModel)]="isNotificationsOn"
+          [disabled]="isNotificationLoading"
+          [ngModelOptions]="{ standalone: true }"
+          (change)="changeNorificationStatus($event, collectionInfo.id.toString())"
+        >
+          {{ 'nav.notifications' | translate }}
+        </mat-slide-toggle>
 
         <div class="collection-info__description" *ngIf="collectionInfo.description?.length">
           {{ collectionInfo.description }}
+        </div>
+      </div>
+
+      <div class="collection-info" *ngIf="activeSavedSearch">
+        <div class="collection-info__head">
+          <span class="collection-info__title">
+            {{ 'global_filter.saved_filter' | translate }}
+            "{{ activeSavedSearch.name }}"
+          </span>
+          <button
+            mat-button
+            type="button"
+            color="primary"
+            (click)="clearSavedFilter()"
+            class="filter-group__head__button"
+          >
+            {{ 'nav.clear' | translate }}
+          </button>
+        </div>
+
+        <mat-slide-toggle
+          class="notifications-toggle"
+          [(ngModel)]="isNotificationsOn"
+          [disabled]="isNotificationLoading"
+          [ngModelOptions]="{ standalone: true }"
+          *ngIf="isLoggedIn && activeSavedSearch.id"
+          (change)="changeNorificationStatus($event, activeSavedSearch.id.toString())"
+        >
+          {{ 'nav.notifications' | translate }}
+        </mat-slide-toggle>
+
+        <div class="collection-info__description" *ngIf="activeSavedSearch.description?.length">
+          {{ activeSavedSearch.description }}
         </div>
       </div>
 

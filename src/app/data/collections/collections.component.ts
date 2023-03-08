@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { surveyHelper, formHelper } from '@helpers';
-import { CollectionResult, PostResult } from '@models';
+import { AccountNotificationsInterface, CollectionResult, PostResult } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -14,6 +14,7 @@ import {
   BreakpointService,
   EventBusService,
   EventType,
+  NotificationsService,
 } from '@services';
 
 enum CollectionView {
@@ -47,11 +48,12 @@ export class CollectionsComponent implements OnInit {
     featured: [false, []],
     visible_to: [false, []],
     view: ['map', []],
-    is_notifications_enabled: [true, []],
+    is_notifications_enabled: [false, []],
   });
   roleOptions: any;
   tmpCollectionToEditId = 0;
   isLoggedIn = true;
+  private notification: AccountNotificationsInterface;
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
@@ -65,6 +67,7 @@ export class CollectionsComponent implements OnInit {
     private session: SessionService,
     private rolesService: RolesService,
     private breakpointService: BreakpointService,
+    private notificationsService: NotificationsService,
   ) {}
 
   ngOnInit() {
@@ -167,6 +170,15 @@ export class CollectionsComponent implements OnInit {
     });
     this.tmpCollectionToEditId = collection.id;
     this.currentView = CollectionView.Edit;
+
+    this.notificationsService.get(String(collection.id)).subscribe({
+      next: (response) => {
+        this.notification = response.results[0];
+        this.collectionForm.patchValue({
+          is_notifications_enabled: !!this.notification,
+        });
+      },
+    });
   }
 
   goToCollection(collection: CollectionResult) {
@@ -208,6 +220,12 @@ export class CollectionsComponent implements OnInit {
         });
       }
     });
+
+    if (!this.notification && collectionData.is_notifications_enabled) {
+      this.notificationsService.post({ set: String(this.tmpCollectionToEditId) }).subscribe();
+    } else if (this.notification && !collectionData.is_notifications_enabled) {
+      this.notificationsService.delete(this.notification.id).subscribe();
+    }
   }
 
   addNewCollection() {

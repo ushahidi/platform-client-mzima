@@ -1,3 +1,5 @@
+@import '/src/styles/helpers';
+
 .spinner {
   margin: 60px 0;
   display: block;
@@ -9,10 +11,40 @@
   padding-left: 24px;
   padding-right: 24px;
 
+  @include breakpoint-max($tablet) {
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
   &::ng-deep {
     .mat-tab-header {
       margin-bottom: 8px;
       background: var(--color-light);
+    }
+
+    .mat-tab-labels {
+      @include breakpoint-max($tablet) {
+        justify-content: center;
+      }
+    }
+
+    .mat-tab-label {
+      height: auto;
+      font-size: 24px;
+      padding: 4px 8px;
+      font-weight: 700;
+      line-height: 1.2;
+
+      @include breakpoint-max($tablet) {
+        padding-top: 0;
+        padding-bottom: 8px;
+      }
+
+      .mat-tab-label-content {
+        white-space: normal;
+      }
     }
   }
 }
@@ -20,22 +52,33 @@
 .mat-dialog-content {
   padding-left: 0;
   padding-right: 0;
+
+  @include breakpoint-max($tablet) {
+    overflow: visible;
+    max-height: none !important;
+  }
 }
 
 .tab-content {
   margin: 0;
-  padding: 16px;
-  border-top: 1px solid #eee;
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  @include breakpoint-max($tablet) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }
 
 .contacts-tab {
   margin-bottom: 16px;
-  border: 1px solid #eee;
+  border: 1px solid var(--color-neutral-20);
 
   &__title {
     font-size: 16px;
     line-height: 1.5;
-    margin: 8px 16px;
+    padding: 8px 16px;
+    margin-bottom: 0;
   }
 
   &__add-btn {
@@ -58,12 +101,18 @@
 
     &::ng-deep {
       .mat-expansion-indicator {
-        width: 20px;
-        height: 20px;
+        width: 1em;
+        height: 1em;
         display: flex;
+        font-size: 20px;
         align-items: center;
         flex-direction: column;
         justify-content: center;
+
+        @include breakpoint-max($tablet) {
+          font-size: 24px;
+          margin-inline-start: -8px;
+        }
       }
     }
   }
@@ -85,26 +134,53 @@
 
 .contacts {
   .mat-expansion-panel {
+    margin: 0;
     background: none;
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+    &:not(:first-child):not(.contact-item) {
+      margin-top: 24px;
+
+      @include breakpoint-max($tablet) {
+        margin-top: 16px;
+      }
+    }
 
     &-header {
-      height: 48px;
+      height: 42px;
       padding-right: 16px;
+
       h4 {
         font-size: 20px;
+        line-height: 1.2;
         font-weight: 700;
       }
     }
   }
+
+  .contact-item {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
 }
 
 .contact-item {
+  &.mat-expansion-panel {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  &.mat-expansion-panel-spacing {
+    border-top: 1px solid var(--color-neutral-20);
+  }
+
   &::ng-deep {
     .mat-expansion-panel-content {
       padding-left: 24px;
       padding-right: 24px;
       transition: padding 0.35s ease;
-      box-shadow: inset 0 1px 4px var(--color-neutral-20);
+      border-bottom: 1px solid var(--color-neutral-20);
     }
   }
 
@@ -126,14 +202,18 @@
   }
 }
 
-.type-group {
+.notification-group {
   padding: 16px;
-  margin-bottom: 16px;
+
+  &:not(:first-child) {
+    margin-top: 16px;
+  }
 
   &__title {
-    display: inline-block;
+    display: block;
     font-size: 16px;
     font-weight: 700;
+    line-height: 1.25;
     margin-bottom: 16px;
   }
 
@@ -148,6 +228,82 @@
 
     &-icon {
       font-size: 20px;
+    }
+  }
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:not(:first-child) {
+    margin-top: 16px;
+  }
+
+  &__title {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  &__btn {
+    padding: 0;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    font-size: 24px;
+    border-radius: 4px;
+    margin: 0 0 0 24px;
+
+    @include breakpoint-max($tablet) {
+      font-size: 32px;
+    }
+
+    .mat-icon {
+      font-size: 20px;
+
+      @include breakpoint-max($tablet) {
+        font-size: 1em;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  @include breakpoint-max($tablet) {
+    .account-settings-modal {
+      height: 100%;
+      width: 100% !important;
+      max-width: none !important;
+
+      .mat-dialog-container {
+        border-radius: 0 !important;
+        padding: 96px 16px 80px !important;
+
+        .modal {
+          &__close-btn {
+            top: 24px;
+            position: fixed;
+            inset-inline-end: 16px;
+          }
+        }
+      }
+
+      .mat-dialog-actions {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        z-index: 25;
+        position: fixed;
+        margin-bottom: 0 !important;
+        min-height: 48px !important;
+        padding: 12px 16px !important;
+        background: var(--color-light);
+        border-top: 1px solid var(--color-neutral-20);
+      }
     }
   }
 }

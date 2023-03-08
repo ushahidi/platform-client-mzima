@@ -61,6 +61,14 @@
     </mat-form-field>
   </div>
 
+  <div class="form-row">
+    <div class="toggle">
+      <mat-slide-toggle formControlName="is_notifications_enabled">
+        {{ 'nav.receive_notifications' | translate }}
+      </mat-slide-toggle>
+    </div>
+  </div>
+
   <div mat-dialog-actions align="end">
     <button type="button" (click)="cancel()" mat-stroked-button>
       {{ 'app.cancel' | translate }}
