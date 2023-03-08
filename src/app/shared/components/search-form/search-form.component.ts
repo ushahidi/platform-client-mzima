@@ -124,6 +124,9 @@ export class SearchFormComponent implements OnInit {
 
     this.form.valueChanges.subscribe({
       next: (values) => {
+        if (this.collectionInfo?.id) {
+          values.set = this.collectionInfo.id.toString();
+        }
         localStorage.setItem(
           this.session.localStorageNameMapper('filters'),
           JSON.stringify(values),
@@ -150,6 +153,11 @@ export class SearchFormComponent implements OnInit {
           const collectionId = typeof res.set === 'string' ? res.set : '';
           if (collectionId) {
             this.getCollectionInfo(collectionId);
+            const withSet = Object.assign({}, this.form.value, { set: collectionId });
+            localStorage.setItem(
+              this.session.localStorageNameMapper('filters'),
+              JSON.stringify(withSet),
+            );
           } else {
             this.collectionInfo = undefined;
           }
@@ -254,8 +262,9 @@ export class SearchFormComponent implements OnInit {
       'status[]': values.status,
       'form[]': values.form,
       'tags[]': values.tags,
+      set: values.set,
       date_after: values.date.start ? new Date(values.date.start).toISOString() : null,
-      date_before: values.date.end ? new Date(values.date.end).toISOString() : null,
+      date_before: values.date.eid ? new Date(values.date.end).toISOString() : null,
       q: this.searchQuery,
       center_point:
         values.center_point?.location?.lat && values.center_point?.location?.lng
@@ -347,7 +356,6 @@ export class SearchFormComponent implements OnInit {
     this.postsService.getPostStatistics().subscribe({
       next: (res) => {
         this.notShownPostsCount = res.unmapped;
-
         if (this.surveyList?.length) {
           this.surveyList.map((survey) => (survey.total = 0));
           const values = res.totals.find((total: any) => total.key === 'form')?.values;
@@ -357,6 +365,8 @@ export class SearchFormComponent implements OnInit {
             if (!survey) return;
             survey.total = (survey.total || 0) + value.total;
           });
+
+          this.total = this.getTotal(this.surveyList);
         }
       },
     });
