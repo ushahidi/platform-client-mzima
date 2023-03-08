@@ -29,7 +29,7 @@ import { BreakpointService } from '@services';
 export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   public provider: any;
   public surveyList: any[];
-  public form: FormGroup = this.fb.group({});
+  public form: FormGroup;
   private dataSourceList: any[];
   public selectedSurvey: any;
   public surveyAttributesList: any;
@@ -37,7 +37,6 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   private availableProviders: any[];
   public onCreating: boolean;
   public isDesktop = false;
-
   providersData: any;
   cloneProviders: any;
 
@@ -60,6 +59,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
         this.isDesktop = isDesktop;
       },
     });
+    this.form = this.fb.group({});
   }
 
   ngOnInit(): void {

@@ -35,24 +35,7 @@ export class CreateCategoryFormComponent implements OnInit {
   public roleOptions: GroupCheckboxItemInterface[] = [];
   public isUpdate = false;
   public isDesktop = false;
-
-  public form: FormGroup = this.fb.group({
-    id: [''],
-    name: ['', [Validators.required]],
-    description: [''],
-    is_child_to: [''],
-    language: ['en'],
-    visible_to: [
-      {
-        value: 'everyone',
-        options: ['admin'],
-      },
-    ],
-    translations: this.fb.array<TranslationInterface>([]),
-    translate_name: [''],
-    translate_description: [''],
-    parent: [],
-  });
+  public form: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -70,6 +53,24 @@ export class CreateCategoryFormComponent implements OnInit {
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },
+    });
+
+    this.form = this.fb.group({
+      id: [''],
+      name: ['', [Validators.required]],
+      description: [''],
+      is_child_to: [''],
+      language: ['en'],
+      visible_to: [
+        {
+          value: 'everyone',
+          options: ['admin'],
+        },
+      ],
+      translations: this.fb.array<TranslationInterface>([]),
+      translate_name: [''],
+      translate_description: [''],
+      parent: [],
     });
 
     this.categoriesService.get().subscribe({

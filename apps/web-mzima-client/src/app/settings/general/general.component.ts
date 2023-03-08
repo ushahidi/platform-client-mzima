@@ -22,14 +22,7 @@ import { untilDestroyed } from '@ngneat/until-destroy';
 export class GeneralComponent implements OnInit {
   @ViewChild('mapSettings') mapSettings: SettingsMapComponent;
   public isDesktop$: Observable<boolean>;
-  public generalForm: FormGroup = this.formBuilder.group({
-    name: ['', [Validators.required]],
-    description: ['', []],
-    email: ['', [Validators.email, Validators.required]],
-    language: ['en', []],
-    private: [false, []],
-    disable_registration: [false, []],
-  });
+  public generalForm: FormGroup;
   public copySuccess = false;
   siteConfig: any;
   apiKey: ApiKeyResult;
@@ -49,6 +42,14 @@ export class GeneralComponent implements OnInit {
     private breakpointService: BreakpointService,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+    this.generalForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      description: ['', []],
+      email: ['', [Validators.email, Validators.required]],
+      language: ['en', []],
+      private: [false, []],
+      disable_registration: [false, []],
+    });
   }
 
   ngOnInit(): void {

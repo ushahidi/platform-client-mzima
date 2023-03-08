@@ -7,6 +7,7 @@ import { surveyHelper } from '@helpers';
 import { LanguageInterface, RoleResult, SurveyItemTask } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
+import { Observable } from 'rxjs';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
@@ -25,31 +26,11 @@ import _ from 'lodash';
 })
 export class SurveyItemComponent implements OnInit {
   @ViewChild('configTask') configTask: SurveyTaskComponent;
-  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+  private isDesktop$: Observable<boolean>;
   public selectLanguageCode: string;
   public description: string;
   public name: string;
-  public form: FormGroup = this.formBuilder.group({
-    name: ['', [Validators.required]],
-    description: [''],
-    color: [null],
-    enabled_languages: this.formBuilder.group({
-      default: ['en'],
-      available: [[]],
-    }),
-    tasks: [[]],
-    base_language: [''],
-    require_approval: [true],
-    everyone_can_create: [true],
-    translations: [{}],
-    can_create: [[]],
-    disabled: [false],
-    hide_author: [false],
-    hide_location: [false],
-    hide_time: [false],
-    targeted_survey: [false],
-    type: [''],
-  });
+  public form: FormGroup;
   public isEdit = false;
   roles: RoleResult[] = [];
   surveyId: string;
@@ -74,10 +55,32 @@ export class SurveyItemComponent implements OnInit {
     private breakpointService: BreakpointService,
     private location: Location,
   ) {
+    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },
+    });
+    this.form = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      description: [''],
+      color: [null],
+      enabled_languages: this.formBuilder.group({
+        default: ['en'],
+        available: [[]],
+      }),
+      tasks: [[]],
+      base_language: [''],
+      require_approval: [true],
+      everyone_can_create: [true],
+      translations: [{}],
+      can_create: [[]],
+      disabled: [false],
+      hide_author: [false],
+      hide_location: [false],
+      hide_time: [false],
+      targeted_survey: [false],
+      type: [''],
     });
   }
 

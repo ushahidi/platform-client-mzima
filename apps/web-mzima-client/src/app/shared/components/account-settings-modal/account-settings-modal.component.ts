@@ -68,32 +68,8 @@ export class AccountSettingsModalComponent implements OnInit {
       types: ['Need translations'],
     },
   ];
-
-  private checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
-    if (!group) return null;
-    const pass = group.get('password')?.value;
-    const confirmPass = group.get('confirmPassword')?.value;
-    return pass === confirmPass ? null : { notSame: true };
-  };
-
-  public profileForm: FormGroup = this.formBuilder.group(
-    {
-      role: [''],
-      display_name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
-      confirmPassword: [
-        '',
-        [Validators.required, Validators.minLength(8), Validators.maxLength(64)],
-      ],
-    },
-    { validators: this.checkPasswords },
-  );
-
-  public addAccountForm: FormGroup = this.formBuilder.group({
-    type: ['email', [Validators.required]],
-    name: ['', [Validators.required, Validators.email]],
-  });
+  public profileForm: FormGroup;
+  public addAccountForm: FormGroup;
 
   constructor(
     private usersService: UsersService,
@@ -102,11 +78,37 @@ export class AccountSettingsModalComponent implements OnInit {
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
     private matDialogRef: MatDialogRef<AccountSettingsModalComponent>,
-  ) {}
+  ) {
+    this.profileForm = this.formBuilder.group(
+      {
+        role: [''],
+        display_name: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
+        confirmPassword: [
+          '',
+          [Validators.required, Validators.minLength(8), Validators.maxLength(64)],
+        ],
+      },
+      { validators: this.checkPasswords },
+    );
+
+    this.addAccountForm = this.formBuilder.group({
+      type: ['email', [Validators.required]],
+      name: ['', [Validators.required, Validators.email]],
+    });
+  }
 
   ngOnInit(): void {
     this.getTabInformation();
   }
+
+  private checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+    if (!group) return null;
+    const pass = group.get('password')?.value;
+    const confirmPass = group.get('confirmPassword')?.value;
+    return pass === confirmPass ? null : { notSame: true };
+  };
 
   private getProfile(): void {
     this.usersService.getCurrentUser().subscribe({

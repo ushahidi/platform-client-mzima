@@ -5,7 +5,7 @@ import { CONST } from '@constants';
 import { Roles } from '@enums';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { RoleResult } from '@models';
 import { BreakpointService } from '@services';
 import { Location } from '@angular/common';
@@ -25,21 +25,13 @@ const PERMISSIONS = {
   styleUrls: ['./role-item.component.scss'],
 })
 export class RoleItemComponent implements OnInit {
-  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+  private isDesktop$: Observable<boolean>;
   public permissionsList: any[] = [];
   public role: RoleResult;
   public roles: RoleResult[];
   public isUpdate = false;
   public userRole: string;
-
-  public form: FormGroup = this.fb.group({
-    display_name: ['', [Validators.required]],
-    description: [''],
-    permissions: [[], [Validators.required]],
-    id: [null],
-    name: ['', [Validators.required]],
-    protected: [false],
-  });
+  public form: FormGroup;
   public isDesktop = false;
 
   constructor(
@@ -54,10 +46,19 @@ export class RoleItemComponent implements OnInit {
     private location: Location,
     private changeDetectorRef: ChangeDetectorRef,
   ) {
+    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },
+    });
+    this.form = this.fb.group({
+      display_name: ['', [Validators.required]],
+      description: [''],
+      permissions: [[], [Validators.required]],
+      id: [null],
+      name: ['', [Validators.required]],
+      protected: [false],
     });
   }
 

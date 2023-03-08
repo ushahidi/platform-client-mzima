@@ -6,6 +6,7 @@ import { CONST } from '@constants';
 import { RoleResult, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 import { UsersService } from '../../../core/services/users.service';
 import { RolesService } from '../../../core/services/roles.service';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
@@ -18,17 +19,10 @@ import { BreakpointService } from '@services';
   styleUrls: ['./user-item.component.scss'],
 })
 export class UserItemComponent implements OnInit {
-  public isChangePassword = false;
-  private isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+  private isDesktop$:Observable<boolean>;
   public isUpdate = false;
   public roles: RoleResult[];
-  public form: FormGroup = this.fb.group({
-    id: [0],
-    realname: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(7)]],
-    role: ['', [Validators.required]],
-  });
+  public form: FormGroup;
   public isMyProfile = false;
   public isDesktop = false;
 
@@ -42,10 +36,19 @@ export class UserItemComponent implements OnInit {
     private breakpointService: BreakpointService,
     private location: Location,
   ) {
+    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },
+    });
+
+    this.form = this.fb.group({
+      id: [0],
+      realname: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(7)]],
+      role: ['', [Validators.required]],
     });
   }
 

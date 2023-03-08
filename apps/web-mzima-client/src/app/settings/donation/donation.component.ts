@@ -19,12 +19,7 @@ export class DonationComponent implements OnInit {
   public isDesktop$: Observable<boolean>;
   public donationConfig: DonationConfigInterface;
   public images: string[] = [];
-  public donationForm: FormGroup = this.formBuilder.group({
-    title: ['', [Validators.required]],
-    description: ['', []],
-    wallet: ['', []],
-    enabled: [false, []],
-  });
+  public donationForm: FormGroup;
   public isDesktop: boolean;
 
   constructor(
@@ -41,6 +36,12 @@ export class DonationComponent implements OnInit {
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },
+    });
+    this.donationForm = this.formBuilder.group({
+      title: ['', [Validators.required]],
+      description: ['', []],
+      wallet: ['', []],
+      enabled: [false, []],
     });
   }
 
