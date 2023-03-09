@@ -1,4 +1,4 @@
-@import '/src/styles/helpers';
+@import 'apps/web-mzima-client/src/styles/helpers';
 
 .main {
   @include breakpoint-min($tablet) {

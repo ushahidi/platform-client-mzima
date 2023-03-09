@@ -47,7 +47,7 @@ export class UsersComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.userService.totalUsers$.subscribe({
+    this.userService.totalUsers$.pipe(untilDestroyed(this)).subscribe({
       next: (total) => (this.total = total),
     });
     this.cdr.detectChanges();

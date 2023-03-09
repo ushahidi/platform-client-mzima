@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -119,7 +119,7 @@ const material = [
 
 @NgModule({
   declarations: [...components],
-  imports: [...modules, ...material, NgOptimizedImage],
+  imports: [...modules, ...material],
   exports: [...components, ...modules, ...material],
 })
 export class SharedModule {}

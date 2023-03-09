@@ -25,8 +25,6 @@ import { filter, Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'platform-client';
   public isShowLoader = false;
-  private languages$: Observable<LanguageInterface[]>;
-  private isRTL$: Observable<boolean>;
   public isDesktop$: Observable<boolean>;
   public languages: LanguageInterface[];
   public selectedLanguage$;
@@ -49,21 +47,20 @@ export class AppComponent implements OnInit {
     private breakpointService: BreakpointService,
     private sessionService: SessionService,
   ) {
-    this.languages$ = this.languageService.languages$.pipe(untilDestroyed(this));
-    this.isRTL$ = this.languageService.isRTL$.pipe(untilDestroyed(this));
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.selectedLanguage$ = this.languageService.selectedLanguage$.pipe(untilDestroyed(this));
 
-    this.loaderService.isActive$.subscribe({
+    this.loaderService.isActive$.pipe(untilDestroyed(this)).subscribe({
       next: (value) => {
         this.isShowLoader = value;
       },
     });
+
     if (this.env.environment.gtm_key) this.loadGtm();
 
     this.iconService.registerIcons();
 
-    this.isRTL$.subscribe({
+    this.languageService.isRTL$.pipe(untilDestroyed(this)).subscribe({
       next: (isRTL) => {
         if (this.isRTL !== isRTL) {
           this.isRTL = isRTL;
@@ -79,12 +76,14 @@ export class AppComponent implements OnInit {
       },
     });
 
-    this.languages$.subscribe((langs: LanguageInterface[]) => {
-      const initialLanguage = this.languageService.initialLanguage;
-      this.languages = langs.sort((lang: LanguageInterface) => {
-        return lang.code == initialLanguage ? -1 : 0;
+    this.languageService.languages$
+      .pipe(untilDestroyed(this))
+      .subscribe((langs: LanguageInterface[]) => {
+        const initialLanguage = this.languageService.initialLanguage;
+        this.languages = langs.sort((lang: LanguageInterface) => {
+          return lang.code == initialLanguage ? -1 : 0;
+        });
       });
-    });
 
     this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
       next: (option) => (this.isInnerPage = Boolean(option.inner)),

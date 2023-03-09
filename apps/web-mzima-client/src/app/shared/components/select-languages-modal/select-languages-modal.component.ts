@@ -3,7 +3,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LanguageInterface } from '@models';
 import { Observable } from 'rxjs';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
 
 export interface SelectLanguagesDialogData {
@@ -12,6 +12,7 @@ export interface SelectLanguagesDialogData {
   activeLanguages: LanguageInterface[];
 }
 
+@UntilDestroy()
 @Component({
   selector: 'app-select-languages-modal',
   templateUrl: './select-languages-modal.component.html',

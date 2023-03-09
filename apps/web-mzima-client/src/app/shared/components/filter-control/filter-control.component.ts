@@ -1,24 +1,25 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import {
   AfterViewInit,
   Component,
   EventEmitter,
+  forwardRef,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 import { DateRange } from '@angular/material/datepicker';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BreakpointService } from '@services';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { BreakpointService } from '@services';
-import { MatButton } from '@angular/material/button';
-import { fromEvent, Observable } from "rxjs";
-import { SelectionModel } from '@angular/cdk/collections';
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { fromEvent, Observable } from 'rxjs';
 
 dayjs.extend(customParseFormat);
 
@@ -46,9 +47,9 @@ interface CategoryFlatNode {
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useValue: FilterControlComponent
-    }
-  ]
+      useExisting: forwardRef(() => FilterControlComponent),
+    },
+  ],
 })
 export class FilterControlComponent implements ControlValueAccessor, OnChanges, AfterViewInit {
   @Input() public badge?: string | number | null;
@@ -66,10 +67,9 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public value: any;
   public calendarValue = {
     start: '',
-    end: ''
+    end: '',
   };
   public filterType = FilterType;
-
   public touched = false;
   public disabled = false;
   public isModalOpen: boolean;
@@ -88,8 +88,22 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     fromEvent(window, 'resize').subscribe({
       next: () => {
         this.buttonWidth = this.button._elementRef?.nativeElement.clientWidth ?? 0;
-      }
+      },
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['options']?.currentValue) {
+      if (this.type === FilterType.Multilevelselect) {
+        setTimeout(() => {
+          this.dataSource = new MatTreeFlatDataSource(
+            this.treeControl,
+            this.treeFlattener,
+            changes['options'].currentValue || [],
+          );
+        }, 10);
+      }
+    }
   }
 
   private _transformer = (node: any, level: number) => {
@@ -97,7 +111,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
       id: node.id,
-      level: level
+      level: level,
     };
   };
 
@@ -107,14 +121,14 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
 
   public treeControl = new FlatTreeControl<CategoryFlatNode>(
     (node) => node.level,
-    (node) => node.expandable
+    (node) => node.expandable,
   );
 
   private treeFlattener = new MatTreeFlattener(
     this._transformer,
     (node) => node.level,
     (node) => node.expandable,
-    (node) => node.children
+    (node) => node.children,
   );
   public dataSource: any;
 
@@ -126,37 +140,23 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     console.log(value);
   };
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['options']?.currentValue) {
-      if (this.type === FilterType.Multilevelselect) {
-        setTimeout(() => {
-          this.dataSource = new MatTreeFlatDataSource(
-            this.treeControl,
-            this.treeFlattener,
-            changes['options'].currentValue || []
-          );
-        }, 10);
-      }
-    }
-  }
-
   public hasChild = (_: number, node: CategoryFlatNode) => node.expandable;
+
+  public valueChanged(): void {
+    this.markAsTouched();
+    this.onChange(this.value);
+  }
 
   public writeValue(value: any) {
     if (this.type === this.filterType.Daterange) {
       this.value = new DateRange<Date>(new Date(value.start), new Date(value.end));
       this.calendarValue = {
         start: dayjs(this.value.start).format('DD-MM-YYYY'),
-        end: this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : ''
+        end: this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : '',
       };
     } else {
       this.value = value;
     }
-  }
-
-  public valueChanged(): void {
-    this.markAsTouched();
-    this.onChange(this.value);
   }
 
   registerOnChange(onChange: any) {
@@ -166,6 +166,8 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   registerOnTouched(onTouched: any) {
     this.onTouched = onTouched;
   }
+
+  setDisabledState() {}
 
   markAsTouched() {
     if (!this.touched) {
@@ -189,7 +191,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
 
     this.calendarValue = {
       start: dayjs(this.value.start).format('DD-MM-YYYY'),
-      end: this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : ''
+      end: this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : '',
     };
 
     this.value = new DateRange(this.value.start, this.value.end);

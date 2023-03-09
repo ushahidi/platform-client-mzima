@@ -5,11 +5,10 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { mergeMap, Observable } from 'rxjs';
 import { CONST } from '@constants';
-// import { EnvService, ResourceService, SessionService } from '@services';
 import { UsersService } from './users.service';
-import {ResourceService} from "./resource.service";
-import {EnvService} from "./env.service";
-import {SessionService} from "./session.service";
+import { ResourceService } from './resource.service';
+import { EnvService } from './env.service';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root',

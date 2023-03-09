@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { BehaviorSubject, debounceTime, Observable, Subject } from 'rxjs';
@@ -40,7 +40,7 @@ export interface SearchResponse {
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useValue: LocationSelectionComponent,
+      useExisting: forwardRef(() => LocationSelectionComponent),
     },
   ],
 })

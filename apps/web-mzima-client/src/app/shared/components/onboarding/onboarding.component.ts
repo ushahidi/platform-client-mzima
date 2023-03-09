@@ -1,10 +1,8 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserInterface } from '@models';
 import { EventBusService, EventType, SessionService } from '@services';
 import { NgxCustomTourService } from 'ngx-custom-tour';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Observable } from 'rxjs';
 
 interface OnboardingStep {
   title?: string;
@@ -66,7 +64,7 @@ export class OnboardingComponent implements AfterViewInit {
       },
     });
 
-    this.customTourService.finish$.subscribe({
+    this.customTourService.finish$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
         localStorage.setItem(
           this.sessionService.getLocalStorageNameMapper('is_onboarding_done'),
@@ -82,13 +80,16 @@ export class OnboardingComponent implements AfterViewInit {
       },
     });
 
-    this.sessionService?.getCurrentUserData().pipe(untilDestroyed(this)).subscribe((userData) => {
-      this.isLoggedIn = !!userData.userId;
-      this.username = userData.realname;
-      if (!this.onboardingSteps) {
-        this.initOnboardingSteps();
-      }
-    });
+    this.sessionService
+      .getCurrentUserData()
+      .pipe(untilDestroyed(this))
+      .subscribe((userData) => {
+        this.isLoggedIn = !!userData.userId;
+        this.username = userData.realname;
+        if (!this.onboardingSteps) {
+          this.initOnboardingSteps();
+        }
+      });
 
     this.eventBusService.on(EventType.ShowOnboarding).subscribe({
       next: () => this.initOnboarding(),
@@ -103,7 +104,7 @@ export class OnboardingComponent implements AfterViewInit {
       },
     });
 
-    this.sessionService.isFiltersVisible$.subscribe({
+    this.sessionService.isFiltersVisible$.pipe(untilDestroyed(this)).subscribe({
       next: (isFiltersVisible) => {
         setTimeout(() => {
           this.isFiltersVisible = isFiltersVisible;

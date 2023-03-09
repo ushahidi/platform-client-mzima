@@ -7,7 +7,6 @@ import { surveyHelper } from '@helpers';
 import { LanguageInterface, RoleResult, SurveyItemTask } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
-import { Observable } from 'rxjs';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
@@ -26,7 +25,6 @@ import _ from 'lodash';
 })
 export class SurveyItemComponent implements OnInit {
   @ViewChild('configTask') configTask: SurveyTaskComponent;
-  private isDesktop$: Observable<boolean>;
   public selectLanguageCode: string;
   public description: string;
   public name: string;
@@ -55,8 +53,7 @@ export class SurveyItemComponent implements OnInit {
     private breakpointService: BreakpointService,
     private location: Location,
   ) {
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
-    this.isDesktop$.subscribe({
+    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },
@@ -115,7 +112,7 @@ export class SurveyItemComponent implements OnInit {
     this.additionalTasks = this.form
       .get('tasks')
       ?.value.filter((t: SurveyItemTask) => t.type === 'task');
-    this.form.controls['tasks'].valueChanges.subscribe((change) => {
+    this.form.controls['tasks'].valueChanges.pipe(untilDestroyed(this)).subscribe((change) => {
       this.additionalTasks = change.filter((t: SurveyItemTask) => t.type === 'task');
     });
   }

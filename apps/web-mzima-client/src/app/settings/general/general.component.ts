@@ -12,8 +12,9 @@ import { LoaderService } from '../../core/services/loader.service';
 import { LanguageService } from '../../core/services/language.service';
 import { ApiKeyService } from '../../core/services/api-key.service';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-general',
   templateUrl: './general.component.html',

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Meta } from '@angular/platform-browser';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DonationModalComponent } from '../../../settings';
 import { SessionService } from '../../../core/services/session.service';
 import { DonationService } from '../../../core/services/donation.service';
 
+@UntilDestroy()
 @Component({
   selector: 'app-donation-button',
   templateUrl: './donation-button.component.html',
@@ -26,7 +28,7 @@ export class DonationButtonComponent implements OnInit {
     if (this.isDonationEnabled) {
       this.setPaymentPointer(this.session.getSiteConfigurations().donation?.wallet);
       this.donationService.setupMonetization();
-      this.donationService.donate$.subscribe((donationInfo) => {
+      this.donationService.donate$.pipe(untilDestroyed(this)).subscribe((donationInfo) => {
         this.donationInfo = donationInfo;
       });
     }

@@ -71,7 +71,7 @@ export class ToolbarComponent implements OnInit {
       this.isSettingsPage = url.indexOf('/settings') > -1;
     });
 
-    this.breadcrumbService.breadcrumbs$.subscribe({
+    this.breadcrumbService.breadcrumbs$.pipe(untilDestroyed(this)).subscribe({
       next: (res) => (this.pageTitle = res[res.length - 1]?.instance),
     });
 

@@ -3,10 +3,12 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Roles } from '@enums';
 import { takeUntilDestroy$ } from '@helpers';
 import { UserInterface } from '@models';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { BreakpointService, EventBusService, EventType } from '@services';
 import { filter } from 'rxjs';
 import { SessionService } from '../core/services/session.service';
 
+@UntilDestroy()
 @Component({
   selector: 'app-settings-layout',
   templateUrl: './settings-layout.component.html',
@@ -16,8 +18,6 @@ export class SettingsLayoutComponent {
   public isDesktop = false;
   public isInnerPage = false;
   public userData: UserInterface;
-  private isDesktop$ = this.breakpointService.isDesktop$.pipe(takeUntilDestroy$());
-  private userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
 
   constructor(
     private breakpointService: BreakpointService,
@@ -25,11 +25,11 @@ export class SettingsLayoutComponent {
     private eventBusService: EventBusService,
     private sessionService: SessionService,
   ) {
-    this.userData$.subscribe({
+    this.sessionService.currentUserData$.pipe(takeUntilDestroy$()).subscribe({
       next: (userData) => (this.userData = userData),
     });
 
-    this.isDesktop$.subscribe({
+    this.breakpointService.isDesktop$.pipe(takeUntilDestroy$()).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
 

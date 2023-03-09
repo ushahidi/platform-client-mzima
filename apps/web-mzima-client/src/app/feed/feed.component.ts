@@ -16,7 +16,6 @@ import { PostsV5Service } from '../core/services/posts.v5.service';
 import { ConfirmModalService } from '../core/services/confirm-modal.service';
 import { LanguageService } from '../core/services/language.service';
 
-
 enum FeedMode {
   Tiles = 'TILES',
   Post = 'POST',
@@ -138,13 +137,13 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       },
     });
 
-    this.postsService.totalPosts$.subscribe({
+    this.postsService.totalPosts$.pipe(untilDestroyed(this)).subscribe({
       next: (total) => {
         this.total = total;
       },
     });
 
-    this.sessionService.isFiltersVisible$.subscribe({
+    this.sessionService.isFiltersVisible$.pipe(untilDestroyed(this)).subscribe({
       next: (isFiltersVisible) => {
         setTimeout(() => {
           this.isFiltersVisible = isFiltersVisible;
@@ -152,7 +151,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       },
     });
 
-    this.languageService.isRTL$.subscribe({
+    this.languageService.isRTL$.pipe(untilDestroyed(this)).subscribe({
       next: (isRTL) => {
         if (this.isRTL !== isRTL) {
           this.isRTL = isRTL;
@@ -172,7 +171,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           : 1;
     });
 
-    this.sessionService.isMainFiltersHidden$.subscribe({
+    this.sessionService.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
       next: (isMainFiltersHidden: boolean) => {
         setTimeout(() => {
           this.isMainFiltersOpen = !isMainFiltersHidden;
