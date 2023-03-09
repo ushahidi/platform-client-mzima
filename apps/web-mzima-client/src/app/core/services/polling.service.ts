@@ -28,7 +28,7 @@ export class PollingService implements OnDestroy {
   stopExportPolling = new Subject();
   private importFinished = new Subject();
   importFinished$ = this.importFinished.asObservable();
-  private renderer = this.rendererFactory.createRenderer(null, null);
+  private renderer;
 
   constructor(
     private dataImportService: DataImportService,
@@ -36,7 +36,9 @@ export class PollingService implements OnDestroy {
     private notificationService: NotificationService,
     private env: EnvService,
     private rendererFactory: RendererFactory2,
-  ) {}
+  ) {
+    this.renderer = this.rendererFactory.createRenderer(null, null);
+  }
 
   getImportJobs() {
     this.dataImportService.get().subscribe((allJobs) => {

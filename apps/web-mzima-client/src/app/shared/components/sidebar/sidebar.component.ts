@@ -8,7 +8,6 @@ import { takeUntilDestroy$ } from '@helpers';
 import { MenuInterface, SiteConfigInterface, UserInterface, UserMenuInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import {
-  AuthService,
   BreakpointService,
   EventBusService,
   EventType,
@@ -38,7 +37,6 @@ export class SidebarComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private sessionService: SessionService,
-    private authService: AuthService,
     private gtmTracking: GtmTrackingService,
     private router: Router,
     private translate: TranslateService,
@@ -50,10 +48,8 @@ export class SidebarComponent implements OnInit {
     this.siteConfig = this.sessionService.getSiteConfigurations();
     this.isDesktop$.subscribe({
       next: (isDesktop) => {
-        if (isDesktop) {
-          this.isDesktop = isDesktop;
-          this.initNavigationMenu();
-        }
+        this.isDesktop = isDesktop;
+        this.initNavigationMenu();
       },
     });
 
