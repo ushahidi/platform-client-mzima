@@ -28,6 +28,7 @@
       <mat-icon svgIcon="close"></mat-icon>
     </button>
   </mat-form-field>
+
   <button
     type="button"
     mat-raised-button
@@ -59,9 +60,11 @@
       </span>
 
       <div class="collection-info" *ngIf="collectionInfo">
-        <span class="collection-info__title">
-          Collection
-          {{ collectionInfo.name }}
+        <div class="collection-info__head">
+          <span class="collection-info__title">
+            {{ 'app.collection' | translate }}
+            "{{ collectionInfo.name }}"
+          </span>
           <button
             mat-button
             type="button"
@@ -71,7 +74,18 @@
           >
             {{ 'nav.clear' | translate }}
           </button>
-        </span>
+        </div>
+
+        <!--        <mat-slide-toggle-->
+        <!--          *ngIf="isLoggedIn"-->
+        <!--          class="notifications-toggle"-->
+        <!--          [(ngModel)]="isNotificationsOn"-->
+        <!--          [disabled]="isNotificationLoading"-->
+        <!--          [ngModelOptions]="{ standalone: true }"-->
+        <!--          (change)="changeNorificationStatus($event, collectionInfo.id.toString())"-->
+        <!--        >-->
+        <!--          {{ 'nav.notifications' | translate }}-->
+        <!--        </mat-slide-toggle>-->
 
         <div class="collection-info__description" *ngIf="collectionInfo.description?.length">
           {{ collectionInfo.description }}
@@ -116,19 +130,19 @@
           <div class="filter-group__info">
             <span *ngIf="notShownPostsCount <= 0">{{
               'global_filter.unmapped_none' | translate
-            }}</span>
+              }}</span>
             <span *ngIf="notShownPostsCount === 1">{{
               'global_filter.unmapped_start_one' | translate
-            }}</span>
+              }}</span>
             <span *ngIf="notShownPostsCount >= 2">{{
               'global_filter.unmapped_start_many' | translate
-            }}</span>
+              }}</span>
             <a [routerLink]="['feed']" *ngIf="notShownPostsCount >= 1">
               {{ notShownPostsCount }} post{{ notShownPostsCount >= 2 ? 's' : '' }}
             </a>
             <span *ngIf="notShownPostsCount >= 1">{{
               'global_filter.unmapped_end' | translate
-            }}</span>
+              }}</span>
           </div>
         </div>
 
@@ -166,10 +180,11 @@
       </ng-container>
     </div>
   </div>
+
   <div
     data-filter-highlight
     class="search-form__filters-panel"
-    *ngIf="(isDesktop$ | async) || isFiltersVisible"
+    *ngIf="(isDesktop$ | async)! || isFiltersVisible"
     [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
   >
     <div class="search-form__filters-panel__head" *ngIf="!(isDesktop$ | async)!">
@@ -186,14 +201,15 @@
 
     <div class="search-form__filters-panel__inner">
       <ng-container *ngIf="!(isDesktop$ | async)!">
+
         <app-filter-control
-          [options]="surveyList"
+          class="search-form__filters-panel__item"
           formControlName="form"
+          [options]="surveyList"
           [fields]="['id', 'name']"
           (clear)="clearFilter('form')"
           [type]="filterType.Multiselect"
           [title]="'app.surveys' | translate"
-          class="search-form__filters-panel__item"
           [badge]="form.controls['form'].value?.length || null"
         >
           <div class="clear-button" suffix>
@@ -209,12 +225,12 @@
         </app-filter-control>
 
         <app-filter-control
-          [options]="sources"
+          class="search-form__filters-panel__item"
           formControlName="source"
+          [options]="sources"
           [fields]="['value', 'name']"
           [type]="filterType.Multiselect"
           (clear)="clearFilter('source')"
-          class="search-form__filters-panel__item"
           [title]="'global_filter.source' | translate"
           [badge]="form.controls['source'].value?.length || null"
         >
@@ -232,17 +248,17 @@
       </ng-container>
 
       <app-filter-control
-        title="{{ 'global_filter.saved_filters' | translate }}"
+        class="search-form__filters-panel__item"
+        [(ngModel)]="activeSavedSearchValue"
+        [ngModelOptions]="{ standalone: true }"
+        [title]="'global_filter.saved_filters' | translate"
         [type]="filterType.Select"
+        [badge]="activeSavedSearchValue ? 1 : null"
         [options]="savedSearches"
         [canEdit]="isEditAvailable"
         (clear)="applySavedFilter(null)"
         (editOption)="saveSearch($event)"
-        [(ngModel)]="activeSavedSearchValue"
-        [ngModelOptions]="{ standalone: true }"
         (filterChange)="applySavedFilter($event)"
-        class="search-form__filters-panel__item"
-        [badge]="activeSavedSearchValue ? 1 : null"
       >
         <button
           *ngIf="canCreateSearch"
@@ -256,18 +272,18 @@
           {{ 'global_filter.save_new_filter' | translate }}
         </button>
         <span class="no-saved-filters" postfix *ngIf="savedSearches?.length === 0"
-          >No saved filters. Saved filter(s) will appear here for you to select once made
+        >No saved filters. Saved filter(s) will appear here for you to select once made
           available.</span
         >
       </app-filter-control>
 
       <app-filter-control
-        [options]="statuses"
+        class="search-form__filters-panel__item"
         formControlName="status"
+        [options]="statuses"
         [fields]="['value', 'name']"
         [type]="filterType.Multiselect"
         (clear)="clearFilter('status')"
-        class="search-form__filters-panel__item"
         [title]="'global_filter.status' | translate"
         [badge]="form.controls['status'].value?.length || null"
       >
@@ -285,13 +301,13 @@
       </app-filter-control>
 
       <app-filter-control
+        class="search-form__filters-panel__item"
         *ngIf="categoriesData?.length"
         formControlName="tags"
         [options]="categoriesData"
         (clear)="clearFilter('tags')"
         [type]="filterType.Multilevelselect"
         [title]="'app.categories' | translate"
-        class="search-form__filters-panel__item"
         [badge]="form.controls['tags'].value?.length || null"
       >
         <div class="clear-button" suffix>
@@ -307,10 +323,10 @@
       </app-filter-control>
 
       <app-filter-control
+        class="search-form__filters-panel__item"
         formControlName="date"
         [type]="filterType.Daterange"
         (clear)="clearFilter('date')"
-        class="search-form__filters-panel__item"
         [title]="'global_filter.date_range' | translate"
         [badge]="form.controls['date'].value?.start || form.controls['date'].value?.end ? 1 : null"
       >
@@ -327,10 +343,10 @@
       </app-filter-control>
 
       <app-filter-control
-        [type]="filterType.Location"
-        formControlName="center_point"
-        (clear)="clearFilter('center_point')"
         class="search-form__filters-panel__item"
+        formControlName="center_point"
+        [type]="filterType.Location"
+        (clear)="clearFilter('center_point')"
         [title]="'global_filter.location' | translate"
         [badge]="form.controls['center_point'].value.location?.lat ? 1 : null"
       >
@@ -370,6 +386,7 @@
       </div>
     </div>
   </div>
+
 </form>
 
 <ng-template #loader>

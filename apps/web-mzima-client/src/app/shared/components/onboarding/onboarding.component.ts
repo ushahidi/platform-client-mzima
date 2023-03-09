@@ -82,13 +82,16 @@ export class OnboardingComponent implements AfterViewInit {
       },
     });
 
-    this.sessionService?.getCurrentUserData().pipe(untilDestroyed(this)).subscribe((userData) => {
-      this.isLoggedIn = !!userData.userId;
-      this.username = userData.realname;
-      if (!this.onboardingSteps) {
-        this.initOnboardingSteps();
-      }
-    });
+    this.sessionService
+      .getCurrentUserData()
+      .pipe(untilDestroyed(this))
+      .subscribe((userData) => {
+        this.isLoggedIn = !!userData.userId;
+        this.username = userData.realname;
+        if (!this.onboardingSteps) {
+          this.initOnboardingSteps();
+        }
+      });
 
     this.eventBusService.on(EventType.ShowOnboarding).subscribe({
       next: () => this.initOnboarding(),
@@ -103,7 +106,7 @@ export class OnboardingComponent implements AfterViewInit {
       },
     });
 
-    this.sessionService.isFiltersVisible$.subscribe({
+    this.sessionService.isFiltersVisible$.pipe(untilDestroyed(this)).subscribe({
       next: (isFiltersVisible) => {
         setTimeout(() => {
           this.isFiltersVisible = isFiltersVisible;

@@ -4,13 +4,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationStart, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
-import {
-  CategoryInterface,
-  CollectionResult,
-  Savedsearch,
-  SurveyItem,
-  UserInterface,
-} from '@models';
+import { CategoryInterface, CollectionResult, Savedsearch, SurveyItem } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { EventBusService, EventType, SessionService, BreakpointService } from '@services';
@@ -42,20 +36,14 @@ import { PostsService } from '../../../core/services/posts.service';
 })
 export class SearchFormComponent implements OnInit {
   public isDesktop$: Observable<boolean>;
-  private postsFilters$: Observable<any>;
-  private totalGeoPosts$: Observable<number>;
-  private totalPosts$: Observable<number>;
-  private isMainFiltersHidden$: Observable<boolean>;
-  private userData$: Observable<UserInterface>;
-  private isFiltersVisible$: Observable<boolean>;
   public _array = Array;
   public filterType = FilterType;
   public form: FormGroup;
   public collectionInfo?: CollectionResult;
   public activeFilters: any;
   public savedSearches: Savedsearch[];
-  public statuses = searchFormHelper.statuses;
   public surveyList: SurveyItem[] = [];
+  public statuses = searchFormHelper.statuses;
   public sources = searchFormHelper.sources;
   public categoriesData: MultilevelSelectOption[];
   public activeSavedSearch?: Savedsearch;
@@ -65,14 +53,14 @@ export class SearchFormComponent implements OnInit {
   public isFiltersVisible: boolean;
   public searchQuery: string;
   private readonly searchSubject = new Subject<string>();
-  public citiesOptions: BehaviorSubject<SearchResponse[]>;
+  public citiesOptions = new BehaviorSubject<any[]>([]);
   public notShownPostsCount: number;
   public showSources: boolean;
   public isLoggedIn = false;
   public isMainFiltersOpen = true;
   public surveysLoaded: boolean;
   public isOnboardingActive: boolean;
-  private defaultFormValue;
+  private defaultFormValue: any;
   public filters: string;
   public activeSaved: string;
 
@@ -91,21 +79,22 @@ export class SearchFormComponent implements OnInit {
     private breakpointService: BreakpointService,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
-    this.userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
-    this.postsFilters$ = this.postsService.postsFilters$.pipe(untilDestroyed(this));
-    this.totalGeoPosts$ = this.postsService.totalGeoPosts$.pipe(untilDestroyed(this));
-    this.totalPosts$ = this.postsService.totalPosts$.pipe(untilDestroyed(this));
-    this.isMainFiltersHidden$ = this.session.isMainFiltersHidden$.pipe(untilDestroyed(this));
-    this.isFiltersVisible$ = this.session.isFiltersVisible$.pipe(untilDestroyed(this));
     this.form = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS);
     this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
     this.filters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'))!;
     this.activeSaved = localStorage.getItem(
       this.session.getLocalStorageNameMapper('activeSavedSearch'),
     )!;
+  }
+
+  ngOnInit(): void {
+    this.eventBusInit();
 
     this.getSavedFilters();
     this.getSurveys();
+    this.getCategories();
+    this.getPostsFilters();
+    this.getTotalPosts();
 
     if (this.filters) {
       const filters = JSON.parse(this.filters!);
@@ -125,8 +114,6 @@ export class SearchFormComponent implements OnInit {
       this.preparingSavedFilter();
     }
 
-    this.getCategories();
-
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
         this.isMapView = params.url.includes('/map');
@@ -144,18 +131,34 @@ export class SearchFormComponent implements OnInit {
       },
     });
 
-    this.citiesOptions = new BehaviorSubject<any[]>([]);
-
     this.searchSubject.pipe(debounceTime(700)).subscribe({
       next: () => {
         this.getActiveFilters(this.form.value);
         this.applyFilters();
       },
     });
+
+    this.session.currentUserData$.pipe(untilDestroyed(this)).subscribe((userData) => {
+      this.isLoggedIn = !!userData.userId;
+      this.getSavedFilters();
+    });
+
+    this.session.isFiltersVisible$
+      .pipe(untilDestroyed(this))
+      .subscribe((isVisible) => (this.isFiltersVisible = isVisible));
+
+    this.session.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
+      next: (isMainFiltersHidden: boolean) => {
+        setTimeout(() => {
+          this.isMainFiltersOpen = !isMainFiltersHidden;
+        }, 1);
+      },
+      error: (err) => console.log('isMainFiltersHidden:', err),
+    });
   }
 
   getPostsFilters() {
-    this.postsFilters$.subscribe({
+    this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: (res) => {
         if (res.set) {
           const collectionId = typeof res.set === 'string' ? res.set : '';
@@ -171,33 +174,8 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.eventBusInit();
-
-    this.isMapView = this.router.url.includes('/map');
-
-    this.userData$.subscribe((userData) => {
-      this.isLoggedIn = !!userData.userId;
-      this.getSavedFilters();
-    });
-
-    this.isFiltersVisible$.subscribe((isVisible) => (this.isFiltersVisible = isVisible));
-    this.getPostsFilters();
-
-    // this.getTotalPosts();
-
-    this.isMainFiltersHidden$.subscribe({
-      next: (isMainFiltersHidden: boolean) => {
-        setTimeout(() => {
-          this.isMainFiltersOpen = !isMainFiltersHidden;
-        }, 1);
-      },
-      error: (err) => console.log('isMainFiltersHidden:', err),
-    });
-  }
-
   private getTotalPosts() {
-    this.totalGeoPosts$.subscribe({
+    this.postsService.totalGeoPosts$.pipe(untilDestroyed(this)).subscribe({
       next: (total) => {
         if (this.isMapView) {
           this.total = total;
@@ -206,7 +184,7 @@ export class SearchFormComponent implements OnInit {
       error: (err) => console.log('totalGeoPosts:', err),
     });
 
-    this.totalPosts$.subscribe({
+    this.postsService.totalPosts$.pipe(untilDestroyed(this)).subscribe({
       next: (total) => {
         if (!this.isMapView) {
           this.total = total;

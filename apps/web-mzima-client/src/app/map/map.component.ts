@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { mapHelper, takeUntilDestroy$ } from '@helpers';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
+import { untilDestroyed } from '@ngneat/until-destroy';
 import { MainViewComponent } from '@shared';
 import {
   Content,
@@ -98,7 +99,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
       },
     });
 
-    this.sessionService.isFiltersVisible$.subscribe({
+    this.sessionService.isFiltersVisible$.pipe(untilDestroyed(this)).subscribe({
       next: (isFiltersVisible) => {
         setTimeout(() => {
           this.isFiltersVisible = isFiltersVisible;
@@ -106,7 +107,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
       },
     });
 
-    this.sessionService.isMainFiltersHidden$.subscribe({
+    this.sessionService.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
       next: (isMainFiltersHidden: boolean) => {
         setTimeout(() => {
           this.isMainFiltersOpen = !isMainFiltersHidden;
