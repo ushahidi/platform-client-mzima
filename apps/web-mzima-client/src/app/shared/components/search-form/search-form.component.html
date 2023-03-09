@@ -86,16 +86,6 @@
         >
           {{ 'nav.notifications' | translate }}
         </mat-slide-toggle>
-        <!--        <mat-slide-toggle-->
-        <!--          *ngIf="isLoggedIn"-->
-        <!--          class="notifications-toggle"-->
-        <!--          [(ngModel)]="isNotificationsOn"-->
-        <!--          [disabled]="isNotificationLoading"-->
-        <!--          [ngModelOptions]="{ standalone: true }"-->
-        <!--          (change)="changeNorificationStatus($event, collectionInfo.id.toString())"-->
-        <!--        >-->
-        <!--          {{ 'nav.notifications' | translate }}-->
-        <!--        </mat-slide-toggle>-->
 
         <div class="collection-info__description" *ngIf="collectionInfo.description?.length">
           {{ collectionInfo.description }}

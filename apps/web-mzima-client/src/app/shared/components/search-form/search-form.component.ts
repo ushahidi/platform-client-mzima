@@ -293,8 +293,6 @@ export class SearchFormComponent implements OnInit {
   }
 
   private getNotification(id: string): void {
-    console.log('getNotification: ', id);
-    
     if (!this.collectionInfo) return;
 
     this.isNotificationLoading = true;
