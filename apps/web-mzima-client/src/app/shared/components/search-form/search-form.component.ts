@@ -120,7 +120,7 @@ export class SearchFormComponent implements OnInit {
       },
     });
 
-    this.form.valueChanges.subscribe({
+    this.form.valueChanges.pipe(untilDestroyed(this)).subscribe({
       next: (values) => {
         localStorage.setItem(
           this.session.getLocalStorageNameMapper('filters'),

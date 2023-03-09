@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SessionService } from '../../../core/services/session.service';
 
+@UntilDestroy()
 @Component({
   selector: 'app-company-info',
   templateUrl: './company-info.component.html',
@@ -17,7 +19,7 @@ export class CompanyInfoComponent {
     const isDescriptionOpen = localStorage.getItem('is_description_open');
     this.isDescriptionOpen = isDescriptionOpen ? JSON.parse(isDescriptionOpen) : true;
 
-    this.sessionService.deploymentInfo$.subscribe({
+    this.sessionService.deploymentInfo$.pipe(untilDestroyed(this)).subscribe({
       next: (deploymentInfo) => {
         this.title = deploymentInfo.title;
         this.description = deploymentInfo.description;

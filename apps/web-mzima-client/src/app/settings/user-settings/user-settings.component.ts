@@ -5,8 +5,9 @@ import dayjs from 'dayjs';
 import { forkJoin, Observable } from 'rxjs';
 import { BreakpointService } from '@services';
 import { UsersService } from '../../core/services/users.service';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',

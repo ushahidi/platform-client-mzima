@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {PollingService} from "../../../core/services/polling.service";
-// import { PollingService } from '@services';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { PollingService } from '../../../core/services/polling.service';
 
+@UntilDestroy()
 @Component({
   selector: 'app-import-results',
   templateUrl: './import-results.component.html',
@@ -26,19 +27,19 @@ export class ImportResultsComponent implements OnInit {
     const jobId = this.route.snapshot.queryParamMap.get('job')?.split(',');
     if (jobId) {
       this.pollingService.getImportJobsById(jobId);
-      this.pollingService.importFinished$.subscribe((job: any) => {
-        this.importFinished = true;
-        this.collectionId = job.collection_id;
-        this.filename = job.filename;
-      });
+      this.pollingImportFinished();
     } else {
       this.pollingService.getImportJobs();
-      this.pollingService.importFinished$.subscribe((job: any) => {
-        this.importFinished = true;
-        this.collectionId = job.collection_id;
-        this.filename = job.filename;
-      });
+      this.pollingImportFinished();
     }
+  }
+
+  private pollingImportFinished() {
+    this.pollingService.importFinished$.pipe(untilDestroyed(this)).subscribe((job: any) => {
+      this.importFinished = true;
+      this.collectionId = job.collection_id;
+      this.filename = job.filename;
+    });
   }
 
   getPollingInfo() {

@@ -109,7 +109,7 @@ export class CreateCategoryFormComponent implements OnInit {
       },
     });
 
-    this.form.valueChanges.subscribe({
+    this.form.valueChanges.pipe(untilDestroyed(this)).subscribe({
       next: (data) => {
         // if (!!this.activeLanguages.find((language) => language.code === data.language)) {
         //   this.activeLanguages = [];

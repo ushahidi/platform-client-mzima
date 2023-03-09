@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { mapHelper, takeUntilDestroy$ } from '@helpers';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MainViewComponent } from '@shared';
 import {
   Content,
@@ -28,7 +28,7 @@ import { PostsV5Service } from '../core/services/posts.v5.service';
 import { MediaService } from '../core/services/media.service';
 import { SessionService, EventBusService, EventType } from '@services';
 
-
+@UntilDestroy()
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',

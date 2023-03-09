@@ -16,7 +16,6 @@ import { PostsV5Service } from '../core/services/posts.v5.service';
 import { ConfirmModalService } from '../core/services/confirm-modal.service';
 import { LanguageService } from '../core/services/language.service';
 
-
 enum FeedMode {
   Tiles = 'TILES',
   Post = 'POST',
