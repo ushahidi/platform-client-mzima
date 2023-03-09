@@ -7,6 +7,7 @@ import { map } from 'rxjs';
 import { MultilevelSelectOption } from '../../../shared/components';
 import { CategoriesService } from '../../../core/services/categories.service';
 import { SurveysService } from '../../../core/services/surveys.service';
+import { NotificationService } from '../../../core/services/notification.service';
 import _ from 'lodash';
 
 @Component({
@@ -19,7 +20,7 @@ export class CreateFieldModalComponent implements OnInit {
   public fields = _.cloneDeep(surveyHelper.surveyFields);
   public selectedFieldType: any;
   public editMode = false;
-  public availableCategories: MultilevelSelectOption[];
+  public availableCategories?: MultilevelSelectOption[];
   public categories: any = [];
   public availableSurveys: SurveyItem[] = [];
   public hasOptions = false;
@@ -32,6 +33,7 @@ export class CreateFieldModalComponent implements OnInit {
     private translate: TranslateService,
     private categoriesService: CategoriesService,
     private surveysService: SurveysService,
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit() {
@@ -39,6 +41,7 @@ export class CreateFieldModalComponent implements OnInit {
       this.editField();
     }
     this.surveyId = this.data?.surveyId;
+    this.getCategories();
   }
 
   private editField() {
@@ -126,6 +129,10 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   public addNewTask() {
+    if (this.hasOptions && !this.selectedFieldType.options?.length) {
+      this.notificationService.showError(this.translate.instant('survey.add_options_first'));
+      return;
+    }
     this.matDialogRef.close(this.selectedFieldType);
   }
 
@@ -143,8 +150,6 @@ export class CreateFieldModalComponent implements OnInit {
     switch (input) {
       case 'relation':
         return this.loadAvailableSurveys();
-      case 'tags':
-        return this.getCategories();
     }
   }
 

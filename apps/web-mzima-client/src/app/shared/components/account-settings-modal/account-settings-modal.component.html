@@ -15,6 +15,7 @@
       [(selectedIndex)]="selectedTabIndex"
       (selectedIndexChange)="getTabInformation()"
       dynamicHeight
+      disablePagination
       animationDuration="0ms"
     >
       <mat-tab
@@ -181,14 +182,14 @@
                         addAccountForm.invalid || addAccountForm.pristine || addAccountForm.disabled
                       "
                     >
-                      Add account
+                      {{ 'contact.button.add' | translate }}
                     </button>
                   </form>
                 </mat-expansion-panel>
               </mat-accordion>
             </mat-expansion-panel>
 
-            <mat-expansion-panel class="contacts-tab" expanded>
+            <mat-expansion-panel *ngIf="notifications?.length" class="contacts-tab" expanded>
               <mat-expansion-panel-header>
                 <h4 class="contacts-tab__title">
                   {{ 'notification.what_you_get_notification_about' | translate }}
@@ -196,11 +197,50 @@
               </mat-expansion-panel-header>
 
               <div class="contacts">
-                <div *ngFor="let typeElement of notificationType" class="contact-item type-group">
-                  <span class="type-group__title">{{ typeElement.group }}</span>
-                  <div class="type-group__options" *ngFor="let type of typeElement.types">
-                    <span class="type-group__option">{{ type }}</span>
-                    <mat-icon class="type-group__option-icon" svgIcon="delete"></mat-icon>
+                <div
+                  class="notification-group"
+                  *ngIf="filteredNotifications(NotificationTypeEnum.Collection)?.length"
+                >
+                  <span class="notification-group__title">{{ 'app.collections' | translate }}</span>
+                  <div
+                    *ngFor="
+                      let notification of filteredNotifications(NotificationTypeEnum.Collection)
+                    "
+                    class="notification"
+                  >
+                    <span class="notification__title">{{ notification.set.name }}</span>
+                    <button
+                      mat-icon-button
+                      class="notification__btn"
+                      (click)="deleteNotification(notification.id.toString())"
+                      [attr.aria-label]="'notification.button.delete' | translate"
+                    >
+                      <mat-icon svgIcon="delete"></mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="notification-group"
+                  *ngIf="filteredNotifications(NotificationTypeEnum.SavedSearch)?.length"
+                >
+                  <span class="notification-group__title">{{
+                    'global_filter.saved_filters' | translate
+                  }}</span>
+                  <div
+                    *ngFor="
+                      let notification of filteredNotifications(NotificationTypeEnum.SavedSearch)
+                    "
+                    class="notification"
+                  >
+                    <span class="notification__title">{{ notification.set.name }}</span>
+                    <button
+                      mat-icon-button
+                      class="notification__btn"
+                      (click)="deleteNotification(notification.id.toString())"
+                      [attr.aria-label]="'notification.button.delete' | translate"
+                    >
+                      <mat-icon svgIcon="delete"></mat-icon>
+                    </button>
                   </div>
                 </div>
               </div>

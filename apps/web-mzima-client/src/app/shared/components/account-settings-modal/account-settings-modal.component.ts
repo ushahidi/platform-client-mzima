@@ -9,13 +9,23 @@ import {
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { formHelper } from '@helpers';
-import { ContactsInterface, UserDataInterface, UserInterface } from '@models';
+import {
+  AccountNotificationsInterface,
+  ContactsInterface,
+  NotificationTypeEnum,
+  UserDataInterface,
+  UserInterface,
+} from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { UsersService } from '../../../core/services/users.service';
 import { ContactsService } from '../../../core/services/contacts.service';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
+import { NotificationsService } from '../../../core/services/notifications.service';
+import { CollectionsService } from '../../../core/services/collections.service';
+import { SavedsearchesService } from '../../../core/services/savedsearches.service';
 
 enum AccountTypeEnum {
   Email = 'email',
@@ -25,11 +35,6 @@ enum AccountTypeEnum {
 interface AccountTypeInterface {
   name: string;
   value: AccountTypeEnum;
-}
-
-interface AccountNotificationTypeInterface {
-  group: string;
-  types: string[];
 }
 
 @Component({
@@ -57,27 +62,29 @@ export class AccountSettingsModalComponent implements OnInit {
       value: AccountTypeEnum.Phone,
     },
   ];
-  // TODO: There is no logic for this functionality
-  public notificationType: AccountNotificationTypeInterface[] = [
-    {
-      group: 'Collection',
-      types: ['Nature of incident'],
-    },
-    {
-      group: 'Saved filters',
-      types: ['Need translations'],
-    },
-  ];
   public profileForm: FormGroup;
   public addAccountForm: FormGroup;
+  public notifications: AccountNotificationsInterface[] = [];
+  NotificationTypeEnum = NotificationTypeEnum;
+
+  private checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+    if (!group) return null;
+    const pass = group.get('password')?.value;
+    const confirmPass = group.get('confirmPassword')?.value;
+    return pass === confirmPass ? null : { notSame: true };
+  };
 
   constructor(
     private usersService: UsersService,
     private contactsService: ContactsService,
     private formBuilder: FormBuilder,
     private confirmModalService: ConfirmModalService,
+    private notificationsService: NotificationsService,
+    private collectionsService: CollectionsService,
     private translate: TranslateService,
     private matDialogRef: MatDialogRef<AccountSettingsModalComponent>,
+    private _snackBar: MatSnackBar,
+    private savedsearchesService: SavedsearchesService,
   ) {
     this.profileForm = this.formBuilder.group(
       {
@@ -102,13 +109,6 @@ export class AccountSettingsModalComponent implements OnInit {
   ngOnInit(): void {
     this.getTabInformation();
   }
-
-  private checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
-    if (!group) return null;
-    const pass = group.get('password')?.value;
-    const confirmPass = group.get('confirmPassword')?.value;
-    return pass === confirmPass ? null : { notSame: true };
-  };
 
   private getProfile(): void {
     this.usersService.getCurrentUser().subscribe({
@@ -217,6 +217,7 @@ export class AccountSettingsModalComponent implements OnInit {
 
       case 1:
         this.getContacts();
+        this.getNotifications();
         break;
     }
   }
@@ -284,5 +285,65 @@ export class AccountSettingsModalComponent implements OnInit {
       const validators = actions[value]();
       this.setFieldsValidators([this.addAccountForm.controls['name']], validators);
     }
+  }
+
+  private getNotifications(): void {
+    this.notificationsService.get().subscribe({
+      next: (response) => {
+        this.notifications = response.results;
+
+        this.notifications.map((notification) => {
+          this.collectionsService.get(String(notification.set.id)).subscribe({
+            next: (res) => {
+              this.applyNotificationName(res.id, res.name, NotificationTypeEnum.Collection);
+            },
+            error: () => {
+              this.savedsearchesService.getById(String(notification.set.id)).subscribe({
+                next: (res) => {
+                  this.applyNotificationName(res.id, res.name, NotificationTypeEnum.SavedSearch);
+                },
+              });
+            },
+          });
+        });
+      },
+    });
+  }
+
+  private applyNotificationName(
+    notificationId: number,
+    name: string,
+    type: NotificationTypeEnum,
+  ): void {
+    const notification = this.notifications.find((n) => n.set.id === notificationId);
+    if (notification) {
+      notification.type = type;
+      notification.set.name = name;
+    }
+  }
+
+  public async deleteNotification(id: string): Promise<void> {
+    const confirmed = await this.confirmModalService.open({
+      title: this.translate.instant(
+        'notification.are_you_sure_you_want_to_remove_this_notification',
+      ),
+      description: this.translate.instant('notify.default.proceed_warning'),
+    });
+    if (!confirmed) return;
+
+    this.notificationsService.delete(id).subscribe({
+      next: async () => {
+        this.getNotifications();
+
+        await this._snackBar.open(
+          this.translate.instant('notification.removed'),
+          this.translate.instant('message.button.default'),
+        );
+      },
+    });
+  }
+
+  public filteredNotifications(type: NotificationTypeEnum): AccountNotificationsInterface[] {
+    return this.notifications.filter((notification) => notification.type === type);
   }
 }

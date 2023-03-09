@@ -35,3 +35,4 @@ export { SavedsearchesService } from './savedsearches.service';
 export { UshahidiPageTitleStrategy } from './page-title.service';
 export { TwitterService } from './twitter.service';
 export { SearchService } from './search.service';
+export { NotificationsService } from './notifications.service';

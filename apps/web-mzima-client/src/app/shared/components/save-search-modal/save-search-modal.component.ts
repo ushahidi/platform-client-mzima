@@ -2,11 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { Savedsearch } from '@models';
+import { AccountNotificationsInterface, Savedsearch } from '@models';
 import { GroupCheckboxItemInterface } from '../group-checkbox-select/group-checkbox-select.component';
 import { formHelper } from '@helpers';
 import { RolesService } from '../../../core/services/roles.service';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
+import { NotificationsService } from '../../../core/services/notifications.service';
 
 export interface SaveSearchModalData {
   search?: Savedsearch;
@@ -20,6 +21,7 @@ export interface SaveSearchModalData {
 export class SaveSearchModalComponent implements OnInit {
   public form: FormGroup;
   public roleOptions: GroupCheckboxItemInterface[] = [];
+  private notification: AccountNotificationsInterface;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -28,6 +30,7 @@ export class SaveSearchModalComponent implements OnInit {
     private rolesService: RolesService,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
+    private notificationsService: NotificationsService,
   ) {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
@@ -41,6 +44,7 @@ export class SaveSearchModalComponent implements OnInit {
       ],
       featured: [false],
       defaultViewingMode: ['map'],
+      is_notifications_enabled: [false],
     });
   }
 
@@ -84,6 +88,15 @@ export class SaveSearchModalComponent implements OnInit {
             defaultViewingMode: this.data.search.view,
           });
         }
+      },
+    });
+
+    this.notificationsService.get(String(this.data.search.id)).subscribe({
+      next: (response) => {
+        this.notification = response.results[0];
+        this.form.patchValue({
+          is_notifications_enabled: !!this.notification,
+        });
       },
     });
   }

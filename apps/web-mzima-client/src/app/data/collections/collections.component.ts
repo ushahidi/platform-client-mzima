@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { surveyHelper, formHelper } from '@helpers';
-import { CollectionResult, PostResult, UserInterface } from '@models';
+import { CollectionResult, PostResult, UserInterface, AccountNotificationsInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -11,6 +11,7 @@ import { SessionService, BreakpointService, EventBusService, EventType } from '@
 import { CollectionsService } from '../../core/services/collections.service';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { RolesService } from '../../core/services/roles.service';
+import { NotificationsService } from '../../core/services/notifications.service';
 
 enum CollectionView {
   List = 'list',
@@ -39,6 +40,7 @@ export class CollectionsComponent implements OnInit {
   roleOptions: any;
   tmpCollectionToEditId = 0;
   isLoggedIn = true;
+  private notification: AccountNotificationsInterface;
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
@@ -52,6 +54,7 @@ export class CollectionsComponent implements OnInit {
     private session: SessionService,
     private rolesService: RolesService,
     private breakpointService: BreakpointService,
+    private notificationsService: NotificationsService,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
@@ -64,7 +67,7 @@ export class CollectionsComponent implements OnInit {
       featured: [false, []],
       visible_to: [false, []],
       view: ['map', []],
-      is_notifications_enabled: [true, []],
+      is_notifications_enabled: [false, []],
     });
   }
 
@@ -169,6 +172,15 @@ export class CollectionsComponent implements OnInit {
     });
     this.tmpCollectionToEditId = collection.id;
     this.currentView = CollectionView.Edit;
+
+    this.notificationsService.get(String(collection.id)).subscribe({
+      next: (response) => {
+        this.notification = response.results[0];
+        this.collectionForm.patchValue({
+          is_notifications_enabled: !!this.notification,
+        });
+      },
+    });
   }
 
   goToCollection(collection: CollectionResult) {
@@ -210,6 +222,12 @@ export class CollectionsComponent implements OnInit {
         });
       }
     });
+
+    if (!this.notification && collectionData.is_notifications_enabled) {
+      this.notificationsService.post({ set: String(this.tmpCollectionToEditId) }).subscribe();
+    } else if (this.notification && !collectionData.is_notifications_enabled) {
+      this.notificationsService.delete(this.notification.id).subscribe();
+    }
   }
 
   addNewCollection() {

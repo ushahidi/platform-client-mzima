@@ -31,7 +31,7 @@ jobs:
     - name: Get npm cache directory
       id: npm-cache-dir
       run: |
-        echo "::set-output name=dir::$(npm config get cache)"
+        echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
 
     - uses: actions/cache@v3
       id: npm-cache
@@ -106,7 +106,3 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
-
-    - name: Logout from Amazon ECR
-      if: always()
-      run: docker logout ${{ steps.login-ecr.outputs.registry }}

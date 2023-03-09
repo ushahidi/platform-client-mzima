@@ -43,8 +43,8 @@ export class MainViewComponent {
       this.collectionId = this.route.snapshot.paramMap.get('id')!;
       this.params.set = this.collectionId;
       this.postsService.applyFilters({
-        set: this.collectionId,
         ...this.normalizeFilter(this.filters),
+        set: this.collectionId,
       });
       this.searchId = '';
     } else {
@@ -62,8 +62,8 @@ export class MainViewComponent {
       } else {
         this.searchId = '';
         this.postsService.applyFilters({
-          set: [],
           ...this.normalizeFilter(this.filters),
+          set: [],
         });
       }
     }

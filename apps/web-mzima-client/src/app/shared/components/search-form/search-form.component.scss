@@ -327,22 +327,32 @@
 }
 
 .collection-info {
+  white-space: normal;
+
   &:not(:first-child) {
     margin-top: -26px;
+  }
+
+  &__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    .filter-group__head__button {
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-inline-end: -4px;
+      margin-inline-start: 4px;
+    }
   }
 
   &__title {
     display: block;
     font-size: 14px;
     font-weight: 400;
-    line-height: 1.3;
-    white-space: normal;
+    line-height: 18px;
     word-break: break-word;
     color: var(--color-neutral-100);
-
-    .filter-group__head__button {
-      margin-inline-start: 0;
-    }
   }
 
   &__description {
@@ -636,5 +646,35 @@
     font-size: 16px;
     padding-left: 0;
     padding-right: 0;
+  }
+}
+
+.notifications-toggle {
+  width: 100%;
+  display: block;
+  font-size: 14px;
+  margin: 10px 0 0;
+  min-height: 24px;
+  line-height: 1.3;
+
+  &::ng-deep {
+    .mat-slide-toggle-bar {
+      width: 44px !important;
+      height: 24px !important;
+      margin-inline-end: 8px !important;
+    }
+
+    .mat-slide-toggle-thumb-container {
+      width: 20px !important;
+      height: 20px !important;
+    }
+  }
+
+  &.mat-checked {
+    &::ng-deep {
+      .mat-slide-toggle-thumb-container {
+        transform: translate3d(20px, 0, 0) !important;
+      }
+    }
   }
 }
