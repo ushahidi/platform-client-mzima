@@ -8,9 +8,9 @@
   >
   </app-settings-header>
 
-  <div class="users-container" *ngIf="!isLoading || users?.length; else loader">
-    <app-spinner class="spinner" *ngIf="!users"></app-spinner>
-    <div class="card">
+  <div class="users-container">
+    <app-spinner class="spinner" *ngIf="isLoading"></app-spinner>
+    <div class="card" [hidden]="isLoading">
       <p-table
         #dt
         responsiveLayout="stack"
@@ -99,14 +99,9 @@
         </ng-template>
       </p-table>
     </div>
-    <app-spinner class="users-loading" *ngIf="isLoading"></app-spinner>
   </div>
   <div class="actions-spacer" *ngIf="isShowActions && !(isDesktop$ | async)!"></div>
 </section>
-
-<ng-template #loader>
-  <app-spinner class="spinner"></app-spinner>
-</ng-template>
 
 <ng-template #usersEmpty>
   <span class="posts-empty">{{ 'empty.user' | translate }}</span>

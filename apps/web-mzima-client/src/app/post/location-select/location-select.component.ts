@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { mapHelper } from '@helpers';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
@@ -27,7 +27,7 @@ import { pointIcon } from '../../core/helpers/map';
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useValue: LocationSelectComponent,
+      useExisting: forwardRef(() => LocationSelectComponent),
     },
   ],
 })

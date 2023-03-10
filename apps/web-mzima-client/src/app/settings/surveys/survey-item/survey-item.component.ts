@@ -35,9 +35,9 @@ export class SurveyItemComponent implements OnInit {
   additionalTasks: SurveyItemTask[] = [];
   mainPost: SurveyItemTask;
   surveyObject: any;
-  public languages: LanguageInterface[] = this.languageService.getLanguages();
-  public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
-  public activeLanguages: LanguageInterface[] = this.defaultLanguage ? [this.defaultLanguage] : [];
+  public languages: LanguageInterface[];
+  public defaultLanguage?: LanguageInterface;
+  public activeLanguages: LanguageInterface[];
   public isDesktop = false;
 
   constructor(
@@ -53,6 +53,9 @@ export class SurveyItemComponent implements OnInit {
     private breakpointService: BreakpointService,
     private location: Location,
   ) {
+    this.languages = this.languageService.getLanguages();
+    this.defaultLanguage = this.languages.find((lang) => lang.code === 'en');
+    this.activeLanguages = this.defaultLanguage ? [this.defaultLanguage] : [];
     this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;

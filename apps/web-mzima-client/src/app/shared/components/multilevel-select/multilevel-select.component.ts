@@ -1,5 +1,5 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, forwardRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 
@@ -24,7 +24,7 @@ interface CategoryFlatNode {
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useValue: MultilevelSelectComponent,
+      useExisting: forwardRef(() => MultilevelSelectComponent),
     },
   ],
 })

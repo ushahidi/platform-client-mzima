@@ -28,8 +28,8 @@ export class CreateCategoryFormComponent implements OnInit {
   @Output() formSubmit = new EventEmitter<any>();
   @Output() deleteCall = new EventEmitter<any>();
   public categories: CategoryInterface[];
-  public languages: LanguageInterface[] = this.languageService.getLanguages();
-  public defaultLanguage?: LanguageInterface = this.languages.find((lang) => lang.code === 'en');
+  public languages: LanguageInterface[];
+  public defaultLanguage?: LanguageInterface;
   public activeLanguages: LanguageInterface[] = [];
   public selectedTranslation?: string;
   public roleOptions: GroupCheckboxItemInterface[] = [];
@@ -49,6 +49,8 @@ export class CreateCategoryFormComponent implements OnInit {
     private router: Router,
     private location: Location,
   ) {
+    this.languages = this.languageService.getLanguages();
+    this.defaultLanguage = this.languages.find((lang) => lang.code === 'en');
     this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;

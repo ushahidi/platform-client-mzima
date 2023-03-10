@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
 
@@ -30,7 +30,7 @@ export interface GroupCheckboxValueInterface {
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useValue: GroupCheckboxSelectComponent,
+      useExisting: forwardRef(() => GroupCheckboxSelectComponent),
     },
   ],
 })

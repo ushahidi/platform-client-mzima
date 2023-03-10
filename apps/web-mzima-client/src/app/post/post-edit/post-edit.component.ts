@@ -239,13 +239,15 @@ export class PostEditComponent implements OnInit, OnChanges {
     );
   }
 
-  private addFormControl(value: string, field: any) {
+  private addFormControl(value: string, field: any): FormControl {
     // console.log({ field, value });
     if (field.type === 'title') {
       return new FormControl(value, [Validators.required, Validators.minLength(2)]);
     } else if (field.input === 'video') {
-      const fieldRequired: any = field.required ? Validators.required : null;
-      return new FormControl(value, [fieldRequired, this.formValidator.videoValidator]);
+      const validators = [];
+      if (field.required) validators.push(Validators.required);
+      validators.push(this.formValidator.videoValidator);
+      return new FormControl(value, validators);
     } else {
       return new FormControl(value, field.required ? Validators.required : null);
     }
