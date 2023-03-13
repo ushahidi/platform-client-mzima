@@ -33,7 +33,7 @@ export class TwitterService {
 
     twitterData._e = [];
 
-    twitterData.ready = (callback: Function) => {
+    twitterData.ready = (callback: () => void) => {
       twitterData._e.push(callback);
     };
 
@@ -53,7 +53,7 @@ export class TwitterService {
     firstJSScript.parentNode.insertBefore(js, firstJSScript);
   }
 
-  private _onTwitterScriptLoadedFactory(observer: Observer<any>): Function {
+  private _onTwitterScriptLoadedFactory(observer: Observer<any>): (twitterData: any) => void {
     return (twitterData: any) => {
       observer.next(twitterData);
       observer.complete();

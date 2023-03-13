@@ -3,7 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { surveyHelper, formHelper } from '@helpers';
-import { CollectionResult, PostResult, UserInterface, AccountNotificationsInterface } from '@models';
+import {
+  CollectionResult,
+  PostResult,
+  UserInterface,
+  AccountNotificationsInterface,
+} from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';

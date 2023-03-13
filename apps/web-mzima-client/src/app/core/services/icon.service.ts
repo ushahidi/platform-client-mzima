@@ -4,14 +4,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Icons } from '@enums';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IconService {
-  constructor(
-    private matIconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
-  ) {
-  }
+  constructor(private matIconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {}
 
   registerIcons(): void {
     this.load(Icons, 'assets/icons');
@@ -23,7 +19,7 @@ export class IconService {
       const iconName = icons[icon];
       this.matIconRegistry.addSvgIcon(
         iconName,
-        this.sanitizer.bypassSecurityTrustResourceUrl(`${ url }/${ iconName }.svg`)
+        this.sanitizer.bypassSecurityTrustResourceUrl(`${url}/${iconName}.svg`),
       );
     });
   }

@@ -9,10 +9,7 @@ import { ResourceService } from './resource.service';
   providedIn: 'root',
 })
 export class CollectionsService extends ResourceService<any> {
-  constructor(
-    protected override httpClient: HttpClient,
-    protected override env: EnvService
-  ) {
+  constructor(protected override httpClient: HttpClient, protected override env: EnvService) {
     super(httpClient, env);
   }
 

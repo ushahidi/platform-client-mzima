@@ -1,6 +1,6 @@
 // import { EnvService } from '@services';
 import { divIcon, marker } from 'leaflet';
-import {EnvService} from "../services/env.service";
+import { EnvService } from '../services/env.service';
 
 export const pointIcon = (color: string, type: string = 'default') => {
   // Test string to make sure that it does not contain injection

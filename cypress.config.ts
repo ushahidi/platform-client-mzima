@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { defineConfig } from 'cypress';
-import { ENVS } from './cypress/utils/env.utils';
+import { ENVS } from './apps/web-mzima-client-e2e/src/utils/env.utils';
 
 export default defineConfig({
   e2e: {

@@ -5,7 +5,7 @@ export interface UserResponse extends ApiResponse {
 }
 
 export interface UserResult {
-  allowed_privileges: String[];
+  allowed_privileges: string[];
   contacts: UserContacts[];
   created: string;
   email: string;

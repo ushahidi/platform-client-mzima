@@ -8,7 +8,7 @@ import {
   SiteConfigInterface,
   UserInterface,
 } from '@models';
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CONST } from '@constants';
 
 @Injectable({
@@ -110,7 +110,9 @@ export class SessionService {
     this.currentSessionData.tokenType =
       localStorage.getItem(this.getLocalStorageNameMapper('tokenType')) || '';
 
-    const isFiltersVisible = localStorage.getItem(this.getLocalStorageNameMapper('isFiltersVisible'));
+    const isFiltersVisible = localStorage.getItem(
+      this.getLocalStorageNameMapper('isFiltersVisible'),
+    );
     this._isFiltersVisible.next(isFiltersVisible ? JSON.parse(isFiltersVisible) : false);
 
     const isMainFiltersHidden = localStorage.getItem(

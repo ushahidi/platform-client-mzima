@@ -6,13 +6,13 @@ import { LanguageInterface } from '@models';
 import LangJSON from '../../../assets/locales/languages.json';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LanguageService {
   private languages = new BehaviorSubject<LanguageInterface[]>(this.getLanguages());
   public languages$ = this.languages.asObservable();
 
-  private languageKey = `${ CONST.LOCAL_STORAGE_PREFIX }language`;
+  private languageKey = `${CONST.LOCAL_STORAGE_PREFIX}language`;
 
   private selectedLanguage = new BehaviorSubject<string>('');
   public selectedLanguage$ = this.selectedLanguage.asObservable();
@@ -46,8 +46,8 @@ export class LanguageService {
           pluralequation: 'language.pluralequation',
           code: 'en',
           name: 'English',
-          nplurals: 2
-        }
+          nplurals: 2,
+        },
       ];
     }
   }

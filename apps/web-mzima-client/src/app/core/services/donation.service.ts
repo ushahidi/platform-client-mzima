@@ -7,8 +7,8 @@ import { SessionService } from './session.service';
   providedIn: 'root',
 })
 export class DonationService {
-  private total: number = 0;
-  private scale: number = 9;
+  private total = 0;
+  private scale = 9;
 
   isMonetizationStarted = false;
   private donate = new BehaviorSubject<any>({});
@@ -19,13 +19,13 @@ export class DonationService {
   setupMonetization() {
     if (document.monetization) {
       document.monetization.addEventListener('monetizationpending', () => {
-        console.info('Initializing Web Monetization .');
+        console.log('Initializing Web Monetization .');
       });
 
       document.monetization.addEventListener('monetizationstart', (event) => {
         if (event.detail.paymentPointer === this.session.getSiteConfigurations().donation?.wallet) {
           // $rootScope.$broadcast('event:donation:started');
-          console.info('Web Monetization Started.');
+          console.log('Web Monetization Started.');
           this.isMonetizationStarted = true;
         }
       });
@@ -44,7 +44,7 @@ export class DonationService {
       });
 
       document.monetization.addEventListener('monetizationstop', () => {
-        console.info('Web Monetization Stopped.');
+        console.log('Web Monetization Stopped.');
         this.isMonetizationStarted = false;
       });
     }

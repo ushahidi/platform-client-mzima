@@ -22,7 +22,7 @@ export class FileUploaderComponent {
   uploadFile($event: any) {
     if (!$event.target.files[0]) return;
     if (validateFile($event.target.files[0])) {
-      var reader = new FileReader();
+      const reader = new FileReader();
       reader.onload = () => {
         const currentFile: any = {
           file: $event.target.files[0],

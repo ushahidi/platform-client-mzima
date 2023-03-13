@@ -7,17 +7,11 @@ import { EnvService } from './env.service';
   providedIn: 'root',
 })
 export abstract class ResourceService<T> {
-  private apiUrl = ''
+  private apiUrl = '';
   private readonly options = {};
 
-  protected constructor(
-    protected httpClient: HttpClient,
-    protected env: EnvService
-  ) {
-    this.apiUrl =
-      this.env.environment.backend_url +
-      this.getApiVersions() +
-      this.getResourceUrl();
+  protected constructor(protected httpClient: HttpClient, protected env: EnvService) {
+    this.apiUrl = this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl();
     this.options = {
       responseType: 'json',
       headers: new HttpHeaders({
@@ -39,9 +33,7 @@ export abstract class ResourceService<T> {
   }
 
   getList(index: number, page: number): Observable<T[]> {
-    const params = new HttpParams()
-      .set('limit', index.toString())
-      .set('offset', page.toString());
+    const params = new HttpParams().set('limit', index.toString()).set('offset', page.toString());
 
     return this.httpClient
       .get<T[]>(`${this.apiUrl}?${params.toString()}`)
@@ -72,27 +64,21 @@ export abstract class ResourceService<T> {
   }
 
   update(id: string | number, resource: T, config?: string) {
-    const apiUrl = config
-      ? `${this.apiUrl}/${id}/${config}`
-      : `${this.apiUrl}/${id}`;
+    const apiUrl = config ? `${this.apiUrl}/${id}/${config}` : `${this.apiUrl}/${id}`;
     return this.httpClient
       .put(apiUrl, this.toServerModel(resource), this.options)
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
   patch(id: string | number, resource: T, config?: string) {
-    const apiUrl = config
-      ? `${this.apiUrl}/${id}/${config}`
-      : `${this.apiUrl}/${id}`;
+    const apiUrl = config ? `${this.apiUrl}/${id}/${config}` : `${this.apiUrl}/${id}`;
     return this.httpClient
       .patch(apiUrl, this.toServerModel(resource), this.options)
       .pipe(map((json) => this.fromServerModel(json)));
   }
 
   delete(id: string | number, config?: string): Observable<any> {
-    const apiUrl = config
-      ? `${this.apiUrl}/${id}/${config}`
-      : `${this.apiUrl}/${id}`;
+    const apiUrl = config ? `${this.apiUrl}/${id}/${config}` : `${this.apiUrl}/${id}`;
     return this.httpClient.delete(`${apiUrl}`, this.options);
   }
 }

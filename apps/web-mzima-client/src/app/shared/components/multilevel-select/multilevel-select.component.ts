@@ -35,7 +35,7 @@ export class MultilevelSelectComponent implements ControlValueAccessor, OnChange
   public values: number[] = [];
   public touched = false;
   public disabled = false;
-  public value: string = '';
+  public value = '';
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {

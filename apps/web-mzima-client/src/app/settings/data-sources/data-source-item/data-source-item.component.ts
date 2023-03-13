@@ -221,10 +221,11 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
       if (this.provider.visible_survey) {
         this.cloneProviders[this.form.value.id].form_id = this.form.value.form_id.id;
         if (this.cloneProviders[this.form.value.id].form_id) {
-          let obj: any = {};
+          const obj: any = {};
           for (const field of this.provider.control_inbound_fields) {
             obj[field.key] = this.form.value[field.control_label];
           }
+          console.log('inbound_fields', obj);
           this.cloneProviders[this.form.value.id].inbound_fields = obj;
         }
       } else {
@@ -232,17 +233,19 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
         delete this.cloneProviders[this.form.value.id].inbound_fields;
       }
     } else {
-      let provider: any = {};
+      const provider: any = {};
       provider[this.form.value.id] = this.form.value;
       if (this.provider.visible_survey) {
         provider[this.form.value.id].form_id = this.form.value.form_id.id;
         if (provider[this.form.value.id].form_id) {
-          let obj: any = {};
+          const obj: any = {};
           for (const field of this.provider.control_inbound_fields) {
             obj[field.key] = this.form.value[field.control_label];
           }
+          console.log('provider obj', obj);
           provider[this.form.value.id].inbound_fields = obj;
         }
+        console.log('provider', provider);
       } else {
         delete provider[this.form.value.id].form_id;
         delete provider[this.form.value.id].inbound_fields;

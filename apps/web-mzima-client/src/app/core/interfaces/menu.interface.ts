@@ -3,7 +3,7 @@ export interface MenuInterface {
   router?: string;
   icon: string;
   adminGuard?: boolean;
-  action?: Function;
+  action?: () => void;
   hidden?: boolean;
   ref?: string;
 }
@@ -14,7 +14,7 @@ export interface UserMenuInterface {
   visible: boolean;
   separator?: boolean;
   router?: string;
-  action?: Function;
+  action?: () => void;
   ref?: string;
   adminGuard?: boolean;
 }

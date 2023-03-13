@@ -6,10 +6,10 @@ export interface DataSourceConfigInterface {
   providers: Providers;
   'authenticable-providers': AuthenticableProviders;
   email: Email;
-  twilio: Twilio;
-  smssync: Smssync;
-  twitter: Twitter;
-  nexmo: Nexmo;
+  twilio: object;
+  smssync: object;
+  twitter: object;
+  nexmo: object;
   frontlinesms: Frontlinesms;
   gmail: Gmail;
   allowed_privileges: string[];
@@ -38,14 +38,6 @@ export interface Email {
   incoming_username: string;
   incoming_password: string;
 }
-
-export interface Twilio {}
-
-export interface Smssync {}
-
-export interface Twitter {}
-
-export interface Nexmo {}
 
 export interface Frontlinesms {
   server_url: string;

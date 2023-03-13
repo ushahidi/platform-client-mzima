@@ -55,7 +55,7 @@ export class DataSourcesService extends ResourceService<any> {
         item.selected_survey =
           surveyList.find((el: any) => el.id === providersData[dataSourceKey]?.form_id) || null;
 
-        let inboundFieldsArr: any[] = [];
+        const inboundFieldsArr: any[] = [];
         for (const dataKey in item.inbound_fields) {
           inboundFieldsArr.push({
             control_label: dataKey.toLowerCase(),

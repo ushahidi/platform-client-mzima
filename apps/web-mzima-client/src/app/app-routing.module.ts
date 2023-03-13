@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes, TitleStrategy } from '@angular/router';
 import { HostGuard } from '@guards';
 import { PageNotFoundComponent } from './shared/components';
-import {UshahidiPageTitleStrategy} from '@services';
+import { UshahidiPageTitleStrategy } from '@services';
 
 const routes: Routes = [
   {

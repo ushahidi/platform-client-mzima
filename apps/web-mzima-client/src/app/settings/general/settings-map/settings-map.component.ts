@@ -31,10 +31,7 @@ export class SettingsMapComponent implements OnInit {
   minZoom = 0;
   baseLayers = Object.keys(mapHelper.getMapLayers().baselayers);
 
-  constructor(
-    private sessionService: SessionService,
-    private changeDetector: ChangeDetectorRef
-  ) {}
+  constructor(private sessionService: SessionService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.mapConfig = this.sessionService.getMapConfigurations();
@@ -43,10 +40,7 @@ export class SettingsMapComponent implements OnInit {
       scrollWheelZoom: true,
       zoomControl: false,
       layers: [],
-      center: [
-        this.mapConfig.default_view!.lat,
-        this.mapConfig.default_view!.lon,
-      ],
+      center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
       zoom: this.mapConfig.default_view!.zoom,
     };
     this.mapReady = true;
@@ -66,9 +60,7 @@ export class SettingsMapComponent implements OnInit {
 
   addTileLayerToMap(code: MapViewInterface['baselayer']) {
     const currentLayer = mapHelper.getMapLayers().baselayers[code];
-    this.mapLayers = this.mapLayers.filter(
-      (layer) => !(layer instanceof TileLayer)
-    );
+    this.mapLayers = this.mapLayers.filter((layer) => !(layer instanceof TileLayer));
     this.mapLayers.push(tileLayer(currentLayer.url, currentLayer.layerOptions));
   }
 
@@ -94,14 +86,11 @@ export class SettingsMapComponent implements OnInit {
     // Set the zoom level to our default zoom.
     this.settingMap.setView(
       [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
-      this.mapConfig.default_view!.zoom
+      this.mapConfig.default_view!.zoom,
     );
 
     // Update our draggable marker to the default.
-    this.mapMarker.setLatLng([
-      this.mapConfig.default_view!.lat,
-      this.mapConfig.default_view!.lon,
-    ]);
+    this.mapMarker.setLatLng([this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon]);
     this.changeDetector.detectChanges();
   }
 

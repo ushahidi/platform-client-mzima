@@ -88,7 +88,7 @@ export interface PostResult {
   updated?: string;
   url: string;
   user_id?: number;
-  values: {};
+  values: object;
   categories?: CategoryInterface[];
   form_id?: number;
   user?: PostPropertiesUser;

@@ -8,10 +8,7 @@ import { EnumGtmEvent, EnumGtmGroup, EnumGtmSource } from '@enums';
 export class GtmDirective implements AfterViewInit {
   @Input() appGtm: { source: EnumGtmSource; group: EnumGtmGroup };
 
-  constructor(
-    private elRef: ElementRef,
-    private gtmTrackingService: GtmTrackingService,
-  ) {}
+  constructor(private elRef: ElementRef, private gtmTrackingService: GtmTrackingService) {}
 
   ngAfterViewInit(): void {
     this.elRef.nativeElement.setAttribute('data-event', EnumGtmEvent.GroupClick);

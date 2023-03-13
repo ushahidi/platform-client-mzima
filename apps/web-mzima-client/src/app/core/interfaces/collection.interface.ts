@@ -5,7 +5,7 @@ export interface Collection extends ApiResponse {
 }
 
 export interface CollectionResult {
-  allowed_privileges: String[];
+  allowed_privileges: string[];
   created: string;
   description: string;
   featured: boolean;

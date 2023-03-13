@@ -35,8 +35,10 @@ module.exports = {
         '@typescript-eslint/dot-notation': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/member-ordering': 'off',
         '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
+        '@typescript-eslint/no-inferrable-types': 'off',
       },
     },
     {

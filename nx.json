@@ -18,9 +18,11 @@
     },
     "lint": {
       "inputs": ["default", "{workspaceRoot}/.eslintrc.js"]
+    },
+    "e2e": {
+      "inputs": ["default", "^default"]
     }
   },
-
   "generators": {
     "@nrwl/angular:application": {
       "style": "scss",

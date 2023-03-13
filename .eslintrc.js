@@ -5,7 +5,6 @@ module.exports = {
   overrides: [
     {
       files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
-      plugins: ['import'],
       settings: {
         'import/extensions': ['.js', '.ts'],
         'import/parsers': {
@@ -41,7 +40,13 @@ module.exports = {
         'plugin:prettier/recommended',
         'prettier',
       ],
+      plugins: ['import'],
       rules: {
+        'no-unsafe-optional-chaining': 'warn',
+        'no-case-declarations': 'warn',
+        'no-useless-escape': 'warn',
+        'no-prototype-builtins': 'warn',
+        'no-restricted-syntax': 'warn',
         'import/no-unresolved': 'off',
         'import/prefer-default-export': 'off',
         'import/no-extraneous-dependencies': 'off',

@@ -361,7 +361,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     /** Extra check to prevent form submission before hand
      * incase any field shows error but has no backend validation **/
     this.form.enable();
-    for (let task of this.tasks) {
+    for (const task of this.tasks) {
       this.atLeastOneFieldHasValidationError = task.fields.some((field: any) => {
         return (
           this.form.get(field.key)?.hasError('required') ||

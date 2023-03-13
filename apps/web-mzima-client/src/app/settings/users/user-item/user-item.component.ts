@@ -19,7 +19,7 @@ import { BreakpointService } from '@services';
   styleUrls: ['./user-item.component.scss'],
 })
 export class UserItemComponent implements OnInit {
-  private isDesktop$:Observable<boolean>;
+  private isDesktop$: Observable<boolean>;
   public isUpdate = false;
   public roles: RoleResult[];
   public form: FormGroup;

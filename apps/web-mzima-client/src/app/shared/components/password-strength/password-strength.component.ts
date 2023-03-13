@@ -55,7 +55,7 @@ export class PasswordStrengthComponent implements OnChanges {
 
   private checkStrength(password: string) {
     let force = 0;
-    const regex = /[$-/:-?{-~!"^_@`\[\]]/g;
+    const regex = /[$-/:-?{-~!"^_@`[\]]/g;
     const lowerLetters = /[a-z]+/.test(password);
     const upperLetters = /[A-Z]+/.test(password);
     const numbers = /[0-9]+/.test(password);
