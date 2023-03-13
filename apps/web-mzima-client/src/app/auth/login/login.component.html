@@ -18,7 +18,7 @@
   [ngClass]="{ 'tabs--single': !isSignupActive }"
 >
   <mat-tab [label]="'nav.login' | translate">
-    <app-login-form (loggined)="loggined($event)">
+    <app-login-form (loggined)="successfully($event)">
       <button
         btn-cancel
         mat-stroked-button
@@ -32,7 +32,7 @@
     </app-login-form>
   </mat-tab>
   <mat-tab [label]="'nav.registration' | translate" *ngIf="isSignupActive">
-    <app-registration-form>
+    <app-registration-form (registered)="successfully($event)">
       <button
         btn-cancel
         mat-stroked-button

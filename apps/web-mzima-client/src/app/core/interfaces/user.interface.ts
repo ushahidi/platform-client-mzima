@@ -1,7 +1,8 @@
-import { ApiResponse } from './api-response.interface';
+import { ApiNResponse, ApiResponse } from './api-response.interface';
 
-export interface UserResponse extends ApiResponse {
+export interface UserResponse extends ApiResponse, ApiNResponse {
   results: UserResult[];
+  data: UserResult[];
 }
 
 export interface UserResult {

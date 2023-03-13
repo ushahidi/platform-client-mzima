@@ -24,6 +24,7 @@ export interface GeoJsonFilter {
   'form[]'?: string[];
   created_before_by_id?: string;
   q?: string;
+  page?: number;
 }
 
 export interface PostPropertiesInterface {

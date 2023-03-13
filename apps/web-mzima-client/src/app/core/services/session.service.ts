@@ -45,7 +45,7 @@ export class SessionService {
     realname: '',
     email: '',
     role: '',
-    permissions: '',
+    permissions: [],
     gravatar: '',
     language: '',
     allowed_privileges: [],

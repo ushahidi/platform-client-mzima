@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { EnvService } from './env.service';
-import { GeoJsonFilter, UserInterface, UserResponse } from '@models';
+import { GeoJsonFilter, UserInterface, UserInterfaceResponse, UserResponse } from '@models';
 import { ResourceService } from './resource.service';
 import { SessionService } from './session.service';
 
@@ -22,25 +22,26 @@ export class UsersService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return this.env.environment.api_v3;
+    return this.env.environment.api_v5;
   }
 
   getResourceUrl(): string {
     return 'users';
   }
 
-  getCurrentUser(): Observable<UserInterface> {
+  getCurrentUser(): Observable<UserInterfaceResponse> {
     return super.get('me').pipe(
-      tap((userData) => {
+      tap((response) => {
+        const { data } = response;
         this.sessionService.setCurrentUser({
-          userId: userData.id,
-          realname: userData.realname,
-          email: userData.email,
-          role: userData.role,
-          permissions: userData.permissions,
-          allowed_privileges: userData.allowed_privileges,
-          gravatar: userData.gravatar,
-          language: userData.language,
+          userId: data.id,
+          realname: data.realname,
+          email: data.email,
+          role: data.role,
+          permissions: data.permissions,
+          allowed_privileges: data.allowed_privileges,
+          gravatar: data.gravatar,
+          language: data.language,
         });
       }),
     );
@@ -67,7 +68,7 @@ export class UsersService extends ResourceService<any> {
   public getUsers(url: string, filter?: GeoJsonFilter): Observable<UserResponse> {
     return super.get(url, filter).pipe(
       tap((response) => {
-        this.totalUsers.next(response.total_count);
+        this.totalUsers.next(response.meta.total);
       }),
     );
   }

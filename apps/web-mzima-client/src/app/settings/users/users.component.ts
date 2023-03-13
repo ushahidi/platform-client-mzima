@@ -30,6 +30,7 @@ export class UsersComponent implements OnInit {
     created_before_by_id: '',
     order: 'asc',
     q: '',
+    page: 1,
   };
   public total: number;
 
@@ -56,21 +57,21 @@ export class UsersComponent implements OnInit {
   public getUsers(event?: LazyLoadEvent) {
     this.isLoading = true;
     this.currentPage = (event?.first ?? 0) / 10;
-    this.params.offset = this.currentPage * 10;
     this.params.order = event?.sortOrder === 1 ? 'asc' : 'desc' || 'asc';
     this.params.q = event?.globalFilter || '';
+    this.params.page = this.currentPage + 1;
 
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: {
-        page: this.currentPage + 1,
+        page: this.params.page,
       },
       queryParamsHandling: 'merge',
     });
 
     this.userService.getUsers('', { ...this.params }).subscribe({
       next: (response) => {
-        this.users = response.results;
+        this.users = response.data;
         this.isLoading = false;
         this.cdr.detectChanges();
       },

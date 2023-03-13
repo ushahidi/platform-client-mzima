@@ -112,8 +112,9 @@ export class AccountSettingsModalComponent implements OnInit {
 
   private getProfile(): void {
     this.usersService.getCurrentUser().subscribe({
-      next: (profile) => {
-        this.profile = profile;
+      next: (response) => {
+        const { data } = response;
+        this.profile = data;
 
         this.profileForm.patchValue({
           role: this.profile.role,

@@ -5,12 +5,16 @@ export interface SessionTokenInterface {
   tokenType: string;
 }
 
+export interface UserInterfaceResponse {
+  data: UserInterface;
+}
+
 export interface UserInterface {
   userId?: string | number;
   realname?: string;
   email?: string;
   role?: string;
-  permissions?: string;
+  permissions?: string[];
   gravatar?: string;
   language?: string;
   allowed_privileges?: string[];

@@ -27,7 +27,7 @@ export class LoginComponent {
     this.matDialogRef.close('cancel');
   }
 
-  public loggined(state: boolean): void {
+  public successfully(state: boolean): void {
     this.matDialogRef.close(state);
   }
 }

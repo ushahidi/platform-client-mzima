@@ -64,7 +64,9 @@ export class AuthService extends ResourceService<any> {
 
         return this.userService.getCurrentUser().subscribe({
           next: (userData) => {
-            this.userService.dispatchUserEvents(userData);
+            console.log(userData);
+            const { data } = userData;
+            this.userService.dispatchUserEvents({ data });
           },
         });
       }),

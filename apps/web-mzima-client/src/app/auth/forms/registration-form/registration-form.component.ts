@@ -47,7 +47,11 @@ export class RegistrationFormComponent {
     this.form.disable();
     this.authService.signup({ email, password, realname: name }).subscribe({
       next: (response) => {
-        this.registered.emit(response);
+        this.authService.login(email, password).subscribe({
+          next: () => {
+            this.registered.emit(response);
+          },
+        });
       },
       error: () => {
         this.form.enable();

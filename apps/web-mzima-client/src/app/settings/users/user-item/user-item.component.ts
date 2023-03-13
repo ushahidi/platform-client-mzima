@@ -62,7 +62,8 @@ export class UserItemComponent implements OnInit {
   private getUserInformation(userId: string) {
     this.userService.getUserById(userId).subscribe({
       next: (response) => {
-        this.fillInForm(response);
+        const { data } = response;
+        this.fillInForm(data);
         this.form.controls['password'].removeValidators([
           Validators.required,
           Validators.minLength(7),
