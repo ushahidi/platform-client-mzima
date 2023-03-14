@@ -73,13 +73,12 @@
 
     <div class="form-row" *ngIf="selectedFieldType.input === 'tags'">
       <ng-container *ngIf="availableCategories; else spinner">
-        <app-multilevel-select
-          [(ngModel)]="categories"
-          [placeholder]="'survey.select_categories' | translate"
+        <mat-label>{{ 'category.which_categories' | translate }}</mat-label>
+        <app-multilevel-selection
           [data]="availableCategories"
-          [label]="'category.which_categories' | translate"
+          [(ngModel)]="selectedFieldType.options"
         >
-        </app-multilevel-select>
+        </app-multilevel-selection>
       </ng-container>
     </div>
 
@@ -93,7 +92,7 @@
       </app-multilevel-select>
     </div>
 
-    <div class="form-row">
+    <div class="form-row" *ngIf="onlyOptional || canDisableCaption || canMakePrivate">
       <div class="toggle">
         <mat-slide-toggle *ngIf="onlyOptional" [(ngModel)]="selectedFieldType.required">
           {{ 'survey.required' | translate }}

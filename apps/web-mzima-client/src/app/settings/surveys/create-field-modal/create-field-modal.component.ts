@@ -78,7 +78,9 @@ export class CreateFieldModalComponent implements OnInit {
         }),
       )
       .subscribe({
-        next: (response) => (this.availableCategories = response),
+        next: (response) => {
+          this.availableCategories = response;
+        },
         error: (err) => console.log(err),
       });
   }
