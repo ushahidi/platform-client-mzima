@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { SurveyItem, SurveyItemEnabledLanguages } from '@models';
+import { SurveyItem } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService } from '@services';
-import { forkJoin, Observable, take } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, take } from 'rxjs';
 import { SurveysService } from '../../core/services/surveys.service';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -21,10 +21,10 @@ export class SurveysComponent implements OnInit {
   public isShowActions = false;
 
   constructor(
-    private surveysService: SurveysService,
-    private translate: TranslateService,
-    private confirmModalService: ConfirmModalService,
-    private breakpointService: BreakpointService,
+    private readonly surveysService: SurveysService,
+    private readonly translate: TranslateService,
+    private readonly confirmModalService: ConfirmModalService,
+    private readonly breakpointService: BreakpointService,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   }
@@ -33,19 +33,25 @@ export class SurveysComponent implements OnInit {
     this.getSurveys();
   }
 
-  private getSurveys() {
-    this.surveysService.get().subscribe({
-      next: (res) => (this.surveys = res.results),
-      error: (err) => console.log(err),
-    });
+  private getSurveys(): void {
+    this.surveysService
+      .getSurveys()
+      .pipe(
+        map((res) => res.results),
+        catchError((err) => {
+          console.error(err);
+          return of([]);
+        }),
+      )
+      .subscribe((surveys) => {
+        this.surveys = surveys;
+      });
   }
 
   public duplicateSurvey() {
     if (this.selectedSurveys.length > 1 || !this.selectedSurveys.length) return;
     const survey: SurveyItem = this.selectedSurveys.shift()!;
-    const surveyDuplicate = JSON.parse(JSON.stringify(survey));
-    delete surveyDuplicate.id;
-    surveyDuplicate.name = `${survey.name} - duplicate`;
+    const surveyDuplicate = { ...survey, id: null, name: `${survey.name} - duplicate` };
 
     this.surveysService.post(surveyDuplicate).subscribe({
       next: () => this.getSurveys(),
@@ -73,7 +79,7 @@ export class SurveysComponent implements OnInit {
     if (!confirmed) return;
     const join = [];
     for (const survey of this.selectedSurveys) {
-      join.push(this.surveysService.delete(survey.id));
+      join.push(this.surveysService.deleteSurvey(survey.id));
     }
     forkJoin(join)
       .pipe(take(1))
@@ -84,18 +90,6 @@ export class SurveysComponent implements OnInit {
         },
         error: (e) => console.log(e),
       });
-  }
-
-  getLanguages(languages: SurveyItemEnabledLanguages) {
-    if (languages.available.length) {
-      return `${this.translate.instant('translations.languages')}: ${this.translate.instant(
-        'languages.' + languages.default,
-      )}, ${languages.available.map((l) => this.translate.instant('languages.' + l)).join(', ')}`;
-    } else {
-      return `${this.translate.instant('translations.language')}: ${this.translate.instant(
-        `languages.${languages.default}`,
-      )}`;
-    }
   }
 
   public selectSurveys({ checked }: MatCheckboxChange, survey: SurveyItem) {

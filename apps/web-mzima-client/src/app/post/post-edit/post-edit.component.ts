@@ -119,7 +119,7 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private loadData(formId: number | null, updateContent?: []) {
     if (!formId) return;
-    this.surveysService.getById(formId).subscribe({
+    this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
         this.data = data;
         this.tasks = data.result.tasks;
