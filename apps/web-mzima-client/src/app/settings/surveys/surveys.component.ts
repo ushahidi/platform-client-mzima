@@ -49,7 +49,8 @@ export class SurveysComponent implements OnInit {
   }
 
   public duplicateSurvey() {
-    if (this.selectedSurveys.length > 1 || !this.selectedSurveys.length) return;
+    if (this.selectedSurveys.length !== 1) return;
+
     const survey: SurveyItem = this.selectedSurveys.shift()!;
     const surveyDuplicate = { ...survey, id: null, name: `${survey.name} - duplicate` };
 
@@ -76,12 +77,10 @@ export class SurveysComponent implements OnInit {
       confirmButtonText: this.translate.instant('app.yes_delete'),
       cancelButtonText: this.translate.instant('app.no_go_back'),
     });
+
     if (!confirmed) return;
-    const join = [];
-    for (const survey of this.selectedSurveys) {
-      join.push(this.surveysService.deleteSurvey(survey.id));
-    }
-    forkJoin(join)
+
+    forkJoin(this.selectedSurveys.map((survey) => this.surveysService.deleteSurvey(survey.id)))
       .pipe(take(1))
       .subscribe({
         next: () => {
@@ -96,8 +95,7 @@ export class SurveysComponent implements OnInit {
     if (checked) {
       this.selectedSurveys.push(survey);
     } else {
-      const index = this.selectedSurveys.findIndex((el: any) => el.id === survey.id);
-      if (index > -1) this.selectedSurveys.splice(index, 1);
+      this.selectedSurveys = this.selectedSurveys.filter((s) => s.id !== survey.id);
     }
   }
 
