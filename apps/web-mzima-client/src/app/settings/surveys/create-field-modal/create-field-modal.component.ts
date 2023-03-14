@@ -125,7 +125,7 @@ export class CreateFieldModalComponent implements OnInit {
     this.surveysService.get().subscribe({
       next: (types) => {
         this.availableSurveys =
-          types.results.filter((s) => s.id.toString() !== this.surveyId) || [];
+          types.results.filter((s: any) => s.id.toString() !== this.surveyId) || [];
       },
     });
   }

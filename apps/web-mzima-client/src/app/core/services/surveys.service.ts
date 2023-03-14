@@ -32,15 +32,15 @@ export class SurveysService extends ResourceService<any> {
     }
   }
 
-  override get(): Observable<SurveyApiResponse> {
+  getSurveys(): Observable<SurveyApiResponse> {
     return super.get();
   }
 
-  override getById(id: string | number): Observable<any> {
+  getSurveyById(id: string | number): Observable<any> {
     return super.getById(id);
   }
 
-  override delete(id: string | number): Observable<any> {
+  deleteSurvey(id: string | number): Observable<any> {
     return super.delete(id);
   }
 }

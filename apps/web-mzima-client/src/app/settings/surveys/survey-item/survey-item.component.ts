@@ -90,7 +90,7 @@ export class SurveyItemComponent implements OnInit {
     if (id) {
       this.surveyId = id;
       this.isEdit = !!id;
-      this.surveysService.getById(id).subscribe({
+      this.surveysService.getSurveyById(id).subscribe({
         next: (response) => {
           this.updateForm(response.result);
           this.initTasks();
