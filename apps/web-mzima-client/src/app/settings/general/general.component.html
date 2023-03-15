@@ -1,18 +1,18 @@
 <h1 *ngIf="isDesktop$ | async">{{ 'settings.settings_list.general' | translate }}</h1>
 <form [formGroup]="generalForm" (ngSubmit)="save()" novalidate>
   <div class="form-row">
-    <mat-label>{{ 'settings.deployment_name' | translate }}</mat-label>
+    <mat-label>{{ 'settings.deployment_name' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
       <input
         matInput
-        placeholder="{{ 'settings.deployment_name' }}"
+        placeholder="{{ 'settings.deployment_name' | translate }}"
         formControlName="name"
         required
       />
-      <mat-error *ngIf="generalForm.get('name')?.invalid">
-        {{ generalForm.get('name')?.errors | json }}
-      </mat-error>
     </mat-form-field>
+    <mat-error *ngIf="generalForm.get('name')?.invalid" class="form-row__error">
+      {{ 'settings.valid.name.required' | translate }}
+    </mat-error>
   </div>
   <div class="form-row">
     <mat-label>{{ 'settings.site_description' | translate }}</mat-label>
@@ -37,13 +37,18 @@
     </app-file-uploader>
   </div>
   <div class="form-row">
-    <mat-label>{{ 'settings.site_email' | translate }}</mat-label>
+    <mat-label>{{ 'settings.site_email' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
       <input matInput placeholder="name@domain.com" formControlName="email" required />
-      <mat-error *ngIf="generalForm.get('email')?.invalid">
-        {{ generalForm.get('email')?.errors | json }}
-      </mat-error>
     </mat-form-field>
+    <ng-container *ngIf="generalForm.get('email')?.invalid">
+      <mat-error
+        *ngFor="let error of generalForm.get('email')?.errors | keyvalue"
+        class="form-row__error"
+      >
+        {{ 'contact.valid.email.' + error.key | translate }}
+      </mat-error>
+    </ng-container>
   </div>
   <div class="form-row">
     <mat-label>{{ 'settings.site_language' | translate }}</mat-label>
@@ -117,7 +122,14 @@
   >
     {{ 'app.cancel' | translate }}
   </button>
-  <button type="button" color="primary" mat-raised-button (click)="save()" [data-qa]="'btn-save'">
+  <button
+    type="button"
+    color="primary"
+    (click)="save()"
+    mat-raised-button
+    [data-qa]="'btn-save'"
+    [disabled]="generalForm.invalid || generalForm.disabled"
+  >
     {{ 'app.save' | translate }}
   </button>
 </div>
