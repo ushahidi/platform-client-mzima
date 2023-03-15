@@ -1,0 +1,55 @@
+<div class="multilevelselection-holder">
+  <mat-checkbox
+    color="primary"
+    checkboxPosition="before"
+    [(ngModel)]="isAllSelected"
+    (change)="toggleSelectAll()"
+    class="multilevelselection__checkbox"
+  >
+    {{ 'nav.select_all' | translate }}
+  </mat-checkbox>
+
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="multilevelselection">
+    <mat-tree-node *matTreeNodeDef="let option" class="multilevelselection__option">
+      <mat-checkbox
+        color="primary"
+        [value]="option[fields[0]]"
+        checkboxPosition="before"
+        (click)="$event.stopPropagation()"
+        class="multilevelselection__checkbox"
+        (change)="categoryLeafSelectionToggle(option)"
+        [checked]="checklistSelection.isSelected(option)"
+      >
+        {{ option[fields[1]] | translate }}
+      </mat-checkbox>
+    </mat-tree-node>
+    <mat-tree-node
+      (click)="$event.stopPropagation()"
+      class="multilevelselection__option"
+      *matTreeNodeDef="let option; when: hasChild"
+    >
+      <mat-checkbox
+        color="primary"
+        checkboxPosition="before"
+        [value]="option[fields[0]]"
+        (click)="$event.stopPropagation()"
+        class="multilevelselection__checkbox"
+        [checked]="descendantsAllSelected(option)"
+        (change)="categorySelectionToggle(option)"
+      >
+        {{ option[fields[1]] | translate }}
+      </mat-checkbox>
+      <button
+        mat-icon-button
+        matTreeNodeToggle
+        class="multilevelselection__option__arrow"
+        [attr.aria-label]="'Toggle ' + option[fields[1]] | translate"
+        [ngClass]="{
+          'multilevelselection__option__arrow--open': treeControl.isExpanded(option)
+        }"
+      >
+        <mat-icon svgIcon="arrow-down"></mat-icon>
+      </button>
+    </mat-tree-node>
+  </mat-tree>
+</div>

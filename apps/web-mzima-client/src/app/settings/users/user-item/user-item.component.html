@@ -1,0 +1,100 @@
+<h1 *ngIf="isDesktop">
+  {{ (isUpdate ? 'user.edit_user' : 'user.add_user') | translate }}
+</h1>
+
+<form class="form" [formGroup]="form" (ngSubmit)="save()" novalidate>
+  <div class="form-row">
+    <mat-label>{{ 'user.full_name' | translate }} *</mat-label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        formControlName="realname"
+        [placeholder]="'user.placeholder.realname' | translate"
+      />
+      <mat-error *ngIf="form.get('realname')?.hasError('required')">{{
+        'user.valid.name.required' | translate
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-label>{{ 'user.email' | translate }} *</mat-label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        formControlName="email"
+        [placeholder]="'user.placeholder.email' | translate"
+      />
+      <mat-error *ngIf="form.get('email')?.hasError('required')">{{
+        'user.valid.email.required' | translate
+      }}</mat-error>
+      <mat-error *ngIf="form.get('email')?.hasError('email')">{{
+        'user.valid.email.email' | translate
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-label> {{ 'user.password' | translate }} * </mat-label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        formControlName="password"
+        [placeholder]="'user.placeholder.password' | translate"
+      />
+      <mat-hint>{{ 'user.password_notify' | translate }}</mat-hint>
+      <mat-error *ngIf="form.get('password')?.hasError('required')">{{
+        'user.valid.password.required' | translate
+      }}</mat-error>
+      <mat-error *ngIf="form.get('password')?.hasError('minlength')">{{
+        'user.valid.password.minlength' | translate
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-label>{{ 'user.role' | translate }} *</mat-label>
+    <mat-form-field appearance="outline" *ngIf="roles?.length">
+      <mat-select formControlName="role" disableOptionCentering [data-qa]="'user-role-select'">
+        <mat-option *ngFor="let role of roles" [value]="role.name" [data-qa]="role.name">
+          {{ role.display_name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
+  <div class="form-controls-panel form-controls-panel--sticky">
+    <div>
+      <button
+        *ngIf="isUpdate && !isMyProfile"
+        mat-raised-button
+        type="button"
+        color="accent"
+        [data-qa]="'btn-user-delete-user'"
+        (click)="deleteUser()"
+        class="delete-button"
+      >
+        <ng-container *ngIf="isDesktop">{{ 'user.delete_user' | translate }}</ng-container>
+        <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
+      </button>
+    </div>
+    <div>
+      <button
+        mat-stroked-button
+        type="button"
+        [data-qa]="'btn-user-cancel'"
+        (click)="navigateToUsers()"
+      >
+        <span>{{ 'app.cancel' | translate }}</span>
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="role-button"
+        type="submit"
+        [data-qa]="'btn-user-save'"
+        [disabled]="form.invalid"
+      >
+        <span>{{ 'app.save' | translate }}</span>
+      </button>
+    </div>
+  </div>
+</form>

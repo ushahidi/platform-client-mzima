@@ -1,0 +1,23 @@
+<app-onboarding *ngIf="!isOnboardingDone && (isDesktop$ | async)"></app-onboarding>
+
+<mat-sidenav-container
+  [dir]="isRTL ? 'rtl' : 'ltr'"
+  class="main"
+  [ngClass]="{ 'main--inner': !(isDesktop$ | async)! && isInnerPage }">
+  <mat-sidenav opened mode="side" disableClose class="sidebar">
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-toolbar
+      [languages]="languages"
+      [selectedLanguage]="selectedLanguage$ | async"
+    ></app-toolbar>
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<app-cookies-notification></app-cookies-notification>
+
+<app-spinner fullscreen="true" *ngIf="isShowLoader"></app-spinner>

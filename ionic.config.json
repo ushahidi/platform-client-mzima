@@ -1,0 +1,7 @@
+{
+  "name": "mobile-mzima-client",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

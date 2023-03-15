@@ -1,26 +1,10 @@
 module.exports = {
   root: true,
-  ignorePatterns: ['projects/**/*'],
+  ignorePatterns: ['**/*'],
+  plugins: ['@nrwl/nx'],
   overrides: [
     {
-      files: ['*.component.ts', '*.page.ts'],
-      extends: [
-        'plugin:@angular-eslint/template/process-inline-templates',
-      ]
-    }, // *.component.ts, *.page.ts
-    {
-      files: ['*.ts'],
-      parserOptions: {
-        project: ['tsconfig.json'],
-        createDefaultProgram: true
-      },
-      extends: [
-        'plugin:@angular-eslint/recommended',
-        'airbnb-typescript/base',
-        'plugin:prettier/recommended',
-        'prettier',
-      ],
-      plugins: ['import'],
+      files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
       settings: {
         'import/extensions': ['.js', '.ts'],
         'import/parsers': {
@@ -33,63 +17,54 @@ module.exports = {
         },
       },
       rules: {
-        '@typescript-eslint/no-unused-expressions': 'off',
-        '@typescript-eslint/lines-between-class-members': 'off',
+        '@nrwl/nx/enforce-module-boundaries': [
+          'error',
+          {
+            enforceBuildableLibDependency: true,
+            allow: [],
+            depConstraints: [
+              {
+                sourceTag: '*',
+                onlyDependOnLibsWithTags: ['*'],
+              },
+            ],
+          },
+        ],
+      },
+    },
+    {
+      files: ['*.ts', '*.tsx'],
+      extends: [
+        'plugin:@nrwl/nx/typescript',
+        'airbnb-typescript/base',
+        'plugin:prettier/recommended',
+        'prettier',
+      ],
+      plugins: ['import'],
+      rules: {
+        'no-unsafe-optional-chaining': 'warn',
+        'no-case-declarations': 'warn',
+        'no-useless-escape': 'warn',
+        'no-prototype-builtins': 'warn',
+        'no-restricted-syntax': 'warn',
         'import/no-unresolved': 'off',
         'import/prefer-default-export': 'off',
+        'import/no-extraneous-dependencies': 'off',
         'class-methods-use-this': 'off',
         'lines-between-class-members': 'off',
-        'import/no-extraneous-dependencies': [
-          'error',
-          {
-            'devDependencies': false,
-            'optionalDependencies': false,
-            'peerDependencies': false,
-          },
-        ],
-        '@typescript-eslint/unbound-method': [
-          'error',
-          {
-            ignoreStatic: true,
-          },
-        ],
-        '@angular-eslint/directive-selector': [
-          'error',
-          {
-            'type': 'attribute',
-            'prefix': 'app',
-            'style': 'camelCase'
-          }
-        ],
-        '@angular-eslint/component-selector': [
-          'error',
-          {
-            'type': 'element',
-            'prefix': 'app',
-            'style': 'kebab-case'
-          }
-        ],
-        '@typescript-eslint/dot-notation': 'off',
-      }
-    }, // *.ts
-    {
-      files: ['*.html'],
-      extends: [
-        'plugin:@angular-eslint/template/recommended'
-      ],
-      rules: {}
-    }, // *.html
-    {
-      files: ['src/**/*.spec.ts', 'src/**/*.d.ts'],
-      parserOptions: {
-        project: './tsconfig.spec.json',
       },
-      extends: ['plugin:jasmine/recommended'],
-      plugins: ['jasmine'],
-      env: { jasmine: true },
-      rules: {
-        '@typescript-eslint/no-unused-vars': 'off'
-      }
-    }, // src/**/*.spec.ts, src/**/*.d.ts
-  ]
-}
+    },
+    {
+      files: ['*.js', '*.jsx'],
+      extends: ['plugin:@nrwl/nx/javascript'],
+      rules: {},
+    },
+    {
+      files: ['*.spec.ts', '*.spec.tsx', '*.spec.js', '*.spec.jsx'],
+      env: {
+        jest: true,
+      },
+      rules: {},
+    },
+  ],
+};

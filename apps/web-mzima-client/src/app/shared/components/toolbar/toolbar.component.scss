@@ -1,0 +1,285 @@
+@import 'helpers';
+
+.toolbar {
+  top: 0;
+  width: auto;
+  z-index: 50;
+  height: 72px;
+  position: fixed;
+  padding-left: 24px;
+  padding-right: 24px;
+  inset-inline-end: 0;
+  color: var(--color-black);
+  inset-inline-start: 220px;
+  background: var(--color-light);
+  border-bottom: 1px solid var(--color-neutral-30);
+
+  @include breakpoint-max($laptop-small) {
+    height: 64px;
+    padding-left: 16px;
+    padding-right: 16px;
+    inset-inline-start: 200px;
+  }
+
+  @include breakpoint-max($tablet) {
+    height: 80px;
+    z-index: 600;
+    inset-inline-start: 0;
+  }
+
+  &__back {
+    width: 32px;
+    height: 32px;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 32px;
+    margin-inline-end: 8px;
+    margin-inline-start: 0;
+  }
+
+  &__controls {
+    display: flex;
+    flex: 1 1 100%;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__search-form {
+    flex: 1 1 100%;
+  }
+
+  &__button {
+    min-width: 125px;
+    margin-inline-start: 16px;
+
+    @include breakpoint-max($laptop-small) {
+      margin-inline-start: 8px;
+    }
+
+    &::ng-deep {
+      .mat-button-wrapper {
+        justify-content: center;
+      }
+    }
+  }
+
+  &__language {
+    width: 50px;
+    display: block;
+    margin-inline-start: 16px;
+  }
+
+  &__page-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+
+    @include breakpoint-max($laptop-small) {
+      @include breakpoint-min($tablet) {
+        display: none;
+      }
+    }
+
+    @include breakpoint-max($tablet) {
+      font-size: 20px;
+      line-height: 1.28;
+    }
+  }
+}
+
+.account-info {
+  height: 100%;
+  flex-shrink: 0;
+  padding-top: 0;
+  font-size: 14px;
+  min-width: 236px;
+  font-weight: 400;
+  max-width: 250px;
+  line-height: 17px;
+  padding-bottom: 0;
+  text-align: right;
+  white-space: normal;
+  margin-inline-end: -24px;
+  padding-inline-end: 24px;
+  margin-inline-start: 16px;
+  padding-inline-start: 8px;
+  border-left: 1px solid var(--color-neutral-30);
+
+  @include breakpoint-max($laptop-small) {
+    min-width: 106px;
+  }
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 50%;
+    margin-inline-start: 12px;
+
+    @include breakpoint-max($laptop-small) {
+      margin-inline-start: 0;
+    }
+  }
+
+  &__main {
+    max-width: calc(100% - 44px);
+
+    @include breakpoint-max($laptop-small) {
+      display: none;
+    }
+  }
+
+  &__name {
+    display: block;
+  }
+
+  &__email {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  &__arrow {
+    flex-shrink: 0;
+    font-size: 24px;
+    margin-inline-start: 12px;
+  }
+}
+
+::ng-deep {
+  .account-menu {
+    width: 236px;
+  }
+}
+
+.search-form {
+  flex: 1 1 100%;
+
+  @include breakpoint-min($tablet) {
+    max-width: 371px;
+  }
+}
+
+.burger {
+  padding: 0;
+  display: flex;
+  height: 48px;
+  margin-top: 0;
+  min-width: 48px;
+  margin-bottom: 0;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin-inline-end: -8px;
+  margin-inline-start: 36px;
+}
+
+.menu {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 700;
+  position: fixed;
+  color: var(--color-neutral-50);
+  background: var(--color-neutral-100);
+  --scrollbar-color: var(--color-neutral-60);
+  --scrollbar-background: var(--color-neutral-100);
+
+  &:not(.menu--open) {
+    opacity: 0;
+    top: -9999px;
+    left: -9999px;
+    right: 9999px;
+    bottom: 9999px;
+  }
+
+  &__head {
+    display: flex;
+    flex-shrink: 0;
+    padding: 0 16px;
+    min-height: 80px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-neutral-90);
+
+    &__close {
+      padding: 0;
+      height: 40px;
+      display: flex;
+      margin-top: 0;
+      min-width: 40px;
+      font-size: 32px;
+      margin-bottom: 0;
+      align-items: center;
+      margin-inline-end: 0;
+      flex-direction: column;
+      justify-content: center;
+      margin-inline-start: 24px;
+      color: var(--color-neutral-40);
+      background: var(--color-black);
+      border-color: var(--color-neutral-90);
+    }
+  }
+
+  &__body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    height: calc(100% - 160px);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &__footer {
+    display: flex;
+    flex-shrink: 0;
+    padding: 16px 12px;
+    background: var(--color-neutral-100);
+
+    &__button {
+      margin: 0 4px;
+      flex: 1 1 calc(50% - 8px);
+
+      &.mat-stroked-button {
+        color: var(--color-light);
+        background: var(--color-black);
+        border-color: var(--color-neutral-20);
+      }
+    }
+  }
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  hr {
+    height: 1px;
+    border: none;
+    margin: 4px 0;
+    background: var(--color-neutral-90);
+  }
+}
+
+.mobile-menu-button {
+  margin: 4px 0;
+  padding: 0 16px;
+  font-size: 16px;
+  border-radius: 0;
+  font-weight: 400;
+  text-align: start;
+  line-height: 56px;
+  color: var(--color-neutral-50);
+  background: var(--color-neutral-100);
+}
+
+::ng-deep {
+  html.rtl {
+    .toolbar__back .mat-icon {
+      transform: scaleX(-1);
+    }
+  }
+}

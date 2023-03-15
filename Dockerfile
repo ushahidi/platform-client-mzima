@@ -6,7 +6,7 @@ COPY ./package.json ./package-lock.json ./
 
 RUN npm install
 COPY . ./
-RUN npm run build
+RUN npm run web:build
 
 FROM nginx
 ENV DOCKERIZE_VERSION v0.6.1
@@ -24,7 +24,7 @@ RUN case `uname -m` in aarch*|armv8*) darch=armhf;; i?86) darch=386;; x86_64) da
 ARG HTTP_PORT=8080
 
 WORKDIR /usr/share/nginx/html
-COPY --from=0 /var/app/dist/platform-client ./
+COPY --from=0 /var/app/dist/apps/web-mzima-client ./
 COPY docker/ /opt/docker/
 RUN cp /opt/docker/nginx.default.conf /etc/nginx/conf.d/default.conf && \
     sed -i 's/$HTTP_PORT/'$HTTP_PORT'/' /etc/nginx/conf.d/default.conf && \

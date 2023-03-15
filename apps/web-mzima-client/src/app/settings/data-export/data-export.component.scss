@@ -1,0 +1,57 @@
+@import 'helpers';
+
+.description {
+  max-width: 654px;
+  margin-bottom: 32px;
+
+  a {
+    .mat-icon {
+      width: 1em;
+      height: 1em;
+      line-height: 1;
+      margin: -3px 0;
+      font-size: 24px;
+      vertical-align: top;
+    }
+  }
+}
+
+.mat-column-download {
+  text-align: center;
+}
+
+.download-btn {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  min-width: 0;
+  display: flex;
+  margin: 0 auto;
+  line-height: 32px;
+  border-radius: 50%;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  .mat-icon {
+    font-size: 24px;
+  }
+}
+
+.spinner {
+  display: block;
+  margin: 150px 0;
+}
+
+.history-table {
+  @include breakpoint-max($mobile) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
+    .mat-table {
+      min-width: 680px;
+    }
+  }
+}

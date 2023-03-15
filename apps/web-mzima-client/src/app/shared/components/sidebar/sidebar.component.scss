@@ -1,0 +1,191 @@
+@import 'helpers';
+
+.sidebar {
+  height: 100%;
+  display: flex;
+  font-size: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  line-height: 14px;
+  position: relative;
+  --side-offset: 24px;
+  flex-direction: column;
+  scroll-behavior: smooth;
+  color: var(--color-neutral-50);
+  -webkit-overflow-scrolling: touch;
+
+  @include breakpoint-min($tablet) {
+    padding: 24px var(--side-offset) 20px;
+  }
+
+  @include breakpoint-max($tablet) {
+    overflow: visible;
+  }
+
+  &__logo {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px var(--side-offset) 0;
+    border-bottom: 1px solid var(--color-neutral-90);
+    margin: -24px calc(var(--side-offset) * -1) 8px;
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+  }
+
+  &__add-post-btn {
+    display: block;
+    border-width: 1px 0;
+    border-style: solid;
+    padding: 12px var(--side-offset);
+    border-color: var(--color-neutral-90);
+    margin: 0 calc(var(--side-offset) * -1) 8px;
+
+    @include breakpoint-max($laptop-small) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    @include breakpoint-max($tablet) {
+      left: 50%;
+      padding: 0;
+      z-index: 25;
+      bottom: 100%;
+      border: none;
+      position: absolute;
+      margin: 0 0 -12px -32px;
+    }
+  }
+
+  &__menu {
+    @include breakpoint-min($tablet) {
+      margin: 0 calc(var(--side-offset) * -1);
+
+      &:not(:first-child) {
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--color-neutral-90);
+      }
+    }
+
+    @include breakpoint-max($tablet) {
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+}
+
+.sidebar-menu-button {
+  width: 100%;
+  color: inherit;
+  font-size: 16px;
+  border-radius: 0;
+  line-height: 1.6;
+  text-align: start;
+  font-weight: normal;
+  border-style: solid;
+  border-width: 0 0 0 4px;
+  border-color: transparent;
+  transition-duration: 0.35s;
+  box-shadow: none !important;
+  transition-timing-function: ease;
+  background: var(--color-neutral-100);
+  transition-property: color, background-color, border-color;
+
+  @include breakpoint-min($tablet) {
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-inline-start: calc(var(--side-offset) - 4px);
+    padding-inline-end: var(--side-offset);
+  }
+
+  @include breakpoint-max($tablet) {
+    flex: 1 1 100%;
+    border-width: 0;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 13px 8px;
+
+    &:before {
+      left: 0;
+      right: 0;
+      top: -1px;
+      margin: 0;
+      content: '';
+      height: 2px;
+      border: none;
+      bottom: auto;
+      display: block;
+      border-radius: 0;
+      position: absolute;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      background-color: var(--color-primary-60);
+    }
+
+    &:not(.sidebar-menu-button--active) {
+      &:before {
+        opacity: 0;
+      }
+    }
+  }
+
+  &:hover {
+    color: var(--color-primary-60);
+  }
+
+  &:focus {
+    color: var(--color-primary-60);
+    border-color: var(--color-primary-60);
+  }
+
+  &::ng-deep {
+    .mat-ripple-element {
+      background-color: var(--color-neutral-100);
+    }
+
+    .mat-button-wrapper {
+      @include breakpoint-max($tablet) {
+        width: 100%;
+        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  &--active {
+    color: var(--color-primary-60);
+    background-color: var(--color-black);
+    border-color: var(--color-primary-60);
+  }
+
+  &:not(:first-child) {
+    @include breakpoint-min($tablet) {
+      margin-top: 8px;
+    }
+  }
+
+  &__icon {
+    font-size: 30px;
+    margin-inline-end: 12px;
+    margin-right: 12px !important;
+
+    @include breakpoint-max($tablet) {
+      font-size: 32px;
+      margin-bottom: 4px;
+      margin-right: 0 !important;
+      margin-inline-end: 0 !important;
+    }
+
+    img {
+      font-size: 14px;
+      fill: currentColor;
+    }
+  }
+}

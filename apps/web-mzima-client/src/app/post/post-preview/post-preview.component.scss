@@ -1,0 +1,160 @@
+@import 'helpers';
+
+.post {
+  &--feed {
+    padding: 24px;
+    cursor: pointer;
+    min-height: 100%;
+    border-radius: 4px;
+    background: var(--color-light);
+    box-shadow: inset 0 0 0 1px var(--color-neutral-30);
+
+    @include breakpoint-max($tablet) {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-inline-end: 16px;
+      padding-inline-start: 24px;
+    }
+  }
+
+  &--selectable {
+    user-select: none;
+  }
+
+  &__head {
+    display: flex;
+    font-size: 13px;
+    margin-bottom: 8px;
+    align-items: center;
+    justify-content: flex-end;
+
+    .post--selectable & {
+      justify-content: space-between;
+    }
+
+    &::ng-deep {
+      .mat-checkbox-inner-container {
+        margin-inline-end: 0 !important;
+      }
+    }
+
+    .mat-checkbox {
+      pointer-events: none;
+    }
+  }
+
+  &__main {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &__visual {
+    flex: 0 0 45%;
+    overflow: hidden;
+    max-width: 178px;
+    margin-inline-end: 8px;
+    min-height: 168px;
+    border-radius: 4px;
+    position: relative;
+
+    img {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+    }
+  }
+
+  &__twitter {
+    height: 216px;
+    overflow: auto;
+    padding-top: 8px;
+    position: relative;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    scroll-behavior: smooth;
+    padding-inline-end: 8px;
+    margin-inline-end: -12px;
+    -webkit-overflow-scrolling: touch;
+    --scrollbar-background: var(--color-light);
+
+    @include breakpoint-max($tablet) {
+      padding-inline-end: 0;
+      margin-inline-end: 0;
+    }
+
+    app-twitter-widget {
+      z-index: 5;
+      display: block;
+      height: 100%;
+      position: relative;
+    }
+  }
+
+  &__content {
+    flex: 1 1 100%;
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 400;
+    margin-bottom: 8px;
+
+    h3 {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.28;
+      margin-bottom: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+
+    p {
+      margin-top: 0;
+      overflow: hidden;
+      word-break: break-word;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      line-clamp: 5;
+      -webkit-box-orient: vertical;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__more {
+    margin-top: 8px;
+    text-align: right;
+
+    .mat-button {
+      font-size: 12px;
+      padding-left: 0;
+      padding-right: 0;
+      font-weight: 700;
+      line-height: 18px;
+      text-decoration: underline;
+      transition: color 0.35s ease;
+
+      &:hover {
+        color: var(--color-primary-70);
+      }
+
+      &:active {
+        color: var(--color-primary-50);
+      }
+
+      &::ng-deep {
+        .mat-button-focus-overlay {
+          display: none;
+        }
+      }
+    }
+  }
+}

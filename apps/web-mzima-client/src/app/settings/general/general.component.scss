@@ -1,0 +1,21 @@
+@import 'helpers';
+
+.api-key {
+  margin-bottom: 24px;
+
+  .form-row {
+    margin-bottom: 16px;
+  }
+}
+
+.copy {
+  position: relative;
+
+  &-success {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 7px;
+    color: var(--color-success);
+  }
+}

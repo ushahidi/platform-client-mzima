@@ -1,0 +1,26 @@
+@import 'helpers';
+
+.types-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include breakpoint-min($tablet) {
+    columns: 2;
+  }
+}
+
+.type-item {
+  cursor: pointer;
+  padding: 15px 12px;
+  position: relative;
+  margin-bottom: 8px;
+  background: var(--color-neutral-10);
+  border-radius: 4px;
+  border-inline-start: 5px solid var(--color);
+}
+
+.spinner {
+  display: block;
+  margin: 64px auto;
+}

@@ -1,0 +1,34 @@
+@import 'helpers';
+
+.mat-icon-button.tooltip-btn {
+  width: 1em;
+  height: 1em;
+  font-size: 18px;
+  vertical-align: top;
+  border: none !important;
+  margin-inline-start: 4px;
+  color: inherit !important;
+  background: none !important;
+  display: inline-flex !important;
+
+  .mat-icon {
+    font-size: inherit;
+  }
+}
+
+.mat-tooltip {
+  font-size: 12px;
+  line-height: 1.3;
+  max-width: 371px !important;
+  margin: 0 0 0 8px !important;
+  border-radius: 4px !important;
+  padding: 19px 24px !important;
+  background: var(--color-light);
+  color: var(--color-neutral-90) !important;
+  box-shadow: 0 4px 20px rgba(var(--color-light-contrast-rgb), 0.1);
+
+  @include breakpoint-max($mobile) {
+    padding: 16px !important;
+    max-width: 280px !important;
+  }
+}

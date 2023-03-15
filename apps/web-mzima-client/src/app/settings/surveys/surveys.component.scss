@@ -1,0 +1,43 @@
+@import 'helpers';
+
+.types-list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  justify-content: flex-start;
+}
+
+.type-item {
+  display: flex;
+  cursor: pointer;
+  min-height: 46px;
+  padding: 8px 12px;
+  margin: 0 4px 8px;
+  position: relative;
+  border-radius: 4px;
+  align-items: center;
+  width: calc(50% - 8px);
+  transition: color 0.35s ease;
+  background: var(--color-neutral-10);
+  border-inline-start: 5px solid var(--color, transparent);
+
+  @include breakpoint-max($tablet) {
+    border-inline-start-width: 4px;
+    box-shadow: inset 0 0 0 1px var(--color-neutral-20);
+  }
+
+  @include breakpoint-max($mobile) {
+    width: calc(100% - 8px);
+  }
+}
+
+.actions-spacer {
+  height: 68px;
+}
+
+.spinner {
+  display: block;
+  margin: 20vh 0;
+}

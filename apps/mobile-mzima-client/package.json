@@ -1,0 +1,14 @@
+{
+  "name": "mobile-mzima-client",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "*",
+    "@capacitor/ios": "*"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "*"
+  }
+}

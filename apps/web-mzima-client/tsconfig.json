@@ -1,0 +1,46 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./tsconfig.editor.json"
+    }
+  ],
+  "baseUrl": ".",
+  "compilerOptions": {
+    "target": "es2022",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@data": ["apps/web-mzima-client/src/app/data"],
+      "@auth": ["apps/web-mzima-client/src/app/auth"],
+      "@models": ["apps/web-mzima-client/src/app/core/interfaces"],
+      "@pipes": ["apps/web-mzima-client/src/app/core/pipes"],
+      "@services": ["apps/web-mzima-client/src/app/core/services"],
+      "@constants": ["apps/web-mzima-client/src/app/core/constants"],
+      "@guards": ["apps/web-mzima-client/src/app/core/guards"],
+      "@helpers": ["apps/web-mzima-client/src/app/core/helpers"],
+      "@shared": ["apps/web-mzima-client/src/app/shared"],
+      "@post": ["apps/web-mzima-client/src/app/post"],
+      "@enums": ["apps/web-mzima-client/src/app/core/enums"],
+      "@directives": ["apps/web-mzima-client/src/app/core/directives"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

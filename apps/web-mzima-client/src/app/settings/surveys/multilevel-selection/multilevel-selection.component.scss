@@ -1,0 +1,38 @@
+.multilevelselection-holder {
+  margin-top: 16px;
+}
+
+.multilevelselection {
+  margin-top: 16px;
+
+  &__option {
+    display: flex;
+    min-height: 0;
+
+    &:not(:first-child) {
+      margin-top: 16px;
+    }
+
+    &[aria-level='2'] {
+      margin-left: 32px;
+    }
+
+    &__arrow {
+      width: 1em;
+      height: 1em;
+      flex-shrink: 0;
+      line-height: 1;
+      font-size: 32px;
+
+      .multilevelselection__option[aria-expanded='true'] & {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__checkbox {
+    flex: 1 1 100%;
+    display: block;
+    min-height: 32px;
+  }
+}

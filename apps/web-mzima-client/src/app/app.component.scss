@@ -1,0 +1,59 @@
+@import 'helpers';
+
+.main {
+  @include breakpoint-min($tablet) {
+    height: 100%;
+    z-index: initial;
+  }
+
+  @include breakpoint-max($tablet) {
+    min-height: 100%;
+    padding-top: 80px;
+    padding-bottom: 80px;
+
+    &--inner {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.sidebar {
+  width: 100%;
+  max-width: 220px;
+  border-right: none;
+  z-index: 1000 !important;
+  background-color: var(--color-neutral-100);
+  --scrollbar-color: var(--color-neutral-60);
+  --scrollbar-background: var(--color-neutral-100);
+
+  @include breakpoint-max($laptop-small) {
+    max-width: 200px;
+  }
+
+  @include breakpoint-max($tablet) {
+    right: 0;
+    top: auto;
+    position: fixed;
+    max-width: none;
+    overflow: visible;
+    z-index: 500 !important;
+  }
+}
+
+.content-wrapper {
+  &:not(.content-wrapper--no-offset) {
+    height: 100%;
+  }
+}
+
+::ng-deep {
+  .mat-drawer-inner-container {
+    @include breakpoint-min($tablet) {
+      overflow: hidden !important;
+    }
+
+    @include breakpoint-max($tablet) {
+      overflow: visible !important;
+    }
+  }
+}

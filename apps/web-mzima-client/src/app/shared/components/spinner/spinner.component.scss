@@ -1,0 +1,33 @@
+@import 'helpers';
+
+.overlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  z-index: 5000;
+  position: fixed;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(#000, 0.5);
+}
+
+.spinner {
+  margin: 0 auto;
+  width: var(--size, 100px) !important;
+  height: var(--size, 100px) !important;
+
+  @include breakpoint-max($mobile) {
+    width: var(--size, 64px) !important;
+    height: var(--size, 64px) !important;
+  }
+
+  &::ng-deep {
+    svg {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+}

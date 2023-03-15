@@ -1,0 +1,44 @@
+@import 'helpers';
+
+.map-holder {
+  z-index: 0;
+  min-height: 325px;
+  position: relative;
+
+  &:before {
+    content: '';
+    display: block;
+    padding-top: calc(336 / 803 * 100%);
+  }
+}
+
+.form-row {
+  margin-bottom: 16px;
+}
+
+.map {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.inputs {
+  display: flex;
+  margin: 0 -8px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  .form-row {
+    flex-basis: auto;
+    margin-left: 8px;
+    margin-right: 8px;
+    width: calc(50% - 16px);
+
+    @include breakpoint-max($mobile) {
+      width: calc(100% - 16px);
+    }
+  }
+}
