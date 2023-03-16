@@ -139,7 +139,6 @@ export class CreateFieldModalComponent implements OnInit {
     this.matDialogRef.close({
       ...this.selectedFieldType,
       label: this.selectedFieldType.label.trim(),
-      instructions: this.selectedFieldType.instructions.trim(),
     });
   }
 
