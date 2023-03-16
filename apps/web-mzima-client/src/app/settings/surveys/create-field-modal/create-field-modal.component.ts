@@ -163,6 +163,7 @@ export class CreateFieldModalComponent implements OnInit {
   public removeOption(i: any) {
     this.selectedFieldType.options.splice(i, 1);
     this.setTempSelectedFieldType();
+    this.checkForEmptyOptions();
   }
 
   public addOption() {
