@@ -171,7 +171,9 @@
     type="button"
     color="primary"
     (click)="addNewTask()"
-    [disabled]="!selectedFieldType?.label?.length || !validateDuplicate() || emptyTitleOption"
+    [disabled]="
+      !selectedFieldType?.label.trim()?.length || !validateDuplicate() || emptyTitleOption
+    "
   >
     {{ (editMode ? 'app.update' : 'app.save') | translate }}
   </button>
