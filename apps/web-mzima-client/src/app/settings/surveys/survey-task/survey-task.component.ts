@@ -222,7 +222,6 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe({
       next: (response: FormAttributeInterface) => {
         if (response) {
-          console.log(response);
           this.taskFields[idx] = response;
         }
       },
