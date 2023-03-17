@@ -46,6 +46,15 @@ export class CreateFieldModalComponent implements OnInit {
 
   private editField() {
     this.selectedFieldType = this.data.selectedFieldType;
+    if (
+      this.selectedFieldType.input === 'tags' &&
+      this.selectedFieldType.options?.length &&
+      typeof this.selectedFieldType.options[0] === 'object'
+    ) {
+      this.selectedFieldType.options = this.selectedFieldType.options.map(
+        (option: any) => option.id,
+      );
+    }
     this.editMode = true;
     this.setHasOptionValidate();
     this.checkLoadAvailableData(this.selectedFieldType.input);

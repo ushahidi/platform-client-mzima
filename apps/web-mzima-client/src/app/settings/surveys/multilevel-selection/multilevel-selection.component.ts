@@ -84,8 +84,18 @@ export class MultilevelSelectionComponent implements ControlValueAccessor, OnCha
     this.onChange(this.value);
   }
 
-  public writeValue(value: any) {
-    this.value = value;
+  public writeValue(values: any[]) {
+    if (values) {
+      setTimeout(() => {
+        this.checklistSelection.deselect(...this.treeControl.dataNodes);
+        const nodes = this.treeControl.dataNodes.filter((node) =>
+          values.some((val: any) => val === node.id),
+        );
+        this.checklistSelection.select(...nodes);
+      }, 50);
+    } else {
+      this.value = [];
+    }
   }
 
   registerOnChange(onChange: any) {
