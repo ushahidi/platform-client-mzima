@@ -86,14 +86,15 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   onChange($event: string, i: any) {
-    this.selectedFieldType.options[i] = $event;
+    this.selectedFieldType.options[i] = $event.trim();
     this.checkForEmptyOptions();
   }
 
   private checkForEmptyOptions() {
     if (this.selectedFieldType.options.length) {
-      this.emptyTitleOption = !!this.selectedFieldType.options.filter((el: string) => el === '')
-        .length;
+      this.emptyTitleOption = !!this.selectedFieldType.options.filter(
+        (el: string) => el.trim() === '',
+      ).length;
     }
   }
 
@@ -135,7 +136,10 @@ export class CreateFieldModalComponent implements OnInit {
       this.notificationService.showError(this.translate.instant('survey.add_options_first'));
       return;
     }
-    this.matDialogRef.close(this.selectedFieldType);
+    this.matDialogRef.close({
+      ...this.selectedFieldType,
+      label: this.selectedFieldType.label.trim(),
+    });
   }
 
   public selectField(field: Partial<FormAttributeInterface>) {
@@ -158,6 +162,7 @@ export class CreateFieldModalComponent implements OnInit {
   public removeOption(i: any) {
     this.selectedFieldType.options.splice(i, 1);
     this.setTempSelectedFieldType();
+    this.checkForEmptyOptions();
   }
 
   public addOption() {

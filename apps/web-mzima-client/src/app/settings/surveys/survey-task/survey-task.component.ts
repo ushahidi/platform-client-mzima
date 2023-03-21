@@ -207,7 +207,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     return this.isPost ? field.type !== 'title' && field.type !== 'description' : true;
   }
 
-  editField(selectedFieldType: any) {
+  editField(selectedFieldType: any, idx: number) {
     const dialogRef = this.dialog.open(CreateFieldModalComponent, {
       width: '100%',
       maxWidth: 576,
@@ -222,10 +222,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe({
       next: (response: FormAttributeInterface) => {
         if (response) {
-          const index = this.taskFields.findIndex((field) => field.id === response.id);
-          if (index !== -1) {
-            this.taskFields[index] = response;
-          }
+          this.taskFields[idx] = response;
         }
       },
     });

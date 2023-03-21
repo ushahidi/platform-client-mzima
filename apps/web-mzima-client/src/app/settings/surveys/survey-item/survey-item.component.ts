@@ -236,7 +236,6 @@ export class SurveyItemComponent implements OnInit {
         .showError(`You need to add translations for all names, and ensure checkboxes and radios do not have duplicates.
        Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language).`);
     }
-    console.log('save > form ', this.form.value);
   }
 
   public cancel() {
