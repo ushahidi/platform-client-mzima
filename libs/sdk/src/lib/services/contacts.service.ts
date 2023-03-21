@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { API_CONFIG_TOKEN, SdkConfig } from '../config';
+import { Observable } from 'rxjs';
+import { ContactsResponseInterface } from '../models';
 import { ResourceService } from './resource.service';
+import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ApiKeyService extends ResourceService<any> {
+export class ContactsService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
     @Inject(API_CONFIG_TOKEN) config: SdkConfig,
@@ -19,6 +21,10 @@ export class ApiKeyService extends ResourceService<any> {
   }
 
   getResourceUrl(): string {
-    return 'apikeys';
+    return 'contacts';
+  }
+
+  override get(data?: any): Observable<ContactsResponseInterface> {
+    return super.get(undefined, data);
   }
 }

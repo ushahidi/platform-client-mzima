@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { mergeMap, Observable } from 'rxjs';
+import { mergeMap, Observable, tap } from 'rxjs';
 import { CONST } from '@constants';
-import { UsersService } from './users.service';
+import { UsersService } from '@mzima-client/sdk';
 import { ResourceService } from './resource.service';
 import { EnvService } from './env.service';
 import { SessionService } from './session.service';
@@ -62,12 +62,29 @@ export class AuthService extends ResourceService<any> {
           });
         }
 
-        return this.userService.getCurrentUser().subscribe({
-          next: (userData) => {
-            console.log(userData);
+        return this.getCurrentUser().subscribe({
+          next: (userData: any) => {
             const { data } = userData;
             this.userService.dispatchUserEvents({ data });
           },
+        });
+      }),
+    );
+  }
+
+  private getCurrentUser(): any {
+    return this.userService.getCurrentUser().pipe(
+      tap((response: any) => {
+        const { data } = response;
+        this.sessionService.setCurrentUser({
+          userId: data.id,
+          realname: data.realname,
+          email: data.email,
+          role: data.role,
+          permissions: data.permissions,
+          allowed_privileges: data.allowed_privileges,
+          gravatar: data.gravatar,
+          language: data.language,
         });
       }),
     );

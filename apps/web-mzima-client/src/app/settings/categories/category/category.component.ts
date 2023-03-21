@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CategoryInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { CategoriesService } from '../../../core/services/categories.service';
+import { CategoriesService, CategoryInterface } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 
 @Component({

@@ -8,6 +8,7 @@ import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 })
 export abstract class ResourceService<T> {
   private apiUrl = '';
+  protected config: SdkConfig;
   private readonly options = {};
 
   protected constructor(
@@ -21,6 +22,7 @@ export abstract class ResourceService<T> {
         'Content-Type': 'application/json',
       }),
     };
+    this.config = config;
   }
 
   abstract getApiVersions(): string;

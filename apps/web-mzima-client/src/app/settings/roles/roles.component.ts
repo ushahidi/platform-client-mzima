@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RoleResponse } from '@models';
 import { Observable } from 'rxjs';
-import { RolesService } from '../../core/services/roles.service';
+import { RolesService, RoleResponse } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
 

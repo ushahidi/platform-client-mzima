@@ -2,12 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { AccountNotificationsInterface, Savedsearch } from '@models';
+import { AccountNotificationsInterface } from '@models';
 import { GroupCheckboxItemInterface } from '../group-checkbox-select/group-checkbox-select.component';
 import { formHelper } from '@helpers';
-import { RolesService } from '../../../core/services/roles.service';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
-import { NotificationsService } from '../../../core/services/notifications.service';
+import { NotificationsService, RolesService, Savedsearch } from '@mzima-client/sdk';
 
 export interface SaveSearchModalData {
   search?: Savedsearch;

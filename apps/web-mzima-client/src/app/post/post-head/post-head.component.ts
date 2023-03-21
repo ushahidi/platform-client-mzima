@@ -2,12 +2,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CollectionsComponent } from '@data';
-import { PostPropertiesInterface, PostResult, PostStatus, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService, SessionService } from '@services';
 import { ShareModalComponent } from '../../shared/components';
-import { PostsV5Service } from '../../core/services/posts.v5.service';
+import {
+  PostsV5Service,
+  PostPropertiesInterface,
+  PostResult,
+  PostStatus,
+  UserInterface,
+} from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 
 @UntilDestroy()

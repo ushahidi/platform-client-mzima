@@ -6,8 +6,8 @@ import {
   SessionConfigInterface,
   SessionTokenInterface,
   SiteConfigInterface,
-  UserInterface,
 } from '@models';
+import { UserInterface } from '@mzima-client/sdk';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CONST } from '@constants';
 

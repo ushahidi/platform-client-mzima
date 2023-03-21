@@ -1,12 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { surveyHelper } from '@helpers';
-import { CategoryInterface, FormAttributeInterface, SurveyItem } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs';
 import { MultilevelSelectOption } from '../../../shared/components';
-import { CategoriesService } from '../../../core/services/categories.service';
-import { SurveysService } from '../../../core/services/surveys.service';
+import {
+  CategoriesService,
+  SurveysService,
+  CategoryInterface,
+  FormAttributeInterface,
+  SurveyItem,
+} from '@mzima-client/sdk';
 import { NotificationService } from '../../../core/services/notification.service';
 import _ from 'lodash';
 

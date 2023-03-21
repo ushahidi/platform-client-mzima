@@ -1,21 +1,24 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import { FormAttributeInterface, FormInterface, FormsResponse, FormTaskInterface } from '@models';
-import { EnvService } from './env.service';
+import { FormAttributeInterface, FormInterface, FormsResponse, FormTaskInterface } from '../models';
 import { ResourceService } from './resource.service';
 import { Observable } from 'rxjs';
+import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormsService extends ResourceService<any> {
-  constructor(protected override httpClient: HttpClient, protected override env: EnvService) {
-    super(httpClient, env);
+  constructor(
+    protected override httpClient: HttpClient,
+    @Inject(API_CONFIG_TOKEN) config: SdkConfig,
+  ) {
+    super(httpClient, config);
   }
 
   getApiVersions(): string {
-    return this.env.environment.api_v3;
+    return 'api/v3/';
   }
 
   getResourceUrl(): string {

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PostPropertiesInterface, PostResult } from '@models';
+import { PostPropertiesInterface, PostResult } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-post-metadata',

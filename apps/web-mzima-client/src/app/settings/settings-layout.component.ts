@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Roles } from '@enums';
 import { takeUntilDestroy$ } from '@helpers';
-import { UserInterface } from '@models';
+import { UserInterface } from '@mzima-client/sdk';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BreakpointService, EventBusService, EventType } from '@services';
 import { filter } from 'rxjs';

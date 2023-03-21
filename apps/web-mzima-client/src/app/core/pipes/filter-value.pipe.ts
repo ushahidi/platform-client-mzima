@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import dayjs from 'dayjs';
-import { CategoryInterface, SurveyItem } from '@models';
+import { CategoryInterface, SurveyItem } from '@mzima-client/sdk';
 
 @Pipe({
   name: 'filterValue',

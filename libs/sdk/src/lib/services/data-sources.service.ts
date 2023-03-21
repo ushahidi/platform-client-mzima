@@ -1,24 +1,24 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { arrayHelpers } from '@helpers';
-import { DataSource, DataSourceOptions } from '@models';
+import { Inject, Injectable } from '@angular/core';
+import { arrayHelpers } from '../helpers';
+import { DataSource, DataSourceOptions } from '../models';
 import { map, Observable } from 'rxjs';
-import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
+import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataSourcesService extends ResourceService<any> {
   constructor(
-    protected override httpClient: HttpClient, //
-    protected override env: EnvService,
+    protected override httpClient: HttpClient,
+    @Inject(API_CONFIG_TOKEN) config: SdkConfig,
   ) {
-    super(httpClient, env);
+    super(httpClient, config);
   }
 
   getApiVersions(): string {
-    return this.env.environment.api_v3;
+    return 'api/v3/';
   }
 
   getResourceUrl(): string {

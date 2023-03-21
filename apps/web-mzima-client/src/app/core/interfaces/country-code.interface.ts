@@ -1,4 +1,4 @@
-import { ApiResponse } from './api-response.interface';
+import { ApiResponse } from '@mzima-client/sdk';
 
 export interface CountryCodeResponse extends ApiResponse {
   results: CountryCodeResult[];

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PostPropertiesInterface, UserInterface } from '@models';
+import { PostPropertiesInterface, UserInterface } from '@mzima-client/sdk';
 import { Subject } from 'rxjs';
 
 @Component({

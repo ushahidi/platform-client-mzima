@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { WebhookApiInterface, WebhookResultInterface } from '@models';
+import { Inject, Injectable } from '@angular/core';
+import { WebhookApiInterface, WebhookResultInterface } from '../models';
 import { Observable, Subject } from 'rxjs';
-import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
+import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +13,10 @@ export class WebhooksService extends ResourceService<any> {
   readonly changeWebhookState$ = this._changeWebhookState.asObservable();
 
   constructor(
-    protected override httpClient: HttpClient, //
-    protected override env: EnvService,
+    protected override httpClient: HttpClient,
+    @Inject(API_CONFIG_TOKEN) config: SdkConfig,
   ) {
-    super(httpClient, env);
+    super(httpClient, config);
   }
 
   setState(value: boolean) {
@@ -24,7 +24,7 @@ export class WebhooksService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return this.env.environment.api_v3;
+    return 'api/v3/';
   }
 
   getResourceUrl(): string {

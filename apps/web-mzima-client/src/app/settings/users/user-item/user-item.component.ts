@@ -3,12 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CONST } from '@constants';
-import { RoleResult, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { UsersService } from '../../../core/services/users.service';
-import { RolesService } from '../../../core/services/roles.service';
+import { RolesService, RoleResult, UsersService, UserInterface } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { BreakpointService } from '@services';
 

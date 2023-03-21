@@ -11,20 +11,20 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { CONST } from '@constants';
-import {
-  FormAttributeInterface,
-  LanguageInterface,
-  RoleResult,
-  SurveyItem,
-  SurveyItemTask,
-} from '@models';
+import { LanguageInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import {
   GroupCheckboxItemInterface,
   GroupCheckboxValueInterface,
 } from '../../../shared/components';
 import { CreateFieldModalComponent } from '../create-field-modal/create-field-modal.component';
-import { FormsService } from '../../../core/services/forms.service';
+import {
+  FormsService,
+  FormAttributeInterface,
+  RoleResult,
+  SurveyItem,
+  SurveyItemTask,
+} from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { LanguageService } from '../../../core/services/language.service';
 import _ from 'lodash';

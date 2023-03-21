@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CollectionResult } from '@models';
+import { CollectionResult } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-collection-item',

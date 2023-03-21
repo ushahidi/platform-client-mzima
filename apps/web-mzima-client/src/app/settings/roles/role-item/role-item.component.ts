@@ -5,11 +5,9 @@ import { CONST } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, Observable } from 'rxjs';
-import { RoleResult } from '@models';
 import { BreakpointService } from '@services';
 import { Location } from '@angular/common';
-import { RolesService } from '../../../core/services/roles.service';
-import { PermissionsService } from '../../../core/services/permissions.service';
+import { PermissionsService, RolesService, RoleResult } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 
 const PERMISSIONS = {

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Savedsearch, SavedsearchesResponse } from '../models';
 import { Observable } from 'rxjs';
-import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 import { ResourceService } from './resource.service';
+import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 
 @Injectable({
   providedIn: 'root',
@@ -23,19 +24,19 @@ export class SavedsearchesService extends ResourceService<any> {
     return 'savedsearches';
   }
 
-  override get(): Observable<any> {
+  override get(): Observable<SavedsearchesResponse> {
     return super.get();
   }
 
-  override update(id: string | number, resource: any): Observable<any> {
+  override update(id: string | number, resource: Savedsearch): Observable<SavedsearchesResponse> {
     return super.update(id, resource);
   }
 
-  override post(resource: any): Observable<any> {
+  override post(resource: Savedsearch): Observable<SavedsearchesResponse> {
     return super.post(resource);
   }
 
-  override delete(id: string | number): Observable<any> {
+  override delete(id: string | number): Observable<SavedsearchesResponse> {
     return super.delete(id);
   }
 }

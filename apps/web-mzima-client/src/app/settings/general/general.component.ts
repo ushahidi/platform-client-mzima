@@ -6,12 +6,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { SessionService, BreakpointService } from '@services';
 import { mergeMap, Observable } from 'rxjs';
 import { SettingsMapComponent } from './settings-map/settings-map.component';
-import { MediaService } from '../../core/services/media.service';
+import { MediaService, ApiKeyService } from '@mzima-client/sdk';
 import { ConfigService } from '../../core/services/config.service';
 import { LoaderService } from '../../core/services/loader.service';
 import { LanguageService } from '../../core/services/language.service';
-// import { ApiKeyService } from '../../core/services/api-key.service';
-import { ApiKeyService } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 

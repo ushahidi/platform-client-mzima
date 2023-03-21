@@ -6,7 +6,7 @@ import { ResourceService } from './resource.service';
 @Injectable({
   providedIn: 'root',
 })
-export class ApiKeyService extends ResourceService<any> {
+export class CategoriesService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
     @Inject(API_CONFIG_TOKEN) config: SdkConfig,
@@ -15,10 +15,10 @@ export class ApiKeyService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return 'api/v3/';
+    return 'api/v5/';
   }
 
   getResourceUrl(): string {
-    return 'apikeys';
+    return 'categories';
   }
 }

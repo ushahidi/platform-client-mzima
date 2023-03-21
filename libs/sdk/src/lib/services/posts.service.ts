@@ -1,22 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { GeoJsonFilter, GeoJsonPostsResponse, PostApiResponse, PostResult } from '@models';
+import { Inject, Injectable } from '@angular/core';
+import { GeoJsonFilter, GeoJsonPostsResponse, PostApiResponse, PostResult } from '../models';
 import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
-import { EnvService } from './env.service';
 import { ResourceService } from './resource.service';
-
-export interface PostFilters {
-  has_location?: string;
-  order?: string;
-  order_unlocked_on_top?: boolean;
-  orderby?: string;
-  set: string;
-  'source[]'?: string[];
-  'tags[]'?: number[];
-  'status[]'?: string[];
-  'form[]'?: string[];
-  reactToFilters?: boolean;
-}
+import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 
 @Injectable({
   providedIn: 'root',
@@ -40,12 +27,15 @@ export class PostsService extends ResourceService<any> {
   private totalGeoPosts = new Subject<number>();
   public totalGeoPosts$ = this.totalGeoPosts.asObservable();
 
-  constructor(protected override httpClient: HttpClient, protected override env: EnvService) {
-    super(httpClient, env);
+  constructor(
+    protected override httpClient: HttpClient,
+    @Inject(API_CONFIG_TOKEN) config: SdkConfig,
+  ) {
+    super(httpClient, config);
   }
 
   getApiVersions(): string {
-    return this.env.environment.api_v3;
+    return 'api/v3/';
   }
 
   getResourceUrl(): string {
