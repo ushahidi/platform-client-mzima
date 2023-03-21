@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {},
+    "paths": {
+      "@mzima-client/mzima-ui": ["libs/mzima-ui/src/index.ts"]
+    },
     "strictPropertyInitialization": false,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true

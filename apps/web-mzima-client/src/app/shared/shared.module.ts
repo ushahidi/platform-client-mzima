@@ -54,6 +54,7 @@ import { SpinnerModule } from './components/spinner/spinner.module';
 import { DirectiveModule } from './directive.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddPostModalComponent } from '@post';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 const components = [
   SidebarComponent,
@@ -95,6 +96,7 @@ const modules = [
   ShareModule,
   NgxCustomTourModule,
   CollectionItemModule,
+  MzimaUiModule,
 ];
 
 const material = [

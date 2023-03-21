@@ -34,7 +34,8 @@
       "@shared": ["apps/web-mzima-client/src/app/shared"],
       "@post": ["apps/web-mzima-client/src/app/post"],
       "@enums": ["apps/web-mzima-client/src/app/core/enums"],
-      "@directives": ["apps/web-mzima-client/src/app/core/directives"]
+      "@directives": ["apps/web-mzima-client/src/app/core/directives"],
+      "@mzima-client/mzima-ui": ["libs/mzima-ui/src/index.ts"]
     }
   },
   "angularCompilerOptions": {
