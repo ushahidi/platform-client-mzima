@@ -23,10 +23,10 @@ import { Observable } from 'rxjs';
 import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
 import { PostsService } from '../core/services/posts.service';
-import { SavedsearchesService } from '../core/services/savedsearches.service';
 import { PostsV5Service } from '../core/services/posts.v5.service';
 import { MediaService } from '../core/services/media.service';
 import { SessionService, EventBusService, EventType } from '@services';
+import { SavedsearchesService } from '@mzima-client/sdk';
 
 @UntilDestroy()
 @Component({

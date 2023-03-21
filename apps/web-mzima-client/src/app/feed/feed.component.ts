@@ -11,10 +11,10 @@ import { PostDetailsModalComponent } from '../map';
 import { MainViewComponent } from '@shared';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
 import { PostsService } from '../core/services/posts.service';
-import { SavedsearchesService } from '../core/services/savedsearches.service';
 import { PostsV5Service } from '../core/services/posts.v5.service';
 import { ConfirmModalService } from '../core/services/confirm-modal.service';
 import { LanguageService } from '../core/services/language.service';
+import { SavedsearchesService } from '@mzima-client/sdk';
 
 enum FeedMode {
   Tiles = 'TILES',

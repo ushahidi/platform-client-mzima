@@ -1,14 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserInterface } from '@models';
+import { SavedsearchesService } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-  EventBusService,
-  EventType,
-  PostsService,
-  SavedsearchesService,
-  SessionService,
-} from '@services';
+import { EventBusService, EventType, PostsService, SessionService } from '@services';
 
 @UntilDestroy()
 @Component({

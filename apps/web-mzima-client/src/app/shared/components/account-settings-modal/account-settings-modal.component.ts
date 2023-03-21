@@ -25,7 +25,7 @@ import { ContactsService } from '../../../core/services/contacts.service';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { NotificationsService } from '../../../core/services/notifications.service';
 import { CollectionsService } from '../../../core/services/collections.service';
-import { SavedsearchesService } from '../../../core/services/savedsearches.service';
+import { SavedsearchesService } from '@mzima-client/sdk';
 
 enum AccountTypeEnum {
   Email = 'email',

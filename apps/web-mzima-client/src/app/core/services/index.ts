@@ -34,5 +34,4 @@ export { NotificationsService } from './notifications.service';
 export { PostsService } from './posts.service';
 export { SurveysService } from './surveys.service';
 export { CategoriesService } from './categories.service';
-export { SavedsearchesService } from './savedsearches.service';
 export { CollectionsService } from './collections.service';

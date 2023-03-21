@@ -13,6 +13,7 @@ import { SharedModule, SpinnerModule } from '@shared';
 import { CookieService } from 'ngx-cookie-service';
 import { LottieModule } from 'ngx-lottie';
 import { QuillModule } from 'ngx-quill';
+import { SdkModule } from '@mzima-client/sdk';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
@@ -62,6 +63,9 @@ export function playerFactory(): any {
     AuthModule,
     SharedModule,
     HttpClientModule,
+    SdkModule.forRoot({
+      url: 'https://mzima-api.staging.ush.zone/',
+    }),
     QuillModule.forRoot({
       modules: {
         toolbar: [
