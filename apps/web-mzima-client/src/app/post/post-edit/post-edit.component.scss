@@ -130,3 +130,17 @@
   line-height: 1.3;
   color: var(--color-neutral-80);
 }
+
+.mat-checkbox {
+  display: block;
+
+  &::ng-deep {
+    .mat-checkbox-layout {
+      width: 100%;
+    }
+  }
+
+  &.lvl-2 {
+    margin-left: 16px;
+  }
+}

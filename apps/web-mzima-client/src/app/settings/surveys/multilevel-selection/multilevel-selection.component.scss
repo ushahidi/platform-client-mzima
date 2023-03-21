@@ -22,10 +22,14 @@
       height: 1em;
       flex-shrink: 0;
       line-height: 1;
-      font-size: 32px;
+      font-size: 24px;
 
       .multilevelselection__option[aria-expanded='true'] & {
         transform: rotate(180deg);
+      }
+
+      .mat-icon {
+        font-size: inherit;
       }
     }
   }

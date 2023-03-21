@@ -84,8 +84,18 @@ export class MultilevelSelectionComponent implements ControlValueAccessor, OnCha
     this.onChange(this.value);
   }
 
-  public writeValue(value: any) {
-    this.value = value;
+  public writeValue(values: any[]) {
+    if (values) {
+      setTimeout(() => {
+        this.checklistSelection.deselect(...this.treeControl.dataNodes);
+        const nodes = this.treeControl.dataNodes.filter((node) =>
+          values.some((val: any) => val === node.id),
+        );
+        this.checklistSelection.select(...nodes);
+      }, 50);
+    } else {
+      this.value = [];
+    }
   }
 
   registerOnChange(onChange: any) {
@@ -103,14 +113,12 @@ export class MultilevelSelectionComponent implements ControlValueAccessor, OnCha
     }
   }
 
-  public descendantsAllSelected(option: CategoryFlatNode): boolean {
+  public descendantsHasSelected(option: CategoryFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(option);
-    const descAllSelected =
+    const descHasSelected =
       descendants.length > 0 &&
-      descendants.every((child) => {
-        return this.checklistSelection.isSelected(child);
-      });
-    return descAllSelected;
+      !!descendants.find((child) => this.checklistSelection.isSelected(child));
+    return descHasSelected;
   }
 
   public categorySelectionToggle(node: CategoryFlatNode): void {
@@ -163,18 +171,15 @@ export class MultilevelSelectionComponent implements ControlValueAccessor, OnCha
   private getLevel = (option: CategoryFlatNode) => option.level;
 
   private checkRootNodeSelection(option: CategoryFlatNode): void {
-    const nodeSelected = this.checklistSelection.isSelected(option);
     const descendants = this.treeControl.getDescendants(option);
-    const descAllSelected =
+
+    const descHasSelected =
       descendants.length > 0 &&
-      descendants.every((child) => {
-        return this.checklistSelection.isSelected(child);
-      });
-    if (nodeSelected && !descAllSelected) {
-      this.checklistSelection.deselect(option);
-    } else if (!nodeSelected && descAllSelected) {
-      this.checklistSelection.select(option);
-    }
+      !!descendants.find((child) => this.checklistSelection.isSelected(child));
+
+    descHasSelected
+      ? this.checklistSelection.select(option)
+      : this.checklistSelection.deselect(option);
   }
 
   public toggleSelectAll(): void {
