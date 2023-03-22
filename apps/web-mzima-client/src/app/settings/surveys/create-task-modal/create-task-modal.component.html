@@ -12,7 +12,7 @@
 <strong mat-dialog-title>{{ 'survey.add_task' | translate }}</strong>
 <mat-dialog-content class="post">
   <div class="form-row">
-    <mat-label>{{ 'survey.task_name' | translate }}</mat-label>
+    <mat-label>{{ 'survey.task_name' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
       <input
         matInput
@@ -45,7 +45,13 @@
   <button mat-stroked-button type="button" (click)="cancel()">
     {{ 'app.cancel' | translate }}
   </button>
-  <button type="submit" color="primary" mat-raised-button (click)="addNewTask()">
+  <button
+    type="submit"
+    color="primary"
+    mat-raised-button
+    [disabled]="newTask.label.trim().length === 0"
+    (click)="addNewTask()"
+  >
     {{ 'app.add' | translate }}
   </button>
 </div>

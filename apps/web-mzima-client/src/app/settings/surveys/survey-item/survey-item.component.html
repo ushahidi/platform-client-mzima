@@ -33,7 +33,7 @@
   >
     <ng-container survey-info>
       <div class="form-row">
-        <mat-label>{{ 'survey.survey_name' | translate }}</mat-label>
+        <mat-label>{{ 'survey.survey_name' | translate }} *</mat-label>
         <mat-form-field appearance="outline">
           <input matInput formControlName="name" [placeholder]="'survey.survey_name' | translate" />
           <mat-error *ngIf="form.get('name')?.invalid">
