@@ -40,6 +40,7 @@ export class SurveyItemComponent implements OnInit {
   public defaultLanguage?: LanguageInterface;
   public activeLanguages: LanguageInterface[];
   public isDesktop = false;
+  public errorTaskField = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -304,5 +305,22 @@ export class SurveyItemComponent implements OnInit {
 
   public setNewColor(color: string): void {
     this.form.patchValue({ color });
+  }
+
+  public deleteTask(task: SurveyItemTask) {
+    const tasks: SurveyItemTask[] = this.getFormControl('tasks').value;
+    const index = tasks.indexOf(task);
+    tasks.splice(index, 1);
+    this.form.patchValue({ tasks });
+  }
+
+  public duplicateTask(task: SurveyItemTask) {
+    const tasks: SurveyItemTask[] = this.getFormControl('tasks').value;
+    tasks.push(task);
+    this.form.patchValue({ tasks });
+  }
+
+  public setErrorTaskField(event: boolean) {
+    this.errorTaskField = event;
   }
 }
