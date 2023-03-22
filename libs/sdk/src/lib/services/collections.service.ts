@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { Collection } from '../models';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API_CONFIG_TOKEN, SdkConfig } from '../config';
+import { EnvLoader } from '../loader';
+import { Collection } from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -11,9 +11,9 @@ import { ResourceService } from './resource.service';
 export class CollectionsService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
-    @Inject(API_CONFIG_TOKEN) config: SdkConfig,
+    protected override currentLoader: EnvLoader,
   ) {
-    super(httpClient, config);
+    super(httpClient, currentLoader);
   }
 
   getApiVersions(): string {

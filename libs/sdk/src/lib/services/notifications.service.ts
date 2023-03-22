@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { EnvLoader } from '../loader';
 import { ResourceService } from './resource.service';
-import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +10,9 @@ import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 export class NotificationsService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
-    @Inject(API_CONFIG_TOKEN) config: SdkConfig,
+    protected override currentLoader: EnvLoader,
   ) {
-    super(httpClient, config);
+    super(httpClient, currentLoader);
   }
 
   getApiVersions(): string {

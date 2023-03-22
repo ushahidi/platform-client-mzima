@@ -1,28 +1,29 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { API_CONFIG_TOKEN, SdkConfig } from '../config';
+import { EnvLoader } from '../loader';
 
 @Injectable({
   providedIn: 'root',
 })
 export abstract class ResourceService<T> {
   private apiUrl = '';
-  protected config: SdkConfig;
+  protected backendUrl: string;
   private readonly options = {};
 
-  protected constructor(
-    protected httpClient: HttpClient,
-    @Inject(API_CONFIG_TOKEN) config: SdkConfig,
-  ) {
-    this.apiUrl = config.url + this.getApiVersions() + this.getResourceUrl();
+  protected constructor(protected httpClient: HttpClient, protected currentLoader: EnvLoader) {
+    this.currentLoader.getApiUrl().subscribe((backendUrl) => {
+      console.log('backendUrl', backendUrl);
+      this.apiUrl = backendUrl + this.getApiVersions() + this.getResourceUrl();
+      this.backendUrl = backendUrl;
+    });
+
     this.options = {
       responseType: 'json',
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
-    this.config = config;
   }
 
   abstract getApiVersions(): string;

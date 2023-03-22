@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CategoriesService, CategoryInterface } from '@mzima-client/sdk';
-import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
+import { ConfirmModalService } from '@services';
 
 @Component({
   selector: 'app-category',

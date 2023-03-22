@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { WebhookApiInterface, WebhookResultInterface } from '../models';
+import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { EnvLoader } from '../loader';
+import { WebhookApiInterface, WebhookResultInterface } from '../models';
 import { ResourceService } from './resource.service';
-import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +14,9 @@ export class WebhooksService extends ResourceService<any> {
 
   constructor(
     protected override httpClient: HttpClient,
-    @Inject(API_CONFIG_TOKEN) config: SdkConfig,
+    protected override currentLoader: EnvLoader,
   ) {
-    super(httpClient, config);
+    super(httpClient, currentLoader);
   }
 
   setState(value: boolean) {

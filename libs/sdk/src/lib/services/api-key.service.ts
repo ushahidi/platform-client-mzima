@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { API_CONFIG_TOKEN, SdkConfig } from '../config';
+import { Injectable } from '@angular/core';
+import { EnvLoader } from '../loader';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -9,9 +9,9 @@ import { ResourceService } from './resource.service';
 export class ApiKeyService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
-    @Inject(API_CONFIG_TOKEN) config: SdkConfig,
+    protected override currentLoader: EnvLoader,
   ) {
-    super(httpClient, config);
+    super(httpClient, currentLoader);
   }
 
   getApiVersions(): string {

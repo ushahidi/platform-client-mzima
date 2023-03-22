@@ -13,7 +13,7 @@ import { SharedModule, SpinnerModule } from '@shared';
 import { CookieService } from 'ngx-cookie-service';
 import { LottieModule } from 'ngx-lottie';
 import { QuillModule } from 'ngx-quill';
-import { SdkModule } from '@mzima-client/sdk';
+import { ApiUrlLoader, EnvLoader, SdkModule } from '@mzima-client/sdk';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
@@ -36,6 +36,10 @@ export const loadConfigProvider: FactoryProvider = {
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
+}
+
+export function EnvLoaderFactory(env: EnvService): any {
+  return new ApiUrlLoader(env);
 }
 
 export function googleTagManagerFactory(config: EnvService) {
@@ -64,7 +68,11 @@ export function playerFactory(): any {
     SharedModule,
     HttpClientModule,
     SdkModule.forRoot({
-      url: 'https://mzima-api.staging.ush.zone/',
+      loader: {
+        provide: EnvLoader,
+        useFactory: EnvLoaderFactory,
+        deps: [EnvService],
+      },
     }),
     QuillModule.forRoot({
       modules: {

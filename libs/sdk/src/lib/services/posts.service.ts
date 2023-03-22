@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { GeoJsonFilter, GeoJsonPostsResponse, PostApiResponse, PostResult } from '../models';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
+import { EnvLoader } from '../loader';
+import { GeoJsonFilter, GeoJsonPostsResponse, PostApiResponse, PostResult } from '../models';
 import { ResourceService } from './resource.service';
-import { API_CONFIG_TOKEN, SdkConfig } from '../config';
 
 @Injectable({
   providedIn: 'root',
@@ -29,9 +29,9 @@ export class PostsService extends ResourceService<any> {
 
   constructor(
     protected override httpClient: HttpClient,
-    @Inject(API_CONFIG_TOKEN) config: SdkConfig,
+    protected override currentLoader: EnvLoader,
   ) {
-    super(httpClient, config);
+    super(httpClient, currentLoader);
   }
 
   getApiVersions(): string {
