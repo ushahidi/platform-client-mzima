@@ -245,7 +245,12 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'location'">
-              <app-location-select [zoom]="12" [formControlName]="field.key"></app-location-select>
+              <app-location-select
+                [zoom]="12"
+                [formControlName]="field.key"
+                [parentForm]="form"
+                [field]="field"
+              ></app-location-select>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'relation'">

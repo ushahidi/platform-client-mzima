@@ -91,6 +91,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     this.route.paramMap.subscribe((params) => {
       if (params.get('type')) {
         this.formId = Number(params.get('type'));
+        console.log(this.loadData(this.formId));
         this.loadData(this.formId);
       }
       if (params.get('id')) {
@@ -126,6 +127,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     if (!formId) return;
     this.surveysService.getById(formId).subscribe({
       next: (data) => {
+        console.log(data);
         this.data = data;
         this.tasks = data.result.tasks;
         this.surveyName = data.result.name;
@@ -251,6 +253,12 @@ export class PostEditComponent implements OnInit, OnChanges {
     } else if (field.input === 'video') {
       const fieldRequired: any = field.required ? Validators.required : null;
       return new FormControl(value, [fieldRequired, this.formValidator.videoValidator]);
+    } else if (field.input === 'location') {
+      const { lat, lng }: any = value;
+      return new FormGroup({
+        fieldLat: new FormControl(lat, field.required ? Validators.required : null),
+        fieldLng: new FormControl(lng, field.required ? Validators.required : null),
+      });
     } else {
       return new FormControl(value, field.required ? Validators.required : null);
     }

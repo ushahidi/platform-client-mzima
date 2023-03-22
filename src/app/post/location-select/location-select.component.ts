@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { mapHelper } from '@helpers';
 import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
 import { SessionService } from '@services';
@@ -32,6 +32,8 @@ import { pointIcon } from 'src/app/core/helpers/map';
   ],
 })
 export class LocationSelectComponent implements OnInit, ControlValueAccessor {
+  @Input() parentForm: FormGroup;
+  @Input() field: any;
   @Input() public center: LatLngLiteral;
   @Input() public zoom: number;
   private map: Map;
@@ -63,6 +65,9 @@ export class LocationSelectComponent implements OnInit, ControlValueAccessor {
   constructor(private sessionService: SessionService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    console.log(this.location);
+    console.log(this.parentForm.get(this.field.key));
+    console.log(this.field);
     this.mapConfig = this.sessionService.getMapConfigurations();
 
     const currentLayer =
