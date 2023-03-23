@@ -187,7 +187,11 @@
               [isChecked]="isPostChecked(post.id)"
               (statusChanged)="postStatusChanged()"
               (selected)="isPostSelected($event, post.id.toString())"
-              [ngClass]="{ 'post--selected': post.id === postDetails?.id }"
+              [ngClass]="{
+                'post--selected':
+                  post.id === postDetails?.id ||
+                  (mode === FeedMode.Post && post.id.toString() === activePostId)
+              }"
               *ngFor="
                 let post of posts
                   | paginate

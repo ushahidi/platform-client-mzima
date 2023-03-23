@@ -96,8 +96,17 @@
                   </li>
                   <li *ngFor="let option of field.options; trackBy: trackById">
                     <mat-checkbox
+                      [ngClass]="{ 'lvl-2': option.parent }"
                       [checked]="form.get(field.key)?.value.includes(option.id)"
-                      (change)="onCheckChange($event, field.key, option.id)"
+                      (change)="
+                        onCheckChange(
+                          $event,
+                          field.key,
+                          option.id,
+                          field.options,
+                          option.parent?.id
+                        )
+                      "
                     >
                       {{ option.tag }}
                     </mat-checkbox>

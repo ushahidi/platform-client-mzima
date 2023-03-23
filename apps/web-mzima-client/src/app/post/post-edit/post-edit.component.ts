@@ -423,15 +423,53 @@ export class PostEditComponent implements OnInit, OnChanges {
     });
   }
 
-  public onCheckChange(event: any, fieldKey: string, id: number) {
+  public onCheckChange(
+    event: any,
+    fieldKey: string,
+    id: number,
+    options?: any[],
+    parentId?: number,
+  ) {
     const formArray: FormArray = this.form.get(fieldKey) as FormArray;
-    if (event.checked) {
-      const index = formArray.controls.findIndex((ctrl: any) => ctrl.value === id);
-      if (index === -1) formArray.push(new FormControl(id));
+    const isChecked = event.checked;
+
+    if (isChecked) {
+      const hasId = formArray.controls.some((control: any) => control.value === id);
+      if (!hasId) formArray.push(new FormControl(id));
+
+      if (parentId) {
+        const hasParentId = formArray.controls.some((control: any) => control.value === parentId);
+        if (!hasParentId) formArray.push(new FormControl(parentId));
+      }
+
+      if (!parentId && options) {
+        const children = options.filter((option) => option.parent_id === id);
+        children.forEach((child) => {
+          const hasChildId = formArray.controls.some((control: any) => control.value === child.id);
+          if (!hasChildId) formArray.push(new FormControl(child.id));
+        });
+      }
     } else {
       const index = formArray.controls.findIndex((ctrl: any) => ctrl.value === id);
-      if (index > -1) {
-        formArray.removeAt(index);
+      if (index > -1) formArray.removeAt(index);
+
+      if (parentId && options) {
+        const children = options.filter((option: any) => option.parent_id === parentId);
+        const isParentHasCheckedChild = children.some((child) =>
+          formArray.controls.some((control: any) => control.value === child.id),
+        );
+        if (!isParentHasCheckedChild) {
+          const i = formArray.controls.findIndex((ctrl: any) => ctrl.value === parentId);
+          if (i > -1) formArray.removeAt(i);
+        }
+      }
+
+      if (!parentId && options) {
+        const children = options.filter((option) => option.parent_id === id);
+        children.forEach((child) => {
+          const i = formArray.controls.findIndex((ctrl: any) => ctrl.value === child.id);
+          if (i > -1) formArray.removeAt(i);
+        });
       }
     }
   }

@@ -33,7 +33,7 @@
   >
     <ng-container survey-info>
       <div class="form-row">
-        <mat-label>{{ 'survey.survey_name' | translate }}</mat-label>
+        <mat-label>{{ 'survey.survey_name' | translate }} *</mat-label>
         <mat-form-field appearance="outline">
           <input matInput formControlName="name" [placeholder]="'survey.survey_name' | translate" />
           <mat-error *ngIf="form.get('name')?.invalid">
@@ -43,7 +43,7 @@
       </div>
 
       <div class="form-row" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
-        <mat-label> {{ 'survey.survey_name' | translate }} ({{ selectLanguageCode }}) </mat-label>
+        <mat-label> {{ 'survey.survey_name' | translate }} ({{ selectLanguageCode }})</mat-label>
         <mat-form-field appearance="outline">
           <input
             matInput
@@ -70,7 +70,7 @@
       </div>
 
       <div class="form-row" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
-        <mat-label> {{ 'survey.description' | translate }} ({{ selectLanguageCode }}) </mat-label>
+        <mat-label> {{ 'survey.description' | translate }} ({{ selectLanguageCode }})</mat-label>
         <mat-form-field appearance="outline">
           <textarea
             matInput
@@ -78,7 +78,7 @@
             cdkAutosizeMinRows="2"
             cdkAutosizeMaxRows="5"
             [placeholder]="'survey.description' | translate"
-            [value]="this.form.get('translations')?.value[selectLanguageCode]?.description"
+            [value]="form.get('translations')?.value[selectLanguageCode]?.description"
             (change)="setTranslates(selectLanguageCode, 'description', $event)"
           >
           </textarea>
@@ -97,7 +97,13 @@
 </div>
 
 <ng-container *ngIf="additionalTasks?.length; else noTasks">
-  <app-survey-task *ngFor="let task of additionalTasks" [task]="task"></app-survey-task>
+  <app-survey-task
+    *ngFor="let task of additionalTasks"
+    [task]="task"
+    (deleteTaskChange)="deleteTask($event)"
+    (duplicateTaskChange)="duplicateTask($event)"
+    (errorFieldChange)="setErrorTaskField($event)"
+  ></app-survey-task>
 </ng-container>
 
 <ng-template #noTasks>
@@ -114,9 +120,11 @@
     type="submit"
     color="primary"
     mat-raised-button
-    [disabled]="form.invalid || form.disabled"
+    [disabled]="form.invalid || form.disabled || errorTaskField"
     (click)="save()"
   >
     {{ (isEdit ? 'app.save' : 'app.add_survey') | translate }}
   </button>
 </div>
+
+<pre [style]="{ display: 'none' }">task</pre>

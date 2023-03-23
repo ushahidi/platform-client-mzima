@@ -1545,7 +1545,8 @@
       "email": {
         "required": "Email address is required",
         "pattern": "This email address is invalid",
-        "maxlength": "This email address is too long"
+        "maxlength": "This email address is too long",
+        "emailExists": "Email is already in use"
       },
       "password": {
         "required": "Password is required",
