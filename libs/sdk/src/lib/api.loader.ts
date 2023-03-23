@@ -9,8 +9,7 @@ export class ApiUrlLoader implements EnvLoader {
    * Gets the translations from the server
    */
   public getApiUrl(): Observable<string> {
-    console.log('this.envService', this.envService);
-    return this.envService.environment.backend_url
+    return this.envService.environment?.backend_url
       ? of(this.envService.environment.backend_url)
       : of(apiHelpers.defaultApiURl);
   }

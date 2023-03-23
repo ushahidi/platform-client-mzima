@@ -13,7 +13,6 @@ export abstract class ResourceService<T> {
 
   protected constructor(protected httpClient: HttpClient, protected currentLoader: EnvLoader) {
     this.currentLoader.getApiUrl().subscribe((backendUrl) => {
-      console.log('backendUrl', backendUrl);
       this.apiUrl = backendUrl + this.getApiVersions() + this.getResourceUrl();
       this.backendUrl = backendUrl;
     });

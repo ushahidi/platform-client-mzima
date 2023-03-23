@@ -12,7 +12,6 @@ export abstract class EnvLoader {
 @Injectable()
 export class EnvFakeLoader extends EnvLoader {
   getApiUrl(): Observable<string> {
-    console.log('asdasdasd', apiHelpers.defaultApiURl);
     return of(apiHelpers.defaultApiURl);
   }
 }
