@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
 import { ResourceService } from './resource.service';
 
@@ -15,7 +16,7 @@ export class CategoriesService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return 'api/v5/';
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {

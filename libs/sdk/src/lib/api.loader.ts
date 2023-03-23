@@ -6,11 +6,13 @@ export class ApiUrlLoader implements EnvLoader {
   constructor(private envService: any) {}
 
   /**
-   * Gets the translations from the server
+   * Gets the API url from env file
    */
   public getApiUrl(): Observable<string> {
-    return this.envService.environment?.backend_url
-      ? of(this.envService.environment.backend_url)
-      : of(apiHelpers.defaultApiURl);
+    if (typeof this.envService.environment?.backend_url === 'string') {
+      return of(this.envService.environment.backend_url);
+    } else {
+      return of(apiHelpers.getApiUrlByDomain(this.envService.environment.backend_url));
+    }
   }
 }

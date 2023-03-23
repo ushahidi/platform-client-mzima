@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
+import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
 import { GeoJsonFilter, UserInterface, UserInterfaceResponse, UserResponse } from '../models';
 import { ResourceService } from './resource.service';
@@ -20,7 +21,7 @@ export class UsersService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return 'api/v5/';
+    return apiHelpers.API_V_3;
   }
 
   getResourceUrl(): string {

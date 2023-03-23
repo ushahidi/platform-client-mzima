@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
 import { Savedsearch, SavedsearchesResponse } from '../models';
 import { ResourceService } from './resource.service';
@@ -17,7 +18,7 @@ export class SavedsearchesService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return 'api/v3/';
+    return apiHelpers.API_V_3;
   }
 
   getResourceUrl(): string {

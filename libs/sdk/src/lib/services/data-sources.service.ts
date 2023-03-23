@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { arrayHelpers } from '../helpers';
+import { apiHelpers, arrayHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
 import { DataSource, DataSourceOptions } from '../models';
 import { ResourceService } from './resource.service';
@@ -18,7 +18,7 @@ export class DataSourcesService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return 'api/v3/';
+    return apiHelpers.API_V_3;
   }
 
   getResourceUrl(): string {

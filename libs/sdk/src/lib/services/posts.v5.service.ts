@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
 import { ResourceService } from './resource.service';
 
@@ -16,7 +17,7 @@ export class PostsV5Service extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return 'api/v3/';
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {
