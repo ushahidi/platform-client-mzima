@@ -42,6 +42,8 @@
     "@ngneat/until-destroy": "^9.2.3",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "@sentry/angular-ivy": "^7.44.2",
+    "@sentry/tracing": "^7.44.2",
     "@swimlane/ngx-charts": "^20.1.2",
     "@types/leaflet.markercluster": "^1.5.1",
     "angular-google-tag-manager": "^1.6.1",
