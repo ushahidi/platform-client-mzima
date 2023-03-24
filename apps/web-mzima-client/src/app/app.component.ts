@@ -1,4 +1,4 @@
-import { Component, OnInit, RendererFactory2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LanguageInterface } from '@models';
@@ -6,7 +6,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
   BreakpointService,
-  EnvService,
   EventBusService,
   EventType,
   IconService,
@@ -34,8 +33,6 @@ export class AppComponent implements OnInit {
 
   constructor(
     private loaderService: LoaderService,
-    private rendererFactory: RendererFactory2,
-    protected env: EnvService,
     private iconService: IconService,
     private languageService: LanguageService,
     private router: Router,
@@ -55,8 +52,6 @@ export class AppComponent implements OnInit {
         this.isShowLoader = value;
       },
     });
-
-    if (this.env.environment.gtm_key) this.loadGtm();
 
     this.iconService.registerIcons();
 
@@ -101,23 +96,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.setMetaData();
-  }
-
-  private loadGtm() {
-    const renderer = this.rendererFactory.createRenderer(null, null);
-    const script = renderer.createElement('script');
-    script.async = true;
-    script.innerHTML = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','${this.env.environment.gtm_key}');`;
-
-    renderer.appendChild(document.head, script);
-
-    const div = document.createElement('div');
-    div.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${this.env.environment.gtm_key}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
-    renderer.appendChild(document.body, div);
   }
 
   private getChild(activatedRoute: ActivatedRoute): ActivatedRoute {
