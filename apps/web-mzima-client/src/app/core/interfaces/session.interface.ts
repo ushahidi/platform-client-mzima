@@ -6,7 +6,7 @@ export interface SessionTokenInterface {
 }
 
 export interface UserInterfaceResponse {
-  data: UserInterface;
+  result: UserInterface;
 }
 
 export interface UserInterface {
