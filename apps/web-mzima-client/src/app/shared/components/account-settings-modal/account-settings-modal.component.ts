@@ -161,6 +161,7 @@ export class AccountSettingsModalComponent implements OnInit {
         this.profileForm.controls['confirmPassword'].setValue('');
         this.updatePassword(false);
         this.profileForm.enable();
+        this.closeModal();
       },
     });
   }
