@@ -2,7 +2,7 @@ import { Component, NgZone, OnInit, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { mapHelper, takeUntilDestroy$ } from '@helpers';
-import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
+import { MapConfigInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MainViewComponent } from '@shared';
 import {
@@ -22,10 +22,13 @@ import 'leaflet.markercluster';
 import { Observable } from 'rxjs';
 import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
-import { PostsService } from '../core/services/posts.service';
-import { SavedsearchesService } from '../core/services/savedsearches.service';
-import { PostsV5Service } from '../core/services/posts.v5.service';
-import { MediaService } from '../core/services/media.service';
+import {
+  MediaService,
+  SavedsearchesService,
+  PostsService,
+  PostsV5Service,
+  GeoJsonPostsResponse,
+} from '@mzima-client/sdk';
 import { SessionService, EventBusService, EventType } from '@services';
 
 @UntilDestroy()

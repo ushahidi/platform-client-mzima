@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CategoryInterface } from '@models';
+import { CategoryInterface } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-category-item',

@@ -4,16 +4,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
-import { LanguageInterface, RoleResult, SurveyItemTask } from '@models';
+import { LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
 import { noWhitespaceValidator } from '../../../core/validators/no-whitespace';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
-import { SurveysService } from '../../../core/services/surveys.service';
-import { FormsService } from '../../../core/services/forms.service';
-import { RolesService } from '../../../core/services/roles.service';
+import {
+  FormsService,
+  SurveysService,
+  RolesService,
+  RoleResult,
+  SurveyItemTask,
+} from '@mzima-client/sdk';
 import { NotificationService } from '../../../core/services/notification.service';
 import { LanguageService } from '../../../core/services/language.service';
 import _ from 'lodash';
@@ -40,6 +44,7 @@ export class SurveyItemComponent implements OnInit {
   public defaultLanguage?: LanguageInterface;
   public activeLanguages: LanguageInterface[];
   public isDesktop = false;
+  public errorTaskField = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -304,5 +309,22 @@ export class SurveyItemComponent implements OnInit {
 
   public setNewColor(color: string): void {
     this.form.patchValue({ color });
+  }
+
+  public deleteTask(task: SurveyItemTask) {
+    const tasks: SurveyItemTask[] = this.getFormControl('tasks').value;
+    const index = tasks.indexOf(task);
+    tasks.splice(index, 1);
+    this.form.patchValue({ tasks });
+  }
+
+  public duplicateTask(task: SurveyItemTask) {
+    const tasks: SurveyItemTask[] = this.getFormControl('tasks').value;
+    tasks.push(task);
+    this.form.patchValue({ tasks });
+  }
+
+  public setErrorTaskField(event: boolean) {
+    this.errorTaskField = event;
   }
 }

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { arrayHelpers } from '@helpers';
-import { DataSource, DataSourceOptions } from '@models';
 import { map, Observable } from 'rxjs';
-import { EnvService } from './env.service';
+import { apiHelpers, arrayHelpers } from '../helpers';
+import { EnvLoader } from '../loader';
+import { DataSource, DataSourceOptions } from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -11,14 +11,14 @@ import { ResourceService } from './resource.service';
 })
 export class DataSourcesService extends ResourceService<any> {
   constructor(
-    protected override httpClient: HttpClient, //
-    protected override env: EnvService,
+    protected override httpClient: HttpClient,
+    protected override currentLoader: EnvLoader,
   ) {
-    super(httpClient, env);
+    super(httpClient, currentLoader);
   }
 
   getApiVersions(): string {
-    return this.env.environment.api_v3;
+    return apiHelpers.API_V_3;
   }
 
   getResourceUrl(): string {

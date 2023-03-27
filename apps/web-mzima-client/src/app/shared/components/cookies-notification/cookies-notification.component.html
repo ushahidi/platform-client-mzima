@@ -11,17 +11,14 @@
 
   <div class="cookies-notification__buttons">
     <button
-      class="cookies-notification__buttons-decline"
       type="button"
-      color="dark"
-      mat-raised-button
+      mat-stroked-button
       [data-qa]="'button-decline-cookies'"
       (click)="decline()"
     >
       {{ 'cookies.decline' | translate }}
     </button>
     <button
-      class="cookies-notification__buttons"
       type="button"
       color="primary"
       mat-raised-button

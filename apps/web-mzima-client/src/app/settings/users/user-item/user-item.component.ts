@@ -3,12 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CONST } from '@constants';
-import { RoleResult, UserInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { UsersService } from '../../../core/services/users.service';
-import { RolesService } from '../../../core/services/roles.service';
+import { RolesService, RoleResult, UsersService, UserInterface } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { BreakpointService } from '@services';
 
@@ -62,8 +60,8 @@ export class UserItemComponent implements OnInit {
   private getUserInformation(userId: string) {
     this.userService.getUserById(userId).subscribe({
       next: (response) => {
-        const { data } = response;
-        this.fillInForm(data);
+        const { result } = response;
+        this.fillInForm(result);
         this.form.controls['password'].removeValidators([
           Validators.required,
           Validators.minLength(7),

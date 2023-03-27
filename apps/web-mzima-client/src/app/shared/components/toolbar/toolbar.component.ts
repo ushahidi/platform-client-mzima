@@ -5,7 +5,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { LoginComponent } from '@auth';
 import { CollectionsComponent } from '@data';
 import { EnumGtmEvent, EnumGtmSource } from '@enums';
-import { SiteConfigInterface, UserInterface, UserMenuInterface } from '@models';
+import { SiteConfigInterface, UserMenuInterface } from '@models';
+import { UserInterface } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {

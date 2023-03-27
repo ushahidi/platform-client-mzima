@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoriesService } from '../../../core/services/categories.service';
+import { CategoriesService } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-create',

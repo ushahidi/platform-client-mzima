@@ -10,11 +10,9 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { CategoryInterface, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { CollectionsModalComponent } from '../../shared/components';
-import { PostsV5Service } from '../../core/services/posts.v5.service';
-import { MediaService } from '../../core/services/media.service';
+import { MediaService, PostsV5Service, CategoryInterface, PostResult } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-post-details',

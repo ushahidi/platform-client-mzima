@@ -12,11 +12,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { arrayHelpers } from '@helpers';
 import { combineLatest } from 'rxjs';
 import { Location } from '@angular/common';
-import { FormsService } from '../../../core/services/forms.service';
+import { FormsService, DataSourcesService, SurveysService } from '@mzima-client/sdk';
 import { ConfigService } from '../../../core/services/config.service';
-import { DataSourcesService } from '../../../core/services/data-sources.service';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
-import { SurveysService } from '../../../core/services/surveys.service';
 import { BreakpointService } from '@services';
 
 @UntilDestroy()

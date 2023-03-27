@@ -31,9 +31,7 @@
           "apps/web-mzima-client/src/styles.scss"
         ],
         "stylePreprocessorOptions": {
-          "includePaths": [
-            "apps/web-mzima-client/src/styles"
-          ]
+          "includePaths": ["apps/web-mzima-client/src/styles"]
         },
         "scripts": [],
         "allowedCommonJsDependencies": [

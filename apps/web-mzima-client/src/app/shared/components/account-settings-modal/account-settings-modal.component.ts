@@ -11,21 +11,20 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { formHelper } from '@helpers';
-import {
-  AccountNotificationsInterface,
-  ContactsInterface,
-  NotificationTypeEnum,
-  UserDataInterface,
-  UserInterface,
-} from '@models';
+import { AccountNotificationsInterface, NotificationTypeEnum } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
-import { UsersService } from '../../../core/services/users.service';
-import { ContactsService } from '../../../core/services/contacts.service';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
-import { NotificationsService } from '../../../core/services/notifications.service';
-import { CollectionsService } from '../../../core/services/collections.service';
-import { SavedsearchesService } from '../../../core/services/savedsearches.service';
+import {
+  ContactsService,
+  NotificationsService,
+  CollectionsService,
+  SavedsearchesService,
+  ContactsInterface,
+  UsersService,
+  UserDataInterface,
+  UserInterface,
+} from '@mzima-client/sdk';
 
 enum AccountTypeEnum {
   Email = 'email',
@@ -91,11 +90,8 @@ export class AccountSettingsModalComponent implements OnInit {
         role: [''],
         display_name: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
-        confirmPassword: [
-          '',
-          [Validators.required, Validators.minLength(8), Validators.maxLength(64)],
-        ],
+        password: [''],
+        confirmPassword: [''],
       },
       { validators: this.checkPasswords },
     );
@@ -113,8 +109,8 @@ export class AccountSettingsModalComponent implements OnInit {
   private getProfile(): void {
     this.usersService.getCurrentUser().subscribe({
       next: (response) => {
-        const { data } = response;
-        this.profile = data;
+        const { result } = response;
+        this.profile = result;
 
         this.profileForm.patchValue({
           role: this.profile.role,
@@ -164,6 +160,7 @@ export class AccountSettingsModalComponent implements OnInit {
         this.profileForm.controls['confirmPassword'].setValue('');
         this.updatePassword(false);
         this.profileForm.enable();
+        this.closeModal();
       },
     });
   }
@@ -192,12 +189,12 @@ export class AccountSettingsModalComponent implements OnInit {
     if (this.isUpdatingPassword) {
       this.setFieldsValidators(
         [this.profileForm.controls['password'], this.profileForm.controls['confirmPassword']],
-        [Validators.required, Validators.minLength(8)],
+        [Validators.required, Validators.minLength(8), Validators.maxLength(64)],
       );
     } else {
       this.setFieldsValidators(
         [this.profileForm.controls['password'], this.profileForm.controls['confirmPassword']],
-        [Validators.minLength(8)],
+        [Validators.minLength(8), Validators.maxLength(64)],
       );
     }
   }

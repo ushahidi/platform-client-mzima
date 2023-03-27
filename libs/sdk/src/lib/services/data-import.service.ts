@@ -1,20 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ImportCSVFileInterface, ImportCSVFilesResponse } from '@models';
-import { EnvService } from './env.service';
+import { apiHelpers } from '../helpers';
+import { EnvLoader } from '../loader';
+import { ImportCSVFileInterface, ImportCSVFilesResponse } from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataImportService extends ResourceService<any> {
-  constructor(protected override httpClient: HttpClient, protected override env: EnvService) {
-    super(httpClient, env);
+  constructor(
+    protected override httpClient: HttpClient,
+    protected override currentLoader: EnvLoader,
+  ) {
+    super(httpClient, currentLoader);
   }
 
   getApiVersions(): string {
-    return this.env.environment.api_v3;
+    return apiHelpers.API_V_3;
   }
 
   getResourceUrl(): string {
@@ -38,7 +42,7 @@ export class DataImportService extends ResourceService<any> {
   }
 
   uploadFile(file: File, formId: string | number): Observable<any> {
-    const apiUrl = this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl();
+    const apiUrl = this.backendUrl + this.getApiVersions() + this.getResourceUrl();
 
     const formData = new FormData();
     formData.append('file', file);

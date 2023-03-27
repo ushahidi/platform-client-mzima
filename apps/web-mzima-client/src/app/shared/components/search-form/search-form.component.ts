@@ -5,13 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { NavigationStart, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
-import {
-  AccountNotificationsInterface,
-  CategoryInterface,
-  CollectionResult,
-  Savedsearch,
-  SurveyItem,
-} from '@models';
+import { AccountNotificationsInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EventBusService, EventType, SessionService, BreakpointService } from '@services';
 import {
@@ -28,12 +22,18 @@ import { FilterType } from '../filter-control/filter-control.component';
 import { SearchResponse } from '../location-selection/location-selection.component';
 import { MultilevelSelectOption } from '../multilevel-select/multilevel-select.component';
 import { SaveSearchModalComponent } from '../save-search-modal/save-search-modal.component';
-import { SavedsearchesService } from '../../../core/services/savedsearches.service';
-import { SurveysService } from '../../../core/services/surveys.service';
-import { CategoriesService } from '../../../core/services/categories.service';
-import { CollectionsService } from '../../../core/services/collections.service';
-import { PostsService } from '../../../core/services/posts.service';
-import { NotificationsService } from '../../../core/services/notifications.service';
+import {
+  CategoriesService,
+  CollectionsService,
+  NotificationsService,
+  SavedsearchesService,
+  SurveysService,
+  PostsService,
+  CategoryInterface,
+  CollectionResult,
+  Savedsearch,
+  SurveyItem,
+} from '@mzima-client/sdk';
 
 @UntilDestroy()
 @Component({
@@ -400,7 +400,7 @@ export class SearchFormComponent implements OnInit {
       .get()
       .pipe(
         map((response) => {
-          response.results.map((search) => {
+          response.results.map((search: any) => {
             if (search.filter?.status === 'all') {
               search.filter.status = ['published', 'draft', 'archived'];
             }

@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
-import { EnvService } from './env.service';
-import { GeoJsonFilter, UserInterface, UserInterfaceResponse, UserResponse } from '@models';
+import { apiHelpers } from '../helpers';
+import { EnvLoader } from '../loader';
+import { GeoJsonFilter, UserInterface, UserInterfaceResponse, UserResponse } from '../models';
 import { ResourceService } from './resource.service';
-import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,15 +14,14 @@ export class UsersService extends ResourceService<any> {
   public totalUsers$ = this.totalUsers.asObservable();
 
   constructor(
-    protected override httpClient: HttpClient, //
-    protected override env: EnvService,
-    private sessionService: SessionService,
+    protected override httpClient: HttpClient,
+    protected override currentLoader: EnvLoader,
   ) {
-    super(httpClient, env);
+    super(httpClient, currentLoader);
   }
 
   getApiVersions(): string {
-    return this.env.environment.api_v5;
+    return apiHelpers.API_V_3;
   }
 
   getResourceUrl(): string {
@@ -30,21 +29,7 @@ export class UsersService extends ResourceService<any> {
   }
 
   getCurrentUser(): Observable<UserInterfaceResponse> {
-    return super.get('me').pipe(
-      tap((response) => {
-        const { data } = response;
-        this.sessionService.setCurrentUser({
-          userId: data.id,
-          realname: data.realname,
-          email: data.email,
-          role: data.role,
-          permissions: data.permissions,
-          allowed_privileges: data.allowed_privileges,
-          gravatar: data.gravatar,
-          language: data.language,
-        });
-      }),
-    );
+    return super.get('me');
   }
 
   public dispatchUserEvents(userData: any): void {
@@ -67,7 +52,7 @@ export class UsersService extends ResourceService<any> {
 
   public getUsers(url: string, filter?: GeoJsonFilter): Observable<UserResponse> {
     return super.get(url, filter).pipe(
-      tap((response) => {
+      tap((response: any) => {
         this.totalUsers.next(response.meta.total);
       }),
     );

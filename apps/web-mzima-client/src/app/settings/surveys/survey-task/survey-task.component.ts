@@ -11,20 +11,20 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { CONST } from '@constants';
-import {
-  FormAttributeInterface,
-  LanguageInterface,
-  RoleResult,
-  SurveyItem,
-  SurveyItemTask,
-} from '@models';
+import { LanguageInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import {
   GroupCheckboxItemInterface,
   GroupCheckboxValueInterface,
 } from '../../../shared/components';
 import { CreateFieldModalComponent } from '../create-field-modal/create-field-modal.component';
-import { FormsService } from '../../../core/services/forms.service';
+import {
+  FormsService,
+  FormAttributeInterface,
+  RoleResult,
+  SurveyItem,
+  SurveyItemTask,
+} from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { LanguageService } from '../../../core/services/language.service';
 import _ from 'lodash';
@@ -40,6 +40,9 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   @Input() roles: RoleResult[];
   @Input() isMain: boolean;
   @Output() colorSelected = new EventEmitter();
+  @Output() duplicateTaskChange = new EventEmitter();
+  @Output() deleteTaskChange = new EventEmitter();
+  @Output() errorFieldChange = new EventEmitter();
 
   surveyId: string;
   selectedRoles: GroupCheckboxValueInterface = {
@@ -55,6 +58,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   languagesToSelect: LanguageInterface[] = [];
   roleOptions: GroupCheckboxItemInterface[] = [];
   selectedColor: string;
+  currentInterimId = 0;
 
   constructor(
     private confirm: ConfirmModalService,
@@ -95,6 +99,16 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     }
   }
 
+  ngOnInit(): void {
+    this.surveyId = this.route.snapshot.paramMap.get('id') || '';
+    this.taskFields = this.task.fields;
+    this.currentInterimId = this.findIntermId();
+    this.isPost = this.task.type === 'post';
+    if (this.surveyId && this.isPost) {
+      this.getSurveyRoles();
+    }
+  }
+
   private getSurveyRoles() {
     this.formsService.getRoles(this.surveyId).subscribe((response) => {
       this.selectedRoles = {
@@ -117,13 +131,14 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     };
   }
 
-  ngOnInit(): void {
-    this.surveyId = this.route.snapshot.paramMap.get('id') || '';
-    this.taskFields = this.task.fields;
-    this.isPost = this.task.type === 'post';
-    if (this.surveyId && this.isPost) {
-      this.getSurveyRoles();
-    }
+  private findIntermId() {
+    const stageIds: number[] = [];
+    _.each(this.taskFields, (field: any) => {
+      if (field.form_stage_id) {
+        stageIds.push(field.form_stage_id.split('_')[2]);
+      }
+    });
+    return stageIds.length ? Math.max.apply(null, stageIds) : 0;
   }
 
   private initLanguages() {
@@ -230,5 +245,35 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
 
   public colorChanged(): void {
     this.colorSelected.emit(this.selectedColor);
+  }
+
+  public deleteTask(task: SurveyItemTask) {
+    this.deleteTaskChange.emit(task);
+    this.errorFieldChange.emit(false);
+  }
+
+  public duplicateTask(task: SurveyItemTask) {
+    const dup = _.cloneDeep(task);
+    dup.label = '';
+    dup.description = '';
+    _.each(dup.fields, (field: Partial<any>) => {
+      if (field) {
+        delete field['id'];
+        delete field['url'];
+        delete field['key'];
+        field['form_stage_id'] = this.getInterimId();
+      }
+    });
+    this.duplicateTaskChange.emit(dup);
+  }
+
+  private getInterimId() {
+    const id = 'interim_id_' + this.currentInterimId;
+    this.currentInterimId++;
+    return id;
+  }
+
+  public changeLabel(value: string) {
+    this.errorFieldChange.emit(value.trim().length === 0);
   }
 }

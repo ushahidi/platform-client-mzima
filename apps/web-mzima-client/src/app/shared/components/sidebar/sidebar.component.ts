@@ -5,7 +5,8 @@ import { LoginComponent } from '@auth';
 import { CollectionsComponent } from '@data';
 import { EnumGtmEvent, EnumGtmSource, Roles } from '@enums';
 import { takeUntilDestroy$ } from '@helpers';
-import { MenuInterface, SiteConfigInterface, UserInterface, UserMenuInterface } from '@models';
+import { MenuInterface, SiteConfigInterface, UserMenuInterface } from '@models';
+import { UserInterface } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import {
   BreakpointService,

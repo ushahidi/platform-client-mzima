@@ -9,6 +9,8 @@
               matInput
               [(ngModel)]="task.label"
               [placeholder]="'survey.untitled_task' | translate"
+              (ngModelChange)="changeLabel($event)"
+              required
             />
           </mat-form-field>
         </div>
@@ -78,8 +80,12 @@
       </ng-template>
 
       <div class="form-controls-panel" *ngIf="!isPost">
-        <button mat-raised-button color="accent">{{ 'survey.delete_task' | translate }}</button>
-        <button mat-stroked-button>{{ 'survey.duplicate_task' | translate }}</button>
+        <button mat-raised-button color="accent" (click)="deleteTask(task)">
+          {{ 'survey.delete_task' | translate }}
+        </button>
+        <button mat-stroked-button (click)="duplicateTask(task)">
+          {{ 'survey.duplicate_task' | translate }}
+        </button>
       </div>
     </mat-tab>
     <mat-tab [label]="'survey.configure' | translate" *ngIf="!isPost">

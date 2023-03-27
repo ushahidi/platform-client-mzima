@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { takeUntilDestroy$ } from '@helpers';
-import { WebhookResultInterface } from '@models';
-import { WebhooksService } from '../../core/services/webhooks.service';
+import { WebhooksService, WebhookResultInterface } from '@mzima-client/sdk';
 import { Observable } from 'rxjs';
 import { BreakpointService } from '@services';
 
