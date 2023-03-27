@@ -22,7 +22,7 @@ export class SurveysComponent implements OnInit {
   public params = {
     page: 1,
     order: 'asc',
-    limit: 16,
+    limit: 0,
     current_page: 0,
     last_page: 0,
     total: 0,
@@ -39,17 +39,23 @@ export class SurveysComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSurveys(this.params);
+    this.getSurveys();
   }
 
-  private getSurveys(params: any): void {
+  private getSurveys(): void {
     this.isLoading = true;
-    this.surveysService.getSurveys('', { ...params }).subscribe((res) => {
-      this.surveys = [...this.surveys, ...res.results];
-      const { current_page: currentPage, last_page: lastPage, total } = res.meta;
-      this.params = { ...this.params, current_page: currentPage, last_page: lastPage, total };
-      this.isLoading = false;
-    });
+    this.surveysService
+      .getSurveys('', {
+        page: this.params.page,
+        order: this.params.order,
+        limit: this.params.limit,
+      })
+      .subscribe((res) => {
+        this.surveys = [...this.surveys, ...res.results];
+        const { current_page: currentPage, last_page: lastPage, total } = res.meta;
+        this.params = { ...this.params, current_page: currentPage, last_page: lastPage, total };
+        this.isLoading = false;
+      });
   }
 
   public duplicateSurvey() {
@@ -59,7 +65,7 @@ export class SurveysComponent implements OnInit {
     const surveyDuplicate = { ...survey, id: null, name: `${survey.name} - duplicate` };
 
     this.surveysService.post(surveyDuplicate).subscribe({
-      next: () => this.getSurveys(this.params),
+      next: () => this.getSurveys(),
       error: (err) => console.log(err),
     });
   }
@@ -88,7 +94,7 @@ export class SurveysComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.getSurveys(this.params);
+          this.getSurveys();
           this.selectedSurveys = [];
         },
         error: (e) => console.log(e),
@@ -110,7 +116,7 @@ export class SurveysComponent implements OnInit {
   public loadMore(): void {
     if (this.params.current_page < this.params.last_page) {
       this.params.page += 1;
-      this.getSurveys(this.params);
+      this.getSurveys();
     }
   }
 }
