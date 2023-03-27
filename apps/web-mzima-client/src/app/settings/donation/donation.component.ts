@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DonationConfigInterface, SiteConfigInterface } from '@models';
-import { MediaService } from '../../core/services/media.service';
+import { MediaService } from '@mzima-client/sdk';
 import { LoaderService } from '../../core/services/loader.service';
 import { ConfigService } from '../../core/services/config.service';
 import { Observable } from 'rxjs';

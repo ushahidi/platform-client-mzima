@@ -1,7 +1,6 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
-import { CategoryInterface } from '@models';
 import { CategoryItemComponent } from './category-item/category-item.component';
-import { CategoriesService } from '../../core/services/categories.service';
+import { CategoriesService, CategoryInterface } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-categories',

@@ -5,36 +5,6 @@ export interface SessionTokenInterface {
   tokenType: string;
 }
 
-export interface UserInterfaceResponse {
-  result: UserInterface;
-}
-
-export interface UserInterface {
-  userId?: string | number;
-  realname?: string;
-  email?: string;
-  role?: string;
-  permissions?: string[];
-  gravatar?: string;
-  language?: string;
-  allowed_privileges?: string[];
-  contacts?: any[];
-  created?: Date;
-  failed_attempts?: number;
-  id?: number;
-  last_attempt?: any;
-  last_login?: any;
-  logins?: number;
-  updated?: Date;
-  url?: string;
-}
-
-export interface UserDataInterface {
-  realname?: string;
-  email?: string;
-  password?: string;
-}
-
 export interface DonationConfigInterface {
   description: string;
   title: string;

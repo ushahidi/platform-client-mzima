@@ -3,13 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroy$ } from '@helpers';
-import { FormAttributeInterface, SurveyItem, WebhookResultInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService } from '@services';
-import { FormsService } from '../../../core/services/forms.service';
-import { WebhooksService } from '../../../core/services/webhooks.service';
-import { SurveysService } from '../../../core/services/surveys.service';
+import {
+  FormsService,
+  SurveysService,
+  WebhooksService,
+  FormAttributeInterface,
+  SurveyItem,
+  WebhookResultInterface,
+} from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { Observable } from 'rxjs';
 

@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CollectionResult } from '@models';
-import { CollectionsService } from '../../../core/services/collections.service';
+import { CollectionsService, CollectionResult } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-collections-modal',

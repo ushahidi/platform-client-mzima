@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import { searchFormHelper } from '@helpers';
-import { GeoJsonFilter, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
@@ -10,11 +9,15 @@ import { filter, forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 import { MainViewComponent } from '@shared';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
-import { PostsService } from '../core/services/posts.service';
-import { SavedsearchesService } from '../core/services/savedsearches.service';
-import { PostsV5Service } from '../core/services/posts.v5.service';
 import { ConfirmModalService } from '../core/services/confirm-modal.service';
 import { LanguageService } from '../core/services/language.service';
+import {
+  SavedsearchesService,
+  PostsService,
+  PostsV5Service,
+  GeoJsonFilter,
+  PostResult,
+} from '@mzima-client/sdk';
 
 enum FeedMode {
   Tiles = 'TILES',

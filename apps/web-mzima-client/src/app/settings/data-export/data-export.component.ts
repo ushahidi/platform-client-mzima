@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CONST } from '@constants';
-import { FormInterface, ExportJobInterface } from '@models';
 import { Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { PollingService, SessionService, BreakpointService } from '@services';
 import {
   ExportJobsService,
   FormsService,
-  PollingService,
-  SessionService,
+  FormInterface,
+  ExportJobInterface,
   UsersService,
-  BreakpointService,
-} from '@services';
+} from '@mzima-client/sdk';
 
 @UntilDestroy()
 @Component({
@@ -56,7 +55,7 @@ export class DataExportComponent implements OnInit {
     if (userId) {
       this.usersService.getUserSettings(userId).subscribe({
         next: (response) => {
-          this.hxlApiKey = response.results.some((setting: any) => {
+          this.hxlApiKey = response.results?.some((setting: any) => {
             return setting.config_key === 'hdx_api_key';
           });
         },

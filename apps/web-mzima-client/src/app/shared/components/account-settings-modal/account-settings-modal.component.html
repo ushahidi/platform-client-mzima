@@ -146,13 +146,18 @@
                   </mat-expansion-panel-header>
 
                   <form novalidate (ngSubmit)="addAccount()" [formGroup]="addAccountForm">
-                    <mat-radio-group formControlName="type" (change)="accountFormatChanged($event)">
-                      <div class="radio-button" *ngFor="let accountType of accountTypes">
-                        <mat-radio-button [value]="accountType.value">
-                          {{ accountType.name }}
-                        </mat-radio-button>
-                      </div>
-                    </mat-radio-group>
+                    <div class="form-row">
+                      <mat-radio-group
+                        formControlName="type"
+                        (change)="accountFormatChanged($event)"
+                      >
+                        <div class="radio-button" *ngFor="let accountType of accountTypes">
+                          <mat-radio-button [value]="accountType.value">
+                            {{ accountType.name }}
+                          </mat-radio-button>
+                        </div>
+                      </mat-radio-group>
+                    </div>
 
                     <div class="form-row">
                       <mat-label>{{
