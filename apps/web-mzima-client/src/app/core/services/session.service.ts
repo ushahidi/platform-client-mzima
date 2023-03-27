@@ -136,7 +136,6 @@ export class SessionService {
       this.currentUser[key as keyof UserInterface] =
         localStorage.getItem(this.getLocalStorageNameMapper(key)) ?? '';
     });
-    console.log('loadUserDataFromLocalStorage', this.currentUser);
     this._currentUserData$.next(this.currentUser);
   }
 
@@ -148,7 +147,6 @@ export class SessionService {
       );
     });
     this.currentUser = Object.assign({}, this.currentUser, user);
-    console.log('setCurrentUser', this.currentUser);
     this._currentUserData$.next(this.currentUser);
     this._isLogged.next(!!this.currentUser.userId);
   }
@@ -187,7 +185,6 @@ export class SessionService {
     this.currentUser = {};
     if (cookies) sessionStorage.setItem(this.getLocalStorageNameMapper('cookies'), cookies);
     if (filters) sessionStorage.setItem(this.getLocalStorageNameMapper('filters'), filters);
-    console.log('clearUserData', this.currentUser);
     this._currentUserData$.next(this.currentUser);
     this._isLogged.next(!!this.currentUser.userId);
   }

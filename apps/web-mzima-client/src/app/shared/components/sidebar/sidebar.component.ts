@@ -68,7 +68,6 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
-      console.log(this.isLoggedIn);
       const hostRoles = [
         Roles.Admin,
         Roles.ManageUsers,
