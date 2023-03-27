@@ -65,7 +65,7 @@ export class RoleItemComponent implements OnInit {
     const roleId = this.route.snapshot.paramMap.get('id') || '';
     const roles$ = this.rolesService.get();
     const role$ = this.rolesService.getById(roleId);
-    const permissions$ = this.permissionsService.get();
+    const permissions$ = this.permissionsService.getPermissions();
     combineLatest([role$, permissions$, roles$]).subscribe({
       next: ([role, permissions, roles]) => {
         this.roles = roles.results;

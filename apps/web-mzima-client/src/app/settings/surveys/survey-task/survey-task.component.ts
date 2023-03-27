@@ -134,7 +134,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   private findIntermId() {
     const stageIds: number[] = [];
     _.each(this.taskFields, (field: any) => {
-      if (field.form_stage_id) {
+      if (field.form_stage_id && typeof field.form_stage_id !== 'number') {
         stageIds.push(field.form_stage_id.split('_')[2]);
       }
     });

@@ -18,14 +18,14 @@ export class PermissionsService extends ResourceService<PermissionResult> {
   }
 
   getApiVersions(): string {
-    return apiHelpers.API_V_3;
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {
     return 'permissions';
   }
 
-  override get(): Observable<any> {
+  getPermissions(): Observable<any> {
     return super.get();
   }
 }

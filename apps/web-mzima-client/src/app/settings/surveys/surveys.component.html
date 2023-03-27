@@ -17,8 +17,7 @@
   </button>
 </app-settings-header>
 
-<app-spinner class="spinner" *ngIf="!surveys"></app-spinner>
-<ul role="list" class="types-list" *ngIf="!!surveys" [data-qa]="'survey-list'">
+<ul role="list" class="types-list" *ngIf="surveys.length" [data-qa]="'survey-list'">
   <li
     mat-ripple
     role="listitem"
@@ -37,5 +36,16 @@
     {{ survey.name }}
   </li>
 </ul>
+<button
+  mat-button
+  (click)="loadMore()"
+  class="load-more"
+  *ngIf="!isLoading && params.current_page < params.last_page"
+>
+  <mat-icon svgIcon="refresh"></mat-icon>
+  <span>{{ 'app.load_more' | translate }}</span>
+</button>
+
+<app-spinner class="spinner" *ngIf="!surveys.length || isLoading"></app-spinner>
 
 <div class="actions-spacer" *ngIf="!(isDesktop$ | async)! && isShowActions"></div>
