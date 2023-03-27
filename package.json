@@ -83,13 +83,13 @@
     "@angular/language-service": "~14.2.7",
     "@capacitor/cli": "^4.7.0",
     "@ionic/angular-toolkit": "^8.0.0",
-    "@nrwl/angular": "15.8.6",
-    "@nrwl/cypress": "15.8.6",
-    "@nrwl/eslint-plugin-nx": "15.8.6",
-    "@nrwl/jest": "15.8.6",
-    "@nrwl/linter": "15.8.6",
-    "@nrwl/nx-cloud": "15.2.1",
-    "@nrwl/workspace": "15.8.6",
+    "@nrwl/angular": "15.8.9",
+    "@nrwl/cypress": "15.8.9",
+    "@nrwl/eslint-plugin-nx": "15.8.9",
+    "@nrwl/jest": "15.8.9",
+    "@nrwl/linter": "15.8.9",
+    "@nrwl/nx-cloud": "15.3.2",
+    "@nrwl/workspace": "15.8.9",
     "@schematics/angular": "~14.2.6",
     "@types/d3": "^7.4.0",
     "@types/jest": "29.4.0",
@@ -111,7 +111,7 @@
     "jest-environment-jsdom": "29.4.3",
     "jest-preset-angular": "13.0.0",
     "lint-staged": "^13.1.2",
-    "nx": "15.8.6",
+    "nx": "15.8.9",
     "prettier": "^2.6.2",
     "ts-jest": "29.0.5",
     "ts-node": "10.9.1",
@@ -121,3 +121,4 @@
     "autoprefixer": "10.4.5"
   }
 }
+

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService } from '@services';
-import { catchError, forkJoin, map, Observable, of, take } from 'rxjs';
+import { forkJoin, Observable, take } from 'rxjs';
 import { SurveysService, SurveyItem } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -15,9 +15,19 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class SurveysComponent implements OnInit {
   public isDesktop$: Observable<boolean>;
-  public surveys: SurveyItem[];
+  public surveys: SurveyItem[] = [];
   public selectedSurveys: SurveyItem[] = [];
   public isShowActions = false;
+
+  public params = {
+    page: 1,
+    order: 'asc',
+    limit: 0,
+    current_page: 0,
+    last_page: 0,
+    total: 0,
+  };
+  public isLoading = false;
 
   constructor(
     private readonly surveysService: SurveysService,
@@ -33,17 +43,18 @@ export class SurveysComponent implements OnInit {
   }
 
   private getSurveys(): void {
+    this.isLoading = true;
     this.surveysService
-      .getSurveys()
-      .pipe(
-        map((res) => res.results),
-        catchError((err) => {
-          console.error(err);
-          return of([]);
-        }),
-      )
-      .subscribe((surveys) => {
-        this.surveys = surveys;
+      .getSurveys('', {
+        page: this.params.page,
+        order: this.params.order,
+        limit: this.params.limit,
+      })
+      .subscribe((res) => {
+        this.surveys = [...this.surveys, ...res.results];
+        const { current_page: currentPage, last_page: lastPage, total } = res.meta;
+        this.params = { ...this.params, current_page: currentPage, last_page: lastPage, total };
+        this.isLoading = false;
       });
   }
 
@@ -100,5 +111,12 @@ export class SurveysComponent implements OnInit {
 
   public showActions(event: boolean) {
     this.isShowActions = event;
+  }
+
+  public loadMore(): void {
+    if (this.params.current_page < this.params.last_page) {
+      this.params.page += 1;
+      this.getSurveys();
+    }
   }
 }

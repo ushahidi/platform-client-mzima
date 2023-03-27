@@ -48,7 +48,7 @@
           <input
             matInput
             [placeholder]="'survey.survey_name' | translate"
-            [value]="this.form.get('translations')?.value[selectLanguageCode]?.name"
+            [value]="form.get('translations')?.value[selectLanguageCode]?.name"
             (change)="setTranslates(selectLanguageCode, 'name', $event)"
           />
         </mat-form-field>

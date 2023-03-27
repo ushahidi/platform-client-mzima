@@ -41,3 +41,26 @@
   display: block;
   margin: 20vh 0;
 }
+
+.load-more {
+  display: block;
+  min-width: 132px;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 500;
+  margin: 24px auto 0;
+  letter-spacing: -0.005em;
+
+  .feed--post-view & {
+    margin-top: 16px;
+
+    @include breakpoint-max($laptop-small) {
+      margin-top: 8px;
+    }
+  }
+
+  @include breakpoint-max($tablet) {
+    margin-top: 8px;
+    margin-bottom: 32px;
+  }
+}
