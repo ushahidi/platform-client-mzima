@@ -170,7 +170,9 @@
   </mzima-client-button>
   <mzima-client-button
     (buttonClick)="addNewTask()"
-    [disabled]="!selectedFieldType?.label?.length || !validateDuplicate() || emptyTitleOption"
+    [disabled]="
+      !selectedFieldType?.label.trim()?.length || !validateDuplicate() || emptyTitleOption
+    "
   >
     {{ (editMode ? 'app.update' : 'app.save') | translate }}
   </mzima-client-button>

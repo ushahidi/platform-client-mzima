@@ -25,6 +25,10 @@
       .multilevelselection__option[aria-expanded='true'] & {
         transform: rotate(180deg);
       }
+
+      .mat-icon {
+        font-size: inherit;
+      }
     }
   }
 

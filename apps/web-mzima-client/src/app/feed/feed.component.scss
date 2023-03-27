@@ -320,12 +320,12 @@
 
   &__posts {
     .feed--post-view & {
-      padding: 16px 16px 24px;
+      padding: 16px 32px 24px 16px;
       background: var(--color-light);
       --scrollbar-background: var(--color-light);
 
       @include breakpoint-max($laptop-small) {
-        padding: 8px 8px 16px;
+        padding: 8px 16px 16px 8px;
       }
     }
   }
@@ -381,10 +381,22 @@
     margin-right: 0;
   }
 
+  &--selected {
+    left: 16px !important;
+    box-shadow: 0 8px 10px 0 rgba(var(--color-light-contrast-rgb), 0.05);
+
+    @include breakpoint-max($laptop-small) {
+      left: 8px !important;
+    }
+  }
+
   .feed--post-view & {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
+    transition-duration: 0.35s;
+    transition-timing-function: ease;
+    transition-property: left, box-shadow;
   }
 }
 

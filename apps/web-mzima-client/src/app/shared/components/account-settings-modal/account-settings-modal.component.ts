@@ -91,11 +91,8 @@ export class AccountSettingsModalComponent implements OnInit {
         role: [''],
         display_name: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
-        confirmPassword: [
-          '',
-          [Validators.required, Validators.minLength(8), Validators.maxLength(64)],
-        ],
+        password: [''],
+        confirmPassword: [''],
       },
       { validators: this.checkPasswords },
     );
@@ -164,6 +161,7 @@ export class AccountSettingsModalComponent implements OnInit {
         this.profileForm.controls['confirmPassword'].setValue('');
         this.updatePassword(false);
         this.profileForm.enable();
+        this.closeModal();
       },
     });
   }
@@ -192,12 +190,12 @@ export class AccountSettingsModalComponent implements OnInit {
     if (this.isUpdatingPassword) {
       this.setFieldsValidators(
         [this.profileForm.controls['password'], this.profileForm.controls['confirmPassword']],
-        [Validators.required, Validators.minLength(8)],
+        [Validators.required, Validators.minLength(8), Validators.maxLength(64)],
       );
     } else {
       this.setFieldsValidators(
         [this.profileForm.controls['password'], this.profileForm.controls['confirmPassword']],
-        [Validators.minLength(8)],
+        [Validators.minLength(8), Validators.maxLength(64)],
       );
     }
   }

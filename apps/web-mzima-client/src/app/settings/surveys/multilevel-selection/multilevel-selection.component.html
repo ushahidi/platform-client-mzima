@@ -34,7 +34,7 @@
         [value]="option[fields[0]]"
         (click)="$event.stopPropagation()"
         class="multilevelselection__checkbox"
-        [checked]="descendantsAllSelected(option)"
+        [checked]="descendantsHasSelected(option)"
         (change)="categorySelectionToggle(option)"
       >
         {{ option[fields[1]] | translate }}

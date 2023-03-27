@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CONST } from '@constants';
-import { Roles } from '@enums';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, Observable } from 'rxjs';
@@ -84,7 +83,7 @@ export class RoleItemComponent implements OnInit {
         if (this.isUpdate) {
           this.fillInForm(role);
 
-          for (const permission of this.preparePermissions(role, permissions)) {
+          for (const permission of role.permissions) {
             this.permissionsList.reduce((acc, el: any) => {
               return el.name === permission ? [...acc, (el.checked = true)] : [...acc, el];
             }, []);
@@ -94,15 +93,6 @@ export class RoleItemComponent implements OnInit {
       },
       error: (err) => console.log(err),
     });
-  }
-
-  // TODO: refactor after change backend for admin permissions
-  private preparePermissions(role: any, permissions: any) {
-    let permissionListName: any[] = [];
-    for (const permission of permissions.results) {
-      permissionListName = [...permissionListName, permission.name];
-    }
-    return role.name === Roles.Admin ? permissionListName : role.permissions;
   }
 
   setName(event: string) {

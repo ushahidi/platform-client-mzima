@@ -9,6 +9,8 @@
               matInput
               [(ngModel)]="task.label"
               [placeholder]="'survey.untitled_task' | translate"
+              (ngModelChange)="changeLabel($event)"
+              required
             />
           </mat-form-field>
         </div>
@@ -58,7 +60,7 @@
               color="gray"
               [iconOnly]="true"
               class="field-item__control"
-              (buttonClick)="editField(field)"
+              (buttonClick)="editField(field, i)"
             >
               <mat-icon icon svgIcon="pencil"></mat-icon>
             </mzima-client-button>
@@ -80,10 +82,10 @@
       </ng-template>
 
       <div class="form-controls-panel" *ngIf="!isPost">
-        <mzima-client-button color="danger">
+        <mzima-client-button color="danger" (buttonClick)="deleteTask(task)">
           {{ 'survey.delete_task' | translate }}
         </mzima-client-button>
-        <mzima-client-button fill="outline" color="secondary">
+        <mzima-client-button fill="outline" color="secondary" (buttonClick)="duplicateTask(task)">
           {{ 'survey.duplicate_task' | translate }}
         </mzima-client-button>
       </div>

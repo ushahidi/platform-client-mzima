@@ -40,6 +40,9 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   @Input() roles: RoleResult[];
   @Input() isMain: boolean;
   @Output() colorSelected = new EventEmitter();
+  @Output() duplicateTaskChange = new EventEmitter();
+  @Output() deleteTaskChange = new EventEmitter();
+  @Output() errorFieldChange = new EventEmitter();
 
   surveyId: string;
   selectedRoles: GroupCheckboxValueInterface = {
@@ -55,6 +58,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   languagesToSelect: LanguageInterface[] = [];
   roleOptions: GroupCheckboxItemInterface[] = [];
   selectedColor: string;
+  currentInterimId = 0;
 
   constructor(
     private confirm: ConfirmModalService,
@@ -95,6 +99,16 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     }
   }
 
+  ngOnInit(): void {
+    this.surveyId = this.route.snapshot.paramMap.get('id') || '';
+    this.taskFields = this.task.fields;
+    this.currentInterimId = this.findIntermId();
+    this.isPost = this.task.type === 'post';
+    if (this.surveyId && this.isPost) {
+      this.getSurveyRoles();
+    }
+  }
+
   private getSurveyRoles() {
     this.formsService.getRoles(this.surveyId).subscribe((response) => {
       this.selectedRoles = {
@@ -117,13 +131,14 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     };
   }
 
-  ngOnInit(): void {
-    this.surveyId = this.route.snapshot.paramMap.get('id') || '';
-    this.taskFields = this.task.fields;
-    this.isPost = this.task.type === 'post';
-    if (this.surveyId && this.isPost) {
-      this.getSurveyRoles();
-    }
+  private findIntermId() {
+    const stageIds: number[] = [];
+    _.each(this.taskFields, (field: any) => {
+      if (field.form_stage_id) {
+        stageIds.push(field.form_stage_id.split('_')[2]);
+      }
+    });
+    return stageIds.length ? Math.max.apply(null, stageIds) : 0;
   }
 
   private initLanguages() {
@@ -207,7 +222,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     return this.isPost ? field.type !== 'title' && field.type !== 'description' : true;
   }
 
-  editField(selectedFieldType: any) {
+  editField(selectedFieldType: any, idx: number) {
     const dialogRef = this.dialog.open(CreateFieldModalComponent, {
       width: '100%',
       maxWidth: 576,
@@ -222,10 +237,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe({
       next: (response: FormAttributeInterface) => {
         if (response) {
-          const index = this.taskFields.findIndex((field) => field.id === response.id);
-          if (index !== -1) {
-            this.taskFields[index] = response;
-          }
+          this.taskFields[idx] = response;
         }
       },
     });
@@ -233,5 +245,35 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
 
   public colorChanged(): void {
     this.colorSelected.emit(this.selectedColor);
+  }
+
+  public deleteTask(task: SurveyItemTask) {
+    this.deleteTaskChange.emit(task);
+    this.errorFieldChange.emit(false);
+  }
+
+  public duplicateTask(task: SurveyItemTask) {
+    const dup = _.cloneDeep(task);
+    dup.label = '';
+    dup.description = '';
+    _.each(dup.fields, (field: Partial<any>) => {
+      if (field) {
+        delete field['id'];
+        delete field['url'];
+        delete field['key'];
+        field['form_stage_id'] = this.getInterimId();
+      }
+    });
+    this.duplicateTaskChange.emit(dup);
+  }
+
+  private getInterimId() {
+    const id = 'interim_id_' + this.currentInterimId;
+    this.currentInterimId++;
+    return id;
+  }
+
+  public changeLabel(value: string) {
+    this.errorFieldChange.emit(value.trim().length === 0);
   }
 }

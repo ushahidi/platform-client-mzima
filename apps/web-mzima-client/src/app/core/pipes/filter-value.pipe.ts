@@ -11,11 +11,12 @@ export class FilterValuePipe implements PipeTransform {
 
   transform(value: any, key: any, surveys: SurveyItem[], categories: CategoryInterface[]): unknown {
     switch (key) {
-      case 'order_unlocked_on_top':
+      case 'order_unlocked_on_top': {
         const boolText = value === 'true' ? 'yes' : 'no';
         return this.translate.instant(
           'global_filter.filter_tabs.order_group.unlocked_on_top_' + boolText,
         );
+      }
 
       case 'order':
         return this.translate.instant(

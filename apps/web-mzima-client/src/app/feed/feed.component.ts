@@ -1,12 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import { searchFormHelper } from '@helpers';
 import { GeoJsonFilter, PostResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
-import { forkJoin } from 'rxjs';
+import { filter, forkJoin } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 import { MainViewComponent } from '@shared';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
@@ -111,11 +111,14 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       },
     });
 
-    this.route.firstChild?.params.subscribe((params) => {
-      this.activePastId = params['id'];
+    this.route.firstChild?.params.subscribe(() => {
       if (this.activePastId && !this.isDesktop) {
         this.showPostModal(this.activePastId);
       }
+    });
+
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      this.activePostId = this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1];
     });
 
     this.route.params.subscribe(() => {
@@ -397,6 +400,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public editPost(post: any): void {
+    if (this.isDesktop) return;
+
     this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
       width: '100%',
       maxWidth: 576,

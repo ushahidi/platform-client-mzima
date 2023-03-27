@@ -14,7 +14,7 @@
 <strong mat-dialog-title>{{ 'survey.add_task' | translate }}</strong>
 <mat-dialog-content class="post">
   <div class="form-row">
-    <mat-label>{{ 'survey.task_name' | translate }}</mat-label>
+    <mat-label>{{ 'survey.task_name' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
       <input
         matInput
@@ -47,7 +47,11 @@
   <mzima-client-button fill="outline" color="secondary" (buttonClick)="cancel()">
     {{ 'app.cancel' | translate }}
   </mzima-client-button>
-  <mzima-client-button type="submit" (buttonClick)="addNewTask()">
+  <mzima-client-button
+    type="submit"
+    (buttonClick)="addNewTask()"
+    [disabled]="newTask.label.trim().length === 0"
+  >
     {{ 'app.add' | translate }}
   </mzima-client-button>
 </div>
