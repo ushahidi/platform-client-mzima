@@ -30,6 +30,7 @@ import { PostDetailsComponent } from './post-details/post-details.component';
 import { PostMetadataComponent } from './post-metadata/post-metadata.component';
 import { TwitterWidgetComponent } from './twitter-widget/twitter-widget.component';
 import { PostHeadComponent } from './post-head/post-head.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { PostHeadComponent } from './post-head/post-head.component';
     MatMenuModule,
     PipeModule,
     NgxMatNativeDateModule,
+    MzimaUiModule,
   ],
   exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent, PostEditComponent],
 })

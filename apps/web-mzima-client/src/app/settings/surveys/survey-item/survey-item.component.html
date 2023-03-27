@@ -90,10 +90,10 @@
 
 <div class="form-head-panel">
   <h1>{{ 'survey.tasks' | translate }}</h1>
-  <button type="button" mat-stroked-button (click)="addTask()">
+  <mzima-client-button color="secondary" fill="outline" (click)="addTask()">
     <span>{{ 'survey.add_task' | translate }}</span>
-    <mat-icon svgIcon="plus"></mat-icon>
-  </button>
+    <mat-icon icon svgIcon="plus"></mat-icon>
+  </mzima-client-button>
 </div>
 
 <ng-container *ngIf="additionalTasks?.length; else noTasks">
@@ -107,16 +107,10 @@
 <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
 
 <div class="form-controls-panel form-controls-panel--sticky">
-  <button mat-stroked-button type="button" (click)="cancel()">
+  <mzima-client-button fill="outline" color="secondary" (buttonClick)="cancel()">
     {{ 'app.cancel' | translate }}
-  </button>
-  <button
-    type="submit"
-    color="primary"
-    mat-raised-button
-    [disabled]="form.invalid || form.disabled"
-    (click)="save()"
-  >
+  </mzima-client-button>
+  <mzima-client-button (buttonClick)="save()" [disabled]="form.invalid || form.disabled">
     {{ (isEdit ? 'app.save' : 'app.add_survey') | translate }}
-  </button>
+  </mzima-client-button>
 </div>

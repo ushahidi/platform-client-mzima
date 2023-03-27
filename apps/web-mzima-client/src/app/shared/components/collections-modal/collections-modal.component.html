@@ -1,13 +1,15 @@
-<button
-  mat-stroked-button
-  [mat-dialog-close]="false"
-  class="modal__close-btn"
+<mzima-client-button
   tabindex="-1"
-  aria-label="{{ 'modal.button.close' | translate }}"
+  fill="outline"
+  [iconOnly]="true"
+  color="light-gray"
   [data-qa]="'btn-close'"
+  class="modal__close-btn"
+  [mat-dialog-close]="false"
+  ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
-</button>
+  <mat-icon icon svgIcon="close"></mat-icon>
+</mzima-client-button>
 
 <strong mat-dialog-title>{{ data.title }}</strong>
 
@@ -27,12 +29,12 @@
 </div>
 
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>
+  <mzima-client-button mat-dialog-close>
     {{ 'app.create_new' | translate }}
-  </button>
-  <button mat-raised-button color="primary" mat-dialog-close>
+  </mzima-client-button>
+  <mzima-client-button mat-dialog-close>
     {{ 'form.save_and_close' | translate }}
-  </button>
+  </mzima-client-button>
 </mat-dialog-actions>
 
 <ng-template #spinner>

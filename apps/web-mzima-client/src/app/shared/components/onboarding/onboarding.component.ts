@@ -179,7 +179,7 @@ export class OnboardingComponent implements AfterViewInit {
         icon: 'settings',
         content:
           '<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>',
-        selector: '[data-onboard-id="sidebar-menu-button-settings"]',
+        selector: '[data-onboard-id="sidebar-btn-settings"]',
         position: 'right',
         hidden: !this.isLoggedIn,
       },

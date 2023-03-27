@@ -76,10 +76,15 @@
 
 <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
 <div class="form-controls-panel form-controls-panel--sticky">
-  <button type="button" (click)="cancel()" mat-stroked-button [data-qa]="'btn-cancel'">
+  <mzima-client-button
+    fill="outline"
+    color="secondary"
+    (buttonClick)="cancel()"
+    [data-qa]="'btn-cancel'"
+  >
     {{ 'app.cancel' | translate }}
-  </button>
-  <button type="button" color="primary" mat-raised-button (click)="save()" [data-qa]="'btn-save'">
+  </mzima-client-button>
+  <mzima-client-button (buttonClick)="save()" [data-qa]="'btn-save'">
     {{ 'app.save' | translate }}
-  </button>
+  </mzima-client-button>
 </div>

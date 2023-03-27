@@ -1,13 +1,15 @@
-<button
-  mat-stroked-button
-  [mat-dialog-close]="false"
-  class="modal__close-btn"
+<mzima-client-button
   tabindex="-1"
-  aria-label="{{ 'modal.button.close' | translate }}"
+  fill="outline"
+  [iconOnly]="true"
+  color="light-gray"
   [data-qa]="'btn-close'"
+  class="modal__close-btn"
+  [mat-dialog-close]="false"
+  ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
-</button>
+  <mat-icon icon svgIcon="close"></mat-icon>
+</mzima-client-button>
 
 <strong mat-dialog-title>{{ 'form.add_field' | translate }}</strong>
 <mat-dialog-content>
@@ -37,10 +39,10 @@
       <div class="form-head-panel">
         <mat-label class="form-label">{{ 'form.field_options' | translate }} </mat-label>
 
-        <button type="button" mat-stroked-button (click)="addOption()">
-          <span>{{ 'form.field_add_option' | translate }}</span>
-          <mat-icon svgIcon="plus"></mat-icon>
-        </button>
+        <mzima-client-button fill="outline" color="secondary" (buttonClick)="addOption()">
+          {{ 'form.field_add_option' | translate }}
+          <mat-icon icon svgIcon="plus"></mat-icon>
+        </mzima-client-button>
       </div>
 
       <div class="form-row__item" *ngFor="let opt of tmp; let i = index">
@@ -52,17 +54,17 @@
             placeholder="{{ 'form.field_name_placeholder' | translate }}"
           />
 
-          <button
+          <mzima-client-button
             matSuffix
-            type="button"
-            color="accent"
-            mat-icon-button
-            (click)="removeOption(i)"
+            fill="clear"
+            color="danger"
+            [iconOnly]="true"
             class="button-flat button-beta"
+            (buttonClick)="removeOption(i)"
             *ngIf="selectedFieldType.options.length > 1"
           >
-            <mat-icon svgIcon="delete"></mat-icon>
-          </button>
+            <mat-icon icon svgIcon="delete"></mat-icon>
+          </mzima-client-button>
         </mat-form-field>
       </div>
 
@@ -163,18 +165,15 @@
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
-  <button type="button" [mat-dialog-close]="false" mat-stroked-button>
+  <mzima-client-button fill="outline" color="secondary" [mat-dialog-close]="false">
     {{ 'app.cancel' | translate }}
-  </button>
-  <button
-    mat-raised-button
-    type="button"
-    color="primary"
-    (click)="addNewTask()"
+  </mzima-client-button>
+  <mzima-client-button
+    (buttonClick)="addNewTask()"
     [disabled]="!selectedFieldType?.label?.length || !validateDuplicate() || emptyTitleOption"
   >
     {{ (editMode ? 'app.update' : 'app.save') | translate }}
-  </button>
+  </mzima-client-button>
 </div>
 
 <ng-template #allFields>

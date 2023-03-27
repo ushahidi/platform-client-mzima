@@ -11,6 +11,7 @@ import { MapRoutingModule } from './map-routing.module';
 import { MapComponent } from './map.component';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
 import { PostModule } from '../post/post.module';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [MapComponent, PostDetailsModalComponent],
@@ -25,6 +26,7 @@ import { PostModule } from '../post/post.module';
     LeafletModule,
     TranslateModule,
     DirectiveModule,
+    MzimaUiModule,
   ],
 })
 export class MapModule {}

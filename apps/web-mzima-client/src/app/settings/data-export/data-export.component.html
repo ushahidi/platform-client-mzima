@@ -19,25 +19,22 @@
       </ng-container>
       <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
       <div class="form-controls-panel">
-        <button
-          type="button"
-          mat-stroked-button
-          (click)="selectFields()"
+        <mzima-client-button
+          fill="outline"
+          color="secondary"
+          (buttonClick)="selectFields()"
           [disabled]="showProgress"
           [data-qa]="'btn-select-fields'"
         >
           {{ 'data_export.select_fields' | translate }}
-        </button>
-        <button
-          type="button"
-          color="primary"
-          mat-raised-button
-          (click)="exportAll()"
+        </mzima-client-button>
+        <mzima-client-button
+          (buttonClick)="exportAll()"
           [disabled]="showProgress"
           [data-qa]="'btn-export-all'"
         >
           {{ 'data_export.all' | translate }}
-        </button>
+        </mzima-client-button>
       </div>
     </mat-tab>
     <mat-tab [label]="'data_export.export_history' | translate" [data-qa]="'tab-export-history'">
@@ -46,7 +43,7 @@
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>{{ 'app.name' | translate }}</th>
             <td mat-cell *matCellDef="let job">
-              <span class="title">{{ 'data_export.job' | translate: { jobId: job.id } }} </span>
+              <span class="title">{{ 'data_export.job' | translate : { jobId: job.id } }} </span>
             </td>
           </ng-container>
 
@@ -72,9 +69,16 @@
           <ng-container matColumnDef="download">
             <th mat-header-cell *matHeaderCellDef align="center">Download</th>
             <td mat-cell align="center" *matCellDef="let job">
-              <a download [href]="job.url" mat-raised-button class="download-btn">
-                <mat-icon svgIcon="download"></mat-icon>
-              </a>
+              <mzima-client-button
+                fill="clear"
+                [href]="job.url"
+                color="secondary"
+                [iconOnly]="true"
+                class="download-btn"
+                [download]="'data_export.job' | translate : { jobId: job.id }"
+              >
+                <mat-icon icon svgIcon="download"></mat-icon>
+              </mzima-client-button>
             </td>
           </ng-container>
 
@@ -116,18 +120,17 @@
 
   <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
-    <button type="button" mat-stroked-button (click)="selectFields()" [data-qa]="'btn-cancel'">
-      {{ 'data_export.cancel' | translate }}
-    </button>
-    <button
-      type="button"
-      color="primary"
-      mat-raised-button
-      (click)="exportSelected()"
-      [data-qa]="'btn-export-selected'"
+    <mzima-client-button
+      fill="outline"
+      color="secondary"
+      [data-qa]="'btn-cancel'"
+      (buttonClick)="selectFields()"
     >
+      {{ 'data_export.cancel' | translate }}
+    </mzima-client-button>
+    <mzima-client-button (buttonClick)="exportSelected()" [data-qa]="'btn-export-selected'">
       {{ 'data_export.export_selected' | translate }}
-    </button>
+    </mzima-client-button>
   </div>
 </ng-template>
 

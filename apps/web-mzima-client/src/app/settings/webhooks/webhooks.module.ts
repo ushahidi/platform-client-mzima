@@ -13,6 +13,7 @@ import { DirectiveModule } from '@shared';
 import { WebhooksRoutingModule } from './webhooks-routing.module';
 import { WebhooksComponent } from './webhooks.component';
 import { WebhookItemComponent } from './webhook-item/webhook-item.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [WebhooksComponent, WebhookItemComponent],
@@ -29,6 +30,7 @@ import { WebhookItemComponent } from './webhook-item/webhook-item.component';
     MatSelectModule,
     MatSlideToggleModule,
     MatTableModule,
+    MzimaUiModule,
   ],
 })
 export class WebhooksModule {}

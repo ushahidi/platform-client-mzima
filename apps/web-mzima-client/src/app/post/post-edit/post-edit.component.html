@@ -204,16 +204,14 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'upload'">
-              <button
-                type="button"
-                color="primary"
-                mat-stroked-button
-                (click)="fileInput.click()"
+              <mzima-client-button
+                [expand]="false"
+                (buttonClick)="fileInput.click()"
                 [data-qa]="'btn-post-item-upload'"
               >
                 {{ 'post.media.add_photo' | translate }}
-                <mat-icon svgIcon="plus"></mat-icon>
-              </button>
+                <mat-icon icon svgIcon="plus"></mat-icon>
+              </mzima-client-button>
               <input hidden #fileInput type="file" id="file" [formControlName]="field.key" />
               <br />
               <br />
@@ -253,16 +251,15 @@
               <span class="related-post-selected" *ngIf="selectedRelatedPost">
                 {{ selectedRelatedPost.id }}: {{ selectedRelatedPost.title }}
                 <mat-icon class="trash"></mat-icon>
-                <button
-                  type="button"
-                  color="primary"
-                  mat-stroked-button
+                <mzima-client-button
+                  fill="outline"
+                  color="secondary"
                   [data-qa]="'btn-post-item-delete-relation-post'"
-                  (click)="deleteRelatedPost(field, selectedRelatedPost.id)"
+                  (buttonClick)="deleteRelatedPost(field, selectedRelatedPost.id)"
                 >
-                  delete
-                  <mat-icon class="trash"></mat-icon>
-                </button>
+                  Delete
+                  <mat-icon icon class="trash"></mat-icon>
+                </mzima-client-button>
               </span>
 
               <div class="relation-container">
@@ -274,16 +271,15 @@
                     [ngModelOptions]="{ standalone: true }"
                   />
                 </mat-form-field>
-                <button
-                  type="button"
-                  color="primary"
-                  mat-stroked-button
+                <mzima-client-button
+                  fill="outline"
+                  color="secondary"
                   class="relation-button-search"
-                  (click)="relationSearchPosts()"
+                  (buttonClick)="relationSearchPosts()"
                   [data-qa]="'btn-post-item-relation-search'"
                 >
                   {{ 'post.relation.search' | translate }}
-                </button>
+                </mzima-client-button>
               </div>
 
               <span class="related-post-list" *ngIf="relatedPosts?.length">
@@ -321,18 +317,17 @@
       </div>
 
       <div class="form-controls-panel form-controls-panel--sticky">
-        <button
-          color="primary"
-          mat-stroked-button
-          type="button"
+        <mzima-client-button
+          fill="outline"
+          color="secondary"
           [data-qa]="'btn-post-item-previous'"
-          (click)="previousPage()"
+          (buttonClick)="previousPage()"
         >
           {{ 'app.cancel' | translate }}
-        </button>
-        <button color="primary" mat-raised-button type="submit" [data-qa]="'btn-post-item-submit'">
+        </mzima-client-button>
+        <mzima-client-button type="submit" [data-qa]="'btn-post-item-submit'">
           {{ 'app.submit' | translate }}
-        </button>
+        </mzima-client-button>
       </div>
     </form>
   </div>

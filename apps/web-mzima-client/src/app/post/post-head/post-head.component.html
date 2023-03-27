@@ -1,31 +1,37 @@
 <div class="post-head">
-  <button
+  <mzima-client-button
+    fill="clear"
+    color="gray"
     tabindex="-1"
-    mat-icon-button
     *ngIf="editable"
-    (click)="editPost($event)"
+    [iconOnly]="true"
+    (buttonClick)="editPost($event)"
     class="post-head__control"
   >
-    <mat-icon matPrefix svgIcon="edit-post"></mat-icon>
-  </button>
+    <mat-icon icon svgIcon="edit-post"></mat-icon>
+  </mzima-client-button>
 
-  <button
+  <mzima-client-button
+    fill="clear"
+    color="gray"
     tabindex="-1"
-    mat-icon-button
-    (click)="sharePost()"
+    [iconOnly]="true"
+    (buttonClick)="sharePost()"
     class="post-head__control post-head__control--share"
   >
-    <mat-icon matPrefix svgIcon="share"></mat-icon>
-  </button>
-  <button
+    <mat-icon icon svgIcon="share"></mat-icon>
+  </mzima-client-button>
+  <mzima-client-button
+    fill="clear"
+    color="gray"
     tabindex="-1"
-    mat-icon-button
+    [iconOnly]="true"
     (click)="$event.stopPropagation()"
     class="post-head__control post-head__control--dots"
     [matMenuTriggerFor]="actions"
   >
-    <mat-icon matPrefix svgIcon="dots"></mat-icon>
-  </button>
+    <mat-icon icon svgIcon="dots"></mat-icon>
+  </mzima-client-button>
 
   <mat-menu #actions="matMenu" xPosition="before">
     <button mat-menu-item (click)="addToCollection()">

@@ -125,6 +125,7 @@ export class SearchFormComponent implements OnInit {
       this.checkSavedSearchNotifications();
     }
 
+    this.isMapView = this.router.url.includes('/map');
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
         this.isMapView = params.url.includes('/map');

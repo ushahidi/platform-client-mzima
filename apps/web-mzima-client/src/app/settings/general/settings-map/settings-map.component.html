@@ -7,9 +7,9 @@
         placeholder="{{ 'settings.general_settings.placeholder.pick_location' | translate }}"
       />
 
-      <button matSuffix type="button" mat-icon-button>
-        <mat-icon svgIcon="search-small"></mat-icon>
-      </button>
+      <mzima-client-button [iconOnly]="true" fill="clear" matSuffix color="secondary">
+        <mat-icon icon svgIcon="search-small"></mat-icon>
+      </mzima-client-button>
     </mat-form-field>
   </div>
 

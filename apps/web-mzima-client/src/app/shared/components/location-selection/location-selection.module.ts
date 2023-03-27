@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { LocationSelectionComponent } from './location-selection.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [LocationSelectionComponent],
@@ -20,6 +21,7 @@ import { LocationSelectionComponent } from './location-selection.component';
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
+    MzimaUiModule,
   ],
   exports: [LocationSelectionComponent],
 })

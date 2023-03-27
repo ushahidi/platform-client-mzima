@@ -30,6 +30,7 @@ import { CreateTaskModalComponent } from './create-task-modal/create-task-modal.
 import { CreateFieldModalComponent } from './create-field-modal/create-field-modal.component';
 import { ShareMenuComponent } from './share-menu/share-menu.component';
 import { QuillModule } from 'ngx-quill';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { QuillModule } from 'ngx-quill';
     MatCheckboxModule,
     MatTreeModule,
     MatListModule,
+    MzimaUiModule,
   ],
 })
 export class SurveysModule {}

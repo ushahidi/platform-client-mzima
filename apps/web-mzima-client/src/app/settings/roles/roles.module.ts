@@ -13,6 +13,7 @@ import { RoleItemComponent } from './role-item/role-item.component';
 
 import { RolesRoutingModule } from './roles-routing.module';
 import { RolesComponent } from './roles.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [RolesComponent, RoleItemComponent],
@@ -28,6 +29,7 @@ import { RolesComponent } from './roles.component';
     ReactiveFormsModule,
     MatInputModule,
     MatListModule,
+    MzimaUiModule,
   ],
 })
 export class RolesModule {}

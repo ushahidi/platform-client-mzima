@@ -30,10 +30,10 @@
 
       <div class="form-head-panel">
         <h2>{{ 'survey.fields.fields_title' | translate }}:</h2>
-        <button type="button" mat-stroked-button (click)="addField()">
+        <mzima-client-button color="secondary" fill="outline" (buttonClick)="addField()">
           <span>{{ 'form.add_field' | translate }}</span>
-          <mat-icon svgIcon="plus"></mat-icon>
-        </button>
+          <mat-icon icon svgIcon="plus"></mat-icon>
+        </mzima-client-button>
       </div>
 
       <div
@@ -53,23 +53,25 @@
           </div>
           <!-- <span class="field-item__type">{{ field.type }}</span> -->
           <div class="field-item__controls">
-            <button
-              type="button"
-              mat-icon-button
-              (click)="editField(field)"
+            <mzima-client-button
+              fill="clear"
+              color="gray"
+              [iconOnly]="true"
               class="field-item__control"
+              (buttonClick)="editField(field)"
             >
-              <mat-icon svgIcon="pencil"></mat-icon>
-            </button>
-            <button
-              type="button"
-              mat-icon-button
+              <mat-icon icon svgIcon="pencil"></mat-icon>
+            </mzima-client-button>
+            <mzima-client-button
+              fill="clear"
+              color="gray"
+              [iconOnly]="true"
               *ngIf="canDelete(field)"
-              (click)="deleteField(i)"
               class="field-item__control"
+              (buttonClick)="deleteField(i)"
             >
-              <mat-icon svgIcon="delete"></mat-icon>
-            </button>
+              <mat-icon icon svgIcon="delete"></mat-icon>
+            </mzima-client-button>
           </div>
         </div>
       </div>
@@ -78,8 +80,12 @@
       </ng-template>
 
       <div class="form-controls-panel" *ngIf="!isPost">
-        <button mat-raised-button color="accent">{{ 'survey.delete_task' | translate }}</button>
-        <button mat-stroked-button>{{ 'survey.duplicate_task' | translate }}</button>
+        <mzima-client-button color="danger">
+          {{ 'survey.delete_task' | translate }}
+        </mzima-client-button>
+        <mzima-client-button fill="outline" color="secondary">
+          {{ 'survey.duplicate_task' | translate }}
+        </mzima-client-button>
       </div>
     </mat-tab>
     <mat-tab [label]="'survey.configure' | translate" *ngIf="!isPost">

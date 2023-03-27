@@ -1,37 +1,14 @@
 .share-item {
-  font-size: 16px;
-  text-align: left;
-  line-height: 1.5;
-  padding: 4px 8px;
+  vertical-align: top;
   display: inline-block;
-
-  &__icon {
-    font-size: 32px;
-    margin-inline-end: 8px;
-  }
-
-  &::ng-deep {
-    .mat-button-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-    }
-  }
+  --justify-content: flex-start;
 }
 
 .copy {
   position: relative;
   &-button {
-    padding: 0;
-    width: 1em;
-    height: 1em;
-    min-width: 0;
-    display: flex;
-    font-size: 32px;
-    line-height: 1em;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+    --size: 32px;
+    --icon-size: 24px;
   }
 
   &-success {

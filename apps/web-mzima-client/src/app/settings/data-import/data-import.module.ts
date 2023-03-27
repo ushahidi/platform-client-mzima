@@ -12,6 +12,7 @@ import { DirectiveModule, LottieAnimationModule } from '@shared';
 import { DataImportRoutingModule } from './data-import-routing.module';
 import { DataImportComponent } from './data-import.component';
 import { ImportResultsComponent } from './import-results/import-results.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [DataImportComponent, ImportResultsComponent],
@@ -28,6 +29,7 @@ import { ImportResultsComponent } from './import-results/import-results.componen
     FormsModule,
     MatTableModule,
     LottieAnimationModule,
+    MzimaUiModule,
   ],
 })
 export class DataImportModule {}

@@ -1,1 +1,78 @@
-<p>button works!</p>
+<button
+  [id]="id"
+  [type]="type"
+  class="mzima-button"
+  [disabled]="disabled"
+  [tabindex]="tabIndex"
+  [attr.data-qa]="dataQa"
+  (click)="onClick($event)"
+  [attr.aria-label]="ariaLabel"
+  *ngIf="!href; else linkButton"
+  [ngClass]="
+    'mzima-button--' +
+    color +
+    ' mzima-button--' +
+    fill +
+    ' mzima-button--' +
+    size +
+    (expand ? ' mzima-button--block' : '') +
+    (rounded ? ' mzima-button--rounded' : '') +
+    (isActive ? ' mzima-button--active' : '') +
+    (disabled ? ' mzima-button--disabled' : '') +
+    (iconOnly ? ' mzima-button--icon-only' : '')
+  "
+>
+  <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
+</button>
+
+<ng-template #linkButton>
+  <a
+    [id]="id"
+    [type]="type"
+    [href]="href"
+    [target]="target"
+    class="mzima-button"
+    [tabindex]="tabIndex"
+    [download]="download"
+    [attr.data-qa]="dataQa"
+    (click)="onClick($event)"
+    [attr.aria-label]="ariaLabel"
+    [ngClass]="
+      'mzima-button--' +
+      color +
+      ' mzima-button--' +
+      fill +
+      ' mzima-button--' +
+      size +
+      (expand ? ' mzima-button--block' : '') +
+      (rounded ? ' mzima-button--rounded' : '') +
+      (isActive ? ' mzima-button--active' : '') +
+      (disabled ? ' mzima-button--disabled' : '') +
+      (iconOnly ? ' mzima-button--icon-only' : '')
+    "
+  >
+    <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
+  </a>
+</ng-template>
+
+<ng-template #buttonContent>
+  <span class="mzima-button__ripple" *ngIf="fill !== 'clear'"></span>
+
+  <div class="mzima-button__content">
+    <span class="mzima-button__prefix">
+      <ng-content select="[prefix]"></ng-content>
+    </span>
+    <span class="mzima-button__icon mzima-button__icon--prefix">
+      <ng-content select="[iconPrefix]"></ng-content>
+    </span>
+    <span class="mzima-button__text">
+      <ng-content></ng-content>
+    </span>
+    <span class="mzima-button__icon">
+      <ng-content select="[icon]"></ng-content>
+    </span>
+    <span class="mzima-button__suffix">
+      <ng-content select="[suffix]"></ng-content>
+    </span>
+  </div>
+</ng-template>

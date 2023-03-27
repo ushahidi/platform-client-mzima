@@ -12,6 +12,7 @@ import { DirectiveModule, SpinnerModule } from '@shared';
 
 import { DataExportRoutingModule } from './data-export-routing.module';
 import { DataExportComponent } from './data-export.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [DataExportComponent],
@@ -28,6 +29,7 @@ import { DataExportComponent } from './data-export.component';
     MatIconModule,
     SpinnerModule,
     MatFormFieldModule,
+    MzimaUiModule,
   ],
 })
 export class DataExportModule {}

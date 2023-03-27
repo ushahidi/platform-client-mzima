@@ -45,9 +45,9 @@
         : post.allowed_privileges.includes('read_full'))
     "
   >
-    <button mat-button color="primary" (click)="showDetails()" disableRipple>
+    <mzima-client-button size="small" fill="clear" [expand]="false" (buttonClick)="showDetails()">
       {{ 'post.read_more' | translate }}
-    </button>
+    </mzima-client-button>
   </div>
 
   <div class="post__twitter" *ngIf="post.source === 'Twitter' && post.data_source_message_id">

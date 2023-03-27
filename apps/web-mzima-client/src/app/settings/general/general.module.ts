@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { DirectiveModule } from '@shared';
 import { SettingsModule } from '../settings.module';
@@ -30,6 +31,7 @@ import { SettingsMapComponent } from './settings-map/settings-map.component';
     MatIconModule,
     DirectiveModule,
     FormsModule,
+    MzimaUiModule,
   ],
 })
 export class GeneralModule {}

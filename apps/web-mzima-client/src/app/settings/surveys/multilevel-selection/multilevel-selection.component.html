@@ -39,17 +39,19 @@
       >
         {{ option[fields[1]] | translate }}
       </mat-checkbox>
-      <button
-        mat-icon-button
+      <mzima-client-button
+        fill="clear"
+        color="secondary"
+        [iconOnly]="true"
         matTreeNodeToggle
         class="multilevelselection__option__arrow"
-        [attr.aria-label]="'Toggle ' + option[fields[1]] | translate"
+        [ariaLabel]="'Toggle ' + option[fields[1]] | translate"
         [ngClass]="{
           'multilevelselection__option__arrow--open': treeControl.isExpanded(option)
         }"
       >
-        <mat-icon svgIcon="arrow-down"></mat-icon>
-      </button>
+        <mat-icon icon svgIcon="arrow-down"></mat-icon>
+      </mzima-client-button>
     </mat-tree-node>
   </mat-tree>
 </div>

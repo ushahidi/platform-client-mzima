@@ -9,6 +9,7 @@ import { DirectiveModule } from '@shared';
 
 import { UserSettingsRoutingModule } from './user-settings-routing.module';
 import { UserSettingsComponent } from './user-settings.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [UserSettingsComponent],
@@ -21,6 +22,7 @@ import { UserSettingsComponent } from './user-settings.component';
     MatButtonModule,
     DirectiveModule,
     MatIconModule,
+    MzimaUiModule,
   ],
 })
 export class UserSettingsModule {}

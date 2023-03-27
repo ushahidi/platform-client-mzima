@@ -43,8 +43,10 @@ h1 {
   text-align: center;
   padding-bottom: 24px;
 
-  .mat-button-base {
-    min-width: 140px;
+  mzima-client-button {
     margin-top: 12px;
+    --min-width: 140px;
+    vertical-align: top;
+    display: inline-block;
   }
 }

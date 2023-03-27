@@ -1,13 +1,15 @@
-<button
-  mat-stroked-button
-  [mat-dialog-close]="false"
-  class="modal__close-btn"
+<mzima-client-button
   tabindex="-1"
-  aria-label="{{ 'modal.button.close' | translate }}"
+  fill="outline"
+  [iconOnly]="true"
+  color="light-gray"
   [data-qa]="'btn-close'"
+  class="modal__close-btn"
+  [mat-dialog-close]="false"
+  ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
-</button>
+  <mat-icon icon svgIcon="close"></mat-icon>
+</mzima-client-button>
 
 <strong mat-dialog-title>{{ 'survey.add_task' | translate }}</strong>
 <mat-dialog-content class="post">
@@ -42,10 +44,10 @@
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
-  <button mat-stroked-button type="button" (click)="cancel()">
+  <mzima-client-button fill="outline" color="secondary" (buttonClick)="cancel()">
     {{ 'app.cancel' | translate }}
-  </button>
-  <button type="submit" color="primary" mat-raised-button (click)="addNewTask()">
+  </mzima-client-button>
+  <mzima-client-button type="submit" (buttonClick)="addNewTask()">
     {{ 'app.add' | translate }}
-  </button>
+  </mzima-client-button>
 </div>

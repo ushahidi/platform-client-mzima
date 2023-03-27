@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LocationSelectionModule } from '../location-selection/location-selection.module';
 import { FilterControlComponent } from './filter-control.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [FilterControlComponent],
@@ -32,6 +33,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDatepickerModule,
     MatCheckboxModule,
     LocationSelectionModule,
+    MzimaUiModule,
   ],
   exports: [FilterControlComponent],
 })

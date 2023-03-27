@@ -18,11 +18,9 @@
     }
 
     &__arrow {
-      width: 1em;
-      height: 1em;
       flex-shrink: 0;
-      line-height: 1;
-      font-size: 32px;
+      --size: 32px;
+      --icon-size: 24px;
 
       .multilevelselection__option[aria-expanded='true'] & {
         transform: rotate(180deg);

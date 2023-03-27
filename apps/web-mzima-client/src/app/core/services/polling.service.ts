@@ -118,7 +118,7 @@ export class PollingService implements OnDestroy {
             isLoading: true,
             buttons: [
               {
-                color: 'accent',
+                color: 'danger',
                 text: 'notify.export.cancel_export',
                 handler: () => {
                   this.stopExportPolling.next(true);
