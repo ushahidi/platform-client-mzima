@@ -17,7 +17,7 @@ import { ColorPickerComponentModule } from '../../shared/components/color-picker
 import { GroupCheckboxSelectModule } from '../../shared/components/group-checkbox-select/group-checkbox-select.module';
 import { MultilevelSelectModule } from '../../shared/components/multilevel-select/multilevel-select.module';
 import { SettingsHeaderModule } from '../../shared/components/settings-header/settings-header.module';
-import { DirectiveModule, SpinnerModule, TranslationsSwitchModule } from '@shared';
+import { DirectiveModule, SpinnerModule } from '@shared';
 
 import { SurveysRoutingModule } from './surveys-routing.module';
 import { SurveysComponent } from './surveys.component';
@@ -48,7 +48,6 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
     DragDropModule,
     SurveysRoutingModule,
     MatExpansionModule,
-    TranslationsSwitchModule,
     QuillModule.forRoot(),
     MatButtonModule,
     MatIconModule,
