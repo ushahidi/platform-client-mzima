@@ -1,12 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GeoJsonFilter, UserResult } from '@models';
+import { GeoJsonFilter, UsersService, UserResult } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService } from '@services';
 import { LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { forkJoin, Observable } from 'rxjs';
-import { UsersService } from '../../core/services/users.service';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 

@@ -4,7 +4,7 @@ import { CONST } from '@constants';
 import dayjs from 'dayjs';
 import { forkJoin, Observable } from 'rxjs';
 import { BreakpointService } from '@services';
-import { UsersService } from '../../core/services/users.service';
+import { UsersService } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -47,7 +47,7 @@ export class UserSettingsComponent implements OnInit {
   private getSettingsHDX() {
     this.usersService.getUserSettings(this.userId!).subscribe({
       next: (response) => {
-        response.results.forEach((setting: any) => {
+        response.results?.forEach((setting: any) => {
           this.updateSettings(setting);
         });
       },

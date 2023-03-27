@@ -23,6 +23,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
+      "@mzima-client/sdk": ["libs/sdk/src/index.ts"],
       "@data": ["apps/web-mzima-client/src/app/data"],
       "@auth": ["apps/web-mzima-client/src/app/auth"],
       "@models": ["apps/web-mzima-client/src/app/core/interfaces"],

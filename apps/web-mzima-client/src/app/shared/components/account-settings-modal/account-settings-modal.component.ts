@@ -11,21 +11,20 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { formHelper } from '@helpers';
-import {
-  AccountNotificationsInterface,
-  ContactsInterface,
-  NotificationTypeEnum,
-  UserDataInterface,
-  UserInterface,
-} from '@models';
+import { AccountNotificationsInterface, NotificationTypeEnum } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
-import { UsersService } from '../../../core/services/users.service';
-import { ContactsService } from '../../../core/services/contacts.service';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
-import { NotificationsService } from '../../../core/services/notifications.service';
-import { CollectionsService } from '../../../core/services/collections.service';
-import { SavedsearchesService } from '../../../core/services/savedsearches.service';
+import {
+  ContactsService,
+  NotificationsService,
+  CollectionsService,
+  SavedsearchesService,
+  ContactsInterface,
+  UsersService,
+  UserDataInterface,
+  UserInterface,
+} from '@mzima-client/sdk';
 
 enum AccountTypeEnum {
   Email = 'email',

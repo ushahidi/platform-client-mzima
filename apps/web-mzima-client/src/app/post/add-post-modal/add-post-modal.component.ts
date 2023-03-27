@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CONST } from '@constants';
-import { SurveyItem } from '@models';
-import { SurveysService } from '../../core/services/surveys.service';
+import { SurveysService, SurveyItem } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-add-post-modal',

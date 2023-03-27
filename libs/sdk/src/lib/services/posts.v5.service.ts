@@ -1,19 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { EnvService } from './env.service';
+import { apiHelpers } from '../helpers';
+import { EnvLoader } from '../loader';
 import { ResourceService } from './resource.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsV5Service extends ResourceService<any> {
-  constructor(protected override httpClient: HttpClient, protected override env: EnvService) {
-    super(httpClient, env);
+  constructor(
+    protected override httpClient: HttpClient,
+    protected override currentLoader: EnvLoader,
+  ) {
+    super(httpClient, currentLoader);
   }
 
   getApiVersions(): string {
-    return this.env.environment.api_v5;
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {

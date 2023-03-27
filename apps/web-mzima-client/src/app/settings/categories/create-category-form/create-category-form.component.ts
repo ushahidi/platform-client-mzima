@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { CategoryInterface, TranslationInterface, LanguageInterface } from '@models';
+import { TranslationInterface, LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -11,8 +11,7 @@ import {
   SelectLanguagesModalComponent,
 } from '../../../shared/components';
 import { LanguageService } from '../../../core/services/language.service';
-import { CategoriesService } from '../../../core/services/categories.service';
-import { RolesService } from '../../../core/services/roles.service';
+import { CategoriesService, RolesService, CategoryInterface } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { BreakpointService } from '@services';
 

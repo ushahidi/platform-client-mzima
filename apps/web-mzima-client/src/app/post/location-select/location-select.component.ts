@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { mapHelper } from '@helpers';
-import { GeoJsonPostsResponse, MapConfigInterface } from '@models';
+import { MapConfigInterface } from '@models';
+import { GeoJsonPostsResponse } from '@mzima-client/sdk';
 import { SessionService } from '@services';
 import {
   control,
