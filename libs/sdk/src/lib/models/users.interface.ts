@@ -1,5 +1,6 @@
+import { ApiNResponse, ApiResponse } from './api-response.interface';
 export interface UserInterfaceResponse {
-  data: UserInterface;
+  result: UserInterface;
 }
 
 export interface UserInterface {
@@ -27,7 +28,6 @@ export interface UserDataInterface {
   email?: string;
   password?: string;
 }
-import { ApiNResponse, ApiResponse } from './api-response.interface';
 
 export interface UserResponse extends ApiResponse, ApiNResponse {
   results: UserResult[];
