@@ -12,9 +12,10 @@ export function takeUntilDestroy$<T>(): UnaryFunction<Observable<T>, Observable<
 
 export const validateFile = (file: File, type = 'image') => {
   switch (type) {
-    case 'image':
+    case 'image': {
       const mimeReg = /[\/.](gif|jpg|jpeg|png)$/i;
       return mimeReg.test(file.type) && file.size < 1048576;
+    }
     case 'csv':
     default:
       return true;

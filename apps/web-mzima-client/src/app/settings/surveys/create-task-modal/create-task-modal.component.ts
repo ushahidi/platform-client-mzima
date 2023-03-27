@@ -24,6 +24,10 @@ export class CreateTaskModalComponent {
   }
 
   addNewTask() {
-    this.matDialogRef.close(this.newTask);
+    this.matDialogRef.close({
+      ...this.newTask,
+      label: this.newTask.label.trim(),
+      description: this.newTask.description.trim(),
+    });
   }
 }

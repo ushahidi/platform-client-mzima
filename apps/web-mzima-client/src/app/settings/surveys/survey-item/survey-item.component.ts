@@ -7,6 +7,7 @@ import { surveyHelper } from '@helpers';
 import { LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
+import { noWhitespaceValidator } from '../../../core/validators/no-whitespace';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
@@ -43,6 +44,7 @@ export class SurveyItemComponent implements OnInit {
   public defaultLanguage?: LanguageInterface;
   public activeLanguages: LanguageInterface[];
   public isDesktop = false;
+  public errorTaskField = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -66,7 +68,7 @@ export class SurveyItemComponent implements OnInit {
       },
     });
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, noWhitespaceValidator]],
       description: [''],
       color: [null],
       enabled_languages: this.formBuilder.group({
@@ -223,16 +225,23 @@ export class SurveyItemComponent implements OnInit {
         base_language: defaultLang,
       });
 
-      const request = Object.assign({}, this.form.value, this.configTask.getConfigOptions());
+      const request = Object.assign(
+        {},
+        {
+          ...this.form.value,
+          name: this.form.value.name.trim(),
+          description: this.form.value.description.trim(),
+        },
+        this.configTask.getConfigOptions(),
+      );
       this.surveysService.saveSurvey(request, this.surveyId).subscribe({
         next: (response) => {
           this.updateForm(response.result);
           this.saveRoles(response.result.id);
           this.router.navigate(['settings/surveys']);
         },
-        error: (err) => {
-          console.error(err);
-          this.notification.showError(JSON.stringify(err));
+        error: ({ error }) => {
+          this.notification.showError(JSON.stringify(error.name[0]));
         },
       });
     } else {
@@ -300,5 +309,22 @@ export class SurveyItemComponent implements OnInit {
 
   public setNewColor(color: string): void {
     this.form.patchValue({ color });
+  }
+
+  public deleteTask(task: SurveyItemTask) {
+    const tasks: SurveyItemTask[] = this.getFormControl('tasks').value;
+    const index = tasks.indexOf(task);
+    tasks.splice(index, 1);
+    this.form.patchValue({ tasks });
+  }
+
+  public duplicateTask(task: SurveyItemTask) {
+    const tasks: SurveyItemTask[] = this.getFormControl('tasks').value;
+    tasks.push(task);
+    this.form.patchValue({ tasks });
+  }
+
+  public setErrorTaskField(event: boolean) {
+    this.errorTaskField = event;
   }
 }

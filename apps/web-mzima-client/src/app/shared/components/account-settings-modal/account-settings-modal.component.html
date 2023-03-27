@@ -280,3 +280,9 @@
 <ng-template #spinner>
   <app-spinner class="spinner"></app-spinner>
 </ng-template>
+
+<pre [style]="{ display: 'none' }">
+  {{ profileForm.invalid }}
+  {{ profileForm.pristine }}
+  {{ profileForm.disabled }}
+</pre>

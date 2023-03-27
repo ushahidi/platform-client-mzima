@@ -70,7 +70,7 @@ export class UsersComponent implements OnInit {
 
     this.userService.getUsers('', { ...this.params }).subscribe({
       next: (response) => {
-        this.users = response.data;
+        this.users = response.results;
         this.isLoading = false;
         this.cdr.detectChanges();
       },

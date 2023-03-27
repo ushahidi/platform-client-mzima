@@ -61,11 +61,10 @@ export class AuthService extends ResourceService<any> {
             tokenType: authResponse.token_type,
           });
         }
-
-        return this.getCurrentUser().subscribe({
-          next: (userData: any) => {
-            const { data } = userData;
-            this.userService.dispatchUserEvents({ data });
+        return this.userService.getCurrentUser().subscribe({
+          next: (userData) => {
+            const { result } = userData;
+            this.userService.dispatchUserEvents({ result });
           },
         });
       }),
