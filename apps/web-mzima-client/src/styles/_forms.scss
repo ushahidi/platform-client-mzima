@@ -511,6 +511,14 @@
     .mat-hint,
     .mat-error {
       margin-top: 8px;
+
+      p {
+        margin-bottom: 0;
+
+        &:not(:first-child) {
+          margin-top: 4px;
+        }
+      }
     }
   }
 

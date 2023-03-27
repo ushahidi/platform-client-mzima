@@ -12,19 +12,21 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GeoJsonFilter, PostResult } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService, EventBusService, EventType } from '@services';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { TranslateService } from '@ngx-translate/core';
-import { objectHelpers } from '@helpers';
-import { SurveysService } from '../../core/services/surveys.service';
-import { PostsV5Service } from '../../core/services/posts.v5.service';
-import { PostsService } from '../../core/services/posts.service';
+import {
+  SurveysService,
+  PostsService,
+  PostsV5Service,
+  GeoJsonFilter,
+  PostResult,
+} from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-import { formValidators } from '@helpers';
+import { objectHelpers, formValidators } from '@helpers';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);

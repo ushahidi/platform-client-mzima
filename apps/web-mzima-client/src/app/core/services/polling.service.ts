@@ -10,9 +10,7 @@ import {
   forkJoin,
   map,
 } from 'rxjs';
-import { ExportJobInterface } from '@models';
-import { DataImportService } from './data-import.service';
-import { ExportJobsService } from './export-jobs.service';
+import { DataImportService, ExportJobsService, ExportJobInterface } from '@mzima-client/sdk';
 import { NotificationService } from './notification.service';
 import { EnvService } from './env.service';
 

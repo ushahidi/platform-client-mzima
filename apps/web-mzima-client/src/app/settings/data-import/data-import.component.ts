@@ -2,15 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { omit, clone, invert, keys, includes } from 'lodash';
-import { FormAttributeInterface, FormCSVInterface, FormInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, Observable } from 'rxjs';
-import { DataImportService } from '../../core/services/data-import.service';
+import {
+  DataImportService,
+  FormsService,
+  FormAttributeInterface,
+  FormCSVInterface,
+  FormInterface,
+} from '@mzima-client/sdk';
 import { NotificationService } from '../../core/services/notification.service';
 import { PollingService } from '../../core/services/polling.service';
 import { LoaderService } from '../../core/services/loader.service';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-import { FormsService } from '../../core/services/forms.service';
 import { BreakpointService } from '@services';
 
 enum PostStatus {

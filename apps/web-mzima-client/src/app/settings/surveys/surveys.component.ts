@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { SurveyItem } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService } from '@services';
 import { catchError, forkJoin, map, Observable, of, take } from 'rxjs';
-import { SurveysService } from '../../core/services/surveys.service';
+import { SurveysService, SurveyItem } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 

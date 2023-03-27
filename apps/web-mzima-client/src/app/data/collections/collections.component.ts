@@ -3,20 +3,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { surveyHelper, formHelper } from '@helpers';
-import {
-  CollectionResult,
-  PostResult,
-  UserInterface,
-  AccountNotificationsInterface,
-} from '@models';
+import { AccountNotificationsInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
-import { CollectionsService } from '../../core/services/collections.service';
+import {
+  CollectionsService,
+  NotificationsService,
+  RolesService,
+  CollectionResult,
+  PostResult,
+  UserInterface,
+} from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-import { RolesService } from '../../core/services/roles.service';
-import { NotificationsService } from '../../core/services/notifications.service';
 
 enum CollectionView {
   List = 'list',

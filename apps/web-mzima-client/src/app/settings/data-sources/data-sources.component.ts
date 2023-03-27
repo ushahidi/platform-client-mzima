@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { arrayHelpers } from '@helpers';
 import { Observable, switchMap } from 'rxjs';
 import { ConfigService } from '../../core/services/config.service';
-import { DataSourcesService } from '../../core/services/data-sources.service';
+import { DataSourcesService } from '@mzima-client/sdk';
 import { BreakpointService } from '@services';
 
 @Component({
