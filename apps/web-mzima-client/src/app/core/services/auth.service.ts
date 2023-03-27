@@ -74,16 +74,16 @@ export class AuthService extends ResourceService<any> {
   private getCurrentUser(): any {
     return this.userService.getCurrentUser().pipe(
       tap((response: any) => {
-        const { data } = response;
+        const { result } = response;
         this.sessionService.setCurrentUser({
-          userId: data.id,
-          realname: data.realname,
-          email: data.email,
-          role: data.role,
-          permissions: data.permissions,
-          allowed_privileges: data.allowed_privileges,
-          gravatar: data.gravatar,
-          language: data.language,
+          userId: result.id,
+          realname: result.realname,
+          email: result.email,
+          role: result.role,
+          permissions: result.permissions,
+          allowed_privileges: result.allowed_privileges,
+          gravatar: result.gravatar,
+          language: result.language,
         });
       }),
     );
