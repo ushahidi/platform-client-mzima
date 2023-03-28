@@ -39,7 +39,12 @@
 
 .spinner {
   display: block;
-  margin: 20vh 0;
+  z-index: 9999;
+  position: absolute;
+  margin: 0 auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .load-more {
