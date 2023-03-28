@@ -42,7 +42,7 @@ export class SurveysComponent implements OnInit {
     this.getSurveys();
   }
 
-  private getSurveys(): void {
+  private getSurveys(isAdd = false): void {
     this.isLoading = true;
     this.surveysService
       .getSurveys('', {
@@ -50,23 +50,32 @@ export class SurveysComponent implements OnInit {
         order: this.params.order,
         limit: this.params.limit,
       })
-      .subscribe((res) => {
-        this.surveys = [...this.surveys, ...res.results];
-        const { current_page: currentPage, last_page: lastPage, total } = res.meta;
-        this.params = { ...this.params, current_page: currentPage, last_page: lastPage, total };
-        this.isLoading = false;
+      .subscribe({
+        next: (res) => {
+          this.surveys = isAdd ? [...this.surveys, ...res.results] : res.results;
+          const { current_page: currentPage, last_page: lastPage, total } = res.meta;
+          this.params = { ...this.params, current_page: currentPage, last_page: lastPage, total };
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.log(err);
+          this.isLoading = false;
+        },
       });
   }
 
   public duplicateSurvey() {
+    this.isLoading = true;
     if (this.selectedSurveys.length !== 1) return;
 
     const survey: SurveyItem = this.selectedSurveys.shift()!;
     const surveyDuplicate = { ...survey, id: null, name: `${survey.name} - duplicate` };
-
     this.surveysService.post(surveyDuplicate).subscribe({
       next: () => this.getSurveys(),
-      error: (err) => console.log(err),
+      error: (err) => {
+        console.log(err);
+        this.isLoading = false;
+      },
     });
   }
 
@@ -89,6 +98,7 @@ export class SurveysComponent implements OnInit {
     });
 
     if (!confirmed) return;
+    this.isLoading = true;
 
     forkJoin(this.selectedSurveys.map((survey) => this.surveysService.deleteSurvey(survey.id)))
       .pipe(take(1))
@@ -97,7 +107,10 @@ export class SurveysComponent implements OnInit {
           this.getSurveys();
           this.selectedSurveys = [];
         },
-        error: (e) => console.log(e),
+        error: (e) => {
+          console.log(e);
+          this.isLoading = false;
+        },
       });
   }
 
@@ -116,7 +129,7 @@ export class SurveysComponent implements OnInit {
   public loadMore(): void {
     if (this.params.current_page < this.params.last_page) {
       this.params.page += 1;
-      this.getSurveys();
+      this.getSurveys(true);
     }
   }
 }

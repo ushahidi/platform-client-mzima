@@ -17,6 +17,8 @@
   </button>
 </app-settings-header>
 
+<app-spinner class="spinner" *ngIf="isLoading || !surveys.length"></app-spinner>
+
 <ul role="list" class="types-list" *ngIf="surveys.length" [data-qa]="'survey-list'">
   <li
     mat-ripple
@@ -45,7 +47,5 @@
   <mat-icon svgIcon="refresh"></mat-icon>
   <span>{{ 'app.load_more' | translate }}</span>
 </button>
-
-<app-spinner class="spinner" *ngIf="!surveys.length || isLoading"></app-spinner>
 
 <div class="actions-spacer" *ngIf="!(isDesktop$ | async)! && isShowActions"></div>
