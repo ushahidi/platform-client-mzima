@@ -100,14 +100,12 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     if (this.selectedFields) {
       this.value = this.selectedFields;
       setTimeout(() => {
-        if (this.treeControl?.dataNodes) {
-          for (const node of this.treeControl.dataNodes) {
-            if (this.value.includes(node.id)) {
-              const { expandable, level } = node;
-              !expandable && level === 0
-                ? this.categorySelectionToggle(node, true)
-                : this.categoryLeafSelectionToggle(node, true);
-            }
+        for (const node of this.treeControl.dataNodes) {
+          if (this.value.includes(node.id)) {
+            const { expandable, level } = node;
+            !expandable && level === 0
+              ? this.categorySelectionToggle(node, true)
+              : this.categoryLeafSelectionToggle(node, true);
           }
         }
       }, 500);
