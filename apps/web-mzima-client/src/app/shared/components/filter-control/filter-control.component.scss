@@ -217,7 +217,6 @@
     padding-top: 6px;
     padding-bottom: 6px;
     padding-inline-start: 12px;
-    padding-inline-end: 16px;
 
     &::ng-deep {
       .mat-list-item-content {
@@ -312,7 +311,7 @@
 
       .menu-content {
         @include breakpoint-min($tablet) {
-          min-width: 160px;
+          min-width: 200px;
         }
       }
     }

@@ -97,41 +97,40 @@
         class="multilevelselect-filter"
       >
         <mat-selection-list [(ngModel)]="value" (selectionChange)="valueChanged()">
-          <mat-tree-node *matTreeNodeDef="let option">
+          <mat-tree-node *matTreeNodeDef="let node">
             <mat-checkbox
               color="primary"
-              [value]="option[fields[0]]"
-              checkboxPosition="before"
+              [value]="node.id"
               (click)="$event.stopPropagation()"
               class="multilevelselect-filter__option"
-              (change)="categoryLeafSelectionToggle(option)"
-              [checked]="checklistSelection.isSelected(option)"
+              (change)="categoryLeafSelectionToggle(node)"
+              [checked]="checklistSelection.isSelected(node)"
             >
-              {{ option[fields[1]] | translate }}
+              {{ node.name }}
             </mat-checkbox>
           </mat-tree-node>
           <mat-tree-node
             (click)="$event.stopPropagation()"
-            *matTreeNodeDef="let option; when: hasChild"
+            *matTreeNodeDef="let node; when: hasChild"
           >
             <mat-checkbox
               color="primary"
-              checkboxPosition="before"
-              [value]="option[fields[0]]"
+              [value]="node.id"
               (click)="$event.stopPropagation()"
+              [indeterminate]="descendantsPartiallySelected(node)"
               class="multilevelselect-filter__option"
-              [checked]="descendantsAllSelected(option)"
-              (change)="categorySelectionToggle(option)"
+              [checked]="descendantsAllSelected(node)"
+              (change)="categorySelectionToggle(node)"
             >
-              {{ option[fields[1]] | translate }}
+              {{ node.name }}
             </mat-checkbox>
             <button
               mat-icon-button
               matTreeNodeToggle
-              class="multilevelselect-filter__option__arrow"
-              [attr.aria-label]="'Toggle ' + option[fields[1]] | translate"
+              class="multilevelselect-filter__option__arrow checklist-leaf-node"
+              [attr.aria-label]="'Toggle ' + node.name"
               [ngClass]="{
-                'multilevelselect-filter__option__arrow--open': treeControl.isExpanded(option)
+                'multilevelselect-filter__option__arrow--open': treeControl.isExpanded(node)
               }"
             >
               <mat-icon svgIcon="arrow-down"></mat-icon>

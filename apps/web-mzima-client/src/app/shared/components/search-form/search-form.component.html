@@ -163,19 +163,19 @@
           <div class="filter-group__info">
             <span *ngIf="notShownPostsCount <= 0">{{
               'global_filter.unmapped_none' | translate
-              }}</span>
+            }}</span>
             <span *ngIf="notShownPostsCount === 1">{{
               'global_filter.unmapped_start_one' | translate
-              }}</span>
+            }}</span>
             <span *ngIf="notShownPostsCount >= 2">{{
               'global_filter.unmapped_start_many' | translate
-              }}</span>
+            }}</span>
             <a [routerLink]="['feed']" *ngIf="notShownPostsCount >= 1">
               {{ notShownPostsCount }} post{{ notShownPostsCount >= 2 ? 's' : '' }}
             </a>
             <span *ngIf="notShownPostsCount >= 1">{{
               'global_filter.unmapped_end' | translate
-              }}</span>
+            }}</span>
           </div>
         </div>
 
@@ -234,7 +234,6 @@
 
     <div class="search-form__filters-panel__inner">
       <ng-container *ngIf="!(isDesktop$ | async)!">
-
         <app-filter-control
           class="search-form__filters-panel__item"
           formControlName="form"
@@ -305,7 +304,7 @@
           {{ 'global_filter.save_new_filter' | translate }}
         </button>
         <span class="no-saved-filters" postfix *ngIf="savedSearches?.length === 0"
-        >No saved filters. Saved filter(s) will appear here for you to select once made
+          >No saved filters. Saved filter(s) will appear here for you to select once made
           available.</span
         >
       </app-filter-control>
@@ -341,6 +340,7 @@
         [type]="filterType.Multilevelselect"
         [title]="'app.categories' | translate"
         [badge]="form.controls['tags'].value?.length || null"
+        [selectedFields]="form.controls['tags'].value"
       >
         <div class="clear-button" suffix>
           <button
@@ -418,7 +418,6 @@
       </div>
     </div>
   </div>
-
 </form>
 
 <ng-template #loader>
