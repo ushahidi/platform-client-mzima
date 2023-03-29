@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
-import { Collection } from '../models';
+import { Collection, CollectionResult } from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -18,13 +18,16 @@ export class CollectionsService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return apiHelpers.API_V_3;
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {
     return 'collections';
   }
 
+  override getById(id: string | number): Observable<{ result: CollectionResult }> {
+    return super.getById(id);
+  }
   getCollections(queryParams?: any): Observable<Collection> {
     return super.get('', queryParams);
   }
