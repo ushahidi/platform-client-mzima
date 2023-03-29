@@ -48,7 +48,7 @@ export class SaveSearchModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.rolesService.get().subscribe({
+    this.rolesService.getRoles().subscribe({
       next: (response) => {
         this.roleOptions = [
           {

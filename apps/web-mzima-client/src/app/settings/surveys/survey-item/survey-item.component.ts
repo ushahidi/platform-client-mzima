@@ -192,7 +192,7 @@ export class SurveyItemComponent implements OnInit {
   }
 
   initRoles() {
-    this.rolesService.get().subscribe((response) => {
+    this.rolesService.getRoles().subscribe((response) => {
       this.roles = response.results;
     });
   }
