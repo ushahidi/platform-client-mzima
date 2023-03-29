@@ -1,7 +1,11 @@
 import { ApiResponse } from './api-response.interface';
 
-export interface RoleResponse extends ApiResponse {
+export interface RolesResponse extends ApiResponse {
   results: RoleResult[];
+}
+
+export interface RoleResponse extends ApiResponse {
+  result: RoleResult;
 }
 
 export interface RoleResult {

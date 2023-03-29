@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RolesService, RoleResponse } from '@mzima-client/sdk';
+import { RolesService, RolesResponse } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
 
@@ -12,7 +12,7 @@ import { BreakpointService } from '@services';
 })
 export class RolesComponent implements OnInit {
   public isDesktop$: Observable<boolean>;
-  public roleResponse$: Observable<RoleResponse>;
+  public roleResponse$: Observable<RolesResponse>;
 
   constructor(private rolesService: RolesService, private breakpointService: BreakpointService) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
@@ -23,6 +23,6 @@ export class RolesComponent implements OnInit {
   }
 
   private getRoles() {
-    this.roleResponse$ = this.rolesService.get();
+    this.roleResponse$ = this.rolesService.getRoles();
   }
 }

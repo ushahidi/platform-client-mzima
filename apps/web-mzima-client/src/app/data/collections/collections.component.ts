@@ -89,7 +89,7 @@ export class CollectionsComponent implements OnInit {
   }
 
   private initRoles() {
-    this.rolesService.get().subscribe({
+    this.rolesService.getRoles().subscribe({
       next: (response) => {
         this.roleOptions = [
           {

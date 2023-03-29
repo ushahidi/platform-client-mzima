@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
-import { RoleResponse, RoleResult } from '../models';
+import { RolesResponse, RoleResult, RoleResponse } from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -18,26 +18,26 @@ export class RolesService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return apiHelpers.API_V_3;
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {
     return 'roles';
   }
 
-  override get(): Observable<RoleResponse> {
+  getRoles(): Observable<RolesResponse> {
     return super.get();
   }
 
-  override getById(id: string): Observable<RoleResult> {
+  getRoleById(id: string): Observable<RoleResponse> {
     return super.getById(id);
   }
 
-  override update(id: string | number, role: RoleResult): Observable<RoleResult> {
+  updateRole(id: string | number, role: RoleResult): Observable<RoleResult> {
     return super.update(id, role);
   }
 
-  override delete(id: string | number): Observable<any> {
+  deleteRole(id: string | number): Observable<any> {
     return super.delete(id);
   }
 }
