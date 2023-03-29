@@ -25,7 +25,6 @@ export class RoleItemComponent implements OnInit {
   private isDesktop$: Observable<boolean>;
   public permissionsList: any[] = [];
   public role: RoleResult;
-  public roles: RoleResult[];
   public isUpdate = false;
   public userRole: string;
   public form: FormGroup;
@@ -63,13 +62,11 @@ export class RoleItemComponent implements OnInit {
     this.userRole = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`) || '';
     this.isUpdate = !!this.route.snapshot.paramMap.get('id');
     const roleId = this.route.snapshot.paramMap.get('id') || '';
-    const roles$ = this.rolesService.get();
-    const role$ = this.rolesService.getById(roleId);
+    const role$ = this.rolesService.getRoleById(roleId);
     const permissions$ = this.permissionsService.getPermissions();
-    combineLatest([role$, permissions$, roles$]).subscribe({
-      next: ([role, permissions, roles]) => {
-        this.roles = roles.results;
-        this.role = role;
+    combineLatest([role$, permissions$]).subscribe({
+      next: ([role, permissions]) => {
+        this.role = role.result;
         this.permissionsList = permissions.results.map((el: any) => {
           const nameTranslateText = el.name.replaceAll(' ', '_').toLowerCase();
           return {
@@ -79,9 +76,9 @@ export class RoleItemComponent implements OnInit {
           };
         });
         if (this.isUpdate) {
-          this.fillInForm(role);
+          this.fillInForm(this.role);
 
-          for (const permission of role.permissions) {
+          for (const permission of this.role.permissions) {
             this.permissionsList.reduce((acc, el: any) => {
               return el.name === permission ? [...acc, (el.checked = true)] : [...acc, el];
             }, []);
@@ -135,7 +132,7 @@ export class RoleItemComponent implements OnInit {
         error: (err) => console.log(err),
       });
     } else {
-      this.rolesService.update(this.role.id, this.form.value).subscribe({
+      this.rolesService.updateRole(this.role.id, this.form.value).subscribe({
         next: () => this.navigateToRoles(),
         error: (err) => console.log(err),
       });
@@ -154,7 +151,7 @@ export class RoleItemComponent implements OnInit {
   }
 
   public async delete() {
-    this.rolesService.delete(this.role.id).subscribe({
+    this.rolesService.deleteRole(this.role.id).subscribe({
       next: () => this.navigateToRoles(),
       error: (err) => console.log(err),
     });

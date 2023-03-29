@@ -75,7 +75,7 @@ export class UserItemComponent implements OnInit {
   }
 
   private getRoles() {
-    this.rolesService.get().subscribe({
+    this.rolesService.getRoles().subscribe({
       next: (response) => {
         this.roles = response.results;
       },
