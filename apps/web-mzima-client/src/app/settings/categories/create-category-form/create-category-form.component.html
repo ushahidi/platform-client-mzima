@@ -117,11 +117,13 @@
       <mzima-client-button
         color="danger"
         *ngIf="isUpdate"
+        class="delete-btn"
+        [iconOnly]="!isDesktop"
         [data-qa]="'btn-cetegory-delete'"
         (buttonClick)="deleteCategoryEmit()"
       >
         <ng-container *ngIf="isDesktop">{{ 'category.delete_category' | translate }}</ng-container>
-        <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
+        <mat-icon *ngIf="!isDesktop" icon svgIcon="delete"></mat-icon>
       </mzima-client-button>
     </div>
     <div>

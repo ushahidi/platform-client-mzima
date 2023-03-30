@@ -187,9 +187,11 @@
         (buttonClick)="openDialog()"
         *ngIf="!isCreateWebhook"
         [disabled]="!form.get('id')?.value"
+        [iconOnly]="!isDesktop"
+        class="delete-btn"
       >
         <ng-container *ngIf="isDesktop">{{ 'app.delete' | translate }}</ng-container>
-        <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
+        <mat-icon *ngIf="!isDesktop" icon svgIcon="delete"></mat-icon>
       </mzima-client-button>
     </div>
     <div>

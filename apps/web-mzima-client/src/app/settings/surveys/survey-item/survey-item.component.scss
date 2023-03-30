@@ -13,6 +13,10 @@
     }
   }
 
+  @include breakpoint-max($tablet) {
+    position: relative;
+  }
+
   &__border {
     top: 0;
     bottom: 0;
@@ -25,9 +29,9 @@
     border-start-start-radius: 4px;
 
     @include breakpoint-max($tablet) {
-      top: 89px;
-      left: 16px;
-      right: 16px;
+      left: 0;
+      right: 0;
+      top: -14px;
       z-index: 50;
       height: 6px;
       width: auto;
