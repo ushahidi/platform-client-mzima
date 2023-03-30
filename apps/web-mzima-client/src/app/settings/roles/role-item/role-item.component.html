@@ -48,43 +48,33 @@
   <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <div>
-      <button
-        type="button"
-        color="accent"
-        mat-raised-button
-        (click)="deleteRole()"
+      <mzima-client-button
+        color="danger"
+        (buttonClick)="deleteRole()"
         [data-qa]="'btn-delete-role'"
         *ngIf="isUpdate && !role?.protected"
-        class="delete-button"
       >
         <ng-container *ngIf="isDesktop">{{ 'role.delete' | translate }}</ng-container>
         <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
-      </button>
+      </mzima-client-button>
     </div>
     <div>
-      <button
-        mat-stroked-button
-        type="button"
-        (click)="navigateToRoles()"
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
         [data-qa]="'btn-cancel-role'"
+        (buttonClick)="navigateToRoles()"
       >
-        <span>{{ 'app.cancel' | translate }}</span>
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        class="role-button"
-        type="submit"
-        [disabled]="form.invalid"
-        [data-qa]="'btn-save-role'"
-      >
+        {{ 'app.cancel' | translate }}
+      </mzima-client-button>
+      <mzima-client-button type="submit" [disabled]="form.invalid" [data-qa]="'btn-save-role'">
         <ng-container *ngIf="isDesktop">{{
           (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate
         }}</ng-container>
         <ng-container *ngIf="!isDesktop">{{
           (isUpdate ? 'app.update' : 'app.save') | translate
         }}</ng-container>
-      </button>
+      </mzima-client-button>
     </div>
   </div>
 </form>

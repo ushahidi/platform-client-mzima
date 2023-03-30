@@ -70,23 +70,13 @@
   }
 
   &__control {
-    width: 1em;
-    height: 1em;
-    display: flex;
-    flex-shrink: 0;
-    font-size: 20px;
+    --size: 20px;
+    --icon-size: 20px;
     margin-left: 8px;
-    background: none;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
 
     @include breakpoint-max($tablet) {
-      font-size: 32px;
-    }
-
-    .mat-icon {
-      font-size: 1em;
+      --size: 32px;
+      --icon-size: 32px;
     }
   }
 

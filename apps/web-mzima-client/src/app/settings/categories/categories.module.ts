@@ -17,6 +17,7 @@ import { CreateComponent } from './create/create.component';
 import { CreateCategoryFormComponent } from './create-category-form/create-category-form.component';
 import { CategoryItemComponent } from './category-item/category-item.component';
 import { CategoryComponent } from './category/category.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { CategoryComponent } from './category/category.component';
     MatButtonModule,
     DirectiveModule,
     SettingsHeaderModule,
+    MzimaUiModule,
   ],
 })
 export class CategoriesModule {}

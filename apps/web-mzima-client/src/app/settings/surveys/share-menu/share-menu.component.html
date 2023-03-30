@@ -10,43 +10,46 @@
   <div class="copy-success" *ngIf="copySuccess">{{ 'share.copied' | translate }}</div>
   <mat-form-field appearance="outline" class="copy" [ngClass]="{ success: copySuccess }">
     <textarea matInput readonly cdkTextareaAutosize cdkAutosizeMaxRows="10">{{ embed }}</textarea>
-    <button
-      class="copy-button"
-      type="button"
-      (click)="copyToClipboard(embed)"
+    <mzima-client-button
       matSuffix
-      mat-raised-button
+      fill="clear"
+      color="secondary"
+      [iconOnly]="true"
+      class="copy-button"
       [disabled]="copySuccess"
+      (buttonClick)="copyToClipboard(embed)"
     >
-      <mat-icon svgIcon="copy"></mat-icon>
-    </button>
+      <mat-icon icon svgIcon="copy"></mat-icon>
+    </mzima-client-button>
   </mat-form-field>
 </div>
 
 <div class="form-row">
-  <a
+  <mzima-client-button
+    fill="clear"
+    color="secondary"
     target="_blank"
     class="share-item"
-    mat-raised-button
     [href]="'https://twitter.com/intent/tweet?url=' + shareUrlEncoded"
   >
-    <mat-icon class="share-item__icon" svgIcon="twitter"></mat-icon>
+    <mat-icon iconPrefix svgIcon="twitter"></mat-icon>
     Twitter
-  </a>
+  </mzima-client-button>
 </div>
 
 <div class="form-row">
-  <a
+  <mzima-client-button
+    fill="clear"
+    color="secondary"
     target="_blank"
     class="share-item"
-    mat-raised-button
     [href]="
       'https://www.facebook.com/sharer/sharer.php?u=' + shareUrlEncoded + '&amp;src=sdkpreparse'
     "
   >
-    <mat-icon class="share-item__icon" svgIcon="facebook"></mat-icon>
+    <mat-icon iconPrefix svgIcon="facebook"></mat-icon>
     Facebook
-  </a>
+  </mzima-client-button>
 </div>
 
 <!-- <button mat-raised-button class="share-item">

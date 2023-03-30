@@ -5,17 +5,14 @@
   >
     <h1 *ngIf="isDesktop$ | async">{{ settingsTitle | translate }}</h1>
     <ng-container *ngIf="isShowActions">
-      <button
-        type="button"
-        color="accent"
-        mat-raised-button
+      <mzima-client-button
+        color="danger"
+        (buttonClick)="deleteEmit()"
         [data-qa]="'btn-settings-delete'"
-        class="delete-btn"
         [disabled]="!selectedItem.length"
-        (click)="deleteEmit()"
       >
         {{ 'app.delete' | translate }}
-      </button>
+      </mzima-client-button>
       <ng-content></ng-content>
     </ng-container>
   </div>
@@ -24,28 +21,20 @@
     *ngIf="isShowCreation"
     [ngClass]="{ 'form-head-panel__inner--single': !isShowActionsButton }"
   >
-    <button
+    <mzima-client-button
+      fill="outline"
+      color="secondary"
+      [isActive]="isShowActions"
       *ngIf="isShowActionsButton"
-      type="button"
-      color="primary"
-      mat-stroked-button
+      (buttonClick)="showActions()"
       [data-qa]="'btn-settings-action'"
-      (click)="showActions()"
-      [ngClass]="{ active: isShowActions }"
     >
       {{ 'settings.bulk_actions' | translate }}
-    </button>
-    <button
-      class="create-btn"
-      type="button"
-      color="primary"
-      mat-raised-button
-      [routerLink]="['create']"
-      [data-qa]="'btn-settings-create'"
-    >
+    </mzima-client-button>
+    <mzima-client-button [routerLink]="['create']" [data-qa]="'btn-settings-create'">
       <span>{{ newButtonTitle | translate }}</span>
-      <mat-icon svgIcon="plus"></mat-icon>
-    </button>
+      <mat-icon icon svgIcon="plus"></mat-icon>
+    </mzima-client-button>
   </div>
 
   <div class="form-head-panel__inner" *ngIf="isShowTranslation">
@@ -65,16 +54,9 @@
       </mat-form-field>
     </div>
 
-    <button
-      class="create-btn"
-      type="button"
-      color="primary"
-      mat-raised-button
-      (click)="showLanguagesEmit()"
-      [data-qa]="'btn-settings-create'"
-    >
+    <mzima-client-button [data-qa]="'btn-settings-create'" (buttonClick)="showLanguagesEmit()">
       {{ newButtonTitle | translate }}
-      <mat-icon svgIcon="plus"></mat-icon>
-    </button>
+      <mat-icon icon svgIcon="plus"></mat-icon>
+    </mzima-client-button>
   </div>
 </div>

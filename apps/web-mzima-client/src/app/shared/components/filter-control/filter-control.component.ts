@@ -168,9 +168,11 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public writeValue(value: any) {
     if (this.type === this.filterType.Daterange) {
       this.value = new DateRange<Date>(new Date(value.start), new Date(value.end));
+      const start = dayjs(this.value.start).format('DD-MM-YYYY'),
+        end = this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : '';
       this.calendarValue = {
-        start: dayjs(this.value.start).format('DD-MM-YYYY'),
-        end: this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : '',
+        start: start !== 'Invalid Date' ? start : '',
+        end: end !== 'Invalid Date' ? end : '',
       };
     } else {
       this.value = value;

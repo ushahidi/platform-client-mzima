@@ -6,21 +6,20 @@
 
   <h1>{{ 'data_import.import_complete' | translate }}</h1>
   <div class="description">
-    <p [innerHTML]="'data_import.complete_info' | translate: { filename: filename }"></p>
+    <p [innerHTML]="'data_import.complete_info' | translate : { filename: filename }"></p>
   </div>
 
   <div class="form-controls-panel">
-    <button type="button" mat-stroked-button [routerLink]="['/feed/collections', collectionId]">
-      {{ 'data_import.see_imported_posts' | translate }}
-    </button>
-    <button
-      type="button"
-      color="primary"
-      mat-raised-button
-      [routerLink]="['/settings/data-import']"
+    <mzima-client-button
+      fill="outline"
+      color="secondary"
+      [routerLink]="['/feed/collections', collectionId]"
     >
+      {{ 'data_import.see_imported_posts' | translate }}
+    </mzima-client-button>
+    <mzima-client-button [routerLink]="['/settings/data-import']">
       {{ 'data_import.import_another' | translate }}
-    </button>
+    </mzima-client-button>
   </div>
 </div>
 
@@ -32,17 +31,17 @@
   </div>
 
   <div class="form-controls-panel">
-    <button *ngIf="document.magic" type="button" mat-stroked-button (click)="getPollingInfo()">
-      {{ 'data_import.get_polling_info' | translate }}
-    </button>
-    <button
-      type="button"
-      color="primary"
-      mat-raised-button
-      [routerLink]="['/settings/data-import']"
+    <mzima-client-button
+      fill="outline"
+      color="secondary"
+      *ngIf="document.magic"
+      (buttonClick)="getPollingInfo()"
     >
+      {{ 'data_import.get_polling_info' | translate }}
+    </mzima-client-button>
+    <mzima-client-button [routerLink]="['/settings/data-import']">
       {{ 'data_import.import_another' | translate }}
-    </button>
+    </mzima-client-button>
   </div>
   <!-- TODO: FIXME: DEBUG INFO -->
   <pre>{{ pollingInfo | json }}</pre>

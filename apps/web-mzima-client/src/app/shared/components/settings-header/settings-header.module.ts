@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { DirectiveModule } from '../../directive.module';
 import { SettingsHeaderComponent } from './settings-header.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [SettingsHeaderComponent],
@@ -20,6 +21,7 @@ import { SettingsHeaderComponent } from './settings-header.component';
     MatSelectModule,
     FormsModule,
     MatIconModule,
+    MzimaUiModule,
   ],
   exports: [SettingsHeaderComponent],
 })

@@ -74,22 +74,11 @@
 
   &__close-btn {
     top: 0;
-    padding: 0;
+    right: 0;
     z-index: 75;
-    width: 40px;
-    height: 40px;
-    min-width: 0;
-    display: flex;
-    border-radius: 8px;
+    --size: 40px;
+    --border-radius: 8px;
     position: absolute;
-    align-items: center;
-    inset-inline-end: 0;
-    flex-direction: column;
-    justify-content: center;
-
-    .mat-icon {
-      font-size: 24px;
-    }
   }
 
   &__content {
@@ -123,7 +112,7 @@
     justify-content: flex-end;
     margin: 24px -13px -24px;
 
-    .mat-button-base {
+    mzima-client-button {
       margin: 0 5px;
     }
   }

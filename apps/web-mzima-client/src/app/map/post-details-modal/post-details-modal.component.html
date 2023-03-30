@@ -1,13 +1,15 @@
-<button
-  mat-stroked-button
-  [mat-dialog-close]="false"
-  class="modal__close-btn"
+<mzima-client-button
   tabindex="-1"
-  aria-label="{{ 'modal.button.close' | translate }}"
+  fill="outline"
+  [iconOnly]="true"
+  color="light-gray"
   [data-qa]="'btn-close'"
+  class="modal__close-btn"
+  [mat-dialog-close]="false"
+  ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
-</button>
+  <mat-icon icon svgIcon="close"></mat-icon>
+</mzima-client-button>
 
 <mat-dialog-content class="post">
   <app-post-details

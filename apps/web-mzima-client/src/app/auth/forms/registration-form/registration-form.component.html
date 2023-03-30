@@ -28,9 +28,15 @@
   <div class="form-row">
     <mat-label>{{ 'user.password' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
-      <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisible()">
-        <mat-icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
-      </button>
+      <mzima-client-button
+        matSuffix
+        fill="clear"
+        color="secondary"
+        [iconOnly]="true"
+        (buttonClick)="togglePasswordVisible()"
+      >
+        <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
+      </mzima-client-button>
       <input
         matInput
         formControlName="password"
@@ -54,14 +60,12 @@
   <div mat-dialog-actions align="end">
     <ng-content select="[btn-cancel]"></ng-content>
 
-    <button
+    <mzima-client-button
       type="submit"
-      color="primary"
-      mat-raised-button
       [disabled]="form.invalid || form.disabled"
       [data-qa]="'btn-register'"
     >
       {{ 'nav.register' | translate }}
-    </button>
+    </mzima-client-button>
   </div>
 </form>

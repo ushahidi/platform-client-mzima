@@ -6,6 +6,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { CollectionItemComponent } from './collection-item.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [CollectionItemComponent],
@@ -16,6 +17,7 @@ import { CollectionItemComponent } from './collection-item.component';
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
+    MzimaUiModule,
   ],
   exports: [CollectionItemComponent],
 })

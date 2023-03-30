@@ -93,22 +93,14 @@
       margin-inline-start: -4px;
     }
 
-    .mat-button-base {
+    mzima-client-button {
       margin: 0 8px;
+      white-space: nowrap;
 
       @include breakpoint-max($tablet) {
         margin: 0 4px;
-        line-height: 40px;
+        --min-height: 40px;
         width: calc(50% - 8px);
-
-        &.mat-stroked-button {
-          line-height: 38px;
-        }
-      }
-
-      &.mat-stroked-button {
-        background: transparent;
-        color: var(--color-neutral-10);
       }
     }
   }

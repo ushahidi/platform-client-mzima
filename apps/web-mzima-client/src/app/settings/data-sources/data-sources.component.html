@@ -1,16 +1,13 @@
 <div class="form-head-panel">
   <h1 *ngIf="isDesktop$ | async">Data Source</h1>
-  <button
-    type="button"
-    color="primary"
-    mat-raised-button
-    [data-qa]="'btn-add-provider'"
+  <mzima-client-button
     [routerLink]="['create']"
     *ngIf="isAllProvidersAdded"
+    [data-qa]="'btn-add-provider'"
   >
     <span>Add source</span>
-    <mat-icon svgIcon="plus"></mat-icon>
-  </button>
+    <mat-icon icon svgIcon="plus"></mat-icon>
+  </mzima-client-button>
 </div>
 <ng-container *ngIf="providersData?.length; else showLoader">
   <div *ngFor="let provider of providersData" [data-qa]="'providers-list'">

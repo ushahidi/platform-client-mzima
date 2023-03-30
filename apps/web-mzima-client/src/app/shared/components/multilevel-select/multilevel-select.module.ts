@@ -7,6 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTreeModule } from '@angular/material/tree';
 import { MultilevelSelectComponent } from './multilevel-select.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [MultilevelSelectComponent],
@@ -18,6 +19,7 @@ import { MultilevelSelectComponent } from './multilevel-select.component';
     FormsModule,
     MatButtonModule,
     MatIconModule,
+    MzimaUiModule,
   ],
   exports: [MultilevelSelectComponent],
 })

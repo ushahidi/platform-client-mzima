@@ -1,8 +1,7 @@
-.mat-button-base {
-  min-width: 100%;
-}
 .donation-amount {
-  .mat-icon {
+  &__icon {
     font-size: 20px;
+    margin-top: -8px;
+    margin-bottom: -8px;
   }
 }

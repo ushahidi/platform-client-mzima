@@ -51,16 +51,9 @@
     margin: 0 -8px -8px;
     justify-content: space-between;
 
-    .twitter,
-    .facebook {
-      &-btn {
-        margin: 0 8px 8px;
-        width: 45%;
-      }
-
-      &-icon {
-        margin-inline-start: 8px;
-      }
+    mzima-client-button {
+      margin: 0 8px 8px;
+      width: calc(50% - 16px);
     }
   }
 }

@@ -15,7 +15,7 @@
   }
 
   .mat-dialog-title {
-    flex: 1 1 100%;
+    // flex: 1 1 100%;
     margin-bottom: 0 !important;
 
     @include breakpoint-max($tablet) {
@@ -124,7 +124,7 @@
       overflow: hidden;
     }
 
-    .mat-button-base {
+    > mzima-client-button {
       flex-shrink: 0;
       margin-inline-start: 16px;
     }

@@ -191,32 +191,28 @@
   <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <div>
-      <button
-        mat-raised-button
-        type="button"
-        color="accent"
-        (click)="turnOffDataSource($event)"
+      <mzima-client-button
+        color="danger"
         *ngIf="!onCreating"
-        class="delete-button"
         [data-qa]="'btn-provider-delete'"
+        (buttonClick)="turnOffDataSource($event)"
       >
         <ng-container *ngIf="isDesktop">{{ 'app.delete' | translate }}</ng-container>
-        <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
-      </button>
+        <mat-icon icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
+      </mzima-client-button>
     </div>
     <div>
-      <button mat-stroked-button type="button" (click)="back()" [data-qa]="'btn-provider-cancel'">
-        {{ 'app.cancel' | translate }}
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="form.invalid"
-        [data-qa]="'btn-provider-save'"
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
+        (buttonClick)="back()"
+        [data-qa]="'btn-provider-cancel'"
       >
+        {{ 'app.cancel' | translate }}
+      </mzima-client-button>
+      <mzima-client-button [disabled]="form.invalid" [data-qa]="'btn-provider-save'">
         {{ 'app.save' | translate }}
-      </button>
+      </mzima-client-button>
     </div>
   </div>
 </form>
