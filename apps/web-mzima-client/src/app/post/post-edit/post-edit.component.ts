@@ -381,27 +381,24 @@ export class PostEditComponent implements OnInit, OnChanges {
     if (!this.form.valid) this.form.markAllAsTouched();
     this.preventSubmitIncaseTheresNoBackendValidation();
 
-    console.log('postData', postData);
-
-    // if (this.postId) {
-    //   postData.post_date = this.post.post_date || new Date().toISOString();
-    //   this.postsV5Service.update(this.postId, postData).subscribe({
-    //     error: () => this.form.enable(),
-    //     complete: async () => {
-    //       await this.postComplete();
-    //     },
-    //   });
-    // } else {
-    //   if (!this.atLeastOneFieldHasValidationError) {
-    //     this.postsV5Service.post(postData).subscribe({
-    //       error: () => this.form.enable(),
-    //       complete: async () => {
-    //         // console.log('Submit possible!');
-    //         await this.postComplete();
-    //       },
-    //     });
-    //   }
-    // }
+    if (this.postId) {
+      postData.post_date = this.post.post_date || new Date().toISOString();
+      this.postsV5Service.update(this.postId, postData).subscribe({
+        error: () => this.form.enable(),
+        complete: async () => {
+          await this.postComplete();
+        },
+      });
+    } else {
+      if (!this.atLeastOneFieldHasValidationError) {
+        this.postsV5Service.post(postData).subscribe({
+          error: () => this.form.enable(),
+          complete: async () => {
+            await this.postComplete();
+          },
+        });
+      }
+    }
   }
 
   public preventSubmitIncaseTheresNoBackendValidation() {
