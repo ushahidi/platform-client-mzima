@@ -37,6 +37,7 @@
       <ng-container *ngFor="let field of post_content.fields">
         <div *ngIf="field.input !== 'tags' ? field.value : field.value?.length" class="post__group">
           <h3>{{ field.label }}</h3>
+
           <ng-container *ngIf="field.input === 'tags'">
             <ng-container *ngFor="let category of post.categories">
               <div class="category" *ngIf="!isParentCategory(post.categories, category.id)">
@@ -62,15 +63,56 @@
           </ng-container>
 
           <ng-container *ngIf="field.input === 'date'">
-            <p>{{ field.value.value | date: 'MMMM d, y' }}</p>
+            <p>{{ field.value.value | date : 'MMMM d, y' }}</p>
           </ng-container>
 
           <ng-container *ngIf="field.input === 'datetime'">
-            <p>{{ field.value.value | date: 'MMMM d, y h:mm aaa' }}</p>
+            <p>{{ field.value.value | date : 'MMMM d, y h:mm aaa' }}</p>
           </ng-container>
 
           <ng-container *ngIf="field.input === 'radio'">
-            <p>{{ field.value.value }}</p>
+            <p>{{ field.value.value || '-' }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'number'">
+            <p>{{ field.value.value || '-' }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'text'">
+            <a *ngIf="field.label === 'Media Link'" [href]="field.value.value" target="_blank">{{
+              field.value.value
+            }}</a>
+            <p *ngIf="field.label !== 'Media Link'">{{ field.value.value || '-' }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'textarea'">
+            <p>{{ field.value.value || '-' }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'checkbox'">
+            <span *ngIf="!field.options.length">-</span>
+            <ul class="post--checkbox-list" *ngIf="field.options.length">
+              <li *ngFor="let option of field.options">
+                <p>{{ option }}</p>
+              </li>
+            </ul>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'video'">
+            <span *ngIf="!field.value.value">-</span>
+            <div *ngIf="field.value.value">
+              <iframe id="player" [src]="field.value.value" width="560" height="315"></iframe>
+              <a [href]="field.value.value" target="_blank">{{ field.value.value }}</a>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'upload'">
+            <span *ngIf="!field.value.value">-</span>
+            <img *ngIf="field.value.value" [src]="field.value.value" [alt]="post.title" />
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'relation'">
+            <p>{{ field.value.value || '-' }}</p>
           </ng-container>
         </div>
       </ng-container>

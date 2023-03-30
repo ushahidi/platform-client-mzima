@@ -208,7 +208,12 @@
 
             <ng-container *ngIf="field.input === 'number'">
               <mat-form-field appearance="outline">
-                <input matInput [formControlName]="field.key" type="number" />
+                <input
+                  matInput
+                  [formControlName]="field.key"
+                  type="number"
+                  [pattern]="field.type === 'int' ? '[0-9]*' : ''"
+                />
               </mat-form-field>
             </ng-container>
 
@@ -320,6 +325,9 @@
               <span *ngIf="form.get(field.key)?.hasError('minlength')">
                 {{ field.label }} field is too short, use at least 2 characters
               </span>
+              <span *ngIf="form.get(field.key)?.hasError('pattern')">
+                {{ field.label }} field is invalid
+              </span>
             </mat-error>
           </div>
         </div>
@@ -334,7 +342,11 @@
         >
           {{ 'app.cancel' | translate }}
         </mzima-client-button>
-        <mzima-client-button type="submit" [data-qa]="'btn-post-item-submit'">
+        <mzima-client-button
+          [disabled]="form.invalid"
+          type="submit"
+          [data-qa]="'btn-post-item-submit'"
+        >
           {{ 'app.submit' | translate }}
         </mzima-client-button>
       </div>
