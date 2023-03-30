@@ -188,6 +188,10 @@ export class SearchFormComponent implements OnInit {
               JSON.stringify(withSet),
             );
           } else {
+            localStorage.setItem(
+              this.session.getLocalStorageNameMapper('filters'),
+              JSON.stringify(this.form.value),
+            );
             this.collectionInfo = undefined;
           }
         }
@@ -287,7 +291,7 @@ export class SearchFormComponent implements OnInit {
   private getCollectionInfo(id: string) {
     this.collectionsService.getById(id).subscribe({
       next: (coll) => {
-        this.collectionInfo = coll;
+        this.collectionInfo = coll.result;
         this.activeSavedSearch = undefined;
         this.activeSavedSearchValue = null;
         localStorage.removeItem(this.session.getLocalStorageNameMapper('activeSavedSearch'));

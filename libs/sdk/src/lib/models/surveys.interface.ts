@@ -2,6 +2,17 @@ import { FormAttributeInterface } from './forms.interface';
 
 export interface SurveyApiResponse {
   results: SurveyItem[];
+  meta: Meta;
+}
+
+export interface Meta {
+  current_page: number;
+  from: number;
+  last_page: number;
+  path: string;
+  per_page: number;
+  to: number;
+  total: number;
 }
 
 export interface SurveyItem {

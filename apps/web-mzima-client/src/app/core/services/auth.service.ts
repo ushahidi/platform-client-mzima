@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { mergeMap, Observable, tap } from 'rxjs';
+import { mergeMap, Observable } from 'rxjs';
 import { CONST } from '@constants';
 import { UsersService } from '@mzima-client/sdk';
 import { ResourceService } from './resource.service';
@@ -62,8 +62,9 @@ export class AuthService extends ResourceService<any> {
           });
         }
         return this.userService.getCurrentUser().subscribe({
-          next: (userData) => {
+          next: (userData: any) => {
             const { result } = userData;
+            this.setCurrentUserToSession(result);
             this.userService.dispatchUserEvents({ result });
           },
         });
@@ -71,22 +72,17 @@ export class AuthService extends ResourceService<any> {
     );
   }
 
-  private getCurrentUser(): any {
-    return this.userService.getCurrentUser().pipe(
-      tap((response: any) => {
-        const { data } = response;
-        this.sessionService.setCurrentUser({
-          userId: data.id,
-          realname: data.realname,
-          email: data.email,
-          role: data.role,
-          permissions: data.permissions,
-          allowed_privileges: data.allowed_privileges,
-          gravatar: data.gravatar,
-          language: data.language,
-        });
-      }),
-    );
+  private setCurrentUserToSession(user: any) {
+    this.sessionService.setCurrentUser({
+      userId: user.id,
+      realname: user.realname,
+      email: user.email,
+      role: user.role,
+      permissions: user.permissions,
+      allowed_privileges: user.allowed_privileges,
+      gravatar: user.gravatar,
+      language: user.language,
+    });
   }
 
   signup(payload: { email: string; password: string; realname: string }) {

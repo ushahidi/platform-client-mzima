@@ -33,8 +33,8 @@ export class SurveysService extends ResourceService<any> {
     }
   }
 
-  getSurveys(): Observable<SurveyApiResponse> {
-    return super.get();
+  getSurveys(url: string, params: object): Observable<SurveyApiResponse> {
+    return super.get(url, params);
   }
 
   getSurveyById(id: string | number): Observable<any> {
