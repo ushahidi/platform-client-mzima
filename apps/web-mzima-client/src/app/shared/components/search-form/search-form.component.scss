@@ -181,25 +181,15 @@
       min-width: 150px;
       position: absolute;
       top: calc(100% + 16px);
-      box-shadow: inset 0 0 0 1px var(--color-neutral-60) !important;
-    }
 
-    &::ng-deep {
-      .mat-button-wrapper {
-        justify-content: center;
-
-        @include breakpoint-max($tablet) {
-          flex-direction: row-reverse;
+      &::ng-deep {
+        .mzima-button {
+          &--outline {
+            &:before {
+              box-shadow: inset 0 0 0 1px var(--color-neutral-60);
+            }
+          }
         }
-      }
-    }
-
-    &__icon {
-      flex-shrink: 0;
-
-      @include breakpoint-max($tablet) {
-        margin-inline-start: 10px;
-        margin-inline-end: 0 !important;
       }
     }
   }
@@ -253,6 +243,7 @@
       width: 40px;
       height: 56px;
       line-height: 1;
+      cursor: pointer;
       font-size: 24px;
       margin-top: -1px;
       position: absolute;
@@ -260,6 +251,7 @@
       pointer-events: auto;
       inset-inline-start: 100%;
       border-radius: 0 28px 28px 0;
+      background: var(--color-light);
       border: 1px solid var(--color-neutral-20);
       border-inline-start-width: 0;
 
@@ -337,13 +329,6 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-
-    .filter-group__head__button {
-      margin-top: 0;
-      margin-bottom: 0;
-      margin-inline-end: -4px;
-      margin-inline-start: 4px;
-    }
   }
 
   &__title {
@@ -448,17 +433,6 @@
     justify-content: space-between;
 
     &__button {
-      min-width: 0;
-      font-size: 12px;
-      padding: 2px 4px;
-      font-weight: 700;
-      line-height: 14px;
-      text-decoration: underline;
-      margin-top: -2px;
-      margin-bottom: -2px;
-      margin-inline-end: -4px;
-      margin-inline-start: 14px;
-
       @include breakpoint-max($tablet) {
         font-size: 14px;
         line-height: 16px;
@@ -587,37 +561,22 @@
 }
 
 .save-filter-button {
-  width: 100%;
-  font-size: 14px;
-  border-radius: 0;
-  text-align: left;
-  padding-left: 16px;
-  padding-right: 16px;
+  display: block;
+  margin-top: 8px;
+  --font-size: 14px;
+  --border-radius: 0;
+  --justify-content: flex-start;
+  --padding-start: 8px;
+  --padding-end: 16px;
 
   @include breakpoint-max($tablet) {
-    font-size: 16px;
-    margin-top: 16px;
+    margin-top: 0;
+    --font-size: 16px;
+    margin-bottom: 8px;
     margin-left: -16px;
     margin-right: -16px;
+    --padding-start: 10px;
     width: calc(100% + 32px);
-  }
-
-  &.small {
-    .save-filter-button {
-      &__icon {
-        margin-inline-end: 8px;
-
-        &:last-child {
-          margin-inline-start: 0;
-        }
-      }
-    }
-  }
-
-  .mat-icon {
-    @include breakpoint-max($tablet) {
-      font-size: 20px;
-    }
   }
 }
 
@@ -626,6 +585,11 @@
   padding: 8px 14px;
   align-items: center;
   justify-content: flex-end;
+
+  @include breakpoint-max($tablet) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .spinner {

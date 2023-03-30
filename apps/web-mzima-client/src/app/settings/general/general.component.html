@@ -89,47 +89,47 @@
       <input matInput [value]="apiKey.api_key" readonly />
       <div class="copy-success" *ngIf="copySuccess">{{ 'share.copied' | translate }}</div>
 
-      <button
+      <mzima-client-button
         matSuffix
-        type="button"
-        mat-icon-button
-        (click)="copyToClipboard(apiKey.api_key)"
+        fill="clear"
+        color="secondary"
+        [iconOnly]="true"
         [disabled]="copySuccess"
+        (buttonClick)="copyToClipboard(apiKey.api_key)"
       >
-        <mat-icon svgIcon="copy"></mat-icon>
-      </button>
+        <mat-icon icon svgIcon="copy"></mat-icon>
+      </mzima-client-button>
 
       <mat-hint>{{ 'settings.api_key_desc' | translate }}</mat-hint>
     </mat-form-field>
   </div>
 
-  <button type="button" mat-stroked-button (click)="generateApiKey()">
+  <mzima-client-button fill="outline" [expand]="false" color="secondary" (click)="generateApiKey()">
     <span>{{ 'settings.general_settings.generate_api_key' | translate }}</span>
-    <mat-icon svgIcon="key"></mat-icon>
-  </button>
+    <mat-icon icon svgIcon="key"></mat-icon>
+  </mzima-client-button>
 </div>
 
 <app-settings-map #mapSettings></app-settings-map>
 
 <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
 <div class="form-controls-panel form-controls-panel--sticky">
-  <button
+  <mzima-client-button
     type="button"
-    mat-stroked-button
+    fill="outline"
+    color="secondary"
     routerLink="/settings"
     [data-qa]="'btn-cancel'"
     *ngIf="!(isDesktop$ | async)!"
   >
     {{ 'app.cancel' | translate }}
-  </button>
-  <button
-    type="button"
-    color="primary"
-    (click)="save()"
-    mat-raised-button
-    [data-qa]="'btn-save'"
+  </mzima-client-button>
+  <mzima-client-button
+    type="submit"
+    data-qa="btn-save"
+    (buttonClick)="save()"
     [disabled]="generalForm.invalid || generalForm.disabled"
   >
     {{ 'app.save' | translate }}
-  </button>
+  </mzima-client-button>
 </div>

@@ -71,8 +71,8 @@
 }
 
 .buttons {
-  .mat-button-base {
-    width: 100%;
+  mzima-client-button {
+    display: block;
 
     &:not(:first-child) {
       margin-top: 8px;

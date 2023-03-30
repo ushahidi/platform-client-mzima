@@ -1,12 +1,15 @@
-<button
-  mat-stroked-button
-  [mat-dialog-close]="false"
-  class="modal__close-btn"
+<mzima-client-button
   tabindex="-1"
-  aria-label="{{ 'modal.button.close' | translate }}"
+  fill="outline"
+  [iconOnly]="true"
+  color="light-gray"
+  [data-qa]="'btn-close'"
+  class="modal__close-btn"
+  [mat-dialog-close]="false"
+  ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon class="fab-button__icon">close</mat-icon>
-</button>
+  <mat-icon icon svgIcon="close"></mat-icon>
+</mzima-client-button>
 
 <strong mat-dialog-title>{{
   (isDesktop$ | async) ? ('form.choose_language' | translate) : 'Choose language'
@@ -19,7 +22,9 @@
         placeholder="{{ 'global_filter.search' | translate }}"
         (input)="searchLanguage($event)"
       />
-      <mat-icon matPrefix svgIcon="search"></mat-icon>
+      <mzima-client-button matPrefix fill="clear" color="secondary" [iconOnly]="true">
+        <mat-icon icon svgIcon="search-small"></mat-icon>
+      </mzima-client-button>
     </mat-form-field>
   </div>
 </form>
@@ -40,13 +45,13 @@
   </ul>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-stroked-button [mat-dialog-close]="false">{{ 'app.cancel' | translate }}</button>
-  <button
-    color="primary"
-    mat-raised-button
+  <mzima-client-button fill="outline" color="secondary" [mat-dialog-close]="false">
+    {{ 'app.cancel' | translate }}
+  </mzima-client-button>
+  <mzima-client-button
     [mat-dialog-close]="data.activeLanguages"
     [disabled]="!data.activeLanguages.length"
   >
     {{ 'app.add' | translate }}
-  </button>
+  </mzima-client-button>
 </div>

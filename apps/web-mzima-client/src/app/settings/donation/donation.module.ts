@@ -10,6 +10,7 @@ import { DonationRoutingModule } from './donation-routing.module';
 import { DonationComponent } from './donation.component';
 import { SettingsModule } from '../settings.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [DonationComponent],
@@ -23,6 +24,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     TranslateModule,
     MatInputModule,
     MatButtonModule,
+    MzimaUiModule,
   ],
 })
 export class DonationModule {}

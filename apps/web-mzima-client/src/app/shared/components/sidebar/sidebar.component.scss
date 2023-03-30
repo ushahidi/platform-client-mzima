@@ -81,17 +81,21 @@
 }
 
 .sidebar-menu-button {
-  width: 100%;
+  display: flex;
   color: inherit;
+  cursor: pointer;
   font-size: 16px;
   border-radius: 0;
   line-height: 1.6;
   text-align: start;
   font-weight: normal;
+  align-items: center;
   border-style: solid;
+  text-decoration: none;
   border-width: 0 0 0 4px;
   border-color: transparent;
   transition-duration: 0.35s;
+  justify-content: flex-start;
   box-shadow: none !important;
   transition-timing-function: ease;
   background: var(--color-neutral-100);
@@ -110,6 +114,7 @@
     font-size: 12px;
     line-height: 18px;
     padding: 13px 8px;
+    flex-direction: column;
 
     &:before {
       left: 0;
@@ -144,21 +149,6 @@
     border-color: var(--color-primary-60);
   }
 
-  &::ng-deep {
-    .mat-ripple-element {
-      background-color: var(--color-neutral-100);
-    }
-
-    .mat-button-wrapper {
-      @include breakpoint-max($tablet) {
-        width: 100%;
-        align-items: center;
-        flex-direction: column;
-        justify-content: flex-start;
-      }
-    }
-  }
-
   &--active {
     color: var(--color-primary-60);
     background-color: var(--color-black);
@@ -172,15 +162,29 @@
   }
 
   &__icon {
+    width: 1em;
+    height: 1em;
+    display: block;
     font-size: 30px;
     margin-inline-end: 12px;
     margin-right: 12px !important;
+
+    @include breakpoint-max($laptop-small) {
+      margin-inline-end: 8px;
+      margin-right: 8px !important;
+    }
 
     @include breakpoint-max($tablet) {
       font-size: 32px;
       margin-bottom: 4px;
       margin-right: 0 !important;
       margin-inline-end: 0 !important;
+    }
+
+    &::ng-deep {
+      svg {
+        display: block;
+      }
     }
 
     img {

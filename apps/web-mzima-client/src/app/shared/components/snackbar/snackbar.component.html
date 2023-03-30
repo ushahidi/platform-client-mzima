@@ -19,14 +19,13 @@
     <p *ngIf="data.message">{{ data.message | translate }}</p>
 
     <div class="snackbar__buttons" *ngIf="data.buttons?.length">
-      <button
-        mat-raised-button
+      <mzima-client-button
         *ngFor="let button of data.buttons"
-        [color]="button.color"
-        (click)="closeSnackbar(button.handler)"
+        [color]="button.color ?? 'primary'"
+        (buttonClick)="closeSnackbar(button.handler)"
       >
         {{ button.text! | translate }}
-      </button>
+      </mzima-client-button>
     </div>
   </div>
 </div>

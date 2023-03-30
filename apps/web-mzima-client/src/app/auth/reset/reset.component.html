@@ -14,8 +14,8 @@
     </app-lottie-animation>
     <strong mat-dialog-title>Your password was successfully changed</strong>
     <p>Now you can login with new credentials</p>
-    <button type="button" color="primary" mat-raised-button (click)="openLoginModal()">
+    <mzima-client-button type="button" (buttonClick)="openLoginModal()" [expand]="false">
       {{ 'nav.login' | translate }}
-    </button>
+    </mzima-client-button>
   </div>
 </ng-template>

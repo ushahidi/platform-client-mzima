@@ -1,14 +1,16 @@
 <ng-container *ngIf="profile !== undefined; else spinner">
-  <button
-    mat-stroked-button
-    [mat-dialog-close]="false"
-    class="modal__close-btn"
+  <mzima-client-button
     tabindex="-1"
-    aria-label="{{ 'modal.button.close' | translate }}"
+    fill="outline"
+    [iconOnly]="true"
+    color="light-gray"
     [data-qa]="'btn-close'"
+    class="modal__close-btn"
+    [mat-dialog-close]="false"
+    ariaLabel="{{ 'modal.button.close' | translate }}"
   >
-    <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
-  </button>
+    <mat-icon icon svgIcon="close"></mat-icon>
+  </mzima-client-button>
 
   <div class="content">
     <mat-tab-group
@@ -131,9 +133,13 @@
                   </div>
 
                   <div class="contact-item__buttons">
-                    <button color="accent" mat-raised-button (click)="deleteContact(contact.id)">
+                    <mzima-client-button
+                      color="danger"
+                      (buttonClick)="deleteContact(contact.id)"
+                      [expand]="false"
+                    >
                       {{ 'contact.button.delete' | translate }}
-                    </button>
+                    </mzima-client-button>
                   </div>
                 </mat-expansion-panel>
                 <mat-expansion-panel
@@ -180,15 +186,15 @@
                       </mat-form-field>
                     </div>
 
-                    <button
-                      color="primary"
-                      mat-raised-button
+                    <mzima-client-button
+                      type="submit"
+                      [expand]="false"
                       [disabled]="
                         addAccountForm.invalid || addAccountForm.pristine || addAccountForm.disabled
                       "
                     >
                       {{ 'contact.button.add' | translate }}
-                    </button>
+                    </mzima-client-button>
                   </form>
                 </mat-expansion-panel>
               </mat-accordion>
@@ -214,14 +220,16 @@
                     class="notification"
                   >
                     <span class="notification__title">{{ notification.set.name }}</span>
-                    <button
-                      mat-icon-button
+                    <mzima-client-button
+                      fill="clear"
+                      color="secondary"
+                      [iconOnly]="true"
                       class="notification__btn"
-                      (click)="deleteNotification(notification.id.toString())"
-                      [attr.aria-label]="'notification.button.delete' | translate"
+                      (buttonClick)="deleteNotification(notification.id.toString())"
+                      [ariaLabel]="'notification.button.delete' | translate"
                     >
-                      <mat-icon svgIcon="delete"></mat-icon>
-                    </button>
+                      <mat-icon icon svgIcon="delete"></mat-icon>
+                    </mzima-client-button>
                   </div>
                 </div>
                 <div
@@ -238,14 +246,16 @@
                     class="notification"
                   >
                     <span class="notification__title">{{ notification.set.name }}</span>
-                    <button
-                      mat-icon-button
+                    <mzima-client-button
+                      fill="clear"
+                      color="secondary"
+                      [iconOnly]="true"
                       class="notification__btn"
-                      (click)="deleteNotification(notification.id.toString())"
-                      [attr.aria-label]="'notification.button.delete' | translate"
+                      [ariaLabel]="'notification.button.delete' | translate"
+                      (buttonClick)="deleteNotification(notification.id.toString())"
                     >
-                      <mat-icon svgIcon="delete"></mat-icon>
-                    </button>
+                      <mat-icon icon svgIcon="delete"></mat-icon>
+                    </mzima-client-button>
                   </div>
                 </div>
               </div>
@@ -257,13 +267,11 @@
   </div>
 
   <mat-dialog-actions align="end">
-    <button mat-stroked-button [mat-dialog-close]="false">
+    <mzima-client-button fill="outline" color="secondary" [mat-dialog-close]="false">
       {{ 'app.cancel' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="applyChanges()"
+    </mzima-client-button>
+    <mzima-client-button
+      (buttonClick)="applyChanges()"
       [disabled]="
         isLoading ||
         (selectedTabIndex === 0
@@ -273,7 +281,7 @@
       "
     >
       {{ 'form.save_and_close' | translate }}
-    </button>
+    </mzima-client-button>
   </mat-dialog-actions>
 </ng-container>
 

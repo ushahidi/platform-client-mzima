@@ -11,6 +11,7 @@ import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings/settings.component';
 import { FileUploaderComponent } from './components';
 import { SettingsLayoutComponent } from './settings-layout.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [SettingsComponent, FileUploaderComponent, SettingsLayoutComponent],
@@ -23,6 +24,7 @@ import { SettingsLayoutComponent } from './settings-layout.component';
     TranslateModule,
     DirectiveModule,
     MatRippleModule,
+    MzimaUiModule,
   ],
   exports: [FileUploaderComponent],
 })

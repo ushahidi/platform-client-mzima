@@ -133,28 +133,9 @@
     margin-top: 8px;
     text-align: right;
 
-    .mat-button {
-      font-size: 12px;
-      padding-left: 0;
-      padding-right: 0;
-      font-weight: 700;
-      line-height: 18px;
-      text-decoration: underline;
-      transition: color 0.35s ease;
-
-      &:hover {
-        color: var(--color-primary-70);
-      }
-
-      &:active {
-        color: var(--color-primary-50);
-      }
-
-      &::ng-deep {
-        .mat-button-focus-overlay {
-          display: none;
-        }
-      }
+    mzima-client-button {
+      vertical-align: top;
+      display: inline-block;
     }
   }
 }

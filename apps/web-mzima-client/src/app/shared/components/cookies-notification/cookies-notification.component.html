@@ -10,22 +10,17 @@
   </div>
 
   <div class="cookies-notification__buttons">
-    <button
+    <mzima-client-button
+      fill="outline"
       type="button"
-      mat-stroked-button
+      color="secondary"
+      (buttonClick)="decline()"
       [data-qa]="'button-decline-cookies'"
-      (click)="decline()"
     >
       {{ 'cookies.decline' | translate }}
-    </button>
-    <button
-      type="button"
-      color="primary"
-      mat-raised-button
-      [data-qa]="'button-accept-cookies'"
-      (click)="accept()"
-    >
+    </mzima-client-button>
+    <mzima-client-button (buttonClick)="accept()" [data-qa]="'button-accept-cookies'">
       {{ 'cookies.accept_cookies' | translate }}
-    </button>
+    </mzima-client-button>
   </div>
 </div>

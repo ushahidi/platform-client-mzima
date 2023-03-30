@@ -1,0 +1,337 @@
+@import 'helpers';
+
+.mzima-button {
+  border: none;
+  display: block;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none;
+  -webkit-appearance: none;
+  height: var(--height, auto);
+  transition: color 0.35s ease;
+  font-family: var(--font-family);
+  min-width: var(--min-width, auto);
+  text-align: var(--text-align, center);
+  letter-spacing: var(--letter-spacing, 0);
+  text-transform: var(--text-transform, normal);
+
+  &:disabled {
+    cursor: default;
+  }
+
+  // Size
+  &--medium {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: var(--font-size, 16px);
+    min-height: var(--min-height, 40px);
+    font-weight: var(--font-weight, 500);
+    line-height: var(--line-height, 1.25);
+    padding-inline-end: var(--padding-end, 16px);
+    padding-inline-start: var(--padding-start, 16px);
+
+    @include breakpoint-max($tablet) {
+      font-size: var(--font-size, 18px);
+      min-height: var(--min-height, 48px);
+      padding-inline-end: var(--padding-end, 14px);
+      padding-inline-start: var(--padding-start, 14px);
+    }
+  }
+
+  &--small {
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 700;
+    text-decoration: underline;
+    min-height: var(--min-height, 18px);
+
+    @include breakpoint-max($tablet) {
+      font-size: 14px;
+      line-height: 16px;
+    }
+
+    &:not(:disabled) {
+      &:hover,
+      &:active {
+        text-decoration: none;
+      }
+    }
+  }
+
+  // Expand
+  &--block {
+    width: 100%;
+  }
+
+  &--rounded {
+    border-radius: 50% !important;
+  }
+
+  &--icon-only {
+    padding: 0;
+    display: flex;
+    min-height: 0;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+    width: var(--size, 32px);
+    height: var(--size, 32px);
+    font-size: var(--icon-size, 24px);
+
+    @include breakpoint-max($tablet) {
+      width: var(--size, 48px);
+      height: var(--size, 48px);
+      font-size: var(--icon-size, 32px);
+    }
+  }
+
+  // Fill
+  &--solid {
+    color: var(--color);
+    background-color: var(--background-color);
+    --ripple-color: var(--hover-background-color);
+
+    &:not(:disabled) {
+      &:active {
+        --ripple-color: var(--active-background-color);
+      }
+    }
+
+    &:disabled {
+      color: var(--disabled-color);
+      background-color: var(--disabled-background-color);
+    }
+  }
+
+  &--outline {
+    color: var(--color);
+    background-color: var(--color-light);
+    --ripple-color: var(--hover-background-color);
+
+    &.mzima-button--custom {
+      background-color: var(--background-color, var(--color-light));
+
+      &:before {
+        box-shadow: inset 0 0 0 1px var(--border-color);
+      }
+    }
+
+    &:before {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 5;
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      border-radius: inherit;
+      box-shadow: inset 0 0 0 1px var(--background-color);
+    }
+
+    &:not(:disabled) {
+      &:hover,
+      &:active {
+        color: var(--color);
+      }
+
+      &:active {
+        --ripple-color: var(--active-background-color);
+      }
+    }
+
+    &:disabled {
+      color: var(--disabled-color);
+      background-color: var(--disabled-background-color);
+    }
+  }
+
+  &--clear {
+    background-color: transparent;
+    color: var(--background-color);
+    border-bottom: var(--border-bottom);
+
+    &:not(:disabled) {
+      &:hover {
+        color: var(--hover-background-color);
+      }
+
+      &:active {
+        color: var(--active-background-color);
+      }
+    }
+
+    &:disabled {
+      color: var(--disabled-color);
+    }
+  }
+
+  &:not(.mzima-button--clear) {
+    border-radius: var(--border-radius, 4px);
+  }
+
+  // Color
+  &--primary {
+    --color: var(--color-black);
+    --background-color: var(--color-primary-60);
+    --hover-background-color: var(--color-primary-70);
+    --active-background-color: var(--color-primary-50);
+    --disabled-color: var(--color-neutral-70);
+    --disabled-background-color: var(--color-primary-90);
+  }
+
+  &--secondary {
+    --color: var(--color-black-contrast);
+    --background-color: var(--color-black);
+    --hover-background-color: var(--color-neutral-100);
+    --active-background-color: var(--color-black);
+    --disabled-color: var(--color-neutral-70);
+    --disabled-background-color: var(--color-neutral-30);
+
+    &.mzima-button--outline {
+      --color: var(--color-black);
+      --background-color: var(--color-neutral-70);
+      --hover-background-color: var(--color-neutral-10);
+      --active-background-color: var(--color-neutral-20);
+    }
+  }
+
+  &--danger {
+    --color: var(--color-accent-contrast);
+    --background-color: var(--color-accent);
+    --hover-background-color: var(--color-accent-tint);
+    --active-background-color: var(--color-accent-shade);
+    --disabled-color: var(--color-neutral-70);
+    --disabled-background-color: var(--color-neutral-30);
+  }
+
+  &--success {
+    --color: var(--color-success-contrast);
+    --background-color: var(--color-success);
+    --hover-background-color: var(--color-success-tint);
+    --active-background-color: var(--color-success-shade);
+    --disabled-color: var(--color-neutral-70);
+    --disabled-background-color: var(--color-neutral-30);
+  }
+
+  &--gray {
+    --color: var(--color-neutral-100);
+    --background-color: var(--color-neutral-60);
+    --hover-background-color: var(--color-neutral-10);
+    --active-background-color: var(--color-neutral-20);
+    --disabled-color: var(--color-neutral-70);
+    --disabled-background-color: var(--color-neutral-30);
+
+    &.mzima-button--clear {
+      --background-color: var(--color);
+      --hover-background-color: var(--color-black);
+      --active-background-color: var(--color-neutral-90);
+    }
+  }
+
+  &--light-gray {
+    --color: var(--color-black);
+    --background-color: var(--color-neutral-20);
+    --hover-background-color: var(--color-neutral-10);
+    --active-background-color: var(--color-neutral-20);
+    --disabled-color: var(--color-neutral-70);
+    --disabled-background-color: transparent;
+  }
+
+  &--light {
+    --color: var(--color-light-contrast);
+    --background-color: var(--color-light);
+    --hover-background-color: var(--color-neutral-10);
+    --active-background-color: var(--color-neutral-20);
+    --disabled-color: var(--color-neutral-70);
+    --disabled-background-color: var(--color-neutral-30);
+  }
+
+  &--custom {
+  }
+
+  &__content {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: var(--justify-content, center);
+  }
+
+  &__prefix {
+    margin-inline-end: 10px;
+  }
+
+  &__suffix {
+    margin-inline-start: 10px;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: -8px;
+    margin-bottom: -8px;
+    font-size: var(--icon-size, 32px);
+
+    &:not(.mzima-button__icon--prefix) {
+      margin-inline-start: 10px;
+    }
+
+    &--prefix {
+      margin-inline-end: 10px;
+    }
+
+    .mzima-button--icon-only & {
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-inline-start: 0;
+    }
+
+    &::ng-deep {
+      .mat-icon {
+        width: 1em;
+        height: 1em;
+        display: block;
+        font-size: inherit;
+
+        svg {
+          vertical-align: top;
+        }
+      }
+    }
+  }
+
+  &__prefix,
+  &__suffix,
+  &__icon {
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__ripple {
+    top: 50%;
+    left: 50%;
+    display: block;
+    min-width: 1em;
+    min-height: 1em;
+    font-size: 64px;
+    padding-top: 100%;
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    transform-origin: 0 0;
+    width: calc(100% + 16px);
+    transition-duration: 0.35s;
+    transition-timing-function: ease;
+    transform: scale(1) translate(-50%, -50%);
+    background: var(--ripple-color, transparent);
+    transition-property: background-color, transform;
+
+    .mzima-button:disabled &,
+    .mzima-button:not(.mzima-button--active):not(:hover):not(:active) & {
+      transform: scale(0) translate(-50%, -50%);
+    }
+  }
+}

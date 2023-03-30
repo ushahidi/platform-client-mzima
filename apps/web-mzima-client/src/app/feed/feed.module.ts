@@ -12,6 +12,7 @@ import { FeedRoutingModule } from './feed-routing.module';
 import { PostModule } from '../post/post.module';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [FeedComponent],
@@ -28,6 +29,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     TranslateModule,
     SpinnerModule,
     FormsModule,
+    MzimaUiModule,
   ],
 })
 export class FeedModule {}

@@ -10,24 +10,28 @@
     <div class="feed-page__info-panel" *ngIf="isDesktop">
       <span class="feed-page__results-info">Current results: {{ posts.length }} / {{ total }}</span>
       <div class="feed-page__mode-switcher">
-        <button
-          mat-icon-button
+        <mzima-client-button
+          [fill]="mode === FeedMode.Tiles ? 'outline' : 'solid'"
+          [iconOnly]="true"
           id="switcher-button-tiles"
-          [disabled]="mode === FeedMode.Tiles"
-          (click)="switchMode(FeedMode.Tiles)"
+          [color]="mode === FeedMode.Tiles ? 'primary' : 'light'"
+          [isActive]="mode === FeedMode.Tiles"
+          (buttonClick)="switchMode(FeedMode.Tiles)"
           class="feed-page__mode-switcher__button"
         >
-          <mat-icon svgIcon="tiles"></mat-icon>
-        </button>
-        <button
-          mat-icon-button
+          <mat-icon icon svgIcon="tiles"></mat-icon>
+        </mzima-client-button>
+        <mzima-client-button
+          [fill]="mode === FeedMode.Post ? 'outline' : 'solid'"
+          [iconOnly]="true"
           id="switcher-button-post"
-          [disabled]="mode === FeedMode.Post"
-          (click)="switchMode(FeedMode.Post)"
+          [color]="mode === FeedMode.Post ? 'primary' : 'light'"
+          [isActive]="mode === FeedMode.Post"
+          (buttonClick)="switchMode(FeedMode.Post)"
           class="feed-page__mode-switcher__button"
         >
-          <mat-icon svgIcon="sidebar"></mat-icon>
-        </button>
+          <mat-icon icon svgIcon="sidebar"></mat-icon>
+        </mzima-client-button>
       </div>
     </div>
     <div
@@ -39,28 +43,29 @@
         *ngIf="isDesktop || isBulkOptionsVisible"
       >
         <ng-container *ngIf="isBulkOptionsVisible">
-          <button
-            color="accent"
-            mat-raised-button
+          <mzima-client-button
+            color="danger"
+            [iconOnly]="!isDesktop"
             class="feed-page__control"
-            (click)="deleteSelectedPosts()"
             [disabled]="!selectedPosts.length"
+            (buttonClick)="deleteSelectedPosts()"
           >
             <span *ngIf="isDesktop">{{ 'app.delete' | translate }}</span>
-            <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
-          </button>
+            <mat-icon icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
+          </mzima-client-button>
           <ng-container *ngIf="!isDesktop">
             <span class="feed-page__controls__info">
               {{ selectedPosts.length }}/{{ posts.length }} Selected
             </span>
-            <button
-              mat-stroked-button
+            <mzima-client-button
+              [iconOnly]="true"
+              color="light-gray"
               class="feed-page__control"
               [disabled]="!selectedPosts.length"
-              [matMenuTriggerFor]="statusesMenu"
+              [matMenuTriggerFor]="selectedPosts.length ? statusesMenu : null"
             >
-              <mat-icon svgIcon="dots"></mat-icon>
-            </button>
+              <mat-icon icon svgIcon="dots"></mat-icon>
+            </mzima-client-button>
             <mat-menu
               #statusesMenu="matMenu"
               xPosition="after"
@@ -96,40 +101,49 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <button mat-button (click)="selectAllPosts()" class="feed-page__control">
-              {{ 'post.select_all' | translate }}
-            </button>
-            <button
-              mat-button
+            <mzima-client-button
+              fill="clear"
+              color="gray"
               class="feed-page__control"
-              (click)="deselectAllPosts()"
+              (buttonClick)="selectAllPosts()"
+            >
+              {{ 'post.select_all' | translate }}
+            </mzima-client-button>
+            <mzima-client-button
+              fill="clear"
+              color="gray"
+              class="feed-page__control"
+              (buttonClick)="deselectAllPosts()"
               [disabled]="!selectedPosts.length"
             >
               {{ 'nav.deselect' | translate }}
               {{ 'nav.all' | translate }}
-            </button>
+            </mzima-client-button>
           </ng-container>
         </ng-container>
       </div>
       <div class="feed-page__controls">
-        <button
-          *ngIf="user?.allowed_privileges?.includes('update')"
-          mat-stroked-button
-          [ngClass]="{ active: isBulkOptionsVisible }"
-          (click)="toggleBulkOptions(!isBulkOptionsVisible)"
+        <mzima-client-button
+          fill="outline"
+          color="secondary"
+          [isActive]="isBulkOptionsVisible"
           class="feed-page__control feed-page__control--bulk"
+          *ngIf="user?.allowed_privileges?.includes('update')"
+          (buttonClick)="toggleBulkOptions(!isBulkOptionsVisible)"
         >
           {{ 'post.modify.bulk_actions' | translate }}
-        </button>
+        </mzima-client-button>
         <div class="feed-page__controls__inner">
-          <button
-            mat-stroked-button
+          <mzima-client-button
+            fill="outline"
+            color="secondary"
+            [iconOnly]="!isDesktop"
             [matMenuTriggerFor]="sortingMenu"
             class="feed-page__control feed-page__control--sorting"
           >
             <span *ngIf="isDesktop">{{ 'global_filter.sorting' | translate }}</span>
-            <mat-icon svgIcon="sorting"></mat-icon>
-          </button>
+            <mat-icon icon svgIcon="sorting"></mat-icon>
+          </mzima-client-button>
 
           <mat-menu #sortingMenu="matMenu" xPosition="before">
             <button
@@ -149,14 +163,16 @@
             </button>
           </mat-menu>
 
-          <button
+          <mzima-client-button
+            fill="outline"
+            color="secondary"
+            [iconOnly]="true"
             *ngIf="!isDesktop"
-            mat-stroked-button
             class="feed-page__control"
-            (click)="toggleFilters(!isFiltersVisible)"
+            (buttonClick)="toggleFilters(!isFiltersVisible)"
           >
-            <mat-icon class="search-form__filters__icon" svgIcon="filters"></mat-icon>
-          </button>
+            <mat-icon icon svgIcon="filters"></mat-icon>
+          </mzima-client-button>
         </div>
       </div>
     </div>
@@ -201,9 +217,10 @@
             </app-post-preview>
           </ngx-masonry>
           <app-spinner class="feed__loading" *ngIf="isLoading"></app-spinner>
-          <button
-            mat-button
-            (click)="loadMore()"
+          <mzima-client-button
+            fill="clear"
+            color="secondary"
+            (buttonClick)="loadMore()"
             class="feed__load-more"
             *ngIf="
               !isLoading &&
@@ -212,9 +229,9 @@
               params.offset + params.limit < total
             "
           >
-            <mat-icon svgIcon="refresh"></mat-icon>
+            <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
             <span>{{ 'app.load_more' | translate }}</span>
-          </button>
+          </mzima-client-button>
           <pagination-controls
             class="pagination"
             (pageChange)="changePage($event)"

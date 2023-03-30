@@ -5,17 +5,12 @@
   justify-content: flex-end;
 
   &__control {
-    width: 1em;
-    height: 1em;
+    --size: 32px;
     margin: 0 8px;
-    font-size: 32px;
 
     &--dots {
-      font-size: 24px;
-    }
-
-    .mat-icon {
-      font-size: inherit;
+      --size: 24px;
+      --icon-size: 24px;
     }
   }
 }

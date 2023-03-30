@@ -31,28 +31,15 @@
   }
 
   &__control {
-    font-size: 20px;
-    padding: 0;
-    width: 1em;
-    height: 1em;
-    min-width: 0;
-    display: flex;
+    --size: 20px;
     margin: 0 4px;
-    line-height: 1em;
-    border-radius: 50%;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    background: none;
+    --icon-size: 20px;
 
     @include breakpoint-max($tablet) {
-      font-size: 22px;
+      --size: 22px;
+      --icon-size: 22px;
       margin-left: 6px;
       margin-right: 6px;
-    }
-
-    .mat-icon {
-      font-size: 1em;
     }
   }
 

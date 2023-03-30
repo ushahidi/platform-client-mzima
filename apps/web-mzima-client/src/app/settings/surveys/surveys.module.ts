@@ -17,7 +17,7 @@ import { ColorPickerComponentModule } from '../../shared/components/color-picker
 import { GroupCheckboxSelectModule } from '../../shared/components/group-checkbox-select/group-checkbox-select.module';
 import { MultilevelSelectModule } from '../../shared/components/multilevel-select/multilevel-select.module';
 import { SettingsHeaderModule } from '../../shared/components/settings-header/settings-header.module';
-import { DirectiveModule, SpinnerModule, TranslationsSwitchModule } from '@shared';
+import { DirectiveModule, SpinnerModule } from '@shared';
 
 import { SurveysRoutingModule } from './surveys-routing.module';
 import { SurveysComponent } from './surveys.component';
@@ -30,6 +30,7 @@ import { CreateTaskModalComponent } from './create-task-modal/create-task-modal.
 import { CreateFieldModalComponent } from './create-field-modal/create-field-modal.component';
 import { ShareMenuComponent } from './share-menu/share-menu.component';
 import { QuillModule } from 'ngx-quill';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,6 @@ import { QuillModule } from 'ngx-quill';
     DragDropModule,
     SurveysRoutingModule,
     MatExpansionModule,
-    TranslationsSwitchModule,
     QuillModule.forRoot(),
     MatButtonModule,
     MatIconModule,
@@ -68,6 +68,7 @@ import { QuillModule } from 'ngx-quill';
     MatCheckboxModule,
     MatTreeModule,
     MatListModule,
+    MzimaUiModule,
   ],
 })
 export class SurveysModule {}
