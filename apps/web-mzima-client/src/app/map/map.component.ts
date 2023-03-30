@@ -133,7 +133,6 @@ export class MapComponent extends MainViewComponent implements OnInit {
           this.map.removeLayer(layer);
           this.markerClusterData.removeLayer(layer);
         });
-        console.log('sasda');
         this.mapLayers = [];
 
         this.getPostsGeoJson();
@@ -147,7 +146,6 @@ export class MapComponent extends MainViewComponent implements OnInit {
   }
 
   getPostsGeoJson() {
-    console.log('getPostsGeoJson');
     this.postsService.getGeojson(this.params).subscribe({
       next: (posts) => {
         const geoPosts = geoJSON(posts, {
