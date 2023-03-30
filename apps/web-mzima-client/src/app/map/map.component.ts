@@ -123,7 +123,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   }
 
   private initFilterListener() {
-    this.filtersSubscription$.pipe(debounceTime(300)).subscribe({
+    this.filtersSubscription$.pipe(debounceTime(1000)).subscribe({
       next: () => {
         if (this.route.snapshot.data['view'] === 'search' && !this.searchId) return;
         if (this.route.snapshot.data['view'] === 'collection' && !this.collectionId) return;
