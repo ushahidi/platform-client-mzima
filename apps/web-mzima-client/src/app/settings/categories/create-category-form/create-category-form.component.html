@@ -114,32 +114,32 @@
   <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <div>
-      <button
+      <mzima-client-button
+        color="danger"
         *ngIf="isUpdate"
-        mat-raised-button
-        type="button"
-        color="accent"
         [data-qa]="'btn-cetegory-delete'"
-        (click)="deleteCategoryEmit()"
-        class="delete-button"
+        (buttonClick)="deleteCategoryEmit()"
       >
         <ng-container *ngIf="isDesktop">{{ 'category.delete_category' | translate }}</ng-container>
         <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
-      </button>
+      </mzima-client-button>
     </div>
     <div>
-      <button mat-stroked-button type="button" [data-qa]="'btn-category-cancel'" (click)="back()">
-        <span>{{ 'app.cancel' | translate }}</span>
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
+        (buttonClick)="back()"
+        [data-qa]="'btn-category-cancel'"
+      >
+        {{ 'app.cancel' | translate }}
+      </mzima-client-button>
+      <mzima-client-button
         type="submit"
         [data-qa]="'btn-category-save'"
         [disabled]="form.disabled || form.invalid || loading"
       >
-        <span>{{ 'app.save' | translate }}</span>
-      </button>
+        {{ 'app.save' | translate }}
+      </mzima-client-button>
     </div>
   </div>
 </form>

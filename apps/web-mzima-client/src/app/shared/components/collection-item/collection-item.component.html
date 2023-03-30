@@ -8,22 +8,26 @@
     <mat-checkbox [checked]="checked"> </mat-checkbox>
   </div>
   <div class="collection-item__actions" *ngIf="actions && !selectable">
-    <button
+    <mzima-client-button
+      fill="clear"
       tabindex="-1"
-      mat-raised-button
+      [iconOnly]="true"
+      color="secondary"
       class="collection-item__control"
-      (click)="editCollection($event)"
+      (buttonClick)="editCollection($event)"
     >
-      <mat-icon matPrefix svgIcon="collection-edit"></mat-icon>
-    </button>
-    <button
+      <mat-icon icon svgIcon="collection-edit"></mat-icon>
+    </mzima-client-button>
+    <mzima-client-button
+      fill="clear"
       tabindex="-1"
-      mat-raised-button
+      [iconOnly]="true"
+      color="secondary"
       class="collection-item__control"
-      (click)="deleteCollection($event)"
+      (buttonClick)="deleteCollection($event)"
     >
-      <mat-icon matPrefix svgIcon="delete"></mat-icon>
-    </button>
+      <mat-icon icon svgIcon="delete"></mat-icon>
+    </mzima-client-button>
   </div>
 
   <strong class="collection-item__title">{{ collection.name }}</strong>

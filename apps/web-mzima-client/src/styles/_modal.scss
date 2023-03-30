@@ -34,13 +34,13 @@
       padding-bottom: 16px !important;
     }
 
-    .mat-raised-button,
-    .mat-stroked-button {
+    mzima-client-button {
+      display: block;
       min-width: 124px;
-    }
 
-    .mat-button-base + .mat-button-base {
-      margin-inline-start: 10px;
+      + mzima-client-button {
+        margin-inline-start: 10px;
+      }
     }
   }
 
@@ -57,26 +57,16 @@
     .modal {
       &__close-btn {
         top: 24px;
-        padding: 0;
         z-index: 75;
-        width: 40px;
-        height: 40px;
-        min-width: 0;
-        display: flex;
-        border-radius: 8px;
+        --size: 40px;
+        --icon-size: 24px;
         position: absolute;
-        align-items: center;
-        flex-direction: column;
+        --border-radius: 8px;
         inset-inline-end: 24px;
-        justify-content: center;
 
         @include breakpoint-max($tablet) {
           top: 16px;
           inset-inline-end: 16px;
-        }
-
-        .mat-icon {
-          font-size: 24px;
         }
       }
 

@@ -102,7 +102,7 @@
   align-items: flex-start;
   justify-content: flex-end;
 
-  .mat-button-base {
+  mzima-client-button {
     margin: 0 8px;
     min-width: 125px;
 
@@ -605,13 +605,6 @@
     top: 0 !important;
     flex-direction: column;
     justify-content: center;
-
-    .mat-icon {
-      width: 1em;
-      height: 1em;
-      line-height: 1;
-      font-size: 24px;
-    }
   }
 
   .mat-form-field-prefix {
@@ -625,19 +618,22 @@
         padding-left: 10px;
       }
     }
+
+    mzima-client-button {
+      width: 100%;
+      --size: 40px;
+      --icon-size: 32px;
+    }
   }
 
   .mat-form-field-suffix {
-    flex-basis: 48px;
+    flex-basis: 40px;
     align-items: center;
-  }
 
-  .mat-form-field-suffix {
-    .mat-icon-button {
-      padding: 0;
-      width: 1.5em !important;
-      height: 1.5em !important;
-      display: flex !important;
+    mzima-client-button {
+      width: 100%;
+      --size: 40px;
+      --icon-size: 24px;
     }
 
     .mat-datepicker-toggle-default-icon {

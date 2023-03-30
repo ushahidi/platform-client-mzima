@@ -142,7 +142,7 @@ export class CollectionsComponent implements OnInit {
   }
 
   isPostInCollection(collection: CollectionResult) {
-    return this.post?.sets.some((set) => set === collection.id.toString());
+    return this.post?.sets?.some((set) => set === collection.id.toString());
   }
 
   onCheckChange(isChecked: boolean, item: CollectionResult) {

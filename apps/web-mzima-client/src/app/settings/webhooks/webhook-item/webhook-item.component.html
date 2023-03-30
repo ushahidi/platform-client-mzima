@@ -137,7 +137,7 @@
       <p>
         {{
           'survey.choose_survey_field_desc'
-            | translate: { datasource_type: getSurveyName(form.get('form_id')?.value) }
+            | translate : { datasource_type: getSurveyName(form.get('form_id')?.value) }
         }}
       </p>
 
@@ -181,33 +181,29 @@
   <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <div>
-      <button
-        type="button"
-        color="accent"
-        mat-raised-button
+      <mzima-client-button
+        color="danger"
         [data-qa]="'btn-webhook-delete'"
-        (click)="openDialog()"
+        (buttonClick)="openDialog()"
         *ngIf="!isCreateWebhook"
         [disabled]="!form.get('id')?.value"
-        class="delete-button"
       >
         <ng-container *ngIf="isDesktop">{{ 'app.delete' | translate }}</ng-container>
         <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
-      </button>
+      </mzima-client-button>
     </div>
     <div>
-      <button mat-stroked-button type="button" [data-qa]="'btn-webhook-cancel'" (click)="cancel()">
-        {{ 'app.cancel' | translate }}
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [data-qa]="'btn-webhook-save'"
-        [disabled]="form.invalid"
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
+        (buttonClick)="cancel()"
+        [data-qa]="'btn-webhook-cancel'"
       >
+        {{ 'app.cancel' | translate }}
+      </mzima-client-button>
+      <mzima-client-button [data-qa]="'btn-webhook-save'" [disabled]="form.invalid">
         {{ (isCreateWebhook ? 'app.save' : 'app.edit') | translate }}
-      </button>
+      </mzima-client-button>
     </div>
   </div>
 </form>

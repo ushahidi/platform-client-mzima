@@ -1,15 +1,9 @@
 <div class="form-head-panel">
   <h1 *ngIf="isDesktop$ | async">{{ 'app.roles' | translate }}</h1>
-  <button
-    type="button"
-    color="primary"
-    mat-raised-button
-    [routerLink]="['create']"
-    [data-qa]="'btn-add-role'"
-  >
+  <mzima-client-button [routerLink]="['create']" [data-qa]="'btn-add-role'">
     <span>{{ 'role.add_role' | translate }}</span>
-    <mat-icon svgIcon="plus"></mat-icon>
-  </button>
+    <mat-icon icon svgIcon="plus"></mat-icon>
+  </mzima-client-button>
 </div>
 
 <div class="roles">

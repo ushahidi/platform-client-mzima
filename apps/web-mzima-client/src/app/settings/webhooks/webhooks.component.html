@@ -1,16 +1,10 @@
 <ng-container *ngIf="webhookList">
   <div class="form-head-panel">
     <h1 *ngIf="isDesktop$ | async">{{ 'app.webhooks' | translate }}</h1>
-    <button
-      type="button"
-      color="primary"
-      mat-raised-button
-      [routerLink]="['create']"
-      [data-qa]="'btn-webhook-create'"
-    >
+    <mzima-client-button [routerLink]="['create']" [data-qa]="'btn-webhook-create'">
       <span>{{ 'webhook.add_webhook' | translate }}</span>
-      <mat-icon svgIcon="plus"></mat-icon>
-    </button>
+      <mat-icon icon svgIcon="plus"></mat-icon>
+    </mzima-client-button>
   </div>
 
   <div class="webhook-item-list" [data-qa]="'webhook-list'">
