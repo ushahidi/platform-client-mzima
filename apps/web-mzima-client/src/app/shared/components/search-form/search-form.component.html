@@ -343,16 +343,6 @@
         [badge]="form.controls['tags'].value?.length || null"
         [selectedFields]="form.controls['tags'].value"
       >
-        <div class="clear-button" suffix>
-          <mzima-client-button
-            fill="clear"
-            size="small"
-            class="filter-group__head__button"
-            (buttonClick)="clearFilter('tags')"
-          >
-            {{ 'nav.clear' | translate }}
-          </mzima-client-button>
-        </div>
       </app-filter-control>
 
       <app-filter-control
