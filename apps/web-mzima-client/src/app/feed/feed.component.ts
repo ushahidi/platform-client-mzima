@@ -352,6 +352,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       this.params.limit !== undefined &&
       this.params.offset + this.params.limit < this.total
     ) {
+      this.currentPage++;
       this.params.offset = this.params.offset + this.params.limit;
       this.getPosts(this.params, true);
     }
