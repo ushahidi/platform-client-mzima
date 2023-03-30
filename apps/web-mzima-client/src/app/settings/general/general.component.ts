@@ -65,7 +65,6 @@ export class GeneralComponent implements OnInit {
     });
     this.apiKeyService.get().subscribe((res) => {
       // FIXME: results[0]
-      console.log('WHATAAA', res);
       this.apiKey = res.results[0];
     });
     this.translate.onLangChange.subscribe((newLang) => {

@@ -341,6 +341,7 @@
         [type]="filterType.Multilevelselect"
         [title]="'app.categories' | translate"
         [badge]="form.controls['tags'].value?.length || null"
+        [selectedFields]="form.controls['tags'].value"
       >
         <div class="clear-button" suffix>
           <mzima-client-button
