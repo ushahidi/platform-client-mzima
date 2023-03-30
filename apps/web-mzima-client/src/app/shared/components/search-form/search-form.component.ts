@@ -544,7 +544,6 @@ export class SearchFormComponent implements OnInit {
   }
 
   async applySavedFilter(value: number | null) {
-    console.log('applySavedFilter', value);
     if (value) {
       await this.setSavedFilter(value);
       this.router.navigate([
