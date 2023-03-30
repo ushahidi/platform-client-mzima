@@ -177,6 +177,30 @@ export class PostEditComponent implements OnInit, OnChanges {
     value.forEach((val: { id: any }) => formArray.push(new FormControl(val?.id)));
   }
 
+  private handleText(key: string, value: any) {
+    this.form.patchValue({ [key]: value?.value });
+  }
+
+  private handleUpload(key: string, value: any) {
+    this.form.patchValue({ [key]: value?.value });
+  }
+
+  private handleVideo(key: string, value: any) {
+    this.form.patchValue({ [key]: value?.value });
+  }
+
+  private handleTextarea(key: string, value: any) {
+    this.form.patchValue({ [key]: value?.value });
+  }
+
+  private handleRelation(key: string, value: any) {
+    this.form.patchValue({ [key]: value?.value });
+  }
+
+  private handleNumber(key: string, value: any) {
+    this.form.patchValue({ [key]: value?.value });
+  }
+
   private handleCheckbox(key: string, value: any) {
     const data = value.map((val: { id: any }) => val?.id);
     this.form.patchValue({ [key]: data });
@@ -203,7 +227,19 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private updateForm(updateValues: any[]) {
-    type InputHandlerType = 'tags' | 'checkbox' | 'location' | 'date' | 'datetime' | 'radio';
+    type InputHandlerType =
+      | 'tags'
+      | 'checkbox'
+      | 'location'
+      | 'date'
+      | 'datetime'
+      | 'radio'
+      | 'text'
+      | 'upload'
+      | 'video'
+      | 'textarea'
+      | 'relation'
+      | 'number';
     type TypeHandlerType = 'title' | 'description';
 
     const inputHandlers: { [key in InputHandlerType]: (key: string, value: any) => void } = {
@@ -213,6 +249,12 @@ export class PostEditComponent implements OnInit, OnChanges {
       date: this.handleDate.bind(this),
       datetime: this.handleDate.bind(this),
       radio: this.handleRadio.bind(this),
+      text: this.handleText.bind(this),
+      upload: this.handleUpload.bind(this),
+      video: this.handleVideo.bind(this),
+      textarea: this.handleTextarea.bind(this),
+      relation: this.handleRelation.bind(this),
+      number: this.handleNumber.bind(this),
     };
 
     const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
@@ -242,13 +284,14 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private addFormControl(value: string, field: any): FormControl {
-    // console.log({ field, value });
     if (field.type === 'title') {
       return new FormControl(value, [Validators.required, Validators.minLength(2)]);
     } else if (field.input === 'video') {
       const validators = [];
-      if (field.required) validators.push(Validators.required);
-      validators.push(this.formValidator.videoValidator);
+      if (field.required) {
+        validators.push(Validators.required);
+        validators.push(this.formValidator.videoValidator);
+      }
       return new FormControl(value, validators);
     } else {
       return new FormControl(value, field.required ? Validators.required : null);
@@ -351,7 +394,6 @@ export class PostEditComponent implements OnInit, OnChanges {
         this.postsV5Service.post(postData).subscribe({
           error: () => this.form.enable(),
           complete: async () => {
-            // console.log('Submit possible!');
             await this.postComplete();
           },
         });
