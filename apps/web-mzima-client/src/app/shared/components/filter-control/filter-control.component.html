@@ -93,6 +93,16 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="filterType.Multilevelselect">
+      <div class="clear-button" suffix>
+        <mzima-client-button
+          fill="clear"
+          size="small"
+          class="filter-group__head__button"
+          (buttonClick)="clearTags()"
+        >
+          {{ 'nav.clear' | translate }}
+        </mzima-client-button>
+      </div>
       <mat-tree
         [dataSource]="dataSource"
         [treeControl]="treeControl"

@@ -99,12 +99,9 @@ export class SearchFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventBusInit();
-
     this.getSavedFilters();
     this.getSurveys();
     this.getCategories();
-    this.getPostsFilters();
-    this.getTotalPosts();
 
     if (this.filters) {
       const filters = JSON.parse(this.filters!);
@@ -173,6 +170,9 @@ export class SearchFormComponent implements OnInit {
       },
       error: (err) => console.log('isMainFiltersHidden:', err),
     });
+
+    this.getPostsFilters();
+    this.getTotalPosts();
   }
 
   getPostsFilters() {

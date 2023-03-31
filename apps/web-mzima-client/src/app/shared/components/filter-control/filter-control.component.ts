@@ -58,7 +58,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   @Input() public title: string;
   @Input() public canEdit?: boolean;
   @Input() public fields: string[] = ['id', 'name'];
-  @Input() public selectedFields: any;
+  @Input() public selectedFields: any[];
   @Output() public filterChange = new EventEmitter();
   @Output() public editOption = new EventEmitter();
   @Output() public clear = new EventEmitter();
@@ -108,7 +108,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
               : this.categoryLeafSelectionToggle(node, true);
           }
         }
-      }, 500);
+      }, 1000);
     }
   }
 
@@ -247,12 +247,12 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   /** Whether all the descendants of the node are selected. */
   public descendantsAllSelected(option: CategoryFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(option);
-    const descAllSelected =
+    return (
       descendants.length > 0 &&
       descendants.every((child) => {
         return this.checklistSelection.isSelected(child);
-      });
-    return descAllSelected;
+      })
+    );
   }
 
   /** Whether part of the descendants are selected */
@@ -284,12 +284,17 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   }
 
   private selectItems(data: any) {
-    if (data) {
-      this.value = this.treeControl.dataNodes
-        .filter((nodeEl: any) => data.isSelected(nodeEl))
-        .map((nodeEl) => nodeEl.id);
-      this.onChange(this.value);
-    }
+    this.value = this.treeControl.dataNodes
+      .filter((nodeEl: any) => data.isSelected(nodeEl))
+      .map((nodeEl) => nodeEl.id);
+    this.onChange(this.value);
+  }
+
+  public clearTags() {
+    const descendants = this.treeControl.dataNodes;
+    this.checklistSelection.deselect(...descendants);
+    this.selectItems(this.checklistSelection);
+    this.clear.emit();
   }
 
   /** Checks all the parents when a leaf node is selected/unselected */

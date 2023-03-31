@@ -27,6 +27,7 @@ import {
 } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
+import { excludeSpecialCharactersValidator } from '../../core/validators/excludeSpecialCharacters';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -285,16 +286,26 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private addFormControl(value: string, field: any): FormControl {
     if (field.type === 'title') {
-      return new FormControl(value, [Validators.required, Validators.minLength(2)]);
+      return new FormControl(value, [
+        Validators.required,
+        Validators.minLength(2),
+        excludeSpecialCharactersValidator(),
+      ]);
     } else if (field.input === 'video') {
       const validators = [];
       if (field.required) {
         validators.push(Validators.required);
         validators.push(this.formValidator.videoValidator);
+        excludeSpecialCharactersValidator();
       }
       return new FormControl(value, validators);
     } else {
-      return new FormControl(value, field.required ? Validators.required : null);
+      const validators = [];
+      if (field.required) {
+        validators.push(Validators.required);
+      }
+      validators.push(excludeSpecialCharactersValidator());
+      return new FormControl(value, validators);
     }
   }
 
