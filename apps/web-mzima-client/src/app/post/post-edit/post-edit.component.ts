@@ -42,7 +42,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   @Input() public postInput: any;
   @Output() cancel = new EventEmitter();
   @Output() updated = new EventEmitter();
-  public data: any;
+  public color: string;
   public form: FormGroup;
   public description: string;
   public title: string;
@@ -124,9 +124,10 @@ export class PostEditComponent implements OnInit, OnChanges {
     if (!formId) return;
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
-        this.data = data;
-        this.tasks = data.result.tasks;
-        this.surveyName = data.result.name;
+        const { result } = data;
+        this.color = result.color;
+        this.tasks = result.tasks;
+        this.surveyName = result.name;
 
         const fields: any = {};
         for (const task of this.tasks) {
@@ -141,7 +142,7 @@ export class PostEditComponent implements OnInit, OnChanges {
                   this.description = field.default;
                   break;
                 case 'relation':
-                  this.relationConfigForm = field.config.input.form;
+                  this.relationConfigForm = field.config?.input?.form;
                   this.relationConfigKey = field.key;
                   break;
               }
