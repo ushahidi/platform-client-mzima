@@ -50,12 +50,14 @@
     <div>
       <mzima-client-button
         color="danger"
+        class="delete-btn"
+        [iconOnly]="!isDesktop"
         (buttonClick)="deleteRole()"
         [data-qa]="'btn-delete-role'"
         *ngIf="isUpdate && !role?.protected"
       >
         <ng-container *ngIf="isDesktop">{{ 'role.delete' | translate }}</ng-container>
-        <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
+        <mat-icon *ngIf="!isDesktop" icon svgIcon="delete"></mat-icon>
       </mzima-client-button>
     </div>
     <div>

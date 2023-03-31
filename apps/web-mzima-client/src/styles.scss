@@ -157,8 +157,12 @@ a {
     }
 
     @include breakpoint-max($tablet) {
-      height: auto;
+      height: 100%;
       margin-top: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
       margin-inline-start: 0 !important;
     }
   }

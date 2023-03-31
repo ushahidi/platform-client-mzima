@@ -1,13 +1,13 @@
 @import 'helpers';
 
 .main {
+  height: 100%;
+
   @include breakpoint-min($tablet) {
-    height: 100%;
     z-index: initial;
   }
 
   @include breakpoint-max($tablet) {
-    min-height: 100%;
     padding-top: 80px;
     padding-bottom: 80px;
 
