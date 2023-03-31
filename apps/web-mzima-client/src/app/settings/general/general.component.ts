@@ -43,7 +43,7 @@ export class GeneralComponent implements OnInit {
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.generalForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.pattern('^\\S[a-zA-Z\\s]*$')]],
       description: ['', []],
       email: ['', [Validators.email, Validators.required]],
       language: ['en', []],
