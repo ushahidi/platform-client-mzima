@@ -1360,7 +1360,8 @@
     "add_new_users": "Add New Users",
     "valid": {
       "name": {
-        "required": "Site name is required"
+        "required": "Site name is required",
+        "pattern": "Invalid format"
       }
     },
     "bulk_actions": "Bulk actions"
