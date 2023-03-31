@@ -79,10 +79,15 @@
           </ng-container>
 
           <ng-container *ngIf="field.input === 'text'">
-            <a *ngIf="field.label === 'Media Link'" [href]="field.value.value" target="_blank">{{
-              field.value.value
-            }}</a>
-            <p *ngIf="field.label !== 'Media Link'">{{ field.value.value || '-' }}</p>
+            <ng-container *ngIf="field.label === 'Media Link'">
+              <a *ngIf="field.value.value" [href]="field.value.value" target="_blank">{{
+                field.value.value
+              }}</a>
+              <p *ngIf="!field.value.value">-</p>
+            </ng-container>
+            <ng-container *ngIf="field.label !== 'Media Link'">
+              <p>{{ field.value.value || '-' }}</p>
+            </ng-container>
           </ng-container>
 
           <ng-container *ngIf="field.input === 'textarea'">

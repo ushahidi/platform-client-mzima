@@ -328,6 +328,9 @@
               <span *ngIf="form.get(field.key)?.hasError('pattern')">
                 {{ field.label }} field is invalid
               </span>
+              <span *ngIf="form.get(field.key)?.hasError('specialCharacters')">
+                {{ field.label }} field contains special characters
+              </span>
             </mat-error>
           </div>
         </div>
