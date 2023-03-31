@@ -27,7 +27,7 @@ import {
 } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
-import { excludeSpecialCharactersValidator } from '../../core/validators/excludeSpecialCharacters';
+import { AlphanumericValidatorValidator } from '../../core/validators/alphanumeric';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -289,14 +289,14 @@ export class PostEditComponent implements OnInit, OnChanges {
       return new FormControl(value, [
         Validators.required,
         Validators.minLength(2),
-        excludeSpecialCharactersValidator(),
+        AlphanumericValidatorValidator(),
       ]);
     } else if (field.input === 'video') {
       const validators = [];
       if (field.required) {
         validators.push(Validators.required);
         validators.push(this.formValidator.videoValidator);
-        excludeSpecialCharactersValidator();
+        AlphanumericValidatorValidator();
       }
       return new FormControl(value, validators);
     } else {
@@ -304,7 +304,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       if (field.required) {
         validators.push(Validators.required);
       }
-      validators.push(excludeSpecialCharactersValidator());
+      validators.push(AlphanumericValidatorValidator());
       return new FormControl(value, validators);
     }
   }
