@@ -10,7 +10,7 @@
       *ngIf="form && tasks.length; else spinner"
     >
       <div *ngFor="let task of tasks; let i = index" class="task-container">
-        <div [ngStyle]="{ '--color': data?.result?.color }">
+        <div [ngStyle]="{ '--color': color }">
           <ng-container *ngIf="task.type !== 'post'">
             <h2 class="task-label">{{ task.translations[activeLanguage]?.label || task.label }}</h2>
 
