@@ -319,18 +319,18 @@
               </mat-form-field>
             </ng-container>
             <mat-error *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched">
-              <span *ngIf="form.get(field.key)?.hasError('required')">
+              <p *ngIf="form.get(field.key)?.hasError('required')">
                 {{ field.label }} field is a required field *
-              </span>
-              <span *ngIf="form.get(field.key)?.hasError('minlength')">
+              </p>
+              <p *ngIf="form.get(field.key)?.hasError('minlength')">
                 {{ field.label }} field is too short, use at least 2 characters
-              </span>
-              <span *ngIf="form.get(field.key)?.hasError('pattern')">
+              </p>
+              <p *ngIf="form.get(field.key)?.hasError('pattern')">
                 {{ field.label }} field is invalid
-              </span>
-              <span *ngIf="form.get(field.key)?.hasError('specialCharacters')">
+              </p>
+              <p *ngIf="form.get(field.key)?.hasError('specialCharacters')">
                 {{ field.label }} field contains special characters
-              </span>
+              </p>
             </mat-error>
           </div>
         </div>
