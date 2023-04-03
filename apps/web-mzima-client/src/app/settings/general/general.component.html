@@ -16,6 +16,9 @@
     <mat-error *ngIf="generalForm.get('name')?.hasError('pattern')" class="form-row__error">
       {{ 'settings.valid.name.pattern' | translate }}
     </mat-error>
+    <mat-error *ngIf="generalForm.get('name')?.hasError('minlength')" class="form-row__error">
+      {{ 'settings.valid.name.minlength' | translate }}
+    </mat-error>
   </div>
   <div class="form-row">
     <mat-label>{{ 'settings.site_description' | translate }}</mat-label>
