@@ -543,7 +543,8 @@ export class SearchFormComponent implements OnInit {
         JSON.stringify(this.activeSavedSearch),
       );
     } else {
-      this.activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
+      const activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
+      this.activeSavedSearch = activeSavedSearch.result;
       this.checkSavedSearchNotifications();
     }
   }
