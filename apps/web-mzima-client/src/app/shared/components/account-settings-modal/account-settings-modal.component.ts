@@ -303,8 +303,8 @@ export class AccountSettingsModalComponent implements OnInit {
               this.savedsearchesService.getById(String(notification.set.id)).subscribe({
                 next: (res) => {
                   this.applyNotificationName(
-                    res.result.id,
-                    res.result.name,
+                    res.result.id!,
+                    res.result.name!,
                     NotificationTypeEnum.SavedSearch,
                   );
                 },
