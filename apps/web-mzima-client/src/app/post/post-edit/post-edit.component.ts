@@ -61,7 +61,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   public surveyName: string;
   private postId?: number;
   private post?: any;
-  private isDesktop: boolean;
+  public isDesktop: boolean;
   public atLeastOneFieldHasValidationError: boolean;
   public formValidator = new formValidators.FormValidator();
 
@@ -454,7 +454,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       if (!confirmed) return;
     }
 
-    if (this.isDesktop) {
+    if (!this.postInput) {
       this.backNavigation(true);
       this.eventBusService.next({
         type: EventType.AddPostButtonSubmit,
