@@ -72,11 +72,20 @@
   </div>
 
   <div mat-dialog-actions align="end">
-    <mzima-client-button fill="outline" color="secondary" (buttonClick)="cancel()">
-      {{ 'app.cancel' | translate }}
+    <mzima-client-button *ngIf="!!data.search" color="danger" (buttonClick)="deleteSavedfilter()">
+      {{ 'app.delete' | translate }}
     </mzima-client-button>
-    <mzima-client-button [disabled]="form.invalid || form.disabled" id="apply-saved-filters">
-      {{ 'app.apply_filters' | translate }}
-    </mzima-client-button>
+    <div class="button-group">
+      <mzima-client-button fill="outline" color="secondary" (buttonClick)="cancel()">
+        {{ 'app.cancel' | translate }}
+      </mzima-client-button>
+      <mzima-client-button
+        [disabled]="form.invalid || form.disabled"
+        id="apply-saved-filters"
+        type="submit"
+      >
+        {{ 'app.apply_filters' | translate }}
+      </mzima-client-button>
+    </div>
   </div>
 </form>
