@@ -336,7 +336,7 @@
         </div>
       </div>
 
-      <div class="form-controls-panel form-controls-panel--sticky">
+      <div class="form-controls-panel" [ngClass]="{ 'form-controls-panel--sticky': isDesktop }">
         <mzima-client-button
           fill="outline"
           color="secondary"
