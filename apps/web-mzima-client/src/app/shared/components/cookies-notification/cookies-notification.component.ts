@@ -24,24 +24,29 @@ export class CookiesNotificationComponent implements OnInit {
   }
 
   public accept() {
-    this.cookieService.set(
-      this.COOKIE_NAME,
-      new Date().toISOString(),
-      365,
-      undefined,
-      undefined,
-      true,
-    );
+    this.setCookies(true);
     this.showCookies = false;
     this.loadGtm();
   }
 
   public decline() {
+    this.setCookies(false);
     this.showCookies = false;
   }
 
+  private setCookies(isAccepted: boolean): void {
+    this.cookieService.set(
+      this.COOKIE_NAME,
+      JSON.stringify(isAccepted),
+      30,
+      undefined,
+      undefined,
+      true,
+    );
+  }
+
   private loadGtm() {
-    const cookies = this.cookieService.check(this.COOKIE_NAME);
+    const cookies = JSON.parse(this.cookieService.get(this.COOKIE_NAME) || 'false');
     if (!cookies) return;
 
     const renderer = this.rendererFactory.createRenderer(null, null);
