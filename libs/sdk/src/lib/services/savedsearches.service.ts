@@ -29,6 +29,10 @@ export class SavedsearchesService extends ResourceService<any> {
     return super.get();
   }
 
+  override getById(id: string | number): Observable<{ result: Savedsearch }> {
+    return super.getById(id);
+  }
+
   override update(id: string | number, resource: Savedsearch): Observable<SavedsearchesResponse> {
     return super.update(id, resource);
   }
