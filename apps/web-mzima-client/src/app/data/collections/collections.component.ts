@@ -172,7 +172,9 @@ export class CollectionsComponent implements OnInit {
       name: collection.name,
       description: collection.description,
       featured: collection.featured,
-      visible_to: formHelper.mapRoleToVisible(collection.role),
+      visible_to: collection.featured
+        ? { value: 'only_me', options: [] }
+        : formHelper.mapRoleToVisible(collection.role),
       view: collection.view,
     });
     this.tmpCollectionToEditId = collection.id;
@@ -203,10 +205,10 @@ export class CollectionsComponent implements OnInit {
   saveCollection() {
     const collectionData = this.collectionForm.value;
     collectionData.role = collectionData.visible_to.options;
+    collectionData.featured = collectionData.visible_to.value === 'only_me';
     delete collectionData.visible_to;
     this.userData$.subscribe((userData) => {
       collectionData.user_id = userData.userId;
-
       if (this.currentView === CollectionView.Create) {
         this.collectionsService.post(collectionData).subscribe({
           next: () => {
@@ -219,6 +221,10 @@ export class CollectionsComponent implements OnInit {
       } else {
         this.collectionsService.update(this.tmpCollectionToEditId, collectionData).subscribe({
           next: () => {
+            this.eventBus.next({
+              type: EventType.UpdateCollection,
+              payload: this.tmpCollectionToEditId,
+            });
             this.matDialogRef.close();
           },
           error: (err) => {

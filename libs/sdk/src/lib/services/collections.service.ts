@@ -28,6 +28,7 @@ export class CollectionsService extends ResourceService<any> {
   override getById(id: string | number): Observable<{ result: CollectionResult }> {
     return super.getById(id);
   }
+
   getCollections(queryParams?: any): Observable<Collection> {
     return super.get('', queryParams);
   }

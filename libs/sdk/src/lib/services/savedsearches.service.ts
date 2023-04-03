@@ -18,7 +18,7 @@ export class SavedsearchesService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return apiHelpers.API_V_3;
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {
@@ -27,6 +27,10 @@ export class SavedsearchesService extends ResourceService<any> {
 
   override get(): Observable<SavedsearchesResponse> {
     return super.get();
+  }
+
+  override getById(id: string | number): Observable<{ result: Savedsearch }> {
+    return super.getById(id);
   }
 
   override update(id: string | number, resource: Savedsearch): Observable<SavedsearchesResponse> {
