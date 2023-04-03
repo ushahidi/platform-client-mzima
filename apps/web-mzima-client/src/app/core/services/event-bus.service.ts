@@ -8,6 +8,7 @@ export const enum EventType {
   OpenSupportModal = 'OPEN_SUPPORT_MODAL',
   SavedSearchInit = 'SAVED_SEARCH_INIT',
   DeleteCollection = 'DELETE_COLLECTION',
+  UpdateCollection = 'UPDATE_COLLECTION',
   IsSettingsInnerPage = 'IS_SETTINGS_INNER_PAGE',
   ShowOnboarding = 'SHOW_ONBOARDING',
   FinishOnboarding = 'FINISH_ONBOARDING',

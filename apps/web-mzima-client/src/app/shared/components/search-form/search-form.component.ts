@@ -289,6 +289,18 @@ export class SearchFormComponent implements OnInit {
   }
 
   private getCollectionInfo(id: string) {
+    this.eventBusService
+      .on(EventType.UpdateCollection)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (colId) => {
+          this.collectionsService.getById(colId).subscribe({
+            next: (coll) => {
+              this.collectionInfo = coll.result;
+            },
+          });
+        },
+      });
     this.collectionsService.getById(id).subscribe({
       next: (coll) => {
         this.collectionInfo = coll.result;
