@@ -39,7 +39,9 @@
       min-width: 124px;
 
       + mzima-client-button {
-        margin-inline-start: 10px;
+        @include breakpoint-min($tablet) {
+          margin-inline-start: 10px;
+        }
       }
     }
   }
