@@ -1361,7 +1361,8 @@
     "valid": {
       "name": {
         "required": "Site name is required",
-        "pattern": "Invalid format"
+        "pattern": "Invalid format",
+        "minlength": "Site name is too short"
       }
     },
     "bulk_actions": "Bulk actions"
