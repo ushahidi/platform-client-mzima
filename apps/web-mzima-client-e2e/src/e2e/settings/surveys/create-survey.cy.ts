@@ -1,4 +1,4 @@
-import { Base, Login, Settings, Surveys } from '../../actions';
+import { Base, Login, Settings, Surveys, Translations } from '../../actions';
 
 describe('Initialize surveys page', () => {
   before(() => {
@@ -20,18 +20,18 @@ describe('Initialize surveys page', () => {
     Base.checkExistElement('title');
     Base.checkContainElement('title', 'Add Survey');
 
-    // Translations.ClickTranslationButton();
-    // Translations.AddTranslation(['es']);
-    // Translations.SelectTranslation('Spanish');
-    // Translations.SelectTranslation('English');
-    //
-    // Translations.ClickTranslationButton();
-    // Translations.AddTranslation(['es', 'nl']);
-    // Translations.SelectTranslation('English');
+    Translations.ClickTranslationButton();
+    Translations.SelectTranslation(['es']);
+    Translations.ChooseTranslation('Spanish');
+    Translations.ChooseTranslation('English');
 
-    // Base.checkContainAndClickSelector('.mat-tab-label', 'Configure');
-    // Base.checkContainAndClickSelector('.mat-tab-label', 'Share');
-    // Base.checkContainAndClickSelector('.mat-tab-label', 'Main info');
+    Translations.ClickTranslationButton();
+    Translations.SelectTranslation(['es']);
+    Translations.ChooseTranslation('English');
+
+    Base.checkContainAndClickSelector('.mat-tab-label', 'Configure');
+    Base.checkContainAndClickSelector('.mat-tab-label', 'Share');
+    Base.checkContainAndClickSelector('.mat-tab-label', 'Main info');
 
     Base.checkExistElement('name');
     Base.checkExistElement('description');
@@ -41,7 +41,38 @@ describe('Initialize surveys page', () => {
     // Base.inputField('survey-name-es', 'Test survey name spanish');
     // Base.inputField('survey-description-es', 'Test survey description spanish');
 
-    Base.checkContainElementClickable('survey-add-field', 'Add Field');
-    Base.checkContainElementClickable('btn-add-task', 'Add Task');
+    Base.checkContainElementClickable('btn-survey-add-field', 'Add Field');
+    Base.clickElement('btn-survey-add-field');
+    Base.checkExistSelector('.fields-list');
+    Base.checkExistSelector('.list-item');
+    Base.checkExistElement('select-survey.short_text');
+    Base.clickElement('select-survey.short_text');
+    Base.checkExistElement('selected-field-name');
+    Base.inputField('selected-field-name', 'Text');
+    Base.checkExistElement('selected-field-description');
+    Base.inputField('selected-field-description', 'Description');
+    cy.get('[data-qa="toggle-required"] input').click({ force: true });
+    cy.get('[data-qa="toggle-required"] input').should('be.checked');
+    cy.get('[data-qa="toggle-required"] input').click({ force: true });
+    cy.get('[data-qa="toggle-required"] input').should('not.checked');
+    cy.get('[data-qa="toggle-private"] input').click({ force: true });
+    cy.get('[data-qa="toggle-private"] input').should('be.checked');
+    cy.get('[data-qa="toggle-private"] input').click({ force: true });
+    cy.get('[data-qa="toggle-private"] input').should('not.checked');
+    Base.checkExistElement('default-value');
+    Base.clickElement('btn-add-field');
+
+    Base.checkExistElement('field-name');
+    Base.checkContainElement('field-name', 'Text');
+    Base.checkExistElement('btn-field-edit-Text');
+    Base.checkExistElement('btn-delete-field-Text');
+    // cy.get(`[data-qa="btn-field-edit"]`).click();
+    Base.clickElement('btn-field-edit-Text');
+    Base.checkExistElement('selected-field-description');
+    Base.checkExistElement('selected-field-description');
+    Base.clickElement('btn-cancel-field');
+
+
+    // Base.checkContainElementClickable('btn-add-task', 'Add Task');
   });
 });

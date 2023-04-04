@@ -8,7 +8,7 @@ class TranslationsActions {
     return this;
   }
 
-  AddTranslation(languages: string[]) {
+  SelectTranslation(languages: string[]) {
     Base.checkContainElement('lang-modal-title', 'Choose language for translation');
     for (const language of languages) {
       Base.checkField(`lang-${ language }`);
@@ -17,7 +17,7 @@ class TranslationsActions {
     return this;
   }
 
-  SelectTranslation(language: string) {
+  ChooseTranslation(language: string) {
     Base.checkExistElement('select_language');
     Base.clickElement('select_language');
     Base.checkContainAndClickSelector('mat-option', language);

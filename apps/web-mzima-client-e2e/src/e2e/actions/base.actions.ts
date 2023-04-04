@@ -14,12 +14,12 @@ class BaseActions {
   }
 
   inputField(element: string, content: string) {
-    cy.get(`[data-qa=${ element }]`).clear().type(content);
+    cy.get(`[data-qa="${ element }"]`).clear().type(content);
     return this;
   }
 
   checkField(element: string) {
-    cy.get(`[data-qa=${ element }]`).find('input').click({ force: true });
+    cy.get(`[data-qa="${ element }"]`).find('input').click({ force: true });
     return this;
   }
 
@@ -29,7 +29,7 @@ class BaseActions {
   }
 
   clickElement(element: string) {
-    cy.get(`[data-qa=${ element }]`).click();
+    cy.get(`[data-qa="${ element }"]`).click();
     return this;
   }
 
@@ -39,27 +39,27 @@ class BaseActions {
   }
 
   checkExistElement(element: string) {
-    cy.get(`[data-qa=${ element }]`).should('exist');
+    cy.get(`[data-qa="${ element }"]`).should('exist');
     return this;
   }
 
   checkContainElementClickable(element: string, content: string) {
-    cy.get(`[data-qa=${ element }]`).contains(content).focused();
+    cy.get(`[data-qa="${ element }"]`).contains(content).focused();
     return this;
   }
 
   checkContainElement(element: string, content: string) {
-    cy.get(`[data-qa=${ element }]`).contains(content);
+    cy.get(`[data-qa="${ element }"]`).contains(content);
     return this;
   }
 
   checkContainAndClickElement(element: string, content: string) {
-    cy.get(`[data-qa=${ element }]`).contains(content).click();
+    cy.get(`[data-qa="${ element }"]`).contains(content).click();
     return this;
   }
 
   checkContainAndClickSelector(selector: string, content: string) {
-    cy.get(selector).contains(content, { timeout: 5000 }).click();
+    cy.get(selector).contains(content).click();
     return this;
   }
 

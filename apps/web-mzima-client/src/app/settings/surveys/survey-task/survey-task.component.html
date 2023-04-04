@@ -36,7 +36,7 @@
           color="secondary"
           fill="outline"
           (buttonClick)="addField()"
-          [data-qa]="'survey-add-field'"
+          [data-qa]="'btn-survey-add-field'"
         >
           <span>{{ 'form.add_field' | translate }}</span>
           <mat-icon icon svgIcon="plus"></mat-icon>
@@ -49,14 +49,19 @@
         (cdkDropListDropped)="drop($event)"
         *ngIf="taskFields?.length; else noFields"
       >
-        <div class="field-item" *ngFor="let field of taskFields; let i = index" cdkDrag>
+        <div
+          class="field-item"
+          *ngFor="let field of taskFields; let i = index"
+          cdkDrag
+          [data-qa]="'field-' + field"
+        >
           <div class="field-item__main">
             <mat-icon
               cdkDragHandle
               class="field-item__drag-handle"
               svgIcon="drag-handle"
             ></mat-icon>
-            <span class="field-item__title">{{ field.label }}</span>
+            <span class="field-item__title" [data-qa]="'field-name'">{{ field.label }}</span>
           </div>
           <!-- <span class="field-item__type">{{ field.type }}</span> -->
           <div class="field-item__controls">
@@ -66,6 +71,7 @@
               [iconOnly]="true"
               class="field-item__control"
               (buttonClick)="editField(field, i)"
+              [data-qa]="'btn-field-edit-' + field.label"
             >
               <mat-icon icon svgIcon="pencil"></mat-icon>
             </mzima-client-button>
@@ -76,6 +82,7 @@
               *ngIf="canDelete(field)"
               class="field-item__control"
               (buttonClick)="deleteField(i)"
+              [data-qa]="'btn-delete-field-' + field.label"
             >
               <mat-icon icon svgIcon="delete"></mat-icon>
             </mzima-client-button>
