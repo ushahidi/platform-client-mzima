@@ -10,27 +10,37 @@
 
   &__button {
     width: 100%;
+    height: 100%;
     display: block;
-    font-size: 14px;
-    padding: 8px 4px;
-    border-radius: 0;
-    color: var(--color-neutral-90);
-    min-height: 100%;
-    line-height: 17px;
-    font-weight: normal;
-    box-shadow: none !important;
-    border-bottom: 1px solid var(--color-neutral-30);
+    --font-size: 14px;
+    --padding-start: 4px;
+    --padding-end: 4px;
+    --border-radius: 0;
+    --min-height: 100%;
+    --line-height: 24px;
+    --font-weight: normal;
+    --border-bottom: 1px solid var(--color-neutral-30);
 
     @include breakpoint-max($tablet) {
-      border: none;
-      font-size: 12px;
-      min-height: 48px;
-      line-height: 1.5;
-      text-align: start;
-      letter-spacing: 0.04em;
-      padding-inline-end: 64px;
-      text-transform: uppercase;
-      padding-inline-start: 16px;
+      --font-size: 12px;
+      --min-height: 48px;
+      --line-height: 1.5;
+      --padding-end: 16px;
+      --padding-start: 16px;
+      --border-bottom: none;
+      --letter-spacing: 0.04em;
+      --text-transform: uppercase;
+      --justify-content: flex-start;
+    }
+
+    &::ng-deep {
+      .mzima-button {
+        &__text {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+        }
+      }
     }
 
     &[aria-expanded='true'] {
@@ -68,7 +78,7 @@
         top: 50%;
         position: absolute;
         margin-top: -0.5em;
-        inset-inline-end: 16px;
+        inset-inline-end: 0;
         transform: rotate(-90deg);
       }
 
@@ -183,14 +193,14 @@
   }
 
   .edit-btn {
-    width: 1em;
-    height: 1em;
-    font-size: 21px;
+    --size: 21px;
+    --icon-size: 21px;
     margin-inline-end: 8px;
 
-    .mat-icon {
-      margin: 0;
-      font-size: 1em;
+    @include breakpoint-max($tablet) {
+      --size: 24px;
+      --icon-size: 24px;
+      margin-inline-end: 0;
     }
   }
 
@@ -217,7 +227,12 @@
     padding-top: 6px;
     padding-bottom: 6px;
     padding-inline-start: 12px;
-    padding-inline-end: 16px;
+
+    @include breakpoint-max($tablet) {
+      font-size: 16px;
+      line-height: 1.5;
+      padding-inline-start: 0;
+    }
 
     &::ng-deep {
       .mat-list-item-content {
@@ -241,40 +256,23 @@
           margin-inline-end: 11px;
         }
       }
+
+      .mat-checkbox-layout {
+        white-space: normal;
+      }
+
+      .mat-checkbox-label {
+        line-height: inherit;
+      }
     }
 
     &__arrow {
-      margin: 0;
-      width: 1em;
-      height: 1em;
-      display: flex;
-      font-size: 32px;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
+      --size: 32px;
+      --icon-size: 24px;
       transition: transform 0.35s ease;
-
-      @include breakpoint-max($tablet) {
-        font-size: 40px;
-        margin-inline-end: -16px;
-      }
 
       &--open {
         transform: rotate(180deg);
-      }
-
-      &::ng-deep {
-        .mat-button-wrapper {
-          justify-content: center;
-        }
-      }
-
-      .mat-icon {
-        font-size: 0.5em;
-
-        &:last-child {
-          margin: 0;
-        }
       }
     }
   }
@@ -312,7 +310,7 @@
 
       .menu-content {
         @include breakpoint-min($tablet) {
-          min-width: 160px;
+          min-width: 180px;
         }
       }
     }
@@ -498,15 +496,9 @@
   }
 
   &__back {
-    width: 1em;
-    height: 1em;
-    line-height: 1;
-    font-size: 40px;
+    --size: 40px;
+    --icon-size: 40px;
     margin-inline-end: 8px;
-
-    .mat-icon {
-      font-size: 1em;
-    }
   }
 
   &__content {
@@ -571,5 +563,17 @@
         }
       }
     }
+  }
+}
+
+.clear-button {
+  display: flex;
+  padding: 8px 14px;
+  align-items: center;
+  justify-content: flex-end;
+
+  @include breakpoint-max($tablet) {
+    padding-left: 0;
+    padding-right: 0;
   }
 }

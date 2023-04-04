@@ -28,13 +28,8 @@
   }
 
   &__back {
-    width: 32px;
-    height: 32px;
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 32px;
+    --size: 32px;
     margin-inline-end: 8px;
-    margin-inline-start: 0;
   }
 
   &__controls {
@@ -54,12 +49,6 @@
 
     @include breakpoint-max($laptop-small) {
       margin-inline-start: 8px;
-    }
-
-    &::ng-deep {
-      .mat-button-wrapper {
-        justify-content: center;
-      }
     }
   }
 
@@ -90,24 +79,35 @@
 
 .account-info {
   height: 100%;
+  --min-height: 100%;
   flex-shrink: 0;
-  padding-top: 0;
-  font-size: 14px;
-  min-width: 236px;
-  font-weight: 400;
-  max-width: 250px;
-  line-height: 17px;
+  --font-size: 14px;
+  --min-width: 236px;
+  --font-weight: 400;
+  --max-width: 250px;
+  --line-height: 17px;
   padding-bottom: 0;
-  text-align: right;
+  --justify-content: flex-end;
   white-space: normal;
   margin-inline-end: -24px;
-  padding-inline-end: 24px;
+  --padding-end: 24px;
   margin-inline-start: 16px;
-  padding-inline-start: 8px;
+  --padding-start: 8px;
   border-left: 1px solid var(--color-neutral-30);
 
   @include breakpoint-max($laptop-small) {
-    min-width: 106px;
+    --min-width: 106px;
+  }
+
+  &::ng-deep {
+    .mzima-button {
+      &__text {
+        display: flex;
+        text-align: right;
+        align-items: center;
+        justify-content: flex-start;
+      }
+    }
   }
 
   &__avatar {
@@ -206,21 +206,13 @@
     border-bottom: 1px solid var(--color-neutral-90);
 
     &__close {
-      padding: 0;
-      height: 40px;
-      display: flex;
-      margin-top: 0;
-      min-width: 40px;
-      font-size: 32px;
-      margin-bottom: 0;
-      align-items: center;
-      margin-inline-end: 0;
-      flex-direction: column;
-      justify-content: center;
+      --size: 40px;
+      --icon-size: 32px;
       margin-inline-start: 24px;
-      color: var(--color-neutral-40);
-      background: var(--color-black);
-      border-color: var(--color-neutral-90);
+      --color: var(--color-neutral-40);
+      --background-color: var(--color-black);
+      --border-color: var(--color-neutral-90);
+      --hover-background-color: var(--color-black);
     }
   }
 
@@ -241,12 +233,10 @@
     &__button {
       margin: 0 4px;
       flex: 1 1 calc(50% - 8px);
-
-      &.mat-stroked-button {
-        color: var(--color-light);
-        background: var(--color-black);
-        border-color: var(--color-neutral-20);
-      }
+      --color: var(--color-light);
+      --background-color: var(--color-black);
+      --border-color: var(--color-neutral-20);
+      --hover-background-color: var(--color-black);
     }
   }
 }
@@ -265,15 +255,28 @@
 }
 
 .mobile-menu-button {
+  display: flex;
   margin: 4px 0;
   padding: 0 16px;
   font-size: 16px;
+  cursor: pointer;
   border-radius: 0;
   font-weight: 400;
   text-align: start;
   line-height: 56px;
+  align-items: center;
+  text-decoration: none;
+  justify-content: flex-start;
   color: var(--color-neutral-50);
   background: var(--color-neutral-100);
+
+  &__icon {
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    font-size: 32px;
+    margin-right: 12px;
+  }
 }
 
 ::ng-deep {

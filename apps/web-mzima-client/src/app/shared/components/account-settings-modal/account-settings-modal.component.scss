@@ -249,24 +249,13 @@
   }
 
   &__btn {
-    padding: 0;
-    width: 1em;
-    height: 1em;
-    line-height: 1;
-    font-size: 24px;
-    border-radius: 4px;
+    --size: 24px;
+    --icon-size: 20px;
     margin: 0 0 0 24px;
 
     @include breakpoint-max($tablet) {
-      font-size: 32px;
-    }
-
-    .mat-icon {
-      font-size: 20px;
-
-      @include breakpoint-max($tablet) {
-        font-size: 1em;
-      }
+      --size: 32px;
+      --icon-size: 32px;
     }
   }
 }

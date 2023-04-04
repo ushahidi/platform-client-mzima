@@ -1,7 +1,12 @@
 <div class="sidebar" *ngIf="isDesktop || !isInnerPage">
   <div class="sidebar__main">
     <span class="sidebar__logo" *ngIf="isDesktop">
-      <img src="../../../../assets/images/ushahidi-logo.svg" alt="ushahidi" width="172" height="40" />
+      <img
+        src="../../../../assets/images/ushahidi-logo.svg"
+        alt="ushahidi"
+        width="172"
+        height="40"
+      />
     </span>
 
     <div class="sidebar__info">
@@ -16,7 +21,6 @@
         <ng-container *ngIf="!item.hidden && (!item.adminGuard || isHost)">
           <a
             [id]="item.ref"
-            mat-raised-button
             class="sidebar-menu-button"
             [data-qa]="'btn-' + item.icon"
             [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
@@ -33,7 +37,6 @@
           <ng-template #menuAction>
             <button
               [id]="item.ref"
-              mat-raised-button
               class="sidebar-menu-button"
               [data-qa]="'btn-' + item.icon"
               [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
@@ -53,12 +56,11 @@
         <ng-container *ngIf="item.visible && (!item.adminGuard || isHost)">
           <button
             [id]="item.ref"
-            mat-raised-button
             (click)="item.action()"
             class="sidebar-menu-button"
             [data-qa]="'btn-' + item.icon"
             *ngIf="item.action; else menuLink"
-            [attr.data-onboard-id]="'sidebar-menu-button-' + item.icon"
+            [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
           >
             <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
             <span class="sidebar-menu-button__title">{{ item.label | translate }}</span>
@@ -66,11 +68,10 @@
           <ng-template #menuLink>
             <a
               [id]="item.ref"
-              mat-raised-button
               class="sidebar-menu-button"
               [data-qa]="'btn-' + item.icon"
               (click)="item.action && item.action()"
-              [attr.data-onboard-id]="'sidebar-menu-button-' + item.icon"
+              [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
               routerLinkActive="sidebar-menu-button--active"
               [routerLink]="item.router && createRouterLink(item.router)"
             >

@@ -1,11 +1,9 @@
-<button
-  mat-raised-button
-  (click)="addPost()"
-  aria-label="Add post"
-  color="primary"
+<mzima-client-button
+  (buttonClick)="addPost()"
   class="submit-post-button"
-  [data-qa]="'btn-add-new-post'"
+  [rounded]="!(isDesktop$ | async)!"
+  [iconOnly]="!(isDesktop$ | async)!"
 >
   <span *ngIf="isDesktop$ | async">{{ 'app.add_new_post' | translate }}</span>
-  <mat-icon svgIcon="plus"></mat-icon>
-</button>
+  <mat-icon icon svgIcon="plus"></mat-icon>
+</mzima-client-button>

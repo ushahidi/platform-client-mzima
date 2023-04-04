@@ -28,4 +28,10 @@
     font-weight: 400;
     margin-bottom: 32px;
   }
+
+  mzima-client-button {
+    --min-width: 140px;
+    vertical-align: top;
+    display: inline-block;
+  }
 }

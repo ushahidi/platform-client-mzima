@@ -19,7 +19,7 @@ import {
   tileLayer,
 } from 'leaflet';
 import 'leaflet.markercluster';
-import { Observable } from 'rxjs';
+import { debounceTime, Observable } from 'rxjs';
 import { PostPreviewComponent } from '../post/post-preview/post-preview.component';
 import { PostDetailsModalComponent } from './post-details-modal/post-details-modal.component';
 import {
@@ -123,7 +123,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   }
 
   private initFilterListener() {
-    this.filtersSubscription$.subscribe({
+    this.filtersSubscription$.pipe(debounceTime(1000)).subscribe({
       next: () => {
         if (this.route.snapshot.data['view'] === 'search' && !this.searchId) return;
         if (this.route.snapshot.data['view'] === 'collection' && !this.collectionId) return;
@@ -133,7 +133,6 @@ export class MapComponent extends MainViewComponent implements OnInit {
           this.map.removeLayer(layer);
           this.markerClusterData.removeLayer(layer);
         });
-
         this.mapLayers = [];
 
         this.getPostsGeoJson();

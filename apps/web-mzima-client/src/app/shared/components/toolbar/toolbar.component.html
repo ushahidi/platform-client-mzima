@@ -1,12 +1,14 @@
 <mat-toolbar class="toolbar">
-  <button
-    mat-icon-button
-    (click)="back()"
+  <mzima-client-button
+    fill="clear"
+    color="secondary"
+    [iconOnly]="true"
+    (buttonClick)="back()"
     class="toolbar__back"
     *ngIf="!(isDesktop$ | async)! && isInnerPage"
   >
-    <mat-icon svgIcon="back"></mat-icon>
-  </button>
+    <mat-icon icon svgIcon="back"></mat-icon>
+  </mzima-client-button>
   <h1
     class="toolbar__page-title"
     [data-qa]="'page-title'"
@@ -18,16 +20,10 @@
     <app-search-form class="search-form" *ngIf="showSearchForm"></app-search-form>
     <ng-container *ngIf="isDesktop$ | async">
       <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
-      <button
-        color="dark"
-        mat-raised-button
-        (click)="openShare()"
-        class="toolbar__button"
-        *ngIf="!isSettingsPage"
-      >
+      <mzima-client-button (buttonClick)="openShare()" color="secondary" class="toolbar__button">
         <span>{{ 'app.share' | translate }}</span>
-        <mat-icon class="toolbar__button__icon" svgIcon="share"></mat-icon>
-      </button>
+        <mat-icon icon svgIcon="share"></mat-icon>
+      </mzima-client-button>
       <app-language
         class="toolbar__language"
         [languages]="languages"
@@ -35,8 +31,9 @@
       ></app-language>
     </ng-container>
   </div>
-  <button
-    mat-button
+  <mzima-client-button
+    fill="clear"
+    color="secondary"
     class="account-info"
     [data-qa]="'account-info'"
     *ngIf="isLoggedIn && (isDesktop$ | async)"
@@ -54,31 +51,40 @@
       }}?d=retro&s=40"
     />
     <mat-icon class="account-info__arrow" svgIcon="arrow-down"></mat-icon>
-  </button>
-  <button
-    mat-button
+  </mzima-client-button>
+  <mzima-client-button
+    fill="clear"
     class="burger"
+    color="secondary"
+    [iconOnly]="true"
     *ngIf="!(isDesktop$ | async)!"
-    [attr.aria-label]="'nav.open_menu' | translate"
-    (click)="toggleBurgerMenu()"
+    (buttonClick)="toggleBurgerMenu()"
+    [ariaLabel]="'nav.open_menu' | translate"
   >
-    <mat-icon svgIcon="hamburger"></mat-icon>
-  </button>
+    <mat-icon icon svgIcon="hamburger"></mat-icon>
+  </mzima-client-button>
 </mat-toolbar>
 
 <div class="menu" *ngIf="!(isDesktop$ | async)!" [ngClass]="{ 'menu--open': isBurgerMenuOpen }">
   <div class="menu__head">
     <div class="menu__logo">
-      <img src="../../../../assets/images/ushahidi-logo.svg" alt="ushahidi" width="177" height="54" />
+      <img
+        src="../../../../assets/images/ushahidi-logo.svg"
+        alt="ushahidi"
+        width="177"
+        height="54"
+      />
     </div>
-    <button
-      mat-stroked-button
+    <mzima-client-button
+      fill="outline"
+      color="custom"
+      [iconOnly]="true"
       class="menu__head__close"
-      (click)="toggleBurgerMenu(false)"
-      [attr.aria-label]="'modal.button.close' | translate"
+      (buttonClick)="toggleBurgerMenu(false)"
+      [ariaLabel]="'modal.button.close' | translate"
     >
-      <mat-icon>close</mat-icon>
-    </button>
+      <mat-icon icon svgIcon="close"></mat-icon>
+    </mzima-client-button>
   </div>
 
   <div class="menu__body">
@@ -88,7 +94,6 @@
       <ng-container *ngFor="let item of menu">
         <hr *ngIf="item.separator" />
         <a
-          mat-raised-button
           *ngIf="item.visible"
           class="mobile-menu-button"
           [data-qa]="'btn-' + item.icon"
@@ -101,8 +106,8 @@
         </a>
       </ng-container>
       <hr />
-      <a mat-raised-button class="mobile-menu-button"> {{ 'app.privacy_policy' | translate }} </a>
-      <a mat-raised-button class="mobile-menu-button">
+      <a class="mobile-menu-button"> {{ 'app.privacy_policy' | translate }} </a>
+      <a class="mobile-menu-button">
         {{ 'app.terms_and_conditions' | translate }}
       </a>
     </div>
@@ -113,10 +118,15 @@
       class="menu__footer__button"
       *ngIf="isDonateAvailable"
     ></app-donation-button>
-    <button mat-stroked-button (click)="openShare()" class="menu__footer__button">
-      <span>{{ 'app.share' | translate }}</span>
-      <mat-icon svgIcon="share"></mat-icon>
-    </button>
+    <mzima-client-button
+      fill="outline"
+      color="custom"
+      (buttonClick)="openShare()"
+      class="menu__footer__button"
+    >
+      {{ 'app.share' | translate }}
+      <mat-icon icon svgIcon="share"></mat-icon>
+    </mzima-client-button>
   </div>
 </div>
 

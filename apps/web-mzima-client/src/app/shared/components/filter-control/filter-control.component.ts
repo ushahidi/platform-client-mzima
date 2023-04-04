@@ -58,6 +58,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   @Input() public title: string;
   @Input() public canEdit?: boolean;
   @Input() public fields: string[] = ['id', 'name'];
+  @Input() public selectedFields: any[];
   @Output() public filterChange = new EventEmitter();
   @Output() public editOption = new EventEmitter();
   @Output() public clear = new EventEmitter();
@@ -75,10 +76,15 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public isModalOpen: boolean;
   public buttonWidth = 200;
   public checklistSelection = new SelectionModel<CategoryFlatNode>(true);
+  public treeControl: FlatTreeControl<CategoryFlatNode>;
 
   constructor(private breakpointService: BreakpointService) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+    this.treeControl = new FlatTreeControl<CategoryFlatNode>(this.getLevel, this.isExpandable);
   }
+
+  private getLevel = (node: CategoryFlatNode) => node.level;
+  private isExpandable = (node: CategoryFlatNode) => node.expandable;
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -90,6 +96,20 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
         this.buttonWidth = this.button._elementRef?.nativeElement.clientWidth ?? 0;
       },
     });
+
+    if (this.selectedFields) {
+      this.value = this.selectedFields;
+      setTimeout(() => {
+        for (const node of this.treeControl.dataNodes) {
+          if (this.value.includes(node.id)) {
+            const { expandable, level } = node;
+            !expandable && level === 0
+              ? this.categorySelectionToggle(node, true)
+              : this.categoryLeafSelectionToggle(node, true);
+          }
+        }
+      }, 1000);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -106,6 +126,9 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     }
   }
 
+  /**
+   * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
+   */
   private _transformer = (node: any, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -118,11 +141,6 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   isEditable(option: any) {
     return option.allowed_privileges.includes('update') && this.value === option.id;
   }
-
-  public treeControl = new FlatTreeControl<CategoryFlatNode>(
-    (node) => node.level,
-    (node) => node.expandable,
-  );
 
   private treeFlattener = new MatTreeFlattener(
     this._transformer,
@@ -150,9 +168,11 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public writeValue(value: any) {
     if (this.type === this.filterType.Daterange) {
       this.value = new DateRange<Date>(new Date(value.start), new Date(value.end));
+      const start = dayjs(this.value.start).format('DD-MM-YYYY'),
+        end = this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : '';
       this.calendarValue = {
-        start: dayjs(this.value.start).format('DD-MM-YYYY'),
-        end: this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : '',
+        start: start !== 'Invalid Date' ? start : '',
+        end: end !== 'Invalid Date' ? end : '',
       };
     } else {
       this.value = value;
@@ -224,17 +244,26 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     this.clear.emit();
   }
 
+  /** Whether all the descendants of the node are selected. */
   public descendantsAllSelected(option: CategoryFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(option);
-    const descAllSelected =
+    return (
       descendants.length > 0 &&
       descendants.every((child) => {
         return this.checklistSelection.isSelected(child);
-      });
-    return descAllSelected;
+      })
+    );
   }
 
-  public categorySelectionToggle(node: CategoryFlatNode): void {
+  /** Whether part of the descendants are selected */
+  descendantsPartiallySelected(node: CategoryFlatNode): boolean {
+    const descendants = this.treeControl.getDescendants(node);
+    const result = descendants.some((child) => this.checklistSelection.isSelected(child));
+    return result && !this.descendantsAllSelected(node);
+  }
+
+  /** Toggle the category item selection. Select/deselect all the descendants node */
+  public categorySelectionToggle(node: CategoryFlatNode, isInit = false): void {
     this.checklistSelection.toggle(node);
     const descendants = this.treeControl.getDescendants(node);
     this.checklistSelection.isSelected(node)
@@ -243,13 +272,32 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
 
     descendants.forEach((child) => this.checklistSelection.isSelected(child));
     this.checkAllParentsSelection(node);
+    if (!isInit) this.selectItems(this.checklistSelection);
   }
 
-  public categoryLeafSelectionToggle(option: CategoryFlatNode): void {
+  /** Toggle a leaf category item selection. Check all the parents to see if they changed */
+  public categoryLeafSelectionToggle(option: CategoryFlatNode, isInit = false): void {
     this.checklistSelection.toggle(option);
     this.checkAllParentsSelection(option);
+
+    if (!isInit) this.selectItems(this.checklistSelection);
   }
 
+  private selectItems(data: any) {
+    this.value = this.treeControl.dataNodes
+      .filter((nodeEl: any) => data.isSelected(nodeEl))
+      .map((nodeEl) => nodeEl.id);
+    this.onChange(this.value);
+  }
+
+  public clearTags() {
+    const descendants = this.treeControl.dataNodes;
+    this.checklistSelection.deselect(...descendants);
+    this.selectItems(this.checklistSelection);
+    this.clear.emit();
+  }
+
+  /** Checks all the parents when a leaf node is selected/unselected */
   private checkAllParentsSelection(option: CategoryFlatNode): void {
     let parent: CategoryFlatNode | null = this.getParentNode(option);
     while (parent) {
@@ -258,6 +306,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     }
   }
 
+  /** Get the parent node of a node */
   private getParentNode(option: CategoryFlatNode): CategoryFlatNode | null {
     const currentLevel = this.getLevel(option);
 
@@ -277,8 +326,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     return null;
   }
 
-  private getLevel = (option: CategoryFlatNode) => option.level;
-
+  /** Check root node checked state and change it accordingly */
   private checkRootNodeSelection(option: CategoryFlatNode): void {
     const nodeSelected = this.checklistSelection.isSelected(option);
     const descendants = this.treeControl.getDescendants(option);

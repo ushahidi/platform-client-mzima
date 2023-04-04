@@ -5,14 +5,13 @@
         <img [src]="src" [alt]="'app.file_uploader' | translate" />
       </div>
       <div class="buttons">
-        <button
-          color="accent"
-          type="button"
-          mat-raised-button
-          translate="app.delete"
-          (click)="deleteImage(i)"
+        <mzima-client-button
+          color="danger"
           [data-qa]="'btn-update-logo'"
-        ></button>
+          (buttonClick)="deleteImage(i)"
+        >
+          {{ 'app.delete' | translate }}
+        </mzima-client-button>
       </div>
     </div>
     <div class="image">
@@ -29,9 +28,9 @@
         />
       </div>
       <div class="buttons">
-        <button color="primary" type="button" mat-stroked-button (click)="chooseFile()">
+        <mzima-client-button fill="outline" color="secondary" (buttonClick)="chooseFile()">
           {{ 'app.choose_photo' | translate }}
-        </button>
+        </mzima-client-button>
       </div>
     </div>
   </ng-container>
@@ -55,18 +54,17 @@
       />
     </div>
     <div class="buttons">
-      <button color="primary" type="button" mat-stroked-button (click)="chooseFile()">
+      <mzima-client-button fill="outline" color="secondary" (buttonClick)="chooseFile()">
         {{ 'app.choose_photo' | translate }}
-      </button>
-      <button
-        type="button"
-        color="accent"
-        mat-raised-button
-        translate="app.delete"
-        (click)="deleteImage()"
+      </mzima-client-button>
+      <mzima-client-button
+        color="danger"
         *ngIf="imageSrc?.length"
         [data-qa]="'btn-update-logo'"
-      ></button>
+        (buttonClick)="deleteImage()"
+      >
+        {{ 'app.delete' | translate }}
+      </mzima-client-button>
     </div>
   </div>
 </div>

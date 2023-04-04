@@ -19,6 +19,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { DirectiveModule, LottieAnimationModule, PasswordStrengthModule } from '@shared';
 import { AuthRoutingModule } from './auth-routing.module';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { AuthRoutingModule } from './auth-routing.module';
     LottieAnimationModule,
     DirectiveModule,
     PasswordStrengthModule,
+    MzimaUiModule,
   ],
 })
 export class AuthModule {}

@@ -16,16 +16,17 @@
         [ngModelOptions]="{ standalone: true }"
         [placeholder]="'global_filter.location_placeholder' | translate"
       />
-      <button
+      <mzima-client-button
         matSuffix
-        type="button"
-        mat-icon-button
-        (click)="clear()"
+        fill="clear"
+        [iconOnly]="true"
+        color="secondary"
         *ngIf="searchQuery"
+        (buttonClick)="clear()"
         class="location-control__clear"
       >
-        <mat-icon class="location-control__icon" svgIcon="close"></mat-icon>
-      </button>
+        <mat-icon icon svgIcon="close"></mat-icon>
+      </mzima-client-button>
       <mat-autocomplete
         autoActiveFirstOption
         autoSelectActiveOption

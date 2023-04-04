@@ -99,12 +99,9 @@ export class SearchFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventBusInit();
-
     this.getSavedFilters();
     this.getSurveys();
     this.getCategories();
-    this.getPostsFilters();
-    this.getTotalPosts();
 
     if (this.filters) {
       const filters = JSON.parse(this.filters!);
@@ -125,6 +122,7 @@ export class SearchFormComponent implements OnInit {
       this.checkSavedSearchNotifications();
     }
 
+    this.isMapView = this.router.url.includes('/map');
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
         this.isMapView = params.url.includes('/map');
@@ -172,6 +170,9 @@ export class SearchFormComponent implements OnInit {
       },
       error: (err) => console.log('isMainFiltersHidden:', err),
     });
+
+    this.getPostsFilters();
+    this.getTotalPosts();
   }
 
   getPostsFilters() {
@@ -187,6 +188,10 @@ export class SearchFormComponent implements OnInit {
               JSON.stringify(withSet),
             );
           } else {
+            localStorage.setItem(
+              this.session.getLocalStorageNameMapper('filters'),
+              JSON.stringify(this.form.value),
+            );
             this.collectionInfo = undefined;
           }
         }
@@ -284,9 +289,21 @@ export class SearchFormComponent implements OnInit {
   }
 
   private getCollectionInfo(id: string) {
+    this.eventBusService
+      .on(EventType.UpdateCollection)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (colId) => {
+          this.collectionsService.getById(colId).subscribe({
+            next: (coll) => {
+              this.collectionInfo = coll.result;
+            },
+          });
+        },
+      });
     this.collectionsService.getById(id).subscribe({
       next: (coll) => {
-        this.collectionInfo = coll;
+        this.collectionInfo = coll.result;
         this.activeSavedSearch = undefined;
         this.activeSavedSearchValue = null;
         localStorage.removeItem(this.session.getLocalStorageNameMapper('activeSavedSearch'));
@@ -538,7 +555,8 @@ export class SearchFormComponent implements OnInit {
         JSON.stringify(this.activeSavedSearch),
       );
     } else {
-      this.activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
+      const activeSavedSearch = await lastValueFrom(this.savedsearchesService.getById(value));
+      this.activeSavedSearch = activeSavedSearch.result;
       this.checkSavedSearchNotifications();
     }
   }

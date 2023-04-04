@@ -21,6 +21,7 @@ import { DirectiveModule, SpinnerModule } from '@shared';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
 import { UserItemComponent } from './user-item/user-item.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [UsersComponent, UserItemComponent],
@@ -46,6 +47,7 @@ import { UserItemComponent } from './user-item/user-item.component';
     DirectiveModule,
     MatButtonModule,
     MatIconModule,
+    MzimaUiModule,
   ],
 })
 export class UsersModule {}

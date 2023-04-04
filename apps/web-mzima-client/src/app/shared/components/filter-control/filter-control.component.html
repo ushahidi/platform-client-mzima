@@ -1,14 +1,14 @@
 <div class="filter-control">
   <ng-container *ngIf="(isDesktop$ | async)!; else button">
-    <button
+    <mzima-client-button
       #button
-      type="button"
-      mat-raised-button
+      fill="clear"
+      color="gray"
       [matMenuTriggerFor]="menu"
       class="filter-control__button"
     >
       <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
-    </button>
+    </mzima-client-button>
 
     <mat-menu
       #menu="matMenu"
@@ -56,14 +56,16 @@
           >
             {{ option[fields[1]] | translate }}
           </mat-radio-button>
-          <button
+          <mzima-client-button
             *ngIf="canEdit && isEditable(option)"
             class="edit-btn"
-            mat-icon-button
-            (click)="editOption.emit(option)"
+            [iconOnly]="true"
+            fill="clear"
+            color="secondary"
+            (buttonClick)="editOption.emit(option)"
           >
-            <mat-icon svgIcon="pencil"></mat-icon>
-          </button>
+            <mat-icon icon svgIcon="pencil"></mat-icon>
+          </mzima-client-button>
         </div>
       </mat-radio-group>
       <ng-content select="[postfix]"></ng-content>
@@ -91,51 +93,62 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="filterType.Multilevelselect">
+      <div class="clear-button" suffix>
+        <mzima-client-button
+          fill="clear"
+          size="small"
+          class="filter-group__head__button"
+          (buttonClick)="clearTags()"
+        >
+          {{ 'nav.clear' | translate }}
+        </mzima-client-button>
+      </div>
       <mat-tree
         [dataSource]="dataSource"
         [treeControl]="treeControl"
         class="multilevelselect-filter"
       >
         <mat-selection-list [(ngModel)]="value" (selectionChange)="valueChanged()">
-          <mat-tree-node *matTreeNodeDef="let option">
+          <mat-tree-node *matTreeNodeDef="let node">
             <mat-checkbox
               color="primary"
-              [value]="option[fields[0]]"
-              checkboxPosition="before"
+              [value]="node.id"
               (click)="$event.stopPropagation()"
               class="multilevelselect-filter__option"
-              (change)="categoryLeafSelectionToggle(option)"
-              [checked]="checklistSelection.isSelected(option)"
+              (change)="categoryLeafSelectionToggle(node)"
+              [checked]="checklistSelection.isSelected(node)"
             >
-              {{ option[fields[1]] | translate }}
+              {{ node.name }}
             </mat-checkbox>
           </mat-tree-node>
           <mat-tree-node
             (click)="$event.stopPropagation()"
-            *matTreeNodeDef="let option; when: hasChild"
+            *matTreeNodeDef="let node; when: hasChild"
           >
             <mat-checkbox
               color="primary"
-              checkboxPosition="before"
-              [value]="option[fields[0]]"
+              [value]="node.id"
               (click)="$event.stopPropagation()"
+              [indeterminate]="descendantsPartiallySelected(node)"
               class="multilevelselect-filter__option"
-              [checked]="descendantsAllSelected(option)"
-              (change)="categorySelectionToggle(option)"
+              [checked]="descendantsAllSelected(node)"
+              (change)="categorySelectionToggle(node)"
             >
-              {{ option[fields[1]] | translate }}
+              {{ node.name }}
             </mat-checkbox>
-            <button
-              mat-icon-button
+            <mzima-client-button
+              fill="clear"
+              [iconOnly]="true"
+              color="secondary"
               matTreeNodeToggle
-              class="multilevelselect-filter__option__arrow"
-              [attr.aria-label]="'Toggle ' + option[fields[1]] | translate"
+              class="multilevelselect-filter__option__arrow checklist-leaf-node"
+              [attr.aria-label]="'Toggle ' + node.name"
               [ngClass]="{
-                'multilevelselect-filter__option__arrow--open': treeControl.isExpanded(option)
+                'multilevelselect-filter__option__arrow--open': treeControl.isExpanded(node)
               }"
             >
-              <mat-icon svgIcon="arrow-down"></mat-icon>
-            </button>
+              <mat-icon icon svgIcon="arrow-down"></mat-icon>
+            </mzima-client-button>
           </mat-tree-node>
         </mat-selection-list>
       </mat-tree>
@@ -205,20 +218,26 @@
 </ng-template>
 
 <ng-template #button>
-  <button
-    type="button"
-    mat-raised-button
-    (click)="toggleModal(true)"
+  <mzima-client-button
+    fill="clear"
+    color="secondary"
     class="filter-control__button"
+    (buttonClick)="toggleModal(true)"
   >
     <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
-  </button>
+  </mzima-client-button>
 
   <div class="filter-modal" *ngIf="isModalOpen">
     <div class="filter-modal__head">
-      <button type="button" mat-icon-button class="filter-modal__back" (click)="toggleModal(false)">
-        <mat-icon svgIcon="back"></mat-icon>
-      </button>
+      <mzima-client-button
+        fill="clear"
+        [iconOnly]="true"
+        color="secondary"
+        class="filter-modal__back"
+        (buttonClick)="toggleModal(false)"
+      >
+        <mat-icon icon svgIcon="back"></mat-icon>
+      </mzima-client-button>
       <h1>{{ title }}</h1>
     </div>
 
@@ -227,23 +246,17 @@
     </div>
 
     <div class="filter-modal__controls">
-      <button
-        type="button"
-        mat-stroked-button
-        (click)="clearFilter()"
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
+        (buttonClick)="clearFilter()"
         class="filter-modal__control"
       >
         {{ 'nav.clear' | translate }}
-      </button>
-      <button
-        type="button"
-        color="primary"
-        (click)="apply()"
-        mat-raised-button
-        class="filter-modal__control"
-      >
+      </mzima-client-button>
+      <mzima-client-button (buttonClick)="apply()" class="filter-modal__control">
         {{ 'app.apply_filters' | translate }}
-      </button>
+      </mzima-client-button>
     </div>
   </div>
 </ng-template>

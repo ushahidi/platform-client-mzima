@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ColorPickerComponent } from './color-picker.component';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 @NgModule({
   declarations: [ColorPickerComponent],
@@ -16,6 +17,7 @@ import { ColorPickerComponent } from './color-picker.component';
     FormsModule,
     ColorPickerModule,
     MatButtonModule,
+    MzimaUiModule,
   ],
   exports: [ColorPickerComponent],
 })

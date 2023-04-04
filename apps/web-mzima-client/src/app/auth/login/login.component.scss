@@ -68,6 +68,10 @@
         }
       }
 
+      .mat-tab-body-wrapper {
+        overflow: visible;
+      }
+
       .mat-dialog-actions {
         left: 0;
         right: 0;
@@ -77,7 +81,7 @@
         position: fixed;
         min-height: 56px !important;
         background: var(--color-light);
-        padding: 8px 24px 56px !important;
+        padding: 8px 24px 32px !important;
 
         .mat-raised-button {
           min-width: 100%;

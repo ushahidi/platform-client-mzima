@@ -10,7 +10,7 @@
       *ngIf="form && tasks.length; else spinner"
     >
       <div *ngFor="let task of tasks; let i = index" class="task-container">
-        <div [ngStyle]="{ '--color': data?.result?.color }">
+        <div [ngStyle]="{ '--color': color }">
           <ng-container *ngIf="task.type !== 'post'">
             <h2 class="task-label">{{ task.translations[activeLanguage]?.label || task.label }}</h2>
 
@@ -208,21 +208,24 @@
 
             <ng-container *ngIf="field.input === 'number'">
               <mat-form-field appearance="outline">
-                <input matInput [formControlName]="field.key" type="number" />
+                <input
+                  matInput
+                  [formControlName]="field.key"
+                  type="number"
+                  [pattern]="field.type === 'int' ? '[0-9]*' : ''"
+                />
               </mat-form-field>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'upload'">
-              <button
-                type="button"
-                color="primary"
-                mat-stroked-button
-                (click)="fileInput.click()"
+              <mzima-client-button
+                [expand]="false"
+                (buttonClick)="fileInput.click()"
                 [data-qa]="'btn-post-item-upload'"
               >
                 {{ 'post.media.add_photo' | translate }}
-                <mat-icon svgIcon="plus"></mat-icon>
-              </button>
+                <mat-icon icon svgIcon="plus"></mat-icon>
+              </mzima-client-button>
               <input hidden #fileInput type="file" id="file" [formControlName]="field.key" />
               <br />
               <br />
@@ -262,16 +265,15 @@
               <span class="related-post-selected" *ngIf="selectedRelatedPost">
                 {{ selectedRelatedPost.id }}: {{ selectedRelatedPost.title }}
                 <mat-icon class="trash"></mat-icon>
-                <button
-                  type="button"
-                  color="primary"
-                  mat-stroked-button
+                <mzima-client-button
+                  fill="outline"
+                  color="secondary"
                   [data-qa]="'btn-post-item-delete-relation-post'"
-                  (click)="deleteRelatedPost(field, selectedRelatedPost.id)"
+                  (buttonClick)="deleteRelatedPost(field, selectedRelatedPost.id)"
                 >
-                  delete
-                  <mat-icon class="trash"></mat-icon>
-                </button>
+                  Delete
+                  <mat-icon icon class="trash"></mat-icon>
+                </mzima-client-button>
               </span>
 
               <div class="relation-container">
@@ -283,16 +285,15 @@
                     [ngModelOptions]="{ standalone: true }"
                   />
                 </mat-form-field>
-                <button
-                  type="button"
-                  color="primary"
-                  mat-stroked-button
+                <mzima-client-button
+                  fill="outline"
+                  color="secondary"
                   class="relation-button-search"
-                  (click)="relationSearchPosts()"
+                  (buttonClick)="relationSearchPosts()"
                   [data-qa]="'btn-post-item-relation-search'"
                 >
                   {{ 'post.relation.search' | translate }}
-                </button>
+                </mzima-client-button>
               </div>
 
               <span class="related-post-list" *ngIf="relatedPosts?.length">
@@ -318,30 +319,39 @@
               </mat-form-field>
             </ng-container>
             <mat-error *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched">
-              <span *ngIf="form.get(field.key)?.hasError('required')">
+              <p *ngIf="form.get(field.key)?.hasError('required')">
                 {{ field.label }} field is a required field *
-              </span>
-              <span *ngIf="form.get(field.key)?.hasError('minlength')">
+              </p>
+              <p *ngIf="form.get(field.key)?.hasError('minlength')">
                 {{ field.label }} field is too short, use at least 2 characters
-              </span>
+              </p>
+              <p *ngIf="form.get(field.key)?.hasError('pattern')">
+                {{ field.label }} field is invalid
+              </p>
+              <p *ngIf="form.get(field.key)?.hasError('specialCharacters')">
+                {{ field.label }} field contains special characters
+              </p>
             </mat-error>
           </div>
         </div>
       </div>
 
-      <div class="form-controls-panel form-controls-panel--sticky">
-        <button
-          color="primary"
-          mat-stroked-button
-          type="button"
+      <div class="form-controls-panel" [ngClass]="{ 'form-controls-panel--sticky': isDesktop }">
+        <mzima-client-button
+          fill="outline"
+          color="secondary"
           [data-qa]="'btn-post-item-previous'"
-          (click)="previousPage()"
+          (buttonClick)="previousPage()"
         >
           {{ 'app.cancel' | translate }}
-        </button>
-        <button color="primary" mat-raised-button type="submit" [data-qa]="'btn-post-item-submit'">
+        </mzima-client-button>
+        <mzima-client-button
+          [disabled]="form.invalid"
+          type="submit"
+          [data-qa]="'btn-post-item-submit'"
+        >
           {{ 'app.submit' | translate }}
-        </button>
+        </mzima-client-button>
       </div>
     </form>
   </div>

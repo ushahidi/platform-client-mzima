@@ -80,7 +80,7 @@ export class CreateCategoryFormComponent implements OnInit {
       },
     });
 
-    this.rolesService.get().subscribe({
+    this.rolesService.getRoles().subscribe({
       next: (response) => {
         this.roleOptions = [
           {

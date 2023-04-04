@@ -1,14 +1,16 @@
 <section class="share-modal">
-  <button
-    mat-stroked-button
-    [mat-dialog-close]="false"
-    class="modal__close-btn"
+  <mzima-client-button
     tabindex="-1"
-    aria-label="{{ 'modal.button.close' | translate }}"
+    fill="outline"
+    [iconOnly]="true"
+    color="light-gray"
     [data-qa]="'btn-close'"
+    class="modal__close-btn"
+    [mat-dialog-close]="false"
+    ariaLabel="{{ 'modal.button.close' | translate }}"
   >
-    <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
-  </button>
+    <mat-icon icon svgIcon="close"></mat-icon>
+  </mzima-client-button>
 
   <strong mat-dialog-title>{{ 'share.share_deployment' | translate }}</strong>
 
@@ -43,9 +45,9 @@
       </div>
     </div>
     <div class="buttons">
-      <button
-        class="twitter-btn"
-        mat-stroked-button
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
         [autoSetMeta]="true"
         [title]="title ? title : ''"
         [description]="description"
@@ -53,11 +55,11 @@
         [url]="address"
       >
         {{ 'share.share_on_twitter' | translate }}
-        <mat-icon class="fab-button__icon twitter-icon" svgIcon="twitter-fill"></mat-icon>
-      </button>
-      <button
-        class="facebook-btn"
-        mat-stroked-button
+        <mat-icon icon class="fab-button__icon twitter-icon" svgIcon="twitter-fill"></mat-icon>
+      </mzima-client-button>
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
         [autoSetMeta]="true"
         [title]="title ? title : ''"
         [description]="description"
@@ -65,8 +67,8 @@
         [url]="address"
       >
         {{ 'share.share_on_facebook' | translate }}
-        <mat-icon class="fab-button__icon facebook-icon" svgIcon="facebook-fill"></mat-icon>
-      </button>
+        <mat-icon icon class="fab-button__icon facebook-icon" svgIcon="facebook-fill"></mat-icon>
+      </mzima-client-button>
     </div>
   </div>
 </section>

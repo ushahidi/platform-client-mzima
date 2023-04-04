@@ -29,7 +29,9 @@
   }
 
   &__main {
-    height: 100%;
+    @include breakpoint-min($tablet) {
+      height: 100%;
+    }
 
     .feed-page--post-view & {
       display: flex;
@@ -189,14 +191,14 @@
 
     @include breakpoint-max($tablet) {
       display: flex;
-      min-width: 64px;
+      --min-width: 64px;
       min-height: 48px;
       align-items: center;
       justify-content: center;
 
       &--bulk {
         flex: 1 1 100%;
-        max-width: 320px;
+        --max-width: 320px;
       }
     }
 
@@ -207,12 +209,6 @@
             display: none;
           }
         }
-      }
-    }
-
-    .mat-icon {
-      &:not(:first-child) {
-        margin-inline-start: 10px;
       }
     }
   }
@@ -246,15 +242,13 @@
     justify-content: flex-start;
 
     &__button {
-      width: 40px;
-      height: 40px;
+      --size: 40px;
       margin: 0 4px;
-      border-radius: 4px;
-      color: var(--color-black);
 
-      &.mat-button-disabled {
-        color: var(--color-black);
-        background-color: var(--color-neutral-20);
+      &::ng-deep {
+        .mzima-button--primary.mzima-button--outline {
+          --hover-background-color: var(--color-primary-100);
+        }
       }
     }
   }

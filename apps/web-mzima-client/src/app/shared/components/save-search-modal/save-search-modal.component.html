@@ -1,13 +1,15 @@
-<button
-  mat-stroked-button
-  [mat-dialog-close]="false"
-  class="modal__close-btn"
+<mzima-client-button
   tabindex="-1"
-  aria-label="{{ 'modal.button.close' | translate }}"
+  fill="outline"
+  [iconOnly]="true"
+  color="light-gray"
   [data-qa]="'btn-close'"
+  class="modal__close-btn"
+  [mat-dialog-close]="false"
+  ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon class="fab-button__icon" svgIcon="close"></mat-icon>
-</button>
+  <mat-icon icon svgIcon="close"></mat-icon>
+</mzima-client-button>
 
 <strong mat-dialog-title>
   {{ (!!data.search ? 'set.update_saved_filter' : 'set.create_saved_filter') | translate }}
@@ -70,16 +72,20 @@
   </div>
 
   <div mat-dialog-actions align="end">
-    <button type="button" (click)="cancel()" mat-stroked-button>
-      {{ 'app.cancel' | translate }}
-    </button>
-    <button
-      color="primary"
-      mat-raised-button
-      [disabled]="form.invalid || form.disabled"
-      id="apply-saved-filters"
-    >
-      {{ 'app.apply_filters' | translate }}
-    </button>
+    <mzima-client-button *ngIf="!!data.search" color="danger" (buttonClick)="deleteSavedfilter()">
+      {{ 'app.delete' | translate }}
+    </mzima-client-button>
+    <div class="button-group">
+      <mzima-client-button fill="outline" color="secondary" (buttonClick)="cancel()">
+        {{ 'app.cancel' | translate }}
+      </mzima-client-button>
+      <mzima-client-button
+        [disabled]="form.invalid || form.disabled"
+        id="apply-saved-filters"
+        type="submit"
+      >
+        {{ 'app.apply_filters' | translate }}
+      </mzima-client-button>
+    </div>
   </div>
 </form>

@@ -9,7 +9,9 @@
   }"
 >
   <mat-form-field appearance="outline" class="search-form__control">
-    <mat-icon matPrefix svgIcon="search"></mat-icon>
+    <mzima-client-button matPrefix [iconOnly]="true" fill="clear" color="secondary">
+      <mat-icon icon svgIcon="search-small"></mat-icon>
+    </mzima-client-button>
     <input
       matInput
       [(ngModel)]="searchQuery"
@@ -18,27 +20,28 @@
       [ngModelOptions]="{ standalone: true }"
       [placeholder]="'global_filter.search' | translate"
     />
-    <button
+    <mzima-client-button
       matSuffix
-      type="button"
-      mat-icon-button
+      fill="clear"
+      [iconOnly]="true"
+      color="secondary"
       *ngIf="searchQuery?.length"
-      (click)="clearPostsResults()"
+      (buttonClick)="clearPostsResults()"
     >
-      <mat-icon svgIcon="close"></mat-icon>
-    </button>
+      <mat-icon icon svgIcon="close"></mat-icon>
+    </mzima-client-button>
   </mat-form-field>
 
-  <button
-    type="button"
-    mat-raised-button
+  <mzima-client-button
+    [fill]="(isDesktop$ | async) ? 'clear' : 'outline'"
+    [color]="(isDesktop$ | async) ? 'gray' : 'secondary'"
     class="search-form__filters"
     *ngIf="(isDesktop$ | async) || isMapView"
-    (click)="toggleFilters(!isFiltersVisible)"
+    (buttonClick)="toggleFilters(!isFiltersVisible)"
   >
-    <mat-icon class="search-form__filters__icon" svgIcon="filters"></mat-icon>
     <span>{{ 'app.filters' | translate }}</span>
-  </button>
+    <mat-icon iconPrefix svgIcon="filters"></mat-icon>
+  </mzima-client-button>
 
   <div
     data-filter-highlight
@@ -47,7 +50,6 @@
   >
     <button
       type="button"
-      mat-icon-button
       (click)="toggleMainFilters()"
       class="search-form__main-filters__toggle-btn"
     >
@@ -65,15 +67,14 @@
             {{ 'app.collection' | translate }}
             "{{ collectionInfo.name }}"
           </span>
-          <button
-            mat-button
-            type="button"
-            color="primary"
-            (click)="clearCollection()"
+          <mzima-client-button
+            fill="clear"
+            size="small"
+            (buttonClick)="clearCollection()"
             class="filter-group__head__button"
           >
             {{ 'nav.clear' | translate }}
-          </button>
+          </mzima-client-button>
         </div>
 
         <mat-slide-toggle
@@ -98,15 +99,14 @@
             {{ 'global_filter.saved_filter' | translate }}
             "{{ activeSavedSearch.name }}"
           </span>
-          <button
-            mat-button
-            type="button"
-            color="primary"
-            (click)="clearSavedFilter()"
+          <mzima-client-button
+            fill="clear"
+            size="small"
+            (buttonClick)="clearSavedFilter()"
             class="filter-group__head__button"
           >
             {{ 'nav.clear' | translate }}
-          </button>
+          </mzima-client-button>
         </div>
 
         <mat-slide-toggle
@@ -129,15 +129,14 @@
         <div class="filter-group" *ngIf="surveyList?.length">
           <div class="filter-group__head">
             <label class="filter-group__title" for="surveys">{{ 'app.surveys' | translate }}</label>
-            <button
-              mat-button
-              type="button"
-              color="primary"
-              (click)="clearFilter('form')"
+            <mzima-client-button
+              fill="clear"
+              size="small"
               class="filter-group__head__button"
+              (buttonClick)="clearFilter('form')"
             >
               {{ 'nav.clear' | translate }}
-            </button>
+            </mzima-client-button>
           </div>
           <mat-selection-list
             (selectionChange)="surveyChanged($event)"
@@ -163,19 +162,19 @@
           <div class="filter-group__info">
             <span *ngIf="notShownPostsCount <= 0">{{
               'global_filter.unmapped_none' | translate
-              }}</span>
+            }}</span>
             <span *ngIf="notShownPostsCount === 1">{{
               'global_filter.unmapped_start_one' | translate
-              }}</span>
+            }}</span>
             <span *ngIf="notShownPostsCount >= 2">{{
               'global_filter.unmapped_start_many' | translate
-              }}</span>
+            }}</span>
             <a [routerLink]="['feed']" *ngIf="notShownPostsCount >= 1">
               {{ notShownPostsCount }} post{{ notShownPostsCount >= 2 ? 's' : '' }}
             </a>
             <span *ngIf="notShownPostsCount >= 1">{{
               'global_filter.unmapped_end' | translate
-              }}</span>
+            }}</span>
           </div>
         </div>
 
@@ -184,15 +183,14 @@
             <label class="filter-group__title" for="source">
               {{ 'global_filter.source' | translate }}
             </label>
-            <button
-              mat-button
-              type="button"
-              color="primary"
-              (click)="clearFilter('source')"
+            <mzima-client-button
+              fill="clear"
+              size="small"
               class="filter-group__head__button"
+              (buttonClick)="clearFilter('source')"
             >
               {{ 'nav.clear' | translate }}
-            </button>
+            </mzima-client-button>
           </div>
           <mat-selection-list name="source" class="selection-list" formControlName="source">
             <ng-container *ngFor="let source of sources">
@@ -222,19 +220,22 @@
   >
     <div class="search-form__filters-panel__head" *ngIf="!(isDesktop$ | async)!">
       <h3>Filters and sorting</h3>
-      <button
-        mat-stroked-button
-        (click)="toggleFilters(false)"
-        class="search-form__filters-panel__head__close"
-        [attr.aria-label]="'modal.button.close' | translate"
+      <mzima-client-button
+        tabindex="-1"
+        fill="outline"
+        [iconOnly]="true"
+        color="light-gray"
+        [data-qa]="'btn-close'"
+        class="modal__close-btn"
+        (buttonClick)="toggleFilters(false)"
+        ariaLabel="{{ 'modal.button.close' | translate }}"
       >
-        <mat-icon class="fab-button__icon">close</mat-icon>
-      </button>
+        <mat-icon icon svgIcon="close"></mat-icon>
+      </mzima-client-button>
     </div>
 
     <div class="search-form__filters-panel__inner">
       <ng-container *ngIf="!(isDesktop$ | async)!">
-
         <app-filter-control
           class="search-form__filters-panel__item"
           formControlName="form"
@@ -246,14 +247,14 @@
           [badge]="form.controls['form'].value?.length || null"
         >
           <div class="clear-button" suffix>
-            <button
-              mat-button
-              color="primary"
-              (click)="clearFilter('form')"
+            <mzima-client-button
+              fill="clear"
+              size="small"
               class="filter-group__head__button"
+              (buttonClick)="clearFilter('form')"
             >
               {{ 'nav.clear' | translate }}
-            </button>
+            </mzima-client-button>
           </div>
         </app-filter-control>
 
@@ -268,14 +269,14 @@
           [badge]="form.controls['source'].value?.length || null"
         >
           <div class="clear-button" suffix>
-            <button
-              mat-button
-              color="primary"
-              (click)="clearFilter('source')"
+            <mzima-client-button
+              fill="clear"
+              size="small"
               class="filter-group__head__button"
+              (buttonClick)="clearFilter('source')"
             >
               {{ 'nav.clear' | translate }}
-            </button>
+            </mzima-client-button>
           </div>
         </app-filter-control>
       </ng-container>
@@ -293,19 +294,18 @@
         (editOption)="saveSearch($event)"
         (filterChange)="applySavedFilter($event)"
       >
-        <button
+        <mzima-client-button
           *ngIf="canCreateSearch"
           suffix
-          mat-button
-          color="primary"
-          (click)="saveSearch()"
-          class="save-filter-button small"
+          fill="clear"
+          class="save-filter-button"
+          (buttonClick)="saveSearch()"
         >
-          <mat-icon svgIcon="plus" class="save-filter-button__icon"></mat-icon>
+          <mat-icon iconPrefix svgIcon="plus"></mat-icon>
           {{ 'global_filter.save_new_filter' | translate }}
-        </button>
+        </mzima-client-button>
         <span class="no-saved-filters" postfix *ngIf="savedSearches?.length === 0"
-        >No saved filters. Saved filter(s) will appear here for you to select once made
+          >No saved filters. Saved filter(s) will appear here for you to select once made
           available.</span
         >
       </app-filter-control>
@@ -321,14 +321,14 @@
         [badge]="form.controls['status'].value?.length || null"
       >
         <div class="clear-button" suffix>
-          <button
-            mat-button
-            color="primary"
-            (click)="clearFilter('status')"
+          <mzima-client-button
+            fill="clear"
+            size="small"
             class="filter-group__head__button"
+            (buttonClick)="clearFilter('status')"
           >
             {{ 'nav.clear' | translate }}
-          </button>
+          </mzima-client-button>
         </div>
       </app-filter-control>
 
@@ -341,17 +341,8 @@
         [type]="filterType.Multilevelselect"
         [title]="'app.categories' | translate"
         [badge]="form.controls['tags'].value?.length || null"
+        [selectedFields]="form.controls['tags'].value"
       >
-        <div class="clear-button" suffix>
-          <button
-            mat-button
-            color="primary"
-            class="filter-group__head__button"
-            (click)="clearFilter('tags')"
-          >
-            {{ 'nav.clear' | translate }}
-          </button>
-        </div>
       </app-filter-control>
 
       <app-filter-control
@@ -363,14 +354,14 @@
         [badge]="form.controls['date'].value?.start || form.controls['date'].value?.end ? 1 : null"
       >
         <div class="clear-button" suffix>
-          <button
-            mat-button
-            color="primary"
+          <mzima-client-button
+            fill="clear"
+            size="small"
             class="filter-group__head__button"
-            (click)="clearFilter('date')"
+            (buttonClick)="clearFilter('date')"
           >
             {{ 'nav.clear' | translate }}
-          </button>
+          </mzima-client-button>
         </div>
       </app-filter-control>
 
@@ -383,42 +374,38 @@
         [badge]="form.controls['center_point'].value.location?.lat ? 1 : null"
       >
         <div class="clear-button" suffix>
-          <button
-            mat-button
-            color="primary"
+          <mzima-client-button
+            fill="clear"
+            size="small"
             class="filter-group__head__button"
-            (click)="clearFilter('center_point')"
+            (buttonClick)="clearFilter('center_point')"
           >
             {{ 'nav.clear' | translate }}
-          </button>
+          </mzima-client-button>
         </div>
       </app-filter-control>
 
       <div class="search-form__filters-panel__item search-form__filters-panel__item--controls">
-        <button
-          type="button"
-          mat-stroked-button
+        <mzima-client-button
+          fill="outline"
+          color="secondary"
           [disabled]="form.disabled"
           class="search-form__button"
-          (click)="resetSavedFilter()"
+          (buttonClick)="resetSavedFilter()"
         >
           {{ 'global_filter.clear_all_filters' | translate }}
-        </button>
-        <button
-          type="button"
-          color="primary"
+        </mzima-client-button>
+        <mzima-client-button
           *ngIf="!(isDesktop$ | async)!"
-          mat-raised-button
-          (click)="applyAndClose()"
+          (buttonClick)="applyAndClose()"
           [disabled]="form.disabled"
           class="search-form__button"
         >
           Apply filters
-        </button>
+        </mzima-client-button>
       </div>
     </div>
   </div>
-
 </form>
 
 <ng-template #loader>

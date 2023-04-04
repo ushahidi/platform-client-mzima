@@ -6,12 +6,12 @@ export interface SnackbarData {
   message?: string;
   icon?: {
     name: string;
-    color?: 'accent' | 'primary' | 'secondary' | 'dark' | 'success';
+    color?: 'accent' | 'primary' | 'secondary' | 'gray' | 'success';
   };
   isLoading?: boolean;
   buttons: {
     text?: string;
-    color?: 'accent' | 'primary' | 'secondary' | 'dark' | 'success';
+    color?: 'danger' | 'primary' | 'secondary' | 'gray' | 'success';
     icon?: string;
     handler?: () => void;
   }[];

@@ -9,6 +9,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
+import { MzimaUiModule } from '@mzima-client/mzima-ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { DirectiveModule, SpinnerModule } from '@shared';
 import { DataSourceItemComponent } from './data-source-item/data-source-item.component';
@@ -33,6 +34,7 @@ import { DataSourcesComponent } from './data-sources.component';
     MatInputModule,
     MatRadioModule,
     MatRippleModule,
+    MzimaUiModule,
   ],
 })
 export class DataSourcesModule {}

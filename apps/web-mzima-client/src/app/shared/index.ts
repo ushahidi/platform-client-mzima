@@ -1,5 +1,4 @@
 export { SharedModule } from './shared.module';
-export { TranslationsSwitchModule } from './components/translations-switch/translations-switch.module';
 export { MainViewComponent } from './components/main-view.component';
 export { LottieAnimationModule } from './components/lottie-animation/lottie-animation.module';
 export { PasswordStrengthModule } from './components/password-strength/password-strength.module';

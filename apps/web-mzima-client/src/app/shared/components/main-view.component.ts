@@ -47,7 +47,7 @@ export class MainViewComponent {
       if (this.route.snapshot.data['view'] === 'search') {
         this.searchId = this.route.snapshot.paramMap.get('id')!;
         this.savedSearchesService.getById(this.searchId).subscribe((sSearch) => {
-          this.postsService.applyFilters(Object.assign(sSearch.filter, { set: [] }));
+          this.postsService.applyFilters(Object.assign(sSearch.result.filter, { set: [] }));
           this.eventBusService.next({
             type: EventType.SavedSearchInit,
             payload: this.searchId,
