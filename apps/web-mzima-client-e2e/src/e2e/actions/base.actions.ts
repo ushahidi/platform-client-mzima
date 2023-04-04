@@ -38,9 +38,33 @@ class BaseActions {
     return this;
   }
 
+  checkExistElement(element: string) {
+    cy.get(`[data-qa=${ element }]`).should('exist');
+    return this;
+  }
+
+  checkContainElementClickable(element: string, content: string) {
+    cy.get(`[data-qa=${ element }]`).contains(content).focused();
+    return this;
+  }
+
   checkContainElement(element: string, content: string) {
     cy.get(`[data-qa=${ element }]`).contains(content);
     return this;
+  }
+
+  checkContainAndClickElement(element: string, content: string) {
+    cy.get(`[data-qa=${ element }]`).contains(content).click();
+    return this;
+  }
+
+  checkContainAndClickSelector(selector: string, content: string) {
+    cy.get(selector).contains(content, { timeout: 5000 }).click();
+    return this;
+  }
+
+  saveLocalStorage(key: string, value: string) {
+    localStorage.setItem(key, value);
   }
 }
 

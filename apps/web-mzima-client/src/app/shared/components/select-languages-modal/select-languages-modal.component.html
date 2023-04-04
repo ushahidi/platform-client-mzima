@@ -11,7 +11,7 @@
   <mat-icon icon svgIcon="close"></mat-icon>
 </mzima-client-button>
 
-<strong mat-dialog-title>{{
+<strong mat-dialog-title [data-qa]="'lang-modal-title'">{{
   (isDesktop$ | async) ? ('form.choose_language' | translate) : 'Choose language'
 }}</strong>
 <form class="search-form">
@@ -32,7 +32,7 @@
   <ul role="list" class="types-list" [data-qa]="'survey-list'">
     <li role="listitem" class="type-item" *ngFor="let language of languages">
       <mat-checkbox
-        [data-qa]="'survey-item' + language.code"
+        [data-qa]="'lang-' + language.code"
         [checked]="data.activeLanguages.includes(language)"
         class="type-item__checkbox"
         (click)="$event.stopPropagation()"
@@ -45,12 +45,18 @@
   </ul>
 </div>
 <div mat-dialog-actions align="end">
-  <mzima-client-button fill="outline" color="secondary" [mat-dialog-close]="false">
+  <mzima-client-button
+    fill="outline"
+    color="secondary"
+    [mat-dialog-close]="false"
+    [data-qa]="'btn-lang-cancel'"
+  >
     {{ 'app.cancel' | translate }}
   </mzima-client-button>
   <mzima-client-button
     [mat-dialog-close]="data.activeLanguages"
     [disabled]="!data.activeLanguages.length"
+    [data-qa]="'btn-lang-add'"
   >
     {{ 'app.add' | translate }}
   </mzima-client-button>

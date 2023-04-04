@@ -3,7 +3,7 @@
     class="form-head-panel__inner form-head-panel__inner--actions"
     *ngIf="isShowActions || (isDesktop$ | async)"
   >
-    <h1 *ngIf="isDesktop$ | async">{{ settingsTitle | translate }}</h1>
+    <h1 *ngIf="isDesktop$ | async" [data-qa]="'title'">{{ settingsTitle | translate }}</h1>
     <ng-container *ngIf="isShowActions">
       <mzima-client-button
         color="danger"
@@ -37,6 +37,7 @@
     </mzima-client-button>
   </div>
 
+  <!-- isShowTranslation -->
   <div class="form-head-panel__inner" *ngIf="isShowTranslation">
     <div class="translate-container">
       <mat-form-field appearance="outline" class="feed-page__control">
@@ -46,17 +47,23 @@
           [(ngModel)]="selectedLanguage"
           [placeholder]="'select_language' | translate"
           (selectionChange)="selectLanguageEmit($event)"
+          [data-qa]="'select_language'"
         >
-          <mat-option *ngFor="let language of languages" [value]="language">
+          <mat-option
+            *ngFor="let language of languages"
+            [value]="language"
+            [data-qa]="'lang-' + language"
+          >
             {{ language?.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
 
-    <mzima-client-button [data-qa]="'btn-settings-create'" (buttonClick)="showLanguagesEmit()">
+    <mzima-client-button [data-qa]="'btn-settings-translation'" (buttonClick)="showLanguagesEmit()">
       {{ newButtonTitle | translate }}
       <mat-icon icon svgIcon="plus"></mat-icon>
     </mzima-client-button>
   </div>
+  <!-- END isShowTranslation -->
 </div>
