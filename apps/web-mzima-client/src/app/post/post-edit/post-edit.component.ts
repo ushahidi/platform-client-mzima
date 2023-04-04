@@ -286,6 +286,9 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private addFormControl(value: string, field: any): FormControl {
+    if (field.type === 'description') {
+      return new FormControl(value, [Validators.minLength(2), AlphanumericValidatorValidator()]);
+    }
     if (field.type === 'title') {
       return new FormControl(value, [
         Validators.required,
@@ -297,7 +300,6 @@ export class PostEditComponent implements OnInit, OnChanges {
       if (field.required) {
         validators.push(Validators.required);
         validators.push(this.formValidator.videoValidator);
-        AlphanumericValidatorValidator();
       }
       return new FormControl(value, validators);
     } else {
@@ -305,7 +307,6 @@ export class PostEditComponent implements OnInit, OnChanges {
       if (field.required) {
         validators.push(Validators.required);
       }
-      validators.push(AlphanumericValidatorValidator());
       return new FormControl(value, validators);
     }
   }
