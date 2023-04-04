@@ -438,7 +438,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       buttonSuccess: this.translate.instant('notify.confirm_modal.add_post_success.success_button'),
     });
 
-    this.isDesktop ? this.backNavigation() : this.updated.emit();
+    !this.postInput ? this.backNavigation() : this.updated.emit();
   }
 
   public async previousPage() {
