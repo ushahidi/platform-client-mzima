@@ -19,9 +19,11 @@ export class FormValidator {
 
   public videoValidator = (control: FormControl) => {
     /** Custom validator for video url */
-    const urlMatch: RegExpMatchArray | null = this.matchVideoUrl().urlMatch(control.value);
-    if (!urlMatch) {
-      return { invalidvideourl: true };
+    if (control.value) {
+      const urlMatch: RegExpMatchArray | null = this.matchVideoUrl().urlMatch(control.value);
+      if (!urlMatch) {
+        return { invalidvideourl: true };
+      }
     }
     return null;
   };

@@ -8,7 +8,14 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -286,29 +293,34 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private addFormControl(value: string, field: any): FormControl {
-    if (field.type === 'description') {
-      return new FormControl(value, [Validators.minLength(2), AlphanumericValidatorValidator()]);
-    }
-    if (field.type === 'title') {
-      return new FormControl(value, [
-        Validators.required,
-        Validators.minLength(2),
-        AlphanumericValidatorValidator(),
-      ]);
-    } else if (field.input === 'video') {
-      const validators = [];
+    if (field.input === 'video') {
+      const videoValidators = [];
       if (field.required) {
-        validators.push(Validators.required);
-        validators.push(this.formValidator.videoValidator);
+        videoValidators.push(Validators.required);
       }
-      return new FormControl(value, validators);
-    } else {
-      const validators = [];
-      if (field.required) {
-        validators.push(Validators.required);
-      }
-      return new FormControl(value, validators);
+      videoValidators.push(this.formValidator.videoValidator);
+      return new FormControl(value, videoValidators);
     }
+
+    const validators: ValidatorFn[] = [];
+    switch (field.type) {
+      case 'description':
+        validators.push(Validators.minLength(2), AlphanumericValidatorValidator());
+        break;
+      case 'title':
+        validators.push(
+          Validators.required,
+          Validators.minLength(2),
+          AlphanumericValidatorValidator(),
+        );
+        break;
+      default:
+        if (field.required) {
+          validators.push(Validators.required);
+        }
+        break;
+    }
+    return new FormControl(value, validators);
   }
 
   public getOptionsByParentId(field: any, parent_id: number): any[] {
