@@ -24,33 +24,6 @@ import { RouterModule } from '@angular/router';
 import * as Sentry from '@sentry/angular-ivy';
 import { BrowserTracing } from '@sentry/angular-ivy';
 
-declare let window: any;
-window.getEnvService = function getEnvService() {
-  const newEnvService = new EnvService();
-  return newEnvService.initEnv();
-};
-
-async function sentryInit() {
-  const env = await window.getEnvService();
-  Sentry.init({
-    dsn: env.sentry_dsn,
-    debug: env.sentry_debug_mode,
-    integrations: [
-      new BrowserTracing({
-        tracePropagationTargets: [],
-        routingInstrumentation: Sentry.routingInstrumentation,
-      }),
-    ],
-
-    // Set tracesSampleRate to 1.0 to capture 100%
-    // of transactions for performance monitoring.
-    // We recommend adjusting this value in production
-    tracesSampleRate: 1.0,
-  });
-}
-
-sentryInit();
-
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
     envService.initEnv().then(() => {
@@ -62,6 +35,30 @@ export const loadConfigProvider: FactoryProvider = {
   provide: APP_INITIALIZER,
   useFactory: loadConfigFactory,
   deps: [EnvService, ConfigService],
+  multi: true,
+};
+
+function loadSentryFactory(envService: EnvService) {
+  return () =>
+    envService.initEnv().then(() => {
+      Sentry.init({
+        dsn: envService.environment.sentry_dsn,
+        debug: envService.environment.sentry_debug_mode,
+        integrations: [
+          new BrowserTracing({
+            tracePropagationTargets: [],
+            routingInstrumentation: Sentry.routingInstrumentation,
+          }),
+        ],
+        tracesSampleRate: 1.0,
+      });
+    });
+}
+
+export const loadSentryProvider: FactoryProvider = {
+  provide: APP_INITIALIZER,
+  useFactory: loadSentryFactory,
+  deps: [EnvService],
   multi: true,
 };
 
@@ -147,6 +144,7 @@ export function playerFactory(): any {
     loadGoogleTagManagerProvider,
     Meta,
     CookieService,
+    loadSentryProvider,
   ],
   bootstrap: [AppComponent],
 })
