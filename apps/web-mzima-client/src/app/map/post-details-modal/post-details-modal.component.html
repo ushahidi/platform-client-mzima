@@ -15,7 +15,6 @@
   <app-post-details
     [post]="post"
     [color]="color"
-    [twitterId]="twitterId"
     (edit)="handleEditPost()"
     *ngIf="!editable; else editPost"
     (statusChanged)="statusChangedHandle()"
