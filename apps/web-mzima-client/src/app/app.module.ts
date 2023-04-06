@@ -32,7 +32,7 @@ export function loadSentryFactory(envService: EnvService) {
         debug: envService.environment.sentry_debug_mode,
         integrations: [
           new BrowserTracing({
-            tracePropagationTargets: ['localhost', 'mzima-api.staging.ush.zone', /^\//],
+            tracePropagationTargets: [],
             routingInstrumentation: Sentry.routingInstrumentation,
           }),
         ],
