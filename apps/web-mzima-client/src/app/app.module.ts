@@ -22,6 +22,7 @@ import { AuthInterceptor } from './core/interceptors';
 
 import { RouterModule } from '@angular/router';
 import * as Sentry from '@sentry/angular-ivy';
+import { BrowserTracing } from '@sentry/tracing';
 
 export function loadSentryFactory(envService: EnvService) {
   return () =>
@@ -30,8 +31,8 @@ export function loadSentryFactory(envService: EnvService) {
         dsn: envService.environment.sentry_dsn,
         debug: envService.environment.sentry_debug_mode,
         integrations: [
-          new Sentry.BrowserTracing({
-            tracePropagationTargets: ['localhost', 'mzima.staging.ush.zone', /^\//],
+          new BrowserTracing({
+            tracePropagationTargets: ['localhost', 'mzima-api.staging.ush.zone', /^\//],
             routingInstrumentation: Sentry.routingInstrumentation,
           }),
         ],
