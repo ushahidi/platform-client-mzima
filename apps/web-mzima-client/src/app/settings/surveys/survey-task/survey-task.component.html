@@ -82,7 +82,7 @@
               *ngIf="canDelete(field)"
               class="field-item__control"
               (buttonClick)="deleteField(i)"
-              [data-qa]="'btn-delete-field-' + field.label"
+              [data-qa]="'btn-field-delete-' + field.label"
             >
               <mat-icon icon svgIcon="delete"></mat-icon>
             </mzima-client-button>

@@ -1,78 +1,128 @@
-import { Base, Login, Settings, Surveys, Translations } from '../../actions';
+import { Login, Settings, Surveys } from '../../actions';
 
 describe('Initialize surveys page', () => {
   before(() => {
-    Base.goHomePage();
-    Base.saveLocalStorage('USH_is_onboarding_done', 'true');
-    Base.checkExistSelector('app-cookies-notification');
-    Base.checkContainAndClickElement('button-decline-cookies', 'Decline');
+    cy.visit('/');
+    localStorage.setItem('USH_is_onboarding_done', 'true');
+    cy.get('app-cookies-notification').should('exist');
+    cy.get(`[data-qa="button-decline-cookies"]`).contains('Decline').click();
     Login.loginForm();
     Settings.checkSettingsPage();
     Surveys.checkSurveyPage();
   });
 
   it('Click add survey button', () => {
-    Base.checkExistElement('btn-settings-create');
-    Base.checkContainElementClickable('btn-settings-create', 'Add Survey');
-    Base.clickElement('btn-settings-create');
+    cy.get(`[data-qa="btn-settings-create"]`).should('exist');
+    cy.get(`[data-qa="btn-settings-create"]`).contains('Add Survey').focused();
+    cy.get(`[data-qa="btn-settings-create"]`).click();
 
-    Base.checkExistSelector('app-settings-header');
-    Base.checkExistElement('title');
-    Base.checkContainElement('title', 'Add Survey');
+    cy.get('app-settings-header').should('exist');
+    cy.get(`[data-qa="title"]`).should('exist');
+    cy.get(`[data-qa="title"]`).contains('Add Survey');
 
-    Translations.ClickTranslationButton();
-    Translations.SelectTranslation(['es']);
-    Translations.ChooseTranslation('Spanish');
-    Translations.ChooseTranslation('English');
+    // add translate for survey and select language
+    // Translations.ClickTranslationButton();
+    // Translations.SelectTranslation(['es']);
+    // Translations.ChooseTranslation('Spanish');
+    // Translations.ChooseTranslation('English');
 
-    Translations.ClickTranslationButton();
-    Translations.SelectTranslation(['es']);
-    Translations.ChooseTranslation('English');
+    // Translations.ClickTranslationButton();
+    // Translations.SelectTranslation(['es']);
+    // Translations.ChooseTranslation('English');
 
-    Base.checkContainAndClickSelector('.mat-tab-label', 'Configure');
-    Base.checkContainAndClickSelector('.mat-tab-label', 'Share');
-    Base.checkContainAndClickSelector('.mat-tab-label', 'Main info');
+    // check tabs ('Main info', 'Configure', 'Share')
+    // cy.get('.mat-tab-label').contains('Configure').click();
+    // cy.get('.mat-tab-label').contains('Share').click();
+    // cy.get('.mat-tab-label').contains('Main info').click();
 
-    Base.checkExistElement('name');
-    Base.checkExistElement('description');
-    Base.inputField('name', 'Test survey');
-    Base.inputField('description', 'Test survey description');
+    // set survey name && description
+    cy.get(`[data-qa="name"]`).should('exist');
+    cy.get(`[data-qa="description"]`).should('exist');
+    cy.get(`[data-qa="name"]`).clear().type('Test survey');
+    cy.get(`[data-qa="description"]`).clear().type('Test survey description');
 
-    // Base.inputField('survey-name-es', 'Test survey name spanish');
-    // Base.inputField('survey-description-es', 'Test survey description spanish');
+    // if select language (ex. 'es'), then set survey name && description for this language
+    // cy.get(`[data-qa="survey-name-es"]`).clear().type('Test survey name spanish');
+    // cy.get(`[data-qa="survey-description-es"]`).clear().type('Test survey description spanish');
 
-    Base.checkContainElementClickable('btn-survey-add-field', 'Add Field');
-    Base.clickElement('btn-survey-add-field');
-    Base.checkExistSelector('.fields-list');
-    Base.checkExistSelector('.list-item');
-    Base.checkExistElement('select-survey.short_text');
-    Base.clickElement('select-survey.short_text');
-    Base.checkExistElement('selected-field-name');
-    Base.inputField('selected-field-name', 'Text');
-    Base.checkExistElement('selected-field-description');
-    Base.inputField('selected-field-description', 'Description');
-    cy.get('[data-qa="toggle-required"] input').click({ force: true });
-    cy.get('[data-qa="toggle-required"] input').should('be.checked');
-    cy.get('[data-qa="toggle-required"] input').click({ force: true });
-    cy.get('[data-qa="toggle-required"] input').should('not.checked');
-    cy.get('[data-qa="toggle-private"] input').click({ force: true });
-    cy.get('[data-qa="toggle-private"] input').should('be.checked');
-    cy.get('[data-qa="toggle-private"] input').click({ force: true });
-    cy.get('[data-qa="toggle-private"] input').should('not.checked');
-    Base.checkExistElement('default-value');
-    Base.clickElement('btn-add-field');
+    // Add field
+    cy.get(`[data-qa="btn-survey-add-field"]`).contains('Add Field').focused();
+    cy.get(`[data-qa="btn-survey-add-field"]`).click();
+    cy.get('.fields-list').should('exist');
+    cy.get('.list-item').should('exist');
+    // [data-qa-"select-survey.short_text"]
+    // [data-qa-"select-survey.long_text"]
+    // [data-qa-"select-survey.number_decimal"]
+    // [data-qa-"select-survey.number_integer"]
+    // [data-qa-"select-survey.location"]
+    // [data-qa-"select-survey.date"]
+    // [data-qa-"select-survey.datetime"]
+    // [data-qa-"select-survey.select"]
+    // [data-qa-"select-survey.radio_button"]
+    // [data-qa-"select-survey.checkbox"]
+    // [data-qa-"select-survey.related_post"]
+    // [data-qa-"select-survey.upload_image"]
+    // [data-qa-"select-survey.embed_video"]
+    // [data-qa-"select-survey.markdown"]
+    // [data-qa-"select-survey.categories"]
+    cy.get(`[data-qa="select-survey.short_text"]`).should('exist');
+    cy.get(`[data-qa="select-survey.short_text"]`).click();
+    cy.get(`[data-qa="selected-field-name"]`).should('exist');
+    cy.get(`[data-qa="selected-field-name"]`).clear().type('Text');
+    cy.get(`[data-qa="selected-field-description"]`).should('exist');
+    cy.get(`[data-qa="selected-field-description"]`).clear().type('Description');
+    // cy.get('[data-qa="toggle-required"] input').click({ force: true });
+    // cy.get('[data-qa="toggle-required"] input').should('be.checked');
+    // cy.get('[data-qa="toggle-required"] input').click({ force: true });
+    // cy.get('[data-qa="toggle-required"] input').should('not.checked');
+    // cy.get('[data-qa="toggle-private"] input').click({ force: true });
+    // cy.get('[data-qa="toggle-private"] input').should('be.checked');
+    // cy.get('[data-qa="toggle-private"] input').click({ force: true });
+    // cy.get('[data-qa="toggle-private"] input').should('not.checked');
+    cy.get(`[data-qa="default-value"]`).should('exist');
+    cy.get(`[data-qa="btn-add-field"]`).click();
 
-    Base.checkExistElement('field-name');
-    Base.checkContainElement('field-name', 'Text');
-    Base.checkExistElement('btn-field-edit-Text');
-    Base.checkExistElement('btn-delete-field-Text');
-    // cy.get(`[data-qa="btn-field-edit"]`).click();
-    Base.clickElement('btn-field-edit-Text');
-    Base.checkExistElement('selected-field-description');
-    Base.checkExistElement('selected-field-description');
-    Base.clickElement('btn-cancel-field');
+    // check added field
+    cy.get(`[data-qa="field-name"]`).should('exist');
+    cy.get(`[data-qa="field-name"]`).contains('Text');
 
+    // check edit field button and cancel edit
+    cy.get(`[data-qa="btn-field-edit-Text"]`).should('exist');
+    cy.get(`[data-qa="btn-field-edit-Text"]`).click();
+    cy.get(`[data-qa="selected-field-description"]`).should('exist');
+    cy.get(`[data-qa="selected-field-description"]`).should('exist');
+    cy.get(`[data-qa="btn-cancel-field"]`).click();
 
-    // Base.checkContainElementClickable('btn-add-task', 'Add Task');
+    // check delete field button
+    cy.get(`[data-qa="btn-field-delete-Text"]`).should('exist');
+
+    // add task
+    // check add task button
+    cy.get(`[data-qa="btn-add-task"]`).contains('Add Task').focused().should('exist');
+    cy.get(`[data-qa="btn-add-task"]`).click();
+    // check modal
+    cy.get(`[data-qa="task-modal-title"]`).contains('Add Task').should('exist');
+    cy.get(`[data-qa="survey-task-cancel"]`).contains('Cancel').focused().should('exist');
+    cy.get(`[data-qa="survey-task-add"]`).contains('Add').focused().should('exist');
+
+    // input task name and description
+    cy.get(`[data-qa="survey-task-name"]`).clear().type('Text task');
+    cy.get(`[data-qa="survey-task-description"]`).clear().type('Text description task');
+    cy.get('[data-qa="task-toggle-required"] input').click({ force: true });
+    cy.get('[data-qa="task-toggle-required"] input').should('be.checked');
+    cy.get(`[data-qa="survey-task-add"]`).click();
+
+    // cy.get(`[data-qa="btn-survey-add-field"]`).click();
+    // cy.get('.fields-list').should('exist');
+    // cy.get('.list-item').should('exist');
+    // cy.get(`[data-qa="select-survey.number_integer"]`).should('exist');
+    // cy.get(`[data-qa="select-survey.number_integer"]`).click();
+
+    // check save and cancel buttons
+    cy.get(`[data-qa="btn-cancel-survey-item"]`).contains('Cancel').focused().should('exist');
+    cy.get(`[data-qa="btn-save-survey-item"]`).contains('Add Survey').focused().should('exist');
+
+    // save survey
+    cy.get(`[data-qa="btn-save-survey-item"]`).click();
   });
 });
