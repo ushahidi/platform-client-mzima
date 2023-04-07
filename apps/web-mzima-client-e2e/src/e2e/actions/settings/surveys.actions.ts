@@ -10,12 +10,6 @@ class SurveysActions {
     Base.checkContainElement('title', 'Surveys');
     return this;
   }
-
-  createSurvey() {
-    // Base.checkExistSelector('app-login');
-    // Base.checkExistSelector('app-login-form');
-    // this.loginInputForm();
-  }
 }
 
 export default new SurveysActions();
