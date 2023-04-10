@@ -5,6 +5,7 @@
   "scripts": {
     "web:serve": "nx serve web-mzima-client",
     "web:build": "nx run web-mzima-client:build:production",
+    "web:cypress": "nx e2e web-mzima-client-e2e --watch",
     "lint": "nx lint web-mzima-client",
     "mobile:serve": "nx run mobile-mzima-client:serve",
     "mobile:add": "nx run mobile-mzima-client:cap:add",

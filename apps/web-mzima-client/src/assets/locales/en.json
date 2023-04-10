@@ -203,7 +203,7 @@
     "crowdsourced_activity": "Crowdsourced Survey Activity"
   },
   "form": {
-    "add_field": "Add field",
+    "add_field": "Add Field",
     "add_field_instructions": "Add instructions to this field",
     "add_field_instructions_info": "These instructions will be presented as a tooltip to a user when filling in this field.",
     "add_field_instructions_placeholder": "Explain this field...",

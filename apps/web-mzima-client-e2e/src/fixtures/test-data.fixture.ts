@@ -1,6 +1,6 @@
 const loginData = {
-  login: 'procoders@ushahidi.com',
-  password: 'TestUser123',
+  login: 'konstantin@test.com',
+  password: 'trausertra324',
 };
 
 const roleData = {

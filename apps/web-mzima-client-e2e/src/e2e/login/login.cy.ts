@@ -3,14 +3,16 @@ import { Base, Login } from '../actions';
 describe('Initialize login page', () => {
   before(() => {
     Base.goHomePage();
-    Base.checkExistSelector('[data-qa="btn-login"]');
-    Base.clickElement('btn-login');
-  })
+    Base.saveLocalStorage('USH_is_onboarding_done', 'true');
+    Base.checkExistSelector('[data-qa="btn-auth"]');
+    Base.clickElement('btn-auth');
+  });
 
   it('Input login information', () => {
     Login.loginForm();
-    cy.get('[data-qa="btn-logout"]').should('exist');
-    cy.get('[data-qa="btn-login"]').should('not.exist');
+  });
+  after(() => {
+    cy.get('[data-qa="btn-auth"]').should('not.exist');
     cy.get('[data-qa="account-info"]').should('exist');
-  })
-})
+  });
+});

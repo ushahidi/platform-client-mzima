@@ -11,7 +11,7 @@
   <mat-icon icon svgIcon="close"></mat-icon>
 </mzima-client-button>
 
-<strong mat-dialog-title>{{ 'survey.add_task' | translate }}</strong>
+<strong mat-dialog-title [data-qa]="'task-modal-title'">{{ 'survey.add_task' | translate }}</strong>
 <mat-dialog-content class="post">
   <div class="form-row">
     <mat-label>{{ 'survey.task_name' | translate }} *</mat-label>
@@ -20,6 +20,7 @@
         matInput
         placeholder="{{ 'survey.name_this_task' | translate }}"
         [(ngModel)]="newTask.label"
+        [data-qa]="'survey-task-name'"
       />
     </mat-form-field>
   </div>
@@ -33,24 +34,31 @@
         cdkAutosizeMaxRows="5"
         placeholder="{{ 'survey.describe_this_task' | translate }}"
         [(ngModel)]="newTask.description"
+        [data-qa]="'survey-task-description'"
       ></textarea>
     </mat-form-field>
   </div>
   <div class="toggle">
-    <mat-slide-toggle [(ngModel)]="newTask.required">
+    <mat-slide-toggle [(ngModel)]="newTask.required" [data-qa]="'task-toggle-required'">
       {{ 'survey.require_section' | translate }}
     </mat-slide-toggle>
   </div>
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
-  <mzima-client-button fill="outline" color="secondary" (buttonClick)="cancel()">
+  <mzima-client-button
+    fill="outline"
+    color="secondary"
+    (buttonClick)="cancel()"
+    [data-qa]="'survey-task-cancel'"
+  >
     {{ 'app.cancel' | translate }}
   </mzima-client-button>
   <mzima-client-button
     type="submit"
     (buttonClick)="addNewTask()"
     [disabled]="newTask.label.trim().length === 0"
+    [data-qa]="'survey-task-add'"
   >
     {{ 'app.add' | translate }}
   </mzima-client-button>
