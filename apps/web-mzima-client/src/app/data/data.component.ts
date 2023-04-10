@@ -25,8 +25,8 @@ export class DataComponent implements OnInit, AfterViewInit {
     order: 'desc',
     order_unlocked_on_top: true,
     orderby: 'created',
-    'source[]': ['sms', 'twitter', 'web', 'email'],
-    'status[]': [],
+    'source[]': [],
+    'status[]': ['published', 'draft'],
   };
 
   constructor(public sessionService: SessionService, private postsService: PostsService) {}
