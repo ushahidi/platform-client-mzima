@@ -9,7 +9,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class PostDetailsModalComponent {
   public post: any;
   public color: string;
-  public twitterId: string;
   public editable: boolean;
 
   constructor(
@@ -18,7 +17,6 @@ export class PostDetailsModalComponent {
   ) {
     this.post = data.post;
     this.color = data.color;
-    this.twitterId = data.twitterId;
     this.editable = data.editable;
   }
 

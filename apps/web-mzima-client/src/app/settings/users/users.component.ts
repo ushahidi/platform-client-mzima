@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService } from '@services';
 import { LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { forkJoin, Observable } from 'rxjs';
+import { debounceTime, forkJoin, Observable, Subject } from 'rxjs';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -18,7 +18,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class UsersComponent implements OnInit {
   @ViewChild('dt') dt: Table;
   public isDesktop$: Observable<boolean>;
-  public isLoading = false;
   public users: UserResult[] = [];
   public selectedUsers: UserResult[] = [];
   public isShowActions = false;
@@ -32,6 +31,7 @@ export class UsersComponent implements OnInit {
     page: 1,
   };
   public total: number;
+  private readonly searchSubject = new Subject<string>();
 
   constructor(
     private userService: UsersService,
@@ -44,6 +44,12 @@ export class UsersComponent implements OnInit {
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.currentPage = Number(this.activatedRoute.snapshot.queryParams['page'] ?? 1) - 1;
+
+    this.searchSubject.pipe(debounceTime(350)).subscribe({
+      next: (query: string) => {
+        this.dt.filterGlobal(query, 'contains');
+      },
+    });
   }
 
   public ngOnInit() {
@@ -54,7 +60,6 @@ export class UsersComponent implements OnInit {
   }
 
   public getUsers(event?: LazyLoadEvent) {
-    this.isLoading = true;
     this.currentPage = (event?.first ?? 0) / 10;
     this.params.order = event?.sortOrder === 1 ? 'asc' : 'desc' || 'asc';
     this.params.q = event?.globalFilter || '';
@@ -71,7 +76,6 @@ export class UsersComponent implements OnInit {
     this.userService.getUsers('', { ...this.params }).subscribe({
       next: (response) => {
         this.users = response.results;
-        this.isLoading = false;
         this.cdr.detectChanges();
       },
       error: (err) => console.log(err),
@@ -106,6 +110,6 @@ export class UsersComponent implements OnInit {
   }
 
   public globalSearch(event: any) {
-    this.dt.filterGlobal(event.target.value, 'contains');
+    this.searchSubject.next(event.target.value);
   }
 }
