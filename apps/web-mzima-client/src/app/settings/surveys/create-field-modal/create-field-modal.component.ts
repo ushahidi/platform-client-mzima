@@ -30,6 +30,7 @@ export class CreateFieldModalComponent implements OnInit {
   public hasOptions = false;
   public tmp: any[] = [];
   public emptyTitleOption = false;
+  public numberError = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -144,7 +145,26 @@ export class CreateFieldModalComponent implements OnInit {
     });
   }
 
+  private isNumber({ label, type }: any): boolean {
+    if (type === 'decimal') {
+      return /([-+]?[0-9]*[.,][0-9]+)/gm.test(label.trim());
+    }
+    if (type === 'int') {
+      return /^-?\d+$/gm.test(label.trim());
+    }
+    return true;
+  }
+
   public addNewTask() {
+    if (this.selectedFieldType.input === 'number') {
+      if (this.isNumber(this.selectedFieldType)) {
+        this.numberError = false;
+      } else {
+        this.numberError = true;
+        return;
+      }
+    }
+
     if (this.hasOptions && !this.selectedFieldType.options?.length) {
       this.notificationService.showError(this.translate.instant('survey.add_options_first'));
       return;

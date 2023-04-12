@@ -4,6 +4,9 @@ import { Base, Login, Settings } from '../../actions';
 describe('Initialize role page', () => {
   before(() => {
     Base.goHomePage();
+    localStorage.setItem('USH_is_onboarding_done', 'true');
+    cy.get('app-cookies-notification').should('exist');
+    cy.get(`[data-qa="button-decline-cookies"]`).contains('Decline').click();
     Login.loginForm();
     Settings.checkSettingsPage();
   });

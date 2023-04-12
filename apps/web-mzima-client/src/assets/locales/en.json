@@ -259,7 +259,8 @@
     "post_step": "Post",
     "type": "type",
     "visible_to": "Visible To",
-    "choose_language": "Choose language for translation"
+    "choose_language": "Choose language for translation",
+    "error_input_number": "Please input {{type}} type number"
   },
   "survey": {
     "no_tasks": "No tasks",
