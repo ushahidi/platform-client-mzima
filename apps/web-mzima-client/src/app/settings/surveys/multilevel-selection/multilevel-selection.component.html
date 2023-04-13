@@ -5,6 +5,7 @@
     [(ngModel)]="isAllSelected"
     (change)="toggleSelectAll()"
     class="multilevelselection__checkbox"
+    [data-qa]="'select_all'"
   >
     {{ 'nav.select_all' | translate }}
   </mat-checkbox>
@@ -19,6 +20,7 @@
         class="multilevelselection__checkbox"
         (change)="categoryLeafSelectionToggle(option)"
         [checked]="checklistSelection.isSelected(option)"
+        [data-qa]="'tag-' + option[fields[1]] | lowercase"
       >
         {{ option[fields[1]] | translate }}
       </mat-checkbox>
@@ -36,6 +38,7 @@
         class="multilevelselection__checkbox"
         [checked]="descendantsHasSelected(option)"
         (change)="categorySelectionToggle(option)"
+        [data-qa]="'tag-' + option[fields[1]] | lowercase"
       >
         {{ option[fields[1]] | translate }}
       </mat-checkbox>
@@ -49,6 +52,7 @@
         [ngClass]="{
           'multilevelselection__option__arrow--open': treeControl.isExpanded(option)
         }"
+        [data-qa]="'btn-tag-toggle-' + option[fields[1]] | lowercase"
       >
         <mat-icon icon svgIcon="arrow-down"></mat-icon>
       </mzima-client-button>

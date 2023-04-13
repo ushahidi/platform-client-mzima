@@ -359,7 +359,7 @@ export class SearchFormComponent implements OnInit {
           survey.total = (survey.total || 0) + value.total;
         });
 
-        this.total = this.getTotal(this.surveyList);
+        this.total = this.total || this.getTotal(this.surveyList);
 
         this.sources.map(
           (source) =>
