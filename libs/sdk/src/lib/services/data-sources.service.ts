@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { apiHelpers, arrayHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
-import { DataSource, DataSourceOptions } from '../models';
+import { DataSourceOptions, DataSourceResult } from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class DataSourcesService extends ResourceService<any> {
     return 'dataproviders';
   }
 
-  getDataSource(): Observable<DataSource> {
+  getDataSource(): Observable<DataSourceResult[]> {
     return super.get().pipe(map((data) => data.results));
   }
 
