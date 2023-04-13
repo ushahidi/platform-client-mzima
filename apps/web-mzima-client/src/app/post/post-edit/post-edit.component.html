@@ -257,7 +257,12 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'location'">
-              <app-location-select [zoom]="12" [formControlName]="field.key"></app-location-select>
+              <app-location-select
+                [zoom]="12"
+                [location]="locationValue"
+                [required]="form.get(field.key)?.hasError('required')!"
+                (locationChange)="changeLocation($event, field.key)"
+              ></app-location-select>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'relation'">

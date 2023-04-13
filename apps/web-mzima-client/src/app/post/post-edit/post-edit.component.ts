@@ -32,9 +32,11 @@ import {
   GeoJsonFilter,
   PostResult,
 } from '@mzima-client/sdk';
+import { LatLngLiteral } from 'leaflet';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
 import { AlphanumericValidatorValidator } from '../../core/validators/alphanumeric';
+import { LocationValidator } from '../../core/validators/location-validator';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -71,6 +73,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   public isDesktop: boolean;
   public atLeastOneFieldHasValidationError: boolean;
   public formValidator = new formValidators.FormValidator();
+  public locationValue: LatLngLiteral;
 
   constructor(
     private route: ActivatedRoute,
@@ -179,6 +182,10 @@ export class PostEditComponent implements OnInit, OnChanges {
         }
       },
     });
+  }
+
+  public changeLocation({ lat, lng }: LatLngLiteral, formKey: string) {
+    this.form.patchValue({ [formKey]: { lat, lng } });
   }
 
   private handleTags(key: string, value: any) {
@@ -292,7 +299,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     );
   }
 
-  private addFormControl(value: string, field: any): FormControl {
+  private addFormControl(value: any, field: any): FormControl {
     if (field.input === 'video') {
       const videoValidators = [];
       if (field.required) {
@@ -300,6 +307,16 @@ export class PostEditComponent implements OnInit, OnChanges {
       }
       videoValidators.push(this.formValidator.videoValidator);
       return new FormControl(value, videoValidators);
+    }
+
+    if (field.input === 'location') {
+      this.locationValue = value;
+      const locationValidators = [];
+      if (field.required) {
+        locationValidators.push(Validators.required);
+      }
+      locationValidators.push(LocationValidator());
+      return new FormControl(value, locationValidators);
     }
 
     const validators: ValidatorFn[] = [];

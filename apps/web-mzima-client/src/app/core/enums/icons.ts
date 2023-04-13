@@ -66,4 +66,5 @@ export enum Icons {
   marker = 'marker',
   clapper = 'clapper',
   collectionEdit = 'collection-edit',
+  currentLocation = 'current-location',
 }

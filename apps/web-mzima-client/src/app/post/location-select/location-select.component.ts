@@ -1,8 +1,15 @@
-import { ChangeDetectorRef, Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
-import { GeoJsonPostsResponse } from '@mzima-client/sdk';
 import { SessionService } from '@services';
 import {
   control,
@@ -13,12 +20,12 @@ import {
   MapOptions,
   marker,
   Marker,
-  MarkerClusterGroup,
   MarkerClusterGroupOptions,
   tileLayer,
 } from 'leaflet';
 import 'leaflet.markercluster';
 import { pointIcon } from '../../core/helpers/map';
+import { decimalPattern } from '../../core/helpers/regex';
 
 @Component({
   selector: 'app-location-select',
@@ -32,15 +39,20 @@ import { pointIcon } from '../../core/helpers/map';
     },
   ],
 })
-export class LocationSelectComponent implements OnInit, ControlValueAccessor {
+export class LocationSelectComponent implements OnInit {
   @Input() public center: LatLngLiteral;
   @Input() public zoom: number;
+  @Input() public location: LatLngLiteral;
+  @Input() public required: boolean;
+  @Output() locationChange = new EventEmitter();
+  public emptyFieldLat = false;
+  public emptyFieldLng = false;
+  public noLetterLat = false;
+  public noLetterLng = false;
   private map: Map;
-  postsCollection: GeoJsonPostsResponse;
   mapLayers: any[] = [];
   mapReady = false;
   mapConfig: MapConfigInterface;
-  markerClusterData = new MarkerClusterGroup();
   markerClusterOptions: MarkerClusterGroupOptions = {
     animate: true,
     maxClusterRadius: 50,
@@ -50,24 +62,15 @@ export class LocationSelectComponent implements OnInit, ControlValueAccessor {
     animate: true,
   };
   mapMarker: Marker;
-  location: LatLngLiteral;
 
   public leafletOptions: MapOptions;
-
-  onChange = (location: LatLngLiteral) => {
-    console.log(location);
-  };
-
-  onTouched = () => {};
-
-  touched = false;
 
   disabled = false;
 
   constructor(private sessionService: SessionService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.mapConfig = this.sessionService.getMapConfigurations();
+    this.mapConfig = this.getMapConfigurations();
 
     const currentLayer =
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
@@ -87,7 +90,11 @@ export class LocationSelectComponent implements OnInit, ControlValueAccessor {
     this.mapReady = true;
   }
 
-  onMapReady(map: Map) {
+  private getMapConfigurations(): MapConfigInterface {
+    return this.sessionService.getMapConfigurations();
+  }
+
+  public onMapReady(map: Map) {
     this.map = map;
     control.zoom({ position: 'bottomleft' }).addTo(map);
     this.map.panTo(this.location);
@@ -95,14 +102,12 @@ export class LocationSelectComponent implements OnInit, ControlValueAccessor {
 
     this.map.on('click', (e) => {
       this.location = e.latlng;
-      this.cdr.detectChanges();
-      this.onChange(this.location);
       this.addMarker();
-      this.markAsTouched();
+      this.cdr.detectChanges();
     });
   }
 
-  addMarker() {
+  private addMarker() {
     if (this.mapMarker) {
       this.map.removeLayer(this.mapMarker);
     }
@@ -112,29 +117,40 @@ export class LocationSelectComponent implements OnInit, ControlValueAccessor {
     }).addTo(this.map);
 
     this.mapMarker.on('dragend', (e) => {
+      console.log('dragend');
       this.location = e.target.getLatLng();
+      this.cdr.detectChanges();
     });
   }
 
-  writeValue(location: LatLngLiteral) {
-    this.location = location;
-    if (this.map) {
-      this.map.panTo(this.location);
+  public changeCoords() {
+    this.locationChange.emit(this.location);
+    this.cdr.detectChanges();
+    this.checkErrors();
+  }
+
+  private checkErrors() {
+    this.emptyFieldLat = this.location.lat.toString() === '';
+    this.emptyFieldLng = this.location.lng.toString() === '';
+
+    if (this.location.lat) {
+      this.noLetterLat = !decimalPattern(this.location.lat.toString());
+    }
+
+    if (this.location.lng) {
+      this.noLetterLng = !decimalPattern(this.location.lng.toString());
     }
   }
 
-  registerOnChange(onChange: any) {
-    this.onChange = onChange;
-  }
-
-  registerOnTouched(onTouched: any) {
-    this.onTouched = onTouched;
-  }
-
-  markAsTouched() {
-    if (!this.touched) {
-      this.onTouched();
-      this.touched = true;
-    }
+  public getCurrentLocation() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const {
+        coords: { latitude, longitude },
+      } = position;
+      this.location.lat = latitude;
+      this.location.lng = longitude;
+      this.addMarker();
+      this.map.setView([latitude, longitude], 12);
+    });
   }
 }

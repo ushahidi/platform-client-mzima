@@ -770,7 +770,6 @@
     "unpublished": "Unpublished",
     "published_by": "Published by",
     "can_see_this_post": "can see this post",
-    "location": "Location",
     "categories": "Categories",
     "status": "Status",
     "type": "Type",
@@ -944,6 +943,17 @@
     },
     "relation": {
       "search": "Search"
+    },
+    "location": {
+      "location": "Location",
+      "you_can_search_or_click": "You can search or click the area of map where you want to place the marker.",
+      "search_address": "Search for addresses, place names, or coordinates...",
+      "errors": {
+        "empty_lat": "Latitude is empty field",
+        "empty_lng": "Longitude is empty field",
+        "decimal_lat": "Latitude only decimal number",
+        "decimal_lng": "Longitude only decimal number"
+      }
     }
   },
   "role": {
