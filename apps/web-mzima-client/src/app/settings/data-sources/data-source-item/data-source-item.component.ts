@@ -12,7 +12,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { arrayHelpers } from '@helpers';
 import { combineLatest } from 'rxjs';
 import { Location } from '@angular/common';
-import { FormsService, DataSourcesService, SurveysService } from '@mzima-client/sdk';
+import {
+  FormsService,
+  DataSourcesService,
+  SurveysService,
+  DataSourceResult,
+} from '@mzima-client/sdk';
 import { ConfigService } from '../../../core/services/config.service';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { BreakpointService } from '@services';
@@ -87,13 +92,16 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
 
     combineLatest([providers$, surveys$, dataSources$]).subscribe({
       next: ([providersData, surveys, dataSources]) => {
-        this.providersData = providersData;
+        const dataSourcesResult = dataSources.filter(
+          (dataSource: DataSourceResult) => dataSource.id !== 'gmail',
+        );
+        this.providersData = this.removeProvider(providersData, 'gmail');
         this.cloneProviders = JSON.parse(JSON.stringify(this.providersData));
         this.availableProviders = this.getAvailableProviders(this.providersData.providers);
         this.surveyList = surveys.results;
         this.dataSourceList = this.dataSourcesService.combineDataSource(
-          providersData,
-          dataSources,
+          this.providersData,
+          dataSourcesResult,
           this.surveyList,
         );
         this.setCurrentProvider();
@@ -101,9 +109,16 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     });
   }
 
+  // temporary removal of the provider, waiting for an update of the api to v5
+  private removeProvider(providersData: any, providerId: string) {
+    delete providersData[providerId];
+    delete providersData.providers[providerId];
+    return providersData;
+  }
+
   public setCurrentProvider(providerId?: any): void {
     if (!this.currentProviderId && !providerId) {
-      this.currentProviderId = this.availableProviders[1]?.id as string;
+      this.currentProviderId = this.availableProviders[0]?.id as string;
     }
     const id = this.currentProviderId || providerId;
     if (id) {

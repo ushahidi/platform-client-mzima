@@ -9,8 +9,7 @@
   </app-settings-header>
 
   <div class="users-container">
-    <app-spinner class="spinner" *ngIf="isLoading"></app-spinner>
-    <div class="card" [hidden]="isLoading">
+    <div class="card">
       <p-table
         #dt
         responsiveLayout="stack"
@@ -26,7 +25,6 @@
         [paginator]="true"
         [rows]="10"
         [totalRecords]="total"
-        [loading]="isLoading"
         [rowHover]="true"
         [globalFilterFields]="['realname', 'role', 'email']"
         [first]="currentPage * 10"

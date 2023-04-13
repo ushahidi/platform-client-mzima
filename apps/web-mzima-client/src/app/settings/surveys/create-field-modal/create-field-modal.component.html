@@ -14,7 +14,7 @@
 <strong mat-dialog-title>{{ 'form.add_field' | translate }}</strong>
 <mat-dialog-content>
   <ng-container *ngIf="selectedFieldType; else allFields">
-    <div class="form-row">
+    <div id="field_name" class="form-row">
       <mat-label>{{ 'app.name' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <input
@@ -24,6 +24,13 @@
           placeholder="{{ 'form.field_name_placeholder' | translate }}"
           [data-qa]="'selected-field-name'"
         />
+        <mat-hint
+          *ngIf="numberError"
+          class="alert error"
+          [translate]="'form.error_input_number'"
+          [translateParams]="{ type: selectedFieldType.type }"
+        >
+        </mat-hint>
       </mat-form-field>
     </div>
 
@@ -39,7 +46,9 @@
     <!-- Has options -->
     <div class="form-row" *ngIf="hasOptions">
       <div class="form-head-panel">
-        <mat-label class="form-label">{{ 'form.field_options' | translate }} </mat-label>
+        <mat-label class="form-label" [data-qa]="'field-options'"
+          >{{ 'form.field_options' | translate }}
+        </mat-label>
 
         <mzima-client-button
           fill="outline"
@@ -59,7 +68,7 @@
             [(ngModel)]="tmp[i].value"
             (ngModelChange)="onChange($event, i)"
             placeholder="{{ 'form.field_name_placeholder' | translate }}"
-            [data-qa]="opt"
+            [data-qa]="'option-' + i"
           />
 
           <mzima-client-button
@@ -70,7 +79,7 @@
             class="button-flat button-beta"
             (buttonClick)="removeOption(i)"
             *ngIf="selectedFieldType.options.length > 1"
-            [data-qa]="'btn-remove-option'"
+            [data-qa]="'btn-remove-option-' + i"
           >
             <mat-icon icon svgIcon="delete"></mat-icon>
           </mzima-client-button>
