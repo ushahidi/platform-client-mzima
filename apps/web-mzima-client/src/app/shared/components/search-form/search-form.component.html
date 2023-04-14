@@ -159,7 +159,7 @@
             </mat-list-option>
           </mat-selection-list>
 
-          <div class="filter-group__info">
+          <div class="filter-group__info" *ngIf="isMapView">
             <span *ngIf="notShownPostsCount <= 0">{{
               'global_filter.unmapped_none' | translate
             }}</span>

@@ -359,7 +359,7 @@ export class SearchFormComponent implements OnInit {
           survey.total = (survey.total || 0) + value.total;
         });
 
-        this.total = this.total || this.getTotal(this.surveyList);
+        // this.total = this.total || this.getTotal(this.surveyList);
 
         this.sources.map(
           (source) =>
@@ -394,7 +394,7 @@ export class SearchFormComponent implements OnInit {
             survey.total = (survey.total || 0) + value.total;
           });
 
-          this.total = this.getTotal(this.surveyList);
+          // this.total = this.getTotal(this.surveyList);
         }
       },
     });
@@ -708,7 +708,7 @@ export class SearchFormComponent implements OnInit {
     for (const element of event.source._value) {
       arr.push(...this.surveyList.filter((el) => el.id === element));
     }
-    this.total = this.getTotal(arr);
+    // this.total = this.getTotal(arr);
   }
 
   public clearSavedFilter(): void {
