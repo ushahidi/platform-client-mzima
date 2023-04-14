@@ -46,7 +46,9 @@ export class CookiesNotificationComponent implements OnInit {
   }
 
   private loadGtm() {
-    const cookies = JSON.parse(this.cookieService.get(this.COOKIE_NAME) || 'false');
+    const cookies = JSON.parse(
+      this.checkCookiesValue(this.cookieService.get(this.COOKIE_NAME)) || 'false',
+    );
     if (!cookies) return;
 
     const renderer = this.rendererFactory.createRenderer(null, null);
@@ -63,5 +65,14 @@ export class CookiesNotificationComponent implements OnInit {
     const div = document.createElement('div');
     div.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${this.env.environment.gtm_key}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
     renderer.appendChild(document.body, div);
+  }
+
+  private checkCookiesValue(value: string) {
+    if (value === 'false' || value === 'true') {
+      return value;
+    } else {
+      this.cookieService.delete(this.COOKIE_NAME);
+      return 'false';
+    }
   }
 }
