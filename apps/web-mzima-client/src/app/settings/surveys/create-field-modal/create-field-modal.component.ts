@@ -145,12 +145,12 @@ export class CreateFieldModalComponent implements OnInit {
     });
   }
 
-  private isNumber({ label, type }: any): boolean {
+  private isNumber({ default: val, type }: any): boolean {
     if (type === 'decimal') {
-      return /([-+]?[0-9]*[.,][0-9]+)/gm.test(label.trim());
+      return /((?<!\S)[-+]?[0-9]*[.,][0-9]+$)/gm.test(String(val).trim());
     }
     if (type === 'int') {
-      return /^-?\d+$/gm.test(label.trim());
+      return /^-?\d+$/gm.test(String(val).trim());
     }
     return true;
   }
@@ -183,6 +183,12 @@ export class CreateFieldModalComponent implements OnInit {
     );
     this.setHasOptionValidate();
     this.checkLoadAvailableData(this.selectedFieldType.input);
+    if (this.selectedFieldType.input === 'number' && this.selectedFieldType.type === 'int') {
+      this.selectedFieldType.default = 0;
+    }
+    if (this.selectedFieldType.input === 'number' && this.selectedFieldType.type === 'decimal') {
+      this.selectedFieldType.default = '0.0';
+    }
   }
 
   private checkLoadAvailableData(input: string) {
