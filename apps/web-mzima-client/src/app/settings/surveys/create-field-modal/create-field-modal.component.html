@@ -14,7 +14,7 @@
 <strong mat-dialog-title>{{ 'form.add_field' | translate }}</strong>
 <mat-dialog-content>
   <ng-container *ngIf="selectedFieldType; else allFields">
-    <div id="field_name" class="form-row">
+    <div class="form-row">
       <mat-label>{{ 'app.name' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <input
@@ -24,13 +24,6 @@
           placeholder="{{ 'form.field_name_placeholder' | translate }}"
           [data-qa]="'selected-field-name'"
         />
-        <mat-hint
-          *ngIf="numberError"
-          class="alert error"
-          [translate]="'form.error_input_number'"
-          [translateParams]="{ type: selectedFieldType.type }"
-        >
-        </mat-hint>
       </mat-form-field>
     </div>
 
@@ -149,7 +142,7 @@
       </div>
     </div>
 
-    <div class="form-row" *ngIf="canDisplay">
+    <div id="field_value" class="form-row" *ngIf="canDisplay">
       <mat-label>{{ 'app.default_value' | translate }} </mat-label>
       <mat-form-field appearance="outline">
         <ng-container [ngSwitch]="selectedFieldType.type">
@@ -179,7 +172,7 @@
             *ngSwitchCase="'decimal'"
             matInput
             [(ngModel)]="selectedFieldType.default"
-            type="number"
+            type="text"
             [data-qa]="'default-number'"
           />
           <input
@@ -190,6 +183,13 @@
             [data-qa]="'default-value'"
           />
         </ng-container>
+        <mat-hint
+          *ngIf="numberError"
+          class="alert error"
+          [translate]="'form.error_input_number'"
+          [translateParams]="{ type: selectedFieldType.type }"
+        >
+        </mat-hint>
       </mat-form-field>
     </div>
   </ng-container>
