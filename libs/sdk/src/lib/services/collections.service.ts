@@ -34,7 +34,7 @@ export class CollectionsService extends ResourceService<any> {
   }
 
   addToCollection(collectionId: string | number, postId: string | number) {
-    return super.post({ id: postId } as any, `${collectionId}/posts`);
+    return super.post({ post_id: postId } as any, `${collectionId}/posts`);
   }
 
   removeFromCollection(collectionId: string | number, postId: string | number) {

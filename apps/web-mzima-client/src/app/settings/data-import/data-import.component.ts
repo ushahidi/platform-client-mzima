@@ -38,6 +38,7 @@ export class DataImportComponent implements OnInit {
   hasRequiredTask = false;
   requiredFields = new Map<string, string>();
   maps_to: any = {};
+  uploadErrors: any[] = [];
 
   statusOption: string;
   selectedStatus: PostStatus;
@@ -100,8 +101,10 @@ export class DataImportComponent implements OnInit {
               this.setRequiredFields(this.selectedForm.attributes);
             },
           });
+          this.uploadErrors = [];
         },
         error: (err) => {
+          this.uploadErrors = err.error.errors;
           this.notification.showError(err);
           this.loader.hide();
         },
