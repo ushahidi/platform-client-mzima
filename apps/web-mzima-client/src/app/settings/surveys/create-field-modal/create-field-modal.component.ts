@@ -28,7 +28,7 @@ export class CreateFieldModalComponent implements OnInit {
   public categories: any = [];
   public availableSurveys: SurveyItem[] = [];
   public hasOptions = false;
-  public tmp: any[] = [];
+  public fieldOptions: Array<{ value: string; error: string }> = [];
   public emptyTitleOption = false;
   public numberError = false;
 
@@ -99,9 +99,29 @@ export class CreateFieldModalComponent implements OnInit {
       });
   }
 
-  onChange($event: string, i: any) {
-    this.selectedFieldType.options[i] = $event.trim();
+  onChange(index: number) {
+    const option = this.fieldOptions[index];
+    this.selectedFieldType.options[index] = option.value.trim();
     this.checkForEmptyOptions();
+    this.optionValidation(index);
+  }
+
+  optionValidation(index: number) {
+    const regex = /^[\p{L}\p{N}\s\-".?!;,@]*$/gmu;
+    const option = this.fieldOptions[index];
+
+    if (!regex.test(option.value)) {
+      option.error = 'survey.special_characters_option';
+    } else {
+      const duplicates = this.fieldOptions.filter(
+        (e, i) => e.value === option.value && i !== index,
+      );
+      option.error = duplicates.length ? 'survey.duplicate_option' : '';
+    }
+  }
+
+  public checkForSpecialOptions(): boolean {
+    return this.fieldOptions.some((option) => !!option.error);
   }
 
   private checkForEmptyOptions() {
@@ -200,21 +220,23 @@ export class CreateFieldModalComponent implements OnInit {
 
   public removeOption(i: any) {
     this.selectedFieldType.options.splice(i, 1);
-    this.setTempSelectedFieldType();
+    this.fieldOptions.splice(i, 1);
     this.checkForEmptyOptions();
   }
 
   public addOption() {
     if (!this.selectedFieldType.options) this.selectedFieldType.options = [];
     this.selectedFieldType.options.push('');
-    this.setTempSelectedFieldType();
     this.checkForEmptyOptions();
+    this.fieldOptions.push({ value: '', error: '' });
   }
 
   private setTempSelectedFieldType() {
-    this.tmp = this.selectedFieldType.options.map((opt: string) => ({
+    this.fieldOptions = this.selectedFieldType.options.map((opt: string) => ({
       value: opt,
+      error: '',
     }));
+    this.fieldOptions.forEach((opt, i) => this.optionValidation(i));
   }
 
   private setHasOptionValidate() {

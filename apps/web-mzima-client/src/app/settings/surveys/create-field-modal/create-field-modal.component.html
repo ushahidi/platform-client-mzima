@@ -54,12 +54,12 @@
         </mzima-client-button>
       </div>
 
-      <div class="form-row__item" *ngFor="let opt of tmp; let i = index">
+      <div class="form-row__item" *ngFor="let option of fieldOptions; let i = index">
         <mat-form-field appearance="outline">
           <input
             matInput
-            [(ngModel)]="tmp[i].value"
-            (ngModelChange)="onChange($event, i)"
+            [(ngModel)]="option.value"
+            (input)="onChange(i)"
             placeholder="{{ 'form.field_name_placeholder' | translate }}"
             [data-qa]="'option-' + i"
           />
@@ -77,11 +77,10 @@
             <mat-icon icon svgIcon="delete"></mat-icon>
           </mzima-client-button>
         </mat-form-field>
+        <mat-error role="alert" *ngIf="option.error">
+          {{ option.error | translate }}
+        </mat-error>
       </div>
-
-      <mat-error role="alert" *ngIf="!validateDuplicate()">
-        {{ 'survey.duplicate_option' | translate }}
-      </mat-error>
     </div>
 
     <div class="form-row" *ngIf="selectedFieldType.input === 'tags'">
@@ -207,7 +206,10 @@
   <mzima-client-button
     (buttonClick)="addNewTask()"
     [disabled]="
-      !selectedFieldType?.label.trim()?.length || !validateDuplicate() || emptyTitleOption
+      !selectedFieldType?.label.trim()?.length ||
+      !validateDuplicate() ||
+      emptyTitleOption ||
+      checkForSpecialOptions()
     "
     [data-qa]="'btn-add-field'"
   >
