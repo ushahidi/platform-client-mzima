@@ -46,9 +46,15 @@
       }
     }
 
-    &:hover,
-    &.mat-tab-label-active {
-      color: var(--color-black);
+    &.mat-tab-disabled {
+      color: var(--color-neutral-50);
+    }
+
+    &:not(.mat-tab-disabled) {
+      &:hover,
+      &.mat-tab-label-active {
+        color: var(--color-black);
+      }
     }
   }
 }
