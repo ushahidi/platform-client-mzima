@@ -10,16 +10,33 @@
     -webkit-overflow-scrolling: touch;
   }
 
+  @include breakpoint-max($tablet) {
+    padding-top: 16px;
+    background: var(--color-light);
+  }
+
   .page-content {
     @include breakpoint-min($tablet) {
       padding: 0;
-      margin: 0 auto;
-      max-width: 1054px;
     }
 
     @include breakpoint-max($tablet) {
+      padding-left: 0;
+      padding-right: 0;
       box-shadow: none;
     }
+  }
+}
+
+.container {
+  @include breakpoint-min($tablet) {
+    margin: 0 auto;
+    max-width: 1054px;
+  }
+
+  @include breakpoint-max($tablet) {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 
