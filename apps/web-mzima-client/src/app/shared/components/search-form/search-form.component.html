@@ -133,7 +133,7 @@
           disablePagination
           animationDuration="0ms"
         >
-          <mat-tab [label]="'app.surveys' | translate" [disabled]="!surveyList?.length">
+          <mat-tab [label]="'app.surveys' | translate" [disabled]="!surveyList.length">
             <div class="tabs__clear">
               <mzima-client-button
                 fill="clear"
@@ -161,7 +161,9 @@
               >
                 <span class="selection-list__option__border"></span>
                 {{ survey.name }}
-                <span class="selection-list__option__total">{{ survey.total }}</span>
+                <span class="selection-list__option__total" *ngIf="isMapView">{{
+                  survey.total
+                }}</span>
               </mat-list-option>
             </mat-selection-list>
 
@@ -204,7 +206,9 @@
                   class="selection-list__option"
                 >
                   {{ source.name }}
-                  <span class="selection-list__option__total">{{ source.total }}</span>
+                  <span class="selection-list__option__total" *ngIf="isMapView">{{
+                    source.total
+                  }}</span>
                 </mat-list-option>
               </ng-container>
             </mat-selection-list>
