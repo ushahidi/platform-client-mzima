@@ -46,7 +46,6 @@ export class LocationSelectComponent implements OnInit {
   @Input() public location: LatLngLiteral;
   @Input() public required: boolean;
   @Output() locationChange = new EventEmitter();
-  // public geocoderControl = new Geocoder();
   public emptyFieldLat = false;
   public emptyFieldLng = false;
   public noLetterLat = false;
