@@ -26,3 +26,4 @@ export * from './cookies-notification/cookies-notification.component';
 export * from './page-not-found/page-not-found.component';
 export * from './share-modal/share-modal.component';
 export * from './onboarding/onboarding.component';
+export * from './notification/notification.component';
