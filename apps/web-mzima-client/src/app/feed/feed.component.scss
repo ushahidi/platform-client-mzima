@@ -29,7 +29,9 @@
   }
 
   &__main {
-    height: 100%;
+    @include breakpoint-min($tablet) {
+      height: 100%;
+    }
 
     .feed-page--post-view & {
       display: flex;

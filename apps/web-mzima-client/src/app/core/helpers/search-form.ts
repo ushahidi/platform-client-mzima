@@ -43,6 +43,18 @@ export const sources = [
     total: 0,
     checked: true,
   },
+  {
+    name: 'USSD',
+    value: 'ussd',
+    total: 0,
+    checked: true,
+  },
+  {
+    name: 'WhatsApp',
+    value: 'whatsapp',
+    total: 0,
+    checked: true,
+  },
 ];
 
 export const sortingOptions = [

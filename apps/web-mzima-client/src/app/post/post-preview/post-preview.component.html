@@ -27,6 +27,10 @@
     </app-post-head>
   </div>
 
+  <div class="post__twitter" *ngIf="post.source === 'Twitter' && post.data_source_message_id">
+    <app-twitter-widget [id]="post.data_source_message_id"></app-twitter-widget>
+  </div>
+
   <div class="post__main">
     <div class="post__visual" *ngIf="media && post.source !== 'Twitter'">
       <img [src]="media.original_file_url" [alt]="post.title" />
@@ -48,10 +52,6 @@
     <mzima-client-button size="small" fill="clear" [expand]="false" (buttonClick)="showDetails()">
       {{ 'post.read_more' | translate }}
     </mzima-client-button>
-  </div>
-
-  <div class="post__twitter" *ngIf="post.source === 'Twitter' && post.data_source_message_id">
-    <app-twitter-widget [id]="post.data_source_message_id"></app-twitter-widget>
   </div>
 
   <app-post-metadata [post]="post"></app-post-metadata>

@@ -142,7 +142,8 @@
     "privacy_policy": "Privacy Policy",
     "terms_and_conditions": "Terms and Conditions",
     "ok_sounds_good": "OK, sound good",
-    "next_step": "Next step"
+    "next_step": "Next step",
+    "we_are_aware_there_are_some_issues_here": "We are aware there are some issues here. The team is working on fixing them."
   },
   "cookies": {
     "we_use_cookies": "Howdy! We use cookies to make your experience better.",
@@ -203,7 +204,7 @@
     "crowdsourced_activity": "Crowdsourced Survey Activity"
   },
   "form": {
-    "add_field": "Add field",
+    "add_field": "Add Field",
     "add_field_instructions": "Add instructions to this field",
     "add_field_instructions_info": "These instructions will be presented as a tooltip to a user when filling in this field.",
     "add_field_instructions_placeholder": "Explain this field...",
@@ -259,7 +260,8 @@
     "post_step": "Post",
     "type": "type",
     "visible_to": "Visible To",
-    "choose_language": "Choose language for translation"
+    "choose_language": "Choose language for translation",
+    "error_input_number": "Please input {{type}} type number"
   },
   "survey": {
     "no_tasks": "No tasks",
@@ -275,6 +277,7 @@
     "internal_use_task_desc": "This task will only be visible to User who have Manage Post permission.",
     "duplicate_task": "Duplicate task",
     "duplicate_option": "Duplicate option is present",
+    "special_characters_option": "This option contains special characters",
     "show_this_task_to": "Show this task to everyone when published",
     "show_this_task_to_desc": "When a survey response is published, data from this task will be displayed.",
     "survey_name": "Survey name",
@@ -1315,7 +1318,7 @@
       "delete_their_own_posts": "Delete Their Own Posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
     },
     "deployment_delete_this": "Delete this deployment",
     "deployment_delete": "Delete deployment",
@@ -1360,7 +1363,9 @@
     "add_new_users": "Add New Users",
     "valid": {
       "name": {
-        "required": "Site name is required"
+        "required": "Site name is required",
+        "pattern": "Invalid format",
+        "minlength": "Site name is too short"
       }
     },
     "bulk_actions": "Bulk actions"

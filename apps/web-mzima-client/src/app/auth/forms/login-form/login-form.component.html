@@ -1,8 +1,14 @@
-<form novalidate [formGroup]="form" (ngSubmit)="login()">
+<form novalidate [formGroup]="form" (ngSubmit)="login()" data-qa="form">
   <div class="form-row">
     <mat-label>{{ 'user.email' | translate }}</mat-label>
     <mat-form-field appearance="outline">
-      <input matInput placeholder="pat@example.com" formControlName="email" required />
+      <input
+        matInput
+        placeholder="pat@example.com"
+        formControlName="email"
+        required
+        [data-qa]="'email'"
+      />
       <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
     </mat-form-field>
   </div>
@@ -16,6 +22,7 @@
         color="secondary"
         [iconOnly]="true"
         (buttonClick)="togglePasswordVisible()"
+        [data-qa]="'toggle-password'"
       >
         <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
       </mzima-client-button>
@@ -25,15 +32,21 @@
         formControlName="password"
         required
         [type]="isPasswordVisible ? 'text' : 'password'"
+        [data-qa]="'password'"
       />
       <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
     </mat-form-field>
   </div>
 
   <div class="form-row controls">
-    <mzima-client-button (buttonClick)="restorePassword()" color="secondary" fill="clear"
-      >Forgot password?</mzima-client-button
+    <mzima-client-button
+      (buttonClick)="restorePassword()"
+      color="secondary"
+      fill="clear"
+      [data-qa]="'restorePassword'"
     >
+      Forgot password?
+    </mzima-client-button>
   </div>
 
   <mat-error class="form-error">{{ loginError }}</mat-error>

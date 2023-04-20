@@ -34,7 +34,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   @ViewChild('feed') public feed: ElementRef;
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
   public override params: GeoJsonFilter = {
-    limit: 9,
+    limit: 20,
     offset: 0,
     created_before_by_id: '',
   };
@@ -73,7 +73,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   };
   FeedMode = FeedMode;
   public currentPage = 1;
-  public itemsPerPage = 9;
+  public itemsPerPage = 20;
   public activePastId: string;
   private postDetailsModal: MatDialogRef<PostDetailsModalComponent>;
   public isMainFiltersOpen: boolean;

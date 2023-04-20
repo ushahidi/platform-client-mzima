@@ -28,12 +28,13 @@ export class CollectionsService extends ResourceService<any> {
   override getById(id: string | number): Observable<{ result: CollectionResult }> {
     return super.getById(id);
   }
+
   getCollections(queryParams?: any): Observable<Collection> {
     return super.get('', queryParams);
   }
 
   addToCollection(collectionId: string | number, postId: string | number) {
-    return super.post({ id: postId } as any, `${collectionId}/posts`);
+    return super.post({ post_id: postId } as any, `${collectionId}/posts`);
   }
 
   removeFromCollection(collectionId: string | number, postId: string | number) {

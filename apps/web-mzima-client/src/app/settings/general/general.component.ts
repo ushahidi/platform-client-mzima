@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { ApiKeyResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
-import { SessionService, BreakpointService } from '@services';
+import { SessionService, BreakpointService, NotificationService } from '@services';
 import { mergeMap, Observable } from 'rxjs';
 import { SettingsMapComponent } from './settings-map/settings-map.component';
 import { MediaService, ApiKeyService } from '@mzima-client/sdk';
@@ -40,10 +40,14 @@ export class GeneralComponent implements OnInit {
     private confirmModalService: ConfirmModalService,
     private clipboard: Clipboard,
     private breakpointService: BreakpointService,
+    private notificationService: NotificationService,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.generalForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: [
+        '',
+        [Validators.required, Validators.pattern('^\\S[a-zA-Z\\s]*$'), Validators.minLength(3)],
+      ],
       description: ['', []],
       email: ['', [Validators.email, Validators.required]],
       language: ['en', []],
@@ -117,11 +121,19 @@ export class GeneralComponent implements OnInit {
           complete: () => {
             this.loader.hide();
           },
+          error: (error) => {
+            this.loader.hide();
+            this.notificationService.showError(error.message);
+          },
         });
     } else {
       this.updateSettings().subscribe({
         complete: () => {
           this.loader.hide();
+        },
+        error: (error) => {
+          this.loader.hide();
+          this.notificationService.showError(error.message);
         },
       });
     }

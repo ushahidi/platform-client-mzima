@@ -23,8 +23,8 @@
       <img [src]="media.original_file_url" [alt]="post.title" />
     </div>
 
-    <div class="post__twitter" *ngIf="post.source === 'Twitter' && twitterId">
-      <app-twitter-widget [id]="twitterId"></app-twitter-widget>
+    <div class="post__twitter" *ngIf="post.source === 'Twitter' && post.data_source_message_id">
+      <app-twitter-widget [id]="post.data_source_message_id"></app-twitter-widget>
     </div>
 
     <h2 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h2>
@@ -79,10 +79,15 @@
           </ng-container>
 
           <ng-container *ngIf="field.input === 'text'">
-            <a *ngIf="field.label === 'Media Link'" [href]="field.value.value" target="_blank">{{
-              field.value.value
-            }}</a>
-            <p *ngIf="field.label !== 'Media Link'">{{ field.value.value || '-' }}</p>
+            <ng-container *ngIf="field.label === 'Media Link'">
+              <a *ngIf="field.value.value" [href]="field.value.value" target="_blank">{{
+                field.value.value
+              }}</a>
+              <p *ngIf="!field.value.value">-</p>
+            </ng-container>
+            <ng-container *ngIf="field.label !== 'Media Link'">
+              <p>{{ field.value.value || '-' }}</p>
+            </ng-container>
           </ng-container>
 
           <ng-container *ngIf="field.input === 'textarea'">

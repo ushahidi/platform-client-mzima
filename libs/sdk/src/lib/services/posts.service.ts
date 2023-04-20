@@ -150,6 +150,8 @@ export class PostsService extends ResourceService<any> {
 
     delete filters.form;
     delete filters['form[]'];
+    delete filters.source;
+    delete filters['source[]'];
 
     return super.get(
       'stats',

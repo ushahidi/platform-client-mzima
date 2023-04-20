@@ -102,17 +102,25 @@
   align-items: flex-start;
   justify-content: flex-end;
 
+  @include breakpoint-max($tablet) {
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+
   mzima-client-button {
     margin: 0 8px;
-    min-width: 125px;
 
     @include breakpoint-max($tablet) {
       margin-left: 5px;
       margin-right: 5px;
     }
 
-    @include breakpoint-max($mobile) {
-      min-width: 115px;
+    &:not(.delete-btn) {
+      min-width: 125px;
+
+      @include breakpoint-max($mobile) {
+        min-width: 115px;
+      }
     }
   }
 

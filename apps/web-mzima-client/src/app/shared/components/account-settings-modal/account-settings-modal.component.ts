@@ -302,7 +302,11 @@ export class AccountSettingsModalComponent implements OnInit {
             error: () => {
               this.savedsearchesService.getById(String(notification.set.id)).subscribe({
                 next: (res) => {
-                  this.applyNotificationName(res.id, res.name, NotificationTypeEnum.SavedSearch);
+                  this.applyNotificationName(
+                    res.result.id!,
+                    res.result.name!,
+                    NotificationTypeEnum.SavedSearch,
+                  );
                 },
               });
             },

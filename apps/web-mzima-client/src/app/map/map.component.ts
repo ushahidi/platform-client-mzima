@@ -181,6 +181,17 @@ export class MapComponent extends MainViewComponent implements OnInit {
                             },
                           });
 
+                          comp.instance.edit.subscribe({
+                            next: () => {
+                              this.showPostDetailsModal(
+                                postV5,
+                                post.color,
+                                post.data_source_message_id,
+                                true,
+                              );
+                            },
+                          });
+
                           const mediaField = postV5.post_content[0].fields.find(
                             (field: any) => field.type === 'media',
                           );
@@ -240,11 +251,16 @@ export class MapComponent extends MainViewComponent implements OnInit {
     });
   }
 
-  private showPostDetailsModal(post: any, color: string, twitterId?: string): void {
+  private showPostDetailsModal(
+    post: any,
+    color: string,
+    twitterId?: string,
+    editable?: boolean,
+  ): void {
     this.dialog.open(PostDetailsModalComponent, {
       width: '100%',
       maxWidth: 576,
-      data: { post, color, twitterId },
+      data: { post, color, twitterId, editable },
       height: 'auto',
       maxHeight: '90vh',
       panelClass: ['modal', 'post-modal'],

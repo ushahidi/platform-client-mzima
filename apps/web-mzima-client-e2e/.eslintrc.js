@@ -4,7 +4,9 @@ module.exports = {
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
+      "rules": {
+        'cypress/no-unnecessary-waiting': 'off',
+      }
     }
   ]
 }

@@ -1181,7 +1181,7 @@
       "edit_their_own_posts": "Editar sus propias publicaciones",
       "registred_member": "Miembro registrado",
       "administrator": "Administrador",
-      "roles_description": "Estas opciones controlan los cambios que pueden hacer este tipo de roles. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\"> Consulte nuestras guías de apoyo para saber más."
+      "roles_description": "Estas opciones controlan los cambios que pueden hacer este tipo de roles. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\"> Consulte nuestras guías de apoyo para saber más."
     },
     "deployment_delete_this": "Borrar este despliegue",
     "deployment_delete": "Borrar despliegue",

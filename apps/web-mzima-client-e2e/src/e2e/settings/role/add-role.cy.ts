@@ -1,25 +1,21 @@
-import testData from '../../fixtures/test-data.fixture';
-import { Base, Login } from '../actions';
+import testData from '../../../fixtures/test-data.fixture';
+import { Base, Login, Settings } from '../../actions';
 
 describe('Initialize role page', () => {
   before(() => {
     Base.goHomePage();
-    Base.clickElement('btn-login');
+    localStorage.setItem('USH_is_onboarding_done', 'true');
+    cy.get('app-cookies-notification').should('exist');
+    cy.get(`[data-qa="button-decline-cookies"]`).contains('Decline').click();
     Login.loginForm();
-  })
-
-  it('Settings page exists', () => {
-    Base.checkExistSelector('[data-qa="btn-settings"]');
-    Base.clickElement('btn-settings');
-    Base.checkContainElement('page-title', 'Settings');
-    Base.checkExistSelector('app-settings');
-  })
+    Settings.checkSettingsPage();
+  });
 
   it('Roles page exists', () => {
     Base.checkExistSelector('[data-qa="btn-roles"]');
     Base.clickElement('btn-roles');
     Base.checkExistSelector('app-roles');
-  })
+  });
 
   it('Create role', () => {
     Base.checkExistSelector('[data-qa="btn-add-role"]');
@@ -29,9 +25,9 @@ describe('Initialize role page', () => {
     cy.get('form').within(() => {
       Base.inputField('display_name', testData.roleData.name);
       Base.inputField('description', testData.roleData.description);
-      Base.checkField('manage-posts')
+      Base.checkField('manage-posts');
       Base.checkContainElement('btn-save-role', 'Save & close');
       Base.submitButton();
     });
-  })
-})
+  });
+});

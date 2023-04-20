@@ -24,24 +24,31 @@ export class CookiesNotificationComponent implements OnInit {
   }
 
   public accept() {
-    this.cookieService.set(
-      this.COOKIE_NAME,
-      new Date().toISOString(),
-      365,
-      undefined,
-      undefined,
-      true,
-    );
+    this.setCookies(true);
     this.showCookies = false;
     this.loadGtm();
   }
 
   public decline() {
+    this.setCookies(false);
     this.showCookies = false;
   }
 
+  private setCookies(isAccepted: boolean): void {
+    this.cookieService.set(
+      this.COOKIE_NAME,
+      JSON.stringify(isAccepted),
+      30,
+      undefined,
+      undefined,
+      true,
+    );
+  }
+
   private loadGtm() {
-    const cookies = this.cookieService.check(this.COOKIE_NAME);
+    const cookies = JSON.parse(
+      this.checkCookiesValue(this.cookieService.get(this.COOKIE_NAME)) || 'false',
+    );
     if (!cookies) return;
 
     const renderer = this.rendererFactory.createRenderer(null, null);
@@ -58,5 +65,14 @@ export class CookiesNotificationComponent implements OnInit {
     const div = document.createElement('div');
     div.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${this.env.environment.gtm_key}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
     renderer.appendChild(document.body, div);
+  }
+
+  private checkCookiesValue(value: string) {
+    if (value === 'false' || value === 'true') {
+      return value;
+    } else {
+      this.cookieService.delete(this.COOKIE_NAME);
+      return 'false';
+    }
   }
 }

@@ -8,7 +8,14 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,6 +35,7 @@ import {
 } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
+import { AlphanumericValidatorValidator } from '../../core/validators/alphanumeric';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -44,7 +52,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   @Input() public postInput: any;
   @Output() cancel = new EventEmitter();
   @Output() updated = new EventEmitter();
-  public data: any;
+  public color: string;
   public form: FormGroup;
   public description: string;
   public title: string;
@@ -63,7 +71,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   public surveyName: string;
   private postId?: number;
   private post?: any;
-  private isDesktop: boolean;
+  public isDesktop: boolean;
   public atLeastOneFieldHasValidationError: boolean;
   public formValidator = new formValidators.FormValidator();
 
@@ -129,9 +137,10 @@ export class PostEditComponent implements OnInit, OnChanges {
     if (!formId) return;
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
-        this.data = data;
-        this.tasks = data.result.tasks;
-        this.surveyName = data.result.name;
+        const { result } = data;
+        this.color = result.color;
+        this.tasks = result.tasks;
+        this.surveyName = result.name;
 
         const fields: any = {};
         for (const task of this.tasks) {
@@ -146,7 +155,7 @@ export class PostEditComponent implements OnInit, OnChanges {
                   this.description = field.default;
                   break;
                 case 'relation':
-                  this.relationConfigForm = field.config.input.form;
+                  this.relationConfigForm = field.config?.input?.form;
                   this.relationConfigKey = field.key;
                   break;
               }
@@ -180,7 +189,7 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private handleTags(key: string, value: any) {
     const formArray = this.form.get(key) as FormArray;
-    value.forEach((val: { id: any }) => formArray.push(new FormControl(val?.id)));
+    value?.forEach((val: { id: any }) => formArray.push(new FormControl(val?.id)));
   }
 
   private handleText(key: string, value: any) {
@@ -208,7 +217,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleCheckbox(key: string, value: any) {
-    const data = value.map((val: { id: any }) => val?.id);
+    const data = value?.value?.map((val: { id: any }) => val?.id);
     this.form.patchValue({ [key]: data });
   }
 
@@ -290,18 +299,34 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private addFormControl(value: string, field: any): FormControl {
-    if (field.type === 'title') {
-      return new FormControl(value, [Validators.required, Validators.minLength(2)]);
-    } else if (field.input === 'video') {
-      const validators = [];
+    if (field.input === 'video') {
+      const videoValidators = [];
       if (field.required) {
-        validators.push(Validators.required);
-        validators.push(this.formValidator.videoValidator);
+        videoValidators.push(Validators.required);
       }
-      return new FormControl(value, validators);
-    } else {
-      return new FormControl(value, field.required ? Validators.required : null);
+      videoValidators.push(this.formValidator.videoValidator);
+      return new FormControl(value, videoValidators);
     }
+
+    const validators: ValidatorFn[] = [];
+    switch (field.type) {
+      case 'description':
+        validators.push(Validators.minLength(2), AlphanumericValidatorValidator());
+        break;
+      case 'title':
+        validators.push(
+          Validators.required,
+          Validators.minLength(2),
+          AlphanumericValidatorValidator(),
+        );
+        break;
+      default:
+        if (field.required) {
+          validators.push(Validators.required);
+        }
+        break;
+    }
+    return new FormControl(value, validators);
   }
 
   public getOptionsByParentId(field: any, parent_id: number): any[] {
@@ -447,7 +472,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       buttonSuccess: this.translate.instant('notify.confirm_modal.add_post_success.success_button'),
     });
 
-    this.isDesktop ? this.backNavigation() : this.updated.emit();
+    !this.postInput ? this.backNavigation() : this.updated.emit();
   }
 
   public async previousPage() {
@@ -463,7 +488,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       if (!confirmed) return;
     }
 
-    if (this.isDesktop) {
+    if (!this.postInput) {
       this.backNavigation(true);
       this.eventBusService.next({
         type: EventType.AddPostButtonSubmit,

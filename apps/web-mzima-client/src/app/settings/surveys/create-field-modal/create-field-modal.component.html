@@ -22,6 +22,7 @@
           required
           [(ngModel)]="selectedFieldType.label"
           placeholder="{{ 'form.field_name_placeholder' | translate }}"
+          [data-qa]="'selected-field-name'"
         />
       </mat-form-field>
     </div>
@@ -31,27 +32,36 @@
       <quill-editor
         [(ngModel)]="selectedFieldType.instructions"
         placeholder="{{ 'app.insert_text_here' | translate }}"
+        [data-qa]="'selected-field-description'"
       ></quill-editor>
     </div>
 
     <!-- Has options -->
     <div class="form-row" *ngIf="hasOptions">
       <div class="form-head-panel">
-        <mat-label class="form-label">{{ 'form.field_options' | translate }} </mat-label>
+        <mat-label class="form-label" [data-qa]="'field-options'"
+          >{{ 'form.field_options' | translate }}
+        </mat-label>
 
-        <mzima-client-button fill="outline" color="secondary" (buttonClick)="addOption()">
+        <mzima-client-button
+          fill="outline"
+          color="secondary"
+          (buttonClick)="addOption()"
+          [data-qa]="'btn-add-option'"
+        >
           {{ 'form.field_add_option' | translate }}
           <mat-icon icon svgIcon="plus"></mat-icon>
         </mzima-client-button>
       </div>
 
-      <div class="form-row__item" *ngFor="let opt of tmp; let i = index">
+      <div class="form-row__item" *ngFor="let option of fieldOptions; let i = index">
         <mat-form-field appearance="outline">
           <input
             matInput
-            [(ngModel)]="tmp[i].value"
-            (ngModelChange)="onChange($event, i)"
+            [(ngModel)]="option.value"
+            (input)="onChange(i)"
             placeholder="{{ 'form.field_name_placeholder' | translate }}"
+            [data-qa]="'option-' + i"
           />
 
           <mzima-client-button
@@ -62,15 +72,15 @@
             class="button-flat button-beta"
             (buttonClick)="removeOption(i)"
             *ngIf="selectedFieldType.options.length > 1"
+            [data-qa]="'btn-remove-option-' + i"
           >
             <mat-icon icon svgIcon="delete"></mat-icon>
           </mzima-client-button>
         </mat-form-field>
+        <mat-error role="alert" *ngIf="option.error">
+          {{ option.error | translate }}
+        </mat-error>
       </div>
-
-      <mat-error role="alert" *ngIf="!validateDuplicate()">
-        {{ 'survey.duplicate_option' | translate }}
-      </mat-error>
     </div>
 
     <div class="form-row" *ngIf="selectedFieldType.input === 'tags'">
@@ -96,7 +106,11 @@
 
     <div class="form-row" *ngIf="onlyOptional || canDisableCaption || canMakePrivate">
       <div class="toggle">
-        <mat-slide-toggle *ngIf="onlyOptional" [(ngModel)]="selectedFieldType.required">
+        <mat-slide-toggle
+          *ngIf="onlyOptional"
+          [(ngModel)]="selectedFieldType.required"
+          [data-qa]="'toggle-required'"
+        >
           {{ 'survey.required' | translate }}
         </mat-slide-toggle>
       </div>
@@ -114,7 +128,11 @@
       </div>
 
       <div class="toggle">
-        <mat-slide-toggle *ngIf="canMakePrivate" [(ngModel)]="selectedFieldType.response_private">
+        <mat-slide-toggle
+          *ngIf="canMakePrivate"
+          [(ngModel)]="selectedFieldType.response_private"
+          [data-qa]="'toggle-private'"
+        >
           {{ 'survey.make_response_private' | translate }}
           <p class="init active" *ngIf="selectedFieldType.response_private">
             <small>{{ 'survey.response_private_desc' | translate }}</small>
@@ -123,7 +141,7 @@
       </div>
     </div>
 
-    <div class="form-row" *ngIf="canDisplay">
+    <div id="field_value" class="form-row" *ngIf="canDisplay">
       <mat-label>{{ 'app.default_value' | translate }} </mat-label>
       <mat-form-field appearance="outline">
         <ng-container [ngSwitch]="selectedFieldType.type">
@@ -132,12 +150,14 @@
             matInput
             [(ngModel)]="selectedFieldType.default"
             placeholder="{{ 'form.default_location_placeholder' | translate }}"
+            [data-qa]="'default-location'"
           />
           <input
             *ngSwitchCase="'date'"
             matInput
             [(ngModel)]="selectedFieldType.default"
             placeholder="{{ 'form.default_location_placeholder' | translate }}"
+            [data-qa]="'default-date'"
           />
           <input
             *ngSwitchCase="'int'"
@@ -145,34 +165,53 @@
             [(ngModel)]="selectedFieldType.default"
             type="number"
             step="1"
+            [data-qa]="'default-number'"
           />
           <input
             *ngSwitchCase="'decimal'"
             matInput
             [(ngModel)]="selectedFieldType.default"
-            type="number"
+            type="text"
+            [data-qa]="'default-number'"
           />
           <input
             *ngSwitchDefault
             matInput
             [(ngModel)]="selectedFieldType.default"
             placeholder="{{ 'form.default_default_placeholder' | translate }}"
+            [data-qa]="'default-value'"
           />
         </ng-container>
+        <mat-hint
+          *ngIf="numberError"
+          class="alert error"
+          [translate]="'form.error_input_number'"
+          [translateParams]="{ type: selectedFieldType.type }"
+        >
+        </mat-hint>
       </mat-form-field>
     </div>
   </ng-container>
 </mat-dialog-content>
 
 <div mat-dialog-actions align="end">
-  <mzima-client-button fill="outline" color="secondary" [mat-dialog-close]="false">
+  <mzima-client-button
+    fill="outline"
+    color="secondary"
+    [mat-dialog-close]="false"
+    [data-qa]="'btn-cancel-field'"
+  >
     {{ 'app.cancel' | translate }}
   </mzima-client-button>
   <mzima-client-button
     (buttonClick)="addNewTask()"
     [disabled]="
-      !selectedFieldType?.label.trim()?.length || !validateDuplicate() || emptyTitleOption
+      !selectedFieldType?.label.trim()?.length ||
+      !validateDuplicate() ||
+      emptyTitleOption ||
+      checkForSpecialOptions()
     "
+    [data-qa]="'btn-add-field'"
   >
     {{ (editMode ? 'app.update' : 'app.save') | translate }}
   </mzima-client-button>
@@ -186,6 +225,7 @@
       *ngFor="let field of fields"
       (click)="(field.input !== 'tags' || availableCategories?.length) && selectField(field)"
       [ngClass]="{ 'list-item--disabled': field.input === 'tags' && !availableCategories?.length }"
+      [data-qa]="'select-' + field.label"
     >
       <h3>{{ field.label | translate }}</h3>
       <p>{{ field.instructions | translate }}</p>

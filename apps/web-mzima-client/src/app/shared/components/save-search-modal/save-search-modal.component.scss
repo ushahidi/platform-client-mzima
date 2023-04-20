@@ -20,4 +20,11 @@
 .mat-dialog-actions {
   padding-top: 12px;
   padding-bottom: 12px;
+  justify-content: space-between;
+
+  .button-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }

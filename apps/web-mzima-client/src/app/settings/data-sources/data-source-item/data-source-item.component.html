@@ -193,7 +193,9 @@
     <div>
       <mzima-client-button
         color="danger"
+        class="delete-btn"
         *ngIf="!onCreating"
+        [iconOnly]="!isDesktop"
         [data-qa]="'btn-provider-delete'"
         (buttonClick)="turnOffDataSource($event)"
       >

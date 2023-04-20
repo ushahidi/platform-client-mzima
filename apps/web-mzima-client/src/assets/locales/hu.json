@@ -1181,7 +1181,7 @@
       "edit_their_own_posts": "A saját bejegyzéseit szerkeszthetik",
       "registred_member": "Regisztrált tag",
       "administrator": "Adminisztrátor",
-      "roles_description": "Ezen lehetőségek által lehet vezérelni, hogy ez a típusú szerep miben végezhet változtatásokat. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Keresd fel a támogatással kapcsolatos útmutatónkat még több információért."
+      "roles_description": "Ezen lehetőségek által lehet vezérelni, hogy ez a típusú szerep miben végezhet változtatásokat. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Keresd fel a támogatással kapcsolatos útmutatónkat még több információért."
     },
     "deployment_delete_this": "Telepített változat törlése",
     "deployment_delete": "Telepített változat törlése",

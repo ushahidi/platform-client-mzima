@@ -10,7 +10,7 @@
       *ngIf="form && tasks.length; else spinner"
     >
       <div *ngFor="let task of tasks; let i = index" class="task-container">
-        <div [ngStyle]="{ '--color': data?.result?.color }">
+        <div [ngStyle]="{ '--color': color }">
           <ng-container *ngIf="task.type !== 'post'">
             <h2 class="task-label">{{ task.translations[activeLanguage]?.label || task.label }}</h2>
 
@@ -313,21 +313,24 @@
               </mat-form-field>
             </ng-container>
             <mat-error *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched">
-              <span *ngIf="form.get(field.key)?.hasError('required')">
+              <p *ngIf="form.get(field.key)?.hasError('required')">
                 {{ field.label }} field is a required field *
-              </span>
-              <span *ngIf="form.get(field.key)?.hasError('minlength')">
+              </p>
+              <p *ngIf="form.get(field.key)?.hasError('minlength')">
                 {{ field.label }} field is too short, use at least 2 characters
-              </span>
-              <span *ngIf="form.get(field.key)?.hasError('pattern')">
+              </p>
+              <p *ngIf="form.get(field.key)?.hasError('pattern')">
                 {{ field.label }} field is invalid
-              </span>
+              </p>
+              <p *ngIf="form.get(field.key)?.hasError('specialCharacters')">
+                {{ field.label }} field contains special characters
+              </p>
             </mat-error>
           </div>
         </div>
       </div>
 
-      <div class="form-controls-panel form-controls-panel--sticky">
+      <div class="form-controls-panel" [ngClass]="{ 'form-controls-panel--sticky': isDesktop }">
         <mzima-client-button
           fill="outline"
           color="secondary"

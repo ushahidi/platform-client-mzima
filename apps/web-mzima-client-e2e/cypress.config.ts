@@ -1,6 +1,12 @@
 import { defineConfig } from 'cypress';
 import { nxE2EPreset } from '@nrwl/cypress/plugins/cypress-preset';
+import { ENVS } from './src/utils/env.utils';
 
 export default defineConfig({
-  e2e: nxE2EPreset(__dirname),
+  e2e: {
+    ...nxE2EPreset(__dirname),
+    baseUrl: ENVS.dev,
+    viewportWidth: 1440,
+    viewportHeight: 900,
+  },
 });
