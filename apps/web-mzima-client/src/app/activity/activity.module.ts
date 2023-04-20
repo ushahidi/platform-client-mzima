@@ -10,6 +10,7 @@ import { ActivityTimelineComponent } from './activity-timeline/activity-timeline
 import { ActivityComponent } from './activity.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { ChartHeadComponent } from './chart-head/chart-head.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ChartHeadComponent } from './chart-head/chart-head.component';
     MatInputModule,
     MatSelectModule,
     TranslateModule,
+    SharedModule,
   ],
 })
 export class ActivityModule {}

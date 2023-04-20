@@ -320,6 +320,7 @@
 
 .collection-info {
   white-space: normal;
+  margin-bottom: 16px;
 
   &:not(:first-child) {
     margin-top: -26px;
@@ -639,6 +640,44 @@
       .mat-slide-toggle-thumb-container {
         transform: translate3d(20px, 0, 0) !important;
       }
+    }
+  }
+}
+
+.tabs {
+  &__clear {
+    display: flex;
+    margin-bottom: 8px;
+    justify-content: flex-end;
+  }
+
+  &::ng-deep {
+    .mat-tab-header {
+      margin-bottom: 8px;
+    }
+
+    .mat-tab-body,
+    .mat-tab-body-content,
+    .mat-tab-body-wrapper {
+      margin-left: -15px;
+      margin-right: -15px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .mat-tab-labels {
+      margin: 0 -8px;
+    }
+
+    .mat-tab-label {
+      height: 28px;
+      min-width: 0;
+      flex: 1 1 100%;
+      margin: 0 8px;
+      padding: 0 8px;
+      font-size: 14px;
+      line-height: 1.5;
+      font-weight: 700;
     }
   }
 }

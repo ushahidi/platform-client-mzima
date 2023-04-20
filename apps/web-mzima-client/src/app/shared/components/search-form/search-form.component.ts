@@ -153,6 +153,7 @@ export class SearchFormComponent implements OnInit {
     this.session.currentUserData$.pipe(untilDestroyed(this)).subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
       this.getSavedFilters();
+      this.getPostsStatistic();
       if (this.isLoggedIn && this.collectionInfo) {
         this.getNotification(String(this.collectionInfo.id));
       }
@@ -359,7 +360,7 @@ export class SearchFormComponent implements OnInit {
           survey.total = (survey.total || 0) + value.total;
         });
 
-        this.total = this.total || this.getTotal(this.surveyList);
+        // this.total = this.total || this.getTotal(this.surveyList);
 
         this.sources.map(
           (source) =>
@@ -384,17 +385,26 @@ export class SearchFormComponent implements OnInit {
     this.postsService.getPostStatistics().subscribe({
       next: (res) => {
         this.notShownPostsCount = res.unmapped;
+        const values = res.totals.find((total: any) => total.key === 'form')?.values;
+
         if (this.surveyList?.length) {
           this.surveyList.map((survey) => (survey.total = 0));
-          const values = res.totals.find((total: any) => total.key === 'form')?.values;
-
           values.map((value: any) => {
             const survey = this.surveyList.find((s) => s.id === value.id);
             if (!survey) return;
             survey.total = (survey.total || 0) + value.total;
           });
 
-          this.total = this.getTotal(this.surveyList);
+          // this.total = this.getTotal(this.surveyList);
+        }
+
+        if (this.sources?.length) {
+          this.sources.map(
+            (src) =>
+              (src.total = values
+                .filter((value: any) => value.type === src.value)
+                .reduce((acc: any, value: any) => acc + value.total, 0)),
+          );
         }
       },
     });
@@ -708,7 +718,7 @@ export class SearchFormComponent implements OnInit {
     for (const element of event.source._value) {
       arr.push(...this.surveyList.filter((el) => el.id === element));
     }
-    this.total = this.getTotal(arr);
+    // this.total = this.getTotal(arr);
   }
 
   public clearSavedFilter(): void {

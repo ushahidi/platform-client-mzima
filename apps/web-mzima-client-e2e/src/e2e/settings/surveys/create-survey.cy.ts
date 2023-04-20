@@ -63,18 +63,18 @@ function addFields(field: string, value: string) {
 
   switch (field) {
     case 'number_decimal':
-      cy.get(`[data-qa="selected-field-name"]`).clear().type(value).should('exist');
-      cy.get('#field_name').within(() => {
+      cy.get(`[data-qa="default-number"]`).clear().type(value).should('exist');
+      cy.get('#field_value').within(() => {
         cy.get(`input`)
           .invoke('val')
           .then((val: any) => {
-            expect(/([-+]?[0-9]*[.,][0-9]+)/gm.test(val)).to.be.true;
+            expect(/((?<!\S)[-+]?[0-9]*[.,][0-9]+$)/gm.test(val)).to.be.true;
           });
       });
       break;
     case 'number_integer':
-      cy.get(`[data-qa="selected-field-name"]`).clear().type(value).should('exist');
-      cy.get('#field_name').within(() => {
+      cy.get(`[data-qa="default-number"]`).clear().type(value).should('exist');
+      cy.get('#field_value').within(() => {
         cy.get(`input`)
           .invoke('val')
           .then((val: any) => {

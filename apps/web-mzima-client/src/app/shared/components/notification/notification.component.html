@@ -1,0 +1,15 @@
+<div *ngIf="!isHidden" class="notification" [ngClass]="'notification--' + type">
+  <mat-icon class="notification__icon" icon [svgIcon]="getNotificationIcon()"></mat-icon>
+  <ng-content></ng-content>
+  <mzima-client-button
+    fill="outline"
+    color="custom"
+    [iconOnly]="true"
+    [data-qa]="'btn-close'"
+    class="notification__close"
+    (click)="hideNotification()"
+    ariaLabel="{{ 'modal.button.close' | translate }}"
+  >
+    <mat-icon icon svgIcon="close"></mat-icon>
+  </mzima-client-button>
+</div>
