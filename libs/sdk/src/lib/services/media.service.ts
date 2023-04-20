@@ -25,11 +25,14 @@ export class MediaService extends ResourceService<PermissionResult> {
     return 'media';
   }
 
-  uploadFile(file: File) {
+  uploadFile(file: File, caption?: string) {
     const apiUrl = this.backendUrl + this.getApiVersions() + this.getResourceUrl();
 
     const formData = new FormData();
     formData.append('file', file);
+    if (caption) {
+      formData.append('caption', caption);
+    }
 
     return this.httpClient.post(apiUrl, formData);
   }

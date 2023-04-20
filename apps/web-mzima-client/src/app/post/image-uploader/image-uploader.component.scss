@@ -1,0 +1,27 @@
+.image-loader {
+  &__preview {
+    margin-bottom: 24px;
+
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    margin: 0 -4px;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  &__control {
+    margin: 0 4px;
+
+    &--delete {
+      --size: 40px;
+    }
+  }
+}

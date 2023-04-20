@@ -24,9 +24,12 @@ import {
   PostsV5Service,
   GeoJsonFilter,
   PostResult,
+  MediaService,
 } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
+import { lastValueFrom } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -76,6 +79,8 @@ export class PostEditComponent implements OnInit, OnChanges {
     private eventBusService: EventBusService,
     private location: Location,
     private breakpointService: BreakpointService,
+    private mediaService: MediaService,
+    private snackBar: MatSnackBar,
   ) {
     this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
@@ -103,6 +108,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['postInput'] && changes['postInput'].currentValue) {
       this.post = this.postInput;
+      // console.log('post: ', this.post);
       this.formId = this.post.form_id;
       this.postId = this.post.id;
       this.loadData(this.formId!, this.post.post_content);
@@ -302,10 +308,10 @@ export class PostEditComponent implements OnInit, OnChanges {
     return field.options.filter((option: any) => option.parent_id === parent_id);
   }
 
-  preparationData(): any {
+  async preparationData(): Promise<any> {
     for (const task of this.tasks) {
-      task.fields = task.fields.map(
-        (field: { key: string | number; input: string; type: string }) => {
+      task.fields = await Promise.all(
+        task.fields.map(async (field: { key: string | number; input: string; type: string }) => {
           let value: any = {
             value: this.form.value[field.key],
           };
@@ -344,7 +350,17 @@ export class PostEditComponent implements OnInit, OnChanges {
                 : {};
               break;
             case 'upload':
-              value.value = this.form.value[field.key] || null;
+              if (!this.form.value[field.key].photo) return;
+              try {
+                const uploadObservable = this.mediaService.uploadFile(
+                  this.form.value[field.key].photo,
+                  this.form.value[field.key].caption,
+                );
+                const response: any = await lastValueFrom(uploadObservable);
+                value.value = response.id;
+              } catch (error: any) {
+                throw new Error(`Error uploading file: ${error.message}`);
+              }
               break;
           }
 
@@ -352,7 +368,7 @@ export class PostEditComponent implements OnInit, OnChanges {
             ...field,
             value,
           };
-        },
+        }),
       );
     }
   }
@@ -361,7 +377,12 @@ export class PostEditComponent implements OnInit, OnChanges {
     if (this.form.disabled) return;
     this.form.disable();
 
-    this.preparationData();
+    try {
+      await this.preparationData();
+    } catch (error: any) {
+      this.snackBar.open(error, 'Close', { panelClass: ['error'], duration: 3000 });
+      return;
+    }
 
     const postData = {
       base_language: 'en',

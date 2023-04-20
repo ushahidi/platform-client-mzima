@@ -927,3 +927,13 @@
     color: var(--color-neutral-90);
   }
 }
+
+.image-loader {
+  &__btn {
+    margin-bottom: 16px;
+  }
+
+  .form-row {
+    margin-bottom: 0;
+  }
+}
