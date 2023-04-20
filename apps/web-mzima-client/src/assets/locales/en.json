@@ -390,7 +390,8 @@
     "fields": {
       "fields_title": "Fields",
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "The {{name}} field contains special characters"
       }
     },
     "targeted_survey": {

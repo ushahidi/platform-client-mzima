@@ -7,6 +7,7 @@ import { surveyHelper } from '@helpers';
 import { LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
+import { AlphanumericValidatorValidator } from '../../../core/validators/alphanumeric';
 import { noWhitespaceValidator } from '../../../core/validators/no-whitespace';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
@@ -68,7 +69,7 @@ export class SurveyItemComponent implements OnInit {
       },
     });
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, noWhitespaceValidator]],
+      name: ['', [Validators.required, noWhitespaceValidator, AlphanumericValidatorValidator()]],
       description: [''],
       color: [null],
       enabled_languages: this.formBuilder.group({
