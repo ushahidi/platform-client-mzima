@@ -49,7 +49,6 @@ export class AccountSettingsModalComponent implements OnInit {
   public isLoading: boolean;
   public isContactsChanged: boolean;
   public isAddAccountFormOpen: boolean;
-  public isContactsOnUpdate: boolean;
   public matcher = new formHelper.FormErrorStateMatcher();
   public accountTypes: AccountTypeInterface[] = [
     {
@@ -70,7 +69,10 @@ export class AccountSettingsModalComponent implements OnInit {
     if (!group) return null;
     const pass = group.get('password')?.value;
     const confirmPass = group.get('confirmPassword')?.value;
-    return pass === confirmPass ? null : { notSame: true };
+    if (confirmPass) {
+      return pass === confirmPass ? null : { notSame: true };
+    }
+    return null;
   };
 
   constructor(
@@ -166,7 +168,6 @@ export class AccountSettingsModalComponent implements OnInit {
   }
 
   public updateContacts(): void {
-    this.isContactsOnUpdate = true;
     forkJoin(
       this.contacts.map((contact) =>
         this.contactsService.update(contact.id, {
@@ -177,7 +178,6 @@ export class AccountSettingsModalComponent implements OnInit {
     ).subscribe({
       complete: () => {
         this.getContacts();
-        this.isContactsOnUpdate = false;
         this.closeModal();
       },
     });
@@ -194,8 +194,9 @@ export class AccountSettingsModalComponent implements OnInit {
     } else {
       this.setFieldsValidators(
         [this.profileForm.controls['password'], this.profileForm.controls['confirmPassword']],
-        [Validators.minLength(8), Validators.maxLength(64)],
+        [],
       );
+      this.profileForm.patchValue({ password: '', confirmPassword: '' });
     }
   }
 
