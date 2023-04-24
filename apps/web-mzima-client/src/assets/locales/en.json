@@ -141,7 +141,7 @@
     "preview_image": "Preview image",
     "privacy_policy": "Privacy Policy",
     "terms_and_conditions": "Terms and Conditions",
-    "ok_sounds_good": "OK, sound good",
+    "ok_sounds_good": "Ok, sounds good",
     "next_step": "Next step",
     "we_are_aware_there_are_some_issues_here": "We are aware there are some issues here. The team is working on fixing them."
   },
@@ -1795,12 +1795,12 @@
       "add_post_success": {
         "success": "Success!",
         "success_description": "Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.",
-        "success_button": "OK, sounds good"
+        "success_button": "Ok, sounds good"
       },
       "deleted": {
         "success": "Success!",
         "success_description": "You've permanently deleted {{count}} posts.",
-        "success_button": "OK, sounds good"
+        "success_button": "Ok, sounds good"
       }
     },
     "language": {
