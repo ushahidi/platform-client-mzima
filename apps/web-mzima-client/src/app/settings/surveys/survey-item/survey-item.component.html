@@ -36,8 +36,14 @@
         <mat-label>{{ 'survey.survey_name' | translate }} *</mat-label>
         <mat-form-field appearance="outline">
           <input matInput formControlName="name" [placeholder]="'survey.survey_name' | translate" />
-          <mat-error *ngIf="form.get('name')?.invalid">
+          <mat-error *ngIf="form.get('name')?.hasError('required')">
             {{ 'survey.fields.validation.required' | translate }}
+          </mat-error>
+          <mat-error
+            *ngIf="form.get('name')?.hasError('specialCharacters')"
+            [translate]="'survey.fields.validation.special_characters'"
+            [translateParams]="{ name: ('survey.survey_name' | translate) }"
+          >
           </mat-error>
         </mat-form-field>
       </div>
@@ -50,6 +56,7 @@
             [placeholder]="'survey.survey_name' | translate"
             [value]="form.get('translations')?.value[selectLanguageCode]?.name"
             (change)="setTranslates(selectLanguageCode, 'name', $event)"
+            [data-qa]="'survey-name-' + selectLanguageCode"
           />
         </mat-form-field>
       </div>
@@ -64,6 +71,7 @@
             cdkAutosizeMaxRows="5"
             [placeholder]="'survey.description' | translate"
             formControlName="description"
+            [data-qa]="'description'"
           >
           </textarea>
         </mat-form-field>
@@ -80,6 +88,7 @@
             [placeholder]="'survey.description' | translate"
             [value]="form.get('translations')?.value[selectLanguageCode]?.description"
             (change)="setTranslates(selectLanguageCode, 'description', $event)"
+            [data-qa]="'survey-description-' + selectLanguageCode"
           >
           </textarea>
         </mat-form-field>
@@ -90,7 +99,12 @@
 
 <div class="form-head-panel">
   <h1>{{ 'survey.tasks' | translate }}</h1>
-  <mzima-client-button color="secondary" fill="outline" (click)="addTask()">
+  <mzima-client-button
+    color="secondary"
+    fill="outline"
+    (click)="addTask()"
+    [data-qa]="'btn-add-task'"
+  >
     <span>{{ 'survey.add_task' | translate }}</span>
     <mat-icon icon svgIcon="plus"></mat-icon>
   </mzima-client-button>
@@ -113,12 +127,18 @@
 <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
 
 <div class="form-controls-panel form-controls-panel--sticky">
-  <mzima-client-button fill="outline" color="secondary" (buttonClick)="cancel()">
+  <mzima-client-button
+    fill="outline"
+    color="secondary"
+    (buttonClick)="cancel()"
+    [data-qa]="'btn-cancel-survey-item'"
+  >
     {{ 'app.cancel' | translate }}
   </mzima-client-button>
   <mzima-client-button
     (buttonClick)="save()"
     [disabled]="form.invalid || form.disabled || errorTaskField"
+    [data-qa]="'btn-save-survey-item'"
   >
     {{ (isEdit ? 'app.save' : 'app.add_survey') | translate }}
   </mzima-client-button>

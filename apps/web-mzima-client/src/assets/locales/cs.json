@@ -1181,7 +1181,7 @@
       "edit_their_own_posts": "Upravit si vlastní příspěvky",
       "registred_member": "Registrovaný člen",
       "administrator": "Správce",
-      "roles_description": "Tyto možnosti nastavují, jaké může tento typ role provádět změny. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Navštivte naše příručky podpory, kde najdete další informace."
+      "roles_description": "Tyto možnosti nastavují, jaké může tento typ role provádět změny. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Navštivte naše příručky podpory, kde najdete další informace."
     },
     "deployment_delete_this": "Smazat toto Nasazení",
     "deployment_delete": "Smazat nasazení",

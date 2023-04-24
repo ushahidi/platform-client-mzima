@@ -28,8 +28,9 @@ export class CreateFieldModalComponent implements OnInit {
   public categories: any = [];
   public availableSurveys: SurveyItem[] = [];
   public hasOptions = false;
-  public tmp: any[] = [];
+  public fieldOptions: Array<{ value: string; error: string }> = [];
   public emptyTitleOption = false;
+  public numberError = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -98,9 +99,29 @@ export class CreateFieldModalComponent implements OnInit {
       });
   }
 
-  onChange($event: string, i: any) {
-    this.selectedFieldType.options[i] = $event.trim();
+  onChange(index: number) {
+    const option = this.fieldOptions[index];
+    this.selectedFieldType.options[index] = option.value.trim();
     this.checkForEmptyOptions();
+    this.optionValidation(index);
+  }
+
+  optionValidation(index: number) {
+    const regex = /^[\p{L}\p{N}\s\-".?!;,@]*$/gmu;
+    const option = this.fieldOptions[index];
+
+    if (!regex.test(option.value)) {
+      option.error = 'survey.special_characters_option';
+    } else {
+      const duplicates = this.fieldOptions.filter(
+        (e, i) => e.value === option.value && i !== index,
+      );
+      option.error = duplicates.length ? 'survey.duplicate_option' : '';
+    }
+  }
+
+  public checkForSpecialOptions(): boolean {
+    return this.fieldOptions.some((option) => !!option.error);
   }
 
   private checkForEmptyOptions() {
@@ -144,7 +165,26 @@ export class CreateFieldModalComponent implements OnInit {
     });
   }
 
+  private isNumber({ default: val, type }: any): boolean {
+    if (type === 'decimal') {
+      return /((?<!\S)[-+]?[0-9]*[.,][0-9]+$)/gm.test(String(val).trim());
+    }
+    if (type === 'int') {
+      return /^-?\d+$/gm.test(String(val).trim());
+    }
+    return true;
+  }
+
   public addNewTask() {
+    if (this.selectedFieldType.input === 'number') {
+      if (this.isNumber(this.selectedFieldType)) {
+        this.numberError = false;
+      } else {
+        this.numberError = true;
+        return;
+      }
+    }
+
     if (this.hasOptions && !this.selectedFieldType.options?.length) {
       this.notificationService.showError(this.translate.instant('survey.add_options_first'));
       return;
@@ -163,6 +203,12 @@ export class CreateFieldModalComponent implements OnInit {
     );
     this.setHasOptionValidate();
     this.checkLoadAvailableData(this.selectedFieldType.input);
+    if (this.selectedFieldType.input === 'number' && this.selectedFieldType.type === 'int') {
+      this.selectedFieldType.default = 0;
+    }
+    if (this.selectedFieldType.input === 'number' && this.selectedFieldType.type === 'decimal') {
+      this.selectedFieldType.default = '0.0';
+    }
   }
 
   private checkLoadAvailableData(input: string) {
@@ -174,21 +220,23 @@ export class CreateFieldModalComponent implements OnInit {
 
   public removeOption(i: any) {
     this.selectedFieldType.options.splice(i, 1);
-    this.setTempSelectedFieldType();
+    this.fieldOptions.splice(i, 1);
     this.checkForEmptyOptions();
   }
 
   public addOption() {
     if (!this.selectedFieldType.options) this.selectedFieldType.options = [];
     this.selectedFieldType.options.push('');
-    this.setTempSelectedFieldType();
     this.checkForEmptyOptions();
+    this.fieldOptions.push({ value: '', error: '' });
   }
 
   private setTempSelectedFieldType() {
-    this.tmp = this.selectedFieldType.options.map((opt: string) => ({
+    this.fieldOptions = this.selectedFieldType.options.map((opt: string) => ({
       value: opt,
+      error: '',
     }));
+    this.fieldOptions.forEach((opt, i) => this.optionValidation(i));
   }
 
   private setHasOptionValidate() {
