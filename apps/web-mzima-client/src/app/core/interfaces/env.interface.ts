@@ -9,4 +9,6 @@ export interface EnvConfigInterface {
   oauth_client_secret: string;
   export_polling_interval: number;
   gtm_key: string;
+  sentry_dsn: string;
+  sentry_debug_mode: boolean;
 }
