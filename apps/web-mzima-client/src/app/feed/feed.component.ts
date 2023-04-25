@@ -43,6 +43,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     size: this.params.limit,
   };
   public posts: any[] = [];
+  public postCurrentLength = 0;
   public isLoading = false;
   public mode: FeedMode = FeedMode.Tiles;
   public activePostId: any;
@@ -206,6 +207,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
+        this.postCurrentLength =
+          data.count < Number(data.limit) ? data.total_count : this.currentPage * data.count;
         this.eventBusService.next({
           type: EventType.FeedPostsLoaded,
           payload: true,
