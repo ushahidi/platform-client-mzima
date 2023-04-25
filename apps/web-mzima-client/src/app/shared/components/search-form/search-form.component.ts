@@ -273,7 +273,7 @@ export class SearchFormComponent implements OnInit {
       'tags[]': values.tags,
       set: values.set,
       date_after: values.date.start ? new Date(values.date.start).toISOString() : null,
-      date_before: values.date.eid ? new Date(values.date.end).toISOString() : null,
+      date_before: values.date.end ? new Date(values.date.end).toISOString() : null,
       q: this.searchQuery,
       center_point:
         values.center_point?.location?.lat && values.center_point?.location?.lng
