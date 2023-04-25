@@ -146,7 +146,7 @@ export class OnboardingComponent implements AfterViewInit {
         title: 'Filtering',
         icon: 'filters',
         content:
-          '<p>You can filter your results by it’s Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>',
+          '<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>',
         selector: ['.search-form__filters', '[data-filter-highlight]'],
       },
       {
