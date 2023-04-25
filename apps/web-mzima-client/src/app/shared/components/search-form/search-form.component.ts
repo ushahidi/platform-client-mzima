@@ -17,6 +17,7 @@ import {
   map,
   Observable,
   Subject,
+  switchMap,
 } from 'rxjs';
 import { FilterType } from '../filter-control/filter-control.component';
 import { SearchResponse } from '../location-selection/location-selection.component';
@@ -129,7 +130,7 @@ export class SearchFormComponent implements OnInit {
       },
     });
 
-    this.form.valueChanges.pipe(untilDestroyed(this)).subscribe({
+    this.form.valueChanges.pipe(untilDestroyed(this), debounceTime(500)).subscribe({
       next: (values) => {
         if (this.collectionInfo?.id) {
           values.set = this.collectionInfo.id.toString();
@@ -177,29 +178,33 @@ export class SearchFormComponent implements OnInit {
   }
 
   getPostsFilters() {
-    this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
-      next: (res) => {
-        if (res.set) {
-          const collectionId = typeof res.set === 'string' ? res.set : '';
-          if (collectionId) {
-            this.getCollectionInfo(collectionId);
-            const withSet = Object.assign({}, this.form.value, { set: collectionId });
-            localStorage.setItem(
-              this.session.getLocalStorageNameMapper('filters'),
-              JSON.stringify(withSet),
-            );
-          } else {
-            localStorage.setItem(
-              this.session.getLocalStorageNameMapper('filters'),
-              JSON.stringify(this.form.value),
-            );
-            this.collectionInfo = undefined;
+    this.postsService.postsFilters$
+      .pipe(
+        untilDestroyed(this),
+        switchMap((res) => {
+          if (res.set) {
+            const collectionId = typeof res.set === 'string' ? res.set : '';
+            if (collectionId) {
+              this.getCollectionInfo(collectionId);
+              const withSet = Object.assign({}, this.form.value, { set: collectionId });
+              localStorage.setItem(
+                this.session.getLocalStorageNameMapper('filters'),
+                JSON.stringify(withSet),
+              );
+            } else {
+              localStorage.setItem(
+                this.session.getLocalStorageNameMapper('filters'),
+                JSON.stringify(this.form.value),
+              );
+              this.collectionInfo = undefined;
+            }
           }
-        }
-        this.getPostsStatistic();
-      },
-      error: (err) => console.log('postsFilters:', err),
-    });
+          return this.getPostsStatistic();
+        }),
+      )
+      .subscribe({
+        error: (err) => console.log('postsFilters:', err),
+      });
   }
 
   private getTotalPosts() {
@@ -381,9 +386,9 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
-  public getPostsStatistic(): void {
-    this.postsService.getPostStatistics().subscribe({
-      next: (res) => {
+  public getPostsStatistic(): Observable<any> {
+    return this.postsService.getPostStatistics().pipe(
+      map((res) => {
         this.notShownPostsCount = res.unmapped;
         const values = res.totals.find((total: any) => total.key === 'form')?.values;
 
@@ -406,8 +411,10 @@ export class SearchFormComponent implements OnInit {
                 .reduce((acc: any, value: any) => acc + value.total, 0)),
           );
         }
-      },
-    });
+
+        return res;
+      }),
+    );
   }
 
   get isEditAvailable() {
