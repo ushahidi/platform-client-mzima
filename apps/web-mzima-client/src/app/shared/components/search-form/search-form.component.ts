@@ -392,7 +392,10 @@ export class SearchFormComponent implements OnInit {
           values.map((value: any) => {
             const survey = this.surveyList.find((s) => s.id === value.id);
             if (!survey) return;
-            survey.total = (survey.total || 0) + value.total;
+            if (this.form.controls['source'].value.includes(value.type)) {
+              // Exclude unchecked sources
+              survey.total = (survey.total || 0) + value.total;
+            }
           });
 
           // this.total = this.getTotal(this.surveyList);
@@ -403,6 +406,7 @@ export class SearchFormComponent implements OnInit {
             (src) =>
               (src.total = values
                 .filter((value: any) => value.type === src.value)
+                .filter((value: any) => this.form.controls['form'].value.includes(value.id)) // Exclude unchecked surveys
                 .reduce((acc: any, value: any) => acc + value.total, 0)),
           );
         }
