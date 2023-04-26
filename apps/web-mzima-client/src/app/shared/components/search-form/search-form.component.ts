@@ -35,6 +35,7 @@ import {
   Savedsearch,
   SurveyItem,
 } from '@mzima-client/sdk';
+import dayjs from 'dayjs';
 
 @UntilDestroy()
 @Component({
@@ -277,8 +278,13 @@ export class SearchFormComponent implements OnInit {
       'form[]': values.form,
       'tags[]': values.tags,
       set: values.set,
-      date_after: values.date.start ? new Date(values.date.start).toISOString() : null,
-      date_before: values.date.end ? new Date(values.date.end).toISOString() : null,
+      date_after: values.date.start ? dayjs(values.date.start).toISOString() : null,
+      date_before: values.date.end
+        ? dayjs(values.date.end)
+            .endOf('day')
+            .add(dayjs(values.date.end).utcOffset(), 'minute')
+            .toISOString()
+        : null,
       q: this.searchQuery,
       center_point:
         values.center_point?.location?.lat && values.center_point?.location?.lng
