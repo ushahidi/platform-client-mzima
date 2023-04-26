@@ -5,6 +5,7 @@ import { ApiKeyResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionService, BreakpointService, NotificationService } from '@services';
 import { mergeMap, Observable } from 'rxjs';
+import { AlphanumericValidatorValidator } from '../../core/validators';
 import { SettingsMapComponent } from './settings-map/settings-map.component';
 import { MediaService, ApiKeyService } from '@mzima-client/sdk';
 import { ConfigService } from '../../core/services/config.service';
@@ -46,7 +47,12 @@ export class GeneralComponent implements OnInit {
     this.generalForm = this.formBuilder.group({
       name: [
         '',
-        [Validators.required, Validators.pattern('^\\S[a-zA-Z\\s]*$'), Validators.minLength(3)],
+        [
+          Validators.required,
+          AlphanumericValidatorValidator(),
+          Validators.minLength(3),
+          Validators.maxLength(255),
+        ],
       ],
       description: ['', []],
       email: ['', [Validators.email, Validators.required]],
