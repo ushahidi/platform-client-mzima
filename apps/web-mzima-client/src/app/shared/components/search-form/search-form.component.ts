@@ -131,7 +131,7 @@ export class SearchFormComponent implements OnInit {
       },
     });
 
-    this.form.valueChanges.pipe(untilDestroyed(this), debounceTime(500)).subscribe({
+    this.form.valueChanges.pipe(debounceTime(500), untilDestroyed(this)).subscribe({
       next: (values) => {
         if (this.collectionInfo?.id) {
           values.set = this.collectionInfo.id.toString();
@@ -362,7 +362,18 @@ export class SearchFormComponent implements OnInit {
       next: (responses) => {
         const values = responses[1].totals.find((total: any) => total.key === 'form')?.values;
         this.surveyList = responses[0].results;
-        this.surveyList.map((survey) => (survey.checked = true));
+
+        if (this.filters) {
+          const data = JSON.parse(this.filters);
+          const formIds = new Set(data.form);
+
+          this.surveyList.forEach((survey) => {
+            survey.checked = formIds.has(survey.id);
+          });
+        } else {
+          this.surveyList.forEach((survey) => (survey.checked = true));
+        }
+
         this.surveyList.map((survey) => (survey.total = survey.total || 0));
 
         values.map((value: any) => {
@@ -732,14 +743,6 @@ export class SearchFormComponent implements OnInit {
 
   public toggleMainFilters(): void {
     this.session.toggleMainFiltersVisibility(this.isMainFiltersOpen);
-  }
-
-  surveyChanged(event: any) {
-    const arr: any[] = [];
-    for (const element of event.source._value) {
-      arr.push(...this.surveyList.filter((el) => el.id === element));
-    }
-    // this.total = this.getTotal(arr);
   }
 
   public clearSavedFilter(): void {
