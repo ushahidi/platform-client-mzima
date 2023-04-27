@@ -102,7 +102,9 @@ export class PostsService extends ResourceService<any> {
     // TODO: REWORK THIS!! Created to make current API work as expected
     if (params.date?.start) {
       params.date_after = params.date.start;
-      params.date_before = params.date.end;
+      if (params.date.end) {
+        params.date_before = params.date.end;
+      }
       delete params.date;
     } else {
       delete params.date;
