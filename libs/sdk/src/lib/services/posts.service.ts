@@ -70,7 +70,6 @@ export class PostsService extends ResourceService<any> {
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
     const tmpParams = { ...this.postsFilters.value, has_location: 'mapped', ...filter };
-
     return super.get('geojson', this.postParamsMapper(tmpParams)).pipe(
       tap((res) => {
         this.totalGeoPosts.next(res.total);
@@ -103,7 +102,9 @@ export class PostsService extends ResourceService<any> {
     // TODO: REWORK THIS!! Created to make current API work as expected
     if (params.date?.start) {
       params.date_after = params.date.start;
-      params.date_before = params.date.end;
+      if (params.date.end) {
+        params.date_before = params.date.end;
+      }
       delete params.date;
     } else {
       delete params.date;
@@ -120,12 +121,12 @@ export class PostsService extends ResourceService<any> {
       delete params.set;
     }
 
-    if (params.form && params.form[0] === 'none') {
-      delete params.form;
+    if (params.form && params.form.length === 0) {
+      params.form.push('none');
     }
 
-    if (params['form[]'] && params['form[]'][0] === 'none') {
-      delete params['form[]'];
+    if (params['form[]'] && params['form[]'].length === 0) {
+      params['form[]'].push('none');
     }
 
     if (params.status?.length) {
@@ -141,7 +142,6 @@ export class PostsService extends ResourceService<any> {
       params['tags[]'] = params.tags;
       delete params.tags;
     }
-
     return params;
   }
 
