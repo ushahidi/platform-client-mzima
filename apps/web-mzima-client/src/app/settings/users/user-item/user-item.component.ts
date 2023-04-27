@@ -105,16 +105,24 @@ export class UserItemComponent implements OnInit {
 
   private createUser(roleBody: any) {
     delete roleBody.id;
+    this.form.disable();
     this.userService.createUser(roleBody).subscribe({
-      next: () => this.navigateToUsers(),
+      next: () => {
+        this.navigateToUsers();
+        this.form.enable();
+      },
       error: (err) => console.log(err),
     });
   }
 
   private updateUser(roleBody: any) {
     if (!this.form.value.password) delete roleBody.password;
+    this.form.disable();
     this.userService.updateUserById(roleBody.id, roleBody).subscribe({
-      next: () => this.navigateToUsers(),
+      next: () => {
+        this.navigateToUsers();
+        this.form.enable();
+      },
       error: (err) => console.log(err),
     });
   }

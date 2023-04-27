@@ -68,6 +68,7 @@
         color="danger"
         [data-qa]="'btn-user-delete-user'"
         (buttonClick)="deleteUser()"
+        [disabled]="form.disabled"
       >
         <ng-container *ngIf="isDesktop">{{ 'user.delete_user' | translate }}</ng-container>
         <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
@@ -77,12 +78,17 @@
       <mzima-client-button
         fill="outline"
         color="secondary"
+        [disabled]="form.disabled"
         [data-qa]="'btn-user-cancel'"
         (buttonClick)="navigateToUsers()"
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
-      <mzima-client-button [data-qa]="'btn-user-save'" [disabled]="form.invalid">
+      <mzima-client-button
+        [data-qa]="'btn-user-save'"
+        [disabled]="form.invalid || form.disabled"
+        type="submit"
+      >
         {{ 'app.save' | translate }}
       </mzima-client-button>
     </div>
