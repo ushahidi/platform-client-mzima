@@ -1181,7 +1181,7 @@
       "edit_their_own_posts": "Променят своите публикации",
       "registred_member": "Регистриран член",
       "administrator": "Администратор",
-      "roles_description": "Тези опции контролират какъв тип роли може да променят. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Посетете нашите ръководства, за да научите повече."
+      "roles_description": "Тези опции контролират какъв тип роли може да променят. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Посетете нашите ръководства, за да научите повече."
     },
     "deployment_delete_this": "Изтрийте тази инсталация",
     "deployment_delete": "Изтрий инсталация",

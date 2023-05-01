@@ -44,6 +44,7 @@ import {
   SupportModalComponent,
   OnboardingComponent,
   ToolbarComponent,
+  NotificationComponent,
 } from './components';
 import { CollectionItemModule } from './components/collection-item/collection-item.module';
 import { FilterControlModule } from './components/filter-control/filter-control.module';
@@ -79,6 +80,7 @@ const components = [
   MainViewComponent,
   AddPostModalComponent,
   DonationModalComponent,
+  NotificationComponent,
 ];
 
 const modules = [

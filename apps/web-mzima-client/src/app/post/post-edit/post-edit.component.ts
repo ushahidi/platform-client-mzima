@@ -190,7 +190,7 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private handleTags(key: string, value: any) {
     const formArray = this.form.get(key) as FormArray;
-    value.forEach((val: { id: any }) => formArray.push(new FormControl(val?.id)));
+    value?.forEach((val: { id: any }) => formArray.push(new FormControl(val?.id)));
   }
 
   private handleText(key: string, value: any) {
@@ -218,7 +218,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleCheckbox(key: string, value: any) {
-    const data = value.map((val: { id: any }) => val?.id);
+    const data = value?.value?.map((val: { id: any }) => val?.id);
     this.form.patchValue({ [key]: data });
   }
 

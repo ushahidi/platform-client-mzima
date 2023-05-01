@@ -1181,7 +1181,7 @@
       "edit_their_own_posts": "Uredi njihove vlastite postove",
       "registred_member": "Registrirani član",
       "administrator": "Administrator",
-      "roles_description": "Ove opcije kontroliraju čemu ova vrsta uloge može raditi promjene. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Posjetite naše upute podrške kako bi saznali više."
+      "roles_description": "Ove opcije kontroliraju čemu ova vrsta uloge može raditi promjene. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Posjetite naše upute podrške kako bi saznali više."
     },
     "deployment_delete_this": "Obriši ovu implementaciju",
     "deployment_delete": "Obriši implementaciju",

@@ -1,6 +1,11 @@
 <div class="activity-page">
-  <div class="page-content">
-    <app-activity-timeline class="chart-item"></app-activity-timeline>
-    <app-bar-chart class="chart-item"></app-bar-chart>
+  <div class="container">
+    <app-notification type="warning" id="activity-issues-warning">
+      {{ 'app.we_are_aware_there_are_some_issues_here' | translate }}
+    </app-notification>
+    <div class="page-content">
+      <app-activity-timeline class="chart-item"></app-activity-timeline>
+      <app-bar-chart class="chart-item"></app-bar-chart>
+    </div>
   </div>
 </div>

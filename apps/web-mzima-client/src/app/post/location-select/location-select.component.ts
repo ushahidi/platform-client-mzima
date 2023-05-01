@@ -24,6 +24,7 @@ import {
   tileLayer,
 } from 'leaflet';
 import 'leaflet.markercluster';
+import Geocoder from 'leaflet-control-geocoder';
 import { pointIcon } from '../../core/helpers/map';
 import { decimalPattern } from '../../core/helpers/regex';
 import Geocoder from 'leaflet-control-geocoder';
@@ -63,7 +64,6 @@ export class LocationSelectComponent implements OnInit {
     animate: true,
   };
   mapMarker: Marker;
-
   public leafletOptions: MapOptions;
 
   disabled = false;
@@ -96,15 +96,23 @@ export class LocationSelectComponent implements OnInit {
   }
 
   public onMapReady(map: Map) {
+    const geocoderControl = new Geocoder({ defaultMarkGeocode: false });
     this.map = map;
     control.zoom({ position: 'bottomleft' }).addTo(map);
     this.map.panTo(this.location);
+    geocoderControl.addTo(this.map);
     this.addMarker();
 
     this.map.on('click', (e) => {
       this.location = e.latlng;
       this.addMarker();
       this.cdr.detectChanges();
+    });
+
+    geocoderControl.on('markgeocode', (e: any) => {
+      this.location = e.geocode.center;
+      this.addMarker();
+      map.fitBounds(e.geocode.bbox);
     });
   }
 
