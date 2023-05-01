@@ -12,7 +12,11 @@
 
   <form class="search-form">
     <mat-form-field appearance="outline">
-      <input matInput [placeholder]="'post.location.search_address' | translate" />
+      <input
+        matInput
+        (input)="onEnterSearchText($event)"
+        [placeholder]="'post.location.search_address' | translate"
+      />
     </mat-form-field>
   </form>
   <mat-icon

@@ -26,6 +26,7 @@ import {
 import 'leaflet.markercluster';
 import { pointIcon } from '../../core/helpers/map';
 import { decimalPattern } from '../../core/helpers/regex';
+import Geocoder from 'leaflet-control-geocoder';
 
 @Component({
   selector: 'app-location-select',
@@ -152,5 +153,39 @@ export class LocationSelectComponent implements OnInit {
       this.addMarker();
       this.map.setView([latitude, longitude], 12);
     });
+  }
+
+  onEnterSearchText(event: Event) {
+    const { value } = event.target as HTMLInputElement;
+    console.log(value);
+
+    const test = this.getMapConfigurations();
+    console.log(test);
+
+    const geocoderControl = new Geocoder({
+      placeholder: value,
+      // geocoder:
+    });
+    geocoderControl.addTo(this.map);
+
+    geocoderControl.on('markgeocode', (e) => {
+      // let pos = { lat: this.location.lat, lng: this.location.lng };
+      // console.log(pos);
+      console.log(e);
+    });
+
+    // var map = L.map('map').setView([0, 0], 2);
+    // L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    //   attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(map);
+    // L.Control.geocoder().addTo(map);
+
+    // const geocoderControl = new Geocoder();
+    // const test = geocoderControl.addTo(this.map);
+    // console.log(test);
+
+    // geocoderControl.on('markgoecode', (e) => {
+    //   console.log(e)
+    // })
   }
 }
