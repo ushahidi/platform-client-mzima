@@ -3,7 +3,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
-import { GeoJsonFilter, GeoJsonPostsResponse, PostApiResponse, PostResult } from '../models';
+import {
+  GeoJsonFilter,
+  GeoJsonPostsResponse,
+  PostApiResponse,
+  PostResult,
+  PostStatsResponse,
+} from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -36,7 +42,7 @@ export class PostsService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return apiHelpers.API_V_3;
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {
@@ -47,13 +53,13 @@ export class PostsService extends ResourceService<any> {
     return super.getById(id).pipe(
       map((response) => {
         const source =
-          response.source === 'sms'
+          response.result.source === 'sms'
             ? 'SMS'
-            : response.source
-            ? response.source.charAt(0).toUpperCase() + response.source.slice(1)
+            : response.result.source
+            ? response.result.source.charAt(0).toUpperCase() + response.result.source.slice(1)
             : 'Web';
         return {
-          ...response,
+          ...response.result,
           source,
         };
       }),
@@ -72,7 +78,7 @@ export class PostsService extends ResourceService<any> {
     const tmpParams = { ...this.postsFilters.value, has_location: 'mapped', ...filter };
     return super.get('geojson', this.postParamsMapper(tmpParams)).pipe(
       tap((res) => {
-        this.totalGeoPosts.next(res.total);
+        this.totalGeoPosts.next(res.count);
       }),
     );
   }
@@ -145,7 +151,7 @@ export class PostsService extends ResourceService<any> {
     return params;
   }
 
-  public getPostStatistics(queryParams?: any) {
+  public getPostStatistics(queryParams?: any): Observable<PostStatsResponse> {
     const filters = { ...this.postsFilters.value };
 
     delete filters.form;
@@ -158,6 +164,7 @@ export class PostsService extends ResourceService<any> {
       queryParams ?? {
         ...this.postParamsMapper(filters),
         group_by: 'form',
+        enable_group_by_source: true,
         has_location: 'all',
         include_unmapped: true,
       },

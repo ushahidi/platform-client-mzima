@@ -148,7 +148,23 @@ export class MapComponent extends MainViewComponent implements OnInit {
   getPostsGeoJson() {
     this.postsService.getGeojson(this.params).subscribe({
       next: (posts) => {
-        const geoPosts = geoJSON(posts, {
+        const oldGeoJson: any = posts.results.map((r) => {
+          return {
+            type: r.geojson.type,
+            features: r.geojson.features.map((f) => {
+              f.properties = {
+                data_source_message_id: r.data_source_message_id,
+                description: r.description,
+                id: r.id,
+                'marker-color': r['marker-color'],
+                source: r.source,
+                title: r.title,
+              };
+              return f;
+            }),
+          };
+        });
+        const geoPosts = geoJSON(oldGeoJson, {
           pointToLayer: mapHelper.pointToLayer,
           onEachFeature: (feature, layer) => {
             layer.on('mouseout', () => {
@@ -230,8 +246,8 @@ export class MapComponent extends MainViewComponent implements OnInit {
           this.mapLayers.push(geoPosts);
         }
 
-        if (posts.total > this.params.limit + this.params.offset) {
-          this.progress = ((this.params.limit + this.params.offset) / posts.total) * 100;
+        if (posts.count > this.params.limit + this.params.offset) {
+          this.progress = ((this.params.limit + this.params.offset) / posts.count) * 100;
 
           this.params.offset = this.params.limit + this.params.offset;
           this.getPostsGeoJson();
@@ -239,7 +255,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
           this.progress = 100;
         }
 
-        if (posts.features.length && this.params.offset <= this.params.limit) {
+        if (posts.results.length && this.params.offset <= this.params.limit) {
           this.mapFitToBounds = geoPosts.getBounds();
         }
       },

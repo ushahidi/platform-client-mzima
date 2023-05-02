@@ -36,7 +36,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public override params: GeoJsonFilter = {
     limit: 20,
     offset: 0,
-    created_before_by_id: '',
+    // created_before_by_id: '',
   };
   public pagination = {
     page: 1,

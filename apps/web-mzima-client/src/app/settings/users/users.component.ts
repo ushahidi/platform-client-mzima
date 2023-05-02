@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit {
   public params: GeoJsonFilter = {
     limit: 10,
     offset: this.currentPage * 10,
-    created_before_by_id: '',
+    // created_before_by_id: '',
     order: 'asc',
     q: '',
     page: 1,
