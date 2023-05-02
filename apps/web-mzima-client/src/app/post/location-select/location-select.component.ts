@@ -10,6 +10,7 @@ import {
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
+import { TranslateService } from '@ngx-translate/core';
 import { SessionService } from '@services';
 import {
   control,
@@ -67,7 +68,11 @@ export class LocationSelectComponent implements OnInit {
   public disabled = false;
   public geocoderControl: any;
 
-  constructor(private sessionService: SessionService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private sessionService: SessionService,
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     this.mapConfig = this.getMapConfigurations();
@@ -96,18 +101,13 @@ export class LocationSelectComponent implements OnInit {
 
   public onMapReady(mapBox: Map) {
     // Initialize geocoder
-    this.geocoderControl = new Geocoder({ defaultMarkGeocode: false });
-
-    // if you remove our input field, otherwise you can delete
-    // this.geocoderControl = new Geocoder({
-    //   defaultMarkGeocode: false,
-    //   position: 'topleft',
-    //   iconLabel: '',
-    //   collapsed: false,
-    //   placeholder: 'post.location.search_address',
-    //   showResultIcons: true,
-    //   errorMessage: 'Aucun resultat.',
-    // });
+    this.geocoderControl = new Geocoder({
+      defaultMarkGeocode: false,
+      position: 'topleft',
+      collapsed: false,
+      placeholder: this.translate.instant('post.location.search_address'),
+      errorMessage: this.translate.instant('post.location.nothing_found'),
+    });
 
     this.mapBox = mapBox;
     control.zoom({ position: 'bottomleft' }).addTo(this.mapBox);
@@ -116,6 +116,19 @@ export class LocationSelectComponent implements OnInit {
     // Connect geocoder to map
     this.geocoderControl.addTo(this.mapBox);
     this.addMarker();
+
+    // change tracking for search when entering text
+    const geocoderInputElement = this.geocoderControl.getContainer().querySelector('input');
+    if (geocoderInputElement) {
+      geocoderInputElement.addEventListener('input', (event: any) => {
+        const value = event.target.value;
+        if (value.length > 2) {
+          this.geocoderControl.options.placeholder = value;
+          this.geocoderControl._input.value = value;
+          this.geocoderControl._geocode();
+        }
+      });
+    }
 
     this.mapBox.on('click', (e) => {
       this.location = e.latlng;
@@ -176,13 +189,5 @@ export class LocationSelectComponent implements OnInit {
       this.addMarker();
       this.mapBox.setView([latitude, longitude], 12);
     });
-  }
-
-  onEnterSearchText(event: Event) {
-    const { value } = event.target as HTMLInputElement;
-
-    this.geocoderControl.options.placeholder = value;
-    this.geocoderControl._input.value = value;
-    this.geocoderControl._geocode();
   }
 }

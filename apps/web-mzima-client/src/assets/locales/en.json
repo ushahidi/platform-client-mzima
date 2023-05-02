@@ -950,6 +950,7 @@
       "location": "Location",
       "you_can_search_or_click": "You can search or click the area of map where you want to place the marker.",
       "search_address": "Search for addresses, place names, or coordinates...",
+      "nothing_found": "Nothing found",
       "errors": {
         "empty_lat": "Latitude is empty field",
         "empty_lng": "Longitude is empty field",

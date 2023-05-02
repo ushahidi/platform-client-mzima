@@ -9,20 +9,13 @@
     (leafletMapReady)="onMapReady($event)"
     [leafletFitBoundsOptions]="fitBoundsOptions"
   ></div>
-  <form class="search-form">
-    <mat-form-field appearance="outline">
-      <input
-        matInput
-        (input)="onEnterSearchText($event)"
-        [placeholder]="'post.location.search_address' | translate"
-      />
-    </mat-form-field>
-  </form>
-  <mat-icon
-    (click)="getCurrentLocation()"
-    class="current-location"
-    svgIcon="current-location"
-  ></mat-icon>
+  <button type="button" class="btn-current-location">
+    <mat-icon
+      (click)="getCurrentLocation()"
+      class="btn-current-location_icon"
+      svgIcon="current-location"
+    ></mat-icon>
+  </button>
 </div>
 
 <span class="instructions">
