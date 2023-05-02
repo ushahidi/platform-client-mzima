@@ -146,109 +146,112 @@ export class MapComponent extends MainViewComponent implements OnInit {
   }
 
   getPostsGeoJson() {
-    this.postsService.getGeojson(this.params).subscribe({
-      next: (posts) => {
-        const geoPosts = geoJSON(posts, {
-          pointToLayer: mapHelper.pointToLayer,
-          onEachFeature: (feature, layer) => {
-            layer.on('mouseout', () => {
-              layer.unbindPopup();
-            });
-            layer.on('click', () => {
-              this.zone.run(() => {
-                if (layer instanceof FeatureGroup) {
-                  layer = layer.getLayers()[0];
-                }
+    this.postsService
+      .getGeojson(this.params)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (posts) => {
+          const geoPosts = geoJSON(posts, {
+            pointToLayer: mapHelper.pointToLayer,
+            onEachFeature: (feature, layer) => {
+              layer.on('mouseout', () => {
+                layer.unbindPopup();
+              });
+              layer.on('click', () => {
+                this.zone.run(() => {
+                  if (layer instanceof FeatureGroup) {
+                    layer = layer.getLayers()[0];
+                  }
 
-                if (layer.getPopup()) {
-                  layer.openPopup();
-                } else {
-                  const comp = this.view.createComponent(PostPreviewComponent);
-                  this.postsService.getById(feature.properties.id).subscribe({
-                    next: (post) => {
-                      comp.setInput('post', post);
-                      comp.setInput('user', this.user);
+                  if (layer.getPopup()) {
+                    layer.openPopup();
+                  } else {
+                    const comp = this.view.createComponent(PostPreviewComponent);
+                    this.postsService.getById(feature.properties.id).subscribe({
+                      next: (post) => {
+                        comp.setInput('post', post);
+                        comp.setInput('user', this.user);
 
-                      this.postsV5Service.getById(feature.properties.id).subscribe({
-                        next: (postV5) => {
-                          comp.instance.details$.subscribe({
-                            next: () => {
-                              this.showPostDetailsModal(
-                                postV5,
-                                post.color,
-                                post.data_source_message_id,
-                              );
-                            },
-                          });
-
-                          comp.instance.edit.subscribe({
-                            next: () => {
-                              this.showPostDetailsModal(
-                                postV5,
-                                post.color,
-                                post.data_source_message_id,
-                                true,
-                              );
-                            },
-                          });
-
-                          const mediaField = postV5.post_content[0].fields.find(
-                            (field: any) => field.type === 'media',
-                          );
-                          if (mediaField && mediaField.value?.value) {
-                            this.mediaService.getById(mediaField.value.value).subscribe({
-                              next: (media) => {
-                                comp.setInput('media', media);
+                        this.postsV5Service.getById(feature.properties.id).subscribe({
+                          next: (postV5) => {
+                            comp.instance.details$.subscribe({
+                              next: () => {
+                                this.showPostDetailsModal(
+                                  postV5,
+                                  post.color,
+                                  post.data_source_message_id,
+                                );
                               },
                             });
-                          }
-                          const popup: Content = comp.location.nativeElement;
 
-                          layer.bindPopup(popup, {
-                            maxWidth: 360,
-                            minWidth: 360,
-                            maxHeight: window.innerHeight - 176,
-                            closeButton: false,
-                            className: 'pl-popup',
-                          });
+                            comp.instance.edit.subscribe({
+                              next: () => {
+                                this.showPostDetailsModal(
+                                  postV5,
+                                  post.color,
+                                  post.data_source_message_id,
+                                  true,
+                                );
+                              },
+                            });
 
-                          layer.openPopup(); // This one is for fit popup in view
-                        },
-                      });
-                    },
-                  });
-                }
+                            const mediaField = postV5.post_content[0].fields.find(
+                              (field: any) => field.type === 'media',
+                            );
+                            if (mediaField && mediaField.value?.value) {
+                              this.mediaService.getById(mediaField.value.value).subscribe({
+                                next: (media) => {
+                                  comp.setInput('media', media);
+                                },
+                              });
+                            }
+                            const popup: Content = comp.location.nativeElement;
+
+                            layer.bindPopup(popup, {
+                              maxWidth: 360,
+                              minWidth: 360,
+                              maxHeight: window.innerHeight - 176,
+                              closeButton: false,
+                              className: 'pl-popup',
+                            });
+
+                            layer.openPopup(); // This one is for fit popup in view
+                          },
+                        });
+                      },
+                    });
+                  }
+                });
               });
-            });
-          },
-        });
+            },
+          });
 
-        if (this.mapConfig.clustering) {
-          this.markerClusterData.addLayer(geoPosts);
-          this.mapLayers.push(this.markerClusterData);
-        } else {
-          this.mapLayers.push(geoPosts);
-        }
+          if (this.mapConfig.clustering) {
+            this.markerClusterData.addLayer(geoPosts);
+            this.mapLayers.push(this.markerClusterData);
+          } else {
+            this.mapLayers.push(geoPosts);
+          }
 
-        if (posts.total > this.params.limit + this.params.offset) {
-          this.progress = ((this.params.limit + this.params.offset) / posts.total) * 100;
+          if (posts.total > this.params.limit + this.params.offset) {
+            this.progress = ((this.params.limit + this.params.offset) / posts.total) * 100;
 
-          this.params.offset = this.params.limit + this.params.offset;
-          this.getPostsGeoJson();
-        } else {
-          this.progress = 100;
-        }
+            this.params.offset = this.params.limit + this.params.offset;
+            this.getPostsGeoJson();
+          } else {
+            this.progress = 100;
+          }
 
-        if (posts.features.length && this.params.offset <= this.params.limit) {
-          this.mapFitToBounds = geoPosts.getBounds();
-        }
-      },
-      error: (err) => {
-        if (err.message.match(/Http failure response for/)) {
-          setTimeout(() => this.getPostsGeoJson(), 5000);
-        }
-      },
-    });
+          if (posts.features.length && this.params.offset <= this.params.limit) {
+            this.mapFitToBounds = geoPosts.getBounds();
+          }
+        },
+        error: (err) => {
+          if (err.message.match(/Http failure response for/)) {
+            setTimeout(() => this.getPostsGeoJson(), 5000);
+          }
+        },
+      });
   }
 
   private showPostDetailsModal(
