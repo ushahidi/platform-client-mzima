@@ -28,7 +28,10 @@
             "output": "./svg"
           }
         ],
-        "styles": ["apps/mobile-mzima-client/src/theme/variables.scss", "apps/mobile-mzima-client/src/global.scss"],
+        "styles": [
+          "apps/mobile-mzima-client/src/theme/variables.scss",
+          "apps/mobile-mzima-client/src/global.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -83,7 +86,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "apps/mobile-mzima-client/**/*.ts",
@@ -92,7 +95,7 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["coverage/apps/mobile-mzima-client"],
       "options": {
         "jestConfig": "apps/mobile-mzima-client/jest.config.ts",
