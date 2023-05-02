@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { RolesService, RoleResult, UsersService, UserInterface } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { BreakpointService } from '@services';
+import { regexHelper } from '@helpers';
 
 @UntilDestroy()
 @Component({
@@ -44,7 +45,7 @@ export class UserItemComponent implements OnInit {
     this.form = this.fb.group({
       id: [0],
       realname: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
       password: ['', [Validators.required, Validators.minLength(7)]],
       role: ['', [Validators.required]],
     });
