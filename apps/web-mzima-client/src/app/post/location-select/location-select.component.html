@@ -9,12 +9,8 @@
     (leafletMapReady)="onMapReady($event)"
     [leafletFitBoundsOptions]="fitBoundsOptions"
   ></div>
-  <button type="button" class="btn-current-location">
-    <mat-icon
-      (click)="getCurrentLocation()"
-      class="btn-current-location_icon"
-      svgIcon="current-location"
-    ></mat-icon>
+  <button type="button" class="btn-current-location" (click)="getCurrentLocation()">
+    <mat-icon class="btn-current-location_icon" svgIcon="current-location"></mat-icon>
   </button>
 </div>
 
