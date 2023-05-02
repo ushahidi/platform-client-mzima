@@ -24,7 +24,6 @@ import {
   tileLayer,
 } from 'leaflet';
 import 'leaflet.markercluster';
-import Geocoder from 'leaflet-control-geocoder';
 import { pointIcon } from '../../core/helpers/map';
 import { decimalPattern } from '../../core/helpers/regex';
 import Geocoder from 'leaflet-control-geocoder';
@@ -51,22 +50,22 @@ export class LocationSelectComponent implements OnInit {
   public emptyFieldLng = false;
   public noLetterLat = false;
   public noLetterLng = false;
-  private map: Map;
-  mapLayers: any[] = [];
-  mapReady = false;
-  mapConfig: MapConfigInterface;
-  markerClusterOptions: MarkerClusterGroupOptions = {
+  private mapBox: Map;
+  public mapLayers: any[] = [];
+  public mapReady = false;
+  public mapConfig: MapConfigInterface;
+  public markerClusterOptions: MarkerClusterGroupOptions = {
     animate: true,
     maxClusterRadius: 50,
   };
-  mapFitToBounds: LatLngBounds;
-  fitBoundsOptions: FitBoundsOptions = {
+  public mapFitToBounds: LatLngBounds;
+  public fitBoundsOptions: FitBoundsOptions = {
     animate: true,
   };
-  mapMarker: Marker;
+  public mapMarker: Marker;
   public leafletOptions: MapOptions;
-
-  disabled = false;
+  public disabled = false;
+  public geocoderControl: any;
 
   constructor(private sessionService: SessionService, private cdr: ChangeDetectorRef) {}
 
@@ -95,35 +94,51 @@ export class LocationSelectComponent implements OnInit {
     return this.sessionService.getMapConfigurations();
   }
 
-  public onMapReady(map: Map) {
-    const geocoderControl = new Geocoder({ defaultMarkGeocode: false });
-    this.map = map;
-    control.zoom({ position: 'bottomleft' }).addTo(map);
-    this.map.panTo(this.location);
-    geocoderControl.addTo(this.map);
+  public onMapReady(mapBox: Map) {
+    // Initialize geocoder
+    this.geocoderControl = new Geocoder({ defaultMarkGeocode: false });
+
+    // if you remove our input field, otherwise you can delete
+    // this.geocoderControl = new Geocoder({
+    //   defaultMarkGeocode: false,
+    //   position: 'topleft',
+    //   iconLabel: '',
+    //   collapsed: false,
+    //   placeholder: 'post.location.search_address',
+    //   showResultIcons: true,
+    //   errorMessage: 'Aucun resultat.',
+    // });
+
+    this.mapBox = mapBox;
+    control.zoom({ position: 'bottomleft' }).addTo(this.mapBox);
+    this.mapBox.panTo(this.location);
+
+    // Connect geocoder to map
+    this.geocoderControl.addTo(this.mapBox);
     this.addMarker();
 
-    this.map.on('click', (e) => {
+    this.mapBox.on('click', (e) => {
       this.location = e.latlng;
       this.addMarker();
       this.cdr.detectChanges();
     });
 
-    geocoderControl.on('markgeocode', (e: any) => {
+    // Listen event markgeocode from geocoder
+    this.geocoderControl.on('markgeocode', (e: any) => {
       this.location = e.geocode.center;
       this.addMarker();
-      map.fitBounds(e.geocode.bbox);
+      this.mapBox.fitBounds(e.geocode.bbox);
     });
   }
 
   private addMarker() {
     if (this.mapMarker) {
-      this.map.removeLayer(this.mapMarker);
+      this.mapBox.removeLayer(this.mapMarker);
     }
     this.mapMarker = marker(this.location, {
       draggable: true,
       icon: pointIcon(this.mapConfig.default_view!.color),
-    }).addTo(this.map);
+    }).addTo(this.mapBox);
 
     this.mapMarker.on('dragend', (e) => {
       console.log('dragend');
@@ -159,41 +174,15 @@ export class LocationSelectComponent implements OnInit {
       this.location.lat = latitude;
       this.location.lng = longitude;
       this.addMarker();
-      this.map.setView([latitude, longitude], 12);
+      this.mapBox.setView([latitude, longitude], 12);
     });
   }
 
   onEnterSearchText(event: Event) {
     const { value } = event.target as HTMLInputElement;
-    console.log(value);
 
-    const test = this.getMapConfigurations();
-    console.log(test);
-
-    const geocoderControl = new Geocoder({
-      placeholder: value,
-      // geocoder:
-    });
-    geocoderControl.addTo(this.map);
-
-    geocoderControl.on('markgeocode', (e) => {
-      // let pos = { lat: this.location.lat, lng: this.location.lng };
-      // console.log(pos);
-      console.log(e);
-    });
-
-    // var map = L.map('map').setView([0, 0], 2);
-    // L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    //   attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-    // }).addTo(map);
-    // L.Control.geocoder().addTo(map);
-
-    // const geocoderControl = new Geocoder();
-    // const test = geocoderControl.addTo(this.map);
-    // console.log(test);
-
-    // geocoderControl.on('markgoecode', (e) => {
-    //   console.log(e)
-    // })
+    this.geocoderControl.options.placeholder = value;
+    this.geocoderControl._input.value = value;
+    this.geocoderControl._geocode();
   }
 }
