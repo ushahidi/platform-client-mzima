@@ -51,7 +51,7 @@ export class LocationSelectComponent implements OnInit {
   public emptyFieldLng = false;
   public noLetterLat = false;
   public noLetterLng = false;
-  private mapBox: Map;
+  private map: Map;
   public mapLayers: any[] = [];
   public mapReady = false;
   public mapConfig: MapConfigInterface;
@@ -109,12 +109,12 @@ export class LocationSelectComponent implements OnInit {
       errorMessage: this.translate.instant('post.location.nothing_found'),
     });
 
-    this.mapBox = mapBox;
-    control.zoom({ position: 'bottomleft' }).addTo(this.mapBox);
-    this.mapBox.panTo(this.location);
+    this.map = mapBox;
+    control.zoom({ position: 'bottomleft' }).addTo(this.map);
+    this.map.panTo(this.location);
 
     // Connect geocoder to map
-    this.geocoderControl.addTo(this.mapBox);
+    this.geocoderControl.addTo(this.map);
     this.addMarker();
 
     // change tracking for search when entering text
@@ -130,7 +130,7 @@ export class LocationSelectComponent implements OnInit {
       });
     }
 
-    this.mapBox.on('click', (e) => {
+    this.map.on('click', (e) => {
       this.location = e.latlng;
       this.addMarker();
       this.cdr.detectChanges();
@@ -140,18 +140,18 @@ export class LocationSelectComponent implements OnInit {
     this.geocoderControl.on('markgeocode', (e: any) => {
       this.location = e.geocode.center;
       this.addMarker();
-      this.mapBox.fitBounds(e.geocode.bbox);
+      this.map.fitBounds(e.geocode.bbox);
     });
   }
 
   private addMarker() {
     if (this.mapMarker) {
-      this.mapBox.removeLayer(this.mapMarker);
+      this.map.removeLayer(this.mapMarker);
     }
     this.mapMarker = marker(this.location, {
       draggable: true,
       icon: pointIcon(this.mapConfig.default_view!.color),
-    }).addTo(this.mapBox);
+    }).addTo(this.map);
 
     this.mapMarker.on('dragend', (e) => {
       console.log('dragend');
@@ -187,7 +187,7 @@ export class LocationSelectComponent implements OnInit {
       this.location.lat = latitude;
       this.location.lng = longitude;
       this.addMarker();
-      this.mapBox.setView([latitude, longitude], 12);
+      this.map.setView([latitude, longitude], 12);
     });
   }
 }
