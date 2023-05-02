@@ -70,11 +70,10 @@
   }
 }
 
-// Style for geocoder
-.map-holder {
-  .leaflet-top .leaflet-right {
+::ng-deep {
+  .leaflet-top.leaflet-right {
     left: 15px;
-    top: 59px;
+    top: 16px;
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 4px;
@@ -83,28 +82,39 @@
     width: 96%;
   }
 
-  .leaflet-control-geocoder
-    .leaflet-bar
-    .leaflet-control
-    .leaflet-control-geocoder-expanded
-    .leaflet-control-geocoder-options-open {
-    position: relative;
-    left: 0;
+  .leaflet-control-geocoder {
     width: 100%;
+  }
+
+  .leaflet-touch .leaflet-bar {
     border: none;
     box-shadow: none;
+  }
+
+  .leaflet-right .leaflet-control {
     margin: 0;
-    height: auto;
   }
 
-  .leaflet-control-geocoder-alternatives {
-    width: 100%;
-    overflow-y: auto;
-    margin-top: 40px;
-  }
+  .leaflet-control {
+    .leaflet-control-geocoder-icon,
+    .leaflet-control-geocoder-form {
+      display: none;
+    }
 
-  .leaflet-control-geocoder-icon,
-  .leaflet-control-geocoder-form {
-    display: none;
+    .leaflet-control-geocoder-expanded.leaflet-control-geocoder-options-open {
+      position: relative;
+      left: 0;
+      width: 100%;
+      border: none;
+      box-shadow: none;
+      margin: 0;
+      height: auto;
+    }
+
+    .leaflet-control-geocoder-alternatives {
+      width: 100%;
+      overflow-y: auto;
+      margin-top: 40px;
+    }
   }
 }
