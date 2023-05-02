@@ -27,8 +27,8 @@
       <mat-error *ngIf="form.get('email')?.hasError('required')">{{
         'user.valid.email.required' | translate
       }}</mat-error>
-      <mat-error *ngIf="form.get('email')?.hasError('email')">{{
-        'user.valid.email.email' | translate
+      <mat-error *ngIf="form.get('email')?.hasError('pattern')">{{
+        'user.valid.email.pattern' | translate
       }}</mat-error>
     </mat-form-field>
   </div>
