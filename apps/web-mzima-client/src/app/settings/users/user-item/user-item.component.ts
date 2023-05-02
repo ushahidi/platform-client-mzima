@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { RolesService, RoleResult, UsersService, UserInterface } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { BreakpointService } from '@services';
+import { regexHelper } from '@helpers';
 
 @UntilDestroy()
 @Component({
@@ -44,7 +45,7 @@ export class UserItemComponent implements OnInit {
     this.form = this.fb.group({
       id: [0],
       realname: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
       password: ['', [Validators.required, Validators.minLength(7)]],
       role: ['', [Validators.required]],
     });
@@ -105,16 +106,24 @@ export class UserItemComponent implements OnInit {
 
   private createUser(roleBody: any) {
     delete roleBody.id;
+    this.form.disable();
     this.userService.createUser(roleBody).subscribe({
-      next: () => this.navigateToUsers(),
+      next: () => {
+        this.navigateToUsers();
+        this.form.enable();
+      },
       error: (err) => console.log(err),
     });
   }
 
   private updateUser(roleBody: any) {
     if (!this.form.value.password) delete roleBody.password;
+    this.form.disable();
     this.userService.updateUserById(roleBody.id, roleBody).subscribe({
-      next: () => this.navigateToUsers(),
+      next: () => {
+        this.navigateToUsers();
+        this.form.enable();
+      },
       error: (err) => console.log(err),
     });
   }

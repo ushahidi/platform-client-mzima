@@ -144,12 +144,7 @@
                 {{ 'nav.clear' | translate }}
               </mzima-client-button>
             </div>
-            <mat-selection-list
-              (selectionChange)="surveyChanged($event)"
-              name="surveys"
-              class="selection-list"
-              formControlName="form"
-            >
+            <mat-selection-list name="surveys" class="selection-list" formControlName="form">
               <mat-list-option
                 *ngFor="let survey of surveyList"
                 [selected]="survey.checked"

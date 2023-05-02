@@ -276,8 +276,7 @@
         isLoading ||
         (selectedTabIndex === 0
           ? profileForm.invalid || profileForm.pristine || profileForm.disabled
-          : !isContactsChanged) ||
-        isContactsOnUpdate
+          : !isContactsChanged)
       "
     >
       {{ 'form.save_and_close' | translate }}

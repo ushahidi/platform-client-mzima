@@ -19,7 +19,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { fromEvent, Observable } from 'rxjs';
+import { debounceTime, fromEvent, Observable, Subject } from 'rxjs';
 
 dayjs.extend(customParseFormat);
 
@@ -77,10 +77,28 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public buttonWidth = 200;
   public checklistSelection = new SelectionModel<CategoryFlatNode>(true);
   public treeControl: FlatTreeControl<CategoryFlatNode>;
+  private dateFormat = 'DD-MM-YYYY';
+  private readonly calendarInputDebouncer$ = new Subject();
 
   constructor(private breakpointService: BreakpointService) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.treeControl = new FlatTreeControl<CategoryFlatNode>(this.getLevel, this.isExpandable);
+
+    this.calendarInputDebouncer$.pipe(debounceTime(1000)).subscribe(() => {
+      const start: Date | null = this.toLocalDate(this.calendarValue.start);
+      let end: Date | null = this.toLocalDate(this.calendarValue.end);
+
+      if (!start || !end) return;
+
+      if (start > end) {
+        end = null;
+        this.calendarValue.end = '';
+      }
+
+      this.value = new DateRange<Date>(start, end);
+      this.markAsTouched();
+      this.onChange(this.value);
+    });
   }
 
   private getLevel = (node: CategoryFlatNode) => node.level;
@@ -126,6 +144,14 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     }
   }
 
+  private toLocalDate = (date: string | undefined): Date | null => {
+    if (!date) return null;
+    const localDate = dayjs(date, this.dateFormat)
+      .add(dayjs(date, this.dateFormat).utcOffset(), 'minute')
+      .toDate();
+    return String(localDate) !== 'Invalid Date' ? new Date(localDate) : null;
+  };
+
   /**
    * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
    */
@@ -168,8 +194,8 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public writeValue(value: any) {
     if (this.type === this.filterType.Daterange) {
       this.value = new DateRange<Date>(new Date(value.start), new Date(value.end));
-      const start = dayjs(this.value.start).format('DD-MM-YYYY'),
-        end = this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : '';
+      const start = dayjs(this.value.start).format(this.dateFormat),
+        end = this.value.end ? dayjs(this.value.end).format(this.dateFormat) : '';
       this.calendarValue = {
         start: start !== 'Invalid Date' ? start : '',
         end: end !== 'Invalid Date' ? end : '',
@@ -210,8 +236,8 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     }
 
     this.calendarValue = {
-      start: dayjs(this.value.start).format('DD-MM-YYYY'),
-      end: this.value.end ? dayjs(this.value.end).format('DD-MM-YYYY') : '',
+      start: dayjs(this.value.start).format(this.dateFormat),
+      end: this.value.end ? dayjs(this.value.end).format(this.dateFormat) : '',
     };
 
     this.value = new DateRange(this.value.start, this.value.end);
@@ -220,15 +246,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   }
 
   public calendarInputChangeHandle(): void {
-    const start: Date | null = new Date(dayjs(this.calendarValue.start, 'DD-MM-YYYY').toDate());
-    let end: Date | null = new Date(dayjs(this.calendarValue.end, 'DD-MM-YYYY').toDate());
-
-    if (start > end) {
-      end = null;
-      this.calendarValue.end = '';
-    }
-
-    this.value = new DateRange<Date>(start, end);
+    this.calendarInputDebouncer$.next(null);
   }
 
   public toggleModal(value?: boolean): void {

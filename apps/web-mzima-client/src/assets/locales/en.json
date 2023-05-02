@@ -141,7 +141,7 @@
     "preview_image": "Preview image",
     "privacy_policy": "Privacy Policy",
     "terms_and_conditions": "Terms and Conditions",
-    "ok_sounds_good": "OK, sound good",
+    "ok_sounds_good": "OK, sounds good",
     "next_step": "Next step",
     "we_are_aware_there_are_some_issues_here": "We are aware there are some issues here. The team is working on fixing them."
   },
@@ -390,7 +390,8 @@
     "fields": {
       "fields_title": "Fields",
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}} field contains special characters"
       }
     },
     "targeted_survey": {
