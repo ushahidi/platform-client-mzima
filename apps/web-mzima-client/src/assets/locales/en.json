@@ -818,6 +818,7 @@
     "unstructured_posts_desc": "Unstructured posts",
     "my_posts_desc": "Your posts",
     "unknown_posts_desc": "Posts with no assigned survey",
+    "image_is_required": "Image is required",
     "locking": {
       "unlocked": "Post successfully unlocked",
       "unlock": "Unlock",
@@ -1613,7 +1614,8 @@
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} resources?",
       "bulk_destroy_success": "Deleted resource",
       "bulk_destroy_error": "Unable to delete resource, please try again",
-      "bulk_destroy_cancelled": "Delete cancelled"
+      "bulk_destroy_cancelled": "Delete cancelled",
+      "are_you_sure_you_want_to_delete_this": "Are you sure you want to delete this?"
     },
     "data_import": {
       "see_imported_posts": "See imported posts",

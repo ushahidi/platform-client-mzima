@@ -36,6 +36,7 @@ import {
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
 import { AlphanumericValidatorValidator } from '../../core/validators/alphanumeric';
+import { PhotoRequired } from '../../core/validators/photo-required';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -116,7 +117,6 @@ export class PostEditComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['postInput'] && changes['postInput'].currentValue) {
       this.post = this.postInput;
-      // console.log('post: ', this.post);
       this.formId = this.post.form_id;
       this.postId = this.post.id;
       this.loadData(this.formId!, this.post.post_content);
@@ -196,8 +196,23 @@ export class PostEditComponent implements OnInit, OnChanges {
     this.form.patchValue({ [key]: value?.value });
   }
 
-  private handleUpload(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value });
+  private async handleUpload(key: string, value: any) {
+    if (!value?.value) return;
+    try {
+      const uploadObservable = this.mediaService.getById(value.value);
+      const response: any = await lastValueFrom(uploadObservable);
+
+      this.form.patchValue({
+        [key]: {
+          id: value.value,
+          caption: response.caption,
+          photo: response.original_file_url,
+        },
+      });
+    } catch (error: any) {
+      this.form.patchValue({ [key]: null });
+      throw new Error(`Error fetching file: ${error.message}`);
+    }
   }
 
   private handleVideo(key: string, value: any) {
@@ -320,6 +335,11 @@ export class PostEditComponent implements OnInit, OnChanges {
           AlphanumericValidatorValidator(),
         );
         break;
+      case 'media':
+        if (field.required) {
+          validators.push(PhotoRequired());
+        }
+        break;
       default:
         if (field.required) {
           validators.push(Validators.required);
@@ -375,16 +395,27 @@ export class PostEditComponent implements OnInit, OnChanges {
                 : {};
               break;
             case 'upload':
-              if (!this.form.value[field.key].photo) return;
-              try {
-                const uploadObservable = this.mediaService.uploadFile(
-                  this.form.value[field.key].photo,
-                  this.form.value[field.key].caption,
-                );
-                const response: any = await lastValueFrom(uploadObservable);
-                value.value = response.id;
-              } catch (error: any) {
-                throw new Error(`Error uploading file: ${error.message}`);
+              if (this.form.value[field.key].upload && this.form.value[field.key].photo) {
+                try {
+                  const uploadObservable = this.mediaService.uploadFile(
+                    this.form.value[field.key].photo,
+                    this.form.value[field.key].caption,
+                  );
+                  const response: any = await lastValueFrom(uploadObservable);
+                  value.value = response.id;
+                } catch (error: any) {
+                  throw new Error(`Error uploading file: ${error.message}`);
+                }
+              } else if (this.form.value[field.key].delete && this.form.value[field.key].id) {
+                try {
+                  const deleteObservable = this.mediaService.delete(this.form.value[field.key].id);
+                  await lastValueFrom(deleteObservable);
+                  value.value = null;
+                } catch (error: any) {
+                  throw new Error(`Error deleting file: ${error.message}`);
+                }
+              } else {
+                value.value = this.form.value[field.key].id;
               }
               break;
           }

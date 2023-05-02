@@ -106,7 +106,7 @@ interface PostForm {
   url: string;
 }
 
-interface PostContent {
+export interface PostContent {
   description?: string;
   fields: PostContentField[];
   form_id: number;

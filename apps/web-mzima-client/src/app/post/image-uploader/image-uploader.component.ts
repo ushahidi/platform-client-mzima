@@ -1,6 +1,8 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
+import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 
 @Component({
   selector: 'app-image-uploader',
@@ -16,20 +18,28 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 })
 export class ImageUploaderComponent implements ControlValueAccessor {
   @Input() public hasCaption: boolean;
+  @Input() public requiredError?: boolean;
+  id?: number;
   caption: string;
   photo: File | null;
   preview: string | SafeUrl | null;
   isDisabled = false;
+  upload = false;
   onChange: any = () => {};
   onTouched: any = () => {};
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private confirm: ConfirmModalService,
+    private translate: TranslateService,
+  ) {}
 
   writeValue(obj: any): void {
     if (obj) {
+      this.upload = false;
       this.caption = obj.caption;
-      this.photo = obj.photo;
-      this.preview = URL.createObjectURL(obj.photo);
+      this.id = obj.id;
+      this.photo = this.preview = obj.photo;
     }
   }
 
@@ -50,19 +60,27 @@ export class ImageUploaderComponent implements ControlValueAccessor {
 
     if (inputElement.files && inputElement.files.length) {
       this.photo = inputElement.files[0];
+      this.upload = true;
       this.preview = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.photo));
-      this.onChange({ caption: this.caption, photo: this.photo });
+      this.onChange({ caption: this.caption, photo: this.photo, id: this.id, upload: this.upload });
+      this.id = undefined;
       inputElement.value = '';
     }
   }
 
-  deletePhoto() {
-    this.photo = null;
-    this.preview = null;
-    this.onChange({ caption: this.caption, photo: this.photo });
+  async deletePhoto() {
+    const confirmed = await this.confirm.open({
+      title: this.translate.instant('notify.default.are_you_sure_you_want_to_delete_this'),
+      description: this.translate.instant('notify.default.proceed_warning'),
+    });
+
+    if (!confirmed) return;
+
+    this.photo = this.preview = null;
+    this.onChange({ caption: this.caption, photo: this.photo, id: this.id, delete: true });
   }
 
   captionChanged() {
-    this.onChange({ caption: this.caption, photo: this.photo });
+    this.onChange({ caption: this.caption, photo: this.photo, id: this.id, upload: this.upload });
   }
 }

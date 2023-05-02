@@ -37,7 +37,7 @@ export class MediaService extends ResourceService<PermissionResult> {
     return this.httpClient.post(apiUrl, formData);
   }
 
-  override getById(id: string | number): Observable<any> {
-    return this.httpClient.get(`https://api-2022.uchaguzi.or.ke/api/v3/media/${id}`);
+  override getById(id: string): Observable<any> {
+    return super.get(id);
   }
 }

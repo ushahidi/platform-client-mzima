@@ -32,12 +32,16 @@
         <mat-icon icon svgIcon="delete"></mat-icon>
       </mzima-client-button>
     </div>
+
+    <mat-error class="error-msg" *ngIf="requiredError">
+      {{ 'post.image_is_required' | translate }}
+    </mat-error>
   </div>
 
   <div class="form-row" *ngIf="hasCaption">
     <mat-label>{{ 'post.media.add_caption' | translate }}</mat-label>
     <mat-form-field appearance="outline">
-      <input matInput [(ngModel)]="caption" (change)="captionChanged()" />
+      <input matInput [(ngModel)]="caption" (change)="captionChanged()" [disabled]="!!id" />
     </mat-form-field>
   </div>
 </div>
