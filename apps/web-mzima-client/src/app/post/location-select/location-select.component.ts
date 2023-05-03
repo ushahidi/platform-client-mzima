@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -28,6 +29,7 @@ import 'leaflet.markercluster';
 import { pointIcon } from '../../core/helpers/map';
 import { decimalPattern } from '../../core/helpers/regex';
 import Geocoder from 'leaflet-control-geocoder';
+import { fromEvent, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 
 @Component({
   selector: 'app-location-select',
@@ -41,7 +43,7 @@ import Geocoder from 'leaflet-control-geocoder';
     },
   ],
 })
-export class LocationSelectComponent implements OnInit {
+export class LocationSelectComponent implements OnInit, AfterViewInit {
   @Input() public center: LatLngLiteral;
   @Input() public zoom: number;
   @Input() public location: LatLngLiteral;
@@ -95,6 +97,24 @@ export class LocationSelectComponent implements OnInit {
     this.mapReady = true;
   }
 
+  ngAfterViewInit() {
+    // change tracking for search when entering text in geocoder search input (and debounce to reduce geocoding requests sent)
+    const geocoderInputElement = this.geocoderControl.getContainer().querySelector('input');
+    fromEvent(geocoderInputElement, 'input')
+      .pipe(
+        filter(Boolean),
+        debounceTime(600),
+        distinctUntilChanged(),
+        tap(() => {
+          this.geocoderControl.options.placeholder = geocoderInputElement.value;
+          this.geocoderControl._input.value = geocoderInputElement.value;
+          this.geocoderControl._geocode();
+        }),
+      )
+      .subscribe();
+    // TODO 1: On enter key press - After typing in the input field, Update map and marker once enter key is pressed
+  }
+
   private getMapConfigurations(): MapConfigInterface {
     return this.sessionService.getMapConfigurations();
   }
@@ -116,20 +136,6 @@ export class LocationSelectComponent implements OnInit {
     // Connect geocoder to map
     this.geocoderControl.addTo(this.map);
     this.addMarker();
-
-    // change tracking for search when entering text
-    const geocoderInputElement = this.geocoderControl.getContainer().querySelector('input');
-    if (geocoderInputElement) {
-      geocoderInputElement.addEventListener('input', (event: any) => {
-        const value = event.target.value;
-        if (value.length > 2) {
-          this.geocoderControl.options.placeholder = value;
-          this.geocoderControl._input.value = value;
-          this.geocoderControl._geocode();
-        }
-      });
-      // TODO 1: On enter key press - After typing in the input field, Update map and marker once enter key is pressed
-    }
 
     const geocoderSearchButton = this.geocoderControl
       .getContainer()
