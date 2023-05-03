@@ -163,7 +163,7 @@ export class PostEditComponent implements OnInit, OnChanges {
                   (field.input === 'date'
                     ? new Date()
                     : field.input === 'location'
-                    ? { lat: -1.28569, lng: 36.832324 }
+                    ? { lat: '', lng: '' }
                     : field.input === 'number'
                     ? 0
                     : '');
