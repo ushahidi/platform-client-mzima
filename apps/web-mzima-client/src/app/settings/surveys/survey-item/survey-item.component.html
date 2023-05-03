@@ -36,8 +36,14 @@
         <mat-label>{{ 'survey.survey_name' | translate }} *</mat-label>
         <mat-form-field appearance="outline">
           <input matInput formControlName="name" [placeholder]="'survey.survey_name' | translate" />
-          <mat-error *ngIf="form.get('name')?.invalid">
+          <mat-error *ngIf="form.get('name')?.hasError('required')">
             {{ 'survey.fields.validation.required' | translate }}
+          </mat-error>
+          <mat-error
+            *ngIf="form.get('name')?.hasError('specialCharacters')"
+            [translate]="'survey.fields.validation.special_characters'"
+            [translateParams]="{ name: ('survey.survey_name' | translate) }"
+          >
           </mat-error>
         </mat-form-field>
       </div>

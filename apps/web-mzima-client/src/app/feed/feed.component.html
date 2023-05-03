@@ -8,7 +8,9 @@
 >
   <ng-container *ngIf="posts.length">
     <div class="feed-page__info-panel" *ngIf="isDesktop">
-      <span class="feed-page__results-info">Current results: {{ posts.length }} / {{ total }}</span>
+      <span class="feed-page__results-info"
+        >Current results: {{ postCurrentLength }} / {{ total }}</span
+      >
       <div class="feed-page__mode-switcher">
         <mzima-client-button
           [fill]="mode === FeedMode.Tiles ? 'outline' : 'solid'"

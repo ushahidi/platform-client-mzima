@@ -17,6 +17,7 @@ import {
   map,
   Observable,
   Subject,
+  switchMap,
 } from 'rxjs';
 import { FilterType } from '../filter-control/filter-control.component';
 import { SearchResponse } from '../location-selection/location-selection.component';
@@ -34,6 +35,7 @@ import {
   Savedsearch,
   SurveyItem,
 } from '@mzima-client/sdk';
+import dayjs from 'dayjs';
 
 @UntilDestroy()
 @Component({
@@ -129,7 +131,7 @@ export class SearchFormComponent implements OnInit {
       },
     });
 
-    this.form.valueChanges.pipe(untilDestroyed(this)).subscribe({
+    this.form.valueChanges.pipe(debounceTime(500), untilDestroyed(this)).subscribe({
       next: (values) => {
         if (this.collectionInfo?.id) {
           values.set = this.collectionInfo.id.toString();
@@ -177,29 +179,33 @@ export class SearchFormComponent implements OnInit {
   }
 
   getPostsFilters() {
-    this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
-      next: (res) => {
-        if (res.set) {
-          const collectionId = typeof res.set === 'string' ? res.set : '';
-          if (collectionId) {
-            this.getCollectionInfo(collectionId);
-            const withSet = Object.assign({}, this.form.value, { set: collectionId });
-            localStorage.setItem(
-              this.session.getLocalStorageNameMapper('filters'),
-              JSON.stringify(withSet),
-            );
-          } else {
-            localStorage.setItem(
-              this.session.getLocalStorageNameMapper('filters'),
-              JSON.stringify(this.form.value),
-            );
-            this.collectionInfo = undefined;
+    this.postsService.postsFilters$
+      .pipe(
+        untilDestroyed(this),
+        switchMap((res) => {
+          if (res.set) {
+            const collectionId = typeof res.set === 'string' ? res.set : '';
+            if (collectionId) {
+              this.getCollectionInfo(collectionId);
+              const withSet = Object.assign({}, this.form.value, { set: collectionId });
+              localStorage.setItem(
+                this.session.getLocalStorageNameMapper('filters'),
+                JSON.stringify(withSet),
+              );
+            } else {
+              localStorage.setItem(
+                this.session.getLocalStorageNameMapper('filters'),
+                JSON.stringify(this.form.value),
+              );
+              this.collectionInfo = undefined;
+            }
           }
-        }
-        this.getPostsStatistic();
-      },
-      error: (err) => console.log('postsFilters:', err),
-    });
+          return this.getPostsStatistic();
+        }),
+      )
+      .subscribe({
+        error: (err) => console.log('postsFilters:', err),
+      });
   }
 
   private getTotalPosts() {
@@ -272,8 +278,13 @@ export class SearchFormComponent implements OnInit {
       'form[]': values.form,
       'tags[]': values.tags,
       set: values.set,
-      date_after: values.date.start ? new Date(values.date.start).toISOString() : null,
-      date_before: values.date.eid ? new Date(values.date.end).toISOString() : null,
+      date_after: values.date.start ? dayjs(values.date.start).toISOString() : null,
+      date_before: values.date.end
+        ? dayjs(values.date.end)
+            .endOf('day')
+            .add(dayjs(values.date.end).utcOffset(), 'minute')
+            .toISOString()
+        : null,
       q: this.searchQuery,
       center_point:
         values.center_point?.location?.lat && values.center_point?.location?.lng
@@ -349,9 +360,20 @@ export class SearchFormComponent implements OnInit {
 
     forkJoin([this.surveysService.get(), this.postsService.getPostStatistics()]).subscribe({
       next: (responses) => {
-        const values = responses[1].totals.find((total: any) => total.key === 'form')?.values;
+        const values = responses[1].result.group_by_total_posts;
         this.surveyList = responses[0].results;
-        this.surveyList.map((survey) => (survey.checked = true));
+
+        if (this.filters) {
+          const data = JSON.parse(this.filters);
+          const formIds = new Set(data.form);
+
+          this.surveyList.forEach((survey) => {
+            survey.checked = formIds.has(survey.id);
+          });
+        } else {
+          this.surveyList.forEach((survey) => (survey.checked = true));
+        }
+
         this.surveyList.map((survey) => (survey.total = survey.total || 0));
 
         values.map((value: any) => {
@@ -365,7 +387,7 @@ export class SearchFormComponent implements OnInit {
         this.sources.map(
           (source) =>
             (source.total = values
-              .filter((value: any) => value.type === source.value)
+              .filter((value: any) => value.source === source.value)
               .reduce((acc: any, value: any) => acc + value.total, 0)),
         );
 
@@ -381,18 +403,20 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
-  public getPostsStatistic(): void {
-    this.postsService.getPostStatistics().subscribe({
-      next: (res) => {
-        this.notShownPostsCount = res.unmapped;
-        const values = res.totals.find((total: any) => total.key === 'form')?.values;
-
+  public getPostsStatistic(): Observable<any> {
+    return this.postsService.getPostStatistics().pipe(
+      map((res) => {
+        this.notShownPostsCount = res.result.unmapped;
+        const values = res.result.group_by_total_posts;
         if (this.surveyList?.length) {
           this.surveyList.map((survey) => (survey.total = 0));
           values.map((value: any) => {
             const survey = this.surveyList.find((s) => s.id === value.id);
             if (!survey) return;
-            survey.total = (survey.total || 0) + value.total;
+            if (this.form.controls['source'].value.includes(value.source)) {
+              // Exclude unchecked sources
+              survey.total = (survey.total || 0) + value.total;
+            }
           });
 
           // this.total = this.getTotal(this.surveyList);
@@ -402,12 +426,15 @@ export class SearchFormComponent implements OnInit {
           this.sources.map(
             (src) =>
               (src.total = values
-                .filter((value: any) => value.type === src.value)
+                .filter((value: any) => value.source === src.value)
+                .filter((value: any) => this.form.controls['form'].value.includes(value.id)) // Exclude unchecked surveys
                 .reduce((acc: any, value: any) => acc + value.total, 0)),
           );
         }
-      },
-    });
+
+        return res;
+      }),
+    );
   }
 
   get isEditAvailable() {
@@ -678,7 +705,11 @@ export class SearchFormComponent implements OnInit {
 
   public clearFilter(filterName: string): void {
     this.total = 0;
-    this.form.controls[filterName].patchValue('');
+    if (filterName === 'form') {
+      this.form.controls[filterName].patchValue(['none']);
+    } else {
+      this.form.controls[filterName].patchValue('');
+    }
   }
 
   public searchPosts(): void {
@@ -711,14 +742,6 @@ export class SearchFormComponent implements OnInit {
 
   public toggleMainFilters(): void {
     this.session.toggleMainFiltersVisibility(this.isMainFiltersOpen);
-  }
-
-  surveyChanged(event: any) {
-    const arr: any[] = [];
-    for (const element of event.source._value) {
-      arr.push(...this.surveyList.filter((el) => el.id === element));
-    }
-    // this.total = this.getTotal(arr);
   }
 
   public clearSavedFilter(): void {

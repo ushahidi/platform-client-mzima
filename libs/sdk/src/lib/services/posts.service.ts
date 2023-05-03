@@ -3,7 +3,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
-import { GeoJsonFilter, GeoJsonPostsResponse, PostApiResponse, PostResult } from '../models';
+import {
+  GeoJsonFilter,
+  GeoJsonPostsResponse,
+  PostApiResponse,
+  PostResult,
+  PostStatsResponse,
+} from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -36,32 +42,40 @@ export class PostsService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return apiHelpers.API_V_3;
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {
     return 'posts';
   }
 
+  updateStatus(id: string | number, status: string) {
+    return super.patch(id, { status });
+  }
+
+  override post(params: any): Observable<any> {
+    return super.post(params);
+  }
+
+  override update(postId: string | number, params: any): Observable<any> {
+    return super.update(postId, params);
+  }
+
   override getById(id: string | number): Observable<any> {
     return super.getById(id).pipe(
       map((response) => {
         const source =
-          response.source === 'sms'
+          response.result.source === 'sms'
             ? 'SMS'
-            : response.source
-            ? response.source.charAt(0).toUpperCase() + response.source.slice(1)
+            : response.result.source
+            ? response.result.source.charAt(0).toUpperCase() + response.result.source.slice(1)
             : 'Web';
         return {
-          ...response,
+          ...response.result,
           source,
         };
       }),
     );
-  }
-
-  override update(id: string | number, resource: any): Observable<any> {
-    return super.update(id, resource);
   }
 
   override delete(id: string | number): Observable<any> {
@@ -70,10 +84,9 @@ export class PostsService extends ResourceService<any> {
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
     const tmpParams = { ...this.postsFilters.value, has_location: 'mapped', ...filter };
-
     return super.get('geojson', this.postParamsMapper(tmpParams)).pipe(
       tap((res) => {
-        this.totalGeoPosts.next(res.total);
+        this.totalGeoPosts.next(res.count);
       }),
     );
   }
@@ -94,7 +107,7 @@ export class PostsService extends ResourceService<any> {
         return response;
       }),
       tap((response) => {
-        this.totalPosts.next(response.total_count);
+        this.totalPosts.next(response.meta.total);
       }),
     );
   }
@@ -103,7 +116,9 @@ export class PostsService extends ResourceService<any> {
     // TODO: REWORK THIS!! Created to make current API work as expected
     if (params.date?.start) {
       params.date_after = params.date.start;
-      params.date_before = params.date.end;
+      if (params.date.end) {
+        params.date_before = params.date.end;
+      }
       delete params.date;
     } else {
       delete params.date;
@@ -120,12 +135,12 @@ export class PostsService extends ResourceService<any> {
       delete params.set;
     }
 
-    if (params.form && params.form[0] === 'none') {
-      delete params.form;
+    if (params.form && params.form.length === 0) {
+      params.form.push('none');
     }
 
-    if (params['form[]'] && params['form[]'][0] === 'none') {
-      delete params['form[]'];
+    if (params['form[]'] && params['form[]'].length === 0) {
+      params['form[]'].push('none');
     }
 
     if (params.status?.length) {
@@ -141,11 +156,10 @@ export class PostsService extends ResourceService<any> {
       params['tags[]'] = params.tags;
       delete params.tags;
     }
-
     return params;
   }
 
-  public getPostStatistics(queryParams?: any) {
+  public getPostStatistics(queryParams?: any): Observable<PostStatsResponse> {
     const filters = { ...this.postsFilters.value };
 
     delete filters.form;
@@ -158,10 +172,19 @@ export class PostsService extends ResourceService<any> {
       queryParams ?? {
         ...this.postParamsMapper(filters),
         group_by: 'form',
+        enable_group_by_source: true,
         has_location: 'all',
         include_unmapped: true,
       },
     );
+  }
+
+  public lockPost(id: string | number) {
+    return super.update(id, null, 'lock');
+  }
+
+  public unlockPost(id: string | number) {
+    return super.delete(id, 'lock');
   }
 
   public applyFilters(filters: any): void {

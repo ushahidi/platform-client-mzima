@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostsService } from '@mzima-client/sdk';
 import { LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 import { Color } from '@swimlane/ngx-charts/lib/utils/color-sets';
-import dayjs, { ManipulateType } from 'dayjs';
+import { ManipulateType } from 'dayjs';
 
 @Component({
   selector: 'app-activity-timeline',
@@ -52,29 +52,43 @@ export class ActivityTimelineComponent implements OnInit {
       timeline_attribute: 'created',
     };
     this.data = [];
-    let series: any[] = [];
+    // let series: any[] = [];
     this.postsService.getPostStatistics({ ...params, group_by: value }).subscribe({
       next: (response) => {
-        for (const el of response.totals) {
-          for (const elValue of el.values) {
-            const time = new Date(elValue.label * 1000);
+        console.log('Response', response);
 
-            if (
-              !this.dateRange ||
-              time.getTime() > dayjs().subtract(1, this.dateRange).toDate().getTime()
-            ) {
-              series = [
-                ...series,
-                {
-                  name: time,
-                  value: this.cumulativeTotal ? elValue.cumulative_total : elValue.total,
-                },
-              ];
-            }
-          }
+        // this.data = response.result.group_by_total_posts.map(post => {
+        //   const time = new Date(parseInt(post.label) * 1000);
+        //   if (!this.dateRange ||
+        //       time.getTime() > dayjs().subtract(1, this.dateRange).toDate().getTime()) {
+        //         series.push({
+        //           name: time,
+        //           value: post.total,
+        //         })
+        //       }
+        //   return {name: post.source, series};
+        // })
 
-          this.data = [...this.data, { name: el.key, series }];
-        }
+        // for (const el of response.totals) {
+        //   for (const elValue of el.values) {
+        //     const time = new Date(elValue.label * 1000);
+
+        //     if (
+        //       !this.dateRange ||
+        //       time.getTime() > dayjs().subtract(1, this.dateRange).toDate().getTime()
+        //     ) {
+        //       series = [
+        //         ...series,
+        //         {
+        //           name: time,
+        //           value: this.cumulativeTotal ? elValue.cumulative_total : elValue.total,
+        //         },
+        //       ];
+        //     }
+        //   }
+
+        //   this.data = [...this.data, { name: el.key, series }];
+        // }
       },
     });
   }

@@ -21,7 +21,7 @@ export class DataComponent implements OnInit, AfterViewInit {
   params: GeoJsonFilter = {
     has_location: 'all',
     limit: 20,
-    offset: 0,
+    page: 1,
     order: 'desc',
     order_unlocked_on_top: true,
     orderby: 'created',
@@ -43,7 +43,7 @@ export class DataComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.postsService.getPosts('', this.params).subscribe({
       next: (response) => {
-        this.length = response.total_count;
+        this.length = response.count;
         this.dataSource = new MatTableDataSource<PostResult>(response.results);
         this.isLoading = false;
       },
