@@ -28,7 +28,6 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   SurveysService,
   PostsService,
-  PostsV5Service,
   GeoJsonFilter,
   PostResult,
   MediaService,
@@ -80,8 +79,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     private route: ActivatedRoute,
     private surveysService: SurveysService,
     private formBuilder: FormBuilder,
-    private postsV5Service: PostsV5Service,
-    private postsV3Service: PostsService,
+    private postsService: PostsService,
     private router: Router,
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
@@ -106,6 +104,9 @@ export class PostEditComponent implements OnInit, OnChanges {
       }
       if (params.get('id')) {
         this.postId = Number(params.get('id'));
+        this.postsService.lockPost(this.postId).subscribe((p) => {
+          console.log('Post locked: ', p);
+        });
         this.loadPostData(this.postId);
       }
     });
@@ -124,7 +125,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private loadPostData(postId: number) {
-    this.postsV5Service.getById(postId).subscribe({
+    this.postsService.getById(postId).subscribe({
       next: (post) => {
         this.formId = post.form_id;
         this.post = post;
@@ -460,7 +461,7 @@ export class PostEditComponent implements OnInit, OnChanges {
 
     if (this.postId) {
       postData.post_date = this.post.post_date || new Date().toISOString();
-      this.postsV5Service.update(this.postId, postData).subscribe({
+      this.postsService.update(this.postId, postData).subscribe({
         error: () => this.form.enable(),
         complete: async () => {
           await this.postComplete();
@@ -468,7 +469,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       });
     } else {
       if (!this.atLeastOneFieldHasValidationError) {
-        this.postsV5Service.post(postData).subscribe({
+        this.postsService.post(postData).subscribe({
           error: () => this.form.enable(),
           complete: async () => {
             await this.postComplete();
@@ -608,7 +609,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       'status[]': [],
     };
     this.isSearching = true;
-    this.postsV3Service.getPosts('', params).subscribe({
+    this.postsService.getPosts('', params).subscribe({
       next: (data) => {
         this.relatedPosts = data.results;
         this.isSearching = false;

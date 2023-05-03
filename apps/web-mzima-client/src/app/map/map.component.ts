@@ -26,7 +26,6 @@ import {
   MediaService,
   SavedsearchesService,
   PostsService,
-  PostsV5Service,
   GeoJsonPostsResponse,
 } from '@mzima-client/sdk';
 import { SessionService, EventBusService, EventType } from '@services';
@@ -62,7 +61,6 @@ export class MapComponent extends MainViewComponent implements OnInit {
     protected override savedSearchesService: SavedsearchesService,
     protected override eventBusService: EventBusService,
     protected override sessionService: SessionService,
-    private postsV5Service: PostsV5Service,
     private view: ViewContainerRef,
     private dialog: MatDialog,
     private zone: NgZone,
@@ -128,7 +126,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
         if (this.route.snapshot.data['view'] === 'search' && !this.searchId) return;
         if (this.route.snapshot.data['view'] === 'collection' && !this.collectionId) return;
 
-        this.params.offset = 0;
+        this.params.page = 1;
         this.mapLayers.map((layer) => {
           this.map.removeLayer(layer);
           this.markerClusterData.removeLayer(layer);
@@ -151,7 +149,23 @@ export class MapComponent extends MainViewComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (posts) => {
-          const geoPosts = geoJSON(posts, {
+          const oldGeoJson: any = posts.results.map((r) => {
+            return {
+              type: r.geojson.type,
+              features: r.geojson.features.map((f) => {
+                f.properties = {
+                  data_source_message_id: r.data_source_message_id,
+                  description: r.description,
+                  id: r.id,
+                  'marker-color': r['marker-color'],
+                  source: r.source,
+                  title: r.title,
+                };
+                return f;
+              }),
+            };
+          });
+          const geoPosts = geoJSON(oldGeoJson, {
             pointToLayer: mapHelper.pointToLayer,
             onEachFeature: (feature, layer) => {
               layer.on('mouseout', () => {
@@ -172,7 +186,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
                         comp.setInput('post', post);
                         comp.setInput('user', this.user);
 
-                        this.postsV5Service.getById(feature.properties.id).subscribe({
+                        this.postsService.getById(feature.properties.id).subscribe({
                           next: (postV5) => {
                             comp.instance.details$.subscribe({
                               next: () => {
@@ -233,16 +247,24 @@ export class MapComponent extends MainViewComponent implements OnInit {
             this.mapLayers.push(geoPosts);
           }
 
-          if (posts.total > this.params.limit + this.params.offset) {
-            this.progress = ((this.params.limit + this.params.offset) / posts.total) * 100;
+          // public loadMore(): void {
+          //   if (this.params.limit !== undefined && this.params.limit * this.params.page! < this.total) {
+          //     this.currentPage++;
+          //     this.params.page!++;
+          //     this.getPosts(this.params, true);
+          //   }
+          // }
 
-            this.params.offset = this.params.limit + this.params.offset;
+          if (posts.count > this.params.limit * this.params.page) {
+            this.progress = ((this.params.limit * this.params.page) / posts.count) * 100;
+
+            this.params.page++;
             this.getPostsGeoJson();
           } else {
             this.progress = 100;
           }
 
-          if (posts.features.length && this.params.offset <= this.params.limit) {
+          if (posts.results.length && this.params.page <= this.params.limit) {
             this.mapFitToBounds = geoPosts.getBounds();
           }
         },
