@@ -49,6 +49,18 @@ export class PostsService extends ResourceService<any> {
     return 'posts';
   }
 
+  updateStatus(id: string | number, status: string) {
+    return super.patch(id, { status });
+  }
+
+  override post(params: any): Observable<any> {
+    return super.post(params);
+  }
+
+  override update(postId: string | number, params: any): Observable<any> {
+    return super.update(postId, params);
+  }
+
   override getById(id: string | number): Observable<any> {
     return super.getById(id).pipe(
       map((response) => {
@@ -64,10 +76,6 @@ export class PostsService extends ResourceService<any> {
         };
       }),
     );
-  }
-
-  override update(id: string | number, resource: any): Observable<any> {
-    return super.update(id, resource);
   }
 
   override delete(id: string | number): Observable<any> {
@@ -99,7 +107,7 @@ export class PostsService extends ResourceService<any> {
         return response;
       }),
       tap((response) => {
-        this.totalPosts.next(response.total_count);
+        this.totalPosts.next(response.meta.total);
       }),
     );
   }
@@ -169,6 +177,14 @@ export class PostsService extends ResourceService<any> {
         include_unmapped: true,
       },
     );
+  }
+
+  public lockPost(id: string | number) {
+    return super.update(id, null, 'lock');
+  }
+
+  public unlockPost(id: string | number) {
+    return super.delete(id, 'lock');
   }
 
   public applyFilters(filters: any): void {

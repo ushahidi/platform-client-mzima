@@ -26,7 +26,6 @@ import {
   MediaService,
   SavedsearchesService,
   PostsService,
-  PostsV5Service,
   GeoJsonPostsResponse,
 } from '@mzima-client/sdk';
 import { SessionService, EventBusService, EventType } from '@services';
@@ -62,7 +61,6 @@ export class MapComponent extends MainViewComponent implements OnInit {
     protected override savedSearchesService: SavedsearchesService,
     protected override eventBusService: EventBusService,
     protected override sessionService: SessionService,
-    private postsV5Service: PostsV5Service,
     private view: ViewContainerRef,
     private dialog: MatDialog,
     private zone: NgZone,
@@ -185,7 +183,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
                       comp.setInput('post', post);
                       comp.setInput('user', this.user);
 
-                      this.postsV5Service.getById(feature.properties.id).subscribe({
+                      this.postsService.getById(feature.properties.id).subscribe({
                         next: (postV5) => {
                           comp.instance.details$.subscribe({
                             next: () => {

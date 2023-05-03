@@ -12,7 +12,6 @@ export * from './media.service';
 export * from './notifications.service';
 export * from './permissions.service';
 export * from './posts.service';
-export * from './posts.v5.service';
 export * from './roles.service';
 export * from './surveys.service';
 export * from './users.service';

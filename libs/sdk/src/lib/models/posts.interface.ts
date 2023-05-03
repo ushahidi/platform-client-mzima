@@ -1,4 +1,4 @@
-import { ApiNResponse, ApiResponse } from './api-response.interface';
+import { ApiNResponse } from './api-response.interface';
 import { CategoryInterface } from './category.interface';
 
 export interface GeoJsonPostsResponse extends ApiNResponse {
@@ -63,7 +63,7 @@ export interface PostPropertiesUser {
   gravatar?: string;
   realname?: string;
 }
-export interface PostApiResponse extends ApiResponse {
+export interface PostApiResponse extends ApiNResponse {
   results: PostResult[];
 }
 
