@@ -112,7 +112,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
         }),
       )
       .subscribe();
-    // TODO 1: On enter key press - After typing in the input field, Update map and marker once enter key is pressed
   }
 
   private getMapConfigurations(): MapConfigInterface {
@@ -136,15 +135,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     // Connect geocoder to map
     this.geocoderControl.addTo(this.map);
     this.addMarker();
-
-    const geocoderSearchButton = this.geocoderControl
-      .getContainer()
-      .querySelector('.leaflet-control-geocoder-icon');
-    geocoderSearchButton.addEventListener('click', () => {
-      console.log('connected...', this.geocoderControl._input.value);
-      console.log(this.location);
-      // TODO 2: On button click - fire map click or something... to update map when map and marker when search icon button is clicked on
-    });
 
     this.map.on('click', (e) => {
       this.location = e.latlng;
@@ -209,12 +199,14 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   }
 
   public onFocusOut() {
-    // TODO 3: Update map and marker when focus leaves the lat and long input fields if they don't use the search field (or should we stick to the old platform's use of "update map" button?)
+    // TODO 1: Update map and marker when focus leaves the lat and long input fields if they don't use the search field (or should we stick to the old platform's use of "update map" button?)
     console.log('testing focus out...');
     // this.changeCoords();
   }
 
-  // TODO 4: Issue - submit button on the page is still disabled after the long and lat input fields are populated with the search. Until you edit the long and lat input fields by clicking on them... then the submit button allows you to submit
+  // TODO 2: Issue - submit button on the page is still disabled after the long and lat input fields are populated with the search. Until you edit the long and lat input fields by clicking on them... then the submit button allows you to submit
 
-  // TODO 5: The refine location name input field should be empty also from start
+  // TODO 3: The refine location name input field should be empty also from start
+
+  // TODO 4: Validation check
 }
