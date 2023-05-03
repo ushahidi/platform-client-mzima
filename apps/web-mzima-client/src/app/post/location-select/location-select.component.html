@@ -24,7 +24,12 @@
       appearance="outline"
       [ngClass]="{ 'location-error': noLetterLat || emptyFieldLat }"
     >
-      <input matInput [(ngModel)]="location.lat" (ngModelChange)="changeCoords()" />
+      <input
+        matInput
+        [(ngModel)]="location.lat"
+        (ngModelChange)="changeCoords()"
+        (focusout)="onFocusOut()"
+      />
     </mat-form-field>
     <p *ngIf="noLetterLat" class="location-error">
       {{ 'post.location.errors.decimal_lat' | translate }}
@@ -40,7 +45,12 @@
       appearance="outline"
       [ngClass]="{ 'location-error': noLetterLng || emptyFieldLng }"
     >
-      <input matInput [(ngModel)]="location.lng" (ngModelChange)="changeCoords()" />
+      <input
+        matInput
+        [(ngModel)]="location.lng"
+        (ngModelChange)="changeCoords()"
+        (focusout)="onFocusOut()"
+      />
     </mat-form-field>
     <p *ngIf="noLetterLng" class="location-error">
       {{ 'post.location.errors.decimal_lng' | translate }}

@@ -128,7 +128,17 @@ export class LocationSelectComponent implements OnInit {
           this.geocoderControl._geocode();
         }
       });
+      // TODO 1: On enter key press - After typing in the input field, Update map and marker once enter key is pressed
     }
+
+    const geocoderSearchButton = this.geocoderControl
+      .getContainer()
+      .querySelector('.leaflet-control-geocoder-icon');
+    geocoderSearchButton.addEventListener('click', () => {
+      console.log('connected...', this.geocoderControl._input.value);
+      console.log(this.location);
+      // TODO 2: On button click - fire map click or something... to update map when map and marker when search icon button is clicked on
+    });
 
     this.map.on('click', (e) => {
       this.location = e.latlng;
@@ -139,6 +149,7 @@ export class LocationSelectComponent implements OnInit {
     // Listen event markgeocode from geocoder
     this.geocoderControl.on('markgeocode', (e: any) => {
       this.location = e.geocode.center;
+      console.log(this.location);
       this.addMarker();
       this.map.fitBounds(e.geocode.bbox);
     });
@@ -190,4 +201,14 @@ export class LocationSelectComponent implements OnInit {
       this.map.setView([latitude, longitude], 12);
     });
   }
+
+  public onFocusOut() {
+    // TODO 3: Update map and marker when focus leaves the lat and long input fields if they don't use the search field (or should we stick to the old platform's use of "update map" button?)
+    console.log('testing focus out...');
+    // this.changeCoords();
+  }
+
+  // TODO 4: Issue - submit button on the page is still disabled after the long and lat input fields are populated with the search. Until you edit the long and lat input fields by clicking on them... then the submit button allows you to submit
+
+  // TODO 5: The refine location name input field should be empty also from start
 }
