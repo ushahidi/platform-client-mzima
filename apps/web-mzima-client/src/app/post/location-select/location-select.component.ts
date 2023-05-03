@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -28,6 +29,7 @@ import 'leaflet.markercluster';
 import { pointIcon } from '../../core/helpers/map';
 import { decimalPattern } from '../../core/helpers/regex';
 import Geocoder from 'leaflet-control-geocoder';
+import { fromEvent, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 
 @Component({
   selector: 'app-location-select',
@@ -41,7 +43,7 @@ import Geocoder from 'leaflet-control-geocoder';
     },
   ],
 })
-export class LocationSelectComponent implements OnInit {
+export class LocationSelectComponent implements OnInit, AfterViewInit {
   @Input() public center: LatLngLiteral;
   @Input() public zoom: number;
   @Input() public location: LatLngLiteral;
@@ -95,6 +97,23 @@ export class LocationSelectComponent implements OnInit {
     this.mapReady = true;
   }
 
+  ngAfterViewInit() {
+    // change tracking for search when entering text in geocoder search input (and debounce to reduce geocoding requests sent)
+    const geocoderInputElement = this.geocoderControl.getContainer().querySelector('input');
+    fromEvent(geocoderInputElement, 'input')
+      .pipe(
+        filter(Boolean),
+        debounceTime(600),
+        distinctUntilChanged(),
+        tap(() => {
+          this.geocoderControl.options.placeholder = geocoderInputElement.value;
+          this.geocoderControl._input.value = geocoderInputElement.value;
+          this.geocoderControl._geocode();
+        }),
+      )
+      .subscribe();
+  }
+
   private getMapConfigurations(): MapConfigInterface {
     return this.sessionService.getMapConfigurations();
   }
@@ -116,29 +135,6 @@ export class LocationSelectComponent implements OnInit {
     // Connect geocoder to map
     this.geocoderControl.addTo(this.map);
     this.addMarker();
-
-    // change tracking for search when entering text
-    const geocoderInputElement = this.geocoderControl.getContainer().querySelector('input');
-    if (geocoderInputElement) {
-      geocoderInputElement.addEventListener('input', (event: any) => {
-        const value = event.target.value;
-        if (value.length > 2) {
-          this.geocoderControl.options.placeholder = value;
-          this.geocoderControl._input.value = value;
-          this.geocoderControl._geocode();
-        }
-      });
-      // TODO 1: On enter key press - After typing in the input field, Update map and marker once enter key is pressed
-    }
-
-    const geocoderSearchButton = this.geocoderControl
-      .getContainer()
-      .querySelector('.leaflet-control-geocoder-icon');
-    geocoderSearchButton.addEventListener('click', () => {
-      console.log('connected...', this.geocoderControl._input.value);
-      console.log(this.location);
-      // TODO 2: On button click - fire map click or something... to update map when map and marker when search icon button is clicked on
-    });
 
     this.map.on('click', (e) => {
       this.location = e.latlng;
@@ -203,12 +199,14 @@ export class LocationSelectComponent implements OnInit {
   }
 
   public onFocusOut() {
-    // TODO 3: Update map and marker when focus leaves the lat and long input fields if they don't use the search field (or should we stick to the old platform's use of "update map" button?)
+    // TODO 1: Update map and marker when focus leaves the lat and long input fields if they don't use the search field (or should we stick to the old platform's use of "update map" button?)
     console.log('testing focus out...');
     // this.changeCoords();
   }
 
-  // TODO 4: Issue - submit button on the page is still disabled after the long and lat input fields are populated with the search. Until you edit the long and lat input fields by clicking on them... then the submit button allows you to submit
+  // TODO 2: Issue - submit button on the page is still disabled after the long and lat input fields are populated with the search. Until you edit the long and lat input fields by clicking on them... then the submit button allows you to submit
 
-  // TODO 5: The refine location name input field should be empty also from start
+  // TODO 3: The refine location name input field should be empty also from start
+
+  // TODO 4: Validation check
 }
