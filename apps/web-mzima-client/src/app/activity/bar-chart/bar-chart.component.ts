@@ -35,11 +35,10 @@ export class BarChartComponent implements OnInit {
     this.data = [];
     this.postsService.getPostStatistics({ group_by: value }).subscribe({
       next: (response) => {
-        for (const el of response.totals) {
-          for (const elValue of el.values) {
-            this.data = [...this.data, { name: elValue.label, value: elValue.total }];
-          }
-        }
+        this.data = response.result.group_by_total_posts.map((p) => ({
+          name: p.label || 'No survey',
+          value: p.total,
+        }));
       },
     });
   }

@@ -7,9 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService, SessionService } from '@services';
 import { ShareModalComponent } from '../../shared/components';
 import {
-  PostsV5Service,
   PostPropertiesInterface,
   PostResult,
+  PostsService,
   PostStatus,
   UserInterface,
 } from '@mzima-client/sdk';
@@ -34,7 +34,7 @@ export class PostHeadComponent {
 
   constructor(
     private session: SessionService,
-    private postsV5Service: PostsV5Service,
+    private postsService: PostsService,
     private dialog: MatDialog,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
@@ -64,21 +64,21 @@ export class PostHeadComponent {
   }
 
   underReview() {
-    this.postsV5Service.updateStatus(this.post.id, PostStatus.Draft).subscribe((res) => {
+    this.postsService.updateStatus(this.post.id, PostStatus.Draft).subscribe((res) => {
       this.post = res.result;
       this.statusChanged.emit();
     });
   }
 
   publish() {
-    this.postsV5Service.updateStatus(this.post.id, PostStatus.Published).subscribe((res) => {
+    this.postsService.updateStatus(this.post.id, PostStatus.Published).subscribe((res) => {
       this.post = res.result;
       this.statusChanged.emit();
     });
   }
 
   archive() {
-    this.postsV5Service.updateStatus(this.post.id, PostStatus.Archived).subscribe((res) => {
+    this.postsService.updateStatus(this.post.id, PostStatus.Archived).subscribe((res) => {
       this.post = res.result;
       this.statusChanged.emit();
     });
@@ -90,7 +90,7 @@ export class PostHeadComponent {
     });
     if (!confirmed) return;
 
-    this.postsV5Service.delete(this.post.id).subscribe((res) => {
+    this.postsService.delete(this.post.id).subscribe((res) => {
       this.post = res;
       this.deleted.emit();
       this.confirmModalService.open({

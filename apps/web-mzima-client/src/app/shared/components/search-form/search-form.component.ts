@@ -360,7 +360,7 @@ export class SearchFormComponent implements OnInit {
 
     forkJoin([this.surveysService.get(), this.postsService.getPostStatistics()]).subscribe({
       next: (responses) => {
-        const values = responses[1].totals.find((total: any) => total.key === 'form')?.values;
+        const values = responses[1].result.group_by_total_posts;
         this.surveyList = responses[0].results;
 
         if (this.filters) {
@@ -387,7 +387,7 @@ export class SearchFormComponent implements OnInit {
         this.sources.map(
           (source) =>
             (source.total = values
-              .filter((value: any) => value.type === source.value)
+              .filter((value: any) => value.source === source.value)
               .reduce((acc: any, value: any) => acc + value.total, 0)),
         );
 
@@ -406,15 +406,14 @@ export class SearchFormComponent implements OnInit {
   public getPostsStatistic(): Observable<any> {
     return this.postsService.getPostStatistics().pipe(
       map((res) => {
-        this.notShownPostsCount = res.unmapped;
-        const values = res.totals.find((total: any) => total.key === 'form')?.values;
-
+        this.notShownPostsCount = res.result.unmapped;
+        const values = res.result.group_by_total_posts;
         if (this.surveyList?.length) {
           this.surveyList.map((survey) => (survey.total = 0));
           values.map((value: any) => {
             const survey = this.surveyList.find((s) => s.id === value.id);
             if (!survey) return;
-            if (this.form.controls['source'].value.includes(value.type)) {
+            if (this.form.controls['source'].value.includes(value.source)) {
               // Exclude unchecked sources
               survey.total = (survey.total || 0) + value.total;
             }
@@ -427,7 +426,7 @@ export class SearchFormComponent implements OnInit {
           this.sources.map(
             (src) =>
               (src.total = values
-                .filter((value: any) => value.type === src.value)
+                .filter((value: any) => value.source === src.value)
                 .filter((value: any) => this.form.controls['form'].value.includes(value.id)) // Exclude unchecked surveys
                 .reduce((acc: any, value: any) => acc + value.total, 0)),
           );

@@ -11,6 +11,7 @@ export interface ApiResponse {
 }
 
 export interface ApiNResponse {
+  count: number;
   links: {
     first?: string;
     last?: string;
