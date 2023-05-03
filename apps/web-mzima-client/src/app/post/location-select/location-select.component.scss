@@ -78,7 +78,7 @@
   }
 
   .leaflet-control-geocoder-form {
-    width: 95%;
+    width: calc(100% - 30px);
 
     input {
       width: 100%;
