@@ -12,7 +12,13 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CollectionsModalComponent } from '../../shared/components';
-import { MediaService, CategoryInterface, PostResult, PostContent } from '@mzima-client/sdk';
+import {
+  MediaService,
+  CategoryInterface,
+  PostResult,
+  PostContent,
+  PostsService,
+} from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-post-details',
@@ -78,8 +84,8 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   private getPost(): void {
     if (!this.postId) return;
     this.postsService.getById(this.postId).subscribe({
-      next: (postV5: PostResult) => {
-        this.post = postV5;
+      next: (post: PostResult) => {
+        this.post = post;
         const mediaField = (this.post.post_content as PostContent[])[0].fields.find(
           (field: any) => field.type === 'media',
         );
