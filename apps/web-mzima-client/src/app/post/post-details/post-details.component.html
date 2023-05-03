@@ -96,8 +96,8 @@
 
           <ng-container *ngIf="field.input === 'checkbox'">
             <span *ngIf="!field.options.length">-</span>
-            <ul class="post--checkbox-list" *ngIf="field.options.length">
-              <li *ngFor="let option of field.options">
+            <ul class="post--checkbox-list" *ngIf="field.value?.value?.length">
+              <li *ngFor="let option of field.value.value">
                 <p>{{ option }}</p>
               </li>
             </ul>

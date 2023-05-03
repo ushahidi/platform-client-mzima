@@ -207,7 +207,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleCheckbox(key: string, value: any) {
-    const data = value?.value?.map((val: { id: any }) => val?.id);
+    const data = value?.value;
     this.form.patchValue({ [key]: data });
   }
 
