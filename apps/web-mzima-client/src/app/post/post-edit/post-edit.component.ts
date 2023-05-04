@@ -25,13 +25,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  SurveysService,
-  PostsService,
-  PostsV5Service,
-  GeoJsonFilter,
-  PostResult,
-} from '@mzima-client/sdk';
+import { SurveysService, PostsService, GeoJsonFilter, PostResult } from '@mzima-client/sdk';
 import { LatLngLiteral } from 'leaflet';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
