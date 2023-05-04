@@ -35,13 +35,9 @@ Run `npm run mobile:add-android` - "nx run mobile-mzima-client:cap:add-android",
 
 Run `npm run mobile:sync` - "nx run mobile-mzima-client:cap:sync",
 
-Run `npm run mobile:open-ios` - "nx run mobile-mzima-client:cap:open-ios",
+Run `npm run mobile:ios` - "nx run mobile-mzima-client:cap:ios",
 
-Run `npm run mobile:open-android` - "nx run mobile-mzima-client:cap:open-android",
-
-Run `npm run mobile:run-ios` - "nx run mobile-mzima-client:cap:run-ios",
-
-Run `npm run mobile:run-android` - "nx run mobile-mzima-client:cap:run-android"
+Run `npm run mobile:android` - "nx run mobile-mzima-client:cap:android",
 
 ## Understand this workspace
 
