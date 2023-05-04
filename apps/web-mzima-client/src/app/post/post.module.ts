@@ -31,6 +31,7 @@ import { PostMetadataComponent } from './post-metadata/post-metadata.component';
 import { TwitterWidgetComponent } from './twitter-widget/twitter-widget.component';
 import { PostHeadComponent } from './post-head/post-head.component';
 import { MzimaUiModule } from '@mzima-client/mzima-ui';
+import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
     PostMetadataComponent,
     TwitterWidgetComponent,
     PostHeadComponent,
+    ImageUploaderComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,47 @@
+<div class="image-loader">
+  <div class="image-loader__btn">
+    <div class="image-loader__preview" *ngIf="preview">
+      <img [src]="preview" />
+    </div>
+    <div class="image-loader__controls">
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
+        class="image-loader__control"
+        (buttonClick)="fileInput.click()"
+        [data-qa]="'btn-post-item-upload'"
+      >
+        <ng-container *ngIf="!preview; else changeButton">
+          {{ 'post.media.add_photo' | translate }}
+        </ng-container>
+        <ng-template #changeButton>
+          {{ 'post.media.replace_image' | translate }}
+        </ng-template>
+        <mat-icon icon [svgIcon]="!preview ? 'plus' : 'edit'"></mat-icon>
+      </mzima-client-button>
+      <input hidden #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" />
+
+      <mzima-client-button
+        color="danger"
+        *ngIf="preview"
+        [iconOnly]="true"
+        (buttonClick)="deletePhoto()"
+        [data-qa]="'btn-post-item-delete-photo'"
+        class="image-loader__control image-loader__control--delete"
+      >
+        <mat-icon icon svgIcon="delete"></mat-icon>
+      </mzima-client-button>
+    </div>
+
+    <mat-error class="error-msg" *ngIf="requiredError">
+      {{ 'post.image_is_required' | translate }}
+    </mat-error>
+  </div>
+
+  <div class="form-row" *ngIf="hasCaption">
+    <mat-label>{{ 'post.media.add_caption' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input matInput [(ngModel)]="caption" (change)="captionChanged()" [disabled]="!!id" />
+    </mat-form-field>
+  </div>
+</div>

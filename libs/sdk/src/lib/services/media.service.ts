@@ -25,16 +25,19 @@ export class MediaService extends ResourceService<PermissionResult> {
     return 'media';
   }
 
-  uploadFile(file: File) {
+  uploadFile(file: File, caption?: string) {
     const apiUrl = this.backendUrl + this.getApiVersions() + this.getResourceUrl();
 
     const formData = new FormData();
     formData.append('file', file);
+    if (caption) {
+      formData.append('caption', caption);
+    }
 
     return this.httpClient.post(apiUrl, formData);
   }
 
-  override getById(id: string | number): Observable<any> {
-    return this.httpClient.get(`https://api-2022.uchaguzi.or.ke/api/v3/media/${id}`);
+  override getById(id: string): Observable<any> {
+    return super.get(id);
   }
 }
