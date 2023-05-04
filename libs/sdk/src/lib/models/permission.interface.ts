@@ -10,4 +10,5 @@ export interface PermissionResult {
   id: number;
   name: string;
   url: string;
+  caption?: string;
 }

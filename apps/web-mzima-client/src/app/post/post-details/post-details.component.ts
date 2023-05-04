@@ -12,7 +12,13 @@ import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CollectionsModalComponent } from '../../shared/components';
-import { MediaService, CategoryInterface, PostResult, PostsService } from '@mzima-client/sdk';
+import {
+  MediaService,
+  CategoryInterface,
+  PostResult,
+  PostContent,
+  PostsService,
+} from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-post-details',
@@ -61,21 +67,31 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
           (field: any) => field.type === 'media',
         );
         if (mediaField && mediaField.value?.value) {
-          this.mediaService.getById(mediaField.value.value).subscribe({
-            next: (media) => {
-              this.media = media;
-            },
-          });
+          this.getPostMedia(mediaField);
         }
       }
     }
   }
 
+  private getPostMedia(mediaField: any): void {
+    this.mediaService.getById(mediaField.value.value).subscribe({
+      next: (media) => {
+        this.media = media;
+      },
+    });
+  }
+
   private getPost(): void {
     if (!this.postId) return;
     this.postsService.getById(this.postId).subscribe({
-      next: (postV5: PostResult) => {
-        this.post = postV5;
+      next: (post: PostResult) => {
+        this.post = post;
+        const mediaField = (this.post.post_content as PostContent[])[0].fields.find(
+          (field: any) => field.type === 'media',
+        );
+        if (mediaField && mediaField.value?.value) {
+          this.getPostMedia(mediaField);
+        }
       },
     });
   }
