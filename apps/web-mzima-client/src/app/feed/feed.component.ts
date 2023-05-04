@@ -11,13 +11,7 @@ import { MainViewComponent } from '@shared';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
 import { ConfirmModalService } from '../core/services/confirm-modal.service';
 import { LanguageService } from '../core/services/language.service';
-import {
-  SavedsearchesService,
-  PostsService,
-  PostsV5Service,
-  GeoJsonFilter,
-  PostResult,
-} from '@mzima-client/sdk';
+import { SavedsearchesService, PostsService, GeoJsonFilter, PostResult } from '@mzima-client/sdk';
 
 enum FeedMode {
   Tiles = 'TILES',
@@ -35,8 +29,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
   public override params: GeoJsonFilter = {
     limit: 20,
-    offset: 0,
-    created_before_by_id: '',
+    page: 1,
+    // created_before_by_id: '',
   };
   public pagination = {
     page: 1,
@@ -86,7 +80,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     protected override savedSearchesService: SavedsearchesService,
     protected override eventBusService: EventBusService,
     protected override sessionService: SessionService,
-    private postsV5Service: PostsV5Service,
     private confirmModalService: ConfirmModalService,
     private dialog: MatDialog,
     private translate: TranslateService,
@@ -137,7 +130,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
           next: () => {
             this.posts = [];
-            this.params.offset = (this.currentPage - 1) * (this.params.limit ?? 0);
+            this.params.page = 1;
             this.getPosts(this.params);
           },
         });
@@ -208,7 +201,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       next: (data) => {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
         this.postCurrentLength =
-          data.count < Number(data.limit) ? data.total_count : this.currentPage * data.count;
+          data.count < Number(data.meta.per_page) ? data.meta.total : this.currentPage * data.count;
         this.eventBusService.next({
           type: EventType.FeedPostsLoaded,
           payload: true,
@@ -223,7 +216,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public pageChanged(page: any): void {
     this.pagination.page = page;
-    this.params.offset = (this.pagination.size || 0) * (this.pagination.page - 1);
+    this.params.page = page;
     this.getPosts(this.params);
   }
 
@@ -251,7 +244,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         }
       });
 
-      this.postsV5Service.getById(post.id).subscribe({
+      this.postsService.getById(post.id).subscribe({
         next: (postV5: PostResult) => {
           this.postDetailsModal.componentInstance.post = postV5;
         },
@@ -350,13 +343,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public loadMore(): void {
-    if (
-      this.params.offset !== undefined &&
-      this.params.limit !== undefined &&
-      this.params.offset + this.params.limit < this.total
-    ) {
+    if (this.params.limit !== undefined && this.params.limit * this.params.page! < this.total) {
       this.currentPage++;
-      this.params.offset = this.params.offset + this.params.limit;
+      this.params.page!++;
       this.getPosts(this.params, true);
     }
   }
@@ -422,7 +411,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       panelClass: ['modal', 'post-modal'],
     });
 
-    this.postsV5Service.getById(post.id).subscribe({
+    this.postsService.getById(post.id).subscribe({
       next: (postV5: PostResult) => {
         this.postDetailsModal.componentInstance.post = postV5;
       },
