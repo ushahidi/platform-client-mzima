@@ -136,11 +136,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.map = mapBox;
     control.zoom({ position: 'bottomleft' }).addTo(this.map);
-    this.map.panTo(this.location);
-
-    // Connect geocoder to map
-    this.geocoderControl.addTo(this.map);
-    this.addMarker();
+    this.zoomAndConnectGeocoderToMap();
 
     this.map.on('click', (e) => {
       this.location = e.latlng;
@@ -204,10 +200,16 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
     });
   }
 
+  public zoomAndConnectGeocoderToMap() {
+    this.map.panTo(this.location);
+
+    // Connect geocoder to map
+    this.geocoderControl.addTo(this.map);
+    this.addMarker();
+  }
+
   public onFocusOut() {
-    // TODO 1: Update map and marker when focus leaves the lat and long input fields if they don't use the search field (or should we stick to the old platform's use of "update map" button?)
-    console.log('testing focus out...');
-    // this.changeCoords();
+    this.zoomAndConnectGeocoderToMap();
   }
 
   // TODO 2: Issue - submit button on the page is still disabled after the long and lat input fields are populated with the search. Until you edit the long and lat input fields by clicking on them... then the submit button allows you to submit
