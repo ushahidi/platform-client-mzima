@@ -260,6 +260,7 @@
               <app-location-select
                 [zoom]="12"
                 [location]="locationValue"
+                [parent]="{ form: form, latFieldsKey: field.key }"
                 [required]="form.get(field.key)?.hasError('required')!"
                 (locationChange)="changeLocation($event, field.key)"
               ></app-location-select>

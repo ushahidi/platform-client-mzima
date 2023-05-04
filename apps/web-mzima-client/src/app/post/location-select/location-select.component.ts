@@ -9,7 +9,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -49,6 +49,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() public zoom: number;
   @Input() public location: LatLngLiteral;
   @Input() public required: boolean;
+  @Input() public parent: { form: FormGroup; latFieldsKey: string };
   @Output() locationChange = new EventEmitter();
   public emptyFieldLat = false;
   public emptyFieldLng = false;
@@ -150,6 +151,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
       console.log(this.location);
       this.addMarker();
       this.map.fitBounds(e.geocode.bbox);
+      this.enableSubmitButtonOnGeocode();
     });
   }
 
@@ -212,7 +214,11 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
     this.zoomAndConnectGeocoderToMap();
   }
 
-  // TODO 2: Issue - submit button on the page is still disabled after the long and lat input fields are populated with the search. Until you edit the long and lat input fields by clicking on them... then the submit button allows you to submit
+  public enableSubmitButtonOnGeocode() {
+    const locationFieldsKey = this.parent.form.get(this.parent.latFieldsKey);
+    locationFieldsKey?.markAsTouched();
+    this.parent.form.controls[this.parent.latFieldsKey].setErrors(null);
+  }
 
   // TODO 3: The refine location name input field should be empty also from start
 
