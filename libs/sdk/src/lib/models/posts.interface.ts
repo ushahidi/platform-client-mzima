@@ -1,5 +1,6 @@
 import { ApiResponse } from './api-response.interface';
 import { CategoryInterface } from './category.interface';
+import * as GeoJSON from '../../../../../node_modules/@types/geojson/index';
 
 export interface GeoJsonPostsResponse {
   features: GeoJSON.Feature[];

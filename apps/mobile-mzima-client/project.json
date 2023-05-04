@@ -17,9 +17,10 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/mobile-mzima-client/src/favicon.ico",
+          "apps/mobile-mzima-client/src/env.json",
           {
             "glob": "**/*",
-            "input": "src/assets",
+            "input": "apps/mobile-mzima-client/src/assets",
             "output": "assets"
           },
           {
@@ -109,8 +110,18 @@
           "command": "npx cap {args.command}",
           "cwd": "apps/mobile-mzima-client"
         },
-        "add": {
-          "commands": ["npx cap add ios", "npx cap add android"],
+        "build": {
+          "command": "nx run mobile-mzima-client:build:production",
+          "parallel": false,
+          "cwd": "apps/mobile-mzima-client"
+        },
+        "add-ios": {
+          "command": "npx cap add ios",
+          "parallel": false,
+          "cwd": "apps/mobile-mzima-client"
+        },
+        "add-android": {
+          "command": "npx cap add android",
           "parallel": false,
           "cwd": "apps/mobile-mzima-client"
         },
