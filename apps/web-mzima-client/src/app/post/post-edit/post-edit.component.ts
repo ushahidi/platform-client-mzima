@@ -20,17 +20,25 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService, EventBusService, EventType } from '@services';
+import { BreakpointService, ConfirmModalService, EventBusService, EventType } from '@services';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { TranslateService } from '@ngx-translate/core';
-import { SurveysService, PostsService, GeoJsonFilter, PostResult } from '@mzima-client/sdk';
+import {
+  SurveysService,
+  PostsService,
+  GeoJsonFilter,
+  PostResult,
+  MediaService,
+} from '@mzima-client/sdk';
 import { LatLngLiteral } from 'leaflet';
+import { AlphanumericValidatorValidator } from '../../core/validators';
 import { LocationValidator } from '../../core/validators/location-validator';
 import { PhotoRequired } from '../../core/validators/photo-required';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { objectHelpers, formValidators } from '@helpers';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
