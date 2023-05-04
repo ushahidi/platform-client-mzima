@@ -6,7 +6,10 @@ COPY ./package.json ./package-lock.json ./
 
 RUN npm install
 COPY . ./
-RUN npm run web:build
+
+# use build_target="web:devbuild" for development build
+ARG build_target=web:build
+RUN npm run ${build_target}
 
 FROM nginx
 ENV DOCKERIZE_VERSION v0.6.1

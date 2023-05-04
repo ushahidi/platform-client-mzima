@@ -218,17 +218,14 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'upload'">
-              <mzima-client-button
-                [expand]="false"
-                (buttonClick)="fileInput.click()"
-                [data-qa]="'btn-post-item-upload'"
+              <app-image-uploader
+                [formControlName]="field.key"
+                [hasCaption]="field.config.hasCaption"
+                [requiredError]="
+                  form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                "
               >
-                {{ 'post.media.add_photo' | translate }}
-                <mat-icon icon svgIcon="plus"></mat-icon>
-              </mzima-client-button>
-              <input hidden #fileInput type="file" id="file" [formControlName]="field.key" />
-              <br />
-              <br />
+              </app-image-uploader>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'video'">
@@ -347,6 +344,7 @@
           color="secondary"
           [data-qa]="'btn-post-item-previous'"
           (buttonClick)="previousPage()"
+          [disabled]="form.disabled"
         >
           {{ 'app.cancel' | translate }}
         </mzima-client-button>
@@ -354,6 +352,7 @@
           [disabled]="form.invalid"
           type="submit"
           [data-qa]="'btn-post-item-submit'"
+          [disabled]="form.disabled || form.invalid"
         >
           {{ 'app.submit' | translate }}
         </mzima-client-button>
