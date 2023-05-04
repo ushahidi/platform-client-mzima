@@ -1,11 +1,23 @@
-import { ApiResponse } from './api-response.interface';
+import { ApiNResponse } from './api-response.interface';
 import { CategoryInterface } from './category.interface';
 import * as GeoJSON from '../../../../../node_modules/@types/geojson/index';
 
-export interface GeoJsonPostsResponse {
-  features: GeoJSON.Feature[];
-  total: number;
-  type: GeoJSON.GeoJsonTypes;
+export interface GeoJsonPostsResponse extends ApiNResponse {
+  count: number;
+  results: GeoJsonItem[];
+}
+
+export interface GeoJsonItem {
+  data_source_message_id: string;
+  description: string;
+  geojson: {
+    features: GeoJSON.Feature[];
+    type: GeoJSON.GeoJsonTypes;
+  };
+  id: number;
+  'marker-color': string;
+  source: string;
+  title: string;
 }
 
 export interface GeoJsonFilter {
@@ -52,7 +64,7 @@ export interface PostPropertiesUser {
   gravatar?: string;
   realname?: string;
 }
-export interface PostApiResponse extends ApiResponse {
+export interface PostApiResponse extends ApiNResponse {
   results: PostResult[];
 }
 
@@ -107,7 +119,7 @@ interface PostForm {
   url: string;
 }
 
-interface PostContent {
+export interface PostContent {
   description?: string;
   fields: PostContentField[];
   form_id: number;
@@ -119,6 +131,23 @@ interface PostContent {
   task_is_internal_only: boolean;
   translations: any[];
   type: string;
+}
+
+interface PostStatsItem {
+  id: number;
+  label: string;
+  source: string;
+  total: number;
+}
+
+interface PostStatistics {
+  group_by_meta: { group_by: string };
+  group_by_total_posts: PostStatsItem[];
+  total_posts: number;
+  unmapped: number;
+}
+export interface PostStatsResponse {
+  result: PostStatistics;
 }
 
 interface PostContentField {

@@ -28,13 +28,16 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   SurveysService,
   PostsService,
-  PostsV5Service,
   GeoJsonFilter,
   PostResult,
+  MediaService,
 } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
 import { AlphanumericValidatorValidator } from '../../core/validators/alphanumeric';
+import { PhotoRequired } from '../../core/validators/photo-required';
+import { lastValueFrom } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -76,14 +79,15 @@ export class PostEditComponent implements OnInit, OnChanges {
     private route: ActivatedRoute,
     private surveysService: SurveysService,
     private formBuilder: FormBuilder,
-    private postsV5Service: PostsV5Service,
-    private postsV3Service: PostsService,
+    private postsService: PostsService,
     private router: Router,
     private translate: TranslateService,
     private confirmModalService: ConfirmModalService,
     private eventBusService: EventBusService,
     private location: Location,
     private breakpointService: BreakpointService,
+    private mediaService: MediaService,
+    private snackBar: MatSnackBar,
   ) {
     this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
@@ -100,6 +104,9 @@ export class PostEditComponent implements OnInit, OnChanges {
       }
       if (params.get('id')) {
         this.postId = Number(params.get('id'));
+        this.postsService.lockPost(this.postId).subscribe((p) => {
+          console.log('Post locked: ', p);
+        });
         this.loadPostData(this.postId);
       }
     });
@@ -118,7 +125,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private loadPostData(postId: number) {
-    this.postsV5Service.getById(postId).subscribe({
+    this.postsService.getById(postId).subscribe({
       next: (post) => {
         this.formId = post.form_id;
         this.post = post;
@@ -190,8 +197,23 @@ export class PostEditComponent implements OnInit, OnChanges {
     this.form.patchValue({ [key]: value?.value });
   }
 
-  private handleUpload(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value });
+  private async handleUpload(key: string, value: any) {
+    if (!value?.value) return;
+    try {
+      const uploadObservable = this.mediaService.getById(value.value);
+      const response: any = await lastValueFrom(uploadObservable);
+
+      this.form.patchValue({
+        [key]: {
+          id: value.value,
+          caption: response.caption,
+          photo: response.original_file_url,
+        },
+      });
+    } catch (error: any) {
+      this.form.patchValue({ [key]: null });
+      throw new Error(`Error fetching file: ${error.message}`);
+    }
   }
 
   private handleVideo(key: string, value: any) {
@@ -211,7 +233,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleCheckbox(key: string, value: any) {
-    const data = value?.value?.map((val: { id: any }) => val?.id);
+    const data = value?.value;
     this.form.patchValue({ [key]: data });
   }
 
@@ -314,6 +336,11 @@ export class PostEditComponent implements OnInit, OnChanges {
           AlphanumericValidatorValidator(),
         );
         break;
+      case 'media':
+        if (field.required) {
+          validators.push(PhotoRequired());
+        }
+        break;
       default:
         if (field.required) {
           validators.push(Validators.required);
@@ -327,10 +354,10 @@ export class PostEditComponent implements OnInit, OnChanges {
     return field.options.filter((option: any) => option.parent_id === parent_id);
   }
 
-  preparationData(): any {
+  async preparationData(): Promise<any> {
     for (const task of this.tasks) {
-      task.fields = task.fields.map(
-        (field: { key: string | number; input: string; type: string }) => {
+      task.fields = await Promise.all(
+        task.fields.map(async (field: { key: string | number; input: string; type: string }) => {
           let value: any = {
             value: this.form.value[field.key],
           };
@@ -369,7 +396,28 @@ export class PostEditComponent implements OnInit, OnChanges {
                 : {};
               break;
             case 'upload':
-              value.value = this.form.value[field.key] || null;
+              if (this.form.value[field.key].upload && this.form.value[field.key].photo) {
+                try {
+                  const uploadObservable = this.mediaService.uploadFile(
+                    this.form.value[field.key].photo,
+                    this.form.value[field.key].caption,
+                  );
+                  const response: any = await lastValueFrom(uploadObservable);
+                  value.value = response.id;
+                } catch (error: any) {
+                  throw new Error(`Error uploading file: ${error.message}`);
+                }
+              } else if (this.form.value[field.key].delete && this.form.value[field.key].id) {
+                try {
+                  const deleteObservable = this.mediaService.delete(this.form.value[field.key].id);
+                  await lastValueFrom(deleteObservable);
+                  value.value = null;
+                } catch (error: any) {
+                  throw new Error(`Error deleting file: ${error.message}`);
+                }
+              } else {
+                value.value = this.form.value[field.key].id;
+              }
               break;
           }
 
@@ -377,7 +425,7 @@ export class PostEditComponent implements OnInit, OnChanges {
             ...field,
             value,
           };
-        },
+        }),
       );
     }
   }
@@ -386,7 +434,12 @@ export class PostEditComponent implements OnInit, OnChanges {
     if (this.form.disabled) return;
     this.form.disable();
 
-    this.preparationData();
+    try {
+      await this.preparationData();
+    } catch (error: any) {
+      this.snackBar.open(error, 'Close', { panelClass: ['error'], duration: 3000 });
+      return;
+    }
 
     const postData = {
       base_language: 'en',
@@ -408,7 +461,7 @@ export class PostEditComponent implements OnInit, OnChanges {
 
     if (this.postId) {
       postData.post_date = this.post.post_date || new Date().toISOString();
-      this.postsV5Service.update(this.postId, postData).subscribe({
+      this.postsService.update(this.postId, postData).subscribe({
         error: () => this.form.enable(),
         complete: async () => {
           await this.postComplete();
@@ -416,7 +469,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       });
     } else {
       if (!this.atLeastOneFieldHasValidationError) {
-        this.postsV5Service.post(postData).subscribe({
+        this.postsService.post(postData).subscribe({
           error: () => this.form.enable(),
           complete: async () => {
             await this.postComplete();
@@ -556,7 +609,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       'status[]': [],
     };
     this.isSearching = true;
-    this.postsV3Service.getPosts('', params).subscribe({
+    this.postsService.getPosts('', params).subscribe({
       next: (data) => {
         this.relatedPosts = data.results;
         this.isSearching = false;

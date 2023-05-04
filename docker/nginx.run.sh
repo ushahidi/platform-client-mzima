@@ -8,8 +8,10 @@ fi
 
 # patch in frontend configuration
 if [ -z "$BACKEND_URL" ]; then
-  echo "ERROR! You must provide a BACKEND_URL variable pointing at an ushahidi API host"
-  exit 1
+  if [ -z "$MULTISITE_DOMAIN" ]; then
+    echo "ERROR! You must provide a BACKEND_URL or MULTISITE_DOMAIN variable pointing at an ushahidi API host"
+    exit 1
+  fi
 fi
 
 if [ -f /opt/docker/env.json.template ]; then
