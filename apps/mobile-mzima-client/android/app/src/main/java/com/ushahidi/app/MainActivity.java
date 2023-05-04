@@ -1,4 +1,4 @@
-package com.ushahidi.app;
+package com.ushahidi.mobile;
 
 import com.getcapacitor.BridgeActivity;
 

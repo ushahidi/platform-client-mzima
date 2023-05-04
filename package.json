@@ -12,10 +12,8 @@
     "mobile:add-ios": "nx run mobile-mzima-client:cap:add-ios",
     "mobile:add-android": "nx run mobile-mzima-client:cap:add-android",
     "mobile:sync": "nx run mobile-mzima-client:cap:sync",
-    "mobile:open-ios": "nx run mobile-mzima-client:cap:open-ios",
-    "mobile:open-android": "nx run mobile-mzima-client:cap:open-android",
-    "mobile:run-ios": "nx run mobile-mzima-client:cap:run-ios",
-    "mobile:run-android": "nx run mobile-mzima-client:cap:run-android",
+    "mobile:ios": "nx run mobile-mzima-client:cap:ios",
+    "mobile:android": "nx run mobile-mzima-client:cap:android",
     "postinstall": "ngcc --properties es2020 browser module main",
     "prepare": "husky install",
     "nx": "nx"

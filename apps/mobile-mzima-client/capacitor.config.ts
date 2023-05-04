@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   // need change to app id before publish
-  appId: 'com.ushahidi.app',
+  appId: 'com.ushahidi.mobile',
   appName: 'Ushahidi',
   webDir: '../../dist/apps/mobile-mzima-client',
   bundledWebRuntime: false,
@@ -12,10 +12,8 @@ const config: CapacitorConfig = {
       launchAutoHide: true,
       backgroundColor: '#000000',
       androidScaleType: 'CENTER_CROP',
-      iosContentMode: 'scaleAspectFill',
-      showSpinner: false,
-      spinnerStyle: 'lines',
-      webShowSpinner: false,
+      splashFullScreen: true,
+      splashImmersive: true,
     },
   },
 };
