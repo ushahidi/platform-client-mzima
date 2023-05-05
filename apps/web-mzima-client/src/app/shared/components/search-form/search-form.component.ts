@@ -64,7 +64,6 @@ export class SearchFormComponent implements OnInit {
   private readonly searchSubject = new Subject<string>();
   public citiesOptions = new BehaviorSubject<any[]>([]);
   public notShownPostsCount: number;
-  public showSources: boolean;
   public isLoggedIn = false;
   public isMainFiltersOpen = true;
   public surveysLoaded: boolean;
@@ -376,24 +375,9 @@ export class SearchFormComponent implements OnInit {
 
         this.surveyList.map((survey) => (survey.total = survey.total || 0));
 
-        values.map((value: any) => {
-          const survey = this.surveyList.find((s) => s.id === value.id);
-          if (!survey) return;
-          survey.total = (survey.total || 0) + value.total;
-        });
-
-        // this.total = this.total || this.getTotal(this.surveyList);
-
-        this.sources.map(
-          (source) =>
-            (source.total = values
-              .filter((value: any) => value.source === source.value)
-              .reduce((acc: any, value: any) => acc + value.total, 0)),
-        );
+        this.calculateCounters(values);
 
         this.surveysLoaded = true;
-
-        this.showSources = !!this.sources?.find((source) => source.total > 0);
       },
       error: (err) => {
         if (err.message.match(/Http failure response for/)) {
@@ -403,35 +387,38 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
+  private calculateCounters(values: any) {
+    if (this.surveyList?.length) {
+      this.surveyList.map((survey) => (survey.total = 0));
+      values.map((value: any) => {
+        const survey = this.surveyList.find((s) => s.id === value.id);
+        if (!survey) return;
+        if (this.form.controls['source'].value.includes(value.source)) {
+          // Exclude unchecked sources
+          survey.total = (survey.total || 0) + value.total;
+        }
+      });
+
+      // this.total = this.getTotal(this.surveyList);
+    }
+
+    if (this.sources?.length) {
+      this.sources.map(
+        (src) =>
+          (src.total = values
+            .filter((value: any) => value.source === src.value)
+            .filter((value: any) => this.form.controls['form'].value.includes(value.id)) // Exclude unchecked surveys
+            .reduce((acc: any, value: any) => acc + value.total, 0)),
+      );
+    }
+  }
+
   public getPostsStatistic(): Observable<any> {
     return this.postsService.getPostStatistics().pipe(
       map((res) => {
         this.notShownPostsCount = res.result.unmapped;
         const values = res.result.group_by_total_posts;
-        if (this.surveyList?.length) {
-          this.surveyList.map((survey) => (survey.total = 0));
-          values.map((value: any) => {
-            const survey = this.surveyList.find((s) => s.id === value.id);
-            if (!survey) return;
-            if (this.form.controls['source'].value.includes(value.source)) {
-              // Exclude unchecked sources
-              survey.total = (survey.total || 0) + value.total;
-            }
-          });
-
-          // this.total = this.getTotal(this.surveyList);
-        }
-
-        if (this.sources?.length) {
-          this.sources.map(
-            (src) =>
-              (src.total = values
-                .filter((value: any) => value.source === src.value)
-                .filter((value: any) => this.form.controls['form'].value.includes(value.id)) // Exclude unchecked surveys
-                .reduce((acc: any, value: any) => acc + value.total, 0)),
-          );
-        }
-
+        this.calculateCounters(values);
         return res;
       }),
     );
