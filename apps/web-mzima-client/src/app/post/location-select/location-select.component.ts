@@ -148,7 +148,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
     // Listen event markgeocode from geocoder
     this.geocoderControl.on('markgeocode', (e: any) => {
       this.location = e.geocode.center;
-      console.log(this.location);
       this.addMarker();
       this.map.fitBounds(e.geocode.bbox);
       this.enableSubmitButtonOnGeocode();
@@ -165,7 +164,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
     }).addTo(this.map);
 
     this.mapMarker.on('dragend', (e) => {
-      console.log('dragend');
       this.location = e.target.getLatLng();
       this.cdr.detectChanges();
     });
