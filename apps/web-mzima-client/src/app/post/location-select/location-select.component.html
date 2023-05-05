@@ -9,33 +9,54 @@
     (leafletMapReady)="onMapReady($event)"
     [leafletFitBoundsOptions]="fitBoundsOptions"
   ></div>
-
-  <form class="search-form">
-    <mat-form-field appearance="outline">
-      <input matInput placeholder="Search for addresses, place names, or coordinates..." />
-    </mat-form-field>
-  </form>
+  <button type="button" class="btn-current-location" (click)="getCurrentLocation()">
+    <mat-icon class="btn-current-location_icon" svgIcon="current-location"></mat-icon>
+  </button>
 </div>
 
 <span class="instructions">
-  You can search or click the area of map where you want to place the marker.
+  {{ 'post.location.you_can_search_or_click' | translate }}
 </span>
-<mat-grid-list cols="1" gutterSize="5" rowHeight="84" *ngIf="location">
-  <mat-grid-tile>
-    <div class="form-row">
-      <mat-label>Lat</mat-label>
-      <mat-form-field appearance="outline">
-        <input matInput [(ngModel)]="location.lat" />
-      </mat-form-field>
-    </div>
-  </mat-grid-tile>
+<div *ngIf="location">
+  <div class="form-row">
+    <mat-label>Lat</mat-label>
+    <mat-form-field
+      appearance="outline"
+      [ngClass]="{ 'location-error': noLetterLat || emptyFieldLat }"
+    >
+      <input
+        matInput
+        [(ngModel)]="location.lat"
+        (ngModelChange)="changeCoords()"
+        (focusout)="onFocusOut()"
+      />
+    </mat-form-field>
+    <p *ngIf="noLetterLat" class="location-error">
+      {{ 'post.location.errors.decimal_lat' | translate }}
+    </p>
+    <p *ngIf="emptyFieldLat" class="location-error">
+      {{ 'post.location.errors.empty_lat' | translate }}
+    </p>
+  </div>
 
-  <mat-grid-tile>
-    <div class="form-row">
-      <mat-label>Long</mat-label>
-      <mat-form-field appearance="outline">
-        <input matInput [(ngModel)]="location.lng" />
-      </mat-form-field>
-    </div>
-  </mat-grid-tile>
-</mat-grid-list>
+  <div class="form-row">
+    <mat-label>Long</mat-label>
+    <mat-form-field
+      appearance="outline"
+      [ngClass]="{ 'location-error': noLetterLng || emptyFieldLng }"
+    >
+      <input
+        matInput
+        [(ngModel)]="location.lng"
+        (ngModelChange)="changeCoords()"
+        (focusout)="onFocusOut()"
+      />
+    </mat-form-field>
+    <p *ngIf="noLetterLng" class="location-error">
+      {{ 'post.location.errors.decimal_lng' | translate }}
+    </p>
+    <p *ngIf="emptyFieldLng" class="location-error">
+      {{ 'post.location.errors.empty_lng' | translate }}
+    </p>
+  </div>
+</div>

@@ -25,20 +25,79 @@
   margin-bottom: 8px;
 }
 
-.search-form {
-  top: 16px;
-  left: 16px;
-  right: 16px;
+.btn-current-location {
+  bottom: 80px;
+  left: 10px;
+  width: 33px;
+  height: 33px;
   z-index: 50;
   position: absolute;
+  background-color: #fff;
+  padding: 2px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  box-shadow: 0 0 2px rgb(0 0 0 / 12%), 0 2px 2px rgb(0 0 0 / 24%);
+  cursor: pointer;
+
+  &_icon {
+    font-size: 24px;
+  }
+}
+
+.location-error {
+  color: var(--color-accent);
 
   &::ng-deep {
-    .mat-form-field-appearance-outline {
-      .mat-form-field-wrapper {
-        padding-bottom: 0;
+    .mat-form-field-outline-thick {
+      .mat-form-field-outline-end {
+        border-color: transparent;
       }
+    }
+  }
+
+  & input {
+    border: 1px solid var(--color-accent);
+  }
+}
+
+::ng-deep {
+  .leaflet-top.leaflet-left {
+    width: 100%;
+  }
+
+  .leaflet-touch .leaflet-control-geocoder {
+    top: 16px;
+    left: 16px;
+    padding: 7px;
+    right: 16px;
+    z-index: 50;
+    position: absolute;
+    border-radius: 4px;
+    box-shadow: 0 0 2px rgb(0 0 0 / 12%), 0 2px 2px rgb(0 0 0 / 24%);
+    margin: 0;
+    border: none;
+  }
+
+  .leaflet-control-geocoder-form {
+    width: calc(100% - 30px);
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .leaflet-control-geocoder-alternatives {
+    width: 100%;
+
+    li {
+      display: flex;
+      position: relative;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      padding: 5px 16px;
+      user-select: none;
+      cursor: pointer;
+      min-height: 48px;
     }
   }
 }

@@ -32,9 +32,11 @@ import {
   PostResult,
   MediaService,
 } from '@mzima-client/sdk';
+import { LatLngLiteral } from 'leaflet';
+import { LocationValidator } from '../../core/validators/location-validator';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
-import { AlphanumericValidatorValidator } from '../../core/validators/alphanumeric';
+import { AlphanumericValidatorValidator } from '../../core/validators';
 import { PhotoRequired } from '../../core/validators/photo-required';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -74,6 +76,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   public isDesktop: boolean;
   public atLeastOneFieldHasValidationError: boolean;
   public formValidator = new formValidators.FormValidator();
+  public locationValue: LatLngLiteral;
 
   constructor(
     private route: ActivatedRoute,
@@ -167,7 +170,7 @@ export class PostEditComponent implements OnInit, OnChanges {
                   (field.input === 'date'
                     ? new Date()
                     : field.input === 'location'
-                    ? { lat: -1.28569, lng: 36.832324 }
+                    ? { lat: '', lng: '' }
                     : field.input === 'number'
                     ? 0
                     : '');
@@ -186,6 +189,10 @@ export class PostEditComponent implements OnInit, OnChanges {
         }
       },
     });
+  }
+
+  public changeLocation({ lat, lng }: LatLngLiteral, formKey: string) {
+    this.form.patchValue({ [formKey]: { lat, lng } });
   }
 
   private handleTags(key: string, value: any) {
@@ -314,7 +321,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     );
   }
 
-  private addFormControl(value: string, field: any): FormControl {
+  private addFormControl(value: any, field: any): FormControl {
     if (field.input === 'video') {
       const videoValidators = [];
       if (field.required) {
@@ -322,6 +329,16 @@ export class PostEditComponent implements OnInit, OnChanges {
       }
       videoValidators.push(this.formValidator.videoValidator);
       return new FormControl(value, videoValidators);
+    }
+
+    if (field.input === 'location') {
+      this.locationValue = value;
+      const locationValidators = [];
+      if (field.required) {
+        locationValidators.push(Validators.required);
+      }
+      locationValidators.push(LocationValidator());
+      return new FormControl(value, locationValidators);
     }
 
     const validators: ValidatorFn[] = [];
