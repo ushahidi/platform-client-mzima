@@ -5,7 +5,6 @@ import {
   EventEmitter,
   forwardRef,
   Input,
-  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -30,8 +29,10 @@ import 'leaflet.markercluster';
 import { pointIcon } from '../../core/helpers/map';
 import { decimalPattern } from '../../core/helpers/regex';
 import Geocoder from 'leaflet-control-geocoder';
-import { fromEvent, filter, debounceTime, distinctUntilChanged, tap, Subscription } from 'rxjs';
+import { fromEvent, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-location-select',
   templateUrl: './location-select.component.html',
@@ -44,7 +45,7 @@ import { fromEvent, filter, debounceTime, distinctUntilChanged, tap, Subscriptio
     },
   ],
 })
-export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy {
+export class LocationSelectComponent implements OnInit, AfterViewInit {
   @Input() public center: LatLngLiteral;
   @Input() public zoom: number;
   @Input() public location: LatLngLiteral;
@@ -71,7 +72,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
   public leafletOptions: MapOptions;
   public disabled = false;
   public geocoderControl: any;
-  private geocoderSubscription?: Subscription;
 
   constructor(
     private sessionService: SessionService,
@@ -103,7 +103,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
   ngAfterViewInit() {
     // change tracking for search when entering text in geocoder search input (and debounce to reduce geocoding requests sent)
     const geocoderInputElement = this.geocoderControl.getContainer().querySelector('input');
-    this.geocoderSubscription = fromEvent(geocoderInputElement, 'input')
+    fromEvent(geocoderInputElement, 'input')
       .pipe(
         filter(Boolean),
         debounceTime(600),
@@ -113,12 +113,9 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
           this.geocoderControl._input.value = geocoderInputElement.value;
           this.geocoderControl._geocode();
         }),
+        untilDestroyed(this),
       )
       .subscribe();
-  }
-
-  ngOnDestroy() {
-    this.geocoderSubscription?.unsubscribe();
   }
 
   private getMapConfigurations(): MapConfigInterface {
