@@ -692,7 +692,7 @@ export class SearchFormComponent implements OnInit {
 
   public clearFilter(filterName: string): void {
     this.total = 0;
-    if (filterName === 'form') {
+    if (filterName === 'form' || filterName === 'source') {
       this.form.controls[filterName].patchValue(['none']);
     } else {
       this.form.controls[filterName].patchValue('');
