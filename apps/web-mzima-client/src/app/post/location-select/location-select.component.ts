@@ -216,8 +216,17 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
 
   public enableSubmitButtonOnGeocode() {
     const locationFieldsKey = this.parent.form.get(this.parent.latFieldsKey);
+
+    // Check error object
+    const errorObj = locationFieldsKey?.errors!;
+    for (const value in errorObj) {
+      if (value === 'emptyLocation') delete errorObj[value];
+    }
+    const err = Object.keys(errorObj).length === 0 ? null : errorObj;
+
+    // Enable submit button
     locationFieldsKey?.markAsTouched();
-    this.parent.form.controls[this.parent.latFieldsKey].setErrors(null); // TODO: Do better checks based on concerns expressed in https://stackoverflow.com/questions/43553544/how-can-i-manually-set-an-angular-form-field-as-invalid/46369930#46369930
+    this.parent.form.controls[this.parent.latFieldsKey].setErrors(err);
   }
 
   // TODO 4: Validation check
