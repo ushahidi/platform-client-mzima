@@ -1,29 +1,29 @@
 module.exports = {
-  "extends": ["../../.eslintrc.js"],
-  "ignorePatterns": ["!**/*"],
-  "overrides": [
+  extends: ['../../.eslintrc.js'],
+  ignorePatterns: ['!**/*'],
+  overrides: [
     {
-      "files": ["*.ts"],
-      "parserOptions": {
-        "project": ['apps/web-mzima-client/tsconfig.json'],
-        "createDefaultProgram": true,
+      files: ['*.ts'],
+      parserOptions: {
+        project: ['apps/web-mzima-client/tsconfig.json'],
+        createDefaultProgram: true,
       },
-      "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
+      rules: {
+        '@angular-eslint/directive-selector': [
+          'error',
           {
-            "type": "attribute",
-            "prefix": "mzimaClient",
-            "style": "camelCase"
-          }
+            type: 'attribute',
+            prefix: 'mzimaClient',
+            style: 'camelCase',
+          },
         ],
-        "@angular-eslint/component-selector": [
-          "error",
+        '@angular-eslint/component-selector': [
+          'error',
           {
-            "type": "element",
-            "prefix": "mzima-client",
-            "style": "kebab-case"
-          }
+            type: 'element',
+            prefix: 'mzima-client',
+            style: 'kebab-case',
+          },
         ],
         '@typescript-eslint/no-unused-expressions': 'off',
         '@typescript-eslint/lines-between-class-members': 'off',
@@ -35,15 +35,12 @@ module.exports = {
         '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
         '@typescript-eslint/no-inferrable-types': 'off',
       },
-      "extends": [
-        "plugin:@nrwl/nx/angular",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ]
+      extends: ['plugin:@nx/angular', 'plugin:@angular-eslint/template/process-inline-templates'],
     },
     {
-      "files": ["*.html"],
-      "extends": ["plugin:@nrwl/nx/angular-template"],
-      "rules": {}
-    }
-  ]
-}
+      files: ['*.html'],
+      extends: ['plugin:@nx/angular-template'],
+      rules: {},
+    },
+  ],
+};

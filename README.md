@@ -27,17 +27,17 @@ Before invoking the capacitor commands, you must go into the folders of the `mob
 
 Run `npm run mobile:serve` - "nx run mobile-mzima-client:serve",
 
-Run `npm run mobile:add` - "nx run mobile-mzima-client:cap:add",
+Run `npm run mobile:build` - "nx run mobile-mzima-client:build",
+
+Run `npm run mobile:add-ios` - "nx run mobile-mzima-client:cap:add-ios",
+
+Run `npm run mobile:add-android` - "nx run mobile-mzima-client:cap:add-android",
 
 Run `npm run mobile:sync` - "nx run mobile-mzima-client:cap:sync",
 
-Run `npm run mobile:open-ios` - "nx run mobile-mzima-client:cap:open-ios",
+Run `npm run mobile:ios` - "nx run mobile-mzima-client:cap:ios",
 
-Run `npm run mobile:open-android` - "nx run mobile-mzima-client:cap:open-android",
-
-Run `npm run mobile:run-ios` - "nx run mobile-mzima-client:cap:run-ios",
-
-Run `npm run mobile:run-android` - "nx run mobile-mzima-client:cap:run-android"
+Run `npm run mobile:android` - "nx run mobile-mzima-client:cap:android",
 
 ## Understand this workspace
 

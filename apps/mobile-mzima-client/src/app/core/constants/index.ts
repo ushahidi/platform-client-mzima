@@ -1,0 +1,1 @@
+export { CONST } from './test';

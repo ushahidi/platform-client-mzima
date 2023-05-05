@@ -99,7 +99,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "apps/web-mzima-client/src/**/*.ts",
@@ -108,7 +108,7 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["coverage/apps/web-mzima-client"],
       "options": {
         "jestConfig": "apps/web-mzima-client/jest.config.ts",

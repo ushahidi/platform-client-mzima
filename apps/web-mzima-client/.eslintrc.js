@@ -9,7 +9,7 @@ module.exports = {
         createDefaultProgram: true,
       },
       extends: [
-        'plugin:@nrwl/nx/angular',
+        'plugin:@nx/angular',
         'plugin:@angular-eslint/template/process-inline-templates',
         'plugin:@angular-eslint/recommended',
       ],
@@ -43,7 +43,7 @@ module.exports = {
     },
     {
       files: ['*.html'],
-      extends: ['plugin:@nrwl/nx/angular-template'],
+      extends: ['plugin:@nx/angular-template'],
       rules: {},
     },
   ],

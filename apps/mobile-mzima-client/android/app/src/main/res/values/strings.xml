@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Ushahidi</string>
+    <string name="title_activity_main">Ushahidi</string>
+    <string name="package_name">com.ushahidi.mobile</string>
+    <string name="custom_url_scheme">com.ushahidi.mobile</string>
+</resources>

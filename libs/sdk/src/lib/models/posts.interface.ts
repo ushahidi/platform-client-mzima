@@ -1,5 +1,6 @@
 import { ApiNResponse } from './api-response.interface';
 import { CategoryInterface } from './category.interface';
+import * as GeoJSON from 'geojson';
 
 export interface GeoJsonPostsResponse extends ApiNResponse {
   count: number;

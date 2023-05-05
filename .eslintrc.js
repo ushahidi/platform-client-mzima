@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   ignorePatterns: ['**/*'],
-  plugins: ['@nrwl/nx'],
+  plugins: ['@nx'],
   overrides: [
     {
       files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
@@ -17,7 +17,7 @@ module.exports = {
         },
       },
       rules: {
-        '@nrwl/nx/enforce-module-boundaries': [
+        '@nx/enforce-module-boundaries': [
           'error',
           {
             enforceBuildableLibDependency: true,
@@ -35,7 +35,7 @@ module.exports = {
     {
       files: ['*.ts', '*.tsx'],
       extends: [
-        'plugin:@nrwl/nx/typescript',
+        'plugin:@nx/typescript',
         'airbnb-typescript/base',
         'plugin:prettier/recommended',
         'prettier',
@@ -56,7 +56,7 @@ module.exports = {
     },
     {
       files: ['*.js', '*.jsx'],
-      extends: ['plugin:@nrwl/nx/javascript'],
+      extends: ['plugin:@nx/javascript'],
       rules: {},
     },
     {

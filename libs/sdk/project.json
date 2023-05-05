@@ -6,7 +6,7 @@
   "prefix": "mzima-client",
   "targets": {
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["coverage/libs/sdk"],
       "options": {
         "jestConfig": "libs/sdk/jest.config.ts",
@@ -14,7 +14,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": ["libs/sdk/**/*.ts", "libs/sdk/**/*.html"]
       }
