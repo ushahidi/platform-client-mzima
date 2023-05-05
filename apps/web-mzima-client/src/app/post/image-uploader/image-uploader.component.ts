@@ -1,8 +1,9 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
+import { AlphanumericValidatorValidator } from '../../core/validators';
 
 @Component({
   selector: 'app-image-uploader',
@@ -20,7 +21,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
   @Input() public hasCaption: boolean;
   @Input() public requiredError?: boolean;
   id?: number;
-  caption: string;
+  captionControl = new FormControl('', AlphanumericValidatorValidator());
   photo: File | null;
   preview: string | SafeUrl | null;
   isDisabled = false;
@@ -37,7 +38,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
   writeValue(obj: any): void {
     if (obj) {
       this.upload = false;
-      this.caption = obj.caption;
+      this.captionControl.patchValue(obj.caption);
       this.id = obj.id;
       this.photo = this.preview = obj.photo;
     }
@@ -62,7 +63,12 @@ export class ImageUploaderComponent implements ControlValueAccessor {
       this.photo = inputElement.files[0];
       this.upload = true;
       this.preview = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.photo));
-      this.onChange({ caption: this.caption, photo: this.photo, id: this.id, upload: this.upload });
+      this.onChange({
+        caption: this.captionControl.value,
+        photo: this.photo,
+        id: this.id,
+        upload: this.upload,
+      });
       this.id = undefined;
       inputElement.value = '';
     }
@@ -77,10 +83,21 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     if (!confirmed) return;
 
     this.photo = this.preview = null;
-    this.onChange({ caption: this.caption, photo: this.photo, id: this.id, delete: true });
+    this.onChange({
+      caption: this.captionControl.value,
+      photo: this.photo,
+      id: this.id,
+      delete: true,
+    });
   }
 
   captionChanged() {
-    this.onChange({ caption: this.caption, photo: this.photo, id: this.id, upload: this.upload });
+    console.log(this.captionControl.value);
+    this.onChange({
+      caption: this.captionControl.value,
+      photo: this.photo,
+      id: this.id,
+      upload: this.upload,
+    });
   }
 }

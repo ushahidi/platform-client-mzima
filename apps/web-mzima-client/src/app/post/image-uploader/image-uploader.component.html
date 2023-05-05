@@ -41,7 +41,17 @@
   <div class="form-row" *ngIf="hasCaption">
     <mat-label>{{ 'post.media.add_caption' | translate }}</mat-label>
     <mat-form-field appearance="outline">
-      <input matInput [(ngModel)]="caption" (change)="captionChanged()" [disabled]="!!id" />
+      <input
+        matInput
+        [formControl]="captionControl"
+        (change)="captionChanged()"
+        [disabled]="!!id"
+      />
     </mat-form-field>
+    <mat-error>
+      <p *ngIf="captionControl?.hasError('specialCharacters')">
+        This field contains special characters
+      </p>
+    </mat-error>
   </div>
 </div>
