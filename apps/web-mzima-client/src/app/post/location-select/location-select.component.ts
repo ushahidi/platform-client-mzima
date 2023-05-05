@@ -212,16 +212,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
 
   public enableSubmitButtonOnGeocode() {
     const locationFieldsKey = this.parent.form.get(this.parent.latFieldsKey);
-
-    // Check error object
-    const errorObj = locationFieldsKey?.errors!;
-    for (const value in errorObj) {
-      if (value === 'emptyLocation') delete errorObj[value];
-    }
-    const err = Object.keys(errorObj).length === 0 ? null : errorObj;
-
-    // Enable submit button
     locationFieldsKey?.markAsTouched();
-    this.parent.form.controls[this.parent.latFieldsKey].setErrors(err);
+    this.parent.form.controls[this.parent.latFieldsKey].setErrors(null);
   }
 }
