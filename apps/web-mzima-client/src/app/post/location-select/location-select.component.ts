@@ -211,6 +211,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   public onFocusOut() {
+    this.checkErrors();
     this.zoomAndConnectGeocoderToMap();
   }
 
@@ -228,6 +229,4 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
     locationFieldsKey?.markAsTouched();
     this.parent.form.controls[this.parent.latFieldsKey].setErrors(err);
   }
-
-  // TODO 4: Validation check
 }
