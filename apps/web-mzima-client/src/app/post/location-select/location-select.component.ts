@@ -220,7 +220,5 @@ export class LocationSelectComponent implements OnInit, AfterViewInit, OnDestroy
     this.parent.form.controls[this.parent.latFieldsKey].setErrors(null); // TODO: Do better checks based on concerns expressed in https://stackoverflow.com/questions/43553544/how-can-i-manually-set-an-angular-form-field-as-invalid/46369930#46369930
   }
 
-  // TODO 3: The refine location name input field should be empty also from start
-
   // TODO 4: Validation check
 }
