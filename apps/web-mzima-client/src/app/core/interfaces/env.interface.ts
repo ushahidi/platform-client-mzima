@@ -10,5 +10,6 @@ export interface EnvConfigInterface {
   export_polling_interval: number;
   gtm_key: string;
   sentry_dsn: string;
+  sentry_environment?: string;
   sentry_debug_mode: boolean;
 }
