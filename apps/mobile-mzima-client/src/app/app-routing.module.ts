@@ -6,6 +6,11 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then((m) => m.TabsPageModule),
   },
+  {
+    path: 'walkthrough',
+    loadChildren: () =>
+      import('./pages/walkthrough/walkthrough.module').then((m) => m.WalkthroughPageModule),
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,46 @@
+<!--<ion-content [fullscreen]="true">-->
+<div class="page">
+  <div class="main">
+    <div class="walktrough-slides__skip-container">
+      <mzima-client-button class="walktrough-slides__skip-button" (buttonClick)="skip()">
+        Skip
+      </mzima-client-button>
+    </div>
+
+    <swiper-container
+      #swiperContainer
+      class="walktrough-slides slides-wrapper"
+      [modules]="swiperModules"
+      (slidechange)="slideChanged()"
+      [pagination]="{clickable: true, dynamicBullets: true}"
+    >
+      <swiper-slide class="walktrough-slide" *ngFor="let slide of sliderData">
+        <div class="walktrough-slide__visual">
+          <img [src]="slide.img" [alt]="slide.title" loading="lazy" />
+        </div>
+        <div class="walktrough-slide__content">
+          <strong class="walktrough-slide__title">{{ slide?.title! }}</strong>
+          <div class="walktrough-slide__description">
+            <p>{{ slide?.description! }}</p>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+    <div class="walktrough-slides__navigation">
+      <mzima-client-button (buttonClick)="slideNext()" *ngIf="currentIndex < sliderData.length -1">
+        NEXT
+        <span class="arrow">></span>
+      </mzima-client-button>
+
+      <mzima-client-button
+        class="walktrough-slides__navigation-button"
+        (buttonClick)="finish()"
+        *ngIf="currentIndex === sliderData.length -1"
+      >
+        ENTER
+        <span class="arrow">></span>
+      </mzima-client-button>
+    </div>
+  </div>
+</div>
+<!--</ion-content>-->

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { WalkthroughGuard } from '../core/guards/walkthrough.guard';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -26,10 +27,15 @@ const routes: Routes = [
       },
     ],
   },
+  // {
+  //   path: '',
+  //   redirectTo: '/tabs/tab1',
+  //   pathMatch: 'full',
+  // },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full',
+    component: TabsPage,
+    canActivate: [WalkthroughGuard],
   },
 ];
 

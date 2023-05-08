@@ -21,7 +21,8 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "paths": {
-      "@mzima-client/sdk": ["libs/sdk/src/index.ts"]
+      "@mzima-client/sdk": ["libs/sdk/src/index.ts"],
+      "@mzima-client/mzima-ui": ["libs/mzima-ui/src/index.ts"]
     },
   },
   "angularCompilerOptions": {
