@@ -20,6 +20,7 @@ export class ButtonComponent {
     | 'custom' = 'primary';
   @Input() public type: 'submit' | 'button' = 'button';
   @Input() public expand: 'block' | 'inline' = 'block';
+  @Input() public size: 'small' | 'default' = 'default';
   @Input() public disabled = false;
   @Output() public buttonClick = new EventEmitter<Event>();
 

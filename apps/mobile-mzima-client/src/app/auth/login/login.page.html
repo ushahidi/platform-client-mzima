@@ -20,12 +20,18 @@
           placeholder="Enter password"
         >
           <div class="forgot-password-button" button>
-            <app-button fill="clear" expand="inline">Forgot password?</app-button>
+            <app-button
+              (click)="openForgotPasswordModal()"
+              fill="clear"
+              expand="inline"
+              size="small"
+              >Forgot password?</app-button
+            >
           </div>
         </app-form-control>
-        <ion-text class="form-error ion-text-center" color="danger"
-          >Password or email is incorrect. Please, try again</ion-text
-        >
+        <ion-text class="form-error ion-text-center" color="danger">
+          Password or email is incorrect. Please, try again
+        </ion-text>
       </div>
 
       <div class="bottom-panel">
@@ -34,3 +40,42 @@
     </form>
   </div>
 </ion-content>
+
+<app-modal class="forgot-password-modal" [isOpen]="isForgotPasswordModalOpen">
+  <div class="forgot-password-modal__header" header>
+    <app-button
+      fill="clear"
+      color="custom"
+      class="forgot-password-modal__back"
+      (click)="isForgotPasswordModalOpen = false"
+    >
+      <app-icon name="arrow-back" slot="icon-only"></app-icon>
+    </app-button>
+    Password recovery
+  </div>
+  <div class="forgot-password-modal__info">
+    <ion-text class="forgot-password-modal__title">Forgot your password?</ion-text>
+    <p>No worries! Submit your email and check your inbox for a reset link.</p>
+  </div>
+  <form
+    class="forgot-password-form"
+    novalidate
+    [formGroup]="forgotPasswordForm"
+    (ngSubmit)="forgotPassword()"
+  >
+    <app-form-control
+      type="email"
+      label="Email"
+      [required]="true"
+      formControlName="email"
+      placeholder="Enter your email"
+    >
+    </app-form-control>
+
+    <div class="bottom-panel">
+      <app-button [disabled]="forgotPasswordForm.invalid || forgotPasswordForm.disabled"
+        >Reset password</app-button
+      >
+    </div>
+  </form>
+</app-modal>

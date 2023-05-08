@@ -1,0 +1,29 @@
+.modal {
+  &__header {
+    &:after {
+      bottom: 0;
+      height: 1px;
+
+      @media (prefers-color-scheme: dark) {
+        background: var(--ion-color-step-400);
+      }
+
+      @media (prefers-color-scheme: light) {
+        background: var(--ion-color-step-600);
+      }
+    }
+  }
+
+  &__toolbar {
+    font-size: 22px;
+    line-height: 28px;
+    --min-height: 64px;
+  }
+
+  &__body {
+    &::part(scroll) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
