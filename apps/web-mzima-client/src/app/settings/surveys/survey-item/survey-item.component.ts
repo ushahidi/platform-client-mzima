@@ -259,7 +259,7 @@ export class SurveyItemComponent implements OnInit {
     const data = JSON.parse(filters);
     if (!data.form.includes(surveyId)) {
       data.form.push(surveyId);
-      localStorage.setItem(this.session.getLocalStorageNameMapper('filters'), JSON.stringify(data));
+      localStorage.setItem(localStorageKey, JSON.stringify(data));
     }
   }
 
