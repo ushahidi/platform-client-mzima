@@ -30,6 +30,7 @@ export function loadSentryFactory(envService: EnvService) {
       Sentry.init({
         dsn: envService.environment.sentry_dsn,
         debug: envService.environment.sentry_debug_mode,
+        environment: envService.environment.sentry_environment || 'default',
         integrations: [
           new BrowserTracing({
             tracePropagationTargets: [],

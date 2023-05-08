@@ -148,6 +148,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
       this.addMarker();
       this.map.fitBounds(e.geocode.bbox);
       this.enableSubmitButtonOnGeocode();
+      this.changeCoords();
     });
   }
 
