@@ -15,7 +15,7 @@ export const WalkthroughSlider = [
     description: 'Find specific posts and quickly organise the data by any criteria you choose.',
   },
   {
-    img: '/assets/images/walkthrow/slide_3.svg',
+    img: '/assets/images/walkthrow/slide_4.svg',
     title: 'Gain offline data collection',
     description: 'Keep collecting and reporting crucial information, even without internet access!',
   },
