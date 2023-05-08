@@ -1,0 +1,36 @@
+<ion-content class="page ion-padding-vertical" [fullscreen]="true">
+  <ion-title class="page-title ion-text-center ion-margin-bottom">Welcome back!</ion-title>
+  <div class="main ion-padding-horizontal">
+    <form class="form" novalidate [formGroup]="form" (ngSubmit)="login()">
+      <div>
+        <app-form-control
+          type="email"
+          label="Email"
+          [required]="true"
+          formControlName="email"
+          placeholder="Enter your email"
+        >
+        </app-form-control>
+        <app-form-control
+          type="password"
+          label="Passsword"
+          [required]="true"
+          [togglePassword]="true"
+          formControlName="password"
+          placeholder="Enter password"
+        >
+          <div class="forgot-password-button" button>
+            <app-button fill="clear" expand="inline">Forgot password?</app-button>
+          </div>
+        </app-form-control>
+        <ion-text class="form-error ion-text-center" color="danger"
+          >Password or email is incorrect. Please, try again</ion-text
+        >
+      </div>
+
+      <div class="bottom-panel">
+        <app-button [disabled]="form.invalid || form.disabled">Log in</app-button>
+      </div>
+    </form>
+  </div>
+</ion-content>
