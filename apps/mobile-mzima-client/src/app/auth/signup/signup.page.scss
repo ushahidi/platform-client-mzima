@@ -1,0 +1,56 @@
+.page {
+  &::part(scroll) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.main {
+  flex: 1 1 100%;
+}
+
+.page-title {
+  font-size: 24px;
+  margin-top: 32px;
+  line-height: 32px;
+  margin-bottom: 24px;
+  font-weight: normal;
+}
+
+.form {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bottom-panel {
+  margin-top: 24px;
+}
+
+.input-group {
+  margin-bottom: 24px;
+}
+
+.agreement {
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  --padding-top: 12px;
+  --padding-left: 6px;
+  --padding-right: 12px;
+  --padding-bottom: 12px;
+
+  @media (prefers-color-scheme: light) {
+    border-color: var(--ion-color-step-300);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    border-color: var(--ion-color-step-400);
+  }
+}
+
+.password-strength {
+  display: block;
+  margin-top: 4px;
+}

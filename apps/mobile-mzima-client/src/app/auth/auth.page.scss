@@ -1,0 +1,34 @@
+.auth-tabs {
+  position: static;
+
+  ion-tab-bar {
+    height: 52px;
+    padding-top: 0;
+  }
+
+  ion-tab-button {
+    font-size: 16px;
+    max-width: none;
+    font-weight: 500;
+
+    @media (prefers-color-scheme: light) {
+      --color: var(--ion-color-step-450);
+      --color-selected: var(--ion-text-color);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      --color: var(--ion-color-step-700);
+    }
+
+    &.tab-selected {
+      box-shadow: inset 0 -3px 0 0 var(--ion-color-primary);
+    }
+  }
+}
+
+.logo {
+  display: block;
+  font-size: 156px;
+  text-align: center;
+  margin: 16px auto 8px;
+}

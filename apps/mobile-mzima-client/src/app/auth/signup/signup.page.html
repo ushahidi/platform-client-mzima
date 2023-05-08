@@ -1,0 +1,57 @@
+<ion-content class="page ion-padding-vertical" [fullscreen]="true">
+  <ion-title class="page-title ion-text-center ion-margin-bottom">Welcome to Ushahidi!</ion-title>
+  <div class="main ion-padding-horizontal">
+    <form class="form" novalidate [formGroup]="form" (ngSubmit)="signUp()">
+      <div>
+        <div class="input-group">
+          <app-form-control
+            label="Name"
+            [required]="true"
+            formControlName="name"
+            placeholder="Enter name"
+            hint="The name you enter will be a display name"
+          >
+          </app-form-control>
+          <app-form-control
+            type="email"
+            label="Email"
+            [required]="true"
+            formControlName="email"
+            placeholder="Enter your email"
+          >
+          </app-form-control>
+          <app-form-control
+            type="password"
+            label="Passsword"
+            [required]="true"
+            [togglePassword]="true"
+            formControlName="password"
+            placeholder="Enter password"
+            [hint]="!form.controls['password'].value?.length ? 'Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol.' : undefined"
+          >
+            <app-password-strength
+              additional
+              *ngIf="form.controls['password'].value?.length"
+              class="password-strength"
+              [passwordToCheck]="form.value.password ?? ''"
+            ></app-password-strength>
+          </app-form-control>
+        </div>
+        <div class="agreement">
+          <app-checkbox formControlName="agreement">
+            I agree to Ushahidi
+            <a (click)="openLink($event, 'Privacy Policy')">Privacy Policy</a> the <br /><a
+              (click)="openLink($event, 'Privacy Policy')"
+              >Terms and Conditions</a
+            >.
+          </app-checkbox>
+        </div>
+      </div>
+
+      <div class="bottom-panel">
+        <app-button [disabled]="form.invalid || form.disabled">Sign up</app-button>
+        <app-button class="ion-margin-top" fill="clear" color="medium">Skip for now</app-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

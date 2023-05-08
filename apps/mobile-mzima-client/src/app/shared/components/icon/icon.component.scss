@@ -1,0 +1,10 @@
+ion-icon {
+  vertical-align: top;
+  display: inline-block;
+}
+
+::ng-deep {
+  app-icon {
+    line-height: 1;
+  }
+}

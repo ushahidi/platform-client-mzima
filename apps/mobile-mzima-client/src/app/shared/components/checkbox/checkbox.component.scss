@@ -1,0 +1,34 @@
+.checkbox {
+  --size: 18px;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 500;
+  --checkbox-background: transparent;
+  padding-top: var(--padding-top, 0);
+  padding-left: var(--padding-left, 0);
+  padding-right: var(--padding-right, 0);
+  padding-bottom: var(--padding-bottom, 0);
+
+  @media (prefers-color-scheme: light) {
+    --border-color: var(--ion-color-step-600);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --border-color: var(--ion-color-step-400);
+  }
+
+  &__text {
+    white-space: normal;
+    pointer-events: auto;
+  }
+
+  &::part(container) {
+    margin: 11px;
+  }
+}
+
+::ng-deep {
+  app-checkbox {
+    display: block;
+  }
+}

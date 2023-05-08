@@ -21,7 +21,11 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "paths": {
-      "@mzima-client/sdk": ["libs/sdk/src/index.ts"]
+      "@mzima-client/sdk": ["libs/sdk/src/index.ts"],
+      "@helpers": ["apps/mobile-mzima-client/src/app/core/helpers"]
+      // "@models": ["apps/web-mzima-client/src/app/core/interfaces"],
+      // "@services": ["apps/web-mzima-client/src/app/core/services"],
+      // "@shared": ["apps/mobile-mzima-client/src/app/shared"],
     },
   },
   "angularCompilerOptions": {
