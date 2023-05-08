@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { CONST } from '@constants';
-import { Roles } from '@enums';
+import { Permissions } from '@enums';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HostGuard implements CanActivate {
   canActivate(): boolean {
-    const role = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`);
-    const hostRoles = [
-      Roles.Admin,
-      Roles.ManageUsers,
-      Roles.ManageSettings,
-      Roles.ManageImportExport,
+    const hostRoles: any[] = [
+      Permissions.ManageUsers,
+      Permissions.ManageSettings,
+      Permissions.ImportExport,
     ];
-    return hostRoles.includes(<Roles>role);
+
+    const permissions = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}permissions`);
+    return !!permissions?.split(',').some((p) => hostRoles.includes(p));
   }
 }
