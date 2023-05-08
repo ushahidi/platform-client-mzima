@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
 import { LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService } from '@services';
+import { BreakpointService, SessionService } from '@services';
 import { AlphanumericValidatorValidator, noWhitespaceValidator } from '../../../core/validators';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
@@ -58,6 +58,7 @@ export class SurveyItemComponent implements OnInit {
     private languageService: LanguageService,
     private breakpointService: BreakpointService,
     private location: Location,
+    private session: SessionService,
   ) {
     this.languages = this.languageService.getLanguages();
     this.defaultLanguage = this.languages.find((lang) => lang.code === 'en');
@@ -238,6 +239,7 @@ export class SurveyItemComponent implements OnInit {
         next: (response) => {
           this.updateForm(response.result);
           this.saveRoles(response.result.id);
+          this.setToFilters(response.result.id);
           this.router.navigate(['settings/surveys']);
         },
         error: ({ error }) => {
@@ -248,6 +250,16 @@ export class SurveyItemComponent implements OnInit {
       this.notification
         .showError(`You need to add translations for all names, and ensure checkboxes and radios do not have duplicates.
        Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language).`);
+    }
+  }
+
+  private setToFilters(surveyId: number): void {
+    const localStorageKey = this.session.getLocalStorageNameMapper('filters');
+    const filters = localStorage.getItem(localStorageKey)!;
+    const data = JSON.parse(filters);
+    if (!data.form.includes(surveyId)) {
+      data.form.push(surveyId);
+      localStorage.setItem(this.session.getLocalStorageNameMapper('filters'), JSON.stringify(data));
     }
   }
 
