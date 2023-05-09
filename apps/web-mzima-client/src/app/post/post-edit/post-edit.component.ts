@@ -487,7 +487,10 @@ export class PostEditComponent implements OnInit, OnChanges {
     } else {
       if (!this.atLeastOneFieldHasValidationError) {
         this.postsService.post(postData).subscribe({
-          error: () => this.form.enable(),
+          error: (err) => {
+            this.form.enable();
+            console.log(err);
+          },
           complete: async () => {
             await this.postComplete();
           },

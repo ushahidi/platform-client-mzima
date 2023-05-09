@@ -98,6 +98,10 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
 
     this.mapReady = true;
+
+    if (!this.required) {
+      this.markLocationFieldsAsTouched();
+    }
   }
 
   ngAfterViewInit() {
@@ -211,6 +215,10 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   }
 
   public enableSubmitButtonOnGeocode() {
+    this.markLocationFieldsAsTouched();
+  }
+
+  public markLocationFieldsAsTouched() {
     const locationFieldsKey = this.parent.form.get(this.parent.latFieldsKey);
     locationFieldsKey?.markAsTouched();
     this.parent.form.controls[this.parent.latFieldsKey].setErrors(null);
