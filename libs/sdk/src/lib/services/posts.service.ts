@@ -86,7 +86,7 @@ export class PostsService extends ResourceService<any> {
     const tmpParams = { ...this.postsFilters.value, has_location: 'mapped', ...filter };
     return super.get('geojson', this.postParamsMapper(tmpParams)).pipe(
       tap((res) => {
-        this.totalGeoPosts.next(res.count);
+        this.totalGeoPosts.next(res.meta.total);
       }),
     );
   }
