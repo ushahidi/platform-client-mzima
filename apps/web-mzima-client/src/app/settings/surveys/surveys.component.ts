@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { TranslateService } from '@ngx-translate/core';
-import { BreakpointService, SessionService } from '@services';
+import { BreakpointService } from '@services';
 import { forkJoin, Observable, take } from 'rxjs';
 import { SurveysService, SurveyItem } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
@@ -34,7 +34,6 @@ export class SurveysComponent implements OnInit {
     private readonly translate: TranslateService,
     private readonly confirmModalService: ConfirmModalService,
     private readonly breakpointService: BreakpointService,
-    private readonly session: SessionService,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   }
@@ -72,7 +71,10 @@ export class SurveysComponent implements OnInit {
     const survey: SurveyItem = this.selectedSurveys.shift()!;
     const surveyDuplicate = { ...survey, id: null, name: `${survey.name} - duplicate` };
     this.surveysService.post(surveyDuplicate).subscribe({
-      next: () => this.getSurveys(),
+      next: (response) => {
+        this.surveysService.setToFilters(response.result.id);
+        this.getSurveys();
+      },
       error: (err) => {
         console.log(err);
         this.isLoading = false;
@@ -102,7 +104,7 @@ export class SurveysComponent implements OnInit {
     this.isLoading = true;
     forkJoin(
       this.selectedSurveys.map((survey) => {
-        this.removeFromFilters(survey.id);
+        this.surveysService.removeFromFilters(survey.id);
         return this.surveysService.deleteSurvey(survey.id);
       }),
     )
@@ -117,16 +119,6 @@ export class SurveysComponent implements OnInit {
           this.isLoading = false;
         },
       });
-  }
-
-  private removeFromFilters(surveyId: number): void {
-    const localStorageKey = this.session.getLocalStorageNameMapper('filters');
-    const filters = localStorage.getItem(localStorageKey)!;
-    const data = JSON.parse(filters);
-    if (data.form.includes(surveyId)) {
-      data.form = data.form.filter((item: number) => item !== surveyId);
-      localStorage.setItem(localStorageKey, JSON.stringify(data));
-    }
   }
 
   public selectSurveys({ checked }: MatCheckboxChange, survey: SurveyItem) {
