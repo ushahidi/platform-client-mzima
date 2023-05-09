@@ -20,6 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { CollectionsComponent } from '@data';
 import { TranslateModule } from '@ngx-translate/core';
+import { SafePipe } from '@pipes';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ShareModule } from 'ngx-sharebuttons';
 import { NgxCustomTourModule } from 'ngx-custom-tour';
@@ -81,6 +82,7 @@ const components = [
   AddPostModalComponent,
   DonationModalComponent,
   NotificationComponent,
+  SafePipe,
 ];
 
 const modules = [
