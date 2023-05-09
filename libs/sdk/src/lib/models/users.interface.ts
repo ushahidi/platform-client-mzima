@@ -8,7 +8,7 @@ export interface UserInterface {
   realname?: string;
   email?: string;
   role?: string;
-  permissions?: string[];
+  permissions?: any[];
   gravatar?: string;
   language?: string;
   allowed_privileges?: string[];

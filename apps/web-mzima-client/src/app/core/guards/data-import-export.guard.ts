@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { CONST } from '@constants';
-import { Roles } from '@enums';
+import { Permissions } from '@enums';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataImportExportGuard implements CanActivate {
   canActivate(): boolean {
-    const role = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`);
-    return role === Roles.ManageImportExport;
+    const permissions = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}permissions`);
+    return !!permissions?.includes(Permissions.ImportExport);
   }
 }
