@@ -20,6 +20,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./deployment/deployment.module').then((m) => m.DeploymentPageModule),
   },
+  {
+    path: 'deployment-search',
+    loadChildren: () =>
+      import('./deployment-search/deployment-search.module').then(
+        (m) => m.DeploymentSearchPageModule,
+      ),
+  },
 ];
 
 @NgModule({
