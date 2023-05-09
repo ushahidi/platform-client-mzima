@@ -247,15 +247,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
             this.mapLayers.push(geoPosts);
           }
 
-          // public loadMore(): void {
-          //   if (this.params.limit !== undefined && this.params.limit * this.params.page! < this.total) {
-          //     this.currentPage++;
-          //     this.params.page!++;
-          //     this.getPosts(this.params, true);
-          //   }
-          // }
-
-          if (posts.count > this.params.limit * this.params.page) {
+          if (posts.meta.total > this.params.limit * this.params.page) {
             this.progress = ((this.params.limit * this.params.page) / posts.count) * 100;
 
             this.params.page++;

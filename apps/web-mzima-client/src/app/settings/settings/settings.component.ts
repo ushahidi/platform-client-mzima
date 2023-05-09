@@ -96,7 +96,7 @@ export class SettingsComponent implements OnInit {
         description: 'settings.settings_list.roles_desc',
         icon: 'roles',
         router: 'roles',
-        visible: this.isAdmin,
+        visible: this.isAdmin || this.isManageUsers,
       },
       {
         title: 'settings.settings_list.categories',
