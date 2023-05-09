@@ -1,0 +1,32 @@
+.deployment-item {
+  &__image {
+    border: 1px solid var(--ion-color-step-400);
+    border-radius: 50%;
+    margin-right: 16px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    &-name {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--ion-color-light-contrast);
+    }
+
+    &-server {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--ion-color-medium);
+    }
+  }
+
+  &__button {
+    &-icon {
+      color: var(--ion-color-medium);
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<ion-item class="deployment-item">
+  <img
+    class="deployment-item__image"
+    [ngSrc]="deployment.icon"
+    [alt]="deployment.name"
+    width="40"
+    height="40"
+  />
+  <ion-label class="deployment-item__content">
+    <span class="deployment-item__content-name">{{ deployment.name }}</span>
+    <span class="deployment-item__content-server">{{ deployment.server }}</span>
+  </ion-label>
+  <app-button class="deployment-item__button" fill="clear">
+    <app-icon class="deployment-item__button-icon" slot="icon-only" name="delete"></app-icon>
+  </app-button>
+</ion-item>

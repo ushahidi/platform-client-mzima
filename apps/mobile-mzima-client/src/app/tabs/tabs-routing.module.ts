@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DeploymentGuard } from '../core/guards/deployment.guard';
 import { WalkthroughGuard } from '../core/guards/walkthrough.guard';
 import { TabsPage } from './tabs.page';
 
@@ -35,7 +36,7 @@ const routes: Routes = [
   {
     path: '',
     component: TabsPage,
-    canActivate: [WalkthroughGuard],
+    canActivate: [WalkthroughGuard, DeploymentGuard],
   },
 ];
 

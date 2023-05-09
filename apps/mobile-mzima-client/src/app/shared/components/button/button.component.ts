@@ -23,6 +23,7 @@ export class ButtonComponent {
   @Input() public radius = '100px';
   @Input() public disabled = false;
   @Input() public shadow = false;
+  @Input() public height = '40px';
   @Output() public buttonClick = new EventEmitter<Event>();
 
   public onClick(event: Event): void {

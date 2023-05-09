@@ -1,0 +1,9 @@
+<div class="deployment-list__container">
+  <p class="deployment-list__description">Choose one Deployment from list</p>
+  <ion-list class="deployment-list">
+    <app-deployment-item
+      *ngFor="let item of deploymentList"
+      [deployment]="item"
+    ></app-deployment-item>
+  </ion-list>
+</div>

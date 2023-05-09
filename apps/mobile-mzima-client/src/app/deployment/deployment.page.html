@@ -1,0 +1,21 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <app-logo></app-logo>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page ion-padding-vertical" [fullscreen]="true">
+  <!--  <app-logo></app-logo>-->
+  <div class="main ion-padding-horizontal">
+    <app-deployment-search-btn></app-deployment-search-btn>
+
+    <app-deployment-list [deploymentList]="deploymentList"></app-deployment-list>
+
+    <div class="content-container">
+      <!--    <div class="input-container" #inputContentContainer>-->
+      <!--      <app-custom-input></app-custom-input>-->
+      <!--      <ion-input placeholder="Введите текст..." class="input-animation"></ion-input>-->
+      <!--    </div>-->
+    </div>
+  </div>
+</ion-content>

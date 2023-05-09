@@ -30,6 +30,8 @@ export class WalkthroughPage {
 
   public finish() {
     this.storageService.setStorage('isIntroDone', 'yes');
-    this.router.navigate(['/']);
+    this.storageService.getStorage('deployment')
+      ? this.router.navigate(['/'])
+      : this.router.navigate(['/deployment']);
   }
 }

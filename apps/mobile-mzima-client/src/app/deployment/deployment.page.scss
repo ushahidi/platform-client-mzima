@@ -1,0 +1,9 @@
+.page {
+  &::part(scroll) {
+    display: flex;
+  }
+}
+
+.main {
+  flex: 1 1 100%;
+}

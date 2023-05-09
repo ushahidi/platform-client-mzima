@@ -7,7 +7,7 @@
   [shape]="expand === 'inline' ? '' : 'round'"
   class="button"
   [ngClass]="{ 'button--custom-color': color === 'custom', 'button--shadow': shadow }"
-  [ngStyle]="{ '--border-radius': radius }"
+  [ngStyle]="{ '--border-radius': radius, height: height }"
   (click)="onClick($event)"
 >
   <span><ng-content></ng-content></span>
