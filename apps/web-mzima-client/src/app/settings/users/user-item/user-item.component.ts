@@ -129,7 +129,6 @@ export class UserItemComponent implements OnInit {
         this.form.enable();
       },
       error: ({ error }) => {
-        console.log({ error });
         this.createUserErrors = error.errors.failed_validations;
         this.form.enable();
       },
