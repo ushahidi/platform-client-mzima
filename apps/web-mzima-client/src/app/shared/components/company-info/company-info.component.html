@@ -13,5 +13,5 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
 
-  <div [innerHTML]="description"></div>
+  <div [innerHTML]="description | safeUrl"></div>
 </mat-expansion-panel>

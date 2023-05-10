@@ -71,7 +71,10 @@ export class SurveysComponent implements OnInit {
     const survey: SurveyItem = this.selectedSurveys.shift()!;
     const surveyDuplicate = { ...survey, id: null, name: `${survey.name} - duplicate` };
     this.surveysService.post(surveyDuplicate).subscribe({
-      next: () => this.getSurveys(),
+      next: (response) => {
+        this.surveysService.setToFilters(response.result.id);
+        this.getSurveys();
+      },
       error: (err) => {
         console.log(err);
         this.isLoading = false;
@@ -99,8 +102,12 @@ export class SurveysComponent implements OnInit {
 
     if (!confirmed) return;
     this.isLoading = true;
-
-    forkJoin(this.selectedSurveys.map((survey) => this.surveysService.deleteSurvey(survey.id)))
+    forkJoin(
+      this.selectedSurveys.map((survey) => {
+        this.surveysService.removeFromFilters(survey.id);
+        return this.surveysService.deleteSurvey(survey.id);
+      }),
+    )
       .pipe(take(1))
       .subscribe({
         next: () => {
