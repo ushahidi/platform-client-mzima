@@ -112,6 +112,7 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
         {
           value: 'everyone',
           options: [],
+          disabled: false,
         },
       ],
       translations: this.fb.array<TranslationInterface>([]),
