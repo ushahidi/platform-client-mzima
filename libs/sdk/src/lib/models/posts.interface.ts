@@ -92,7 +92,7 @@ export interface PostResult {
   parent_id?: number;
   post_date: Date;
   published_to: [];
-  sets: [];
+  sets: number[];
   slug: string;
   source?: string;
   status: PostStatus;
