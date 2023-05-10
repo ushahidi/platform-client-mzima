@@ -9,6 +9,7 @@
           [required]="true"
           formControlName="email"
           placeholder="Enter your email"
+          [errors]="fieldErrorMessages(form.controls['email'], 'email')"
         >
         </app-form-control>
         <app-form-control
@@ -18,6 +19,7 @@
           [togglePassword]="true"
           formControlName="password"
           placeholder="Enter password"
+          [errors]="fieldErrorMessages(form.controls['password'], 'password')"
         >
           <div class="forgot-password-button" button>
             <app-button
@@ -25,17 +27,21 @@
               fill="clear"
               expand="inline"
               size="small"
-              >Forgot password?</app-button
             >
+              Forgot password?
+            </app-button>
           </div>
         </app-form-control>
-        <ion-text class="form-error ion-text-center" color="danger">
-          Password or email is incorrect. Please, try again
+        <ion-text *ngIf="loginError?.length" class="form-error ion-text-center" color="danger">
+          {{ loginError }}
         </ion-text>
       </div>
 
       <div class="bottom-panel">
-        <app-button [disabled]="form.invalid || form.disabled">Log in</app-button>
+        <app-button type="submit" [disabled]="form.invalid || form.disabled"> Log in </app-button>
+        <app-button class="ion-margin-top" fill="clear" color="medium" routerLink="/map">
+          Skip for now
+        </app-button>
       </div>
     </form>
   </div>
@@ -63,19 +69,32 @@
     [formGroup]="forgotPasswordForm"
     (ngSubmit)="forgotPassword()"
   >
-    <app-form-control
-      type="email"
-      label="Email"
-      [required]="true"
-      formControlName="email"
-      placeholder="Enter your email"
-    >
-    </app-form-control>
+    <div>
+      <app-form-control
+        type="email"
+        label="Email"
+        [required]="true"
+        formControlName="email"
+        placeholder="Enter your email"
+        [errors]="fieldErrorMessages(form.controls['email'], 'email')"
+      >
+      </app-form-control>
+      <ion-text
+        *ngIf="forgotPasswordError?.length"
+        class="form-error ion-text-center"
+        color="danger"
+      >
+        {{ forgotPasswordError }}
+      </ion-text>
+    </div>
 
     <div class="bottom-panel">
-      <app-button [disabled]="forgotPasswordForm.invalid || forgotPasswordForm.disabled"
-        >Reset password</app-button
+      <app-button
+        type="submit"
+        [disabled]="forgotPasswordForm.invalid || forgotPasswordForm.disabled"
       >
+        Reset password
+      </app-button>
     </div>
   </form>
 </app-modal>

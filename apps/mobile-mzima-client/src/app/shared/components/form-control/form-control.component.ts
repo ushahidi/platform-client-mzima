@@ -21,7 +21,9 @@ export class FormControlComponent implements ControlValueAccessor {
   @Input() public required = false;
   @Input() public disabled = false;
   @Input() public togglePassword = false;
+  @Input() public errors: string[] = [];
   public isPasswordVisible = false;
+  public isOnFocus: boolean;
 
   value: string;
   onChange: any = () => {};
@@ -45,5 +47,14 @@ export class FormControlComponent implements ControlValueAccessor {
 
   public handleInputChange(event: Event): void {
     this.onChange((event.target as HTMLInputElement)?.value);
+  }
+
+  public handleBlur(): void {
+    this.onTouched();
+    this.isOnFocus = false;
+  }
+
+  public handleFocus(): void {
+    this.isOnFocus = true;
   }
 }

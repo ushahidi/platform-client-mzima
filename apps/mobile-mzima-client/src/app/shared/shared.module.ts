@@ -11,6 +11,7 @@ import {
   CheckboxComponent,
   ButtonComponent,
   ModalComponent,
+  PageNotFoundComponent,
 } from './components';
 
 const components = [
@@ -19,6 +20,7 @@ const components = [
   CheckboxComponent,
   ButtonComponent,
   ModalComponent,
+  PageNotFoundComponent,
 ];
 
 @NgModule({

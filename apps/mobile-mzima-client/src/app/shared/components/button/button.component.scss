@@ -33,6 +33,12 @@
   &.button-clear {
     --padding-start: 0;
     --padding-end: 0;
+
+    &.ion-color-primary {
+      @media (prefers-color-scheme: light) {
+        --ion-color-base: var(--color-primary-40) !important;
+      }
+    }
   }
 
   &.button-small {

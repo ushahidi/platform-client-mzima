@@ -13,6 +13,11 @@
 
   --ion-item-background: #f5f5f5;
 
+  --ion-backdrop-color: #181b21;
+  --ion-backdrop-opacity: 0.6;
+
+  --ion-overlay-background-color: #ffffff;
+
   /** primary **/
   --ion-color-primary: #ffc235;
   --ion-color-primary-rgb: 255, 194, 53;
@@ -209,5 +214,7 @@
     --ion-tab-bar-background: transparent;
 
     --ion-card-background: #383e45;
+
+    --ion-overlay-background-color: #383e45;
   }
 }
