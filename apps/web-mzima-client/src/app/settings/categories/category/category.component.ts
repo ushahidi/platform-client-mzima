@@ -37,6 +37,9 @@ export class CategoryComponent {
         this.isFormOnSubmit = false;
         this.router.navigate(['settings/categories']);
       },
+      error: () => {
+        this.isFormOnSubmit = false;
+      },
     });
   }
 

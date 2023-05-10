@@ -1,7 +1,7 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -43,6 +43,7 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
     DirectiveModule,
     SettingsHeaderModule,
     MzimaUiModule,
+    FormsModule,
   ],
 })
 export class CategoriesModule {}

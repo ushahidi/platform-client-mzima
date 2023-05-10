@@ -20,6 +20,9 @@ export class CreateComponent {
         this.isFormOnSubmit = false;
         this.router.navigate(['settings/categories']);
       },
+      error: () => {
+        this.isFormOnSubmit = false;
+      },
     });
   }
 }
