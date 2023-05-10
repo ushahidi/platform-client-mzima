@@ -24,6 +24,7 @@ export class UserItemComponent implements OnInit {
   public form: FormGroup;
   public isMyProfile = false;
   public isDesktop = false;
+  public createUserErrors: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -112,7 +113,10 @@ export class UserItemComponent implements OnInit {
         this.navigateToUsers();
         this.form.enable();
       },
-      error: (err) => console.log(err),
+      error: ({ error }) => {
+        this.createUserErrors = error.errors.failed_validations;
+        this.form.enable();
+      },
     });
   }
 
@@ -124,7 +128,10 @@ export class UserItemComponent implements OnInit {
         this.navigateToUsers();
         this.form.enable();
       },
-      error: (err) => console.log(err),
+      error: ({ error }) => {
+        this.createUserErrors = error.errors.failed_validations;
+        this.form.enable();
+      },
     });
   }
 
