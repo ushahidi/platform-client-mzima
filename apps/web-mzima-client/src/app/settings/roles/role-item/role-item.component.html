@@ -10,6 +10,13 @@
         placeholder="{{ 'role.placeholder.name' | translate }}"
       />
     </mat-form-field>
+    <ng-container *ngFor="let err of formErrors">
+      <ng-container *ngIf="err?.field === 'name'">
+        <mat-error *ngFor="let msg of err?.error_messages">
+          {{ msg | translate }}
+        </mat-error>
+      </ng-container>
+    </ng-container>
   </div>
   <div class="form-row">
     <mat-label>{{ 'role.description' | translate }}</mat-label>
@@ -69,7 +76,11 @@
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
-      <mzima-client-button type="submit" [disabled]="form.invalid" [data-qa]="'btn-save-role'">
+      <mzima-client-button
+        type="submit"
+        [disabled]="form.invalid || isFormOnSubmit"
+        [data-qa]="'btn-save-role'"
+      >
         <ng-container *ngIf="isDesktop">{{
           (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate
         }}</ng-container>

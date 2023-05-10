@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ import { BreakpointService } from '@services';
   templateUrl: './create-category-form.component.html',
   styleUrls: ['./create-category-form.component.scss'],
 })
-export class CreateCategoryFormComponent implements OnInit {
+export class CreateCategoryFormComponent implements OnInit, OnDestroy {
   @Input() public loading: boolean;
   @Input() public category: CategoryInterface;
   @Output() formSubmit = new EventEmitter<any>();
@@ -37,6 +37,7 @@ export class CreateCategoryFormComponent implements OnInit {
   public isDesktop = false;
   public form: FormGroup;
   private userRole: string;
+  public formErrors: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -57,24 +58,9 @@ export class CreateCategoryFormComponent implements OnInit {
         this.isDesktop = isDesktop;
       },
     });
-  }
 
-  private updateRole() {
-    let value = '';
-    if (this.category?.role) {
-      if (this.category?.role?.length === 1) {
-        value = 'onlyme';
-      }
-      if (this.category?.role?.length > 1) {
-        value = 'specific';
-      }
-    } else {
-      value = 'everyone';
-    }
-
-    this.updateForm('visible_to', {
-      value,
-      options: this.category.role,
+    this.categoriesService.categoryErrors$.pipe(untilDestroyed(this)).subscribe((value) => {
+      this.formErrors = value;
     });
   }
 
@@ -94,7 +80,7 @@ export class CreateCategoryFormComponent implements OnInit {
         is_child_to: this.category.parent?.id || null,
       });
 
-      this.updateRole();
+      this.updateRole(this.category?.role, !!this.category.parent_id);
 
       if (this.category?.translations) {
         const translations: TranslationInterface[] = Object.keys(this.category?.translations).map(
@@ -111,6 +97,10 @@ export class CreateCategoryFormComponent implements OnInit {
     this.activeLanguages.push(this.defaultLanguage!);
   }
 
+  ngOnDestroy() {
+    this.categoriesService.categoryErrors.next(null);
+  }
+
   private initializeForm() {
     this.form = this.fb.group({
       id: [''],
@@ -118,7 +108,12 @@ export class CreateCategoryFormComponent implements OnInit {
       description: [''],
       is_child_to: [''],
       language: ['en'],
-      visible_to: [],
+      visible_to: [
+        {
+          value: 'everyone',
+          options: [],
+        },
+      ],
       translations: this.fb.array<TranslationInterface>([]),
       translate_name: [''],
       translate_description: [''],
@@ -126,9 +121,30 @@ export class CreateCategoryFormComponent implements OnInit {
     });
   }
 
+  private updateRole(role: any, disabled = false) {
+    let value = '';
+    if (role) {
+      if (role?.length === 1) {
+        value = 'onlyme';
+      }
+      if (role?.length > 1) {
+        value = 'specific';
+      }
+    } else {
+      value = 'everyone';
+    }
+
+    this.updateForm('visible_to', {
+      value,
+      options: role,
+      disabled,
+    });
+  }
+
   private formSubscribe() {
     this.form.valueChanges.pipe(untilDestroyed(this)).subscribe({
       next: (data) => {
+        this.categoriesService.categoryErrors.next(null);
         // if (!!this.activeLanguages.find((language) => language.code === data.language)) {
         //   this.activeLanguages = [];
         // }
@@ -206,36 +222,21 @@ export class CreateCategoryFormComponent implements OnInit {
             }),
           },
         ];
-
-        this.roleOptions.forEach((option) => {
-          switch (option.value) {
-            case 'onlyme':
-              if (this.category.role?.length === 1 && this.category.role.includes(this.userRole)) {
-                option.checked = true;
-              }
-              break;
-            case 'specific':
-              if (this.category.role?.length! > 1) {
-                option.checked = true;
-              }
-              break;
-            case 'everyone':
-              if (!this.category.role) {
-                option.checked = true;
-              }
-          }
-          if (option?.options) {
-            option.options.forEach((subOption) => {
-              if (this.category.role) {
-                subOption.checked = this.category.role.includes(subOption.value as string);
-              } else if (subOption.value === 'admin') {
-                subOption.checked = true;
-              } else {
-                subOption.checked = false;
-              }
-            });
-          }
-        });
+        if (this.category) {
+          this.roleOptions.forEach((option) => {
+            if (option?.options) {
+              option.options.forEach((subOption) => {
+                if (this.category.role) {
+                  subOption.checked = this.category.role.includes(subOption.value as string);
+                } else if (subOption.value === 'admin') {
+                  subOption.checked = true;
+                } else {
+                  subOption.checked = false;
+                }
+              });
+            }
+          });
+        }
       },
     });
   }
@@ -249,7 +250,6 @@ export class CreateCategoryFormComponent implements OnInit {
   }
 
   public submit(): void {
-    // console.log(this.form.value);
     if (this.form.invalid) return;
     const category = {
       base_language: this.form.value.language,
@@ -346,8 +346,8 @@ export class CreateCategoryFormComponent implements OnInit {
 
   public parentChanged(event: any): void {
     const parentCategory = this.categories.find((category) => category.id === event.value);
-    const visibleTo = parentCategory ? parentCategory?.role || [] : ['admin'];
-    this.form.setControl('visible_to', this.fb.array(visibleTo));
+    const parentRole = parentCategory ? parentCategory?.role! : null;
+    this.updateRole(parentRole, parentCategory ? !!parentCategory.id : false);
     this.form.controls['parent'].setValue(parentCategory);
   }
 
