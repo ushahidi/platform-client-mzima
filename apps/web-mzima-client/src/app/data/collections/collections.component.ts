@@ -80,9 +80,15 @@ export class CollectionsComponent implements OnInit {
       if (this.isLoggedIn) {
         this.initRoles();
       }
-      const permissions = userData.permissions! as string;
-      this.featuredEnabled = permissions.split(',').includes('Manage Posts');
     });
+
+    const permissions = localStorage.getItem('USH_permissions')!;
+    // console.log(permissions);
+    if (permissions) {
+      this.featuredEnabled = permissions.split(',').includes('Manage Posts');
+    } else {
+      this.featuredEnabled = false;
+    }
 
     this.getCollections();
   }
