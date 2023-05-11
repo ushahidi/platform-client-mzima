@@ -1,0 +1,62 @@
+::ng-deep {
+  app-button {
+    display: block;
+  }
+}
+
+.button {
+  margin: 0;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  --box-shadow: none;
+  vertical-align: top;
+  text-transform: none;
+  letter-spacing: 0.1px;
+
+  &.button-disabled {
+    opacity: 1;
+    --ion-color-primary-contrast: rgba(var(--ion-text-color-rgb), 0.38);
+
+    &.ion-color-primary {
+      @media (prefers-color-scheme: light) {
+        --ion-color-primary: var(--ion-color-step-100);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        --ion-color-primary: var(--ion-color-step-200);
+      }
+    }
+  }
+
+  &.button-clear {
+    --padding-start: 0;
+    --padding-end: 0;
+
+    &.ion-color-primary {
+      @media (prefers-color-scheme: light) {
+        --ion-color-base: var(--color-primary-40) !important;
+      }
+    }
+  }
+
+  &.button-small {
+    height: 20px;
+  }
+
+  &.button-has-icon-only {
+    width: var(--size, 48px);
+    height: var(--size, 48px);
+    font-size: var(--icon-size, calc(var(--size, 48px) / 2));
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+
+  &--custom-color {
+    &.button-clear {
+      color: inherit;
+      --color: currentColor;
+    }
+  }
+}

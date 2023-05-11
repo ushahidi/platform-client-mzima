@@ -1,0 +1,11 @@
+body {
+  color: var(--ion-text-color);
+}
+
+a {
+  text-decoration: underline;
+
+  @media (prefers-color-scheme: light) {
+    color: var(--color-primary-40);
+  }
+}

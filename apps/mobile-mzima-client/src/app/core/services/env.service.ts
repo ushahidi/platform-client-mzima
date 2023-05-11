@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { checkBackendURL } from '../helpers/environment';
+import { checkBackendURL } from '@helpers';
 import { EnvConfigInterface } from '../intefaces/env.interface';
 
 @Injectable({

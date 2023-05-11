@@ -1,38 +1,102 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable, mergeMap } from 'rxjs';
+import { EnvService, SessionService, ResourceService } from '@services';
+import { Router } from '@angular/router';
+import { CONST } from '@constants';
+import { UsersService } from '@mzima-client/sdk';
 
-@Injectable()
-export class AuthService {
-  constructor(protected httpClient: HttpClient) {}
-
-  toServerModel(entity: any): any {
-    return entity;
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthService extends ResourceService<any> {
+  constructor(
+    protected override httpClient: HttpClient,
+    protected override env: EnvService,
+    private sessionService: SessionService,
+    private router: Router,
+    private userService: UsersService,
+  ) {
+    super(httpClient, env);
   }
 
-  fromServerModel(json: any) {
-    return json;
+  getApiVersions(): string {
+    return '';
   }
 
-  login(username: any, password: any): Observable<any> {
-    const CLAIMED_USER_SCOPES = ['*'];
+  getResourceUrl(): string {
+    return 'oauth/token';
+  }
 
+  login(username: string, password: string): Observable<any> {
     const payload = {
       username: username,
       password: password,
       grant_type: 'password',
-      client_id: 'ushahidiui',
-      client_secret: '35e7f0bca957836d05ca0492211b0ac707671261',
-      scope: CLAIMED_USER_SCOPES.join(' '),
+      client_id: this.env.environment.oauth_client_id,
+      client_secret: this.env.environment.oauth_client_secret,
+      scope: CONST.CLAIMED_USER_SCOPES.join(' '),
     };
+    return super.post(payload).pipe(
+      mergeMap(async (authResponse) => {
+        const accessToken = authResponse.access_token;
 
-    return this.httpClient
-      .post(`https://mzima-api.staging.ush.zone/oauth/token`, this.toServerModel(payload), {
-        responseType: 'json',
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        }),
-      })
-      .pipe(map((json) => this.fromServerModel(json)));
+        if (authResponse.expires_in) {
+          this.sessionService.setSessionData({
+            accessToken,
+            accessTokenExpires: Math.floor(Date.now() / 1000) + authResponse.expires_in,
+            grantType: 'password',
+            tokenType: authResponse.token_type,
+          });
+        } else if (authResponse.expires) {
+          this.sessionService.setSessionData({
+            accessToken,
+            accessTokenExpires: authResponse.expires,
+            grantType: 'password',
+            tokenType: authResponse.token_type,
+          });
+        }
+        return this.userService.getCurrentUser().subscribe({
+          next: (userData: any) => {
+            const { result } = userData;
+            this.setCurrentUserToSession(result);
+            this.userService.dispatchUserEvents({ result });
+          },
+        });
+      }),
+    );
+  }
+
+  private setCurrentUserToSession(user: any) {
+    this.sessionService.setCurrentUser({
+      userId: user.id,
+      realname: user.realname,
+      email: user.email,
+      role: user.role,
+      permissions: user.permissions,
+      allowed_privileges: user.allowed_privileges,
+      gravatar: user.gravatar,
+      language: user.language,
+    });
+  }
+
+  signup(payload: { email: string; password: string; realname: string }) {
+    return this.httpClient.post(
+      `${this.env.environment.backend_url}${this.env.environment.api_v3}register`,
+      payload,
+    );
+  }
+
+  resetPassword(payload: { email: string }) {
+    return this.httpClient.post(
+      `${this.env.environment.backend_url}${this.env.environment.api_v3}passwordreset`,
+      payload,
+    );
+  }
+
+  public logout() {
+    this.sessionService.clearSessionData();
+    this.sessionService.clearUserData();
+    this.router.navigate(['/auth/login']);
   }
 }
