@@ -19,7 +19,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { debounceTime, fromEvent, Observable, Subject } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
 
 dayjs.extend(customParseFormat);
 
@@ -78,27 +78,10 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public checklistSelection = new SelectionModel<CategoryFlatNode>(true);
   public treeControl: FlatTreeControl<CategoryFlatNode>;
   private dateFormat = 'DD-MM-YYYY';
-  private readonly calendarInputDebouncer$ = new Subject();
 
   constructor(private breakpointService: BreakpointService) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.treeControl = new FlatTreeControl<CategoryFlatNode>(this.getLevel, this.isExpandable);
-
-    this.calendarInputDebouncer$.pipe(debounceTime(1000)).subscribe(() => {
-      const start: Date | null = this.toLocalDate(this.calendarValue.start);
-      let end: Date | null = this.toLocalDate(this.calendarValue.end);
-
-      if (!start || !end) return;
-
-      if (start > end) {
-        end = null;
-        this.calendarValue.end = '';
-      }
-
-      this.value = new DateRange<Date>(start, end);
-      this.markAsTouched();
-      this.onChange(this.value);
-    });
   }
 
   private getLevel = (node: CategoryFlatNode) => node.level;
@@ -243,10 +226,6 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     this.value = new DateRange(this.value.start, this.value.end);
     this.markAsTouched();
     this.onChange(this.value);
-  }
-
-  public calendarInputChangeHandle(): void {
-    this.calendarInputDebouncer$.next(null);
   }
 
   public toggleModal(value?: boolean): void {

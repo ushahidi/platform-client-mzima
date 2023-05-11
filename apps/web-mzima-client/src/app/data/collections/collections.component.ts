@@ -116,8 +116,7 @@ export class CollectionsComponent implements OnInit {
 
   private formSubscribe() {
     this.collectionForm.controls['name'].valueChanges.pipe(untilDestroyed(this)).subscribe({
-      next: (data) => {
-        console.log(data);
+      next: () => {
         this.formErrors = [];
       },
     });
