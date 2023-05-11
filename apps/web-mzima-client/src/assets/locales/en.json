@@ -1006,7 +1006,12 @@
   "collection": {
     "visible_to_public": "This Collection is visible to the public",
     "visible_to_you": "This Collection is visible to just you and admins",
-    "visible_to_roles": "This Collection is visible to {{roles}}"
+    "visible_to_roles": "This Collection is visible to {{roles}}",
+    "validation": {
+      "required": {
+        "name": "Collection name is required"
+      }
+    }
   },
   "set": {
     "by": "by",
