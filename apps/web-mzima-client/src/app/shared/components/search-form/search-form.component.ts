@@ -135,6 +135,10 @@ export class SearchFormComponent implements OnInit {
         if (this.collectionInfo?.id) {
           values.set = this.collectionInfo.id.toString();
         }
+        const surveys = values.form;
+        values.form = this.surveyList
+          .filter((survey) => !surveys.includes(survey.id))
+          .map((survey) => survey.id);
         localStorage.setItem(
           this.session.getLocalStorageNameMapper('filters'),
           JSON.stringify(values),
@@ -367,8 +371,10 @@ export class SearchFormComponent implements OnInit {
           const formIds = new Set(data.form);
 
           this.surveyList.forEach((survey) => {
-            survey.checked = formIds.has(survey.id);
+            survey.checked = !formIds.has(survey.id);
           });
+          const checkedSurveys = this.surveyList.filter((survey) => survey.checked);
+          this.form.controls['form'].patchValue(checkedSurveys);
         } else {
           this.surveyList.forEach((survey) => (survey.checked = true));
         }

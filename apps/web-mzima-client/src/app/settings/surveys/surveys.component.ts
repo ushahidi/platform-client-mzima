@@ -71,8 +71,7 @@ export class SurveysComponent implements OnInit {
     const survey: SurveyItem = this.selectedSurveys.shift()!;
     const surveyDuplicate = { ...survey, id: null, name: `${survey.name} - duplicate` };
     this.surveysService.post(surveyDuplicate).subscribe({
-      next: (response) => {
-        this.surveysService.setToFilters(response.result.id);
+      next: () => {
         this.getSurveys();
       },
       error: (err) => {
