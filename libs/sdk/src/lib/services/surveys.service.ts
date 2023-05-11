@@ -45,16 +45,6 @@ export class SurveysService extends ResourceService<any> {
     return super.delete(id);
   }
 
-  public setToFilters(surveyId: number): void {
-    const localStorageKey = 'USH_filters';
-    const filters = localStorage.getItem(localStorageKey)!;
-    const data = JSON.parse(filters);
-    if (!data.form.includes(surveyId)) {
-      data.form.push(surveyId);
-      localStorage.setItem(localStorageKey, JSON.stringify(data));
-    }
-  }
-
   public removeFromFilters(surveyId: number): void {
     const localStorageKey = 'USH_filters';
     const filters = localStorage.getItem(localStorageKey)!;

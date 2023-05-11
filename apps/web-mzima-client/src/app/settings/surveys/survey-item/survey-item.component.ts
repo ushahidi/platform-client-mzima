@@ -238,7 +238,6 @@ export class SurveyItemComponent implements OnInit {
         next: (response) => {
           this.updateForm(response.result);
           this.saveRoles(response.result.id);
-          this.surveysService.setToFilters(response.result.id);
           this.router.navigate(['settings/surveys']);
         },
         error: ({ error }) => {
