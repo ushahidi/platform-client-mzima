@@ -1,7 +1,4 @@
-$mobile: 768px;
-$tablet: 1024px;
-$laptop-small: 1366px;
-$laptop: 1439px;
+@import 'helpers';
 
 .mzima-button {
   border: none;
@@ -34,7 +31,7 @@ $laptop: 1439px;
     padding-inline-end: var(--padding-end, 16px);
     padding-inline-start: var(--padding-start, 16px);
 
-    @media only screen and (max-width: #{$tablet}) {
+    @include breakpoint-max($tablet) {
       font-size: var(--font-size, 18px);
       min-height: var(--min-height, 48px);
       padding-inline-end: var(--padding-end, 14px);
@@ -50,7 +47,7 @@ $laptop: 1439px;
     text-decoration: underline;
     min-height: var(--min-height, 18px);
 
-    @media only screen and (max-width: #{$tablet}) {
+    @include breakpoint-max($tablet) {
       font-size: 14px;
       line-height: 16px;
     }
@@ -83,7 +80,7 @@ $laptop: 1439px;
     height: var(--size, 32px);
     font-size: var(--icon-size, 24px);
 
-    @media only screen and (max-width: #{$tablet}) {
+    @include breakpoint-max($tablet) {
       width: var(--size, 48px);
       height: var(--size, 48px);
       font-size: var(--icon-size, 32px);
