@@ -75,3 +75,11 @@
     color: var(--ion-color-step-550);
   }
 }
+
+.error-msg {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+}

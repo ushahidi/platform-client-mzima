@@ -9,14 +9,30 @@ export class PasswordStrengthComponent implements OnChanges {
   @Input() public passwordToCheck: string;
   @Output() passwordStrength = new EventEmitter<boolean>();
 
-  private colors = ['var(--ion-color-danger)', 'orangered', 'orange', 'yellowgreen'];
+  private colors = [
+    'var(--ion-color-danger)',
+    'var(--color-primary-40)',
+    'var(--color-primary-60)',
+    'var(--ion-color-success)',
+  ];
+  private messages = [
+    'Password is too weak',
+    'Password strength improved',
+    'Password is strong',
+    'Password is excellent',
+  ];
   public bars = new Array(4);
+  public passwordMessage = '';
+  public color = this.colors[0];
 
   ngOnChanges(changes: { [propName: string]: SimpleChange }): void {
     const password = changes['passwordToCheck'].currentValue;
-    this.setBarColors(4, 'var(--color-neutral-20)');
+    this.setBarColors(4, undefined);
     if (password) {
-      const { index, color } = this.getColor(this.checkStrength(password));
+      const { index, color, message } = this.getColor(this.checkStrength(password));
+      this.passwordMessage = message;
+      this.color = color;
+
       this.setBarColors(index, color);
       const pwdStrength = this.checkStrength(password);
       this.passwordStrength.emit(pwdStrength >= 20);
@@ -44,10 +60,11 @@ export class PasswordStrengthComponent implements OnChanges {
     return {
       index: index + 1,
       color: this.colors[index],
+      message: this.messages[index],
     };
   }
 
-  private setBarColors(count: number, color: string) {
+  private setBarColors(count: number, color?: string) {
     for (let n = 0; n < count; n++) {
       this.bars[n] = color;
     }

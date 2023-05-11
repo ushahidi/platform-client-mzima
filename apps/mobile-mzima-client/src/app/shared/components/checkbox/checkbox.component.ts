@@ -38,6 +38,6 @@ export class CheckboxComponent implements ControlValueAccessor {
   }
 
   public handleInputChange(event: Event): void {
-    this.onChange((event.target as HTMLInputElement)?.value);
+    this.onChange((event.target as HTMLInputElement)?.checked);
   }
 }

@@ -29,6 +29,13 @@
       <mat-error *ngIf="form.get('name')?.hasError('required')">
         {{ 'category.validation.required.name' | translate }}
       </mat-error>
+      <ng-container *ngFor="let err of formErrors">
+        <ng-container *ngIf="err?.field === 'tag'">
+          <mat-error *ngFor="let msg of err?.error_messages">
+            {{ msg | translate }}
+          </mat-error>
+        </ng-container>
+      </ng-container>
     </div>
 
     <div class="form-row">

@@ -1,10 +1,17 @@
-<mat-radio-group class="radio-buttons" [value]="value.value" (change)="radioGroupChange($event)">
+<mat-radio-group class="radio-buttons" [value]="value?.value" (change)="radioGroupChange($event)">
   <ng-container *ngFor="let item of data">
-    <mat-radio-button [value]="item.value">
+    <mat-radio-button
+      [value]="item.value"
+      [checked]="item.value === value?.value"
+      [disabled]="value.disabled!"
+    >
       <mat-icon *ngIf="isIconVisible && item?.icon">{{ item.icon }}</mat-icon>
       {{ item.name }}
     </mat-radio-button>
-    <span class="radio-buttons__options" *ngIf="item.options?.length && value.value === item.value">
+    <span
+      class="radio-buttons__options"
+      *ngIf="item?.options?.length! > 1 && value.value === 'specific'"
+    >
       <mat-selection-list [(ngModel)]="value.options">
         <mat-list-option
           color="primary"

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { regexHelper } from '@helpers';
+import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { fieldErrorMessages, regexHelper } from '@helpers';
+import { AuthService } from '@services';
+import { emailExistsValidator } from '@validators';
 
 @Component({
   selector: 'app-signup',
@@ -14,12 +17,51 @@ export class SignupPage {
     password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
     agreement: [false, [Validators.required]],
   });
+  public signupError: string;
+  public fieldErrorMessages = fieldErrorMessages;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   public signUp(): void {
-    // TODO: Signup functionality
-    console.log('signUp');
+    const { name, email, password } = this.form.value;
+    if (!name || !email || !password) return;
+    this.form.disable();
+    this.authService.signup({ email, password, realname: name }).subscribe({
+      next: () => {
+        this.form.enable();
+        this.authService.login(email, password).subscribe({
+          next: () => {
+            this.router.navigate(['/map']);
+          },
+        });
+      },
+      error: ({ error }) => {
+        this.form.enable();
+
+        if (error.errors[1].message === 'email is already in use') {
+          this.signupError = error.errors[1].message;
+          this.checkExistEmailError(true);
+          setTimeout(() => {
+            this.checkExistEmailError(false);
+          }, 3000);
+        }
+      },
+    });
+  }
+
+  private checkExistEmailError(isExists: boolean) {
+    this.setFieldsValidators([this.form.controls['email']], [emailExistsValidator(isExists)]);
+  }
+
+  private setFieldsValidators(controls: AbstractControl[], validators: ValidatorFn[]): void {
+    controls.map((control) => {
+      control.setValidators(validators);
+      control.updateValueAndValidity();
+    });
   }
 
   public openLink(event: Event, link: string): void {

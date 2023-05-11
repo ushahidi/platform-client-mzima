@@ -10,6 +10,7 @@
             formControlName="name"
             placeholder="Enter name"
             hint="The name you enter will be a display name"
+            [errors]="fieldErrorMessages(form.controls['name'], 'name')"
           >
           </app-form-control>
           <app-form-control
@@ -18,6 +19,7 @@
             [required]="true"
             formControlName="email"
             placeholder="Enter your email"
+            [errors]="fieldErrorMessages(form.controls['email'], 'email')"
           >
           </app-form-control>
           <app-form-control
@@ -27,6 +29,7 @@
             [togglePassword]="true"
             formControlName="password"
             placeholder="Enter password"
+            [errors]="fieldErrorMessages(form.controls['password'], 'password')"
             [hint]="!form.controls['password'].value?.length ? 'Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol.' : undefined"
           >
             <app-password-strength
@@ -40,17 +43,26 @@
         <div class="agreement">
           <app-checkbox formControlName="agreement">
             I agree to Ushahidi
-            <a (click)="openLink($event, 'Privacy Policy')">Privacy Policy</a> the <br /><a
-              (click)="openLink($event, 'Privacy Policy')"
-              >Terms and Conditions</a
-            >.
+            <a (click)="openLink($event, 'Privacy Policy')">Privacy Policy</a>
+            the <br />
+            <a (click)="openLink($event, 'Privacy Policy')">Terms and Conditions</a>.
           </app-checkbox>
         </div>
+        <ion-text *ngIf="signupError?.length" class="form-error ion-text-center" color="danger">
+          {{ signupError }}
+        </ion-text>
       </div>
 
       <div class="bottom-panel">
-        <app-button [disabled]="form.invalid || form.disabled">Sign up</app-button>
-        <app-button class="ion-margin-top" fill="clear" color="medium">Skip for now</app-button>
+        <app-button
+          type="submit"
+          [disabled]="form.invalid || form.disabled || !form.controls['agreement'].value"
+        >
+          Sign up
+        </app-button>
+        <app-button class="ion-margin-top" fill="clear" color="medium" routerLink="/map">
+          Skip for now
+        </app-button>
       </div>
     </form>
   </div>

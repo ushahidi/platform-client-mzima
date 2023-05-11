@@ -29,6 +29,8 @@ export class RoleItemComponent implements OnInit {
   public userRole: string;
   public form: FormGroup;
   public isDesktop = false;
+  public formErrors: any[] = [];
+  public isFormOnSubmit = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -129,12 +131,18 @@ export class RoleItemComponent implements OnInit {
       delete roleBody.id;
       this.rolesService.post(roleBody).subscribe({
         next: () => this.navigateToRoles(),
-        error: (err) => console.log(err),
+        error: ({ error }) => {
+          this.formErrors = error.errors.failed_validations;
+          this.isFormOnSubmit = false;
+        },
       });
     } else {
       this.rolesService.updateRole(this.role.id, this.form.value).subscribe({
         next: () => this.navigateToRoles(),
-        error: (err) => console.log(err),
+        error: ({ error }) => {
+          this.formErrors = error.errors.failed_validations;
+          this.isFormOnSubmit = false;
+        },
       });
     }
   }

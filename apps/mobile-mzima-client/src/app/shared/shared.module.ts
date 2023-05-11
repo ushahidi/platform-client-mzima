@@ -10,9 +10,18 @@ import {
   IconComponent,
   CheckboxComponent,
   ButtonComponent,
+  ModalComponent,
+  PageNotFoundComponent,
 } from './components';
 
-const components = [IconComponent, FormControlComponent, CheckboxComponent, ButtonComponent];
+const components = [
+  IconComponent,
+  FormControlComponent,
+  CheckboxComponent,
+  ButtonComponent,
+  ModalComponent,
+  PageNotFoundComponent,
+];
 
 @NgModule({
   declarations: [...components],

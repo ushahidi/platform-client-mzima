@@ -31,15 +31,24 @@
   }
 
   &.button-clear {
-    height: 20px;
     --padding-start: 0;
     --padding-end: 0;
+
+    &.ion-color-primary {
+      @media (prefers-color-scheme: light) {
+        --ion-color-base: var(--color-primary-40) !important;
+      }
+    }
+  }
+
+  &.button-small {
+    height: 20px;
   }
 
   &.button-has-icon-only {
     width: var(--size, 48px);
     height: var(--size, 48px);
-    font-size: var(--icon-size, calc(var(--size) / 2));
+    font-size: var(--icon-size, calc(var(--size, 48px) / 2));
     --padding-start: 0;
     --padding-end: 0;
   }
@@ -47,6 +56,7 @@
   &--custom-color {
     &.button-clear {
       color: inherit;
+      --color: currentColor;
     }
   }
 
