@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { surveyHelper, formHelper } from '@helpers';
 import { AccountNotificationsInterface } from '@models';
@@ -46,6 +47,8 @@ export class CollectionsComponent implements OnInit {
   tmpCollectionToEditId = 0;
   isLoggedIn = true;
   private notification: AccountNotificationsInterface;
+  private userRole: string;
+  public formErrors: any[] = [];
 
   constructor(
     private matDialogRef: MatDialogRef<CollectionsComponent>,
@@ -66,56 +69,71 @@ export class CollectionsComponent implements OnInit {
     this.searchForm = this.formBuilder.group({
       query: ['', []],
     });
-    this.collectionForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      description: ['', []],
-      featured: [false, []],
-      visible_to: [false, []],
-      view: ['map', []],
-      is_notifications_enabled: [false, []],
-    });
   }
 
   ngOnInit() {
+    this.initializeForm();
+    this.formSubscribe();
     this.userData$.subscribe((userData) => {
+      this.userRole = userData.role!;
       this.isLoggedIn = !!userData.userId;
       if (this.isLoggedIn) {
         this.initRoles();
       }
     });
 
+    const permissions = localStorage.getItem('USH_permissions')!;
+    // console.log(permissions);
+    if (permissions) {
+      this.featuredEnabled = permissions.split(',').includes('Manage Posts');
+    } else {
+      this.featuredEnabled = false;
+    }
+
     this.getCollections();
-    this.featuredEnabled = true; //hasPermission Manage Posts
+  }
+
+  private initializeForm() {
+    this.collectionForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      description: [''],
+      featured: [false],
+      visible_to: [
+        {
+          value: 'everyone',
+          options: [],
+          disabled: false,
+        },
+      ],
+      view: ['map'],
+      is_notifications_enabled: [false],
+    });
+  }
+
+  private updateForm(field: string, value: any) {
+    this.collectionForm.patchValue({ [field]: value });
+  }
+
+  private formSubscribe() {
+    this.collectionForm.controls['name'].valueChanges.pipe(untilDestroyed(this)).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.formErrors = [];
+      },
+    });
   }
 
   private initRoles() {
     this.rolesService.getRoles().subscribe({
       next: (response) => {
-        this.roleOptions = [
-          {
-            name: 'Only me',
-            value: 'only_me',
-            // icon: 'person',
-          },
-          {
-            name: this.translate.instant('role.everyone'),
-            value: 'everyone',
-            // icon: 'person',
-          },
-          {
-            name: this.translate.instant('app.specific_roles'),
-            value: 'specific',
-            // icon: 'group',
-            options: response.results.map((role) => {
-              return {
-                name: role.display_name,
-                value: role.name,
-                checked: role.name === 'admin',
-                disabled: role.name === 'admin',
-              };
-            }),
-          },
-        ];
+        this.roleOptions = formHelper.roleTransform({
+          roles: response.results,
+          userRole: this.userRole,
+          onlyMe: this.translate.instant('role.only_me'),
+          everyone: this.translate.instant('role.everyone'),
+          specificRoles: this.translate.instant('app.specific_roles'),
+          isShowIcons: false,
+        });
       },
     });
   }
@@ -172,11 +190,14 @@ export class CollectionsComponent implements OnInit {
       name: collection.name,
       description: collection.description,
       featured: collection.featured,
-      visible_to: collection.featured
-        ? { value: 'only_me', options: [] }
-        : formHelper.mapRoleToVisible(collection.role),
       view: collection.view,
     });
+
+    this.updateForm(
+      'visible_to',
+      formHelper.mapRoleToVisible(collection.role, !!collection.featured),
+    );
+
     this.tmpCollectionToEditId = collection.id;
     this.currentView = CollectionView.Edit;
 
@@ -202,9 +223,20 @@ export class CollectionsComponent implements OnInit {
     // $state.go(`posts.${viewParam}.collection`, {collectionId: collection.id}, {reload: true});
   }
 
+  featuredChange(event: MatSlideToggleChange) {
+    this.updateForm('visible_to', {
+      value: 'only_me',
+      options: [this.userRole],
+      disabled: event.checked,
+    });
+  }
+
   saveCollection() {
     const collectionData = this.collectionForm.value;
-    collectionData.role = collectionData.visible_to.options;
+    collectionData.role =
+      this.collectionForm.value.visible_to.value === 'everyone'
+        ? null
+        : this.collectionForm.value.visible_to.options;
     collectionData.featured = collectionData.visible_to.value === 'only_me';
     delete collectionData.visible_to;
     this.userData$.subscribe((userData) => {
@@ -214,8 +246,8 @@ export class CollectionsComponent implements OnInit {
           next: () => {
             this.matDialogRef.close();
           },
-          error: (err) => {
-            console.error('Something went wrong: ', err);
+          error: ({ error }) => {
+            this.formErrors = error.errors.failed_validations;
           },
         });
       } else {
@@ -227,8 +259,8 @@ export class CollectionsComponent implements OnInit {
             });
             this.matDialogRef.close();
           },
-          error: (err) => {
-            console.error('Something went wrong: ', err);
+          error: ({ error }) => {
+            this.formErrors = error.errors.failed_validations;
           },
         });
       }
@@ -243,9 +275,12 @@ export class CollectionsComponent implements OnInit {
 
   addNewCollection() {
     this.currentView = CollectionView.Create;
+    this.initializeForm();
+    this.formSubscribe();
   }
 
   public closeModal(): void {
+    this.formErrors = [];
     if (this.currentView !== CollectionView.List) {
       this.currentView = CollectionView.List;
     } else {

@@ -7,6 +7,7 @@ import { CONST } from '@constants';
 import { TranslationInterface, LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
+import { formHelper } from '@helpers';
 import {
   GroupCheckboxItemInterface,
   SelectLanguagesModalComponent,
@@ -80,7 +81,10 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
         is_child_to: this.category.parent?.id || null,
       });
 
-      this.updateRole(this.category?.role, !!this.category.parent_id);
+      this.updateForm(
+        'visible_to',
+        formHelper.mapRoleToVisible(this.category?.role, !!this.category.parent_id),
+      );
 
       if (this.category?.translations) {
         const translations: TranslationInterface[] = Object.keys(this.category?.translations).map(
@@ -119,26 +123,6 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
       translate_name: [''],
       translate_description: [''],
       parent: [],
-    });
-  }
-
-  private updateRole(role: any, disabled = false) {
-    let value = '';
-    if (role) {
-      if (role?.length === 1) {
-        value = 'onlyme';
-      }
-      if (role?.length > 1) {
-        value = 'specific';
-      }
-    } else {
-      value = 'everyone';
-    }
-
-    this.updateForm('visible_to', {
-      value,
-      options: role,
-      disabled,
     });
   }
 
@@ -184,61 +168,35 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  private capitalize(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-  }
-
   private getRoles() {
     this.rolesService.getRoles().subscribe({
       next: (response) => {
-        this.roleOptions = [
-          {
-            name: this.translate.instant('role.only_me'),
-            value: 'onlyme',
-            icon: 'person',
-            options: [
-              {
-                name: this.capitalize(this.userRole),
-                value: this.userRole,
-                checked: true,
-              },
-            ],
-          },
-          {
-            name: this.translate.instant('role.everyone'),
-            value: 'everyone',
-            icon: 'person',
-          },
-          {
-            name: this.translate.instant('app.specific_roles'),
-            value: 'specific',
-            icon: 'group',
-            options: response.results.map((role) => {
-              return {
-                name: role.display_name,
-                value: role.name,
-                checked: role.name === 'admin',
-                disabled: role.name === 'admin',
-              };
-            }),
-          },
-        ];
+        this.roleOptions = formHelper.roleTransform({
+          roles: response.results,
+          userRole: this.userRole,
+          onlyMe: this.translate.instant('role.only_me'),
+          everyone: this.translate.instant('role.everyone'),
+          specificRoles: this.translate.instant('app.specific_roles'),
+          isShowIcons: false,
+        });
+
         if (this.category) {
-          this.roleOptions.forEach((option) => {
-            if (option?.options) {
-              option.options.forEach((subOption) => {
-                if (this.category.role) {
-                  subOption.checked = this.category.role.includes(subOption.value as string);
-                } else if (subOption.value === 'admin') {
-                  subOption.checked = true;
-                } else {
-                  subOption.checked = false;
-                }
-              });
-            }
-          });
+          this.checkRoleOptions(this.category.parent.id);
         }
       },
+    });
+  }
+
+  checkRoleOptions(parentId: number) {
+    this.roleOptions.forEach((option) => {
+      if (option?.options) {
+        option.options.forEach((role) => {
+          if (this.category.role) {
+            role.checked = this.category.role.includes(role.value as string);
+            role.disabled = !!parentId;
+          } else role.checked = role.value === 'admin';
+        });
+      }
     });
   }
 
@@ -348,7 +306,11 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
   public parentChanged(event: any): void {
     const parentCategory = this.categories.find((category) => category.id === event.value);
     const parentRole = parentCategory ? parentCategory?.role! : null;
-    this.updateRole(parentRole, parentCategory ? !!parentCategory.id : false);
+    this.updateForm(
+      'visible_to',
+      formHelper.mapRoleToVisible(parentRole, parentCategory ? !!parentCategory.id : false),
+    );
+    this.checkRoleOptions(event.value);
     this.form.controls['parent'].setValue(parentCategory);
   }
 
