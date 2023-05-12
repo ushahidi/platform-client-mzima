@@ -275,10 +275,13 @@ export class SearchFormComponent implements OnInit {
   }
 
   private getActiveFilters(values: any): void {
+    const checkedSurveys = this.surveyList
+      .filter((survey) => !values.form.includes(survey.id))
+      .map((survey) => survey.id);
     const filters: any = {
       'source[]': values.source,
       'status[]': values.status,
-      'form[]': values.form,
+      'form[]': checkedSurveys,
       'tags[]': values.tags,
       set: values.set,
       date_after: values.date.start ? dayjs(values.date.start).toISOString() : null,
