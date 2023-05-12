@@ -9,6 +9,8 @@ import { UsersService } from '@mzima-client/sdk';
 import { ResourceService } from './resource.service';
 import { EnvService } from './env.service';
 import { SessionService } from './session.service';
+import { GtmTrackingService } from './gtm-tracking.service';
+import { EnumGtmEvent } from '@enums';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +22,7 @@ export class AuthService extends ResourceService<any> {
     private sessionService: SessionService,
     private userService: UsersService,
     private translate: TranslateService,
+    private gtm: GtmTrackingService,
     private router: Router,
   ) {
     super(httpClient, env);
@@ -64,6 +67,8 @@ export class AuthService extends ResourceService<any> {
         return this.userService.getCurrentUser().subscribe({
           next: (userData: any) => {
             const { result } = userData;
+            this.gtm.setUserLayer(result);
+            this.gtm.registerEvent({ event: EnumGtmEvent.Login });
             this.setCurrentUserToSession(result);
             this.userService.dispatchUserEvents({ result });
           },
@@ -107,6 +112,7 @@ export class AuthService extends ResourceService<any> {
   }
 
   public logout() {
+    this.gtm.clearUserLayer();
     this.sessionService.clearSessionData();
     this.sessionService.clearUserData();
     this.router.navigate(['/map']);
