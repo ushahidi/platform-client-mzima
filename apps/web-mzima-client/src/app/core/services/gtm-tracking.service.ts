@@ -17,8 +17,12 @@ export class GtmTrackingService {
   }
 
   public setConfigLayer(config: SiteConfigInterface) {
+    const deploymentId =
+      config.analytics?.prefix && config.analytics?.id
+        ? `${config.analytics.prefix}-${config.analytics.id}`
+        : 'local';
     this.userProps.deployment_url = config.multisite?.site_fqdn || window.location.host;
-    this.userProps.deployment_id = config.id;
+    this.userProps.deployment_id = deploymentId;
     this.userProps.deployment_name = config.name;
     this.userProps.browser_language = navigator.languages
       ? navigator.languages[0]

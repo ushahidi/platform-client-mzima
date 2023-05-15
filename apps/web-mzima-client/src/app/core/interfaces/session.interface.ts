@@ -17,6 +17,7 @@ export interface SiteConfigInterface {
   allowed_privileges?: string[];
   client_url?: boolean;
   multisite?: any;
+  analytics?: { id: string; prefix: string };
   date_format?: string;
   description?: string;
   disable_registration?: boolean;
