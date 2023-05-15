@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicSlides } from '@ionic/angular';
-import { WalkthroughSlider } from '../core/constants';
-import { StorageService } from '../core/services/storage.service';
+import { WalkthroughSlider } from '@constants';
+import { StorageService } from '@services';
 import { register } from 'swiper/element/bundle';
 
 register();

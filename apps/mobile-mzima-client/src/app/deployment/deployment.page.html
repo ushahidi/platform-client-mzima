@@ -1,21 +1,29 @@
 <ion-header [translucent]="true" class="ion-no-border">
-  <ion-toolbar>
-    <app-logo></app-logo>
-  </ion-toolbar>
+  <ion-toolbar> </ion-toolbar>
 </ion-header>
 
 <ion-content class="page ion-padding-vertical" [fullscreen]="true">
-  <!--  <app-logo></app-logo>-->
-  <div class="main ion-padding-horizontal">
-    <app-deployment-search-btn></app-deployment-search-btn>
-
-    <app-deployment-list [deploymentList]="deploymentList"></app-deployment-list>
-
-    <div class="content-container">
-      <!--    <div class="input-container" #inputContentContainer>-->
-      <!--      <app-custom-input></app-custom-input>-->
-      <!--      <ion-input placeholder="Введите текст..." class="input-animation"></ion-input>-->
-      <!--    </div>-->
-    </div>
-  </div>
+  <ion-grid class="ion-padding-horizontal">
+    <ion-row>
+      <ion-col size="12">
+        <app-logo></app-logo>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <app-deployment-search-btn></app-deployment-search-btn>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <p class="deployment__description">Choose one Deployment from list</p>
+        <ion-list class="deployment-list">
+          <app-deployment-item
+            *ngFor="let item of deploymentList"
+            [deployment]="item"
+          ></app-deployment-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -11,15 +11,9 @@ import { SharedModule } from '../shared/shared.module';
 import { DeploymentPage } from './deployment.page';
 import { LogoComponent } from './components/logo/logo.component';
 import { DeploymentSearchBtnComponent } from './components/deployment-search-btn/deployment-search-btn.component';
-import { DeploymentListComponent } from './components/deployment-list/deployment-list.component';
 import { DeploymentItemComponent } from './components/deployment-item/deployment-item.component';
 
-const components = [
-  LogoComponent,
-  DeploymentSearchBtnComponent,
-  DeploymentListComponent,
-  DeploymentItemComponent,
-];
+const components = [LogoComponent, DeploymentSearchBtnComponent, DeploymentItemComponent];
 
 @NgModule({
   imports: [
@@ -32,5 +26,6 @@ const components = [
     MatIconModule,
   ],
   declarations: [DeploymentPage, ...components],
+  exports: [DeploymentItemComponent],
 })
 export class DeploymentPageModule {}

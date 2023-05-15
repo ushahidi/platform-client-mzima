@@ -1,7 +1,10 @@
-<ion-item class="deployment-item">
+<ion-item
+  class="deployment-item"
+  [ngStyle]="{ '--background': isBackgroundVisible, '--border-style': isBorderVisible }"
+>
   <img
     class="deployment-item__image"
-    [ngSrc]="deployment.icon"
+    [src]="deployment.icon"
     [alt]="deployment.name"
     width="40"
     height="40"
@@ -10,7 +13,15 @@
     <span class="deployment-item__content-name">{{ deployment.name }}</span>
     <span class="deployment-item__content-server">{{ deployment.server }}</span>
   </ion-label>
-  <app-button class="deployment-item__button" fill="clear">
+
+  <app-button class="deployment-item__button" fill="clear" *ngIf="buttonVisible">
     <app-icon class="deployment-item__button-icon" slot="icon-only" name="delete"></app-icon>
   </app-button>
+
+  <ion-checkbox
+    *ngIf="checkboxVisible"
+    slot="end"
+    [indeterminate]="indeterminateState"
+    (click)="checkCheckbox(deployment, $event)"
+  ></ion-checkbox>
 </ion-item>
