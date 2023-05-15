@@ -135,14 +135,16 @@ export class SearchFormComponent implements OnInit {
         if (this.collectionInfo?.id) {
           values.set = this.collectionInfo.id.toString();
         }
-        const surveys = values.form;
-        values.form = this.surveyList
-          .filter((survey) => !surveys.includes(survey.id))
-          .map((survey) => survey.id);
         localStorage.setItem(
           this.session.getLocalStorageNameMapper('filters'),
           JSON.stringify(values),
         );
+        if (values?.form) {
+          localStorage.setItem(
+            this.session.getLocalStorageNameMapper('allSurveysChecked'),
+            JSON.stringify(values.form.length === this.surveyList.length),
+          );
+        }
         this.getActiveFilters(values);
         this.applyFilters();
       },
@@ -275,13 +277,10 @@ export class SearchFormComponent implements OnInit {
   }
 
   private getActiveFilters(values: any): void {
-    const checkedSurveys = this.surveyList
-      .filter((survey) => !values.form.includes(survey.id))
-      .map((survey) => survey.id);
     const filters: any = {
       'source[]': values.source,
       'status[]': values.status,
-      'form[]': checkedSurveys,
+      'form[]': values.form,
       'tags[]': values.tags,
       set: values.set,
       date_after: values.date.start ? dayjs(values.date.start).toISOString() : null,
@@ -373,11 +372,19 @@ export class SearchFormComponent implements OnInit {
           const data = JSON.parse(this.filters);
           const formIds = new Set(data.form);
 
+          const allSurveysChecked = JSON.parse(
+            localStorage.getItem(this.session.getLocalStorageNameMapper('allSurveysChecked')) ||
+              'false',
+          );
+
           this.surveyList.forEach((survey) => {
-            survey.checked = !formIds.has(survey.id);
+            survey.checked = allSurveysChecked || formIds.has(survey.id);
           });
-          const checkedSurveys = this.surveyList.filter((survey) => survey.checked);
-          this.form.controls['form'].patchValue(checkedSurveys);
+
+          localStorage.setItem(
+            this.session.getLocalStorageNameMapper('allSurveysChecked'),
+            JSON.stringify(!this.surveyList.find((survey) => !survey.checked)),
+          );
         } else {
           this.surveyList.forEach((survey) => (survey.checked = true));
         }
