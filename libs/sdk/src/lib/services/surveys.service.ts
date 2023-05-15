@@ -44,4 +44,14 @@ export class SurveysService extends ResourceService<any> {
   deleteSurvey(id: string | number): Observable<any> {
     return super.delete(id);
   }
+
+  public removeFromFilters(surveyId: number): void {
+    const localStorageKey = 'USH_filters';
+    const filters = localStorage.getItem(localStorageKey)!;
+    const data = JSON.parse(filters);
+    if (data.form.includes(surveyId)) {
+      data.form = data.form.filter((item: number) => item !== surveyId);
+      localStorage.setItem(localStorageKey, JSON.stringify(data));
+    }
+  }
 }

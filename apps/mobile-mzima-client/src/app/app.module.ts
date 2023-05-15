@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, FactoryProvider, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -8,7 +8,8 @@ import { ApiUrlLoader, EnvLoader, SdkModule } from '@mzima-client/sdk';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ConfigService } from './core/services/config.service';
-import { EnvService } from './core/services/env.service';
+import { EnvService } from '@services';
+import { AuthInterceptor } from './core/interceptors';
 
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
@@ -32,7 +33,9 @@ export function EnvLoaderFactory(env: EnvService): any {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      mode: 'md',
+    }),
     AppRoutingModule,
     HttpClientModule,
     SdkModule.forRoot({
@@ -43,7 +46,18 @@ export function EnvLoaderFactory(env: EnvService): any {
       },
     }),
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, loadConfigProvider],
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    loadConfigProvider,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

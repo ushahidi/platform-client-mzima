@@ -21,7 +21,13 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "paths": {
-      "@mzima-client/sdk": ["libs/sdk/src/index.ts"]
+      "@mzima-client/sdk": ["libs/sdk/src/index.ts"],
+      "@helpers": ["apps/mobile-mzima-client/src/app/core/helpers"],
+      "@services": ["apps/mobile-mzima-client/src/app/core/services"],
+      "@constants": ["apps/mobile-mzima-client/src/app/core/constants"],
+      "@interceptors": ["apps/mobile-mzima-client/src/app/core/interceptors"],
+      "@guards": ["apps/mobile-mzima-client/src/app/core/guards"],
+      "@validators": ["apps/mobile-mzima-client/src/app/core/validators"]
     },
   },
   "angularCompilerOptions": {

@@ -1006,7 +1006,12 @@
   "collection": {
     "visible_to_public": "This Collection is visible to the public",
     "visible_to_you": "This Collection is visible to just you and admins",
-    "visible_to_roles": "This Collection is visible to {{roles}}"
+    "visible_to_roles": "This Collection is visible to {{roles}}",
+    "validation": {
+      "required": {
+        "name": "Collection name is required"
+      }
+    }
   },
   "set": {
     "by": "by",
@@ -1306,7 +1311,7 @@
         "label": "Donation images"
       },
       "wallet": {
-        "label":  "Wallet address",
+        "label": "Wallet address",
         "placeholder": "Enter a wallet address e.g $ilp.uphold.com/example",
         "required": "Donation wallet address is required"
       },
@@ -1558,6 +1563,9 @@
     "token": "Password reset token",
     "name_will_be_a_display_name": "The name you enter will be a display name.",
     "valid": {
+      "fields": {
+        "email must be unique": "User with this email already exists"
+      },
       "name": {
         "required": "Display name is required",
         "maxlength": "Display name is too long"

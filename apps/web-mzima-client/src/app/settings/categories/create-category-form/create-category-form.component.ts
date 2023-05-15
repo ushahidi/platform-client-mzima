@@ -1,11 +1,13 @@
 import { Location } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { CONST } from '@constants';
 import { TranslationInterface, LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
+import { formHelper } from '@helpers';
 import {
   GroupCheckboxItemInterface,
   SelectLanguagesModalComponent,
@@ -21,7 +23,7 @@ import { BreakpointService } from '@services';
   templateUrl: './create-category-form.component.html',
   styleUrls: ['./create-category-form.component.scss'],
 })
-export class CreateCategoryFormComponent implements OnInit {
+export class CreateCategoryFormComponent implements OnInit, OnDestroy {
   @Input() public loading: boolean;
   @Input() public category: CategoryInterface;
   @Output() formSubmit = new EventEmitter<any>();
@@ -35,6 +37,8 @@ export class CreateCategoryFormComponent implements OnInit {
   public isUpdate = false;
   public isDesktop = false;
   public form: FormGroup;
+  private userRole: string;
+  public formErrors: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -56,6 +60,52 @@ export class CreateCategoryFormComponent implements OnInit {
       },
     });
 
+    this.categoriesService.categoryErrors$.pipe(untilDestroyed(this)).subscribe((value) => {
+      this.formErrors = value;
+    });
+  }
+
+  ngOnInit(): void {
+    this.initializeForm();
+    this.formSubscribe();
+    this.getCategories();
+    this.getRoles();
+    this.userRole = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`)!;
+    if (this.category) {
+      this.isUpdate = !!this.category;
+      this.form.patchValue({
+        id: this.category.id,
+        name: this.category.tag,
+        description: this.category.description,
+        language: this.category.enabled_languages.default,
+        is_child_to: this.category.parent?.id || null,
+      });
+
+      this.updateForm(
+        'visible_to',
+        formHelper.mapRoleToVisible(this.category?.role, !!this.category.parent_id),
+      );
+
+      if (this.category?.translations) {
+        const translations: TranslationInterface[] = Object.keys(this.category?.translations).map(
+          (key) => {
+            return { id: key, ...this.category.translations[key] };
+          },
+        );
+        this.activeLanguages = this.languages.filter((language) =>
+          translations.find((trans) => trans.id === language.code),
+        );
+        this.form.setControl('translations', this.fb.array(translations));
+      }
+    }
+    this.activeLanguages.push(this.defaultLanguage!);
+  }
+
+  ngOnDestroy() {
+    this.categoriesService.categoryErrors.next(null);
+  }
+
+  private initializeForm() {
     this.form = this.fb.group({
       id: [''],
       name: ['', [Validators.required]],
@@ -65,7 +115,8 @@ export class CreateCategoryFormComponent implements OnInit {
       visible_to: [
         {
           value: 'everyone',
-          options: ['admin'],
+          options: [],
+          disabled: false,
         },
       ],
       translations: this.fb.array<TranslationInterface>([]),
@@ -73,45 +124,12 @@ export class CreateCategoryFormComponent implements OnInit {
       translate_description: [''],
       parent: [],
     });
+  }
 
-    this.categoriesService.get().subscribe({
-      next: (data) => {
-        this.categories = data.results.filter((cat: CategoryInterface) => !cat.parent_id);
-      },
-    });
-
-    this.rolesService.getRoles().subscribe({
-      next: (response) => {
-        this.roleOptions = [
-          {
-            name: this.translate.instant('role.only_me'),
-            value: 'onlyme',
-            icon: 'person',
-          },
-          {
-            name: this.translate.instant('role.everyone'),
-            value: 'everyone',
-            icon: 'person',
-          },
-          {
-            name: this.translate.instant('app.specific_roles'),
-            value: 'specific',
-            icon: 'group',
-            options: response.results.map((role) => {
-              return {
-                name: role.display_name,
-                value: role.name,
-                checked: role.name === 'admin',
-                disabled: role.name === 'admin',
-              };
-            }),
-          },
-        ];
-      },
-    });
-
+  private formSubscribe() {
     this.form.valueChanges.pipe(untilDestroyed(this)).subscribe({
       next: (data) => {
+        this.categoriesService.categoryErrors.next(null);
         // if (!!this.activeLanguages.find((language) => language.code === data.language)) {
         //   this.activeLanguages = [];
         // }
@@ -142,35 +160,48 @@ export class CreateCategoryFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    if (this.category) {
-      this.isUpdate = !!this.category;
-      this.form.patchValue({
-        id: this.category.id,
-        name: this.category.tag,
-        description: this.category.description,
-        language: this.category.enabled_languages.default,
-        is_child_to: this.category.parent?.id || null,
-      });
+  private getCategories() {
+    this.categoriesService.get().subscribe({
+      next: (data) => {
+        this.categories = data.results.filter((cat: CategoryInterface) => !cat.parent_id);
+      },
+    });
+  }
 
-      if (this.category?.role?.length && this.category?.role?.length > 1) {
-        this.form.controls['category_visibility'].setValue('specific');
-        this.form.setControl('visible_to', this.fb.array(this.category.role));
-      }
+  private getRoles() {
+    this.rolesService.getRoles().subscribe({
+      next: (response) => {
+        this.roleOptions = formHelper.roleTransform({
+          roles: response.results,
+          userRole: this.userRole,
+          onlyMe: this.translate.instant('role.only_me'),
+          everyone: this.translate.instant('role.everyone'),
+          specificRoles: this.translate.instant('app.specific_roles'),
+          isShowIcons: false,
+        });
 
-      if (this.category?.translations) {
-        const translations: TranslationInterface[] = Object.keys(this.category?.translations).map(
-          (key) => {
-            return { id: key, ...this.category.translations[key] };
-          },
-        );
-        this.activeLanguages = this.languages.filter((language) =>
-          translations.find((trans) => trans.id === language.code),
-        );
-        this.form.setControl('translations', this.fb.array(translations));
+        if (this.category) {
+          this.checkRoleOptions(this.category.parent.id);
+        }
+      },
+    });
+  }
+
+  checkRoleOptions(parentId: number) {
+    this.roleOptions.forEach((option) => {
+      if (option?.options) {
+        option.options.forEach((role) => {
+          if (this.category.role) {
+            role.checked = this.category.role.includes(role.value as string);
+            role.disabled = !!parentId;
+          } else role.checked = role.value === 'admin';
+        });
       }
-    }
-    this.activeLanguages.push(this.defaultLanguage!);
+    });
+  }
+
+  private updateForm(field: string, value: any) {
+    this.form.patchValue({ [field]: value });
   }
 
   public isRoleActive(roleName: string): boolean {
@@ -192,9 +223,7 @@ export class CreateCategoryFormComponent implements OnInit {
       parent_id: this.form.value.is_child_to || null,
       parent_id_original: this.form.value.is_child_to || null,
       role:
-        this.form.value.visible_to.value === 'specific'
-          ? this.form.value.visible_to.options
-          : ['admin'],
+        this.form.value.visible_to.value === 'everyone' ? null : this.form.value.visible_to.options,
       slug: this.form.value.name,
       tag: this.form.value.name,
       translations: this.form.value.translations.reduce(
@@ -276,8 +305,12 @@ export class CreateCategoryFormComponent implements OnInit {
 
   public parentChanged(event: any): void {
     const parentCategory = this.categories.find((category) => category.id === event.value);
-    const visibleTo = parentCategory ? parentCategory?.role || [] : ['admin'];
-    this.form.setControl('visible_to', this.fb.array(visibleTo));
+    const parentRole = parentCategory ? parentCategory?.role! : null;
+    this.updateForm(
+      'visible_to',
+      formHelper.mapRoleToVisible(parentRole, parentCategory ? !!parentCategory.id : false),
+    );
+    this.checkRoleOptions(event.value);
     this.form.controls['parent'].setValue(parentCategory);
   }
 

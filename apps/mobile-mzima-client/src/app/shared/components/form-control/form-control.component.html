@@ -1,0 +1,39 @@
+<div class="ion-margin-bottom">
+  <ion-item class="form-row" lines="none">
+    <ion-input
+      [(ngModel)]="value"
+      class="form-control"
+      [label]="label + (required ? '*' : '')"
+      [type]="type === 'password' && isPasswordVisible ? 'text' : type"
+      labelPlacement="floating"
+      [placeholder]="placeholder"
+      [required]="required"
+      [disabled]="disabled"
+      (ionBlur)="handleBlur()"
+      (ionFocus)="handleFocus()"
+      (ionChange)="handleInputChange($event)"
+      (keyup)="handleInputChange($event)"
+    >
+    </ion-input>
+    <app-button
+      class="toggle-password-button"
+      slot="end"
+      *ngIf="togglePassword"
+      fill="clear"
+      color="custom"
+      (click)="isPasswordVisible = !isPasswordVisible"
+    >
+      <app-icon slot="icon-only" [name]="isPasswordVisible ? 'eye' : 'eye-closed'"></app-icon>
+    </app-button>
+  </ion-item>
+  <span *ngIf="hint?.length && (!errors.length || isOnFocus)" class="hint ion-padding-horizontal">
+    {{ hint }}
+  </span>
+  <ng-container *ngIf="!isOnFocus && errors.length">
+    <ion-text *ngFor="let error of errors" color="danger" class="error-msg ion-padding-horizontal">
+      {{ error }}
+    </ion-text>
+  </ng-container>
+  <ng-content select="[button]"></ng-content>
+  <ng-content select="[additional]"></ng-content>
+</div>

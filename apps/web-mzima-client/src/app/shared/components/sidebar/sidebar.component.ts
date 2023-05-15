@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoginComponent } from '@auth';
 import { CollectionsComponent } from '@data';
-import { EnumGtmEvent, EnumGtmSource, Roles } from '@enums';
+import { EnumGtmEvent, EnumGtmSource, Roles, Permissions } from '@enums';
 import { takeUntilDestroy$ } from '@helpers';
 import { MenuInterface, SiteConfigInterface, UserMenuInterface } from '@models';
 import { UserInterface } from '@mzima-client/sdk';
@@ -69,12 +69,12 @@ export class SidebarComponent implements OnInit {
     this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
       const hostRoles = [
-        Roles.Admin,
-        Roles.ManageUsers,
-        Roles.ManageSettings,
-        Roles.ManageImportExport,
+        Permissions.ManageUsers,
+        Permissions.ManageSettings,
+        Permissions.ImportExport,
       ];
-      this.isHost = hostRoles.includes(<Roles>userData.role!);
+      this.isHost =
+        userData.role === Roles.Admin || hostRoles.some((r) => userData.permissions?.includes(r));
       this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
       this.initMenu();
     });

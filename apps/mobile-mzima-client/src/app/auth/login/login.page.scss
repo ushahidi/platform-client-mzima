@@ -1,0 +1,88 @@
+.page {
+  &::part(scroll) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.main {
+  flex: 1 1 100%;
+}
+
+.page-title {
+  font-size: 24px;
+  margin-top: 32px;
+  line-height: 32px;
+  margin-bottom: 24px;
+  font-weight: normal;
+}
+
+.form {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bottom-panel {
+  margin-top: 24px;
+}
+
+.forgot-password-button {
+  display: flex;
+  margin-top: 4px;
+  justify-content: flex-end;
+}
+
+.form-error {
+  display: block;
+  margin-top: 24px;
+}
+
+.forgot-password-modal {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &__back {
+    margin-right: 4px;
+
+    @media (prefers-color-scheme: light) {
+      color: var(--ion-color-step-600);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-800);
+    }
+  }
+
+  &__info {
+    margin-top: 16px;
+    margin-bottom: 32px;
+    letter-spacing: 0.5px;
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-700);
+    }
+  }
+
+  &__title {
+    display: block;
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: 8px;
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-text-color);
+    }
+  }
+}
+
+.forgot-password-form {
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}

@@ -1,0 +1,15 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <div class="logo" [ngClass]="{'logo--small': isKeyboardOpen}">
+      <app-icon class="logo__img" name="ushahidi-logo"></app-icon>
+      <app-icon class="logo__title" name="ushahidi-text"></app-icon>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-tabs class="auth-tabs">
+  <ion-tab-bar slot="top">
+    <ion-tab-button tab="login">Log In</ion-tab-button>
+    <ion-tab-button tab="signup">Sign Up</ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

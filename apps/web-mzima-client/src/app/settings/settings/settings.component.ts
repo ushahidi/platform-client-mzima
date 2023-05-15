@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { Roles } from '@enums';
+import { Roles, Permissions } from '@enums';
 
 interface SettingsItem {
   title: string;
@@ -17,6 +17,7 @@ interface SettingsItem {
 })
 export class SettingsComponent implements OnInit {
   @Input() userRole: string;
+  @Input() permissions: any;
   isAdmin = false;
   isManageUsers = false;
   isManageSettings = false;
@@ -25,9 +26,9 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.isAdmin = this.userRole === Roles.Admin;
-    this.isManageUsers = this.userRole === Roles.ManageUsers;
-    this.isManageSettings = this.userRole === Roles.ManageSettings;
-    this.isManageImportExport = this.userRole === Roles.ManageImportExport;
+    this.isManageUsers = this.permissions.includes(Permissions.ManageUsers);
+    this.isManageSettings = this.permissions.includes(Permissions.ManageSettings);
+    this.isManageImportExport = this.permissions.includes(Permissions.ImportExport);
     this.initMenu();
   }
 

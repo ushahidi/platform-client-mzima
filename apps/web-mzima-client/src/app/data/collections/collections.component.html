@@ -111,10 +111,17 @@
             formControlName="name"
             required
           />
-          <mat-error *ngIf="collectionForm.get('name')?.invalid">
-            {{ collectionForm.get('name')?.errors | json }}
+          <mat-error *ngIf="collectionForm.get('name')?.hasError('required')">
+            {{ 'collection.validation.required.name' | translate }}
           </mat-error>
         </mat-form-field>
+        <ng-container *ngFor="let err of formErrors">
+          <ng-container *ngIf="err?.field === 'name'">
+            <mat-error *ngFor="let msg of err?.error_messages">
+              {{ msg | translate }}
+            </mat-error>
+          </ng-container>
+        </ng-container>
       </div>
       <div class="form-row">
         <mat-label>{{ 'set.description' | translate }}</mat-label>
@@ -130,7 +137,11 @@
       </div>
       <div class="form-row" *ngIf="featuredEnabled">
         <div class="toggle">
-          <mat-slide-toggle formControlName="featured" name="first-name">
+          <mat-slide-toggle
+            formControlName="featured"
+            name="first-name"
+            (change)="featuredChange($event)"
+          >
             {{ 'set.featured' | translate }}
           </mat-slide-toggle>
         </div>

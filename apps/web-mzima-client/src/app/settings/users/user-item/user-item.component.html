@@ -31,6 +31,13 @@
         'user.valid.email.pattern' | translate
       }}</mat-error>
     </mat-form-field>
+    <ng-container *ngFor="let err of createUserErrors">
+      <ng-container *ngIf="err?.field === 'email'">
+        <mat-error *ngFor="let msg of err?.error_messages">
+          {{ 'user.valid.' + msg | translate }}
+        </mat-error>
+      </ng-container>
+    </ng-container>
   </div>
   <div class="form-row">
     <mat-label> {{ 'user.password' | translate }} * </mat-label>
@@ -40,7 +47,7 @@
         formControlName="password"
         [placeholder]="'user.placeholder.password' | translate"
       />
-      <mat-hint>{{ 'user.password_notify' | translate }}</mat-hint>
+      <mat-hint *ngIf="isUpdate">{{ 'user.password_notify' | translate }}</mat-hint>
       <mat-error *ngIf="form.get('password')?.hasError('required')">{{
         'user.valid.password.required' | translate
       }}</mat-error>

@@ -139,6 +139,12 @@ export class SearchFormComponent implements OnInit {
           this.session.getLocalStorageNameMapper('filters'),
           JSON.stringify(values),
         );
+        if (values?.form) {
+          localStorage.setItem(
+            this.session.getLocalStorageNameMapper('allSurveysChecked'),
+            JSON.stringify(values.form.length === this.surveyList.length),
+          );
+        }
         this.getActiveFilters(values);
         this.applyFilters();
       },
@@ -366,9 +372,19 @@ export class SearchFormComponent implements OnInit {
           const data = JSON.parse(this.filters);
           const formIds = new Set(data.form);
 
+          const allSurveysChecked = JSON.parse(
+            localStorage.getItem(this.session.getLocalStorageNameMapper('allSurveysChecked')) ||
+              'false',
+          );
+
           this.surveyList.forEach((survey) => {
-            survey.checked = formIds.has(survey.id);
+            survey.checked = allSurveysChecked || formIds.has(survey.id);
           });
+
+          localStorage.setItem(
+            this.session.getLocalStorageNameMapper('allSurveysChecked'),
+            JSON.stringify(!this.surveyList.find((survey) => !survey.checked)),
+          );
         } else {
           this.surveyList.forEach((survey) => (survey.checked = true));
         }

@@ -1,0 +1,78 @@
+.auth-tabs {
+  position: static;
+
+  ion-tab-bar {
+    height: 52px;
+    padding-top: 0;
+  }
+
+  ion-tab-button {
+    font-size: 16px;
+    max-width: none;
+    font-weight: 500;
+
+    @media (prefers-color-scheme: light) {
+      --color: var(--ion-color-step-450);
+      --color-selected: var(--ion-text-color);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      --color: var(--ion-color-step-700);
+    }
+
+    &.tab-selected {
+      box-shadow: inset 0 -3px 0 0 var(--ion-color-primary);
+    }
+  }
+}
+
+.logo {
+  display: block;
+  min-height: 109px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 37px;
+  margin: 40px auto 32px;
+  transition: all 0.35s ease;
+
+  &--small {
+    margin-top: 8px;
+    min-height: 64px;
+    padding-bottom: 0;
+    margin-bottom: 8px;
+  }
+
+  &__img {
+    left: 0;
+    font-size: 72px;
+    position: relative;
+    transition: all 0.35s ease;
+    color: var(--ion-color-primary);
+
+    .logo--small & {
+      left: -68px;
+      font-size: 64px;
+    }
+  }
+
+  &__title {
+    left: 50%;
+    bottom: -64px;
+    font-size: 155px;
+    position: absolute;
+    pointer-events: none;
+    transition: all 0.35s ease;
+    transform: translateX(-50%);
+
+    .logo--small & {
+      bottom: -34px;
+      font-size: 132px;
+      transform: translateX(calc(-50% + 44px));
+    }
+  }
+
+  app-icon {
+    line-height: 1;
+    display: block;
+  }
+}
