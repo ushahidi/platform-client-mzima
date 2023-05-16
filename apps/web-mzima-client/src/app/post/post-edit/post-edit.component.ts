@@ -194,21 +194,19 @@ export class PostEditComponent implements OnInit, OnChanges {
     });
   }
 
-  public changeLocation({ lat, lng }: LatLngLiteral, formKey: string) {
-    this.form.patchValue({ [formKey]: { lat, lng } });
-    if (this.form.controls[formKey].value.lat || this.form.controls[formKey].value.lng) {
-      this.emptyLocation = false;
-      this.cdr.detectChanges();
-    }
+  public changeLocation(data: any, formKey: string) {
+    const { location, error } = data;
+    const { lat, lng } = location;
+
+    this.form.patchValue({ [formKey]: { lat: Number(lat), lng: lng } });
+
+    this.emptyLocation = error;
+    this.cdr.detectChanges();
   }
 
   private handleTags(key: string, value: any) {
     const formArray = this.form.get(key) as FormArray;
     value?.forEach((val: { id: any }) => formArray.push(new FormControl(val?.id)));
-  }
-
-  private handleText(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value });
   }
 
   private async handleUpload(key: string, value: any) {
@@ -278,7 +276,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       date: this.handleDate.bind(this),
       datetime: this.handleDate.bind(this),
       radio: this.handleDefault.bind(this),
-      text: this.handleText.bind(this),
+      text: this.handleDefault.bind(this),
       upload: this.handleUpload.bind(this),
       video: this.handleDefault.bind(this),
       textarea: this.handleDefault.bind(this),
