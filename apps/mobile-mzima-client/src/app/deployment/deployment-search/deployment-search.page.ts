@@ -51,7 +51,6 @@ export class DeploymentSearchPage {
       this.deploymentService.searchDeployments(this.search).subscribe({
         next: (deployments) => {
           this.loading = false;
-          console.log(deployments);
           this.deploymentList = deployments;
         },
         error: (err) => {

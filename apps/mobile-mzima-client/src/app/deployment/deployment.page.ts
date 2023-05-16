@@ -7,7 +7,7 @@ import { StorageService } from '@services';
   styleUrls: ['./deployment.page.scss'],
 })
 export class DeploymentPage {
-  deploymentList: any[] = [];
+  public deploymentList: any[] = [];
 
   constructor(private storageService: StorageService) {}
 
@@ -16,10 +16,7 @@ export class DeploymentPage {
   }
 
   private loadData() {
-    const storeDeployments = this.storageService.getStorage('deployments');
-    if (storeDeployments) {
-      this.deploymentList = JSON.parse(storeDeployments);
-    }
+    this.deploymentList = this.storageService.getStorage('deployments', 'array') || '[]';
   }
 
   public removeDeployment(event: any) {
