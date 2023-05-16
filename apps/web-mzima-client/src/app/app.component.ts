@@ -8,12 +8,14 @@ import {
   BreakpointService,
   EventBusService,
   EventType,
+  GtmTrackingService,
   IconService,
   LanguageService,
   LoaderService,
   SessionService,
 } from '@services';
 import { filter, Observable } from 'rxjs';
+import { EnumGtmEvent } from './core/enums/gtm';
 
 @UntilDestroy()
 @Component({
@@ -43,6 +45,7 @@ export class AppComponent implements OnInit {
     private eventBusService: EventBusService,
     private breakpointService: BreakpointService,
     private sessionService: SessionService,
+    private gtm: GtmTrackingService,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.selectedLanguage$ = this.languageService.selectedLanguage$.pipe(untilDestroyed(this));
@@ -70,6 +73,8 @@ export class AppComponent implements OnInit {
         }
       },
     });
+
+    this.gtm.setConfigLayer(this.sessionService.getSiteConfigurations());
 
     this.languageService.languages$
       .pipe(untilDestroyed(this))
@@ -103,50 +108,55 @@ export class AppComponent implements OnInit {
   }
 
   private setMetaData(): void {
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-      const route = this.getChild(this.activatedRoute);
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        const route = this.getChild(this.activatedRoute);
+        this.gtm.registerEvent(
+          { event: EnumGtmEvent.PageView },
+          { url: (event as NavigationEnd).url },
+        );
+        route.data.subscribe((data: any) => {
+          this.metaService.updateTag({
+            name: 'twitter:card',
+            content: 'summary',
+          });
+          data.description
+            ? this.metaService.updateTag({
+                name: 'description',
+                content: this.translate.instant(data.description),
+              })
+            : this.removeTags(['description']);
 
-      route.data.subscribe((data: any) => {
-        this.metaService.updateTag({
-          name: 'twitter:card',
-          content: 'summary',
+          data.ogUrl
+            ? this.metaService.updateTag({
+                property: 'og:url',
+                content: data.ogUrl,
+              })
+            : this.metaService.updateTag({
+                property: 'og:url',
+                content: window.location.href,
+              });
+
+          data.ogTitle
+            ? this.saveOgTitle(data.ogTitle)
+            : this.removeTags(['og:title', 'twitter:title', 'twitter:description']);
+
+          data.ogDescription
+            ? this.metaService.updateTag({
+                property: 'og:description',
+                content: this.translate.instant(data.ogDescription),
+              })
+            : this.removeTags(['og:description']);
+
+          data.ogImage
+            ? this.metaService.updateTag({
+                property: 'og:image',
+                content: data.ogImage,
+              })
+            : this.removeTags(['og:image']);
         });
-        data.description
-          ? this.metaService.updateTag({
-              name: 'description',
-              content: this.translate.instant(data.description),
-            })
-          : this.removeTags(['description']);
-
-        data.ogUrl
-          ? this.metaService.updateTag({
-              property: 'og:url',
-              content: data.ogUrl,
-            })
-          : this.metaService.updateTag({
-              property: 'og:url',
-              content: window.location.href,
-            });
-
-        data.ogTitle
-          ? this.saveOgTitle(data.ogTitle)
-          : this.removeTags(['og:title', 'twitter:title', 'twitter:description']);
-
-        data.ogDescription
-          ? this.metaService.updateTag({
-              property: 'og:description',
-              content: this.translate.instant(data.ogDescription),
-            })
-          : this.removeTags(['og:description']);
-
-        data.ogImage
-          ? this.metaService.updateTag({
-              property: 'og:image',
-              content: data.ogImage,
-            })
-          : this.removeTags(['og:image']);
       });
-    });
   }
 
   private saveOgTitle(ogTitle: string) {

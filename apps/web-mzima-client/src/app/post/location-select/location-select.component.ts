@@ -3,12 +3,10 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  forwardRef,
   Input,
   OnInit,
   Output,
 } from '@angular/core';
-import { FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,7 +25,7 @@ import {
 } from 'leaflet';
 import 'leaflet.markercluster';
 import { pointIcon } from '../../core/helpers/map';
-import { decimalPattern } from '../../core/helpers/regex';
+import { alphaNumeric, decimalPattern } from '../../core/helpers/regex';
 import Geocoder from 'leaflet-control-geocoder';
 import { fromEvent, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -37,25 +35,19 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   selector: 'app-location-select',
   templateUrl: './location-select.component.html',
   styleUrls: ['./location-select.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: forwardRef(() => LocationSelectComponent),
-    },
-  ],
 })
 export class LocationSelectComponent implements OnInit, AfterViewInit {
   @Input() public center: LatLngLiteral;
   @Input() public zoom: number;
   @Input() public location: LatLngLiteral;
   @Input() public required: boolean;
-  @Input() public parent: { form: FormGroup; latFieldsKey: string };
   @Output() locationChange = new EventEmitter();
   public emptyFieldLat = false;
   public emptyFieldLng = false;
   public noLetterLat = false;
   public noLetterLng = false;
+  public noSpecialCharactersLat = false;
+  public noSpecialCharactersLng = false;
   private map: Map;
   public mapLayers: any[] = [];
   public mapReady = false;
@@ -122,7 +114,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     return this.sessionService.getMapConfigurations();
   }
 
-  public onMapReady(mapBox: Map) {
+  public onMapReady(map: Map) {
     // Initialize geocoder
     this.geocoderControl = new Geocoder({
       defaultMarkGeocode: false,
@@ -132,9 +124,12 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
       errorMessage: this.translate.instant('post.location.nothing_found'),
     });
 
-    this.map = mapBox;
+    this.map = map;
     control.zoom({ position: 'bottomleft' }).addTo(this.map);
-    this.zoomAndConnectGeocoderToMap();
+    this.map.panTo(this.location);
+
+    this.geocoderControl.addTo(this.map);
+    this.addMarker();
 
     this.map.on('click', (e) => {
       this.location = e.latlng;
@@ -147,12 +142,11 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
       this.location = e.geocode.center;
       this.addMarker();
       this.map.fitBounds(e.geocode.bbox);
-      this.enableSubmitButtonOnGeocode();
-      this.changeCoords();
     });
   }
 
   private addMarker() {
+    this.checkErrors();
     if (this.mapMarker) {
       this.map.removeLayer(this.mapMarker);
     }
@@ -163,27 +157,44 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
 
     this.mapMarker.on('dragend', (e) => {
       this.location = e.target.getLatLng();
+      this.checkErrors();
       this.cdr.detectChanges();
     });
   }
 
-  public changeCoords() {
-    this.locationChange.emit(this.location);
+  private changeCoords(error = false) {
+    this.locationChange.emit({ location: this.location, error });
     this.cdr.detectChanges();
-    this.checkErrors();
   }
 
-  private checkErrors() {
-    this.emptyFieldLat = this.location.lat.toString() === '';
-    this.emptyFieldLng = this.location.lng.toString() === '';
+  public checkErrors() {
+    this.emptyFieldLat = this.emptyFieldLng = false;
+    this.noLetterLat = this.noLetterLng = false;
+    this.noSpecialCharactersLat = this.noSpecialCharactersLng = false;
+
+    if (this.required) {
+      this.emptyFieldLat = this.location.lat.toString() === '';
+      this.emptyFieldLng = this.location.lng.toString() === '';
+    }
 
     if (this.location.lat) {
       this.noLetterLat = !decimalPattern(this.location.lat.toString());
+      this.noSpecialCharactersLat = !alphaNumeric(this.location.lat.toString());
     }
 
     if (this.location.lng) {
       this.noLetterLng = !decimalPattern(this.location.lng.toString());
+      this.noSpecialCharactersLng = !alphaNumeric(this.location.lng.toString());
     }
+
+    this.changeCoords(
+      this.emptyFieldLat ||
+        this.emptyFieldLng ||
+        this.noLetterLat ||
+        this.noLetterLng ||
+        this.noSpecialCharactersLat ||
+        this.noSpecialCharactersLng,
+    );
   }
 
   public getCurrentLocation() {
@@ -198,22 +209,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public zoomAndConnectGeocoderToMap() {
-    this.map.panTo(this.location);
-
-    // Connect geocoder to map
-    this.geocoderControl.addTo(this.map);
-    this.addMarker();
-  }
-
   public onFocusOut() {
     this.checkErrors();
-    this.zoomAndConnectGeocoderToMap();
-  }
-
-  public enableSubmitButtonOnGeocode() {
-    const locationFieldsKey = this.parent.form.get(this.parent.latFieldsKey);
-    locationFieldsKey?.markAsTouched();
-    this.parent.form.controls[this.parent.latFieldsKey].setErrors(null);
   }
 }

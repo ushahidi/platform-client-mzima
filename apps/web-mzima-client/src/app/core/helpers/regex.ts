@@ -5,3 +5,7 @@ export const emailValidate = () => {
 export const decimalPattern = (value: string) => {
   return /((?<!\S)[-+]?[0-9]*[.,][0-9]+$)/gm.test(value);
 };
+
+export const alphaNumeric = (value: string) => {
+  return /^[\p{L}\p{N}\s\-".?!;,@'()“”«»]*$/gmu.test(value);
+};

@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -33,7 +34,6 @@ import {
   MediaService,
 } from '@mzima-client/sdk';
 import { LatLngLiteral } from 'leaflet';
-import { LocationValidator } from '../../core/validators/location-validator';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
 import { AlphanumericValidatorValidator } from '../../core/validators';
@@ -77,6 +77,8 @@ export class PostEditComponent implements OnInit, OnChanges {
   public atLeastOneFieldHasValidationError: boolean;
   public formValidator = new formValidators.FormValidator();
   public locationValue: LatLngLiteral;
+  public locationRequired = false;
+  public emptyLocation = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -91,6 +93,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     private breakpointService: BreakpointService,
     private mediaService: MediaService,
     private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef,
   ) {
     this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
@@ -191,17 +194,19 @@ export class PostEditComponent implements OnInit, OnChanges {
     });
   }
 
-  public changeLocation({ lat, lng }: LatLngLiteral, formKey: string) {
-    this.form.patchValue({ [formKey]: { lat, lng } });
+  public changeLocation(data: any, formKey: string) {
+    const { location, error } = data;
+    const { lat, lng } = location;
+
+    this.form.patchValue({ [formKey]: { lat: Number(lat), lng: lng } });
+
+    this.emptyLocation = error;
+    this.cdr.detectChanges();
   }
 
   private handleTags(key: string, value: any) {
     const formArray = this.form.get(key) as FormArray;
     value?.forEach((val: { id: any }) => formArray.push(new FormControl(val?.id)));
-  }
-
-  private handleText(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value });
   }
 
   private async handleUpload(key: string, value: any) {
@@ -223,19 +228,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     }
   }
 
-  private handleVideo(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value });
-  }
-
-  private handleTextarea(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value });
-  }
-
-  private handleRelation(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value });
-  }
-
-  private handleNumber(key: string, value: any) {
+  private handleDefault(key: string, value: any) {
     this.form.patchValue({ [key]: value?.value });
   }
 
@@ -250,10 +243,6 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private handleDate(key: string, value: any) {
     this.form.patchValue({ [key]: new Date(value?.value) });
-  }
-
-  private handleRadio(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value });
   }
 
   private handleTitle(key: string) {
@@ -286,13 +275,13 @@ export class PostEditComponent implements OnInit, OnChanges {
       location: this.handleLocation.bind(this),
       date: this.handleDate.bind(this),
       datetime: this.handleDate.bind(this),
-      radio: this.handleRadio.bind(this),
-      text: this.handleText.bind(this),
+      radio: this.handleDefault.bind(this),
+      text: this.handleDefault.bind(this),
       upload: this.handleUpload.bind(this),
-      video: this.handleVideo.bind(this),
-      textarea: this.handleTextarea.bind(this),
-      relation: this.handleRelation.bind(this),
-      number: this.handleNumber.bind(this),
+      video: this.handleDefault.bind(this),
+      textarea: this.handleDefault.bind(this),
+      relation: this.handleDefault.bind(this),
+      number: this.handleDefault.bind(this),
     };
 
     const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
@@ -331,20 +320,20 @@ export class PostEditComponent implements OnInit, OnChanges {
       return new FormControl(value, videoValidators);
     }
 
-    if (field.input === 'location') {
-      this.locationValue = value;
-      const locationValidators = [];
-      if (field.required) {
-        locationValidators.push(Validators.required);
-      }
-      locationValidators.push(LocationValidator());
-      return new FormControl(value, locationValidators);
-    }
-
     const validators: ValidatorFn[] = [];
     switch (field.type) {
+      case 'point':
+        this.locationValue = value;
+        if (field.required) {
+          this.locationRequired = field.required;
+          if (value.lat === '' || value.lng === '') {
+            this.emptyLocation = true;
+          }
+        }
+        break;
       case 'description':
         validators.push(Validators.minLength(2), AlphanumericValidatorValidator());
+        if (field.required) validators.push(Validators.required);
         break;
       case 'title':
         validators.push(
@@ -395,10 +384,14 @@ export class PostEditComponent implements OnInit, OnChanges {
                 : { value: null };
               break;
             case 'location':
-              value.value = {
-                lat: this.form.value[field.key].lat,
-                lon: this.form.value[field.key].lng,
-              };
+              value = this.form.value[field.key].lat
+                ? {
+                    value: {
+                      lat: this.form.value[field.key].lat,
+                      lon: this.form.value[field.key].lng,
+                    },
+                  }
+                : { value: null };
               break;
             case 'tags':
             case 'checkbox':
@@ -487,7 +480,10 @@ export class PostEditComponent implements OnInit, OnChanges {
     } else {
       if (!this.atLeastOneFieldHasValidationError) {
         this.postsService.post(postData).subscribe({
-          error: () => this.form.enable(),
+          error: (err) => {
+            this.form.enable();
+            console.log(err);
+          },
           complete: async () => {
             await this.postComplete();
           },
@@ -513,7 +509,7 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   async postComplete() {
     this.form.enable();
-    await this.confirmModalService.open({
+    this.confirmModalService.open({
       title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
       description: `<p>${this.translate.instant(
         'notify.confirm_modal.add_post_success.success_description',

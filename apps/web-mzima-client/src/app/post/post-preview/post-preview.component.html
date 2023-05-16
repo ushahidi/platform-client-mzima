@@ -14,6 +14,7 @@
     </ng-container>
     <app-post-head
       [post]="post"
+      (refresh)="refresh.emit()"
       (edit)="edit.emit()"
       [editable]="
         allowed_privileges.includes('update') && post.allowed_privileges.includes('update')
