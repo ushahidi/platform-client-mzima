@@ -25,7 +25,7 @@ import {
 } from 'leaflet';
 import 'leaflet.markercluster';
 import { pointIcon } from '../../core/helpers/map';
-import { decimalPattern } from '../../core/helpers/regex';
+import { alphaNumeric, decimalPattern } from '../../core/helpers/regex';
 import Geocoder from 'leaflet-control-geocoder';
 import { fromEvent, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -46,6 +46,8 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   public emptyFieldLng = false;
   public noLetterLat = false;
   public noLetterLng = false;
+  public noSpecialCharactersLat = false;
+  public noSpecialCharactersLng = false;
   private map: Map;
   public mapLayers: any[] = [];
   public mapReady = false;
@@ -144,7 +146,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   }
 
   private addMarker() {
-    this.changeCoords();
+    this.checkErrors();
     if (this.mapMarker) {
       this.map.removeLayer(this.mapMarker);
     }
@@ -155,22 +157,20 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
 
     this.mapMarker.on('dragend', (e) => {
       this.location = e.target.getLatLng();
-      this.changeCoords();
+      this.checkErrors();
       this.cdr.detectChanges();
     });
   }
 
-  public changeCoords() {
-    this.locationChange.emit(this.location);
+  private changeCoords(error = false) {
+    this.locationChange.emit({ location: this.location, error });
     this.cdr.detectChanges();
-    this.checkErrors();
   }
 
-  private checkErrors() {
-    this.emptyFieldLat = false;
-    this.emptyFieldLng = false;
-    this.noLetterLat = false;
-    this.noLetterLng = false;
+  public checkErrors() {
+    this.emptyFieldLat = this.emptyFieldLng = false;
+    this.noLetterLat = this.noLetterLng = false;
+    this.noSpecialCharactersLat = this.noSpecialCharactersLng = false;
 
     if (this.required) {
       this.emptyFieldLat = this.location.lat.toString() === '';
@@ -179,11 +179,22 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
 
     if (this.location.lat) {
       this.noLetterLat = !decimalPattern(this.location.lat.toString());
+      this.noSpecialCharactersLat = !alphaNumeric(this.location.lat.toString());
     }
 
     if (this.location.lng) {
       this.noLetterLng = !decimalPattern(this.location.lng.toString());
+      this.noSpecialCharactersLng = !alphaNumeric(this.location.lng.toString());
     }
+
+    this.changeCoords(
+      this.emptyFieldLat ||
+        this.emptyFieldLng ||
+        this.noLetterLat ||
+        this.noLetterLng ||
+        this.noSpecialCharactersLat ||
+        this.noSpecialCharactersLng,
+    );
   }
 
   public getCurrentLocation() {
