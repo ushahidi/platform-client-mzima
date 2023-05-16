@@ -239,6 +239,7 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private handleLocation(key: string, value: any) {
     this.form.patchValue({ [key]: { lat: value?.value.lat, lng: value?.value.lon } });
+    this.locationValue = this.form.controls[key].value;
   }
 
   private handleDate(key: string, value: any) {
@@ -254,6 +255,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private updateForm(updateValues: any[]) {
+    console.log(updateValues);
     type InputHandlerType =
       | 'tags'
       | 'checkbox'
