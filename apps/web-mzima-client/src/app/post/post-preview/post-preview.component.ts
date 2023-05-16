@@ -24,6 +24,7 @@ export class PostPreviewComponent implements OnInit, OnChanges {
   @Input() public isChecked?: boolean;
   @Output() selected = new EventEmitter();
   @Output() edit = new EventEmitter();
+  @Output() refresh = new EventEmitter();
   @Output() deleted = new EventEmitter();
   @Output() statusChanged = new EventEmitter();
   private details = new Subject<boolean>();

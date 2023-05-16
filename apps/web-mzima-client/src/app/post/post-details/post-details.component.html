@@ -8,6 +8,7 @@
       <app-post-head
         [post]="post"
         (edit)="edit.emit()"
+        (refresh)="refresh.emit()"
         [editable]="
           allowed_privileges.includes('update') && post.allowed_privileges.includes('update')
         "

@@ -28,6 +28,7 @@ export class PostHeadComponent {
   @Input() public editable: boolean;
   @Input() public deleteable: boolean;
   @Output() edit = new EventEmitter();
+  @Output() refresh = new EventEmitter();
   @Output() deleted = new EventEmitter();
   @Output() statusChanged = new EventEmitter();
   public isDesktop = false;
@@ -58,6 +59,7 @@ export class PostHeadComponent {
 
     dialogRef.afterClosed().subscribe({
       next: (response) => {
+        this.refresh.emit();
         response ? console.log(response) : null;
       },
     });

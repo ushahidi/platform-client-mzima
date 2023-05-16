@@ -41,7 +41,8 @@ export class GtmTrackingService {
 
   private pathToPageType(path: any) {
     // i.e. '/settings/general' -> ['settings', 'general']
-    const tokens = path.split('/').filter(Boolean);
+    const tokens = path?.split('/').filter(Boolean);
+    if (!tokens) return 'deployment-other';
 
     if (tokens[0] == 'settings') {
       return 'deployment-settings';
