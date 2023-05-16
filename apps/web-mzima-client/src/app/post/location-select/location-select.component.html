@@ -19,7 +19,7 @@
 </span>
 <div *ngIf="location">
   <div class="form-row">
-    <mat-label>Lat</mat-label>
+    <mat-label>Lat <span class="color-accent" *ngIf="required">*</span></mat-label>
     <mat-form-field
       appearance="outline"
       [ngClass]="{ 'location-error': noLetterLat || emptyFieldLat }"
@@ -40,7 +40,7 @@
   </div>
 
   <div class="form-row">
-    <mat-label>Long</mat-label>
+    <mat-label>Lng <span class="color-accent" *ngIf="required">*</span></mat-label>
     <mat-form-field
       appearance="outline"
       [ngClass]="{ 'location-error': noLetterLng || emptyFieldLng }"

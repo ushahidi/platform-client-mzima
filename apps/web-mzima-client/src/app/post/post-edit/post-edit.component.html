@@ -257,8 +257,7 @@
               <app-location-select
                 [zoom]="12"
                 [location]="locationValue"
-                [parent]="{ form: form, latFieldsKey: field.key }"
-                [required]="form.get(field.key)?.hasError('required')!"
+                [required]="locationRequired"
                 (locationChange)="changeLocation($event, field.key)"
               ></app-location-select>
             </ng-container>
@@ -350,10 +349,9 @@
           {{ 'app.cancel' | translate }}
         </mzima-client-button>
         <mzima-client-button
-          [disabled]="form.invalid"
           type="submit"
           [data-qa]="'btn-post-item-submit'"
-          [disabled]="form.disabled || form.invalid"
+          [disabled]="form.disabled || form.invalid || emptyLocation"
         >
           {{ 'app.submit' | translate }}
         </mzima-client-button>
