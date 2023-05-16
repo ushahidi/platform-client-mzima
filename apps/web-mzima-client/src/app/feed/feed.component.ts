@@ -125,12 +125,12 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.route.queryParams.subscribe({
       next: (params: Params) => {
         this.currentPage = params['page'] ? Number(params['page']) : 1;
+        this.params.page = this.currentPage;
         this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedMode.Tiles;
 
         this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
           next: () => {
             this.posts = [];
-            this.params.page = 1;
             this.getPosts(this.params);
           },
         });
