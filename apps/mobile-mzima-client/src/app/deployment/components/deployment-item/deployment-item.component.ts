@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-deployment-item',
@@ -11,11 +11,15 @@ export class DeploymentItemComponent {
   @Input() checkboxVisible = false;
   @Input() isBackgroundVisible = true;
   @Input() isBorderVisible = true;
+  @Output() selectedDeployment = new EventEmitter();
 
   indeterminateState: boolean;
 
-  checkCheckbox(item: any, event: any) {
-    console.log('item', item);
-    console.log('checkCheckbox', event.target.checked);
+  selectDeployment(event: any, deployment: any) {
+    this.selectedDeployment.emit({ checked: !event.target.checked, deployment });
+  }
+
+  removeDeployment(deployment: any) {
+    this.selectedDeployment.emit({ checked: false, deployment });
   }
 }

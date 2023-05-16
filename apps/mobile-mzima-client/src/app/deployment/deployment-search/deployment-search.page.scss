@@ -5,6 +5,7 @@
 
   &__icon {
     margin-right: 15px;
+    cursor: pointer;
 
     &-img {
       font-size: 22px;
@@ -21,4 +22,14 @@
       margin-bottom: 15px;
     }
   }
+}
+
+.emptyList {
+  display: flex;
+  align-items: center;
+  height: calc(100vh - 100px);
+  width: 80%;
+  text-align: center;
+  margin: auto;
+  color: var(--ion-color-medium);
 }

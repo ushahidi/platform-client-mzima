@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 
 import { IonicModule } from '@ionic/angular';
+import { TruncatePipe } from '../core/pipes';
 
 import { DeploymentPageRoutingModule } from './deployment-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -15,6 +16,8 @@ import { DeploymentItemComponent } from './components/deployment-item/deployment
 
 const components = [LogoComponent, DeploymentSearchBtnComponent, DeploymentItemComponent];
 
+const pipes = [TruncatePipe];
+
 @NgModule({
   imports: [
     CommonModule,
@@ -25,7 +28,7 @@ const components = [LogoComponent, DeploymentSearchBtnComponent, DeploymentItemC
     NgOptimizedImage,
     MatIconModule,
   ],
-  declarations: [DeploymentPage, ...components],
+  declarations: [DeploymentPage, ...components, ...pipes],
   exports: [DeploymentItemComponent],
 })
 export class DeploymentPageModule {}
