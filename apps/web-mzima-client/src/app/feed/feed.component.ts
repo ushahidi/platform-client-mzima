@@ -375,6 +375,12 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     }
   }
 
+  refreshPost(post: PostResult) {
+    this.postsService.getById(post.id).subscribe((p) => {
+      this.posts.find((tmpP) => tmpP.id === p.id).sets = p.sets;
+    });
+  }
+
   public changePage(page: number): void {
     this.toggleBulkOptions(false);
     this.currentPage = page;

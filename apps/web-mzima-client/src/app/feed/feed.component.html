@@ -198,6 +198,7 @@
               ngxMasonryItem
               [feedView]="true"
               (edit)="editPost(post)"
+              (refresh)="refreshPost(post)"
               (deleted)="postDeleted()"
               (loaded)="refreshMasonry()"
               (click)="showPostDetails(post)"

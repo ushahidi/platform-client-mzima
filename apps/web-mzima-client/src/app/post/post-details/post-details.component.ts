@@ -32,6 +32,7 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   @Input() color?: string;
   @Input() twitterId?: string;
   @Output() edit = new EventEmitter();
+  @Output() refresh = new EventEmitter();
   @Output() statusChanged = new EventEmitter();
   public media?: any;
   public allowed_privileges: string | string[];
