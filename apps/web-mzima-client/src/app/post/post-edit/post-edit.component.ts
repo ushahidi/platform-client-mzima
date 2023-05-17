@@ -252,7 +252,6 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private updateForm(updateValues: any[]) {
-    console.log(updateValues);
     type InputHandlerType =
       | 'tags'
       | 'checkbox'
