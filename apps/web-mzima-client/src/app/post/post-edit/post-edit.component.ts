@@ -33,7 +33,6 @@ import {
   PostResult,
   MediaService,
 } from '@mzima-client/sdk';
-import { LatLngLiteral } from 'leaflet';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
 import { AlphanumericValidatorValidator } from '../../core/validators';
@@ -76,7 +75,6 @@ export class PostEditComponent implements OnInit, OnChanges {
   public isDesktop: boolean;
   public atLeastOneFieldHasValidationError: boolean;
   public formValidator = new formValidators.FormValidator();
-  public locationValue: LatLngLiteral;
   public locationRequired = false;
   public emptyLocation = false;
 
@@ -323,7 +321,6 @@ export class PostEditComponent implements OnInit, OnChanges {
     const validators: ValidatorFn[] = [];
     switch (field.type) {
       case 'point':
-        this.locationValue = value;
         if (field.required) {
           this.locationRequired = field.required;
           if (value.lat === '' || value.lng === '') {
