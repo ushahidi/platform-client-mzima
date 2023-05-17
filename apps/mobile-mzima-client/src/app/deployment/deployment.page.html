@@ -14,7 +14,7 @@
         <app-deployment-search-btn></app-deployment-search-btn>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="deploymentList.length">
       <ion-col size="12">
         <p class="deployment__description">Choose one Deployment from list</p>
         <ion-list class="deployment-list">

@@ -24,7 +24,6 @@
         <ion-label>Founded {{ deploymentList.length }} items</ion-label>
       </ion-col>
       <ion-list class="search-list" [ngStyle]="{'background' : 'none'}">
-        {{deploymentList.length}}
         <app-deployment-item
           class="search-list__item"
           *ngFor="let item of deploymentList"

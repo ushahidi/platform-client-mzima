@@ -16,7 +16,7 @@ export class DeploymentPage {
   }
 
   private loadData() {
-    this.deploymentList = this.storageService.getStorage('deployments', 'array') || '[]';
+    this.deploymentList = this.storageService.getStorage('deployments', 'array') || [];
   }
 
   public removeDeployment(event: any) {
