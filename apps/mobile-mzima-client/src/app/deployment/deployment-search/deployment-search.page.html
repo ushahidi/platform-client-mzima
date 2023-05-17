@@ -32,7 +32,7 @@
           [checkboxVisible]="true"
           [isBackgroundVisible]="false"
           [isBorderVisible]="false"
-          (selectedDeployment)="addDeployment($event)"
+          (selectedDeployment)="selectDeployment($event)"
         ></app-deployment-item>
       </ion-list>
     </ion-row>
@@ -43,3 +43,11 @@
     </ng-template>
   </ion-grid>
 </ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="addButtonVisible" [translucent]="true">
+  <ion-toolbar>
+    <app-button class="search-footer__add-button" color="primary" (click)="addDeployment()">
+      Apply
+    </app-button>
+  </ion-toolbar>
+</ion-footer>

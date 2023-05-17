@@ -21,7 +21,7 @@
           <app-deployment-item
             *ngFor="let item of deploymentList"
             [deployment]="item"
-            (selectedDeployment)="removeDeployment($event)"
+            (selectedDeployment)="callModal($event)"
           ></app-deployment-item>
         </ion-list>
       </ion-col>

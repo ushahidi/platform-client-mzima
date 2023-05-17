@@ -11,6 +11,7 @@ import { DeploymentService } from '../../core/services/deployment.service';
 export class DeploymentSearchPage {
   public deploymentList: any[] = [];
   public loading = false;
+  public addButtonVisible = false;
   private search: string | null = '';
   private domain: string | null = null;
   private selectedDeployments: any[] = [];
@@ -64,7 +65,7 @@ export class DeploymentSearchPage {
     }
   }
 
-  public addDeployment(event: any) {
+  public selectDeployment(event: any) {
     const { checked, deployment } = event;
     if (checked) {
       if (this.selectedDeployments.some((i: any) => i.id === deployment.id)) {
@@ -77,6 +78,11 @@ export class DeploymentSearchPage {
         this.selectedDeployments.splice(index, 1);
       }
     }
+    this.addButtonVisible = !!this.selectedDeployments.length;
+  }
+
+  public addDeployment() {
     this.storageService.setStorage('deployments', this.selectedDeployments, 'array');
+    this.onBack();
   }
 }
