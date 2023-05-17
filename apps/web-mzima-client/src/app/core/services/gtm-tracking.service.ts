@@ -37,8 +37,7 @@ export class GtmTrackingService {
   public clearUserLayer() {
     this.userProps.user_role = null;
     this.userProps.user_id = null;
-    delete this.userProps.user_role;
-    delete this.userProps.user_id;
+    this.registerEvent({ event: EnumGtmEvent.Logout });
   }
 
   private pathToPageType(path: any) {

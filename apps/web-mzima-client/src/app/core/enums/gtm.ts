@@ -4,6 +4,7 @@
  */
 export enum EnumGtmEvent {
   Login = 'ush_login',
+  Logout = 'ush_logout',
   Search = 'ush_search',
   PageView = 'ush_page_view',
   Click = 'ush_click',
