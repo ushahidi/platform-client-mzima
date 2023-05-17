@@ -22,6 +22,9 @@ export class ButtonComponent {
   @Input() public expand: 'block' | 'inline' = 'block';
   @Input() public size: 'small' | 'default' = 'default';
   @Input() public disabled = false;
+  @Input() public radius = '100px';
+  @Input() public shadow = false;
+  @Input() public height = '40px';
   @Output() public buttonClick = new EventEmitter<Event>();
 
   public onClick(event: Event): void {

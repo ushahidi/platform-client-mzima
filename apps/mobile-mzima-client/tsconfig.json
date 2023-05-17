@@ -22,6 +22,7 @@
     "noImplicitReturns": true,
     "paths": {
       "@mzima-client/sdk": ["libs/sdk/src/index.ts"],
+      "@mzima-client/mzima-ui": ["libs/mzima-ui/src/index.ts"],
       "@helpers": ["apps/mobile-mzima-client/src/app/core/helpers"],
       "@services": ["apps/mobile-mzima-client/src/app/core/services"],
       "@constants": ["apps/mobile-mzima-client/src/app/core/constants"],

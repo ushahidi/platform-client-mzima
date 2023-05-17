@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DeploymentGuard, WalkthroughGuard } from '@guards';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -31,6 +32,11 @@ const routes: Routes = [
   //   redirectTo: '/tabs/tab1',
   //   pathMatch: 'full',
   // },
+  {
+    path: '',
+    component: TabsPage,
+    canActivate: [WalkthroughGuard, DeploymentGuard],
+  },
 ];
 
 @NgModule({

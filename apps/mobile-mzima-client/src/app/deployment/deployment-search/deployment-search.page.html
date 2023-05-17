@@ -1,0 +1,46 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="search-toolbar">
+      <ion-buttons slot="start" class="search-toolbar__icon" (click)="onBack()">
+        <ion-icon class="search-toolbar__icon-img" name="arrow-back-outline"></ion-icon>
+      </ion-buttons>
+      <ion-input
+        (ionInput)="searchDeployments($event)"
+        type="text"
+        placeholder="Search"
+        clearInput
+      ></ion-input>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding-horizontal">
+    <ion-row
+      class="ion-align-items-center ion-margin-top"
+      *ngIf="deploymentList.length; else emptyList"
+    >
+      <ion-col size="12">
+        <ion-label>Founded {{ deploymentList.length }} items</ion-label>
+      </ion-col>
+      <ion-list class="search-list" [ngStyle]="{'background' : 'none'}">
+        {{deploymentList.length}}
+        <app-deployment-item
+          class="search-list__item"
+          *ngFor="let item of deploymentList"
+          [deployment]="item"
+          [buttonVisible]="false"
+          [checkboxVisible]="true"
+          [isBackgroundVisible]="false"
+          [isBorderVisible]="false"
+          (selectedDeployment)="addDeployment($event)"
+        ></app-deployment-item>
+      </ion-list>
+    </ion-row>
+    <ng-template #emptyList>
+      <ion-row class="emptyList">
+        <p>Start typing Deployment name or paste Deployment link</p>
+      </ion-row>
+    </ng-template>
+  </ion-grid>
+</ion-content>

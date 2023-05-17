@@ -1,0 +1,36 @@
+.page {
+  &::part(scroll) {
+    display: flex;
+  }
+}
+
+.main {
+  flex: 1 1 100%;
+}
+
+.deployment__description {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ion-color-medium);
+}
+
+.deployment-list {
+  border-radius: 24px;
+
+  app-deployment-item {
+    display: block;
+    padding: 5px 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--ion-color-step-400);
+    }
+
+    &:first-child {
+      padding: 0 0 5px;
+    }
+
+    &:last-child {
+      padding: 5px 0 0;
+    }
+  }
+}
