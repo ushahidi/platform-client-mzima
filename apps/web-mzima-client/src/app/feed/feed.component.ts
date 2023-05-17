@@ -192,6 +192,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     });
   }
 
+  loadData(): void {
+    this.params.page = 1;
+    this.getPosts(this.params);
+  }
+
   private getPosts(params: any, add?: boolean): void {
     if (!add) {
       this.posts = [];

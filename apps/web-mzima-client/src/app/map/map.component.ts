@@ -120,22 +120,30 @@ export class MapComponent extends MainViewComponent implements OnInit {
     this.getUserData();
   }
 
+  loadData(): void {
+    this.reInitParams();
+    this.getPostsGeoJson();
+  }
+
   private initFilterListener() {
     this.filtersSubscription$.pipe(debounceTime(1000)).subscribe({
       next: () => {
         if (this.route.snapshot.data['view'] === 'search' && !this.searchId) return;
         if (this.route.snapshot.data['view'] === 'collection' && !this.collectionId) return;
 
-        this.params.page = 1;
-        this.mapLayers.map((layer) => {
-          this.map.removeLayer(layer);
-          this.markerClusterData.removeLayer(layer);
-        });
-        this.mapLayers = [];
-
+        this.reInitParams();
         this.getPostsGeoJson();
       },
     });
+  }
+
+  private reInitParams() {
+    this.params.page = 1;
+    this.mapLayers.map((layer) => {
+      this.map.removeLayer(layer);
+      this.markerClusterData.removeLayer(layer);
+    });
+    this.mapLayers = [];
   }
 
   onMapReady(map: Map) {

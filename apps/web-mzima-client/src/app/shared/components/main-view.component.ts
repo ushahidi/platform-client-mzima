@@ -9,7 +9,7 @@ import { EventBusService, EventType, SessionService } from '@services';
   selector: 'app-main-view',
   template: '',
 })
-export class MainViewComponent {
+export abstract class MainViewComponent {
   searchId = '';
   collectionId = '';
   params: any = {
@@ -31,6 +31,8 @@ export class MainViewComponent {
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
     );
   }
+
+  abstract loadData(): void;
 
   initCollection() {
     if (this.route.snapshot.data['view'] === 'collection') {
@@ -81,7 +83,10 @@ export class MainViewComponent {
 
   getUserData(): void {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
-      next: (userData) => (this.user = userData),
+      next: (userData) => {
+        this.user = userData;
+        this.loadData();
+      },
     });
   }
 
