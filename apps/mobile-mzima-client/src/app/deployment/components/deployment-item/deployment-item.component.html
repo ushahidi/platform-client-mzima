@@ -13,7 +13,9 @@
     <span class="deployment-item__content-name">{{
       deployment.deployment_name | truncate : 30
     }}</span>
-    <span *ngIf="deployment.description">{{ deployment.description | truncate : 25 }}</span>
+    <span class="deployment-item__content-description" *ngIf="deployment.description">{{
+      deployment.description | truncate : 31
+    }}</span>
     <span class="deployment-item__content-server">{{ deployment.domain | lowercase }}</span>
     <span class="deployment-item__content-server">{{ deployment.fqdn | lowercase }}</span>
   </ion-label>

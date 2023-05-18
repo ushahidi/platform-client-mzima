@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { IonicModule } from '@ionic/angular';
 import { TruncatePipe } from '../core/pipes';
+import { DeleteDeploymentModalComponent } from './components/delete-deployment-modal/delete-deployment-modal.component';
 
 import { DeploymentPageRoutingModule } from './deployment-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -14,7 +15,12 @@ import { LogoComponent } from './components/logo/logo.component';
 import { DeploymentSearchBtnComponent } from './components/deployment-search-btn/deployment-search-btn.component';
 import { DeploymentItemComponent } from './components/deployment-item/deployment-item.component';
 
-const components = [LogoComponent, DeploymentSearchBtnComponent, DeploymentItemComponent];
+const components = [
+  LogoComponent,
+  DeploymentSearchBtnComponent,
+  DeploymentItemComponent,
+  DeleteDeploymentModalComponent,
+];
 
 const pipes = [TruncatePipe];
 

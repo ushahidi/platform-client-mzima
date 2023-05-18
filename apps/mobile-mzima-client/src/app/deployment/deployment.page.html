@@ -14,14 +14,14 @@
         <app-deployment-search-btn></app-deployment-search-btn>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="deploymentList.length">
       <ion-col size="12">
         <p class="deployment__description">Choose one Deployment from list</p>
         <ion-list class="deployment-list">
           <app-deployment-item
             *ngFor="let item of deploymentList"
             [deployment]="item"
-            (selectedDeployment)="removeDeployment($event)"
+            (selectedDeployment)="callModal($event)"
           ></app-deployment-item>
         </ion-list>
       </ion-col>

@@ -2,7 +2,6 @@ import { Component, Optional } from '@angular/core';
 import { App } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { AlertController, IonRouterOutlet, Platform, ToastController } from '@ionic/angular';
-import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +24,6 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(async () => {
       if (this.platform.is('hybrid')) {
-        await SplashScreen.hide();
         this.exitAppOnDoubleTap();
       }
     });

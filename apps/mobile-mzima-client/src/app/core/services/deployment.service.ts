@@ -19,7 +19,7 @@ export class DeploymentService {
   }
 
   public searchDeployments(search: string): Observable<any> {
-    const storeDeployments = this.storageService.getStorage('deployments', 'array') || '[]';
+    const storeDeployments = this.storageService.getStorage('deployments', 'array') || [];
 
     const params = new HttpParams().set('q', search);
     const url = 'https://api.ushahidi.io/deployments';
