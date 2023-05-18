@@ -18,8 +18,8 @@
 
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
         <item name="android:background">@drawable/splash</item>
-        <item name="android:navigationBarColor">@android:color/black</item>
-        <item name="android:windowSplashScreenBackground" tools:targetApi="31">@null</item>
+        <item name="android:navigationBarColor">#181B21</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="31">#181B21</item>
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="31">@null</item>
         <item name="android:windowSplashScreenBrandingImage" tools:targetApi="31">@drawable/brand1</item>
     </style>
