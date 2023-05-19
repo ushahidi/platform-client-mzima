@@ -2,6 +2,10 @@
   &::part(scroll) {
     display: flex;
   }
+
+  &-grid {
+    width: 90%;
+  }
 }
 
 .main {

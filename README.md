@@ -23,7 +23,8 @@ Run `npm run web:build` to make production build for deploy.
 
 ## Mobile project
 
-Before invoking the capacitor commands, you must go into the folders of the `mobile project` and run the `npm install`commands to install the`@capacitor/cli`plugin inside the mobile project
+Before invoking the capacitor commands, you must go into the folders of the `mobile project` and run the `npm install`commands to install the plugin inside the mobile project
+!!! All native plugins for mobile development must be installed in the mobile project folder `mobile-mzima-client`
 
 Run `npm run mobile:serve` - "nx run mobile-mzima-client:serve",
 
