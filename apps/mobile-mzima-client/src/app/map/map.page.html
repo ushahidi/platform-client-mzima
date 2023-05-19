@@ -1,4 +1,19 @@
-<ion-content class="ion-padding">
-  <p>Map page works!</p>
-  <app-button *ngIf="isLoggedIn" (click)="logout()">Logout</app-button>
-</ion-content>
+<app-draggable-layout
+  [mode]="1"
+  [offsetTop]="78"
+  [breakpoints]="[0, 300]"
+  (toggleMode)="checkIsFullscreen($event)"
+>
+  <app-search-form
+    [isLight]="mode !== 'fullscreen'"
+    header
+    class="search-form ion-padding-horizontal"
+  ></app-search-form>
+  <app-map-view class="map"></app-map-view>
+  <ng-container draggable>
+    <app-button shape="normal" [shadow]="true" class="add-post-button">
+      <app-icon slot="icon-only" name="plus"></app-icon>
+    </app-button>
+    <app-feed-view [atBottom]="mode === 0" [atTop]="mode === 'fullscreen'"></app-feed-view>
+  </ng-container>
+</app-draggable-layout>

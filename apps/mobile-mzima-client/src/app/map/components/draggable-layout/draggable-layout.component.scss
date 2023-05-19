@@ -1,0 +1,123 @@
+::ng-deep {
+  app-draggable-layout {
+    height: 100%;
+    display: block;
+  }
+}
+
+.has-fixed-header {
+  z-index: initial;
+  contain: size style;
+}
+
+.header {
+  flex-shrink: 0;
+
+  &--fixed {
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1500;
+    position: fixed;
+  }
+}
+
+.page-content {
+  overflow: hidden;
+  --padding-top: calc(var(--fixed-offset) - 28px);
+  --padding-start: 0;
+  --padding-end: 0;
+
+  &::part(scroll) {
+    margin-right: -15px;
+    padding-right: 15px;
+  }
+
+  &::part(scroll)::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.base-layout {
+  background-color: var(--gray-800);
+}
+
+.fixed-content {
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+}
+
+.draggable-content {
+  z-index: 50;
+  padding-top: 44px;
+  position: relative;
+  transition: all 0.35s ease;
+  border-radius: 28px 28px 0 0;
+  background: var(--ion-background-color);
+  padding-bottom: calc(32px + var(--ion-safe-area-bottom));
+  min-height: calc(100% - var(--offset) - var(--ion-safe-area-top));
+  box-shadow: 0 4px 8px 3px rgba(var(--ion-color-light-contrast-rgb), 0.15),
+    0px 1px 3px rgba(var(--ion-color-light-contrast-rgb), 0.3);
+
+  .page-content--fullscreen & {
+    border-radius: 0;
+    padding-top: calc(44px + var(--ion-safe-area-top));
+  }
+
+  .modal-handle,
+  &__drag-handle {
+    left: 0;
+    right: 0;
+    z-index: 15;
+    height: 36px;
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    border-radius: inherit;
+    bottom: calc(100% - 36px);
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    border-bottom: 1px solid transparent;
+    background: var(--ion-background-color);
+    transition-property: height, border-color;
+
+    .page-content--fullscreen & {
+      top: 0;
+      bottom: auto;
+      position: fixed;
+      height: calc(73px + var(--ion-safe-area-top));
+      border-bottom-color: var(--ion-color-step-200);
+    }
+
+    &:after {
+      left: 50%;
+      content: '';
+      width: 32px;
+      height: 4px;
+      bottom: 16px;
+      opacity: 0.4;
+      margin-left: -16px;
+      border-radius: 2px;
+      position: absolute;
+      pointer-events: none;
+      background: var(--ion-text-color);
+    }
+
+    &--fixed {
+      position: fixed;
+      border-radius: 0;
+      height: calc(var(--offset) + var(--ion-safe-area-top) + 20px);
+      bottom: calc(100% - var(--offset) - var(--ion-safe-area-top) - 20px);
+    }
+  }
+}
+
+.backdrop-no-tappable {
+  pointer-events: none;
+}

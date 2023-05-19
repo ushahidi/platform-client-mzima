@@ -21,6 +21,7 @@ export class ButtonComponent {
   @Input() public type: 'submit' | 'button' = 'button';
   @Input() public expand: 'block' | 'inline' = 'block';
   @Input() public size: 'small' | 'default' = 'default';
+  @Input() public shape: 'round' | 'normal' = 'round';
   @Input() public disabled = false;
   @Input() public radius = '100px';
   @Input() public shadow = false;

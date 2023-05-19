@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '@shared';
 import { DeploymentPageModule } from '../deployment.module';
 
 import { DeploymentSearchPageRoutingModule } from './deployment-search-routing.module';

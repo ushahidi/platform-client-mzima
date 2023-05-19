@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TruncatePipe } from '../core/pipes';
 
 import { DeploymentPageRoutingModule } from './deployment-routing.module';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared';
 
 import { DeploymentPage } from './deployment.page';
 import { LogoComponent } from './components/logo/logo.component';

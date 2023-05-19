@@ -1,0 +1,13 @@
+<form class="search-form" novalidate [formGroup]="form">
+  <app-form-control
+    [rounded]="true"
+    placeholder="Search"
+    formControlName="postsQuery"
+    [color]="isLight ? 'light' : 'default'"
+  >
+    <app-icon start name="search-small"></app-icon>
+    <app-button class="filters-button" fill="clear" color="medium" end>
+      <app-icon slot="icon-only" name="filters"></app-icon>
+    </app-button>
+  </app-form-control>
+</form>

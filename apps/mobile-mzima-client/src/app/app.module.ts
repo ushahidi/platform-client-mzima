@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { ApiUrlLoader, EnvLoader, SdkModule } from '@mzima-client/sdk';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -45,6 +47,8 @@ export function EnvLoaderFactory(env: EnvService): any {
         deps: [EnvService],
       },
     }),
+    LeafletModule,
+    LeafletMarkerClusterModule,
   ],
   providers: [
     {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AuthPage } from './auth.page';
 import { AuthPageRoutingModule } from './auth-routing.module';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared';
 
 @NgModule({
   imports: [AuthPageRoutingModule, SharedModule],

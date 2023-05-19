@@ -5,10 +5,9 @@
   [size]="size"
   [color]="color === 'custom' ? '' : color"
   [disabled]="disabled"
-  [shape]="expand === 'inline' ? '' : 'round'"
+  [shape]="expand === 'inline' || shape === 'normal' ? undefined : 'round'"
   class="button"
   [ngClass]="{ 'button--custom-color': color === 'custom', 'button--shadow': shadow }"
-  [ngStyle]="{ '--border-radius': radius, height: height }"
   (click)="onClick($event)"
 >
   <span><ng-content></ng-content></span>

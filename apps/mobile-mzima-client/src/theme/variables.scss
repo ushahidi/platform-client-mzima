@@ -18,6 +18,8 @@
 
   --ion-overlay-background-color: #ffffff;
 
+  --ion-padding: 16px;
+
   /** primary **/
   --ion-color-primary: #ffc235;
   --ion-color-primary-rgb: 255, 194, 53;
@@ -83,12 +85,12 @@
   --ion-color-medium-tint: #7b7e82;
 
   /** light **/
-  --ion-color-light: #f4f5f8;
-  --ion-color-light-rgb: 244, 245, 248;
+  --ion-color-light: #ffffff;
+  --ion-color-light-rgb: 255, 255, 255;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0, 0, 0;
-  --ion-color-light-shade: #d7d8da;
-  --ion-color-light-tint: #f5f6f9;
+  --ion-color-light-shade: #e0e0e0;
+  --ion-color-light-tint: #ffffff;
 
   --ion-color-step-50: #e9e9ea;
   --ion-color-step-100: #e2e2e3;

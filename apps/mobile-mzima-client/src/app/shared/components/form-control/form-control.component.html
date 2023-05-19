@@ -1,11 +1,19 @@
 <div class="ion-margin-bottom">
-  <ion-item class="form-row" lines="none">
+  <ion-item
+    lines="none"
+    class="form-row"
+    [ngClass]="{
+      'form-row--rounded': rounded,
+      'form-row--light': color === 'light'
+    }"
+  >
+    <ng-content slot="start" select="[start]"></ng-content>
     <ion-input
       [(ngModel)]="value"
       class="form-control"
-      [label]="label + (required ? '*' : '')"
+      [label]="label ? label + (required ? '*' : '') : null"
       [type]="type === 'password' && isPasswordVisible ? 'text' : type"
-      labelPlacement="floating"
+      [labelPlacement]="label ? 'floating' : 'start'"
       [placeholder]="placeholder"
       [required]="required"
       [disabled]="disabled"
@@ -25,6 +33,7 @@
     >
       <app-icon slot="icon-only" [name]="isPasswordVisible ? 'eye' : 'eye-closed'"></app-icon>
     </app-button>
+    <ng-content slot="end" select="[end]"></ng-content>
   </ion-item>
   <span *ngIf="hint?.length && (!errors.length || isOnFocus)" class="hint ion-padding-horizontal">
     {{ hint }}

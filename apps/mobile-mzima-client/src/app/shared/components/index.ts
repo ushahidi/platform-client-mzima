@@ -4,3 +4,4 @@ export * from './checkbox/checkbox.component';
 export * from './button/button.component';
 export * from './modal/modal.component';
 export * from './page-not-found/page-not-found.component';
+export * from './menu/menu.component';

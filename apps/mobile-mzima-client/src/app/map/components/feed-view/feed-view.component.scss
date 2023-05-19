@@ -1,0 +1,42 @@
+.menu {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  transition-duration: 0.35s;
+  transition-timing-function: ease;
+  transition-property: opacity height;
+  height: calc(80px + var(--ion-safe-area-bottom));
+
+  &--hidden {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+.page-content {
+  transition: padding 0.35s ease;
+
+  &.at-top {
+    padding-top: var(--ion-safe-area-top);
+  }
+
+  &:not(.at-bottom) {
+    padding-bottom: 80px;
+  }
+}
+
+.total-posts {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  margin-bottom: 26px;
+  letter-spacing: 0.1px;
+  transition: margin-bottom 0.35s ease;
+
+  .at-bottom & {
+    margin-bottom: calc(26px + var(--ion-safe-area-bottom));
+  }
+}

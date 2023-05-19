@@ -2,6 +2,12 @@
   border-bottom-width: 1px;
   border-bottom-style: solid;
   --border-radius: 4px 4px 0 0;
+  --transition: all 0.35s ease;
+  border-radius: var(--border-radius);
+
+  &--rounded {
+    --border-radius: 28px;
+  }
 
   @media (prefers-color-scheme: dark) {
     border-bottom-color: var(--ion-color-step-600);
@@ -11,6 +17,15 @@
     border-bottom-color: var(--ion-color-step-300);
   }
 
+  &--light {
+    --color: var(--ion-text-color);
+    --background: var(--ion-color-light);
+
+    @media (prefers-color-scheme: dark) {
+      border-bottom-color: var(--ion-color-step-200);
+    }
+  }
+
   &::ng-deep {
     .input-label-placement-stacked.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md,
     .has-focus.input-label-placement-floating.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md,
@@ -18,6 +33,14 @@
       .label-text-wrapper.sc-ion-input-md {
       z-index: 15;
       pointer-events: none;
+    }
+  }
+
+  &::ng-deep {
+    ion-icon {
+      display: block;
+      line-height: 1;
+      font-size: 40px;
     }
   }
 }
@@ -37,6 +60,14 @@
 
 .form-control {
   --border-radius: 4px 4px 0 0;
+
+  .form-row--rounded & {
+    --border-radius: 28px;
+  }
+
+  .form-row--light & {
+    --background: var(--ion-color-light);
+  }
 
   @media (prefers-color-scheme: dark) {
     --highlight-color-focused: var(--ion-color-step-800);

@@ -1,0 +1,29 @@
+<ng-content select="[header]"></ng-content>
+
+<ion-content
+  #content
+  [fullscreen]="true"
+  class="page-content"
+  [scrollEvents]="true"
+  (ionScroll)="onContentScroll($event)"
+  (touchend)="onContentTouchEnd()"
+  (touchstart)="onContentTouchStart()"
+  (ionScrollEnd)="onContentScrollEnd()"
+  (ionScrollStart)="onContentScrollStart()"
+  [ngClass]="{ 'page-content--fullscreen': isFullscreenView }"
+  [ngStyle]="{ '--fixed-offset': fixedContentHeight + 'px' }"
+>
+  <div class="fixed-content" #fixedContent>
+    <ng-content></ng-content>
+  </div>
+  <div
+    class="draggable-content"
+    [ngStyle]="{
+      background: draggableBackground,
+      '--background': draggableBackground
+    }"
+  >
+    <span class="draggable-content__drag-handle"></span>
+    <ng-content select="[draggable]"></ng-content>
+  </div>
+</ion-content>

@@ -15,13 +15,15 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 })
 export class FormControlComponent implements ControlValueAccessor {
   @Input() public label?: string;
-  @Input() public placeholder?: string;
+  @Input() public placeholder: string = '';
   @Input() public hint?: string;
   @Input() public type?: 'text' | 'email' | 'password' = 'text';
   @Input() public required = false;
+  @Input() public rounded = false;
   @Input() public disabled = false;
   @Input() public togglePassword = false;
   @Input() public errors: string[] = [];
+  @Input() public color: 'light' | 'default' = 'default';
   public isPasswordVisible = false;
   public isOnFocus: boolean;
 
