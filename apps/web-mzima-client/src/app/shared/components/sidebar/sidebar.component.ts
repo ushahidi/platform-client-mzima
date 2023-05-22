@@ -118,7 +118,9 @@ export class SidebarComponent implements OnInit {
     if (route !== 'map' && route !== 'feed') return route;
 
     if (this.router.url.includes('collection')) {
-      return `${route}/collection/${this.router.url.split('/').pop() || ''}`;
+      const tmpArr = this.router.url.split('/');
+      const collectionId = tmpArr[tmpArr.findIndex((q) => q === 'collection') + 1];
+      return `${route}/collection/${collectionId || ''}`;
     }
 
     if (this.router.url.includes('search')) {

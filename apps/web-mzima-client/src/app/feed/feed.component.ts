@@ -363,6 +363,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public switchMode(mode: FeedMode): void {
     this.mode = mode;
+    if (this.collectionId) {
+      this.switchCollectionMode();
+      return;
+    }
     if (this.mode === FeedMode.Post) {
       this.router.navigate(['/feed', this.posts[0].id, 'view'], {
         queryParams: {
@@ -372,6 +376,24 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       });
     } else {
       this.router.navigate(['/feed'], {
+        queryParams: {
+          mode: this.mode,
+        },
+        queryParamsHandling: 'merge',
+      });
+    }
+  }
+
+  switchCollectionMode() {
+    if (this.mode === FeedMode.Post) {
+      this.router.navigate(['/feed', 'collection', this.collectionId, this.posts[0].id, 'view'], {
+        queryParams: {
+          mode: this.mode,
+        },
+        queryParamsHandling: 'merge',
+      });
+    } else {
+      this.router.navigate(['/feed', 'collection', this.collectionId], {
         queryParams: {
           mode: this.mode,
         },

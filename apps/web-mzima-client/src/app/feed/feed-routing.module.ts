@@ -34,6 +34,22 @@ const routes: Routes = [
         data: {
           view: 'collection',
         },
+        children: [
+          {
+            path: ':id/view',
+            component: PostDetailsComponent,
+            data: {
+              ogTitle: 'nav.feed',
+            },
+          },
+          {
+            path: ':id/edit',
+            component: PostEditComponent,
+            data: {
+              ogTitle: 'nav.feed',
+            },
+          },
+        ],
       },
     ],
   },
