@@ -108,9 +108,7 @@ export class PostHeadComponent {
 
   public editPost(event: Event) {
     event.stopPropagation();
-    this.isDesktop
-      ? this.router.navigateByUrl(`/feed/${this.post.id}/edit?mode=POST`)
-      : this.edit.emit();
+    this.edit.emit();
   }
 
   public sharePost() {
