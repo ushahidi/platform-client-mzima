@@ -228,9 +228,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public showPostDetails(post: any): void {
     if (this.isDesktop) {
       if (this.collectionId) {
-        this.router.navigate(['/feed', 'collection', this.collectionId, this.posts[0].id, 'view'], {
+        this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'view'], {
           queryParams: {
-            mode: this.mode,
+            mode: FeedMode.Post,
           },
           queryParamsHandling: 'merge',
         });
