@@ -227,12 +227,21 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public showPostDetails(post: any): void {
     if (this.isDesktop) {
-      this.router.navigate(['feed', post.id, 'view'], {
-        queryParams: {
-          mode: FeedMode.Post,
-        },
-        queryParamsHandling: 'merge',
-      });
+      if (this.collectionId) {
+        this.router.navigate(['/feed', 'collection', this.collectionId, this.posts[0].id, 'view'], {
+          queryParams: {
+            mode: this.mode,
+          },
+          queryParamsHandling: 'merge',
+        });
+      } else {
+        this.router.navigate(['feed', post.id, 'view'], {
+          queryParams: {
+            mode: FeedMode.Post,
+          },
+          queryParamsHandling: 'merge',
+        });
+      }
     } else {
       this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
         width: '100%',
@@ -429,7 +438,24 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public editPost(post: any): void {
-    if (this.isDesktop) return;
+    if (this.isDesktop) {
+      if (this.collectionId) {
+        this.router.navigate(['/feed', 'collection', this.collectionId, this.posts[0].id, 'view'], {
+          queryParams: {
+            mode: FeedMode.Post,
+          },
+          queryParamsHandling: 'merge',
+        });
+      } else {
+        this.router.navigate(['feed', post.id, 'view'], {
+          queryParams: {
+            mode: FeedMode.Post,
+          },
+          queryParamsHandling: 'merge',
+        });
+      }
+      return;
+    }
 
     this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
       width: '100%',
