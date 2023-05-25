@@ -2,13 +2,9 @@
   [mode]="1"
   [offsetTop]="78"
   [breakpoints]="[0, 300]"
-  (toggleMode)="checkIsFullscreen($event)"
+  (toggleMode)="mode = $event"
 >
-  <app-search-form
-    [isLight]="mode !== 'fullscreen'"
-    header
-    class="search-form ion-padding-horizontal"
-  ></app-search-form>
+  <app-search-form [isLight]="mode !== 'fullscreen'" header class="search-form"></app-search-form>
   <app-map-view class="map"></app-map-view>
   <ng-container draggable>
     <app-button shape="normal" [shadow]="true" class="add-post-button">

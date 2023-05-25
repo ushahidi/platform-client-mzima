@@ -13,6 +13,9 @@ import {
   ModalComponent,
   PageNotFoundComponent,
   MenuComponent,
+  SpinnerComponent,
+  RadioComponent,
+  SelectComponent,
 } from './components';
 
 const components = [
@@ -23,6 +26,9 @@ const components = [
   ModalComponent,
   PageNotFoundComponent,
   MenuComponent,
+  SpinnerComponent,
+  RadioComponent,
+  SelectComponent,
 ];
 
 @NgModule({

@@ -1,3 +1,119 @@
 .filters-button {
   --size: 40px;
 }
+
+.back-button {
+  --size: 40px;
+  --icon-size: 24px;
+  margin-left: -24px;
+}
+
+.search-form {
+  position: relative;
+
+  &__form-control-container {
+    z-index: 100;
+    position: relative;
+    padding-bottom: 7px;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color 0.35s ease;
+    padding-top: calc(8px + var(--ion-safe-area-top));
+
+    .search-form--results-visible & {
+      border-bottom-color: var(--ion-color-step-200);
+    }
+  }
+
+  &__form-control {
+    .search-form--results-visible & {
+      --light-border-color: transparent;
+
+      @media (prefers-color-scheme: dark) {
+        --input-background: transparent;
+      }
+    }
+  }
+}
+
+.search-form-results {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  transform-origin: 50% 0;
+  transition-duration: 0.35s;
+  transition-timing-function: ease;
+  transition-property: transform, opacity;
+  --background: var(--ion-background-color);
+  --padding-top: calc(96px + var(--ion-safe-area-top));
+
+  &--hidden {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  &__empty {
+    display: flex;
+    min-height: 100%;
+    text-align: center;
+    align-items: center;
+    padding-bottom: 72px;
+    letter-spacing: 0.5px;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.filters-modal {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: var(--ion-padding);
+  }
+
+  &__title {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__total-posts {
+    font-size: 14px;
+    margin-left: 8px;
+    font-weight: 400;
+    line-height: 20px;
+    white-space: nowrap;
+    letter-spacing: 0.25px;
+
+    &__count {
+      color: var(--color-primary-40);
+    }
+  }
+
+  &__footer {
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &__button {
+    --button-padding-end: 24px;
+    --button-padding-start: 24px;
+  }
+
+  &__filters {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    margin: calc(var(--ion-padding) * -1) calc(var(--ion-padding) * -1) 0;
+  }
+}
+
+.filter {
+  display: block;
+  min-height: 100%;
+}

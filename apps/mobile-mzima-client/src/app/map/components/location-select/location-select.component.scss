@@ -1,0 +1,32 @@
+.main {
+  padding-top: 24px;
+}
+
+.results {
+  margin-top: -1px;
+  overflow-y: auto;
+  max-height: 288px;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  border-radius: 0 0 28px 28px;
+  -webkit-overflow-scrolling: touch;
+  background: var(--ion-item-background);
+}
+
+.search-input {
+  &--has-results {
+    --input-border-radius: 28px 28px 0 0;
+  }
+}
+
+.result-item {
+  display: flex;
+  min-height: 72px;
+  padding: 8px 16px;
+  flex-direction: column;
+  justify-content: center;
+
+  &:not(:first-child) {
+    border-top: 1px solid var(--ion-color-step-200);
+  }
+}

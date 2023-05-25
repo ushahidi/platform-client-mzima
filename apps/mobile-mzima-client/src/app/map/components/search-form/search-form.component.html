@@ -1,13 +1,127 @@
-<form class="search-form" novalidate [formGroup]="form">
-  <app-form-control
-    [rounded]="true"
-    placeholder="Search"
-    formControlName="postsQuery"
-    [color]="isLight ? 'light' : 'default'"
+<form
+  novalidate
+  [formGroup]="form"
+  class="search-form"
+  [ngClass]="{ 'search-form--results-visible': isResultsVisible }"
+>
+  <div class="search-form__form-control-container ion-padding-horizontal">
+    <app-form-control
+      #formControl
+      placeholder="Search"
+      formControlName="postsQuery"
+      [rounded]="!isResultsVisible"
+      [clearable]="isResultsVisible"
+      class="search-form__form-control"
+      (inputFocus)="showSearchResults()"
+      [color]="isLight ? 'light' : 'default'"
+    >
+      <ng-container start>
+        <app-icon *ngIf="!isResultsVisible" name="search-small"></app-icon>
+        <app-button
+          end
+          fill="clear"
+          color="medium"
+          class="back-button"
+          *ngIf="isResultsVisible"
+          (buttonClick)="hideSearchResults()"
+        >
+          <app-icon slot="icon-only" name="arrow-back"></app-icon>
+        </app-button>
+      </ng-container>
+      <app-button
+        end
+        fill="clear"
+        color="medium"
+        class="filters-button"
+        *ngIf="!isResultsVisible"
+        (buttonClick)="showFiltersModal($event)"
+      >
+        <app-icon slot="icon-only" name="filters"></app-icon>
+      </app-button>
+    </app-form-control>
+  </div>
+
+  <ion-content
+    class="search-form-results ion-padding-horizontal"
+    [ngClass]="{ 'search-form-results--hidden': !isResultsVisible }"
   >
-    <app-icon start name="search-small"></app-icon>
-    <app-button class="filters-button" fill="clear" color="medium" end>
-      <app-icon slot="icon-only" name="filters"></app-icon>
-    </app-button>
-  </app-form-control>
+    <div class="search-form-results__empty">
+      <ng-container *ngIf="!posts.length && !isPostsLoading">
+        <ion-text color="medium" *ngIf="!form.controls['postsQuery'].value?.length">
+          Start typing to find Posts
+        </ion-text>
+        <ion-text color="medium" *ngIf="form.controls['postsQuery'].value?.length">
+          Sorry, no posts were found <br />based on your search criteria.
+        </ion-text>
+      </ng-container>
+      <app-spinner *ngIf="isPostsLoading"></app-spinner>
+    </div>
+    <app-post-item *ngFor="let post of posts" [post]="post"></app-post-item>
+  </ion-content>
 </form>
+
+<app-modal
+  class="filters-modal"
+  [isOpen]="isFiltersModalOpen"
+  (modalClose)="modalCloseHandle()"
+  [options]="{
+    footer: true
+  }"
+  [closable]="!selectedFilter"
+>
+  <div class="filters-modal__header" header>
+    <span>{{ selectedFilter?.label ?? 'Filters' }}</span>
+    <ion-text color="medium" class="filters-modal__total-posts">
+      Found posts:
+      <strong class="filters-modal__total-posts__count">{{ totalPosts }}</strong>
+    </ion-text>
+  </div>
+  <div class="filters-modal__filters">
+    <ng-container *ngIf="!selectedFilter; else filter">
+      <app-filter-control
+        *ngFor="let filter of filters"
+        [filter]="filter"
+        (filterClick)="openFilter(filter)"
+      >
+      </app-filter-control>
+    </ng-container>
+  </div>
+  <div class="filters-modal__footer" footer>
+    <ng-container *ngIf="!selectedFilter">
+      <app-button class="filters-modal__button" expand="inline">Save as</app-button>
+      <app-button
+        fill="outline"
+        color="medium"
+        expand="inline"
+        class="filters-modal__button"
+        (buttonClick)="handleClearFilters()"
+      >
+        Clear
+      </app-button>
+    </ng-container>
+    <ng-container *ngIf="selectedFilter">
+      <app-button class="filters-modal__button" expand="inline" (buttonClick)="applyFilter()">
+        Apply
+      </app-button>
+      <app-button
+        fill="outline"
+        color="medium"
+        expand="inline"
+        class="filters-modal__button"
+        *ngIf="selectedFilter.name !== 'set'"
+        (buttonClick)="handleClearFilters(selectedFilter.name)"
+      >
+        Clear
+      </app-button>
+    </ng-container>
+  </div>
+</app-modal>
+
+<ng-template #filter>
+  <app-filter
+    class="filter"
+    *ngIf="selectedFilter"
+    [filter]="selectedFilter"
+    [totalPosts]="totalPosts"
+  ></app-filter>
+</ng-template>

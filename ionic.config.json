@@ -3,5 +3,10 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "config": {
+    "ionic": {
+      "innerHTMLTemplatesEnabled": true
+    }
+  }
 }

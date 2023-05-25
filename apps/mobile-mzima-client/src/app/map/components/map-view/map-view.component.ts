@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, NgZone } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
-  FeatureGroup,
   FitBoundsOptions,
   geoJSON,
   LatLngBounds,
@@ -14,7 +13,7 @@ import {
 import { mapHelper } from '@helpers';
 import { PostsService } from '@mzima-client/sdk';
 import { SessionService } from '@services';
-import { MapConfigInterface } from '../../../core/intefaces/session.interface';
+import { MapConfigInterface } from '@models';
 
 @UntilDestroy()
 @Component({
@@ -40,11 +39,7 @@ export class MapViewComponent implements AfterViewInit {
     offset: 0,
   };
 
-  constructor(
-    private postsService: PostsService,
-    private zone: NgZone,
-    private sessionService: SessionService,
-  ) {
+  constructor(private postsService: PostsService, private sessionService: SessionService) {
     this.mapConfig = this.sessionService.getMapConfigurations();
 
     const currentLayer =
@@ -65,13 +60,12 @@ export class MapViewComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.isMapReady = true;
-    }, 50);
-    // this.getPostsGeoJson();
+    }, 100);
+    this.getPostsGeoJson();
   }
 
   public onMapReady(map: Map) {
     this.map = map;
-    // control.zoom({ position: 'bottomleft' }).addTo(map);
   }
 
   private getPostsGeoJson() {
@@ -103,38 +97,19 @@ export class MapViewComponent implements AfterViewInit {
                 layer.unbindPopup();
               });
               layer.on('click', () => {
-                this.zone.run(() => {
-                  if (layer instanceof FeatureGroup) {
-                    layer = layer.getLayers()[0];
-                  }
-
-                  if (layer.getPopup()) {
-                    layer.openPopup();
-                  } else {
-                    console.log();
-                  }
-                });
+                console.log('show post preview: ', layer);
               });
             },
           });
 
-          // if (this.mapConfig.clustering) {
-          //   this.markerClusterData.addLayer(geoPosts);
-          //   this.mapLayers.push(this.markerClusterData);
-          // } else {
-          //   this.mapLayers.push(geoPosts);
-          // }
-
-          if (posts.meta.total > this.params.limit * this.params.page) {
-            this.progress = ((this.params.limit * this.params.page) / posts.count) * 100;
-
-            this.params.page++;
-            this.getPostsGeoJson();
+          if (this.mapConfig.clustering) {
+            this.markerClusterData.addLayer(geoPosts);
+            this.mapLayers.push(this.markerClusterData);
           } else {
-            this.progress = 100;
+            this.mapLayers.push(geoPosts);
           }
 
-          if (posts.results.length && this.params.page <= this.params.limit) {
+          if (posts.results.length) {
             this.mapFitToBounds = geoPosts.getBounds();
           }
         },
@@ -145,12 +120,4 @@ export class MapViewComponent implements AfterViewInit {
         },
       });
   }
-
-  // private reInitParams() {
-  //   this.mapLayers.map((layer) => {
-  //     this.map.removeLayer(layer);
-  //     this.markerClusterData.removeLayer(layer);
-  //   });
-  //   this.mapLayers = [];
-  // }
 }

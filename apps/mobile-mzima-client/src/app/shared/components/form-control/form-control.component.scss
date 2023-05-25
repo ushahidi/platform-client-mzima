@@ -1,13 +1,10 @@
 .form-row {
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  --border-radius: 4px 4px 0 0;
   --transition: all 0.35s ease;
+  transition: var(--transition);
   border-radius: var(--border-radius);
-
-  &--rounded {
-    --border-radius: 28px;
-  }
+  --border-radius: var(--input-border-radius, 4px 4px 0 0);
 
   @media (prefers-color-scheme: dark) {
     border-bottom-color: var(--ion-color-step-600);
@@ -17,12 +14,21 @@
     border-bottom-color: var(--ion-color-step-300);
   }
 
+  &--rounded {
+    border-bottom-color: transparent;
+    --border-radius: var(--input-border-radius, 28px);
+  }
+
   &--light {
-    --color: var(--ion-text-color);
-    --background: var(--ion-color-light);
+    @media (prefers-color-scheme: light) {
+      --color: var(--ion-text-color);
+      --background: var(--input-background, var(--ion-color-light));
+      border-bottom-color: var(--light-border-color, var(--ion-color-step-200));
+    }
 
     @media (prefers-color-scheme: dark) {
-      border-bottom-color: var(--ion-color-step-200);
+      --background: var(--input-background, var(--ion-color-step-200));
+      border-bottom-color: var(--light-border-color, transparent);
     }
   }
 
@@ -36,12 +42,23 @@
     }
   }
 
-  &::ng-deep {
-    ion-icon {
-      display: block;
-      line-height: 1;
-      font-size: 40px;
+  span[slot='start'],
+  span[slot='end'] {
+    &::ng-deep {
+      app-icon {
+        display: block;
+        line-height: 1;
+        font-size: 40px;
+      }
     }
+  }
+
+  span[slot='start'] {
+    margin-inline-end: 0;
+  }
+
+  span[slot='end'] {
+    margin-inline-start: 0;
   }
 }
 
@@ -59,14 +76,11 @@
 }
 
 .form-control {
+  --background: transparent;
   --border-radius: 4px 4px 0 0;
 
   .form-row--rounded & {
     --border-radius: 28px;
-  }
-
-  .form-row--light & {
-    --background: var(--ion-color-light);
   }
 
   @media (prefers-color-scheme: dark) {
@@ -92,18 +106,19 @@
       }
     }
   }
-}
 
-.toggle-password-button {
-  --size: 48px;
-  margin-right: -16px;
+  &__button {
+    --size: 48px;
+    margin-right: -16px;
+    margin-inline-start: 0px;
 
-  @media (prefers-color-scheme: light) {
-    color: var(--ion-color-step-450);
-  }
+    @media (prefers-color-scheme: light) {
+      color: var(--ion-color-step-450);
+    }
 
-  @media (prefers-color-scheme: dark) {
-    color: var(--ion-color-step-550);
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-550);
+    }
   }
 }
 

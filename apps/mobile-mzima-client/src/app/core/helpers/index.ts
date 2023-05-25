@@ -4,3 +4,4 @@ export { fieldErrorMessages } from './field-error-messages';
 export * from './random-color';
 export * from './util';
 export * as mapHelper from './map';
+export * as searchFormHelper from './search-form';

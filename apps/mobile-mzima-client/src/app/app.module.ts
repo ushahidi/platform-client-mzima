@@ -37,6 +37,7 @@ export function EnvLoaderFactory(env: EnvService): any {
     BrowserModule,
     IonicModule.forRoot({
       mode: 'md',
+      innerHTMLTemplatesEnabled: true,
     }),
     AppRoutingModule,
     HttpClientModule,

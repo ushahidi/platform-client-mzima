@@ -7,8 +7,4 @@ import { Component } from '@angular/core';
 })
 export class MapPage {
   public mode: number | 'fullscreen';
-
-  public checkIsFullscreen(mode: number | 'fullscreen'): void {
-    this.mode = mode;
-  }
 }

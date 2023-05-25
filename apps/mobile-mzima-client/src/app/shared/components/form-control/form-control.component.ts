@@ -1,5 +1,6 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { IonInput } from '@ionic/angular';
 
 @Component({
   selector: 'app-form-control',
@@ -21,9 +22,13 @@ export class FormControlComponent implements ControlValueAccessor {
   @Input() public required = false;
   @Input() public rounded = false;
   @Input() public disabled = false;
+  @Input() public clearable = false;
   @Input() public togglePassword = false;
   @Input() public errors: string[] = [];
   @Input() public color: 'light' | 'default' = 'default';
+  @Output() public inputFocus = new EventEmitter();
+  @Output() public inputBlur = new EventEmitter();
+  @ViewChild('input') input: IonInput;
   public isPasswordVisible = false;
   public isOnFocus: boolean;
 
@@ -54,9 +59,22 @@ export class FormControlComponent implements ControlValueAccessor {
   public handleBlur(): void {
     this.onTouched();
     this.isOnFocus = false;
+    this.inputBlur.emit();
   }
 
   public handleFocus(): void {
     this.isOnFocus = true;
+    this.inputFocus.emit();
+  }
+
+  public clearInput(): void {
+    this.value = '';
+  }
+
+  public blurInput(): void {
+    this.clearInput();
+    this.input.getInputElement().then((el) => {
+      el.blur();
+    });
   }
 }

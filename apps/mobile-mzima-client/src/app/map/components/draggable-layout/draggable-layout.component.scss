@@ -106,7 +106,14 @@
       border-radius: 2px;
       position: absolute;
       pointer-events: none;
-      background: var(--ion-text-color);
+
+      @media (prefers-color-scheme: light) {
+        background-color: var(--ion-text-color);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        background-color: var(--ion-color-step-800);
+      }
     }
 
     &--fixed {

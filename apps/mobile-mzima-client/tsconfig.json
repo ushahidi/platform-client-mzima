@@ -29,7 +29,9 @@
       "@interceptors": ["apps/mobile-mzima-client/src/app/core/interceptors"],
       "@guards": ["apps/mobile-mzima-client/src/app/core/guards"],
       "@validators": ["apps/mobile-mzima-client/src/app/core/validators"],
-      "@shared": ["apps/mobile-mzima-client/src/app/shared"]
+      "@shared": ["apps/mobile-mzima-client/src/app/shared"],
+      "@components": ["apps/mobile-mzima-client/src/app/shared/components"],
+      "@models": ["apps/mobile-mzima-client/src/app/core/interfaces"]
     },
   },
   "angularCompilerOptions": {

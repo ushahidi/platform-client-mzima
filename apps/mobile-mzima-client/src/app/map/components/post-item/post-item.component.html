@@ -1,0 +1,27 @@
+<ion-card class="post">
+  <ion-card-header class="post__header">
+    <ion-avatar class="post__avatar">
+      <ion-img
+        [alt]="post.user?.realname"
+        src="//www.gravatar.com/avatar/{{
+          post.user?.gravatar || '00000000000000000000000000000000'
+        }}?d=retro&s=40"
+      ></ion-img>
+    </ion-avatar>
+    <div class="post__header__inner">
+      <ion-card-title class="post__username">{{
+        post.author_realname ?? post.author_email
+      }}</ion-card-title>
+      <ion-card-subtitle class="post__date">{{
+        post.post_date | date : 'mediumDate'
+      }}</ion-card-subtitle>
+    </div>
+    <app-button fill="clear" shape="normal" color="medium" class="post__details">
+      <app-icon slot="icon-only" name="dots"></app-icon>
+    </app-button>
+  </ion-card-header>
+  <ion-card-content class="post__body">
+    <ion-card-title class="post__title">{{ post.title }}</ion-card-title>
+    <p *ngIf="post.content">{{ post.content }}</p>
+  </ion-card-content>
+</ion-card>

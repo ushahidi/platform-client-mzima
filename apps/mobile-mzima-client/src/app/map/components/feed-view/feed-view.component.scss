@@ -40,3 +40,16 @@
     margin-bottom: calc(26px + var(--ion-safe-area-bottom));
   }
 }
+
+.empty-box {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  // transition: height 0.35s ease;
+
+  // .at-bottom & {
+  //   height: calc(24px + var(--ion-safe-area-bottom));
+  // }
+}

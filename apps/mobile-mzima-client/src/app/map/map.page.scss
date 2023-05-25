@@ -9,8 +9,6 @@
   right: 0;
   z-index: 15;
   position: absolute;
-  padding-top: calc(8px + var(--ion-safe-area-top));
-  padding-bottom: 8px;
 
   &::ng-deep {
     .ion-margin-bottom {
@@ -32,5 +30,6 @@
   --icon-size: 24px;
   position: absolute;
   right: var(--ion-padding);
+  --button-border-radius: 16px;
   margin-bottom: var(--ion-padding);
 }

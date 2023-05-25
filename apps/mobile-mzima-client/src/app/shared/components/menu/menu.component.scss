@@ -9,7 +9,6 @@
 
 .button {
   flex: 1 1 100%;
-  color: var(--ion-color-step-800);
   --button-height: 80px;
   --button-font-size: 12px;
   --button-line-height: 16px;
@@ -17,9 +16,22 @@
   --button-padding-bottom: 16px;
   --button-letter-spacing: 0.05px;
 
+  @media (prefers-color-scheme: light) {
+    color: var(--ion-color-step-800);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--ion-color-step-850);
+  }
+
+  &--active {
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-primary);
+    }
+  }
+
   &::ng-deep {
     .button {
-      font-weight: 500;
       --ripple-color: var(--ion-color-primary);
     }
   }
@@ -36,13 +48,22 @@
     flex-direction: column;
     justify-content: center;
     transition-duration: 0.35s;
-    color: var(--ion-color-medium);
     transition-timing-function: ease;
     transition-property: background-color color;
 
+    @media (prefers-color-scheme: light) {
+      color: var(--ion-color-medium);
+    }
+
     .button--active & {
-      color: var(--ion-text-color);
-      background-color: var(--color-primary-100);
+      @media (prefers-color-scheme: light) {
+        color: var(--ion-text-color);
+        background-color: var(--color-primary-100);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        background-color: var(--ion-card-background);
+      }
     }
   }
 }

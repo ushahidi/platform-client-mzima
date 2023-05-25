@@ -10,7 +10,7 @@
   --box-shadow: none;
   vertical-align: top;
   text-transform: none;
-  height: var(--button-height, 40px);
+  height: var(--button-height, 44px);
   font-size: var(--button-font-size, 14px);
   line-height: var(--button-line-height, 20px);
   letter-spacing: var(--button-letter-spacing, 0.1px);
@@ -45,6 +45,17 @@
     }
   }
 
+  &.button-outline {
+    --border-width: 1px;
+
+    &.ion-color-medium {
+      &::part(native) {
+        color: var(--ion-text-color);
+        border-color: var(--ion-color-step-200);
+      }
+    }
+  }
+
   &.button-small {
     height: 20px;
   }
@@ -69,6 +80,6 @@
   }
 
   &:not(.button-round) {
-    --border-radius: 16px;
+    --border-radius: var(--button-border-radius, 22px);
   }
 }

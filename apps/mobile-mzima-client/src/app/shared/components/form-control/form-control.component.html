@@ -7,8 +7,11 @@
       'form-row--light': color === 'light'
     }"
   >
-    <ng-content slot="start" select="[start]"></ng-content>
+    <span slot="start">
+      <ng-content select="[start]"></ng-content>
+    </span>
     <ion-input
+      #input
       [(ngModel)]="value"
       class="form-control"
       [label]="label ? label + (required ? '*' : '') : null"
@@ -24,16 +27,28 @@
     >
     </ion-input>
     <app-button
-      class="toggle-password-button"
+      class="form-control__button"
       slot="end"
       *ngIf="togglePassword"
       fill="clear"
       color="custom"
-      (click)="isPasswordVisible = !isPasswordVisible"
+      (buttonClick)="isPasswordVisible = !isPasswordVisible"
     >
       <app-icon slot="icon-only" [name]="isPasswordVisible ? 'eye' : 'eye-closed'"></app-icon>
     </app-button>
-    <ng-content slot="end" select="[end]"></ng-content>
+    <app-button
+      class="form-control__button"
+      slot="end"
+      *ngIf="clearable && value?.length && !togglePassword"
+      fill="clear"
+      color="custom"
+      (buttonClick)="clearInput()"
+    >
+      <app-icon slot="icon-only" name="clear"></app-icon>
+    </app-button>
+    <span slot="end">
+      <ng-content select="[end]"></ng-content>
+    </span>
   </ion-item>
   <span *ngIf="hint?.length && (!errors.length || isOnFocus)" class="hint ion-padding-horizontal">
     {{ hint }}

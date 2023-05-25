@@ -1,0 +1,21 @@
+<div class="main ion-padding-horizontal ion-padding-bottom">
+  <app-form-control
+    [rounded]="true"
+    [clearable]="true"
+    [(ngModel)]="query"
+    class="search-input"
+    (ngModelChange)="getAddresses()"
+    placeholder="Enter city or address"
+    [ngClass]="{ 'search-input--has-results': results.length }"
+  >
+    <ng-container start>
+      <app-icon name="search-small"></app-icon>
+    </ng-container>
+    <div class="results" *ngIf="results.length" additional>
+      <div class="result-item" *ngFor="let result of results">
+        {{ result.label }}
+      </div>
+    </div>
+  </app-form-control>
+  <app-select label="Radius" [options]="radiusOptions" [(ngModel)]="radiusValue"> </app-select>
+</div>

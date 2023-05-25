@@ -1,0 +1,55 @@
+.radio-item {
+  --border-width: 0 0 1px;
+  --background: var(--ion-background-color);
+  --border-color: var(--ion-color-step-200);
+  --padding-start: 16px;
+  --padding-end: 20px;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --min-height: 55px;
+  --ripple-color: var(--ion-color-primary);
+  --transition: all 0.35s ease;
+
+  .item-sliding-active-slide & {
+    --background: var(--ion-item-background);
+  }
+
+  &__control {
+    width: 72px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    text-transform: none;
+    letter-spacing: 0.1px;
+    color: var(--ion-background-color);
+
+    &__icon {
+      line-height: 1;
+      font-size: 24px;
+      margin: 0 0 4px;
+    }
+  }
+}
+
+.radio {
+  --color: var(--ion-color-medium);
+  --color-checked: var(--color-primary-50);
+
+  &::part(container) {
+    width: 20px;
+    height: 20px;
+    margin: 10px 18px 10px 10px;
+  }
+
+  &::ng-deep {
+    .info {
+      display: block;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.25px;
+      color: var(--ion-color-medium);
+    }
+  }
+}
