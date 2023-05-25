@@ -190,6 +190,12 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         }
       },
     });
+
+    this.eventBusService.on(EventType.EditPost).subscribe({
+      next: (post) => {
+        this.editPost(post);
+      },
+    });
   }
 
   loadData(): void {
@@ -227,12 +233,21 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public showPostDetails(post: any): void {
     if (this.isDesktop) {
-      this.router.navigate(['feed', post.id, 'view'], {
-        queryParams: {
-          mode: FeedMode.Post,
-        },
-        queryParamsHandling: 'merge',
-      });
+      if (this.collectionId) {
+        this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'view'], {
+          queryParams: {
+            mode: FeedMode.Post,
+          },
+          queryParamsHandling: 'merge',
+        });
+      } else {
+        this.router.navigate(['feed', post.id, 'view'], {
+          queryParams: {
+            mode: FeedMode.Post,
+          },
+          queryParamsHandling: 'merge',
+        });
+      }
     } else {
       this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
         width: '100%',
@@ -363,6 +378,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public switchMode(mode: FeedMode): void {
     this.mode = mode;
+    if (this.collectionId) {
+      this.switchCollectionMode();
+      return;
+    }
     if (this.mode === FeedMode.Post) {
       this.router.navigate(['/feed', this.posts[0].id, 'view'], {
         queryParams: {
@@ -372,6 +391,24 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       });
     } else {
       this.router.navigate(['/feed'], {
+        queryParams: {
+          mode: this.mode,
+        },
+        queryParamsHandling: 'merge',
+      });
+    }
+  }
+
+  switchCollectionMode() {
+    if (this.mode === FeedMode.Post) {
+      this.router.navigate(['/feed', 'collection', this.collectionId, this.posts[0].id, 'view'], {
+        queryParams: {
+          mode: this.mode,
+        },
+        queryParamsHandling: 'merge',
+      });
+    } else {
+      this.router.navigate(['/feed', 'collection', this.collectionId], {
         queryParams: {
           mode: this.mode,
         },
@@ -407,7 +444,24 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public editPost(post: any): void {
-    if (this.isDesktop) return;
+    if (this.isDesktop) {
+      if (this.collectionId) {
+        this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'edit'], {
+          queryParams: {
+            mode: FeedMode.Post,
+          },
+          queryParamsHandling: 'merge',
+        });
+      } else {
+        this.router.navigate(['feed', post.id, 'edit'], {
+          queryParams: {
+            mode: FeedMode.Post,
+          },
+          queryParamsHandling: 'merge',
+        });
+      }
+      return;
+    }
 
     this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
       width: '100%',

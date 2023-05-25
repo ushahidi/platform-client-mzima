@@ -41,13 +41,13 @@
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumWarning": "2mb",
+              "maximumError": "4mb"
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "2kb",
-              "maximumError": "4kb"
+              "maximumWarning": "10kb",
+              "maximumError": "15kb"
             }
           ],
           "fileReplacements": [
@@ -138,12 +138,13 @@
           "parallel": false,
           "cwd": "apps/mobile-mzima-client"
         },
-        "run-ios": {
-          "command": "npx cap run ios",
+        "run-android": {
+          "commands": ["nx run mobile-mzima-client:build:production", "npx cap copy android", "npx cap sync android", "npx cap run android -l --external"],
+          "parallel": false,
           "cwd": "apps/mobile-mzima-client"
         },
-        "run-android": {
-          "command": "npx cap run android",
+        "run-ios": {
+          "command": "npx cap run ios",
           "cwd": "apps/mobile-mzima-client"
         }
       },

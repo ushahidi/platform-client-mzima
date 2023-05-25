@@ -1,4 +1,5 @@
 ext {
+    debuggable = true
     minSdkVersion = 22
     compileSdkVersion = 32
     targetSdkVersion = 32
