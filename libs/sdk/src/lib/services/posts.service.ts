@@ -17,14 +17,14 @@ import { ResourceService } from './resource.service';
 })
 export class PostsService extends ResourceService<any> {
   private defaultPostsFilters: GeoJsonFilter = {
-    // order: 'desc',
-    // orderby: 'created',
-    // set: '',
-    // order_unlocked_on_top: true,
-    // reactToFilters: true,
-    'source[]': ['web', 'twitter'],
+    order: 'desc',
+    orderby: 'created',
+    set: '',
+    order_unlocked_on_top: true,
+    reactToFilters: true,
+    'source[]': [],
     'tags[]': [],
-    'form[]': ['2', '3', '4', '5'],
+    'form[]': [],
     'status[]': [],
   };
   private postsFilters = new BehaviorSubject<any>(this.defaultPostsFilters);
