@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, lastValueFrom, map, Observable, tap } from 'rxjs';
-import { MapConfigInterface } from '../intefaces/session.interface';
+import { MapConfigInterface } from '@models';
 import { SessionService } from './session.service';
 import { EnvService } from './env.service';
 

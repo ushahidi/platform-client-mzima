@@ -1,4 +1,4 @@
-import { ErrorMessageMapping } from '../intefaces';
+import { ErrorMessageMapping } from '@models';
 
 export const formErrorMessages: ErrorMessageMapping = {
   name: {

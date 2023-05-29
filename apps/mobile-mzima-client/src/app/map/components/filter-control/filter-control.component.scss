@@ -1,0 +1,59 @@
+.filter-control {
+  --border-width: 0 0 1px;
+  --background: transparent;
+  --border-color: var(--ion-color-step-200);
+  --padding-start: 16px;
+  --padding-end: 20px;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --min-height: 55px;
+  --ripple-color: var(--ion-color-primary);
+  --color: var(--ion-color-medium);
+
+  &__icon {
+    line-height: 1;
+    font-size: 40px;
+    margin-right: 16px;
+  }
+
+  &__main {
+    flex: 1 1 100%;
+  }
+
+  &__title {
+    display: block;
+    letter-spacing: 0.5px;
+    color: var(--ion-text-color);
+  }
+
+  &__info {
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+  }
+
+  &__controls {
+    display: flex;
+    margin-left: 16px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &__badge {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: right;
+    letter-spacing: 0.1px;
+    color: var(--color-primary-40);
+  }
+
+  &__details {
+    line-height: 1;
+    font-size: 24px;
+    margin-left: 28px;
+  }
+}

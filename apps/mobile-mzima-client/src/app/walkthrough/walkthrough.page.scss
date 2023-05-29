@@ -34,8 +34,8 @@ swiper-container {
   }
 
   &__navigation-button {
-    width: 56px;
-    height: 56px;
+    --size: 56px;
+    --icon-size: 24px;
   }
 }
 

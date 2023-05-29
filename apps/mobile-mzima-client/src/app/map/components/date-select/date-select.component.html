@@ -1,0 +1,15 @@
+<app-select
+  [(ngModel)]="dateOption"
+  [options]="selectOptions"
+  placeholder="Select Dates"
+  (ngModelChange)="setCalendar()"
+>
+</app-select>
+<ion-calendar
+  [options]="optionsRange"
+  [type]="'string'"
+  [format]="'YYYY-MM-DD'"
+  [(ngModel)]="value"
+  (change)="dateChangeHandle()"
+>
+</ion-calendar>

@@ -12,6 +12,10 @@ import {
   ButtonComponent,
   ModalComponent,
   PageNotFoundComponent,
+  MenuComponent,
+  SpinnerComponent,
+  RadioComponent,
+  SelectComponent,
 } from './components';
 
 const components = [
@@ -21,6 +25,10 @@ const components = [
   ButtonComponent,
   ModalComponent,
   PageNotFoundComponent,
+  MenuComponent,
+  SpinnerComponent,
+  RadioComponent,
+  SelectComponent,
 ];
 
 @NgModule({

@@ -1,0 +1,35 @@
+.map {
+  display: block;
+  height: calc(100vh - 60px - var(--ion-safe-area-bottom));
+}
+
+.search-form {
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 15;
+  position: absolute;
+
+  &::ng-deep {
+    .ion-margin-bottom {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.menu {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.add-post-button {
+  bottom: 100%;
+  --size: 56px;
+  --icon-size: 24px;
+  position: absolute;
+  right: var(--ion-padding);
+  --button-border-radius: 16px;
+  margin-bottom: var(--ion-padding);
+}

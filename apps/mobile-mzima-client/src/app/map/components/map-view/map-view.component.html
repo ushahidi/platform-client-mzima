@@ -1,0 +1,10 @@
+<div
+  class="map"
+  *ngIf="isMapReady"
+  leaflet
+  [leafletOptions]="leafletOptions"
+  [leafletLayers]="mapLayers"
+  [leafletFitBounds]="mapFitToBounds"
+  [leafletFitBoundsOptions]="fitBoundsOptions"
+  (leafletMapReady)="onMapReady($event)"
+></div>

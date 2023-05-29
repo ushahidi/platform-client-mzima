@@ -1,0 +1,36 @@
+<div class="ion-margin-bottom">
+  <ion-item
+    lines="none"
+    class="form-row"
+    [ngClass]="{
+      'form-row--rounded': rounded,
+      'form-row--light': color === 'light'
+    }"
+  >
+    <ion-select
+      class="select"
+      [(ngModel)]="value"
+      interface="popover"
+      [placeholder]="placeholder"
+      (ionChange)="handleSelectChange($event)"
+      [label]="label ? label + (required ? '*' : '') : null"
+      [labelPlacement]="label ? 'floating' : 'end'"
+      [required]="required"
+      [disabled]="disabled"
+    >
+      <ion-select-option *ngFor="let option of options" [value]="option.value">
+        {{ option.label }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <span *ngIf="hint?.length && (!errors.length || isOnFocus)" class="hint ion-padding-horizontal">
+    {{ hint }}
+  </span>
+  <ng-container *ngIf="!isOnFocus && errors.length">
+    <ion-text *ngFor="let error of errors" color="danger" class="error-msg ion-padding-horizontal">
+      {{ error }}
+    </ion-text>
+  </ng-container>
+  <ng-content select="[button]"></ng-content>
+  <ng-content select="[additional]"></ng-content>
+</div>

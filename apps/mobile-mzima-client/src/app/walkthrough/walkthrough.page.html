@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div class="main">
     <div class="walktrough-slides__skip-container">
-      <app-button class="walktrough-slides__skip-button" color="medium" (click)="finish()">
+      <app-button class="walktrough-slides__skip-button" color="medium" (buttonClick)="finish()">
         Skip
       </app-button>
     </div>
@@ -27,11 +27,9 @@
     <div class="walktrough-slides__navigation">
       <app-button
         class="walktrough-slides__navigation-button"
-        expand="inline"
-        radius="16px"
-        height="48px"
         [shadow]="true"
-        (click)="isLastSlide ? finish() : slideNext()"
+        shape="normal"
+        (buttonClick)="isLastSlide ? finish() : slideNext()"
       >
         <app-icon slot="icon-only" name="arrow"></app-icon>
       </app-button>
