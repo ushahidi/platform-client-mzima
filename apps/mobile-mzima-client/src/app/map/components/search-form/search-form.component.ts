@@ -29,6 +29,7 @@ export class SearchFormComponent {
       selected: 'none',
       selectedLabel: 'Selected:',
       selectedCount: 3,
+      value: null,
     },
     {
       name: 'form',
@@ -36,6 +37,7 @@ export class SearchFormComponent {
       label: 'Surveys',
       selected: 'none',
       selectedCount: 16,
+      value: null,
     },
     {
       name: 'source',
@@ -43,6 +45,7 @@ export class SearchFormComponent {
       label: 'Sources',
       selected: 'none',
       selectedCount: searchFormHelper.sources.length,
+      value: null,
     },
     {
       name: 'status',
@@ -50,6 +53,7 @@ export class SearchFormComponent {
       label: 'Status',
       selected: 'none',
       selectedCount: searchFormHelper.statuses.length,
+      value: null,
     },
     {
       name: 'tags',
@@ -57,6 +61,7 @@ export class SearchFormComponent {
       label: 'Categories',
       selected: 'none',
       selectedCount: 20,
+      value: null,
     },
     {
       name: 'date',
@@ -64,6 +69,7 @@ export class SearchFormComponent {
       label: 'Date range',
       selectedLabel: 'Select the date range',
       selectedCount: 'All Time',
+      value: null,
     },
     {
       name: 'location',
@@ -71,6 +77,7 @@ export class SearchFormComponent {
       label: 'Location',
       selectedLabel: 'Select locations',
       selectedCount: 'All locations',
+      value: null,
     },
   ];
   public selectedFilter: FilterControl | null;

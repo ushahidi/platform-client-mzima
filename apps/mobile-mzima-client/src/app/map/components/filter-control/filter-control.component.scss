@@ -16,6 +16,10 @@
     line-height: 1;
     font-size: 40px;
     margin-right: 16px;
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-800);
+    }
   }
 
   &__main {
@@ -48,12 +52,23 @@
     line-height: 20px;
     text-align: right;
     letter-spacing: 0.1px;
-    color: var(--color-primary-40);
+
+    @media (prefers-color-scheme: light) {
+      color: var(--color-primary-40);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-primary);
+    }
   }
 
   &__details {
     line-height: 1;
     font-size: 24px;
     margin-left: 28px;
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-800);
+    }
   }
 }

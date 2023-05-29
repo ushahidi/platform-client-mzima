@@ -1,15 +1,13 @@
-<app-select
-  [(ngModel)]="dateOption"
-  [options]="selectOptions"
-  placeholder="Select Dates"
-  (ngModelChange)="setCalendar()"
->
-</app-select>
-<ion-calendar
-  [options]="optionsRange"
-  [type]="'string'"
-  [format]="'YYYY-MM-DD'"
-  [(ngModel)]="value"
-  (change)="dateChangeHandle()"
->
-</ion-calendar>
+<div class="select-holder ion-padding-horizontal">
+  <app-select
+    label="Select Dates"
+    [(ngModel)]="dateOption"
+    [options]="selectOptions"
+    (ngModelChange)="setCalendar()"
+  >
+    <ng-container start>
+      <app-icon name="calendar"></app-icon>
+    </ng-container>
+  </app-select>
+</div>
+<app-calendar [(ngModel)]="value" (ngModelChange)="dateOption = 'custom'"></app-calendar>

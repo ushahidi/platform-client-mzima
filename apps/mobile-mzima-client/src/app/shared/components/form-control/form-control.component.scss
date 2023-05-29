@@ -44,6 +44,10 @@
 
   span[slot='start'],
   span[slot='end'] {
+    &:empty {
+      display: none;
+    }
+
     &::ng-deep {
       app-icon {
         display: block;

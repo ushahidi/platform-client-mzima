@@ -1,6 +1,6 @@
 <ng-container *ngIf="!isOptionsLoading; else spinner">
-  <div [ngSwitch]="type">
-    <div *ngSwitchCase="filterType.SELECT">
+  <ng-container [ngSwitch]="type">
+    <ng-container *ngSwitchCase="filterType.SELECT">
       <ion-item
         class="button-add"
         *ngIf="filter.name === 'set'"
@@ -33,13 +33,13 @@
           <span class="info">{{ option.info }}</span>
         </app-radio>
       </ion-radio-group>
-    </div>
-    <div *ngSwitchCase="filterType.MULTISELECT">
+    </ng-container>
+    <ng-container *ngSwitchCase="filterType.MULTISELECT">
       <app-checkbox *ngFor="let option of options" type="item">
         {{ option.label }}
       </app-checkbox>
-    </div>
-    <div *ngSwitchCase="filterType.MULTILEVELSELECT">
+    </ng-container>
+    <ng-container *ngSwitchCase="filterType.MULTILEVELSELECT">
       <ng-container *ngFor="let option of options">
         <app-checkbox *ngIf="!option.options?.length" type="item">
           {{ option.label }}
@@ -64,14 +64,14 @@
           <app-icon class="multiselect-option__details" slot="end" name="arrow-right"></app-icon>
         </ion-item>
       </ng-container>
-    </div>
-    <div *ngSwitchCase="filterType.DATE">
-      <app-date-select></app-date-select>
-    </div>
-    <div *ngSwitchCase="filterType.LOCATION">
-      <app-location-select></app-location-select>
-    </div>
-  </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="filterType.DATE">
+      <app-date-select [(ngModel)]="value"></app-date-select>
+    </ng-container>
+    <ng-container *ngSwitchCase="filterType.LOCATION">
+      <app-location-select [(ngModel)]="value"></app-location-select>
+    </ng-container>
+  </ng-container>
 </ng-container>
 
 <ng-template #spinner>

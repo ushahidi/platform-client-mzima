@@ -23,12 +23,30 @@
     line-height: 20px;
     text-transform: none;
     letter-spacing: 0.1px;
-    color: var(--ion-background-color);
+
+    @media (prefers-color-scheme: light) {
+      color: var(--ion-background-color);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-text-color);
+    }
 
     &__icon {
       line-height: 1;
       font-size: 24px;
       margin: 0 0 4px;
+    }
+
+    &.ion-color-danger {
+      @media (prefers-color-scheme: dark) {
+        --ion-color-danger: #bd544e;
+        --ion-color-danger-rgb: 189, 84, 78;
+        --ion-color-danger-contrast: #ffffff;
+        --ion-color-danger-contrast-rgb: 255, 255, 255;
+        --ion-color-danger-shade: #a64a45;
+        --ion-color-danger-tint: #c46560;
+      }
     }
   }
 }
