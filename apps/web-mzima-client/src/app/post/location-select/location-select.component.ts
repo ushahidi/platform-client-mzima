@@ -25,7 +25,7 @@ import {
 } from 'leaflet';
 import 'leaflet.markercluster';
 import { pointIcon } from '../../core/helpers/map';
-import { alphaNumeric, decimalPattern } from '../../core/helpers/regex';
+import { alphaNumeric } from '../../core/helpers/regex';
 import Geocoder from 'leaflet-control-geocoder';
 import { fromEvent, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -44,8 +44,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   @Output() locationChange = new EventEmitter();
   public emptyFieldLat = false;
   public emptyFieldLng = false;
-  public noLetterLat = false;
-  public noLetterLng = false;
   public noSpecialCharactersLat = false;
   public noSpecialCharactersLng = false;
   private map: Map;
@@ -108,6 +106,8 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
         untilDestroyed(this),
       )
       .subscribe();
+
+    console.log(this.location);
   }
 
   private getMapConfigurations(): MapConfigInterface {
@@ -169,7 +169,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
 
   public checkErrors() {
     this.emptyFieldLat = this.emptyFieldLng = false;
-    this.noLetterLat = this.noLetterLng = false;
     this.noSpecialCharactersLat = this.noSpecialCharactersLng = false;
 
     if (this.required) {
@@ -178,20 +177,16 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     }
 
     if (this.location.lat) {
-      this.noLetterLat = !decimalPattern(this.location.lat.toString());
       this.noSpecialCharactersLat = !alphaNumeric(this.location.lat.toString());
     }
 
     if (this.location.lng) {
-      this.noLetterLng = !decimalPattern(this.location.lng.toString());
       this.noSpecialCharactersLng = !alphaNumeric(this.location.lng.toString());
     }
 
     this.changeCoords(
       this.emptyFieldLat ||
         this.emptyFieldLng ||
-        this.noLetterLat ||
-        this.noLetterLng ||
         this.noSpecialCharactersLat ||
         this.noSpecialCharactersLng,
     );
