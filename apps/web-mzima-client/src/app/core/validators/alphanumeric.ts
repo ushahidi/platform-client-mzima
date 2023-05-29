@@ -1,9 +1,9 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { alphaNumeric } from '../helpers/regex';
 
 export function AlphanumericValidatorValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
-    const pattern = /^[\p{L}\p{N}\s\-".?!;,@'()“”«»]*$/gmu;
-    const isValid = pattern.test(control.value);
+    const isValid = alphaNumeric(control.value);
     return !isValid ? { specialCharacters: { value: control.value } } : null;
   };
 }
