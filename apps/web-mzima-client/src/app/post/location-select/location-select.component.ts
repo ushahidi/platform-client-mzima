@@ -106,8 +106,6 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
         untilDestroyed(this),
       )
       .subscribe();
-
-    console.log(this.location);
   }
 
   private getMapConfigurations(): MapConfigInterface {
