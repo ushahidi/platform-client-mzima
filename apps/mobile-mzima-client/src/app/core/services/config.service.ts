@@ -44,6 +44,7 @@ export class ConfigService {
   }
 
   getFeatures(): Observable<any> {
+    console.log(this.env.environment.backend_url);
     return this.httpClient
       .get(
         `${
@@ -64,6 +65,7 @@ export class ConfigService {
   }
 
   getMap(): Observable<MapConfigInterface> {
+    console.log(this.env.environment.backend_url);
     return this.httpClient
       .get<MapConfigInterface>(
         `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/map`,

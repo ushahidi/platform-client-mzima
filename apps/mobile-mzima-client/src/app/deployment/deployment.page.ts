@@ -25,6 +25,27 @@ export class DeploymentPage {
 
   private loadDeployments() {
     this.deploymentList = this.deploymentService.getDeployments();
+
+    // For testing
+    const index = this.deploymentList.findIndex((i: any) => i.deployment_name === 'mzima-api');
+    if (index === -1) {
+      this.deploymentList = [
+        {
+          id: 1,
+          domain: 'staging.ush.zone',
+          subdomain: 'mzima-api',
+          fqdn: 'mzima-api',
+          status: 'deployed',
+          deployment_name: 'mzima-api',
+          description: 'mzima-api for testing',
+          image: 'https://via.placeholder.com/150/B186D1/FFFFFF?text=M',
+          tier: 'level_1',
+          selected: false,
+        },
+        ...this.deploymentList,
+      ];
+      this.deploymentService.setDeployments(this.deploymentList);
+    }
   }
 
   public async callModal(event: any) {
@@ -55,8 +76,8 @@ export class DeploymentPage {
   }
 
   public selectDeployment(deployment: any) {
-    // this.envService.setDynamicBackendUrl(`${ subdomain }.${ domain }`);
-    // this.configService.initAllConfigurations();
     this.deploymentService.setDeployment(deployment);
+    this.envService.setDynamicBackendUrl();
+    this.configService.initAllConfigurations();
   }
 }
