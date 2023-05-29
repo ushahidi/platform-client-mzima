@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { surveyHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs';
+import { alphaNumeric } from '../../../core/helpers/regex';
 import { MultilevelSelectOption } from '../../../shared/components';
 import {
   CategoriesService,
@@ -107,10 +108,9 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   optionValidation(index: number) {
-    const regex = /^[\p{L}\p{N}\s\-".?!;,@]*$/gmu;
     const option = this.fieldOptions[index];
 
-    if (!regex.test(option.value)) {
+    if (!alphaNumeric(option.value)) {
       option.error = 'survey.special_characters_option';
     } else {
       const duplicates = this.fieldOptions.filter(
