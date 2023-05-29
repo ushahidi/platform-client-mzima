@@ -64,6 +64,10 @@ export class SessionService {
     this._isLogged.next(!!this.currentUser.userId);
   }
 
+  isLogged(): boolean {
+    return this._isLogged.value;
+  }
+
   getCurrentUserData() {
     return this._currentUserData$.asObservable();
   }

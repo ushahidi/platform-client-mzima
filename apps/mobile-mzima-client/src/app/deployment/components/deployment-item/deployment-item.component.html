@@ -24,7 +24,7 @@
     class="deployment-item__button"
     fill="clear"
     *ngIf="buttonVisible"
-    (buttonClick)="removeDeployment(deployment)"
+    (buttonClick)="removeDeployment($event, deployment)"
   >
     <app-icon class="deployment-item__button-icon" slot="icon-only" name="delete"></app-icon>
   </app-button>
