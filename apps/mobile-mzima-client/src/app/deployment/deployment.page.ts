@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { StorageService } from '@services';
+
+import { ConfigService, DeploymentService, EnvService } from '@services';
 import { DeleteDeploymentModalComponent } from './components/delete-deployment-modal/delete-deployment-modal.component';
 
 @Component({
@@ -11,14 +12,19 @@ import { DeleteDeploymentModalComponent } from './components/delete-deployment-m
 export class DeploymentPage {
   public deploymentList: any[] = [];
 
-  constructor(private storageService: StorageService, private modalController: ModalController) {}
+  constructor(
+    private modalController: ModalController,
+    private envService: EnvService,
+    private configService: ConfigService,
+    private deploymentService: DeploymentService,
+  ) {}
 
   ionViewWillEnter() {
-    this.loadData();
+    this.loadDeployments();
   }
 
-  private loadData() {
-    this.deploymentList = this.storageService.getStorage('deployments', 'array') || [];
+  private loadDeployments() {
+    this.deploymentList = this.deploymentService.getDeployments();
   }
 
   public async callModal(event: any) {
@@ -45,6 +51,12 @@ export class DeploymentPage {
   public removeDeployment(deploymentId: number) {
     const index = this.deploymentList.findIndex((i: any) => i.id === deploymentId);
     if (index !== -1) this.deploymentList.splice(index, 1);
-    this.storageService.setStorage('deployments', this.deploymentList, 'array');
+    this.deploymentService.setDeployments(this.deploymentList);
+  }
+
+  public selectDeployment(deployment: any) {
+    // this.envService.setDynamicBackendUrl(`${ subdomain }.${ domain }`);
+    // this.configService.initAllConfigurations();
+    this.deploymentService.setDeployment(deployment);
   }
 }

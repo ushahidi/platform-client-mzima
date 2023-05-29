@@ -1,8 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicSlides } from '@ionic/angular';
-import { WalkthroughSlider } from '@constants';
-import { StorageService } from '@services';
+
+import { STORAGE_KEYS, WalkthroughSlider } from '@constants';
+import { DeploymentService, StorageService } from '@services';
+
 import { register } from 'swiper/element/bundle';
 
 register();
@@ -13,24 +15,30 @@ register();
   styleUrls: ['./walkthrough.page.scss'],
 })
 export class WalkthroughPage {
-  @ViewChild('swiperContainer') swiperEl: any;
+  @ViewChild('swiperContainer') swiperEl: ElementRef | undefined;
   public swiperModules = [IonicSlides];
   public sliderData = WalkthroughSlider;
   public isLastSlide = false;
+  public activeSlide = 0;
 
-  constructor(private storageService: StorageService, private router: Router) {}
+  constructor(
+    private router: Router,
+    private storageService: StorageService,
+    private deploymentService: DeploymentService,
+  ) {}
 
   public slideNext() {
     this.swiperEl?.nativeElement.swiper.slideNext();
   }
 
-  async slideChanged() {
+  public slideChanged() {
     this.isLastSlide = this.swiperEl?.nativeElement.swiper.isEnd;
+    this.activeSlide = this.swiperEl?.nativeElement.swiper.activeIndex;
   }
 
   public finish() {
-    this.storageService.setStorage('isIntroDone', 'yes');
-    this.storageService.getStorage('deployment')
+    this.storageService.setStorage(STORAGE_KEYS.INTRO_DONE, 'yes');
+    this.deploymentService.isDeployment()
       ? this.router.navigate(['/'])
       : this.router.navigate(['/deployment']);
   }

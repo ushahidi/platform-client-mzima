@@ -33,7 +33,10 @@
           "apps/mobile-mzima-client/src/theme/variables.scss",
           "apps/mobile-mzima-client/src/global.scss"
         ],
-        "scripts": []
+        "scripts": [],
+        "allowedCommonJsDependencies": [
+          "localforage"
+        ]
       },
       "configurations": {
         "production": {

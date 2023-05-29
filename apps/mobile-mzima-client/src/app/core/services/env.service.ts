@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { checkBackendURL } from '@helpers';
-import { EnvConfigInterface } from '../intefaces/env.interface';
+import { EnvConfigInterface } from '../intefaces';
+
+import { DeploymentService } from './deployment.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,14 +10,18 @@ import { EnvConfigInterface } from '../intefaces/env.interface';
 export class EnvService {
   static ENV: EnvConfigInterface;
   private env: EnvConfigInterface;
+  private deploymentService = inject(DeploymentService);
 
   get environment() {
     return this.env;
   }
 
   async initEnv(): Promise<EnvConfigInterface> {
+    const deployment: any = this.deploymentService.getDeployment();
     const envy: EnvConfigInterface = await fetch('./env.json').then((res) => res.json());
-    envy.backend_url = checkBackendURL(envy.backend_url);
+    if (deployment) {
+      envy.backend_url = checkBackendURL(`${deployment.subdomain}.${deployment.domain}`);
+    }
 
     EnvService.ENV = envy;
     this.env = envy;

@@ -2,7 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { getRandomColor } from '@helpers';
+import { STORAGE_KEYS } from '@constants';
 import { StorageService } from './storage.service';
+
+const DEPLOYMENTS_URL = 'https://api.ushahidi.io/deployments';
 
 @Injectable({
   providedIn: 'root',
@@ -10,20 +13,11 @@ import { StorageService } from './storage.service';
 export class DeploymentService {
   constructor(private httpClient: HttpClient, private storageService: StorageService) {}
 
-  getApiVersions(): string {
-    return '';
-  }
-
-  getResourceUrl(): string {
-    return '';
-  }
-
   public searchDeployments(search: string): Observable<any> {
-    const storeDeployments = this.storageService.getStorage('deployments', 'array') || [];
+    const storeDeployments = this.getDeployments();
 
     const params = new HttpParams().set('q', search);
-    const url = 'https://api.ushahidi.io/deployments';
-    return this.httpClient.get<any[]>(url, { params }).pipe(
+    return this.httpClient.get<any[]>(DEPLOYMENTS_URL, { params }).pipe(
       map((deployments: any) =>
         deployments
           .filter((deployment: any) => deployment.status === 'deployed')
@@ -43,5 +37,25 @@ export class DeploymentService {
           }),
       ),
     );
+  }
+
+  public setDeployments(data: any[]) {
+    this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENTS, data, 'array');
+  }
+
+  public getDeployments(): any[] {
+    return this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENTS, 'array') || [];
+  }
+
+  public setDeployment(data: object) {
+    this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENT, data, 'object');
+  }
+
+  public getDeployment(): object {
+    return this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENT, 'object');
+  }
+
+  public isDeployment(): boolean {
+    return !!this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENT);
   }
 }

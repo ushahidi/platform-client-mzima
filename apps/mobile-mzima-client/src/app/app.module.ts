@@ -2,19 +2,21 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, FactoryProvider, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { AuthInterceptor } from '@interceptors';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { Drivers } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
 import { ApiUrlLoader, EnvLoader, SdkModule } from '@mzima-client/sdk';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ConfigService } from './core/services/config.service';
 import { EnvService } from '@services';
-import { AuthInterceptor } from './core/interceptors';
 
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
-    envService.initEnv().then(() => {
-      return configService.initAllConfigurations();
+    envService.initEnv().then((item: any) => {
+      return item.backend_url ? configService.initAllConfigurations() : null;
     });
 }
 
@@ -44,6 +46,10 @@ export function EnvLoaderFactory(env: EnvService): any {
         useFactory: EnvLoaderFactory,
         deps: [EnvService],
       },
+    }),
+    IonicStorageModule.forRoot({
+      name: '__ushdb',
+      driverOrder: [Drivers.IndexedDB],
     }),
   ],
   providers: [
