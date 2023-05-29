@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { ConfigService, DeploymentService, EnvService } from '@services';
@@ -17,6 +18,7 @@ export class DeploymentPage {
     private envService: EnvService,
     private configService: ConfigService,
     private deploymentService: DeploymentService,
+    private router: Router,
   ) {}
 
   ionViewWillEnter() {
@@ -79,5 +81,6 @@ export class DeploymentPage {
     this.deploymentService.setDeployment(deployment);
     this.envService.setDynamicBackendUrl();
     this.configService.initAllConfigurations();
+    this.router.navigate(['/']);
   }
 }
