@@ -10,7 +10,7 @@ import {
   SessionConfigInterface,
   SessionTokenInterface,
   SiteConfigInterface,
-} from '../intefaces/session.interface';
+} from '@models';
 
 @Injectable({
   providedIn: 'root',

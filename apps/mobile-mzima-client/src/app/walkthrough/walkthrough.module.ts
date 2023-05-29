@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { MzimaUiModule } from '@mzima-client/mzima-ui';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared';
 
 import { WalkthroughPageRoutingModule } from './walkthrough-routing.module';
 

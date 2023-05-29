@@ -11,21 +11,55 @@
       }
 
       @media (prefers-color-scheme: light) {
-        background: var(--ion-color-step-300);
+        background: var(--ion-color-step-200);
       }
+    }
+
+    &__toolbar {
+      font-size: 22px;
+      line-height: 28px;
+      --min-height: 72px;
+      align-items: center;
+      justify-content: flex-start;
     }
   }
 
-  &__toolbar {
-    font-size: 22px;
-    line-height: 28px;
-    --min-height: 64px;
+  &__back {
+    margin-right: 4px;
+    --icon-size: 40px;
+
+    @media (prefers-color-scheme: light) {
+      color: var(--ion-color-step-600);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-800);
+    }
+  }
+
+  &__title {
+    display: block;
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-text-color);
+    }
   }
 
   &__body {
     &::part(scroll) {
       display: flex;
       flex-direction: column;
+    }
+  }
+
+  &__footer {
+    &:before {
+      height: 1px;
+      background: var(--ion-color-step-200);
+    }
+
+    &__toolbar {
+      --min-height: 84px;
     }
   }
 }

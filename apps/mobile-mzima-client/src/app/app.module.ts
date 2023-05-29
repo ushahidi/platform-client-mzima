@@ -7,6 +7,8 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { Drivers } from '@ionic/storage';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { ApiUrlLoader, EnvLoader, SdkModule } from '@mzima-client/sdk';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -37,6 +39,7 @@ export function EnvLoaderFactory(env: EnvService): any {
     BrowserModule,
     IonicModule.forRoot({
       mode: 'md',
+      innerHTMLTemplatesEnabled: true,
     }),
     AppRoutingModule,
     HttpClientModule,
@@ -51,6 +54,8 @@ export function EnvLoaderFactory(env: EnvService): any {
       name: '__ushdb',
       driverOrder: [Drivers.IndexedDB],
     }),
+    LeafletModule,
+    LeafletMarkerClusterModule,
   ],
   providers: [
     {

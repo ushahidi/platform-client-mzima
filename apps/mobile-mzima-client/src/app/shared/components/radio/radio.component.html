@@ -1,0 +1,27 @@
+<ion-item-sliding>
+  <ion-item class="radio-item" lines="none">
+    <ion-radio class="radio" [value]="value" labelPlacement="end" justify="start">
+      <ng-content></ng-content>
+    </ion-radio>
+  </ion-item>
+  <ion-item-options side="end" *ngIf="editable || deletable">
+    <ion-item-option
+      *ngIf="deletable"
+      color="danger"
+      class="radio-item__control"
+      (click)="deleteHandle()"
+    >
+      <app-icon class="radio-item__control__icon" slot="top" name="delete"></app-icon>
+      Delete
+    </ion-item-option>
+    <ion-item-option
+      *ngIf="editable"
+      color="warning"
+      class="radio-item__control"
+      (click)="editHandle()"
+    >
+      <app-icon class="radio-item__control__icon" slot="top" name="edit"></app-icon>
+      Edit
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { checkBackendURL } from '@helpers';
-import { EnvConfigInterface } from '../intefaces';
+import { EnvConfigInterface } from '@models';
 
 import { DeploymentService } from './deployment.service';
 

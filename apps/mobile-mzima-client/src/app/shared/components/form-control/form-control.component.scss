@@ -1,7 +1,10 @@
 .form-row {
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  --border-radius: 4px 4px 0 0;
+  --transition: all 0.35s ease;
+  transition: var(--transition);
+  border-radius: var(--border-radius);
+  --border-radius: var(--input-border-radius, 4px 4px 0 0);
 
   @media (prefers-color-scheme: dark) {
     border-bottom-color: var(--ion-color-step-600);
@@ -9,6 +12,24 @@
 
   @media (prefers-color-scheme: light) {
     border-bottom-color: var(--ion-color-step-300);
+  }
+
+  &--rounded {
+    border-bottom-color: transparent;
+    --border-radius: var(--input-border-radius, 28px);
+  }
+
+  &--light {
+    @media (prefers-color-scheme: light) {
+      --color: var(--ion-text-color);
+      --background: var(--input-background, var(--ion-color-light));
+      border-bottom-color: var(--light-border-color, var(--ion-color-step-200));
+    }
+
+    @media (prefers-color-scheme: dark) {
+      --background: var(--input-background, var(--ion-color-step-200));
+      border-bottom-color: var(--light-border-color, transparent);
+    }
   }
 
   &::ng-deep {
@@ -19,6 +40,25 @@
       z-index: 15;
       pointer-events: none;
     }
+  }
+
+  span[slot='start'],
+  span[slot='end'] {
+    &::ng-deep {
+      app-icon {
+        display: block;
+        line-height: 1;
+        font-size: 40px;
+      }
+    }
+  }
+
+  span[slot='start'] {
+    margin-inline-end: 0;
+  }
+
+  span[slot='end'] {
+    margin-inline-start: 0;
   }
 }
 
@@ -36,7 +76,12 @@
 }
 
 .form-control {
+  --background: transparent;
   --border-radius: 4px 4px 0 0;
+
+  .form-row--rounded & {
+    --border-radius: 28px;
+  }
 
   @media (prefers-color-scheme: dark) {
     --highlight-color-focused: var(--ion-color-step-800);
@@ -61,18 +106,19 @@
       }
     }
   }
-}
 
-.toggle-password-button {
-  --size: 48px;
-  margin-right: -16px;
+  &__button {
+    --size: 48px;
+    margin-right: -16px;
+    margin-inline-start: 0px;
 
-  @media (prefers-color-scheme: light) {
-    color: var(--ion-color-step-450);
-  }
+    @media (prefers-color-scheme: light) {
+      color: var(--ion-color-step-450);
+    }
 
-  @media (prefers-color-scheme: dark) {
-    color: var(--ion-color-step-550);
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-550);
+    }
   }
 }
 

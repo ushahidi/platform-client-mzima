@@ -37,7 +37,8 @@
         radius="16px"
         height="48px"
         [shadow]="true"
-        (click)="isLastSlide ? finish() : slideNext()"
+        shape="normal"
+        (buttonClick)="isLastSlide ? finish() : slideNext()"
       >
         <app-icon slot="icon-only" name="arrow"></app-icon>
       </app-button>

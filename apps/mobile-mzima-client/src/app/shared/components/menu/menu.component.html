@@ -1,0 +1,14 @@
+<div class="navigation">
+  <app-button
+    *ngFor="let item of menu"
+    fill="clear"
+    shape="normal"
+    color="custom"
+    class="button"
+    [routerLink]="[item.route]"
+    routerLinkActive="button--active"
+  >
+    <app-icon class="button__icon" [name]="item.icon"></app-icon>
+    {{ item.label }}
+  </app-button>
+</div>

@@ -1,8 +1,14 @@
-<ion-checkbox
-  class="checkbox"
-  [(ngModel)]="value"
-  (ionChange)="handleInputChange($event)"
-  labelPlacement="end"
->
-  <span class="checkbox__text"><ng-content></ng-content></span>
-</ion-checkbox>
+<ion-item lines="none" class="checkbox-item" *ngIf="type === 'item'; else checkbox">
+  <ng-container *ngTemplateOutlet="checkbox"></ng-container>
+</ion-item>
+
+<ng-template #checkbox>
+  <ion-checkbox
+    class="checkbox"
+    [(ngModel)]="value"
+    (ionChange)="handleInputChange($event)"
+    [labelPlacement]="type === 'default' ? 'end' : 'start'"
+  >
+    <span class="checkbox__text"><ng-content></ng-content></span>
+  </ion-checkbox>
+</ng-template>

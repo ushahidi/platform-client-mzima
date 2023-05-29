@@ -1,0 +1,19 @@
+<ion-item
+  button
+  class="filter-control"
+  lines="none"
+  (click)="handleClick($event)"
+  [disabled]="disabled"
+>
+  <app-icon slot="start" class="filter-control__icon" [name]="filter.icon"></app-icon>
+  <div class="filter-control__main">
+    <span class="filter-control__title">{{ filter.label }}</span>
+    <span class="filter-control__info"
+      >{{ filter.selectedLabel ?? 'Selected filters:' }} {{ filter.selected }}</span
+    >
+  </div>
+  <div slot="end" class="filter-control__controls">
+    <ion-text class="filter-control__badge" color="primary">{{ filter.selectedCount }}</ion-text>
+    <app-icon class="filter-control__details" name="arrow-right"></app-icon>
+  </div>
+</ion-item>

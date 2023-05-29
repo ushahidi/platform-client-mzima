@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CollectionsComponent } from '@data';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { BreakpointService, SessionService } from '@services';
+import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 import { ShareModalComponent } from '../../shared/components';
 import {
   PostPropertiesInterface,
@@ -39,6 +39,7 @@ export class PostHeadComponent {
     private dialog: MatDialog,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
+    private eventBusService: EventBusService,
     private router: Router,
     private breakpointService: BreakpointService,
   ) {
@@ -108,6 +109,10 @@ export class PostHeadComponent {
 
   public editPost(event: Event) {
     event.stopPropagation();
+    this.eventBusService.next({
+      type: EventType.EditPost,
+      payload: this.post,
+    });
     this.edit.emit();
   }
 

@@ -1,0 +1,173 @@
+.form-row {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  --transition: all 0.35s ease;
+  transition: var(--transition);
+  border-radius: var(--border-radius);
+  --border-radius: var(--input-border-radius, 4px 4px 0 0);
+
+  @media (prefers-color-scheme: dark) {
+    border-bottom-color: var(--ion-color-step-600);
+  }
+
+  @media (prefers-color-scheme: light) {
+    border-bottom-color: var(--ion-color-step-300);
+  }
+
+  &--rounded {
+    border-bottom-color: transparent;
+    --border-radius: var(--input-border-radius, 28px);
+  }
+
+  &--light {
+    @media (prefers-color-scheme: light) {
+      --color: var(--ion-text-color);
+      --background: var(--input-background, var(--ion-color-light));
+      border-bottom-color: var(--light-border-color, var(--ion-color-step-200));
+    }
+
+    @media (prefers-color-scheme: dark) {
+      --background: var(--input-background, var(--ion-color-step-200));
+      border-bottom-color: var(--light-border-color, transparent);
+    }
+  }
+
+  &::ng-deep {
+    .input-label-placement-stacked.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md,
+    .has-focus.input-label-placement-floating.sc-ion-input-md-h .label-text-wrapper.sc-ion-input-md,
+    .has-value.input-label-placement-floating.sc-ion-input-md-h
+      .label-text-wrapper.sc-ion-input-md {
+      z-index: 15;
+      pointer-events: none;
+    }
+  }
+
+  span[slot='start'],
+  span[slot='end'] {
+    &::ng-deep {
+      app-icon {
+        display: block;
+        line-height: 1;
+        font-size: 40px;
+      }
+    }
+  }
+
+  span[slot='start'] {
+    margin-inline-end: 0;
+  }
+
+  span[slot='end'] {
+    margin-inline-start: 0;
+  }
+}
+
+.hint {
+  display: block;
+  margin-top: 4px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--ion-color-step-800);
+  }
+}
+
+.error-msg {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+}
+
+.select {
+  --background: transparent;
+  --border-radius: 4px 4px 0 0;
+
+  .form-row--rounded & {
+    --border-radius: 28px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --highlight-color-focused: var(--ion-color-step-800);
+    --highlight-color-valid: var(--ion-color-step-800);
+  }
+
+  @media (prefers-color-scheme: light) {
+    --highlight-color-focused: var(--ion-color-step-600);
+    --highlight-color-valid: var(--ion-color-step-600);
+  }
+
+  &::ng-deep {
+    select {
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus {
+        -webkit-box-shadow: inset 0 0 0 1000px var(--ion-item-background);
+        -webkit-text-fill-color: var(--ion-text-color) !important;
+        transition: background-color 5000s ease-in-out 0s !important;
+      }
+    }
+  }
+
+  &__button {
+    --size: 48px;
+    margin-right: -16px;
+    margin-inline-start: 0px;
+
+    @media (prefers-color-scheme: light) {
+      color: var(--ion-color-step-450);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-550);
+    }
+  }
+
+  &::part(icon) {
+    width: 24px;
+    color: transparent;
+    background-size: 24px 24px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'%3E%3Cpath fill='%236C7074' d='M8.12 9.29 12 13.17l3.88-3.88a.996.996 0 1 1 1.41 1.41l-4.59 4.59a.996.996 0 0 1-1.41 0L6.7 10.7a.996.996 0 0 1 0-1.41c.39-.38 1.03-.39 1.42 0Z'/%3E%3C/svg%3E");
+  }
+}
+
+::ng-deep {
+  .select-popover {
+    --box-shadow: 0 1px 2px rgba(var(--ion-color-primary-contrast-rgb), 0.3),
+      0 2px 6px 2px rgba(var(--ion-color-primary-contrast-rgb), 0.15);
+  }
+
+  .select-interface-option {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    --min-height: 24px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --background: transparent;
+  }
+
+  ion-list.sc-ion-select-popover-md ion-radio.sc-ion-select-popover-md {
+    margin: 0;
+  }
+
+  .sc-ion-select-popover-md-h ion-list.sc-ion-select-popover-md {
+    background: var(--ion-background-color);
+  }
+
+  .item-radio-checked.sc-ion-select-popover-md {
+    --background: var(--ion-item-background);
+    --background-focused-opacity: 1;
+    --background-focused: var(--ion-item-background);
+    --background-activated-opacity: 1;
+    --background-activated: var(--ion-item-background);
+  }
+}
