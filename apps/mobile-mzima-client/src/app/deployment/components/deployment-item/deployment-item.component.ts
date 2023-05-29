@@ -19,7 +19,8 @@ export class DeploymentItemComponent {
     this.selectedDeployment.emit({ checked: !event.target.checked, deployment });
   }
 
-  removeDeployment(deployment: any) {
+  removeDeployment(event: any, deployment: any) {
+    event.stopPropagation();
     this.selectedDeployment.emit({ checked: false, deployment });
   }
 }

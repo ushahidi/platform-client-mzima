@@ -1,32 +1,41 @@
 <ion-content [fullscreen]="true">
   <div class="main">
-    <div class="walktrough-slides__skip-container">
-      <app-button class="walktrough-slides__skip-button" color="medium" (buttonClick)="finish()">
+    <div class="walkthrough-slides__skip-container">
+      <app-button class="walkthrough-slides__skip-button" color="medium" (click)="finish()">
         Skip
       </app-button>
     </div>
 
     <swiper-container
       #swiperContainer
-      class="walktrough-slides slides-wrapper"
+      class="walkthrough-slides slides-wrapper"
       [modules]="swiperModules"
       (slidechange)="slideChanged()"
     >
-      <swiper-slide class="walktrough-slide" *ngFor="let slide of sliderData">
-        <div class="walktrough-slide__visual">
+      <swiper-slide class="walkthrough-slide" *ngFor="let slide of sliderData">
+        <div class="walkthrough-slide__visual">
           <img [src]="slide.img" [alt]="slide.title" />
         </div>
-        <div class="walktrough-slide__content">
-          <strong class="walktrough-slide__title">{{ slide?.title! }}</strong>
-          <div class="walktrough-slide__description">
+        <div class="walkthrough-slide__content">
+          <strong class="walkthrough-slide__title">{{ slide?.title! }}</strong>
+          <div class="walkthrough-slide__description">
             <p>{{ slide?.description! }}</p>
           </div>
         </div>
       </swiper-slide>
     </swiper-container>
-    <div class="walktrough-slides__navigation">
+    <div class="walkthrough-slides__navigation">
+      <div class="dots">
+        <div
+          *ngFor="let dot of sliderData; let i = index"
+          [ngClass]="{'active': i === activeSlide}"
+        ></div>
+      </div>
       <app-button
-        class="walktrough-slides__navigation-button"
+        class="walkthrough-slides__navigation-button"
+        expand="inline"
+        radius="16px"
+        height="48px"
         [shadow]="true"
         shape="normal"
         (buttonClick)="isLastSlide ? finish() : slideNext()"

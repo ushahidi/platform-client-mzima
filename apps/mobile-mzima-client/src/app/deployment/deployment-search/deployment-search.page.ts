@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { StorageService } from '@services';
-import { DeploymentService } from '../../core/services/deployment.service';
+
+import { DeploymentService } from '@services';
 
 @Component({
   selector: 'app-deployment-search',
@@ -16,14 +16,16 @@ export class DeploymentSearchPage {
   private domain: string | null = null;
   private selectedDeployments: any[] = [];
 
-  constructor(
-    private location: Location,
-    private deploymentService: DeploymentService,
-    private storageService: StorageService,
-  ) {
-    const storeDeployments = storageService.getStorage('deployments');
-    if (storeDeployments) {
-      this.selectedDeployments = JSON.parse(storeDeployments);
+  constructor(private location: Location, private deploymentService: DeploymentService) {}
+
+  ionViewWillEnter() {
+    this.getDeployments();
+  }
+
+  private getDeployments() {
+    const storeDeployments = this.deploymentService.getDeployments();
+    if (storeDeployments.length) {
+      this.selectedDeployments = storeDeployments;
     }
   }
 
@@ -50,11 +52,11 @@ export class DeploymentSearchPage {
       this.loading = true;
       this.domain = null;
       this.deploymentService.searchDeployments(this.search).subscribe({
-        next: (deployments) => {
+        next: (deployments: any[]) => {
           this.loading = false;
           this.deploymentList = deployments;
         },
-        error: (err) => {
+        error: (err: any) => {
           this.loading = false;
           console.log(err);
         },
@@ -82,7 +84,7 @@ export class DeploymentSearchPage {
   }
 
   public addDeployment() {
-    this.storageService.setStorage('deployments', this.selectedDeployments, 'array');
+    this.deploymentService.setDeployments(this.selectedDeployments);
     this.onBack();
   }
 }

@@ -34,7 +34,14 @@
           "apps/mobile-mzima-client/src/theme/variables.scss",
           "apps/mobile-mzima-client/src/global.scss"
         ],
-        "scripts": []
+        "scripts": [],
+        "allowedCommonJsDependencies": [
+          "localforage",
+          "lodash",
+          "ion2-calendar",
+          "leaflet",
+          "leaflet.markercluster"
+        ]
       },
       "configurations": {
         "production": {

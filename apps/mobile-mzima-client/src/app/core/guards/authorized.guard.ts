@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { StorageService } from '@services';
+
+import { SessionService } from '@services';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DeploymentGuard implements CanActivate {
+export class AuthorizedGuard implements CanActivate {
   public isDesktop: boolean;
 
-  constructor(private router: Router, private storageService: StorageService) {}
+  constructor(private router: Router, private sessionService: SessionService) {}
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    const isDeployment = this.storageService.getStorage('deployment');
-    if (!isDeployment) {
-      this.router.navigate(['/deployment']);
+    const isLogged = this.sessionService.isLogged();
+    if (!isLogged) {
+      console.warn('Not authorized');
+      // this.router.navigate(['/']);
       return false;
     } else {
       return true;

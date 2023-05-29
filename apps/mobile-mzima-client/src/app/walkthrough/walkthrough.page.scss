@@ -12,7 +12,7 @@ swiper-container {
   height: 100%;
 }
 
-.walktrough-slides {
+.walkthrough-slides {
   width: 100%;
   display: flex;
   position: relative;
@@ -27,10 +27,11 @@ swiper-container {
 
   &__navigation {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-shrink: 0;
     min-height: 65px;
     padding: 12px 16px 36px;
-    justify-content: flex-end;
   }
 
   &__navigation-button {
@@ -39,7 +40,7 @@ swiper-container {
   }
 }
 
-.walktrough-slide {
+.walkthrough-slide {
   display: grid;
   gap: 4%;
 
@@ -78,4 +79,24 @@ swiper-container {
     font-weight: 400;
     line-height: 148%;
   }
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.dots div {
+  height: 10px;
+  width: 10px;
+  background-color: var(--ion-color-medium);
+  border-radius: 50%;
+  margin: 0 5px;
+  transition: width 0.3s ease;
+}
+
+.dots div.active {
+  width: 29px;
+  border-radius: 9px;
 }

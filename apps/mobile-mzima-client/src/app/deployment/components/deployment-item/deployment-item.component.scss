@@ -1,4 +1,6 @@
 .deployment-item {
+  cursor: pointer;
+
   &__image {
     border: 1px solid var(--ion-color-step-400);
     border-radius: 50%;

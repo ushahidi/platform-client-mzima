@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, lastValueFrom, map, Observable, tap } from 'rxjs';
 import { MapConfigInterface } from '@models';
+import { DatabaseService } from './database.service';
 import { SessionService } from './session.service';
 import { EnvService } from './env.service';
 
@@ -13,6 +14,7 @@ export class ConfigService {
     protected httpClient: HttpClient,
     private env: EnvService,
     private sessionService: SessionService,
+    private databaseService: DatabaseService,
   ) {}
 
   getApiVersions(): string {
@@ -31,9 +33,12 @@ export class ConfigService {
       .pipe(
         tap({
           next: (data) => {
-            this.sessionService.setConfigurations('site', data);
+            this.setConfigurations('set', 'site', data);
           },
-          error: () => setTimeout(() => this.getSite(), 5000),
+          error: () => {
+            this.setConfigurations('get', 'site');
+            setTimeout(() => this.getSite(), 5000);
+          },
         }),
       );
   }
@@ -48,9 +53,12 @@ export class ConfigService {
       .pipe(
         tap({
           next: (data) => {
-            this.sessionService.setConfigurations('features', data);
+            this.setConfigurations('set', 'features', data);
           },
-          error: () => setTimeout(() => this.getFeatures(), 5000),
+          error: () => {
+            this.setConfigurations('get', 'features');
+            setTimeout(() => this.getFeatures(), 5000);
+          },
         }),
       );
   }
@@ -69,11 +77,24 @@ export class ConfigService {
             if (data.default_view?.baselayer === 'MapQuestAerial') {
               data.default_view.baselayer = 'satellite';
             }
-            this.sessionService.setConfigurations('map', data);
+            this.setConfigurations('set', 'map', data);
           },
-          error: () => setTimeout(() => this.getMap(), 5000),
+          error: () => {
+            this.setConfigurations('get', 'map');
+            setTimeout(() => this.getMap(), 5000);
+          },
         }),
       );
+  }
+
+  private async setConfigurations(action: string, key: any, data?: any) {
+    let config = data;
+    if (action === 'set') {
+      await this.databaseService.set(key, config);
+    } else {
+      config = await this.databaseService.get('map');
+    }
+    this.sessionService.setConfigurations(key, config);
   }
 
   update(id: string | number, resource: any) {
@@ -84,7 +105,17 @@ export class ConfigService {
   }
 
   initAllConfigurations() {
-    return lastValueFrom(forkJoin([this.getSite(), this.getFeatures(), this.getMap()]));
+    if (navigator.onLine) {
+      return lastValueFrom(forkJoin([this.getSite(), this.getFeatures(), this.getMap()]));
+    } else {
+      return lastValueFrom(
+        forkJoin([
+          this.databaseService.get('site'),
+          this.databaseService.get('features'),
+          this.databaseService.get('map'),
+        ]),
+      );
+    }
   }
 
   public getProvidersData(isAllData = false, dataSources?: any): Observable<any> {
