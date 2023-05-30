@@ -18,21 +18,6 @@ const config: CapacitorConfig = {
       splashFullScreen: true,
       splashImmersive: true,
     },
-    CapacitorSQLite: {
-      iosDatabaseLocation: 'Library/CapacitorDatabase',
-      iosIsEncryption: false,
-      iosKeychainPrefix: appName,
-      iosBiometric: {
-        biometricAuth: false,
-        biometricTitle: 'Biometric login for capacitor sqlite',
-      },
-      androidIsEncryption: false,
-      androidBiometric: {
-        biometricAuth: false,
-        biometricTitle: 'Biometric login for capacitor sqlite',
-        biometricSubTitle: 'Log in using your biometric',
-      },
-    },
   },
 };
 
