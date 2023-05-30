@@ -191,11 +191,14 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       },
     });
 
-    this.eventBusService.on(EventType.EditPost).subscribe({
-      next: (post) => {
-        this.editPost(post);
-      },
-    });
+    this.eventBusService
+      .on(EventType.EditPost)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (post) => {
+          this.editPost(post);
+        },
+      });
   }
 
   loadData(): void {

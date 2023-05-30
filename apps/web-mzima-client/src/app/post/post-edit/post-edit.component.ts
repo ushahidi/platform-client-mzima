@@ -542,7 +542,9 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   public backNavigation(isBack = false): void {
-    isBack ? this.location.back() : this.router.navigate(['/feed']);
+    console.log('backNavigation:', isBack);
+    this.location.back();
+    // isBack ? this.location.back() : this.router.navigate(['/feed']);
   }
 
   public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {
