@@ -37,7 +37,7 @@ export class LoginPage {
     this.authService.login(email, password).subscribe({
       next: () => {
         this.form.enable();
-        this.router.navigate(['/map']);
+        this.router.navigate(['/']);
       },
       error: (err) => {
         this.loginError = err.error.message;

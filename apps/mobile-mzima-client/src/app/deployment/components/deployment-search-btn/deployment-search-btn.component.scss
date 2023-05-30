@@ -1,10 +1,25 @@
-.deployment__search-btn {
-  margin-top: 20px;
-  margin-bottom: 40px;
-  color: #383e45;
-  padding: 0 16px;
-}
+.search-btn {
+  --button-height: 56px;
+  --button-padding-start: 16px;
+  --button-padding-end: 16px;
+  --button-font-size: 16px;
+  --button-line-height: 24px;
+  --button-font-weight: normal;
 
-.deployment__search-icon {
-  margin-right: 20px;
+  &__icon {
+    font-size: 24px;
+    margin-right: 16px;
+  }
+
+  &::ng-deep {
+    .button {
+      > span {
+        width: 100%;
+        display: flex;
+        text-align: start;
+        align-items: center;
+        justify-content: flex-start;
+      }
+    }
+  }
 }

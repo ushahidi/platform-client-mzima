@@ -6,12 +6,12 @@
 
 .button {
   margin: 0;
-  font-weight: 700;
   --box-shadow: none;
   vertical-align: top;
   text-transform: none;
   height: var(--button-height, 44px);
   font-size: var(--button-font-size, 14px);
+  font-weight: var(--button-font-weight, 700);
   line-height: var(--button-line-height, 20px);
   letter-spacing: var(--button-letter-spacing, 0.1px);
   --padding-top: var(--button-padding-top, 4px);

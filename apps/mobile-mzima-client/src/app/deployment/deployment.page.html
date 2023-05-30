@@ -1,31 +1,19 @@
-<ion-header [translucent]="true" class="ion-no-border">
-  <ion-toolbar> </ion-toolbar>
-</ion-header>
-
 <ion-content class="page ion-padding-vertical" [fullscreen]="true">
-  <ion-grid class="ion-padding-horizontal page-grid">
-    <ion-row>
-      <ion-col size="12">
-        <app-logo></app-logo>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="12">
-        <app-deployment-search-btn></app-deployment-search-btn>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="deploymentList.length">
-      <ion-col size="12">
-        <p class="deployment__description">Choose one Deployment from list</p>
-        <ion-list class="deployment-list">
-          <app-deployment-item
-            *ngFor="let item of deploymentList"
-            [deployment]="item"
-            (selectedDeployment)="callModal($event)"
-            (click)="selectDeployment(item)"
-          ></app-deployment-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <app-logo class="logo"></app-logo>
+  <div class="ion-padding-horizontal">
+    <app-deployment-search-btn class="search-btn"></app-deployment-search-btn>
+    <ng-container *ngIf="deploymentList.length">
+      <ion-text color="medium" class="deployment-title ion-padding-horizontal"
+        >Choose one Deployment from list</ion-text
+      >
+      <ion-list class="deployment-list">
+        <app-deployment-item
+          *ngFor="let item of deploymentList"
+          [deployment]="item"
+          (selectedDeployment)="callModal($event)"
+          (click)="selectDeployment(item)"
+        ></app-deployment-item>
+      </ion-list>
+    </ng-container>
+  </div>
 </ion-content>

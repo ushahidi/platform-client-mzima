@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { DeploymentService } from '@services';
+import { FormControlComponent } from '../../shared/components/form-control/form-control.component';
 
 @Component({
   selector: 'app-deployment-search',
   templateUrl: './deployment-search.page.html',
   styleUrls: ['./deployment-search.page.scss'],
 })
-export class DeploymentSearchPage {
+export class DeploymentSearchPage implements AfterViewInit {
+  @ViewChild('searchControl') public searchControl: FormControlComponent;
   public deploymentList: any[] = [];
   public loading = false;
   public addButtonVisible = false;
@@ -17,6 +19,12 @@ export class DeploymentSearchPage {
   private selectedDeployments: any[] = [];
 
   constructor(private location: Location, private deploymentService: DeploymentService) {}
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.searchControl.setFocus();
+    }, 1000);
+  }
 
   ionViewWillEnter() {
     this.getDeployments();

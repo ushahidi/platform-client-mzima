@@ -80,4 +80,10 @@ export class FormControlComponent implements ControlValueAccessor {
       el.blur();
     });
   }
+
+  public setFocus(): void {
+    this.input.getInputElement().then((el) => {
+      el.focus();
+    });
+  }
 }
