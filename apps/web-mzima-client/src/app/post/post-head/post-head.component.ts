@@ -26,6 +26,7 @@ export class PostHeadComponent {
   @Input() public post: PostResult | PostPropertiesInterface;
   @Input() public user: UserInterface;
   @Input() public editable: boolean;
+  @Input() public feedView: boolean;
   @Input() public deleteable: boolean;
   @Output() edit = new EventEmitter();
   @Output() refresh = new EventEmitter();
@@ -109,11 +110,14 @@ export class PostHeadComponent {
 
   public editPost(event: Event) {
     event.stopPropagation();
-    this.eventBusService.next({
-      type: EventType.EditPost,
-      payload: this.post,
-    });
-    this.edit.emit();
+    if (this.feedView) {
+      this.eventBusService.next({
+        type: EventType.EditPost,
+        payload: this.post,
+      });
+    } else {
+      this.edit.emit();
+    }
   }
 
   public sharePost() {

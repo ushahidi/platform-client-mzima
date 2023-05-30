@@ -14,6 +14,7 @@
     </ng-container>
     <app-post-head
       [post]="post"
+      [feedView]="!!feedView"
       (refresh)="refresh.emit()"
       (edit)="edit.emit()"
       [editable]="
