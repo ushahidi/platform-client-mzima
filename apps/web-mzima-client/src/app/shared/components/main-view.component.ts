@@ -13,7 +13,7 @@ export abstract class MainViewComponent {
   searchId = '';
   collectionId = '';
   params: any = {
-    limit: 200,
+    limit: 500,
     offset: 0,
   };
   filters;

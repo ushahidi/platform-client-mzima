@@ -22,7 +22,7 @@
     <mat-label>Lat <span class="color-accent" *ngIf="required">*</span></mat-label>
     <mat-form-field
       appearance="outline"
-      [ngClass]="{ 'location-error': noLetterLat || emptyFieldLat || noSpecialCharactersLat }"
+      [ngClass]="{ 'location-error': emptyFieldLat || noSpecialCharactersLat }"
     >
       <input
         matInput
@@ -32,9 +32,6 @@
         (focusout)="onFocusOut()"
       />
     </mat-form-field>
-    <p *ngIf="noLetterLat" class="location-error">
-      {{ 'post.location.errors.decimal_lat' | translate }}
-    </p>
     <p *ngIf="emptyFieldLat" class="location-error">
       {{ 'post.location.errors.empty_lat' | translate }}
     </p>
@@ -47,7 +44,7 @@
     <mat-label>Lng <span class="color-accent" *ngIf="required">*</span></mat-label>
     <mat-form-field
       appearance="outline"
-      [ngClass]="{ 'location-error': noLetterLng || emptyFieldLng || noSpecialCharactersLng }"
+      [ngClass]="{ 'location-error': emptyFieldLng || noSpecialCharactersLng }"
     >
       <input
         matInput
@@ -57,9 +54,6 @@
         (focusout)="onFocusOut()"
       />
     </mat-form-field>
-    <p *ngIf="noLetterLng" class="location-error">
-      {{ 'post.location.errors.decimal_lng' | translate }}
-    </p>
     <p *ngIf="emptyFieldLng" class="location-error">
       {{ 'post.location.errors.empty_lng' | translate }}
     </p>
