@@ -112,6 +112,14 @@ export class PostsService extends ResourceService<any> {
     );
   }
 
+  public searchPosts(url: string, query?: string, params?: any): Observable<PostApiResponse> {
+    return super.get(url, { has_location: 'all', q: query, ...params }).pipe(
+      tap((response) => {
+        this.totalPosts.next(response.meta.total);
+      }),
+    );
+  }
+
   private postParamsMapper(params: any) {
     // TODO: REWORK THIS!! Created to make current API work as expected
     if (params.date?.start) {

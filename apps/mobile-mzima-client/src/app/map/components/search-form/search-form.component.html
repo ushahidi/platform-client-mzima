@@ -45,8 +45,8 @@
     class="search-form-results ion-padding-horizontal"
     [ngClass]="{ 'search-form-results--hidden': !isResultsVisible }"
   >
-    <div class="search-form-results__empty">
-      <ng-container *ngIf="!posts.length && !isPostsLoading">
+    <div class="search-form-results__empty" *ngIf="!posts.length; else postsList">
+      <ng-container *ngIf="!isPostsLoading">
         <ion-text color="medium" *ngIf="!form.controls['postsQuery'].value?.length">
           Start typing to find Posts
         </ion-text>
@@ -56,7 +56,17 @@
       </ng-container>
       <app-spinner *ngIf="isPostsLoading"></app-spinner>
     </div>
-    <app-post-item *ngFor="let post of posts" [post]="post"></app-post-item>
+
+    <ng-template #postsList>
+      <ion-text class="total" color="medium">Found {{ foundPosts }} items</ion-text>
+      <app-post-item *ngFor="let post of posts" [post]="post"></app-post-item>
+      <ion-infinite-scroll
+        (ionInfinite)="loadMoreSearchResults($event)"
+        *ngIf="foundPosts > posts.length"
+      >
+        <ion-infinite-scroll-content loadingSpinner="lines-sharp"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ng-template>
   </ion-content>
 </form>
 

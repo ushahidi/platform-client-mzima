@@ -1,11 +1,12 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { FormControlComponent } from '@components';
-import { PostResult } from '@mzima-client/sdk';
-import { Subject, debounceTime } from 'rxjs';
+import { PostResult, PostsService } from '@mzima-client/sdk';
+import { Subject, debounceTime, lastValueFrom } from 'rxjs';
 import { AlertService } from '@services';
 import { FilterControl } from '@models';
 import { searchFormHelper } from '@helpers';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-search-form',
@@ -81,18 +82,25 @@ export class SearchFormComponent {
     },
   ];
   public selectedFilter: FilterControl | null;
+  private searchParams = {
+    limit: 10,
+    page: 1,
+  };
+  public foundPosts: number = 0;
 
   public form = this.formBuilder.group({
     postsQuery: [''],
   });
 
-  constructor(private formBuilder: FormBuilder, private alertService: AlertService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private postsService: PostsService,
+  ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: (query: string) => {
-        console.log('search query: ', query);
-        setTimeout(() => {
-          this.isPostsLoading = false;
-        }, 1000);
+        this.searchParams.page = 1;
+        this.searchPosts(query);
       },
     });
 
@@ -117,9 +125,9 @@ export class SearchFormComponent {
     this.formControl.blurInput();
   }
 
-  public showFiltersModal(e: Event): void {
-    e.preventDefault();
-    e.stopPropagation();
+  public showFiltersModal(ev: Event): void {
+    ev.preventDefault();
+    ev.stopPropagation();
     this.isFiltersModalOpen = true;
     setTimeout(() => {
       this.hideSearchResults();
@@ -164,5 +172,27 @@ export class SearchFormComponent {
 
   public applyFilter(): void {
     this.selectedFilter = null;
+  }
+
+  private async searchPosts(query: string, add?: boolean): Promise<void> {
+    try {
+      const response = await lastValueFrom(
+        this.postsService.searchPosts('', query, this.searchParams),
+      );
+      this.posts = add ? [...this.posts, ...response.results] : response.results;
+      this.isPostsLoading = false;
+      this.foundPosts = response.meta.total;
+    } catch (error) {
+      console.error('error: ', error);
+      this.isPostsLoading = false;
+    }
+  }
+
+  public async loadMoreSearchResults(ev: any): Promise<void> {
+    if (this.form.value.postsQuery) {
+      this.searchParams.page++;
+      await this.searchPosts(this.form.value.postsQuery, true);
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }
   }
 }
