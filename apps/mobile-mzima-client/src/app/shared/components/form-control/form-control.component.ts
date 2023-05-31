@@ -28,6 +28,7 @@ export class FormControlComponent implements ControlValueAccessor {
   @Input() public color: 'light' | 'default' = 'default';
   @Output() public inputFocus = new EventEmitter();
   @Output() public inputBlur = new EventEmitter();
+  @Output() public inputClear = new EventEmitter();
   @ViewChild('input') input: IonInput;
   public isPasswordVisible = false;
   public isOnFocus: boolean;
@@ -67,14 +68,22 @@ export class FormControlComponent implements ControlValueAccessor {
     this.inputFocus.emit();
   }
 
-  public clearInput(): void {
+  public clearInput(event?: Event): void {
+    event?.stopPropagation();
     this.value = '';
+    this.inputClear.emit();
   }
 
   public blurInput(): void {
     this.clearInput();
     this.input.getInputElement().then((el) => {
       el.blur();
+    });
+  }
+
+  public setFocus(): void {
+    this.input.getInputElement().then((el) => {
+      el.focus();
     });
   }
 }

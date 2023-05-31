@@ -16,7 +16,9 @@ import {
   SpinnerComponent,
   RadioComponent,
   SelectComponent,
+  CalendarComponent,
 } from './components';
+import { CalendarModule } from 'ion2-calendar';
 
 const components = [
   IconComponent,
@@ -29,11 +31,12 @@ const components = [
   SpinnerComponent,
   RadioComponent,
   SelectComponent,
+  CalendarComponent,
 ];
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, IonicModule, TranslateModule, RouterModule, FormsModule],
+  imports: [CommonModule, IonicModule, TranslateModule, RouterModule, FormsModule, CalendarModule],
   exports: [IonicModule, CommonModule, ...components],
 })
 export class SharedModule {}

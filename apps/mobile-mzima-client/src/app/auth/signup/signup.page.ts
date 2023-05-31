@@ -35,7 +35,7 @@ export class SignupPage {
         this.form.enable();
         this.authService.login(email, password).subscribe({
           next: () => {
-            this.router.navigate(['/map']);
+            this.router.navigate(['/']);
           },
         });
       },

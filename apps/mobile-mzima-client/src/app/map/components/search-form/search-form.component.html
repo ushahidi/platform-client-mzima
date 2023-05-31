@@ -123,5 +123,6 @@
     *ngIf="selectedFilter"
     [filter]="selectedFilter"
     [totalPosts]="totalPosts"
+    [(ngModel)]="selectedFilter.value"
   ></app-filter>
 </ng-template>

@@ -28,11 +28,13 @@ export class SessionService {
   private readonly _isFiltersVisible = new BehaviorSubject<boolean>(false);
   private readonly _isMainFiltersHidden = new BehaviorSubject<boolean>(false);
   private readonly _deploymentInfo = new BehaviorSubject<any>(false);
+  private readonly _mapConfig = new BehaviorSubject<any>(false);
 
   readonly currentUserData$: Observable<UserInterface> = this._currentUserData$.asObservable();
   readonly isFiltersVisible$ = this._isFiltersVisible.asObservable();
   readonly isMainFiltersHidden$ = this._isMainFiltersHidden.asObservable();
   readonly deploymentInfo$ = this._deploymentInfo.asObservable();
+  readonly mapConfig$ = this._mapConfig.asObservable();
 
   private currentSessionData: SessionTokenInterface = {
     accessToken: '',
@@ -102,6 +104,9 @@ export class SessionService {
       description: this.currentConfig['site']?.description ?? '',
       logo: this.currentConfig['site']?.image_header ?? '',
     });
+    if (type === 'map') {
+      this._mapConfig.next(this.currentConfig[type]);
+    }
   }
 
   loadSessionDataFromLocalStorage() {

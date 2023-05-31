@@ -1,5 +1,7 @@
-.sc-ion-alert-md {
+.sc-ion-alert-md,
+.sc-ion-alert-md-h {
   --max-width: 360px;
+  --min-width: 300px;
   --width: calc(100vw - 100px);
 }
 

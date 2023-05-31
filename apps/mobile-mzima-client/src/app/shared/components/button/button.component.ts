@@ -17,6 +17,7 @@ export class ButtonComponent {
     | 'light'
     | 'medium'
     | 'dark'
+    | 'gray'
     | 'custom' = 'primary';
   @Input() public type: 'submit' | 'button' = 'button';
   @Input() public expand: 'block' | 'inline' = 'block';

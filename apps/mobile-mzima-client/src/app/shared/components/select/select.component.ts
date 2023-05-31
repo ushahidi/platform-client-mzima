@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output, ViewChild, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { IonInput } from '@ionic/angular';
 
 @Component({
   selector: 'app-select',
@@ -19,18 +18,13 @@ export class SelectComponent implements ControlValueAccessor {
   @Input() public label?: string;
   @Input() public placeholder: string = '';
   @Input() public hint?: string;
-  @Input() public type?: 'text' | 'email' | 'password' = 'text';
   @Input() public required = false;
   @Input() public rounded = false;
   @Input() public disabled = false;
-  @Input() public clearable = false;
-  @Input() public togglePassword = false;
   @Input() public errors: string[] = [];
   @Input() public color: 'light' | 'default' = 'default';
-  @Output() public inputFocus = new EventEmitter();
-  @Output() public inputBlur = new EventEmitter();
-  @ViewChild('input') input: IonInput;
-  public isPasswordVisible = false;
+  @Output() public selectFocus = new EventEmitter();
+  @Output() public selectBlur = new EventEmitter();
   public isOnFocus: boolean;
 
   value: string;
@@ -55,5 +49,16 @@ export class SelectComponent implements ControlValueAccessor {
 
   public handleSelectChange(event: Event): void {
     this.onChange((event.target as HTMLInputElement)?.value);
+  }
+
+  public handleFocus(): void {
+    this.isOnFocus = true;
+    this.selectFocus.emit();
+  }
+
+  public handleBlur(): void {
+    this.onTouched();
+    this.isOnFocus = false;
+    this.selectBlur.emit();
   }
 }

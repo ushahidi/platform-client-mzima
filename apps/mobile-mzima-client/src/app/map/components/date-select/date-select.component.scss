@@ -1,0 +1,10 @@
+.select-holder {
+  padding-top: 24px;
+  padding-bottom: 24px;
+
+  &::ng-deep {
+    .ion-margin-bottom {
+      margin-bottom: 0;
+    }
+  }
+}
