@@ -14,9 +14,13 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
     canActivate: [NotAuthorizedGuard],
   },
+  // {
+  //   path: 'auth',
+  //   loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
+  // },
   {
-    path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsPageModule),
   },
   {
     path: 'walkthrough',
