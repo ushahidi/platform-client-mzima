@@ -1,10 +1,4 @@
-<app-button
-  class="deployment__search-btn"
-  color="dark"
-  radius="28px"
-  height="50px"
-  (click)="goToSearchDeployment()"
->
-  <app-icon name="search" class="deployment__search-icon"></app-icon>
+<app-button color="gray" class="search-btn" (buttonClick)="goToSearchDeployment()">
+  <app-icon name="search" class="search-btn__icon"></app-icon>
   Search via Deployment name or link
 </app-button>

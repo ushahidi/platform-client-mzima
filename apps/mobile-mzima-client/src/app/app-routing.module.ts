@@ -6,7 +6,6 @@ import { PageNotFoundComponent } from './shared/components';
 const routes: Routes = [
   {
     path: '',
-    // redirectTo: '/auth/login',
     loadChildren: () => import('./map/map.module').then((m) => m.MapPageModule),
     pathMatch: 'full',
   },
@@ -16,12 +15,12 @@ const routes: Routes = [
     canActivate: [NotAuthorizedGuard],
   },
   // {
-  //   path: 'map',
-  //   loadChildren: () => import('./map/map.module').then((m) => m.MapPageModule),
+  //   path: 'auth',
+  //   loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
   // },
   {
-    path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsPageModule),
   },
   {
     path: 'walkthrough',

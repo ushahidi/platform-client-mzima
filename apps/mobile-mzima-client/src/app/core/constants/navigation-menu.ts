@@ -2,7 +2,7 @@ export const navigationMenu = [
   {
     label: 'Map',
     icon: 'location',
-    route: '/map',
+    route: '/',
   },
   {
     label: 'Activity',

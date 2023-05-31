@@ -56,13 +56,15 @@ export class DraggableLayoutComponent implements AfterViewInit {
       if (this.fixedContentHeight) clearInterval(checkHeight);
     }, 50);
 
-    if (this.mode) {
-      this.content.scrollToPoint(
-        0,
-        this.mode === 'fullscreen' ? window.innerHeight : this.breakpoints[this.mode],
-        0,
-      );
-    }
+    setTimeout(() => {
+      if (this.mode) {
+        this.content.scrollToPoint(
+          0,
+          this.mode === 'fullscreen' ? window.innerHeight : this.breakpoints[this.mode],
+          350,
+        );
+      }
+    }, 350);
   }
 
   private getOffsetHeight(): void {

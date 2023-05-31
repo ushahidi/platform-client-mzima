@@ -42,7 +42,7 @@
       *ngIf="clearable && value?.length && !togglePassword"
       fill="clear"
       color="custom"
-      (buttonClick)="clearInput()"
+      (buttonClick)="clearInput($event)"
     >
       <app-icon slot="icon-only" name="clear"></app-icon>
     </app-button>

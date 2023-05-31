@@ -13,10 +13,8 @@ export class DeploymentItemComponent {
   @Input() isBorderVisible = true;
   @Output() selectedDeployment = new EventEmitter();
 
-  indeterminateState: boolean;
-
-  selectDeployment(event: any, deployment: any) {
-    this.selectedDeployment.emit({ checked: !event.target.checked, deployment });
+  selectDeployment(state: boolean, deployment: any) {
+    this.selectedDeployment.emit({ checked: state, deployment });
   }
 
   removeDeployment(event: any, deployment: any) {

@@ -1,39 +1,42 @@
 <ion-item
+  button
+  lines="none"
   class="deployment-item"
   [ngStyle]="{ '--background': isBackgroundVisible, '--border-style': isBorderVisible }"
 >
-  <img
-    class="deployment-item__image"
-    [src]="deployment.image"
-    [alt]="deployment.name"
-    width="40"
-    height="40"
-  />
+  <img class="deployment-item__image" [src]="deployment.image" [alt]="deployment.name" />
   <ion-label class="deployment-item__content">
-    <span class="deployment-item__content-name">{{
-      deployment.deployment_name | truncate : 25
-    }}</span>
-    <span class="deployment-item__content-description" *ngIf="deployment.description">{{
-      deployment.description | truncate : 25
-    }}</span>
-    <span class="deployment-item__content-server">{{ deployment.domain | lowercase }}</span>
-    <span class="deployment-item__content-server">{{ deployment.fqdn | lowercase }}</span>
+    <span class="deployment-item__title">{{ deployment.deployment_name | truncate : 50 }}</span>
+    <ion-text
+      color="medium"
+      class="deployment-item__content-description"
+      *ngIf="deployment.description"
+    >
+      {{ deployment.description | truncate : 50 }}
+    </ion-text>
+    <ion-text color="medium" class="deployment-item__content-server">
+      {{ deployment.domain | lowercase }}
+    </ion-text>
+    <ion-text color="medium" class="deployment-item__content-server">
+      {{ deployment.fqdn | lowercase }}
+    </ion-text>
   </ion-label>
 
   <app-button
-    class="deployment-item__button"
     fill="clear"
+    color="medium"
     *ngIf="buttonVisible"
     (buttonClick)="removeDeployment($event, deployment)"
   >
-    <app-icon class="deployment-item__button-icon" slot="icon-only" name="delete"></app-icon>
+    <app-icon slot="icon-only" name="delete"></app-icon>
   </app-button>
 
-  <ion-checkbox
+  <app-checkbox
     *ngIf="checkboxVisible"
-    [checked]="deployment.selected"
     slot="end"
-    [indeterminate]="indeterminateState"
-    (click)="selectDeployment($event, deployment)"
-  ></ion-checkbox>
+    class="deployment-item__checkbox"
+    [(ngModel)]="deployment.selected"
+    (ngModelChange)="selectDeployment($event, deployment)"
+  >
+  </app-checkbox>
 </ion-item>

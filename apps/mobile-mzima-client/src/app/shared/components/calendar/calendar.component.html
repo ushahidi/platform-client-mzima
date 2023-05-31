@@ -1,0 +1,14 @@
+<div class="calendar-holder ion-padding-vertical">
+  <span class="calendar__selected ion-padding-horizontal">
+    {{ value ? formattedDate(value) : 'All time' }}
+  </span>
+  <ion-calendar
+    [options]="optionsRange"
+    [type]="type"
+    [format]="format"
+    [(ngModel)]="value"
+    class="calendar"
+    (change)="handleInputChange($event)"
+  >
+  </ion-calendar>
+</div>

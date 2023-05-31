@@ -8,3 +8,4 @@ export * from './menu/menu.component';
 export * from './spinner/spinner.component';
 export * from './radio/radio.component';
 export * from './select/select.component';
+export * from './calendar/calendar.component';

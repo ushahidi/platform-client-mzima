@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, forwardRef } from '@angular/core';
 import { FilterControl, FilterControlOption } from '@models';
 import {
   CategoriesService,
@@ -11,6 +11,7 @@ import {
 import { AlertService, SessionService } from '@services';
 import { searchFormHelper } from '@helpers';
 import _ from 'lodash';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 enum FilterType {
   SELECT = 'SELECT',
@@ -24,17 +25,28 @@ enum FilterType {
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => FilterComponent),
+      multi: true,
+    },
+  ],
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent implements ControlValueAccessor, OnInit {
   @Input() public filter: FilterControl;
   @Input() public totalPosts: number;
   public type: FilterType;
   public options: FilterControlOption[] = [];
   public isOptionsLoading = true;
   public activeSavedSearch?: Savedsearch;
-  public value: any = 16;
+  // public value: any = 16;
   public filterType = FilterType;
   public selectedCategory: FilterControlOption | null;
+
+  value: any;
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
   constructor(
     private savedsearchesService: SavedsearchesService,
@@ -47,6 +59,18 @@ export class FilterComponent implements OnInit {
       this.session.getLocalStorageNameMapper('activeSavedSearch'),
     );
     this.activeSavedSearch = activeSavedSearch ? JSON.parse(activeSavedSearch) : null;
+  }
+
+  writeValue(value: any): void {
+    this.value = value;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
   }
 
   ngOnInit(): void {

@@ -4,6 +4,8 @@
   --transition: all 0.35s ease;
   transition: var(--transition);
   border-radius: var(--border-radius);
+  --background-focused: transparent;
+  --background-activated: transparent;
   --border-radius: var(--input-border-radius, 4px 4px 0 0);
 
   @media (prefers-color-scheme: dark) {
@@ -44,6 +46,10 @@
 
   span[slot='start'],
   span[slot='end'] {
+    &:empty {
+      display: none;
+    }
+
     &::ng-deep {
       app-icon {
         display: block;
@@ -78,6 +84,8 @@
 .form-control {
   --background: transparent;
   --border-radius: 4px 4px 0 0;
+  --background-focused: transparent;
+  --background-activated: transparent;
 
   .form-row--rounded & {
     --border-radius: 28px;

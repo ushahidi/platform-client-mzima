@@ -58,4 +58,8 @@ export class DeploymentService {
   public isDeployment(): boolean {
     return !!this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENT);
   }
+
+  public removeDeployment(): void {
+    return this.storageService.deleteStorage(STORAGE_KEYS.DEPLOYMENT);
+  }
 }

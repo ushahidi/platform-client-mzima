@@ -1,7 +1,7 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { CalendarComponentOptions } from 'ion2-calendar';
 import dayjs from 'dayjs';
+import { DateRangeFormat } from '@models';
 
 @Component({
   selector: 'app-date-select',
@@ -16,12 +16,8 @@ import dayjs from 'dayjs';
   ],
 })
 export class DateSelectComponent implements ControlValueAccessor {
-  // @Input() public post: PostResult;
   @Input() public disabled = false;
   public dateOption: any = 'custom';
-  public optionsRange: CalendarComponentOptions = {
-    pickMode: 'range',
-  };
   public selectOptions = [
     {
       value: 'week',
@@ -53,7 +49,7 @@ export class DateSelectComponent implements ControlValueAccessor {
     },
   ];
 
-  value?: { from: string; to: string };
+  value?: DateRangeFormat;
   onChange: any = () => {};
   onTouched: any = () => {};
 
@@ -71,10 +67,6 @@ export class DateSelectComponent implements ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
-  }
-
-  public dateChangeHandle(): void {
-    this.dateOption = 'custom';
   }
 
   public setCalendar(): void {

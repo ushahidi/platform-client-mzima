@@ -1,10 +1,14 @@
 .form-row {
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
   border-bottom-width: 1px;
   border-bottom-style: solid;
   --transition: all 0.35s ease;
   transition: var(--transition);
   border-radius: var(--border-radius);
-  --border-radius: var(--input-border-radius, 4px 4px 0 0);
+  --border-radius: var(--select-border-radius, 4px 4px 0 0);
 
   @media (prefers-color-scheme: dark) {
     border-bottom-color: var(--ion-color-step-600);
@@ -16,18 +20,18 @@
 
   &--rounded {
     border-bottom-color: transparent;
-    --border-radius: var(--input-border-radius, 28px);
+    --border-radius: var(--select-border-radius, 28px);
   }
 
   &--light {
     @media (prefers-color-scheme: light) {
       --color: var(--ion-text-color);
-      --background: var(--input-background, var(--ion-color-light));
+      --background: var(--select-background, var(--ion-color-light));
       border-bottom-color: var(--light-border-color, var(--ion-color-step-200));
     }
 
     @media (prefers-color-scheme: dark) {
-      --background: var(--input-background, var(--ion-color-step-200));
+      --background: var(--select-background, var(--ion-color-step-200));
       border-bottom-color: var(--light-border-color, transparent);
     }
   }
@@ -44,21 +48,44 @@
 
   span[slot='start'],
   span[slot='end'] {
+    top: 50%;
+    font-size: 40px;
+    position: absolute;
+    margin-top: -0.5em;
+
+    &:empty {
+      display: none;
+    }
+
     &::ng-deep {
       app-icon {
         display: block;
         line-height: 1;
-        font-size: 40px;
+        font-size: inherit;
       }
     }
   }
 
   span[slot='start'] {
+    left: 4px;
     margin-inline-end: 0;
+
+    &:not(:empty) {
+      + .select {
+        --padding-start: 48px;
+      }
+    }
   }
 
   span[slot='end'] {
+    right: 4px;
     margin-inline-start: 0;
+
+    &:not(:empty) {
+      + .select {
+        --padding-end: calc(48px + var(--ion-padding));
+      }
+    }
   }
 }
 
@@ -86,6 +113,8 @@
 .select {
   --background: transparent;
   --border-radius: 4px 4px 0 0;
+  --padding-start: var(--ion-padding);
+  --padding-end: var(--ion-padding);
 
   .form-row--rounded & {
     --border-radius: 28px;
@@ -141,6 +170,26 @@
   .select-popover {
     --box-shadow: 0 1px 2px rgba(var(--ion-color-primary-contrast-rgb), 0.3),
       0 2px 6px 2px rgba(var(--ion-color-primary-contrast-rgb), 0.15);
+
+    @media (prefers-color-scheme: dark) {
+      --background: var(--ion-item-background);
+    }
+
+    &::part(content) {
+      border-radius: 0 0 8px 8px;
+    }
+
+    .popover-viewport {
+      border-top: 1px solid;
+
+      @media (prefers-color-scheme: light) {
+        border-top-color: #b2b3b5;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        border-top-color: var(--ion-color-primary);
+      }
+    }
   }
 
   .select-interface-option {
@@ -153,6 +202,12 @@
     --padding-start: 12px;
     --padding-end: 12px;
     --background: transparent;
+
+    &.item-radio-checked {
+      @media (prefers-color-scheme: dark) {
+        --ion-item-background: var(--ion-background-color);
+      }
+    }
   }
 
   ion-list.sc-ion-select-popover-md ion-radio.sc-ion-select-popover-md {
@@ -160,7 +215,7 @@
   }
 
   .sc-ion-select-popover-md-h ion-list.sc-ion-select-popover-md {
-    background: var(--ion-background-color);
+    background: transparent;
   }
 
   .item-radio-checked.sc-ion-select-popover-md {

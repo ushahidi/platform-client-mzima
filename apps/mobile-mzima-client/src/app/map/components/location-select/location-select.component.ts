@@ -18,6 +18,17 @@ export interface SearchResponse {
   type: string;
 }
 
+interface LocationItem {
+  label: string;
+  lat: number;
+  lon: number;
+}
+
+interface LocationSelectValue {
+  location: LocationItem;
+  radius: number;
+}
+
 @Component({
   selector: 'app-location-select',
   templateUrl: './location-select.component.html',
@@ -33,12 +44,13 @@ export interface SearchResponse {
 export class LocationSelectComponent implements ControlValueAccessor {
   @Input() public disabled = false;
 
-  value?: { from: string; to: string };
+  value: LocationSelectValue | null;
   onChange: any = () => {};
   onTouched: any = () => {};
 
   public query = '';
-  public results: any[] = [];
+  public results: LocationItem[] = [];
+  public selectedLocation?: LocationItem | null;
   public radiusValue = 1;
   public radiusOptions = [
     {
@@ -58,11 +70,12 @@ export class LocationSelectComponent implements ControlValueAccessor {
       label: 'Within 100 km',
     },
     {
-      value: 1,
+      value: 500,
       label: 'Within 500 km',
     },
   ];
   private readonly searchSubject = new Subject<string>();
+  public isInputOnFocus: boolean;
 
   constructor(private searchService: SearchService) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
@@ -71,8 +84,8 @@ export class LocationSelectComponent implements ControlValueAccessor {
           next: (response: SearchResponse[]) => {
             this.results = response.map((i) => ({
               label: i.display_name,
-              lat: i.lat,
-              lon: i.lon,
+              lat: Number(i.lat),
+              lon: Number(i.lon),
             }));
           },
         });
@@ -80,8 +93,20 @@ export class LocationSelectComponent implements ControlValueAccessor {
     });
   }
 
-  writeValue(value: any): void {
-    this.value = value;
+  writeValue(value: LocationSelectValue | null): void {
+    console.log('location select write: ', value);
+    if (value) {
+      this.selectedLocation = {
+        lat: value.location.lat,
+        lon: value.location.lon,
+        label: value.location.label,
+      };
+      this.query = value.location.label;
+      this.radiusValue = value.radius;
+    } else {
+      this.selectedLocation = null;
+      this.radiusValue = 1;
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -98,5 +123,41 @@ export class LocationSelectComponent implements ControlValueAccessor {
 
   public getAddresses(): void {
     this.searchSubject.next(this.query);
+  }
+
+  public selectLocation(location: LocationItem): void {
+    this.query = location.label;
+    this.selectedLocation = location;
+    // this.writeValue({
+    //   location: {
+    //     lat: this.selectedLocation.lat,
+    //     lon: this.selectedLocation.lon,
+    //   },
+    //   radius: this.radiusValue,
+    // });
+  }
+
+  public handleInputBlur(): void {
+    setTimeout(() => {
+      this.isInputOnFocus = false;
+    }, 50);
+  }
+
+  public handleInputClear(): void {
+    this.results = [];
+  }
+
+  public setRadius(): void {
+    // if (this.selectedLocation) {
+    //   this.writeValue({
+    //     location: {
+    //       lat: this.selectedLocation?.lat,
+    //       lon: this.selectedLocation?.lon,
+    //     },
+    //     radius: this.radiusValue,
+    //   });
+    // } else {
+    //   this.writeValue(null);
+    // }
   }
 }

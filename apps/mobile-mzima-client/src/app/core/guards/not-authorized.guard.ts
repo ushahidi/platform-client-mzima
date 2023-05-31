@@ -21,7 +21,7 @@ export class NotAuthorizedGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this.isLoggedIn) {
-      this.router.navigate(['/map']);
+      this.router.navigate(['/']);
       return false;
     }
     return true;

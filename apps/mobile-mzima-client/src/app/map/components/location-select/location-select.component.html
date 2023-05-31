@@ -5,17 +5,30 @@
     [(ngModel)]="query"
     class="search-input"
     (ngModelChange)="getAddresses()"
+    (ionFocus)="isInputOnFocus = true"
+    (ionBlur)="handleInputBlur()"
+    (inputClear)="handleInputClear()"
     placeholder="Enter city or address"
-    [ngClass]="{ 'search-input--has-results': results.length }"
+    [ngClass]="{ 'search-input--has-results': results.length && isInputOnFocus }"
   >
     <ng-container start>
       <app-icon name="search-small"></app-icon>
     </ng-container>
-    <div class="results" *ngIf="results.length" additional>
-      <div class="result-item" *ngFor="let result of results">
+    <div class="results" *ngIf="results.length && isInputOnFocus" additional>
+      <ion-item
+        button
+        class="result-item"
+        *ngFor="let result of results"
+        (click)="selectLocation(result)"
+      >
         {{ result.label }}
-      </div>
+      </ion-item>
     </div>
   </app-form-control>
-  <app-select label="Radius" [options]="radiusOptions" [(ngModel)]="radiusValue"> </app-select>
+  <app-select
+    label="Radius"
+    [options]="radiusOptions"
+    [(ngModel)]="radiusValue"
+    (ngModelChange)="setRadius()"
+  ></app-select>
 </div>
