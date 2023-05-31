@@ -103,9 +103,9 @@ export class SearchFormComponent implements OnInit {
     this.getSavedFilters();
     this.getSurveys();
     this.getCategories();
-
     if (this.filters) {
       const filters = JSON.parse(this.filters!);
+      delete filters.set;
       this.updateForm(filters);
       this.getActiveFilters(filters);
       this.applyFilters();
