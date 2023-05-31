@@ -40,21 +40,27 @@ export class MapViewComponent implements AfterViewInit {
   };
 
   constructor(private postsService: PostsService, private sessionService: SessionService) {
-    this.mapConfig = this.sessionService.getMapConfigurations();
+    this.sessionService.mapConfig$.subscribe({
+      next: (mapConfig) => {
+        if (mapConfig) {
+          this.mapConfig = mapConfig;
 
-    const currentLayer =
-      mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
+          const currentLayer =
+            mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
-    this.leafletOptions = {
-      minZoom: 3,
-      maxZoom: 17,
-      scrollWheelZoom: true,
-      zoomControl: false,
-      layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
-      center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
-      zoom: this.mapConfig.default_view!.zoom,
-    };
-    this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
+          this.leafletOptions = {
+            minZoom: 3,
+            maxZoom: 17,
+            scrollWheelZoom: true,
+            zoomControl: false,
+            layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+            center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
+            zoom: this.mapConfig.default_view!.zoom,
+          };
+          this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
+        }
+      },
+    });
   }
 
   ngAfterViewInit(): void {
