@@ -241,6 +241,7 @@
                 Invalid video embed url
               </mat-error>
               <iframe
+                *ngIf="form.get(field.key)?.value"
                 width="560"
                 height="315"
                 [src]="generateSecurityTrustUrl(formValidator.videoUrlPreview(videoInput))"
