@@ -618,7 +618,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   public relationSearchPosts() {
     const params: GeoJsonFilter = {
       order: 'desc',
-      'form[]': this.relationConfigForm,
+      // 'form[]': this.relationConfigForm,
       orderby: 'post_date',
       q: this.relationSearch,
       'status[]': [],

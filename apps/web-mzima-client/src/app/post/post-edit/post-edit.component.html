@@ -259,19 +259,18 @@
 
             <ng-container *ngIf="field.input === 'relation'">
               <p>{{ 'survey.related_post_info' | translate }}</p>
-              <span class="related-post-selected" *ngIf="selectedRelatedPost">
-                {{ selectedRelatedPost.id }}: {{ selectedRelatedPost.title }}
-                <mat-icon class="trash"></mat-icon>
-                <mzima-client-button
-                  fill="outline"
-                  color="secondary"
-                  [data-qa]="'btn-post-item-delete-relation-post'"
-                  (buttonClick)="deleteRelatedPost(field, selectedRelatedPost.id)"
-                >
-                  Delete
-                  <mat-icon icon class="trash"></mat-icon>
-                </mzima-client-button>
-              </span>
+              <div class="related-post-selected" *ngIf="selectedRelatedPost">
+                <div class="related-post-content">
+                  <span>{{ selectedRelatedPost.id }}: {{ selectedRelatedPost.title }}</span>
+                  <div
+                    class="related-post-delete"
+                    [data-qa]="'btn-post-item-delete-relation-post'"
+                    (click)="deleteRelatedPost(field, selectedRelatedPost.id)"
+                  >
+                    <mat-icon svgIcon="close"></mat-icon>
+                  </div>
+                </div>
+              </div>
 
               <div class="relation-container">
                 <mat-form-field appearance="outline">
