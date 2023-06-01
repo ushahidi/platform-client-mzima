@@ -133,27 +133,32 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   get onlyOptional() {
-    return (
-      this.selectedFieldType.input !== 'tags' &&
-      this.selectedFieldType.type !== 'description' &&
-      this.selectedFieldType.type !== 'title'
-    );
+    const types = ['tags', 'description', 'title'];
+    return !types.includes(this.selectedFieldType.type);
   }
 
   get canMakePrivate() {
-    return (
-      this.selectedFieldType.type !== 'tags' &&
-      this.selectedFieldType.type !== 'title' &&
-      this.selectedFieldType.type !== 'description'
-    );
+    const types = ['tags', 'description', 'title'];
+    return !types.includes(this.selectedFieldType.type);
   }
 
   get canDisableCaption() {
-    return this.selectedFieldType.type === 'media' && this.selectedFieldType.input === 'upload';
+    const types = ['media'];
+    return types.includes(this.selectedFieldType.type);
   }
 
   get canDisplay() {
-    return this.selectedFieldType.input !== 'upload' && this.selectedFieldType.type !== 'tags';
+    const inputs = [
+      'upload',
+      'tags',
+      'location',
+      'checkbox',
+      'select',
+      'radio',
+      'date',
+      'datetime',
+    ];
+    return !inputs.includes(this.selectedFieldType.input);
   }
 
   private loadAvailableSurveys() {
