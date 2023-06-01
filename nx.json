@@ -2,7 +2,7 @@
   "npmScope": "mzima-client",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx-cloud",
+      "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": ["build", "lint", "test", "e2e"],
         "accessToken": "OWVmMTdlZjMtZjA5NS00YmZhLThlYmMtZjlhMWNhODYyNTdmfHJlYWQtd3JpdGU="
