@@ -243,7 +243,7 @@
               <iframe
                 width="560"
                 height="315"
-                [src]="generateSecurityTrustResourceUrl(formValidator.videoUrlPreview(videoInput))"
+                [src]="generateSecurityTrustUrl(formValidator.videoUrlPreview(videoInput))"
                 [hidden]="!videoInput.value.length"
               ></iframe>
             </ng-container>

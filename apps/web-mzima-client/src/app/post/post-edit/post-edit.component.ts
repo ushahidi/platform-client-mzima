@@ -662,7 +662,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     return item.id;
   }
 
-  public generateSecurityTrustResourceUrl(unsafeUrl: string) {
+  public generateSecurityTrustUrl(unsafeUrl: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
   }
 }

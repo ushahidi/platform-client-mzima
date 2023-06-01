@@ -65,7 +65,6 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post']) {
-      console.log(this.post);
       this.allowed_privileges = this.post?.allowed_privileges ?? '';
       if (changes['post'].currentValue?.post_content?.length) {
         this.setMetaData(this.post!);
