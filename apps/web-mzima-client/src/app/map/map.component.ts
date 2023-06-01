@@ -262,11 +262,12 @@ export class MapComponent extends MainViewComponent implements OnInit {
             this.getPostsGeoJson();
           } else {
             this.progress = 100;
-          }
-
-          if (posts.results.length && this.params.page <= this.params.limit) {
             this.mapFitToBounds = geoPosts.getBounds();
           }
+
+          // if (posts.results.length && this.params.page <= this.params.limit) {
+          //   this.mapFitToBounds = geoPosts.getBounds();
+          // }
         },
         error: (err) => {
           if (err.message.match(/Http failure response for/)) {
