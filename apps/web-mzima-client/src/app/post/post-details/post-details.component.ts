@@ -8,9 +8,10 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Meta } from '@angular/platform-browser';
+import { DomSanitizer, Meta, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { preparingVideoUrl } from '../../core/helpers/validators';
 import { CollectionsModalComponent } from '../../shared/components';
 import {
   MediaService,
@@ -18,6 +19,7 @@ import {
   PostResult,
   PostContent,
   PostsService,
+  PostContentField,
 } from '@mzima-client/sdk';
 
 @Component({
@@ -37,6 +39,7 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   public media?: any;
   public allowed_privileges: string | string[];
   public postId: string;
+  public videoUrl: SafeResourceUrl;
 
   constructor(
     private dialog: MatDialog,
@@ -45,6 +48,7 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     private metaService: Meta,
     private route: ActivatedRoute,
     private postsService: PostsService,
+    private sanitizer: DomSanitizer,
   ) {
     this.route.params.subscribe((params) => {
       if (params['id']) {
@@ -61,15 +65,12 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post']) {
+      console.log(this.post);
       this.allowed_privileges = this.post?.allowed_privileges ?? '';
       if (changes['post'].currentValue?.post_content?.length) {
         this.setMetaData(this.post!);
-        const mediaField = changes['post'].currentValue.post_content[0].fields.find(
-          (field: any) => field.type === 'media',
-        );
-        if (mediaField && mediaField.value?.value) {
-          this.getPostMedia(mediaField);
-        }
+        this.preparingMediaField(changes['post'].currentValue.post_content[0].fields);
+        this.preparingSafeVideoUrl(changes['post'].currentValue.post_content[0].fields);
       }
     }
   }
@@ -87,14 +88,30 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     this.postsService.getById(this.postId).subscribe({
       next: (post: PostResult) => {
         this.post = post;
-        const mediaField = (this.post.post_content as PostContent[])[0].fields.find(
-          (field: any) => field.type === 'media',
-        );
-        if (mediaField && mediaField.value?.value) {
-          this.getPostMedia(mediaField);
-        }
+        this.preparingMediaField((this.post.post_content as PostContent[])[0].fields);
+        this.preparingSafeVideoUrl((this.post.post_content as PostContent[])[0].fields);
       },
     });
+  }
+
+  private preparingMediaField(fields: PostContentField[]) {
+    const mediaField = fields.find((field: any) => field.type === 'media');
+    if (mediaField && mediaField.value?.value) {
+      this.getPostMedia(mediaField);
+    }
+  }
+
+  private preparingSafeVideoUrl(fields: PostContentField[]) {
+    const videoField = fields.find((field: any) => field.input === 'video');
+    if (videoField && videoField.value?.value) {
+      this.videoUrl = this.generateSecurityTrustResourceUrl(
+        preparingVideoUrl(videoField.value?.value),
+      );
+    }
+  }
+
+  private generateSecurityTrustResourceUrl(unsafeUrl: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
   }
 
   public isParentCategory(

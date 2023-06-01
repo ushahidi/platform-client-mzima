@@ -73,3 +73,21 @@ export class FormValidator {
     return this.videoEmbedUrl;
   }
 }
+
+export const preparingVideoUrl = (rawUrl: string): string => {
+  let preparedUrl = rawUrl;
+
+  if (rawUrl.includes('youtube.com/watch?v=')) {
+    let videoId = rawUrl.split('v=')[1];
+    const ampersandPosition = videoId.indexOf('&');
+    if (ampersandPosition != -1) {
+      videoId = videoId.substring(0, ampersandPosition);
+    }
+    preparedUrl = `https://www.youtube.com/embed/${videoId}`;
+  } else if (rawUrl.includes('vimeo.com/') && !rawUrl.includes('/video/')) {
+    const videoId = rawUrl.split('/')[3];
+    preparedUrl = `https://player.vimeo.com/video/${videoId}`;
+  }
+
+  return preparedUrl;
+};

@@ -230,12 +230,7 @@
 
             <ng-container *ngIf="field.input === 'video'">
               <mat-form-field appearance="outline">
-                <input
-                  matInput
-                  [formControlName]="field.key"
-                  #videoInput
-                  (input)="videoPreview.src = formValidator.videoUrlPreview(videoInput)"
-                />
+                <input matInput [formControlName]="field.key" #videoInput />
               </mat-form-field>
               <mat-error
                 *ngIf="
@@ -248,7 +243,7 @@
               <iframe
                 width="560"
                 height="315"
-                #videoPreview
+                [src]="generateSecurityTrustResourceUrl(formValidator.videoUrlPreview(videoInput))"
                 [hidden]="!videoInput.value.length"
               ></iframe>
             </ng-container>

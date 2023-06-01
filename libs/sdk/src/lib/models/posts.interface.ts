@@ -150,7 +150,7 @@ export interface PostStatsResponse {
   result: PostStatistics;
 }
 
-interface PostContentField {
+export interface PostContentField {
   cardinality: number;
   config: any[];
   default: string;

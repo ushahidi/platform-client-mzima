@@ -19,6 +19,7 @@ import {
 } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService, EventBusService, EventType } from '@services';
@@ -33,6 +34,7 @@ import {
   PostResult,
   MediaService,
 } from '@mzima-client/sdk';
+import { preparingVideoUrl } from '../../core/helpers/validators';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
 import { AlphanumericValidatorValidator } from '../../core/validators';
@@ -92,6 +94,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     private mediaService: MediaService,
     private snackBar: MatSnackBar,
     private cdr: ChangeDetectorRef,
+    private sanitizer: DomSanitizer,
   ) {
     this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
@@ -398,7 +401,7 @@ export class PostEditComponent implements OnInit, OnChanges {
             case 'video':
               value = this.form.value[field.key]
                 ? {
-                    value: this.form.value[field.key],
+                    value: preparingVideoUrl(this.form.value[field.key]),
                   }
                 : {};
               break;
@@ -657,5 +660,9 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   public trackById(item: any): number {
     return item.id;
+  }
+
+  public generateSecurityTrustResourceUrl(unsafeUrl: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
   }
 }
