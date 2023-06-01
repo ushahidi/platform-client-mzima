@@ -1,12 +1,13 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { FormControlComponent } from '@components';
-import { PostResult, PostsService } from '@mzima-client/sdk';
+import { PostResult, PostsService, SurveyItem, SurveysService } from '@mzima-client/sdk';
 import { Subject, debounceTime, lastValueFrom } from 'rxjs';
-import { AlertService } from '@services';
+import { AlertService, SessionService } from '@services';
 import { FilterControl } from '@models';
 import { searchFormHelper } from '@helpers';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-search-form',
@@ -16,12 +17,12 @@ import { InfiniteScrollCustomEvent } from '@ionic/angular';
 export class SearchFormComponent {
   @Input() public isLight = true;
   public isResultsVisible = false;
+  @Input() public totalPosts: number;
   @ViewChild('formControl') formControl: FormControlComponent;
   private readonly searchSubject = new Subject<string>();
   public posts: PostResult[] = [];
   public isPostsLoading = false;
   public isFiltersModalOpen = false;
-  public totalPosts = 356;
   public filters: FilterControl[] = [
     {
       name: 'set',
@@ -29,8 +30,8 @@ export class SearchFormComponent {
       label: 'Saved filters',
       selected: 'none',
       selectedLabel: 'Selected:',
-      selectedCount: 3,
-      value: null,
+      // selectedCount: 3,
+      value: this.getFilterDefaultValue('set'),
     },
     {
       name: 'form',
@@ -38,31 +39,31 @@ export class SearchFormComponent {
       label: 'Surveys',
       selected: 'none',
       selectedCount: 16,
-      value: null,
+      value: this.getFilterDefaultValue('form'),
     },
     {
       name: 'source',
       icon: 'sources',
       label: 'Sources',
-      selected: 'none',
       selectedCount: searchFormHelper.sources.length,
-      value: null,
+      selected: String(searchFormHelper.sources.length),
+      value: this.getFilterDefaultValue('source'),
     },
     {
       name: 'status',
       icon: 'status',
       label: 'Status',
-      selected: 'none',
       selectedCount: searchFormHelper.statuses.length,
-      value: null,
+      selected: '2',
+      value: this.getFilterDefaultValue('status'),
     },
     {
       name: 'tags',
       icon: 'categories',
       label: 'Categories',
       selected: 'none',
-      selectedCount: 20,
-      value: null,
+      // selectedCount: 20,
+      value: this.getFilterDefaultValue('tags'),
     },
     {
       name: 'date',
@@ -70,17 +71,18 @@ export class SearchFormComponent {
       label: 'Date range',
       selectedLabel: 'Select the date range',
       selectedCount: 'All Time',
-      value: null,
+      value: this.getFilterDefaultValue('date'),
     },
     {
-      name: 'location',
+      name: 'center_point',
       icon: 'marker',
       label: 'Location',
       selectedLabel: 'Select locations',
       selectedCount: 'All locations',
-      value: null,
+      value: this.getFilterDefaultValue('location'),
     },
   ];
+  public activeFilters: any;
   public selectedFilter: FilterControl | null;
   private searchParams = {
     limit: 10,
@@ -96,7 +98,13 @@ export class SearchFormComponent {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private postsService: PostsService,
+    private session: SessionService,
+    private surveysService: SurveysService,
   ) {
+    const storageFilters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'))!;
+
+    this.getSurveys();
+
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: (query: string) => {
         this.searchParams.page = 1;
@@ -112,6 +120,55 @@ export class SearchFormComponent {
         }
       },
     });
+
+    if (storageFilters) {
+      this.activeFilters = JSON.parse(storageFilters!);
+      this.filters.map((f) => {
+        f.value = this.activeFilters[f.name];
+        this.updateFilterSelectedText(f);
+      });
+      this.applyFilters();
+    }
+  }
+
+  private getSurveys(): void {
+    this.surveysService.get().subscribe({
+      next: (response) => {
+        const allSurveysChecked = JSON.parse(
+          localStorage.getItem(this.session.getLocalStorageNameMapper('allSurveysChecked')) ||
+            'false',
+        );
+        const formIds = new Set(this.activeFilters?.form ?? []);
+
+        const filterForm = this.filters.find((f) => f.name === 'form');
+        filterForm!.options = response.results.map((survey: SurveyItem) => ({
+          value: survey.id,
+          label: survey.name,
+          checked: allSurveysChecked || formIds.has(survey.id),
+          info: survey.description,
+        }));
+
+        if (!this.activeFilters) {
+          filterForm!.value = response.results.map((survey: SurveyItem) => survey.id);
+          this.activeFilters = searchFormHelper.DEFAULT_FILTERS;
+          this.activeFilters['form'] = response.results.map((s: SurveyItem) => s.id);
+          this.applyFilters();
+        } else {
+          filterForm!.value = response.results
+            .filter((survey: SurveyItem) => formIds.has(survey.id) || allSurveysChecked)
+            .map((survey: SurveyItem) => survey.id);
+        }
+
+        filterForm!.selected = String(filterForm?.value.length ?? 'none');
+      },
+    });
+  }
+
+  private getFilterDefaultValue(filterName: string): any {
+    if (filterName === 'source') {
+      return searchFormHelper.sources.map((s) => s.value);
+    }
+    return searchFormHelper.DEFAULT_FILTERS[filterName] ?? null;
   }
 
   public showSearchResults(): void {
@@ -134,12 +191,11 @@ export class SearchFormComponent {
     }, 50);
   }
 
-  public async handleClearFilters(filterName?: string): Promise<void> {
+  public async handleClearFilters(): Promise<void> {
     const result = await this.alertService.presentAlert({
-      header: !filterName?.length ? 'Clear all filters?' : `Clear ${filterName} filter?`,
-      message: !filterName?.length
-        ? `All filters except <strong>Surveys</strong>, <strong>Sources</strong> and <strong>Status</strong> will be cleared`
-        : 'This filter will be cleared',
+      header: 'Clear all filters?',
+      message:
+        'All filters except <strong>Surveys</strong>, <strong>Sources</strong> and <strong>Status</strong> will be cleared',
       buttons: [
         {
           text: 'Cancel',
@@ -154,23 +210,27 @@ export class SearchFormComponent {
     });
 
     if (result.role === 'confirm') {
-      // TODO: Clear filters
-      console.log(!filterName?.length ? 'clear all filters' : 'clear filter: ' + filterName);
+      this.filters.map((f) => {
+        if (f.name === 'form') {
+          f.value = f.options?.map((o) => o.value);
+        } else {
+          f.value = this.getFilterDefaultValue(f.name);
+        }
+        this.activeFilters[f.name] = f.value;
+        this.updateFilterSelectedText(f);
+      });
+      this.applyFilters();
     }
   }
 
   public openFilter(filter: FilterControl): void {
-    this.selectedFilter = filter;
+    this.selectedFilter = _.cloneDeep(filter);
   }
 
   public modalCloseHandle(): void {
     if (!this.selectedFilter) {
       this.isFiltersModalOpen = false;
     }
-    this.selectedFilter = null;
-  }
-
-  public applyFilter(): void {
     this.selectedFilter = null;
   }
 
@@ -194,5 +254,49 @@ export class SearchFormComponent {
       await this.searchPosts(this.form.value.postsQuery, true);
       (ev as InfiniteScrollCustomEvent).target.complete();
     }
+  }
+
+  public resetSearchForm(): void {
+    this.posts = [];
+    this.searchParams.page = 1;
+  }
+
+  public applyFilter(value: any, filterName: string, removeSelectedFilter = true): void {
+    const originalFilter = this.filters.find((f) => f.name === filterName);
+    if (originalFilter) {
+      originalFilter.value = value;
+      this.activeFilters[originalFilter.name] = originalFilter.value;
+      this.updateFilterSelectedText(originalFilter);
+      if (originalFilter.name === 'source' || originalFilter.name === 'form') {
+        if (originalFilter.value.length > 1 && originalFilter.value.indexOf('none') > -1) {
+          originalFilter.value.splice(originalFilter.value.indexOf('none'), 1);
+        } else if (originalFilter.value.length === 0) {
+          originalFilter.value.push('none');
+        }
+      }
+      this.applyFilters();
+    }
+    if (removeSelectedFilter) {
+      this.selectedFilter = null;
+    }
+  }
+
+  private updateFilterSelectedText(filter: FilterControl): void {
+    filter.selected = filter.value?.length ? String(filter.value.length) : 'none';
+  }
+
+  public clearFilter(filterName: string): void {
+    if (this.selectedFilter) {
+      this.applyFilter(this.getFilterDefaultValue(filterName), this.selectedFilter.name, false);
+      this.selectedFilter = _.cloneDeep(this.filters.find((filter) => filter.name === filterName))!;
+    }
+  }
+
+  private applyFilters(): void {
+    localStorage.setItem(
+      this.session.getLocalStorageNameMapper('filters'),
+      JSON.stringify(this.activeFilters),
+    );
+    this.postsService.applyFilters(this.activeFilters);
   }
 }

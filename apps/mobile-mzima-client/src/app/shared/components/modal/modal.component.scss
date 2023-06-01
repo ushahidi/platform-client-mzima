@@ -43,6 +43,14 @@
       display: flex;
       flex-direction: column;
     }
+
+    &--no-offset-top {
+      --padding-top: 0;
+    }
+
+    &--no-offset-bottom {
+      --padding-bottom: 0;
+    }
   }
 
   &__footer {

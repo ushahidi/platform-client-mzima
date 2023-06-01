@@ -147,6 +147,11 @@ export class PostsService extends ResourceService<any> {
       params.form.push('none');
     }
 
+    if (params.form?.length) {
+      params['form[]'] = params.form;
+      delete params.form;
+    }
+
     if (params['form[]']?.length === 0) {
       params['form[]'].push('none');
     }

@@ -12,6 +12,7 @@
       [rounded]="!isResultsVisible"
       [clearable]="isResultsVisible"
       class="search-form__form-control"
+      (inputClear)="resetSearchForm()"
       (inputFocus)="showSearchResults()"
       [color]="isLight ? 'light' : 'default'"
     >
@@ -75,7 +76,8 @@
   [isOpen]="isFiltersModalOpen"
   (modalClose)="modalCloseHandle()"
   [options]="{
-    footer: true
+    footer: !selectedFilter,
+    offsetBottom: !!selectedFilter
   }"
   [closable]="!selectedFilter"
 >
@@ -97,29 +99,16 @@
     </ng-container>
   </div>
   <div class="filters-modal__footer" footer>
-    <ng-container *ngIf="!selectedFilter">
-      <app-button class="filters-modal__button" expand="inline">Save as</app-button>
+    <ng-container>
+      <app-button (buttonClick)="modalCloseHandle()" class="filters-modal__button" expand="inline"
+        >Apply</app-button
+      >
       <app-button
         fill="outline"
         color="medium"
         expand="inline"
         class="filters-modal__button"
         (buttonClick)="handleClearFilters()"
-      >
-        Clear
-      </app-button>
-    </ng-container>
-    <ng-container *ngIf="selectedFilter">
-      <app-button class="filters-modal__button" expand="inline" (buttonClick)="applyFilter()">
-        Apply
-      </app-button>
-      <app-button
-        fill="outline"
-        color="medium"
-        expand="inline"
-        class="filters-modal__button"
-        *ngIf="selectedFilter.name !== 'set'"
-        (buttonClick)="handleClearFilters(selectedFilter.name)"
       >
         Clear
       </app-button>
@@ -134,5 +123,8 @@
     [filter]="selectedFilter"
     [totalPosts]="totalPosts"
     [(ngModel)]="selectedFilter.value"
-  ></app-filter>
+    (filterClear)="clearFilter(selectedFilter.name)"
+    (ngModelChange)="applyFilter($event, selectedFilter.name)"
+  >
+  </app-filter>
 </ng-template>

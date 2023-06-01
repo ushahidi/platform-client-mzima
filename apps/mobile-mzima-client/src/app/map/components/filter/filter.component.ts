@@ -1,11 +1,10 @@
-import { Component, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { FilterControl, FilterControlOption } from '@models';
 import {
   CategoriesService,
   CategoryInterface,
   Savedsearch,
   SavedsearchesService,
-  SurveyItem,
   SurveysService,
 } from '@mzima-client/sdk';
 import { AlertService, SessionService } from '@services';
@@ -36,13 +35,14 @@ enum FilterType {
 export class FilterComponent implements ControlValueAccessor, OnInit {
   @Input() public filter: FilterControl;
   @Input() public totalPosts: number;
+  @Output() filterClear = new EventEmitter();
   public type: FilterType;
   public options: FilterControlOption[] = [];
   public isOptionsLoading = true;
   public activeSavedSearch?: Savedsearch;
-  // public value: any = 16;
   public filterType = FilterType;
   public selectedCategory: FilterControlOption | null;
+  public isPristine = true;
 
   value: any;
   onChange: any = () => {};
@@ -62,7 +62,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   }
 
   writeValue(value: any): void {
-    this.value = value;
+    this.type === FilterType.MULTISELECT ? (this.value = new Set(value)) : (this.value = value);
   }
 
   registerOnChange(fn: any): void {
@@ -74,7 +74,6 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit(): void {
-    console.log('filter: ', this.filter);
     this.getFilterData();
   }
 
@@ -86,8 +85,9 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
         break;
 
       case 'form':
-        this.getSurveys();
+        this.options = this.filter.options ?? [];
         this.type = FilterType.MULTISELECT;
+        this.isOptionsLoading = false;
         break;
 
       case 'source':
@@ -110,7 +110,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
         this.isOptionsLoading = false;
         break;
 
-      case 'location':
+      case 'center_point':
         this.type = FilterType.LOCATION;
         this.isOptionsLoading = false;
         break;
@@ -141,25 +141,25 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
     });
   }
 
-  private getSurveys(): void {
-    this.isOptionsLoading = true;
-    this.surveysService.get().subscribe({
-      next: (response) => {
-        this.options = response.results.map((survey: SurveyItem) => ({
-          value: survey.id,
-          label: survey.name,
-          // checked: this.activeSavedSearch && filter.id === this.activeSavedSearch.id,
-        }));
-        this.isOptionsLoading = false;
-      },
-      error: (err) => {
-        if (err.message.match(/Http failure response for/)) {
-          this.isOptionsLoading = false;
-          setTimeout(() => this.getSurveys(), 5000);
-        }
-      },
-    });
-  }
+  // private getSurveys(): void {
+  //   this.isOptionsLoading = true;
+  //   this.surveysService.get().subscribe({
+  //     next: (response) => {
+  //       this.options = response.results.map((survey: SurveyItem) => ({
+  //         value: survey.id,
+  //         label: survey.name,
+  //         // checked: this.activeSavedSearch && filter.id === this.activeSavedSearch.id,
+  //       }));
+  //       this.isOptionsLoading = false;
+  //     },
+  //     error: (err) => {
+  //       if (err.message.match(/Http failure response for/)) {
+  //         this.isOptionsLoading = false;
+  //         setTimeout(() => this.getSurveys(), 5000);
+  //       }
+  //     },
+  //   });
+  // }
 
   private getDataSources(): void {
     this.options = searchFormHelper.sources.map((source) => ({
@@ -194,7 +194,6 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
               checked: false,
             })),
         }));
-        console.log('this.options: ', this.options);
         this.isOptionsLoading = false;
       },
       error: (err) => {
@@ -317,6 +316,37 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
 
     if (result.role === 'confirm') {
       this.selectedCategory?.options?.forEach((option) => (option.checked = false));
+    }
+  }
+
+  public optionChanged(state: boolean, option: FilterControlOption): void {
+    state ? this.value.add(option.value) : this.value.delete(option.value);
+    this.isPristine = false;
+  }
+
+  public applyFilter(): void {
+    this.onChange([...this.value]);
+  }
+
+  public async clearFilter(): Promise<void> {
+    const result = await this.alertService.presentAlert({
+      header: `Clear ${this.filter.label} filter?`,
+      message: 'This filter will be cleared',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Clear',
+          role: 'confirm',
+          cssClass: 'danger',
+        },
+      ],
+    });
+
+    if (result.role === 'confirm') {
+      this.filterClear.emit();
     }
   }
 }

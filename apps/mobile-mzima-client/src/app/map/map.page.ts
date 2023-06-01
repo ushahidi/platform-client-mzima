@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class MapPage {
   public mode: number | 'fullscreen';
+  public totalPosts = 0;
+
+  public updatePostsCount(data: any): void {
+    this.totalPosts = data.total;
+  }
 }

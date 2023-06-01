@@ -17,7 +17,10 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content class="ion-padding modal__body">
+    <ion-content
+      class="ion-padding modal__body"
+      [ngClass]="{ 'modal__body--no-offset-bottom': modalOptions.offsetBottom }"
+    >
       <ng-content></ng-content>
     </ion-content>
 

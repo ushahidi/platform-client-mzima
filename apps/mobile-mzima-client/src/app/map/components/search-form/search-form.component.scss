@@ -126,13 +126,21 @@
 
   &__filters {
     display: flex;
-    min-height: 100%;
+    min-height: calc(100% + var(--ion-padding));
     flex-direction: column;
     margin: calc(var(--ion-padding) * -1) calc(var(--ion-padding) * -1) 0;
+
+    app-filter-control {
+      &:last-child {
+        display: block;
+        padding-bottom: 24px;
+      }
+    }
   }
 }
 
 .filter {
-  display: block;
+  display: flex;
   min-height: 100%;
+  flex-direction: column;
 }
