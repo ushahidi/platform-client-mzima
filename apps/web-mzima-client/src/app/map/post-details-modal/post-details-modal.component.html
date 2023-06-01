@@ -14,6 +14,7 @@
 <mat-dialog-content class="post">
   <app-post-details
     [post]="post"
+    [feedView]="false"
     [color]="color"
     (edit)="handleEditPost()"
     *ngIf="!editable; else editPost"
