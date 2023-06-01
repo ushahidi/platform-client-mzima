@@ -116,6 +116,28 @@
     margin-bottom: 10px;
   }
 
+  &-content {
+    display: flex;
+    align-items: center;
+  }
+
+  &-delete {
+    width: 20px;
+    height: 20px;
+    border: 1px solid;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    cursor: pointer;
+
+    mat-icon {
+      display: contents;
+      font-size: 16px;
+    }
+  }
+
   &-list {
     ul li {
       list-style: none;
