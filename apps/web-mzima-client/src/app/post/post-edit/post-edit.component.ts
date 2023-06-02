@@ -169,15 +169,27 @@ export class PostEditComponent implements OnInit, OnChanges {
               }
 
               if (field.key) {
-                const value =
-                  field.default ||
-                  (field.input === 'date'
-                    ? new Date()
-                    : field.input === 'location'
-                    ? { lat: '', lng: '' }
-                    : field.input === 'number'
-                    ? 0
-                    : '');
+                const defaultValues: any = {
+                  date: new Date(),
+                  location: { lat: '', lng: '' },
+                  number: 0,
+                };
+
+                const types = [
+                  'upload',
+                  'tags',
+                  'location',
+                  'checkbox',
+                  'select',
+                  'radio',
+                  'date',
+                  'datetime',
+                ];
+
+                const value = types.includes(field.input)
+                  ? defaultValues[field.input]
+                  : field.default || defaultValues[field.input] || '';
+
                 field.value = value;
                 fields[field.key] = this.fieldsFormArray.includes(field.type)
                   ? this.addFormArray(value, field)
@@ -199,7 +211,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     const { location, error } = data;
     const { lat, lng } = location;
 
-    this.form.patchValue({ [formKey]: { lat: Number(lat), lng: lng } });
+    this.form.patchValue({ [formKey]: { lat: lat, lng: lng } });
 
     this.emptyLocation = error;
     this.cdr.detectChanges();
