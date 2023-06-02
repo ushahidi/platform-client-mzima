@@ -21,6 +21,13 @@
     <mat-form-field appearance="outline">
       <input matInput placeholder="Name your Saved Search..." formControlName="name" />
     </mat-form-field>
+    <ng-container *ngFor="let err of formErrors">
+      <ng-container *ngIf="err?.field === 'name'">
+        <mat-error *ngFor="let msg of err?.error_messages">
+          {{ msg | translate }}
+        </mat-error>
+      </ng-container>
+    </ng-container>
   </div>
 
   <div class="form-row">
