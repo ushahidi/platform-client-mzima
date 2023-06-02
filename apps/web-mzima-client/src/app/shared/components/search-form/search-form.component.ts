@@ -509,67 +509,15 @@ export class SearchFormComponent implements OnInit {
       panelClass: 'modal',
       data: {
         search,
+        activeFilters: this.activeFilters,
+        activeSavedSearch: this.activeSavedSearch,
       },
     });
 
     dialogRef.afterClosed().subscribe({
       next: (result: any) => {
-        if (!result || result === 'cancel') return;
-
-        if (result === 'delete') {
-          if (search?.id) {
-            this.savedsearchesService.delete(search.id).subscribe({
-              next: () => {
-                this.form.enable();
-                this.resetSavedFilter();
-                this.getSavedFilters();
-              },
-            });
-          }
-          return;
-        }
-
-        this.form.disable();
-
-        const filters: any = {};
-        for (const key in this.activeFilters) {
-          filters[key.replace(/\[\]/g, '')] = this.activeFilters[key];
-        }
-
-        const savedSearchParams = {
-          filter: filters,
-          name: result.name,
-          description: result.description,
-          featured: result.visible_to.value === 'only_me',
-          role: result.visible_to.value === 'specific' ? result.visible_to.options : ['admin'],
-          view: result.defaultViewingMode,
-        };
-
-        if (search?.id) {
-          this.savedsearchesService
-            .update(search.id, {
-              ...this.activeSavedSearch,
-              ...savedSearchParams,
-            })
-            .subscribe({
-              next: () => {
-                this.form.enable();
-                this.getSavedFilters();
-              },
-            });
-        } else {
-          this.savedsearchesService
-            .post({
-              ...savedSearchParams,
-            })
-            .subscribe({
-              next: () => {
-                this.form.enable();
-                this.getSavedFilters();
-              },
-            });
-        }
-
+        this.form.enable();
+        this.getSavedFilters();
         if (search) {
           this.notificationsService.get(String(search.id)).subscribe({
             next: (response) => {
