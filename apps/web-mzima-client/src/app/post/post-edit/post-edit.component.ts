@@ -22,7 +22,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService, EventBusService, EventType } from '@services';
+import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -64,6 +64,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   public activeLanguage: string;
   private initialFormData: any;
   private relationConfigForm: any;
+  private relationConfigSource: any;
   private relationConfigKey: string;
   private isSearching = false;
   public relatedPosts: PostResult[];
@@ -79,6 +80,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   public formValidator = new formValidators.FormValidator();
   public locationRequired = false;
   public emptyLocation = false;
+  public filters;
 
   constructor(
     private route: ActivatedRoute,
@@ -95,12 +97,16 @@ export class PostEditComponent implements OnInit, OnChanges {
     private snackBar: MatSnackBar,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
+    private sessionService: SessionService,
   ) {
     this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },
     });
+    this.filters = JSON.parse(
+      localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
+    );
   }
 
   ngOnInit(): void {
@@ -163,7 +169,9 @@ export class PostEditComponent implements OnInit, OnChanges {
                   this.description = field.default;
                   break;
                 case 'relation':
-                  this.relationConfigForm = field.config?.input?.form;
+                  const fieldForm: [] = field.config?.input?.form;
+                  this.relationConfigForm = !fieldForm.length ? this.filters.form : fieldForm;
+                  this.relationConfigSource = this.filters.source;
                   this.relationConfigKey = field.key;
                   break;
               }
@@ -409,7 +417,6 @@ export class PostEditComponent implements OnInit, OnChanges {
             case 'checkbox':
               value.value = this.form.value[field.key] || [];
               break;
-            case 'relation':
             case 'video':
               value = this.form.value[field.key]
                 ? {
@@ -630,7 +637,8 @@ export class PostEditComponent implements OnInit, OnChanges {
   public relationSearchPosts() {
     const params: GeoJsonFilter = {
       order: 'desc',
-      // 'form[]': this.relationConfigForm,
+      'form[]': this.relationConfigForm,
+      'source[]': this.relationConfigSource,
       orderby: 'post_date',
       q: this.relationSearch,
       'status[]': [],
@@ -661,6 +669,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     this.form.patchValue({ [key]: id });
     this.selectedRelatedPost = { id, title };
     this.relatedPosts = [];
+    this.relationSearch = '';
   }
 
   public deleteRelatedPost({ key }: any, { id }: any) {
