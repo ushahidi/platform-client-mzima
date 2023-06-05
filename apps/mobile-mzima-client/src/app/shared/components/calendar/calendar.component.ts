@@ -7,6 +7,9 @@ import {
 } from 'ion2-calendar';
 import { DateRangeFormat } from '@models';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 @Component({
   selector: 'app-calendar',
@@ -51,10 +54,21 @@ export class CalendarComponent implements ControlValueAccessor {
   }
 
   public handleInputChange(value: CalendarComponentPayloadTypes): void {
-    this.onChange(value);
+    this.onChange({
+      from: dayjs
+        .utc((value as DateRangeFormat).from)
+        .startOf('d')
+        .format(),
+      to: dayjs
+        .utc((value as DateRangeFormat).to)
+        .endOf('d')
+        .format(),
+    });
   }
 
   public formattedDate(val: DateRangeFormat): string {
-    return `${dayjs(val.from).format('MMM D, YYYY')} - ${dayjs(val.to).format('MMM D, YYYY')}`;
+    return `${dayjs.utc(val.from).format('MMM D, YYYY')}
+            -
+            ${dayjs.utc(val.to).format('MMM D, YYYY')}`;
   }
 }

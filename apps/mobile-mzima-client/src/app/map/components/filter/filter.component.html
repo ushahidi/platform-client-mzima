@@ -47,7 +47,12 @@
       </ng-container>
       <ng-container *ngSwitchCase="filterType.MULTILEVELSELECT">
         <ng-container *ngFor="let option of options">
-          <app-checkbox *ngIf="!option.options?.length" type="item">
+          <app-checkbox
+            type="item"
+            [(ngModel)]="option.checked"
+            *ngIf="!option.options?.length"
+            (checkboxChange)="optionChanged($event, option)"
+          >
             {{ option.label }}
           </app-checkbox>
           <ion-item
@@ -57,7 +62,11 @@
             *ngIf="option.options?.length"
             (click)="showSubcategories(option)"
           >
-            <ion-avatar class="multiselect-option__visual" slot="start">
+            <ion-avatar
+              slot="start"
+              class="multiselect-option__visual"
+              [ngStyle]="{ '--item-color': option.color }"
+            >
               {{ getFirstLetter(option.label) }}
             </ion-avatar>
             <div>
@@ -72,7 +81,7 @@
         </ng-container>
       </ng-container>
       <ng-container *ngSwitchCase="filterType.DATE">
-        <app-date-select [(ngModel)]="value"></app-date-select>
+        <app-date-select [(ngModel)]="value" (ngModelChange)="isPristine = false"></app-date-select>
       </ng-container>
       <ng-container *ngSwitchCase="filterType.LOCATION">
         <app-location-select [(ngModel)]="value"></app-location-select>
@@ -126,9 +135,10 @@
   </div>
   <div class="subcategories-modal__filters">
     <app-checkbox
-      *ngFor="let option of selectedCategory?.options"
       type="item"
       [(ngModel)]="option.checked"
+      *ngFor="let option of selectedCategory?.options"
+      (ngModelChange)="isSubcategoriesPristine = false"
     >
       {{ option.label }}
     </app-checkbox>
@@ -137,6 +147,7 @@
     <app-button
       expand="inline"
       class="subcategories-modal__button"
+      [disabled]="isSubcategoriesPristine"
       (buttonClick)="applySelectedSubcategories()"
     >
       Apply

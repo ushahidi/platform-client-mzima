@@ -86,12 +86,12 @@
     margin: 0 16px 0 0;
     color: var(--ion-background-color);
 
-    .multiselect-option:nth-child(even) & {
-      background: var(--ion-color-warning);
+    @media (prefers-color-scheme: light) {
+      background: var(--item-color, var(--ion-color-step-400));
     }
 
-    .multiselect-option:nth-child(odd) & {
-      background: var(--ion-color-success);
+    @media (prefers-color-scheme: dark) {
+      background: var(--item-color, var(--ion-color-step-750));
     }
   }
 

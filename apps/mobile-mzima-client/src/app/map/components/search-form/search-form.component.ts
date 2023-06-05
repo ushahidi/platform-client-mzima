@@ -5,7 +5,7 @@ import { PostResult, PostsService, SurveyItem, SurveysService } from '@mzima-cli
 import { Subject, debounceTime, lastValueFrom } from 'rxjs';
 import { AlertService, SessionService } from '@services';
 import { FilterControl } from '@models';
-import { searchFormHelper } from '@helpers';
+import { searchFormHelper, UTCHelper } from '@helpers';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import _ from 'lodash';
 
@@ -38,8 +38,8 @@ export class SearchFormComponent {
       icon: 'surveys',
       label: 'Surveys',
       selected: 'none',
-      selectedCount: 16,
-      value: this.getFilterDefaultValue('form'),
+      selectedCount: '',
+      value: [],
     },
     {
       name: 'source',
@@ -168,6 +168,11 @@ export class SearchFormComponent {
     if (filterName === 'source') {
       return searchFormHelper.sources.map((s) => s.value);
     }
+    if (filterName === 'form') {
+      return this.filters
+        .find((filter) => filter.name === 'form')
+        ?.options?.map((survey) => survey.value);
+    }
     return searchFormHelper.DEFAULT_FILTERS[filterName] ?? null;
   }
 
@@ -264,7 +269,22 @@ export class SearchFormComponent {
   public applyFilter(value: any, filterName: string, removeSelectedFilter = true): void {
     const originalFilter = this.filters.find((f) => f.name === filterName);
     if (originalFilter) {
-      originalFilter.value = value;
+      switch (originalFilter.name) {
+        case 'date':
+          originalFilter.value = {
+            start: value.from || null,
+            end: value.to || null,
+          };
+          break;
+
+        case 'center_point':
+          console.log('apply center_point');
+          break;
+
+        default:
+          originalFilter.value = value;
+          break;
+      }
       this.activeFilters[originalFilter.name] = originalFilter.value;
       this.updateFilterSelectedText(originalFilter);
       if (originalFilter.name === 'source' || originalFilter.name === 'form') {
@@ -282,7 +302,23 @@ export class SearchFormComponent {
   }
 
   private updateFilterSelectedText(filter: FilterControl): void {
-    filter.selected = filter.value?.length ? String(filter.value.length) : 'none';
+    switch (filter.name) {
+      case 'date':
+        if (!filter.value.start || !filter.value.start) {
+          filter.selectedCount = 'All Time';
+        } else {
+          filter.selectedCount = `
+            ${UTCHelper.toUTC(filter.value.start, 'DD MMM')}
+            -
+            ${UTCHelper.toUTC(filter.value.end, 'DD MMM')}
+          `;
+        }
+        break;
+
+      default:
+        filter.selected = filter.value?.length ? String(filter.value.length) : 'none';
+        break;
+    }
   }
 
   public clearFilter(filterName: string): void {

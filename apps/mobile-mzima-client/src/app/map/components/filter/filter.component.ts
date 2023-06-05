@@ -5,7 +5,6 @@ import {
   CategoryInterface,
   Savedsearch,
   SavedsearchesService,
-  SurveysService,
 } from '@mzima-client/sdk';
 import { AlertService, SessionService } from '@services';
 import { searchFormHelper } from '@helpers';
@@ -43,6 +42,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   public filterType = FilterType;
   public selectedCategory: FilterControlOption | null;
   public isPristine = true;
+  public isSubcategoriesPristine = true;
 
   value: any;
   onChange: any = () => {};
@@ -52,7 +52,6 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
     private savedsearchesService: SavedsearchesService,
     private session: SessionService,
     private alertService: AlertService,
-    private surveysService: SurveysService,
     private categoriesService: CategoriesService,
   ) {
     const activeSavedSearch = localStorage.getItem(
@@ -62,7 +61,16 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   }
 
   writeValue(value: any): void {
-    this.type === FilterType.MULTISELECT ? (this.value = new Set(value)) : (this.value = value);
+    this.type === FilterType.MULTISELECT || this.type === FilterType.MULTILEVELSELECT
+      ? (this.value = new Set(value))
+      : (this.value = value);
+
+    if (this.filter.name === 'tags') {
+      this.options.map((option) => {
+        option.checked = this.value.has(option.value);
+        option.options?.map((o) => (o.checked = this.value.has(o.value)));
+      });
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -141,26 +149,6 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
     });
   }
 
-  // private getSurveys(): void {
-  //   this.isOptionsLoading = true;
-  //   this.surveysService.get().subscribe({
-  //     next: (response) => {
-  //       this.options = response.results.map((survey: SurveyItem) => ({
-  //         value: survey.id,
-  //         label: survey.name,
-  //         // checked: this.activeSavedSearch && filter.id === this.activeSavedSearch.id,
-  //       }));
-  //       this.isOptionsLoading = false;
-  //     },
-  //     error: (err) => {
-  //       if (err.message.match(/Http failure response for/)) {
-  //         this.isOptionsLoading = false;
-  //         setTimeout(() => this.getSurveys(), 5000);
-  //       }
-  //     },
-  //   });
-  // }
-
   private getDataSources(): void {
     this.options = searchFormHelper.sources.map((source) => ({
       value: source.value,
@@ -183,15 +171,16 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
       next: (response) => {
         const mainCategories = response?.results.filter((c: CategoryInterface) => !c.parent_id);
         this.options = mainCategories?.map((category: CategoryInterface) => ({
-          checked: false,
+          checked: this.value.has(category.id),
           value: category.id,
           label: String(category.tag),
+          color: category.color!,
           options: response?.results
             ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
             .map((cat: CategoryInterface) => ({
               value: cat.id,
               label: cat.tag,
-              checked: false,
+              checked: this.value.has(cat.id),
             })),
         }));
         this.isOptionsLoading = false;
@@ -287,14 +276,27 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
 
   public modalCloseHandle(): void {
     this.selectedCategory = null;
+    this.isSubcategoriesPristine = true;
   }
 
   public applySelectedSubcategories(): void {
     if (!this.selectedCategory) return;
     const option = this.options.find((o) => o.value === this.selectedCategory?.value);
     if (!option) return;
+    const changedOptions = option.options
+      ?.filter(
+        (o) =>
+          o.checked !== this.selectedCategory?.options?.find((so) => so.value === o.value)?.checked,
+      )
+      .map((o) => (!o.checked ? this.value.add(o.value) : this.value.delete(o.value)));
+    if (changedOptions?.length) {
+      this.isPristine = false;
+    }
     option.options = _.cloneDeep(this.selectedCategory.options);
+    option.checked = !!option.options?.find((o) => o.checked);
+    option.checked ? this.value.add(option.value) : this.value.delete(option.value);
     this.selectedCategory = null;
+    this.isSubcategoriesPristine = true;
   }
 
   public async clearSelectedSubcategories(): Promise<void> {
@@ -325,7 +327,11 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   }
 
   public applyFilter(): void {
-    this.onChange([...this.value]);
+    this.onChange(
+      this.type === FilterType.MULTISELECT || this.type === FilterType.MULTILEVELSELECT
+        ? [...this.value]
+        : this.value,
+    );
   }
 
   public async clearFilter(): Promise<void> {

@@ -14,5 +14,6 @@ export interface FilterControlOption {
   label?: string | number;
   checked?: boolean;
   info?: string;
+  color?: string;
   options?: Omit<FilterControlOption, 'options'>[];
 }
