@@ -68,6 +68,23 @@
     display: block;
   }
 
+  &__media {
+    object-fit: cover;
+
+    &::part(image) {
+      max-height: 320px;
+      min-height: 100px;
+    }
+
+    &__loader {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
   &__body {
     padding: 16px;
   }

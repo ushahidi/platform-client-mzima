@@ -20,6 +20,16 @@
       <app-icon slot="icon-only" name="dots"></app-icon>
     </app-button>
   </ion-card-header>
+  <ng-container *ngIf="mediaId">
+    <ion-img
+      *ngIf="!isMediaLoading; else spinner"
+      class="post__media"
+      [src]="media.original_file_url"
+    ></ion-img>
+    <ng-template #spinner>
+      <app-spinner class="post__media__loader"></app-spinner>
+    </ng-template>
+  </ng-container>
   <ion-card-content class="post__body">
     <ion-card-title class="post__title">{{ post.title }}</ion-card-title>
     <p *ngIf="post.content">{{ post.content }}</p>
