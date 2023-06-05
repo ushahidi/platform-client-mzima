@@ -68,6 +68,19 @@
     display: block;
   }
 
+  &__twitter {
+    margin: 0 15px;
+    overflow-y: auto;
+    max-height: 280px;
+    min-height: 200px;
+    position: relative;
+    overflow-x: hidden;
+    border-radius: 12px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: inset 0 0 0 1px #cfd9de;
+  }
+
   &__media {
     object-fit: cover;
 

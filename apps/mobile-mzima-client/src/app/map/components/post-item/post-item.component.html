@@ -9,9 +9,9 @@
       ></ion-img>
     </ion-avatar>
     <div class="post__header__inner">
-      <ion-card-title class="post__username">{{
-        post.author_realname ?? post.author_email
-      }}</ion-card-title>
+      <ion-card-title class="post__username">
+        {{ (post.user?.realname ?? post.contact?.contact ?? post.author_realname) || 'Anonymous' }}
+      </ion-card-title>
       <ion-card-subtitle class="post__date">{{
         post.post_date | date : 'mediumDate'
       }}</ion-card-subtitle>
@@ -20,7 +20,7 @@
       <app-icon slot="icon-only" name="dots"></app-icon>
     </app-button>
   </ion-card-header>
-  <ng-container *ngIf="mediaId">
+  <ng-container *ngIf="mediaId && post.source !== 'Twitter'">
     <ion-img
       *ngIf="!isMediaLoading; else spinner"
       class="post__media"
@@ -30,6 +30,11 @@
       <app-spinner class="post__media__loader"></app-spinner>
     </ng-template>
   </ng-container>
+  <app-twitter-widget
+    *ngIf="post.source === 'Twitter' && post.data_source_message_id"
+    class="post__twitter"
+    [id]="post.data_source_message_id"
+  ></app-twitter-widget>
   <ion-card-content class="post__body">
     <ion-card-title class="post__title">{{ post.title }}</ion-card-title>
     <p *ngIf="post.content">{{ post.content }}</p>
