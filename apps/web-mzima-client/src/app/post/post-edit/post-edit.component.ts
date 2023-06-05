@@ -424,6 +424,9 @@ export class PostEditComponent implements OnInit, OnChanges {
                   }
                 : {};
               break;
+            case 'relation':
+              value.value = this.form.value[field.key] || null;
+              break;
             case 'upload':
               if (this.form.value[field.key].upload && this.form.value[field.key].photo) {
                 try {
@@ -493,7 +496,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       this.postsService.update(this.postId, postData).subscribe({
         error: () => this.form.enable(),
         complete: async () => {
-          await this.postComplete();
+          await this.postComplete(!!this.postId);
         },
       });
     } else {
@@ -505,6 +508,7 @@ export class PostEditComponent implements OnInit, OnChanges {
           },
           complete: async () => {
             await this.postComplete();
+            this.router.navigate(['/feed']);
           },
         });
       }
@@ -526,9 +530,9 @@ export class PostEditComponent implements OnInit, OnChanges {
     }
   }
 
-  async postComplete() {
+  async postComplete(postId = false) {
     this.form.enable();
-    this.confirmModalService.open({
+    await this.confirmModalService.open({
       title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
       description: `<p>${this.translate.instant(
         'notify.confirm_modal.add_post_success.success_description',
@@ -536,7 +540,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       buttonSuccess: this.translate.instant('notify.confirm_modal.add_post_success.success_button'),
     });
 
-    !this.postInput ? this.backNavigation() : this.updated.emit();
+    !postId ? this.backNavigation() : this.updated.emit();
   }
 
   public async previousPage() {
@@ -553,7 +557,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     }
 
     if (!this.postInput) {
-      this.backNavigation(true);
+      this.backNavigation();
       this.eventBusService.next({
         type: EventType.AddPostButtonSubmit,
         payload: true,
@@ -563,10 +567,8 @@ export class PostEditComponent implements OnInit, OnChanges {
     }
   }
 
-  public backNavigation(isBack = false): void {
-    console.log('backNavigation:', isBack);
+  public backNavigation(): void {
     this.location.back();
-    // isBack ? this.location.back() : this.router.navigate(['/feed']);
   }
 
   public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {
