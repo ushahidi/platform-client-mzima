@@ -27,6 +27,7 @@ interface LocationItem {
 interface LocationSelectValue {
   location: LocationItem;
   radius: number;
+  distance: number;
 }
 
 @Component({
@@ -94,15 +95,16 @@ export class LocationSelectComponent implements ControlValueAccessor {
   }
 
   writeValue(value: LocationSelectValue | null): void {
-    console.log('location select write: ', value);
     if (value) {
-      this.selectedLocation = {
-        lat: value.location.lat,
-        lon: value.location.lon,
-        label: value.location.label,
-      };
-      this.query = value.location.label;
-      this.radiusValue = value.radius;
+      this.selectedLocation = value.location
+        ? {
+            lat: value.location.lat,
+            lon: value.location.lon,
+            label: value.location.label,
+          }
+        : null;
+      this.query = value.location?.label ?? '';
+      this.radiusValue = value.distance ?? 1;
     } else {
       this.selectedLocation = null;
       this.radiusValue = 1;
@@ -128,13 +130,10 @@ export class LocationSelectComponent implements ControlValueAccessor {
   public selectLocation(location: LocationItem): void {
     this.query = location.label;
     this.selectedLocation = location;
-    // this.writeValue({
-    //   location: {
-    //     lat: this.selectedLocation.lat,
-    //     lon: this.selectedLocation.lon,
-    //   },
-    //   radius: this.radiusValue,
-    // });
+    this.onChange({
+      location: this.selectedLocation,
+      radius: this.radiusValue,
+    });
   }
 
   public handleInputBlur(): void {
@@ -145,19 +144,16 @@ export class LocationSelectComponent implements ControlValueAccessor {
 
   public handleInputClear(): void {
     this.results = [];
+    this.onChange({
+      location: null,
+      radius: this.radiusValue,
+    });
   }
 
   public setRadius(): void {
-    // if (this.selectedLocation) {
-    //   this.writeValue({
-    //     location: {
-    //       lat: this.selectedLocation?.lat,
-    //       lon: this.selectedLocation?.lon,
-    //     },
-    //     radius: this.radiusValue,
-    //   });
-    // } else {
-    //   this.writeValue(null);
-    // }
+    this.onChange({
+      location: this.selectedLocation,
+      radius: this.radiusValue,
+    });
   }
 }

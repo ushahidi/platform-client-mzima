@@ -278,7 +278,17 @@ export class SearchFormComponent {
           break;
 
         case 'center_point':
-          console.log('apply center_point');
+          const location = value.location
+            ? {
+                lat: value.location.lat,
+                lng: value.location.lon,
+                label: value.location.label,
+              }
+            : null;
+          originalFilter.value = {
+            location,
+            distance: value.radius ?? '',
+          };
           break;
 
         default:
@@ -312,6 +322,16 @@ export class SearchFormComponent {
             -
             ${UTCHelper.toUTC(filter.value.end, 'DD MMM')}
           `;
+        }
+        break;
+
+      case 'center_point':
+        if (filter.value.location) {
+          filter.selectedCount = `
+            ${filter.value.location.label} (${filter.value.distance}km)
+          `;
+        } else {
+          filter.selectedCount = 'All locations';
         }
         break;
 

@@ -84,7 +84,10 @@
         <app-date-select [(ngModel)]="value" (ngModelChange)="isPristine = false"></app-date-select>
       </ng-container>
       <ng-container *ngSwitchCase="filterType.LOCATION">
-        <app-location-select [(ngModel)]="value"></app-location-select>
+        <app-location-select
+          [(ngModel)]="value"
+          (ngModelChange)="isPristine = false"
+        ></app-location-select>
       </ng-container>
     </ng-container>
   </ng-container>
