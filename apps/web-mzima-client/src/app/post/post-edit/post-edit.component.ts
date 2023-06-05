@@ -424,6 +424,9 @@ export class PostEditComponent implements OnInit, OnChanges {
                   }
                 : {};
               break;
+            case 'relation':
+              value.value = this.form.value[field.key] || null;
+              break;
             case 'upload':
               if (this.form.value[field.key].upload && this.form.value[field.key].photo) {
                 try {
@@ -564,9 +567,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   public backNavigation(isBack = false): void {
-    console.log('backNavigation:', isBack);
-    this.location.back();
-    // isBack ? this.location.back() : this.router.navigate(['/feed']);
+    isBack ? this.location.back() : this.router.navigate(['/feed']);
   }
 
   public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {
