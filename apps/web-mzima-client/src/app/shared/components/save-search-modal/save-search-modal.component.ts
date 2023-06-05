@@ -45,7 +45,7 @@ export class SaveSearchModalComponent implements OnInit {
       visible_to: [
         {
           value: 'everyone',
-          options: ['admin'],
+          options: [],
         },
       ],
       featured: [false],
