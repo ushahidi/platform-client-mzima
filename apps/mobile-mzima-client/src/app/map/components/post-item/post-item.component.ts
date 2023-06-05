@@ -15,8 +15,6 @@ export class PostItemComponent implements OnInit {
   constructor(private mediaService: MediaService) {}
 
   ngOnInit(): void {
-    console.log('post: ', this.post);
-
     this.mediaId = this.post.post_content
       ?.flatMap((c) => c.fields)
       .find((f) => f.input === 'upload')?.value?.value;
