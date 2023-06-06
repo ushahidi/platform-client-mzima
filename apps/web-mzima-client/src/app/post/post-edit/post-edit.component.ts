@@ -263,7 +263,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleDate(key: string, value: any) {
-    this.form.patchValue({ [key]: new Date(value?.value) });
+    this.form.patchValue({ [key]: value?.value ? new Date(value?.value) : null });
   }
 
   private handleTitle(key: string) {
@@ -451,6 +451,8 @@ export class PostEditComponent implements OnInit, OnChanges {
                 value.value = this.form.value[field.key]?.id || null;
               }
               break;
+            default:
+              value.value = this.form.value[field.key] || null;
           }
           return {
             ...field,
