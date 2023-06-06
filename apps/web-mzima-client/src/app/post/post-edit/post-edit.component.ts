@@ -259,7 +259,14 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleLocation(key: string, value: any) {
-    this.form.patchValue({ [key]: { lat: value?.value.lat, lng: value?.value.lon } });
+    this.form.patchValue({
+      [key]: value?.value
+        ? { lat: value?.value.lat, lng: value?.value.lon }
+        : {
+            lat: '',
+            lng: '',
+          },
+    });
   }
 
   private handleDate(key: string, value: any) {
@@ -271,7 +278,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleDescription(key: string) {
-    this.form.patchValue({ [key]: this.post.content });
+    this.form.patchValue({ [key]: this.post.content ? this.post.content : '' });
   }
 
   private updateForm(updateValues: any[]) {
@@ -415,7 +422,7 @@ export class PostEditComponent implements OnInit, OnChanges {
               break;
             case 'tags':
             case 'checkbox':
-              value.value = this.form.value[field.key] || [];
+              value.value = this.form.value[field.key] || null;
               break;
             case 'video':
               value = this.form.value[field.key]
@@ -541,7 +548,10 @@ export class PostEditComponent implements OnInit, OnChanges {
       buttonSuccess: this.translate.instant('notify.confirm_modal.add_post_success.success_button'),
     });
 
-    !postId ? this.backNavigation() : this.updated.emit();
+    if (postId) {
+      this.backNavigation();
+      this.updated.emit();
+    }
   }
 
   public async previousPage() {
