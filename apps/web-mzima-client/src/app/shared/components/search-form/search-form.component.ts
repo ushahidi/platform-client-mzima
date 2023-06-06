@@ -103,18 +103,7 @@ export class SearchFormComponent implements OnInit {
     this.getSavedFilters();
     this.getSurveys();
     this.getCategories();
-    if (this.filters) {
-      const filters = JSON.parse(this.filters!);
-      delete filters.set;
-      this.updateForm(filters);
-      this.getActiveFilters(filters);
-      this.applyFilters();
-    } else {
-      localStorage.setItem(
-        this.session.getLocalStorageNameMapper('filters'),
-        JSON.stringify(this.form.value),
-      );
-    }
+    this.initFilters();
 
     if (this.activeSaved) {
       this.activeSavedSearch = JSON.parse(this.activeSaved!);
@@ -181,6 +170,24 @@ export class SearchFormComponent implements OnInit {
 
     this.getPostsFilters();
     this.getTotalPosts();
+  }
+
+  private initFilters() {
+    if (this.filters) {
+      const filters = JSON.parse(this.filters!);
+      if (!this.router.url.includes('collection')) {
+        // clear collection info if we left collection route
+        delete filters.set;
+      }
+      this.updateForm(filters);
+      this.getActiveFilters(filters);
+      this.applyFilters();
+    } else {
+      localStorage.setItem(
+        this.session.getLocalStorageNameMapper('filters'),
+        JSON.stringify(this.form.value),
+      );
+    }
   }
 
   getPostsFilters() {
