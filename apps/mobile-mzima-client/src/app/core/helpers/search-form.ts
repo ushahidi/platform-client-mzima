@@ -108,28 +108,28 @@ export const sortingOptions = [
   },
 ];
 
-export const DEFAULT_FILTERS = {
-  query: [''],
-  status: [['published', 'draft']],
-  tags: [[]],
-  source: [[]],
-  form: [[]],
-  place: [''],
-  date: [
-    {
-      start: '',
-      end: '',
+interface Filter {
+  [key: string]: any;
+}
+
+export const DEFAULT_FILTERS: Filter = {
+  query: '',
+  status: ['published', 'draft'],
+  tags: [],
+  source: [],
+  form: [],
+  place: '',
+  date: {
+    start: '',
+    end: '',
+  },
+  center_point: {
+    location: {
+      lat: null,
+      lng: null,
     },
-  ],
-  center_point: [
-    {
-      location: {
-        lat: null,
-        lng: null,
-      },
-      distance: 1,
-    },
-  ],
+    distance: 1,
+  },
 };
 
 export const compareForms = (form1: any, form2: any) => {

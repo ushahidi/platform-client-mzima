@@ -12,6 +12,7 @@
       [rounded]="!isResultsVisible"
       [clearable]="isResultsVisible"
       class="search-form__form-control"
+      (inputClear)="resetSearchForm()"
       (inputFocus)="showSearchResults()"
       [color]="isLight ? 'light' : 'default'"
     >
@@ -45,8 +46,8 @@
     class="search-form-results ion-padding-horizontal"
     [ngClass]="{ 'search-form-results--hidden': !isResultsVisible }"
   >
-    <div class="search-form-results__empty">
-      <ng-container *ngIf="!posts.length && !isPostsLoading">
+    <div class="search-form-results__empty" *ngIf="!posts.length; else postsList">
+      <ng-container *ngIf="!isPostsLoading">
         <ion-text color="medium" *ngIf="!form.controls['postsQuery'].value?.length">
           Start typing to find Posts
         </ion-text>
@@ -56,7 +57,17 @@
       </ng-container>
       <app-spinner *ngIf="isPostsLoading"></app-spinner>
     </div>
-    <app-post-item *ngFor="let post of posts" [post]="post"></app-post-item>
+
+    <ng-template #postsList>
+      <ion-text class="total" color="medium">Found {{ foundPosts }} items</ion-text>
+      <app-post-item *ngFor="let post of posts" [post]="post"></app-post-item>
+      <ion-infinite-scroll
+        (ionInfinite)="loadMoreSearchResults($event)"
+        *ngIf="foundPosts > posts.length"
+      >
+        <ion-infinite-scroll-content loadingSpinner="lines-sharp"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ng-template>
   </ion-content>
 </form>
 
@@ -65,7 +76,8 @@
   [isOpen]="isFiltersModalOpen"
   (modalClose)="modalCloseHandle()"
   [options]="{
-    footer: true
+    footer: !selectedFilter,
+    offsetBottom: !!selectedFilter
   }"
   [closable]="!selectedFilter"
 >
@@ -87,20 +99,8 @@
     </ng-container>
   </div>
   <div class="filters-modal__footer" footer>
-    <ng-container *ngIf="!selectedFilter">
-      <app-button class="filters-modal__button" expand="inline">Save as</app-button>
-      <app-button
-        fill="outline"
-        color="medium"
-        expand="inline"
-        class="filters-modal__button"
-        (buttonClick)="handleClearFilters()"
-      >
-        Clear
-      </app-button>
-    </ng-container>
-    <ng-container *ngIf="selectedFilter">
-      <app-button class="filters-modal__button" expand="inline" (buttonClick)="applyFilter()">
+    <ng-container>
+      <app-button (buttonClick)="modalCloseHandle()" class="filters-modal__button" expand="inline">
         Apply
       </app-button>
       <app-button
@@ -108,8 +108,7 @@
         color="medium"
         expand="inline"
         class="filters-modal__button"
-        *ngIf="selectedFilter.name !== 'set'"
-        (buttonClick)="handleClearFilters(selectedFilter.name)"
+        (buttonClick)="handleClearFilters()"
       >
         Clear
       </app-button>
@@ -124,5 +123,8 @@
     [filter]="selectedFilter"
     [totalPosts]="totalPosts"
     [(ngModel)]="selectedFilter.value"
-  ></app-filter>
+    (filterClear)="clearFilter(selectedFilter.name)"
+    (ngModelChange)="applyFilter($event, selectedFilter.name)"
+  >
+  </app-filter>
 </ng-template>

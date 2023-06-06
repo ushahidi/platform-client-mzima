@@ -1,78 +1,118 @@
-<ng-container *ngIf="!isOptionsLoading; else spinner">
-  <ng-container [ngSwitch]="type">
-    <ng-container *ngSwitchCase="filterType.SELECT">
-      <ion-item
-        class="button-add"
-        *ngIf="filter.name === 'set'"
-        button
-        lines="none"
-        (click)="addClickHandle()"
-      >
-        <app-icon class="button-add__icon" name="add" slot="start"></app-icon>
-        Add new filters setting
-      </ion-item>
-      <ion-radio-group
-        *ngIf="options.length"
-        [value]="value"
-        (ionChange)="radioChangeHandle($event)"
-      >
-        <app-radio [value]="null">
-          All filters
-          <ion-text class="info" color="medium">Applied filters: all</ion-text>
-        </app-radio>
-        <app-radio
-          *ngFor="let option of options"
-          [value]="option.value"
-          [editable]="true"
-          [deletable]="true"
-          (optionDelete)="deleteOption()"
-          (optionEdit)="editOption()"
+<ion-content class="body">
+  <ng-container *ngIf="!isOptionsLoading; else spinner">
+    <ng-container [ngSwitch]="type">
+      <ng-container *ngSwitchCase="filterType.SELECT">
+        <ion-item
+          class="button-add"
+          *ngIf="filter.name === 'set'"
+          button
+          lines="none"
+          (click)="addClickHandle()"
         >
-          {{ option.label }}
-          {{ option.value }}
-          <span class="info">{{ option.info }}</span>
-        </app-radio>
-      </ion-radio-group>
-    </ng-container>
-    <ng-container *ngSwitchCase="filterType.MULTISELECT">
-      <app-checkbox *ngFor="let option of options" type="item">
-        {{ option.label }}
-      </app-checkbox>
-    </ng-container>
-    <ng-container *ngSwitchCase="filterType.MULTILEVELSELECT">
-      <ng-container *ngFor="let option of options">
-        <app-checkbox *ngIf="!option.options?.length" type="item">
+          <app-icon class="button-add__icon" name="add" slot="start"></app-icon>
+          Add new filters setting
+        </ion-item>
+        <ion-radio-group
+          *ngIf="options.length"
+          [value]="value"
+          (ionChange)="radioChangeHandle($event)"
+        >
+          <app-radio [value]="null">
+            All filters
+            <ion-text class="info" color="medium">Applied filters: all</ion-text>
+          </app-radio>
+          <app-radio
+            *ngFor="let option of options"
+            [value]="option.value"
+            [editable]="true"
+            [deletable]="true"
+            (optionDelete)="deleteOption()"
+            (optionEdit)="editOption()"
+          >
+            {{ option.label }}
+            {{ option.value }}
+            <span class="info">{{ option.info }}</span>
+          </app-radio>
+        </ion-radio-group>
+      </ng-container>
+      <ng-container *ngSwitchCase="filterType.MULTISELECT">
+        <app-checkbox
+          type="item"
+          *ngFor="let option of options"
+          [checked]="value.has(option.value)"
+          (checkboxChange)="optionChanged($event, option)"
+        >
           {{ option.label }}
         </app-checkbox>
-        <ion-item
-          button
-          class="multiselect-option"
-          lines="none"
-          *ngIf="option.options?.length"
-          (click)="showSubcategories(option)"
-        >
-          <ion-avatar class="multiselect-option__visual" slot="start">
-            {{ getFirstLetter(option.label) }}
-          </ion-avatar>
-          <div>
+      </ng-container>
+      <ng-container *ngSwitchCase="filterType.MULTILEVELSELECT">
+        <ng-container *ngFor="let option of options">
+          <app-checkbox
+            type="item"
+            [(ngModel)]="option.checked"
+            *ngIf="!option.options?.length"
+            (checkboxChange)="optionChanged($event, option)"
+          >
             {{ option.label }}
-            <span class="multiselect-option__info">
-              Selected {{ getCheckedSubcategoriesLength(option.options) }} of
-              {{ option.options?.length }}
-            </span>
-          </div>
-          <app-icon class="multiselect-option__details" slot="end" name="arrow-right"></app-icon>
-        </ion-item>
+          </app-checkbox>
+          <ion-item
+            button
+            class="multiselect-option"
+            lines="none"
+            *ngIf="option.options?.length"
+            (click)="showSubcategories(option)"
+          >
+            <ion-avatar
+              slot="start"
+              class="multiselect-option__visual"
+              [ngStyle]="{ '--item-color': option.color }"
+            >
+              {{ getFirstLetter(option.label) }}
+            </ion-avatar>
+            <div>
+              {{ option.label }}
+              <span class="multiselect-option__info">
+                Selected {{ getCheckedSubcategoriesLength(option.options) }} of
+                {{ option.options?.length }}
+              </span>
+            </div>
+            <app-icon class="multiselect-option__details" slot="end" name="arrow-right"></app-icon>
+          </ion-item>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="filterType.DATE">
+        <app-date-select [(ngModel)]="value" (ngModelChange)="isPristine = false"></app-date-select>
+      </ng-container>
+      <ng-container *ngSwitchCase="filterType.LOCATION">
+        <app-location-select
+          [(ngModel)]="value"
+          (ngModelChange)="isPristine = false"
+        ></app-location-select>
       </ng-container>
     </ng-container>
-    <ng-container *ngSwitchCase="filterType.DATE">
-      <app-date-select [(ngModel)]="value"></app-date-select>
-    </ng-container>
-    <ng-container *ngSwitchCase="filterType.LOCATION">
-      <app-location-select [(ngModel)]="value"></app-location-select>
-    </ng-container>
   </ng-container>
-</ng-container>
+</ion-content>
+
+<ion-footer class="ion-padding-horizontal footer">
+  <ion-toolbar class="footer__toolbar">
+    <div class="btn-panel">
+      <app-button expand="inline" [disabled]="isPristine" (buttonClick)="applyFilter()">
+        Apply
+      </app-button>
+      <app-button
+        clear-btn
+        fill="outline"
+        color="medium"
+        expand="inline"
+        class="filters-modal__button"
+        *ngIf="filter.name !== 'set'"
+        (buttonClick)="clearFilter()"
+      >
+        Clear
+      </app-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
 
 <ng-template #spinner>
   <div class="spinner-container">
@@ -84,6 +124,7 @@
   class="subcategories-modal"
   [isOpen]="!!selectedCategory"
   (modalClose)="modalCloseHandle()"
+  *ngIf="type === filterType.MULTILEVELSELECT"
   [options]="{
     footer: true
   }"
@@ -97,9 +138,10 @@
   </div>
   <div class="subcategories-modal__filters">
     <app-checkbox
-      *ngFor="let option of selectedCategory?.options"
       type="item"
       [(ngModel)]="option.checked"
+      *ngFor="let option of selectedCategory?.options"
+      (ngModelChange)="isSubcategoriesPristine = false"
     >
       {{ option.label }}
     </app-checkbox>
@@ -108,6 +150,7 @@
     <app-button
       expand="inline"
       class="subcategories-modal__button"
+      [disabled]="isSubcategoriesPristine"
       (buttonClick)="applySelectedSubcategories()"
     >
       Apply

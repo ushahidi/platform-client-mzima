@@ -24,6 +24,7 @@
 
   &__main {
     flex: 1 1 100%;
+    white-space: nowrap;
   }
 
   &__title {
@@ -41,17 +42,21 @@
 
   &__controls {
     display: flex;
-    margin-left: 16px;
     align-items: center;
+    margin-inline-start: 8px;
     justify-content: flex-start;
   }
 
   &__badge {
     font-size: 14px;
     font-weight: 700;
+    overflow: hidden;
     line-height: 20px;
     text-align: right;
+    white-space: nowrap;
     letter-spacing: 0.1px;
+    text-overflow: ellipsis;
+    max-width: min(360px, calc(100vw - 248px));
 
     @media (prefers-color-scheme: light) {
       color: var(--color-primary-40);
@@ -65,7 +70,7 @@
   &__details {
     line-height: 1;
     font-size: 24px;
-    margin-left: 28px;
+    margin-left: 16px;
 
     @media (prefers-color-scheme: dark) {
       color: var(--ion-color-step-800);

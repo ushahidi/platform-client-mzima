@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   FitBoundsOptions,
@@ -10,10 +10,13 @@ import {
   MarkerClusterGroupOptions,
   tileLayer,
 } from 'leaflet';
-import { mapHelper } from '@helpers';
-import { PostsService } from '@mzima-client/sdk';
+import { mapHelper, takeUntilDestroy$ } from '@helpers';
+import { PostsService, SavedsearchesService } from '@mzima-client/sdk';
 import { SessionService } from '@services';
 import { MapConfigInterface } from '@models';
+import { MainViewComponent } from '@shared';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, debounceTime } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -21,7 +24,7 @@ import { MapConfigInterface } from '@models';
   templateUrl: './map-view.component.html',
   styleUrls: ['./map-view.component.scss'],
 })
-export class MapViewComponent implements AfterViewInit {
+export class MapViewComponent extends MainViewComponent implements OnInit, AfterViewInit {
   public map: Map;
   public isMapReady = false;
   public leafletOptions: MapOptions;
@@ -34,12 +37,17 @@ export class MapViewComponent implements AfterViewInit {
   private mapConfig: MapConfigInterface;
   public markerClusterData = new MarkerClusterGroup();
   public markerClusterOptions: MarkerClusterGroupOptions = { animate: true, maxClusterRadius: 50 };
-  private params: any = {
-    limit: 200,
-    offset: 0,
-  };
+  filtersSubscription$: Observable<any>;
 
-  constructor(private postsService: PostsService, private sessionService: SessionService) {
+  constructor(
+    protected override router: Router,
+    protected override route: ActivatedRoute,
+    protected override postsService: PostsService,
+    protected override savedSearchesService: SavedsearchesService,
+    protected override sessionService: SessionService,
+  ) {
+    super(router, route, postsService, savedSearchesService, sessionService);
+    this.filtersSubscription$ = this.postsService.postsFilters$.pipe(takeUntilDestroy$());
     this.sessionService.mapConfig$.subscribe({
       next: (mapConfig) => {
         if (mapConfig) {
@@ -63,11 +71,40 @@ export class MapViewComponent implements AfterViewInit {
     });
   }
 
+  ngOnInit(): void {
+    this.initFilterListener();
+  }
+
+  private initFilterListener() {
+    this.filtersSubscription$.pipe(debounceTime(1000)).subscribe({
+      next: () => {
+        if (this.route.snapshot.data['view'] === 'search' && !this.searchId) return;
+        if (this.route.snapshot.data['view'] === 'collection' && !this.collectionId) return;
+
+        this.reInitParams();
+        this.getPostsGeoJson();
+      },
+    });
+  }
+
+  private reInitParams() {
+    this.params.page = 1;
+    this.mapLayers.map((layer) => {
+      this.map.removeLayer(layer);
+      this.markerClusterData.removeLayer(layer);
+    });
+    this.mapLayers = [];
+  }
+
+  loadData(): void {
+    this.reInitParams();
+    this.getPostsGeoJson();
+  }
+
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.isMapReady = true;
     }, 100);
-    this.getPostsGeoJson();
   }
 
   public onMapReady(map: Map) {
