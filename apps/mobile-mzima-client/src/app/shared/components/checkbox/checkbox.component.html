@@ -6,6 +6,7 @@
   <ion-checkbox
     class="checkbox"
     [(ngModel)]="value"
+    [checked]="checked"
     (ionChange)="handleInputChange($event)"
     [labelPlacement]="type === 'default' ? 'end' : 'start'"
   >

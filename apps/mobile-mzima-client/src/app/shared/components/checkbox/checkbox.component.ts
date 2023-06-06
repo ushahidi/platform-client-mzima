@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
@@ -16,7 +16,9 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 export class CheckboxComponent implements ControlValueAccessor {
   @Input() public required = false;
   @Input() public disabled = false;
+  @Input() public checked: boolean;
   @Input() public type: 'item' | 'default' = 'default';
+  @Output() checkboxChange = new EventEmitter<boolean>();
 
   value: string;
   onChange: any = () => {};
@@ -39,6 +41,8 @@ export class CheckboxComponent implements ControlValueAccessor {
   }
 
   public handleInputChange(event: Event): void {
-    this.onChange((event.target as HTMLInputElement)?.checked);
+    const isChecked = (event.target as HTMLInputElement)?.checked;
+    this.onChange(isChecked);
+    this.checkboxChange.emit(isChecked);
   }
 }

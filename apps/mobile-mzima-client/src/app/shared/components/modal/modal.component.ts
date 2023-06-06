@@ -1,8 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
 interface ModalOptions {
   footer?: boolean;
   header?: boolean;
+  offsetTop?: boolean;
+  offsetBottom?: boolean;
 }
 
 @Component({
@@ -10,7 +20,7 @@ interface ModalOptions {
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit, OnChanges {
   @Input() public isOpen: boolean;
   @Input() public closable = true;
   @Input() public options: ModalOptions = {};
@@ -18,6 +28,8 @@ export class ModalComponent implements OnInit {
   public modalOptions: ModalOptions = {
     header: true,
     footer: false,
+    offsetTop: true,
+    offsetBottom: true,
   };
 
   ngOnInit(): void {
@@ -25,6 +37,15 @@ export class ModalComponent implements OnInit {
       ...this.modalOptions,
       ...this.options,
     };
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['options']) {
+      this.modalOptions = {
+        ...this.modalOptions,
+        ...changes['options'].currentValue,
+      };
+    }
   }
 
   public closeModal(): void {

@@ -4,12 +4,21 @@
   [breakpoints]="[0, 300]"
   (toggleMode)="mode = $event"
 >
-  <app-search-form [isLight]="mode !== 'fullscreen'" header class="search-form"></app-search-form>
+  <app-search-form
+    [isLight]="mode !== 'fullscreen'"
+    header
+    class="search-form"
+    [totalPosts]="totalPosts"
+  ></app-search-form>
   <app-map-view class="map"></app-map-view>
   <ng-container draggable>
     <app-button shape="normal" [shadow]="true" class="add-post-button">
       <app-icon slot="icon-only" name="plus"></app-icon>
     </app-button>
-    <app-feed-view [atBottom]="mode === 0" [atTop]="mode === 'fullscreen'"></app-feed-view>
+    <app-feed-view
+      [atBottom]="mode === 0"
+      [atTop]="mode === 'fullscreen'"
+      (postsUpdated)="updatePostsCount($event)"
+    ></app-feed-view>
   </ng-container>
 </app-draggable-layout>

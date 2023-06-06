@@ -20,3 +20,11 @@ a {
   --ion-color-shade: var(--ion-color-gray-shade);
   --ion-color-tint: var(--ion-color-gray-tint);
 }
+
+.infinite-scroll-content-md {
+  min-height: 64px;
+}
+
+.infinite-loading {
+  margin-bottom: 0;
+}
