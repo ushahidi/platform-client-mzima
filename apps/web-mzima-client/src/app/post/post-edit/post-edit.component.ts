@@ -263,7 +263,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleDate(key: string, value: any) {
-    this.form.patchValue({ [key]: new Date(value?.value) });
+    this.form.patchValue({ [key]: value?.value ? new Date(value?.value) : null });
   }
 
   private handleTitle(key: string) {
@@ -428,31 +428,32 @@ export class PostEditComponent implements OnInit, OnChanges {
               value.value = this.form.value[field.key] || null;
               break;
             case 'upload':
-              if (this.form.value[field.key].upload && this.form.value[field.key].photo) {
+              if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
                 try {
                   const uploadObservable = this.mediaService.uploadFile(
-                    this.form.value[field.key].photo,
-                    this.form.value[field.key].caption,
+                    this.form.value[field.key]?.photo,
+                    this.form.value[field.key]?.caption,
                   );
                   const response: any = await lastValueFrom(uploadObservable);
                   value.value = response.id;
                 } catch (error: any) {
                   throw new Error(`Error uploading file: ${error.message}`);
                 }
-              } else if (this.form.value[field.key].delete && this.form.value[field.key].id) {
+              } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
                 try {
-                  const deleteObservable = this.mediaService.delete(this.form.value[field.key].id);
+                  const deleteObservable = this.mediaService.delete(this.form.value[field.key]?.id);
                   await lastValueFrom(deleteObservable);
                   value.value = null;
                 } catch (error: any) {
                   throw new Error(`Error deleting file: ${error.message}`);
                 }
               } else {
-                value.value = this.form.value[field.key].id;
+                value.value = this.form.value[field.key]?.id || null;
               }
               break;
+            default:
+              value.value = this.form.value[field.key] || null;
           }
-
           return {
             ...field,
             value,
