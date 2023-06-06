@@ -262,7 +262,9 @@ export class MapComponent extends MainViewComponent implements OnInit {
             this.getPostsGeoJson();
           } else {
             this.progress = 100;
-            this.mapFitToBounds = geoPosts.getBounds();
+            if (posts.results.length) {
+              this.mapFitToBounds = geoPosts.getBounds();
+            }
           }
 
           // if (posts.results.length && this.params.page <= this.params.limit) {

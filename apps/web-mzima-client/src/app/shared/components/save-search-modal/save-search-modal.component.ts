@@ -124,9 +124,7 @@ export class SaveSearchModalComponent implements OnInit {
       description: this.form.value.description,
       featured: this.form.value.visible_to.value === 'only_me',
       role:
-        this.form.value.visible_to.value === 'specific'
-          ? this.form.value.visible_to.options
-          : ['admin'],
+        this.form.value.visible_to.value === 'specific' ? this.form.value.visible_to.options : [],
       view: this.form.value.defaultViewingMode,
     };
 
