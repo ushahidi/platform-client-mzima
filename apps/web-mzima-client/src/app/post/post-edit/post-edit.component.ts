@@ -53,6 +53,7 @@ dayjs.extend(timezone);
 })
 export class PostEditComponent implements OnInit, OnChanges {
   @Input() public postInput: any;
+  @Input() public modalView: boolean;
   @Output() cancel = new EventEmitter();
   @Output() updated = new EventEmitter();
   public color: string;
@@ -514,8 +515,10 @@ export class PostEditComponent implements OnInit, OnChanges {
       error: () => this.form.enable(),
       complete: async () => {
         await this.postComplete();
-        this.backNavigation();
         this.updated.emit();
+        if (!this.modalView) {
+          this.backNavigation();
+        }
       },
     });
   }

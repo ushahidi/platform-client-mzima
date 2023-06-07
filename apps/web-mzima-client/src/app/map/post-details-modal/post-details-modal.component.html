@@ -24,5 +24,6 @@
 </mat-dialog-content>
 
 <ng-template #editPost>
-  <app-post-edit [postInput]="post" (cancel)="cancel()" (updated)="updated()"> </app-post-edit>
+  <app-post-edit [modalView]="true" [postInput]="post" (cancel)="cancel()" (updated)="updated()">
+  </app-post-edit>
 </ng-template>
