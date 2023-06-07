@@ -248,7 +248,6 @@ export class PostEditPage {
       await this.preparationData();
     } catch (error: any) {
       console.log(error);
-      // this.snackBar.open(error, 'Close', { panelClass: ['error'], duration: 3000 });
       return;
     }
 
