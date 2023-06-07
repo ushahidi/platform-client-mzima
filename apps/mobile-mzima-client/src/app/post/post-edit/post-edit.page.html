@@ -1,0 +1,530 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="">
+    <app-button slot="start" fill="clear" color="medium" class="" (buttonClick)="onBack()">
+      <app-icon slot="icon-only" name="arrow-back"></app-icon>
+    </app-button>
+    <ion-title>Create post</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-horizontal page">
+  <app-select
+    label="Survey name"
+    [options]="surveyListOptions"
+    [(ngModel)]="selectedSurveyId"
+    (ngModelChange)="loadForm()"
+  >
+  </app-select>
+  <form
+    novalidate
+    [formGroup]="form"
+    autocomplete="off"
+    (ngSubmit)="submitPost()"
+    *ngIf="form && tasks?.length"
+  >
+    <div *ngFor="let task of tasks; let i = index" class="task-container">
+      <div [ngStyle]="{ '--color': color }">
+        <ng-container *ngIf="task.type !== 'post'">
+          <h2 class="task-label">{{ task.label }}</h2>
+
+          <div *ngIf="task.show_when_published">
+            <p>This task will be visible when post is published.</p>
+          </div>
+
+          <div *ngIf="task.task_is_internal_only">
+            <p>
+              This task is marked for internal use only. It is not seen by users when they create a
+              post.
+            </p>
+          </div>
+
+          <div class="form-row">
+            <ion-toggle
+              name="accept-survey"
+              labelPlacement="start"
+              (ionChange)="taskComplete($event)"
+            >
+              Task completed
+              <span class="color-accent" *ngIf="task.required">*</span>
+            </ion-toggle>
+          </div>
+        </ng-container>
+        <div class="form-row" *ngFor="let field of task.fields; let i = index">
+          <ion-label>
+            {{ field?.label }}
+            <span class="color-accent" *ngIf="field?.required">*</span>
+          </ion-label>
+          <span
+            class="form-row__instruction"
+            *ngIf="field?.instructions"
+            [innerHTML]="field?.instructions"
+          >
+          </span>
+
+          <!-- title, varchar -->
+          <ng-container
+            *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
+          >
+            <app-form-control
+              color="light"
+              [rounded]="false"
+              [clearable]="true"
+              [label]="field?.label"
+              [required]="field?.required"
+              [formControlName]="field.key"
+            ></app-form-control>
+          </ng-container>
+
+          <!-- description -->
+          <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
+            <app-textarea-control
+              color="light"
+              [rounded]="false"
+              [clearable]="true"
+              [label]="field?.label"
+              [required]="field?.required"
+              [formControlName]="field.key"
+            ></app-textarea-control>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'textarea'">
+            <app-textarea-control
+              color="light"
+              [rounded]="false"
+              [clearable]="true"
+              [label]="field?.label"
+              [required]="field?.required"
+              [formControlName]="field.key"
+            ></app-textarea-control>
+          </ng-container>
+        </div>
+      </div>
+
+      <!--      <div>-->
+      <!--        <p>General information</p>-->
+      <!--        <app-form-control-->
+      <!--          color="light"-->
+      <!--          label="title"-->
+      <!--          [rounded]="false"-->
+      <!--          [clearable]="true"-->
+      <!--          formControlName="title"-->
+      <!--        >-->
+      <!--        </app-form-control>-->
+      <!--        <app-form-control-->
+      <!--          color="light"-->
+      <!--          label="description"-->
+      <!--          [rounded]="false"-->
+      <!--          [clearable]="true"-->
+      <!--          formControlName="description"-->
+      <!--        >-->
+      <!--        </app-form-control>-->
+      <!--        <app-form-control-->
+      <!--          color="light"-->
+      <!--          label="Incident date"-->
+      <!--          [rounded]="false"-->
+      <!--          [clearable]="true"-->
+      <!--          formControlName="incidentDate"-->
+      <!--        >-->
+      <!--          <ng-container start>-->
+      <!--            <app-icon name="calendar"></app-icon>-->
+      <!--          </ng-container>-->
+
+      <!--          <ng-container end>-->
+      <!--            <app-icon name="calendar"></app-icon>-->
+      <!--          </ng-container>-->
+      <!--        </app-form-control>-->
+      <!--      </div>-->
+
+      <!--      <div>-->
+      <!--        <p>Location</p>-->
+      <!--        <app-form-control-->
+      <!--          color="light"-->
+      <!--          label="Location"-->
+      <!--          [rounded]="false"-->
+      <!--          [clearable]="true"-->
+      <!--        >-->
+      <!--          <ng-container start>-->
+      <!--            <app-icon name="calendar"></app-icon>-->
+      <!--          </ng-container>-->
+      <!--        </app-form-control>-->
+      <!--        <div style="display: flex">-->
+      <!--          <app-form-control-->
+      <!--            color="light"-->
+      <!--            label="Latitude"-->
+      <!--            [rounded]="false"-->
+      <!--            [clearable]="true"-->
+      <!--            formControlName="latitude"-->
+      <!--          >-->
+      <!--          </app-form-control>-->
+      <!--          <app-form-control-->
+      <!--            color="light"-->
+      <!--            label="Latitude"-->
+      <!--            [rounded]="false"-->
+      <!--            [clearable]="true"-->
+      <!--            formControlName="longitude"-->
+      <!--          >-->
+      <!--          </app-form-control>-->
+      <!--        </div>-->
+      <!--      </div>-->
+    </div>
+
+    <!--    <app-select-->
+    <!--      label="IncidentDate"-->
+    <!--      [(ngModel)]="dateOption"-->
+    <!--      (ngModelChange)="setCalendar()"-->
+    <!--    >-->
+    <!--      <ng-container start>-->
+    <!--        <app-icon name="calendar"></app-icon>-->
+    <!--      </ng-container>-->
+    <!--    </app-select>-->
+
+    <!--    <app-calendar formControlName="incidentDate" [mode]="'single'"></app-calendar>-->
+
+    <!--    <div>-->
+    <!--      <app-button end fill="clear" color="medium" class="back-button" (buttonClick)="previousPage()">-->
+    <!--        Cancel-->
+    <!--      </app-button>-->
+    <!--      <app-button end fill="clear" color="medium" class="back-button" type="submit">-->
+    <!--        Submit-->
+    <!--      </app-button>-->
+    <!--    </div>-->
+  </form>
+
+  <!--  <div class="post-item-page">-->
+  <!--    <div class="page-content">-->
+  <!--      <h1 class="survey-name">{{ surveyName }}</h1>-->
+
+  <!--      <form-->
+  <!--        novalidate-->
+  <!--        [formGroup]="form"-->
+  <!--        autocomplete="off"-->
+  <!--        (ngSubmit)="submitPost()"-->
+  <!--        *ngIf="form && tasks.length"-->
+  <!--      >-->
+  <!--        <app-form-control-->
+  <!--          color="light"-->
+  <!--          label="title"-->
+  <!--          [rounded]="false"-->
+  <!--          [clearable]="true"-->
+  <!--          placeholder="Search"-->
+  <!--          class="search-form__form-control"-->
+  <!--        >-->
+  <!--        </app-form-control>-->
+  <!--&lt;!&ndash;        <div *ngFor="let task of tasks; let i = index" class="task-container">&ndash;&gt;-->
+  <!--&lt;!&ndash;          <div [ngStyle]="{ '&#45;&#45;color': color }">&ndash;&gt;-->
+  <!--&lt;!&ndash;            <ng-container *ngIf="task.type !== 'post'">&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              <h2 class="task-label">{{ task.translations[activeLanguage]?.label || task.label }}</h2>&ndash;&gt;&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              <div *ngIf="task.show_when_published">&ndash;&gt;-->
+  <!--&lt;!&ndash;                <p>{{ 'survey.task_visible_when_published' }}</p>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              <div *ngIf="task.task_is_internal_only">&ndash;&gt;-->
+  <!--&lt;!&ndash;                <p>{{ 'survey.marked_for_internal' }}</p>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              <div class="form-row">&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <mat-slide-toggle&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  class="task-complete"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  name="accept-survey"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  [required]="task.reqiured"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  labelPosition="before"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  (change)="taskComplete(task, $event)"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  {{ 'task_completed' }}&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  <span class="color-accent" *ngIf="task.required">*</span>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                </mat-slide-toggle>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;            </ng-container>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;            <div class="form-row" *ngFor="let field of task.fields; let i = index">&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              <mat-label>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                {{ field?.label }} <span class="color-accent" *ngIf="field?.required">*</span>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              </mat-label>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              <span&ndash;&gt;-->
+  <!--&lt;!&ndash;                class="form-row__instruction"&ndash;&gt;-->
+  <!--&lt;!&ndash;                *ngIf="field?.instructions"&ndash;&gt;-->
+  <!--&lt;!&ndash;                [innerHTML]="field?.instructions"&ndash;&gt;-->
+  <!--&lt;!&ndash;              >&ndash;&gt;-->
+  <!--&lt;!&ndash;            </span>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              <ng-container&ndash;&gt;-->
+  <!--&lt;!&ndash;                *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"&ndash;&gt;-->
+  <!--&lt;!&ndash;              >&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <mat-form-field appearance="outline">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  <input matInput [formControlName]="field.key" />&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                </mat-form-field>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              </ng-container>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              <ng-container *ngIf="field.input === 'text' && field.type === 'description'">&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <mat-form-field appearance="outline">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <textarea&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  matInput&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  cdkTextareaAutosize&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  cdkAutosizeMinRows="2"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  cdkAutosizeMaxRows="5"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  [formControlName]="field.key"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                </textarea>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                </mat-form-field>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              </ng-container>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              <ng-container *ngIf="field.input === 'textarea'">&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <mat-form-field appearance="outline">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <textarea&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  matInput&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  cdkTextareaAutosize&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  cdkAutosizeMinRows="2"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  cdkAutosizeMaxRows="5"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  [formControlName]="field.key"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                </textarea>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                </mat-form-field>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              </ng-container>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              &lt;!&ndash;              <ng-container *ngIf="field.input === 'tags'">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <span class="related-post-list" *ngIf="field.options?.length; else noOptions">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  <ul>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    <li>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      <mat-checkbox&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                        [checked]="form.get(field.key)?.value.length === field.options.length"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                        (change)="toggleAllSelection($event, task.fields, field.key)"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                        Select all&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      </mat-checkbox>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    </li>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    <li *ngFor="let option of field.options; trackBy: trackById">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      <mat-checkbox&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                        [ngClass]="{ 'lvl-2': option.parent }"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                        [checked]="form.get(field.key)?.value.includes(option.id)"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                        (change)="&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                          onCheckChange(&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                            $event,&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                            field.key,&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                            option.id,&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                            field.options,&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                            option.parent?.id&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                          )&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                        "&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                        {{ option.tag }}&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      </mat-checkbox>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    </li>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  </ul>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </span>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              </ng-container>&ndash;&gt;&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              <ng-container *ngIf="field.input === 'date'">&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <mat-form-field appearance="outline">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  <input&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    matInput&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    [matDatepicker]="picker"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    [formControlName]="field.key"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    (focus)="picker.open()"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    #input&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  />&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  <mat-datepicker-toggle&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    matSuffix&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    [for]="picker"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  ></mat-datepicker-toggle>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  <mat-datepicker #picker (closed)="input.blur()"></mat-datepicker>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                </mat-form-field>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              </ng-container>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              &lt;!&ndash;              <ng-container *ngIf="field.input === 'datetime'">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <mat-form-field appearance="outline">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  <input&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    matInput&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    [ngxMatDatetimePicker]="picker"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    [formControlName]="field.key"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    (focus)="picker.open()"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    #input&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  />&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  <mat-datepicker-toggle&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    matSuffix&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    [for]="$any(picker)"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  ></mat-datepicker-toggle>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  <ngx-mat-datetime-picker #picker (closed)="input.blur()"></ngx-mat-datetime-picker>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </mat-form-field>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              </ng-container>&ndash;&gt;&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              &lt;!&ndash;              <ng-container *ngIf="field.input === 'radio'">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <mat-radio-group&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  [attr.aria-label]="field.label"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  [formControlName]="field.key"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  *ngIf="field.options?.length; else noOptions"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  <div class="radio-button" *ngFor="let option of field.options">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    <mat-radio-button&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      [value]="option"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      {{ option }}&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    </mat-radio-button>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </mat-radio-group>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              </ng-container>&ndash;&gt;&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              <ng-container *ngIf="field.input === 'checkbox'">&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <mat-selection-list&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  [formControlName]="field.key"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  *ngIf="field.options?.length"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  <mat-list-option&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    class="list-option"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    color="primary"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    *ngFor="let option of field.options"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    [value]="option"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    checkboxPosition="before"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    {{ option }}&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  </mat-list-option>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                </mat-selection-list>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              </ng-container>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              <ng-container *ngIf="field.input === 'select'">&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <mat-form-field appearance="outline" *ngIf="field.options?.length">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  <mat-select&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    [formControlName]="field.key"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    disableOptionCentering&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    <mat-option&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                      *ngFor="let option of field.options"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                      [value]="option"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                      {{ option }}&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    </mat-option>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  </mat-select>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                </mat-form-field>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              </ng-container>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              <ng-container *ngIf="field.input === 'number'">&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <mat-form-field appearance="outline">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  <input&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    matInput&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    [formControlName]="field.key"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    type="number"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                    [pattern]="field.type === 'int' ? '[0-9]*' : ''"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  />&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                </mat-form-field>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              </ng-container>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              &lt;!&ndash;              <ng-container *ngIf="field.input === 'upload'">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <app-image-uploader&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  [formControlName]="field.key"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  [hasCaption]="field.config.hasCaption"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  [requiredError]="&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                "&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </app-image-uploader>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              </ng-container>&ndash;&gt;&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              &lt;!&ndash;              <ng-container *ngIf="field.input === 'video'">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <mat-form-field appearance="outline">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  <input matInput [formControlName]="field.key" #videoInput />&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </mat-form-field>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <mat-error&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  *ngIf="&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  form.get(field.key)?.hasError('invalidvideourl') &&&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  !form.get(field.key)?.hasError('required')&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                "&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  Invalid video embed url&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </mat-error>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <iframe&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  *ngIf="form.get(field.key)?.value"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  width="560"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  height="315"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  [src]="generateSecurityTrustUrl(formValidator.videoUrlPreview(videoInput))"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  [hidden]="!videoInput.value.length"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                ></iframe>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              </ng-container>&ndash;&gt;&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              &lt;!&ndash;              <ng-container *ngIf="field.input === 'location'">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <app-location-select&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  [zoom]="12"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  [location]="form.get(field.key)?.value"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  [required]="locationRequired"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  (locationChange)="changeLocation($event, field.key)"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                ></app-location-select>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              </ng-container>&ndash;&gt;&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              &lt;!&ndash;              <ng-container *ngIf="field.input === 'relation'">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <p>{{ 'survey.related_post_info' | translate }}</p>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <div class="related-post-selected" *ngIf="selectedRelatedPost">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  <div class="related-post-content">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    <span>{{ selectedRelatedPost.id }}: {{ selectedRelatedPost.title }}</span>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    <div&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      class="related-post-delete"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      [data-qa]="'btn-post-item-delete-relation-post'"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      (click)="deleteRelatedPost(field, selectedRelatedPost.id)"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      <mat-icon svgIcon="close"></mat-icon>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    </div>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </div>&ndash;&gt;&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              &lt;!&ndash;                <div class="relation-container" *ngIf="!selectedRelatedPost">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  <mat-form-field appearance="outline">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    <input&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      matInput&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      type="text"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      [(ngModel)]="relationSearch"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      [ngModelOptions]="{ standalone: true }"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    />&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  </mat-form-field>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  <mzima-client-button&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    fill="outline"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    color="secondary"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    class="relation-button-search"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    (buttonClick)="relationSearchPosts()"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    [data-qa]="'btn-post-item-relation-search'"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  >&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    {{ 'post.relation.search' | translate }}&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  </mzima-client-button>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </div>&ndash;&gt;&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              &lt;!&ndash;                <span class="related-post-list" *ngIf="relatedPosts?.length">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <ul>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  <li *ngFor="let post of relatedPosts">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    <mat-checkbox (change)="chooseRelatedPost($event, field, post)">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                      {{ post.id }}: {{ post.title }}&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                    </mat-checkbox>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  </li>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </ul>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              </span>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              </ng-container>&ndash;&gt;&ndash;&gt;-->
+
+  <!--&lt;!&ndash;              <ng-container *ngIf="field.input === 'markdown'">&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <mat-form-field appearance="outline">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                <textarea&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  matInput&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  [formControlName]="field.key"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  cdkTextareaAutosize&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  cdkAutosizeMaxRows="5"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                  [placeholder]="field.default"&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                ></textarea>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                &lt;!&ndash;                </mat-form-field>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              </ng-container>&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              <mat-error *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <p *ngIf="form.get(field.key)?.hasError('required')">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  {{ field.label }} field is a required field *&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </p>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <p *ngIf="form.get(field.key)?.hasError('minlength')">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  {{ field.label }} field is too short, use at least 2 characters&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </p>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <p *ngIf="form.get(field.key)?.hasError('pattern')">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  {{ field.label }} field is invalid&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </p>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                <p *ngIf="form.get(field.key)?.hasError('specialCharacters')">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                  {{ field.label }} field contains special characters&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;                </p>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;              &lt;!&ndash;              </mat-error>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;            </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;          </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;        </div>&ndash;&gt;-->
+
+  <!--      </form>-->
+  <!--    </div>-->
+  <!--  </div>-->
+</ion-content>

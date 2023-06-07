@@ -1,23 +1,19 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NotAuthorizedGuard } from '@guards';
-import { PageNotFoundComponent } from './shared/components';
+import { PageNotFoundComponent } from '@components';
 
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./map/map.module').then((m) => m.MapPageModule),
-    pathMatch: 'full',
-  },
+  // {
+  //   path: '',
+  //   loadChildren: () => import('./map/map.module').then((m) => m.MapPageModule),
+  //   pathMatch: 'full',
+  // },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
     canActivate: [NotAuthorizedGuard],
   },
-  // {
-  //   path: 'auth',
-  //   loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
-  // },
   {
     path: 'settings',
     loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsPageModule),
@@ -38,6 +34,19 @@ const routes: Routes = [
       import('./deployment/deployment-search/deployment-search.module').then(
         (m) => m.DeploymentSearchPageModule,
       ),
+  },
+  {
+    path: '',
+    loadChildren: () => import('./post/post-edit/post-edit.module').then((m) => m.PostEditModule),
+    pathMatch: 'full',
+  },
+  {
+    path: 'post-create',
+    loadChildren: () => import('./post/post-edit/post-edit.module').then((m) => m.PostEditModule),
+    data: {
+      breadcrumb: 'nav.posts',
+      ogTitle: 'nav.posts',
+    },
   },
   {
     path: '**',
