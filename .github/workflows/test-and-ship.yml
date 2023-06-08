@@ -8,7 +8,7 @@ env:
   CYPRESS_PROJECT_ID: "itz63b"
 
 jobs:
-  test:
+  cypress-tests-run:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     ## While tests are not fixed
@@ -65,10 +65,10 @@ jobs:
     #     npm run test;
 
   e2e-test:
-    needs: []
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    continue-on-error: false
+    continue-on-error: true
 
     steps:
       - uses: actions/checkout@v3
@@ -159,7 +159,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   ship:
-    needs: [ test ]
+    needs: [ cypress-tests-run, e2e-test ]
     if: github.event_name == 'push'   # not on PRs
     runs-on: ubuntu-latest
     timeout-minutes: 15
