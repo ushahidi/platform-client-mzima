@@ -1,4 +1,4 @@
-<ion-modal [isOpen]="isOpen" class="modal" (didDismiss)="closeModal()">
+<ion-modal [isOpen]="isOpen" class="modal" (didDismiss)="closeModalHandle()" #modal>
   <ng-template>
     <ion-header class="modal__header" *ngIf="modalOptions.header">
       <ion-toolbar class="modal__header__toolbar">
@@ -7,7 +7,7 @@
           slot="start"
           color="custom"
           class="modal__back"
-          (buttonClick)="closeModalHandle()"
+          (buttonClick)="closeModal()"
         >
           <app-icon name="arrow-back" slot="icon-only"></app-icon>
         </app-button>

@@ -4,7 +4,7 @@
       <ng-container *ngSwitchCase="filterType.SELECT">
         <ion-item
           class="button-add"
-          *ngIf="filter.name === 'set'"
+          *ngIf="filter.name === 'saved-filters' && isLoggedIn"
           button
           lines="none"
           (click)="addClickHandle()"
@@ -26,11 +26,10 @@
             [value]="option.value"
             [editable]="true"
             [deletable]="true"
-            (optionDelete)="deleteOption()"
-            (optionEdit)="editOption()"
+            (optionDelete)="deleteOption(option)"
+            (optionEdit)="editOption(option)"
           >
             {{ option.label }}
-            {{ option.value }}
             <span class="info">{{ option.info }}</span>
           </app-radio>
         </ion-radio-group>
@@ -105,8 +104,8 @@
         color="medium"
         expand="inline"
         class="filters-modal__button"
-        *ngIf="filter.name !== 'set'"
         (buttonClick)="clearFilter()"
+        *ngIf="filter.name !== 'saved-filters'"
       >
         Clear
       </app-button>
