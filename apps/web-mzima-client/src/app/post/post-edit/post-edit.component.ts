@@ -53,6 +53,7 @@ dayjs.extend(timezone);
 })
 export class PostEditComponent implements OnInit, OnChanges {
   @Input() public postInput: any;
+  @Input() public modalView: boolean;
   @Output() cancel = new EventEmitter();
   @Output() updated = new EventEmitter();
   public color: string;
@@ -514,10 +515,14 @@ export class PostEditComponent implements OnInit, OnChanges {
       error: () => this.form.enable(),
       complete: async () => {
         await this.postComplete();
-        this.backNavigation();
         this.updated.emit();
+        if (this.checkRoutes('feed')) this.backNavigation();
       },
     });
+  }
+
+  private checkRoutes(path: string) {
+    return this.router.url.includes(path);
   }
 
   private createPost(postData: any) {
@@ -568,8 +573,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       if (!confirmed) return;
     }
 
-    if (!this.postInput) {
-      this.backNavigation();
+    if (!this.postId) {
       this.eventBusService.next({
         type: EventType.AddPostButtonSubmit,
         payload: true,
@@ -577,10 +581,22 @@ export class PostEditComponent implements OnInit, OnChanges {
     } else {
       this.cancel.emit();
     }
+    this.backNavigation();
   }
 
   public backNavigation(): void {
-    this.location.back();
+    let urlString = this.router.url;
+    if (this.checkRoutes('edit')) {
+      urlString = urlString.replace('edit', 'view');
+      const urlParts = urlString.split('?');
+      const url = urlParts[0];
+      let queryParams = {};
+      if (urlParts[1]) {
+        const params = new URLSearchParams(urlParts[1]);
+        queryParams = { mode: params.get('mode') };
+      }
+      this.router.navigate([url], { queryParams: queryParams });
+    }
   }
 
   public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {
