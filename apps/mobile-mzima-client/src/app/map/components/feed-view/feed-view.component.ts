@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeoJsonFilter, PostResult, PostsService, SavedsearchesService } from '@mzima-client/sdk';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MainViewComponent } from '@shared';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { SessionService } from '@services';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
-import { lastValueFrom } from 'rxjs';
+import { Subject, debounceTime, lastValueFrom, takeUntil } from 'rxjs';
+import { MainViewComponent } from '../main-view.component';
 
 @UntilDestroy()
 @Component({
@@ -25,6 +25,7 @@ export class FeedViewComponent extends MainViewComponent {
     limit: 6,
     page: 1,
   };
+  public override $destroy = new Subject();
 
   constructor(
     protected override router: Router,
@@ -34,7 +35,12 @@ export class FeedViewComponent extends MainViewComponent {
     protected override sessionService: SessionService,
   ) {
     super(router, route, postsService, savedSearchesService, sessionService);
-    this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
+
+    this.initFilterListener();
+  }
+
+  private initFilterListener() {
+    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.$destroy)).subscribe({
       next: () => {
         this.params.page = 1;
         this.getPosts(this.params);
@@ -42,10 +48,7 @@ export class FeedViewComponent extends MainViewComponent {
     });
   }
 
-  loadData(): void {
-    this.params.page = 1;
-    this.getPosts(this.params);
-  }
+  loadData(): void {}
 
   private async getPosts(params: any, add = false): Promise<void> {
     this.isPostsLoading = true;
@@ -69,5 +72,10 @@ export class FeedViewComponent extends MainViewComponent {
       await this.getPosts(this.params, true);
       (ev as InfiniteScrollCustomEvent).target.complete();
     }
+  }
+
+  public destroy(): void {
+    this.$destroy.next(null);
+    this.$destroy.complete();
   }
 }

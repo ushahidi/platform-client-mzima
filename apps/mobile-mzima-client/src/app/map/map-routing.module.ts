@@ -9,6 +9,32 @@ const routes: Routes = [
     component: MapPage,
     canActivate: [WalkthroughGuard, NotDeploymentGuard],
   },
+  {
+    path: 'collection',
+    redirectTo: '',
+    children: [
+      {
+        path: ':id',
+        component: MapPage,
+        data: {
+          view: 'collection',
+        },
+      },
+    ],
+  },
+  {
+    path: 'search',
+    redirectTo: '',
+    children: [
+      {
+        path: ':id',
+        component: MapPage,
+        data: {
+          view: 'search',
+        },
+      },
+    ],
+  },
 ];
 
 @NgModule({

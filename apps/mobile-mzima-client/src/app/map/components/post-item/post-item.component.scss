@@ -82,6 +82,8 @@
   }
 
   &__media {
+    margin-left: 1px;
+    margin-right: 1px;
     object-fit: cover;
 
     &::part(image) {

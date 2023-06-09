@@ -16,4 +16,14 @@ export class SearchService {
       },
     });
   }
+
+  public getLabel(lat: number, lon: number): Observable<any> {
+    return this.httpClient.get('https://nominatim.openstreetmap.org/reverse', {
+      params: {
+        lat,
+        lon,
+        format: 'json',
+      },
+    });
+  }
 }
