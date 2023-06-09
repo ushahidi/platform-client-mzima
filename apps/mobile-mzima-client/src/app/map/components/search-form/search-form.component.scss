@@ -84,6 +84,12 @@
     align-items: center;
     justify-content: space-between;
     padding-right: var(--ion-padding);
+
+    > span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   &__title {

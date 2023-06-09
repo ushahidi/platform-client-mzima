@@ -72,6 +72,7 @@
 </form>
 
 <app-modal
+  #filtersModal
   class="filters-modal"
   [isOpen]="isFiltersModalOpen"
   (modalClose)="modalCloseHandle()"
@@ -82,7 +83,7 @@
   [closable]="!selectedFilter"
 >
   <div class="filters-modal__header" header>
-    <span>{{ selectedFilter?.label ?? 'Filters' }}</span>
+    <span>{{ selectedSavedFilter?.label ?? selectedFilter?.label ?? 'Filters' }}</span>
     <ion-text color="medium" class="filters-modal__total-posts">
       Found posts:
       <strong class="filters-modal__total-posts__count">{{ totalPosts }}</strong>
@@ -90,16 +91,18 @@
   </div>
   <div class="filters-modal__filters">
     <ng-container *ngIf="!selectedFilter; else filter">
-      <app-filter-control
-        *ngFor="let filter of filters"
-        [filter]="filter"
-        (filterClick)="openFilter(filter)"
-      >
-      </app-filter-control>
+      <ng-container *ngFor="let filter of filters">
+        <app-filter-control
+          [filter]="filter"
+          (filterClick)="openFilter(filter)"
+          *ngIf="filter.name !== 'saved-filters' || !isAddSavedFiltersMode"
+        >
+        </app-filter-control>
+      </ng-container>
     </ng-container>
   </div>
   <div class="filters-modal__footer" footer>
-    <ng-container>
+    <ng-container *ngIf="!isAddSavedFiltersMode; else SavedFiltersModeButtons">
       <app-button (buttonClick)="modalCloseHandle()" class="filters-modal__button" expand="inline">
         Apply
       </app-button>
@@ -113,6 +116,20 @@
         Clear
       </app-button>
     </ng-container>
+    <ng-template #SavedFiltersModeButtons>
+      <app-button (buttonClick)="saveSavedFilters()" class="filters-modal__button" expand="inline">
+        Save as
+      </app-button>
+      <app-button
+        fill="outline"
+        color="medium"
+        expand="inline"
+        class="filters-modal__button"
+        (buttonClick)="cancelAddSavedFiltersMode()"
+      >
+        Cancel
+      </app-button>
+    </ng-template>
   </div>
 </app-modal>
 
@@ -124,6 +141,9 @@
     [totalPosts]="totalPosts"
     [(ngModel)]="selectedFilter.value"
     (filterClear)="clearFilter(selectedFilter.name)"
+    (filterAdd)="addFilter(selectedFilter.name)"
+    (filterEdit)="editFilter(selectedFilter.name, $event)"
+    (filterDelete)="deleteFilterHandle($event)"
     (ngModelChange)="applyFilter($event, selectedFilter.name)"
   >
   </app-filter>

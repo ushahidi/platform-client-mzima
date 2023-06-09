@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SavedsearchesService, PostsService, UserInterface } from '@mzima-client/sdk';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { SessionService } from '@services';
+import { Subject } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -18,6 +19,7 @@ export abstract class MainViewComponent {
   };
   filters;
   public user: UserInterface;
+  public $destroy = new Subject();
 
   constructor(
     protected router: Router,
@@ -31,36 +33,42 @@ export abstract class MainViewComponent {
     );
   }
 
+  ionViewWillLeave(): void {
+    this.$destroy.next(null);
+    this.$destroy.complete();
+  }
+
   abstract loadData(): void;
 
   initCollection() {
-    if (this.route.snapshot.data['view'] === 'collection') {
-      this.collectionId = this.route.snapshot.paramMap.get('id')!;
-      this.params.set = this.collectionId;
-      this.postsService.applyFilters({
-        ...this.normalizeFilter(this.filters),
-        set: this.collectionId,
-      });
-      this.searchId = '';
-    } else {
-      this.collectionId = '';
-      this.params.set = '';
-      if (this.route.snapshot.data['view'] === 'search') {
+    this.collectionId = '';
+    this.params.set = '';
+
+    switch (this.route.snapshot.data['view']) {
+      case 'collection':
+        this.collectionId = this.route.snapshot.paramMap.get('id')!;
+        this.params.set = this.collectionId;
+        this.postsService.applyFilters({
+          ...this.normalizeFilter(this.filters),
+          set: this.collectionId,
+        });
+        this.searchId = '';
+        break;
+
+      case 'search':
         this.searchId = this.route.snapshot.paramMap.get('id')!;
         this.savedSearchesService.getById(this.searchId).subscribe((sSearch) => {
           this.postsService.applyFilters(Object.assign(sSearch.result.filter, { set: [] }));
-          // this.eventBusService.next({
-          //   type: EventType.SavedSearchInit,
-          //   payload: this.searchId,
-          // });
         });
-      } else {
+        break;
+
+      default:
         this.searchId = '';
         this.postsService.applyFilters({
           ...this.normalizeFilter(this.filters),
           set: [],
         });
-      }
+        break;
     }
   }
 
@@ -78,24 +86,5 @@ export abstract class MainViewComponent {
     delete filters.status;
     delete filters.tags;
     return filters;
-  }
-
-  getUserData(): void {
-    this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
-      next: (userData) => {
-        this.user = userData;
-        this.loadData();
-      },
-    });
-  }
-
-  initCollectionRemoveListener() {
-    // this.eventBusService.on(EventType.DeleteCollection).subscribe({
-    //   next: (colId) => {
-    //     if (Number(colId) === Number(this.collectionId)) {
-    //       this.router.navigate(['/map']);
-    //     }
-    //   },
-    // });
   }
 }

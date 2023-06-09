@@ -9,13 +9,15 @@
     header
     class="search-form"
     [totalPosts]="totalPosts"
+    [activatedSavedFilterId]="searchId"
   ></app-search-form>
-  <app-map-view class="map"></app-map-view>
+  <app-map-view class="map" #map></app-map-view>
   <ng-container draggable>
     <app-button shape="normal" [shadow]="true" class="add-post-button">
       <app-icon slot="icon-only" name="plus"></app-icon>
     </app-button>
     <app-feed-view
+      #feed
       [atBottom]="mode === 0"
       [atTop]="mode === 'fullscreen'"
       (postsUpdated)="updatePostsCount($event)"

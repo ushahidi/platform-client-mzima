@@ -7,17 +7,13 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./map/map.module').then((m) => m.MapPageModule),
-    pathMatch: 'full',
+    // pathMatch: 'full',
   },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
     canActivate: [NotAuthorizedGuard],
   },
-  // {
-  //   path: 'auth',
-  //   loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
-  // },
   {
     path: 'settings',
     loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsPageModule),

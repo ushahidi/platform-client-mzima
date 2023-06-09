@@ -6,7 +6,9 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
+import { IonModal } from '@ionic/angular';
 
 interface ModalOptions {
   footer?: boolean;
@@ -25,6 +27,7 @@ export class ModalComponent implements OnInit, OnChanges {
   @Input() public closable = true;
   @Input() public options: ModalOptions = {};
   @Output() public modalClose = new EventEmitter();
+  @ViewChild('modal') modal: IonModal;
   public modalOptions: ModalOptions = {
     header: true,
     footer: false,
@@ -48,14 +51,14 @@ export class ModalComponent implements OnInit, OnChanges {
     }
   }
 
-  public closeModal(): void {
+  public closeModal(force = false): void {
     this.modalClose.emit();
+    if (this.closable || force) {
+      this.modal.dismiss();
+    }
   }
 
   public closeModalHandle(): void {
     this.modalClose.emit();
-    if (this.closable) {
-      this.isOpen = false;
-    }
   }
 }
