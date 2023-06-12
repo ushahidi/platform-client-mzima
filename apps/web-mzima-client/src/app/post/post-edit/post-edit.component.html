@@ -51,7 +51,11 @@
               *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
             >
               <mat-form-field appearance="outline">
-                <input matInput [formControlName]="field.key" />
+                <input
+                  matInput
+                  [formControlName]="field.key"
+                  [data-qa]="field.label.replace(' ', '-') | lowercase"
+                />
               </mat-form-field>
             </ng-container>
 
@@ -63,7 +67,7 @@
                   cdkAutosizeMinRows="2"
                   cdkAutosizeMaxRows="5"
                   [formControlName]="field.key"
-                  [data-qa]="'post-item-' + field.key"
+                  [data-qa]="field.label.replace(' ', '-') | lowercase"
                 >
                 </textarea>
               </mat-form-field>
@@ -77,7 +81,7 @@
                   cdkAutosizeMinRows="2"
                   cdkAutosizeMaxRows="5"
                   [formControlName]="field.key"
-                  [data-qa]="'post-item-' + field.key"
+                  [data-qa]="field.label.replace(' ', '-') | lowercase"
                 >
                 </textarea>
               </mat-form-field>
@@ -213,6 +217,9 @@
                   [formControlName]="field.key"
                   type="number"
                   [pattern]="field.type === 'int' ? '[0-9]*' : ''"
+                  [data-qa]="
+                    field.label.replace(' ', '-').replace('(', '').replace(')', '') | lowercase
+                  "
                 />
               </mat-form-field>
             </ng-container>
@@ -230,7 +237,12 @@
 
             <ng-container *ngIf="field.input === 'video'">
               <mat-form-field appearance="outline">
-                <input matInput [formControlName]="field.key" #videoInput />
+                <input
+                  matInput
+                  [formControlName]="field.key"
+                  [data-qa]="field.label.replace(' ', '-') | lowercase"
+                  #videoInput
+                />
               </mat-form-field>
               <mat-error
                 *ngIf="
@@ -312,6 +324,7 @@
                   cdkTextareaAutosize
                   cdkAutosizeMaxRows="5"
                   [placeholder]="field.default"
+                  [data-qa]="field.label.replace(' ', '-') | lowercase"
                 ></textarea>
               </mat-form-field>
             </ng-container>
