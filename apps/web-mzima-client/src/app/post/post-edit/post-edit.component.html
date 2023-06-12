@@ -162,12 +162,18 @@
                 [attr.aria-label]="field.label"
                 [formControlName]="field.key"
                 *ngIf="field.options?.length; else noOptions"
-                [data-qa]="'post-item-post-radio' + field.key"
+                [data-qa]="
+                  field.label.replaceAll(' ', '-').replace('(', '').replace(')', '') | lowercase
+                "
               >
                 <div class="radio-button" *ngFor="let option of field.options">
                   <mat-radio-button
                     [value]="option"
-                    [data-qa]="'post-item-post-radio-option' + option"
+                    [data-qa]="
+                      field.label.replaceAll(' ', '-').replace('(', '').replace(')', '') +
+                        '-' +
+                        option.replaceAll(' ', '-') | lowercase
+                    "
                   >
                     {{ option }}
                   </mat-radio-button>
@@ -179,7 +185,9 @@
               <mat-selection-list
                 [formControlName]="field.key"
                 *ngIf="field.options?.length; else noOptions"
-                [data-qa]="'post-item-post-checkbox' + field.key"
+                [data-qa]="
+                  field.label.replaceAll(' ', '-').replace('(', '').replace(')', '') | lowercase
+                "
               >
                 <mat-list-option
                   color="primary"
@@ -187,7 +195,11 @@
                   class="list-option"
                   checkboxPosition="before"
                   *ngFor="let option of field.options"
-                  [data-qa]="'post-item-post-checkbox-option' + option"
+                  [data-qa]="
+                    field.label.replaceAll(' ', '-').replace('(', '').replace(')', '') +
+                      '-' +
+                      option.replaceAll(' ', '-') | lowercase
+                  "
                 >
                   {{ option }}
                 </mat-list-option>
