@@ -294,6 +294,7 @@
                     type="text"
                     [(ngModel)]="relationSearch"
                     [ngModelOptions]="{ standalone: true }"
+                    [data-qa]="field.label.replaceAll(' ', '-') | lowercase"
                   />
                 </mat-form-field>
                 <mzima-client-button
@@ -301,7 +302,7 @@
                   color="secondary"
                   class="relation-button-search"
                   (buttonClick)="relationSearchPosts()"
-                  [data-qa]="'btn-post-item-relation-search'"
+                  [data-qa]="field.label.replaceAll(' ', '-') + '-search' | lowercase"
                 >
                   {{ 'post.relation.search' | translate }}
                 </mzima-client-button>
