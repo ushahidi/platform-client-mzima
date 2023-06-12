@@ -126,12 +126,13 @@
                   [matDatepicker]="picker"
                   [formControlName]="field.key"
                   (focus)="picker.open()"
+                  [data-qa]="field.label.replaceAll(' ', '-') | lowercase"
                   #input
                 />
                 <mat-datepicker-toggle
                   matSuffix
                   [for]="picker"
-                  [data-qa]="'post-item-post-date-toggle'"
+                  [data-qa]="field.label.replaceAll(' ', '-') + '-toggle' | lowercase"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #picker (closed)="input.blur()"></mat-datepicker>
               </mat-form-field>
@@ -144,12 +145,13 @@
                   [ngxMatDatetimePicker]="picker"
                   [formControlName]="field.key"
                   (focus)="picker.open()"
+                  [data-qa]="field.label.replaceAll(' ', '-') | lowercase"
                   #input
                 />
                 <mat-datepicker-toggle
                   matSuffix
                   [for]="$any(picker)"
-                  [data-qa]="'post-item-post-date-time-toggle' + field.key"
+                  [data-qa]="field.label.replaceAll(' ', '-') + '-toggle' | lowercase"
                 ></mat-datepicker-toggle>
                 <ngx-mat-datetime-picker #picker (closed)="input.blur()"></ngx-mat-datetime-picker>
               </mat-form-field>
