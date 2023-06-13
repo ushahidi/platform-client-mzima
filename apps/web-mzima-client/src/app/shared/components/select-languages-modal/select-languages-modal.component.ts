@@ -7,7 +7,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
 
 export interface SelectLanguagesDialogData {
-  defaultLanguage: LanguageInterface;
+  defaultLanguage?: LanguageInterface;
   languages: LanguageInterface[];
   activeLanguages: LanguageInterface[];
 }
