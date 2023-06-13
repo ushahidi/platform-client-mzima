@@ -43,11 +43,7 @@
           <ng-container *ngIf="field.input === 'tags'">
             <ng-container *ngFor="let category of post.categories">
               <div class="category" *ngIf="!isParentCategory(post.categories, category.id)">
-                <mat-icon class="category__icon">
-                  <svg class="iconic">
-                    <use xlink:href="assets/sprites.svg#tag"></use>
-                  </svg>
-                </mat-icon>
+                <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
                 {{ category.tag }}
               </div>
             </ng-container>

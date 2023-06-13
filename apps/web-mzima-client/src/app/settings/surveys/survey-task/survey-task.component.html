@@ -192,16 +192,11 @@
                 <span class="language-title">{{ lang.name }}</span>
               </mat-option>
             </mat-select>
-            <div *ngIf="showLangError" class="alert error">
-              <svg class="iconic" role="img">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  xlink:href="assets/sprites.svg#warning"
-                ></use>
-              </svg>
-              <p translate="translations.error_translation_exists"></p>
-            </div>
           </mat-form-field>
+          <div class="alert error" *ngIf="showLangError">
+            <mat-icon svgIcon="warning"></mat-icon>
+            <p translate="translations.error_translation_exists"></p>
+          </div>
         </div>
       </ng-container>
     </mat-tab>
