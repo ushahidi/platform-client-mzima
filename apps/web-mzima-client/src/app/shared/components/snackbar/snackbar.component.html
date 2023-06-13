@@ -5,14 +5,7 @@
     *ngIf="data.isLoading"
   ></mat-progress-bar>
   <span *ngIf="data.icon" class="snackbar__icon" [ngClass]="data.icon.color || 'primary'">
-    <mat-icon>
-      <svg class="iconic" role="img">
-        <use
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          [attr.xlink:href]="'assets/sprites.svg#' + data.icon.name"
-        ></use>
-      </svg>
-    </mat-icon>
+    <mat-icon [svgIcon]="data.icon.name"></mat-icon>
   </span>
   <div class="snackbar__main">
     <h3 class="snackbar__title" *ngIf="data.title">{{ data.title | translate }}</h3>
