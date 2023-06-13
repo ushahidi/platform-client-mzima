@@ -53,6 +53,7 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.post = undefined;
+        this.media = null;
 
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
 
