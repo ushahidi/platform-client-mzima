@@ -58,7 +58,7 @@ export interface FeaturesConfigInterface {
 }
 
 export interface MapViewInterface {
-  baselayer: 'streets' | 'satellite' | 'hOSM' | 'MapQuestAerial' | 'MapQuest';
+  baselayer: 'streets' | 'satellite' | 'hOSM' | 'MapQuestAerial' | 'MapQuest' | 'dark';
   color: string;
   fit_map_boundaries: boolean;
   icon: string;

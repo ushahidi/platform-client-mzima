@@ -35,6 +35,7 @@
     "@angular/router": "~14.2.7",
     "@asymmetrik/ngx-leaflet": "^14.0.1",
     "@asymmetrik/ngx-leaflet-markercluster": "^14.0.1",
+    "@capacitor/status-bar": "^5.0.4",
     "@ionic/angular": "^7.0.7",
     "@ionic/storage-angular": "^4.0.0",
     "@ngneat/until-destroy": "^9.2.3",

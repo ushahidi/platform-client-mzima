@@ -35,16 +35,30 @@ export class MapViewComponent implements AfterViewInit {
   public markerClusterData = new MarkerClusterGroup();
   public markerClusterOptions: MarkerClusterGroupOptions = { animate: true, maxClusterRadius: 50 };
   public $destroy = new Subject();
+  private isDarkMode = false;
+  private baseLayer: 'streets' | 'satellite' | 'hOSM' | 'MapQuestAerial' | 'MapQuest' | 'dark';
 
   constructor(private postsService: PostsService, private sessionService: SessionService) {
+    const mediaDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaDarkMode.addEventListener('change', (ev) => this.switchMode(ev));
+    this.isDarkMode = mediaDarkMode.matches;
+
     this.initFilterListener();
     this.sessionService.mapConfig$.subscribe({
       next: (mapConfig) => {
         if (mapConfig) {
           this.mapConfig = mapConfig;
 
+          this.baseLayer = this.mapConfig.default_view!.baselayer;
           const currentLayer =
-            mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
+            mapHelper.getMapLayers().baselayers[
+              this.isDarkMode &&
+              this.baseLayer !== 'satellite' &&
+              this.baseLayer !== 'MapQuestAerial' &&
+              this.baseLayer !== 'hOSM'
+                ? 'dark'
+                : this.baseLayer
+            ];
 
           this.leafletOptions = {
             minZoom: 3,
@@ -59,6 +73,27 @@ export class MapViewComponent implements AfterViewInit {
         }
       },
     });
+  }
+
+  private switchMode(systemInitiatedDark: any) {
+    this.isDarkMode = systemInitiatedDark.matches;
+
+    const currentLayer =
+      mapHelper.getMapLayers().baselayers[
+        this.isDarkMode &&
+        this.baseLayer !== 'satellite' &&
+        this.baseLayer !== 'MapQuestAerial' &&
+        this.baseLayer !== 'hOSM'
+          ? 'dark'
+          : this.baseLayer
+      ];
+
+    this.leafletOptions.layers = [tileLayer(currentLayer.url, currentLayer.layerOptions)];
+
+    this.isMapReady = false;
+    setTimeout(() => {
+      this.isMapReady = true;
+    }, 50);
   }
 
   private initFilterListener() {
@@ -99,12 +134,8 @@ export class MapViewComponent implements AfterViewInit {
               type: r.geojson.type,
               features: r.geojson.features.map((f) => {
                 f.properties = {
-                  data_source_message_id: r.data_source_message_id,
-                  description: r.description,
                   id: r.id,
-                  'marker-color': r['marker-color'],
-                  source: r.source,
-                  title: r.title,
+                  type: r.source,
                 };
                 return f;
               }),
