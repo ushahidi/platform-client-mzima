@@ -1,3 +1,7 @@
+html.plt-android:not(.plt-mobileweb) {
+  --ion-safe-area-top: calc(30px + env(safe-area-inset-top));
+}
+
 body {
   font-size: 16px;
   line-height: 1.5;
