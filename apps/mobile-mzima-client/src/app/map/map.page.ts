@@ -5,6 +5,7 @@ import { SessionService } from '@services';
 import { MainViewComponent } from './components/main-view.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
 import { FeedViewComponent } from './components/feed-view/feed-view.component';
+import { DraggableLayoutComponent } from './components/draggable-layout/draggable-layout.component';
 
 @Component({
   selector: 'app-map',
@@ -12,6 +13,7 @@ import { FeedViewComponent } from './components/feed-view/feed-view.component';
   styleUrls: ['map.page.scss'],
 })
 export class MapPage extends MainViewComponent {
+  @ViewChild('layout') public layout: DraggableLayoutComponent;
   @ViewChild('map') public map: MapViewComponent;
   @ViewChild('feed') public feed: FeedViewComponent;
   public mode: number | 'fullscreen';
@@ -41,5 +43,9 @@ export class MapPage extends MainViewComponent {
 
   public updatePostsCount(data: any): void {
     this.totalPosts = data.total;
+  }
+
+  ionViewWillEnter() {
+    this.layout.updateOffsetHeight();
   }
 }
