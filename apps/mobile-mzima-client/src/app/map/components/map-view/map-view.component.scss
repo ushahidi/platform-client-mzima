@@ -79,5 +79,19 @@
         line-height: inherit;
       }
     }
+
+    .custom-map-marker {
+      svg {
+        @media (prefers-color-scheme: light) {
+          fill: var(--ion-color-step-950);
+          --marker-secondary-color: var(--ion-color-light);
+        }
+
+        @media (prefers-color-scheme: dark) {
+          fill: var(--ion-color-primary);
+          --marker-secondary-color: var(--ion-color-step-100);
+        }
+      }
+    }
   }
 }

@@ -4,6 +4,7 @@ import { AlertController, IonRouterOutlet, Platform, ToastController } from '@io
 import { Capacitor } from '@capacitor/core';
 import { App } from '@capacitor/app';
 import { Network } from '@capacitor/network';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 export class BaseComponent {
   tap = 0;
@@ -21,6 +22,20 @@ export class BaseComponent {
         this.exitAppOnDoubleTap();
       }
     });
+
+    if (this.platform.is('capacitor')) {
+      StatusBar.setOverlaysWebView({ overlay: true });
+
+      const mediaDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      this.setStatusBarColor(mediaDarkMode.matches);
+      mediaDarkMode.addEventListener('change', (ev) => {
+        this.setStatusBarColor(ev.matches);
+      });
+    }
+  }
+
+  private setStatusBarColor(isDark: boolean): void {
+    StatusBar.setStyle({ style: isDark ? Style.Dark : Style.Light });
   }
 
   async listenToNetworkStatus() {

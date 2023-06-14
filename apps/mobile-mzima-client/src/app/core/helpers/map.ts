@@ -2,19 +2,15 @@
 import { divIcon, marker } from 'leaflet';
 import { EnvService } from '../services/env.service';
 
-export const pointIcon = (color: string, type: string = 'default') => {
-  // Test string to make sure that it does not contain injection
-  color = color && /^[a-zA-Z0-9#]+$/.test(color) ? color : 'var(--color-neutral-100)';
+export const pointIcon = (type: string = 'default') => {
   const size: any = [30, 40];
-  // var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
 
   return divIcon({
     className: 'custom-map-marker',
     html: `
-    <svg class="iconic" style="height: 100%; width: 100%; fill:${color};">
+    <svg style="height: 100%; width: 100%;">
       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/markers.svg#${type}"></use>
     </svg>
-    <span class="iconic-bg" style="background-color:${color};"></span>
     `,
     iconSize: size,
     iconAnchor: [size[0] / 2, size[1]],
@@ -23,8 +19,27 @@ export const pointIcon = (color: string, type: string = 'default') => {
 };
 
 export const pointToLayer = (feature: any, latlng: any) => {
+  let type = feature.properties.type;
+  switch (feature.properties.type) {
+    case 'twitter':
+      type = 'twitter';
+      break;
+
+    case 'sms':
+      type = 'sms';
+      break;
+
+    case 'email':
+      type = 'email';
+      break;
+
+    default:
+      type = 'default';
+      break;
+  }
+
   return marker(latlng, {
-    icon: pointIcon(feature.properties['marker-color']),
+    icon: pointIcon(type),
   });
 };
 
@@ -59,6 +74,7 @@ export const getMapLayers = () => {
             '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>',
         },
       },
+      dark: mapboxStaticTiles('Dark', 'mapbox/dark-v10'),
     },
   };
 };
