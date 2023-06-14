@@ -12,19 +12,32 @@
       <ion-card-title class="post__username">
         {{ (post.user?.realname ?? post.contact?.contact ?? post.author_realname) || 'Anonymous' }}
       </ion-card-title>
-      <ion-card-subtitle class="post__date">{{
-        post.post_date | date : 'mediumDate'
-      }}</ion-card-subtitle>
+      <ion-card-subtitle class="post__date">
+        {{ post.post_date | date : 'mediumDate' }}
+      </ion-card-subtitle>
     </div>
-    <app-button fill="clear" shape="normal" color="medium" class="post__details">
+    <app-button
+      fill="clear"
+      shape="normal"
+      color="medium"
+      class="post__details"
+      (buttonClick)="isActionsOpen = true"
+    >
       <app-icon slot="icon-only" name="dots"></app-icon>
     </app-button>
+    <ion-action-sheet
+      mode="ios"
+      [isOpen]="isActionsOpen"
+      [buttons]="actionSheetButtons"
+      (willDismiss)="makeAction($event)"
+    ></ion-action-sheet>
   </ion-card-header>
   <ng-container *ngIf="mediaId && post.source !== 'Twitter'">
     <ion-img
       *ngIf="!isMediaLoading; else spinner"
       class="post__media"
       [src]="media.original_file_url"
+      (ionError)="mediaId = undefined"
     ></ion-img>
     <ng-template #spinner>
       <app-spinner class="post__media__loader"></app-spinner>
