@@ -23,6 +23,7 @@ export class FormControlComponent implements ControlValueAccessor {
   @Input() public rounded = false;
   @Input() public disabled = false;
   @Input() public clearable = false;
+  @Input() public readonly = false;
   @Input() public togglePassword = false;
   @Input() public errors: string[] = [];
   @Input() public color: 'light' | 'default' = 'default';
@@ -33,7 +34,7 @@ export class FormControlComponent implements ControlValueAccessor {
   public isPasswordVisible = false;
   public isOnFocus: boolean;
 
-  value: string;
+  @Input() public value: string;
   onChange: any = () => {};
   onTouched: any = () => {};
 

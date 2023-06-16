@@ -114,9 +114,7 @@ export class MapViewComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.isMapReady = true;
-    }, 300);
+    this.isMapReady = true;
   }
 
   public onMapReady(map: Map) {

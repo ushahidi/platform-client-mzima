@@ -1,0 +1,31 @@
+<div class="location-select">
+  <div class="location-select__map">
+    <div
+      leaflet
+      class="map"
+      tabindex="-1"
+      *ngIf="isMapReady"
+      [leafletLayers]="mapLayers"
+      [leafletOptions]="leafletOptions"
+      (leafletMapReady)="onMapReady($event)"
+    ></div>
+  </div>
+  <ion-grid class="controls">
+    <ion-row>
+      <ion-col>
+        <app-form-control
+          label="Latitude"
+          [value]="location.lat.toString()"
+          [readonly]="true"
+        ></app-form-control>
+      </ion-col>
+      <ion-col>
+        <app-form-control
+          label="Longitude"
+          [value]="location.lon.toString()"
+          [readonly]="true"
+        ></app-form-control>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

@@ -9,3 +9,5 @@ export * from './spinner/spinner.component';
 export * from './radio/radio.component';
 export * from './select/select.component';
 export * from './calendar/calendar.component';
+export * from './header/header.component';
+export * from './main-layout/main-layout.component';

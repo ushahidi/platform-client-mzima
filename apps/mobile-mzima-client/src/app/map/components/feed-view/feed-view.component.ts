@@ -85,6 +85,10 @@ export class FeedViewComponent extends MainViewComponent {
     });
   }
 
+  public showPost(id: string): void {
+    this.router.navigate([id]);
+  }
+
   public destroy(): void {
     this.$destroy.next(null);
     this.$destroy.complete();

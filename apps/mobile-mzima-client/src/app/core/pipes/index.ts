@@ -1,1 +1,2 @@
-export * from './truncate.pipe';
+export { TruncatePipe } from './truncate.pipe';
+export { DateAgoPipe } from './date-ago.pipe';

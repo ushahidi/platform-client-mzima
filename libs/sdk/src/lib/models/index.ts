@@ -12,3 +12,4 @@ export * from './role.interface';
 export * from './surveys.interface';
 export * from './users.interface';
 export * from './webhook.interface';
+export * from './search-response.interface';

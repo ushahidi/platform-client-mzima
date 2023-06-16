@@ -120,6 +120,12 @@ export const getPostItemActions = (role?: PostItemActionTypeUserRole): ActionShe
   );
 };
 
+export const getPostStatusActions = (): ActionSheetButton[] => {
+  return postItemActions.filter(
+    (postItemAction) => postItemAction.role === 'status' || postItemAction.role === 'cancel',
+  );
+};
+
 export const postStatusChangedHeader: Record<PostStatus, string> = {
   [PostStatus.Published]: 'Publishing',
   [PostStatus.Draft]: 'Reviewing',

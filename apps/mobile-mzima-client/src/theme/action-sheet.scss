@@ -1,7 +1,7 @@
 .sc-ion-action-sheet-ios-h {
   --backdrop-opacity: 0.8;
   --button-color: var(--ion-text-color);
-  --button-background: var(--ion-color-gray);
+  --button-background: var(--ion-background-color);
 
   .action-sheet-group.sc-ion-action-sheet-ios {
     border-radius: 28px;
@@ -51,5 +51,23 @@
 
   .action-sheet-cancel.sc-ion-action-sheet-ios {
     font-weight: 500;
+  }
+}
+
+.action-sheet-title.sc-ion-action-sheet-ios {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  border-bottom: 1px solid;
+  color: var(--ion-color-medium);
+  padding: 12px var(--ion-padding);
+  background: var(--button-background);
+
+  @media (prefers-color-scheme: light) {
+    border-bottom-color: var(--ion-color-step-100);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    border-bottom-color: var(--ion-border-color);
   }
 }

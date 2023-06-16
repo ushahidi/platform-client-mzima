@@ -61,7 +61,7 @@ export class PostsService extends ResourceService<any> {
     return super.update(postId, params);
   }
 
-  override getById(id: string | number): Observable<any> {
+  override getById(id: string | number): Observable<PostResult> {
     return super.getById(id).pipe(
       map((response) => {
         const source =

@@ -148,7 +148,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     });
   }
 
-  private loadData(formId: number | null, updateContent?: []) {
+  private loadData(formId: number | null, updateContent?: any[]) {
     if (!formId) return;
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {

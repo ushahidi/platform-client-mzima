@@ -17,6 +17,8 @@ import {
   RadioComponent,
   SelectComponent,
   CalendarComponent,
+  HeaderComponent,
+  MainLayoutComponent,
 } from './components';
 import { CalendarModule } from 'ion2-calendar';
 
@@ -32,6 +34,8 @@ const components = [
   RadioComponent,
   SelectComponent,
   CalendarComponent,
+  HeaderComponent,
+  MainLayoutComponent,
 ];
 
 @NgModule({

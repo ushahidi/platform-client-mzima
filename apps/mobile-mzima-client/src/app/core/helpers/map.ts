@@ -4,7 +4,6 @@ import { EnvService } from '../services/env.service';
 
 export const pointIcon = (type: string = 'default') => {
   const size: any = [30, 40];
-
   return divIcon({
     className: 'custom-map-marker',
     html: `
@@ -19,27 +18,8 @@ export const pointIcon = (type: string = 'default') => {
 };
 
 export const pointToLayer = (feature: any, latlng: any) => {
-  let type = feature.properties.type;
-  switch (feature.properties.type) {
-    case 'twitter':
-      type = 'twitter';
-      break;
-
-    case 'sms':
-      type = 'sms';
-      break;
-
-    case 'email':
-      type = 'email';
-      break;
-
-    default:
-      type = 'default';
-      break;
-  }
-
   return marker(latlng, {
-    icon: pointIcon(type),
+    icon: pointIcon(feature.properties.type),
   });
 };
 
