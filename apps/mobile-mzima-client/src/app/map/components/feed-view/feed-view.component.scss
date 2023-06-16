@@ -7,7 +7,7 @@
   transition-duration: 0.35s;
   transition-timing-function: ease;
   transition-property: opacity height;
-  height: calc(80px + var(--ion-safe-area-bottom));
+  height: calc(84px + var(--ion-safe-area-bottom));
 
   &--hidden {
     height: 0;

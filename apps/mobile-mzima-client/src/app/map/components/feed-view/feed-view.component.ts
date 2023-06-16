@@ -74,6 +74,17 @@ export class FeedViewComponent extends MainViewComponent {
     }
   }
 
+  public handlePostDeleted(data: any): void {
+    this.posts.splice(
+      this.posts.findIndex((p) => p.id === data.post.id),
+      1,
+    );
+    this.totalPosts--;
+    this.postsUpdated.emit({
+      total: this.totalPosts,
+    });
+  }
+
   public destroy(): void {
     this.$destroy.next(null);
     this.$destroy.complete();

@@ -1,4 +1,9 @@
 import { ActionSheetButton } from '@ionic/angular';
+import { PostStatus } from '@mzima-client/sdk';
+
+interface PostItemAction extends ActionSheetButton {
+  guard: PostItemActionTypeUserRole[];
+}
 
 export enum PostItemActionType {
   SHARE = 'SHARE',
@@ -115,6 +120,17 @@ export const getPostItemActions = (role?: PostItemActionTypeUserRole): ActionShe
   );
 };
 
-interface PostItemAction extends ActionSheetButton {
-  guard: PostItemActionTypeUserRole[];
-}
+export const postStatusChangedHeader: Record<PostStatus, string> = {
+  [PostStatus.Published]: 'Publishing',
+  [PostStatus.Draft]: 'Reviewing',
+  [PostStatus.Archived]: 'Archiving',
+};
+
+export const postStatusChangedMessage = (status: PostStatus, title: string): string => {
+  const messages: Record<PostStatus, string> = {
+    [PostStatus.Published]: `The post “${title}” was published. Now everyone can see this post.`,
+    [PostStatus.Draft]: `The post “${title}” is under review now.`,
+    [PostStatus.Archived]: `The post “${title}” was archived.`,
+  };
+  return messages[status];
+};

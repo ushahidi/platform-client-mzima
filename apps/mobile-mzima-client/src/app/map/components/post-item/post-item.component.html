@@ -3,7 +3,7 @@
     <ion-avatar class="post__avatar">
       <ion-img
         [alt]="post.user?.realname"
-        src="//www.gravatar.com/avatar/{{
+        src="https://www.gravatar.com/avatar/{{
           post.user?.gravatar || '00000000000000000000000000000000'
         }}?d=retro&s=40"
       ></ion-img>
@@ -25,12 +25,6 @@
     >
       <app-icon slot="icon-only" name="dots"></app-icon>
     </app-button>
-    <ion-action-sheet
-      mode="ios"
-      [isOpen]="isActionsOpen"
-      [buttons]="actionSheetButtons"
-      (willDismiss)="makeAction($event)"
-    ></ion-action-sheet>
   </ion-card-header>
   <ng-container *ngIf="mediaId && post.source !== 'Twitter'">
     <ion-img
@@ -53,3 +47,10 @@
     <p *ngIf="post.content">{{ post.content }}</p>
   </ion-card-content>
 </ion-card>
+
+<ion-action-sheet
+  mode="ios"
+  [isOpen]="isActionsOpen"
+  [buttons]="actionSheetButtons"
+  (willDismiss)="makeAction($event)"
+></ion-action-sheet>

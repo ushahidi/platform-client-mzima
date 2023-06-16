@@ -1,9 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MediaService, PostResult } from '@mzima-client/sdk';
-import { getPostItemActions, PostItemActionType, PostItemActionTypeUserRole } from '@constants';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MediaService, PostResult, PostStatus, PostsService } from '@mzima-client/sdk';
+import {
+  getPostItemActions,
+  PostItemActionType,
+  PostItemActionTypeUserRole,
+  postStatusChangedHeader,
+  postStatusChangedMessage,
+} from '@constants';
 import { ActionSheetButton } from '@ionic/angular';
-import { SessionService } from '@services';
+import { AlertService, EnvService, SessionService, ShareService, ToastService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { cloneDeep } from 'lodash';
 
 @UntilDestroy()
 @Component({
@@ -13,13 +20,25 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class PostItemComponent implements OnInit {
   @Input() public post: PostResult;
+  @Output() public postUpdated = new EventEmitter<{ post: PostResult }>();
+  @Output() public postDeleted = new EventEmitter<{ post: PostResult }>();
   public media: any;
   public mediaId?: number;
   public isMediaLoading: boolean;
   public isActionsOpen = false;
   public actionSheetButtons?: ActionSheetButton[] = getPostItemActions();
 
-  constructor(private mediaService: MediaService, protected sessionService: SessionService) {
+  constructor(
+    private mediaService: MediaService,
+    protected sessionService: SessionService,
+    private alertService: AlertService,
+    private toastService: ToastService,
+    private postsService: PostsService,
+    private shareService: ShareService,
+    private envService: EnvService,
+  ) {}
+
+  ngOnInit(): void {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: ({ role, userId }) => {
         if (role === 'admin') {
@@ -33,9 +52,7 @@ export class PostItemComponent implements OnInit {
         }
       },
     });
-  }
 
-  ngOnInit(): void {
     this.mediaId = this.post.post_content
       ?.flatMap((c) => c.fields)
       .find((f) => f.input === 'upload')?.value?.value;
@@ -61,22 +78,22 @@ export class PostItemComponent implements OnInit {
     const action: PostItemActionType = ev.detail.data.action;
 
     const actions: Record<PostItemActionType, () => void> = {
-      [PostItemActionType.SHARE]: () => this.sharePost(),
+      [PostItemActionType.SHARE]: () =>
+        this.shareService.share({
+          title: this.post.title,
+          text: this.post.title,
+          url: `${this.envService.deploymentUrl}feed/${this.post.id}/view?mode=POST`,
+          dialogTitle: 'Share Post',
+        }),
       [PostItemActionType.EDIT]: () => this.editPost(),
       [PostItemActionType.ADD_TO_COLLECTION]: () => this.addToCollection(),
-      [PostItemActionType.PUBLISH]: () => this.setPostStatus(PostItemActionType.PUBLISH),
-      [PostItemActionType.PUT_UNDER_REVIEW]: () =>
-        this.setPostStatus(PostItemActionType.PUT_UNDER_REVIEW),
-      [PostItemActionType.ARCHIVE]: () => this.setPostStatus(PostItemActionType.ARCHIVE),
+      [PostItemActionType.PUBLISH]: () => this.setPostStatus(PostStatus.Published),
+      [PostItemActionType.PUT_UNDER_REVIEW]: () => this.setPostStatus(PostStatus.Draft),
+      [PostItemActionType.ARCHIVE]: () => this.setPostStatus(PostStatus.Archived),
       [PostItemActionType.DELETE]: () => this.deletePost(),
     };
 
     actions[action]();
-  }
-
-  private sharePost(): void {
-    // TODO: share post
-    console.log('share post');
   }
 
   private editPost(): void {
@@ -89,13 +106,42 @@ export class PostItemComponent implements OnInit {
     console.log('add post to collection');
   }
 
-  private setPostStatus(status: PostItemActionType): void {
-    // TODO: set post status
-    console.log('set post status: ', status);
+  private setPostStatus(status: PostStatus): void {
+    this.postsService.updateStatus(this.post.id, status).subscribe((res) => {
+      this.post = res.result;
+      this.postUpdated.emit({ post: this.post });
+      this.toastService.presentToast({
+        header: postStatusChangedHeader[status],
+        message: postStatusChangedMessage(status, this.post.title),
+        buttons: [],
+      });
+    });
   }
 
-  private deletePost(): void {
-    // TODO: delete post
-    console.log('delete post');
+  private async deletePost(): Promise<void> {
+    const result = await this.alertService.presentAlert({
+      header: 'Are you sure you want to delete this post?',
+      message: 'This action cannot be undone. Please proceed with caution.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Delete',
+          role: 'confirm',
+          cssClass: 'danger',
+        },
+      ],
+    });
+
+    if (result.role === 'confirm') {
+      const post = cloneDeep(this.post);
+      this.postsService.delete(this.post.id).subscribe({
+        next: () => {
+          this.postDeleted.emit({ post });
+        },
+      });
+    }
   }
 }
