@@ -9,14 +9,7 @@ export interface AccountNotificationsInterface {
   created: Date;
   allowed_privileges: string[];
   updated: Date | null;
-  url: string;
-  set: {
-    id: number;
-    url: string;
-    name?: string;
-  };
-  user: {
-    id: number;
-    url: string;
-  };
+  set_id: number;
+  set_name?: string;
+  user_id: number;
 }
