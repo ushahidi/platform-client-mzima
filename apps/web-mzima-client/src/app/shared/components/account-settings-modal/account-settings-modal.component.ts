@@ -292,7 +292,7 @@ export class AccountSettingsModalComponent implements OnInit {
         this.notifications = response.results;
 
         this.notifications.map((notification) => {
-          this.collectionsService.getById(String(notification.set.id)).subscribe({
+          this.collectionsService.getById(String(notification.set_id)).subscribe({
             next: (res) => {
               this.applyNotificationName(
                 res.result.id,
@@ -301,7 +301,7 @@ export class AccountSettingsModalComponent implements OnInit {
               );
             },
             error: () => {
-              this.savedsearchesService.getById(String(notification.set.id)).subscribe({
+              this.savedsearchesService.getById(String(notification.set_id)).subscribe({
                 next: (res) => {
                   this.applyNotificationName(
                     res.result.id!,
@@ -322,10 +322,10 @@ export class AccountSettingsModalComponent implements OnInit {
     name: string,
     type: NotificationTypeEnum,
   ): void {
-    const notification = this.notifications.find((n) => n.set.id === notificationId);
+    const notification = this.notifications.find((n) => n.set_id === notificationId);
     if (notification) {
       notification.type = type;
-      notification.set.name = name;
+      notification.set_name = name;
     }
   }
 
