@@ -530,7 +530,7 @@ export class SearchFormComponent implements OnInit {
             next: (response) => {
               const notification = response.results[0];
               if (!notification && result.is_notifications_enabled) {
-                this.notificationsService.post({ set: String(search.id) }).subscribe();
+                this.notificationsService.post({ set_id: String(search.id) }).subscribe();
               } else if (notification && !result.is_notifications_enabled) {
                 this.notificationsService.delete(notification.id).subscribe();
               }
@@ -715,9 +715,9 @@ export class SearchFormComponent implements OnInit {
   public changeNorificationStatus(event: MatSlideToggleChange, set: string): void {
     if (event.checked && !this.notification) {
       this.isNotificationLoading = true;
-      this.notificationsService.post({ set }).subscribe({
+      this.notificationsService.post({ set_id: set }).subscribe({
         next: (notification) => {
-          this.notification = notification;
+          this.notification = notification.result;
           this.isNotificationLoading = false;
         },
         error: () => {
