@@ -266,7 +266,7 @@ export class CollectionsComponent implements OnInit {
     });
 
     if (!this.notification && collectionData.is_notifications_enabled) {
-      this.notificationsService.post({ set: String(this.tmpCollectionToEditId) }).subscribe();
+      this.notificationsService.post({ set_id: String(this.tmpCollectionToEditId) }).subscribe();
     } else if (this.notification && !collectionData.is_notifications_enabled) {
       this.notificationsService.delete(this.notification.id).subscribe();
     }

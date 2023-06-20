@@ -29,7 +29,7 @@ import {
 })
 export class PostDetailsComponent implements OnChanges, OnDestroy {
   @Input() post?: PostResult;
-  @Input() feedView: boolean;
+  @Input() feedView: boolean = true;
   @Input() userId?: number | string;
   @Input() color?: string;
   @Input() twitterId?: string;

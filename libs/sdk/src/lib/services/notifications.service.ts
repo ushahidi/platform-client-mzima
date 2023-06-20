@@ -17,7 +17,7 @@ export class NotificationsService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return apiHelpers.API_V_3;
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {
