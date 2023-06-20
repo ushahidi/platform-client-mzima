@@ -3,6 +3,10 @@ import { divIcon, marker } from 'leaflet';
 import { EnvService } from '../services/env.service';
 
 export const pointIcon = (type: string = 'default') => {
+  if (type !== 'twitter' && type !== 'sms' && type !== 'email') {
+    type = 'default';
+  }
+
   const size: any = [30, 40];
   return divIcon({
     className: 'custom-map-marker',
@@ -57,4 +61,15 @@ export const getMapLayers = () => {
       dark: mapboxStaticTiles('Dark', 'mapbox/dark-v10'),
     },
   };
+};
+
+export const getMapLayer = (baseLayer: string, isDarkMode: boolean) => {
+  return (getMapLayers() as any).baselayers[
+    isDarkMode &&
+    baseLayer !== 'satellite' &&
+    baseLayer !== 'MapQuestAerial' &&
+    baseLayer !== 'hOSM'
+      ? 'dark'
+      : baseLayer
+  ];
 };

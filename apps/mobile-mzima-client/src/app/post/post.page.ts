@@ -9,7 +9,7 @@ import {
   postStatusChangedHeader,
   postStatusChangedMessage,
 } from '@constants';
-import { EnvService, SessionService, ShareService, ToastService } from '@services';
+import { AlertService, EnvService, SessionService, ShareService, ToastService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -43,12 +43,8 @@ export class PostPage {
     protected sessionService: SessionService,
     private shareService: ShareService,
     private envService: EnvService,
+    private alertService: AlertService,
   ) {
-    this.postId = this.route.snapshot.params['id'];
-    if (this.postId) {
-      this.getPost(this.postId);
-    }
-
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: ({ userId, role }) => {
         this.user = {
@@ -60,41 +56,51 @@ export class PostPage {
     });
   }
 
+  ionViewWillEnter() {
+    this.postId = this.route.snapshot.params['id'];
+    if (this.postId) {
+      this.getPost(this.postId);
+    }
+  }
+
   private getPost(id: string) {
     this.isPostLoading = true;
-    this.postsService.getById(id).subscribe({
-      next: async (post) => {
-        this.post = post;
-        this.checkPermissions();
+    this.postsService
+      .getById(id)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: async (post) => {
+          this.post = post;
+          this.checkPermissions();
 
-        this.isPostLoading = false;
+          this.isPostLoading = false;
 
-        this.mediaId = this.post!.post_content?.flatMap((c) => c.fields).find(
-          (f) => f.input === 'upload',
-        )?.value?.value;
+          this.mediaId = this.post!.post_content?.flatMap((c) => c.fields).find(
+            (f) => f.input === 'upload',
+          )?.value?.value;
 
-        this.location = this.post!.post_content?.flatMap((c) => c.fields).find(
-          (f) => f.input === 'location',
-        )?.value?.value;
+          this.location = this.post!.post_content?.flatMap((c) => c.fields).find(
+            (f) => f.input === 'location',
+          )?.value?.value;
 
-        if (this.mediaId) {
-          this.isMediaLoading = true;
-          this.mediaService.getById(String(this.mediaId)).subscribe({
-            next: (media) => {
-              this.isMediaLoading = false;
-              this.media = media;
-            },
-            error: () => {
-              this.isMediaLoading = false;
-            },
-          });
-        }
-      },
-      error: (error) => {
-        console.error('post loading error: ', error);
-        this.isPostLoading = false;
-      },
-    });
+          if (this.mediaId) {
+            this.isMediaLoading = true;
+            this.mediaService.getById(String(this.mediaId)).subscribe({
+              next: (media) => {
+                this.isMediaLoading = false;
+                this.media = media;
+              },
+              error: () => {
+                this.isMediaLoading = false;
+              },
+            });
+          }
+        },
+        error: (error) => {
+          console.error('post loading error: ', error);
+          this.isPostLoading = false;
+        },
+      });
   }
 
   private checkPermissions(): void {
@@ -108,7 +114,6 @@ export class PostPage {
     if (this.user.role === 'admin') {
       this.permissions = ['add_to_collection', 'edit', 'change_status'];
     }
-    console.log('permissions: ', this.permissions);
   }
 
   public back(): void {
@@ -153,5 +158,40 @@ export class PostPage {
       url: `${this.envService.deploymentUrl}feed/${this.post.id}/view?mode=POST`,
       dialogTitle: 'Share Post',
     });
+  }
+
+  public async deletePost(): Promise<void> {
+    const result = await this.alertService.presentAlert({
+      header: 'Are you sure you want to delete this post?',
+      message: 'This action cannot be undone. Please proceed with caution.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Delete',
+          role: 'confirm',
+          cssClass: 'danger',
+        },
+      ],
+    });
+
+    if (result.role === 'confirm') {
+      this.postsService.delete(this.post!.id).subscribe({
+        next: () => {
+          this.router.navigate(['/']);
+        },
+      });
+    }
+  }
+
+  public editPost(): void {
+    console.log('edit post');
+  }
+
+  public addPostToCollection(): void {
+    // TODO: add post to collection
+    console.log('add post to collection');
   }
 }

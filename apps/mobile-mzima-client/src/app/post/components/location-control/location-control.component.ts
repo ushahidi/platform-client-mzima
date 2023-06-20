@@ -33,7 +33,7 @@ export class LocationControlComponent implements OnInit, AfterViewInit {
           this.mapConfig = mapConfig;
 
           this.baseLayer = this.mapConfig.default_view!.baselayer;
-          const currentLayer = this.getMapLayer();
+          const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
 
           this.leafletOptions = {
             minZoom: 10,
@@ -61,13 +61,15 @@ export class LocationControlComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.isMapReady = true;
+    setTimeout(() => {
+      this.isMapReady = true;
+    }, 200);
   }
 
   private switchMode(systemInitiatedDark: any) {
     this.isDarkMode = systemInitiatedDark.matches;
 
-    const currentLayer = this.getMapLayer();
+    const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
 
     this.leafletOptions.layers = [tileLayer(currentLayer.url, currentLayer.layerOptions)];
 
@@ -79,16 +81,5 @@ export class LocationControlComponent implements OnInit, AfterViewInit {
 
   public onMapReady(map: Map) {
     this.map = map;
-  }
-
-  private getMapLayer() {
-    return mapHelper.getMapLayers().baselayers[
-      this.isDarkMode &&
-      this.baseLayer !== 'satellite' &&
-      this.baseLayer !== 'MapQuestAerial' &&
-      this.baseLayer !== 'hOSM'
-        ? 'dark'
-        : this.baseLayer
-    ];
   }
 }

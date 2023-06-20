@@ -70,13 +70,23 @@
         >
           <app-icon slot="icon-only" name="dots"></app-icon>
         </app-button>
-        <app-button color="dark" fill="clear">
+        <app-button color="dark" fill="clear" (buttonClick)="sharePost()">
           <app-icon slot="icon-only" name="share"></app-icon>
         </app-button>
-        <app-button color="dark" fill="clear" *ngIf="permissions.includes('add_to_collection')">
+        <app-button
+          color="dark"
+          fill="clear"
+          *ngIf="permissions.includes('add_to_collection')"
+          (buttonClick)="addPostToCollection()"
+        >
           <app-icon slot="icon-only" name="add-to-collection"></app-icon>
         </app-button>
-        <app-button color="danger" fill="clear" *ngIf="permissions.includes('edit')">
+        <app-button
+          color="danger"
+          fill="clear"
+          *ngIf="permissions.includes('edit')"
+          (buttonClick)="deletePost()"
+        >
           <app-icon slot="icon-only" name="delete"></app-icon>
         </app-button>
       </ion-buttons>

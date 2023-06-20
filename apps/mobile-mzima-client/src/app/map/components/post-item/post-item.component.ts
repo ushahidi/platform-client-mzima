@@ -144,4 +144,10 @@ export class PostItemComponent implements OnInit {
       });
     }
   }
+
+  public showOptions(ev: Event): void {
+    ev.preventDefault();
+    ev.stopPropagation();
+    this.isActionsOpen = true;
+  }
 }

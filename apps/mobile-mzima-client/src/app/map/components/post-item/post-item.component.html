@@ -21,7 +21,7 @@
       shape="normal"
       color="medium"
       class="post__details"
-      (buttonClick)="isActionsOpen = true"
+      (buttonClick)="showOptions($event)"
     >
       <app-icon slot="icon-only" name="dots"></app-icon>
     </app-button>
@@ -50,6 +50,7 @@
 
 <ion-action-sheet
   mode="ios"
+  header="Post Actions"
   [isOpen]="isActionsOpen"
   [buttons]="actionSheetButtons"
   (willDismiss)="makeAction($event)"
