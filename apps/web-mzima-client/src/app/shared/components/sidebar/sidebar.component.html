@@ -3,7 +3,7 @@
     <span class="sidebar__logo" *ngIf="isDesktop">
       <img
         src="../../../../assets/images/ushahidi-logo.svg"
-        alt="ushahidi"
+        alt="Ushahidi Company Platform Logo"
         width="172"
         height="40"
       />
@@ -28,8 +28,13 @@
             [routerLink]="createRouterLink(item.router)"
             routerLinkActive="sidebar-menu-button--active"
             (click)="registerPage($event, item.router, item.label)"
-          >
-            <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
+            ><!-- Added aria-hidden true (I noticed all mat-icons in the side nav the aria-hidden is set to true in default 
+            (or perhaps there's a configuration I missed)) -->
+            <mat-icon
+              class="sidebar-menu-button__icon"
+              [svgIcon]="item.icon"
+              aria-hidden="true"
+            ></mat-icon>
             <span class="sidebar-menu-button__title">
               {{ item.label | translate }}
             </span>
@@ -42,7 +47,13 @@
               [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
               (click)="item.action && item.action()"
             >
-              <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
+              <!-- Added aria-hidden true (I noticed all mat-icons in the side nav the aria-hidden is set to true in default 
+              (or perhaps there's a configuration I missed)) -->
+              <mat-icon
+                class="sidebar-menu-button__icon"
+                [svgIcon]="item.icon"
+                aria-hidden="true"
+              ></mat-icon>
               <span class="sidebar-menu-button__title">
                 {{ item.label | translate }}
               </span>
@@ -75,7 +86,13 @@
               routerLinkActive="sidebar-menu-button--active"
               [routerLink]="item.router && createRouterLink(item.router)"
             >
-              <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
+              <!-- Added aria-hidden true (I noticed all mat-icons in the side nav the aria-hidden is set to true in default 
+    (or perhaps there's a configuration I missed)) -->
+              <mat-icon
+                class="sidebar-menu-button__icon"
+                [svgIcon]="item.icon"
+                aria-hidden="true"
+              ></mat-icon>
               <span class="sidebar-menu-button__title">
                 {{ item.label | translate }}
               </span>

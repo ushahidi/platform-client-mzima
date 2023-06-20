@@ -7,11 +7,21 @@
 >
   <mat-expansion-panel-header>
     <mat-panel-title class="company-info__header">
-      <img [src]="logo" [alt]="title" class="company-info__logo" *ngIf="logo" />
+      <!-- Adding Logo at the end (thought it was more descriptive) -->
+      <img [src]="logo" [alt]="title + 'Logo'" class="company-info__logo" *ngIf="logo" />
       <span class="company-info__title">{{ title }}</span>
-      <mat-icon svgIcon="arrow-down" class="company-info__header__arrow"></mat-icon>
+      <!-- The arrow down icon is an interactive icon -->
+      <mat-icon
+        svgIcon="arrow-down"
+        class="company-info__header__arrow"
+        aria-label="company description button-icon"
+        aria-hidden="false"
+        [attr.aria-expanded]="expanded"
+        role="button"
+        tabindex="0"
+      ></mat-icon>
     </mat-panel-title>
   </mat-expansion-panel-header>
-
-  <div [innerHTML]="description | safeUrl"></div>
+  <!-- Ensures the div is focusable when expanded is true (added tab focus on description for screen readers to read it out to users)-->
+  <div [innerHTML]="description | safeUrl" [tabIndex]="expanded ? '0' : null"></div>
 </mat-expansion-panel>
