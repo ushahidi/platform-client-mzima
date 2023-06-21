@@ -18,10 +18,9 @@
         aria-hidden="false"
         [attr.aria-expanded]="isDescriptionOpen"
         role="button"
-        tabindex="0"
       ></mat-icon>
     </mat-panel-title>
   </mat-expansion-panel-header>
   <!-- Ensures the div is focusable when expanded is true (added tab focus on description for screen readers to read it out to users)-->
-  <div [innerHTML]="description | safeUrl" [tabIndex]="isDescriptionOpen ? '0' : null"></div>
+  <div [innerHTML]="description | safeUrl"></div>
 </mat-expansion-panel>
