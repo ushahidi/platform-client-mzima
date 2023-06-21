@@ -10,7 +10,7 @@
 .env.docker
 
 # Node
-/node_modules
+node_modules/
 apps/mobile-mzima-client/node_modules
 npm-debug.log
 yarn-error.log
@@ -46,7 +46,9 @@ testem.log
 Thumbs.db
 
 # Cypress e2e tests
-e2e-testing/node_modules
-cypress/videos/*
+e2e-testing/cypress/videos/*
+e2e-testing/cypress/screenshots/*
+e2e-testing/cypress/reports/*
+*/cypress.env.json
 
 .angular

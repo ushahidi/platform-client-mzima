@@ -1,9 +1,9 @@
-import LoginFunctions from "../../functions/LoginFunctions";
+import LoginPage from "../../pages/LoginPage";
 
 describe("Login as Admin", () => {
-  const loginFunctions = new LoginFunctions();
+  const loginPage = new LoginPage();
 
   it("Logs in as admin user", () => {
-    loginFunctions.login_as_admin();
+    loginPage.login_as_admin();
   });
 });

@@ -1,17 +1,17 @@
-import LoginFunctions from "../../functions/LoginFunctions";
-import UserFunctions from "../../functions/UserFunctions";
+import LoginPage from "../../pages/LoginPage";
+import UserPage from "../../pages/UserPage";
 
 describe("Automated Tests for Users", () => {
-  const loginFunctions = new LoginFunctions();
-  const userFunctions = new UserFunctions();
+  const loginPage = new LoginPage();
+  const userPage = new UserPage();
 
   beforeEach(() => {
-    loginFunctions.login_as_admin();
+    loginPage.login_as_admin();
   });
   it("Adds User", () => {
-    userFunctions.add_user();
+    userPage.add_user();
   });
   it("Deletes User",()=>{
-    userFunctions.delete_user();
+    userPage.delete_user();
   })
 });

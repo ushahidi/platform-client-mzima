@@ -12,7 +12,7 @@
     class="role-item"
     *ngFor="let role of (roleResponse$ | async)?.results"
     [routerLink]="['update', role.id]"
-    [data-qa]="'btn-' + role.display_name | lowercase"
+    [data-qa]="'role-link-' + role.display_name | lowercase"
   >
     {{ role.display_name }}
   </a>

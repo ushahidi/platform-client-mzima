@@ -1,18 +1,18 @@
-import LoginFunctions from "../../functions/LoginFunctions";
-import RoleFunctions from "../../functions/RoleFunctions";
+import LoginPage from "../../pages/LoginPage";
+import RolePage from "../../pages/RolePage";
 
 describe("Automated Tests for Roles", () => {
-  const loginFunctions = new LoginFunctions();
-  const roleFunctions = new RoleFunctions();
+  const loginPage = new LoginPage();
+  const rolePage = new RolePage();
 
   beforeEach(() => {
-    loginFunctions.login_as_admin();
+    loginPage.login_as_admin();
   });
   it("Create Role", () => {
-    roleFunctions.add_and_verify_role();
+    rolePage.add_and_verify_role();
   });
 
   it ("Deletes role", ()=>{
-        roleFunctions.delete_role_and_verify_deletion();
+        rolePage.delete_role_and_verify_deletion();
   })
 });

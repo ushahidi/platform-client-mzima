@@ -1,6 +1,6 @@
 import RoleLocators from '../locators/RoleLocators';
 
-class RoleFunctions {
+class RolePage {
   open_roles_page() {
     cy.get(RoleLocators.stngsBtn).click();
     cy.get(RoleLocators.roleBtn).click();
@@ -40,4 +40,4 @@ class RoleFunctions {
   }
 }
 
-export default RoleFunctions;
+export default RolePage;

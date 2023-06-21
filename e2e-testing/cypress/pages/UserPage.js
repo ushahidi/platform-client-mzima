@@ -1,6 +1,6 @@
 import UserLocators from '../locators/UserLocators';
 
-class UserFunctions {
+class UserPage {
   open_user_page_steps() {
     cy.wait(2000);
     cy.get(UserLocators.stngsBtn).click();
@@ -44,4 +44,4 @@ class UserFunctions {
   }
 }
 
-export default UserFunctions;
+export default UserPage;

@@ -2,7 +2,7 @@
 
 import SurveyLocators from '../locators/SurveyLocators';
 
-class SurveyFunctions {
+class SurveyPage {
   open_survey_creation_page_steps() {
     cy.get(SurveyLocators.stngsBtn).click();
     cy.get(SurveyLocators.surveysBtn).click();
@@ -148,4 +148,4 @@ class SurveyFunctions {
   }
 }
 
-export default SurveyFunctions;
+export default SurveyPage;

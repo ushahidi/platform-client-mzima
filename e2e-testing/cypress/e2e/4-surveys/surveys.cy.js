@@ -1,19 +1,19 @@
-import LoginFunctions from "../../functions/LoginFunctions";
-import SurveyFunctions from "../../functions/SurveyFunctions";
+import LoginPage from "../../pages/LoginPage";
+import SurveyPage from "../../pages/SurveyPage";
 
 describe("Automated Tests for Surveys", () => {
-  const loginFunctions = new LoginFunctions();
-  const surveyFunctions = new SurveyFunctions();
+  const loginPage = new LoginPage();
+  const surveyPage = new SurveyPage();
 
   before(() => {
-    loginFunctions.login_as_admin();
+    loginPage.login_as_admin();
   });
 
   it("Opens Survey Page", () => {
-    surveyFunctions.open_survey_creation_page_steps();
-    surveyFunctions.add_survey_details_steps();
-    surveyFunctions.add_survey_fields_steps();
-    surveyFunctions.complete_add_survey_steps();
-    surveyFunctions.verify_created_survey_exists();
+    surveyPage.open_survey_creation_page_steps();
+    surveyPage.add_survey_details_steps();
+    surveyPage.add_survey_fields_steps();
+    surveyPage.complete_add_survey_steps();
+    surveyPage.verify_created_survey_exists();
   });
 });

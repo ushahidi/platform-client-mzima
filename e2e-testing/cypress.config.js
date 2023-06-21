@@ -6,6 +6,10 @@ module.exports = defineConfig({
   viewportHeight: 960,
   defaultCommandTimeout: 20000,
   e2e: {
+    baseUrl: 'http://localhost:4200',
+    env: {
+      apiUrl: 'https://mzima-api.staging.ush.zone',
+    },
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },

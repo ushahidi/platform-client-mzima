@@ -1,9 +1,10 @@
 import LoginLocators from '../locators/LoginLocators';
 
-class LoginFunctions {
-  launch_login_modal(launchURL) {
-    cy.visit(launchURL);
-    this.click_through_onboarding();
+class LoginPage {
+  launch_login_modal(skipOnboarding = true) {
+    if (skipOnboarding) window.localStorage.setItem('USH_is_onboarding_done', 'true');
+    cy.visit('/');
+    if (skipOnboarding) this.completeOnboarding();
     cy.get(LoginLocators.loginModal).click();
   }
 
@@ -24,7 +25,7 @@ class LoginFunctions {
     cy.get(LoginLocators.loginButton).click();
   }
 
-  click_through_onboarding() {
+  completeOnboarding() {
     cy.get('#onboarding-button-greeting').click();
     cy.get('#onboarding-button-marker').click();
     cy.get('#onboarding-button-filters').click();
@@ -40,8 +41,8 @@ class LoginFunctions {
     cy.get(LoginLocators.accountBtn).should('exist');
   }
 
-  login_as_admin() {
-    this.launch_login_modal(Cypress.env('baseUrl'));
+  login_as_admin(skipOnboarding = true) {
+    this.launch_login_modal();
     this.type_email(Cypress.env('ush_admin_email'));
     this.type_password(Cypress.env('ush_admin_pwd'));
     this.click_login_button();
@@ -49,4 +50,4 @@ class LoginFunctions {
   }
 }
 
-export default LoginFunctions;
+export default LoginPage;
