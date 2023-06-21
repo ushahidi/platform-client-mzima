@@ -31,8 +31,8 @@ export class CompanyInfoComponent {
   }
 
   public descriptionToggleHandle(state: boolean) {
-    // Changes expanded to true or false
-    this.expanded = !this.expanded;
+    // Changes arrow down icon attr.aria-expanded to true or false
+    this.isDescriptionOpen = state;
     localStorage.setItem('is_description_open', JSON.stringify(state));
   }
 }
