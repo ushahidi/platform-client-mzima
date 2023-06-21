@@ -140,7 +140,7 @@ jobs:
           jq '.baseUrl="http://localhost:4200/"' <<<$(cat cypress.env.json) > cypress.env.json
   
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v5
   
         with:
           browser: chrome
