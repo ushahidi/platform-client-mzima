@@ -212,6 +212,7 @@ jobs:
         with:
           record: true
           parallel: true
+          working-directory: e2e-testing
           start: npm start
 
         env:
