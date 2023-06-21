@@ -15,4 +15,5 @@ export * from './posts.service';
 export * from './roles.service';
 export * from './surveys.service';
 export * from './users.service';
+export * from './layers.service';
 export * from './webhooks.service';
