@@ -103,7 +103,7 @@ export class ToolbarComponent implements OnInit {
       },
       {
         label: 'nav.help_support',
-        icon: 'auth',
+        icon: 'info',
         visible: true,
         action: () => this.openSupportModal(),
       },
