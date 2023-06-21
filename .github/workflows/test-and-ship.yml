@@ -147,6 +147,7 @@ jobs:
           install-command: npm install
           record: true
           parallel: true
+          working-directory: e2e-testing
           start: npm start
   
         env:
