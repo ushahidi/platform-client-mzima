@@ -5,5 +5,7 @@
   [iconOnly]="!(isDesktop$ | async)!"
 >
   <span *ngIf="isDesktop$ | async">{{ 'app.add_new_post' | translate }}</span>
-  <mat-icon icon svgIcon="plus"></mat-icon>
+  <!-- Added aria-hidden true (I noticed all mat-icons in the side nav the aria-hidden is set to true in default 
+    (or perhaps there's a configuration I missed)) -->
+  <mat-icon icon svgIcon="plus" aria-hidden="true"></mat-icon>
 </mzima-client-button>
