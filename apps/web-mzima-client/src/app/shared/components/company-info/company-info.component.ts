@@ -12,6 +12,8 @@ export class CompanyInfoComponent {
   public logo: string;
   public title: string;
   public description: string;
+  // Added to keep track of the arrow down icon in the expansion panel whether it is expanded or collapsed
+  public expanded: boolean = false;
 
   public isDescriptionOpen = true;
 
@@ -29,6 +31,8 @@ export class CompanyInfoComponent {
   }
 
   public descriptionToggleHandle(state: boolean) {
+    // Changes arrow down icon attr.aria-expanded to true or false
+    this.isDescriptionOpen = state;
     localStorage.setItem('is_description_open', JSON.stringify(state));
   }
 }
