@@ -147,7 +147,7 @@ jobs:
           install-command: npm install
           record: true
           parallel: true
-          working-directory: e2e-testing
+          start: npm start
   
         env:
             CYPRESS_ush_admin_email: "${{secrets.e2e_ush_admin_email}}"
