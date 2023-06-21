@@ -136,7 +136,7 @@ jobs:
       - name: Patch cypress config
         run: |
           cd e2e-testing
-          echo '{"projectId": "'${CYPRESS_PROJECT_ID}'"}' > cypress.json
+          echo '{"projectId": "'${CYPRESS_PROJECT_ID}'"}' > cypress.env.json
           jq '.baseUrl="http://localhost:4200/"' <<<$(cat cypress.env.json) > cypress.env.json
   
       - name: Cypress run
