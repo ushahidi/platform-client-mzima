@@ -10,6 +10,7 @@ export * from './permission.interface';
 export * from './posts.interface';
 export * from './role.interface';
 export * from './surveys.interface';
+export * from './layers.interface';
 export * from './users.interface';
 export * from './webhook.interface';
 export * from './search-response.interface';
