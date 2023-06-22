@@ -49,5 +49,11 @@
     <string>Allow us always to access your location</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>Allow us to access your location while using the app</string>
+    <key>NSCameraUsageDescription</key>
+    <string>To take photos, to post content</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Store photos to your device</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>To work with media files on your device</string>
 </dict>
 </plist>

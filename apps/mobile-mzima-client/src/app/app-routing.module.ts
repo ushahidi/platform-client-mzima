@@ -4,11 +4,11 @@ import { NotAuthorizedGuard } from '@guards';
 import { PageNotFoundComponent } from '@components';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./map/map.module').then((m) => m.MapPageModule),
-  //   pathMatch: 'full',
-  // },
+  {
+    path: '',
+    loadChildren: () => import('./map/map.module').then((m) => m.MapPageModule),
+    pathMatch: 'full',
+  },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthPageModule),
@@ -35,13 +35,13 @@ const routes: Routes = [
         (m) => m.DeploymentSearchPageModule,
       ),
   },
+  // {
+  //   path: '',
+  //   loadChildren: () => import('./post/post-edit/post-edit.module').then((m) => m.PostEditModule),
+  //   pathMatch: 'full',
+  // },
   {
-    path: '',
-    loadChildren: () => import('./post/post-edit/post-edit.module').then((m) => m.PostEditModule),
-    pathMatch: 'full',
-  },
-  {
-    path: 'post-create',
+    path: 'post-edit',
     loadChildren: () => import('./post/post-edit/post-edit.module').then((m) => m.PostEditModule),
     data: {
       breadcrumb: 'nav.posts',

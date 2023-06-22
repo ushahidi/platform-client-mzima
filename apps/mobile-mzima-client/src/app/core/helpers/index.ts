@@ -6,3 +6,4 @@ export * from './util';
 export * as mapHelper from './map';
 export * as searchFormHelper from './search-form';
 export * as UTCHelper from './utc';
+export * as objectHelpers from './object-helpers';

@@ -1,6 +1,11 @@
 <ion-item-sliding>
   <ion-item class="radio-item" lines="none">
-    <ion-radio class="radio" [value]="value" labelPlacement="end" justify="start">
+    <ion-radio
+      class="radio"
+      [value]="value"
+      [labelPlacement]="type === 'default' ? 'end' : 'start'"
+      [justify]="justify"
+    >
       <ng-content></ng-content>
     </ion-radio>
   </ion-item>

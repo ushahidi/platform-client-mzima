@@ -20,14 +20,6 @@ export class PostEditForm {
 
     const validators: ValidatorFn[] = [];
     switch (field.type) {
-      case 'point':
-        if (field.required) {
-          // this.locationRequired = field.required;
-          // if (value.lat === '' || value.lng === '') {
-          //   this.emptyLocation = true;
-          // }
-        }
-        break;
       case 'description':
         validators.push(Validators.minLength(2), AlphanumericValidator());
         if (field.required) validators.push(Validators.required);

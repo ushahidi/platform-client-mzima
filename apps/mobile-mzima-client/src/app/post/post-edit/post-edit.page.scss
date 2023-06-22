@@ -1,0 +1,104 @@
+.checkbox {
+  &-list {
+    list-style: none;
+    padding-left: 0;
+
+    &__item {
+      &:not(:last-child) {
+        padding-bottom: 5px;
+      }
+
+      &:not(:first-child) {
+        padding-top: 5px;
+      }
+
+      .lvl-2 {
+        margin-left: 16px;
+      }
+    }
+  }
+}
+
+.form-row {
+  &__instruction {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-800);
+    }
+  }
+}
+
+.form-control {
+  &--section {
+    margin-bottom: 16px;
+  }
+
+  &--tip {
+    font-size: 12px;
+  }
+}
+
+ion-modal {
+  --width: 290px;
+  --height: 400px;
+  --border-radius: 8px;
+}
+
+.form-controls-panel {
+  display: flex;
+  justify-content: flex-start;
+
+  .submit-button {
+    width: 100px;
+
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}
+
+.related-post {
+  &-selected {
+    display: inline-block;
+    border: 1px solid var(--color-neutral-30);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+  }
+
+  &-delete {
+    width: 20px;
+    height: 20px;
+    border: 1px solid;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    cursor: pointer;
+
+    mat-icon {
+      display: contents;
+      font-size: 16px;
+    }
+  }
+
+  &-list {
+    ul {
+      padding: 0;
+    }
+
+    ul li {
+      list-style: none;
+      padding-top: 15px;
+    }
+  }
+}

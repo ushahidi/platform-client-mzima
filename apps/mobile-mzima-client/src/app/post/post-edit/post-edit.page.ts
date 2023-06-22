@@ -1,17 +1,32 @@
 import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { PostsService, SurveysService } from '@mzima-client/sdk';
-import { SessionService } from '@services';
-import { preparingVideoUrl } from '@validators';
+import { STORAGE_KEYS } from '@constants';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { lastValueFrom } from 'rxjs';
+import {
+  GeoJsonFilter,
+  MediaService,
+  PostResult,
+  PostsService,
+  SurveysService,
+} from '@mzima-client/sdk';
+import { AlertService, SessionService } from '@services';
+import { FormValidator, preparingVideoUrl } from '@validators';
 import { DatabaseService } from '@services';
-import { PostEditForm } from '../components';
+import { NetworkService } from '../../core/services/network.service';
+import { ToastService } from '../../core/services/toast.service';
+import { PostEditForm, UploadFileHelper } from '../helpers';
 
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
+import { objectHelpers, UTCHelper } from '@helpers';
 
+dayjs.extend(timezone);
+
+@UntilDestroy()
 @Component({
   selector: 'app-post-edit',
   templateUrl: 'post-edit.page.html',
@@ -21,65 +36,93 @@ export class PostEditPage {
   @Input() public postInput: any;
   @Output() cancel = new EventEmitter();
   @Output() updated = new EventEmitter();
+  public date: string;
   public color: string;
   public form: FormGroup;
   private initialFormData: any;
   private relationConfigForm: any;
   private relationConfigSource: any;
   private relationConfigKey: string;
+  private isSearching = false;
+  public relatedPosts: PostResult[];
+  public relationSearch: string;
+  public selectedRelatedPost: any;
   private fieldsFormArray = ['tags'];
   public description: string;
   public title: string;
-  private formId: number;
   private postId: number;
   private post: any;
   public tasks: any[];
   private completeStages: number[] = [];
-  // private fieldsFormArray = ['tags'];
   public surveyName: string;
   public atLeastOneFieldHasValidationError: boolean;
-  // public locationRequired = false;
-  // public emptyLocation = false;
+  public locationRequired = false;
+  public emptyLocation = false;
+  public formValidator = new FormValidator();
 
   public filters: any;
   public surveyList: any;
   public surveyListOptions: any;
-  public selectedSurveyId: number = 507;
+  public selectedSurveyId: number;
   public selectedSurvey: any;
+  private fileToUpload: any;
+  private checkedList: any[] = [];
+  private isConnection = true;
 
   dateOption: any;
 
   constructor(
+    private networkService: NetworkService,
+    private toastService: ToastService,
+    private alertService: AlertService,
     private location: Location,
     private router: Router,
     private formBuilder: FormBuilder,
     private postsService: PostsService,
+    private mediaService: MediaService,
     private surveysService: SurveysService,
     private sessionService: SessionService,
     private dataBaseService: DatabaseService,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
   ) {
+    this.networkService.networkStatus$.pipe(untilDestroyed(this)).subscribe({
+      next: (value) => (this.isConnection = value),
+    });
     this.filters = JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
     );
-    this.transformSurveys();
+  }
 
-    this.form = this.formBuilder.group({
-      title: new FormControl(),
-      description: new FormControl(),
-      incidentDate: new FormControl(),
-      latitude: new FormControl(),
-      longitude: new FormControl(),
+  async ionViewWillEnter() {
+    this.getSurveys();
+  }
+
+  async transformSurveys() {
+    this.surveyList = await this.dataBaseService.get('surveys');
+    this.surveyListOptions = this.surveyList.map((item: any) => {
+      return {
+        label: item.name,
+        value: item.id,
+      };
     });
   }
 
-  ionViewWillEnter() {
-    this.getSurveys();
-    if (this.selectedSurveyId) this.loadForm();
+  clearData() {
+    this.relatedPosts = [];
+    this.fileToUpload = null;
+
+    if (this.form?.controls) {
+      for (const control in this.form.controls) {
+        this.form.removeControl(control);
+      }
+    }
   }
 
   loadForm() {
+    if (!this.selectedSurveyId) return;
+    this.clearData();
+
     this.selectedSurvey = this.surveyList.find((item: any) => item.id === this.selectedSurveyId);
     this.color = this.selectedSurvey.color;
     this.tasks = this.selectedSurvey.tasks;
@@ -106,7 +149,7 @@ export class PostEditPage {
 
           if (field.key) {
             const defaultValues: any = {
-              date: new Date(),
+              date: UTCHelper.toUTC(dayjs()),
               location: { lat: '', lng: '' },
               number: 0,
             };
@@ -127,30 +170,36 @@ export class PostEditPage {
               : field.default || defaultValues[field.input] || '';
 
             field.value = value;
+
             fields[field.key] = this.fieldsFormArray.includes(field.type)
               ? new PostEditForm(this.formBuilder).addFormArray(value, field)
               : new PostEditForm(this.formBuilder).addFormControl(value, field);
+
+            if (field.type === 'point') {
+              this.locationRequired = field.required;
+              if (value.lat === '' || value.lng === '') this.emptyLocation = true;
+            }
           }
         });
     }
     this.form = new FormGroup(fields);
     this.initialFormData = this.form.value;
-
-    console.log(this.form.controls);
-    console.log(this.form.value);
   }
 
-  async transformSurveys() {
-    this.surveyList = await this.dataBaseService.get('surveys');
-    this.surveyListOptions = this.surveyList.map((item: any) => {
-      return {
-        label: item.name,
-        value: item.id,
-      };
-    });
+  public changeLocation(data: any, formKey: string) {
+    const { location, error } = data;
+    const { lat, lng } = location;
+
+    this.form.patchValue({ [formKey]: { lat: lat, lng: lng } });
+
+    this.emptyLocation = error;
+    this.cdr.detectChanges();
   }
 
-  setCalendar() {}
+  setCalendar(event: any, key: any, type: 'date' | 'dateTime' = 'date') {
+    const template = type === 'dateTime' ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
+    this.form.patchValue({ [key]: UTCHelper.toUTC(event.detail.value, template) });
+  }
 
   getSurveys() {
     this.surveysService
@@ -162,6 +211,11 @@ export class PostEditPage {
       .subscribe({
         next: (response) => {
           this.dataBaseService.set('surveys', response.results);
+          this.transformSurveys();
+        },
+        error: (err) => {
+          this.transformSurveys();
+          console.log(err);
         },
       });
   }
@@ -175,30 +229,26 @@ export class PostEditPage {
       date: (value: any) =>
         value
           ? {
-              value: dayjs(value).format('YYYY-MM-DD'),
+              value: UTCHelper.toUTC(value),
               value_meta: { from_tz: dayjs.tz.guess() },
             }
           : { value: null },
       datetime: (value: any) =>
         value
           ? {
-              value: dayjs(value).format('YYYY-MM-DD'),
+              value: UTCHelper.toUTC(value, 'YYYY-MM-DD HH:mm'),
               value_meta: { from_tz: dayjs.tz.guess() },
             }
           : { value: null },
       location: (value: any) =>
         value && value.lat ? { value: { lat: value.lat, lon: value.lng } } : { value: null },
-      tags: (value: any) => ({ value: value || null }),
-      checkbox: (value: any) => ({ value: value || null }),
       video: (value: any) => (value ? { value: preparingVideoUrl(value) } : {}),
-      relation: (value: any) => ({ value: value || null }),
-      // default: (value: any) => ({ value: value || null }),
     };
 
     for (const task of this.tasks) {
       task.fields = await Promise.all(
         task.fields.map(async (field: { key: string | number; input: string; type: string }) => {
-          const fieldValue = this.form.value[field.key];
+          const fieldValue: any = this.form.value[field.key];
           let value: any = { value: fieldValue };
 
           if (field.type === 'title') this.title = fieldValue;
@@ -208,27 +258,21 @@ export class PostEditPage {
             value = fieldHandlers[field.input as keyof typeof fieldHandlers](fieldValue);
           } else if (field.input === 'upload') {
             if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
-              try {
-                // const uploadObservable = this.mediaService.uploadFile(
-                //   this.form.value[field.key]?.photo,
-                //   this.form.value[field.key]?.caption,
-                // );
-                // const response: any = await lastValueFrom(uploadObservable);
-                // value.value = response.id;
-              } catch (error: any) {
-                throw new Error(`Error uploading file: ${error.message}`);
-              }
+              this.fileToUpload = {
+                ...this.form.value[field.key]?.photo,
+                caption: this.form.value[field.key]?.caption,
+                upload: this.form.value[field.key]?.upload,
+              };
             } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
-              try {
-                // const deleteObservable = this.mediaService.delete(this.form.value[field.key]?.id);
-                // await lastValueFrom(deleteObservable);
-                // value.value = null;
-              } catch (error: any) {
-                throw new Error(`Error deleting file: ${error.message}`);
-              }
+              this.fileToUpload = {
+                fileId: this.form.value[field.key]?.id,
+                delete: this.form.value[field.key]?.delete,
+              };
             } else {
               value.value = this.form.value[field.key]?.id || null;
             }
+          } else {
+            value.value = this.form.value[field.key] || null;
           }
 
           return {
@@ -240,25 +284,32 @@ export class PostEditPage {
     }
   }
 
+  /**
+   * Checking post information and preparing data
+   */
   public async submitPost(): Promise<void> {
     if (this.form.disabled) return;
-    this.form.disable();
+    // this.form.disable();
 
     try {
+      await this.toastService.showToast('error', 3000);
       await this.preparationData();
     } catch (error: any) {
+      this.alertService.presentAlert({
+        header: 'Error',
+        message: error,
+      });
       console.log(error);
-      // this.snackBar.open(error, 'Close', { panelClass: ['error'], duration: 3000 });
       return;
     }
 
-    const postData = {
+    const postData: any = {
       base_language: 'en',
       completed_stages: this.completeStages,
       content: this.description,
       description: '',
       enabled_languages: {},
-      form_id: this.formId,
+      form_id: this.selectedSurveyId,
       locale: 'en_US',
       post_content: this.tasks,
       post_date: new Date().toISOString(),
@@ -267,19 +318,80 @@ export class PostEditPage {
       type: 'report',
     };
 
+    if (this.fileToUpload) postData.file = this.fileToUpload;
+
     if (!this.form.valid) this.form.markAllAsTouched();
+
     this.preventSubmitIncaseTheresNoBackendValidation();
 
-    if (this.postId) {
-      postData.post_date = this.post.post_date || new Date().toISOString();
-      this.updatePost(this.postId, postData);
-    } else {
-      if (!this.atLeastOneFieldHasValidationError) {
-        this.createPost(postData);
+    if (this.postId) postData.post_date = this.post.post_date || new Date().toISOString();
+
+    await this.offlineStore(postData);
+
+    console.log('postData', postData);
+
+    if (this.isConnection) await this.uploadPost();
+  }
+
+  /**
+   * Storing created post to indexedb
+   */
+  async offlineStore(postData: any) {
+    const pendingPosts: any[] =
+      (await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY)) || [];
+    pendingPosts.push(postData);
+    await this.dataBaseService.set(STORAGE_KEYS.PENDING_POST_KEY, pendingPosts);
+  }
+
+  /**
+   * Upload created post from indexedb
+   */
+  async uploadPost() {
+    const pendingPosts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
+    for (let postData of pendingPosts) {
+      if (postData?.file?.upload) {
+        postData = await new UploadFileHelper(this.mediaService).uploadFile(
+          postData,
+          postData.file,
+        );
       }
+
+      if (postData?.file?.delete) {
+        postData = await this.deleteFile(postData, postData.file);
+      }
+
+      if (this.postId) {
+        this.updatePost(this.postId, postData);
+      } else {
+        if (!this.atLeastOneFieldHasValidationError) {
+          this.createPost(postData);
+        }
+      }
+    }
+    await this.dataBaseService.set(STORAGE_KEYS.PENDING_POST_KEY, []);
+  }
+
+  async deleteFile(postData: any, { fileId }: any) {
+    try {
+      const deleteObservable = this.mediaService.delete(fileId);
+      await lastValueFrom(deleteObservable);
+
+      for (const content of postData.post_content) {
+        for (const field of content.fields) {
+          if (field.input === 'upload') {
+            field.value.value = null;
+          }
+        }
+      }
+
+      delete postData.file;
+      return postData;
+    } catch (error: any) {
+      throw new Error(`Error deleting file: ${error.message}`);
     }
   }
 
+  /** Update post */
   private updatePost(postId: number, postData: any) {
     this.postsService.update(postId, postData).subscribe({
       error: () => this.form.enable(),
@@ -291,65 +403,61 @@ export class PostEditPage {
     });
   }
 
+  /** Create post */
   private createPost(postData: any) {
     this.postsService.post(postData).subscribe({
       error: () => this.form.enable(),
       complete: async () => {
         await this.postComplete();
-        this.router.navigate(['/feed']);
+        this.router.navigate(['/']);
       },
     });
   }
 
   async postComplete() {
-    // await this.confirmModalService.open({
-    //   title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
-    //   description: `<p>${this.translate.instant(
-    //     'notify.confirm_modal.add_post_success.success_description',
-    //   )}</p>`,
-    //   buttonSuccess: this.translate.instant('notify.confirm_modal.add_post_success.success_button'),
-    // });
+    await this.alertService.presentAlert({
+      header: 'Success!',
+      message:
+        'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
+      buttons: [
+        {
+          text: 'OK, sounds good',
+          role: 'confirm',
+        },
+      ],
+    });
   }
 
   public async previousPage() {
-    // for (const key in this.initialFormData) {
-    //   this.initialFormData[key] = this.initialFormData[key]?.value || null;
-    // }
-    // if (!objectHelpers.objectsCompare(this.initialFormData, this.form.value)) {
-    //   const confirmed = await this.confirmModalService.open({
-    //     title: this.translate.instant('notify.default.data_has_not_been_saved'),
-    //     description: this.translate.instant('notify.default.proceed_warning'),
-    //     confirmButtonText: 'OK',
-    //   });
-    //   if (!confirmed) return;
-    // }
-    // if (!this.postInput) {
-    //   this.backNavigation();
-    //   this.eventBusService.next({
-    //     type: EventType.AddPostButtonSubmit,
-    //     payload: true,
-    //   });
-    // } else {
-    //   this.cancel.emit();
-    // }
+    for (const key in this.initialFormData) {
+      this.initialFormData[key] = this.initialFormData[key]?.value || null;
+    }
+    if (!objectHelpers.objectsCompare(this.initialFormData, this.form.value)) {
+      const result = await this.alertService.presentAlert({
+        header: 'Success!',
+        message:
+          'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
+      });
+      if (result.role !== 'confirm') return;
+    }
+
+    if (!this.postInput) {
+      this.backNavigation();
+      // this.eventBusService.next({
+      //   type: EventType.AddPostButtonSubmit,
+      //   payload: true,
+      // });
+    } else {
+      this.cancel.emit();
+    }
   }
 
   public backNavigation(): void {
     this.location.back();
   }
 
-  // public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {
-  //   // fields.map((field: any) => {
-  //   //   if (field.key === fieldKey) {
-  //   //     field.options.map((el: any) => {
-  //   //       this.onCheckChange(event, field.key, el.id);
-  //   //     });
-  //   //   }
-  //   // });
-  // }
-
   public preventSubmitIncaseTheresNoBackendValidation() {
-    /** Extra check to prevent form submission before hand
+    /** Extra check to prevent form submission beforehand
      * incase any field shows error but has no backend validation **/
     this.form.enable();
     for (const task of this.tasks) {
@@ -363,16 +471,107 @@ export class PostEditPage {
     }
   }
 
-  public taskComplete(event: any) {
-    console.log(event);
+  public taskComplete({ id }: any, event: any) {
     if (event.checked) {
-      // this.completeStages.push(id);
+      this.completeStages.push(id);
     } else {
-      // const index = this.completeStages.indexOf(id);
-      // if (index >= 0) {
-      //   this.completeStages.splice(index, 1);
-      // }
+      const index = this.completeStages.indexOf(id);
+      if (index >= 0) {
+        this.completeStages.splice(index, 1);
+      }
     }
+  }
+
+  public toggleAllSelection(checked: any, field: any, fieldKey: string) {
+    if (field.key === fieldKey) {
+      field.options.map((el: any) => {
+        this.onCheckChange(checked, field.key, el.id);
+      });
+    }
+  }
+
+  public onCheckChange(
+    checked: boolean,
+    fieldKey: string,
+    id: number,
+    options?: any[],
+    parentId?: number,
+  ) {
+    const formArray: FormArray = this.form.get(fieldKey) as FormArray;
+
+    if (checked) {
+      const hasId = formArray.controls.some((control: any) => control.value === id);
+      if (!hasId) formArray.push(new FormControl(id));
+
+      if (parentId) {
+        const hasParentId = formArray.controls.some((control: any) => control.value === parentId);
+        if (!hasParentId) formArray.push(new FormControl(parentId));
+      }
+
+      if (!parentId && options) {
+        const children = options.filter((option) => option.parent_id === id);
+        children.forEach((child) => {
+          const hasChildId = formArray.controls.some((control: any) => control.value === child.id);
+          if (!hasChildId) formArray.push(new FormControl(child.id));
+        });
+      }
+    } else {
+      const index = formArray.controls.findIndex((ctrl: any) => ctrl.value === id);
+      if (index > -1) formArray.removeAt(index);
+
+      if (parentId && options) {
+        const children = options.filter((option: any) => option.parent_id === parentId);
+        const isParentHasCheckedChild = children.some((child) =>
+          formArray.controls.some((control: any) => control.value === child.id),
+        );
+        if (!isParentHasCheckedChild) {
+          const i = formArray.controls.findIndex((ctrl: any) => ctrl.value === parentId);
+          if (i > -1) formArray.removeAt(i);
+        }
+      }
+
+      if (!parentId && options) {
+        const children = options.filter((option) => option.parent_id === id);
+        children.forEach((child) => {
+          const i = formArray.controls.findIndex((ctrl: any) => ctrl.value === child.id);
+          if (i > -1) formArray.removeAt(i);
+        });
+      }
+    }
+  }
+
+  public chooseRelatedPost(event: any, { key }: any, { id, title }: any) {
+    if (!event) return;
+    this.form.patchValue({ [key]: id });
+    this.selectedRelatedPost = { id, title };
+    this.relatedPosts = [];
+    this.relationSearch = '';
+  }
+
+  public relationSearchPosts() {
+    const params: GeoJsonFilter = {
+      order: 'desc',
+      'form[]': this.relationConfigForm,
+      'source[]': this.relationConfigSource,
+      orderby: 'post_date',
+      q: this.relationSearch,
+      'status[]': [],
+    };
+    this.isSearching = true;
+    this.postsService.getPosts('', params).subscribe({
+      next: (data) => {
+        this.relatedPosts = data.results;
+        this.isSearching = false;
+      },
+      error: () => (this.isSearching = false),
+    });
+  }
+
+  public deleteRelatedPost({ key }: any, { id }: any) {
+    if (this.form.controls[key].value === id) {
+      this.form.patchValue({ [key]: '' });
+    }
+    this.selectedRelatedPost = null;
   }
 
   public trackById(item: any): number {
@@ -381,5 +580,20 @@ export class PostEditPage {
 
   public generateSecurityTrustUrl(unsafeUrl: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
+  }
+
+  public changeSelectionFields(checked: boolean, fieldKey: string, item: any) {
+    if (checked) {
+      this.checkedList = this.form.controls[fieldKey].value || [];
+      this.checkedList.push(item);
+      this.form.patchValue({ [fieldKey]: this.checkedList });
+    } else {
+      this.checkedList = this.form.controls[fieldKey].value;
+      const index = this.checkedList.indexOf(item);
+      if (index >= 0) {
+        this.checkedList.splice(index, 1);
+        this.form.patchValue({ [fieldKey]: this.checkedList });
+      }
+    }
   }
 }

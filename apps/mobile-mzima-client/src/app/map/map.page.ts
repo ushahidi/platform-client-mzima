@@ -17,6 +17,6 @@ export class MapPage {
   }
 
   public createPost() {
-    this.router.navigate(['/post-create']);
+    this.router.navigate(['/post-edit']);
   }
 }

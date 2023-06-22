@@ -17,6 +17,7 @@ export class SelectComponent implements ControlValueAccessor {
   @Input() public options?: { label: string; value: any }[];
   @Input() public label?: string;
   @Input() public placeholder: string = '';
+  @Input() public hintHTML?: string;
   @Input() public hint?: string;
   @Input() public required = false;
   @Input() public rounded = false;
@@ -48,7 +49,8 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   public handleSelectChange(event: Event): void {
-    this.onChange((event.target as HTMLInputElement)?.value);
+    const value = (event.target as HTMLInputElement)?.value;
+    this.onChange(typeof value === 'string' ? value.trim() : value);
   }
 
   public handleFocus(): void {

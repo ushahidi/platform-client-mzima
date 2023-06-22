@@ -18,6 +18,7 @@ export class TextareaControlComponent implements ControlValueAccessor {
   @Input() public label?: string;
   @Input() public placeholder: string = '';
   @Input() public hint?: string;
+  @Input() public hintHTML?: string;
   @Input() public required = false;
   @Input() public rounded = false;
   @Input() public disabled = false;
