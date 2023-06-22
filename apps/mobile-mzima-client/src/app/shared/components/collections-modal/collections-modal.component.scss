@@ -1,0 +1,241 @@
+.main {
+  --padding-top: var(--ion-safe-area-top);
+
+  &::part(scroll) {
+    transition: padding-top 0.35s ease;
+  }
+
+  &--search-view {
+    --padding-top: calc(96px + var(--ion-safe-area-top));
+  }
+}
+
+.header {
+  display: block;
+  overflow: hidden;
+  transition-duration: 0.35s;
+  transition-timing-function: ease;
+  transition-property: height, opacity;
+  height: calc(72px + var(--ion-safe-area-top));
+
+  &--hidden {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+.info-button {
+  --size: 40px;
+  --icon-size: 24px;
+  margin-left: var(--ion-padding);
+}
+
+.loader {
+  display: block;
+  margin-top: 64px;
+}
+
+.footer {
+  min-height: calc(76px + var(--ion-safe-area-bottom));
+  padding: 16px 24px calc(16px + var(--ion-safe-area-bottom));
+
+  &:before {
+    height: 1px;
+    background: var(--ion-color-step-200);
+  }
+
+  &__buttons {
+    gap: 8px;
+
+    .footer--search-view & {
+      align-items: stretch;
+      flex-direction: column;
+    }
+  }
+
+  &__button {
+    --button-padding-start: 24px;
+    --button-padding-end: 24px;
+  }
+}
+
+.empty-box {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.button-add {
+  height: 72px;
+  font-weight: 600;
+  --border-width: 0 0 1px;
+  --background: transparent;
+  --border-color: var(--ion-color-step-200);
+  --padding-start: 16px;
+  --padding-end: 20px;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --min-height: 55px;
+  --ripple-color: var(--ion-color-primary);
+  transition-duration: 0.35s;
+  transition-timing-function: ease;
+  transition-property: height, margin-bottom, opacity;
+
+  .main:not(.main--search-view) & {
+    margin-bottom: 128px;
+  }
+
+  .main--search-view & {
+    height: 0;
+    opacity: 0;
+  }
+
+  @media (prefers-color-scheme: light) {
+    --color: var(--color-primary-40);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --color: var(--ion-color-primary);
+  }
+
+  &__icon {
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    font-size: 40px;
+    margin-right: 16px;
+  }
+}
+
+.search-form {
+  left: 0;
+  right: 0;
+  top: 72px;
+  z-index: 150;
+  display: block;
+  position: absolute;
+  margin-bottom: 24px;
+  transition: all 0.35s ease;
+  background: var(--background);
+  padding: 24px var(--ion-padding);
+  transition-property: top, position, padding, margin-bottom;
+
+  .main--search-view & {
+    top: 0;
+    position: fixed;
+    margin-bottom: 0;
+    --light-border-color: transparent;
+    padding: calc(7px + var(--ion-safe-area-top)) 0 7px;
+
+    @media (prefers-color-scheme: dark) {
+      --input-background: transparent;
+    }
+  }
+
+  &::ng-deep {
+    .ion-margin-bottom {
+      margin-bottom: 0;
+    }
+  }
+
+  &__form-control-container {
+    z-index: 100;
+    position: relative;
+    padding-bottom: 7px;
+    transition-duration: 0.35s;
+    transition-timing-function: ease;
+    border-bottom: 1px solid transparent;
+    padding-top: calc(8px + var(--ion-safe-area-top));
+    transition-property: border-bottom-color background-color;
+
+    .search-form--results-visible & {
+      background-color: var(--ion-background-color);
+      border-bottom-color: var(--ion-color-step-200);
+    }
+  }
+
+  &__form-control {
+  }
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  padding-inline: var(--ion-padding);
+}
+
+.collection-item {
+  --checkbox-border-color: transparent;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+  }
+
+  &__content {
+    flex: 1 1 100%;
+  }
+
+  &__description {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    overflow: hidden;
+    line-height: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    letter-spacing: 0.25px;
+    -webkit-box-orient: vertical;
+  }
+
+  &__count {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    margin-left: 16px;
+    letter-spacing: 0.1px;
+  }
+}
+
+.create-collection-form {
+  &__group {
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    padding: 0;
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+
+    @media (prefers-color-scheme: light) {
+      color: var(--ion-color-step-800);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-900);
+    }
+  }
+
+  .footer {
+    width: auto;
+    margin-left: calc(var(--ion-padding) * -1);
+    margin-right: calc(var(--ion-padding) * -1);
+  }
+
+  .form-control {
+    &::ng-deep {
+      .ion-margin-bottom {
+        margin-bottom: 8px;
+      }
+    }
+  }
+}

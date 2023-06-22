@@ -10,5 +10,8 @@
       <app-icon name="arrow-back" slot="icon-only"></app-icon>
     </app-button>
     {{ title }}
+    <div slot="end">
+      <ng-content select="[end]"></ng-content>
+    </div>
   </ion-toolbar>
 </ion-header>

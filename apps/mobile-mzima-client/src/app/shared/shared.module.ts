@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   FormControlComponent,
   IconComponent,
@@ -19,6 +19,8 @@ import {
   CalendarComponent,
   HeaderComponent,
   MainLayoutComponent,
+  CollectionsModalComponent,
+  ToggleComponent,
 } from './components';
 import { CalendarModule } from 'ion2-calendar';
 
@@ -36,11 +38,21 @@ const components = [
   CalendarComponent,
   HeaderComponent,
   MainLayoutComponent,
+  CollectionsModalComponent,
+  ToggleComponent,
 ];
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, IonicModule, TranslateModule, RouterModule, FormsModule, CalendarModule],
+  imports: [
+    CommonModule,
+    IonicModule,
+    TranslateModule,
+    RouterModule,
+    FormsModule,
+    CalendarModule,
+    ReactiveFormsModule,
+  ],
   exports: [IonicModule, CommonModule, ...components],
 })
 export class SharedModule {}

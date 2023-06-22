@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MediaService, PostResult, PostStatus, PostsService } from '@mzima-client/sdk';
 import { LatLon } from '@models';
-import { ActionSheetButton } from '@ionic/angular';
+import { ActionSheetButton, ModalController } from '@ionic/angular';
 import {
   PostItemActionType,
   getPostStatusActions,
@@ -11,6 +11,7 @@ import {
 } from '@constants';
 import { AlertService, EnvService, SessionService, ShareService, ToastService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { CollectionsModalComponent } from '../shared/components/collections-modal/collections-modal.component';
 
 @UntilDestroy()
 @Component({
@@ -44,6 +45,7 @@ export class PostPage {
     private shareService: ShareService,
     private envService: EnvService,
     private alertService: AlertService,
+    private modalController: ModalController,
   ) {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: ({ userId, role }) => {
@@ -190,8 +192,18 @@ export class PostPage {
     console.log('edit post');
   }
 
-  public addPostToCollection(): void {
-    // TODO: add post to collection
-    console.log('add post to collection');
+  public async addPostToCollection(): Promise<void> {
+    const modal = await this.modalController.create({
+      component: CollectionsModalComponent,
+      componentProps: {
+        postId: this.post!.id,
+        selectedCollections: new Set(this.post?.sets ?? []),
+      },
+    });
+    modal.onWillDismiss().then(({ data }) => {
+      const { collections } = data;
+      console.log('collections: ', collections);
+    });
+    modal.present();
   }
 }

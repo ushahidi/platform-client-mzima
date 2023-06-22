@@ -7,10 +7,11 @@ import {
   postStatusChangedHeader,
   postStatusChangedMessage,
 } from '@constants';
-import { ActionSheetButton } from '@ionic/angular';
+import { ActionSheetButton, ModalController } from '@ionic/angular';
 import { AlertService, EnvService, SessionService, ShareService, ToastService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { cloneDeep } from 'lodash';
+import { CollectionsModalComponent } from '../../../shared/components/collections-modal/collections-modal.component';
 
 @UntilDestroy()
 @Component({
@@ -36,6 +37,7 @@ export class PostItemComponent implements OnInit {
     private postsService: PostsService,
     private shareService: ShareService,
     private envService: EnvService,
+    private modalController: ModalController,
   ) {}
 
   ngOnInit(): void {
@@ -101,9 +103,19 @@ export class PostItemComponent implements OnInit {
     console.log('edit post');
   }
 
-  private addToCollection(): void {
-    // TODO: add post to collection
-    console.log('add post to collection');
+  private async addToCollection(): Promise<void> {
+    const modal = await this.modalController.create({
+      component: CollectionsModalComponent,
+      componentProps: {
+        postId: this.post.id,
+        selectedCollections: new Set(this.post.sets ?? []),
+      },
+    });
+    modal.onWillDismiss().then(({ data }) => {
+      const { collections } = data;
+      console.log('collections: ', collections);
+    });
+    modal.present();
   }
 
   private setPostStatus(status: PostStatus): void {

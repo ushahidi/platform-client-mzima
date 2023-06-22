@@ -1,4 +1,13 @@
 .location-select {
+  &__title {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.1px;
+  }
+
   &__map {
     height: 120px;
     margin-bottom: 8px;

@@ -27,6 +27,7 @@ export class FormControlComponent implements ControlValueAccessor {
   @Input() public togglePassword = false;
   @Input() public errors: string[] = [];
   @Input() public color: 'light' | 'default' = 'default';
+  @Input() public rows = 1;
   @Output() public inputFocus = new EventEmitter();
   @Output() public inputBlur = new EventEmitter();
   @Output() public inputClear = new EventEmitter();

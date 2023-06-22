@@ -96,6 +96,7 @@
         class="edit-button"
         color="gray"
         shape="normal"
+        (buttonClick)="editPost()"
         *ngIf="permissions.includes('edit')"
       >
         <app-icon slot="icon-only" name="edit"></app-icon>

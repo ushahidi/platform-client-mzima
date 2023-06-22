@@ -1,0 +1,78 @@
+.toggle-item {
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 32px;
+}
+
+.toggle {
+  padding: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  --border-radius: 16px;
+  --track-background: transparent;
+  --track-background-checked: var(--ion-color-success);
+  --handle-width: 16px;
+  --handle-height: 16px;
+  --handle-max-width: none;
+  --handle-max-height: none;
+  --handle-spacing: 8px;
+  --handle-box-shadow: none;
+  --handle-border-radius: 50%;
+  --handle-background: var(--toggle-color);
+
+  @media (prefers-color-scheme: light) {
+    --toggle-color: var(--ion-item-background);
+    --handle-background-checked: var(--ion-background-color);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --toggle-color: var(--ion-color-step-850);
+    --handle-background-checked: var(--ion-text-color);
+  }
+
+  &.toggle-checked {
+    --handle-width: 24px;
+    --handle-height: 24px;
+    --handle-spacing: 4px;
+
+    &::part(track) {
+      width: 52px;
+      height: 32px;
+      box-shadow: none;
+    }
+
+    &::part(handle) {
+      background-size: 16px 16px;
+    }
+  }
+
+  &::part(track) {
+    width: 52px;
+    height: 32px;
+    transition: box-shadow 0.35s ease;
+    box-shadow: inset 0 0 0 2px var(--toggle-color);
+  }
+
+  &::part(handle) {
+    background-size: 0 0;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    transition: background-size 0.35s ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 16 16'%3E%3Cpath fill='%2370A731' d='M6 10.78 3.22 8l-.947.94L6 12.667l8-8-.94-.94L6 10.78Z'/%3E%3C/svg%3E");
+  }
+
+  &__text {
+    white-space: normal;
+    pointer-events: auto;
+  }
+}
+
+::ng-deep {
+  app-toggle {
+    display: block;
+  }
+}

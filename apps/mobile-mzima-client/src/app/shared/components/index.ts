@@ -11,3 +11,5 @@ export * from './select/select.component';
 export * from './calendar/calendar.component';
 export * from './header/header.component';
 export * from './main-layout/main-layout.component';
+export * from './collections-modal/collections-modal.component';
+export * from './toggle/toggle.component';

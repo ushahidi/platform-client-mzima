@@ -1,7 +1,7 @@
 .checkbox-item {
   --border-width: 0 0 1px;
   --background: transparent;
-  --border-color: var(--ion-color-step-200);
+  --border-color: var(--checkbox-border-color, var(--ion-color-step-200));
   --padding-start: 16px;
   --padding-end: 12px;
   --inner-padding-start: 0;
@@ -15,6 +15,11 @@
     --padding-top: 0;
     --padding-bottom: 0;
     font-weight: normal;
+
+    &__text {
+      display: block;
+      width: calc(100vw - 84px);
+    }
   }
 }
 

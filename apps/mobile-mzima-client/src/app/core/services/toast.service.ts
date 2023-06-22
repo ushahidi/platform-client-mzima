@@ -15,7 +15,9 @@ export class ToastService {
           cssClass: 'custom-toast',
           message: new IonicSafeString(String(params.message ?? '')),
           buttons: params.buttons ?? ['Ok'],
-          duration: params.duration ?? 5000,
+          duration: params.duration ?? 2000,
+          layout: params.layout ?? 'baseline',
+          position: params.position ?? 'bottom',
         })
         .then((toast) => {
           toast.present();

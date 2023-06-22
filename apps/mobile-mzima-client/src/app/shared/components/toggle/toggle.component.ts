@@ -2,23 +2,23 @@ import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/cor
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
-  selector: 'app-checkbox',
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss'],
+  selector: 'app-toggle',
+  templateUrl: './toggle.component.html',
+  styleUrls: ['./toggle.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CheckboxComponent),
+      useExisting: forwardRef(() => ToggleComponent),
       multi: true,
     },
   ],
 })
-export class CheckboxComponent implements ControlValueAccessor {
+export class ToggleComponent implements ControlValueAccessor {
   @Input() public required = false;
   @Input() public disabled = false;
   @Input() public checked: boolean;
   @Input() public type: 'item' | 'default' = 'default';
-  @Output() checkboxChange = new EventEmitter<boolean>();
+  @Output() toggleChange = new EventEmitter<boolean>();
 
   value: boolean;
   onChange: any = () => {};
@@ -43,6 +43,13 @@ export class CheckboxComponent implements ControlValueAccessor {
   public handleInputChange(event: Event): void {
     const isChecked = (event.target as HTMLInputElement)?.checked;
     this.onChange(isChecked);
-    this.checkboxChange.emit(isChecked);
+    this.toggleChange.emit(isChecked);
+  }
+
+  public switchToggle(event: Event): void {
+    if (!(event.target as HTMLElement).classList.contains('toggle-item')) return;
+    this.value = !this.value;
+    this.onChange(this.value);
+    this.toggleChange.emit(this.value);
   }
 }

@@ -78,18 +78,13 @@
     border-radius: 12px;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    box-shadow: inset 0 0 0 1px #cfd9de;
+    box-shadow: inset 0 0 0 1px var(--ion-color-step-200);
   }
 
   &__media {
     margin-left: 1px;
     margin-right: 1px;
     object-fit: cover;
-
-    &::part(image) {
-      max-height: 320px;
-      min-height: 100px;
-    }
 
     &__loader {
       height: 200px;
