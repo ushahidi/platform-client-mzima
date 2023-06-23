@@ -1,12 +1,12 @@
 .map-wrapper {
-  max-height: 190px;
+  max-height: 210px;
   position: relative;
   margin-bottom: 16px;
 
   &:before {
     content: '';
     display: block;
-    padding-top: 50%;
+    padding-top: 60%;
   }
 
   .map {
@@ -40,7 +40,7 @@
     display: none;
   }
   .leaflet-control-attribution {
-    font-size: 10px;
+    font-size: 7px;
   }
   .leaflet-touch .leaflet-bar a {
     width: 25px;
@@ -94,4 +94,8 @@
   &_icon {
     font-size: 20px;
   }
+}
+
+.location-error {
+  color: var(--color-accent);
 }

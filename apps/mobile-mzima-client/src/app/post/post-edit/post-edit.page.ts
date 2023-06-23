@@ -2,10 +2,10 @@ import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { lastValueFrom } from 'rxjs';
+import { distinctUntilChanged, filter, lastValueFrom } from 'rxjs';
 import {
   GeoJsonFilter,
   MediaService,
@@ -52,7 +52,7 @@ export class PostEditPage {
   public title: string;
   private postId: number;
   private post: any;
-  public tasks: any[];
+  public tasks: any[] = [];
   private completeStages: number[] = [];
   public surveyName: string;
   public atLeastOneFieldHasValidationError: boolean;
@@ -61,13 +61,14 @@ export class PostEditPage {
   public formValidator = new FormValidator();
 
   public filters: any;
-  public surveyList: any;
+  public surveyList: any[] = [];
   public surveyListOptions: any;
   public selectedSurveyId: number;
   public selectedSurvey: any;
   private fileToUpload: any;
   private checkedList: any[] = [];
   private isConnection = true;
+  public connectionInfo = '';
 
   dateOption: any;
 
@@ -77,6 +78,7 @@ export class PostEditPage {
     private alertService: AlertService,
     private location: Location,
     private router: Router,
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private postsService: PostsService,
     private mediaService: MediaService,
@@ -86,21 +88,51 @@ export class PostEditPage {
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
   ) {
-    this.networkService.networkStatus$.pipe(untilDestroyed(this)).subscribe({
-      next: (value) => (this.isConnection = value),
-    });
+    this.networkService.networkStatus$
+      .pipe(
+        distinctUntilChanged(),
+        filter((value) => value === true),
+        untilDestroyed(this),
+      )
+      .subscribe({
+        next: (value) => {
+          this.isConnection = value;
+          this.connectionInfo = value
+            ? ''
+            : 'The connection was lost, the information will be saved to the database';
+        },
+      });
     this.filters = JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
     );
+    this.route.paramMap.subscribe((params) => {
+      if (params.get('id')) {
+        this.postId = Number(params.get('id'));
+        this.postsService.lockPost(this.postId).subscribe((p) => {
+          console.log('Post locked: ', p);
+        });
+        this.loadPostData(this.postId);
+      }
+    });
   }
 
   async ionViewWillEnter() {
     this.transformSurveys();
-    this.getSurveys();
+  }
+
+  private loadPostData(postId: number) {
+    this.postsService.getById(postId).subscribe({
+      next: (post) => {
+        this.selectedSurveyId = post.form_id;
+        this.post = post;
+        this.loadForm(post.post_content);
+      },
+    });
   }
 
   async transformSurveys() {
     this.surveyList = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
+    if (!this.surveyList?.length) this.getSurveys();
     this.surveyListOptions = this.surveyList.map((item: any) => {
       return {
         label: item.name,
@@ -120,7 +152,7 @@ export class PostEditPage {
     }
   }
 
-  loadForm() {
+  loadForm(updateContent?: []) {
     if (!this.selectedSurveyId) return;
     this.clearData();
 
@@ -185,6 +217,10 @@ export class PostEditPage {
     }
     this.form = new FormGroup(fields);
     this.initialFormData = this.form.value;
+
+    if (updateContent) {
+      this.updateForm(updateContent);
+    }
   }
 
   public changeLocation(data: any, formKey: string) {
@@ -212,12 +248,119 @@ export class PostEditPage {
       .subscribe({
         next: (response) => {
           this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
+          this.transformSurveys();
         },
         error: (err) => {
           this.transformSurveys();
           console.log(err);
         },
       });
+  }
+
+  private updateForm(updateValues: any[]) {
+    type InputHandlerType =
+      | 'tags'
+      | 'checkbox'
+      | 'location'
+      | 'date'
+      | 'datetime'
+      | 'radio'
+      | 'text'
+      | 'upload'
+      | 'video'
+      | 'textarea'
+      | 'relation'
+      | 'number';
+    type TypeHandlerType = 'title' | 'description';
+
+    const inputHandlers: { [key in InputHandlerType]: (key: string, value: any) => void } = {
+      tags: this.handleTags.bind(this),
+      checkbox: this.handleCheckbox.bind(this),
+      location: this.handleLocation.bind(this),
+      date: this.handleDate.bind(this),
+      datetime: this.handleDate.bind(this),
+      radio: this.handleDefault.bind(this),
+      text: this.handleDefault.bind(this),
+      upload: this.handleUpload.bind(this),
+      video: this.handleDefault.bind(this),
+      textarea: this.handleDefault.bind(this),
+      relation: this.handleDefault.bind(this),
+      number: this.handleDefault.bind(this),
+    };
+
+    const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
+      title: this.handleTitle.bind(this),
+      description: this.handleDescription.bind(this),
+    };
+
+    for (const { fields } of updateValues) {
+      for (const { type, input, key, value } of fields) {
+        this.form.patchValue({ [key]: value });
+        if (inputHandlers[input as InputHandlerType]) {
+          inputHandlers[input as InputHandlerType](key, value);
+        }
+
+        if (typeHandlers[type as TypeHandlerType]) {
+          typeHandlers[type as TypeHandlerType](key);
+        }
+      }
+    }
+  }
+
+  private handleTags(key: string, value: any) {
+    const formArray = this.form.get(key) as FormArray;
+    value?.forEach((val: { id: any }) => formArray.push(new FormControl(val?.id)));
+  }
+
+  private async handleUpload(key: string, value: any) {
+    if (!value?.value) return;
+    try {
+      const uploadObservable = this.mediaService.getById(value.value);
+      const response: any = await lastValueFrom(uploadObservable);
+
+      this.form.patchValue({
+        [key]: {
+          id: value.value,
+          caption: response.caption,
+          photo: response.original_file_url,
+        },
+      });
+    } catch (error: any) {
+      this.form.patchValue({ [key]: null });
+      throw new Error(`Error fetching file: ${error.message}`);
+    }
+  }
+
+  private handleDefault(key: string, value: any) {
+    this.form.patchValue({ [key]: value?.value });
+  }
+
+  private handleCheckbox(key: string, value: any) {
+    const data = value?.value;
+    this.form.patchValue({ [key]: data });
+  }
+
+  private handleLocation(key: string, value: any) {
+    this.form.patchValue({
+      [key]: value?.value
+        ? { lat: value?.value.lat, lng: value?.value.lon }
+        : {
+            lat: '',
+            lng: '',
+          },
+    });
+  }
+
+  private handleDate(key: string, value: any) {
+    this.form.patchValue({ [key]: value?.value ? new Date(value?.value) : null });
+  }
+
+  private handleTitle(key: string) {
+    this.form.patchValue({ [key]: this.post.title });
+  }
+
+  private handleDescription(key: string) {
+    this.form.patchValue({ [key]: this.post.content ? this.post.content : '' });
   }
 
   public onBack() {
@@ -292,13 +435,10 @@ export class PostEditPage {
     // this.form.disable();
 
     try {
-      await this.toastService.showToast('error', 3000);
       await this.preparationData();
     } catch (error: any) {
-      this.alertService.presentAlert({
-        header: 'Error',
-        message: error,
-      });
+      const toaster = await this.toastService.showToast(error, 3000, 'medium');
+      await toaster.present();
       console.log(error);
       return;
     }
@@ -328,6 +468,7 @@ export class PostEditPage {
 
     await this.offlineStore(postData);
 
+    // TODO: Remove after testing
     console.log('postData', postData);
 
     if (this.isConnection) await this.uploadPost();
@@ -421,7 +562,7 @@ export class PostEditPage {
         'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
       buttons: [
         {
-          text: 'OK, sounds good',
+          text: 'OK',
           role: 'confirm',
         },
       ],
@@ -453,7 +594,7 @@ export class PostEditPage {
   }
 
   public backNavigation(): void {
-    this.location.back();
+    this.router.navigate(['/']);
   }
 
   public preventSubmitIncaseTheresNoBackendValidation() {

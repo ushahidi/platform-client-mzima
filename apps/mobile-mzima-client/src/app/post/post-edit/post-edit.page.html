@@ -153,7 +153,7 @@
                 </ng-container>
               </app-form-control>
 
-              <ion-modal trigger="open-date">
+              <ion-modal class="data-modal" trigger="open-date">
                 <ng-template>
                   <ion-content>
                     <ion-datetime
@@ -190,7 +190,7 @@
                 </ng-container>
               </app-form-control>
 
-              <ion-modal trigger="open-datetime">
+              <ion-modal class="date-modal" trigger="open-datetime">
                 <ng-template>
                   <ion-content>
                     <ion-datetime
@@ -436,21 +436,23 @@
             </div>
           </ng-container>
 
-          <!-- errors -->
-          <!--        <mat-error *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched">-->
-          <!--          <p *ngIf="form.get(field.key)?.hasError('required')">-->
-          <!--            {{ field.label }} field is a required field *-->
-          <!--          </p>-->
-          <!--          <p *ngIf="form.get(field.key)?.hasError('minlength')">-->
-          <!--            {{ field.label }} field is too short, use at least 2 characters-->
-          <!--          </p>-->
-          <!--          <p *ngIf="form.get(field.key)?.hasError('pattern')">-->
-          <!--            {{ field.label }} field is invalid-->
-          <!--          </p>-->
-          <!--          <p *ngIf="form.get(field.key)?.hasError('specialCharacters')">-->
-          <!--            {{ field.label }} field contains special characters-->
-          <!--          </p>-->
-          <!--        </mat-error>-->
+          <div
+            class="field-error"
+            *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched"
+          >
+            <ion-text color="danger" *ngIf="form.get(field.key)?.hasError('required')">
+              {{ field.label }} field is a required field *
+            </ion-text>
+            <ion-text color="danger" *ngIf="form.get(field.key)?.hasError('minlength')">
+              {{ field.label }} field is too short, use at least 2 characters
+            </ion-text>
+            <ion-text color="danger" *ngIf="form.get(field.key)?.hasError('pattern')">
+              {{ field.label }} field is invalid
+            </ion-text>
+            <ion-text color="danger" *ngIf="form.get(field.key)?.hasError('specialCharacters')">
+              {{ field.label }} field contains special characters
+            </ion-text>
+          </div>
         </div>
       </div>
     </div>
@@ -465,11 +467,18 @@
 
 <ion-footer class="ion-padding-horizontal">
   <ion-toolbar>
+    <ion-text class="connection-info" color="warning">{{ connectionInfo }}</ion-text>
     <div class="form-controls-panel">
-      <app-button class="submit-button" type="button" (buttonClick)="submitPost()">
+      <app-button
+        class="submit-button"
+        type="button"
+        *ngIf="form"
+        [disabled]="form.disabled || form.invalid || emptyLocation"
+        (buttonClick)="submitPost()"
+      >
         Submit
       </app-button>
-      <app-button color="medium" class="submit-button" (buttonClick)="previousPage()">
+      <app-button color="medium" class="submit-button" (buttonClick)="backNavigation()">
         Cancel
       </app-button>
     </div>

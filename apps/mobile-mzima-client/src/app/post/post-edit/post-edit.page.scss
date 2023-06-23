@@ -4,14 +4,6 @@
     padding-left: 0;
 
     &__item {
-      &:not(:last-child) {
-        padding-bottom: 5px;
-      }
-
-      &:not(:first-child) {
-        padding-top: 5px;
-      }
-
       .lvl-2 {
         margin-left: 16px;
       }
@@ -41,15 +33,21 @@
   }
 }
 
-ion-modal {
+.date-modal {
   --width: 290px;
   --height: 400px;
   --border-radius: 8px;
+  --background: transparent;
+
+  ion-content {
+    --background: transparent;
+  }
 }
 
 .form-controls-panel {
   display: flex;
   justify-content: flex-start;
+  padding: 15px 0;
 
   .submit-button {
     width: 100px;
@@ -98,7 +96,15 @@ ion-modal {
 
     ul li {
       list-style: none;
-      padding-top: 15px;
     }
   }
+}
+
+.field-error {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.connection-info {
+  font-size: 10px;
 }

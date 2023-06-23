@@ -61,6 +61,61 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     this.isDisabled = isDisabled;
   }
 
+  /**
+   * Take image from camera or choosing from photos
+   */
+  async takePicture() {
+    try {
+      if (Capacitor.getPlatform() != 'web') await Camera.requestPermissions();
+      const options = {
+        quality: 90,
+        allowEditing: false,
+        source: CameraSource.Prompt,
+        width: 600,
+        resultType: CameraResultType.Uri,
+      };
+      const image = await Camera.getPhoto(options);
+      const folderExist = await this.checkFolder();
+      if (folderExist) {
+        if (image) await this.saveImage(image);
+      }
+    } catch (e) {
+      console.log('takePicture error: ', e);
+    }
+  }
+
+  async checkFolder(): Promise<boolean> {
+    const options = {
+      directory: Directory.Data,
+      path: IMAGE_DIR,
+    };
+    try {
+      const result = await Filesystem.readdir(options);
+      return !!result.files;
+    } catch (e) {
+      await Filesystem.mkdir(options);
+      return true;
+    }
+  }
+
+  /**
+   * Save image to storage
+   */
+  async saveImage(photo: Photo) {
+    const base64Data = await new ConvertImage().readAsBase64(photo);
+    this.fileName = new Date().getTime() + '.jpeg';
+    try {
+      await Filesystem.writeFile({
+        directory: Directory.Data,
+        path: `${IMAGE_DIR}/${this.fileName}`,
+        data: base64Data,
+      });
+      this.loadFiles();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async loadFiles() {
     const options = {
       directory: Directory.Data,
@@ -68,7 +123,9 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     };
 
     try {
+      if (Capacitor.getPlatform() != 'web') await Filesystem.requestPermissions();
       const result = await Filesystem.readdir(options);
+      console.log('loadFiles>>', result.files);
       this.loadFileData(result.files);
     } catch (e) {
       console.log('readdir', e);
@@ -92,82 +149,24 @@ export class ImageUploaderComponent implements ControlValueAccessor {
       data: `data:image/jpeg;base64,${readFile.data}`,
     };
 
+    console.log('loadFileData', this.photo);
+
     this.transferData({ upload: this.upload });
-
-    // for (const file of files) {
-    //   const filePath = `${IMAGE_DIR}/${this.fileName}`;
-    //   const readFile = await Filesystem.readFile({
-    //     directory: Directory.Data,
-    //     path: filePath,
-    //   });
-    //
-    //   this.files.push({
-    //     name: file.name,
-    //     path: filePath,
-    //     data: `data:image/jpeg;base64,${readFile.data}`,
-    //   });
-    // }
   }
 
-  /**
-   * Take image from camera or choosing from photos
-   */
-  async takePicture() {
-    try {
-      if (Capacitor.getPlatform() != 'web') await Camera.requestPermissions();
-      const options = {
-        quality: 90,
-        allowEditing: false,
-        source: CameraSource.Prompt,
-        width: 600,
-        resultType: CameraResultType.Uri,
-      };
-      const image = await Camera.getPhoto(options);
-      if (image) this.saveImage(image);
-    } catch (e) {
-      console.log('takePicture error: ', e);
-    }
-  }
-
-  /**
-   * Save image to storage
-   */
-  async saveImage(photo: Photo) {
-    const base64Data = await new ConvertImage().readAsBase64(photo);
-    this.fileName = new Date().getTime() + '.jpeg';
-    await Filesystem.writeFile({
-      directory: Directory.Data,
-      path: `${IMAGE_DIR}/${this.fileName}`,
-      data: base64Data,
-    });
-    this.loadFiles();
-  }
-
-  async startUpload() {
-    const response = await fetch(this.photo!.data);
-    console.log('response', response);
-
-    const blob = await response.blob();
-    console.log('blob', blob);
-
-    const formData = new FormData();
-    formData.append('file', blob, this.photo!.name);
-    this.uploadData(formData);
-  }
-
-  async uploadData(formData: FormData) {
-    console.log(formData);
-    // upload to server
-  }
+  // async startUpload() {
+  //   const response = await fetch(this.photo!.data);
+  //   console.log('response', response);
+  //
+  //   const blob = await response.blob();
+  //   console.log('blob', blob);
+  //
+  //   const formData = new FormData();
+  //   formData.append('file', blob, this.photo!.name);
+  //   // this.uploadData(formData);
+  // }
 
   async deleteImage() {
-    // const confirmed = await this.confirm.open({
-    //   title: this.translate.instant('notify.default.are_you_sure_you_want_to_delete_this'),
-    //   description: this.translate.instant('notify.default.proceed_warning'),
-    // });
-
-    // if (!сonfirmed) return;
-
     this.photo = null;
 
     await Filesystem.deleteFile({

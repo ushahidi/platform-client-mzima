@@ -6,7 +6,8 @@ import { ToastController } from '@ionic/angular';
 })
 export class ToastService {
   constructor(protected toastCtrl: ToastController) {}
-  showToast(message: string, duration = 3000, color = 'primary', icon?: string) {
+
+  async showToast(message: string, duration = 3000, color = 'primary', icon?: string) {
     return this.toastCtrl.create({
       mode: 'ios',
       message,

@@ -14,9 +14,11 @@ export class NetworkService {
   }
 
   async listenToNetworkStatus() {
+    const connectionTypes = ['wifi', 'cellular'];
     Network.addListener('networkStatusChange', async (status: any) => {
       console.log('Network status changed', status);
-      this._networkStatus.next(status.connected);
+      const { connected, connectionType } = status;
+      this._networkStatus.next(connected && connectionTypes.includes(connectionType));
     });
   }
 }
