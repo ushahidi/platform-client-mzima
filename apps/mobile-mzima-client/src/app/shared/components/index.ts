@@ -13,3 +13,4 @@ export * from './header/header.component';
 export * from './main-layout/main-layout.component';
 export * from './collections-modal/collections-modal.component';
 export * from './toggle/toggle.component';
+export * from './group-checkbox-select/group-checkbox-select.component';

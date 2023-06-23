@@ -1,0 +1,36 @@
+.radio-item-holder {
+  margin-bottom: 4px;
+  border-radius: 4px;
+  background: var(--ion-item-background);
+
+  &--checked {
+    @media (prefers-color-scheme: light) {
+      box-shadow: inset 0 0 0 1px var(--ion-color-step-200);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      box-shadow: inset 0 0 0 1px var(--ion-color-step-400);
+    }
+  }
+}
+
+.radio-item {
+  --checkbox-border-color: transparent;
+
+  &__options {
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &__checkbox {
+    &::ng-deep {
+      .checkbox-item {
+        --min-height: 40px;
+        --padding-start: 56px;
+      }
+    }
+  }
+}

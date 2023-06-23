@@ -128,11 +128,18 @@
     top: 0;
     position: fixed;
     margin-bottom: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     --light-border-color: transparent;
     padding: calc(7px + var(--ion-safe-area-top)) 0 7px;
 
     @media (prefers-color-scheme: dark) {
       --input-background: transparent;
+      border-bottom-color: var(--ion-border-color);
+    }
+
+    @media (prefers-color-scheme: light) {
+      border-bottom-color: var(--ion-color-step-200);
     }
   }
 

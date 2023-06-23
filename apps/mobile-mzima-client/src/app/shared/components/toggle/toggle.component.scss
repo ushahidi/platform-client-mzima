@@ -25,7 +25,7 @@
   --handle-background: var(--toggle-color);
 
   @media (prefers-color-scheme: light) {
-    --toggle-color: var(--ion-item-background);
+    --toggle-color: var(--ion-color-step-800);
     --handle-background-checked: var(--ion-background-color);
   }
 

@@ -1,11 +1,18 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { InfiniteScrollCustomEvent, ModalController } from '@ionic/angular';
-import { CollectionResult, CollectionsService } from '@mzima-client/sdk';
-import { ToastService } from '@services';
-import { Subject, debounceTime, lastValueFrom } from 'rxjs';
+import {
+  CollectionResult,
+  CollectionsService,
+  NotificationsService,
+  RolesService,
+  UserInterface,
+} from '@mzima-client/sdk';
+import { SessionService, ToastService } from '@services';
+import { Observable, Subject, debounceTime, forkJoin, lastValueFrom } from 'rxjs';
 import { FormControlComponent } from '../form-control/form-control.component';
 import { FormBuilder, Validators } from '@angular/forms';
-import { fieldErrorMessages } from '@helpers';
+import { fieldErrorMessages, formHelper } from '@helpers';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 interface CollectionsParams {
   orderby: string;
@@ -20,6 +27,7 @@ interface CollectionItem extends CollectionResult {
   checked?: boolean;
 }
 
+@UntilDestroy()
 @Component({
   selector: 'app-collections-modal',
   templateUrl: './collections-modal.component.html',
@@ -47,15 +55,39 @@ export class CollectionsModalComponent implements OnInit {
     name: ['', [Validators.required]],
     description: [''],
     featured: [false],
-    notifications: [true],
+    visible_to: [
+      {
+        value: 'everyone',
+        options: [],
+        disabled: false,
+      },
+    ],
+    view: ['map'],
+    is_notifications_enabled: [true],
   });
   public fieldErrorMessages = fieldErrorMessages;
+  public viewingModeOptions = [
+    {
+      label: 'Map',
+      value: 'map',
+    },
+    {
+      label: 'Data',
+      value: 'data',
+    },
+  ];
+  public roleOptions: any;
+  private userRole: string;
+  private userData$: Observable<UserInterface>;
 
   constructor(
     private modalController: ModalController,
     private toastService: ToastService,
     private collectionsService: CollectionsService,
     private formBuilder: FormBuilder,
+    private rolesService: RolesService,
+    private sessionService: SessionService,
+    private notificationsService: NotificationsService,
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: () => {
@@ -63,10 +95,31 @@ export class CollectionsModalComponent implements OnInit {
         this.getCollections(this.params);
       },
     });
+
+    this.userData$ = this.sessionService.currentUserData$.pipe(untilDestroyed(this));
+
+    this.userData$.subscribe((userData) => {
+      this.userRole = userData.role!;
+      this.initRoles();
+    });
   }
 
   ngOnInit(): void {
     this.getCollections(this.params);
+  }
+
+  private initRoles() {
+    this.rolesService.getRoles().subscribe({
+      next: (response) => {
+        this.roleOptions = formHelper.roleTransform({
+          roles: response.results,
+          userRole: this.userRole,
+          onlyMe: 'Only me',
+          everyone: 'Everyone',
+          specificRoles: 'Specific roles...',
+        });
+      },
+    });
   }
 
   private async getCollections(params: CollectionsParams, add?: boolean): Promise<void> {
@@ -95,8 +148,40 @@ export class CollectionsModalComponent implements OnInit {
     }
   }
 
-  public close(collections?: Set<number>): void {
-    this.modalController.dismiss({ collections });
+  public close(): void {
+    this.modalController.dismiss();
+  }
+
+  public updateCollections(): void {
+    if (!this.postId) return;
+
+    const addToCollectionObservables = this.collections
+      .filter((c) => c.checked && !this.selectedCollections.has(c.id))
+      .map((c) => {
+        this.selectedCollections.add(c.id);
+        return this.collectionsService.addToCollection(c.id, this.postId!);
+      });
+
+    const checkedCollections = this.collections.filter((c) => c.checked);
+
+    const removeFromCollectionObservables = [...this.selectedCollections]
+      .filter((id) => checkedCollections.findIndex((c) => c.id === id) === -1)
+      .map((id) => {
+        this.selectedCollections.delete(id);
+        return this.collectionsService.removeFromCollection(id, this.postId!);
+      });
+
+    forkJoin([...addToCollectionObservables, ...removeFromCollectionObservables]).subscribe({
+      next: () => {
+        this.modalController.dismiss({
+          collections: Array.from(this.selectedCollections || []),
+          changed: true,
+        });
+      },
+      error: ({ error }) => {
+        console.error(error);
+      },
+    });
   }
 
   public showTip(): void {
@@ -109,22 +194,9 @@ export class CollectionsModalComponent implements OnInit {
     });
   }
 
-  public collectionChanged(state: any, collectionId: number): void {
+  public collectionChanged(): void {
     this.isPristine = false;
     if (!this.postId) return;
-    if (state) {
-      this.collectionsService.addToCollection(collectionId, this.postId).subscribe({
-        next: () => {
-          this.selectedCollections.add(collectionId);
-        },
-      });
-    } else {
-      this.collectionsService.removeFromCollection(collectionId, this.postId).subscribe({
-        next: () => {
-          this.selectedCollections.delete(collectionId);
-        },
-      });
-    }
   }
 
   public showSearchResults(): void {
@@ -151,6 +223,44 @@ export class CollectionsModalComponent implements OnInit {
   }
 
   public createCollection(): void {
-    console.log('createCollection');
+    this.createCollectionForm.disable();
+    const collectionData: any = this.createCollectionForm.value;
+    collectionData.role =
+      this.createCollectionForm.value.visible_to === 'everyone'
+        ? null
+        : (this.createCollectionForm.value.visible_to as any).options;
+    collectionData.featured = collectionData.visible_to.value === 'only_me';
+    delete collectionData.visible_to;
+
+    this.userData$.subscribe((userData) => {
+      collectionData.user_id = userData.userId;
+      this.collectionsService.post(collectionData).subscribe({
+        next: (response) => {
+          if (collectionData.is_notifications_enabled) {
+            this.notificationsService.post({ set_id: String(response.result.id) }).subscribe({
+              next: () => {
+                this.collectionCreated();
+              },
+              error: ({ error }) => {
+                console.error(error);
+                this.createCollectionForm.enable();
+              },
+            });
+          } else {
+            this.collectionCreated();
+          }
+        },
+        error: ({ error }) => {
+          console.error(error);
+          this.createCollectionForm.enable();
+        },
+      });
+    });
+  }
+
+  private collectionCreated(): void {
+    this.createCollectionForm.enable();
+    this.isAddCollectionModalOpen = false;
+    this.resetSearchForm();
   }
 }

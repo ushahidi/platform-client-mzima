@@ -11,6 +11,55 @@
   --min-height: 55px;
   --ripple-color: var(--ion-color-primary);
 
+  &--radio {
+    --min-height: 24px;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    --border-color: var(--checkbox-border-color, var(--ion-color-step-200));
+
+    .checkbox {
+      --size: 20px;
+      --border-radius: 50%;
+
+      @media (prefers-color-scheme: light) {
+        --border-color: var(--ion-color-medium);
+        --border-color-checked: var(--color-primary-50);
+        --checkbox-background-checked: var(--color-primary-50);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        --border-color: var(--ion-color-primary);
+        --checkbox-background-checked: var(--ion-color-primary);
+      }
+
+      &.checkbox-checked {
+        opacity: 1;
+        --size: 16px;
+
+        &::part(container) {
+          margin: 4px;
+          border: 3px solid var(--ion-item-background);
+
+          @media (prefers-color-scheme: light) {
+            box-shadow: 0 0 0 2px var(--color-primary-50);
+          }
+
+          @media (prefers-color-scheme: dark) {
+            box-shadow: 0 0 0 2px var(--ion-color-primary);
+          }
+        }
+      }
+
+      &::part(container) {
+        margin: 2px;
+      }
+
+      &::part(mark) {
+        opacity: 0;
+      }
+    }
+  }
+
   .checkbox {
     --padding-top: 0;
     --padding-bottom: 0;

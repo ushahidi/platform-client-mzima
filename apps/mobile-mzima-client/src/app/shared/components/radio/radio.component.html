@@ -23,7 +23,7 @@
 </ion-item-sliding>
 
 <ng-template #radioItem>
-  <ion-item class="radio-item" lines="none">
+  <ion-item class="radio-item" lines="none" [disabled]="disabled">
     <ion-radio class="radio" [value]="value" labelPlacement="end" justify="start">
       <ng-content></ng-content>
     </ion-radio>

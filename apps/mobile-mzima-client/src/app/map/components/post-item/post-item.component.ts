@@ -112,8 +112,20 @@ export class PostItemComponent implements OnInit {
       },
     });
     modal.onWillDismiss().then(({ data }) => {
-      const { collections } = data;
-      console.log('collections: ', collections);
+      const { collections, changed } = data ?? {};
+      if (changed) {
+        this.post.sets = collections;
+        this.postUpdated.emit({ post: this.post });
+        this.toastService.presentToast({
+          header: 'Success',
+          message: `The post “${this.post.title}” was ${
+            collections?.length
+              ? `added in ${collections.length} collections`
+              : 'removed from all collections'
+          }.`,
+          buttons: [],
+        });
+      }
     });
     modal.present();
   }

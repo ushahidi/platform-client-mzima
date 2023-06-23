@@ -197,12 +197,23 @@ export class PostPage {
       component: CollectionsModalComponent,
       componentProps: {
         postId: this.post!.id,
-        selectedCollections: new Set(this.post?.sets ?? []),
+        selectedCollections: new Set(this.post!.sets ?? []),
       },
     });
     modal.onWillDismiss().then(({ data }) => {
-      const { collections } = data;
-      console.log('collections: ', collections);
+      const { collections, changed } = data ?? {};
+      if (changed && this.post) {
+        this.post.sets = collections;
+        this.toastService.presentToast({
+          header: 'Success',
+          message: `The post “${this.post.title}” was ${
+            collections?.length
+              ? `added in ${collections.length} collections`
+              : 'removed from all collections'
+          }.`,
+          buttons: [],
+        });
+      }
     });
     modal.present();
   }

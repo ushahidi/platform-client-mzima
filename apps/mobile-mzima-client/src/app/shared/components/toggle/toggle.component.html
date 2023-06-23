@@ -15,6 +15,7 @@
     [(ngModel)]="value"
     [checked]="checked"
     labelPlacement="end"
+    [disabled]="disabled"
     (ionChange)="handleInputChange($event)"
   >
     <span class="toggle__text"><ng-content></ng-content></span>

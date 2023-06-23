@@ -9,6 +9,7 @@ export class RadioComponent {
   @Input() public value?: string | number | null;
   @Input() public editable = false;
   @Input() public deletable = false;
+  @Input() public disabled = false;
   @Output() optionDelete = new EventEmitter();
   @Output() optionEdit = new EventEmitter();
 

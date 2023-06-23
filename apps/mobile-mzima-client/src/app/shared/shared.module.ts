@@ -21,6 +21,7 @@ import {
   MainLayoutComponent,
   CollectionsModalComponent,
   ToggleComponent,
+  GroupCheckboxSelectComponent,
 } from './components';
 import { CalendarModule } from 'ion2-calendar';
 
@@ -40,6 +41,7 @@ const components = [
   MainLayoutComponent,
   CollectionsModalComponent,
   ToggleComponent,
+  GroupCheckboxSelectComponent,
 ];
 
 @NgModule({
