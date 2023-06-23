@@ -65,14 +65,6 @@ export class ImageUploaderComponent implements ControlValueAccessor {
    * Take image from camera or choosing from photos
    */
   async takePicture() {
-    if (this.photo!.path) {
-      try {
-        await this.deleteImage();
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
     try {
       if (Capacitor.getPlatform() != 'web') await Camera.requestPermissions();
       const options = {

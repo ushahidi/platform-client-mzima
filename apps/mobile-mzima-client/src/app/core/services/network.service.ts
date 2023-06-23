@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Network } from '@capacitor/network';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NetworkService {
-  private readonly _networkStatus = new BehaviorSubject<any>(true);
+  private readonly _networkStatus = new Subject<boolean>();
   readonly networkStatus$ = this._networkStatus.asObservable();
 
   constructor() {
