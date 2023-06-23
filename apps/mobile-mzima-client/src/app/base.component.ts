@@ -5,6 +5,7 @@ import { Capacitor } from '@capacitor/core';
 import { App } from '@capacitor/app';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { untilDestroyed } from '@ngneat/until-destroy';
+import { distinctUntilChanged } from 'rxjs';
 import { NetworkService } from './core/services/network.service';
 import { ToastService } from './core/services/toast.service';
 
@@ -42,32 +43,20 @@ export class BaseComponent {
   }
 
   async listenToNetworkStatus() {
-    let toast: any = null;
-    this.networkService.networkStatus$.pipe(untilDestroyed(this)).subscribe({
-      next: async (value) => {
-        if (value) {
-          if (toast) {
-            toast = await this.toastService.showToast(
-              'The connection was restored',
-              2000,
-              'medium',
-              'globe',
-            );
-            await toast.present();
-          }
-        } else {
-          if (!toast) {
-            toast = await this.toastService.showToast(
-              'The connection is lost',
-              2000,
-              'medium',
-              'globe',
-            );
-            await toast.present();
-          }
-        }
-      },
-    });
+    this.networkService.networkStatus$
+      .pipe(distinctUntilChanged(), untilDestroyed(this))
+      .subscribe({
+        next: async (value) => {
+          await this.showConnectionInfo(
+            value ? 'The connection was restored' : 'The connection is lost',
+          );
+        },
+      });
+  }
+
+  async showConnectionInfo(message: string) {
+    const toast = await this.toastService.showToast(message, 3000, 'medium', 'globe');
+    await toast.present();
   }
 
   exitAppOnDoubleTap() {

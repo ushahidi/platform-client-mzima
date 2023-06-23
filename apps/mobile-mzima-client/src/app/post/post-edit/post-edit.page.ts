@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { distinctUntilChanged, filter, lastValueFrom } from 'rxjs';
+import { distinctUntilChanged, lastValueFrom } from 'rxjs';
 import {
   GeoJsonFilter,
   MediaService,
@@ -89,11 +89,7 @@ export class PostEditPage {
     private sanitizer: DomSanitizer,
   ) {
     this.networkService.networkStatus$
-      .pipe(
-        distinctUntilChanged(),
-        filter((value) => value === true),
-        untilDestroyed(this),
-      )
+      .pipe(distinctUntilChanged(), untilDestroyed(this))
       .subscribe({
         next: (value) => {
           this.isConnection = value;
