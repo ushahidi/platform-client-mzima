@@ -26,15 +26,17 @@ export class EnvService {
     return envy;
   }
 
-  get deploymentUrl(): string {
+  get deploymentUrl(): string | null {
     const deployment: any = this.deploymentService.getDeployment();
-    return checkBackendURL(`${deployment.subdomain}.${deployment.domain}`);
+    return deployment ? checkBackendURL(`${deployment.subdomain}.${deployment.domain}`) : null;
   }
 
   setDynamicBackendUrl() {
     const deployment: any = this.deploymentService.getDeployment();
     const envy: EnvConfigInterface = this.env;
-    envy.backend_url = checkBackendURL(`${deployment.subdomain}.${deployment.domain}`);
+    envy.backend_url = deployment
+      ? checkBackendURL(`${deployment.subdomain}.${deployment.domain}`)
+      : null;
     EnvService.ENV = envy;
     this.env = envy;
   }
