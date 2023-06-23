@@ -74,7 +74,6 @@ export class BaseComponent {
     const urls = ['/', '/deployment'];
     if (Capacitor.getPlatform() === 'android') {
       this.platform.backButton.subscribeWithPriority(10, async () => {
-        console.log(this.router.url);
         if (urls.includes(this.router.url)) {
           if (!this.routerOutlet?.canGoBack()) {
             this.tap++;

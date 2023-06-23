@@ -44,9 +44,6 @@ export class AppComponent extends BaseComponent {
           this.getSurveys();
 
           const result = await this.checkPendingPosts();
-          //TODO: Remove after testing
-          console.log('checkPendingPosts', result);
-
           if (result) this.uploadPendingPosts();
         },
       });
