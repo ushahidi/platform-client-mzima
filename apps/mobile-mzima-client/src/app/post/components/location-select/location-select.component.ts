@@ -11,8 +11,9 @@ import {
 } from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
+import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { SessionService } from '@services';
+import { DatabaseService, SessionService } from '@services';
 import {
   control,
   FitBoundsOptions,
@@ -87,17 +88,22 @@ export class LocationSelectComponent implements OnInit {
   public isShowGeocodingResults = false;
   public nativeApp: boolean;
 
-  constructor(private sessionService: SessionService, private cdr: ChangeDetectorRef) {
+  constructor(
+    private sessionService: SessionService,
+    private cdr: ChangeDetectorRef,
+    private dataBaseService: DatabaseService,
+  ) {
     this.searchSubject.pipe(debounceTime(600), untilDestroyed(this)).subscribe((query) => {
       this.performSearch(query);
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (Capacitor.getPlatform() === 'hybrid') {
       this.nativeApp = true;
     }
-    this.mapConfig = this.getMapConfigurations();
+
+    this.mapConfig = await this.dataBaseService.get(STORAGE_KEYS.MAP);
 
     const currentLayer =
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
@@ -122,10 +128,6 @@ export class LocationSelectComponent implements OnInit {
     if (this.resultList && !this.resultList.nativeElement.contains(event.target)) {
       this.isShowGeocodingResults = false;
     }
-  }
-
-  private getMapConfigurations(): MapConfigInterface {
-    return this.sessionService.getMapConfigurations();
   }
 
   public onMapReady(map: Map) {
@@ -161,7 +163,7 @@ export class LocationSelectComponent implements OnInit {
     }
     this.mapMarker = marker(this.location, {
       draggable: true,
-      icon: mapHelper.pointIcon(this.mapConfig.default_view!.color),
+      icon: mapHelper.pointIcon('default', this.mapConfig.default_view!.color),
     }).addTo(this.map);
 
     this.mapMarker.on('dragend', (e) => {

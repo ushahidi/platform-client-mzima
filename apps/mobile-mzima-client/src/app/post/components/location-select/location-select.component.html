@@ -61,7 +61,7 @@
   You can search or click the area of map where you want to place the marker.
 </span>
 
-<div class="map-wrapper">
+<div class="map-wrapper" *ngIf="mapReady">
   <div
     leaflet
     class="map"

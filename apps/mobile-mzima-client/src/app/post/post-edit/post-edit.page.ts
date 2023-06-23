@@ -95,11 +95,12 @@ export class PostEditPage {
   }
 
   async ionViewWillEnter() {
+    this.transformSurveys();
     this.getSurveys();
   }
 
   async transformSurveys() {
-    this.surveyList = await this.dataBaseService.get('surveys');
+    this.surveyList = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
     this.surveyListOptions = this.surveyList.map((item: any) => {
       return {
         label: item.name,
@@ -210,8 +211,7 @@ export class PostEditPage {
       })
       .subscribe({
         next: (response) => {
-          this.dataBaseService.set('surveys', response.results);
-          this.transformSurveys();
+          this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
         },
         error: (err) => {
           this.transformSurveys();
