@@ -65,6 +65,14 @@ export class ImageUploaderComponent implements ControlValueAccessor {
    * Take image from camera or choosing from photos
    */
   async takePicture() {
+    if (this.photo!.path) {
+      try {
+        await this.deleteImage();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
     try {
       if (Capacitor.getPlatform() != 'web') await Camera.requestPermissions();
       const options = {
@@ -125,7 +133,6 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     try {
       if (Capacitor.getPlatform() != 'web') await Filesystem.requestPermissions();
       const result = await Filesystem.readdir(options);
-      console.log('loadFiles>>', result.files);
       this.loadFileData(result.files);
     } catch (e) {
       console.log('readdir', e);
@@ -154,28 +161,26 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     this.transferData({ upload: this.upload });
   }
 
-  // async startUpload() {
-  //   const response = await fetch(this.photo!.data);
-  //   console.log('response', response);
-  //
-  //   const blob = await response.blob();
-  //   console.log('blob', blob);
-  //
-  //   const formData = new FormData();
-  //   formData.append('file', blob, this.photo!.name);
-  //   // this.uploadData(formData);
-  // }
+  async deleteSelectedImage() {
+    try {
+      await this.deleteImage();
+      this.loadFiles();
+      this.transferData({ delete: true });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   async deleteImage() {
-    this.photo = null;
-
-    await Filesystem.deleteFile({
-      directory: Directory.Data,
-      path: this.photo!.path,
-    });
-
-    this.loadFiles();
-    this.transferData({ delete: true });
+    try {
+      await Filesystem.deleteFile({
+        directory: Directory.Data,
+        path: this.photo!.path,
+      });
+      this.photo = null;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   captionChanged() {

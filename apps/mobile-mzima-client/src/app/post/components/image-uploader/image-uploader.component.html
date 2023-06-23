@@ -29,7 +29,7 @@
         color="danger"
         type="button"
         *ngIf="photo?.data"
-        (buttonClick)="deleteImage()"
+        (buttonClick)="deleteSelectedImage()"
       >
         <app-icon slot="icon-only" name="delete"></app-icon>
       </app-button>

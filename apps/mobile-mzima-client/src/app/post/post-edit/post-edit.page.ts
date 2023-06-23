@@ -363,10 +363,6 @@ export class PostEditPage {
     this.form.patchValue({ [key]: this.post.content ? this.post.content : '' });
   }
 
-  public onBack() {
-    this.location.back();
-  }
-
   async preparationData(): Promise<any> {
     const fieldHandlers = {
       date: (value: any) =>
@@ -539,7 +535,7 @@ export class PostEditPage {
       complete: async () => {
         await this.postComplete();
         this.backNavigation();
-        this.updated.emit();
+        // this.updated.emit();
       },
     });
   }
@@ -550,7 +546,7 @@ export class PostEditPage {
       error: () => this.form.enable(),
       complete: async () => {
         await this.postComplete();
-        this.router.navigate(['/']);
+        this.backNavigation();
       },
     });
   }
