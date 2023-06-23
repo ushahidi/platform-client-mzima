@@ -24,13 +24,7 @@
   <hr />
 
   <p class="soft-text" *ngIf="donationService.isMonetizationStarted">
-    <mat-icon
-      ><svg class="iconic">
-        <use
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          xlink:href="assets/sprites.svg#heart"
-        ></use></svg
-    ></mat-icon>
+    <mat-icon svgIcon="heart-filled"></mat-icon>
     {{ 'modal.donation.thank_you_for_your_donation_start' | translate }}
     {{ donationInfo?.assetCode }} {{ donationInfo?.formattedAmount }}
     {{ 'modal.donation.thank_you_for_your_donation_end' | translate }}

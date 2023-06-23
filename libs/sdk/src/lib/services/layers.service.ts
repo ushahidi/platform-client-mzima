@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
+import { LayerResponse } from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NotificationsService extends ResourceService<any> {
+export class LayersService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
     protected override currentLoader: EnvLoader,
@@ -21,14 +22,10 @@ export class NotificationsService extends ResourceService<any> {
   }
 
   getResourceUrl(): string {
-    return 'notifications';
+    return 'layers';
   }
 
-  override get(set?: string): Observable<any> {
-    const params: Record<string, string> = {
-      user: 'me',
-      ...(set && { set }),
-    };
-    return super.get('', params);
+  getLayers(): Observable<LayerResponse> {
+    return super.get();
   }
 }

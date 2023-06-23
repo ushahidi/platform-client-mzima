@@ -51,11 +51,6 @@ export class DraggableLayoutComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const checkHeight = setInterval(() => {
-      this.getOffsetHeight();
-      if (this.fixedContentHeight) clearInterval(checkHeight);
-    }, 50);
-
     setTimeout(() => {
       if (this.mode) {
         this.content.scrollToPoint(
@@ -65,6 +60,13 @@ export class DraggableLayoutComponent implements AfterViewInit {
         );
       }
     }, 350);
+  }
+
+  public updateOffsetHeight(): void {
+    const checkHeight = setInterval(() => {
+      this.getOffsetHeight();
+      if (this.fixedContentHeight) clearInterval(checkHeight);
+    }, 50);
   }
 
   private getOffsetHeight(): void {

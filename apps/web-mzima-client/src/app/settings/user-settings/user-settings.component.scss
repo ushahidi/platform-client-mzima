@@ -9,9 +9,14 @@
   }
 
   .link-blue-icon {
+    width: 1em;
+    height: 1em;
     display: flex;
+    flex-shrink: 0;
+    line-height: 1;
+    font-size: 20px;
+    margin-right: 4px;
     align-items: center;
-    font-size: 14px;
   }
 }
 

@@ -29,7 +29,7 @@ import {
 })
 export class PostDetailsComponent implements OnChanges, OnDestroy {
   @Input() post?: PostResult;
-  @Input() feedView: boolean;
+  @Input() feedView: boolean = true;
   @Input() userId?: number | string;
   @Input() color?: string;
   @Input() twitterId?: string;
@@ -53,6 +53,7 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.post = undefined;
+        this.media = null;
 
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
 

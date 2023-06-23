@@ -6,8 +6,7 @@
     color="custom"
     class="button"
     [routerLink]="[item.route]"
-    routerLinkActive="button--active"
-    [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+    [ngClass]="{ 'button--active': isButtonActive(item) }"
   >
     <app-icon class="button__icon" [name]="item.icon"></app-icon>
     {{ item.label }}

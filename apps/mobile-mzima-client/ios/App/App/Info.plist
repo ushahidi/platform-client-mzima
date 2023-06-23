@@ -22,6 +22,10 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow us always to access your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allow us to access your location while using the app</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen.storyboard</string>
 	<key>UIMainStoryboardFile</key>
@@ -30,6 +34,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -45,10 +51,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>NSLocationAlwaysUsageDescription</key>
-    <string>Allow us always to access your location</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Allow us to access your location while using the app</string>
     <key>NSCameraUsageDescription</key>
     <string>To take photos, to post content</string>
     <key>NSPhotoLibraryAddUsageDescription</key>

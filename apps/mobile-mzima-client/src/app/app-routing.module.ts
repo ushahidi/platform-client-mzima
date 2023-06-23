@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./map/map.module').then((m) => m.MapPageModule),
-    pathMatch: 'full',
+    // pathMatch: 'full',
   },
   {
     path: 'auth',

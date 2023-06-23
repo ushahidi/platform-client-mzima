@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
+import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -24,7 +24,6 @@ import { EnumGtmEvent } from './core/enums/gtm';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'platform-client';
   public isShowLoader = false;
   public isDesktop$: Observable<boolean>;
   public languages: LanguageInterface[];
@@ -39,7 +38,6 @@ export class AppComponent implements OnInit {
     private languageService: LanguageService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private titleService: Title,
     private metaService: Meta,
     private translate: TranslateService,
     private eventBusService: EventBusService,

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   FitBoundsOptions,
@@ -10,13 +10,11 @@ import {
   MarkerClusterGroupOptions,
   tileLayer,
 } from 'leaflet';
-import { mapHelper, takeUntilDestroy$ } from '@helpers';
-import { PostsService, SavedsearchesService } from '@mzima-client/sdk';
+import { mapHelper } from '@helpers';
+import { PostsService } from '@mzima-client/sdk';
 import { SessionService } from '@services';
 import { MapConfigInterface } from '@models';
-import { MainViewComponent } from '@shared';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, debounceTime } from 'rxjs';
+import { Subject, debounceTime, takeUntil } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -24,7 +22,7 @@ import { Observable, debounceTime } from 'rxjs';
   templateUrl: './map-view.component.html',
   styleUrls: ['./map-view.component.scss'],
 })
-export class MapViewComponent extends MainViewComponent implements OnInit, AfterViewInit {
+export class MapViewComponent implements AfterViewInit {
   public map: Map;
   public isMapReady = false;
   public leafletOptions: MapOptions;
@@ -33,28 +31,34 @@ export class MapViewComponent extends MainViewComponent implements OnInit, After
   public fitBoundsOptions: FitBoundsOptions = {
     animate: true,
   };
-  public progress = 0;
   private mapConfig: MapConfigInterface;
   public markerClusterData = new MarkerClusterGroup();
   public markerClusterOptions: MarkerClusterGroupOptions = { animate: true, maxClusterRadius: 50 };
-  filtersSubscription$: Observable<any>;
+  public $destroy = new Subject();
+  private isDarkMode = false;
+  private baseLayer: 'streets' | 'satellite' | 'hOSM' | 'MapQuestAerial' | 'MapQuest' | 'dark';
 
-  constructor(
-    protected override router: Router,
-    protected override route: ActivatedRoute,
-    protected override postsService: PostsService,
-    protected override savedSearchesService: SavedsearchesService,
-    protected override sessionService: SessionService,
-  ) {
-    super(router, route, postsService, savedSearchesService, sessionService);
-    this.filtersSubscription$ = this.postsService.postsFilters$.pipe(takeUntilDestroy$());
+  constructor(private postsService: PostsService, private sessionService: SessionService) {
+    const mediaDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaDarkMode.addEventListener('change', (ev) => this.switchMode(ev));
+    this.isDarkMode = mediaDarkMode.matches;
+
+    this.initFilterListener();
     this.sessionService.mapConfig$.subscribe({
       next: (mapConfig) => {
         if (mapConfig) {
           this.mapConfig = mapConfig;
 
+          this.baseLayer = this.mapConfig.default_view!.baselayer;
           const currentLayer =
-            mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
+            mapHelper.getMapLayers().baselayers[
+              this.isDarkMode &&
+              this.baseLayer !== 'satellite' &&
+              this.baseLayer !== 'MapQuestAerial' &&
+              this.baseLayer !== 'hOSM'
+                ? 'dark'
+                : this.baseLayer
+            ];
 
           this.leafletOptions = {
             minZoom: 3,
@@ -71,16 +75,30 @@ export class MapViewComponent extends MainViewComponent implements OnInit, After
     });
   }
 
-  ngOnInit(): void {
-    this.initFilterListener();
+  private switchMode(systemInitiatedDark: any) {
+    this.isDarkMode = systemInitiatedDark.matches;
+
+    const currentLayer =
+      mapHelper.getMapLayers().baselayers[
+        this.isDarkMode &&
+        this.baseLayer !== 'satellite' &&
+        this.baseLayer !== 'MapQuestAerial' &&
+        this.baseLayer !== 'hOSM'
+          ? 'dark'
+          : this.baseLayer
+      ];
+
+    this.leafletOptions.layers = [tileLayer(currentLayer.url, currentLayer.layerOptions)];
+
+    this.isMapReady = false;
+    setTimeout(() => {
+      this.isMapReady = true;
+    }, 50);
   }
 
   private initFilterListener() {
-    this.filtersSubscription$.pipe(debounceTime(1000)).subscribe({
+    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.$destroy)).subscribe({
       next: () => {
-        if (this.route.snapshot.data['view'] === 'search' && !this.searchId) return;
-        if (this.route.snapshot.data['view'] === 'collection' && !this.collectionId) return;
-
         this.reInitParams();
         this.getPostsGeoJson();
       },
@@ -88,7 +106,6 @@ export class MapViewComponent extends MainViewComponent implements OnInit, After
   }
 
   private reInitParams() {
-    this.params.page = 1;
     this.mapLayers.map((layer) => {
       this.map.removeLayer(layer);
       this.markerClusterData.removeLayer(layer);
@@ -96,15 +113,10 @@ export class MapViewComponent extends MainViewComponent implements OnInit, After
     this.mapLayers = [];
   }
 
-  loadData(): void {
-    this.reInitParams();
-    this.getPostsGeoJson();
-  }
-
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.isMapReady = true;
-    }, 100);
+    }, 300);
   }
 
   public onMapReady(map: Map) {
@@ -113,7 +125,7 @@ export class MapViewComponent extends MainViewComponent implements OnInit, After
 
   private getPostsGeoJson() {
     this.postsService
-      .getGeojson(this.params)
+      .getGeojson({ limit: 1000 })
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (posts) => {
@@ -122,12 +134,8 @@ export class MapViewComponent extends MainViewComponent implements OnInit, After
               type: r.geojson.type,
               features: r.geojson.features.map((f) => {
                 f.properties = {
-                  data_source_message_id: r.data_source_message_id,
-                  description: r.description,
                   id: r.id,
-                  'marker-color': r['marker-color'],
-                  source: r.source,
-                  title: r.title,
+                  type: r.source,
                 };
                 return f;
               }),
@@ -162,5 +170,10 @@ export class MapViewComponent extends MainViewComponent implements OnInit, After
           }
         },
       });
+  }
+
+  public destroy(): void {
+    this.$destroy.next(null);
+    this.$destroy.complete();
   }
 }

@@ -1,7 +1,15 @@
 .donation-amount {
   &__icon {
-    font-size: 20px;
-    margin-top: -8px;
-    margin-bottom: -8px;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    font-size: 24px;
+    vertical-align: top;
+  }
+
+  &::ng-deep {
+    .mat-icon {
+      font-size: 24px;
+    }
   }
 }
