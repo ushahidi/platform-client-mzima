@@ -22,7 +22,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
+import { BreakpointService, EventBusService, SessionService } from '@services';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -573,14 +573,15 @@ export class PostEditComponent implements OnInit, OnChanges {
       if (!confirmed) return;
     }
 
-    if (!this.postId) {
-      this.eventBusService.next({
-        type: EventType.AddPostButtonSubmit,
-        payload: true,
-      });
-    } else {
+    if (this.postId) {
       this.cancel.emit();
     }
+    // else {
+    //   this.eventBusService.next({
+    //     type: EventType.AddPostButtonSubmit,
+    //     payload: true,
+    //   });
+    // }
     this.backNavigation();
   }
 
@@ -596,6 +597,8 @@ export class PostEditComponent implements OnInit, OnChanges {
         queryParams = { mode: params.get('mode') };
       }
       this.router.navigate([url], { queryParams: queryParams });
+    } else {
+      this.router.navigate(['map']);
     }
   }
 
