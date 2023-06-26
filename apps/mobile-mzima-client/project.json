@@ -36,11 +36,13 @@
         ],
         "scripts": [],
         "allowedCommonJsDependencies": [
-          "localforage",
-          "lodash",
+          "dayjs",
           "ion2-calendar",
           "leaflet",
-          "leaflet.markercluster"
+          "leaflet.markercluster",
+          "localforage",
+          "lodash",
+          "xregexp"
         ]
       },
       "configurations": {

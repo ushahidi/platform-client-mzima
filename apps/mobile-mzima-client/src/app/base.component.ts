@@ -1,10 +1,13 @@
 import { Optional } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, IonRouterOutlet, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
 import { App } from '@capacitor/app';
-import { Network } from '@capacitor/network';
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { untilDestroyed } from '@ngneat/until-destroy';
+import { distinctUntilChanged } from 'rxjs';
+import { NetworkService } from './core/services/network.service';
+import { ToastService } from './core/services/toast.service';
 
 export class BaseComponent {
   tap = 0;
@@ -12,8 +15,9 @@ export class BaseComponent {
   constructor(
     protected router: Router,
     protected platform: Platform,
-    protected toastCtrl: ToastController,
+    protected toastService: ToastService,
     protected alertCtrl: AlertController,
+    protected networkService: NetworkService,
     @Optional() protected routerOutlet?: IonRouterOutlet,
   ) {
     this.platform.ready().then(async () => {
@@ -39,28 +43,27 @@ export class BaseComponent {
   }
 
   async listenToNetworkStatus() {
-    let toast: any = null;
-    Network.addListener('networkStatusChange', async (status: any) => {
-      console.log('Network status changed', status);
-      if (status.connected) {
-        if (toast) {
-          await toast.dismiss();
-          toast = null;
-        }
-      } else {
-        if (!toast) {
-          toast = await this.showToast('The connection is lost', 0, 'medium', 'globe');
-          await toast.present();
-        }
-      }
-    });
+    this.networkService.networkStatus$
+      .pipe(distinctUntilChanged(), untilDestroyed(this))
+      .subscribe({
+        next: async (value) => {
+          await this.showConnectionInfo(
+            value ? 'The connection was restored' : 'The connection is lost',
+          );
+        },
+      });
+  }
+
+  async showConnectionInfo(message: string) {
+    const toast = await this.toastService.showToast(message, 3000, 'medium', 'globe');
+    await toast.present();
   }
 
   exitAppOnDoubleTap() {
+    const urls = ['/', '/deployment'];
     if (Capacitor.getPlatform() === 'android') {
       this.platform.backButton.subscribeWithPriority(10, async () => {
-        // TODO add route on map
-        if (this.router.url === '/deployment') {
+        if (urls.includes(this.router.url)) {
           if (!this.routerOutlet?.canGoBack()) {
             this.tap++;
             if (this.tap === 2) await App.exitApp();
@@ -72,22 +75,11 @@ export class BaseComponent {
   }
 
   async doubleTapExistToast() {
-    const toast = await this.showToast('Tap back button again to exit the App');
+    const toast = await this.toastService.showToast('Tap back button again to exit the App');
     await toast.present();
     const dismiss = await toast.onDidDismiss();
     if (dismiss) {
       this.tap = 0;
     }
-  }
-
-  showToast(message: string, duration = 3000, color = 'primary', icon?: string) {
-    return this.toastCtrl.create({
-      mode: 'ios',
-      message,
-      duration,
-      position: 'bottom',
-      color,
-      icon,
-    });
   }
 }

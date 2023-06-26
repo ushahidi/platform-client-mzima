@@ -1,1 +1,1 @@
-export * from './truncate.pipe';
+export * from './truncate/truncate.module';

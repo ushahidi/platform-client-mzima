@@ -2,13 +2,14 @@
 import { divIcon, marker } from 'leaflet';
 import { EnvService } from '../services/env.service';
 
-export const pointIcon = (type: string = 'default') => {
+export const pointIcon = (type: string = 'default', color?: string) => {
+  color = color && /^[a-zA-Z0-9#]+$/.test(color) ? color : 'var(--color-neutral-100)';
   const size: any = [30, 40];
 
   return divIcon({
     className: 'custom-map-marker',
     html: `
-    <svg style="height: 100%; width: 100%;">
+    <svg style="height: 100%; width: 100%; fill:${color};">
       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/markers.svg#${type}"></use>
     </svg>
     `,
