@@ -18,6 +18,7 @@ export class ToastService {
           duration: params.duration ?? 2000,
           layout: params.layout ?? 'baseline',
           position: params.position ?? 'bottom',
+          icon: params.icon,
         })
         .then((toast) => {
           toast.present();

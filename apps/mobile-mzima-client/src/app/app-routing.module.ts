@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NotAuthorizedGuard } from '@guards';
-import { PageNotFoundComponent } from './shared/components';
+import { PageNotFoundComponent } from '@components';
 
 const routes: Routes = [
   {
@@ -34,6 +34,19 @@ const routes: Routes = [
       import('./deployment/deployment-search/deployment-search.module').then(
         (m) => m.DeploymentSearchPageModule,
       ),
+  },
+  // {
+  //   path: '',
+  //   loadChildren: () => import('./post/post-edit/post-edit.module').then((m) => m.PostEditModule),
+  //   pathMatch: 'full',
+  // },
+  {
+    path: 'post-edit',
+    loadChildren: () => import('./post/post-edit/post-edit.module').then((m) => m.PostEditModule),
+    data: {
+      breadcrumb: 'nav.posts',
+      ogTitle: 'nav.posts',
+    },
   },
   {
     path: ':id',

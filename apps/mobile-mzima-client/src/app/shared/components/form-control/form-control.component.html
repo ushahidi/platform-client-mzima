@@ -21,6 +21,8 @@
       [placeholder]="placeholder"
       [required]="required"
       [disabled]="disabled"
+      [readonly]="readonly"
+      [pattern]="pattern"
       (ionBlur)="handleBlur()"
       (ionFocus)="handleFocus()"
       (ionChange)="handleInputChange($event)"
@@ -68,6 +70,7 @@
       <ng-content select="[end]"></ng-content>
     </span>
   </ion-item>
+  <span *ngIf="hintHTML?.length" class="hint ion-padding-horizontal" [innerHTML]="hintHTML"></span>
   <span *ngIf="hint?.length && (!errors.length || isOnFocus)" class="hint ion-padding-horizontal">
     {{ hint }}
   </span>

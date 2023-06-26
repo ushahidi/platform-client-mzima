@@ -1,0 +1,51 @@
+<div class="image-loader">
+  <div class="image-loader__wrap">
+    <div class="post-images" *ngIf="photo?.data">
+      <img class="post-image" [src]="photo?.data" />
+    </div>
+    <div class="image-loader__controls">
+      <app-button
+        class="image-loader__btn"
+        type="button"
+        [color]="'primary'"
+        (buttonClick)="takePicture()"
+        [ngClass]="{
+          'image-loader__replace-btn': photo,
+          'image-loader__add-btn': !photo
+        }"
+      >
+        <ng-container *ngIf="!photo; else changeButton">
+          <app-icon class="icon" name="plus"></app-icon>
+          Add photo
+        </ng-container>
+        <ng-template #changeButton>
+          <app-icon class="icon" name="edit"></app-icon>
+          Replace image
+        </ng-template>
+      </app-button>
+
+      <app-button
+        class="image-loader__delete-btn"
+        color="danger"
+        type="button"
+        *ngIf="photo?.data"
+        (buttonClick)="deleteSelectedImage()"
+      >
+        <app-icon slot="icon-only" name="delete"></app-icon>
+      </app-button>
+    </div>
+    <p class="error-msg" *ngIf="requiredError">Image is required</p>
+  </div>
+
+  <div class="form-row" *ngIf="hasCaption">
+    <app-form-control
+      label="Add caption"
+      [formControl]="captionControl"
+      (change)="captionChanged()"
+      [disabled]="!!id"
+    ></app-form-control>
+    <p *ngIf="captionControl?.hasError('specialCharacters')">
+      This field contains special characters
+    </p>
+  </div>
+</div>

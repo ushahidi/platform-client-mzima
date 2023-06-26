@@ -1,6 +1,7 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, FactoryProvider, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 import { AuthInterceptor } from '@interceptors';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -41,6 +42,7 @@ export function EnvLoaderFactory(env: EnvService): any {
       mode: 'md',
       innerHTMLTemplatesEnabled: true,
     }),
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     SdkModule.forRoot({

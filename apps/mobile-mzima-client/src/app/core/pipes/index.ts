@@ -1,2 +1,2 @@
-export { TruncatePipe } from './truncate.pipe';
+export * from './truncate/truncate.module';
 export { DateAgoPipe } from './date-ago.pipe';

@@ -24,6 +24,7 @@ import {
   GroupCheckboxSelectComponent,
 } from './components';
 import { CalendarModule } from 'ion2-calendar';
+import { TextareaControlComponent } from './components/textarea-control/textarea-control.component';
 
 const components = [
   IconComponent,
@@ -42,6 +43,7 @@ const components = [
   CollectionsModalComponent,
   ToggleComponent,
   GroupCheckboxSelectComponent,
+  TextareaControlComponent,
 ];
 
 @NgModule({

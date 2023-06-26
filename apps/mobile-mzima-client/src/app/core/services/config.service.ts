@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { STORAGE_KEYS } from '@constants';
 import { forkJoin, lastValueFrom, map, Observable, tap } from 'rxjs';
 import { MapConfigInterface } from '@models';
 import { DatabaseService } from './database.service';
@@ -33,10 +34,10 @@ export class ConfigService {
       .pipe(
         tap({
           next: (data) => {
-            this.setConfigurations('set', 'site', data);
+            this.setConfigurations('set', STORAGE_KEYS.SITE, data);
           },
           error: () => {
-            this.setConfigurations('get', 'site');
+            this.setConfigurations('get', STORAGE_KEYS.SITE);
             setTimeout(() => this.getSite(), 5000);
           },
         }),
@@ -53,10 +54,10 @@ export class ConfigService {
       .pipe(
         tap({
           next: (data) => {
-            this.setConfigurations('set', 'features', data);
+            this.setConfigurations('set', STORAGE_KEYS.FEATURES, data);
           },
           error: () => {
-            this.setConfigurations('get', 'features');
+            this.setConfigurations('get', STORAGE_KEYS.FEATURES);
             setTimeout(() => this.getFeatures(), 5000);
           },
         }),
@@ -77,10 +78,10 @@ export class ConfigService {
             if (data.default_view?.baselayer === 'MapQuestAerial') {
               data.default_view.baselayer = 'satellite';
             }
-            this.setConfigurations('set', 'map', data);
+            this.setConfigurations('set', STORAGE_KEYS.MAP, data);
           },
           error: () => {
-            this.setConfigurations('get', 'map');
+            this.setConfigurations('get', STORAGE_KEYS.MAP);
             setTimeout(() => this.getMap(), 5000);
           },
         }),
@@ -92,7 +93,7 @@ export class ConfigService {
     if (action === 'set') {
       await this.databaseService.set(key, config);
     } else {
-      config = await this.databaseService.get('map');
+      config = await this.databaseService.get(STORAGE_KEYS.MAP);
     }
     this.sessionService.setConfigurations(key, config);
   }
@@ -110,9 +111,9 @@ export class ConfigService {
     } else {
       return lastValueFrom(
         forkJoin([
-          this.databaseService.get('site'),
-          this.databaseService.get('features'),
-          this.databaseService.get('map'),
+          this.databaseService.get(STORAGE_KEYS.SITE),
+          this.databaseService.get(STORAGE_KEYS.FEATURES),
+          this.databaseService.get(STORAGE_KEYS.MAP),
         ]),
       );
     }

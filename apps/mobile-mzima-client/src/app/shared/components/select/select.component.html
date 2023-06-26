@@ -24,13 +24,14 @@
       (ionBlur)="handleBlur()"
     >
       <ion-select-option *ngFor="let option of options" [value]="option.value">
-        {{ option.label }}
+        {{ option.label || option }}
       </ion-select-option>
     </ion-select>
     <span slot="end">
       <ng-content select="[end]"></ng-content>
     </span>
   </ion-item>
+  <span *ngIf="hintHTML?.length" class="hint ion-padding-horizontal" [innerHTML]="hintHTML"></span>
   <span *ngIf="hint?.length && (!errors.length || isOnFocus)" class="hint ion-padding-horizontal">
     {{ hint }}
   </span>

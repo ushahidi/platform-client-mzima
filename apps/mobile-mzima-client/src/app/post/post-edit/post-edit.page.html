@@ -1,0 +1,491 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <app-button slot="start" fill="clear" color="medium" class="" (buttonClick)="backNavigation()">
+      <app-icon class="arrow-back" slot="icon-only" name="arrow-back"></app-icon>
+    </app-button>
+    <ion-title>Create post</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-horizontal ion-padding-top page">
+  <app-select
+    label="Survey name"
+    [options]="surveyListOptions"
+    [(ngModel)]="selectedSurveyId"
+    (ngModelChange)="loadForm()"
+  >
+  </app-select>
+  <form novalidate [formGroup]="form" autocomplete="off" *ngIf="form && tasks?.length">
+    <div *ngFor="let task of tasks; let i = index" class="task-container">
+      <div [ngStyle]="{ '--color': color }">
+        <ng-container *ngIf="task.type !== 'post'">
+          <h2 class="task-label">{{ task.label }}</h2>
+
+          <div *ngIf="task.show_when_published">
+            <p>This task will be visible when post is published.</p>
+          </div>
+
+          <div *ngIf="task.task_is_internal_only">
+            <p>
+              This task is marked for internal use only. It is not seen by users when they create a
+              post.
+            </p>
+          </div>
+
+          <div class="form-row">
+            <ion-toggle
+              name="accept-survey"
+              labelPlacement="start"
+              (ionChange)="taskComplete(task, $event)"
+            >
+              Task completed
+              <span class="color-accent" *ngIf="task.required">*</span>
+            </ion-toggle>
+          </div>
+        </ng-container>
+        <div class="form-row" *ngFor="let field of task.fields; let i = index">
+          <!-- title, varchar -->
+          <ng-container
+            *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
+          >
+            <div class="form-control--section">
+              <app-form-control
+                color="light"
+                [clearable]="true"
+                [label]="field?.label"
+                [required]="field?.required"
+                [formControlName]="field.key"
+                [hintHTML]="field?.instructions"
+              ></app-form-control>
+            </div>
+          </ng-container>
+
+          <!-- description -->
+          <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
+            <div class="form-control--section">
+              <app-textarea-control
+                color="light"
+                [clearable]="true"
+                [label]="field?.label"
+                [required]="field?.required"
+                [formControlName]="field.key"
+                [hintHTML]="field?.instructions"
+              ></app-textarea-control>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'textarea'">
+            <div class="form-control--section">
+              <app-textarea-control
+                color="light"
+                [rounded]="false"
+                [clearable]="true"
+                [label]="field?.label"
+                [required]="field?.required"
+                [formControlName]="field.key"
+                [hintHTML]="field?.instructions"
+              ></app-textarea-control>
+            </div>
+          </ng-container>
+
+          <!-- tags -->
+          <ng-container *ngIf="field.input === 'tags'">
+            <div class="form-control--section">
+              <ion-label>
+                {{ field?.label }}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
+              <span class="related-post-list" *ngIf="field.options?.length; else noOptions">
+                <ul class="checkbox-list">
+                  <li class="checkbox-list__item">
+                    <app-checkbox
+                      type="item"
+                      [checked]="form.get(field.key)?.value.length === field.options.length"
+                      (checkboxChange)="toggleAllSelection($event, field, field.key)"
+                    >
+                      Select all
+                    </app-checkbox>
+                  </li>
+                  <li
+                    class="checkbox-list__item"
+                    *ngFor="let option of field.options; trackBy: trackById"
+                  >
+                    <app-checkbox
+                      type="item"
+                      [ngClass]="{ 'lvl-2': option.parent }"
+                      [checked]="form.get(field.key)?.value.includes(option.id)"
+                      (checkboxChange)="
+                                onCheckChange(
+                                  $event,
+                                  field.key,
+                                  option.id,
+                                  field.options,
+                                  option.parent?.id
+                                )
+                              "
+                    >
+                      {{ option.tag }}
+                    </app-checkbox>
+                  </li>
+                </ul>
+              </span>
+            </div>
+          </ng-container>
+
+          <!-- date -->
+          <ng-container *ngIf="field.input === 'date'">
+            <ion-label>
+              {{ field?.label }}
+              <span class="color-accent" *ngIf="field?.required">*</span>
+            </ion-label>
+            <div class="form-control--section">
+              <app-form-control
+                id="open-date"
+                color="light"
+                [label]="field?.label"
+                [required]="field?.required"
+                [clearable]="true"
+                [formControlName]="field.key"
+                [hintHTML]="field?.instructions"
+              >
+                <ng-container start>
+                  <app-icon name="calendar"></app-icon>
+                </ng-container>
+              </app-form-control>
+
+              <ion-modal class="data-modal" trigger="open-date">
+                <ng-template>
+                  <ion-content>
+                    <ion-datetime
+                      #dateId
+                      size="cover"
+                      id="date"
+                      presentation="date"
+                      (ionChange)="setCalendar($event, field.key)"
+                    ></ion-datetime>
+                  </ion-content>
+                </ng-template>
+              </ion-modal>
+            </div>
+          </ng-container>
+
+          <!-- datetime -->
+          <ng-container *ngIf="field.input === 'datetime'">
+            <ion-label>
+              {{ field?.label }}
+              <span class="color-accent" *ngIf="field?.required">*</span>
+            </ion-label>
+            <div class="form-control--section">
+              <app-form-control
+                id="open-datetime"
+                color="light"
+                [label]="field?.label"
+                [required]="field?.required"
+                [clearable]="true"
+                [formControlName]="field.key"
+                [hintHTML]="field?.instructions"
+              >
+                <ng-container start>
+                  <app-icon name="calendar"></app-icon>
+                </ng-container>
+              </app-form-control>
+
+              <ion-modal class="date-modal" trigger="open-datetime">
+                <ng-template>
+                  <ion-content>
+                    <ion-datetime
+                      #dateTimeId
+                      size="cover"
+                      id="datetime"
+                      (ionChange)="setCalendar($event, field.key, 'dateTime')"
+                    ></ion-datetime>
+                  </ion-content>
+                </ng-template>
+              </ion-modal>
+            </div>
+          </ng-container>
+
+          <!-- radio -->
+          <ng-container *ngIf="field.input === 'radio'">
+            <div class="form-control--section">
+              <div>
+                <ion-label>
+                  {{ field?.label }}
+                  <span class="color-accent" *ngIf="field?.required">*</span>
+                </ion-label>
+                <span
+                  class="form-row__instruction"
+                  *ngIf="field?.instructions"
+                  [innerHTML]="field?.instructions"
+                ></span>
+              </div>
+              <ion-radio-group
+                [attr.aria-label]="field.label"
+                [formControlName]="field.key"
+                *ngIf="field.options?.length; else noOptions"
+              >
+                <div class="radio-button" *ngFor="let option of field.options">
+                  <app-radio [value]="option" type="item" justify="space-between">
+                    {{ option }}
+                  </app-radio>
+                </div>
+              </ion-radio-group>
+            </div>
+          </ng-container>
+
+          <!-- checkbox -->
+          <ng-container *ngIf="field.input === 'checkbox'">
+            <div class="form-control--section">
+              <div>
+                <ion-label>
+                  {{ field?.label }}
+                  <span class="color-accent" *ngIf="field?.required">*</span>
+                </ion-label>
+                <span
+                  class="form-row__instruction"
+                  *ngIf="field?.instructions"
+                  [innerHTML]="field?.instructions"
+                ></span>
+              </div>
+              <ul class="checkbox-list" *ngIf="field.options?.length; else noOptions">
+                <li class="checkbox-list__item" *ngFor="let option of field.options">
+                  <app-checkbox
+                    type="item"
+                    (checkboxChange)="changeSelectionFields($event, field.key, option)"
+                  >
+                    {{ option }}
+                  </app-checkbox>
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+
+          <!-- select -->
+          <ng-container *ngIf="field.input === 'select'">
+            <div class="form-control--section">
+              <app-select
+                [hintHTML]="field?.instructions"
+                [label]="field?.label"
+                [formControlName]="field.key"
+                *ngIf="field.options?.length; else noOptions"
+                [options]="field.options"
+              >
+              </app-select>
+            </div>
+          </ng-container>
+
+          <!-- number -->
+          <ng-container *ngIf="field.input === 'number'">
+            <div class="form-control--section">
+              <app-form-control
+                color="light"
+                [clearable]="true"
+                [label]="field?.label"
+                [required]="field?.required"
+                [formControlName]="field.key"
+                [type]="'number'"
+                [pattern]="field.type === 'int' ? '[0-9]*' : ''"
+                [hintHTML]="field?.instructions"
+              ></app-form-control>
+            </div>
+          </ng-container>
+
+          <!-- upload -->
+          <ng-container *ngIf="field.input === 'upload'">
+            <div class="form-control--section">
+              <div>
+                <ion-label>
+                  {{ field?.label }}
+                  <span class="color-accent" *ngIf="field?.required">*</span>
+                </ion-label>
+                <span
+                  class="form-row__instruction"
+                  *ngIf="field?.instructions"
+                  [innerHTML]="field?.instructions"
+                ></span>
+              </div>
+              <app-image-uploader
+                [formControlName]="field.key"
+                [hasCaption]="field.config.hasCaption"
+                [requiredError]="
+                  form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                "
+              >
+              </app-image-uploader>
+            </div>
+          </ng-container>
+
+          <!-- video -->
+          <ng-container *ngIf="field.input === 'video'">
+            <div class="form-control--section">
+              <app-form-control
+                #videoInput
+                color="light"
+                [clearable]="true"
+                [label]="field?.label"
+                [required]="field?.required"
+                [formControlName]="field.key"
+                [hintHTML]="field?.instructions"
+                [errors]="form.get(field.key)?.hasError('invalidvideourl') && !form.get(field.key)?.hasError('required') ? ['Invalid video embed url'] : []"
+              ></app-form-control>
+
+              <iframe
+                *ngIf="form.get(field.key)?.value"
+                width="100%"
+                height="315px"
+                [src]="generateSecurityTrustUrl(formValidator.videoUrlPreview(videoInput))"
+                [hidden]="!videoInput.value.length"
+              ></iframe>
+            </div>
+          </ng-container>
+
+          <!-- location -->
+          <ng-container *ngIf="field.input === 'location'">
+            <div>
+              <ion-label>
+                {{ field?.label }}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
+              <span
+                class="form-row__instruction"
+                *ngIf="field?.instructions"
+                [innerHTML]="field?.instructions"
+              ></span>
+            </div>
+
+            <div class="form-control--section">
+              <app-location-select
+                [zoom]="12"
+                [location]="form.get(field.key)?.value"
+                [required]="locationRequired"
+                (locationChange)="changeLocation($event, field.key)"
+              ></app-location-select>
+            </div>
+          </ng-container>
+
+          <!-- relation -->
+          <ng-container *ngIf="field.input === 'relation'">
+            <div class="form-control--section">
+              <ion-label>
+                {{ field?.label }}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
+              <p class="form-control--tip">
+                Please note, the posts to relate to needs to be published, posts that are "Under
+                review" will not appear in the search-results
+              </p>
+              <div class="related-post-selected" *ngIf="selectedRelatedPost">
+                <div class="related-post-content">
+                  <span>{{ selectedRelatedPost.id }}: {{ selectedRelatedPost.title }}</span>
+                  <div
+                    class="related-post-delete"
+                    (click)="deleteRelatedPost(field, selectedRelatedPost.id)"
+                  >
+                    <app-icon slot="icon-only" name="close"></app-icon>
+                  </div>
+                </div>
+              </div>
+
+              <div class="relation-container" *ngIf="!selectedRelatedPost">
+                <app-form-control
+                  color="light"
+                  [clearable]="true"
+                  [label]="field?.label"
+                  [required]="field?.required"
+                  [(ngModel)]="relationSearch"
+                  [ngModelOptions]="{ standalone: true }"
+                  [hintHTML]="field?.instructions"
+                >
+                </app-form-control>
+                <app-button
+                  type="button"
+                  class="relation-button-search"
+                  (buttonClick)="relationSearchPosts()"
+                >
+                  Relation post search
+                </app-button>
+              </div>
+
+              <span class="related-post-list" *ngIf="relatedPosts?.length">
+                <ul>
+                  <li *ngFor="let post of relatedPosts">
+                    <app-checkbox
+                      type="item"
+                      (checkboxChange)="chooseRelatedPost($event, field, post)"
+                    >
+                      {{ post.id }}: {{ post.title }}
+                    </app-checkbox>
+                  </li>
+                </ul>
+              </span>
+            </div>
+          </ng-container>
+
+          <!-- markdown -->
+          <ng-container *ngIf="field.input === 'markdown'">
+            <div class="form-control--section">
+              <app-textarea-control
+                color="light"
+                [clearable]="true"
+                [label]="field?.label"
+                [required]="field?.required"
+                [formControlName]="field.key"
+                [placeholder]="field.default"
+                [hintHTML]="field?.instructions"
+              ></app-textarea-control>
+            </div>
+          </ng-container>
+
+          <div
+            class="field-error"
+            *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched"
+          >
+            <ion-text color="danger" *ngIf="form.get(field.key)?.hasError('required')">
+              {{ field.label }} field is a required field *
+            </ion-text>
+            <ion-text color="danger" *ngIf="form.get(field.key)?.hasError('minlength')">
+              {{ field.label }} field is too short, use at least 2 characters
+            </ion-text>
+            <ion-text color="danger" *ngIf="form.get(field.key)?.hasError('pattern')">
+              {{ field.label }} field is invalid
+            </ion-text>
+            <ion-text color="danger" *ngIf="form.get(field.key)?.hasError('specialCharacters')">
+              {{ field.label }} field contains special characters
+            </ion-text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <ng-template #noOptions>
+    <div>
+      <span class="no-options">No options</span>
+    </div>
+  </ng-template>
+</ion-content>
+
+<ion-footer class="ion-padding-horizontal">
+  <ion-toolbar>
+    <ion-text class="connection-info" color="warning">{{ connectionInfo }}</ion-text>
+    <div class="form-controls-panel">
+      <app-button
+        class="submit-button"
+        type="button"
+        *ngIf="form"
+        [disabled]="form.disabled || form.invalid || emptyLocation"
+        (buttonClick)="submitPost()"
+      >
+        Submit
+      </app-button>
+      <app-button
+        color="medium"
+        fill="outline"
+        class="submit-button"
+        (buttonClick)="backNavigation()"
+      >
+        Cancel
+      </app-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

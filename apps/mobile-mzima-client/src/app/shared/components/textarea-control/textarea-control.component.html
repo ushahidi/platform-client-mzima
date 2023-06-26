@@ -1,0 +1,41 @@
+<div class="ion-margin-bottom">
+  <ion-item
+    lines="none"
+    class="form-row"
+    [ngClass]="{
+      'form-row--rounded': rounded,
+      'form-row--light': color === 'light'
+    }"
+  >
+    <span slot="start">
+      <ng-content select="[start]"></ng-content>
+    </span>
+    <ion-textarea
+      #textarea
+      [(ngModel)]="value"
+      class="form-control"
+      [label]="label ? label + (required ? '*' : '') : null"
+      [labelPlacement]="label ? 'floating' : 'start'"
+      [placeholder]="placeholder"
+      [required]="required"
+      [disabled]="disabled"
+      (ionBlur)="handleBlur()"
+      (ionFocus)="handleFocus()"
+      (ionChange)="handleInputChange($event)"
+      (keyup)="handleInputChange($event)"
+    >
+    </ion-textarea>
+    <span slot="end">
+      <ng-content select="[end]"></ng-content>
+    </span>
+  </ion-item>
+  <span *ngIf="hintHTML?.length" class="hint ion-padding-horizontal" [innerHTML]="hintHTML"></span>
+  <span *ngIf="hint?.length && (!errors.length || isOnFocus)" class="hint ion-padding-horizontal">
+    {{ hint }}
+  </span>
+  <ng-container *ngIf="!isOnFocus && errors.length">
+    <ion-text *ngFor="let error of errors" color="danger" class="error-msg ion-padding-horizontal">
+      {{ error }}
+    </ion-text>
+  </ng-container>
+</div>
