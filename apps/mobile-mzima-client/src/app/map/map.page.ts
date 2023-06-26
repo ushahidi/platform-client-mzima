@@ -48,4 +48,8 @@ export class MapPage extends MainViewComponent {
   ionViewWillEnter() {
     this.layout.updateOffsetHeight();
   }
+
+  public createPost() {
+    this.router.navigate(['/post-edit']);
+  }
 }

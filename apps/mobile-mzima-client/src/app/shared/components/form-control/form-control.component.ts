@@ -18,10 +18,13 @@ export class FormControlComponent implements ControlValueAccessor {
   @Input() public label?: string;
   @Input() public placeholder: string = '';
   @Input() public hint?: string;
-  @Input() public type?: 'text' | 'email' | 'password' = 'text';
+  @Input() public hintHTML?: string;
+  @Input() public type?: 'text' | 'email' | 'password' | 'number' = 'text';
   @Input() public required = false;
   @Input() public rounded = false;
   @Input() public disabled = false;
+  @Input() public readonly = false;
+  @Input() public pattern: string = '';
   @Input() public clearable = false;
   @Input() public togglePassword = false;
   @Input() public errors: string[] = [];

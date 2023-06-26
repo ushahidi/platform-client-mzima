@@ -1,0 +1,82 @@
+<div *ngIf="location">
+  <div class="map-controls">
+    <div class="form-row form-row__search" #resultList>
+      <app-form-control
+        #searchInput
+        [(ngModel)]="queryLocation"
+        (ngModelChange)="searchLocation()"
+        (focusout)="searchLocation()"
+        label="Location"
+        [required]="required"
+      >
+        <ng-container start>
+          <app-icon class="location-icon" name="location"></app-icon>
+        </ng-container>
+      </app-form-control>
+      <ul class="geocoder-list" *ngIf="isShowGeocodingResults && geocodingResults.length">
+        <li
+          class="geocoder-list__item"
+          *ngFor="let result of geocodingResults"
+          (click)="selectlocation(result)"
+        >
+          {{ result.name | truncate : 35 }}
+        </li>
+      </ul>
+    </div>
+    <div class="form-row__wrapper">
+      <div class="form-row">
+        <app-form-control
+          [(ngModel)]="location.lat"
+          (ngModelChange)="checkErrors()"
+          (focusout)="onFocusOut()"
+          label="Latitude"
+          [required]="required"
+          [readonly]="true"
+        ></app-form-control>
+        <p *ngIf="emptyFieldLat" class="location-error">Empty latitude</p>
+        <p *ngIf="noSpecialCharactersLat" class="location-error">
+          Field latitude contains special characters
+        </p>
+      </div>
+
+      <div class="form-row">
+        <app-form-control
+          [(ngModel)]="location.lng"
+          (ngModelChange)="checkErrors()"
+          (focusout)="onFocusOut()"
+          label="Longitude"
+          [required]="required"
+          [readonly]="true"
+        ></app-form-control>
+        <p *ngIf="emptyFieldLng" class="location-error">Empty longitude</p>
+        <p *ngIf="noSpecialCharactersLng" class="location-error">
+          Field longitude contains special characters
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<span class="instructions">
+  You can search or click the area of map where you want to place the marker.
+</span>
+
+<div class="map-wrapper" *ngIf="mapReady">
+  <div
+    leaflet
+    class="map"
+    [leafletLayers]="mapLayers"
+    [leafletOptions]="leafletOptions"
+    [leafletFitBounds]="mapFitToBounds"
+    (leafletMapReady)="onMapReady($event)"
+    [leafletFitBoundsOptions]="fitBoundsOptions"
+  ></div>
+  <button
+    *ngIf="nativeApp"
+    type="button"
+    class="btn-current-location"
+    (click)="getCurrentLocation()"
+  >
+    <app-icon class="btn-current-location_icon" name="current-location"></app-icon>
+  </button>
+</div>

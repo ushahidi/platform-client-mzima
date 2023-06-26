@@ -1,0 +1,114 @@
+.arrow-back {
+  font-size: 36px;
+}
+
+.checkbox {
+  &-list {
+    list-style: none;
+    padding-left: 0;
+
+    &__item {
+      .lvl-2 {
+        margin-left: 16px;
+      }
+    }
+  }
+}
+
+.form-row {
+  &__instruction {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-800);
+    }
+  }
+}
+
+.form-control {
+  &--section {
+    margin-bottom: 16px;
+  }
+
+  &--tip {
+    font-size: 12px;
+  }
+}
+
+.date-modal {
+  --width: 290px;
+  --height: 400px;
+  --border-radius: 8px;
+  --background: transparent;
+
+  ion-content {
+    --background: transparent;
+  }
+}
+
+.form-controls-panel {
+  display: flex;
+  justify-content: flex-start;
+  padding: 15px 0;
+
+  .submit-button {
+    width: 100px;
+
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}
+
+.related-post {
+  &-selected {
+    display: inline-block;
+    border: 1px solid var(--color-neutral-30);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+  }
+
+  &-delete {
+    width: 20px;
+    height: 20px;
+    border: 1px solid;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    cursor: pointer;
+
+    mat-icon {
+      display: contents;
+      font-size: 16px;
+    }
+  }
+
+  &-list {
+    ul {
+      padding: 0;
+    }
+
+    ul li {
+      list-style: none;
+    }
+  }
+}
+
+.field-error {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.connection-info {
+  font-size: 10px;
+}
