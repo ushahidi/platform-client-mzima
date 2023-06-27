@@ -165,6 +165,9 @@ export class PostItemComponent implements OnInit {
       this.postsService.delete(this.post.id).subscribe({
         next: () => {
           this.postDeleted.emit({ post });
+          this.toastService.presentToast({
+            message: 'Post has been successfully deleted',
+          });
         },
       });
     }

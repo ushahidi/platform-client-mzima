@@ -1,6 +1,4 @@
 .main {
-  --padding-top: var(--ion-safe-area-top);
-
   &::part(scroll) {
     transition: padding-top 0.35s ease;
   }

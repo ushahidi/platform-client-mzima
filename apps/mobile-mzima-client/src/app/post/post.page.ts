@@ -183,6 +183,9 @@ export class PostPage {
       this.postsService.delete(this.post!.id).subscribe({
         next: () => {
           this.router.navigate(['/']);
+          this.toastService.presentToast({
+            message: 'Post has been successfully deleted',
+          });
         },
       });
     }
