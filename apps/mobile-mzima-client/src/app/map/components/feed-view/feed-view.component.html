@@ -5,6 +5,19 @@
     'at-top': atTop
   }"
 >
+  <app-select
+    label="Sort by"
+    [(ngModel)]="sorting"
+    class="sorting-select"
+    [options]="sortingOptions"
+    [disabled]="isPostsLoading"
+    (ngModelChange)="sortPosts()"
+    [ngClass]="{ 'sorting-select--hidden': !atTop }"
+  >
+    <ng-container start>
+      <app-icon name="sorting"></app-icon>
+    </ng-container>
+  </app-select>
   <ng-container *ngIf="posts.length; else emptyBox">
     <div class="total-posts">{{ totalPosts }} posts</div>
     <app-post-item

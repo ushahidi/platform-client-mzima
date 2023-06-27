@@ -26,6 +26,33 @@ export class FeedViewComponent extends MainViewComponent {
     page: 1,
   };
   public override $destroy = new Subject();
+  public sorting = 'created?desc';
+  public sortingOptions = [
+    {
+      label: 'Date created (Newest first)',
+      value: 'created?desc',
+    },
+    {
+      label: 'Date created (Oldest first)',
+      value: 'created?asc',
+    },
+    {
+      label: 'Post date (Newest first)',
+      value: 'post_date?desc',
+    },
+    {
+      label: 'Post date (Oldest first)',
+      value: 'post_date?asc',
+    },
+    {
+      label: 'Date updated (Newest first)',
+      value: 'updated?desc',
+    },
+    {
+      label: 'Date updated (Oldest first)',
+      value: 'updated?asc',
+    },
+  ];
 
   constructor(
     protected override router: Router,
@@ -42,8 +69,7 @@ export class FeedViewComponent extends MainViewComponent {
   private initFilterListener() {
     this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.$destroy)).subscribe({
       next: () => {
-        this.params.page = 1;
-        this.getPosts(this.params);
+        this.updatePosts();
       },
     });
   }
@@ -87,6 +113,20 @@ export class FeedViewComponent extends MainViewComponent {
 
   public showPost(id: string): void {
     this.router.navigate([id]);
+  }
+
+  public sortPosts(): void {
+    this.isPostsLoading = true;
+    this.postsService.setSorting({
+      orderby: this.sorting.split('?')[0],
+      order: this.sorting.split('?')[1],
+    });
+    this.updatePosts();
+  }
+
+  public updatePosts(): void {
+    this.params.page = 1;
+    this.getPosts(this.params);
   }
 
   public destroy(): void {

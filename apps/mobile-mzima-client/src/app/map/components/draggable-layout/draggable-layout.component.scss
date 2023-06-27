@@ -55,7 +55,7 @@
 
 .draggable-content {
   z-index: 50;
-  padding-top: 44px;
+  padding-top: 26px;
   position: relative;
   transition: all 0.35s ease;
   border-radius: 28px 28px 0 0;
@@ -85,10 +85,11 @@
     transition-timing-function: ease;
     border-bottom: 1px solid transparent;
     background: var(--ion-background-color);
-    transition-property: height, border-color;
+    transition-property: height, border-color, opacity;
 
     .page-content--fullscreen & {
       top: 0;
+      opacity: 0;
       bottom: auto;
       position: fixed;
       height: calc(73px + var(--ion-safe-area-top));
