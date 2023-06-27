@@ -4,6 +4,9 @@ on:
 - push
 - pull_request
 
+env:
+  DEFAULT_NODE_VERSION: "16"
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -16,8 +19,9 @@ jobs:
         node_version:
           - "14"
           - "16"
+          - "18"
         include:
-        - node_version: "14"
+        - node_version: "16"    # update along with DEFAULT_NODE_VERSION
           run_lint_tests: "True"
 
     steps:
@@ -107,3 +111,60 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
+
+  gh-release:
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: |
+          set -e;
+          npm install;
+
+      - name: prod build
+        id: bin_build
+        run: | 
+          npm run web:build;
+          FILENAME="platform-client-mzima-${GITHUB_REF##*/}-bin.tar.gz"
+          tar -czv -f ${FILENAME} -C dist/apps/web-mzima-client/ . ;
+          rm -fr dist/apps/web-mzima-client;
+          echo "tarball=${FILENAME}" >> "$GITHUB_OUTPUT"
+
+      - name: dev build
+        id: bindev_build
+        run: | 
+          npm run web:devbuild;
+          FILENAME="platform-client-mzima-${GITHUB_REF##*/}-bin-dev.tar.gz" ;
+          tar -czv -f ${FILENAME} -C dist/apps/web-mzima-client/ . ;
+          rm -fr dist/apps/web-mzima-client;
+          echo "tarball=${FILENAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            ${{steps.bin_build.outputs.tarball}}
+            ${{steps.bindev_build.outputs.tarball}}
