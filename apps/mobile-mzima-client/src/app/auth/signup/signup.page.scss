@@ -19,8 +19,8 @@
 
 .form {
   display: flex;
-  min-height: 100%;
   flex-direction: column;
+  min-height: calc(100% - 101px);
   justify-content: space-between;
 }
 

@@ -1,0 +1,32 @@
+.deployment-info {
+  margin-bottom: 24px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  --min-height: 55px;
+  --border-radius: 24px;
+
+  &__img {
+    margin: 0 16px 0 0;
+  }
+
+  &__title {
+    display: block;
+    letter-spacing: 0.5px;
+  }
+
+  &__info {
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+  }
+
+  &__icon {
+    font-size: 24px;
+    margin: 0 0 0 16px;
+  }
+}
