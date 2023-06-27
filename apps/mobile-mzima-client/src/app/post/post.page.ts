@@ -189,7 +189,8 @@ export class PostPage {
   }
 
   public editPost(): void {
-    console.log('edit post');
+    if (!this.post) return;
+    this.router.navigate([this.post.id, 'edit']);
   }
 
   public async addPostToCollection(): Promise<void> {

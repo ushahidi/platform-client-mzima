@@ -27,8 +27,6 @@ export class BaseComponent {
       }
     });
 
-    this.doubleTapExistToast();
-
     if (this.platform.is('capacitor')) {
       StatusBar.setOverlaysWebView({ overlay: true });
 

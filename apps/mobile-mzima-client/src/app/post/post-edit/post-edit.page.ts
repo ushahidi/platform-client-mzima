@@ -51,7 +51,7 @@ export class PostEditPage {
   private fieldsFormArray = ['tags'];
   public description: string;
   public title: string;
-  private postId: number;
+  public postId: number;
   private post: any;
   public tasks: any[] = [];
   private completeStages: number[] = [];

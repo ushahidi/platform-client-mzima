@@ -10,6 +10,10 @@ const routes: Routes = [
     component: PostPage,
     canActivate: [WalkthroughGuard, NotDeploymentGuard],
   },
+  {
+    path: 'edit',
+    loadChildren: () => import('./post-edit/post-edit.module').then((m) => m.PostEditModule),
+  },
 ];
 
 @NgModule({

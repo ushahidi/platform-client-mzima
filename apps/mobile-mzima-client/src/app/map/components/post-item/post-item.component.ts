@@ -12,6 +12,7 @@ import { AlertService, EnvService, SessionService, ShareService, ToastService } 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { cloneDeep } from 'lodash';
 import { CollectionsModalComponent } from '../../../shared/components/collections-modal/collections-modal.component';
+import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -38,6 +39,7 @@ export class PostItemComponent implements OnInit {
     private shareService: ShareService,
     private envService: EnvService,
     private modalController: ModalController,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -99,8 +101,7 @@ export class PostItemComponent implements OnInit {
   }
 
   private editPost(): void {
-    // TODO: edit post
-    console.log('edit post');
+    this.router.navigate([this.post.id, 'edit']);
   }
 
   private async addToCollection(): Promise<void> {
