@@ -21,7 +21,7 @@ module.exports = {
           'error',
           {
             enforceBuildableLibDependency: true,
-            allow: ['@capacitor/*', '@capacitor-community/*', ],
+            allow: ['@capacitor/*', '@capacitor-community/*', 'capacitor*'],
             depConstraints: [
               {
                 sourceTag: '*',

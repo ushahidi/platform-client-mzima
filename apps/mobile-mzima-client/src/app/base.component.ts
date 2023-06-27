@@ -2,6 +2,10 @@ import { Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
+import { Device } from '@capacitor/device';
+import { Dialog } from '@capacitor/dialog';
+import { NativeSettings, IOSSettings } from 'capacitor-native-settings';
+
 import { App } from '@capacitor/app';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { untilDestroyed } from '@ngneat/until-destroy';
@@ -25,6 +29,7 @@ export class BaseComponent {
         this.listenToNetworkStatus();
         this.exitAppOnDoubleTap();
       }
+      this.logDeviceInfo();
     });
 
     if (this.platform.is('capacitor')) {
@@ -40,6 +45,30 @@ export class BaseComponent {
 
   private setStatusBarColor(isDark: boolean): void {
     StatusBar.setStyle({ style: isDark ? Style.Dark : Style.Light });
+  }
+
+  private async logDeviceInfo() {
+    const info = await Device.getInfo();
+
+    const showConfirm = async () => {
+      const { value } = await Dialog.confirm({
+        title: 'Update iOS',
+        message: `Please update your OS to run this app`,
+      });
+
+      if (value) {
+        NativeSettings.openIOS({
+          option: IOSSettings.SoftwareUpdate,
+        });
+      }
+    };
+
+    const osArray = info.osVersion.split('.');
+    const intOSVersion = parseInt(`${osArray[0]}0${osArray[1]}`);
+
+    if (info.platform === 'ios' && intOSVersion < 1605) {
+      await showConfirm();
+    }
   }
 
   async listenToNetworkStatus() {
