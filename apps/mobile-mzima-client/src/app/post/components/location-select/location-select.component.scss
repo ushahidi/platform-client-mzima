@@ -43,6 +43,9 @@
     font-size: 7px;
   }
   .leaflet-touch .leaflet-bar a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 25px;
     height: 25px;
     line-height: 20px;

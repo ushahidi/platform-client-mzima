@@ -1,14 +1,21 @@
-import { Component, Optional } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
 import { CollectionsService, MediaService, PostsService, SurveysService } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DatabaseService } from '@services';
-import { distinctUntilChanged, filter } from 'rxjs';
+import { DatabaseService, NetworkService, ToastService } from '@services';
+import {
+  BehaviorSubject,
+  concatMap,
+  delay,
+  distinctUntilChanged,
+  filter,
+  firstValueFrom,
+  from,
+  tap,
+} from 'rxjs';
 import { BaseComponent } from './base.component';
-import { NetworkService } from './core/services/network.service';
-import { ToastService } from './core/services/toast.service';
 import { UploadFileHelper } from './post/helpers';
 
 @UntilDestroy()
@@ -17,7 +24,9 @@ import { UploadFileHelper } from './post/helpers';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent extends BaseComponent {
+export class AppComponent extends BaseComponent implements OnInit {
+  private toastMessage$ = new BehaviorSubject<string>('');
+
   constructor(
     override router: Router,
     override platform: Platform,
@@ -32,20 +41,38 @@ export class AppComponent extends BaseComponent {
     @Optional() override routerOutlet?: IonRouterOutlet,
   ) {
     super(router, platform, toastService, alertCtrl, networkService, routerOutlet);
+
+    this.initToastMessageListener();
+    this.initNetworkListener();
+  }
+
+  check() {
+    this.toastMessage$.next('Check toast');
+  }
+
+  ngOnInit() {
+    this.toastMessage$.next('Check toast');
+  }
+
+  private initToastMessageListener() {
+    this.toastMessage$.pipe(untilDestroyed(this)).subscribe((message) => {
+      console.log('toastMessage$', message);
+      this.toastService.showToast(message);
+    });
+  }
+
+  private initNetworkListener() {
     this.networkService.networkStatus$
       .pipe(
         distinctUntilChanged(),
         filter((value) => value === true),
         untilDestroyed(this),
+        concatMap(() => this.getCollections().pipe(delay(2000))),
+        concatMap(() => this.getSurveys().pipe(delay(2000))),
+        concatMap(() => from(this.checkPendingPosts()).pipe(delay(2000))),
       )
-      .subscribe({
-        next: async () => {
-          this.getCollections();
-          this.getSurveys();
-
-          const result = await this.checkPendingPosts();
-          if (result) this.uploadPendingPosts();
-        },
+      .subscribe(async (result) => {
+        if (result) await this.uploadPendingPosts();
       });
   }
 
@@ -57,29 +84,32 @@ export class AppComponent extends BaseComponent {
       q: query,
     };
 
-    this.collectionsService.getCollections(params).subscribe({
-      next: (response) => {
-        this.dataBaseService.set(STORAGE_KEYS.COLLECTIONS, response.results);
-      },
-    });
+    return this.collectionsService.getCollections(params).pipe(
+      tap(async (response) => {
+        await this.dataBaseService.set(STORAGE_KEYS.COLLECTIONS, response.results);
+        this.toastMessage$.next('Collections data updated');
+      }),
+    );
   }
 
   private getSurveys() {
-    this.surveysService
+    return this.surveysService
       .getSurveys('', {
         page: 1,
         order: 'asc',
         limit: 0,
       })
-      .subscribe({
-        next: (response) => {
-          this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
-        },
-      });
+      .pipe(
+        tap(async (response) => {
+          await this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
+          this.toastMessage$.next('Surveys data updated');
+        }),
+      );
   }
 
   async checkPendingPosts(): Promise<boolean> {
     const posts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
+    if (posts?.length) this.toastMessage$.next('Pending posts found');
     return !!posts?.length;
   }
 
@@ -88,9 +118,9 @@ export class AppComponent extends BaseComponent {
     for (let post of posts) {
       if (post?.file?.upload)
         post = await new UploadFileHelper(this.mediaService).uploadFile(post, post.file);
-      this.postsService.post(post).subscribe({
-        complete: async () => {},
-      });
+      await firstValueFrom(this.postsService.post(post));
     }
+    this.toastMessage$.next('All pending posts uploaded to the server');
+    await this.dataBaseService.set(STORAGE_KEYS.PENDING_POST_KEY, []);
   }
 }

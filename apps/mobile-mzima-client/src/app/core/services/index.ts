@@ -9,3 +9,5 @@ export * from './search.service';
 export * from './deployment.service';
 export * from './config.service';
 export * from './twitter.service';
+export * from './network.service';
+export * from './toast.service';

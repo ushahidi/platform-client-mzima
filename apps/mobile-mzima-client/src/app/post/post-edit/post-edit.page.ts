@@ -1,11 +1,10 @@
-import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { distinctUntilChanged, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import {
   GeoJsonFilter,
   MediaService,
@@ -13,11 +12,14 @@ import {
   PostsService,
   SurveysService,
 } from '@mzima-client/sdk';
-import { AlertService, SessionService } from '@services';
+import {
+  AlertService,
+  DatabaseService,
+  NetworkService,
+  SessionService,
+  ToastService,
+} from '@services';
 import { FormValidator, preparingVideoUrl } from '@validators';
-import { DatabaseService } from '@services';
-import { NetworkService } from '../../core/services/network.service';
-import { ToastService } from '../../core/services/toast.service';
 import { PostEditForm, UploadFileHelper } from '../helpers';
 
 import dayjs from 'dayjs';
@@ -76,7 +78,6 @@ export class PostEditPage {
     private networkService: NetworkService,
     private toastService: ToastService,
     private alertService: AlertService,
-    private location: Location,
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -87,20 +88,21 @@ export class PostEditPage {
     private dataBaseService: DatabaseService,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
-  ) {
-    this.networkService.networkStatus$
-      .pipe(distinctUntilChanged(), untilDestroyed(this))
-      .subscribe({
-        next: (value) => {
-          this.isConnection = value;
-          this.connectionInfo = value
-            ? ''
-            : 'The connection was lost, the information will be saved to the database';
-        },
-      });
-    this.filters = JSON.parse(
-      localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
-    );
+  ) {}
+
+  async ionViewWillEnter() {
+    this.checkNetwork();
+    this.initNetworkListener();
+    this.getFilters();
+    this.checkRoute();
+    this.transformSurveys();
+  }
+
+  private async checkNetwork() {
+    this.setConnectionStatus(await this.networkService.checkNetworkStatus());
+  }
+
+  private checkRoute() {
     this.route.paramMap.subscribe((params) => {
       if (params.get('id')) {
         this.postId = Number(params.get('id'));
@@ -112,8 +114,26 @@ export class PostEditPage {
     });
   }
 
-  async ionViewWillEnter() {
-    this.transformSurveys();
+  private getFilters() {
+    this.filters = JSON.parse(
+      localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
+    );
+  }
+
+  private initNetworkListener() {
+    this.networkService.networkStatus$.pipe(untilDestroyed(this)).subscribe({
+      next: (value) => {
+        console.log('initNetworkListener', value);
+        this.setConnectionStatus(value);
+      },
+    });
+  }
+
+  private setConnectionStatus(status: boolean) {
+    this.isConnection = status;
+    this.connectionInfo = status
+      ? ''
+      : 'The connection was lost, the information will be saved to the database';
   }
 
   private loadPostData(postId: number) {
@@ -463,7 +483,14 @@ export class PostEditPage {
     // TODO: Remove after testing
     console.log('postData', postData);
 
-    if (this.isConnection) await this.uploadPost();
+    if (this.isConnection) {
+      await this.uploadPost();
+    } else {
+      await this.postComplete(
+        'Thank you for your report. A message will be sent when the connection is restored.',
+      );
+      this.backNavigation();
+    }
   }
 
   /**
@@ -529,7 +556,9 @@ export class PostEditPage {
     this.postsService.update(postId, postData).subscribe({
       error: () => this.form.enable(),
       complete: async () => {
-        await this.postComplete();
+        await this.postComplete(
+          'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
+        );
         this.backNavigation();
         // this.updated.emit();
       },
@@ -541,17 +570,18 @@ export class PostEditPage {
     this.postsService.post(postData).subscribe({
       error: () => this.form.enable(),
       complete: async () => {
-        await this.postComplete();
+        await this.postComplete(
+          'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
+        );
         this.backNavigation();
       },
     });
   }
 
-  async postComplete() {
+  async postComplete(message: string) {
     await this.alertService.presentAlert({
       header: 'Success!',
-      message:
-        'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
+      message,
       buttons: [
         {
           text: 'OK',
