@@ -6,7 +6,7 @@ import { CollectionsService, MediaService, PostsService, SurveysService } from '
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DatabaseService, NetworkService, ToastService } from '@services';
 import {
-  BehaviorSubject,
+  Subject,
   concatMap,
   delay,
   distinctUntilChanged,
@@ -25,7 +25,7 @@ import { UploadFileHelper } from './post/helpers';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent extends BaseComponent {
-  private toastMessage$ = new BehaviorSubject<string>('');
+  private toastMessage$ = new Subject<string>();
 
   constructor(
     override router: Router,
@@ -41,7 +41,6 @@ export class AppComponent extends BaseComponent {
     @Optional() override routerOutlet?: IonRouterOutlet,
   ) {
     super(router, platform, toastService, alertCtrl, networkService, routerOutlet);
-
     this.initToastMessageListener();
     this.initNetworkListener();
   }

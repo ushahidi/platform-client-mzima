@@ -4,6 +4,8 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
+  <app-button (buttonClick)="clearPosts()">Clear pending posts</app-button>
+  <br />
   <app-button (buttonClick)="logout()">Logout</app-button>
   <br />
   <app-button (buttonClick)="resetOnboarding()">Logout and reset onboarding</app-button>
