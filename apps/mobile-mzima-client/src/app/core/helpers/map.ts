@@ -4,8 +4,10 @@ import { EnvService } from '../services/env.service';
 
 export const pointIcon = (type: string = 'default', color?: string) => {
   color = color && /^[a-zA-Z0-9#]+$/.test(color) ? color : 'var(--color-neutral-100)';
+  if (type !== 'twitter' && type !== 'sms' && type !== 'email') {
+    type = 'default';
+  }
   const size: any = [30, 40];
-
   return divIcon({
     className: 'custom-map-marker',
     html: `
@@ -20,27 +22,8 @@ export const pointIcon = (type: string = 'default', color?: string) => {
 };
 
 export const pointToLayer = (feature: any, latlng: any) => {
-  let type = feature.properties.type;
-  switch (feature.properties.type) {
-    case 'twitter':
-      type = 'twitter';
-      break;
-
-    case 'sms':
-      type = 'sms';
-      break;
-
-    case 'email':
-      type = 'email';
-      break;
-
-    default:
-      type = 'default';
-      break;
-  }
-
   return marker(latlng, {
-    icon: pointIcon(type),
+    icon: pointIcon(feature.properties.type),
   });
 };
 
@@ -78,4 +61,15 @@ export const getMapLayers = () => {
       dark: mapboxStaticTiles('Dark', 'mapbox/dark-v10'),
     },
   };
+};
+
+export const getMapLayer = (baseLayer: string, isDarkMode: boolean) => {
+  return (getMapLayers() as any).baselayers[
+    isDarkMode &&
+    baseLayer !== 'satellite' &&
+    baseLayer !== 'MapQuestAerial' &&
+    baseLayer !== 'hOSM'
+      ? 'dark'
+      : baseLayer
+  ];
 };

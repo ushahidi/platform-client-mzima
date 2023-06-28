@@ -1,6 +1,6 @@
-import { ApiResponse } from './api-response.interface';
+import { ApiNResponse } from './api-response.interface';
 
-export interface Collection extends ApiResponse {
+export interface Collection extends ApiNResponse {
   results: CollectionResult[];
 }
 

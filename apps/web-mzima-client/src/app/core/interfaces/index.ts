@@ -7,4 +7,3 @@ export * from './settings.interface';
 export * from './env.interface';
 export * from './language.interface';
 export * from './gtm-track.interface';
-export * from './account-notification.interface';

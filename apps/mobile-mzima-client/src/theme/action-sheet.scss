@@ -1,0 +1,73 @@
+.sc-ion-action-sheet-ios-h {
+  --backdrop-opacity: 0.8;
+  --button-color: var(--ion-text-color);
+  --button-background: var(--ion-background-color);
+
+  .action-sheet-group.sc-ion-action-sheet-ios {
+    border-radius: 28px;
+    margin-bottom: var(--ion-padding);
+    box-shadow: 0 4px 8px 3px rgba(#000, 0.1), 0 1px 3px rgba(#000, 0.15);
+
+    &:last-child {
+      margin-bottom: var(--ion-padding);
+    }
+  }
+
+  .action-sheet-container.sc-ion-action-sheet-ios {
+    padding-left: var(--ion-padding);
+    padding-right: var(--ion-padding);
+  }
+
+  .action-sheet-button {
+    height: auto;
+    font-size: 16px;
+    line-height: 1.5;
+    contain: content;
+    padding: 16px 24px;
+    letter-spacing: 0.5px;
+
+    &:after {
+      display: none;
+    }
+
+    &.separator {
+      padding: 0;
+      height: 1px;
+      pointer-events: none;
+      background: var(--ion-color-step-400);
+    }
+
+    &:not(.action-sheet-cancel) {
+      .action-sheet-button-inner.sc-ion-action-sheet-ios {
+        justify-content: flex-start;
+      }
+    }
+
+    .action-sheet-icon.sc-ion-action-sheet-ios {
+      font-size: 24px;
+      margin-inline-end: 24px;
+    }
+  }
+
+  .action-sheet-cancel.sc-ion-action-sheet-ios {
+    font-weight: 500;
+  }
+}
+
+.action-sheet-title.sc-ion-action-sheet-ios {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  border-bottom: 1px solid;
+  color: var(--ion-color-medium);
+  padding: 12px var(--ion-padding);
+  background: var(--button-background);
+
+  @media (prefers-color-scheme: light) {
+    border-bottom-color: var(--ion-color-step-100);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    border-bottom-color: var(--ion-border-color);
+  }
+}

@@ -1,0 +1,27 @@
+<div
+  class="radio-item-holder"
+  *ngFor="let item of data"
+  [ngClass]="{ 'radio-item-holder--checked': item.checked && item.options?.length! > 1 }"
+>
+  <app-checkbox
+    type="radio-item"
+    class="radio-item"
+    [(ngModel)]="item.checked"
+    [disabled]="value.disabled! || item.checked"
+    (ngModelChange)="radioGroupChanged(item.value)"
+  >
+    {{ item.name }}
+  </app-checkbox>
+  <div class="radio-item__options" *ngIf="item.options?.length! > 1 && value.value === item.value">
+    <app-checkbox
+      type="item"
+      class="radio-item__checkbox"
+      *ngFor="let option of item.options"
+      [disabled]="option.disabled!"
+      [(ngModel)]="option.checked"
+      (ngModelChange)="checkboxChanged()"
+    >
+      {{ option.name }}
+    </app-checkbox>
+  </div>
+</div>

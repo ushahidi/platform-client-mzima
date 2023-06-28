@@ -34,6 +34,33 @@ export class FeedViewComponent extends MainViewComponent {
   };
   public override $destroy = new Subject();
   private isConnection = true;
+  public sorting = 'created?desc';
+  public sortingOptions = [
+    {
+      label: 'Date created (Newest first)',
+      value: 'created?desc',
+    },
+    {
+      label: 'Date created (Oldest first)',
+      value: 'created?asc',
+    },
+    {
+      label: 'Post date (Newest first)',
+      value: 'post_date?desc',
+    },
+    {
+      label: 'Post date (Oldest first)',
+      value: 'post_date?asc',
+    },
+    {
+      label: 'Date updated (Newest first)',
+      value: 'updated?desc',
+    },
+    {
+      label: 'Date updated (Oldest first)',
+      value: 'updated?asc',
+    },
+  ];
 
   constructor(
     protected override router: Router,
@@ -60,8 +87,7 @@ export class FeedViewComponent extends MainViewComponent {
   private initFilterListener() {
     this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.$destroy)).subscribe({
       next: () => {
-        this.params.page = 1;
-        this.getPosts(this.params);
+        this.updatePosts();
       },
     });
   }
@@ -69,7 +95,6 @@ export class FeedViewComponent extends MainViewComponent {
   loadData(): void {}
 
   private async getPosts(params: any, add = false): Promise<void> {
-    console.log('getPosts');
     this.isPostsLoading = true;
     try {
       const response = await lastValueFrom(this.postsService.getPosts('', { ...params }));
@@ -97,6 +122,35 @@ export class FeedViewComponent extends MainViewComponent {
       await this.getPosts(this.params, true);
       (ev as InfiniteScrollCustomEvent).target.complete();
     }
+  }
+
+  public handlePostDeleted(data: any): void {
+    this.posts.splice(
+      this.posts.findIndex((p) => p.id === data.post.id),
+      1,
+    );
+    this.totalPosts--;
+    this.postsUpdated.emit({
+      total: this.totalPosts,
+    });
+  }
+
+  public showPost(id: string): void {
+    this.router.navigate([id]);
+  }
+
+  public sortPosts(): void {
+    this.isPostsLoading = true;
+    this.postsService.setSorting({
+      orderby: this.sorting.split('?')[0],
+      order: this.sorting.split('?')[1],
+    });
+    this.updatePosts();
+  }
+
+  public updatePosts(): void {
+    this.params.page = 1;
+    this.getPosts(this.params);
   }
 
   public destroy(): void {

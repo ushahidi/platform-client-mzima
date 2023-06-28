@@ -8,6 +8,7 @@ import { SharedModule } from '@shared';
 import { PostItemModule } from '../post-item/post-item.module';
 import { FilterControlModule } from '../filter-control/filter-control.module';
 import { FilterModule } from '../filter/filter.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [SearchFormComponent],
@@ -22,6 +23,7 @@ import { FilterModule } from '../filter/filter.module';
     FilterModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
   exports: [SearchFormComponent],
 })

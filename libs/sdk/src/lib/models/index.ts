@@ -14,3 +14,5 @@ export * from './layers.interface';
 export * from './messages.interface';
 export * from './users.interface';
 export * from './webhook.interface';
+export * from './search-response.interface';
+export * from './account-notification.interface';

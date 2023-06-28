@@ -16,6 +16,7 @@ import { GeoJsonPostsResponse, PostsService } from '@mzima-client/sdk';
 import { DatabaseService, NetworkService, SessionService } from '@services';
 import { MapConfigInterface } from '@models';
 import { Subject, debounceTime, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -43,6 +44,7 @@ export class MapViewComponent implements AfterViewInit {
   constructor(
     private postsService: PostsService,
     private sessionService: SessionService,
+    private router: Router,
     private databaseService: DatabaseService,
     private networkService: NetworkService,
   ) {
@@ -54,6 +56,23 @@ export class MapViewComponent implements AfterViewInit {
     this.initMapConfigListener();
   }
 
+  private initNetworkListener() {
+    this.networkService.networkStatus$.pipe(untilDestroyed(this)).subscribe({
+      next: (value) => {
+        this.isConnection = value;
+      },
+    });
+  }
+
+  private initFilterListener() {
+    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.$destroy)).subscribe({
+      next: () => {
+        this.reInitParams();
+        this.getPostsGeoJson();
+      },
+    });
+  }
+
   private initMapConfigListener() {
     this.sessionService.mapConfig$.subscribe({
       next: (mapConfig) => {
@@ -61,15 +80,7 @@ export class MapViewComponent implements AfterViewInit {
           this.mapConfig = mapConfig;
 
           this.baseLayer = this.mapConfig.default_view!.baselayer;
-          const currentLayer =
-            mapHelper.getMapLayers().baselayers[
-              this.isDarkMode &&
-              this.baseLayer !== 'satellite' &&
-              this.baseLayer !== 'MapQuestAerial' &&
-              this.baseLayer !== 'hOSM'
-                ? 'dark'
-                : this.baseLayer
-            ];
+          const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
 
           this.leafletOptions = {
             minZoom: 3,
@@ -86,26 +97,10 @@ export class MapViewComponent implements AfterViewInit {
     });
   }
 
-  private initNetworkListener() {
-    this.networkService.networkStatus$.pipe(untilDestroyed(this)).subscribe({
-      next: (value) => {
-        this.isConnection = value;
-      },
-    });
-  }
-
   private switchMode(systemInitiatedDark: any) {
     this.isDarkMode = systemInitiatedDark.matches;
 
-    const currentLayer =
-      mapHelper.getMapLayers().baselayers[
-        this.isDarkMode &&
-        this.baseLayer !== 'satellite' &&
-        this.baseLayer !== 'MapQuestAerial' &&
-        this.baseLayer !== 'hOSM'
-          ? 'dark'
-          : this.baseLayer
-      ];
+    const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
 
     this.leafletOptions.layers = [tileLayer(currentLayer.url, currentLayer.layerOptions)];
 
@@ -113,15 +108,6 @@ export class MapViewComponent implements AfterViewInit {
     setTimeout(() => {
       this.isMapReady = true;
     }, 50);
-  }
-
-  private initFilterListener() {
-    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.$destroy)).subscribe({
-      next: () => {
-        this.reInitParams();
-        this.getPostsGeoJson();
-      },
-    });
   }
 
   private reInitParams() {
@@ -135,7 +121,7 @@ export class MapViewComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.isMapReady = true;
-    }, 300);
+    }, 200);
   }
 
   public onMapReady(map: Map) {
@@ -182,7 +168,7 @@ export class MapViewComponent implements AfterViewInit {
           layer.unbindPopup();
         });
         layer.on('click', () => {
-          console.log('show post preview: ', layer);
+          this.router.navigate([feature.properties.id]);
         });
       },
     });

@@ -17,14 +17,14 @@ export class CheckboxComponent implements ControlValueAccessor {
   @Input() public required = false;
   @Input() public disabled = false;
   @Input() public checked: boolean;
-  @Input() public type: 'item' | 'default' = 'default';
+  @Input() public type: 'item' | 'radio-item' | 'default' = 'default';
   @Output() checkboxChange = new EventEmitter<boolean>();
 
-  value: string;
+  value: boolean;
   onChange: any = () => {};
   onTouched: any = () => {};
 
-  writeValue(value: any): void {
+  writeValue(value: boolean): void {
     this.value = value;
   }
 
