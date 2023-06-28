@@ -226,6 +226,7 @@ jobs:
 
   ship:
     needs: [test, e2e-test]
+    if: github.event_name == 'push' # not on PRs
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
