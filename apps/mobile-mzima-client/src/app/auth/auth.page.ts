@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SessionService } from '@services';
 
+@UntilDestroy()
 @Component({
   selector: 'app-auth',
   templateUrl: 'auth.page.html',
@@ -22,5 +24,15 @@ export class AuthPage {
 
     const siteConfig = this.sessionService.getSiteConfigurations();
     this.isSignupActive = !siteConfig.private && !siteConfig.disable_registration;
+
+    this.sessionService.siteConfig$.pipe(untilDestroyed(this)).subscribe({
+      next: (config) => {
+        this.isSignupActive = !config.private && !config.disable_registration;
+      },
+    });
+  }
+
+  ionViewDidLeave() {
+    this.isSignupActive = false;
   }
 }

@@ -1,4 +1,6 @@
 .page {
+  --padding-bottom: calc(16px + var(--ion-safe-area-bottom));
+
   &::part(scroll) {
     display: flex;
     flex-direction: column;

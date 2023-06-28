@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 
 import { DeploymentService } from '@services';
 import { FormControlComponent } from '../../shared/components/form-control/form-control.component';
+import { Deployment } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-deployment-search',
@@ -16,7 +17,7 @@ export class DeploymentSearchPage implements AfterViewInit {
   public addButtonVisible = false;
   private search: string | null = '';
   private domain: string | null = null;
-  private selectedDeployments: any[] = [];
+  private selectedDeployments: Deployment[] = [];
 
   constructor(private location: Location, private deploymentService: DeploymentService) {}
 

@@ -5,9 +5,12 @@ import { ToastController, ToastOptions, IonicSafeString } from '@ionic/angular';
   providedIn: 'root',
 })
 export class ToastService {
+  private toast?: HTMLIonToastElement;
+
   constructor(private toastController: ToastController) {}
 
   public presentToast(params: ToastOptions): Promise<any> {
+    this.toast?.dismiss();
     return new Promise((resolve) => {
       this.toastController
         .create({
@@ -21,6 +24,7 @@ export class ToastService {
           icon: params.icon,
         })
         .then((toast) => {
+          this.toast = toast;
           toast.present();
           toast.onWillDismiss().then((result) => {
             resolve(result);

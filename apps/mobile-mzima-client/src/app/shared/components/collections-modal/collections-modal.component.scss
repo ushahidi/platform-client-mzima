@@ -37,6 +37,14 @@
   min-height: calc(76px + var(--ion-safe-area-bottom));
   padding: 16px 24px calc(16px + var(--ion-safe-area-bottom));
 
+  @media (prefers-color-scheme: light) {
+    box-shadow: 0 -1px 0 0 var(--ion-color-step-200);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    box-shadow: 0 -1px 0 0 var(--ion-border-color);
+  }
+
   &:before {
     height: 1px;
     background: var(--ion-color-step-200);
@@ -210,7 +218,9 @@
 
 .create-collection-form {
   &__group {
-    margin-bottom: 24px;
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
   }
 
   &__title {
@@ -234,6 +244,14 @@
     width: auto;
     margin-left: calc(var(--ion-padding) * -1);
     margin-right: calc(var(--ion-padding) * -1);
+
+    @media (prefers-color-scheme: light) {
+      box-shadow: 0 -1px 0 0 var(--ion-color-step-200);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      box-shadow: 0 -1px 0 0 var(--ion-border-color);
+    }
   }
 
   .form-control {

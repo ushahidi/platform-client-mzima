@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import { getRandomColor } from '@helpers';
 import { STORAGE_KEYS } from '@constants';
-import { StorageService } from './storage.service';
+import { Deployment } from '@mzima-client/sdk';
+import { SessionService, StorageService } from '@services';
 
 const DEPLOYMENTS_URL = 'https://api.ushahidi.io/deployments';
 
@@ -11,7 +12,16 @@ const DEPLOYMENTS_URL = 'https://api.ushahidi.io/deployments';
   providedIn: 'root',
 })
 export class DeploymentService {
-  constructor(private httpClient: HttpClient, private storageService: StorageService) {}
+  public deployment = new Subject<Deployment | null>();
+  readonly deployment$ = this.deployment.asObservable();
+
+  constructor(
+    private httpClient: HttpClient,
+    private storageService: StorageService,
+    private sessionService: SessionService,
+  ) {
+    this.deployment.next(this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENT, 'object'));
+  }
 
   public searchDeployments(search: string): Observable<any> {
     const storeDeployments = this.getDeployments();
@@ -39,7 +49,7 @@ export class DeploymentService {
     );
   }
 
-  public setDeployments(data: any[]) {
+  public setDeployments(data: Deployment[]) {
     this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENTS, data, 'array');
   }
 
@@ -47,11 +57,12 @@ export class DeploymentService {
     return this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENTS, 'array') || [];
   }
 
-  public setDeployment(data: object) {
+  public setDeployment(data: Deployment) {
     this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENT, data, 'object');
+    this.deployment.next(data);
   }
 
-  public getDeployment(): object {
+  public getDeployment(): Deployment {
     return this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENT, 'object');
   }
 
@@ -60,6 +71,8 @@ export class DeploymentService {
   }
 
   public removeDeployment(): void {
+    localStorage.removeItem(this.sessionService.getLocalStorageNameMapper('filters'));
+    this.deployment.next(null);
     return this.storageService.deleteStorage(STORAGE_KEYS.DEPLOYMENT);
   }
 }

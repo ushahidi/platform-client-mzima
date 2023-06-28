@@ -49,16 +49,11 @@
 }
 
 .form-controls-panel {
-  display: flex;
-  justify-content: flex-start;
-  padding: 15px 0;
+  gap: 8px;
 
-  .submit-button {
-    width: 100px;
-
-    &:not(:last-child) {
-      margin-right: 8px;
-    }
+  app-button {
+    --button-padding-start: 24px;
+    --button-padding-end: 24px;
   }
 }
 
@@ -110,5 +105,35 @@
 }
 
 .connection-info {
+  display: block;
   font-size: 10px;
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
+.footer {
+  box-shadow: none;
+
+  &:before {
+    height: 1px;
+    background: var(--ion-color-step-200);
+  }
+
+  &__toolbar {
+    --min-height: calc(76px + var(--ion-safe-area-bottom));
+    --padding-top: 16px;
+    --padding-bottom: calc(16px + var(--ion-safe-area-bottom));
+    --padding-start: 24px;
+    --padding-end: 24px;
+    --border-style: solid;
+    --border-width: 1px 0 0;
+
+    @media (prefers-color-scheme: light) {
+      --border-color: var(--ion-color-step-200);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      --border-color: var(--ion-border-color);
+    }
+  }
 }

@@ -1,4 +1,6 @@
 .header {
+  box-shadow: none;
+
   &:after {
     bottom: 0;
     z-index: 10;
@@ -15,13 +17,27 @@
     justify-content: flex-start;
     --padding-start: var(--ion-padding);
     --padding-end: var(--ion-padding);
+    --background: var(--ion-background-color);
+    --border-width: 0 0 1px;
+    --border-style: solid;
+
+    @media (prefers-color-scheme: light) {
+      --border-color: var(--ion-color-step-200);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      --border-color: var(--ion-border-color);
+    }
+  }
+
+  &__end {
+    overflow: hidden;
   }
 }
 
 .back-button {
-  margin-right: 4px;
   --icon-size: 40px;
-  margin-left: -8px;
+  margin-left: -12px;
 
   @media (prefers-color-scheme: light) {
     color: var(--ion-color-step-600);

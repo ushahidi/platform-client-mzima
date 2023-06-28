@@ -29,6 +29,7 @@ import {
 import Geocoder from 'leaflet-control-geocoder';
 import { debounceTime, Subject } from 'rxjs';
 import { mapHelper, regexHelper } from '@helpers';
+import { Platform } from '@ionic/angular';
 
 export interface MapViewInterface {
   baselayer: 'streets' | 'satellite' | 'hOSM' | 'MapQuestAerial' | 'MapQuest';
@@ -88,7 +89,11 @@ export class LocationSelectComponent implements OnInit {
   public isShowGeocodingResults = false;
   public nativeApp: boolean;
 
-  constructor(private cdr: ChangeDetectorRef, private dataBaseService: DatabaseService) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private dataBaseService: DatabaseService,
+    private platform: Platform,
+  ) {
     this.searchSubject.pipe(debounceTime(600), untilDestroyed(this)).subscribe((query) => {
       this.performSearch(query);
     });
@@ -202,6 +207,7 @@ export class LocationSelectComponent implements OnInit {
   }
 
   public async getCurrentLocation() {
+    if (!this.platform.is('capacitor')) return;
     try {
       const status = await Geolocation.requestPermissions();
       if (status?.location === 'granted') {

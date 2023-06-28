@@ -9,7 +9,13 @@ import {
   postStatusChangedHeader,
   postStatusChangedMessage,
 } from '@constants';
-import { AlertService, EnvService, SessionService, ShareService, ToastService } from '@services';
+import {
+  AlertService,
+  DeploymentService,
+  SessionService,
+  ShareService,
+  ToastService,
+} from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CollectionsModalComponent } from '../shared/components/collections-modal/collections-modal.component';
 
@@ -43,9 +49,9 @@ export class PostPage {
     private toastService: ToastService,
     protected sessionService: SessionService,
     private shareService: ShareService,
-    private envService: EnvService,
     private alertService: AlertService,
     private modalController: ModalController,
+    private deploymentService: DeploymentService,
   ) {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: ({ userId, role }) => {
@@ -157,7 +163,9 @@ export class PostPage {
     this.shareService.share({
       title: this.post.title,
       text: this.post.title,
-      url: `${this.envService.deploymentUrl}feed/${this.post.id}/view?mode=POST`,
+      url: `https://${this.deploymentService.getDeployment().fqdn}/feed/${
+        this.post.id
+      }/view?mode=POST`,
       dialogTitle: 'Share Post',
     });
   }
