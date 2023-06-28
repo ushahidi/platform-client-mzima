@@ -6,8 +6,7 @@ import { App } from '@capacitor/app';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { untilDestroyed } from '@ngneat/until-destroy';
 import { distinctUntilChanged } from 'rxjs';
-import { NetworkService } from './core/services/network.service';
-import { ToastService } from './core/services/toast.service';
+import { NetworkService, ToastService } from '@services';
 
 export class BaseComponent {
   tap = 0;

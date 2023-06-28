@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Network } from '@capacitor/network';
 import { Subject } from 'rxjs';
 
+const CONNECTION_TYPES = ['wifi', 'cellular'];
+
 @Injectable({
   providedIn: 'root',
 })
@@ -14,11 +16,15 @@ export class NetworkService {
   }
 
   async listenToNetworkStatus() {
-    const connectionTypes = ['wifi', 'cellular'];
     Network.addListener('networkStatusChange', async (status: any) => {
       console.log('Network status changed', status);
       const { connected, connectionType } = status;
-      this._networkStatus.next(connected && connectionTypes.includes(connectionType));
+      this._networkStatus.next(connected && CONNECTION_TYPES.includes(connectionType));
     });
+  }
+
+  async checkNetworkStatus(): Promise<boolean> {
+    const { connected, connectionType } = await Network.getStatus();
+    return connected && CONNECTION_TYPES.includes(connectionType);
   }
 }
