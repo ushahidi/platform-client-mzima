@@ -13,7 +13,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DatabaseService, SessionService } from '@services';
+import { DatabaseService } from '@services';
 import {
   control,
   FitBoundsOptions,
@@ -88,18 +88,14 @@ export class LocationSelectComponent implements OnInit {
   public isShowGeocodingResults = false;
   public nativeApp: boolean;
 
-  constructor(
-    private sessionService: SessionService,
-    private cdr: ChangeDetectorRef,
-    private dataBaseService: DatabaseService,
-  ) {
+  constructor(private cdr: ChangeDetectorRef, private dataBaseService: DatabaseService) {
     this.searchSubject.pipe(debounceTime(600), untilDestroyed(this)).subscribe((query) => {
       this.performSearch(query);
     });
   }
 
   async ngOnInit(): Promise<void> {
-    if (Capacitor.getPlatform() === 'hybrid') {
+    if (Capacitor.getPlatform() !== 'web') {
       this.nativeApp = true;
     }
 
@@ -144,6 +140,8 @@ export class LocationSelectComponent implements OnInit {
 
     this.geocoderControl.addTo(this.map);
     this.addMarker();
+
+    this.getCurrentLocation();
 
     this.map.on('click', (e) => {
       this.location = e.latlng;

@@ -8,4 +8,6 @@ export const STORAGE_KEYS = {
   PENDING_POST_KEY: 'pendingPost',
   COLLECTIONS: 'collections',
   SURVEYS: 'surveys',
+  POSTS: 'posts',
+  GEOJSONPOSTS: 'geoJsonPosts',
 };
