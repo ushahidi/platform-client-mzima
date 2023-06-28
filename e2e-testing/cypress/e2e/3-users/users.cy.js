@@ -5,13 +5,11 @@ describe("Automated Tests for Users", () => {
   const loginFunctions = new LoginFunctions();
   const userFunctions = new UserFunctions();
 
-  beforeEach(() => {
+  before(() => {
     loginFunctions.login_as_admin();
   });
-  it("Adds User", () => {
+  it("Adds then Deletes User", () => {
     userFunctions.add_user();
-  });
-  it("Deletes User",()=>{
     userFunctions.delete_user();
-  })
+  });
 });
