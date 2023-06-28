@@ -56,8 +56,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   private initToastMessageListener() {
     this.toastMessage$.pipe(untilDestroyed(this)).subscribe((message) => {
-      console.log('toastMessage$', message);
-      this.toastService.showToast(message);
+      this.toastService.presentToast({ message });
     });
   }
 
