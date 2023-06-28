@@ -49,6 +49,10 @@ const routes: Routes = [
     },
   },
   {
+    path: ':id',
+    loadChildren: () => import('./post/post.module').then((m) => m.PostPageModule),
+  },
+  {
     path: '**',
     pathMatch: 'full',
     component: PageNotFoundComponent,

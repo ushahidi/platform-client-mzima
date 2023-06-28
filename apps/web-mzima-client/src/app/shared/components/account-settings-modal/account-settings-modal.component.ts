@@ -11,7 +11,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { formHelper } from '@helpers';
-import { AccountNotificationsInterface, NotificationTypeEnum } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
@@ -24,6 +23,8 @@ import {
   UsersService,
   UserDataInterface,
   UserInterface,
+  AccountNotificationsInterface,
+  NotificationTypeEnum,
 } from '@mzima-client/sdk';
 
 enum AccountTypeEnum {

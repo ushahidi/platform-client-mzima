@@ -3,3 +3,4 @@ export { formErrorMessages } from './form-error-messages';
 export { navigationMenu } from './navigation-menu';
 export * from './walkthrough';
 export * from './storage-key';
+export * from './post-item-actions';

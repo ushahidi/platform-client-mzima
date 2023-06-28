@@ -1,0 +1,17 @@
+<ion-header class="header">
+  <ion-toolbar class="header__toolbar">
+    <app-button
+      fill="clear"
+      slot="start"
+      color="custom"
+      class="back-button"
+      (buttonClick)="back.emit()"
+    >
+      <app-icon name="arrow-back" slot="icon-only"></app-icon>
+    </app-button>
+    {{ title }}
+    <div slot="end">
+      <ng-content select="[end]"></ng-content>
+    </div>
+  </ion-toolbar>
+</ion-header>

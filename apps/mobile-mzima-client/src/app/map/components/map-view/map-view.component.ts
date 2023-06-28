@@ -15,6 +15,7 @@ import { PostsService } from '@mzima-client/sdk';
 import { SessionService } from '@services';
 import { MapConfigInterface } from '@models';
 import { Subject, debounceTime, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -38,7 +39,11 @@ export class MapViewComponent implements AfterViewInit {
   private isDarkMode = false;
   private baseLayer: 'streets' | 'satellite' | 'hOSM' | 'MapQuestAerial' | 'MapQuest' | 'dark';
 
-  constructor(private postsService: PostsService, private sessionService: SessionService) {
+  constructor(
+    private postsService: PostsService,
+    private sessionService: SessionService,
+    private router: Router,
+  ) {
     const mediaDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
     mediaDarkMode.addEventListener('change', (ev) => this.switchMode(ev));
     this.isDarkMode = mediaDarkMode.matches;
@@ -50,15 +55,7 @@ export class MapViewComponent implements AfterViewInit {
           this.mapConfig = mapConfig;
 
           this.baseLayer = this.mapConfig.default_view!.baselayer;
-          const currentLayer =
-            mapHelper.getMapLayers().baselayers[
-              this.isDarkMode &&
-              this.baseLayer !== 'satellite' &&
-              this.baseLayer !== 'MapQuestAerial' &&
-              this.baseLayer !== 'hOSM'
-                ? 'dark'
-                : this.baseLayer
-            ];
+          const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
 
           this.leafletOptions = {
             minZoom: 3,
@@ -78,15 +75,7 @@ export class MapViewComponent implements AfterViewInit {
   private switchMode(systemInitiatedDark: any) {
     this.isDarkMode = systemInitiatedDark.matches;
 
-    const currentLayer =
-      mapHelper.getMapLayers().baselayers[
-        this.isDarkMode &&
-        this.baseLayer !== 'satellite' &&
-        this.baseLayer !== 'MapQuestAerial' &&
-        this.baseLayer !== 'hOSM'
-          ? 'dark'
-          : this.baseLayer
-      ];
+    const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
 
     this.leafletOptions.layers = [tileLayer(currentLayer.url, currentLayer.layerOptions)];
 
@@ -116,7 +105,7 @@ export class MapViewComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.isMapReady = true;
-    }, 300);
+    }, 200);
   }
 
   public onMapReady(map: Map) {
@@ -148,7 +137,7 @@ export class MapViewComponent implements AfterViewInit {
                 layer.unbindPopup();
               });
               layer.on('click', () => {
-                console.log('show post preview: ', layer);
+                this.router.navigate([feature.properties.id]);
               });
             },
           });

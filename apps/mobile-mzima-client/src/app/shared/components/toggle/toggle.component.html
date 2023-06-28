@@ -1,0 +1,23 @@
+<ion-item
+  lines="none"
+  class="toggle-item"
+  *ngIf="type === 'item'; else toggle"
+  (click)="switchToggle($event)"
+>
+  <ng-container *ngTemplateOutlet="toggle"></ng-container>
+</ion-item>
+
+<ng-template #toggle>
+  <ion-toggle
+    mode="ios"
+    slot="start"
+    class="toggle"
+    [(ngModel)]="value"
+    [checked]="checked"
+    labelPlacement="end"
+    [disabled]="disabled"
+    (ionChange)="handleInputChange($event)"
+  >
+    <span class="toggle__text"><ng-content></ng-content></span>
+  </ion-toggle>
+</ng-template>

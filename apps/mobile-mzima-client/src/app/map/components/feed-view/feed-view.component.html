@@ -5,9 +5,27 @@
     'at-top': atTop
   }"
 >
+  <app-select
+    label="Sort by"
+    [(ngModel)]="sorting"
+    class="sorting-select"
+    [options]="sortingOptions"
+    [disabled]="isPostsLoading"
+    (ngModelChange)="sortPosts()"
+    [ngClass]="{ 'sorting-select--hidden': !atTop }"
+  >
+    <ng-container start>
+      <app-icon name="sorting"></app-icon>
+    </ng-container>
+  </app-select>
   <ng-container *ngIf="posts.length; else emptyBox">
     <div class="total-posts">{{ totalPosts }} posts</div>
-    <app-post-item *ngFor="let post of posts" [post]="post"></app-post-item>
+    <app-post-item
+      *ngFor="let post of posts"
+      [post]="post"
+      (postDeleted)="handlePostDeleted($event)"
+      (click)="showPost(post.id.toString())"
+    ></app-post-item>
 
     <ion-infinite-scroll *ngIf="totalPosts > posts.length" (ionInfinite)="loadMorePosts($event)">
       <ion-infinite-scroll-content loadingSpinner="lines-sharp"></ion-infinite-scroll-content>

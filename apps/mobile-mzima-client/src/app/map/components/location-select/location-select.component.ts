@@ -2,33 +2,8 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SearchService } from '@services';
 import { Subject, debounceTime } from 'rxjs';
-
-export interface SearchResponse {
-  boundingbox: string[];
-  class: string;
-  display_name: string;
-  icon: string;
-  importance: number;
-  lat: string;
-  licence: string;
-  lon: string;
-  osm_id: number;
-  osm_type: string;
-  place_id: number;
-  type: string;
-}
-
-interface LocationItem {
-  label: string;
-  lat: number;
-  lon: number;
-}
-
-interface LocationSelectValue {
-  location: LocationItem;
-  radius: number;
-  distance: number;
-}
+import { LocationItem, LocationSelectValue } from '@models';
+import { SearchResponse } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-location-select',

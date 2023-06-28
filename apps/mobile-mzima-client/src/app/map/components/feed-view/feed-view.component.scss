@@ -7,7 +7,7 @@
   transition-duration: 0.35s;
   transition-timing-function: ease;
   transition-property: opacity height;
-  height: calc(80px + var(--ion-safe-area-bottom));
+  height: calc(84px + var(--ion-safe-area-bottom));
 
   &--hidden {
     height: 0;
@@ -19,7 +19,7 @@
   transition: padding 0.35s ease;
 
   &.at-top {
-    padding-top: var(--ion-safe-area-top);
+    padding-top: calc(66px + var(--ion-safe-area-top));
   }
 
   &:not(.at-bottom) {
@@ -28,17 +28,42 @@
 }
 
 .total-posts {
-  display: block;
+  height: 56px;
+  display: flex;
   font-size: 14px;
   font-weight: 700;
+  overflow: hidden;
   line-height: 20px;
   text-align: center;
-  margin-bottom: 26px;
+  margin-bottom: 8px;
+  align-items: center;
   letter-spacing: 0.1px;
-  transition: margin-bottom 0.35s ease;
+  justify-content: center;
+  transition-duration: 0.35s;
+  transition-timing-function: ease;
+  transition-property: margin-bottom, height;
 
-  .at-bottom & {
+  .page-content.at-bottom & {
     margin-bottom: calc(26px + var(--ion-safe-area-bottom));
+  }
+
+  .page-content.at-top & {
+    height: 0;
+    margin-bottom: 0;
+  }
+}
+
+.sorting-select {
+  height: 57px;
+  display: block;
+  margin-bottom: 16px;
+  transition: all 0.35s ease;
+
+  &--hidden {
+    height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    transform: translateY(100px);
   }
 }
 
