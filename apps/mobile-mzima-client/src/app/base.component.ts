@@ -52,8 +52,8 @@ export class BaseComponent {
 
     const showConfirm = async () => {
       const { value } = await Dialog.confirm({
-        title: 'Update iOS',
-        message: `Please update your OS to run this app`,
+        title: 'Update',
+        message: `For the application to work correctly, please update your iOS`,
       });
 
       if (value) {
