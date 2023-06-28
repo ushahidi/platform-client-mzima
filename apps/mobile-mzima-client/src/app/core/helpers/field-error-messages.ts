@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { formErrorMessages } from '../constants/form-error-messages';
+import { formErrorMessages } from '@constants';
 
 export const fieldErrorMessages = (control: FormControl, controlName: string): string[] => {
   if (!control.touched) return [];

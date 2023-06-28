@@ -60,7 +60,11 @@
 
     <ng-template #postsList>
       <ion-text class="total" color="medium">Found {{ foundPosts }} items</ion-text>
-      <app-post-item *ngFor="let post of posts" [post]="post"></app-post-item>
+      <app-post-item
+        [routerLink]="[post.id.toString()]"
+        *ngFor="let post of posts"
+        [post]="post"
+      ></app-post-item>
       <ion-infinite-scroll
         (ionInfinite)="loadMoreSearchResults($event)"
         *ngIf="foundPosts > posts.length"

@@ -1,0 +1,114 @@
+<app-main-layout (back)="back()" title="Post view">
+  <app-spinner class="spinner" *ngIf="isPostLoading; else postTemplate"></app-spinner>
+  <ng-template #postTemplate>
+    <ng-container *ngIf="post; else errorMessage">
+      <div class="post">
+        <strong class="post__title">{{ post.title }}</strong>
+        <ng-container *ngIf="mediaId && post.source !== 'Twitter'">
+          <ion-img
+            *ngIf="!isMediaLoading; else spinner"
+            class="post__media"
+            [src]="media.original_file_url"
+            (ionError)="mediaId = undefined"
+          ></ion-img>
+          <ng-template #spinner>
+            <app-spinner class="post__media__loader"></app-spinner>
+          </ng-template>
+        </ng-container>
+        <app-twitter-widget
+          *ngIf="post.source === 'Twitter' && post.data_source_message_id"
+          class="post__twitter"
+          [id]="post.data_source_message_id"
+        ></app-twitter-widget>
+        <p *ngIf="post.content">{{ post.content }}</p>
+        <app-location-control class="post__location" *ngIf="location" [location]="location">
+        </app-location-control>
+        <ion-toolbar class="post__author">
+          <ion-avatar class="post__author__avatar" slot="start">
+            <ion-img
+              [alt]="post.user?.realname"
+              src="https://www.gravatar.com/avatar/{{
+                post.user?.gravatar || '00000000000000000000000000000000'
+              }}?d=retro&s=40"
+            ></ion-img>
+          </ion-avatar>
+          <span class="post__author__name">
+            {{ (post.user?.realname ?? post.contact?.contact ?? post.author_realname) || 'Anonymous'
+            }}
+          </span>
+          <span class="post__info">
+            <ion-text color="medium" class="post__info-item">
+              {{ post.post_date | dateAgo }}
+            </ion-text>
+
+            <ion-text color="medium" class="post__info-item">
+              <ng-container *ngIf="post.status === 'published'">Published</ng-container>
+              <ng-container *ngIf="post.status === 'draft'">Under review</ng-container>
+              <ng-container *ngIf="post.status === 'archived'">Archived</ng-container>
+            </ion-text>
+
+            <ion-text color="medium" class="post__info-item">via {{ post.source }}</ion-text>
+          </span>
+        </ion-toolbar>
+      </div>
+    </ng-container>
+    <ng-template #errorMessage>
+      <ion-text color="medium" class="error-msg ion-text-center ion-margin-vertical">
+        Failed to load post #{{ postId }}
+      </ion-text>
+    </ng-template>
+  </ng-template>
+
+  <ion-footer class="controls-panel" footer>
+    <ion-toolbar class="controls-panel__toolbar">
+      <ion-buttons class="controls-panel__buttons">
+        <app-button
+          color="dark"
+          fill="clear"
+          (buttonClick)="openStatusOptions()"
+          *ngIf="permissions.includes('change_status')"
+        >
+          <app-icon slot="icon-only" name="dots"></app-icon>
+        </app-button>
+        <app-button color="dark" fill="clear" (buttonClick)="sharePost()">
+          <app-icon slot="icon-only" name="share"></app-icon>
+        </app-button>
+        <app-button
+          color="dark"
+          fill="clear"
+          *ngIf="permissions.includes('add_to_collection')"
+          (buttonClick)="addPostToCollection()"
+        >
+          <app-icon slot="icon-only" name="add-to-collection"></app-icon>
+        </app-button>
+        <app-button
+          color="danger"
+          fill="clear"
+          *ngIf="permissions.includes('edit')"
+          (buttonClick)="deletePost()"
+        >
+          <app-icon slot="icon-only" name="delete"></app-icon>
+        </app-button>
+      </ion-buttons>
+
+      <app-button
+        slot="end"
+        class="edit-button"
+        color="gray"
+        shape="normal"
+        (buttonClick)="editPost()"
+        *ngIf="permissions.includes('edit')"
+      >
+        <app-icon slot="icon-only" name="edit"></app-icon>
+      </app-button>
+    </ion-toolbar>
+  </ion-footer>
+</app-main-layout>
+
+<ion-action-sheet
+  mode="ios"
+  header="Post Actions"
+  [isOpen]="isStatusOptionsOpen"
+  [buttons]="statusOptionsButtons"
+  (willDismiss)="setStatus($event)"
+></ion-action-sheet>

@@ -1,6 +1,6 @@
 export interface EnvConfigInterface {
   production: boolean;
-  backend_url: string;
+  backend_url: string | null;
   api_v3: string;
   api_v5: string;
   mapbox_api_key: string;

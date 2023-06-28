@@ -9,6 +9,7 @@ import { distinctUntilChanged, lastValueFrom } from 'rxjs';
 import {
   GeoJsonFilter,
   MediaService,
+  PostContent,
   PostResult,
   PostsService,
   SurveysService,
@@ -50,7 +51,7 @@ export class PostEditPage {
   private fieldsFormArray = ['tags'];
   public description: string;
   public title: string;
-  private postId: number;
+  public postId: number;
   private post: any;
   public tasks: any[] = [];
   private completeStages: number[] = [];
@@ -119,7 +120,7 @@ export class PostEditPage {
   private loadPostData(postId: number) {
     this.postsService.getById(postId).subscribe({
       next: (post) => {
-        this.selectedSurveyId = post.form_id;
+        this.selectedSurveyId = post.form_id!;
         this.post = post;
         this.loadForm(post.post_content);
       },
@@ -148,7 +149,7 @@ export class PostEditPage {
     }
   }
 
-  loadForm(updateContent?: []) {
+  loadForm(updateContent?: PostContent[]) {
     if (!this.selectedSurveyId) return;
     this.clearData();
 
@@ -429,8 +430,10 @@ export class PostEditPage {
     try {
       await this.preparationData();
     } catch (error: any) {
-      const toaster = await this.toastService.showToast(error, 3000, 'medium');
-      await toaster.present();
+      this.toastService.presentToast({
+        message: error,
+        duration: 3000,
+      });
       console.log(error);
       return;
     }

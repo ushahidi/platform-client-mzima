@@ -31,7 +31,8 @@
       "@validators": ["apps/mobile-mzima-client/src/app/core/validators"],
       "@shared": ["apps/mobile-mzima-client/src/app/shared"],
       "@components": ["apps/mobile-mzima-client/src/app/shared/components"],
-      "@models": ["apps/mobile-mzima-client/src/app/core/interfaces"]
+      "@models": ["apps/mobile-mzima-client/src/app/core/interfaces"],
+      "@pipes": ["apps/mobile-mzima-client/src/app/core/pipes"]
     },
   },
   "angularCompilerOptions": {

@@ -4,14 +4,12 @@
   justify-content: space-between;
   background: var(--ion-background-color);
   border-top: 1px solid var(--ion-color-step-200);
-  height: calc(80px + var(--ion-safe-area-bottom));
+  height: calc(84px + var(--ion-safe-area-bottom));
 }
 
 .button {
   flex: 1 1 100%;
-  --button-height: 80px;
-  --button-font-size: 12px;
-  --button-line-height: 16px;
+  --button-height: 84px;
   --button-padding-top: 12px;
   --button-padding-bottom: 16px;
   --button-letter-spacing: 0.05px;

@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { NavigationStart, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
-import { AccountNotificationsInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EventBusService, EventType, SessionService, BreakpointService } from '@services';
 import {
@@ -34,6 +33,7 @@ import {
   CollectionResult,
   Savedsearch,
   SurveyItem,
+  AccountNotificationsInterface,
 } from '@mzima-client/sdk';
 import dayjs from 'dayjs';
 

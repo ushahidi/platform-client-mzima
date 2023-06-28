@@ -217,7 +217,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
                               },
                             });
 
-                            const mediaField = postV5.post_content[0].fields.find(
+                            const mediaField = postV5.post_content?.[0].fields.find(
                               (field: any) => field.type === 'media',
                             );
                             if (mediaField && mediaField.value?.value) {

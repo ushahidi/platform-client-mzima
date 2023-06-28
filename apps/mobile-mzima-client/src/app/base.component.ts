@@ -55,8 +55,11 @@ export class BaseComponent {
   }
 
   async showConnectionInfo(message: string) {
-    const toast = await this.toastService.showToast(message, 3000, 'medium', 'globe');
-    await toast.present();
+    await this.toastService.presentToast({
+      message,
+      duration: 0,
+      icon: 'globe',
+    });
   }
 
   exitAppOnDoubleTap() {
@@ -75,10 +78,11 @@ export class BaseComponent {
   }
 
   async doubleTapExistToast() {
-    const toast = await this.toastService.showToast('Tap back button again to exit the App');
-    await toast.present();
-    const dismiss = await toast.onDidDismiss();
-    if (dismiss) {
+    const result = await this.toastService.presentToast({
+      message: 'Tap back button again to exit the App',
+      buttons: [],
+    });
+    if (result) {
       this.tap = 0;
     }
   }

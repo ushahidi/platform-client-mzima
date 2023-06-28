@@ -61,7 +61,7 @@ export class PostsService extends ResourceService<any> {
     return super.update(postId, params);
   }
 
-  override getById(id: string | number): Observable<any> {
+  override getById(id: string | number): Observable<PostResult> {
     return super.getById(id).pipe(
       map((response) => {
         const source =
@@ -84,6 +84,8 @@ export class PostsService extends ResourceService<any> {
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
     const tmpParams = { ...this.postsFilters.value, has_location: 'mapped', ...filter };
+    delete tmpParams.order;
+    delete tmpParams.orderby;
     return super.get('geojson', this.postParamsMapper(tmpParams)).pipe(
       tap((res) => {
         this.totalGeoPosts.next(res.meta.total);
