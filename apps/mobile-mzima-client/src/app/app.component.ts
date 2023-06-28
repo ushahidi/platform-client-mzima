@@ -1,4 +1,4 @@
-import { Component, OnInit, Optional } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
@@ -24,7 +24,7 @@ import { UploadFileHelper } from './post/helpers';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent extends BaseComponent implements OnInit {
+export class AppComponent extends BaseComponent {
   private toastMessage$ = new BehaviorSubject<string>('');
 
   constructor(
@@ -44,14 +44,6 @@ export class AppComponent extends BaseComponent implements OnInit {
 
     this.initToastMessageListener();
     this.initNetworkListener();
-  }
-
-  check() {
-    this.toastMessage$.next('Check toast');
-  }
-
-  ngOnInit() {
-    this.toastMessage$.next('Check toast');
   }
 
   private initToastMessageListener() {
