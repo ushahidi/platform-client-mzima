@@ -11,7 +11,7 @@ import {
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DatabaseService, NetworkService, SessionService } from '@services';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
-import { Subject, debounceTime, lastValueFrom, takeUntil } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, lastValueFrom, takeUntil } from 'rxjs';
 import { MainViewComponent } from '../main-view.component';
 
 @UntilDestroy()
@@ -33,7 +33,7 @@ export class FeedViewComponent extends MainViewComponent {
     page: 1,
   };
   public override $destroy = new Subject();
-  private isConnection = true;
+  public isConnection = true;
   public sorting = 'created?desc';
   public sortingOptions = [
     {
@@ -77,11 +77,16 @@ export class FeedViewComponent extends MainViewComponent {
   }
 
   private initNetworkListener() {
-    this.networkService.networkStatus$.pipe(untilDestroyed(this)).subscribe({
-      next: (value) => {
-        this.isConnection = value;
-      },
-    });
+    this.networkService.networkStatus$
+      .pipe(distinctUntilChanged(), untilDestroyed(this))
+      .subscribe({
+        next: (value) => {
+          this.isConnection = value;
+          if (this.isConnection) {
+            this.getPosts(this.params);
+          }
+        },
+      });
   }
 
   private initFilterListener() {
@@ -103,7 +108,9 @@ export class FeedViewComponent extends MainViewComponent {
     } catch (error) {
       console.error('error: ', error);
       const response = await this.databaseService.get(STORAGE_KEYS.POSTS);
-      this.postDisplayProcessing(response, add);
+      if (response) {
+        this.postDisplayProcessing(response, add);
+      }
     }
   }
 

@@ -27,7 +27,10 @@
       (click)="showPost(post.id.toString())"
     ></app-post-item>
 
-    <ion-infinite-scroll *ngIf="totalPosts > posts.length" (ionInfinite)="loadMorePosts($event)">
+    <ion-infinite-scroll
+      *ngIf="totalPosts > posts.length && isConnection"
+      (ionInfinite)="loadMorePosts($event)"
+    >
       <ion-infinite-scroll-content loadingSpinner="lines-sharp"></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ng-container>

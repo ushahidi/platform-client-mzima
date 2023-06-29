@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { checkBackendURL } from '@helpers';
 import { EnvConfigInterface } from '@models';
 
-import { DeploymentService } from './deployment.service';
+import { DeploymentService } from '@services';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,8 @@ export class EnvService {
   static ENV: EnvConfigInterface;
   private env: EnvConfigInterface;
   private deploymentService = inject(DeploymentService);
+  public deployment = new BehaviorSubject<any>(null);
+  readonly deployment$ = this.deployment.asObservable();
 
   get environment() {
     return this.env;
@@ -39,5 +42,6 @@ export class EnvService {
       : null;
     EnvService.ENV = envy;
     this.env = envy;
+    this.deployment.next(deployment);
   }
 }
