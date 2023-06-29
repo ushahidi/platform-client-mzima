@@ -29,7 +29,7 @@ export abstract class MainViewComponent {
     protected sessionService: SessionService,
   ) {
     this.filters = JSON.parse(
-      localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
+      localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters')) ?? '{}',
     );
   }
 

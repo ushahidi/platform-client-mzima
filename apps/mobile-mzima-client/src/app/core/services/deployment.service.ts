@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { getRandomColor } from '@helpers';
 import { STORAGE_KEYS } from '@constants';
 import { Deployment } from '@mzima-client/sdk';
-import { SessionService, StorageService } from '@services';
+import { DatabaseService, SessionService, StorageService } from '@services';
 
 const DEPLOYMENTS_URL = 'https://api.ushahidi.io/deployments';
 
@@ -12,13 +12,14 @@ const DEPLOYMENTS_URL = 'https://api.ushahidi.io/deployments';
   providedIn: 'root',
 })
 export class DeploymentService {
-  public deployment = new Subject<Deployment | null>();
+  public deployment = new BehaviorSubject<Deployment | null>(null);
   readonly deployment$ = this.deployment.asObservable();
 
   constructor(
     private httpClient: HttpClient,
     private storageService: StorageService,
     private sessionService: SessionService,
+    private databaseService: DatabaseService,
   ) {
     this.deployment.next(this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENT, 'object'));
   }
@@ -73,6 +74,7 @@ export class DeploymentService {
   public removeDeployment(): void {
     localStorage.removeItem(this.sessionService.getLocalStorageNameMapper('filters'));
     this.deployment.next(null);
+    this.databaseService.clear();
     return this.storageService.deleteStorage(STORAGE_KEYS.DEPLOYMENT);
   }
 }

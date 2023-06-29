@@ -12,17 +12,20 @@ export abstract class ResourceService<T> {
   private readonly options = {};
 
   protected constructor(protected httpClient: HttpClient, protected currentLoader: EnvLoader) {
-    this.currentLoader.getApiUrl().subscribe((backendUrl) => {
-      this.apiUrl = backendUrl + this.getApiVersions() + this.getResourceUrl();
-      this.backendUrl = backendUrl;
-    });
-
+    this.getApi();
     this.options = {
       responseType: 'json',
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
+  }
+
+  public getApi(): void {
+    this.currentLoader.getApiUrl().subscribe((backendUrl) => {
+      this.apiUrl = backendUrl + this.getApiVersions() + this.getResourceUrl();
+      this.backendUrl = backendUrl;
+    });
   }
 
   abstract getApiVersions(): string;

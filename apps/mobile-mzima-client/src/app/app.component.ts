@@ -4,7 +4,7 @@ import { STORAGE_KEYS } from '@constants';
 import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
 import { CollectionsService, MediaService, PostsService, SurveysService } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DatabaseService, NetworkService, ToastService } from '@services';
+import { DatabaseService, NetworkService, ListenerService, ToastService } from '@services';
 import {
   Subject,
   concatMap,
@@ -38,11 +38,13 @@ export class AppComponent extends BaseComponent {
     private postsService: PostsService,
     private collectionsService: CollectionsService,
     private surveysService: SurveysService,
+    private listenerService: ListenerService,
     @Optional() override routerOutlet?: IonRouterOutlet,
   ) {
     super(router, platform, toastService, alertCtrl, networkService, routerOutlet);
     this.initToastMessageListener();
     this.initNetworkListener();
+    this.listenerService.changeDeploymentListener();
   }
 
   private initToastMessageListener() {

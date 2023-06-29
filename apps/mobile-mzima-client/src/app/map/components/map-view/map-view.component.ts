@@ -15,7 +15,7 @@ import { mapHelper } from '@helpers';
 import { GeoJsonPostsResponse, PostsService } from '@mzima-client/sdk';
 import { DatabaseService, NetworkService, SessionService } from '@services';
 import { MapConfigInterface } from '@models';
-import { Subject, debounceTime, takeUntil } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 
 @UntilDestroy()
@@ -57,11 +57,16 @@ export class MapViewComponent implements AfterViewInit {
   }
 
   private initNetworkListener() {
-    this.networkService.networkStatus$.pipe(untilDestroyed(this)).subscribe({
-      next: (value) => {
-        this.isConnection = value;
-      },
-    });
+    this.networkService.networkStatus$
+      .pipe(distinctUntilChanged(), untilDestroyed(this))
+      .subscribe({
+        next: (value) => {
+          this.isConnection = value;
+          if (this.isConnection) {
+            this.getPostsGeoJson();
+          }
+        },
+      });
   }
 
   private initFilterListener() {
@@ -141,8 +146,9 @@ export class MapViewComponent implements AfterViewInit {
         error: async (err) => {
           if (err.message.match(/Http failure response for/)) {
             const posts = await this.databaseService.get(STORAGE_KEYS.GEOJSONPOSTS);
-            if (!posts) setTimeout(() => this.getPostsGeoJson(), 5000);
-            this.geoJsonDataProcessor(posts);
+            if (posts) {
+              this.geoJsonDataProcessor(posts);
+            }
           }
         },
       });
