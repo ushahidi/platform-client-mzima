@@ -54,7 +54,7 @@ export class MapWithMarkerComponent implements OnInit {
         lng: this.marker.lon,
       },
       {
-        icon: pointIcon(this.color, this.type),
+        icon: pointIcon(this.color, this.type === 'web' ? 'default' : this.type),
       },
     );
     this.mapLayers.push(mapMarker);
