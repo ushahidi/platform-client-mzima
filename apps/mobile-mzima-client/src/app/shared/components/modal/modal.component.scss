@@ -1,44 +1,7 @@
 .modal {
-  &__header {
-    &:after {
-      bottom: 0;
-      z-index: 10;
-      height: 1px;
-      pointer-events: none;
-      background: var(--ion-color-step-200);
-    }
-
-    &__toolbar {
-      font-size: 22px;
-      line-height: 28px;
-      --min-height: 72px;
-      align-items: center;
-      justify-content: flex-start;
-    }
-  }
-
-  &__back {
-    margin-right: 4px;
-    --icon-size: 40px;
-
-    @media (prefers-color-scheme: light) {
-      color: var(--ion-color-step-600);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      color: var(--ion-color-step-800);
-    }
-  }
-
-  &__title {
-    display: block;
-
-    @media (prefers-color-scheme: dark) {
-      color: var(--ion-text-color);
-    }
-  }
-
   &__body {
+    --padding-bottom: calc(16px + var(--ion-safe-area-bottom));
+
     &::part(scroll) {
       display: flex;
       flex-direction: column;
@@ -54,13 +17,30 @@
   }
 
   &__footer {
+    box-shadow: none;
+
     &:before {
       height: 1px;
       background: var(--ion-color-step-200);
     }
 
     &__toolbar {
-      --min-height: 84px;
+      --min-height: calc(84px + var(--ion-safe-area-bottom));
+      --border-style: solid;
+      --border-width: 1px 0 0;
+      --padding-start: 24px;
+      --padding-end: 24px;
+      --padding-top: 16px;
+      --padding-bottom: calc(16px + var(--ion-safe-area-bottom));
+      padding-bottom: 0 !important;
+
+      @media (prefers-color-scheme: light) {
+        --border-color: var(--ion-color-step-200);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        --border-color: var(--ion-border-color);
+      }
     }
   }
 }

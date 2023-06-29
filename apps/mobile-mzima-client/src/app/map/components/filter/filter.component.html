@@ -92,7 +92,7 @@
   </ng-container>
 </ion-content>
 
-<ion-footer class="ion-padding-horizontal footer">
+<ion-footer class="footer">
   <ion-toolbar class="footer__toolbar">
     <div class="btn-panel">
       <app-button expand="inline" [disabled]="isPristine" (buttonClick)="applyFilter()">
@@ -125,7 +125,8 @@
   (modalClose)="modalCloseHandle()"
   *ngIf="type === filterType.MULTILEVELSELECT"
   [options]="{
-    footer: true
+    footer: true,
+    offsetBottom: false
   }"
 >
   <div class="subcategories-modal__header" header>

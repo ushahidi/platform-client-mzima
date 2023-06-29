@@ -1,4 +1,4 @@
-<ion-item button class="deployment-info" (click)="chooseDeployment()">
+<ion-item button class="deployment-info" (click)="chooseDeployment()" *ngIf="deployment">
   <ion-avatar class="deployment-info__img" slot="start">
     <ion-img [src]="deployment.image"></ion-img>
   </ion-avatar>

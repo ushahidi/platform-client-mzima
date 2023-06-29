@@ -4,13 +4,14 @@
       fill="clear"
       slot="start"
       color="custom"
+      *ngIf="backButton"
       class="back-button"
       (buttonClick)="back.emit()"
     >
       <app-icon name="arrow-back" slot="icon-only"></app-icon>
     </app-button>
     {{ title }}
-    <div slot="end">
+    <div slot="end" class="header__end">
       <ng-content select="[end]"></ng-content>
     </div>
   </ion-toolbar>

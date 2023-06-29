@@ -25,6 +25,7 @@ interface ModalOptions {
 export class ModalComponent implements OnInit, OnChanges {
   @Input() public isOpen: boolean;
   @Input() public closable = true;
+  @Input() public title: string;
   @Input() public options: ModalOptions = {};
   @Output() public modalClose = new EventEmitter();
   @ViewChild('modal') modal: IonModal;

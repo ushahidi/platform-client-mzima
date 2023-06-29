@@ -82,12 +82,12 @@
   (modalClose)="modalCloseHandle()"
   [options]="{
     footer: !selectedFilter,
-    offsetBottom: !!selectedFilter
+    offsetBottom: !selectedFilter
   }"
   [closable]="!selectedFilter"
+  title="{{ selectedSavedFilter?.label ?? selectedFilter?.label ?? 'Filters' }}"
 >
   <div class="filters-modal__header" header>
-    <span>{{ selectedSavedFilter?.label ?? selectedFilter?.label ?? 'Filters' }}</span>
     <ion-text color="medium" class="filters-modal__total-posts">
       Found posts:
       <strong class="filters-modal__total-posts__count">{{ totalPosts }}</strong>

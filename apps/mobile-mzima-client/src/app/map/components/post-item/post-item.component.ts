@@ -8,7 +8,13 @@ import {
   postStatusChangedMessage,
 } from '@constants';
 import { ActionSheetButton, ModalController } from '@ionic/angular';
-import { AlertService, EnvService, SessionService, ShareService, ToastService } from '@services';
+import {
+  AlertService,
+  DeploymentService,
+  SessionService,
+  ShareService,
+  ToastService,
+} from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { cloneDeep } from 'lodash';
 import { CollectionsModalComponent } from '../../../shared/components/collections-modal/collections-modal.component';
@@ -37,7 +43,7 @@ export class PostItemComponent implements OnInit {
     private toastService: ToastService,
     private postsService: PostsService,
     private shareService: ShareService,
-    private envService: EnvService,
+    private deploymentService: DeploymentService,
     private modalController: ModalController,
     private router: Router,
   ) {}
@@ -86,7 +92,9 @@ export class PostItemComponent implements OnInit {
         this.shareService.share({
           title: this.post.title,
           text: this.post.title,
-          url: `${this.envService.deploymentUrl}feed/${this.post.id}/view?mode=POST`,
+          url: `https://${this.deploymentService.getDeployment().fqdn}/feed/${
+            this.post.id
+          }/view?mode=POST`,
           dialogTitle: 'Share Post',
         }),
       [PostItemActionType.EDIT]: () => this.editPost(),

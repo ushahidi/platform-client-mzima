@@ -619,7 +619,7 @@ export class PostEditPage {
   }
 
   public backNavigation(): void {
-    this.router.navigate(['/']);
+    this.router.navigate([this.postId ?? '/']);
   }
 
   public preventSubmitIncaseTheresNoBackendValidation() {

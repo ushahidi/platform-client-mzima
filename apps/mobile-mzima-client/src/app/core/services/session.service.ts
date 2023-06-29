@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { UserInterface } from '@mzima-client/sdk';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { CONST } from '../constants';
 import {
   DonationConfigInterface,
@@ -60,6 +60,9 @@ export class SessionService {
     map: {},
   };
 
+  public siteConfig = new Subject<any>();
+  readonly siteConfig$ = this.siteConfig.asObservable();
+
   constructor() {
     this.loadSessionDataFromLocalStorage();
     this.loadUserDataFromLocalStorage();
@@ -106,6 +109,9 @@ export class SessionService {
     });
     if (type === 'map') {
       this._mapConfig.next(this.currentConfig[type]);
+    }
+    if (type === 'site') {
+      this.siteConfig.next(this.currentConfig[type]);
     }
   }
 

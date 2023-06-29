@@ -7,5 +7,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class HeaderComponent {
   @Input() public title?: string;
+  @Input() public backButton = true;
   @Output() back = new EventEmitter();
 }

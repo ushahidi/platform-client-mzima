@@ -1,11 +1,4 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <app-button slot="start" fill="clear" color="medium" class="" (buttonClick)="backNavigation()">
-      <app-icon class="arrow-back" slot="icon-only" name="arrow-back"></app-icon>
-    </app-button>
-    <ion-title>{{postId ? 'Create' : 'Edit'}} post</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header (back)="backNavigation()" title="{{!postId ? 'Create' : 'Edit'}} post"> </app-header>
 
 <ion-content class="ion-padding-horizontal ion-padding-top page">
   <app-select
@@ -466,12 +459,12 @@
   </ng-template>
 </ion-content>
 
-<ion-footer class="ion-padding-horizontal">
-  <ion-toolbar>
+<ion-footer class="footer">
+  <ion-toolbar class="footer__toolbar">
     <ion-text class="connection-info" color="warning">{{ connectionInfo }}</ion-text>
-    <div class="form-controls-panel">
+    <ion-buttons class="form-controls-panel">
       <app-button
-        class="submit-button"
+        expand="inline"
         type="button"
         *ngIf="form"
         [disabled]="form.disabled || form.invalid || emptyLocation"
@@ -479,14 +472,9 @@
       >
         Submit
       </app-button>
-      <app-button
-        color="medium"
-        fill="outline"
-        class="submit-button"
-        (buttonClick)="backNavigation()"
-      >
+      <app-button color="medium" fill="outline" expand="inline" (buttonClick)="backNavigation()">
         Cancel
       </app-button>
-    </div>
+    </ion-buttons>
   </ion-toolbar>
 </ion-footer>

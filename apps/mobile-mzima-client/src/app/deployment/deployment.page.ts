@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Deployment } from '@mzima-client/sdk';
 
 import { AlertService, ConfigService, DeploymentService, EnvService } from '@services';
 
@@ -9,7 +10,7 @@ import { AlertService, ConfigService, DeploymentService, EnvService } from '@ser
   styleUrls: ['./deployment.page.scss'],
 })
 export class DeploymentPage {
-  public deploymentList: any[] = [];
+  public deploymentList: Deployment[] = [];
 
   constructor(
     private envService: EnvService,
@@ -34,7 +35,7 @@ export class DeploymentPage {
           id: 1,
           domain: 'staging.ush.zone',
           subdomain: 'mzima-api',
-          fqdn: 'mzima-api',
+          fqdn: 'mzima.staging.ush.zone',
           status: 'deployed',
           deployment_name: 'mzima-api',
           description: 'mzima-api for testing',
