@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService, DeploymentService, StorageService } from '@services';
-import { STORAGE_KEYS } from '../core/constants/storage-key';
+import { AuthService, DatabaseService, DeploymentService, StorageService } from '@services';
+import { STORAGE_KEYS } from '@constants';
 
 @Component({
   selector: 'app-settings',
@@ -16,6 +16,7 @@ export class SettingsPage {
     private authService: AuthService,
     private deploymentService: DeploymentService,
     private storageService: StorageService,
+    private dataBaseService: DatabaseService,
   ) {}
 
   public logout(): void {
@@ -29,5 +30,10 @@ export class SettingsPage {
     this.authService.logout();
     this.deploymentService.removeDeployment();
     this.router.navigate(['/walkthrough']);
+  }
+
+  public async clearPosts() {
+    await this.dataBaseService.set(STORAGE_KEYS.PENDING_POST_KEY, []);
+    this.router.navigate(['/']);
   }
 }
