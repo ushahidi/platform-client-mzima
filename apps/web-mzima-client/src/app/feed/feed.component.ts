@@ -324,13 +324,20 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     const count = this.selectedPosts.length;
     forkJoin(this.selectedPosts.map((p) => this.postsService.delete(p))).subscribe({
       complete: () => {
-        this.postDeleted(count);
+        this.postDeleted(this.selectedPosts, count);
       },
     });
   }
 
-  public postDeleted(count?: number): void {
+  public postDeleted(postIds: string[], count?: number): void {
     this.getPosts(this.params);
+    if (this.activePostId && postIds.includes(this.activePostId)) {
+      if (this.collectionId) {
+        this.router.navigate(['feed', 'collection', this.collectionId]);
+      } else {
+        this.router.navigate(['feed']);
+      }
+    }
     this.selectedPosts = [];
     if (count) {
       this.confirmModalService.open({
