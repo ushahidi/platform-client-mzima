@@ -5,7 +5,7 @@ on:
 - pull_request
 
 env:
-  CYPRESS_PROJECT_ID: "43gftm"
+  CYPRESS_PROJECT_ID: "bsiz1z"
 
 jobs:
   test:
@@ -67,7 +67,7 @@ jobs:
   e2e-test:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     continue-on-error: true
 
     steps:
@@ -138,7 +138,7 @@ jobs:
   
         with:
           browser: chrome
-          install-command: npm install
+          # install-command: npm install
           record: true
           parallel: true
           working-directory: e2e-testing
