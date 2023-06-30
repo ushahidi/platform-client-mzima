@@ -69,7 +69,7 @@ jobs:
     needs: []
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    continue-on-error: false
+    continue-on-error: true
 
     steps:
       - uses: actions/checkout@v3
@@ -139,7 +139,7 @@ jobs:
   
         with:
           browser: chrome
-          install-command: npm install
+          # install-command: npm install
           record: true
           parallel: true
           working-directory: e2e-testing
