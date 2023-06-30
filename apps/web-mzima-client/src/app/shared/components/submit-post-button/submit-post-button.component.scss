@@ -9,6 +9,9 @@
           padding-right: 12px;
         }
       }
+
+      // Keyboard Tab Focus mixin
+      @include focusVisible(6px);
     }
   }
 
@@ -17,5 +20,10 @@
     --icon-size: 32px;
     border-radius: 50%;
     filter: drop-shadow(0 4px 12px rgba(var(--color-light-contrast-rgb), 0.25));
+  }
+
+  &:focus {
+    color: var(--color-primary-60);
+    outline: 12px solid var(--color-primary-60);
   }
 }

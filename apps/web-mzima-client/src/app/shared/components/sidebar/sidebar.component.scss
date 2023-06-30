@@ -145,10 +145,8 @@
     color: var(--color-primary-60);
   }
 
-  &:focus {
-    color: var(--color-primary-60);
-    border-color: var(--color-primary-60);
-  }
+  // Keyboard Tab Focus mixin
+  @include focusVisible();
 
   &--active {
     color: var(--color-primary-60);

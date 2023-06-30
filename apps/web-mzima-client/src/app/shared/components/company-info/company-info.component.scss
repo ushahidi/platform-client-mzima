@@ -23,6 +23,8 @@
       &:hover {
         text-decoration: none;
       }
+      // Keyboard Tab Focus for the Ushahidi Support Link
+      @include focusVisible($border-radius: 1px);
     }
 
     .mat-expansion-panel-content {
@@ -81,6 +83,9 @@
       position: absolute;
       inset-inline-end: 0;
       transition: transform 0.35s ease;
+
+      // Keyboard Tab Focus for the Arrow Down Icon
+      @include focusVisible();
 
       .company-info.mat-expanded & {
         transform: rotate(180deg);

@@ -48,3 +48,19 @@ $laptop: 1439px;
     @content;
   }
 }
+
+// Keyboard Tab Focus mixin
+// In terms of keyboard focus, outline property is better thatn border-color
+// :focus-visible property is better than :focus property since it's only used
+// for keyboard focus and other non mouse devices
+// :focus-visible is not supported by all browsers especially Safari https://caniuse.com/?search=focus-visible
+// @support  selector(:focus-visible) is to be used instead
+@mixin focusVisible($outline-offset: 3px, $border-radius: 5px) {
+  @supports selector(:focus-visible) {
+    &:focus-visible {
+      outline: 2px solid var(--color-primary-60);
+      outline-offset: $outline-offset;
+      border-radius: $border-radius;
+    }
+  }
+}
