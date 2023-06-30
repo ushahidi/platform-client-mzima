@@ -55,7 +55,6 @@ export class ToolbarComponent implements OnInit {
     private router: Router,
     private breadcrumbService: BreadcrumbService,
     private breakpointService: BreakpointService,
-    private sessionService: SessionService,
     private translate: TranslateService,
     private gtmTracking: GtmTrackingService,
     private eventBusService: EventBusService,
@@ -63,7 +62,7 @@ export class ToolbarComponent implements OnInit {
   ) {
     this.userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
-    this.siteConfig = this.sessionService.getSiteConfigurations();
+    this.siteConfig = this.session.getSiteConfigurations();
     this.isDonateAvailable = <boolean>this.session.getSiteConfigurations().donation?.enabled;
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
