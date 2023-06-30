@@ -42,3 +42,43 @@
     }
   }
 }
+
+::ng-deep {
+  .leaflet-control-geocoder {
+    display: none;
+  }
+  .leaflet-control-attribution {
+    font-size: 7px;
+  }
+  .leaflet-touch .leaflet-bar a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    line-height: 20px;
+  }
+}
+
+.geocoder-list {
+  list-style: none;
+  margin-top: 0;
+  //background: var(--color-neutral-20);
+  border: 1px solid var(--color-neutral-60);
+  padding: 10px;
+  top: -5px;
+  display: block;
+  position: inherit;
+  border-radius: 5px;
+
+  &__item {
+    cursor: pointer;
+    &:not(:last-child) {
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-neutral-60);
+    }
+    &:not(:first-child) {
+      padding-top: 10px;
+    }
+  }
+}
