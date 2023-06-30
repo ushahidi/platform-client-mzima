@@ -21,6 +21,7 @@ import {
   PostsService,
   PostContentField,
 } from '@mzima-client/sdk';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-post-details',
@@ -36,7 +37,6 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   @Output() edit = new EventEmitter();
   @Output() refresh = new EventEmitter();
   @Output() statusChanged = new EventEmitter();
-  public media?: any;
   public allowed_privileges: string | string[];
   public postId: string;
   public videoUrl: SafeResourceUrl;
@@ -53,7 +53,6 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.post = undefined;
-        this.media = null;
 
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
 
@@ -75,12 +74,14 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     }
   }
 
-  private getPostMedia(mediaField: any): void {
-    this.mediaService.getById(mediaField.value.value).subscribe({
-      next: (media) => {
-        this.media = media;
-      },
-    });
+  private async getPostMedia(mediaId: string): Promise<any> {
+    try {
+      const response = await lastValueFrom(this.mediaService.getById(mediaId));
+      return response;
+    } catch (err) {
+      console.error(err);
+      return err;
+    }
   }
 
   private getPost(): void {
@@ -94,11 +95,16 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     });
   }
 
-  private preparingMediaField(fields: PostContentField[]) {
-    const mediaField = fields.find((field: any) => field.type === 'media');
-    if (mediaField && mediaField.value?.value) {
-      this.getPostMedia(mediaField);
-    }
+  private async preparingMediaField(fields: PostContentField[]): Promise<void> {
+    fields
+      .filter((field: any) => field.type === 'media')
+      .map(async (mediaField) => {
+        if (mediaField.value?.value) {
+          const media = await this.getPostMedia(mediaField.value.value);
+          mediaField.value.mediaSrc = media.original_file_url;
+          mediaField.value.mediaCaption = media.caption;
+        }
+      });
   }
 
   private preparingSafeVideoUrl(fields: PostContentField[]) {

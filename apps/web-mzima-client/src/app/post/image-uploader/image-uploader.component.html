@@ -19,7 +19,13 @@
         </ng-template>
         <mat-icon icon [svgIcon]="!preview ? 'plus' : 'edit'"></mat-icon>
       </mzima-client-button>
-      <input hidden #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" />
+      <input
+        hidden
+        #fileInput
+        type="file"
+        accept="image/jpeg, image/png"
+        (change)="onFileSelected($event)"
+      />
 
       <mzima-client-button
         color="danger"
