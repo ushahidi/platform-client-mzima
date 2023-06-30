@@ -5,7 +5,7 @@ on:
 - pull_request
 
 env:
-  CYPRESS_PROJECT_ID: "bsiz1z"
+  CYPRESS_PROJECT_ID: "43gftm"
 
 jobs:
   test:
