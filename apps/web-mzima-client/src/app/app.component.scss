@@ -40,6 +40,17 @@
   }
 }
 
+::ng-deep {
+  body.burger-menu-open {
+    .sidebar {
+      @include breakpoint-max($tablet) {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
 .content-wrapper {
   &:not(.content-wrapper--no-offset) {
     height: 100%;

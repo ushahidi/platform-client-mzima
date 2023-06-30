@@ -171,6 +171,11 @@ export class ToolbarComponent implements OnInit {
 
   public toggleBurgerMenu(value?: boolean): void {
     this.isBurgerMenuOpen = value ?? !this.isBurgerMenuOpen;
+    if (this.isBurgerMenuOpen) {
+      document.body.classList.add('burger-menu-open');
+    } else {
+      document.body.classList.remove('burger-menu-open');
+    }
   }
 
   createRouterLink(route: string) {
