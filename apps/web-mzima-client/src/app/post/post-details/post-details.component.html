@@ -120,6 +120,16 @@
           <ng-container *ngIf="field.input === 'relation'">
             <p>{{ field.value.value || '-' }}</p>
           </ng-container>
+
+          <ng-container *ngIf="field.input === 'select'">
+            <p>{{ field.value.value || '-' }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'markdown'">
+            <span class="code-container">
+              <code>{{ field.value.value || '-' }}</code>
+            </span>
+          </ng-container>
         </div>
       </ng-container>
     </ng-container>
