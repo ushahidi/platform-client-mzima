@@ -5,6 +5,10 @@
   position: relative;
   transition: transform 0.35s ease;
 
+  @include breakpoint-max($tablet) {
+    height: calc(100vh - 160px);
+  }
+
   &:not(.map-holder--no-offset) {
     @include breakpoint-min($tablet) {
       transform: translateX(110px);
@@ -27,8 +31,11 @@
 .map {
   z-index: 15;
   height: 100%;
-  min-height: 400px;
   position: relative;
+
+  @include breakpoint-min($tablet) {
+    min-height: 400px;
+  }
 }
 
 ::ng-deep {
