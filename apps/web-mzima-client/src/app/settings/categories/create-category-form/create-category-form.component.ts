@@ -261,7 +261,6 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
   }
 
   public chooseTranslation(lang: LanguageInterface): void {
-    console.log(lang);
     this.selectedTranslation = lang.code;
 
     const translation: TranslationInterface = this.form.controls['translations'].value.find(
@@ -273,9 +272,16 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
         translate_description: translation.description,
       });
     } else {
-      this.form.controls['translate_name'].reset();
-      this.form.controls['translate_description'].reset();
+      this.form.controls['translate_name'].setValue('');
+      this.form.controls['translate_description'].setValue('');
     }
+
+    if (lang.code === 'en') {
+      this.form.controls['translate_name'].clearValidators();
+    } else {
+      this.form.controls['translate_name'].setValidators([Validators.required]);
+    }
+    this.form.controls['translate_name'].updateValueAndValidity();
   }
 
   public async deleteTranslation(event: Event, languageCode?: string): Promise<void> {
