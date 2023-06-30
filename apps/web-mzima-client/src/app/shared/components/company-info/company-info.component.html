@@ -15,12 +15,8 @@
         svgIcon="arrow-down"
         class="company-info__header__arrow"
         aria-label="company description button-icon"
-        aria-hidden="false"
-        [attr.aria-expanded]="isDescriptionOpen"
-        role="button"
       ></mat-icon>
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <!-- Ensures the div is focusable when expanded is true (added tab focus on description for screen readers to read it out to users)-->
   <div [innerHTML]="description | safeUrl"></div>
 </mat-expansion-panel>
