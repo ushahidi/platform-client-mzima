@@ -24,8 +24,13 @@ export class FileUploaderComponent {
     if (validateFile($event.target.files[0])) {
       const reader = new FileReader();
       reader.onload = () => {
+        const originalFile = $event.target.files[0];
+        const blob = originalFile.slice(0, originalFile.size, originalFile.type);
+        const file = new File([blob], originalFile.name.trim().replace(/\s/g, '_'), {
+          type: originalFile.type,
+        });
         const currentFile: any = {
-          file: $event.target.files[0],
+          file,
           dataURI: reader.result,
           changed: true,
           deleted: false,
