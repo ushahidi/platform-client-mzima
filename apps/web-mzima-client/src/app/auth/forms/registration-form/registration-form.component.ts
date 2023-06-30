@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { CONST } from '@constants';
 import { AuthService } from '@services';
 import { regexHelper } from '@helpers';
-import { emailExistsValidator } from '../../../core/validators/checkEmailExists';
+import { emailExistsValidator } from '../../../core/validators';
 
 @Component({
   selector: 'app-registration-form',
@@ -18,7 +19,14 @@ export class RegistrationFormComponent {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(CONST.MIN_PASSWORD_LENGTH),
+          Validators.maxLength(CONST.MAX_PASSWORD_LENGTH),
+        ],
+      ],
       agreement: [false, [Validators.required]],
     });
   }

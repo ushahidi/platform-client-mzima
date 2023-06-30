@@ -54,6 +54,9 @@
       <mat-error *ngIf="form.get('password')?.hasError('minlength')">{{
         'user.valid.password.minlength' | translate
       }}</mat-error>
+      <mat-error *ngIf="form.get('password')?.hasError('maxlength')">{{
+        'user.valid.password.maxlength' | translate
+      }}</mat-error>
     </mat-form-field>
   </div>
   <div class="form-row">

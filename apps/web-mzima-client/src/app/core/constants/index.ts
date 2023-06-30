@@ -1,1 +1,1 @@
-export { CONST } from './test';
+export { CONST } from './general';

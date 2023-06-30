@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CONST } from '@constants';
 import { fieldErrorMessages, regexHelper } from '@helpers';
 import { AuthService } from '@services';
 import { emailExistsValidator } from '@validators';
@@ -14,7 +15,14 @@ export class SignupPage {
   public form = this.formBuilder.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
-    password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
+    password: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(CONST.MIN_PASSWORD_LENGTH),
+        Validators.maxLength(CONST.MAX_PASSWORD_LENGTH),
+      ],
+    ],
     agreement: [false, [Validators.required]],
   });
   public signupError: string;
