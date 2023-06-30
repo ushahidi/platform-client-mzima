@@ -25,6 +25,7 @@ export class UserItemComponent implements OnInit {
   public isMyProfile = false;
   public isDesktop = false;
   public createUserErrors: any[] = [];
+  private passwordLength = 8;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +48,7 @@ export class UserItemComponent implements OnInit {
       id: [0],
       realname: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
-      password: ['', [Validators.required, Validators.minLength(7)]],
+      password: ['', [Validators.required, Validators.minLength(this.passwordLength)]],
       role: ['', [Validators.required]],
     });
   }
@@ -66,7 +67,7 @@ export class UserItemComponent implements OnInit {
         this.fillInForm(result);
         this.form.controls['password'].removeValidators([
           Validators.required,
-          Validators.minLength(7),
+          Validators.minLength(this.passwordLength),
         ]);
         this.form.controls['password'].updateValueAndValidity();
         this.isMyProfile =
