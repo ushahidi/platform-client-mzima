@@ -69,7 +69,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   FeedMode = FeedMode;
   public currentPage = 1;
   public itemsPerPage = 20;
-  public activePastId: string;
   private postDetailsModal: MatDialogRef<PostDetailsModalComponent>;
   public isMainFiltersOpen: boolean;
 
@@ -98,24 +97,17 @@ export class FeedComponent extends MainViewComponent implements OnInit {
             },
             queryParamsHandling: 'merge',
           });
-
-          if (this.activePastId) {
-            this.showPostModal(this.activePastId);
-          }
         } else {
           this.postDetailsModal?.close();
         }
       },
     });
 
-    this.route.firstChild?.params.subscribe(() => {
-      if (this.activePastId && !this.isDesktop) {
-        this.showPostModal(this.activePastId);
-      }
-    });
-
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       this.activePostId = this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1];
+      if (this.activePostId && !this.isDesktop) {
+        this.showPostModal(this.activePostId);
+      }
     });
 
     this.route.params.subscribe(() => {
@@ -273,6 +265,21 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       this.postDetailsModal.afterClosed().subscribe((data) => {
         if (data?.update) {
           this.getPosts(this.params);
+        }
+        if (this.collectionId) {
+          this.router.navigate(['/feed', 'collection', this.collectionId], {
+            queryParams: {
+              page: this.currentPage,
+            },
+            queryParamsHandling: 'merge',
+          });
+        } else {
+          this.router.navigate(['feed'], {
+            queryParams: {
+              page: this.currentPage,
+            },
+            queryParamsHandling: 'merge',
+          });
         }
       });
 
