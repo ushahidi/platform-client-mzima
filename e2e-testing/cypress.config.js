@@ -1,7 +1,7 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
-  projectId: "bsiz1z",
+  projectId: "43gftm",
   viewportWidth: 1280,
   viewportHeight: 960,
   defaultCommandTimeout: 20000,
