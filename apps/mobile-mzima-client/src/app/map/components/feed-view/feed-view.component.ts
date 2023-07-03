@@ -76,6 +76,10 @@ export class FeedViewComponent extends MainViewComponent {
     this.initFilterListener();
   }
 
+  ionViewDidLeave(): void {
+    this.posts = [];
+  }
+
   private initNetworkListener() {
     this.networkService.networkStatus$
       .pipe(distinctUntilChanged(), untilDestroyed(this))

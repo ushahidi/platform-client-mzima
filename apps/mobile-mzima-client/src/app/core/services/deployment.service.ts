@@ -59,6 +59,7 @@ export class DeploymentService {
   }
 
   public setDeployment(data: Deployment) {
+    this.resetData();
     this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENT, data, 'object');
     this.deployment.next(data);
   }
@@ -72,9 +73,14 @@ export class DeploymentService {
   }
 
   public removeDeployment(): void {
-    localStorage.removeItem(this.sessionService.getLocalStorageNameMapper('filters'));
+    this.resetData();
     this.deployment.next(null);
-    this.databaseService.clear();
     return this.storageService.deleteStorage(STORAGE_KEYS.DEPLOYMENT);
+  }
+
+  private resetData(): void {
+    localStorage.removeItem(this.sessionService.getLocalStorageNameMapper('filters'));
+    localStorage.removeItem(this.sessionService.getLocalStorageNameMapper('allSurveysChecked'));
+    this.databaseService.clear();
   }
 }

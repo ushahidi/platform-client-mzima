@@ -10,7 +10,7 @@ import {
   SurveysService,
 } from '@mzima-client/sdk';
 import { Subject, debounceTime, lastValueFrom } from 'rxjs';
-import { AlertService, SearchService, SessionService } from '@services';
+import { AlertService, EnvService, SearchService, SessionService } from '@services';
 import { FilterControl, FilterControlOption } from '@models';
 import { searchFormHelper, UTCHelper } from '@helpers';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
@@ -116,6 +116,7 @@ export class SearchFormComponent implements OnChanges {
     private savedsearchesService: SavedsearchesService,
     private router: Router,
     private searchService: SearchService,
+    private envService: EnvService,
   ) {
     const storageFilters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'))!;
 
@@ -156,6 +157,13 @@ export class SearchFormComponent implements OnChanges {
     if (activeSaved) {
       this.router.navigate(['search', activeSaved]);
     }
+
+    this.envService.deployment$.subscribe({
+      next: () => {
+        this.getSurveys();
+        this.resetSearchForm();
+      },
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

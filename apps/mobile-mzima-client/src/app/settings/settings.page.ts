@@ -25,15 +25,15 @@ export class SettingsPage {
     this.router.navigate(['/deployment']);
   }
 
-  public resetOnboarding(): void {
-    this.storageService.deleteStorage(STORAGE_KEYS.INTRO_DONE);
-    this.authService.logout();
-    this.deploymentService.removeDeployment();
-    this.router.navigate(['/walkthrough']);
-  }
-
   public async clearPosts() {
     await this.dataBaseService.set(STORAGE_KEYS.PENDING_POST_KEY, []);
     this.router.navigate(['/']);
+  }
+
+  public resetAppData(): void {
+    localStorage.clear();
+    this.authService.logout();
+    this.dataBaseService.clear();
+    this.router.navigate(['/walkthrough']);
   }
 }
