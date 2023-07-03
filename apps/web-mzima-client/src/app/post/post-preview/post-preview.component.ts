@@ -29,6 +29,8 @@ export class PostPreviewComponent implements OnInit, OnChanges {
   @Output() statusChanged = new EventEmitter();
   private details = new Subject<boolean>();
   public details$ = this.details.asObservable();
+  private onDeleted = new Subject<PostPropertiesInterface>();
+  public deleted$ = this.onDeleted.asObservable();
   public allowed_privileges: string | string[];
 
   ngOnInit() {
@@ -54,7 +56,11 @@ export class PostPreviewComponent implements OnInit, OnChanges {
   }
 
   public deletedHandle(): void {
-    this.deleted.emit();
+    if (this.feedView) {
+      this.deleted.emit();
+    } else {
+      this.onDeleted.next(this.post);
+    }
   }
 
   public statusChangedHandle(): void {

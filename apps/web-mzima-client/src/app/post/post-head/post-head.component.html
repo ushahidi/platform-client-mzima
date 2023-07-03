@@ -38,7 +38,7 @@
       <mat-icon svgIcon="collections"></mat-icon>
       {{ 'set.add_to_collection' | translate }}
     </button>
-    <ng-container *ngIf="post.allowed_privileges!.includes('change_status')">
+    <ng-container *ngIf="post.allowed_privileges?.includes('change_status')">
       <hr />
       <button mat-menu-item (click)="publish()" *ngIf="post.status !== PostStatus.Published">
         <mat-icon svgIcon="sort-up"></mat-icon>

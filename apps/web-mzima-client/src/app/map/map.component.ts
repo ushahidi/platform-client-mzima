@@ -217,6 +217,13 @@ export class MapComponent extends MainViewComponent implements OnInit {
                               },
                             });
 
+                            comp.instance.deleted$.subscribe({
+                              next: () => {
+                                layer.togglePopup();
+                                this.loadData();
+                              },
+                            });
+
                             const mediaField = postV5.post_content?.[0].fields.find(
                               (field: any) => field.type === 'media',
                             );
