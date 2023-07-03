@@ -4,6 +4,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { AlphanumericValidatorValidator } from '../../core/validators';
+import { formHelper } from '@helpers';
 
 @Component({
   selector: 'app-image-uploader',
@@ -60,7 +61,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     const inputElement = event.target as HTMLInputElement;
 
     if (inputElement.files && inputElement.files.length) {
-      this.photo = inputElement.files[0];
+      this.photo = formHelper.prepareImageFileToUpload(inputElement.files[0]);
       this.upload = true;
       this.preview = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.photo));
       this.onChange({
