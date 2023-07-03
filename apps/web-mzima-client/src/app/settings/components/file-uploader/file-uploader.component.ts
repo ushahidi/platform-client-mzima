@@ -1,6 +1,6 @@
 import { ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { Component, Input, Output } from '@angular/core';
-import { validateFile } from '@helpers';
+import { formHelper, validateFile } from '@helpers';
 import { NotificationService } from '@services';
 
 @Component({
@@ -24,11 +24,7 @@ export class FileUploaderComponent {
     if (validateFile($event.target.files[0])) {
       const reader = new FileReader();
       reader.onload = () => {
-        const originalFile = $event.target.files[0];
-        const blob = originalFile.slice(0, originalFile.size, originalFile.type);
-        const file = new File([blob], originalFile.name.trim().replace(/\s/g, '_'), {
-          type: originalFile.type,
-        });
+        const file = formHelper.prepareImageFileToUpload($event.target.files[0]);
         const currentFile: any = {
           file,
           dataURI: reader.result,

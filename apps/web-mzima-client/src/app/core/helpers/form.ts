@@ -68,3 +68,10 @@ export const roleTransform = (data: any) => {
     },
   ];
 };
+
+export const prepareImageFileToUpload = (file: File): File => {
+  const blob = file.slice(0, file.size, file.type);
+  return new File([blob], file.name.trim().replace(/\s/g, '_'), {
+    type: file.type,
+  });
+};
