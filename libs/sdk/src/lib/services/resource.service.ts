@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { EnvLoader } from '../loader';
+import { SwitchApiService } from './switch-api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ export abstract class ResourceService<T> {
   private apiUrl = '';
   protected backendUrl: string;
   private readonly options = {};
+  private switchApiService = inject(SwitchApiService);
 
   protected constructor(protected httpClient: HttpClient, protected currentLoader: EnvLoader) {
     this.getApi();
@@ -19,6 +21,12 @@ export abstract class ResourceService<T> {
         'Content-Type': 'application/json',
       }),
     };
+
+    this.switchApiService.updateApi$.subscribe({
+      next: () => {
+        this.getApi();
+      },
+    });
   }
 
   public getApi(): void {

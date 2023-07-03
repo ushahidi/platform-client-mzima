@@ -30,7 +30,7 @@
     <ion-img
       *ngIf="!isMediaLoading; else spinner"
       class="post__media"
-      [src]="media.original_file_url"
+      [src]="media?.original_file_url"
       (ionError)="mediaId = undefined"
     ></ion-img>
     <ng-template #spinner>

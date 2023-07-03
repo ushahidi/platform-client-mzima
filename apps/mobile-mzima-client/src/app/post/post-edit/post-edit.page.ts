@@ -92,6 +92,7 @@ export class PostEditPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.getSurveys();
     this.checkNetwork();
     this.initNetworkListener();
     this.getFilters();
@@ -148,8 +149,6 @@ export class PostEditPage {
   }
 
   async transformSurveys() {
-    this.surveyList = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
-    if (!this.surveyList?.length) this.getSurveys();
     this.surveyListOptions = this.surveyList.map((item: any) => {
       return {
         label: item.name,
@@ -255,23 +254,30 @@ export class PostEditPage {
     this.form.patchValue({ [key]: UTCHelper.toUTC(event.detail.value, template) });
   }
 
-  getSurveys() {
-    this.surveysService
-      .getSurveys('', {
-        page: 1,
-        order: 'asc',
-        limit: 0,
-      })
-      .subscribe({
-        next: (response) => {
-          this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
-          this.transformSurveys();
-        },
-        error: (err) => {
-          this.transformSurveys();
-          console.log(err);
-        },
-      });
+  async getSurveys() {
+    if (this.isConnection) {
+      this.surveysService
+        .getSurveys('', {
+          page: 1,
+          order: 'asc',
+          limit: 0,
+        })
+        .subscribe({
+          next: async (response) => {
+            this.surveyList = response.results;
+            await this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
+            this.transformSurveys();
+          },
+          error: async (err) => {
+            this.surveyList = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
+            this.transformSurveys();
+            console.log(err);
+          },
+        });
+    } else {
+      this.surveyList = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
+      this.transformSurveys();
+    }
   }
 
   private updateForm(updateValues: any[]) {
