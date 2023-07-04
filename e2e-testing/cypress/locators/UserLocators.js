@@ -16,7 +16,7 @@ const UserLocators = {
     '[".p-datatable-tbody > :nth-child(1) > :nth-child(1) > .p-element > .p-checkbox > .p-checkbox-box"]',
   deleteUsersBtn: '[data-qa="btn-settings-delete"]',
   deleteUserCancelBtn: '[data-qa="btn-confirm-cancel"]',
-  deleteUserConfirmBtn: '[data-qa="btn-confirm-delete"]',
+  deleteUserConfirmBtn: '[data-qa="btn-confirm-deleteee"]',
 };
 
 export default UserLocators;
