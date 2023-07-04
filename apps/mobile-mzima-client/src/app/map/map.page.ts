@@ -48,6 +48,7 @@ export class MapPage extends MainViewComponent {
   ionViewWillEnter() {
     this.layout.updateOffsetHeight();
     this.feed.updatePosts();
+    this.map.getPostsGeoJson();
   }
 
   public createPost() {
