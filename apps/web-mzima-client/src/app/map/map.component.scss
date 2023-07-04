@@ -6,7 +6,12 @@
   transition: transform 0.35s ease;
 
   @include breakpoint-max($tablet) {
-    height: calc(100vh - 160px);
+    left: 0;
+    right: 0;
+    top: 80px;
+    bottom: 80px;
+    height: auto;
+    position: fixed;
   }
 
   &:not(.map-holder--no-offset) {
