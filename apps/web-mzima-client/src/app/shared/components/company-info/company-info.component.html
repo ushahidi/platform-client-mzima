@@ -7,10 +7,8 @@
 >
   <mat-expansion-panel-header>
     <mat-panel-title class="company-info__header">
-      <!-- Adding Logo at the end (thought it was more descriptive) -->
       <img [src]="logo" [alt]="title + 'Logo'" class="company-info__logo" *ngIf="logo" />
       <span class="company-info__title">{{ title }}</span>
-      <!-- The arrow down icon is an interactive icon -->
       <mat-icon
         svgIcon="arrow-down"
         class="company-info__header__arrow"
