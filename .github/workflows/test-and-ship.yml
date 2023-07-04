@@ -127,11 +127,11 @@ jobs:
           server='http://localhost:4200'
           retry 60 timeout 1 curl --silent ${server}/index.html || { echo "Failed getting index.html!" && exit 1; }
   
-#       - name: Patch cypress config
-#         run: |
-#           cd e2e-testing
-#           jq '{"projectId": "'${CYPRESS_PROJECT_ID}'"}' > cypress.config.js
-#           jq '.baseUrl="http://localhost:4200/"' <<<$(cat cypress.env.json) > cypress.env.json
+      - name: Patch cypress config
+        run: |
+          cd e2e-testing
+          jq '{"projectId": "'${CYPRESS_PROJECT_ID}'"}' > cypress.config.js
+          jq '.baseUrl="http://localhost:4200/"' <<<$(cat cypress.env.json) > cypress.env.json
   
       - name: Cypress run
         uses: cypress-io/github-action@v5
