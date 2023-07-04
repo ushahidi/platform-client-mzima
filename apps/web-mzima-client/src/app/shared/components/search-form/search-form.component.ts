@@ -254,6 +254,10 @@ export class SearchFormComponent implements OnInit {
     this.eventBusService.on(EventType.FinishOnboarding).subscribe({
       next: () => (this.isOnboardingActive = false),
     });
+
+    this.eventBusService.on(EventType.DeleteSavedSearch).subscribe({
+      next: () => this.applySavedFilter(null),
+    });
   }
 
   private getCategories() {
@@ -448,7 +452,7 @@ export class SearchFormComponent implements OnInit {
   }
 
   get isEditAvailable() {
-    return this.form.dirty && this.isLoggedIn;
+    return this.isLoggedIn;
   }
 
   get canCreateSearch() {
@@ -529,9 +533,9 @@ export class SearchFormComponent implements OnInit {
           this.notificationsService.get(String(search.id)).subscribe({
             next: (response) => {
               const notification = response.results[0];
-              if (!notification && result.is_notifications_enabled) {
+              if (!notification && result?.is_notifications_enabled) {
                 this.notificationsService.post({ set_id: String(search.id) }).subscribe();
-              } else if (notification && !result.is_notifications_enabled) {
+              } else if (notification && !result?.is_notifications_enabled) {
                 this.notificationsService.delete(notification.id).subscribe();
               }
             },

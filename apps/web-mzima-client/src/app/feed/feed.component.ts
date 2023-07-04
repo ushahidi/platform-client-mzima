@@ -192,6 +192,13 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       },
     });
 
+    this.eventBusService.on(EventType.DeleteSavedSearch).subscribe({
+      next: () => {
+        // We can delete search only from edit so redirect anyway
+        this.router.navigate(['/feed']);
+      },
+    });
+
     this.eventBusService
       .on(EventType.EditPost)
       .pipe(untilDestroyed(this))

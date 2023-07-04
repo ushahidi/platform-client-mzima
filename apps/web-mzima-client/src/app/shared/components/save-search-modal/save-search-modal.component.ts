@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { GroupCheckboxItemInterface } from '../group-checkbox-select/group-checkbox-select.component';
 import { formHelper } from '@helpers';
-import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
+import { ConfirmModalService, EventBusService, EventType } from '@services';
 import {
   AccountNotificationsInterface,
   NotificationsService,
@@ -33,6 +33,7 @@ export class SaveSearchModalComponent implements OnInit {
     private matDialogRef: MatDialogRef<SaveSearchModalComponent>,
     private formBuilder: FormBuilder,
     private rolesService: RolesService,
+    private eventBus: EventBusService,
     private confirmModalService: ConfirmModalService,
     private savedsearchesService: SavedsearchesService,
     private translate: TranslateService,
@@ -163,6 +164,11 @@ export class SaveSearchModalComponent implements OnInit {
 
     if (!confirmed) return;
 
-    this.matDialogRef.close('delete');
+    this.savedsearchesService.delete(this.data.search.id).subscribe({
+      next: () => {
+        this.eventBus.next({ type: EventType.DeleteSavedSearch, payload: this.data.search.id });
+        this.matDialogRef.close('delete');
+      },
+    });
   }
 }
