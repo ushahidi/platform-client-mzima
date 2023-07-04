@@ -84,7 +84,6 @@
       inset-inline-end: 0;
       transition: transform 0.35s ease;
 
-      // Keyboard Tab Focus for the Arrow Down Icon
       @include focusVisible();
 
       .company-info.mat-expanded & {
