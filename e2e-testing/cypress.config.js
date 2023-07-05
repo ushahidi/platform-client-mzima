@@ -10,6 +10,5 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
   },
-  video: true,
-  videoUploadOnPasses: false,
+  video: false,
 });
