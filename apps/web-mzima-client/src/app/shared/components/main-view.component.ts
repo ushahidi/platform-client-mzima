@@ -98,5 +98,12 @@ export abstract class MainViewComponent {
         }
       },
     });
+
+    this.eventBusService.on(EventType.DeleteSavedSearch).subscribe({
+      next: () => {
+        // We can delete search only from edit so redirect anyway
+        this.router.navigate(['/map']);
+      },
+    });
   }
 }
