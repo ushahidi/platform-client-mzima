@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { lastValueFrom } from 'rxjs';
+import { EMPTY, from, lastValueFrom, map, Observable, of, switchMap, tap } from 'rxjs';
 import {
   GeoJsonFilter,
   MediaService,
@@ -92,28 +92,62 @@ export class PostEditPage {
   ) {}
 
   async ionViewWillEnter() {
-    this.getSurveys();
-    this.checkNetwork();
+    await this.checkNetwork();
+    console.log('isConnection', this.isConnection);
+
+    this.post = await this.checkPost();
+    this.surveyList = await this.getSurveys();
+
+    if (this.post) {
+      console.log(this.post);
+      this.selectedSurveyId = this.post.form_id!;
+      this.loadForm(this.post.post_content);
+    }
+
+    this.transformSurveys();
+
     this.initNetworkListener();
     this.getFilters();
-    this.checkRoute();
-    this.transformSurveys();
   }
 
   private async checkNetwork() {
     this.setConnectionStatus(await this.networkService.checkNetworkStatus());
   }
 
-  private checkRoute() {
-    this.route.paramMap.subscribe((params) => {
-      if (params.get('id')) {
-        this.postId = Number(params.get('id'));
-        this.postsService.lockPost(this.postId).subscribe((p) => {
-          console.log('Post locked: ', p);
+  async checkPost(): Promise<any> {
+    return new Promise<number>((resolve, reject) => {
+      this.route.paramMap
+        .pipe(
+          tap((params) => {
+            const id = params.get('id');
+            if (id) {
+              this.postId = Number(id);
+              // if (this.isConnection) this.postsService.lockPost(this.postId).subscribe();
+            }
+          }),
+          switchMap(() => {
+            if (this.postId) return this.loadPostData(this.postId);
+            else return of(null);
+          }),
+        )
+        .subscribe({
+          next: (post) => resolve(post),
+          error: (err) => reject(err),
         });
-        this.loadPostData(this.postId);
-      }
     });
+  }
+
+  private loadPostData(postId: number): Observable<any> {
+    if (!postId) return EMPTY;
+    if (this.isConnection) {
+      console.log('server');
+      return this.postsService.getById(postId);
+    } else {
+      console.log('bd');
+      return from(this.dataBaseService.get(STORAGE_KEYS.POSTS)).pipe(
+        map((postsResult) => postsResult.results.find((post: any) => post.id === postId)),
+      );
+    }
   }
 
   private getFilters() {
@@ -138,17 +172,28 @@ export class PostEditPage {
       : 'The connection was lost, the information will be saved to the database';
   }
 
-  private loadPostData(postId: number) {
-    this.postsService.getById(postId).subscribe({
-      next: (post) => {
-        this.selectedSurveyId = post.form_id!;
-        this.post = post;
-        this.loadForm(post.post_content);
-      },
-    });
+  async getSurveys(): Promise<any[]> {
+    if (this.isConnection) {
+      try {
+        const response: any = await this.surveysService
+          .getSurveys('', {
+            page: 1,
+            order: 'asc',
+            limit: 0,
+          })
+          .toPromise();
+        await this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
+        return response.results;
+      } catch (err) {
+        console.log(err);
+        return this.loadSurveyFormLocalDB();
+      }
+    } else {
+      return this.loadSurveyFormLocalDB();
+    }
   }
 
-  async transformSurveys() {
+  private transformSurveys() {
     this.surveyListOptions = this.surveyList.map((item: any) => {
       return {
         label: item.name,
@@ -190,7 +235,7 @@ export class PostEditPage {
               break;
             case 'relation':
               const fieldForm: [] = field.config?.input?.form;
-              this.relationConfigForm = !fieldForm.length ? this.filters.form : fieldForm;
+              this.relationConfigForm = !fieldForm?.length ? this.filters.form : fieldForm;
               this.relationConfigSource = this.filters.source;
               this.relationConfigKey = field.key;
               break;
@@ -243,7 +288,7 @@ export class PostEditPage {
     const { location, error } = data;
     const { lat, lng } = location;
 
-    this.form.patchValue({ [formKey]: { lat: lat, lng: lng } });
+    this.updateFormControl(formKey, { lat: lat, lng: lng });
 
     this.emptyLocation = error;
     this.cdr.detectChanges();
@@ -251,33 +296,11 @@ export class PostEditPage {
 
   setCalendar(event: any, key: any, type: 'date' | 'dateTime' = 'date') {
     const template = type === 'dateTime' ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
-    this.form.patchValue({ [key]: UTCHelper.toUTC(event.detail.value, template) });
+    this.updateFormControl(key, UTCHelper.toUTC(event.detail.value, template));
   }
 
-  async getSurveys() {
-    if (this.isConnection) {
-      this.surveysService
-        .getSurveys('', {
-          page: 1,
-          order: 'asc',
-          limit: 0,
-        })
-        .subscribe({
-          next: async (response) => {
-            this.surveyList = response.results;
-            await this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
-            this.transformSurveys();
-          },
-          error: async (err) => {
-            this.surveyList = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
-            this.transformSurveys();
-            console.log(err);
-          },
-        });
-    } else {
-      this.surveyList = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
-      this.transformSurveys();
-    }
+  private async loadSurveyFormLocalDB() {
+    return this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
   }
 
   private updateForm(updateValues: any[]) {
@@ -318,7 +341,7 @@ export class PostEditPage {
 
     for (const { fields } of updateValues) {
       for (const { type, input, key, value } of fields) {
-        this.form.patchValue({ [key]: value });
+        this.updateFormControl(key, value);
         if (inputHandlers[input as InputHandlerType]) {
           inputHandlers[input as InputHandlerType](key, value);
         }
@@ -337,53 +360,63 @@ export class PostEditPage {
 
   private async handleUpload(key: string, value: any) {
     if (!value?.value) return;
-    try {
-      const uploadObservable = this.mediaService.getById(value.value);
-      const response: any = await lastValueFrom(uploadObservable);
-
-      this.form.patchValue({
-        [key]: {
+    if (value.photoUrl) {
+      this.updateFormControl(key, {
+        id: value.value,
+        caption: value.caption,
+        photo: value.photoUrl,
+      });
+    } else {
+      try {
+        const uploadObservable = this.mediaService.getById(value.value);
+        const response: any = await lastValueFrom(uploadObservable);
+        this.updateFormControl(key, {
           id: value.value,
           caption: response.caption,
           photo: response.original_file_url,
-        },
-      });
-    } catch (error: any) {
-      this.form.patchValue({ [key]: null });
-      throw new Error(`Error fetching file: ${error.message}`);
+        });
+      } catch (error: any) {
+        this.form.patchValue({ [key]: null });
+        throw new Error(`Error fetching file: ${error.message}`);
+      }
     }
   }
 
   private handleDefault(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value });
+    this.updateFormControl(key, value?.value);
   }
 
   private handleCheckbox(key: string, value: any) {
     const data = value?.value;
-    this.form.patchValue({ [key]: data });
+    this.updateFormControl(key, data);
   }
 
   private handleLocation(key: string, value: any) {
-    this.form.patchValue({
-      [key]: value?.value
+    this.updateFormControl(
+      key,
+      value?.value
         ? { lat: value?.value.lat, lng: value?.value.lon }
         : {
             lat: '',
             lng: '',
           },
-    });
+    );
   }
 
   private handleDate(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value ? new Date(value?.value) : null });
+    this.updateFormControl(key, value?.value ? new Date(value?.value) : null);
   }
 
   private handleTitle(key: string) {
-    this.form.patchValue({ [key]: this.post.title });
+    this.updateFormControl(key, this.post.title);
   }
 
   private handleDescription(key: string) {
-    this.form.patchValue({ [key]: this.post.content ? this.post.content : '' });
+    this.updateFormControl(key, this.post.content ? this.post.content : '');
+  }
+
+  private updateFormControl(key: string, data: any) {
+    this.form.patchValue({ [key]: data });
   }
 
   async preparationData(): Promise<any> {
@@ -625,7 +658,7 @@ export class PostEditPage {
   }
 
   public backNavigation(): void {
-    this.router.navigate([this.postId ?? '/']);
+    this.router.navigate([this.isConnection && this.postId ? this.postId : '/']);
   }
 
   public preventSubmitIncaseTheresNoBackendValidation() {

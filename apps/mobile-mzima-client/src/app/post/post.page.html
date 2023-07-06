@@ -4,7 +4,7 @@
     <ng-container *ngIf="post; else errorMessage">
       <div class="post">
         <strong class="post__title">{{ post.title }}</strong>
-        <ng-container *ngIf="mediaId && post.source !== 'Twitter'">
+        <ng-container *ngIf="isConnection && mediaId && post.source !== 'Twitter'">
           <ion-img
             *ngIf="!isMediaLoading; else spinner"
             class="post__media"
@@ -14,6 +14,9 @@
           <ng-template #spinner>
             <app-spinner class="post__media__loader"></app-spinner>
           </ng-template>
+        </ng-container>
+        <ng-container *ngIf="!isConnection && mediaId && post.source !== 'Twitter'">
+          <p>{{ offlineMessage }}</p>
         </ng-container>
         <app-twitter-widget
           *ngIf="post.source === 'Twitter' && post.data_source_message_id"

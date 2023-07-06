@@ -45,12 +45,18 @@ export class AppComponent extends BaseComponent {
     this.initToastMessageListener();
     this.initNetworkListener();
     this.listenerService.changeDeploymentListener();
+    this.loadInitialData();
   }
 
   private initToastMessageListener() {
     this.toastMessage$.pipe(untilDestroyed(this)).subscribe((message) => {
       this.toastService.presentToast({ message });
     });
+  }
+
+  private loadInitialData() {
+    this.getSurveys(false).subscribe();
+    this.getCollections(false).subscribe();
   }
 
   private initNetworkListener() {
@@ -68,23 +74,23 @@ export class AppComponent extends BaseComponent {
       });
   }
 
-  private getCollections(query = '') {
+  private getCollections(isToast = true) {
     let params: any = new Map();
     params = {
       orderby: 'created',
       order: 'desc',
-      q: query,
+      q: '',
     };
 
     return this.collectionsService.getCollections(params).pipe(
       tap(async (response) => {
         await this.dataBaseService.set(STORAGE_KEYS.COLLECTIONS, response.results);
-        this.toastMessage$.next('Collections data updated');
+        if (isToast) this.toastMessage$.next('Collections data updated');
       }),
     );
   }
 
-  private getSurveys() {
+  private getSurveys(isToast = true) {
     return this.surveysService
       .getSurveys('', {
         page: 1,
@@ -94,7 +100,7 @@ export class AppComponent extends BaseComponent {
       .pipe(
         tap(async (response) => {
           await this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
-          this.toastMessage$.next('Surveys data updated');
+          if (isToast) this.toastMessage$.next('Surveys data updated');
         }),
       );
   }

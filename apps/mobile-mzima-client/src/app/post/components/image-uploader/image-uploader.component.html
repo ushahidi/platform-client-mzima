@@ -3,6 +3,9 @@
     <div class="post-images" *ngIf="photo?.data">
       <img class="post-image" [src]="photo?.data" />
     </div>
+    <div class="post-images" *ngIf="preview">
+      <img class="post-image" [src]="preview" />
+    </div>
     <div class="image-loader__controls">
       <app-button
         class="image-loader__btn"

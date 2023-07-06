@@ -2,9 +2,9 @@
 
 <ion-content class="ion-padding-horizontal ion-padding-top page">
   <app-select
-    *ngIf="!postId"
-    label="Survey name"
+    [label]="surveyList.length ? 'Survey name' : 'Getting data...'"
     [options]="surveyListOptions"
+    [disabled]="!!postId"
     [(ngModel)]="selectedSurveyId"
     (ngModelChange)="loadForm()"
   >

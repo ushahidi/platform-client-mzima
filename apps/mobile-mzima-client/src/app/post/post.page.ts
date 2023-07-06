@@ -8,10 +8,13 @@ import {
   getPostStatusActions,
   postStatusChangedHeader,
   postStatusChangedMessage,
+  STORAGE_KEYS,
 } from '@constants';
 import {
   AlertService,
+  DatabaseService,
   DeploymentService,
+  NetworkService,
   SessionService,
   ShareService,
   ToastService,
@@ -31,6 +34,7 @@ export class PostPage {
   public isPostLoading: boolean = true;
   public media: any;
   public mediaId?: number;
+  public offlineMessage = 'This content is not available offline';
   public isMediaLoading: boolean;
   public location: LatLon;
   public isStatusOptionsOpen = false;
@@ -40,8 +44,10 @@ export class PostPage {
     id: undefined,
     role: undefined,
   };
+  public isConnection = true;
 
   constructor(
+    private networkService: NetworkService,
     private router: Router,
     private route: ActivatedRoute,
     private postsService: PostsService,
@@ -52,6 +58,7 @@ export class PostPage {
     private alertService: AlertService,
     private modalController: ModalController,
     private deploymentService: DeploymentService,
+    private databaseService: DatabaseService,
   ) {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: ({ userId, role }) => {
@@ -64,11 +71,28 @@ export class PostPage {
     });
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    this.isConnection = await this.checkNetwork();
     this.postId = this.route.snapshot.params['id'];
     if (this.postId) {
-      this.getPost(this.postId);
+      if (this.isConnection) {
+        this.getPost(this.postId);
+      } else {
+        this.getPostFromDb(this.postId);
+      }
     }
+  }
+
+  async getPostFromDb(postId: string) {
+    const postDb = await this.databaseService.get(STORAGE_KEYS.POSTS);
+    this.post = postDb.results.find((post: any) => post.id === postId);
+    this.mediaId = this.post!.post_content?.flatMap((c) => c.fields).find(
+      (f) => f.input === 'upload',
+    )?.value?.value;
+  }
+
+  private async checkNetwork(): Promise<boolean> {
+    return this.networkService.checkNetworkStatus();
   }
 
   private getPost(id: string) {
@@ -87,22 +111,26 @@ export class PostPage {
             (f) => f.input === 'upload',
           )?.value?.value;
 
+          this.media = this.post!.post_content?.flatMap((c) => c.fields).find(
+            (f) => f.input === 'upload',
+          )?.value;
+
           this.location = this.post!.post_content?.flatMap((c) => c.fields).find(
             (f) => f.input === 'location',
           )?.value?.value;
 
-          if (this.mediaId) {
-            this.isMediaLoading = true;
-            this.mediaService.getById(String(this.mediaId)).subscribe({
-              next: (media) => {
-                this.isMediaLoading = false;
-                this.media = media;
-              },
-              error: () => {
-                this.isMediaLoading = false;
-              },
-            });
-          }
+          // if (this.mediaId) {
+          //   this.isMediaLoading = true;
+          //   this.mediaService.getById(String(this.mediaId)).subscribe({
+          //     next: (media) => {
+          //       this.isMediaLoading = false;
+          //       this.media = media;
+          //     },
+          //     error: () => {
+          //       this.isMediaLoading = false;
+          //     },
+          //   });
+          // }
         },
         error: (error) => {
           console.error('post loading error: ', error);
