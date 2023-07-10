@@ -1,20 +1,5 @@
 <div class="sidebar" *ngIf="isDesktop || !isInnerPage">
-  <div class="sidebar__main">
-    <span class="sidebar__logo" *ngIf="isDesktop">
-      <img
-        src="../../../../assets/images/ushahidi-logo.svg"
-        alt="ushahidi"
-        width="172"
-        height="40"
-      />
-    </span>
-
-    <div class="sidebar__info">
-      <app-company-info *ngIf="isDesktop"></app-company-info>
-      <app-submit-post-button class="sidebar__add-post-btn"></app-submit-post-button>
-    </div>
-  </div>
-
+  <app-deployment-details></app-deployment-details>
   <nav class="sidebar__controls">
     <div class="sidebar__menu" id="sidebar-menu">
       <ng-container *ngFor="let item of menu">

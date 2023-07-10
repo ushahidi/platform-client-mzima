@@ -1,0 +1,10 @@
+<!-- <div class="sidebar__main"> -->
+<span class="sidebar__logo" *ngIf="isDesktop">
+  <img src="../../../../assets/images/ushahidi-logo.svg" alt="ushahidi" width="172" height="40" />
+</span>
+
+<div class="sidebar__info">
+  <app-company-info *ngIf="isDesktop"></app-company-info>
+  <app-submit-post-button class="sidebar__add-post-btn"></app-submit-post-button>
+</div>
+<!-- </div> -->

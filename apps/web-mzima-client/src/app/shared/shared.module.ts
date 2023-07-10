@@ -52,6 +52,7 @@ import { FilterControlModule } from './components/filter-control/filter-control.
 import { GroupCheckboxSelectModule } from './components/group-checkbox-select/group-checkbox-select.module';
 import { LottieAnimationModule } from './components/lottie-animation/lottie-animation.module';
 import { SpinnerModule } from './components/spinner/spinner.module';
+import { DeploymentDetailsComponent } from './components/deployment-details/deployment-details.component';
 import { DirectiveModule } from './directive.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddPostModalComponent } from '@post';
@@ -81,6 +82,7 @@ const components = [
   DonationModalComponent,
   NotificationComponent,
   SafePipe,
+  DeploymentDetailsComponent,
 ];
 
 const modules = [

@@ -1,0 +1,43 @@
+@import 'helpers';
+
+.sidebar {
+  &__logo {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px var(--side-offset) 0;
+    border-bottom: 1px solid var(--color-neutral-90);
+    margin: -24px calc(var(--side-offset) * -1) 8px;
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+  }
+
+  &__add-post-btn {
+    display: block;
+    border-width: 1px 0;
+    border-style: solid;
+    padding: 12px var(--side-offset);
+    border-color: var(--color-neutral-90);
+    margin: 0 calc(var(--side-offset) * -1) 8px;
+
+    @include breakpoint-max($laptop-small) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    @include breakpoint-max($tablet) {
+      left: 50%;
+      padding: 0;
+      z-index: 25;
+      bottom: 100%;
+      border: none;
+      position: absolute;
+      margin: 0 0 -12px -32px;
+    }
+  }
+}
