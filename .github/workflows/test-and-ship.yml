@@ -70,13 +70,77 @@ jobs:
     timeout-minutes: 15
     continue-on-error: true
 
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - "33061:3306"
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: ushahidi
+          MYSQL_USER: ushahidi
+          MYSQL_PASSWORD: ushahidi
+      redis:
+        image: redis:4-alpine
+      platform:
+        image: ghcr.io/ushahidi/platform:develop
+        credentials:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        ports:
+          - "8080:8080"
+        env:
+          APP_KEY: SomeRandomKey!!!SomeRandomKey!!!
+          DOCKERIZE_TIMEOUT: 180s
+          DOCKERIZE_WAIT_FOR_mysql: tcp://mysql:3306
+          DOCKERIZE_WAIT_FOR_redis: tcp://redis:6379
+          ENABLE_NGINX: "true"
+          ENABLE_PHPFPM: "true"
+          ENABLE_PLATFORM_TASKS: "false"
+          RUN_PLATFORM_MIGRATIONS: "false"
+          DB_CONNECTION: mysql
+          DB_DATABASE: ushahidi
+          DB_HOST: mysql
+          DB_PORT: 3306
+          DB_USERNAME: ushahidi
+          DB_PASSWORD: ushahidi
+          REDIS_HOST: redis
+          CACHE_DRIVER: redis
+          QUEUE_DRIVER: redis
+
     steps:
       - uses: actions/checkout@v3
-  
-      ## set up API endpoint
-      - name: Setup API endpoint
+
+      - name: Set up API service with snapshot
         run: |
-          echo 'BACKEND_URL=https://e2e-laboratory-api.staging.ush.zone' > .env
+          set -e;
+          
+          SNAPSHOT_URL="https://ushahidi-static-web-assets.s3.eu-west-1.amazonaws.com/ushahidi-e2e-data-2023.07.05.sql.gz"
+          wget -O sql-snapshot.sql.gz ${SNAPSHOT_URL} 2>/dev/null || { echo "Failed downloading snapshot!" && exit 1; }
+
+          tmp_defaults=`mktemp`
+          echo -e "[client]\nhost=127.0.0.1\nuser=ushahidi\nport=33061\npassword=ushahidi" > $tmp_defaults
+          zcat sql-snapshot.sql.gz | mysql --defaults-extra-file=$tmp_defaults ushahidi
+
+          echo '!! Snapshot restored !!'
+
+          while ! docker exec ${{ job.services.platform.id }} /bin/true ; do
+            echo "Waiting for platform container to start..."
+            sleep 1
+          done
+          docker exec ${{ job.services.platform.id }} util wait_bootstrap
+          docker exec ${{ job.services.platform.id }} util wait_for_mysql
+          docker exec ${{ job.services.platform.id }} util run_migrations
+
+      - name: Verify and setup API endpoint
+        run: |
+          set -e;
+          curl --fail http://localhost:8080/api/v3/config || \
+            { echo "Failed getting API config!";
+              sleep 5;
+              docker logs ${{ job.services.platform.id }};
+              exit 1; }
+          echo 'BACKEND_URL=http://localhost:8080' > .env
   
       ## same as above step
       - name: Setup Node
