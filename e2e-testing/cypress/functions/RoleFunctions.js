@@ -30,7 +30,7 @@ class RoleFunctions {
   }
   add_and_verify_role() {
     this.open_roles_page();
-    this.add_role("Auto Role", "An automated description for automated role");
+    this.add_role("Automated Role", "An automated description for automated role");
     this.verify_role_exist();
   }
   delete_role_and_verify_deletion() {
