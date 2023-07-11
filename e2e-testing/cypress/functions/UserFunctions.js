@@ -37,7 +37,7 @@ class UserFunctions {
     this.open_user_page_steps();
     this.add_user_steps(
       "Auto User",
-      "autouser@ushahidi.com",
+      "automateduser@ushahidi.com",
       Cypress.env("ush_user_pwd")
     );
   }
