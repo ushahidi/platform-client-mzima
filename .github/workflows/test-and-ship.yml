@@ -21,8 +21,8 @@ jobs:
           - '16'
           - '18'
         include:
-          - node_version: '16' # update along with DEFAULT_NODE_VERSION
-            run_lint_tests: 'True'
+        - node_version: "18"
+          run_lint_tests: "True"
 
     steps:
       - uses: actions/checkout@v3
@@ -71,25 +71,90 @@ jobs:
     timeout-minutes: 5
     continue-on-error: true
 
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - '33061:3306'
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: ushahidi
+          MYSQL_USER: ushahidi
+          MYSQL_PASSWORD: ushahidi
+      redis:
+        image: redis:4-alpine
+      platform:
+        image: ghcr.io/ushahidi/platform:develop
+        credentials:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        ports:
+          - '8080:8080'
+        env:
+          APP_KEY: SomeRandomKey!!!SomeRandomKey!!!
+          DOCKERIZE_TIMEOUT: 180s
+          DOCKERIZE_WAIT_FOR_mysql: tcp://mysql:3306
+          DOCKERIZE_WAIT_FOR_redis: tcp://redis:6379
+          ENABLE_NGINX: 'true'
+          ENABLE_PHPFPM: 'true'
+          ENABLE_PLATFORM_TASKS: 'false'
+          RUN_PLATFORM_MIGRATIONS: 'false'
+          DB_CONNECTION: mysql
+          DB_DATABASE: ushahidi
+          DB_HOST: mysql
+          DB_PORT: 3306
+          DB_USERNAME: ushahidi
+          DB_PASSWORD: ushahidi
+          REDIS_HOST: redis
+          CACHE_DRIVER: redis
+          QUEUE_DRIVER: redis
+
     steps:
       - uses: actions/checkout@v3
   
       ## set up API endpoint
       - name: Setup API endpoint
         run: |
-          echo 'BACKEND_URL=https://e2e-laboratory-api.staging.ush.zone' > .env
-  
+          set -e;
+
+          SNAPSHOT_URL="https://ushahidi-static-web-assets.s3.eu-west-1.amazonaws.com/ushahidi-e2e-data-2023.07.05.sql.gz"
+          wget -O sql-snapshot.sql.gz ${SNAPSHOT_URL} 2>/dev/null || { echo "Failed downloading snapshot!" && exit 1; }
+
+          tmp_defaults=`mktemp`
+          echo -e "[client]\nhost=127.0.0.1\nuser=ushahidi\nport=33061\npassword=ushahidi" > $tmp_defaults
+          zcat sql-snapshot.sql.gz | mysql --defaults-extra-file=$tmp_defaults ushahidi
+
+          echo '!! Snapshot restored !!'
+
+          while ! docker exec ${{ job.services.platform.id }} /bin/true ; do
+            echo "Waiting for platform container to start..."
+            sleep 1
+          done
+          docker exec ${{ job.services.platform.id }} util wait_bootstrap
+          docker exec ${{ job.services.platform.id }} util wait_for_mysql
+          docker exec ${{ job.services.platform.id }} util run_migrations
+
+      - name: Verify and setup API endpoint
+        run: |
+          set -e;
+          curl --fail http://localhost:8080/api/v3/config || \
+            { echo "Failed getting API config!";
+              sleep 5;
+              docker logs ${{ job.services.platform.id }};
+              exit 1; }
+          echo 'BACKEND_URL=http://localhost:8080' > .env
+
       ## same as above step
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 16
-  
+
       - name: Get npm cache directory
         id: npm-cache-dir
         run: |
           echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
-    
+
       - uses: actions/cache@v3
         id: npm-cache
         with:
@@ -97,21 +162,21 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-  
+
       - name: Install dependencies
         run: npm install;
-  
+
       - name: Run server
         run: |
           npm run web:serve &
-  
+
       - name: Wait until the front-end is ready
         run: |
           retry() {
             local -r -i max_attempts="$1"; shift
             local -r cmd="$@"
             local -i attempt_num=1
-  
+
             until $cmd
             do
                 if (( attempt_num == max_attempts ))
@@ -124,38 +189,29 @@ jobs:
                 fi
             done;
           }
-  
-          server='http://localhost:3000'
+
+          server='http://localhost:4200'
           retry 60 timeout 1 curl --silent ${server}/index.html || { echo "Failed getting index.html!" && exit 1; }
-  
-      - name: Patch cypress config
-        run: |
-          cd e2e-testing
-          echo '{"projectId": "'${CYPRESS_PROJECT_ID}'"}' > cypress.json
-          jq '.baseUrl="http://localhost:3000/"' <<<$(cat cypress.env.json) > cypress.env.json
-  
+
       - name: Cypress run
-        uses: cypress-io/github-action@v2
-  
+        uses: cypress-io/github-action@v5
+
         with:
-          browser: chrome
-          # install-command: npm install
           record: true
-          parallel: true
           working-directory: e2e-testing
-  
+
         env:
-            CYPRESS_ush_admin_email: "${{secrets.e2e_ush_admin_email}}"
-            CYPRESS_ush_admin_pwd: "${{secrets.e2e_ush_admin_pwd}}"
-            CYPRESS_ush_user_name: "${{secrets.e2e_ush_user_name}}"
-            CYPRESS_ush_user_email: "${{secrets.e2e_ush_user_email}}"
-            CYPRESS_ush_user_pwd: "${{secrets.e2e_ush_user_pwd}}"
-            CYPRESS_RECORD_KEY: ${{ secrets.E2E_CYPRESS_RECORD_KEY }}
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_ush_admin_email: '${{secrets.e2e_ush_admin_email}}'
+          CYPRESS_ush_admin_pwd: '${{secrets.e2e_ush_admin_pwd}}'
+          CYPRESS_ush_user_name: '${{secrets.e2e_ush_user_name}}'
+          CYPRESS_ush_user_email: '${{secrets.e2e_ush_user_email}}'
+          CYPRESS_ush_user_pwd: '${{secrets.e2e_ush_user_pwd}}'
+          CYPRESS_RECORD_KEY: ${{ secrets.E2E_CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   ship:
-    needs: [ cypress-tests-run, e2e-test ]
-    if: github.event_name == 'push'   # not on PRs
+    needs: [test, e2e-test]
+    if: github.event_name == 'push' # not on PRs
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
