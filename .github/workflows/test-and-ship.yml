@@ -198,15 +198,18 @@ jobs:
       #     jq '.baseUrl="http://localhost:4200/"' <<<$(cat cypress.env.json) > cypress.env.json
   
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        # uses: cypress-io/github-action@v5
   
-        with:
-          browser: chrome
-          # install-command: npm install
-          record: true
-          parallel: true
-          working-directory: e2e-testing
-          start: npm start
+        # with:
+        #   browser: chrome
+        #   # install-command: npm install
+        #   record: true
+        #   parallel: true
+        #   working-directory: e2e-testing
+        #   start: npm start
+        run: | 
+          cd: e2e-testing
+          npm run start
   
         env:
             CYPRESS_ush_admin_email: "${{secrets.e2e_ush_admin_email}}"
