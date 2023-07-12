@@ -210,7 +210,7 @@ jobs:
         run: |
           cd e2e-testing
           npm install
-          npm run start
+          npm run start -- --record
 
         env:
           CYPRESS_ush_admin_email: '${{secrets.e2e_ush_admin_email}}'
