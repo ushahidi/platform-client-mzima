@@ -74,6 +74,19 @@ const routes: Routes = [
     component: PageNotFoundComponent,
   },
   {
+    path: 'views',
+    children: [
+      {
+        path: 'map',
+        redirectTo: '/map',
+      },
+      {
+        path: 'data',
+        redirectTo: '/feed',
+      },
+    ],
+  },
+  {
     path: '**',
     pathMatch: 'full',
     component: PageNotFoundComponent,
