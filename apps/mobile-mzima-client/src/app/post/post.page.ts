@@ -1,15 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MediaService, PostResult, PostStatus, PostsService } from '@mzima-client/sdk';
-import { LatLon } from '@models';
-import { ActionSheetButton, ModalController } from '@ionic/angular';
+import { CollectionsModalComponent } from '@components';
 import {
-  PostItemActionType,
   getPostStatusActions,
+  PostItemActionType,
   postStatusChangedHeader,
   postStatusChangedMessage,
   STORAGE_KEYS,
 } from '@constants';
+import { ActionSheetButton, ModalController } from '@ionic/angular';
+import { LatLon } from '@models';
+import {
+  MediaService,
+  PostContent,
+  PostContentField,
+  PostResult,
+  PostsService,
+  PostStatus,
+} from '@mzima-client/sdk';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   AlertService,
   DatabaseService,
@@ -19,8 +29,8 @@ import {
   ShareService,
   ToastService,
 } from '@services';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { CollectionsModalComponent } from '../shared/components/collections-modal/collections-modal.component';
+import { preparingVideoUrl } from '@validators';
+import { lastValueFrom } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -28,13 +38,10 @@ import { CollectionsModalComponent } from '../shared/components/collections-moda
   templateUrl: 'post.page.html',
   styleUrls: ['post.page.scss'],
 })
-export class PostPage {
+export class PostPage implements OnDestroy {
   public post?: PostResult;
   public postId: string;
   public isPostLoading: boolean = true;
-  public media: any;
-  public mediaId?: number;
-  public offlineMessage = 'This content is not available offline';
   public isMediaLoading: boolean;
   public location: LatLon;
   public isStatusOptionsOpen = false;
@@ -45,6 +52,7 @@ export class PostPage {
     role: undefined,
   };
   public isConnection = true;
+  public videoUrl: SafeResourceUrl;
 
   constructor(
     private networkService: NetworkService,
@@ -59,6 +67,7 @@ export class PostPage {
     private modalController: ModalController,
     private deploymentService: DeploymentService,
     private databaseService: DatabaseService,
+    private sanitizer: DomSanitizer,
   ) {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: ({ userId, role }) => {
@@ -76,26 +85,24 @@ export class PostPage {
     this.postId = this.route.snapshot.params['id'];
     if (this.postId) {
       if (this.isConnection) {
-        this.getPost(this.postId);
+        this.getPost(Number(this.postId));
       } else {
-        this.getPostFromDb(this.postId);
+        this.post = await this.getPostFromDb(Number(this.postId));
+        this.isPostLoading = false;
       }
     }
   }
 
-  async getPostFromDb(postId: string) {
+  async getPostFromDb(postId: number) {
     const postDb = await this.databaseService.get(STORAGE_KEYS.POSTS);
-    this.post = postDb.results.find((post: any) => post.id === postId);
-    this.mediaId = this.post!.post_content?.flatMap((c) => c.fields).find(
-      (f) => f.input === 'upload',
-    )?.value?.value;
+    return postDb.results.find((post: any) => post.id === Number(postId));
   }
 
   private async checkNetwork(): Promise<boolean> {
     return this.networkService.checkNetworkStatus();
   }
 
-  private getPost(id: string) {
+  private getPost(id: number) {
     this.isPostLoading = true;
     this.postsService
       .getById(id)
@@ -103,40 +110,51 @@ export class PostPage {
       .subscribe({
         next: async (post) => {
           this.post = post;
+          console.log('post', this.post);
           this.checkPermissions();
-
           this.isPostLoading = false;
-
-          this.mediaId = this.post!.post_content?.flatMap((c) => c.fields).find(
-            (f) => f.input === 'upload',
-          )?.value?.value;
-
-          this.media = this.post!.post_content?.flatMap((c) => c.fields).find(
-            (f) => f.input === 'upload',
-          )?.value;
-
-          this.location = this.post!.post_content?.flatMap((c) => c.fields).find(
-            (f) => f.input === 'location',
-          )?.value?.value;
-
-          // if (this.mediaId) {
-          //   this.isMediaLoading = true;
-          //   this.mediaService.getById(String(this.mediaId)).subscribe({
-          //     next: (media) => {
-          //       this.isMediaLoading = false;
-          //       this.media = media;
-          //     },
-          //     error: () => {
-          //       this.isMediaLoading = false;
-          //     },
-          //   });
-          // }
+          this.preparingMediaField((this.post.post_content as PostContent[])[0].fields);
+          this.preparingSafeVideoUrl((this.post.post_content as PostContent[])[0].fields);
         },
         error: (error) => {
           console.error('post loading error: ', error);
           this.isPostLoading = false;
         },
       });
+  }
+
+  private async preparingMediaField(fields: PostContentField[]): Promise<void> {
+    fields
+      .filter((field: any) => field.type === 'media')
+      .map(async (mediaField) => {
+        if (mediaField.value?.value) {
+          const media = await this.getPostMedia(mediaField.value.value);
+          mediaField.value.photoUrl = media.original_file_url;
+          mediaField.value.caption = media.caption;
+        }
+      });
+  }
+
+  private async getPostMedia(mediaId: string): Promise<any> {
+    try {
+      return lastValueFrom(this.mediaService.getById(mediaId));
+    } catch (err) {
+      console.error(err);
+      return err;
+    }
+  }
+
+  private preparingSafeVideoUrl(fields: PostContentField[]) {
+    const videoField = fields.find((field: any) => field.input === 'video');
+    if (videoField && videoField.value?.value) {
+      this.videoUrl = this.generateSecurityTrustResourceUrl(
+        preparingVideoUrl(videoField.value?.value),
+      );
+    }
+  }
+
+  private generateSecurityTrustResourceUrl(unsafeUrl: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
   }
 
   private checkPermissions(): void {
@@ -256,5 +274,9 @@ export class PostPage {
       }
     });
     modal.present();
+  }
+
+  ngOnDestroy() {
+    this.videoUrl = '';
   }
 }

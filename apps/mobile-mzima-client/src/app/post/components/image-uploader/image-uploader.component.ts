@@ -30,6 +30,7 @@ interface LocalFile {
 export class ImageUploaderComponent implements ControlValueAccessor {
   @Input() public hasCaption: boolean;
   @Input() public requiredError?: boolean;
+  @Input() public isConnection: boolean;
 
   fileName: string;
   captionControl = new FormControl('', AlphanumericValidator());

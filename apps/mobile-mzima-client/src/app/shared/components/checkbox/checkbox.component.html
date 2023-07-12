@@ -8,14 +8,30 @@
 </ion-item>
 
 <ng-template #checkbox>
-  <ion-checkbox
-    class="checkbox"
-    [(ngModel)]="value"
-    [checked]="checked"
-    [disabled]="disabled"
-    (ionChange)="handleInputChange($event)"
-    [labelPlacement]="type === 'default' || type === 'radio-item' ? 'end' : 'start'"
-  >
-    <span class="checkbox__text"><ng-content></ng-content></span>
-  </ion-checkbox>
+  <ng-container *ngIf="value === undefined">
+    <ion-checkbox
+      class="checkbox"
+      [checked]="checked"
+      [disabled]="disabled"
+      (ionChange)="handleInputChange($event)"
+      [labelPlacement]="type === 'default' || type === 'radio-item' ? 'end' : 'start'"
+    >
+      <ng-container *ngTemplateOutlet="checkbox_text"></ng-container>
+    </ion-checkbox>
+  </ng-container>
+  <ng-container *ngIf="value !== undefined">
+    <ion-checkbox
+      class="checkbox"
+      [(ngModel)]="value"
+      [disabled]="disabled"
+      (ionChange)="handleInputChange($event)"
+      [labelPlacement]="type === 'default' || type === 'radio-item' ? 'end' : 'start'"
+    >
+      <ng-container *ngTemplateOutlet="checkbox_text"></ng-container>
+    </ion-checkbox>
+  </ng-container>
+</ng-template>
+
+<ng-template #checkbox_text>
+  <span class="checkbox__text"><ng-content></ng-content></span>
 </ng-template>

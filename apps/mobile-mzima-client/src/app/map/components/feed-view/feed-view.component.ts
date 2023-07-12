@@ -118,6 +118,7 @@ export class FeedViewComponent extends MainViewComponent {
           (result: any) => !currentPostIds.includes(result.id),
         );
         currentPosts.results = currentPosts.results.concat(newResults);
+        currentPosts.results.sort((a: any, b: any) => b.id - a.id);
         currentPosts.count = currentPosts.results.length;
         await this.databaseService.set(STORAGE_KEYS.POSTS, currentPosts);
       } else {

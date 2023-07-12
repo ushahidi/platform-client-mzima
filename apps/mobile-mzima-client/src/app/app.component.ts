@@ -107,7 +107,7 @@ export class AppComponent extends BaseComponent {
 
   async checkPendingPosts(): Promise<boolean> {
     const posts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
-    if (posts?.length) this.toastMessage$.next('Pending posts found');
+    if (posts?.length) this.toastMessage$.next('Posts found for publication');
     return !!posts?.length;
   }
 

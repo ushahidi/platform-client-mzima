@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angu
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { STORAGE_KEYS } from '@constants';
+import { CONST, STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EMPTY, from, lastValueFrom, map, Observable, of, switchMap, tap } from 'rxjs';
 import {
@@ -66,11 +66,11 @@ export class PostEditPage {
   public filters: any;
   public surveyList: any[] = [];
   public surveyListOptions: any;
-  public selectedSurveyId: number;
+  public selectedSurveyId: number | null;
   public selectedSurvey: any;
   private fileToUpload: any;
   private checkedList: any[] = [];
-  private isConnection = true;
+  public isConnection = true;
   public connectionInfo = '';
 
   dateOption: any;
@@ -92,22 +92,19 @@ export class PostEditPage {
   ) {}
 
   async ionViewWillEnter() {
+    this.initNetworkListener();
     await this.checkNetwork();
-    console.log('isConnection', this.isConnection);
 
+    this.filters = this.getFilters();
     this.post = await this.checkPost();
     this.surveyList = await this.getSurveys();
 
     if (this.post) {
-      console.log(this.post);
       this.selectedSurveyId = this.post.form_id!;
       this.loadForm(this.post.post_content);
     }
 
     this.transformSurveys();
-
-    this.initNetworkListener();
-    this.getFilters();
   }
 
   private async checkNetwork() {
@@ -122,7 +119,7 @@ export class PostEditPage {
             const id = params.get('id');
             if (id) {
               this.postId = Number(id);
-              // if (this.isConnection) this.postsService.lockPost(this.postId).subscribe();
+              if (this.isConnection) this.postsService.lockPost(this.postId).subscribe();
             }
           }),
           switchMap(() => {
@@ -151,7 +148,7 @@ export class PostEditPage {
   }
 
   private getFilters() {
-    this.filters = JSON.parse(
+    return JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
     );
   }
@@ -205,6 +202,7 @@ export class PostEditPage {
   clearData() {
     this.relatedPosts = [];
     this.fileToUpload = null;
+    this.selectedSurvey = null;
 
     if (this.form?.controls) {
       for (const control in this.form.controls) {
@@ -235,8 +233,8 @@ export class PostEditPage {
               break;
             case 'relation':
               const fieldForm: [] = field.config?.input?.form;
-              this.relationConfigForm = !fieldForm?.length ? this.filters.form : fieldForm;
-              this.relationConfigSource = this.filters.source;
+              this.relationConfigForm = fieldForm?.length ? fieldForm : this.filters.form;
+              this.relationConfigSource = this.filters?.source || [];
               this.relationConfigKey = field.key;
               break;
           }
@@ -295,7 +293,7 @@ export class PostEditPage {
   }
 
   setCalendar(event: any, key: any, type: 'date' | 'dateTime' = 'date') {
-    const template = type === 'dateTime' ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
+    const template = type === 'dateTime' ? CONST.FORMAT_DATE_TIME : CONST.FORMAT_DATE;
     this.updateFormControl(key, UTCHelper.toUTC(event.detail.value, template));
   }
 
@@ -319,20 +317,15 @@ export class PostEditPage {
       | 'number';
     type TypeHandlerType = 'title' | 'description';
 
-    const inputHandlers: { [key in InputHandlerType]: (key: string, value: any) => void } = {
-      tags: this.handleTags.bind(this),
-      checkbox: this.handleCheckbox.bind(this),
-      location: this.handleLocation.bind(this),
-      date: this.handleDate.bind(this),
-      datetime: this.handleDate.bind(this),
-      radio: this.handleDefault.bind(this),
-      text: this.handleDefault.bind(this),
-      upload: this.handleUpload.bind(this),
-      video: this.handleDefault.bind(this),
-      textarea: this.handleDefault.bind(this),
-      relation: this.handleDefault.bind(this),
-      number: this.handleDefault.bind(this),
-    };
+    const inputHandlers: Partial<{ [key in InputHandlerType]: (key: string, value: any) => void }> =
+      {
+        tags: this.handleTags.bind(this),
+        checkbox: this.handleCheckbox.bind(this),
+        location: this.handleLocation.bind(this),
+        date: this.handleDate.bind(this),
+        datetime: this.handleDateTime.bind(this),
+        upload: this.handleUpload.bind(this),
+      };
 
     const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
       title: this.handleTitle.bind(this),
@@ -343,7 +336,9 @@ export class PostEditPage {
       for (const { type, input, key, value } of fields) {
         this.updateFormControl(key, value);
         if (inputHandlers[input as InputHandlerType]) {
-          inputHandlers[input as InputHandlerType](key, value);
+          inputHandlers[input as InputHandlerType]!(key, value);
+        } else {
+          this.handleDefault.bind(this)(key, value);
         }
 
         if (typeHandlers[type as TypeHandlerType]) {
@@ -404,7 +399,17 @@ export class PostEditPage {
   }
 
   private handleDate(key: string, value: any) {
-    this.updateFormControl(key, value?.value ? new Date(value?.value) : null);
+    this.updateFormControl(
+      key,
+      value?.value ? UTCHelper.toUTC(value?.value, CONST.FORMAT_DATE) : null,
+    );
+  }
+
+  private handleDateTime(key: string, value: any) {
+    this.updateFormControl(
+      key,
+      value?.value ? UTCHelper.toUTC(value?.value, CONST.FORMAT_DATE_TIME) : null,
+    );
   }
 
   private handleTitle(key: string) {
@@ -431,7 +436,7 @@ export class PostEditPage {
       datetime: (value: any) =>
         value
           ? {
-              value: UTCHelper.toUTC(value, 'YYYY-MM-DD HH:mm'),
+              value: UTCHelper.toUTC(value, CONST.FORMAT_DATE_TIME),
               value_meta: { from_tz: dayjs.tz.guess() },
             }
           : { value: null },
@@ -658,6 +663,7 @@ export class PostEditPage {
   }
 
   public backNavigation(): void {
+    this.clearData();
     this.router.navigate([this.isConnection && this.postId ? this.postId : '/']);
   }
 

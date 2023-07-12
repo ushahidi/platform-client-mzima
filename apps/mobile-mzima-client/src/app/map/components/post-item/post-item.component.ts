@@ -70,8 +70,6 @@ export class PostItemComponent implements OnInit {
       },
     });
 
-    console.log(this.post);
-
     this.mediaId = this.post.post_content
       ?.flatMap((c) => c.fields)
       .find((f) => f.input === 'upload')?.value?.value;
