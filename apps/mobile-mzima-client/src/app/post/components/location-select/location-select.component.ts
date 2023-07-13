@@ -166,7 +166,7 @@ export class LocationSelectComponent implements OnInit {
     }
     this.mapMarker = marker(this.location, {
       draggable: true,
-      icon: mapHelper.pointIcon('default', this.mapConfig.default_view!.color),
+      icon: mapHelper.pointIcon('default', 'var(--color-neutral-100)'),
     }).addTo(this.map);
 
     this.mapMarker.on('dragend', (e) => {

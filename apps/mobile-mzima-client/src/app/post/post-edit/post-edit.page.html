@@ -2,9 +2,9 @@
 
 <ion-content class="ion-padding-horizontal ion-padding-top page">
   <app-select
-    *ngIf="!postId"
-    label="Survey name"
+    [label]="surveyList.length ? 'Survey name' : 'Getting data...'"
     [options]="surveyListOptions"
+    [disabled]="!!postId"
     [(ngModel)]="selectedSurveyId"
     (ngModelChange)="loadForm()"
   >
@@ -128,10 +128,6 @@
 
           <!-- date -->
           <ng-container *ngIf="field.input === 'date'">
-            <ion-label>
-              {{ field?.label }}
-              <span class="color-accent" *ngIf="field?.required">*</span>
-            </ion-label>
             <div class="form-control--section">
               <app-form-control
                 id="open-date"
@@ -147,7 +143,7 @@
                 </ng-container>
               </app-form-control>
 
-              <ion-modal class="data-modal" trigger="open-date">
+              <ion-modal class="date-modal" trigger="open-date">
                 <ng-template>
                   <ion-content>
                     <ion-datetime
@@ -165,10 +161,6 @@
 
           <!-- datetime -->
           <ng-container *ngIf="field.input === 'datetime'">
-            <ion-label>
-              {{ field?.label }}
-              <span class="color-accent" *ngIf="field?.required">*</span>
-            </ion-label>
             <div class="form-control--section">
               <app-form-control
                 id="open-datetime"
@@ -241,16 +233,19 @@
                   [innerHTML]="field?.instructions"
                 ></span>
               </div>
-              <ul class="checkbox-list" *ngIf="field.options?.length; else noOptions">
-                <li class="checkbox-list__item" *ngFor="let option of field.options">
+
+              <ng-container *ngIf="field.options?.length; else noOptions">
+                <ng-container *ngFor="let option of field.options">
                   <app-checkbox
                     type="item"
+                    [required]="field?.required"
+                    [checked]="form.get(field.key)?.value.includes(option)"
                     (checkboxChange)="changeSelectionFields($event, field.key, option)"
                   >
                     {{ option }}
                   </app-checkbox>
-                </li>
-              </ul>
+                </ng-container>
+              </ng-container>
             </div>
           </ng-container>
 
@@ -301,6 +296,7 @@
               <app-image-uploader
                 [formControlName]="field.key"
                 [hasCaption]="field.config.hasCaption"
+                [isConnection]="isConnection"
                 [requiredError]="
                   form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
                 "
@@ -324,12 +320,16 @@
               ></app-form-control>
 
               <iframe
-                *ngIf="form.get(field.key)?.value"
+                *ngIf="form.get(field.key)?.value && isConnection"
                 width="100%"
                 height="315px"
                 [src]="generateSecurityTrustUrl(formValidator.videoUrlPreview(videoInput))"
                 [hidden]="!videoInput.value.length"
               ></iframe>
+
+              <ng-container *ngIf="!isConnection">
+                <app-offline-notification></app-offline-notification>
+              </ng-container>
             </div>
           </ng-container>
 
@@ -394,9 +394,10 @@
                 <app-button
                   type="button"
                   class="relation-button-search"
+                  [disabled]="!isConnection"
                   (buttonClick)="relationSearchPosts()"
                 >
-                  Relation post search
+                  {{ isConnection ? 'Relation post search' : 'Search is not available' }}
                 </app-button>
               </div>
 

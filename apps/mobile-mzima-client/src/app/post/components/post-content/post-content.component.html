@@ -1,0 +1,116 @@
+<ng-container *ngFor="let post_content of postContent">
+  <ng-container *ngFor="let field of post_content.fields">
+    <div *ngIf="field.input !== 'tags' ? field.value : field.value?.length" class="post__group">
+      <h3>{{ field.label }}</h3>
+
+      <ng-container *ngIf="field.input === 'tags'">
+        <ng-container *ngFor="let field of post_content.fields">
+          <ul class="category__item" *ngIf="field.value?.length">
+            <li
+              *ngFor="let value of field.value"
+              [ngClass]="{ 'category__margin-item': value.parent_id }"
+            >
+              {{ value.tag }}
+            </li>
+          </ul>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'location'">
+        <app-location-control
+          class="post__location"
+          [location]="field.value.value"
+        ></app-location-control>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'date'">
+        <p>{{ field.value.value | date : 'MMMM d, y' }}</p>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'datetime'">
+        <p>{{ field.value.value | date : 'MMMM d, y h:mm aaa' }}</p>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'radio'">
+        <p>{{ field.value.value || '-' }}</p>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'number'">
+        <p>{{ field.value.value || '-' }}</p>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'text'">
+        <ng-container *ngIf="field.label === 'Media Link'">
+          <a *ngIf="field.value.value" [href]="field.value.value" target="_blank">{{
+            field.value.value
+          }}</a>
+          <p *ngIf="!field.value.value">-</p>
+        </ng-container>
+        <ng-container *ngIf="field.label !== 'Media Link'">
+          <p>{{ field.value.value || '-' }}</p>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'textarea'">
+        <p>{{ field.value.value || '-' }}</p>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'checkbox'">
+        <span *ngIf="!field.options.length">-</span>
+        <ul class="post--checkbox-list" *ngIf="field.value?.value?.length">
+          <li *ngFor="let option of field.value.value">
+            <p>{{ option }}</p>
+          </li>
+        </ul>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'video'">
+        <span *ngIf="!field.value.value">-</span>
+        <div *ngIf="isConnection && field.value.value">
+          <iframe id="player" [src]="videoUrl" width="100%" height="215"></iframe>
+        </div>
+        <ng-container *ngIf="!isConnection">
+          <app-offline-notification></app-offline-notification>
+        </ng-container>
+        <div>
+          <a [href]="field.value.value" target="_blank">{{ field.value.value }}</a>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'upload' && field.value.photoUrl">
+        <ng-container *ngIf="isConnection">
+          <div class="post__media">
+            <ion-img
+              *ngIf="!isMediaLoading; else spinner"
+              class="post__media"
+              [src]="field.value.photoUrl"
+            ></ion-img>
+            <span *ngIf="field.value?.caption?.length" class="post__media__caption">{{
+              field.value.caption
+            }}</span>
+          </div>
+          <ng-template #spinner>
+            <app-spinner class="post__media__loader"></app-spinner>
+          </ng-template>
+        </ng-container>
+        <ng-container>
+          <app-offline-notification></app-offline-notification>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'relation'">
+        <p>{{ field.value.value || '-' }}</p>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'select'">
+        <p>{{ field.value.value || '-' }}</p>
+      </ng-container>
+
+      <ng-container *ngIf="field.input === 'markdown'">
+        <span class="code-container">
+          <code>{{ field.value.value || '-' }}</code>
+        </span>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-container>

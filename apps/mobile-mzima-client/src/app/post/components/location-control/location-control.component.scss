@@ -58,3 +58,9 @@
     }
   }
 }
+
+::ng-deep {
+  .leaflet-control-attribution {
+    font-size: 7px;
+  }
+}

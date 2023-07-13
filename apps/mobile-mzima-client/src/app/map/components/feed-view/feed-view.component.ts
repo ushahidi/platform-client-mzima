@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import {
   GeoJsonFilter,
+  MediaService,
   PostApiResponse,
   PostResult,
   PostsService,
@@ -10,8 +12,7 @@ import {
 } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DatabaseService, NetworkService, SessionService } from '@services';
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
-import { Subject, debounceTime, distinctUntilChanged, lastValueFrom, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { MainViewComponent } from '../main-view.component';
 
 @UntilDestroy()
@@ -70,6 +71,7 @@ export class FeedViewComponent extends MainViewComponent {
     protected override sessionService: SessionService,
     private databaseService: DatabaseService,
     private networkService: NetworkService,
+    private mediaService: MediaService,
   ) {
     super(router, route, postsService, savedSearchesService, sessionService);
     this.initNetworkListener();
@@ -107,14 +109,61 @@ export class FeedViewComponent extends MainViewComponent {
     this.isPostsLoading = true;
     try {
       const response = await lastValueFrom(this.postsService.getPosts('', { ...params }));
-      await this.databaseService.set(STORAGE_KEYS.POSTS, response);
+      await this.updateObjectsWithUploadInput(response);
+
+      const currentPosts = await this.databaseService.get(STORAGE_KEYS.POSTS);
+      if (currentPosts && currentPosts.results) {
+        const currentPostIds = currentPosts.results.map((post: any) => post.id);
+        const newResults = response.results.filter(
+          (result: any) => !currentPostIds.includes(result.id),
+        );
+        currentPosts.results = currentPosts.results.concat(newResults);
+        currentPosts.results.sort((a: any, b: any) => b.id - a.id);
+        currentPosts.count = currentPosts.results.length;
+        await this.databaseService.set(STORAGE_KEYS.POSTS, currentPosts);
+      } else {
+        await this.databaseService.set(STORAGE_KEYS.POSTS, response);
+      }
+
       this.postDisplayProcessing(response, add);
     } catch (error) {
       console.error('error: ', error);
       const response = await this.databaseService.get(STORAGE_KEYS.POSTS);
-      if (response) {
-        this.postDisplayProcessing(response, add);
-      }
+      if (response) this.postDisplayProcessing(response, false);
+    }
+  }
+
+  async updateObjectsWithUploadInput(response: any) {
+    const uploadPromises = response.results.flatMap((result: any) => {
+      return result.post_content.flatMap((postContent: any) => {
+        return postContent.fields
+          .filter((field: any) => field.input === 'upload')
+          .map((field: any) => this.getMediaDataAndUpdateValue(field));
+      });
+    });
+
+    await Promise.all(uploadPromises);
+  }
+
+  async getMediaDataAndUpdateValue(field: any) {
+    if (!field.value?.value) return field;
+    try {
+      const uploadObservable: any = await this.mediaService.getById(field.value.value);
+      const response: any = await lastValueFrom(uploadObservable);
+
+      field.value = {
+        ...field.value,
+        caption: response.caption,
+        photoUrl: response.original_file_url,
+      };
+    } catch (e) {
+      console.error('An error occurred: ', e);
+      console.log(field);
+      field.value = {
+        ...field.value,
+        caption: null,
+        photoUrl: null,
+      };
     }
   }
 
