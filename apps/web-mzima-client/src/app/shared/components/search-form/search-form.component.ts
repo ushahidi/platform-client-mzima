@@ -456,11 +456,7 @@ export class SearchFormComponent implements OnInit {
   }
 
   get canCreateSearch() {
-    return (
-      this.isLoggedIn &&
-      !this.collectionInfo &&
-      searchFormHelper.compareForms(this.form.value, this.defaultFormValue)
-    );
+    return this.isLoggedIn && !this.collectionInfo;
   }
 
   private getSavedFilters(): void {
