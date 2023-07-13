@@ -88,36 +88,3 @@
     }
   }
 }
-
-.controls-panel {
-  &:before {
-    top: 0;
-    height: 1px;
-    z-index: 20;
-    pointer-events: none;
-    background: var(--ion-color-step-200);
-  }
-
-  &__toolbar {
-    --min-height: 80px;
-    --padding-top: 12px;
-    --border-style: solid;
-    --padding-bottom: 12px;
-    --border-width: 1px 0 0;
-    --padding-start: var(--ion-padding);
-    --padding-end: var(--ion-padding);
-
-    @media (prefers-color-scheme: light) {
-      --border-color: var(--ion-color-step-200);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      --border-color: var(--ion-border-color);
-    }
-  }
-}
-
-.edit-button {
-  --size: 56px;
-  --icon-size: 24px;
-}

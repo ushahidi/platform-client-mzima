@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { regexHelper } from '@helpers';
-import { AlertService, AuthService } from '@services';
+import { AlertService, AuthService, DeploymentService } from '@services';
 import { fieldErrorMessages } from '@helpers';
 
 @Component({
@@ -28,6 +28,7 @@ export class LoginPage {
     private alertService: AlertService,
     private authService: AuthService,
     private router: Router,
+    private deploymentService: DeploymentService,
   ) {}
 
   public login(): void {
@@ -71,5 +72,10 @@ export class LoginPage {
 
   public openForgotPasswordModal(): void {
     this.isForgotPasswordModalOpen = true;
+  }
+
+  public chooseDeployment(): void {
+    this.deploymentService.removeDeployment();
+    this.router.navigate(['deployment']);
   }
 }

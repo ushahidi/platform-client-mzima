@@ -1,6 +1,33 @@
-<app-header (back)="back.emit()" [title]="title"></app-header>
+<app-header
+  *ngIf="header"
+  (back)="back.emit()"
+  [title]="title"
+  class="header"
+  [ngClass]="{ 'header--hidden': isSearchView }"
+>
+  <ng-container end>
+    <ng-content select="[header-end]"></ng-content>
+  </ng-container>
+</app-header>
 
-<ion-content class="ion-padding">
+<ion-content
+  class="main ion-padding"
+  [ngClass]="{
+    'main--no-header': !header,
+    'main--has-search': isSearch,
+    'main--search-view': isSearchView
+  }"
+>
+  <app-search-form
+    #searchForm
+    *ngIf="isSearch"
+    class="search-form"
+    (formFocus)="searchFocusHandle()"
+    (formBlur)="searchBlurHandle()"
+    [(ngModel)]="searchFormValue"
+    (ngModelChange)="searchQueryChanged()"
+  >
+  </app-search-form>
   <ng-content></ng-content>
 </ion-content>
 

@@ -4,7 +4,7 @@ import { Observable, mergeMap } from 'rxjs';
 import { EnvService, SessionService } from '@services';
 import { Router } from '@angular/router';
 import { CONST } from '@constants';
-import { EnvLoader, ResourceService, UsersService } from '@mzima-client/sdk';
+import { EnvLoader, ResourceService, UserInterface, UsersService } from '@mzima-client/sdk';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +58,7 @@ export class AuthService extends ResourceService<any> {
           });
         }
         return this.userService.getCurrentUser().subscribe({
-          next: (userData: any) => {
+          next: (userData) => {
             const { result } = userData;
             this.setCurrentUserToSession(result);
             this.userService.dispatchUserEvents({ result });
@@ -68,7 +68,7 @@ export class AuthService extends ResourceService<any> {
     );
   }
 
-  private setCurrentUserToSession(user: any) {
+  public setCurrentUserToSession(user: UserInterface) {
     this.sessionService.setCurrentUser({
       userId: user.id,
       realname: user.realname,
@@ -98,6 +98,5 @@ export class AuthService extends ResourceService<any> {
   public logout() {
     this.sessionService.clearSessionData();
     this.sessionService.clearUserData();
-    this.router.navigate(['/auth/login']);
   }
 }

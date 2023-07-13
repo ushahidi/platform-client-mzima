@@ -17,4 +17,9 @@ export interface CollectionResult {
   user_id?: string;
   view: string;
   view_options?: string;
+  posts_count?: number;
+}
+
+export interface CollectionItem extends CollectionResult {
+  checked?: boolean;
 }

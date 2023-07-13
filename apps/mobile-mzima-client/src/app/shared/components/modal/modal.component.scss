@@ -1,3 +1,17 @@
+.header {
+  display: block;
+  overflow: hidden;
+  transition-duration: 0.35s;
+  transition-timing-function: ease;
+  transition-property: height, opacity;
+  height: calc(72px + var(--ion-safe-area-top));
+
+  &--hidden {
+    height: 0;
+    opacity: 0;
+  }
+}
+
 .modal {
   &__body {
     --padding-bottom: calc(16px + var(--ion-safe-area-bottom));
@@ -5,6 +19,16 @@
     &::part(scroll) {
       display: flex;
       flex-direction: column;
+    }
+
+    &--has-search {
+      .modal--search-view & {
+        --padding-top: calc(88px + var(--ion-safe-area-top));
+      }
+
+      .modal:not(.modal--search-view) & {
+        --padding-top: 120px;
+      }
     }
 
     &--no-offset-top {
@@ -41,6 +65,60 @@
       @media (prefers-color-scheme: dark) {
         --border-color: var(--ion-border-color);
       }
+    }
+  }
+}
+
+.search-form {
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  display: block;
+  position: absolute;
+  transition: all 0.35s ease;
+  background: var(--background);
+  padding: 24px var(--ion-padding);
+  transition-property: top, position, padding, margin-bottom;
+
+  .modal--search-view & {
+    top: 0;
+    position: fixed;
+    margin-bottom: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    --light-border-color: transparent;
+    padding: calc(7px + var(--ion-safe-area-top)) 0 7px;
+
+    @media (prefers-color-scheme: dark) {
+      --input-background: transparent;
+      border-bottom-color: var(--ion-border-color);
+    }
+
+    @media (prefers-color-scheme: light) {
+      border-bottom-color: var(--ion-color-step-200);
+    }
+  }
+
+  &::ng-deep {
+    .ion-margin-bottom {
+      margin-bottom: 0;
+    }
+  }
+
+  &__form-control-container {
+    z-index: 100;
+    position: relative;
+    padding-bottom: 7px;
+    transition-duration: 0.35s;
+    transition-timing-function: ease;
+    border-bottom: 1px solid transparent;
+    padding-top: calc(8px + var(--ion-safe-area-top));
+    transition-property: border-bottom-color background-color;
+
+    .search-form--results-visible & {
+      background-color: var(--ion-background-color);
+      border-bottom-color: var(--ion-color-step-200);
     }
   }
 }
