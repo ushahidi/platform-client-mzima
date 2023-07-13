@@ -3,6 +3,12 @@
     <div class="post-images" *ngIf="photo?.data">
       <img class="post-image" [src]="photo?.data" />
     </div>
+    <div class="post-images" *ngIf="preview && isConnection">
+      <img class="post-image" [src]="preview" />
+    </div>
+    <ng-container *ngIf="!isConnection">
+      <app-offline-notification></app-offline-notification>
+    </ng-container>
     <div class="image-loader__controls">
       <app-button
         class="image-loader__btn"

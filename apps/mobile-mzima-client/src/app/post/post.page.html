@@ -4,25 +4,32 @@
     <ng-container *ngIf="post; else errorMessage">
       <div class="post">
         <strong class="post__title">{{ post.title }}</strong>
-        <ng-container *ngIf="mediaId && post.source !== 'Twitter'">
-          <ion-img
-            *ngIf="!isMediaLoading; else spinner"
-            class="post__media"
-            [src]="media.original_file_url"
-            (ionError)="mediaId = undefined"
-          ></ion-img>
-          <ng-template #spinner>
-            <app-spinner class="post__media__loader"></app-spinner>
-          </ng-template>
-        </ng-container>
-        <app-twitter-widget
-          *ngIf="post.source === 'Twitter' && post.data_source_message_id"
-          class="post__twitter"
-          [id]="post.data_source_message_id"
-        ></app-twitter-widget>
         <p *ngIf="post.content">{{ post.content }}</p>
-        <app-location-control class="post__location" *ngIf="location" [location]="location">
-        </app-location-control>
+
+        <ng-container *ngIf="post.source === 'Twitter'">
+          <app-twitter-widget
+            *ngIf="post.data_source_message_id && isConnection"
+            class="post__twitter"
+            [id]="post.data_source_message_id"
+          ></app-twitter-widget>
+
+          <ng-container
+            *ngIf="post.source === 'Twitter' && post.data_source_message_id && !isConnection"
+          >
+            <app-offline-notification></app-offline-notification>
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="post.source !== 'Twitter'">
+          <app-post-content
+            [postContent]="post.post_content"
+            [categories]="post.categories"
+            [isConnection]="isConnection"
+            [videoUrl]="videoUrl"
+            [isMediaLoading]="isMediaLoading"
+          ></app-post-content>
+        </ng-container>
+
         <ion-toolbar class="post__author">
           <ion-avatar class="post__author__avatar" slot="start">
             <ion-img
@@ -32,10 +39,12 @@
               }}?d=retro&s=40"
             ></ion-img>
           </ion-avatar>
+
           <span class="post__author__name">
             {{ (post.user?.realname ?? post.contact?.contact ?? post.author_realname) || 'Anonymous'
             }}
           </span>
+
           <span class="post__info">
             <ion-text color="medium" class="post__info-item">
               {{ post.post_date | dateAgo }}

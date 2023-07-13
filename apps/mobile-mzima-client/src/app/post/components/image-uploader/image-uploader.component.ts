@@ -1,5 +1,6 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SafeUrl } from '@angular/platform-browser';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
@@ -29,12 +30,13 @@ interface LocalFile {
 export class ImageUploaderComponent implements ControlValueAccessor {
   @Input() public hasCaption: boolean;
   @Input() public requiredError?: boolean;
+  @Input() public isConnection: boolean;
 
   fileName: string;
   captionControl = new FormControl('', AlphanumericValidator());
   id?: number;
   photo: LocalFile | null;
-  // preview: string;
+  preview: string | SafeUrl | null;
   isDisabled = false;
   upload = false;
   onChange: any = () => {};
@@ -45,7 +47,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
       this.upload = false;
       this.captionControl.patchValue(obj.caption);
       this.id = obj.id;
-      this.photo = obj.photo;
+      this.photo = this.preview = obj.photo;
     }
   }
 
@@ -141,7 +143,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     });
 
     this.upload = true;
-
+    this.preview = null;
     this.photo = {
       name: file.name,
       path: filePath,
