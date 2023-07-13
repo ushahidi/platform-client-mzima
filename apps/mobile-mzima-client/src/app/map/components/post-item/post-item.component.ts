@@ -11,6 +11,7 @@ import { ActionSheetButton, ModalController } from '@ionic/angular';
 import {
   AlertService,
   DeploymentService,
+  NetworkService,
   SessionService,
   ShareService,
   ToastService,
@@ -38,8 +39,10 @@ export class PostItemComponent implements OnInit {
   public isMediaLoading: boolean;
   public isActionsOpen = false;
   public actionSheetButtons?: ActionSheetButton[] = getPostItemActions();
+  public isConnection = true;
 
   constructor(
+    private networkService: NetworkService,
     private mediaService: MediaService,
     protected sessionService: SessionService,
     private alertService: AlertService,
@@ -50,6 +53,10 @@ export class PostItemComponent implements OnInit {
     private modalController: ModalController,
     private router: Router,
   ) {}
+
+  async ionViewWillEnter() {
+    await this.checkNetwork();
+  }
 
   ngOnInit(): void {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
@@ -70,18 +77,31 @@ export class PostItemComponent implements OnInit {
       ?.flatMap((c) => c.fields)
       .find((f) => f.input === 'upload')?.value?.value;
 
-    if (this.mediaId) {
-      this.isMediaLoading = true;
-      this.mediaService.getById(String(this.mediaId)).subscribe({
-        next: (media) => {
-          this.isMediaLoading = false;
-          this.media = media;
-        },
-        error: () => {
-          this.isMediaLoading = false;
-        },
-      });
-    }
+    this.isConnection ? this.getMediaOnline() : this.getMediaOffline();
+  }
+
+  private getMediaOnline() {
+    if (!this.mediaId) return;
+    this.isMediaLoading = true;
+    this.mediaService.getById(String(this.mediaId)).subscribe({
+      next: (media) => {
+        this.isMediaLoading = false;
+        this.media = media;
+      },
+      error: () => {
+        this.isMediaLoading = false;
+      },
+    });
+  }
+
+  private getMediaOffline() {
+    this.media = this.post.post_content
+      ?.flatMap((c) => c.fields)
+      .find((f) => f.input === 'upload')?.value?.photo;
+  }
+
+  private async checkNetwork() {
+    this.isConnection = await this.networkService.checkNetworkStatus();
   }
 
   public makeAction(ev: any) {

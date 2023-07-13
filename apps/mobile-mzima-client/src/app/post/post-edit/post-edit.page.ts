@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angu
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { STORAGE_KEYS } from '@constants';
+import { CONST, STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { lastValueFrom } from 'rxjs';
+import { EMPTY, from, lastValueFrom, map, Observable, of, switchMap, tap } from 'rxjs';
 import {
   GeoJsonFilter,
   MediaService,
@@ -66,11 +66,11 @@ export class PostEditPage {
   public filters: any;
   public surveyList: any[] = [];
   public surveyListOptions: any;
-  public selectedSurveyId: number;
+  public selectedSurveyId: number | null;
   public selectedSurvey: any;
   private fileToUpload: any;
   private checkedList: any[] = [];
-  private isConnection = true;
+  public isConnection = true;
   public connectionInfo = '';
   private queryParams: Params;
 
@@ -99,11 +99,18 @@ export class PostEditPage {
   }
 
   async ionViewWillEnter() {
-    this.getSurveys();
-    this.checkNetwork();
     this.initNetworkListener();
-    this.getFilters();
-    this.checkRoute();
+    await this.checkNetwork();
+
+    this.filters = this.getFilters();
+    this.post = await this.checkPost();
+    this.surveyList = await this.getSurveys();
+
+    if (this.post) {
+      this.selectedSurveyId = this.post.form_id!;
+      this.loadForm(this.post.post_content);
+    }
+
     this.transformSurveys();
   }
 
@@ -111,20 +118,44 @@ export class PostEditPage {
     this.setConnectionStatus(await this.networkService.checkNetworkStatus());
   }
 
-  private checkRoute() {
-    this.route.paramMap.subscribe((params) => {
-      if (params.get('id')) {
-        this.postId = Number(params.get('id'));
-        this.postsService.lockPost(this.postId).subscribe((p) => {
-          console.log('Post locked: ', p);
+  async checkPost(): Promise<any> {
+    return new Promise<number>((resolve, reject) => {
+      this.route.paramMap
+        .pipe(
+          tap((params) => {
+            const id = params.get('id');
+            if (id) {
+              this.postId = Number(id);
+              if (this.isConnection) this.postsService.lockPost(this.postId).subscribe();
+            }
+          }),
+          switchMap(() => {
+            if (this.postId) return this.loadPostData(this.postId);
+            else return of(null);
+          }),
+        )
+        .subscribe({
+          next: (post) => resolve(post),
+          error: (err) => reject(err),
         });
-        this.loadPostData(this.postId);
-      }
     });
   }
 
+  private loadPostData(postId: number): Observable<any> {
+    if (!postId) return EMPTY;
+    if (this.isConnection) {
+      console.log('server');
+      return this.postsService.getById(postId);
+    } else {
+      console.log('bd');
+      return from(this.dataBaseService.get(STORAGE_KEYS.POSTS)).pipe(
+        map((postsResult) => postsResult.results.find((post: any) => post.id === postId)),
+      );
+    }
+  }
+
   private getFilters() {
-    this.filters = JSON.parse(
+    return JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
     );
   }
@@ -145,17 +176,28 @@ export class PostEditPage {
       : 'The connection was lost, the information will be saved to the database';
   }
 
-  private loadPostData(postId: number) {
-    this.postsService.getById(postId).subscribe({
-      next: (post) => {
-        this.selectedSurveyId = post.form_id!;
-        this.post = post;
-        this.loadForm(post.post_content);
-      },
-    });
+  async getSurveys(): Promise<any[]> {
+    if (this.isConnection) {
+      try {
+        const response: any = await this.surveysService
+          .getSurveys('', {
+            page: 1,
+            order: 'asc',
+            limit: 0,
+          })
+          .toPromise();
+        await this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
+        return response.results;
+      } catch (err) {
+        console.log(err);
+        return this.loadSurveyFormLocalDB();
+      }
+    } else {
+      return this.loadSurveyFormLocalDB();
+    }
   }
 
-  async transformSurveys() {
+  private transformSurveys() {
     this.surveyListOptions = this.surveyList.map((item: any) => {
       return {
         label: item.name,
@@ -167,6 +209,7 @@ export class PostEditPage {
   clearData() {
     this.relatedPosts = [];
     this.fileToUpload = null;
+    this.selectedSurvey = null;
 
     if (this.form?.controls) {
       for (const control in this.form.controls) {
@@ -197,8 +240,8 @@ export class PostEditPage {
               break;
             case 'relation':
               const fieldForm: [] = field.config?.input?.form;
-              this.relationConfigForm = !fieldForm.length ? this.filters.form : fieldForm;
-              this.relationConfigSource = this.filters.source;
+              this.relationConfigForm = fieldForm?.length ? fieldForm : this.filters.form;
+              this.relationConfigSource = this.filters?.source || [];
               this.relationConfigKey = field.key;
               break;
           }
@@ -250,41 +293,19 @@ export class PostEditPage {
     const { location, error } = data;
     const { lat, lng } = location;
 
-    this.form.patchValue({ [formKey]: { lat: lat, lng: lng } });
+    this.updateFormControl(formKey, { lat: lat, lng: lng });
 
     this.emptyLocation = error;
     this.cdr.detectChanges();
   }
 
   setCalendar(event: any, key: any, type: 'date' | 'dateTime' = 'date') {
-    const template = type === 'dateTime' ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
-    this.form.patchValue({ [key]: UTCHelper.toUTC(event.detail.value, template) });
+    const template = type === 'dateTime' ? CONST.FORMAT_DATE_TIME : CONST.FORMAT_DATE;
+    this.updateFormControl(key, UTCHelper.toUTC(event.detail.value, template));
   }
 
-  async getSurveys() {
-    if (this.isConnection) {
-      this.surveysService
-        .getSurveys('', {
-          page: 1,
-          order: 'asc',
-          limit: 0,
-        })
-        .subscribe({
-          next: async (response) => {
-            this.surveyList = response.results;
-            await this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
-            this.transformSurveys();
-          },
-          error: async (err) => {
-            this.surveyList = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
-            this.transformSurveys();
-            console.log(err);
-          },
-        });
-    } else {
-      this.surveyList = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
-      this.transformSurveys();
-    }
+  private async loadSurveyFormLocalDB() {
+    return this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
   }
 
   private updateForm(updateValues: any[]) {
@@ -303,20 +324,15 @@ export class PostEditPage {
       | 'number';
     type TypeHandlerType = 'title' | 'description';
 
-    const inputHandlers: { [key in InputHandlerType]: (key: string, value: any) => void } = {
-      tags: this.handleTags.bind(this),
-      checkbox: this.handleCheckbox.bind(this),
-      location: this.handleLocation.bind(this),
-      date: this.handleDate.bind(this),
-      datetime: this.handleDate.bind(this),
-      radio: this.handleDefault.bind(this),
-      text: this.handleDefault.bind(this),
-      upload: this.handleUpload.bind(this),
-      video: this.handleDefault.bind(this),
-      textarea: this.handleDefault.bind(this),
-      relation: this.handleDefault.bind(this),
-      number: this.handleDefault.bind(this),
-    };
+    const inputHandlers: Partial<{ [key in InputHandlerType]: (key: string, value: any) => void }> =
+      {
+        tags: this.handleTags.bind(this),
+        checkbox: this.handleCheckbox.bind(this),
+        location: this.handleLocation.bind(this),
+        date: this.handleDate.bind(this),
+        datetime: this.handleDateTime.bind(this),
+        upload: this.handleUpload.bind(this),
+      };
 
     const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
       title: this.handleTitle.bind(this),
@@ -325,9 +341,11 @@ export class PostEditPage {
 
     for (const { fields } of updateValues) {
       for (const { type, input, key, value } of fields) {
-        this.form.patchValue({ [key]: value });
+        this.updateFormControl(key, value);
         if (inputHandlers[input as InputHandlerType]) {
-          inputHandlers[input as InputHandlerType](key, value);
+          inputHandlers[input as InputHandlerType]!(key, value);
+        } else {
+          this.handleDefault.bind(this)(key, value);
         }
 
         if (typeHandlers[type as TypeHandlerType]) {
@@ -344,53 +362,73 @@ export class PostEditPage {
 
   private async handleUpload(key: string, value: any) {
     if (!value?.value) return;
-    try {
-      const uploadObservable = this.mediaService.getById(value.value);
-      const response: any = await lastValueFrom(uploadObservable);
-
-      this.form.patchValue({
-        [key]: {
+    if (value.photoUrl) {
+      this.updateFormControl(key, {
+        id: value.value,
+        caption: value.caption,
+        photo: value.photoUrl,
+      });
+    } else {
+      try {
+        const uploadObservable = this.mediaService.getById(value.value);
+        const response: any = await lastValueFrom(uploadObservable);
+        this.updateFormControl(key, {
           id: value.value,
           caption: response.caption,
           photo: response.original_file_url,
-        },
-      });
-    } catch (error: any) {
-      this.form.patchValue({ [key]: null });
-      throw new Error(`Error fetching file: ${error.message}`);
+        });
+      } catch (error: any) {
+        this.form.patchValue({ [key]: null });
+        throw new Error(`Error fetching file: ${error.message}`);
+      }
     }
   }
 
   private handleDefault(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value });
+    this.updateFormControl(key, value?.value);
   }
 
   private handleCheckbox(key: string, value: any) {
     const data = value?.value;
-    this.form.patchValue({ [key]: data });
+    this.updateFormControl(key, data);
   }
 
   private handleLocation(key: string, value: any) {
-    this.form.patchValue({
-      [key]: value?.value
+    this.updateFormControl(
+      key,
+      value?.value
         ? { lat: value?.value.lat, lng: value?.value.lon }
         : {
             lat: '',
             lng: '',
           },
-    });
+    );
   }
 
   private handleDate(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value ? new Date(value?.value) : null });
+    this.updateFormControl(
+      key,
+      value?.value ? UTCHelper.toUTC(value?.value, CONST.FORMAT_DATE) : null,
+    );
+  }
+
+  private handleDateTime(key: string, value: any) {
+    this.updateFormControl(
+      key,
+      value?.value ? UTCHelper.toUTC(value?.value, CONST.FORMAT_DATE_TIME) : null,
+    );
   }
 
   private handleTitle(key: string) {
-    this.form.patchValue({ [key]: this.post.title });
+    this.updateFormControl(key, this.post.title);
   }
 
   private handleDescription(key: string) {
-    this.form.patchValue({ [key]: this.post.content ? this.post.content : '' });
+    this.updateFormControl(key, this.post.content ? this.post.content : '');
+  }
+
+  private updateFormControl(key: string, data: any) {
+    this.form.patchValue({ [key]: data });
   }
 
   async preparationData(): Promise<any> {
@@ -405,7 +443,7 @@ export class PostEditPage {
       datetime: (value: any) =>
         value
           ? {
-              value: UTCHelper.toUTC(value, 'YYYY-MM-DD HH:mm'),
+              value: UTCHelper.toUTC(value, CONST.FORMAT_DATE_TIME),
               value_meta: { from_tz: dayjs.tz.guess() },
             }
           : { value: null },
@@ -632,7 +670,14 @@ export class PostEditPage {
   }
 
   public backNavigation(): void {
-    this.router.navigate([this.queryParams['profile'] ? 'profile/posts' : this.postId ?? '/']);
+    this.clearData();
+    this.router.navigate([
+      this.queryParams['profile']
+        ? 'profile/posts'
+        : this.isConnection && this.postId
+        ? this.postId
+        : '/',
+    ]);
   }
 
   public preventSubmitIncaseTheresNoBackendValidation() {

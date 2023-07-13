@@ -23,7 +23,7 @@
       (ionFocus)="handleFocus()"
       (ionBlur)="handleBlur()"
     >
-      <ion-select-option *ngFor="let option of options" [value]="option.value">
+      <ion-select-option *ngFor="let option of options" [value]="option.value || option">
         {{ option.label || option }}
       </ion-select-option>
     </ion-select>

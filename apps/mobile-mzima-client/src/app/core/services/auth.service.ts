@@ -96,6 +96,7 @@ export class AuthService extends ResourceService<any> {
   }
 
   public logout() {
+    console.log('logout');
     this.sessionService.clearSessionData();
     this.sessionService.clearUserData();
   }

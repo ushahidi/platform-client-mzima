@@ -298,20 +298,15 @@ export class PostEditComponent implements OnInit, OnChanges {
       | 'number';
     type TypeHandlerType = 'title' | 'description';
 
-    const inputHandlers: { [key in InputHandlerType]: (key: string, value: any) => void } = {
-      tags: this.handleTags.bind(this),
-      checkbox: this.handleCheckbox.bind(this),
-      location: this.handleLocation.bind(this),
-      date: this.handleDate.bind(this),
-      datetime: this.handleDate.bind(this),
-      radio: this.handleDefault.bind(this),
-      text: this.handleDefault.bind(this),
-      upload: this.handleUpload.bind(this),
-      video: this.handleDefault.bind(this),
-      textarea: this.handleDefault.bind(this),
-      relation: this.handleDefault.bind(this),
-      number: this.handleDefault.bind(this),
-    };
+    const inputHandlers: Partial<{ [key in InputHandlerType]: (key: string, value: any) => void }> =
+      {
+        tags: this.handleTags.bind(this),
+        checkbox: this.handleCheckbox.bind(this),
+        location: this.handleLocation.bind(this),
+        date: this.handleDate.bind(this),
+        datetime: this.handleDate.bind(this),
+        upload: this.handleUpload.bind(this),
+      };
 
     const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
       title: this.handleTitle.bind(this),
@@ -322,7 +317,9 @@ export class PostEditComponent implements OnInit, OnChanges {
       for (const { type, input, key, value } of fields) {
         this.form.patchValue({ [key]: value });
         if (inputHandlers[input as InputHandlerType]) {
-          inputHandlers[input as InputHandlerType](key, value);
+          inputHandlers[input as InputHandlerType]!(key, value);
+        } else {
+          this.handleDefault.bind(this)(key, value);
         }
 
         if (typeHandlers[type as TypeHandlerType]) {
