@@ -73,6 +73,7 @@ export class GeneralComponent implements OnInit {
       private: this.siteConfig.private,
       disable_registration: this.siteConfig.disable_registration,
     });
+    this.langService.changeLanguage(this.siteConfig.language);
     this.apiKeyService.get().subscribe((res) => {
       // FIXME: results[0]
       this.apiKey = res.results[0];
@@ -149,6 +150,9 @@ export class GeneralComponent implements OnInit {
     const siteConfig = Object.assign({}, this.generalForm.value, {
       image_header: this.siteConfig.image_header,
     });
+
+    this.langService.changeLanguage(siteConfig.language);
+
     return this.configService.update('site', siteConfig).pipe(
       mergeMap((updatedSite) => {
         this.sessionService.setConfigurations('site', updatedSite);
