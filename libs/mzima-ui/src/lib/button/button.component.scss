@@ -169,6 +169,19 @@ $laptop: 1439px;
     &:disabled {
       color: var(--disabled-color);
     }
+
+    &.mzima-button--small {
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      color: var(--color-black);
+      background-color: var(--color-neutral-10);
+
+      &:hover {
+        --hover-background-color: none;
+        background-color: var(--color-net);
+      }
+    }
   }
 
   &:not(.mzima-button--clear) {
