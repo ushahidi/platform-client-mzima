@@ -51,18 +51,22 @@ export class DraggableLayoutComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.mode) {
+        this.content.scrollToPoint(
+          0,
+          this.mode === 'fullscreen' ? window.innerHeight : this.breakpoints[this.mode],
+          350,
+        );
+      }
+    }, 350);
+  }
+
+  public updateOffsetHeight(): void {
     const checkHeight = setInterval(() => {
       this.getOffsetHeight();
       if (this.fixedContentHeight) clearInterval(checkHeight);
     }, 50);
-
-    if (this.mode) {
-      this.content.scrollToPoint(
-        0,
-        this.mode === 'fullscreen' ? window.innerHeight : this.breakpoints[this.mode],
-        0,
-      );
-    }
   }
 
   private getOffsetHeight(): void {

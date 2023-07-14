@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { Deployment } from '@mzima-client/sdk';
 
-import { ConfigService, DeploymentService, EnvService } from '@services';
-import { DeleteDeploymentModalComponent } from './components/delete-deployment-modal/delete-deployment-modal.component';
+import { AlertService, ConfigService, DeploymentService, EnvService } from '@services';
 
 @Component({
   selector: 'app-deployment',
@@ -11,14 +10,14 @@ import { DeleteDeploymentModalComponent } from './components/delete-deployment-m
   styleUrls: ['./deployment.page.scss'],
 })
 export class DeploymentPage {
-  public deploymentList: any[] = [];
+  public deploymentList: Deployment[] = [];
 
   constructor(
-    private modalController: ModalController,
     private envService: EnvService,
     private configService: ConfigService,
     private deploymentService: DeploymentService,
     private router: Router,
+    private alertService: AlertService,
   ) {}
 
   ionViewWillEnter() {
@@ -36,7 +35,7 @@ export class DeploymentPage {
           id: 1,
           domain: 'staging.ush.zone',
           subdomain: 'mzima-api',
-          fqdn: 'mzima-api',
+          fqdn: 'mzima.staging.ush.zone',
           status: 'deployed',
           deployment_name: 'mzima-api',
           description: 'mzima-api for testing',
@@ -51,24 +50,26 @@ export class DeploymentPage {
   }
 
   public async callModal(event: any) {
-    const { deployment } = event;
-    const modal = await this.modalController.create({
-      component: DeleteDeploymentModalComponent,
-      id: 'delete-deployment',
-      cssClass: 'delete-deployment',
-      componentProps: {
-        deploymentId: deployment.id,
-      },
+    const result = await this.alertService.presentAlert({
+      header: 'Are you sure you want to delete this deployment?',
+      message: 'Deleting means that from now you will not see it in your deployment list.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Delete',
+          role: 'confirm',
+          cssClass: 'danger',
+        },
+      ],
     });
 
-    modal.onDidDismiss().then((data: any) => {
-      const { data: deploymentId, role: status } = data;
-      if (status === 'success') {
-        this.removeDeployment(deploymentId);
-      }
-    });
-
-    return await modal.present();
+    if (result.role === 'confirm') {
+      const { deployment } = event;
+      this.removeDeployment(deployment.id);
+    }
   }
 
   public removeDeployment(deploymentId: number) {
@@ -81,6 +82,6 @@ export class DeploymentPage {
     this.deploymentService.setDeployment(deployment);
     this.envService.setDynamicBackendUrl();
     this.configService.initAllConfigurations();
-    this.router.navigate(['/']);
+    this.router.navigate(['/auth']);
   }
 }

@@ -1,6 +1,7 @@
 <ion-content class="page ion-padding-vertical" [fullscreen]="true">
   <ion-title class="page-title ion-text-center ion-margin-bottom">Welcome to Ushahidi!</ion-title>
   <div class="main ion-padding-horizontal">
+    <app-deployment-info></app-deployment-info>
     <form class="form" novalidate [formGroup]="form" (ngSubmit)="signUp()">
       <div>
         <div class="input-group">
@@ -60,7 +61,7 @@
         >
           Sign up
         </app-button>
-        <app-button class="ion-margin-top" fill="clear" color="medium" routerLink="/map">
+        <app-button class="ion-margin-top" fill="clear" color="medium" routerLink="/">
           Skip for now
         </app-button>
       </div>

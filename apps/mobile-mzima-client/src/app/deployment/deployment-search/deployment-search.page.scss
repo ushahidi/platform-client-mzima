@@ -1,41 +1,88 @@
-.search-toolbar {
-  padding: 0 16px;
-  flex-wrap: initial;
-  display: flex;
+.page {
+  --padding-top: 24px;
+  --padding-bottom: 24px;
 
-  &__icon {
-    margin-right: 15px;
-    cursor: pointer;
-
-    &-img {
-      font-size: 22px;
-    }
+  &:last-child {
+    --padding-bottom: calc(24px + var(--ion-safe-area-bottom));
   }
-}
 
-.search-footer {
-  &__add-button {
-    margin: 10px 15px 20px;
+  &__title {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.1px;
   }
 }
 
 .search {
-  &-list {
-    width: 100%;
+  --padding-start: 0;
+  --padding-end: 0;
+}
 
-    &__item {
-      display: block;
-      margin-bottom: 15px;
+.search-form {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --border-style: solid;
+  --border-width: 0 0 1px;
+  --padding-start: var(--ion-padding);
+  --padding-end: var(--ion-padding);
+
+  @media (prefers-color-scheme: light) {
+    --border-color: var(--ion-color-step-200);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --border-color: var(--ion-border-color);
+  }
+
+  &__form-control {
+    --input-border-radius: 0;
+    --light-border-color: transparent;
+
+    @media (prefers-color-scheme: dark) {
+      --input-background: transparent;
+    }
+
+    &::ng-deep {
+      .ion-margin-bottom {
+        margin-bottom: 0;
+      }
     }
   }
 }
 
-.emptyList {
+.back-button {
+  --size: 40px;
+  --icon-size: 24px;
+  margin-left: -24px;
+}
+
+.search-footer {
+  padding-top: 24px;
+  padding-bottom: 24px;
+
+  &__toolbar {
+    --min-height: 44px;
+    --padding-top: 0;
+    --padding-bottom: 0;
+  }
+}
+
+.search-list {
+  padding: 0;
+  margin: 0 calc(var(--ion-padding) * -1);
+}
+
+.search-result {
+  display: block;
+}
+
+.empty {
   display: flex;
-  align-items: center;
-  height: calc(100vh - 100px);
-  width: 80%;
+  min-height: 100%;
   text-align: center;
-  margin: auto;
-  color: var(--ion-color-medium);
+  letter-spacing: 0.5px;
+  flex-direction: column;
+  justify-content: center;
 }

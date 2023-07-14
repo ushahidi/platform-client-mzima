@@ -18,21 +18,26 @@ export class FormControlComponent implements ControlValueAccessor {
   @Input() public label?: string;
   @Input() public placeholder: string = '';
   @Input() public hint?: string;
-  @Input() public type?: 'text' | 'email' | 'password' = 'text';
+  @Input() public hintHTML?: string;
+  @Input() public type?: 'text' | 'email' | 'password' | 'number' = 'text';
   @Input() public required = false;
   @Input() public rounded = false;
   @Input() public disabled = false;
+  @Input() public readonly = false;
+  @Input() public pattern: string = '';
   @Input() public clearable = false;
   @Input() public togglePassword = false;
   @Input() public errors: string[] = [];
   @Input() public color: 'light' | 'default' = 'default';
+  @Input() public rows = 1;
   @Output() public inputFocus = new EventEmitter();
   @Output() public inputBlur = new EventEmitter();
+  @Output() public inputClear = new EventEmitter();
   @ViewChild('input') input: IonInput;
   public isPasswordVisible = false;
   public isOnFocus: boolean;
 
-  value: string;
+  @Input() public value: string;
   onChange: any = () => {};
   onTouched: any = () => {};
 
@@ -67,14 +72,22 @@ export class FormControlComponent implements ControlValueAccessor {
     this.inputFocus.emit();
   }
 
-  public clearInput(): void {
+  public clearInput(event?: Event): void {
+    event?.stopPropagation();
     this.value = '';
+    this.inputClear.emit();
   }
 
   public blurInput(): void {
     this.clearInput();
     this.input.getInputElement().then((el) => {
       el.blur();
+    });
+  }
+
+  public setFocus(): void {
+    this.input.getInputElement().then((el) => {
+      el.focus();
     });
   }
 }

@@ -1,4 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
+import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   FitBoundsOptions,
@@ -11,9 +12,11 @@ import {
   tileLayer,
 } from 'leaflet';
 import { mapHelper } from '@helpers';
-import { PostsService } from '@mzima-client/sdk';
-import { SessionService } from '@services';
+import { GeoJsonPostsResponse, PostsService } from '@mzima-client/sdk';
+import { DatabaseService, NetworkService, SessionService } from '@services';
 import { MapConfigInterface } from '@models';
+import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -30,94 +33,166 @@ export class MapViewComponent implements AfterViewInit {
   public fitBoundsOptions: FitBoundsOptions = {
     animate: true,
   };
-  public progress = 0;
   private mapConfig: MapConfigInterface;
   public markerClusterData = new MarkerClusterGroup();
   public markerClusterOptions: MarkerClusterGroupOptions = { animate: true, maxClusterRadius: 50 };
-  private params: any = {
-    limit: 200,
-    offset: 0,
-  };
+  public $destroy = new Subject();
+  private isDarkMode = false;
+  private baseLayer: 'streets' | 'satellite' | 'hOSM' | 'MapQuestAerial' | 'MapQuest' | 'dark';
+  private isConnection = true;
 
-  constructor(private postsService: PostsService, private sessionService: SessionService) {
-    this.mapConfig = this.sessionService.getMapConfigurations();
+  constructor(
+    private postsService: PostsService,
+    private sessionService: SessionService,
+    private router: Router,
+    private databaseService: DatabaseService,
+    private networkService: NetworkService,
+  ) {
+    const mediaDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaDarkMode.addEventListener('change', (ev) => this.switchMode(ev));
+    this.isDarkMode = mediaDarkMode.matches;
+    this.initNetworkListener();
+    this.initFilterListener();
+    this.initMapConfigListener();
+  }
 
-    const currentLayer =
-      mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
+  private initNetworkListener() {
+    this.networkService.networkStatus$
+      .pipe(distinctUntilChanged(), untilDestroyed(this))
+      .subscribe({
+        next: (value) => {
+          this.isConnection = value;
+          if (this.isConnection) {
+            this.getPostsGeoJson();
+          }
+        },
+      });
+  }
 
-    this.leafletOptions = {
-      minZoom: 3,
-      maxZoom: 17,
-      scrollWheelZoom: true,
-      zoomControl: false,
-      layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
-      center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
-      zoom: this.mapConfig.default_view!.zoom,
-    };
-    this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
+  private initFilterListener() {
+    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.$destroy)).subscribe({
+      next: () => {
+        this.reInitParams();
+        this.getPostsGeoJson();
+      },
+    });
+  }
+
+  private initMapConfigListener() {
+    this.sessionService.mapConfig$.subscribe({
+      next: (mapConfig) => {
+        if (mapConfig) {
+          this.mapConfig = mapConfig;
+
+          this.baseLayer = this.mapConfig.default_view!.baselayer;
+          const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
+
+          this.leafletOptions = {
+            minZoom: 3,
+            maxZoom: 17,
+            scrollWheelZoom: true,
+            zoomControl: false,
+            layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+            center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
+            zoom: this.mapConfig.default_view!.zoom,
+          };
+          this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
+        }
+      },
+    });
+  }
+
+  private switchMode(systemInitiatedDark: any) {
+    this.isDarkMode = systemInitiatedDark.matches;
+
+    const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
+
+    this.leafletOptions.layers = [tileLayer(currentLayer.url, currentLayer.layerOptions)];
+
+    this.isMapReady = false;
+    setTimeout(() => {
+      this.isMapReady = true;
+    }, 50);
+  }
+
+  private reInitParams() {
+    this.mapLayers.map((layer) => {
+      this.map.removeLayer(layer);
+      this.markerClusterData.removeLayer(layer);
+    });
+    this.mapLayers = [];
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.isMapReady = true;
-    }, 100);
-    this.getPostsGeoJson();
+    }, 200);
   }
 
   public onMapReady(map: Map) {
     this.map = map;
   }
 
-  private getPostsGeoJson() {
+  public getPostsGeoJson() {
     this.postsService
-      .getGeojson(this.params)
+      .getGeojson({ limit: 100000, offset: 0, page: 1 })
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: (posts) => {
-          const oldGeoJson: any = posts.results.map((r) => {
-            return {
-              type: r.geojson.type,
-              features: r.geojson.features.map((f) => {
-                f.properties = {
-                  data_source_message_id: r.data_source_message_id,
-                  description: r.description,
-                  id: r.id,
-                  'marker-color': r['marker-color'],
-                  source: r.source,
-                  title: r.title,
-                };
-                return f;
-              }),
-            };
-          });
-          const geoPosts = geoJSON(oldGeoJson, {
-            pointToLayer: mapHelper.pointToLayer,
-            onEachFeature: (feature, layer) => {
-              layer.on('mouseout', () => {
-                layer.unbindPopup();
-              });
-              layer.on('click', () => {
-                console.log('show post preview: ', layer);
-              });
-            },
-          });
-
-          if (this.mapConfig.clustering) {
-            this.markerClusterData.addLayer(geoPosts);
-            this.mapLayers.push(this.markerClusterData);
-          } else {
-            this.mapLayers.push(geoPosts);
-          }
-
-          if (posts.results.length) {
-            this.mapFitToBounds = geoPosts.getBounds();
-          }
+        next: async (postsResponse) => {
+          await this.databaseService.set(STORAGE_KEYS.GEOJSONPOSTS, postsResponse);
+          const posts = await this.databaseService.get(STORAGE_KEYS.GEOJSONPOSTS);
+          this.geoJsonDataProcessor(posts);
         },
-        error: (err) => {
+        error: async (err) => {
           if (err.message.match(/Http failure response for/)) {
-            setTimeout(() => this.getPostsGeoJson(), 5000);
+            const posts = await this.databaseService.get(STORAGE_KEYS.GEOJSONPOSTS);
+            if (posts) {
+              this.geoJsonDataProcessor(posts);
+            }
           }
         },
       });
+  }
+
+  private geoJsonDataProcessor(posts: GeoJsonPostsResponse) {
+    const oldGeoJson: any = posts.results.map((r) => {
+      return {
+        type: r.geojson.type,
+        features: r.geojson.features.map((f) => {
+          f.properties = {
+            id: r.id,
+            type: r.source,
+          };
+          return f;
+        }),
+      };
+    });
+    const geoPosts = geoJSON(oldGeoJson, {
+      pointToLayer: mapHelper.pointToLayer,
+      onEachFeature: (feature, layer) => {
+        layer.on('mouseout', () => {
+          layer.unbindPopup();
+        });
+        layer.on('click', () => {
+          this.router.navigate([feature.properties.id]);
+        });
+      },
+    });
+
+    if (this.mapConfig.clustering) {
+      this.markerClusterData.addLayer(geoPosts);
+      this.mapLayers.push(this.markerClusterData);
+    } else {
+      this.mapLayers.push(geoPosts);
+    }
+
+    if (posts.results.length) {
+      this.mapFitToBounds = geoPosts.getBounds();
+    }
+  }
+
+  public destroy(): void {
+    this.$destroy.next(null);
+    this.$destroy.complete();
   }
 }

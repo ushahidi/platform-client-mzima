@@ -8,9 +8,10 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Meta } from '@angular/platform-browser';
+import { DomSanitizer, Meta, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { preparingVideoUrl } from '../../core/helpers/validators';
 import { CollectionsModalComponent } from '../../shared/components';
 import {
   MediaService,
@@ -18,7 +19,9 @@ import {
   PostResult,
   PostContent,
   PostsService,
+  PostContentField,
 } from '@mzima-client/sdk';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-post-details',
@@ -27,16 +30,16 @@ import {
 })
 export class PostDetailsComponent implements OnChanges, OnDestroy {
   @Input() post?: PostResult;
-  @Input() feedView: boolean;
+  @Input() feedView: boolean = true;
   @Input() userId?: number | string;
   @Input() color?: string;
   @Input() twitterId?: string;
   @Output() edit = new EventEmitter();
   @Output() refresh = new EventEmitter();
   @Output() statusChanged = new EventEmitter();
-  public media?: any;
   public allowed_privileges: string | string[];
   public postId: string;
+  public videoUrl: SafeResourceUrl;
 
   constructor(
     private dialog: MatDialog,
@@ -45,6 +48,7 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     private metaService: Meta,
     private route: ActivatedRoute,
     private postsService: PostsService,
+    private sanitizer: DomSanitizer,
   ) {
     this.route.params.subscribe((params) => {
       if (params['id']) {
@@ -64,22 +68,20 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
       this.allowed_privileges = this.post?.allowed_privileges ?? '';
       if (changes['post'].currentValue?.post_content?.length) {
         this.setMetaData(this.post!);
-        const mediaField = changes['post'].currentValue.post_content[0].fields.find(
-          (field: any) => field.type === 'media',
-        );
-        if (mediaField && mediaField.value?.value) {
-          this.getPostMedia(mediaField);
-        }
+        this.preparingMediaField(changes['post'].currentValue.post_content[0].fields);
+        this.preparingSafeVideoUrl(changes['post'].currentValue.post_content[0].fields);
       }
     }
   }
 
-  private getPostMedia(mediaField: any): void {
-    this.mediaService.getById(mediaField.value.value).subscribe({
-      next: (media) => {
-        this.media = media;
-      },
-    });
+  private async getPostMedia(mediaId: string): Promise<any> {
+    try {
+      const response = await lastValueFrom(this.mediaService.getById(mediaId));
+      return response;
+    } catch (err) {
+      console.error(err);
+      return err;
+    }
   }
 
   private getPost(): void {
@@ -87,14 +89,35 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     this.postsService.getById(this.postId).subscribe({
       next: (post: PostResult) => {
         this.post = post;
-        const mediaField = (this.post.post_content as PostContent[])[0].fields.find(
-          (field: any) => field.type === 'media',
-        );
-        if (mediaField && mediaField.value?.value) {
-          this.getPostMedia(mediaField);
-        }
+        this.preparingMediaField((this.post.post_content as PostContent[])[0].fields);
+        this.preparingSafeVideoUrl((this.post.post_content as PostContent[])[0].fields);
       },
     });
+  }
+
+  private async preparingMediaField(fields: PostContentField[]): Promise<void> {
+    fields
+      .filter((field: any) => field.type === 'media')
+      .map(async (mediaField) => {
+        if (mediaField.value?.value) {
+          const media = await this.getPostMedia(mediaField.value.value);
+          mediaField.value.mediaSrc = media.original_file_url;
+          mediaField.value.mediaCaption = media.caption;
+        }
+      });
+  }
+
+  private preparingSafeVideoUrl(fields: PostContentField[]) {
+    const videoField = fields.find((field: any) => field.input === 'video');
+    if (videoField && videoField.value?.value) {
+      this.videoUrl = this.generateSecurityTrustResourceUrl(
+        preparingVideoUrl(videoField.value?.value),
+      );
+    }
+  }
+
+  private generateSecurityTrustResourceUrl(unsafeUrl: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
   }
 
   public isParentCategory(

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { SessionService } from '@services';
 import { Roles, Permissions } from '@enums';
 
 interface SettingsItem {
@@ -23,12 +24,16 @@ export class SettingsComponent implements OnInit {
   isManageSettings = false;
   isManageImportExport = false;
   public settingsItems: SettingsItem[] = [];
+  public isDonateAvailable = false;
+
+  constructor(private session: SessionService) {}
 
   ngOnInit() {
     this.isAdmin = this.userRole === Roles.Admin;
     this.isManageUsers = this.permissions.includes(Permissions.ManageUsers);
     this.isManageSettings = this.permissions.includes(Permissions.ManageSettings);
     this.isManageImportExport = this.permissions.includes(Permissions.ImportExport);
+    this.isDonateAvailable = <boolean>this.session.getSiteConfigurations().donation?.enabled;
     this.initMenu();
   }
 
@@ -67,7 +72,9 @@ export class SettingsComponent implements OnInit {
         description: 'settings.settings_list.donation_desc',
         icon: 'donate',
         router: 'donation',
-        visible: this.isAdmin || this.isManageSettings,
+        visible:
+          (this.isAdmin && this.isDonateAvailable) ||
+          (this.isManageSettings && this.isDonateAvailable),
       },
       {
         title: 'settings.settings_list.user_settings',

@@ -1,47 +1,43 @@
-<ion-content [fullscreen]="true">
-  <div class="main">
-    <div class="walkthrough-slides__skip-container">
-      <app-button class="walkthrough-slides__skip-button" color="medium" (click)="finish()">
-        Skip
-      </app-button>
-    </div>
-
-    <swiper-container
-      #swiperContainer
-      class="walkthrough-slides slides-wrapper"
-      [modules]="swiperModules"
-      (slidechange)="slideChanged()"
-    >
-      <swiper-slide class="walkthrough-slide" *ngFor="let slide of sliderData">
-        <div class="walkthrough-slide__visual">
-          <img [src]="slide.img" [alt]="slide.title" />
-        </div>
-        <div class="walkthrough-slide__content">
-          <strong class="walkthrough-slide__title">{{ slide?.title! }}</strong>
-          <div class="walkthrough-slide__description">
-            <p>{{ slide?.description! }}</p>
-          </div>
-        </div>
-      </swiper-slide>
-    </swiper-container>
-    <div class="walkthrough-slides__navigation">
-      <div class="dots">
-        <div
-          *ngFor="let dot of sliderData; let i = index"
-          [ngClass]="{'active': i === activeSlide}"
-        ></div>
+<ion-content class="main" [fullscreen]="true">
+  <div class="walkthrough-slides__skip-container">
+    <app-button class="walkthrough-slides__skip-button" color="gray" (buttonClick)="finish()">
+      Skip
+    </app-button>
+  </div>
+  <swiper-container
+    #swiperContainer
+    class="walkthrough-slides slides-wrapper"
+    [modules]="swiperModules"
+    (slidechange)="slideChanged()"
+  >
+    <swiper-slide class="walkthrough-slide" *ngFor="let slide of sliderData">
+      <div class="walkthrough-slide__visual">
+        <img [src]="slide.img" [alt]="slide.title" />
       </div>
-      <app-button
-        class="walkthrough-slides__navigation-button"
-        expand="inline"
-        radius="16px"
-        height="48px"
-        [shadow]="true"
-        shape="normal"
-        (buttonClick)="isLastSlide ? finish() : slideNext()"
-      >
-        <app-icon slot="icon-only" name="arrow"></app-icon>
-      </app-button>
+      <div class="walkthrough-slide__content">
+        <span class="walkthrough-slide__title">{{ slide?.title! }}</span>
+        <ion-text class="walkthrough-slide__description" color="medium">
+          {{ slide?.description! }}
+        </ion-text>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+  <div class="walkthrough-slides__navigation">
+    <div class="pagination">
+      <div
+        *ngFor="let dot of sliderData; let i = index"
+        class="pagination__item"
+        [ngClass]="{'pagination__item--active': i === activeSlide}"
+      ></div>
     </div>
+    <app-button
+      class="walkthrough-slides__navigation-button"
+      height="48px"
+      [shadow]="true"
+      shape="normal"
+      (buttonClick)="isLastSlide ? finish() : slideNext()"
+    >
+      <app-icon slot="icon-only" name="arrow"></app-icon>
+    </app-button>
   </div>
 </ion-content>

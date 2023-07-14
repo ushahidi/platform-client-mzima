@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { UserInterface } from '@mzima-client/sdk';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { CONST } from '../constants';
 import {
   DonationConfigInterface,
@@ -28,11 +28,13 @@ export class SessionService {
   private readonly _isFiltersVisible = new BehaviorSubject<boolean>(false);
   private readonly _isMainFiltersHidden = new BehaviorSubject<boolean>(false);
   private readonly _deploymentInfo = new BehaviorSubject<any>(false);
+  private readonly _mapConfig = new BehaviorSubject<any>(false);
 
   readonly currentUserData$: Observable<UserInterface> = this._currentUserData$.asObservable();
   readonly isFiltersVisible$ = this._isFiltersVisible.asObservable();
   readonly isMainFiltersHidden$ = this._isMainFiltersHidden.asObservable();
   readonly deploymentInfo$ = this._deploymentInfo.asObservable();
+  readonly mapConfig$ = this._mapConfig.asObservable();
 
   private currentSessionData: SessionTokenInterface = {
     accessToken: '',
@@ -57,6 +59,9 @@ export class SessionService {
     site: {},
     map: {},
   };
+
+  public siteConfig = new Subject<any>();
+  readonly siteConfig$ = this.siteConfig.asObservable();
 
   constructor() {
     this.loadSessionDataFromLocalStorage();
@@ -102,6 +107,12 @@ export class SessionService {
       description: this.currentConfig['site']?.description ?? '',
       logo: this.currentConfig['site']?.image_header ?? '',
     });
+    if (type === 'map') {
+      this._mapConfig.next(this.currentConfig[type]);
+    }
+    if (type === 'site') {
+      this.siteConfig.next(this.currentConfig[type]);
+    }
   }
 
   loadSessionDataFromLocalStorage() {

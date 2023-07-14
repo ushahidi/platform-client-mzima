@@ -68,4 +68,10 @@ export enum Icons {
   collectionEdit = 'collection-edit',
   warning = 'warning',
   currentLocation = 'current-location',
+  tag = 'tag',
+  heartFilled = 'heart-filled',
+  coins = 'coins',
+  infoCircle = 'info-circle',
+  thumbUp = 'thumb-up',
+  ellipses = 'ellipses',
 }

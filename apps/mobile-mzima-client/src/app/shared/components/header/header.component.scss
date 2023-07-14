@@ -1,0 +1,49 @@
+.header {
+  box-shadow: none;
+
+  &:after {
+    bottom: 0;
+    z-index: 10;
+    height: 1px;
+    pointer-events: none;
+    background: var(--ion-color-step-200);
+  }
+
+  &__toolbar {
+    font-size: 22px;
+    line-height: 28px;
+    --min-height: 72px;
+    align-items: center;
+    justify-content: flex-start;
+    --padding-start: var(--ion-padding);
+    --padding-end: var(--ion-padding);
+    --background: var(--ion-background-color);
+    --border-width: 0 0 1px;
+    --border-style: solid;
+
+    @media (prefers-color-scheme: light) {
+      --border-color: var(--ion-color-step-200);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      --border-color: var(--ion-border-color);
+    }
+  }
+
+  &__end {
+    overflow: hidden;
+  }
+}
+
+.back-button {
+  --icon-size: 40px;
+  margin-left: -12px;
+
+  @media (prefers-color-scheme: light) {
+    color: var(--ion-color-step-600);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--ion-color-step-800);
+  }
+}

@@ -1,3 +1,7 @@
+html.plt-android:not(.plt-mobileweb) {
+  --ion-safe-area-top: calc(30px + env(safe-area-inset-top));
+}
+
 body {
   font-size: 16px;
   line-height: 1.5;
@@ -10,4 +14,21 @@ a {
   @media (prefers-color-scheme: light) {
     color: var(--color-primary-40);
   }
+}
+
+.ion-color-gray {
+  --ion-color-base: var(--ion-color-gray);
+  --ion-color-base-rgb: var(--ion-color-gray-rgb);
+  --ion-color-contrast: var(--ion-color-gray-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-gray-contrast-rgb);
+  --ion-color-shade: var(--ion-color-gray-shade);
+  --ion-color-tint: var(--ion-color-gray-tint);
+}
+
+.infinite-scroll-content-md {
+  min-height: 64px;
+}
+
+.infinite-loading {
+  margin-bottom: 0;
 }

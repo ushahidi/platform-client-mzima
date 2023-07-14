@@ -2,21 +2,8 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SearchService } from '@services';
 import { Subject, debounceTime } from 'rxjs';
-
-export interface SearchResponse {
-  boundingbox: string[];
-  class: string;
-  display_name: string;
-  icon: string;
-  importance: number;
-  lat: string;
-  licence: string;
-  lon: string;
-  osm_id: number;
-  osm_type: string;
-  place_id: number;
-  type: string;
-}
+import { LocationItem, LocationSelectValue } from '@models';
+import { SearchResponse } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-location-select',
@@ -33,12 +20,13 @@ export interface SearchResponse {
 export class LocationSelectComponent implements ControlValueAccessor {
   @Input() public disabled = false;
 
-  value?: { from: string; to: string };
+  value: LocationSelectValue | null;
   onChange: any = () => {};
   onTouched: any = () => {};
 
   public query = '';
-  public results: any[] = [];
+  public results: LocationItem[] = [];
+  public selectedLocation?: LocationItem | null;
   public radiusValue = 1;
   public radiusOptions = [
     {
@@ -58,11 +46,12 @@ export class LocationSelectComponent implements ControlValueAccessor {
       label: 'Within 100 km',
     },
     {
-      value: 1,
+      value: 500,
       label: 'Within 500 km',
     },
   ];
   private readonly searchSubject = new Subject<string>();
+  public isInputOnFocus: boolean;
 
   constructor(private searchService: SearchService) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
@@ -71,8 +60,8 @@ export class LocationSelectComponent implements ControlValueAccessor {
           next: (response: SearchResponse[]) => {
             this.results = response.map((i) => ({
               label: i.display_name,
-              lat: i.lat,
-              lon: i.lon,
+              lat: Number(i.lat),
+              lon: Number(i.lon),
             }));
           },
         });
@@ -80,8 +69,21 @@ export class LocationSelectComponent implements ControlValueAccessor {
     });
   }
 
-  writeValue(value: any): void {
-    this.value = value;
+  writeValue(value: LocationSelectValue | null): void {
+    if (value) {
+      this.selectedLocation = value.location
+        ? {
+            lat: value.location.lat,
+            lon: value.location.lon,
+            label: value.location.label,
+          }
+        : null;
+      this.query = value.location?.label ?? '';
+      this.radiusValue = value.distance ?? 1;
+    } else {
+      this.selectedLocation = null;
+      this.radiusValue = 1;
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -98,5 +100,35 @@ export class LocationSelectComponent implements ControlValueAccessor {
 
   public getAddresses(): void {
     this.searchSubject.next(this.query);
+  }
+
+  public selectLocation(location: LocationItem): void {
+    this.query = location.label;
+    this.selectedLocation = location;
+    this.onChange({
+      location: this.selectedLocation,
+      radius: this.radiusValue,
+    });
+  }
+
+  public handleInputBlur(): void {
+    setTimeout(() => {
+      this.isInputOnFocus = false;
+    }, 50);
+  }
+
+  public handleInputClear(): void {
+    this.results = [];
+    this.onChange({
+      location: null,
+      radius: this.radiusValue,
+    });
+  }
+
+  public setRadius(): void {
+    this.onChange({
+      location: this.selectedLocation,
+      radius: this.radiusValue,
+    });
   }
 }

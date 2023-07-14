@@ -19,9 +19,10 @@ import {
 } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService, EventBusService, EventType } from '@services';
+import { BreakpointService, EventBusService, SessionService } from '@services';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -33,6 +34,7 @@ import {
   PostResult,
   MediaService,
 } from '@mzima-client/sdk';
+import { preparingVideoUrl } from '../../core/helpers/validators';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
 import { AlphanumericValidatorValidator } from '../../core/validators';
@@ -51,6 +53,7 @@ dayjs.extend(timezone);
 })
 export class PostEditComponent implements OnInit, OnChanges {
   @Input() public postInput: any;
+  @Input() public modalView: boolean;
   @Output() cancel = new EventEmitter();
   @Output() updated = new EventEmitter();
   public color: string;
@@ -62,6 +65,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   public activeLanguage: string;
   private initialFormData: any;
   private relationConfigForm: any;
+  private relationConfigSource: any;
   private relationConfigKey: string;
   private isSearching = false;
   public relatedPosts: PostResult[];
@@ -77,6 +81,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   public formValidator = new formValidators.FormValidator();
   public locationRequired = false;
   public emptyLocation = false;
+  public filters;
 
   constructor(
     private route: ActivatedRoute,
@@ -92,12 +97,17 @@ export class PostEditComponent implements OnInit, OnChanges {
     private mediaService: MediaService,
     private snackBar: MatSnackBar,
     private cdr: ChangeDetectorRef,
+    private sanitizer: DomSanitizer,
+    private sessionService: SessionService,
   ) {
     this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
       },
     });
+    this.filters = JSON.parse(
+      localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
+    );
   }
 
   ngOnInit(): void {
@@ -138,7 +148,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     });
   }
 
-  private loadData(formId: number | null, updateContent?: []) {
+  private loadData(formId: number | null, updateContent?: any[]) {
     if (!formId) return;
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
@@ -160,21 +170,35 @@ export class PostEditComponent implements OnInit, OnChanges {
                   this.description = field.default;
                   break;
                 case 'relation':
-                  this.relationConfigForm = field.config?.input?.form;
+                  const fieldForm: [] = field.config?.input?.form;
+                  this.relationConfigForm = !fieldForm.length ? this.filters.form : fieldForm;
+                  this.relationConfigSource = this.filters.source;
                   this.relationConfigKey = field.key;
                   break;
               }
 
               if (field.key) {
-                const value =
-                  field.default ||
-                  (field.input === 'date'
-                    ? new Date()
-                    : field.input === 'location'
-                    ? { lat: '', lng: '' }
-                    : field.input === 'number'
-                    ? 0
-                    : '');
+                const defaultValues: any = {
+                  date: new Date(),
+                  location: { lat: '', lng: '' },
+                  number: 0,
+                };
+
+                const types = [
+                  'upload',
+                  'tags',
+                  'location',
+                  'checkbox',
+                  'select',
+                  'radio',
+                  'date',
+                  'datetime',
+                ];
+
+                const value = types.includes(field.input)
+                  ? defaultValues[field.input]
+                  : field.default || defaultValues[field.input] || '';
+
                 field.value = value;
                 fields[field.key] = this.fieldsFormArray.includes(field.type)
                   ? this.addFormArray(value, field)
@@ -196,7 +220,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     const { location, error } = data;
     const { lat, lng } = location;
 
-    this.form.patchValue({ [formKey]: { lat: Number(lat), lng: lng } });
+    this.form.patchValue({ [formKey]: { lat: lat, lng: lng } });
 
     this.emptyLocation = error;
     this.cdr.detectChanges();
@@ -236,11 +260,18 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleLocation(key: string, value: any) {
-    this.form.patchValue({ [key]: { lat: value?.value.lat, lng: value?.value.lon } });
+    this.form.patchValue({
+      [key]: value?.value
+        ? { lat: value?.value.lat, lng: value?.value.lon }
+        : {
+            lat: '',
+            lng: '',
+          },
+    });
   }
 
   private handleDate(key: string, value: any) {
-    this.form.patchValue({ [key]: new Date(value?.value) });
+    this.form.patchValue({ [key]: value?.value ? new Date(value?.value) : null });
   }
 
   private handleTitle(key: string) {
@@ -248,7 +279,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleDescription(key: string) {
-    this.form.patchValue({ [key]: this.post.content });
+    this.form.patchValue({ [key]: this.post.content ? this.post.content : '' });
   }
 
   private updateForm(updateValues: any[]) {
@@ -267,20 +298,15 @@ export class PostEditComponent implements OnInit, OnChanges {
       | 'number';
     type TypeHandlerType = 'title' | 'description';
 
-    const inputHandlers: { [key in InputHandlerType]: (key: string, value: any) => void } = {
-      tags: this.handleTags.bind(this),
-      checkbox: this.handleCheckbox.bind(this),
-      location: this.handleLocation.bind(this),
-      date: this.handleDate.bind(this),
-      datetime: this.handleDate.bind(this),
-      radio: this.handleDefault.bind(this),
-      text: this.handleDefault.bind(this),
-      upload: this.handleUpload.bind(this),
-      video: this.handleDefault.bind(this),
-      textarea: this.handleDefault.bind(this),
-      relation: this.handleDefault.bind(this),
-      number: this.handleDefault.bind(this),
-    };
+    const inputHandlers: Partial<{ [key in InputHandlerType]: (key: string, value: any) => void }> =
+      {
+        tags: this.handleTags.bind(this),
+        checkbox: this.handleCheckbox.bind(this),
+        location: this.handleLocation.bind(this),
+        date: this.handleDate.bind(this),
+        datetime: this.handleDate.bind(this),
+        upload: this.handleUpload.bind(this),
+      };
 
     const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
       title: this.handleTitle.bind(this),
@@ -291,7 +317,9 @@ export class PostEditComponent implements OnInit, OnChanges {
       for (const { type, input, key, value } of fields) {
         this.form.patchValue({ [key]: value });
         if (inputHandlers[input as InputHandlerType]) {
-          inputHandlers[input as InputHandlerType](key, value);
+          inputHandlers[input as InputHandlerType]!(key, value);
+        } else {
+          this.handleDefault.bind(this)(key, value);
         }
 
         if (typeHandlers[type as TypeHandlerType]) {
@@ -392,42 +420,45 @@ export class PostEditComponent implements OnInit, OnChanges {
               break;
             case 'tags':
             case 'checkbox':
-              value.value = this.form.value[field.key] || [];
+              value.value = this.form.value[field.key] || null;
               break;
-            case 'relation':
             case 'video':
               value = this.form.value[field.key]
                 ? {
-                    value: this.form.value[field.key],
+                    value: preparingVideoUrl(this.form.value[field.key]),
                   }
                 : {};
               break;
+            case 'relation':
+              value.value = this.form.value[field.key] || null;
+              break;
             case 'upload':
-              if (this.form.value[field.key].upload && this.form.value[field.key].photo) {
+              if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
                 try {
                   const uploadObservable = this.mediaService.uploadFile(
-                    this.form.value[field.key].photo,
-                    this.form.value[field.key].caption,
+                    this.form.value[field.key]?.photo,
+                    this.form.value[field.key]?.caption,
                   );
                   const response: any = await lastValueFrom(uploadObservable);
                   value.value = response.id;
                 } catch (error: any) {
                   throw new Error(`Error uploading file: ${error.message}`);
                 }
-              } else if (this.form.value[field.key].delete && this.form.value[field.key].id) {
+              } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
                 try {
-                  const deleteObservable = this.mediaService.delete(this.form.value[field.key].id);
+                  const deleteObservable = this.mediaService.delete(this.form.value[field.key]?.id);
                   await lastValueFrom(deleteObservable);
                   value.value = null;
                 } catch (error: any) {
                   throw new Error(`Error deleting file: ${error.message}`);
                 }
               } else {
-                value.value = this.form.value[field.key].id;
+                value.value = this.form.value[field.key]?.id || null;
               }
               break;
+            default:
+              value.value = this.form.value[field.key] || null;
           }
-
           return {
             ...field,
             value,
@@ -468,25 +499,37 @@ export class PostEditComponent implements OnInit, OnChanges {
 
     if (this.postId) {
       postData.post_date = this.post.post_date || new Date().toISOString();
-      this.postsService.update(this.postId, postData).subscribe({
-        error: () => this.form.enable(),
-        complete: async () => {
-          await this.postComplete();
-        },
-      });
+      this.updatePost(this.postId, postData);
     } else {
       if (!this.atLeastOneFieldHasValidationError) {
-        this.postsService.post(postData).subscribe({
-          error: (err) => {
-            this.form.enable();
-            console.log(err);
-          },
-          complete: async () => {
-            await this.postComplete();
-          },
-        });
+        this.createPost(postData);
       }
     }
+  }
+
+  private updatePost(postId: number, postData: any) {
+    this.postsService.update(postId, postData).subscribe({
+      error: () => this.form.enable(),
+      complete: async () => {
+        await this.postComplete();
+        this.updated.emit();
+        if (this.checkRoutes('feed')) this.backNavigation();
+      },
+    });
+  }
+
+  private checkRoutes(path: string) {
+    return this.router.url.includes(path);
+  }
+
+  private createPost(postData: any) {
+    this.postsService.post(postData).subscribe({
+      error: () => this.form.enable(),
+      complete: async () => {
+        await this.postComplete();
+        this.router.navigate(['/feed']);
+      },
+    });
   }
 
   public preventSubmitIncaseTheresNoBackendValidation() {
@@ -505,16 +548,13 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   async postComplete() {
-    this.form.enable();
-    this.confirmModalService.open({
+    await this.confirmModalService.open({
       title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
       description: `<p>${this.translate.instant(
         'notify.confirm_modal.add_post_success.success_description',
       )}</p>`,
       buttonSuccess: this.translate.instant('notify.confirm_modal.add_post_success.success_button'),
     });
-
-    !this.postInput ? this.backNavigation() : this.updated.emit();
   }
 
   public async previousPage() {
@@ -530,21 +570,33 @@ export class PostEditComponent implements OnInit, OnChanges {
       if (!confirmed) return;
     }
 
-    if (!this.postInput) {
-      this.backNavigation(true);
-      this.eventBusService.next({
-        type: EventType.AddPostButtonSubmit,
-        payload: true,
-      });
-    } else {
+    if (this.postId) {
       this.cancel.emit();
     }
+    // else {
+    //   this.eventBusService.next({
+    //     type: EventType.AddPostButtonSubmit,
+    //     payload: true,
+    //   });
+    // }
+    this.backNavigation();
   }
 
-  public backNavigation(isBack = false): void {
-    console.log('backNavigation:', isBack);
-    this.location.back();
-    // isBack ? this.location.back() : this.router.navigate(['/feed']);
+  public backNavigation(): void {
+    let urlString = this.router.url;
+    if (this.checkRoutes('edit')) {
+      urlString = urlString.replace('edit', 'view');
+      const urlParts = urlString.split('?');
+      const url = urlParts[0];
+      let queryParams = {};
+      if (urlParts[1]) {
+        const params = new URLSearchParams(urlParts[1]);
+        queryParams = { mode: params.get('mode') };
+      }
+      this.router.navigate([url], { queryParams: queryParams });
+    } else {
+      this.router.navigate(['map']);
+    }
   }
 
   public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {
@@ -616,6 +668,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     const params: GeoJsonFilter = {
       order: 'desc',
       'form[]': this.relationConfigForm,
+      'source[]': this.relationConfigSource,
       orderby: 'post_date',
       q: this.relationSearch,
       'status[]': [],
@@ -646,6 +699,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     this.form.patchValue({ [key]: id });
     this.selectedRelatedPost = { id, title };
     this.relatedPosts = [];
+    this.relationSearch = '';
   }
 
   public deleteRelatedPost({ key }: any, { id }: any) {
@@ -657,5 +711,9 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   public trackById(item: any): number {
     return item.id;
+  }
+
+  public generateSecurityTrustUrl(unsafeUrl: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
   }
 }

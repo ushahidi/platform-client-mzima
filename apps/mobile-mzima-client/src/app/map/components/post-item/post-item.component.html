@@ -1,27 +1,55 @@
-<ion-card class="post">
+<ion-card class="post" button>
   <ion-card-header class="post__header">
     <ion-avatar class="post__avatar">
       <ion-img
         [alt]="post.user?.realname"
-        src="//www.gravatar.com/avatar/{{
+        src="https://www.gravatar.com/avatar/{{
           post.user?.gravatar || '00000000000000000000000000000000'
         }}?d=retro&s=40"
       ></ion-img>
     </ion-avatar>
     <div class="post__header__inner">
-      <ion-card-title class="post__username">{{
-        post.author_realname ?? post.author_email
-      }}</ion-card-title>
-      <ion-card-subtitle class="post__date">{{
-        post.post_date | date : 'mediumDate'
-      }}</ion-card-subtitle>
+      <ion-card-title class="post__username">
+        {{ (post.user?.realname ?? post.contact?.contact ?? post.author_realname) || 'Anonymous' }}
+      </ion-card-title>
+      <ion-card-subtitle class="post__date">
+        {{ post.post_date | date : 'mediumDate' }}
+      </ion-card-subtitle>
     </div>
-    <app-button fill="clear" shape="normal" color="medium" class="post__details">
+    <app-button
+      fill="clear"
+      shape="normal"
+      color="medium"
+      class="post__details"
+      (buttonClick)="showOptions($event)"
+    >
       <app-icon slot="icon-only" name="dots"></app-icon>
     </app-button>
   </ion-card-header>
+  <ng-container *ngIf="mediaId && post.source !== 'Twitter'">
+    <ion-img class="post__media" [src]="post" (ionError)="mediaId = undefined"></ion-img>
+    <ng-template #spinner>
+      <app-spinner class="post__media__loader"></app-spinner>
+    </ng-template>
+  </ng-container>
+  <ng-container *ngIf="mediaId && post.source !== 'Twitter'">
+    <ion-img class="post__media" [src]="media"></ion-img>
+  </ng-container>
+  <app-twitter-widget
+    *ngIf="post.source === 'Twitter' && post.data_source_message_id"
+    class="post__twitter"
+    [id]="post.data_source_message_id"
+  ></app-twitter-widget>
   <ion-card-content class="post__body">
     <ion-card-title class="post__title">{{ post.title }}</ion-card-title>
     <p *ngIf="post.content">{{ post.content }}</p>
   </ion-card-content>
 </ion-card>
+
+<ion-action-sheet
+  mode="ios"
+  header="Post Actions"
+  [isOpen]="isActionsOpen"
+  [buttons]="actionSheetButtons"
+  (willDismiss)="makeAction($event)"
+></ion-action-sheet>

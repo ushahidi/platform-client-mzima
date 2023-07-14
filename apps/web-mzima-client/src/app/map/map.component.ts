@@ -217,7 +217,14 @@ export class MapComponent extends MainViewComponent implements OnInit {
                               },
                             });
 
-                            const mediaField = postV5.post_content[0].fields.find(
+                            comp.instance.deleted$.subscribe({
+                              next: () => {
+                                layer.togglePopup();
+                                this.loadData();
+                              },
+                            });
+
+                            const mediaField = postV5.post_content?.[0].fields.find(
                               (field: any) => field.type === 'media',
                             );
                             if (mediaField && mediaField.value?.value) {
@@ -262,11 +269,14 @@ export class MapComponent extends MainViewComponent implements OnInit {
             this.getPostsGeoJson();
           } else {
             this.progress = 100;
+            if (posts.results.length) {
+              this.mapFitToBounds = geoPosts.getBounds();
+            }
           }
 
-          if (posts.results.length && this.params.page <= this.params.limit) {
-            this.mapFitToBounds = geoPosts.getBounds();
-          }
+          // if (posts.results.length && this.params.page <= this.params.limit) {
+          //   this.mapFitToBounds = geoPosts.getBounds();
+          // }
         },
         error: (err) => {
           if (err.message.match(/Http failure response for/)) {

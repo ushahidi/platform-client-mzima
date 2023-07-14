@@ -1,6 +1,7 @@
 <ion-content class="page ion-padding-vertical" [fullscreen]="true">
   <ion-title class="page-title ion-text-center ion-margin-bottom">Welcome back!</ion-title>
   <div class="main ion-padding-horizontal">
+    <app-deployment-info></app-deployment-info>
     <form class="form" novalidate [formGroup]="form" (ngSubmit)="login()">
       <div>
         <app-form-control
@@ -39,7 +40,7 @@
 
       <div class="bottom-panel">
         <app-button type="submit" [disabled]="form.invalid || form.disabled"> Log in </app-button>
-        <app-button class="ion-margin-top" fill="clear" color="medium" routerLink="/map">
+        <app-button class="ion-margin-top" fill="clear" color="medium" routerLink="/">
           Skip for now
         </app-button>
       </div>
@@ -50,9 +51,9 @@
 <app-modal
   class="forgot-password-modal"
   [isOpen]="isForgotPasswordModalOpen"
+  title="Password recovery"
   (modalClose)="isForgotPasswordModalOpen = false"
 >
-  <div header>Password recovery</div>
   <div class="forgot-password-modal__info">
     <ion-text class="forgot-password-modal__title">Forgot your password?</ion-text>
     <p>No worries! Submit your email and check your inbox for a reset link.</p>

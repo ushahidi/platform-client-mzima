@@ -12,19 +12,8 @@
     (buttonClick)="showDonation()"
     *ngIf="donationService.isMonetizationStarted"
   >
-    <mat-icon prefix class="donation-amount__icon">
-      <svg class="iconic" role="img">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/sprites.svg#coins"></use>
-      </svg>
-    </mat-icon>
+    <mat-icon prefix class="donation-amount__icon" svgIcon="coins"></mat-icon>
     <span>{{ donationInfo.formattedAmount }}</span>
-    <mat-icon icon>
-      <svg class="iconic" role="img">
-        <use
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          xlink:href="assets/sprites.svg#info-circle"
-        ></use>
-      </svg>
-    </mat-icon>
+    <mat-icon icon class="donation-amount__icon" svgIcon="info-circle"></mat-icon>
   </mzima-client-button>
 </ng-container>

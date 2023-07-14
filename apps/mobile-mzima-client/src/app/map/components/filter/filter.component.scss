@@ -1,9 +1,54 @@
+.body {
+  --padding-bottom: 24px;
+  flex: 1 1 calc(100% + var(--ion-padding));
+}
+
 .spinner-container {
   display: flex;
   min-height: 100%;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+}
+
+.footer {
+  box-shadow: none;
+
+  &:before {
+    height: 1px;
+    background: var(--ion-color-step-200);
+  }
+
+  &__toolbar {
+    --border-style: solid;
+    --border-width: 1px 0 0;
+    --min-height: calc(84px + var(--ion-safe-area-bottom));
+    --padding-top: 16px;
+    --padding-bottom: calc(16px + var(--ion-safe-area-bottom));
+    --padding-start: 24px;
+    --padding-end: 24px;
+    padding-bottom: 0 !important;
+
+    @media (prefers-color-scheme: light) {
+      --border-color: var(--ion-color-step-200);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      --border-color: var(--ion-border-color);
+    }
+  }
+}
+
+.btn-panel {
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  app-button {
+    --button-padding-end: 24px;
+    --button-padding-start: 24px;
+  }
 }
 
 .button-add {
@@ -17,9 +62,18 @@
   --inner-padding-end: 0;
   --padding-top: 8px;
   --padding-bottom: 8px;
+  --padding-start: 8px;
+  --padding-end: 8px;
   --min-height: 55px;
-  --color: var(--color-primary-40);
   --ripple-color: var(--ion-color-primary);
+
+  @media (prefers-color-scheme: light) {
+    --color: var(--color-primary-40);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --color: var(--ion-color-primary);
+  }
 
   &__icon {
     width: 1em;
@@ -51,12 +105,12 @@
     margin: 0 16px 0 0;
     color: var(--ion-background-color);
 
-    .multiselect-option:nth-child(even) & {
-      background: var(--ion-color-warning);
+    @media (prefers-color-scheme: light) {
+      background: var(--item-color, var(--ion-color-step-400));
     }
 
-    .multiselect-option:nth-child(odd) & {
-      background: var(--ion-color-success);
+    @media (prefers-color-scheme: dark) {
+      background: var(--item-color, var(--ion-color-step-750));
     }
   }
 
@@ -72,6 +126,10 @@
     line-height: 1;
     font-size: 24px;
     margin-left: 28px;
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-color-step-700);
+    }
   }
 }
 
@@ -80,7 +138,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-right: var(--ion-padding);
   }
 
   &__title {
@@ -99,7 +156,13 @@
     letter-spacing: 0.25px;
 
     &__count {
-      color: var(--color-primary-40);
+      @media (prefers-color-scheme: light) {
+        color: var(--color-primary-40);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        color: var(--ion-color-primary);
+      }
     }
   }
 

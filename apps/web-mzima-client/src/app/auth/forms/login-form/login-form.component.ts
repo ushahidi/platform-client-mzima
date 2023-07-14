@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService, EventBusService, EventType } from '@services';
 import { regexHelper } from '@helpers';
 import { ForgotPasswordComponent } from '@auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -19,6 +20,7 @@ export class LoginFormComponent {
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
+    private router: Router,
     private dialog: MatDialog,
     private eventBusService: EventBusService,
   ) {
@@ -64,11 +66,15 @@ export class LoginFormComponent {
       panelClass: ['modal', 'forgot-password-modal'],
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.eventBusService.next({
-        type: EventType.OpenLoginModal,
-        payload: true,
-      });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.router.navigate([`/reset`]);
+      } else {
+        this.eventBusService.next({
+          type: EventType.OpenLoginModal,
+          payload: true,
+        });
+      }
     });
   }
 }

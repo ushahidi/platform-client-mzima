@@ -37,7 +37,7 @@
         class="type-item__checkbox"
         (click)="$event.stopPropagation()"
         (change)="selectLanguage($event, language)"
-        [disabled]="data.defaultLanguage.name === language.name"
+        [disabled]="data.defaultLanguage?.name === language.name"
       >
         {{ language.name }}
       </mat-checkbox>

@@ -1,0 +1,52 @@
+.post {
+  &-images {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  &-image {
+    width: 100%;
+    height: fit-content;
+    border-radius: 8px;
+  }
+}
+
+.image-loader {
+  margin-top: 10px;
+
+  &__wrap {
+    margin-bottom: 16px;
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+
+    .icon {
+      margin-right: 8px;
+    }
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+  }
+
+  &__add-btn {
+    width: 100%;
+    display: block;
+  }
+
+  &__replace-btn {
+    width: 160px;
+  }
+
+  &__delete-btn {
+    color: darkred;
+  }
+
+  .form-row {
+    margin-bottom: 0;
+  }
+}

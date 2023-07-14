@@ -21,10 +21,6 @@
       </app-post-head>
     </div>
 
-    <div class="post__visual" *ngIf="media && post.source !== 'Twitter'">
-      <img [src]="media.original_file_url" [alt]="media.caption" />
-    </div>
-
     <div class="post__twitter" *ngIf="post.source === 'Twitter' && post.data_source_message_id">
       <app-twitter-widget [id]="post.data_source_message_id"></app-twitter-widget>
     </div>
@@ -43,11 +39,7 @@
           <ng-container *ngIf="field.input === 'tags'">
             <ng-container *ngFor="let category of post.categories">
               <div class="category" *ngIf="!isParentCategory(post.categories, category.id)">
-                <mat-icon class="category__icon">
-                  <svg class="iconic">
-                    <use xlink:href="assets/sprites.svg#tag"></use>
-                  </svg>
-                </mat-icon>
+                <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
                 {{ category.tag }}
               </div>
             </ng-container>
@@ -108,18 +100,35 @@
           <ng-container *ngIf="field.input === 'video'">
             <span *ngIf="!field.value.value">-</span>
             <div *ngIf="field.value.value">
-              <iframe id="player" [src]="field.value.value" width="560" height="315"></iframe>
-              <a [href]="field.value.value" target="_blank">{{ field.value.value }}</a>
+              <iframe id="player" [src]="videoUrl" width="400" height="250"></iframe>
+              <div>
+                <a [href]="field.value.value" target="_blank">{{ field.value.value }}</a>
+              </div>
             </div>
           </ng-container>
 
-          <!-- <ng-container *ngIf="field.input === 'upload'">
+          <ng-container *ngIf="field.input === 'upload' && field.value.mediaSrc">
             <span *ngIf="!field.value.value">-</span>
-            <img *ngIf="field.value.value" [src]="field.value.value" [alt]="post.title" />
-          </ng-container> -->
+            <div class="post__media">
+              <img *ngIf="field.value.value" [src]="field.value.mediaSrc" [alt]="post.title" />
+              <span *ngIf="field.value?.mediaCaption?.length" class="post__media__caption">{{
+                field.value.mediaCaption
+              }}</span>
+            </div>
+          </ng-container>
 
           <ng-container *ngIf="field.input === 'relation'">
             <p>{{ field.value.value || '-' }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'select'">
+            <p>{{ field.value.value || '-' }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'markdown'">
+            <span class="code-container">
+              <code>{{ field.value.value || '-' }}</code>
+            </span>
           </ng-container>
         </div>
       </ng-container>

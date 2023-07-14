@@ -199,7 +199,7 @@
               [feedView]="true"
               (edit)="editPost(post)"
               (refresh)="refreshPost(post)"
-              (deleted)="postDeleted()"
+              (deleted)="postDeleted([post.id.toString()])"
               (loaded)="refreshMasonry()"
               (click)="showPostDetails(post)"
               [selectable]="isBulkOptionsVisible"

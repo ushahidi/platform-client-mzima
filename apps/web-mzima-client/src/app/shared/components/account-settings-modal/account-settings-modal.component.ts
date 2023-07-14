@@ -11,7 +11,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { formHelper } from '@helpers';
-import { AccountNotificationsInterface, NotificationTypeEnum } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
@@ -24,6 +23,8 @@ import {
   UsersService,
   UserDataInterface,
   UserInterface,
+  AccountNotificationsInterface,
+  NotificationTypeEnum,
 } from '@mzima-client/sdk';
 
 enum AccountTypeEnum {
@@ -292,7 +293,7 @@ export class AccountSettingsModalComponent implements OnInit {
         this.notifications = response.results;
 
         this.notifications.map((notification) => {
-          this.collectionsService.getById(String(notification.set.id)).subscribe({
+          this.collectionsService.getById(String(notification.set_id)).subscribe({
             next: (res) => {
               this.applyNotificationName(
                 res.result.id,
@@ -301,7 +302,7 @@ export class AccountSettingsModalComponent implements OnInit {
               );
             },
             error: () => {
-              this.savedsearchesService.getById(String(notification.set.id)).subscribe({
+              this.savedsearchesService.getById(String(notification.set_id)).subscribe({
                 next: (res) => {
                   this.applyNotificationName(
                     res.result.id!,
@@ -322,10 +323,10 @@ export class AccountSettingsModalComponent implements OnInit {
     name: string,
     type: NotificationTypeEnum,
   ): void {
-    const notification = this.notifications.find((n) => n.set.id === notificationId);
+    const notification = this.notifications.find((n) => n.set_id === notificationId);
     if (notification) {
       notification.type = type;
-      notification.set.name = name;
+      notification.set_name = name;
     }
   }
 

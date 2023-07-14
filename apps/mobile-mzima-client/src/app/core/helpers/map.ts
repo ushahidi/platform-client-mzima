@@ -2,19 +2,18 @@
 import { divIcon, marker } from 'leaflet';
 import { EnvService } from '../services/env.service';
 
-export const pointIcon = (color: string, type: string = 'default') => {
-  // Test string to make sure that it does not contain injection
+export const pointIcon = (type: string = 'default', color?: string) => {
   color = color && /^[a-zA-Z0-9#]+$/.test(color) ? color : 'var(--color-neutral-100)';
+  if (type !== 'twitter' && type !== 'sms' && type !== 'email') {
+    type = 'default';
+  }
   const size: any = [30, 40];
-  // var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
-
   return divIcon({
     className: 'custom-map-marker',
     html: `
-    <svg class="iconic" style="height: 100%; width: 100%; fill:${color};">
+    <svg style="height: 100%; width: 100%; fill:${color};">
       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/markers.svg#${type}"></use>
     </svg>
-    <span class="iconic-bg" style="background-color:${color};"></span>
     `,
     iconSize: size,
     iconAnchor: [size[0] / 2, size[1]],
@@ -24,7 +23,7 @@ export const pointIcon = (color: string, type: string = 'default') => {
 
 export const pointToLayer = (feature: any, latlng: any) => {
   return marker(latlng, {
-    icon: pointIcon(feature.properties['marker-color']),
+    icon: pointIcon(feature.properties.type),
   });
 };
 
@@ -59,6 +58,18 @@ export const getMapLayers = () => {
             '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>',
         },
       },
+      dark: mapboxStaticTiles('Dark', 'mapbox/dark-v10'),
     },
   };
+};
+
+export const getMapLayer = (baseLayer: string, isDarkMode: boolean) => {
+  return (getMapLayers() as any).baselayers[
+    isDarkMode &&
+    baseLayer !== 'satellite' &&
+    baseLayer !== 'MapQuestAerial' &&
+    baseLayer !== 'hOSM'
+      ? 'dark'
+      : baseLayer
+  ];
 };

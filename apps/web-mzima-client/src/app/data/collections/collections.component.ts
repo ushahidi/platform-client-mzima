@@ -4,7 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { surveyHelper, formHelper } from '@helpers';
-import { AccountNotificationsInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -16,6 +15,7 @@ import {
   CollectionResult,
   PostResult,
   UserInterface,
+  AccountNotificationsInterface,
 } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 
@@ -266,7 +266,7 @@ export class CollectionsComponent implements OnInit {
     });
 
     if (!this.notification && collectionData.is_notifications_enabled) {
-      this.notificationsService.post({ set: String(this.tmpCollectionToEditId) }).subscribe();
+      this.notificationsService.post({ set_id: String(this.tmpCollectionToEditId) }).subscribe();
     } else if (this.notification && !collectionData.is_notifications_enabled) {
       this.notificationsService.delete(this.notification.id).subscribe();
     }

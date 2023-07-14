@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface, MapViewInterface } from '@models';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SessionService } from '@services';
 import {
   control,
@@ -13,8 +14,11 @@ import {
   TileLayer,
   tileLayer,
 } from 'leaflet';
+import Geocoder from 'leaflet-control-geocoder';
+import { debounceTime, Subject } from 'rxjs';
 import { pointIcon } from '../../../core/helpers/map';
 
+@UntilDestroy()
 @Component({
   selector: 'app-settings-map',
   templateUrl: './settings-map.component.html',
@@ -22,7 +26,7 @@ import { pointIcon } from '../../../core/helpers/map';
 })
 export class SettingsMapComponent implements OnInit {
   leafletOptions: any;
-  settingMap: Map;
+  map: Map;
   mapMarker: Marker;
   mapLayers: Layer[] = [];
   mapConfig: MapConfigInterface;
@@ -31,9 +35,19 @@ export class SettingsMapComponent implements OnInit {
   minZoom = 0;
   baseLayers = Object.keys(mapHelper.getMapLayers().baselayers);
 
+  public geocoderControl: any;
+  public queryLocation: string = '';
+  private searchSubject = new Subject<string>();
+  public geocodingResults: any[] = [];
+  public isShowGeocodingResults = false;
+
   constructor(private sessionService: SessionService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    this.searchSubject.pipe(debounceTime(600), untilDestroyed(this)).subscribe((query) => {
+      this.performSearch(query);
+    });
+
     this.mapConfig = this.sessionService.getMapConfigurations();
 
     this.leafletOptions = {
@@ -47,15 +61,17 @@ export class SettingsMapComponent implements OnInit {
     this.addTileLayerToMap(this.mapConfig.default_view!.baselayer);
   }
 
-  addMarker(map: Map) {
-    this.mapMarker = marker(map.getCenter(), {
+  addMarker() {
+    if (this.mapMarker) this.map.removeLayer(this.mapMarker);
+
+    this.mapMarker = marker(this.map.getCenter(), {
       draggable: true,
       icon: pointIcon(this.mapConfig.default_view!.color),
-    });
+    }).addTo(this.map);
+
     this.mapMarker.on('dragend', (e) => {
       this.handleDragEnd(e);
     });
-    this.mapLayers.push(this.mapMarker);
   }
 
   addTileLayerToMap(code: MapViewInterface['baselayer']) {
@@ -69,22 +85,37 @@ export class SettingsMapComponent implements OnInit {
   }
 
   onMapReady(map: Map) {
-    control.zoom({ position: 'bottomleft' }).addTo(map);
-    this.addMarker(map);
-    this.settingMap = map;
-    map.on('click', (e) => {
+    // Initialize geocoder
+    this.geocoderControl = new Geocoder({
+      defaultMarkGeocode: false,
+      position: 'topleft',
+      collapsed: false,
+    });
+
+    this.map = map;
+    control.zoom({ position: 'bottomleft' }).addTo(this.map);
+    this.addMarker();
+
+    this.geocoderControl.addTo(this.map);
+
+    this.map.on('click', (e) => {
       this.mapClick(e);
     });
-    map.on('zoomend', () => {
+
+    this.map.on('zoomend', () => {
       this.mapConfig.default_view!.zoom = map.getZoom();
       this.changeDetector.detectChanges();
     });
+
+    this.geocoderControl.on('finishgeocode', (e: any) => {
+      this.geocodingResults = e.results;
+    });
   }
 
-  updateMapPreview() {
+  private updateMapPreview() {
     // Center the map at our current default.
     // Set the zoom level to our default zoom.
-    this.settingMap.setView(
+    this.map.setView(
       [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
       this.mapConfig.default_view!.zoom,
     );
@@ -94,18 +125,40 @@ export class SettingsMapComponent implements OnInit {
     this.changeDetector.detectChanges();
   }
 
-  mapClick(e: LeafletMouseEvent) {
-    const latlng = e.latlng.wrap();
-    this.mapConfig.default_view!.lat = latlng.lat;
-    this.mapConfig.default_view!.lon = latlng.lng;
-
-    this.updateMapPreview();
+  private mapClick(e: LeafletMouseEvent) {
+    const coordinates = e.latlng.wrap();
+    this.setCoordinates(coordinates.lat, coordinates.lng);
   }
 
-  handleDragEnd(e: DragEndEvent) {
-    const latlng = e.target.getLatLng().wrap();
-    this.mapConfig.default_view!.lat = latlng.lat;
-    this.mapConfig.default_view!.lon = latlng.lng;
+  private handleDragEnd(e: DragEndEvent) {
+    const coordinates = e.target.getLatLng().wrap();
+    this.setCoordinates(coordinates.lat, coordinates.lng);
+  }
+
+  public searchLocation() {
+    this.isShowGeocodingResults = true;
+    this.searchSubject.next(this.queryLocation);
+  }
+
+  private performSearch(query: string) {
+    this.geocoderControl.options.placeholder = query;
+    this.geocoderControl._input.value = query;
+    this.geocoderControl._geocode();
+  }
+
+  public selectLocation(item: any) {
+    this.queryLocation = item.name;
+    const coordinates = item.center;
+    this.map.fitBounds(item.bbox);
+    this.setCoordinates(coordinates.lat, coordinates.lng);
+    this.geocodingResults = [];
+    this.searchSubject.next('');
+  }
+
+  private setCoordinates(lat: number, lon: number) {
+    this.mapConfig.default_view!.lat = lat;
+    this.mapConfig.default_view!.lon = lon;
     this.updateMapPreview();
+    this.addMarker();
   }
 }

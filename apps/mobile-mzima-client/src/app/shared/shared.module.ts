@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   FormControlComponent,
   IconComponent,
@@ -16,7 +16,15 @@ import {
   SpinnerComponent,
   RadioComponent,
   SelectComponent,
+  CalendarComponent,
+  HeaderComponent,
+  MainLayoutComponent,
+  CollectionsModalComponent,
+  ToggleComponent,
+  GroupCheckboxSelectComponent,
 } from './components';
+import { CalendarModule } from 'ion2-calendar';
+import { TextareaControlComponent } from './components/textarea-control/textarea-control.component';
 
 const components = [
   IconComponent,
@@ -29,11 +37,26 @@ const components = [
   SpinnerComponent,
   RadioComponent,
   SelectComponent,
+  CalendarComponent,
+  HeaderComponent,
+  MainLayoutComponent,
+  CollectionsModalComponent,
+  ToggleComponent,
+  GroupCheckboxSelectComponent,
+  TextareaControlComponent,
 ];
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, IonicModule, TranslateModule, RouterModule, FormsModule],
+  imports: [
+    CommonModule,
+    IonicModule,
+    TranslateModule,
+    RouterModule,
+    FormsModule,
+    CalendarModule,
+    ReactiveFormsModule,
+  ],
   exports: [IonicModule, CommonModule, ...components],
 })
 export class SharedModule {}

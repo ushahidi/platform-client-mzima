@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, mergeMap } from 'rxjs';
-import { EnvService, SessionService, ResourceService } from '@services';
+import { EnvService, SessionService } from '@services';
 import { Router } from '@angular/router';
 import { CONST } from '@constants';
-import { UsersService } from '@mzima-client/sdk';
+import { EnvLoader, ResourceService, UsersService } from '@mzima-client/sdk';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +12,13 @@ import { UsersService } from '@mzima-client/sdk';
 export class AuthService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
-    protected override env: EnvService,
+    protected envLoader: EnvLoader,
+    protected env: EnvService,
     private sessionService: SessionService,
     private router: Router,
     private userService: UsersService,
   ) {
-    super(httpClient, env);
+    super(httpClient, envLoader);
   }
 
   getApiVersions(): string {
@@ -95,6 +96,7 @@ export class AuthService extends ResourceService<any> {
   }
 
   public logout() {
+    console.log('logout');
     this.sessionService.clearSessionData();
     this.sessionService.clearUserData();
     this.router.navigate(['/auth/login']);

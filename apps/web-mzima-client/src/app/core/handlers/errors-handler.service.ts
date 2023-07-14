@@ -22,7 +22,7 @@ export class ErrorsHandlerService implements ErrorHandler {
           console.error('Http Error: ' + error.message);
         }
       } else {
-        console.error(`%cClient Error: %c${error.message}`, 'color: #bada55', 'color: error');
+        console.error(`%cClient Error: %c${error?.message}`, 'color: #bada55', 'color: error');
       }
     }
   }

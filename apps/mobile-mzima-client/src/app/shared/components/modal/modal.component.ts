@@ -1,8 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import { IonModal } from '@ionic/angular';
 
 interface ModalOptions {
   footer?: boolean;
   header?: boolean;
+  offsetTop?: boolean;
+  offsetBottom?: boolean;
 }
 
 @Component({
@@ -10,14 +22,18 @@ interface ModalOptions {
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit, OnChanges {
   @Input() public isOpen: boolean;
   @Input() public closable = true;
+  @Input() public title: string;
   @Input() public options: ModalOptions = {};
   @Output() public modalClose = new EventEmitter();
+  @ViewChild('modal') modal: IonModal;
   public modalOptions: ModalOptions = {
     header: true,
     footer: false,
+    offsetTop: true,
+    offsetBottom: true,
   };
 
   ngOnInit(): void {
@@ -27,14 +43,23 @@ export class ModalComponent implements OnInit {
     };
   }
 
-  public closeModal(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['options']) {
+      this.modalOptions = {
+        ...this.modalOptions,
+        ...changes['options'].currentValue,
+      };
+    }
+  }
+
+  public closeModal(force = false): void {
     this.modalClose.emit();
+    if (this.closable || force) {
+      this.modal.dismiss();
+    }
   }
 
   public closeModalHandle(): void {
     this.modalClose.emit();
-    if (this.closable) {
-      this.isOpen = false;
-    }
   }
 }

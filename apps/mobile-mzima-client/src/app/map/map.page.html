@@ -1,15 +1,27 @@
 <app-draggable-layout
+  #layout
   [mode]="1"
   [offsetTop]="78"
   [breakpoints]="[0, 300]"
   (toggleMode)="mode = $event"
 >
-  <app-search-form [isLight]="mode !== 'fullscreen'" header class="search-form"></app-search-form>
-  <app-map-view class="map"></app-map-view>
+  <app-search-form
+    [isLight]="mode !== 'fullscreen'"
+    header
+    class="search-form"
+    [totalPosts]="totalPosts"
+    [activatedSavedFilterId]="searchId"
+  ></app-search-form>
+  <app-map-view class="map" #map></app-map-view>
   <ng-container draggable>
-    <app-button shape="normal" [shadow]="true" class="add-post-button">
+    <app-button shape="normal" [shadow]="true" class="add-post-button" (click)="createPost()">
       <app-icon slot="icon-only" name="plus"></app-icon>
     </app-button>
-    <app-feed-view [atBottom]="mode === 0" [atTop]="mode === 'fullscreen'"></app-feed-view>
+    <app-feed-view
+      #feed
+      [atBottom]="mode === 0"
+      [atTop]="mode === 'fullscreen'"
+      (postsUpdated)="updatePostsCount($event)"
+    ></app-feed-view>
   </ng-container>
 </app-draggable-layout>

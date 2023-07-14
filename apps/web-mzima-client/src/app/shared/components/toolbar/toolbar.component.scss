@@ -158,7 +158,18 @@
   flex: 1 1 100%;
 
   @include breakpoint-min($tablet) {
-    max-width: 371px;
+    max-width: 380px;
+  }
+
+  &::ng-deep {
+    .mat-form-field-appearance-outline {
+      .mat-input-element {
+        max-width: none;
+        background: none;
+        box-sizing: border-box;
+        height: calc(100% - 2px);
+      }
+    }
   }
 }
 
@@ -173,7 +184,7 @@
   flex-direction: column;
   justify-content: center;
   margin-inline-end: -8px;
-  margin-inline-start: 36px;
+  margin-inline-start: 0;
 }
 
 .menu {

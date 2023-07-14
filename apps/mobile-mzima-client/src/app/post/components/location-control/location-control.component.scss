@@ -1,0 +1,66 @@
+.location-select {
+  &__title {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.1px;
+  }
+
+  &__map {
+    height: 120px;
+    margin-bottom: 8px;
+  }
+}
+
+.map {
+  height: 100%;
+  overflow: hidden;
+  font-family: inherit;
+
+  &::ng-deep {
+    .custom-map-marker {
+      svg {
+        @media (prefers-color-scheme: light) {
+          fill: var(--ion-color-step-950);
+          --marker-secondary-color: var(--ion-color-light);
+        }
+
+        @media (prefers-color-scheme: dark) {
+          fill: var(--ion-color-primary);
+          --marker-secondary-color: var(--ion-color-step-100);
+        }
+      }
+    }
+  }
+}
+
+.controls {
+  --ion-grid-padding: 0;
+  --ion-grid-column-padding: 0;
+
+  ion-row {
+    margin-left: -4px;
+    margin-right: -4px;
+  }
+
+  ion-col {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  app-form-control {
+    &::ng-deep {
+      .ion-margin-bottom {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .leaflet-control-attribution {
+    font-size: 7px;
+  }
+}

@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { NavigationStart, Router } from '@angular/router';
 import { searchFormHelper } from '@helpers';
-import { AccountNotificationsInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EventBusService, EventType, SessionService, BreakpointService } from '@services';
 import {
@@ -34,6 +33,7 @@ import {
   CollectionResult,
   Savedsearch,
   SurveyItem,
+  AccountNotificationsInterface,
 } from '@mzima-client/sdk';
 import dayjs from 'dayjs';
 
@@ -103,18 +103,7 @@ export class SearchFormComponent implements OnInit {
     this.getSavedFilters();
     this.getSurveys();
     this.getCategories();
-
-    if (this.filters) {
-      const filters = JSON.parse(this.filters!);
-      this.updateForm(filters);
-      this.getActiveFilters(filters);
-      this.applyFilters();
-    } else {
-      localStorage.setItem(
-        this.session.getLocalStorageNameMapper('filters'),
-        JSON.stringify(this.form.value),
-      );
-    }
+    this.initFilters();
 
     if (this.activeSaved) {
       this.activeSavedSearch = JSON.parse(this.activeSaved!);
@@ -183,6 +172,24 @@ export class SearchFormComponent implements OnInit {
     this.getTotalPosts();
   }
 
+  private initFilters() {
+    if (this.filters) {
+      const filters = JSON.parse(this.filters!);
+      if (!this.router.url.includes('collection')) {
+        // clear collection info if we left collection route
+        delete filters.set;
+      }
+      this.updateForm(filters);
+      this.getActiveFilters(filters);
+      this.applyFilters();
+    } else {
+      localStorage.setItem(
+        this.session.getLocalStorageNameMapper('filters'),
+        JSON.stringify(this.form.value),
+      );
+    }
+  }
+
   getPostsFilters() {
     this.postsService.postsFilters$
       .pipe(
@@ -246,6 +253,10 @@ export class SearchFormComponent implements OnInit {
 
     this.eventBusService.on(EventType.FinishOnboarding).subscribe({
       next: () => (this.isOnboardingActive = false),
+    });
+
+    this.eventBusService.on(EventType.DeleteSavedSearch).subscribe({
+      next: () => this.applySavedFilter(null),
     });
   }
 
@@ -441,15 +452,11 @@ export class SearchFormComponent implements OnInit {
   }
 
   get isEditAvailable() {
-    return this.form.dirty && this.isLoggedIn;
+    return this.isLoggedIn;
   }
 
   get canCreateSearch() {
-    return (
-      this.isLoggedIn &&
-      !this.collectionInfo &&
-      searchFormHelper.compareForms(this.form.value, this.defaultFormValue)
-    );
+    return this.isLoggedIn && !this.collectionInfo;
   }
 
   private getSavedFilters(): void {
@@ -509,74 +516,22 @@ export class SearchFormComponent implements OnInit {
       panelClass: 'modal',
       data: {
         search,
+        activeFilters: this.activeFilters,
+        activeSavedSearch: this.activeSavedSearch,
       },
     });
 
     dialogRef.afterClosed().subscribe({
       next: (result: any) => {
-        if (!result || result === 'cancel') return;
-
-        if (result === 'delete') {
-          if (search?.id) {
-            this.savedsearchesService.delete(search.id).subscribe({
-              next: () => {
-                this.form.enable();
-                this.resetSavedFilter();
-                this.getSavedFilters();
-              },
-            });
-          }
-          return;
-        }
-
-        this.form.disable();
-
-        const filters: any = {};
-        for (const key in this.activeFilters) {
-          filters[key.replace(/\[\]/g, '')] = this.activeFilters[key];
-        }
-
-        const savedSearchParams = {
-          filter: filters,
-          name: result.name,
-          description: result.description,
-          featured: result.visible_to.value === 'only_me',
-          role: result.visible_to.value === 'specific' ? result.visible_to.options : ['admin'],
-          view: result.defaultViewingMode,
-        };
-
-        if (search?.id) {
-          this.savedsearchesService
-            .update(search.id, {
-              ...this.activeSavedSearch,
-              ...savedSearchParams,
-            })
-            .subscribe({
-              next: () => {
-                this.form.enable();
-                this.getSavedFilters();
-              },
-            });
-        } else {
-          this.savedsearchesService
-            .post({
-              ...savedSearchParams,
-            })
-            .subscribe({
-              next: () => {
-                this.form.enable();
-                this.getSavedFilters();
-              },
-            });
-        }
-
+        this.form.enable();
+        this.getSavedFilters();
         if (search) {
           this.notificationsService.get(String(search.id)).subscribe({
             next: (response) => {
               const notification = response.results[0];
-              if (!notification && result.is_notifications_enabled) {
-                this.notificationsService.post({ set: String(search.id) }).subscribe();
-              } else if (notification && !result.is_notifications_enabled) {
+              if (!notification && result?.is_notifications_enabled) {
+                this.notificationsService.post({ set_id: String(search.id) }).subscribe();
+              } else if (notification && !result?.is_notifications_enabled) {
                 this.notificationsService.delete(notification.id).subscribe();
               }
             },
@@ -760,9 +715,9 @@ export class SearchFormComponent implements OnInit {
   public changeNorificationStatus(event: MatSlideToggleChange, set: string): void {
     if (event.checked && !this.notification) {
       this.isNotificationLoading = true;
-      this.notificationsService.post({ set }).subscribe({
+      this.notificationsService.post({ set_id: set }).subscribe({
         next: (notification) => {
-          this.notification = notification;
+          this.notification = notification.result;
           this.isNotificationLoading = false;
         },
         error: () => {

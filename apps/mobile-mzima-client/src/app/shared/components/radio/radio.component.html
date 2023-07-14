@@ -1,10 +1,6 @@
-<ion-item-sliding>
-  <ion-item class="radio-item" lines="none">
-    <ion-radio class="radio" [value]="value" labelPlacement="end" justify="start">
-      <ng-content></ng-content>
-    </ion-radio>
-  </ion-item>
-  <ion-item-options side="end" *ngIf="editable || deletable">
+<ion-item-sliding *ngIf="editable || deletable; else radioItem">
+  <ng-container *ngTemplateOutlet="radioItem"></ng-container>
+  <ion-item-options side="end">
     <ion-item-option
       *ngIf="deletable"
       color="danger"
@@ -25,3 +21,16 @@
     </ion-item-option>
   </ion-item-options>
 </ion-item-sliding>
+
+<ng-template #radioItem>
+  <ion-item class="radio-item" lines="none" [disabled]="disabled">
+    <ion-radio
+      class="radio"
+      [value]="value"
+      [labelPlacement]="type === 'default' ? 'end' : 'start'"
+      [justify]="justify"
+    >
+      <ng-content></ng-content>
+    </ion-radio>
+  </ion-item>
+</ng-template>

@@ -1,0 +1,242 @@
+.calendar-holder {
+  background: var(--ion-item-background);
+}
+
+.calendar {
+  padding: 0;
+  display: block;
+  background: none;
+
+  &__selected {
+    display: block;
+    font-size: 22px;
+    line-height: 28px;
+    margin-bottom: 16px;
+  }
+
+  &::ng-deep {
+    .days-box {
+      overflow: hidden;
+      padding: 0 !important;
+    }
+
+    .days {
+      height: 40px !important;
+      margin-bottom: 8px !important;
+
+      &:not(.startSelection):not(.between):not(.endSelection) {
+        button.days-btn {
+          &.today {
+            @media (prefers-color-scheme: light) {
+              box-shadow: inset 0 0 0 1px var(--color-primary-40);
+            }
+
+            @media (prefers-color-scheme: dark) {
+              box-shadow: inset 0 0 0 1px var(--ion-color-primary);
+            }
+
+            p {
+              @media (prefers-color-scheme: light) {
+                color: var(--color-primary-40) !important;
+              }
+
+              @media (prefers-color-scheme: dark) {
+                color: var(--ion-color-primary) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    button.days-btn {
+      width: 40px !important;
+      height: 40px !important;
+
+      &:after {
+        opacity: 0 !important;
+      }
+
+      p {
+        font-size: 16px !important;
+        line-height: 1.5 !important;
+        color: var(--ion-text-color) !important;
+      }
+
+      &.today {
+        p {
+          font-weight: normal !important;
+        }
+      }
+
+      &:disabled {
+        p {
+          color: var(--ion-color-step-400) !important;
+        }
+      }
+    }
+
+    .primary {
+      .days .on-selected,
+      .startSelection button.days-btn,
+      .endSelection button.days-btn {
+        @media (prefers-color-scheme: dark) {
+          background: var(--color-primary-50) !important;
+        }
+      }
+
+      .startSelection {
+        &:before,
+        &:after {
+          height: 40px !important;
+        }
+
+        &:before {
+          display: none;
+        }
+
+        &:after {
+          opacity: 1 !important;
+
+          @media (prefers-color-scheme: light) {
+            background: var(--color-primary-90) !important;
+          }
+
+          @media (prefers-color-scheme: dark) {
+            background: var(--color-primary-40) !important;
+          }
+        }
+      }
+
+      .between {
+        button.days-btn {
+          width: 100% !important;
+
+          @media (prefers-color-scheme: light) {
+            background: var(--color-primary-90) !important;
+          }
+
+          @media (prefers-color-scheme: dark) {
+            background: var(--color-primary-40) !important;
+          }
+
+          p {
+            color: var(--ion-text-color) !important;
+          }
+
+          &:after {
+            display: none;
+            height: 40px !important;
+          }
+        }
+      }
+
+      .endSelection {
+        &:before,
+        &:after {
+          height: 40px !important;
+        }
+
+        &:after {
+          display: none !important;
+        }
+
+        &:before {
+          opacity: 1 !important;
+
+          @media (prefers-color-scheme: light) {
+            background: var(--color-primary-90) !important;
+          }
+
+          @media (prefers-color-scheme: dark) {
+            background: var(--color-primary-40) !important;
+          }
+        }
+      }
+    }
+
+    .days.startSelection:nth-child(7n):before,
+    .days.between:nth-child(7n) button.days-btn,
+    .days.between button.days-btn.is-last {
+      border-radius: 0 !important;
+    }
+
+    .days.endSelection:nth-child(7n + 1):before,
+    .days.between:nth-child(7n + 1) button.days-btn,
+    .days.between.is-first-wrap button.days-btn.is-first {
+      border-radius: 0 !important;
+    }
+
+    .title {
+      display: flex;
+      margin: 0 0 28px;
+      min-height: 48px;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 124px 0 0 !important;
+
+      .switch-btn {
+        font-weight: 700;
+        text-transform: none;
+        letter-spacing: 0.1px;
+        width: auto !important;
+        font-size: 14px !important;
+        line-height: 20px !important;
+        --border-radius: 0 4px 4px 0;
+        --ripple-color: var(--ion-color-primary);
+        color: var(--ion-color-step-750) !important;
+        --padding-start: var(--ion-padding) !important;
+        --padding-end: var(--ion-padding) !important;
+
+        .arrow-dropdown {
+          line-height: 1 !important;
+          font-size: 10px !important;
+          margin-left: 8px !important;
+        }
+      }
+
+      .back,
+      .forward {
+        width: 48px !important;
+        min-height: 48px !important;
+        position: absolute !important;
+        --ripple-color: var(--ion-color-primary);
+
+        @media (prefers-color-scheme: light) {
+          color: var(--ion-color-step-800) !important;
+        }
+
+        @media (prefers-color-scheme: dark) {
+          color: var(--ion-color-step-900) !important;
+        }
+      }
+
+      .forward {
+        right: 16px !important;
+      }
+
+      .back {
+        left: auto !important;
+        right: 64px !important;
+        margin-left: 0 !important;
+      }
+    }
+
+    .week-toolbar {
+      --min-height: 44px;
+      margin-bottom: 16px;
+    }
+
+    .week-title {
+      overflow: hidden;
+      letter-spacing: 0.5px;
+      padding: 0 !important;
+      font-size: 16px !important;
+      line-height: 44px !important;
+
+      &.transparent {
+        color: var(--ion-text-color) !important;
+      }
+    }
+  }
+}

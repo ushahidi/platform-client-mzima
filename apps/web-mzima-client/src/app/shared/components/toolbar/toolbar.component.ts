@@ -55,7 +55,6 @@ export class ToolbarComponent implements OnInit {
     private router: Router,
     private breadcrumbService: BreadcrumbService,
     private breakpointService: BreakpointService,
-    private sessionService: SessionService,
     private translate: TranslateService,
     private gtmTracking: GtmTrackingService,
     private eventBusService: EventBusService,
@@ -63,7 +62,7 @@ export class ToolbarComponent implements OnInit {
   ) {
     this.userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
-    this.siteConfig = this.sessionService.getSiteConfigurations();
+    this.siteConfig = this.session.getSiteConfigurations();
     this.isDonateAvailable = <boolean>this.session.getSiteConfigurations().donation?.enabled;
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
@@ -103,7 +102,7 @@ export class ToolbarComponent implements OnInit {
       },
       {
         label: 'nav.help_support',
-        icon: 'auth',
+        icon: 'info',
         visible: true,
         action: () => this.openSupportModal(),
       },
@@ -171,6 +170,11 @@ export class ToolbarComponent implements OnInit {
 
   public toggleBurgerMenu(value?: boolean): void {
     this.isBurgerMenuOpen = value ?? !this.isBurgerMenuOpen;
+    if (this.isBurgerMenuOpen) {
+      document.body.classList.add('burger-menu-open');
+    } else {
+      document.body.classList.remove('burger-menu-open');
+    }
   }
 
   createRouterLink(route: string) {

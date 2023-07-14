@@ -61,7 +61,7 @@ export class PostsService extends ResourceService<any> {
     return super.update(postId, params);
   }
 
-  override getById(id: string | number): Observable<any> {
+  override getById(id: string | number): Observable<PostResult> {
     return super.getById(id).pipe(
       map((response) => {
         const source =
@@ -84,6 +84,8 @@ export class PostsService extends ResourceService<any> {
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
     const tmpParams = { ...this.postsFilters.value, has_location: 'mapped', ...filter };
+    delete tmpParams.order;
+    delete tmpParams.orderby;
     return super.get('geojson', this.postParamsMapper(tmpParams)).pipe(
       tap((res) => {
         this.totalGeoPosts.next(res.meta.total);
@@ -106,6 +108,14 @@ export class PostsService extends ResourceService<any> {
 
         return response;
       }),
+      tap((response) => {
+        this.totalPosts.next(response.meta.total);
+      }),
+    );
+  }
+
+  public searchPosts(url: string, query?: string, params?: any): Observable<PostApiResponse> {
+    return super.get(url, { has_location: 'all', q: query, ...params }).pipe(
       tap((response) => {
         this.totalPosts.next(response.meta.total);
       }),
@@ -137,6 +147,11 @@ export class PostsService extends ResourceService<any> {
 
     if (params.form && params.form.length === 0) {
       params.form.push('none');
+    }
+
+    if (params.form?.length) {
+      params['form[]'] = params.form;
+      delete params.form;
     }
 
     if (params['form[]']?.length === 0) {

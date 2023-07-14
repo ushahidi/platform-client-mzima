@@ -1,16 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { FilterControl, FilterControlOption } from '@models';
-import {
-  CategoriesService,
-  CategoryInterface,
-  Savedsearch,
-  SavedsearchesService,
-  SurveyItem,
-  SurveysService,
-} from '@mzima-client/sdk';
+import { CategoriesService, CategoryInterface, SavedsearchesService } from '@mzima-client/sdk';
 import { AlertService, SessionService } from '@services';
 import { searchFormHelper } from '@helpers';
 import _ from 'lodash';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import dayjs from 'dayjs';
 
 enum FilterType {
   SELECT = 'SELECT',
@@ -24,46 +19,96 @@ enum FilterType {
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => FilterComponent),
+      multi: true,
+    },
+  ],
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent implements ControlValueAccessor, OnInit {
   @Input() public filter: FilterControl;
   @Input() public totalPosts: number;
+  @Output() filterClear = new EventEmitter();
+  @Output() filterAdd = new EventEmitter();
+  @Output() filterEdit = new EventEmitter<FilterControlOption>();
+  @Output() filterDelete = new EventEmitter<{ id: string | number }>();
   public type: FilterType;
   public options: FilterControlOption[] = [];
   public isOptionsLoading = true;
-  public activeSavedSearch?: Savedsearch;
-  public value: any = 16;
   public filterType = FilterType;
   public selectedCategory: FilterControlOption | null;
+  public isPristine = true;
+  public isSubcategoriesPristine = true;
+  public isLoggedIn = false;
+
+  value: any;
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
   constructor(
     private savedsearchesService: SavedsearchesService,
-    private session: SessionService,
     private alertService: AlertService,
-    private surveysService: SurveysService,
     private categoriesService: CategoriesService,
+    private sessionService: SessionService,
   ) {
-    const activeSavedSearch = localStorage.getItem(
-      this.session.getLocalStorageNameMapper('activeSavedSearch'),
-    );
-    this.activeSavedSearch = activeSavedSearch ? JSON.parse(activeSavedSearch) : null;
+    this.sessionService.currentUserData$.subscribe({
+      next: () => {
+        this.isLoggedIn = this.sessionService.isLogged();
+      },
+    });
+  }
+
+  writeValue(value: any): void {
+    switch (this.type) {
+      case FilterType.MULTISELECT:
+      case FilterType.MULTILEVELSELECT:
+        this.value = new Set(value);
+        break;
+
+      case FilterType.DATE:
+        this.value = {
+          from: value?.start ? dayjs(value.start).format() : null,
+          to: value?.end ? dayjs(value.end).format() : null,
+        };
+        break;
+      default:
+        this.value = value;
+        break;
+    }
+
+    if (this.filter.name === 'tags') {
+      this.options.map((option) => {
+        option.checked = this.value.has(option.value);
+        option.options?.map((o) => (o.checked = this.value.has(o.value)));
+      });
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
   }
 
   ngOnInit(): void {
-    console.log('filter: ', this.filter);
     this.getFilterData();
   }
 
   private getFilterData(): void {
     switch (this.filter.name) {
-      case 'set':
+      case 'saved-filters':
         this.getSavedFilters();
         this.type = FilterType.SELECT;
         break;
 
       case 'form':
-        this.getSurveys();
+        this.options = this.filter.options ?? [];
         this.type = FilterType.MULTISELECT;
+        this.isOptionsLoading = false;
         break;
 
       case 'source':
@@ -86,7 +131,7 @@ export class FilterComponent implements OnInit {
         this.isOptionsLoading = false;
         break;
 
-      case 'location':
+      case 'center_point':
         this.type = FilterType.LOCATION;
         this.isOptionsLoading = false;
         break;
@@ -103,7 +148,7 @@ export class FilterComponent implements OnInit {
         this.options = response.results.map((filter) => ({
           value: filter.id,
           label: filter.name,
-          checked: this.activeSavedSearch && filter.id === this.activeSavedSearch.id,
+          checked: filter.id === this.filter.value,
           info: `Applied filters: ${this.getObjectKeysCount(filter.filter)} of 24`,
         }));
         this.isOptionsLoading = false;
@@ -112,26 +157,6 @@ export class FilterComponent implements OnInit {
         if (err.message.match(/Http failure response for/)) {
           this.isOptionsLoading = false;
           setTimeout(() => this.getSavedFilters(), 5000);
-        }
-      },
-    });
-  }
-
-  private getSurveys(): void {
-    this.isOptionsLoading = true;
-    this.surveysService.get().subscribe({
-      next: (response) => {
-        this.options = response.results.map((survey: SurveyItem) => ({
-          value: survey.id,
-          label: survey.name,
-          // checked: this.activeSavedSearch && filter.id === this.activeSavedSearch.id,
-        }));
-        this.isOptionsLoading = false;
-      },
-      error: (err) => {
-        if (err.message.match(/Http failure response for/)) {
-          this.isOptionsLoading = false;
-          setTimeout(() => this.getSurveys(), 5000);
         }
       },
     });
@@ -159,18 +184,18 @@ export class FilterComponent implements OnInit {
       next: (response) => {
         const mainCategories = response?.results.filter((c: CategoryInterface) => !c.parent_id);
         this.options = mainCategories?.map((category: CategoryInterface) => ({
-          checked: false,
+          checked: this.value.has(category.id),
           value: category.id,
           label: String(category.tag),
+          color: category.color!,
           options: response?.results
             ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
             .map((cat: CategoryInterface) => ({
               value: cat.id,
               label: cat.tag,
-              checked: false,
+              checked: this.value.has(cat.id),
             })),
         }));
-        console.log('this.options: ', this.options);
         this.isOptionsLoading = false;
       },
       error: (err) => {
@@ -186,40 +211,16 @@ export class FilterComponent implements OnInit {
   }
 
   public radioChangeHandle(event: any): void {
+    this.isPristine = false;
     this.value = event.detail.value;
   }
 
   public async addClickHandle(): Promise<void> {
-    if (this.filter.name === 'set') {
-      const result = await this.alertService.presentAlert({
-        header: 'Save filter name?',
-        inputs: [
-          {
-            placeholder: 'Filter name',
-          },
-        ],
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-          },
-          {
-            text: 'Save',
-            role: 'confirm',
-            cssClass: 'primary',
-          },
-        ],
-      });
-
-      if (result.role === 'confirm') {
-        // TODO: Save new saved filter
-        console.log('add new filter with name: ', result.data.values[0]);
-      }
-    }
+    this.filterAdd.emit();
   }
 
-  public async deleteOption(): Promise<void> {
-    if (this.filter.name === 'set') {
+  public async deleteOption(option: FilterControlOption): Promise<void> {
+    if (this.filter.name === 'saved-filters' && option.value) {
       const result = await this.alertService.presentAlert({
         header: 'Are you sure you want to delete this saved filters?',
         message: 'Deleting means that from now you will not see it in your saved list. ',
@@ -237,16 +238,24 @@ export class FilterComponent implements OnInit {
       });
 
       if (result.role === 'confirm') {
-        // TODO: Delete saved filter
-        console.log('Delete saved filter');
+        this.isOptionsLoading = true;
+        this.savedsearchesService.delete(option.value).subscribe({
+          next: () => {
+            this.filterDelete.emit({ id: String(option.value!) });
+            this.getFilterData();
+          },
+          error: (err) => {
+            this.isOptionsLoading = false;
+            console.error('saved filter delete err: ', err);
+          },
+        });
       }
     }
   }
 
-  public async editOption(): Promise<void> {
-    if (this.filter.name === 'set') {
-      // TODO: Edit saved filter
-      console.log('Edit saved filter');
+  public async editOption(option: FilterControlOption): Promise<void> {
+    if (this.filter.name === 'saved-filters') {
+      this.filterEdit.emit(option);
     }
   }
 
@@ -264,14 +273,27 @@ export class FilterComponent implements OnInit {
 
   public modalCloseHandle(): void {
     this.selectedCategory = null;
+    this.isSubcategoriesPristine = true;
   }
 
   public applySelectedSubcategories(): void {
     if (!this.selectedCategory) return;
     const option = this.options.find((o) => o.value === this.selectedCategory?.value);
     if (!option) return;
+    const changedOptions = option.options
+      ?.filter(
+        (o) =>
+          o.checked !== this.selectedCategory?.options?.find((so) => so.value === o.value)?.checked,
+      )
+      .map((o) => (!o.checked ? this.value.add(o.value) : this.value.delete(o.value)));
+    if (changedOptions?.length) {
+      this.isPristine = false;
+    }
     option.options = _.cloneDeep(this.selectedCategory.options);
+    option.checked = !!option.options?.find((o) => o.checked);
+    option.checked ? this.value.add(option.value) : this.value.delete(option.value);
     this.selectedCategory = null;
+    this.isSubcategoriesPristine = true;
   }
 
   public async clearSelectedSubcategories(): Promise<void> {
@@ -293,6 +315,41 @@ export class FilterComponent implements OnInit {
 
     if (result.role === 'confirm') {
       this.selectedCategory?.options?.forEach((option) => (option.checked = false));
+    }
+  }
+
+  public optionChanged(state: boolean, option: FilterControlOption): void {
+    state ? this.value.add(option.value) : this.value.delete(option.value);
+    this.isPristine = false;
+  }
+
+  public applyFilter(): void {
+    this.onChange(
+      this.type === FilterType.MULTISELECT || this.type === FilterType.MULTILEVELSELECT
+        ? [...this.value]
+        : this.value,
+    );
+  }
+
+  public async clearFilter(): Promise<void> {
+    const result = await this.alertService.presentAlert({
+      header: `Clear ${this.filter.label} filter?`,
+      message: 'This filter will be cleared',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Clear',
+          role: 'confirm',
+          cssClass: 'danger',
+        },
+      ],
+    });
+
+    if (result.role === 'confirm') {
+      this.filterClear.emit();
     }
   }
 }

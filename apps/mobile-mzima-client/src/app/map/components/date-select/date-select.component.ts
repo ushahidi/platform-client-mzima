@@ -1,7 +1,8 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { CalendarComponentOptions } from 'ion2-calendar';
 import dayjs from 'dayjs';
+import { DateRangeFormat } from '@models';
+import { UTCHelper } from '@helpers';
 
 @Component({
   selector: 'app-date-select',
@@ -16,12 +17,8 @@ import dayjs from 'dayjs';
   ],
 })
 export class DateSelectComponent implements ControlValueAccessor {
-  // @Input() public post: PostResult;
   @Input() public disabled = false;
   public dateOption: any = 'custom';
-  public optionsRange: CalendarComponentOptions = {
-    pickMode: 'range',
-  };
   public selectOptions = [
     {
       value: 'week',
@@ -47,13 +44,13 @@ export class DateSelectComponent implements ControlValueAccessor {
       value: null,
       label: 'All time',
     },
-    {
-      value: 'custom',
-      label: 'Custom',
-    },
+    // {
+    //   value: 'custom',
+    //   label: 'Custom',
+    // },
   ];
 
-  value?: { from: string; to: string };
+  value?: DateRangeFormat;
   onChange: any = () => {};
   onTouched: any = () => {};
 
@@ -73,54 +70,59 @@ export class DateSelectComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  public dateChangeHandle(): void {
-    this.dateOption = 'custom';
-  }
-
   public setCalendar(): void {
     switch (this.dateOption) {
       case 'week':
         this.value = {
-          from: dayjs().subtract(7, 'd').format('YYYY-MM-DD'),
-          to: dayjs().format('YYYY-MM-DD'),
+          from: UTCHelper.toUTC(dayjs().subtract(7, 'd').startOf('d')),
+          to: UTCHelper.toUTC(dayjs().endOf('d')),
         };
         break;
 
       case 'month':
         this.value = {
-          from: dayjs().subtract(1, 'M').format('YYYY-MM-DD'),
-          to: dayjs().format('YYYY-MM-DD'),
+          from: UTCHelper.toUTC(dayjs().subtract(1, 'M').startOf('d')),
+          to: UTCHelper.toUTC(dayjs().endOf('d')),
         };
         break;
 
       case '3_month':
         this.value = {
-          from: dayjs().subtract(3, 'M').format('YYYY-MM-DD'),
-          to: dayjs().format('YYYY-MM-DD'),
+          from: UTCHelper.toUTC(dayjs().subtract(3, 'M').startOf('d')),
+          to: UTCHelper.toUTC(dayjs().endOf('d')),
         };
         break;
 
       case '6_month':
         this.value = {
-          from: dayjs().subtract(6, 'M').format('YYYY-MM-DD'),
-          to: dayjs().format('YYYY-MM-DD'),
+          from: UTCHelper.toUTC(dayjs().subtract(6, 'M').startOf('d')),
+          to: UTCHelper.toUTC(dayjs().endOf('d')),
         };
         break;
 
       case 'year':
         this.value = {
-          from: dayjs().subtract(1, 'y').format('YYYY-MM-DD'),
-          to: dayjs().format('YYYY-MM-DD'),
+          from: UTCHelper.toUTC(dayjs().subtract(1, 'y').startOf('d')),
+          to: UTCHelper.toUTC(dayjs().endOf('d')),
         };
         break;
 
+      // case 'custom':
       case null:
-      case 'custom':
-        this.value = undefined;
+        this.value = {
+          from: null,
+          to: null,
+        };
         break;
 
       default:
         break;
     }
+    this.onChange(this.value);
+  }
+
+  public calendarChangedHandle(): void {
+    this.dateOption = 'custom';
+    this.onChange(this.value);
   }
 }

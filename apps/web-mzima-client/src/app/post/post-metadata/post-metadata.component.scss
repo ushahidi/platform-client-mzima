@@ -102,3 +102,17 @@
     }
   }
 }
+
+::ng-deep {
+  .mat-dialog-content {
+    .post {
+      &__border {
+        @include breakpoint-max($tablet) {
+          top: -16px;
+          bottom: -16px;
+          inset-inline-start: -16px;
+        }
+      }
+    }
+  }
+}

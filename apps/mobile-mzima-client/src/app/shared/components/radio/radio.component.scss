@@ -2,7 +2,7 @@
   --border-width: 0 0 1px;
   --background: var(--ion-background-color);
   --border-color: var(--ion-color-step-200);
-  --padding-start: 16px;
+  --padding-start: 17px;
   --padding-end: 20px;
   --inner-padding-start: 0;
   --inner-padding-end: 0;
@@ -23,12 +23,30 @@
     line-height: 20px;
     text-transform: none;
     letter-spacing: 0.1px;
-    color: var(--ion-background-color);
+
+    @media (prefers-color-scheme: light) {
+      color: var(--ion-background-color);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--ion-text-color);
+    }
 
     &__icon {
       line-height: 1;
       font-size: 24px;
       margin: 0 0 4px;
+    }
+
+    &.ion-color-danger {
+      @media (prefers-color-scheme: dark) {
+        --ion-color-danger: #bd544e;
+        --ion-color-danger-rgb: 189, 84, 78;
+        --ion-color-danger-contrast: #ffffff;
+        --ion-color-danger-contrast-rgb: 255, 255, 255;
+        --ion-color-danger-shade: #a64a45;
+        --ion-color-danger-tint: #c46560;
+      }
     }
   }
 }
@@ -40,7 +58,7 @@
   &::part(container) {
     width: 20px;
     height: 20px;
-    margin: 10px 18px 10px 10px;
+    //margin: 10px 18px 10px 10px;
   }
 
   &::ng-deep {

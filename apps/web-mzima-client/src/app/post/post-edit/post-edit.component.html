@@ -230,12 +230,7 @@
 
             <ng-container *ngIf="field.input === 'video'">
               <mat-form-field appearance="outline">
-                <input
-                  matInput
-                  [formControlName]="field.key"
-                  #videoInput
-                  (input)="videoPreview.src = formValidator.videoUrlPreview(videoInput)"
-                />
+                <input matInput [formControlName]="field.key" #videoInput />
               </mat-form-field>
               <mat-error
                 *ngIf="
@@ -246,9 +241,10 @@
                 Invalid video embed url
               </mat-error>
               <iframe
-                width="560"
-                height="315"
-                #videoPreview
+                *ngIf="form.get(field.key)?.value"
+                width="400"
+                height="250"
+                [src]="generateSecurityTrustUrl(formValidator.videoUrlPreview(videoInput))"
                 [hidden]="!videoInput.value.length"
               ></iframe>
             </ng-container>
@@ -264,21 +260,20 @@
 
             <ng-container *ngIf="field.input === 'relation'">
               <p>{{ 'survey.related_post_info' | translate }}</p>
-              <span class="related-post-selected" *ngIf="selectedRelatedPost">
-                {{ selectedRelatedPost.id }}: {{ selectedRelatedPost.title }}
-                <mat-icon class="trash"></mat-icon>
-                <mzima-client-button
-                  fill="outline"
-                  color="secondary"
-                  [data-qa]="'btn-post-item-delete-relation-post'"
-                  (buttonClick)="deleteRelatedPost(field, selectedRelatedPost.id)"
-                >
-                  Delete
-                  <mat-icon icon class="trash"></mat-icon>
-                </mzima-client-button>
-              </span>
+              <div class="related-post-selected" *ngIf="selectedRelatedPost">
+                <div class="related-post-content">
+                  <span>{{ selectedRelatedPost.id }}: {{ selectedRelatedPost.title }}</span>
+                  <div
+                    class="related-post-delete"
+                    [data-qa]="'btn-post-item-delete-relation-post'"
+                    (click)="deleteRelatedPost(field, selectedRelatedPost.id)"
+                  >
+                    <mat-icon svgIcon="close"></mat-icon>
+                  </div>
+                </div>
+              </div>
 
-              <div class="relation-container">
+              <div class="relation-container" *ngIf="!selectedRelatedPost">
                 <mat-form-field appearance="outline">
                   <input
                     matInput

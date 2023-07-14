@@ -1,0 +1,9 @@
+<app-header [backButton]="false" title="Settings"></app-header>
+<ion-content class="ion-padding">
+  <app-button fill="outline" (buttonClick)="clearPosts()">Clear pending posts</app-button>
+  <br />
+  <app-button fill="outline" (buttonClick)="resetAppData()">Reset app data</app-button>
+  <br />
+  <app-button (buttonClick)="logout()">Logout</app-button>
+</ion-content>
+<app-menu class="menu"></app-menu>

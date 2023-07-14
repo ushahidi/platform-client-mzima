@@ -7,6 +7,9 @@
       'form-row--light': color === 'light'
     }"
   >
+    <span slot="start">
+      <ng-content select="[start]"></ng-content>
+    </span>
     <ion-select
       class="select"
       [(ngModel)]="value"
@@ -17,12 +20,18 @@
       [labelPlacement]="label ? 'floating' : 'end'"
       [required]="required"
       [disabled]="disabled"
+      (ionFocus)="handleFocus()"
+      (ionBlur)="handleBlur()"
     >
-      <ion-select-option *ngFor="let option of options" [value]="option.value">
-        {{ option.label }}
+      <ion-select-option *ngFor="let option of options" [value]="option.value || option">
+        {{ option.label || option }}
       </ion-select-option>
     </ion-select>
+    <span slot="end">
+      <ng-content select="[end]"></ng-content>
+    </span>
   </ion-item>
+  <span *ngIf="hintHTML?.length" class="hint ion-padding-horizontal" [innerHTML]="hintHTML"></span>
   <span *ngIf="hint?.length && (!errors.length || isOnFocus)" class="hint ion-padding-horizontal">
     {{ hint }}
   </span>

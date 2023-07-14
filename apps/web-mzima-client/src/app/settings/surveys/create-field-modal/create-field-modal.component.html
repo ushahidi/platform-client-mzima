@@ -146,20 +146,6 @@
       <mat-form-field appearance="outline">
         <ng-container [ngSwitch]="selectedFieldType.type">
           <input
-            *ngSwitchCase="'location'"
-            matInput
-            [(ngModel)]="selectedFieldType.default"
-            placeholder="{{ 'form.default_location_placeholder' | translate }}"
-            [data-qa]="'default-location'"
-          />
-          <input
-            *ngSwitchCase="'date'"
-            matInput
-            [(ngModel)]="selectedFieldType.default"
-            placeholder="{{ 'form.default_location_placeholder' | translate }}"
-            [data-qa]="'default-date'"
-          />
-          <input
             *ngSwitchCase="'int'"
             matInput
             [(ngModel)]="selectedFieldType.default"
