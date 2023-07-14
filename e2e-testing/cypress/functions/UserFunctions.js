@@ -1,4 +1,4 @@
-import UserLocators from "../locators/UserLocators";
+import UserLocators from '../locators/UserLocators';
 
 class UserFunctions {
   open_user_page_steps() {
@@ -15,19 +15,20 @@ class UserFunctions {
     cy.get(UserLocators.userRoleSlct).click();
     cy.get(UserLocators.roleAdmin).click();
     cy.get(UserLocators.saveBtn).click();
+    cy.wait(1000); //without this wait, the test fails. next step is triggered quick before the save function completes
   }
 
   delete_user_steps() {
     //type search term in bits for search to actually happen
     //typing all at once, search doesn't happen
-    cy.get(".p-inputtext").type("Aut");
-    cy.get(".p-inputtext").type("o");
+    cy.get('.p-inputtext').type('Aut');
+    cy.get('.p-inputtext').type('o');
 
     cy.get(UserLocators.bulkActionsBtn).click();
     cy.wait(1000);
     //add unique selector for checkbox
     cy.get(
-      ".p-selectable-row > :nth-child(1) > .p-element > .p-checkbox > .p-checkbox-box > .p-checkbox-icon"
+      '.p-selectable-row > :nth-child(1) > .p-element > .p-checkbox > .p-checkbox-box > .p-checkbox-icon',
     ).click({ force: true });
     cy.get(UserLocators.deleteUsersBtn).click();
     cy.get(UserLocators.deleteUserConfirmBtn).click();
@@ -35,13 +36,10 @@ class UserFunctions {
 
   add_user() {
     this.open_user_page_steps();
-    this.add_user_steps(
-      "Auto User",
-      "automateduser@ushahidi.com",
-      Cypress.env("ush_user_pwd")
-    );
+    this.add_user_steps('Auto User', 'automateduser@ushahidi.com', Cypress.env('ush_user_pwd'));
   }
   delete_user() {
+    this.open_user_page_steps();
     this.delete_user_steps();
   }
 }
