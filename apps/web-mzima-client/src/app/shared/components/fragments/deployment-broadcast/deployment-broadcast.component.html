@@ -1,0 +1,12 @@
+<div class="menu__footer">
+  <app-donation-button class="menu__footer__button" *ngIf="isDonateAvailable"></app-donation-button>
+  <mzima-client-button
+    fill="outline"
+    color="custom"
+    (buttonClick)="openShare()"
+    class="menu__footer__button"
+  >
+    {{ 'app.share' | translate }}
+    <mat-icon icon svgIcon="share"></mat-icon>
+  </mzima-client-button>
+</div>

@@ -52,7 +52,10 @@ import { FilterControlModule } from './components/filter-control/filter-control.
 import { GroupCheckboxSelectModule } from './components/group-checkbox-select/group-checkbox-select.module';
 import { LottieAnimationModule } from './components/lottie-animation/lottie-animation.module';
 import { SpinnerModule } from './components/spinner/spinner.module';
-import { DeploymentDetailsComponent } from './components/deployment-details/deployment-details.component';
+import { DeploymentDetailsComponent } from './components/fragments/deployment-details/deployment-details.component';
+import { MobileMenuComponent } from './components/fragments/mobile-menu/mobile-menu.component';
+import { MenuListNonPageLinksComponent } from './components/fragments/menu-list-non-page-links/menu-list-non-page-links.component';
+import { DeploymentBroadcastComponent } from './components/fragments/deployment-broadcast/deployment-broadcast.component';
 import { DirectiveModule } from './directive.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddPostModalComponent } from '@post';
@@ -83,6 +86,9 @@ const components = [
   NotificationComponent,
   SafePipe,
   DeploymentDetailsComponent,
+  MobileMenuComponent,
+  MenuListNonPageLinksComponent,
+  DeploymentBroadcastComponent,
 ];
 
 const modules = [

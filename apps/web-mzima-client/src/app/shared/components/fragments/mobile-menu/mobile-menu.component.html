@@ -1,0 +1,14 @@
+<!-- mobile -->
+<div class="menu" *ngIf="!(isDesktop$ | async)!" [ngClass]="{ 'menu--open': isBurgerMenuOpen }">
+  <app-deployment-details></app-deployment-details>
+  <app-menu-list-non-page-links></app-menu-list-non-page-links>
+  <app-deployment-broadcast></app-deployment-broadcast>
+</div>
+
+<!-- <mat-menu #accountMenu="matMenu" class="account-menu">
+  <button mat-menu-item (click)="openAccountSettings()">{{ 'nav.account_settings' | translate }}</button>
+  <button mat-menu-item (click)="logout()">{{ 'nav.logout' | translate }}</button>
+</mat-menu> -->
+
+<!-- Remember to add the add post button for Mobile in the right position -->
+<!-- <app-submit-post-button class="sidebar__add-post-btn" *ngIf="!isDesktop"></app-submit-post-button> -->

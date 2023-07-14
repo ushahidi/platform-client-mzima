@@ -2,17 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
-import { LoginComponent } from '@auth';
-import { CollectionsComponent } from '@data';
 import { EnumGtmEvent, EnumGtmSource } from '@enums';
 import { SiteConfigInterface, UserMenuInterface } from '@models';
 import { UserInterface } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
-  AuthService,
   BreadcrumbService,
-  BreakpointService,
   EventBusService,
   EventType,
   GtmTrackingService,
@@ -20,9 +16,7 @@ import {
 } from '@services';
 import { filter, Observable } from 'rxjs';
 import { DonationModalComponent } from '../../../settings';
-import { AccountSettingsModalComponent } from '../account-settings-modal/account-settings-modal.component';
-import { ShareModalComponent } from '../share-modal/share-modal.component';
-import { SupportModalComponent } from '../support-modal/support-modal.component';
+import { NavToolbarService } from '../../services/shared.navtoolbar.service';
 
 @UntilDestroy()
 @Component({
@@ -35,34 +29,30 @@ export class ToolbarComponent implements OnInit {
   @Input() selectedLanguage: any;
   private userData$: Observable<UserInterface>;
   public isDesktop$: Observable<boolean>;
-  public isLoggedIn = false;
+  public isLoggedIn: boolean;
   public isDonateAvailable = false;
   public profile: UserInterface;
   public showSearchForm: boolean;
   public pageTitle: string;
-  public isBurgerMenuOpen = false;
   public siteConfig: SiteConfigInterface;
   public menu: UserMenuInterface[];
   public isAdmin = false;
-  public canRegister = false;
   public isInnerPage = false;
   public isSettingsPage = false;
 
   constructor(
     private session: SessionService,
     private dialog: MatDialog,
-    private authService: AuthService,
     private router: Router,
     private breadcrumbService: BreadcrumbService,
-    private breakpointService: BreakpointService,
     private translate: TranslateService,
     private gtmTracking: GtmTrackingService,
     private eventBusService: EventBusService,
     private location: Location,
+    private navToolbarService: NavToolbarService,
   ) {
     this.userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
-    this.siteConfig = this.session.getSiteConfigurations();
+    this.isDesktop$ = this.navToolbarService.getScreenSize2(this);
     this.isDonateAvailable = <boolean>this.session.getSiteConfigurations().donation?.enabled;
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
@@ -87,55 +77,11 @@ export class ToolbarComponent implements OnInit {
       this.profile = userData;
       this.isLoggedIn = !!userData.userId;
       this.isAdmin = userData.role === 'admin';
-      this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
-      this.initMenu();
     });
   }
 
-  private initMenu() {
-    this.menu = [
-      {
-        label: 'nav.collections',
-        icon: 'collections',
-        visible: true,
-        action: () => this.openCollections(),
-      },
-      {
-        label: 'nav.help_support',
-        icon: 'info',
-        visible: true,
-        action: () => this.openSupportModal(),
-      },
-      {
-        label: 'nav.my_account',
-        icon: 'account',
-        visible: this.isLoggedIn,
-        action: () => this.openSettings(),
-        separator: true,
-      },
-      {
-        label: 'nav.logout',
-        icon: 'logout',
-        visible: this.isLoggedIn,
-        action: () => this.logout(),
-      },
-      {
-        label: 'nav.login',
-        icon: 'auth',
-        visible: !this.isLoggedIn && !this.canRegister,
-        action: () => this.openLogin(),
-      },
-      {
-        label: 'nav.login_register',
-        icon: 'auth',
-        visible: !this.isLoggedIn && this.canRegister,
-        action: () => this.openLogin(),
-      },
-    ];
-  }
-
   public showDonation(): void {
-    this.toggleBurgerMenu(false);
+    this.navToolbarService.toggleBurgerMenu(false);
     this.dialog.open(DonationModalComponent, {
       width: '100%',
       maxWidth: 564,
@@ -143,38 +89,16 @@ export class ToolbarComponent implements OnInit {
     });
   }
 
-  public openSettings(): void {
-    this.toggleBurgerMenu(false);
-    this.dialog.open(AccountSettingsModalComponent, {
-      width: '100%',
-      maxWidth: 800,
-      panelClass: ['modal', 'account-settings-modal'],
-    });
+  public openAccountSettings(): void {
+    this.navToolbarService.openAccountSettings();
   }
 
   public logout(): void {
-    this.authService.logout();
+    this.navToolbarService.logout();
   }
 
-  public openShare() {
-    this.dialog.open(ShareModalComponent, {
-      width: '100%',
-      maxWidth: 564,
-      panelClass: 'modal',
-      data: {
-        title: this.translate.instant(this.pageTitle),
-        description: this.translate.instant(this.pageTitle),
-      },
-    });
-  }
-
-  public toggleBurgerMenu(value?: boolean): void {
-    this.isBurgerMenuOpen = value ?? !this.isBurgerMenuOpen;
-    if (this.isBurgerMenuOpen) {
-      document.body.classList.add('burger-menu-open');
-    } else {
-      document.body.classList.remove('burger-menu-open');
-    }
+  public toggleBurgerMenu(): void {
+    this.navToolbarService.toggleBurgerMenu(); //true - false toggle
   }
 
   createRouterLink(route: string) {
@@ -197,42 +121,11 @@ export class ToolbarComponent implements OnInit {
     );
   }
 
-  private openCollections(): void {
-    this.toggleBurgerMenu(false);
-    const dialogRef = this.dialog.open(CollectionsComponent, {
-      width: '100%',
-      maxWidth: '768px',
-      panelClass: ['modal', 'collections-modal'],
-    });
-
-    dialogRef.afterClosed().subscribe({
-      next: (response) => {
-        response ? console.log(response) : null;
-      },
-    });
-  }
-
-  private openLogin(): void {
-    this.toggleBurgerMenu(false);
-    this.dialog.open(LoginComponent, {
-      width: '100%',
-      maxWidth: 576,
-      panelClass: ['modal', 'login-modal'],
-      data: {
-        isSignupActive: this.canRegister,
-      },
-    });
-  }
-
   public back(): void {
     this.location.back();
   }
 
-  public openSupportModal(): void {
-    this.dialog.open(SupportModalComponent, {
-      width: '100%',
-      maxWidth: 768,
-      panelClass: ['modal', 'support-modal'],
-    });
+  openShare() {
+    this.navToolbarService.openShare(this.pageTitle);
   }
 }
