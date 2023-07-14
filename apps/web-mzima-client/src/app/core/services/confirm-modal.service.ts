@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  ConfirmDialogData,
-  ConfirmModalComponent,
-} from '../../shared/components/confirm-modal/confirm-modal.component';
+import { ConfirmDialogData, ConfirmModalComponent } from '../../shared/components';
 
 interface ConfirmModalProps {
   title?: string;

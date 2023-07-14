@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CONST, STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EMPTY, from, lastValueFrom, map, Observable, of, switchMap, tap } from 'rxjs';
@@ -72,6 +72,7 @@ export class PostEditPage {
   private checkedList: any[] = [];
   public isConnection = true;
   public connectionInfo = '';
+  private queryParams: Params;
 
   dateOption: any;
 
@@ -89,7 +90,13 @@ export class PostEditPage {
     private dataBaseService: DatabaseService,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
-  ) {}
+  ) {
+    this.route.queryParams.subscribe({
+      next: (queryParams) => {
+        this.queryParams = queryParams;
+      },
+    });
+  }
 
   async ionViewWillEnter() {
     this.initNetworkListener();
@@ -216,11 +223,11 @@ export class PostEditPage {
     this.clearData();
 
     this.selectedSurvey = this.surveyList.find((item: any) => item.id === this.selectedSurveyId);
-    this.color = this.selectedSurvey.color;
-    this.tasks = this.selectedSurvey.tasks;
+    this.color = this.selectedSurvey?.color;
+    this.tasks = this.selectedSurvey?.tasks;
 
     const fields: any = {};
-    for (const task of this.tasks) {
+    for (const task of this.tasks ?? []) {
       task.fields
         .sort((a: any, b: any) => a.priority - b.priority)
         .map((field: any) => {
@@ -664,7 +671,13 @@ export class PostEditPage {
 
   public backNavigation(): void {
     this.clearData();
-    this.router.navigate([this.isConnection && this.postId ? this.postId : '/']);
+    this.router.navigate([
+      this.queryParams['profile']
+        ? 'profile/posts'
+        : this.isConnection && this.postId
+        ? this.postId
+        : '/',
+    ]);
   }
 
   public preventSubmitIncaseTheresNoBackendValidation() {

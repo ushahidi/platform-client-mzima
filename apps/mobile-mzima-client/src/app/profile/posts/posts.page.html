@@ -1,0 +1,49 @@
+<app-main-layout title="My posts" (back)="back()" [isSearch]="true" (search)="searchPosts($event)">
+  <app-button
+    header-end
+    fill="clear"
+    class="edit-button"
+    (buttonClick)="editPosts()"
+    [color]="!isEditMode ? 'custom' : 'primary'"
+  >
+    <app-icon *ngIf="!isEditMode" name="edit" slot="icon-only"></app-icon>
+    <ng-container *ngIf="isEditMode">Done</ng-container>
+  </app-button>
+  <ng-container *ngIf="posts.length; else emptyBox">
+    <app-post-item
+      *ngFor="let post of posts"
+      [post]="post"
+      (postDeleted)="handlePostDeleted($event)"
+      [checkbox]="isEditMode"
+      (click)="!isEditMode && showPost(post.id.toString())"
+      (selected)="postSelected($event, post)"
+      [isProfile]="true"
+    ></app-post-item>
+
+    <ion-infinite-scroll
+      *ngIf="totalPosts > posts.length && isConnection"
+      (ionInfinite)="loadMorePosts($event)"
+    >
+      <ion-infinite-scroll-content loadingSpinner="lines-sharp"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ng-container>
+
+  <app-post-controls
+    *ngIf="isEditMode && selectedPosts.length"
+    [posts]="selectedPosts"
+    [permissions]="permissions"
+    [isProfile]="true"
+    (postChanged)="getMyPosts()"
+    footer
+  >
+  </app-post-controls>
+</app-main-layout>
+
+<ng-template #emptyBox>
+  <div class="empty-box">
+    <ion-text color="medium" class="empty ion-text-center" *ngIf="!posts.length && !isPostsLoading">
+      No posts found!
+    </ion-text>
+    <app-spinner *ngIf="isPostsLoading"></app-spinner>
+  </div>
+</ng-template>

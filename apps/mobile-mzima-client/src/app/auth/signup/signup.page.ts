@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/
 import { Router } from '@angular/router';
 import { CONST } from '@constants';
 import { fieldErrorMessages, regexHelper } from '@helpers';
-import { AuthService } from '@services';
+import { AuthService, DeploymentService } from '@services';
 import { emailExistsValidator } from '@validators';
 
 @Component({
@@ -32,6 +32,7 @@ export class SignupPage {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private deploymentService: DeploymentService,
   ) {}
 
   public signUp(): void {
@@ -76,5 +77,10 @@ export class SignupPage {
     event.preventDefault();
     event.stopPropagation();
     console.log('open: ', link);
+  }
+
+  public chooseDeployment(): void {
+    this.deploymentService.removeDeployment();
+    this.router.navigate(['deployment']);
   }
 }
