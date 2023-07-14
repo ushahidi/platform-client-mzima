@@ -90,6 +90,10 @@ swiper-container {
     -webkit-box-orient: vertical;
     overflow: hidden;
 
+    @media (prefers-color-scheme: light) {
+      color: var(--ion-color-medium);
+    }
+
     @media (prefers-color-scheme: dark) {
       color: var(--ion-color-step-800);
     }

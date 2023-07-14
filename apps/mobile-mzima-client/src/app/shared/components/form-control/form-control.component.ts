@@ -27,7 +27,7 @@ export class FormControlComponent implements ControlValueAccessor {
   @Input() public pattern: string = '';
   @Input() public clearable = false;
   @Input() public togglePassword = false;
-  @Input() public errors: string[] = [];
+  @Input() public errors?: string[] = [];
   @Input() public color: 'light' | 'default' = 'default';
   @Input() public rows = 1;
   @Output() public inputFocus = new EventEmitter();

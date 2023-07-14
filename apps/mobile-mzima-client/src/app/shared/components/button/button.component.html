@@ -10,5 +10,6 @@
   [ngClass]="{ 'button--custom-color': color === 'custom', 'button--shadow': shadow }"
   (click)="onClick($event)"
 >
+  <app-icon class="button__icon" slot="start" *ngIf="iconName" [name]="iconName"></app-icon>
   <span><ng-content></ng-content></span>
 </ion-button>

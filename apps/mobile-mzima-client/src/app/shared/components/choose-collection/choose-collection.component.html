@@ -1,0 +1,143 @@
+<app-main-layout
+  class="main"
+  [isSearch]="true"
+  [title]="isProfile ? 'Collection' : 'Add post to collection'"
+  (back)="back.emit()"
+  (searchFocus)="isSearchView = true"
+  (searchBlur)="isSearchView = false"
+  [ngClass]="{ 'main--search-view': isSearchView }"
+>
+  <ion-item button lines="none" class="button-add" (click)="addNewCollection()">
+    <app-icon class="button-add__icon" name="add" slot="start"></app-icon>
+    Create new collection
+  </ion-item>
+
+  <ion-title class="title">
+    <ng-container *ngIf="!isSearchView">Collections</ng-container>
+    <ng-container *ngIf="isSearchView">Found {{ totalCollections }} collections</ng-container>
+  </ion-title>
+  <app-spinner
+    class="loader"
+    *ngIf="isLoading && !collections.length; else collectionsList"
+  ></app-spinner>
+  <ng-template #collectionsList>
+    <ng-container *ngIf="collections.length; else emptyMessage">
+      <app-collection-item
+        *ngFor="let collection of collections"
+        [collection]="collection"
+        [editable]="editable"
+        (collectionChanged)="collectionChanged($event, collection)"
+        (editCollection)="editCollectionHandle(collection)"
+        (click)="editable && showCollection(collection.id)"
+      ></app-collection-item>
+      <ion-infinite-scroll
+        *ngIf="totalCollections > collections.length"
+        (ionInfinite)="loadMoreCollections($event)"
+      >
+        <ion-infinite-scroll-content loadingSpinner="lines-sharp"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ng-container>
+    <ng-template #emptyMessage>
+      <ion-text color="medium" class="empty-box ion-text-center ion-padding">
+        There are no collections yet!
+      </ion-text>
+    </ng-template>
+  </ng-template>
+
+  <ion-footer
+    footer
+    class="footer"
+    [ngClass]="{ 'footer--search-view': isSearchView }"
+    *ngIf="!isProfile"
+  >
+    <ion-buttons class="footer__buttons">
+      <app-button
+        class="footer__button"
+        (buttonClick)="updateCollections()"
+        [disabled]="isPristine"
+      >
+        Add
+      </app-button>
+      <app-button
+        class="footer__button"
+        fill="outline"
+        color="medium"
+        (buttonClick)="back.emit()"
+        *ngIf="!isSearchView"
+      >
+        Cancel
+      </app-button>
+    </ion-buttons>
+  </ion-footer>
+</app-main-layout>
+
+<app-modal
+  [isOpen]="isAddCollectionModalOpen"
+  (modalClose)="isAddCollectionModalOpen = false"
+  [options]="{
+    footer: true
+  }"
+  title="Create Collection"
+>
+  <form
+    class="create-collection-form"
+    novalidate
+    (ngSubmit)="createCollection()"
+    [formGroup]="createCollectionForm"
+  >
+    <div class="create-collection-form__group">
+      <ion-title class="create-collection-form__title">General information</ion-title>
+      <app-form-control
+        label="Collection name"
+        [required]="true"
+        class="form-control"
+        formControlName="name"
+        placeholder="Enter collection name"
+        [errors]="fieldErrorMessages(createCollectionForm.controls['name'], 'name')"
+      >
+      </app-form-control>
+      <app-form-control
+        [rows]="3"
+        label="Description"
+        class="form-control"
+        formControlName="description"
+        placeholder="Enter description"
+      >
+      </app-form-control>
+    </div>
+    <div class="create-collection-form__group">
+      <ion-title class="create-collection-form__title">Displaying</ion-title>
+      <app-toggle type="item" formControlName="featured">Featured</app-toggle>
+    </div>
+    <div class="create-collection-form__group" *ngIf="roleOptions">
+      <ion-title class="create-collection-form__title">Who can see this?</ion-title>
+      <app-group-checkbox-select [data]="roleOptions" formControlName="visible_to">
+      </app-group-checkbox-select>
+    </div>
+    <div class="create-collection-form__group">
+      <ion-title class="create-collection-form__title">Default viewing mode</ion-title>
+      <app-select
+        formControlName="view"
+        label="Default viewing mode"
+        [options]="viewingModeOptions"
+      ></app-select>
+    </div>
+    <div class="create-collection-form__group">
+      <app-toggle formControlName="is_notifications_enabled">Receive notification</app-toggle>
+    </div>
+  </form>
+
+  <ion-buttons class="footer__buttons" footer>
+    <app-button
+      type="submit"
+      class="footer__button"
+      (buttonClick)="createCollection()"
+      [disabled]="createCollectionForm.disabled || createCollectionForm.invalid"
+    >
+      Submit
+    </app-button>
+    <app-button class="footer__button" fill="outline" color="medium" (buttonClick)="close()">
+      Cancel
+    </app-button>
+  </ion-buttons>
+</app-modal>
