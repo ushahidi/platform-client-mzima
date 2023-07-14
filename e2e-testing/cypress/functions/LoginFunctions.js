@@ -13,7 +13,11 @@ class LoginFunctions {
   }
 
   type_password(password) {
-    cy.get(LoginLocators.passwordField).type(password).invoke('val').should('have.length', 12);
+    cy.get(LoginLocators.passwordField)
+      .clear()
+      .type(password)
+      .invoke('val')
+      .should('have.length', 12);
   }
 
   click_login_button() {
