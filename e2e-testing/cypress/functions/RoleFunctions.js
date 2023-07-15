@@ -1,4 +1,4 @@
-import RoleLocators from "../locators/RoleLocators";
+import RoleLocators from '../locators/RoleLocators';
 
 class RoleFunctions {
   open_roles_page() {
@@ -15,7 +15,7 @@ class RoleFunctions {
   }
 
   verify_role_exist() {
-    cy.get(RoleLocators.createdRoleBtn).should("exist");
+    cy.get(RoleLocators.createdRoleBtn).should('exist');
   }
 
   delete_role() {
@@ -26,11 +26,11 @@ class RoleFunctions {
   }
 
   verify_role_deleted() {
-    cy.get(RoleLocators.createdRoleBtn).should("not.exist");
+    cy.get(RoleLocators.createdRoleBtn).should('not.exist');
   }
   add_and_verify_role() {
     this.open_roles_page();
-    this.add_role("Automated Role", "An automated description for automated role");
+    this.add_role('Automation Role 1.0', 'An automated description for automated role');
     this.verify_role_exist();
   }
   delete_role_and_verify_deletion() {
