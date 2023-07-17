@@ -7,7 +7,7 @@ const RoleLocators = {
   addCancelBtn: '[data-qa="btn-cancel-role"]',
   addSaveBtn: '[data-qa="btn-save-role"]',
   manageUsersBox: '[data-qa="manage-users"]',
-  createdRoleBtn: '[data-qa="btn-auto role"]',
+  createdRoleBtn: '[data-qa="btn-automation role 1.0"]',
   deleteRoleBtn: '[data-qa="btn-delete-role"]',
   deleteConfirmBtn: '[data-qa="btn-confirm-delete"]',
 };
