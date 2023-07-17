@@ -330,6 +330,7 @@ export class PostEditPage {
         date: this.handleDate.bind(this),
         datetime: this.handleDateTime.bind(this),
         upload: this.handleUpload.bind(this),
+        relation: this.handleRelation.bind(this),
       };
 
     const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
@@ -384,6 +385,17 @@ export class PostEditPage {
 
   private handleDefault(key: string, value: any) {
     this.updateFormControl(key, value?.value);
+  }
+
+  private handleRelation(key: string, value: any) {
+    this.updateFormControl(key, value?.value);
+    this.postsService.getById(value?.value).subscribe({
+      next: (post) => {
+        const { id, title } = post;
+        this.selectedRelatedPost = { id, title };
+      },
+      error: (err) => console.log(err),
+    });
   }
 
   private handleCheckbox(key: string, value: any) {

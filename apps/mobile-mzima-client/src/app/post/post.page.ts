@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   MediaService,
@@ -23,7 +23,7 @@ import { STORAGE_KEYS } from '@constants';
 })
 export class PostPage implements OnDestroy {
   public post?: PostResult;
-  public postId: string;
+  public postId: number;
   public isPostLoading: boolean = true;
   public isMediaLoading: boolean;
   public location: LatLon;
@@ -33,7 +33,7 @@ export class PostPage implements OnDestroy {
     role: undefined,
   };
   public isConnection = true;
-  public videoUrl: SafeResourceUrl;
+  public videoUrls: any[] = [];
   private queryParams: Params;
 
   constructor(
@@ -66,7 +66,7 @@ export class PostPage implements OnDestroy {
 
   async ionViewWillEnter() {
     this.isConnection = await this.checkNetwork();
-    this.postId = this.route.snapshot.params['id'];
+    this.postId = Number(this.route.snapshot.params['id']);
     if (this.postId) {
       if (this.isConnection) {
         this.getPost(Number(this.postId));
@@ -86,29 +86,31 @@ export class PostPage implements OnDestroy {
     return this.networkService.checkNetworkStatus();
   }
 
-  private async getPost(id: number) {
+  public async getPost(id: number) {
     this.isPostLoading = true;
     this.post = await this.getPostInformation(id);
     if (this.post) {
       this.isPostLoading = false;
       this.checkPermissions();
-      this.isPostLoading = false;
-      this.preparingMediaField((this.post.post_content as PostContent[])[0].fields);
-      this.preparingSafeVideoUrl((this.post.post_content as PostContent[])[0].fields);
-      this.preparingRelatedPosts((this.post.post_content as PostContent[])[0].fields);
+      this.getData(this.post);
     }
   }
 
+  private getData(post: PostResult): void {
+    this.preparingMediaField((post.post_content as PostContent[])[0].fields);
+    this.preparingSafeVideoUrls((post.post_content as PostContent[])[0].fields);
+    this.preparingRelatedPosts((post.post_content as PostContent[])[0].fields);
+  }
+
   private preparingRelatedPosts(fields: PostContentField[]): void {
-    console.log(fields);
     fields
       .filter((field: any) => field.type === 'relation')
       .map(async (relativeField) => {
-        if (relativeField.value?.post_id) {
+        if (relativeField.value?.value) {
           const url = `https://${this.deploymentService.getDeployment().fqdn}/feed/${
-            relativeField.value.post_id
+            relativeField.value.value
           }/view?mode=POST`;
-          const relative = await this.getPostInformation(relativeField.value.post_id);
+          const relative = await this.getPostInformation(relativeField.value.value);
           const { title } = relative;
           relativeField.value.postTitle = title;
           relativeField.value.postUrl = url;
@@ -131,7 +133,7 @@ export class PostPage implements OnDestroy {
 
   private async getPostInformation(postId: number): Promise<any> {
     try {
-      return lastValueFrom(this.postsService.getById(postId));
+      return await lastValueFrom(this.postsService.getById(postId));
     } catch (err) {
       console.error(err);
       return err;
@@ -140,20 +142,24 @@ export class PostPage implements OnDestroy {
 
   private async getPostMedia(mediaId: string): Promise<any> {
     try {
-      return lastValueFrom(this.mediaService.getById(mediaId));
+      return await lastValueFrom(this.mediaService.getById(mediaId));
     } catch (err) {
       console.error(err);
       return err;
     }
   }
 
-  private preparingSafeVideoUrl(fields: PostContentField[]) {
-    const videoField = fields.find((field: any) => field.input === 'video');
-    if (videoField && videoField.value?.value) {
-      this.videoUrl = this.generateSecurityTrustResourceUrl(
-        preparingVideoUrl(videoField.value?.value),
-      );
-    }
+  private preparingSafeVideoUrls(fields: PostContentField[]) {
+    this.videoUrls = fields
+      .filter((field: any) => field.input === 'video' && field.value?.value)
+      .map((videoField) => {
+        const rawUrl = preparingVideoUrl(videoField.value?.value);
+        const safeUrl = this.generateSecurityTrustResourceUrl(rawUrl);
+        return {
+          rawUrl: rawUrl,
+          safeUrl: safeUrl,
+        };
+      });
   }
 
   private generateSecurityTrustResourceUrl(unsafeUrl: string) {
@@ -178,6 +184,6 @@ export class PostPage implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.videoUrl = '';
+    this.videoUrls = [];
   }
 }
