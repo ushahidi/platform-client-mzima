@@ -37,7 +37,7 @@ export class SavedsearchesService extends ResourceService<any> {
     return super.update(id, resource);
   }
 
-  override post(resource: Savedsearch): Observable<SavedsearchesResponse> {
+  override post(resource: Savedsearch): Observable<{ result: Savedsearch }> {
     return super.post(resource);
   }
 
