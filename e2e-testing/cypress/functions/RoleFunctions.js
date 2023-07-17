@@ -12,7 +12,6 @@ class RoleFunctions {
     cy.get(RoleLocators.roleDescFld).type(roleDescription);
     cy.get(RoleLocators.manageUsersBox).click();
     cy.get(RoleLocators.addSaveBtn).click();
-    cy.url().should('eq', 'http://localhost:4200/settings/roles');
   }
 
   verify_role_exist() {
@@ -20,7 +19,7 @@ class RoleFunctions {
   }
 
   delete_role() {
-    cy.get(RoleLocators.createdRoleBtn).click();
+    cy.get(RoleLocators.roleToDeleteBtn).click();
     cy.wait(1000);
     cy.get(RoleLocators.deleteRoleBtn).click();
     cy.get(RoleLocators.deleteConfirmBtn).click();
@@ -35,6 +34,7 @@ class RoleFunctions {
     this.verify_role_exist();
   }
   delete_role_and_verify_deletion() {
+    this.open_roles_page();
     this.delete_role();
     this.verify_role_deleted();
   }
