@@ -73,11 +73,8 @@
 .survey-button {
   ::ng-deep {
     .mzima-button {
-      @include breakpoint-max($laptop-small) {
+      @include breakpoint-min-max($tablet, $laptop-small) {
         width: 45px;
-      }
-      @include breakpoint-max($tablet) {
-        width: auto;
       }
     }
 
@@ -89,10 +86,9 @@
   }
 
   .button-icon {
-    display: none;
-    @include breakpoint-max($laptop-small) {
-      display: block;
-      margin: 0;
+    margin: 0;
+    @include breakpoint-min($laptop-small) {
+      display: none;
     }
     @include breakpoint-max($tablet) {
       display: none;
@@ -100,12 +96,8 @@
   }
 
   .button-name {
-    display: block;
-    @include breakpoint-max($laptop-small) {
+    @include breakpoint-min-max($tablet, $laptop-small) {
       display: none;
-    }
-    @include breakpoint-max($tablet) {
-      display: block;
     }
   }
 }
