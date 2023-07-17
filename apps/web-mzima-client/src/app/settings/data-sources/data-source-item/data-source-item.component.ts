@@ -267,7 +267,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
 
     this.configService.updateProviders(this.cloneProviders).subscribe({
       next: () => this.router.navigate(['/settings/data-sources']),
-      error: () => (this.submitted = true),
+      error: () => (this.submitted = false),
     });
   }
 
