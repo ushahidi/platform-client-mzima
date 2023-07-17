@@ -21,7 +21,7 @@ import {
   ToastService,
 } from '@services';
 import { FormValidator, preparingVideoUrl } from '@validators';
-import { PostEditForm, UploadFileHelper } from '../helpers';
+import { PostEditForm, prepareRelationConfig, UploadFileHelper } from '../helpers';
 
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
@@ -218,6 +218,26 @@ export class PostEditPage {
     }
   }
 
+  getDefaultValues(field: any) {
+    const defaultValues: any = {
+      date: UTCHelper.toUTC(dayjs()),
+      location: { lat: '', lng: '' },
+      number: 0,
+    };
+
+    const types = ['upload', 'tags', 'location', 'checkbox', 'select', 'radio', 'date', 'datetime'];
+
+    return types.includes(field.input)
+      ? defaultValues[field.input]
+      : field.default || defaultValues[field.input] || '';
+  }
+
+  createField(field: any, value: any) {
+    return this.fieldsFormArray.includes(field.type)
+      ? new PostEditForm(this.formBuilder).addFormArray(value, field)
+      : new PostEditForm(this.formBuilder).addFormControl(value, field);
+  }
+
   loadForm(updateContent?: PostContent[]) {
     if (!this.selectedSurveyId) return;
     this.clearData();
@@ -239,40 +259,18 @@ export class PostEditPage {
               this.description = field.default;
               break;
             case 'relation':
-              const fieldForm: [] = field.config?.input?.form;
-              this.relationConfigForm = fieldForm?.length ? fieldForm : this.filters.form;
-              this.relationConfigSource = this.filters?.source || [];
-              this.relationConfigKey = field.key;
+              const { relationConfigForm, relationConfigSource, relationConfigKey } =
+                prepareRelationConfig(field, this.filters);
+              this.relationConfigForm = relationConfigForm;
+              this.relationConfigSource = relationConfigSource;
+              this.relationConfigKey = relationConfigKey;
               break;
           }
 
           if (field.key) {
-            const defaultValues: any = {
-              date: UTCHelper.toUTC(dayjs()),
-              location: { lat: '', lng: '' },
-              number: 0,
-            };
-
-            const types = [
-              'upload',
-              'tags',
-              'location',
-              'checkbox',
-              'select',
-              'radio',
-              'date',
-              'datetime',
-            ];
-
-            const value = types.includes(field.input)
-              ? defaultValues[field.input]
-              : field.default || defaultValues[field.input] || '';
-
+            const value = this.getDefaultValues(field);
             field.value = value;
-
-            fields[field.key] = this.fieldsFormArray.includes(field.type)
-              ? new PostEditForm(this.formBuilder).addFormArray(value, field)
-              : new PostEditForm(this.formBuilder).addFormControl(value, field);
+            fields[field.key] = this.createField(field, value);
 
             if (field.type === 'point') {
               this.locationRequired = field.required;
@@ -332,6 +330,7 @@ export class PostEditPage {
         date: this.handleDate.bind(this),
         datetime: this.handleDateTime.bind(this),
         upload: this.handleUpload.bind(this),
+        relation: this.handleRelation.bind(this),
       };
 
     const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
@@ -386,6 +385,17 @@ export class PostEditPage {
 
   private handleDefault(key: string, value: any) {
     this.updateFormControl(key, value?.value);
+  }
+
+  private handleRelation(key: string, value: any) {
+    this.updateFormControl(key, value?.value);
+    this.postsService.getById(value?.value).subscribe({
+      next: (post) => {
+        const { id, title } = post;
+        this.selectedRelatedPost = { id, title };
+      },
+      error: (err) => console.log(err),
+    });
   }
 
   private handleCheckbox(key: string, value: any) {

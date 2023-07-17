@@ -69,7 +69,7 @@
           </ng-container>
 
           <ng-container *ngIf="field.input === 'number'">
-            <p>{{ field.value.value || '-' }}</p>
+            <p>{{ field.value.value }}</p>
           </ng-container>
 
           <ng-container *ngIf="field.input === 'text'">
@@ -100,7 +100,12 @@
           <ng-container *ngIf="field.input === 'video'">
             <span *ngIf="!field.value.value">-</span>
             <div *ngIf="field.value.value">
-              <iframe id="player" [src]="videoUrl" width="400" height="250"></iframe>
+              <iframe
+                id="player"
+                [src]="getVideoUrlForField(field)"
+                width="400"
+                height="250"
+              ></iframe>
               <div>
                 <a [href]="field.value.value" target="_blank">{{ field.value.value }}</a>
               </div>
@@ -118,7 +123,9 @@
           </ng-container>
 
           <ng-container *ngIf="field.input === 'relation'">
-            <p>{{ field.value.value || '-' }}</p>
+            <a [href]="field.value.postUrl" target="_blank">
+              {{ field.value.postTitle }}
+            </a>
           </ng-container>
 
           <ng-container *ngIf="field.input === 'select'">

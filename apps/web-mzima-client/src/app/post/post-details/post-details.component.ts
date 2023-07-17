@@ -8,20 +8,20 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DomSanitizer, Meta, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import {
+  CategoryInterface,
+  MediaService,
+  PostContent,
+  PostContentField,
+  PostResult,
+  PostsService,
+} from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
+import { lastValueFrom } from 'rxjs';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { CollectionsModalComponent } from '../../shared/components';
-import {
-  MediaService,
-  CategoryInterface,
-  PostResult,
-  PostContent,
-  PostsService,
-  PostContentField,
-} from '@mzima-client/sdk';
-import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-post-details',
@@ -38,8 +38,9 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   @Output() refresh = new EventEmitter();
   @Output() statusChanged = new EventEmitter();
   public allowed_privileges: string | string[];
-  public postId: string;
-  public videoUrl: SafeResourceUrl;
+  public postId: number;
+  public videoUrls: any[] = [];
+  public isPostLoading: boolean = true;
 
   constructor(
     private dialog: MatDialog,
@@ -56,9 +57,9 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
 
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
 
-        this.postId = params['id'];
+        this.postId = Number(params['id']);
 
-        this.getPost();
+        this.getPost(this.postId);
       }
     });
   }
@@ -68,31 +69,35 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
       this.allowed_privileges = this.post?.allowed_privileges ?? '';
       if (changes['post'].currentValue?.post_content?.length) {
         this.setMetaData(this.post!);
-        this.preparingMediaField(changes['post'].currentValue.post_content[0].fields);
-        this.preparingSafeVideoUrl(changes['post'].currentValue.post_content[0].fields);
+        this.getData(changes['post'].currentValue);
       }
     }
   }
 
-  private async getPostMedia(mediaId: string): Promise<any> {
-    try {
-      const response = await lastValueFrom(this.mediaService.getById(mediaId));
-      return response;
-    } catch (err) {
-      console.error(err);
-      return err;
-    }
+  private async getPost(id: number): Promise<void> {
+    if (!this.postId) return;
+    this.post = await this.getPostInformation(id);
+    if (this.post) this.getData(this.post);
   }
 
-  private getPost(): void {
-    if (!this.postId) return;
-    this.postsService.getById(this.postId).subscribe({
-      next: (post: PostResult) => {
-        this.post = post;
-        this.preparingMediaField((this.post.post_content as PostContent[])[0].fields);
-        this.preparingSafeVideoUrl((this.post.post_content as PostContent[])[0].fields);
-      },
-    });
+  private getData(post: PostResult): void {
+    this.preparingMediaField((post.post_content as PostContent[])[0].fields);
+    this.preparingSafeVideoUrls((post.post_content as PostContent[])[0].fields);
+    this.preparingRelatedPosts((post.post_content as PostContent[])[0].fields);
+  }
+
+  private preparingRelatedPosts(fields: PostContentField[]): void {
+    fields
+      .filter((field: any) => field.type === 'relation')
+      .map(async (relativeField) => {
+        if (relativeField.value?.value) {
+          const url = `${window.location.origin}/feed/${relativeField.value.value}/view?mode=POST`;
+          const relative = await this.getPostInformation(relativeField.value.value);
+          const { title } = relative;
+          relativeField.value.postTitle = title;
+          relativeField.value.postUrl = url;
+        }
+      });
   }
 
   private async preparingMediaField(fields: PostContentField[]): Promise<void> {
@@ -107,13 +112,40 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
       });
   }
 
-  private preparingSafeVideoUrl(fields: PostContentField[]) {
-    const videoField = fields.find((field: any) => field.input === 'video');
-    if (videoField && videoField.value?.value) {
-      this.videoUrl = this.generateSecurityTrustResourceUrl(
-        preparingVideoUrl(videoField.value?.value),
-      );
+  private preparingSafeVideoUrls(fields: PostContentField[]) {
+    this.videoUrls = fields
+      .filter((field: any) => field.input === 'video' && field.value?.value)
+      .map((videoField) => {
+        const rawUrl = preparingVideoUrl(videoField.value?.value);
+        const safeUrl = this.generateSecurityTrustResourceUrl(rawUrl);
+        return {
+          rawUrl: rawUrl,
+          safeUrl: safeUrl,
+        };
+      });
+  }
+
+  private async getPostInformation(postId: number): Promise<any> {
+    try {
+      return await lastValueFrom(this.postsService.getById(postId));
+    } catch (err) {
+      console.error(err);
+      return err;
     }
+  }
+
+  private async getPostMedia(mediaId: string): Promise<any> {
+    try {
+      return await lastValueFrom(this.mediaService.getById(mediaId));
+    } catch (err) {
+      console.error(err);
+      return err;
+    }
+  }
+
+  getVideoUrlForField(field: any): any {
+    const videoUrlObj = this.videoUrls.find((urlObj) => urlObj.rawUrl.includes(field.value.value));
+    return videoUrlObj ? videoUrlObj.safeUrl : null;
   }
 
   private generateSecurityTrustResourceUrl(unsafeUrl: string) {
@@ -149,7 +181,7 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   }
 
   public statusChangedHandle(): void {
-    this.getPost();
+    this.getPost(this.postId);
     this.statusChanged.emit();
   }
 

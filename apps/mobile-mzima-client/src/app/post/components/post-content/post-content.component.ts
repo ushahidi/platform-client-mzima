@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SafeResourceUrl } from '@angular/platform-browser';
+import { CategoryInterface, PostContent } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-post-content',
@@ -7,9 +7,21 @@ import { SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./post-content.component.scss'],
 })
 export class PostContentComponent {
-  @Input() postContent: any;
-  @Input() categories: any;
+  @Input() postContent: PostContent[];
+  @Input() categories: CategoryInterface[];
   @Input() isConnection: boolean;
-  @Input() videoUrl: SafeResourceUrl;
+  @Input() videoUrls: any[] = [];
   @Input() isMediaLoading: boolean;
+
+  public isParentCategory(
+    categories: CategoryInterface[] | undefined,
+    category_id: number,
+  ): boolean {
+    return !!categories?.find((category: CategoryInterface) => category.parent_id === category_id);
+  }
+
+  public getVideoUrlForField(field: any): any {
+    const videoUrlObj = this.videoUrls.find((urlObj) => urlObj.rawUrl.includes(field.value.value));
+    return videoUrlObj ? videoUrlObj.safeUrl : null;
+  }
 }
