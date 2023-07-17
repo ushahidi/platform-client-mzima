@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DomSanitizer, Meta, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { preparingVideoUrl } from '../../core/helpers/validators';
@@ -39,7 +39,7 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   @Output() statusChanged = new EventEmitter();
   public allowed_privileges: string | string[];
   public postId: string;
-  public videoUrl: SafeResourceUrl;
+  public videoUrls: any[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -69,7 +69,7 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
       if (changes['post'].currentValue?.post_content?.length) {
         this.setMetaData(this.post!);
         this.preparingMediaField(changes['post'].currentValue.post_content[0].fields);
-        this.preparingSafeVideoUrl(changes['post'].currentValue.post_content[0].fields);
+        this.preparingSafeVideoUrls(changes['post'].currentValue.post_content[0].fields);
       }
     }
   }
@@ -89,8 +89,8 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     this.postsService.getById(this.postId).subscribe({
       next: (post: PostResult) => {
         this.post = post;
-        this.preparingMediaField((this.post.post_content as PostContent[])[0].fields);
-        this.preparingSafeVideoUrl((this.post.post_content as PostContent[])[0].fields);
+        this.preparingMediaField((this.post?.post_content as PostContent[])[0].fields);
+        this.preparingSafeVideoUrls((this.post?.post_content as PostContent[])[0].fields);
       },
     });
   }
@@ -107,13 +107,22 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
       });
   }
 
-  private preparingSafeVideoUrl(fields: PostContentField[]) {
-    const videoField = fields.find((field: any) => field.input === 'video');
-    if (videoField && videoField.value?.value) {
-      this.videoUrl = this.generateSecurityTrustResourceUrl(
-        preparingVideoUrl(videoField.value?.value),
-      );
-    }
+  private preparingSafeVideoUrls(fields: PostContentField[]) {
+    this.videoUrls = fields
+      .filter((field: any) => field.input === 'video' && field.value?.value)
+      .map((videoField) => {
+        const rawUrl = preparingVideoUrl(videoField.value?.value);
+        const safeUrl = this.generateSecurityTrustResourceUrl(rawUrl);
+        return {
+          rawUrl: rawUrl,
+          safeUrl: safeUrl,
+        };
+      });
+  }
+
+  getVideoUrlForField(field: any): any {
+    const videoUrlObj = this.videoUrls.find((urlObj) => urlObj.rawUrl.includes(field.value.value));
+    return videoUrlObj ? videoUrlObj.safeUrl : null;
   }
 
   private generateSecurityTrustResourceUrl(unsafeUrl: string) {

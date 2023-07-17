@@ -100,7 +100,12 @@
           <ng-container *ngIf="field.input === 'video'">
             <span *ngIf="!field.value.value">-</span>
             <div *ngIf="field.value.value">
-              <iframe id="player" [src]="videoUrl" width="400" height="250"></iframe>
+              <iframe
+                id="player"
+                [src]="getVideoUrlForField(field)"
+                width="400"
+                height="250"
+              ></iframe>
               <div>
                 <a [href]="field.value.value" target="_blank">{{ field.value.value }}</a>
               </div>
