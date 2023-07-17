@@ -12,6 +12,7 @@ import {
   Savedsearch,
   SavedsearchesService,
 } from '@mzima-client/sdk';
+import { lastValueFrom } from 'rxjs';
 
 export interface SaveSearchModalData {
   search?: Savedsearch;
@@ -136,7 +137,12 @@ export class SaveSearchModalComponent implements OnInit {
           ...savedSearchParams,
         })
         .subscribe({
-          next: () => {
+          next: async () => {
+            await this.toggleNotifications(
+              this.data.search.id,
+              this.form.value.is_notifications_enabled,
+            );
+            this.eventBus.next({ payload: savedSearchParams, type: EventType.UpdateSavedSearch });
             this.matDialogRef.close(true);
           },
         });
@@ -146,13 +152,31 @@ export class SaveSearchModalComponent implements OnInit {
           ...savedSearchParams,
         })
         .subscribe({
-          next: () => {
+          next: async (newSS) => {
+            await this.toggleNotifications(
+              newSS.result.id!,
+              this.form.value.is_notifications_enabled,
+            );
             this.matDialogRef.close(true);
           },
           error: (err) => {
             this.formErrors = err.error.errors.failed_validations;
           },
         });
+    }
+  }
+
+  private async toggleNotifications(id: string | number, currentNotificationValue: boolean) {
+    if (!!this.notification !== currentNotificationValue) {
+      if (currentNotificationValue) {
+        return lastValueFrom(this.notificationsService.post({ set_id: id }));
+      } else {
+        const notif = await lastValueFrom(this.notificationsService.get(String(id)));
+        const notification = notif.results[0];
+        return lastValueFrom(this.notificationsService.delete(notification.id));
+      }
+    } else {
+      return Promise.reject(0);
     }
   }
 
