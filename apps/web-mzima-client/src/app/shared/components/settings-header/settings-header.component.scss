@@ -72,3 +72,29 @@
     }
   }
 }
+
+.delete-button {
+  ::ng-deep {
+    .mzima-button {
+      @include breakpoint-max($laptop-small) {
+        width: 45px;
+      }
+    }
+    .mzima-button__content .mzima-button__icon:not(.mzima-button__icon--prefix) {
+      margin-inline-start: 0;
+    }
+  }
+  .button-icon {
+    display: none;
+    @include breakpoint-max($laptop-small) {
+      display: block;
+      margin: 0;
+    }
+  }
+  .button-name {
+    display: block;
+    @include breakpoint-max($laptop-small) {
+      display: none;
+    }
+  }
+}
