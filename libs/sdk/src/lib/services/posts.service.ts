@@ -114,6 +114,24 @@ export class PostsService extends ResourceService<any> {
     );
   }
 
+  public getMyPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
+    const tmpParams = { has_location: 'all', user: 'me', ...filter };
+    return super.get(url, this.postParamsMapper(tmpParams)).pipe(
+      map((response) => {
+        response.results.map((post: PostResult) => {
+          post.source =
+            post.source === 'sms'
+              ? 'SMS'
+              : post.source
+              ? post.source.charAt(0).toUpperCase() + post.source.slice(1)
+              : 'Web';
+        });
+
+        return response;
+      }),
+    );
+  }
+
   public searchPosts(url: string, query?: string, params?: any): Observable<PostApiResponse> {
     return super.get(url, { has_location: 'all', q: query, ...params }).pipe(
       tap((response) => {

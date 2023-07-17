@@ -1,0 +1,23 @@
+.edit-button {
+  --size: 48px;
+  --icon-size: 24px;
+  margin-left: 16px;
+  --button-padding-end: 24px;
+  --button-padding-start: 24px;
+
+  @media (prefers-color-scheme: light) {
+    color: var(--ion-color-step-600);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--ion-color-step-800);
+  }
+}
+
+.empty-box {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}

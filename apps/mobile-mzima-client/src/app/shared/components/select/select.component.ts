@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { SelectOptionInterface } from '@models';
 
 @Component({
   selector: 'app-select',
@@ -14,7 +15,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
   ],
 })
 export class SelectComponent implements ControlValueAccessor {
-  @Input() public options?: { label: string; value: any }[];
+  @Input() public options?: SelectOptionInterface[];
   @Input() public label?: string;
   @Input() public placeholder: string = '';
   @Input() public hintHTML?: string;

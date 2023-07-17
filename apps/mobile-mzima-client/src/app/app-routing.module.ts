@@ -7,7 +7,6 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./map/map.module').then((m) => m.MapPageModule),
-    // pathMatch: 'full',
   },
   {
     path: 'auth',
@@ -15,8 +14,8 @@ const routes: Routes = [
     canActivate: [NotAuthorizedGuard],
   },
   {
-    path: 'settings',
-    loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsPageModule),
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then((m) => m.ProfilePageModule),
   },
   {
     path: 'walkthrough',
@@ -29,24 +28,24 @@ const routes: Routes = [
       import('./deployment/deployment.module').then((m) => m.DeploymentPageModule),
   },
   {
-    path: 'deployment-search',
-    loadChildren: () =>
-      import('./deployment/deployment-search/deployment-search.module').then(
-        (m) => m.DeploymentSearchPageModule,
-      ),
-  },
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./post/post-edit/post-edit.module').then((m) => m.PostEditModule),
-  //   pathMatch: 'full',
-  // },
-  {
     path: 'post-edit',
     loadChildren: () => import('./post/post-edit/post-edit.module').then((m) => m.PostEditModule),
     data: {
       breadcrumb: 'nav.posts',
       ogTitle: 'nav.posts',
     },
+  },
+  {
+    path: 'terms-and-conditions',
+    loadChildren: () =>
+      import('./terms-and-conditions/terms-and-conditions.module').then(
+        (m) => m.TermsAndConditionsPageModule,
+      ),
+  },
+  {
+    path: 'privacy-policy',
+    loadChildren: () =>
+      import('./privacy-policy/privacy-policy.module').then((m) => m.PrivacyPolicyPageModule),
   },
   {
     path: ':id',

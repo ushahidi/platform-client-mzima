@@ -68,56 +68,12 @@
     </ng-template>
   </ng-template>
 
-  <ion-footer class="controls-panel" footer>
-    <ion-toolbar class="controls-panel__toolbar">
-      <ion-buttons class="controls-panel__buttons">
-        <app-button
-          color="dark"
-          fill="clear"
-          (buttonClick)="openStatusOptions()"
-          *ngIf="permissions.includes('change_status')"
-        >
-          <app-icon slot="icon-only" name="dots"></app-icon>
-        </app-button>
-        <app-button color="dark" fill="clear" (buttonClick)="sharePost()">
-          <app-icon slot="icon-only" name="share"></app-icon>
-        </app-button>
-        <app-button
-          color="dark"
-          fill="clear"
-          *ngIf="permissions.includes('add_to_collection')"
-          (buttonClick)="addPostToCollection()"
-        >
-          <app-icon slot="icon-only" name="add-to-collection"></app-icon>
-        </app-button>
-        <app-button
-          color="danger"
-          fill="clear"
-          *ngIf="permissions.includes('edit')"
-          (buttonClick)="deletePost()"
-        >
-          <app-icon slot="icon-only" name="delete"></app-icon>
-        </app-button>
-      </ion-buttons>
-
-      <app-button
-        slot="end"
-        class="edit-button"
-        color="gray"
-        shape="normal"
-        (buttonClick)="editPost()"
-        *ngIf="permissions.includes('edit')"
-      >
-        <app-icon slot="icon-only" name="edit"></app-icon>
-      </app-button>
-    </ion-toolbar>
-  </ion-footer>
+  <app-post-controls
+    footer
+    *ngIf="post"
+    [posts]="[post]"
+    [permissions]="permissions"
+    (postChanged)="getPost(postId)"
+  >
+  </app-post-controls>
 </app-main-layout>
-
-<ion-action-sheet
-  mode="ios"
-  header="Post Actions"
-  [isOpen]="isStatusOptionsOpen"
-  [buttons]="statusOptionsButtons"
-  (willDismiss)="setStatus($event)"
-></ion-action-sheet>

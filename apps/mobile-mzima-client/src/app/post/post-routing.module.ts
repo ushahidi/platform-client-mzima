@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PostPage } from './post.page';
-import { WalkthroughGuard } from '../core/guards/walkthrough.guard';
-import { NotDeploymentGuard } from '../core/guards/not-deployment.guard';
+import { WalkthroughGuard, NotDeploymentGuard } from '@guards';
 
 const routes: Routes = [
   {

@@ -15,6 +15,7 @@ interface ModalOptions {
   header?: boolean;
   offsetTop?: boolean;
   offsetBottom?: boolean;
+  searchForm?: boolean;
 }
 
 @Component({
@@ -28,13 +29,17 @@ export class ModalComponent implements OnInit, OnChanges {
   @Input() public title: string;
   @Input() public options: ModalOptions = {};
   @Output() public modalClose = new EventEmitter();
+  @Output() public search = new EventEmitter<string>();
   @ViewChild('modal') modal: IonModal;
   public modalOptions: ModalOptions = {
     header: true,
     footer: false,
     offsetTop: true,
     offsetBottom: true,
+    searchForm: false,
   };
+  public searchFormValue = '';
+  public isSearchView = false;
 
   ngOnInit(): void {
     this.modalOptions = {
@@ -61,5 +66,9 @@ export class ModalComponent implements OnInit, OnChanges {
 
   public closeModalHandle(): void {
     this.modalClose.emit();
+  }
+
+  public searchQueryChanged(): void {
+    this.search.emit(this.searchFormValue);
   }
 }

@@ -1,0 +1,189 @@
+<app-main-layout class="main" title="Profile Information" (back)="back()">
+  <app-profile-photo class="avatar" [photo]="userPhoto"></app-profile-photo>
+  <ion-title class="title">Profile name</ion-title>
+  <form class="information-form" novalidate [formGroup]="form" (ngSubmit)="updateUserInformation()">
+    <app-form-control
+      label="Display name"
+      [required]="true"
+      formControlName="realname"
+      placeholder="Enter your name"
+      [errors]="fieldErrorMessages(form.controls['realname'], 'display_name')"
+    >
+    </app-form-control>
+    <app-select label="Role" [options]="roleOptions" formControlName="role"> </app-select>
+  </form>
+  <ion-title class="title">Profile settings</ion-title>
+  <div class="profile-settings-menu">
+    <ion-item
+      (click)="toggleChangeEmailModal(true)"
+      button
+      class="profile-settings-item"
+      lines="none"
+    >
+      <app-icon class="profile-settings-item__icon" name="email" slot="start"></app-icon>
+      <div class="profile-settings-item__inner">
+        Change E-Mail
+        <ion-text class="profile-settings-item__value" color="primary" *ngIf="userEmail">
+          <span class="ellipsis">{{ userEmail[0] }}</span>{{ userEmail[1] }}
+        </ion-text>
+      </div>
+      <app-icon class="profile-settings-item__details" name="arrow-right" slot="end"></app-icon>
+    </ion-item>
+    <ion-item
+      (click)="toggleChangePasswordModal(true)"
+      button
+      class="profile-settings-item"
+      lines="none"
+    >
+      <app-icon class="profile-settings-item__icon" name="lock" slot="start"></app-icon>
+      <div class="profile-settings-item__inner">Change password</div>
+      <app-icon class="profile-settings-item__details" name="arrow-right" slot="end"></app-icon>
+    </ion-item>
+  </div>
+
+  <ion-footer class="footer" footer>
+    <ion-toolbar class="footer__toolbar">
+      <ion-buttons class="form-controls-panel">
+        <app-button
+          expand="inline"
+          type="button"
+          *ngIf="form"
+          [disabled]="form.disabled || form.invalid || form.pristine"
+          (buttonClick)="updateUserInformation()"
+        >
+          Save changes
+        </app-button>
+        <app-button color="medium" fill="outline" expand="inline" (buttonClick)="back()">
+          Cancel
+        </app-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+</app-main-layout>
+
+<app-modal
+  [isOpen]="isChangeEmailModalOpen"
+  title="Change E-Mail"
+  (modalClose)="toggleChangeEmailModal(false)"
+>
+  <form novalidate class="modal-form" [formGroup]="changeEmailForm" (ngSubmit)="updateUserEmail()">
+    <div>
+      <app-form-control
+        type="email"
+        label="Current E-Mail"
+        [required]="true"
+        formControlName="currentEmail"
+        placeholder="Enter your current email"
+        [errors]="changeEmailForm.hasError('notSameAsCurrent') ? ['The entered email does not match the current email. Please make sure to enter the correct email address.'] : undefined"
+      >
+      </app-form-control>
+      <app-form-control
+        type="email"
+        label="New E-Mail"
+        [required]="true"
+        class="no-offset"
+        formControlName="newEmail"
+        placeholder="Enter new email"
+        [errors]="fieldErrorMessages(changeEmailForm.controls['newEmail'], 'email')"
+      >
+      </app-form-control>
+      <app-form-control
+        type="email"
+        label="Repeat new E-Mail"
+        [required]="true"
+        formControlName="repeatEmail"
+        placeholder="Repeat new email"
+        [errors]="changeEmailForm.hasError('notSame') ? ['Emails do not match'] : undefined"
+      >
+      </app-form-control>
+    </div>
+
+    <ion-footer class="footer footer--modal" footer>
+      <ion-toolbar class="footer__toolbar">
+        <ion-buttons class="form-controls-panel">
+          <app-button
+            type="submit"
+            [disabled]="changeEmailForm.invalid || changeEmailForm.disabled"
+          >
+            Save changes
+          </app-button>
+          <app-button fill="outline" color="medium" (buttonClick)="toggleChangeEmailModal(false)">
+            Cancel
+          </app-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </form>
+</app-modal>
+
+<app-modal
+  [isOpen]="isChangePasswordModalOpen"
+  title="Change password"
+  (modalClose)="toggleChangePasswordModal(false)"
+>
+  <form
+    novalidate
+    class="modal-form"
+    [formGroup]="changePasswordForm"
+    (ngSubmit)="updateUserPassword()"
+  >
+    <div>
+      <!-- <app-form-control
+        type="password"
+        label="Current password"
+        [required]="true"
+        formControlName="currentPassword"
+        placeholder="Enter your current password"
+        [disabled]="true"
+        [errors]="fieldErrorMessages(changePasswordForm.controls['currentPassword'], 'currentPassword')"
+      >
+      </app-form-control> -->
+      <app-form-control
+        type="password"
+        label="New password"
+        [required]="true"
+        class="no-offset"
+        formControlName="newPassword"
+        placeholder="Enter new password"
+        [errors]="fieldErrorMessages(changePasswordForm.controls['newPassword'], 'newPassword')"
+        [hint]="!changePasswordForm.controls['newPassword'].value?.length ? 'Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol.' : undefined"
+      >
+        <app-password-strength
+          additional
+          *ngIf="changePasswordForm.controls['newPassword'].value?.length"
+          class="password-strength"
+          [passwordToCheck]="changePasswordForm.value.newPassword ?? ''"
+        ></app-password-strength>
+      </app-form-control>
+      <app-form-control
+        type="password"
+        label="Repeat new password"
+        [required]="true"
+        formControlName="repeatPassword"
+        placeholder="Repeat new password"
+        [errors]="changePasswordForm.hasError('notSame') ? ['Passwords do not match'] : undefined"
+      >
+      </app-form-control>
+    </div>
+
+    <ion-footer class="footer footer--modal" footer>
+      <ion-toolbar class="footer__toolbar">
+        <ion-buttons class="form-controls-panel">
+          <app-button
+            type="submit"
+            [disabled]="changePasswordForm.invalid || changePasswordForm.disabled"
+          >
+            Save changes
+          </app-button>
+          <app-button
+            fill="outline"
+            color="medium"
+            (buttonClick)="toggleChangePasswordModal(false)"
+          >
+            Cancel
+          </app-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </form>
+</app-modal>

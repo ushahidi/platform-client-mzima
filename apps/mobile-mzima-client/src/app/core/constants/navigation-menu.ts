@@ -11,8 +11,8 @@ export const navigationMenu = [
     route: '/activity',
   },
   {
-    label: 'Settings',
-    icon: 'settings',
-    route: '/settings',
+    label: 'Profile',
+    icon: 'profile',
+    route: '/profile',
   },
 ];

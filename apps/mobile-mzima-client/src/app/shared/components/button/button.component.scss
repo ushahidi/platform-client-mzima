@@ -35,8 +35,8 @@
   }
 
   &.button-clear {
-    --padding-start: 0;
-    --padding-end: 0;
+    --padding-end: var(--button-padding-end, 0);
+    --padding-start: var(--button-padding-start, 0);
 
     &.ion-color-primary {
       @media (prefers-color-scheme: light) {
@@ -81,5 +81,12 @@
 
   &:not(.button-round) {
     --border-radius: var(--button-border-radius, 22px);
+  }
+
+  &__icon {
+    display: block;
+    line-height: 1;
+    margin-inline-end: 8px;
+    font-size: var(--icon-size, 24px);
   }
 }

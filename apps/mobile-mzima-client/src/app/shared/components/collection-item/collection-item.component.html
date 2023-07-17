@@ -1,0 +1,40 @@
+<app-checkbox
+  type="item"
+  *ngIf="!editable"
+  class="collection-item"
+  [(ngModel)]="collection.checked"
+  (checkboxChange)="collectionChanged.emit($event)"
+>
+  <ng-container *ngTemplateOutlet="collectionItem"></ng-container>
+</app-checkbox>
+
+<ion-item class="collection-item collection-item--item" *ngIf="editable" lines="none" button>
+  <ng-container *ngTemplateOutlet="collectionItem"></ng-container>
+  <app-button
+    slot="end"
+    fill="clear"
+    color="custom"
+    class="collection-item__edit-button"
+    (buttonClick)="editClickHandle($event)"
+  >
+    <app-icon name="edit" slot="icon-only"></app-icon>
+  </app-button>
+</ion-item>
+
+<ng-template #collectionItem>
+  <div class="collection-item__inner">
+    <div class="collection-item__content">
+      {{ collection.name }}
+      <ion-text
+        color="medium"
+        class="collection-item__description"
+        *ngIf="collection.description?.length"
+      >
+        {{ collection.description }}
+      </ion-text>
+    </div>
+    <ion-text color="primary" class="collection-item__count">
+      {{ collection.posts_count }}
+    </ion-text>
+  </div>
+</ng-template>

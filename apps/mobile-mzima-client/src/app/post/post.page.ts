@@ -1,36 +1,19 @@
 import { Component, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CollectionsModalComponent } from '@components';
-import {
-  getPostStatusActions,
-  PostItemActionType,
-  postStatusChangedHeader,
-  postStatusChangedMessage,
-  STORAGE_KEYS,
-} from '@constants';
-import { ActionSheetButton, ModalController } from '@ionic/angular';
-import { LatLon } from '@models';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   MediaService,
   PostContent,
   PostContentField,
   PostResult,
   PostsService,
-  PostStatus,
 } from '@mzima-client/sdk';
+import { LatLon } from '@models';
+import { DatabaseService, DeploymentService, NetworkService, SessionService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-  AlertService,
-  DatabaseService,
-  DeploymentService,
-  NetworkService,
-  SessionService,
-  ShareService,
-  ToastService,
-} from '@services';
 import { preparingVideoUrl } from '@validators';
 import { lastValueFrom } from 'rxjs';
+import { STORAGE_KEYS } from '@constants';
 
 @UntilDestroy()
 @Component({
@@ -44,8 +27,6 @@ export class PostPage implements OnDestroy {
   public isPostLoading: boolean = true;
   public isMediaLoading: boolean;
   public location: LatLon;
-  public isStatusOptionsOpen = false;
-  public statusOptionsButtons?: ActionSheetButton[] = getPostStatusActions();
   public permissions: string[] = [];
   private user: { id?: string; role?: string } = {
     id: undefined,
@@ -53,6 +34,7 @@ export class PostPage implements OnDestroy {
   };
   public isConnection = true;
   public videoUrl: SafeResourceUrl;
+  private queryParams: Params;
 
   constructor(
     private networkService: NetworkService,
@@ -60,14 +42,10 @@ export class PostPage implements OnDestroy {
     private route: ActivatedRoute,
     private postsService: PostsService,
     private mediaService: MediaService,
-    private toastService: ToastService,
     protected sessionService: SessionService,
-    private shareService: ShareService,
-    private alertService: AlertService,
-    private modalController: ModalController,
-    private deploymentService: DeploymentService,
     private databaseService: DatabaseService,
     private sanitizer: DomSanitizer,
+    private deploymentService: DeploymentService,
   ) {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: ({ userId, role }) => {
@@ -76,6 +54,12 @@ export class PostPage implements OnDestroy {
           role,
         };
         this.checkPermissions();
+      },
+    });
+
+    this.route.queryParams.subscribe({
+      next: (queryParams) => {
+        this.queryParams = queryParams;
       },
     });
   }
@@ -190,109 +174,7 @@ export class PostPage implements OnDestroy {
   }
 
   public back(): void {
-    this.router.navigate(['/']);
-  }
-
-  public openStatusOptions(): void {
-    this.isStatusOptionsOpen = true;
-  }
-
-  public setStatus(ev: any): void {
-    this.isStatusOptionsOpen = false;
-    const role = ev.detail.role;
-    if (role === 'cancel' || !ev.detail.data) return;
-    const action: PostItemActionType = ev.detail.data.action;
-    const actions: Partial<Record<PostItemActionType, () => void>> = {
-      [PostItemActionType.PUBLISH]: () => this.setPostStatus(PostStatus.Published),
-      [PostItemActionType.PUT_UNDER_REVIEW]: () => this.setPostStatus(PostStatus.Draft),
-      [PostItemActionType.ARCHIVE]: () => this.setPostStatus(PostStatus.Archived),
-    };
-
-    actions[action]?.();
-  }
-
-  private setPostStatus(status: PostStatus): void {
-    if (!this.post) return;
-    this.postsService.updateStatus(this.post.id, status).subscribe((res) => {
-      this.post = res.result;
-      this.toastService.presentToast({
-        header: postStatusChangedHeader[status],
-        message: postStatusChangedMessage(status, this.post!.title),
-        buttons: [],
-      });
-    });
-  }
-
-  public sharePost(): void {
-    if (!this.post) return;
-    this.shareService.share({
-      title: this.post.title,
-      text: this.post.title,
-      url: `https://${this.deploymentService.getDeployment().fqdn}/feed/${
-        this.post.id
-      }/view?mode=POST`,
-      dialogTitle: 'Share Post',
-    });
-  }
-
-  public async deletePost(): Promise<void> {
-    const result = await this.alertService.presentAlert({
-      header: 'Are you sure you want to delete this post?',
-      message: 'This action cannot be undone. Please proceed with caution.',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-        {
-          text: 'Delete',
-          role: 'confirm',
-          cssClass: 'danger',
-        },
-      ],
-    });
-
-    if (result.role === 'confirm') {
-      this.postsService.delete(this.post!.id).subscribe({
-        next: () => {
-          this.router.navigate(['/']);
-          this.toastService.presentToast({
-            message: 'Post has been successfully deleted',
-          });
-        },
-      });
-    }
-  }
-
-  public editPost(): void {
-    if (!this.post) return;
-    this.router.navigate([this.post.id, 'edit']);
-  }
-
-  public async addPostToCollection(): Promise<void> {
-    const modal = await this.modalController.create({
-      component: CollectionsModalComponent,
-      componentProps: {
-        postId: this.post!.id,
-        selectedCollections: new Set(this.post!.sets ?? []),
-      },
-    });
-    modal.onWillDismiss().then(({ data }) => {
-      const { collections, changed } = data ?? {};
-      if (changed && this.post) {
-        this.post.sets = collections;
-        this.toastService.presentToast({
-          header: 'Success',
-          message: `The post “${this.post.title}” was ${
-            collections?.length
-              ? `added in ${collections.length} collections`
-              : 'removed from all collections'
-          }.`,
-          buttons: [],
-        });
-      }
-    });
-    modal.present();
+    this.router.navigate([this.queryParams['profile'] ? 'profile/posts' : '/']);
   }
 
   ngOnDestroy() {
