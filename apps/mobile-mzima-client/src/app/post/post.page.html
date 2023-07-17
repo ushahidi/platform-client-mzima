@@ -22,10 +22,10 @@
 
         <ng-container *ngIf="post.source !== 'Twitter'">
           <app-post-content
-            [postContent]="post.post_content"
-            [categories]="post.categories"
+            [postContent]="post.post_content!"
+            [categories]="post.categories!"
             [isConnection]="isConnection"
-            [videoUrl]="videoUrl"
+            [videoUrls]="videoUrls"
             [isMediaLoading]="isMediaLoading"
           ></app-post-content>
         </ng-container>
