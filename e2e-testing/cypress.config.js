@@ -1,7 +1,7 @@
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
-  projectId: "43gftm",
+  projectId: '43gftm',
   viewportWidth: 1280,
   viewportHeight: 960,
   defaultCommandTimeout: 20000,
@@ -10,5 +10,6 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
   },
-  video: false,
+  video: true,
+  videoUploadOnPasses: false,
 });
