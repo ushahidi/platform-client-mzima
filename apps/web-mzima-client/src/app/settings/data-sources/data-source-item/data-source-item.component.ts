@@ -40,6 +40,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   private availableProviders: any[];
   public onCreating: boolean;
   public isDesktop = false;
+  public submitted = false;
   providersData: any;
   cloneProviders: any;
 
@@ -217,6 +218,7 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   }
 
   public saveProviderData(): void {
+    this.submitted = true;
     if (this.form.value.form_id) {
       for (const field of this.provider.control_inbound_fields) {
         this.form.patchValue({
@@ -238,7 +240,6 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
           for (const field of this.provider.control_inbound_fields) {
             obj[field.key] = this.form.value[field.control_label];
           }
-          console.log('inbound_fields', obj);
           this.cloneProviders[this.form.value.id].inbound_fields = obj;
         }
       } else {
@@ -255,10 +256,8 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
           for (const field of this.provider.control_inbound_fields) {
             obj[field.key] = this.form.value[field.control_label];
           }
-          console.log('provider obj', obj);
           provider[this.form.value.id].inbound_fields = obj;
         }
-        console.log('provider', provider);
       } else {
         delete provider[this.form.value.id].form_id;
         delete provider[this.form.value.id].inbound_fields;
@@ -266,8 +265,9 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
       this.cloneProviders = { ...this.cloneProviders, ...provider };
     }
 
-    this.configService.updateProviders(this.cloneProviders).subscribe(() => {
-      this.router.navigate(['/settings/data-sources']);
+    this.configService.updateProviders(this.cloneProviders).subscribe({
+      next: () => this.router.navigate(['/settings/data-sources']),
+      error: () => (this.submitted = true),
     });
   }
 

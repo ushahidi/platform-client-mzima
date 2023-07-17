@@ -81,6 +81,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   public formValidator = new formValidators.FormValidator();
   public locationRequired = false;
   public emptyLocation = false;
+  public submitted = false;
   public filters;
 
   constructor(
@@ -470,6 +471,7 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   public async submitPost(): Promise<void> {
     if (this.form.disabled) return;
+    this.submitted = true;
     this.form.disable();
 
     try {
@@ -509,7 +511,10 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private updatePost(postId: number, postData: any) {
     this.postsService.update(postId, postData).subscribe({
-      error: () => this.form.enable(),
+      error: () => {
+        this.form.enable();
+        this.submitted = false;
+      },
       complete: async () => {
         await this.postComplete();
         this.updated.emit();
@@ -524,7 +529,10 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private createPost(postData: any) {
     this.postsService.post(postData).subscribe({
-      error: () => this.form.enable(),
+      error: () => {
+        this.form.enable();
+        this.submitted = false;
+      },
       complete: async () => {
         await this.postComplete();
         this.router.navigate(['/feed']);
