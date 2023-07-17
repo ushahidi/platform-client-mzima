@@ -31,7 +31,7 @@ export class PostItemComponent implements OnInit {
   @Input() public post: PostResult;
   @Output() public postUpdated = new EventEmitter<{ post: PostResult }>();
   @Output() public postDeleted = new EventEmitter<{ post: PostResult }>();
-  public media: any;
+  public mediaUrl: string;
   public mediaId?: number;
   public isMediaLoading: boolean;
   public isActionsOpen = false;
@@ -70,31 +70,19 @@ export class PostItemComponent implements OnInit {
       },
     });
 
+    if (this.isConnection) {
+      this.getMedia();
+    }
+  }
+
+  private getMedia() {
     this.mediaId = this.post.post_content
       ?.flatMap((c) => c.fields)
       .find((f) => f.input === 'upload')?.value?.value;
 
-    this.isConnection ? this.getMediaOnline() : this.getMediaOffline();
-  }
-
-  private getMediaOnline() {
-    if (!this.mediaId) return;
-    this.isMediaLoading = true;
-    this.mediaService.getById(String(this.mediaId)).subscribe({
-      next: (media) => {
-        this.isMediaLoading = false;
-        this.media = media;
-      },
-      error: () => {
-        this.isMediaLoading = false;
-      },
-    });
-  }
-
-  private getMediaOffline() {
-    this.media = this.post.post_content
+    this.mediaUrl = this.post.post_content
       ?.flatMap((c) => c.fields)
-      .find((f) => f.input === 'upload')?.value?.photo;
+      .find((f) => f.input === 'upload')?.value?.photoUrl;
   }
 
   private async checkNetwork() {

@@ -22,8 +22,8 @@
 
         <ng-container *ngIf="post.source !== 'Twitter'">
           <app-post-content
-            [postContent]="post.post_content"
-            [categories]="post.categories"
+            [postContent]="post.post_content!"
+            [categories]="post.categories!"
             [isConnection]="isConnection"
             [videoUrl]="videoUrl"
             [isMediaLoading]="isMediaLoading"

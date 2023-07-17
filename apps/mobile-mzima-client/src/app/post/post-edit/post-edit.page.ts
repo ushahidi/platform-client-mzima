@@ -21,7 +21,7 @@ import {
   ToastService,
 } from '@services';
 import { FormValidator, preparingVideoUrl } from '@validators';
-import { PostEditForm, UploadFileHelper } from '../helpers';
+import { PostEditForm, prepareRelationConfig, UploadFileHelper } from '../helpers';
 
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
@@ -211,13 +211,34 @@ export class PostEditPage {
     }
   }
 
+  getDefaultValues(field: any) {
+    const defaultValues: any = {
+      date: UTCHelper.toUTC(dayjs()),
+      location: { lat: '', lng: '' },
+      number: 0,
+    };
+
+    const types = ['upload', 'tags', 'location', 'checkbox', 'select', 'radio', 'date', 'datetime'];
+
+    return types.includes(field.input)
+      ? defaultValues[field.input]
+      : field.default || defaultValues[field.input] || '';
+  }
+
+  createField(field: any, value: any) {
+    return this.fieldsFormArray.includes(field.type)
+      ? new PostEditForm(this.formBuilder).addFormArray(value, field)
+      : new PostEditForm(this.formBuilder).addFormControl(value, field);
+  }
+
   loadForm(updateContent?: PostContent[]) {
     if (!this.selectedSurveyId) return;
     this.clearData();
 
     this.selectedSurvey = this.surveyList.find((item: any) => item.id === this.selectedSurveyId);
-    this.color = this.selectedSurvey.color;
-    this.tasks = this.selectedSurvey.tasks;
+    const { color, tasks } = this.selectedSurvey;
+    this.color = color;
+    this.tasks = tasks;
 
     const fields: any = {};
     for (const task of this.tasks) {
@@ -232,40 +253,18 @@ export class PostEditPage {
               this.description = field.default;
               break;
             case 'relation':
-              const fieldForm: [] = field.config?.input?.form;
-              this.relationConfigForm = fieldForm?.length ? fieldForm : this.filters.form;
-              this.relationConfigSource = this.filters?.source || [];
-              this.relationConfigKey = field.key;
+              const { relationConfigForm, relationConfigSource, relationConfigKey } =
+                prepareRelationConfig(field, this.filters);
+              this.relationConfigForm = relationConfigForm;
+              this.relationConfigSource = relationConfigSource;
+              this.relationConfigKey = relationConfigKey;
               break;
           }
 
           if (field.key) {
-            const defaultValues: any = {
-              date: UTCHelper.toUTC(dayjs()),
-              location: { lat: '', lng: '' },
-              number: 0,
-            };
-
-            const types = [
-              'upload',
-              'tags',
-              'location',
-              'checkbox',
-              'select',
-              'radio',
-              'date',
-              'datetime',
-            ];
-
-            const value = types.includes(field.input)
-              ? defaultValues[field.input]
-              : field.default || defaultValues[field.input] || '';
-
+            const value = this.getDefaultValues(field);
             field.value = value;
-
-            fields[field.key] = this.fieldsFormArray.includes(field.type)
-              ? new PostEditForm(this.formBuilder).addFormArray(value, field)
-              : new PostEditForm(this.formBuilder).addFormControl(value, field);
+            fields[field.key] = this.createField(field, value);
 
             if (field.type === 'point') {
               this.locationRequired = field.required;

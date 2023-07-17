@@ -26,14 +26,8 @@
       <app-icon slot="icon-only" name="dots"></app-icon>
     </app-button>
   </ion-card-header>
-  <ng-container *ngIf="mediaId && post.source !== 'Twitter'">
-    <ion-img class="post__media" [src]="post" (ionError)="mediaId = undefined"></ion-img>
-    <ng-template #spinner>
-      <app-spinner class="post__media__loader"></app-spinner>
-    </ng-template>
-  </ng-container>
-  <ng-container *ngIf="mediaId && post.source !== 'Twitter'">
-    <ion-img class="post__media" [src]="media"></ion-img>
+  <ng-container *ngIf="isConnection && mediaId && post.source !== 'Twitter'">
+    <ion-img class="post__media" [src]="mediaUrl"></ion-img>
   </ng-container>
   <app-twitter-widget
     *ngIf="post.source === 'Twitter' && post.data_source_message_id"

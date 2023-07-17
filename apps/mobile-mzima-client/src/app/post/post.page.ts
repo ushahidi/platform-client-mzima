@@ -102,37 +102,56 @@ export class PostPage implements OnDestroy {
     return this.networkService.checkNetworkStatus();
   }
 
-  private getPost(id: number) {
+  private async getPost(id: number) {
     this.isPostLoading = true;
-    this.postsService
-      .getById(id)
-      .pipe(untilDestroyed(this))
-      .subscribe({
-        next: async (post) => {
-          this.post = post;
-          console.log('post', this.post);
-          this.checkPermissions();
-          this.isPostLoading = false;
-          this.preparingMediaField((this.post.post_content as PostContent[])[0].fields);
-          this.preparingSafeVideoUrl((this.post.post_content as PostContent[])[0].fields);
-        },
-        error: (error) => {
-          console.error('post loading error: ', error);
-          this.isPostLoading = false;
-        },
+    this.post = await this.getPostInformation(id);
+    if (this.post) {
+      this.isPostLoading = false;
+      this.checkPermissions();
+      this.isPostLoading = false;
+      this.preparingMediaField((this.post.post_content as PostContent[])[0].fields);
+      this.preparingSafeVideoUrl((this.post.post_content as PostContent[])[0].fields);
+      this.preparingRelatedPosts((this.post.post_content as PostContent[])[0].fields);
+    }
+  }
+
+  private preparingRelatedPosts(fields: PostContentField[]): void {
+    console.log(fields);
+    fields
+      .filter((field: any) => field.type === 'relation')
+      .map(async (relativeField) => {
+        if (relativeField.value?.post_id) {
+          const url = `https://${this.deploymentService.getDeployment().fqdn}/feed/${
+            relativeField.value.post_id
+          }/view?mode=POST`;
+          const relative = await this.getPostInformation(relativeField.value.post_id);
+          const { title } = relative;
+          relativeField.value.postTitle = title;
+          relativeField.value.postUrl = url;
+        }
       });
   }
 
-  private async preparingMediaField(fields: PostContentField[]): Promise<void> {
+  private preparingMediaField(fields: PostContentField[]): void {
     fields
       .filter((field: any) => field.type === 'media')
       .map(async (mediaField) => {
-        if (mediaField.value?.value) {
+        if (mediaField.value && mediaField.value?.value) {
           const media = await this.getPostMedia(mediaField.value.value);
-          mediaField.value.photoUrl = media.original_file_url;
-          mediaField.value.caption = media.caption;
+          const { original_file_url: originalFileUrl, caption } = media;
+          mediaField.value.photoUrl = originalFileUrl;
+          mediaField.value.caption = caption;
         }
       });
+  }
+
+  private async getPostInformation(postId: number): Promise<any> {
+    try {
+      return lastValueFrom(this.postsService.getById(postId));
+    } catch (err) {
+      console.error(err);
+      return err;
+    }
   }
 
   private async getPostMedia(mediaId: string): Promise<any> {

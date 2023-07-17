@@ -140,8 +140,7 @@ export class MapViewComponent implements AfterViewInit {
       .subscribe({
         next: async (postsResponse) => {
           await this.databaseService.set(STORAGE_KEYS.GEOJSONPOSTS, postsResponse);
-          const posts = await this.databaseService.get(STORAGE_KEYS.GEOJSONPOSTS);
-          this.geoJsonDataProcessor(posts);
+          this.geoJsonDataProcessor(postsResponse);
         },
         error: async (err) => {
           if (err.message.match(/Http failure response for/)) {
