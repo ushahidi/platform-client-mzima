@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { LanguageInterface } from '@models';
 import LangJSON from '../../../assets/locales/languages.json';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +20,9 @@ export class LanguageService {
   private isRTL = new BehaviorSubject<boolean>(false);
   public isRTL$ = this.isRTL.asObservable();
 
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService, private session: SessionService) {
     if (this.initialLanguage === 'null' || this.initialLanguage === null) {
-      this.initialLanguage = 'en';
+      this.initialLanguage = this.session.getSiteConfigurations().language || 'en';
       this.setLanguage(this.initialLanguage!);
     } else {
       this.setLanguage(this.initialLanguage!);
