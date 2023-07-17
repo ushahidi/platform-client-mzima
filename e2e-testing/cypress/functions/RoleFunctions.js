@@ -12,7 +12,7 @@ class RoleFunctions {
     cy.get(RoleLocators.roleDescFld).type(roleDescription);
     cy.get(RoleLocators.manageUsersBox).click();
     cy.get(RoleLocators.addSaveBtn).click();
-    cy.wait(1000);
+    cy.url().should('eq', 'http://localhost:4200/settings/roles');
   }
 
   verify_role_exist() {
