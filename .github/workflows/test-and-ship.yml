@@ -6,7 +6,7 @@ on:
 
 env:
   CYPRESS_PROJECT_ID: '43gftm'
-  DEFAULT_NODE_VERSION: "16"
+  DEFAULT_NODE_VERSION: '16'
 
 jobs:
   test:
@@ -18,12 +18,12 @@ jobs:
     strategy:
       matrix:
         node_version:
-          - "14"
-          - "16"
-          - "18"
+          - '14'
+          - '16'
+          - '18'
         include:
-        - node_version: "16"    # update along with DEFAULT_NODE_VERSION
-          run_lint_tests: "True"
+          - node_version: '16' # update along with DEFAULT_NODE_VERSION
+            run_lint_tests: 'True'
 
     steps:
       - uses: actions/checkout@v3
@@ -198,6 +198,8 @@ jobs:
           cd e2e-testing
           npm install
           npm run start -- --record
+          with:
+              browser: chrome
 
         env:
           CYPRESS_ush_admin_email: '${{secrets.e2e_ush_admin_email}}'
@@ -255,9 +257,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-
   gh-release:
-    needs: [ test ]
+    needs: [test]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
@@ -289,7 +290,7 @@ jobs:
 
       - name: prod build
         id: bin_build
-        run: | 
+        run: |
           npm run web:build;
           FILENAME="platform-client-mzima-${GITHUB_REF##*/}-bin.tar.gz"
           tar -czv -f ${FILENAME} -C dist/apps/web-mzima-client/ . ;
@@ -298,7 +299,7 @@ jobs:
 
       - name: dev build
         id: bindev_build
-        run: | 
+        run: |
           npm run web:devbuild;
           FILENAME="platform-client-mzima-${GITHUB_REF##*/}-bin-dev.tar.gz" ;
           tar -czv -f ${FILENAME} -C dist/apps/web-mzima-client/ . ;
