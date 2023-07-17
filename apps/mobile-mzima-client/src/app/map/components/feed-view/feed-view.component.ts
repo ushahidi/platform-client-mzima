@@ -29,7 +29,7 @@ export class FeedViewComponent extends MainViewComponent {
   public isPostsLoading = true;
   public totalPosts = 0;
   public override params: GeoJsonFilter = {
-    limit: 6,
+    limit: 20,
     page: 1,
   };
   public override $destroy = new Subject();
@@ -110,7 +110,7 @@ export class FeedViewComponent extends MainViewComponent {
       const response = await lastValueFrom(this.postsService.getPosts('', { ...params }));
       await this.updateObjectsWithUploadInput(response);
 
-      const currentPosts = await this.databaseService.get(STORAGE_KEYS.POSTS);
+      const currentPosts = await this.databaseService.get(STORAGE_KEYS.POSTS, false);
       if (currentPosts && currentPosts.results) {
         const currentPostIds = currentPosts.results.map((post: any) => post.id);
         const newResults = response.results.filter(

@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   MediaService,
@@ -8,12 +9,11 @@ import {
   PostsService,
 } from '@mzima-client/sdk';
 import { LatLon } from '@models';
-import { DatabaseService, NetworkService, SessionService } from '@services';
+import { DatabaseService, DeploymentService, NetworkService, SessionService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { preparingVideoUrl } from '@validators';
 import { lastValueFrom } from 'rxjs';
 import { STORAGE_KEYS } from '@constants';
-import { preparingVideoUrl } from '../core/validators/video-post.validator';
 
 @UntilDestroy()
 @Component({
@@ -23,7 +23,7 @@ import { preparingVideoUrl } from '../core/validators/video-post.validator';
 })
 export class PostPage implements OnDestroy {
   public post?: PostResult;
-  public postId: string;
+  public postId: number;
   public isPostLoading: boolean = true;
   public isMediaLoading: boolean;
   public location: LatLon;
@@ -33,7 +33,7 @@ export class PostPage implements OnDestroy {
     role: undefined,
   };
   public isConnection = true;
-  public videoUrl: SafeResourceUrl;
+  public videoUrls: any[] = [];
   private queryParams: Params;
 
   constructor(
@@ -45,6 +45,7 @@ export class PostPage implements OnDestroy {
     protected sessionService: SessionService,
     private databaseService: DatabaseService,
     private sanitizer: DomSanitizer,
+    private deploymentService: DeploymentService,
   ) {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: ({ userId, role }) => {
@@ -65,7 +66,7 @@ export class PostPage implements OnDestroy {
 
   async ionViewWillEnter() {
     this.isConnection = await this.checkNetwork();
-    this.postId = this.route.snapshot.params['id'];
+    this.postId = Number(this.route.snapshot.params['id']);
     if (this.postId) {
       if (this.isConnection) {
         this.getPost(Number(this.postId));
@@ -85,55 +86,80 @@ export class PostPage implements OnDestroy {
     return this.networkService.checkNetworkStatus();
   }
 
-  public getPost(id: number | string) {
+  public async getPost(id: number) {
     this.isPostLoading = true;
-    this.postsService
-      .getById(id)
-      .pipe(untilDestroyed(this))
-      .subscribe({
-        next: async (post) => {
-          this.post = post;
-          console.log('post', this.post);
-          this.checkPermissions();
-          this.isPostLoading = false;
-          this.preparingMediaField((this.post.post_content as PostContent[])[0].fields);
-          this.preparingSafeVideoUrl((this.post.post_content as PostContent[])[0].fields);
-        },
-        error: (error) => {
-          console.error('post loading error: ', error);
-          this.isPostLoading = false;
-        },
-      });
+    this.post = await this.getPostInformation(id);
+    if (this.post) {
+      this.isPostLoading = false;
+      this.checkPermissions();
+      this.getData(this.post);
+    }
   }
 
-  private async preparingMediaField(fields: PostContentField[]): Promise<void> {
+  private getData(post: PostResult): void {
+    this.preparingMediaField((post.post_content as PostContent[])[0].fields);
+    this.preparingSafeVideoUrls((post.post_content as PostContent[])[0].fields);
+    this.preparingRelatedPosts((post.post_content as PostContent[])[0].fields);
+  }
+
+  private preparingRelatedPosts(fields: PostContentField[]): void {
     fields
-      .filter((field: any) => field.type === 'media')
-      .map(async (mediaField) => {
-        if (mediaField.value?.value) {
-          const media = await this.getPostMedia(mediaField.value.value);
-          mediaField.value.photoUrl = media.original_file_url;
-          mediaField.value.caption = media.caption;
+      .filter((field: any) => field.type === 'relation')
+      .map(async (relativeField) => {
+        if (relativeField.value?.value) {
+          const url = `https://${this.deploymentService.getDeployment().fqdn}/feed/${
+            relativeField.value.value
+          }/view?mode=POST`;
+          const relative = await this.getPostInformation(relativeField.value.value);
+          const { title } = relative;
+          relativeField.value.postTitle = title;
+          relativeField.value.postUrl = url;
         }
       });
   }
 
-  private async getPostMedia(mediaId: string): Promise<any> {
+  private preparingMediaField(fields: PostContentField[]): void {
+    fields
+      .filter((field: any) => field.type === 'media')
+      .map(async (mediaField) => {
+        if (mediaField.value && mediaField.value?.value) {
+          const media = await this.getPostMedia(mediaField.value.value);
+          const { original_file_url: originalFileUrl, caption } = media;
+          mediaField.value.photoUrl = originalFileUrl;
+          mediaField.value.caption = caption;
+        }
+      });
+  }
+
+  private async getPostInformation(postId: number): Promise<any> {
     try {
-      return lastValueFrom(this.mediaService.getById(mediaId));
+      return await lastValueFrom(this.postsService.getById(postId));
     } catch (err) {
       console.error(err);
       return err;
     }
   }
 
-  private preparingSafeVideoUrl(fields: PostContentField[]) {
-    const videoField = fields.find((field: any) => field.input === 'video');
-    if (videoField && videoField.value?.value) {
-      this.videoUrl = this.generateSecurityTrustResourceUrl(
-        preparingVideoUrl(videoField.value?.value),
-      );
+  private async getPostMedia(mediaId: string): Promise<any> {
+    try {
+      return await lastValueFrom(this.mediaService.getById(mediaId));
+    } catch (err) {
+      console.error(err);
+      return err;
     }
+  }
+
+  private preparingSafeVideoUrls(fields: PostContentField[]) {
+    this.videoUrls = fields
+      .filter((field: any) => field.input === 'video' && field.value?.value)
+      .map((videoField) => {
+        const rawUrl = preparingVideoUrl(videoField.value?.value);
+        const safeUrl = this.generateSecurityTrustResourceUrl(rawUrl);
+        return {
+          rawUrl: rawUrl,
+          safeUrl: safeUrl,
+        };
+      });
   }
 
   private generateSecurityTrustResourceUrl(unsafeUrl: string) {
@@ -158,6 +184,6 @@ export class PostPage implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.videoUrl = '';
+    this.videoUrls = [];
   }
 }
