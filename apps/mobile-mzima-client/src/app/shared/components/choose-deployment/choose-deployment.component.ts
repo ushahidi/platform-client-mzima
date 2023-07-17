@@ -3,7 +3,6 @@ import { MainLayoutComponent } from '../main-layout/main-layout.component';
 import { Deployment } from '@mzima-client/sdk';
 import { Subject, debounceTime } from 'rxjs';
 import { AlertService, ConfigService, DeploymentService, EnvService } from '@services';
-import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -31,7 +30,6 @@ export class ChooseDeploymentComponent implements OnInit {
     private envService: EnvService,
     private configService: ConfigService,
     private deploymentService: DeploymentService,
-    private router: Router,
     private alertService: AlertService,
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({

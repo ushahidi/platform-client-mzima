@@ -47,7 +47,7 @@
     [ngClass]="{ 'search-form-results--hidden': !isResultsVisible }"
   >
     <div class="search-form-results__empty" *ngIf="!posts.length; else postsList">
-      <ng-container *ngIf="!isPostsLoading">
+      <ng-container *ngIf="!isPostsLoading; else spinner">
         <ion-text color="medium" *ngIf="!form.controls['postsQuery'].value?.length">
           Start typing to find Posts
         </ion-text>
@@ -55,7 +55,6 @@
           Sorry, no posts were found <br />based on your search criteria.
         </ion-text>
       </ng-container>
-      <app-spinner *ngIf="isPostsLoading"></app-spinner>
     </div>
 
     <ng-template #postsList>
@@ -87,10 +86,12 @@
   [closable]="!selectedFilter"
   title="{{ selectedSavedFilter?.label ?? selectedFilter?.label ?? 'Filters' }}"
 >
-  <div class="filters-modal__header" header>
+  <div class="filters-modal__header" header-end>
     <ion-text color="medium" class="filters-modal__total-posts">
       Found posts:
-      <strong class="filters-modal__total-posts__count">{{ totalPosts }}</strong>
+      <strong class="filters-modal__total-posts__count" *ngIf="!isTotalLoading; else spinner">
+        {{ totalPosts }}
+      </strong>
     </ion-text>
   </div>
   <div class="filters-modal__filters">
@@ -151,4 +152,8 @@
     (ngModelChange)="applyFilter($event, selectedFilter.name)"
   >
   </app-filter>
+</ng-template>
+
+<ng-template #spinner>
+  <app-spinner></app-spinner>
 </ng-template>

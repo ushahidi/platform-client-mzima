@@ -26,14 +26,15 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 })
 export class FiltersFormComponent implements OnChanges {
   @Input() public isLight = true;
-  @Input() public totalPosts: number;
   @Input() public activatedSavedFilterId?: string;
   @ViewChild('formControl') formControl: FormControlComponent;
   @ViewChild('filtersModal') filtersModal: ModalComponent;
+  public totalPosts: number;
   public isResultsVisible = false;
   private readonly searchSubject = new Subject<string>();
   public posts: PostResult[] = [];
   public isPostsLoading = false;
+  public isTotalLoading = false;
   public isFiltersModalOpen = false;
   public isAddSavedFiltersMode = false;
   public selectedSavedFilter: FilterControlOption | null;
@@ -118,8 +119,6 @@ export class FiltersFormComponent implements OnChanges {
     private searchService: SearchService,
     private envService: EnvService,
   ) {
-    const storageFilters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'))!;
-
     this.getSurveys();
 
     this.searchSubject.pipe(debounceTime(500)).subscribe({
@@ -137,6 +136,25 @@ export class FiltersFormComponent implements OnChanges {
         }
       },
     });
+
+    this.envService.deployment$.subscribe({
+      next: () => {
+        this.getSurveys();
+        this.resetSearchForm();
+        this.initFilters();
+      },
+    });
+
+    this.postsService.totalPosts$.subscribe({
+      next: (totalPosts) => {
+        this.totalPosts = totalPosts;
+        this.isTotalLoading = false;
+      },
+    });
+  }
+
+  public initFilters(): void {
+    const storageFilters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'))!;
 
     if (storageFilters) {
       this.activeFilters = JSON.parse(storageFilters!);
@@ -157,13 +175,6 @@ export class FiltersFormComponent implements OnChanges {
     if (activeSaved) {
       this.router.navigate(['search', activeSaved]);
     }
-
-    this.envService.deployment$.subscribe({
-      next: () => {
-        this.getSurveys();
-        this.resetSearchForm();
-      },
-    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -540,6 +551,7 @@ export class FiltersFormComponent implements OnChanges {
 
   private applyFilters(): void {
     delete this.activeFilters['saved-filters'];
+    this.isTotalLoading = true;
     localStorage.setItem(
       this.session.getLocalStorageNameMapper('filters'),
       JSON.stringify(this.activeFilters),

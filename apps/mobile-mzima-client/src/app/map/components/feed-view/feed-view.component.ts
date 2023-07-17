@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
@@ -24,7 +24,6 @@ import { MainViewComponent } from '../main-view.component';
 export class FeedViewComponent extends MainViewComponent {
   @Input() public atTop = false;
   @Input() public atBottom = false;
-  @Output() postsUpdated = new EventEmitter<{ total: number }>();
 
   public posts: PostResult[] = [];
   public isPostsLoading = true;
@@ -171,9 +170,6 @@ export class FeedViewComponent extends MainViewComponent {
     this.posts = add ? [...this.posts, ...response.results] : response.results;
     this.isPostsLoading = false;
     this.totalPosts = response.meta.total;
-    this.postsUpdated.emit({
-      total: this.totalPosts,
-    });
   }
 
   public async loadMorePosts(ev: any): Promise<void> {
@@ -190,9 +186,6 @@ export class FeedViewComponent extends MainViewComponent {
       1,
     );
     this.totalPosts--;
-    this.postsUpdated.emit({
-      total: this.totalPosts,
-    });
   }
 
   public showPost(id: string): void {

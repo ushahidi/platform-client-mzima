@@ -17,7 +17,6 @@ export class MapPage extends MainViewComponent {
   @ViewChild('map') public map: MapViewComponent;
   @ViewChild('feed') public feed: FeedViewComponent;
   public mode: number | 'fullscreen';
-  public totalPosts = 0;
 
   constructor(
     protected override router: Router,
@@ -40,10 +39,6 @@ export class MapPage extends MainViewComponent {
   }
 
   loadData(): void {}
-
-  public updatePostsCount(data: any): void {
-    this.totalPosts = data.total;
-  }
 
   ionViewWillEnter() {
     this.layout.updateOffsetHeight();
