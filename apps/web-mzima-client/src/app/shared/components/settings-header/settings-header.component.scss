@@ -79,22 +79,34 @@
       @include breakpoint-max($laptop-small) {
         width: 45px;
       }
+      @include breakpoint-max($tablet) {
+        width: auto;
+      }
     }
+
     .mzima-button__content .mzima-button__icon:not(.mzima-button__icon--prefix) {
       margin-inline-start: 0;
     }
   }
+
   .button-icon {
     display: none;
     @include breakpoint-max($laptop-small) {
       display: block;
       margin: 0;
     }
+    @include breakpoint-max($tablet) {
+      display: none;
+    }
   }
+
   .button-name {
     display: block;
     @include breakpoint-max($laptop-small) {
       display: none;
+    }
+    @include breakpoint-max($tablet) {
+      display: block;
     }
   }
 }
