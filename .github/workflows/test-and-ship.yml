@@ -7,6 +7,8 @@ on:
 env:
   CYPRESS_PROJECT_ID: '43gftm'
   DEFAULT_NODE_VERSION: '16'
+  LC_ALL: en_US.UTF-8
+  TZ: UTC
 
 jobs:
   test:
@@ -82,6 +84,8 @@ jobs:
           MYSQL_DATABASE: ushahidi
           MYSQL_USER: ushahidi
           MYSQL_PASSWORD: ushahidi
+          LC_ALL: ${{ env.LC_ALL }}
+          TZ: ${{ env.TZ }}
       redis:
         image: redis:4-alpine
       platform:
@@ -109,6 +113,8 @@ jobs:
           REDIS_HOST: redis
           CACHE_DRIVER: redis
           QUEUE_DRIVER: redis
+          LC_ALL: ${{ env.LC_ALL }}
+          TZ: ${{ env.TZ }}
 
     steps:
       - uses: actions/checkout@v3
