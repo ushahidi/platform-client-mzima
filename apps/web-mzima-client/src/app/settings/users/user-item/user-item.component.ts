@@ -25,6 +25,7 @@ export class UserItemComponent implements OnInit {
   public isMyProfile = false;
   public isDesktop = false;
   public createUserErrors: any[] = [];
+  public submitted = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -103,6 +104,7 @@ export class UserItemComponent implements OnInit {
   }
 
   public save() {
+    this.submitted = true;
     const roleBody = {
       id: this.form.value.id,
       realname: this.form.value.realname,
@@ -124,6 +126,7 @@ export class UserItemComponent implements OnInit {
       error: ({ error }) => {
         this.createUserErrors = error.errors.failed_validations;
         this.form.enable();
+        this.submitted = false;
       },
     });
   }
@@ -139,6 +142,7 @@ export class UserItemComponent implements OnInit {
       error: ({ error }) => {
         this.createUserErrors = error.errors.failed_validations;
         this.form.enable();
+        this.submitted = false;
       },
     });
   }

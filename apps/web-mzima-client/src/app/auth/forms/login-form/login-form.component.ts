@@ -16,6 +16,7 @@ export class LoginFormComponent {
   public form: FormGroup;
   public loginError: string;
   public isPasswordVisible = false;
+  public submitted = false;
 
   constructor(
     private authService: AuthService,
@@ -42,12 +43,14 @@ export class LoginFormComponent {
   login() {
     const { email, password } = this.form.value;
     this.form.disable();
+    this.submitted = true;
     this.authService.login(email, password).subscribe({
       next: (response) => {
         this.loggined.emit(response);
       },
       error: (err) => {
         this.loginError = err.error.message;
+        this.submitted = false;
         this.form.enable();
         setTimeout(() => (this.loginError = ''), 4000);
       },

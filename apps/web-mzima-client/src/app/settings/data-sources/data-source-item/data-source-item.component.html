@@ -212,7 +212,7 @@
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
-      <mzima-client-button [disabled]="form.invalid" [data-qa]="'btn-provider-save'">
+      <mzima-client-button [disabled]="form.invalid || submitted" [data-qa]="'btn-provider-save'">
         {{ 'app.save' | translate }}
       </mzima-client-button>
     </div>
