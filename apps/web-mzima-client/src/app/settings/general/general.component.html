@@ -137,7 +137,7 @@
     type="submit"
     data-qa="btn-save"
     (buttonClick)="save()"
-    [disabled]="generalForm.invalid || generalForm.disabled"
+    [disabled]="generalForm.invalid || generalForm.disabled || submitted"
   >
     {{ 'app.save' | translate }}
   </mzima-client-button>
