@@ -118,6 +118,7 @@ export class RoleItemComponent implements OnInit {
   }
 
   public save(): void {
+    this.isFormOnSubmit = true;
     const roleBody = {
       id: this.form.value.id,
       name: this.form.value.name,

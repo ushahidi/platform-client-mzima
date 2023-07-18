@@ -38,6 +38,7 @@ export class WebhookItemComponent implements OnInit {
   public isCreateWebhook = false;
   public fields: any[];
   public isDesktop = false;
+  public submitted = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -175,6 +176,7 @@ export class WebhookItemComponent implements OnInit {
   }
 
   public save() {
+    this.submitted = true;
     if (this.form.value.is_source_destination) {
       this.fillInForm({
         destination_field_key: this.fillForApi(
@@ -194,14 +196,20 @@ export class WebhookItemComponent implements OnInit {
     if (this.form.controls['form_id'].value) this.deleteFormFields(['form_id']);
     this.webhooksService.post(this.form.value).subscribe({
       next: () => this.navigateToWebhooks(),
-      error: (err) => console.log(err),
+      error: (err) => {
+        console.log(err);
+        this.submitted = false;
+      },
     });
   }
 
   private updateWebhook() {
     this.webhooksService.update(this.form.controls['id'].value, this.form.value).subscribe({
       next: () => this.navigateToWebhooks(),
-      error: (err) => console.log(err),
+      error: (err) => {
+        console.log(err);
+        this.submitted = false;
+      },
     });
   }
 
