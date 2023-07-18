@@ -45,6 +45,7 @@ export class SurveyItemComponent implements OnInit {
   public activeLanguages: LanguageInterface[];
   public isDesktop = false;
   public errorTaskField = false;
+  public submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -219,6 +220,7 @@ export class SurveyItemComponent implements OnInit {
   }
 
   public save() {
+    this.submitted = true;
     const defaultLang: any[] = this.configTask.selectedLanguage;
     if (this.validateAttributeOptionTranslations() && this.validateAttributeOptionTranslations()) {
       this.form.patchValue({
@@ -241,6 +243,7 @@ export class SurveyItemComponent implements OnInit {
           this.router.navigate(['settings/surveys']);
         },
         error: ({ error }) => {
+          this.submitted = false;
           this.notification.showError(JSON.stringify(error.name[0]));
         },
       });

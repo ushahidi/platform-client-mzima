@@ -137,7 +137,7 @@
   </mzima-client-button>
   <mzima-client-button
     (buttonClick)="save()"
-    [disabled]="form.invalid || form.disabled || errorTaskField"
+    [disabled]="form.invalid || form.disabled || errorTaskField || submitted"
     [data-qa]="'btn-save-survey-item'"
   >
     {{ (isEdit ? 'app.save' : 'app.add_survey') | translate }}
