@@ -10,9 +10,9 @@ import {
   PostsService,
   SavedsearchesService,
 } from '@mzima-client/sdk';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DatabaseService, NetworkService, SessionService } from '@services';
-import { debounceTime, distinctUntilChanged, lastValueFrom, Subject, takeUntil } from 'rxjs';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { DatabaseService, EnvService, SessionService } from '@services';
+import { lastValueFrom, Subject } from 'rxjs';
 import { MainViewComponent } from '../main-view.component';
 
 @UntilDestroy()
@@ -69,37 +69,19 @@ export class FeedViewComponent extends MainViewComponent {
     protected override savedSearchesService: SavedsearchesService,
     protected override sessionService: SessionService,
     private databaseService: DatabaseService,
-    private networkService: NetworkService,
     private mediaService: MediaService,
+    private envService: EnvService,
   ) {
     super(router, route, postsService, savedSearchesService, sessionService);
-    this.initNetworkListener();
-    this.initFilterListener();
+    this.envService.deployment$.subscribe({
+      next: () => {
+        this.posts = [];
+      },
+    });
   }
 
   ionViewDidLeave(): void {
     this.posts = [];
-  }
-
-  private initNetworkListener() {
-    this.networkService.networkStatus$
-      .pipe(distinctUntilChanged(), untilDestroyed(this))
-      .subscribe({
-        next: (value) => {
-          this.isConnection = value;
-          if (this.isConnection) {
-            this.getPosts(this.params);
-          }
-        },
-      });
-  }
-
-  private initFilterListener() {
-    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.$destroy)).subscribe({
-      next: () => {
-        this.updatePosts();
-      },
-    });
   }
 
   loadData(): void {}
