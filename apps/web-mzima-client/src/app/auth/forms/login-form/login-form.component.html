@@ -56,7 +56,7 @@
 
     <mzima-client-button
       type="submit"
-      [disabled]="form.invalid || form.disabled"
+      [disabled]="form.invalid || form.disabled || submitted"
       [data-qa]="'btn-login'"
       id="btn-login"
     >

@@ -69,3 +69,35 @@
     margin-bottom: 32px;
   }
 }
+
+.survey-button {
+  ::ng-deep {
+    .mzima-button {
+      @include breakpoint-min-max($tablet, $laptop-small) {
+        width: 45px;
+      }
+    }
+
+    .mzima-button__content {
+      .mzima-button__icon:not(.mzima-button__icon--prefix) {
+        margin-inline-start: 0;
+      }
+    }
+  }
+
+  .button-icon {
+    margin: 0;
+    @include breakpoint-min($laptop-small) {
+      display: none;
+    }
+    @include breakpoint-max($tablet) {
+      display: none;
+    }
+  }
+
+  .button-name {
+    @include breakpoint-min-max($tablet, $laptop-small) {
+      display: none;
+    }
+  }
+}

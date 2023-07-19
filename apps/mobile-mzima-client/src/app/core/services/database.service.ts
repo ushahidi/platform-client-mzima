@@ -31,11 +31,15 @@ export class DatabaseService {
     await this._storage?.clear();
   }
 
-  public async get(key: string) {
-    this.toastService.presentToast({
-      message: `${this.getKeyName(key)} got from the local database`,
-    });
+  public async get(key: string, isShowToast = true): Promise<any> {
     await this.ready();
+
+    if (isShowToast) {
+      this.toastService.presentToast({
+        message: `${this.getKeyName(key)} got from the local database`,
+      });
+    }
+
     return this._storage?.get(key);
   }
 
