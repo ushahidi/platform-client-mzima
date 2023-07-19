@@ -175,14 +175,15 @@ export class AppComponent implements OnInit {
       next: (user) => {
         if (!user.userId) return this.intercom.shutdown();
         const site = this.sessionService.getSiteConfigurations();
-        const domain = this.router.url;
+        const parsedUrl = new URL(window.location.href);
+        const domain = parsedUrl.origin;
 
         const io = {
           app_id: this.env.environment.intercom_appid,
           custom_launcher_selector: '#intercom_custom_launcher',
           email: user.email,
           created_at: user.created?.getDate(),
-          user_id: `${domain}_${user.id}`,
+          user_id: `${domain}_${user.userId}`,
           deployment_url: domain,
           realname: user.realname,
           last_login: user.last_login,
@@ -195,6 +196,7 @@ export class AppComponent implements OnInit {
             plan: site.tier,
           },
         };
+        console.log('Intercom options: ', io);
         this.intercom.boot(io);
       },
     });
