@@ -27,6 +27,7 @@
       <input
         matInput
         disabled
+        [data-qa]="'location-lat'"
         [(ngModel)]="location.lat"
         (ngModelChange)="checkErrors()"
         (focusout)="onFocusOut()"
@@ -49,6 +50,7 @@
       <input
         matInput
         disabled
+        [data-qa]="'location-lng'"
         [(ngModel)]="location.lng"
         (ngModelChange)="checkErrors()"
         (focusout)="onFocusOut()"
