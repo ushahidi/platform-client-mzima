@@ -26,14 +26,15 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 })
 export class FiltersFormComponent implements OnChanges {
   @Input() public isLight = true;
-  @Input() public totalPosts: number;
   @Input() public activatedSavedFilterId?: string;
   @ViewChild('formControl') formControl: FormControlComponent;
   @ViewChild('filtersModal') filtersModal: ModalComponent;
+  public totalPosts: number;
   public isResultsVisible = false;
   private readonly searchSubject = new Subject<string>();
   public posts: PostResult[] = [];
   public isPostsLoading = false;
+  public isTotalLoading = false;
   public isFiltersModalOpen = false;
   public isAddSavedFiltersMode = false;
   public selectedSavedFilter: FilterControlOption | null;
@@ -106,6 +107,7 @@ export class FiltersFormComponent implements OnChanges {
     postsQuery: [''],
   });
   private activeSavedFilter?: Savedsearch;
+  private surveys: any[] | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -118,8 +120,6 @@ export class FiltersFormComponent implements OnChanges {
     private searchService: SearchService,
     private envService: EnvService,
   ) {
-    const storageFilters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'))!;
-
     this.getSurveys();
 
     this.searchSubject.pipe(debounceTime(500)).subscribe({
@@ -137,6 +137,26 @@ export class FiltersFormComponent implements OnChanges {
         }
       },
     });
+
+    this.envService.deployment$.subscribe({
+      next: () => {
+        this.getSurveys();
+        this.resetSearchForm();
+        this.initFilters();
+        this.initSurveyFilters();
+      },
+    });
+
+    this.postsService.totalPosts$.subscribe({
+      next: (totalPosts) => {
+        this.totalPosts = totalPosts;
+        this.isTotalLoading = false;
+      },
+    });
+  }
+
+  public initFilters(): void {
+    const storageFilters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'))!;
 
     if (storageFilters) {
       this.activeFilters = JSON.parse(storageFilters!);
@@ -157,13 +177,6 @@ export class FiltersFormComponent implements OnChanges {
     if (activeSaved) {
       this.router.navigate(['search', activeSaved]);
     }
-
-    this.envService.deployment$.subscribe({
-      next: () => {
-        this.getSurveys();
-        this.resetSearchForm();
-      },
-    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -247,10 +260,11 @@ export class FiltersFormComponent implements OnChanges {
       delete this.activeSavedFilter.filter['saved-filters'];
 
       const keys = Object.keys(this.activeSavedFilter.filter);
-      keys.forEach((key, index) => {
+      keys.reduce((acc: any[], key, index) => {
         const isLastKey = index === keys.length - 1;
-        this.applyFilter(this.activeSavedFilter!.filter[key], key, !isLastKey);
-      });
+        this.applyFilter(this.activeSavedFilter!.filter[key], key, isLastKey, isLastKey);
+        return acc;
+      }, []);
     }
   }
 
@@ -267,50 +281,55 @@ export class FiltersFormComponent implements OnChanges {
   private getSurveys(): void {
     this.surveysService.get().subscribe({
       next: (response) => {
-        const allSurveysChecked = JSON.parse(
-          localStorage.getItem(this.session.getLocalStorageNameMapper('allSurveysChecked')) ||
-            'false',
-        );
-        const formIds = new Set(this.activeFilters?.form ?? []);
-
-        const formFilter = this.filters.find((f) => f.name === 'form')!;
-        formFilter.options = response.results.map((survey: SurveyItem) => ({
-          value: survey.id,
-          label: survey.name,
-          checked: allSurveysChecked || formIds.has(survey.id),
-          info: survey.description,
-        }));
-
-        if (!this.activatedSavedFilterId) {
-          if (!this.activeFilters) {
-            formFilter.value = response.results.map((s: SurveyItem) => s.id);
-            this.activeFilters = searchFormHelper.DEFAULT_FILTERS;
-            this.activeFilters['form'] = response.results.map((s: SurveyItem) => s.id);
-            this.applyFilters();
-          } else {
-            formFilter.value = response.results
-              .filter((survey: SurveyItem) => formIds.has(survey.id) || allSurveysChecked)
-              .map((survey: SurveyItem) => survey.id);
-          }
-        } else {
-          if (!this.activeSavedFilter?.filter.form) {
-            formFilter.value = response.results.map((s: SurveyItem) => s.id);
-            this.activeFilters['form'] = response.results.map((s: SurveyItem) => s.id);
-            this.applyFilters();
-          }
-        }
-
-        if (formFilter.options?.length) {
-          localStorage.setItem(
-            this.session.getLocalStorageNameMapper('allSurveysChecked'),
-            String(formFilter.options.length <= formFilter.value?.length),
-          );
-        }
-
-        this.updateFilterSelectedText(formFilter);
-        formFilter.selected = String(formFilter?.value?.length ?? 'none');
+        this.surveys = response.results;
+        this.initSurveyFilters();
       },
     });
+  }
+
+  private initSurveyFilters(): void {
+    if (!this.surveys) return;
+    const allSurveysChecked = JSON.parse(
+      localStorage.getItem(this.session.getLocalStorageNameMapper('allSurveysChecked')) || 'false',
+    );
+    const formIds = new Set(this.activeFilters?.form ?? []);
+
+    const formFilter = this.filters.find((f) => f.name === 'form')!;
+    formFilter.options = this.surveys.map((survey: SurveyItem) => ({
+      value: survey.id,
+      label: survey.name,
+      checked: allSurveysChecked || formIds.has(survey.id),
+      info: survey.description,
+    }));
+
+    if (!this.activatedSavedFilterId) {
+      if (!this.activeFilters) {
+        formFilter.value = this.surveys.map((s: SurveyItem) => s.id);
+        this.activeFilters = searchFormHelper.DEFAULT_FILTERS;
+        this.activeFilters['form'] = this.surveys.map((s: SurveyItem) => s.id);
+        this.applyFilters();
+      } else {
+        formFilter.value = this.surveys
+          .filter((survey: SurveyItem) => formIds.has(survey.id) || allSurveysChecked)
+          .map((survey: SurveyItem) => survey.id);
+      }
+    } else {
+      if (!this.activeSavedFilter?.filter.form) {
+        formFilter.value = this.surveys.map((s: SurveyItem) => s.id);
+        this.activeFilters['form'] = this.surveys.map((s: SurveyItem) => s.id);
+        this.applyFilters();
+      }
+    }
+
+    if (formFilter.options?.length) {
+      localStorage.setItem(
+        this.session.getLocalStorageNameMapper('allSurveysChecked'),
+        String(formFilter.options.length <= formFilter.value?.length),
+      );
+    }
+
+    this.updateFilterSelectedText(formFilter);
+    formFilter.selected = String(formFilter?.value?.length ?? 'none');
   }
 
   private getFilterDefaultValue(filterName: string): any {
@@ -368,11 +387,6 @@ export class FiltersFormComponent implements OnChanges {
 
     if (result.role === 'confirm') {
       this.clearAllFilters();
-      localStorage.setItem(
-        this.session.getLocalStorageNameMapper('allSurveysChecked'),
-        String(true),
-      );
-      localStorage.setItem(this.session.getLocalStorageNameMapper('activeSavedSearch'), 'null');
       this.filtersModal.closeModal(true);
       this.router.navigate(['']);
     }
@@ -388,6 +402,8 @@ export class FiltersFormComponent implements OnChanges {
       this.activeFilters[f.name] = f.value;
       this.updateFilterSelectedText(f);
     });
+    localStorage.setItem(this.session.getLocalStorageNameMapper('allSurveysChecked'), String(true));
+    localStorage.setItem(this.session.getLocalStorageNameMapper('activeSavedSearch'), 'null');
     this.applyFilters();
   }
 
@@ -437,10 +453,15 @@ export class FiltersFormComponent implements OnChanges {
   ): void {
     const originalFilter = this.filters.find((f) => f.name === filterName)!;
     if (originalFilter.name === 'saved-filters') {
-      localStorage.setItem(
-        this.session.getLocalStorageNameMapper('activeSavedSearch'),
-        JSON.stringify(value),
-      );
+      if (value) {
+        localStorage.setItem(
+          this.session.getLocalStorageNameMapper('activeSavedSearch'),
+          JSON.stringify(value),
+        );
+      } else {
+        localStorage.removeItem(this.session.getLocalStorageNameMapper('activeSavedSearch'));
+        this.clearAllFilters();
+      }
       this.router.navigate(value ? ['search', value] : ['']);
       this.filtersModal.closeModal(true);
       return;
@@ -540,6 +561,7 @@ export class FiltersFormComponent implements OnChanges {
 
   private applyFilters(): void {
     delete this.activeFilters['saved-filters'];
+    this.isTotalLoading = true;
     localStorage.setItem(
       this.session.getLocalStorageNameMapper('filters'),
       JSON.stringify(this.activeFilters),

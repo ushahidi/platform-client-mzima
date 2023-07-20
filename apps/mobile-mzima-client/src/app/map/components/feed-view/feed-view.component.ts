@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
@@ -10,9 +10,9 @@ import {
   PostsService,
   SavedsearchesService,
 } from '@mzima-client/sdk';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DatabaseService, NetworkService, SessionService } from '@services';
-import { debounceTime, distinctUntilChanged, lastValueFrom, Subject, takeUntil } from 'rxjs';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { DatabaseService, EnvService, SessionService } from '@services';
+import { lastValueFrom, Subject } from 'rxjs';
 import { MainViewComponent } from '../main-view.component';
 
 @UntilDestroy()
@@ -24,7 +24,6 @@ import { MainViewComponent } from '../main-view.component';
 export class FeedViewComponent extends MainViewComponent {
   @Input() public atTop = false;
   @Input() public atBottom = false;
-  @Output() postsUpdated = new EventEmitter<{ total: number }>();
 
   public posts: PostResult[] = [];
   public isPostsLoading = true;
@@ -70,37 +69,19 @@ export class FeedViewComponent extends MainViewComponent {
     protected override savedSearchesService: SavedsearchesService,
     protected override sessionService: SessionService,
     private databaseService: DatabaseService,
-    private networkService: NetworkService,
     private mediaService: MediaService,
+    private envService: EnvService,
   ) {
     super(router, route, postsService, savedSearchesService, sessionService);
-    this.initNetworkListener();
-    this.initFilterListener();
+    this.envService.deployment$.subscribe({
+      next: () => {
+        this.posts = [];
+      },
+    });
   }
 
   ionViewDidLeave(): void {
     this.posts = [];
-  }
-
-  private initNetworkListener() {
-    this.networkService.networkStatus$
-      .pipe(distinctUntilChanged(), untilDestroyed(this))
-      .subscribe({
-        next: (value) => {
-          this.isConnection = value;
-          if (this.isConnection) {
-            this.getPosts(this.params);
-          }
-        },
-      });
-  }
-
-  private initFilterListener() {
-    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.$destroy)).subscribe({
-      next: () => {
-        this.updatePosts();
-      },
-    });
   }
 
   loadData(): void {}
@@ -172,9 +153,6 @@ export class FeedViewComponent extends MainViewComponent {
     this.posts = add ? [...this.posts, ...response.results] : response.results;
     this.isPostsLoading = false;
     this.totalPosts = response.meta.total;
-    this.postsUpdated.emit({
-      total: this.totalPosts,
-    });
   }
 
   public async loadMorePosts(ev: any): Promise<void> {
@@ -191,9 +169,6 @@ export class FeedViewComponent extends MainViewComponent {
       1,
     );
     this.totalPosts--;
-    this.postsUpdated.emit({
-      total: this.totalPosts,
-    });
   }
 
   public showPost(id: string): void {

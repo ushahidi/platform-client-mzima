@@ -13,9 +13,9 @@ import {
 } from 'leaflet';
 import { mapHelper } from '@helpers';
 import { GeoJsonPostsResponse, PostsService } from '@mzima-client/sdk';
-import { DatabaseService, NetworkService, SessionService } from '@services';
+import { DatabaseService, SessionService } from '@services';
 import { MapConfigInterface } from '@models';
-import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
 @UntilDestroy()
@@ -39,43 +39,18 @@ export class MapViewComponent implements AfterViewInit {
   public $destroy = new Subject();
   private isDarkMode = false;
   private baseLayer: 'streets' | 'satellite' | 'hOSM' | 'MapQuestAerial' | 'MapQuest' | 'dark';
-  private isConnection = true;
+  public isConnection = true;
 
   constructor(
     private postsService: PostsService,
     private sessionService: SessionService,
     private router: Router,
     private databaseService: DatabaseService,
-    private networkService: NetworkService,
   ) {
     const mediaDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
     mediaDarkMode.addEventListener('change', (ev) => this.switchMode(ev));
     this.isDarkMode = mediaDarkMode.matches;
-    this.initNetworkListener();
-    this.initFilterListener();
     this.initMapConfigListener();
-  }
-
-  private initNetworkListener() {
-    this.networkService.networkStatus$
-      .pipe(distinctUntilChanged(), untilDestroyed(this))
-      .subscribe({
-        next: (value) => {
-          this.isConnection = value;
-          if (this.isConnection) {
-            this.getPostsGeoJson();
-          }
-        },
-      });
-  }
-
-  private initFilterListener() {
-    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.$destroy)).subscribe({
-      next: () => {
-        this.reInitParams();
-        this.getPostsGeoJson();
-      },
-    });
   }
 
   private initMapConfigListener() {
@@ -115,7 +90,7 @@ export class MapViewComponent implements AfterViewInit {
     }, 50);
   }
 
-  private reInitParams() {
+  public reInitParams() {
     this.mapLayers.map((layer) => {
       this.map.removeLayer(layer);
       this.markerClusterData.removeLayer(layer);
