@@ -19,7 +19,7 @@ export abstract class MainViewComponent {
   };
   filters;
   public user: UserInterface;
-  public $destroy = new Subject();
+  public $destroy = new Subject<boolean>();
 
   constructor(
     protected router: Router,
@@ -31,12 +31,14 @@ export abstract class MainViewComponent {
     this.filters = JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters')) ?? '{}',
     );
-    console.log('MainViewComponent > filters', this.filters);
+  }
+
+  ionViewWillEnter(): void {
+    this.$destroy.next(false);
   }
 
   ionViewWillLeave(): void {
-    this.$destroy.next(null);
-    this.$destroy.complete();
+    this.$destroy.next(true);
   }
 
   abstract loadData(): void;

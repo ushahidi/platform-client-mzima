@@ -35,11 +35,12 @@ export class MapPage extends MainViewComponent implements OnDestroy {
     this.route.params.subscribe(() => {
       this.initCollection();
     });
-
     this.$destroy.subscribe({
-      next: () => {
-        this.map.destroy();
-        this.feed.destroy();
+      next: (state: boolean) => {
+        if (state) {
+          this.map.destroy();
+          this.feed.destroy();
+        }
       },
     });
 
@@ -57,7 +58,7 @@ export class MapPage extends MainViewComponent implements OnDestroy {
 
   loadData(): void {}
 
-  ionViewWillEnter() {
+  override ionViewWillEnter() {
     this.layout.updateOffsetHeight();
     this.getPost$.next(true);
   }
@@ -81,7 +82,7 @@ export class MapPage extends MainViewComponent implements OnDestroy {
   }
 
   private initFilterListener() {
-    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.$destroy)).subscribe({
+    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.getPost$.next(true);
       },

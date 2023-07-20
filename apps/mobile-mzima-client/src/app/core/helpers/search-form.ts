@@ -116,7 +116,7 @@ export const DEFAULT_FILTERS: Filter = {
   query: '',
   status: ['published', 'draft'],
   tags: [],
-  source: [],
+  source: sources.map((s) => s.value),
   form: [],
   place: '',
   date: {

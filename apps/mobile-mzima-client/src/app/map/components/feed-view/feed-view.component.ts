@@ -32,7 +32,7 @@ export class FeedViewComponent extends MainViewComponent {
     limit: 20,
     page: 1,
   };
-  public override $destroy = new Subject();
+  public destroy$ = new Subject();
   public isConnection = true;
   public sorting = 'created?desc';
   public sortingOptions = [
@@ -190,7 +190,7 @@ export class FeedViewComponent extends MainViewComponent {
   }
 
   public destroy(): void {
-    this.$destroy.next(null);
-    this.$destroy.complete();
+    this.destroy$.next(null);
+    this.destroy$.complete();
   }
 }
