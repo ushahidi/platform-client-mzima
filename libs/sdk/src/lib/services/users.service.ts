@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
-import { GeoJsonFilter, UserInterface, UserInterfaceResponse, UserResponse } from '../models';
+import { GeoJsonFilter, UserInterfaceResponse, UserResponse } from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -46,7 +46,7 @@ export class UsersService extends ResourceService<any> {
     );
   }
 
-  updateCurrentUser(data: any): Observable<UserInterface> {
+  updateCurrentUser(data: any): Observable<UserInterfaceResponse> {
     return super.update('me', data);
   }
 

@@ -18,4 +18,8 @@
     <h4 class="menu-item__title">{{ item.title }}</h4>
     <p *ngIf="item.description?.length">{{ item.description }}</p>
   </div>
+  <div matRipple class="menu-item" *ngIf="isLoggedIn">
+    <h4 class="menu-item__title">{{ 'app.intercom.intercom' | translate }}</h4>
+    <p id="intercom_custom_launcher">{{ 'app.intercom.description' | translate }}</p>
+  </div>
 </div>

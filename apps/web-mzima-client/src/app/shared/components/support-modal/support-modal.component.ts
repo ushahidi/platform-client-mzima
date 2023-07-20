@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { EventBusService, EventType } from '@services';
+import { EventBusService, EventType, SessionService } from '@services';
 
 interface SupportMenuItemInterface {
   title: string;
@@ -16,13 +16,20 @@ interface SupportMenuItemInterface {
 })
 export class SupportModalComponent {
   public menu: SupportMenuItemInterface[];
+  isLoggedIn = false;
 
   constructor(
     private translate: TranslateService,
     private matDialogRef: MatDialogRef<SupportModalComponent>,
     private eventBusService: EventBusService,
+    private session: SessionService,
   ) {
     this.initMenu();
+    this.session.currentUserData$.subscribe({
+      next: (userData) => {
+        this.isLoggedIn = !!userData.userId;
+      },
+    });
   }
 
   private initMenu(): void {
@@ -62,14 +69,14 @@ export class SupportModalComponent {
           this.closeModal();
         },
       },
-      {
-        title: this.translate.instant('app.intercom.intercom'),
-        description: this.translate.instant('app.intercom.description'),
-        action: () => {
-          window.open('mailto:hl5rfiga@intercom-mail.com');
-          this.closeModal();
-        },
-      },
+      // {
+      //   title: this.translate.instant('app.intercom.intercom'),
+      //   description: this.translate.instant('app.intercom.description'),
+      //   action: () => {
+      //     window.open('mailto:hl5rfiga@intercom-mail.com');
+      //     this.closeModal();
+      //   },
+      // },
     ];
   }
 

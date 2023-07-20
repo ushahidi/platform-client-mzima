@@ -25,6 +25,7 @@ export class GeneralComponent implements OnInit {
   public isDesktop$: Observable<boolean>;
   public generalForm: FormGroup;
   public copySuccess = false;
+  public submitted = false;
   siteConfig: any;
   apiKey: ApiKeyResult;
   uploadedFile?: File;
@@ -73,6 +74,7 @@ export class GeneralComponent implements OnInit {
       private: this.siteConfig.private,
       disable_registration: this.siteConfig.disable_registration,
     });
+    this.langService.changeLanguage(this.siteConfig.language);
     this.apiKeyService.get().subscribe((res) => {
       // FIXME: results[0]
       this.apiKey = res.results[0];
@@ -113,6 +115,7 @@ export class GeneralComponent implements OnInit {
   }
 
   save() {
+    this.submitted = true;
     this.loader.show();
     if (this.uploadedFile) {
       this.mediaService
@@ -126,9 +129,11 @@ export class GeneralComponent implements OnInit {
         .subscribe({
           complete: () => {
             this.loader.hide();
+            this.submitted = false;
           },
           error: (error) => {
             this.loader.hide();
+            this.submitted = false;
             this.notificationService.showError(error.message);
           },
         });
@@ -149,6 +154,9 @@ export class GeneralComponent implements OnInit {
     const siteConfig = Object.assign({}, this.generalForm.value, {
       image_header: this.siteConfig.image_header,
     });
+
+    this.langService.changeLanguage(siteConfig.language);
+
     return this.configService.update('site', siteConfig).pipe(
       mergeMap((updatedSite) => {
         this.sessionService.setConfigurations('site', updatedSite);

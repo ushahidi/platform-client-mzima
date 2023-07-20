@@ -54,6 +54,11 @@ export class DeploymentService {
     this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENTS, data, 'array');
   }
 
+  public addDeployments(data: Deployment[]) {
+    const deployments = this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENTS, 'array');
+    this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENTS, [...data, ...deployments], 'array');
+  }
+
   public getDeployments(): any[] {
     return this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENTS, 'array') || [];
   }

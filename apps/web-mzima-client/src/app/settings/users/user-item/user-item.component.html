@@ -96,7 +96,7 @@
       </mzima-client-button>
       <mzima-client-button
         [data-qa]="'btn-user-save'"
-        [disabled]="form.invalid || form.disabled"
+        [disabled]="form.invalid || form.disabled || submitted"
         type="submit"
       >
         {{ 'app.save' | translate }}

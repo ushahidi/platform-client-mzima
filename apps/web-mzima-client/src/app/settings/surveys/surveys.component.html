@@ -8,11 +8,13 @@
   <mzima-client-button
     fill="outline"
     color="secondary"
+    class="survey-button"
     [data-qa]="'btn-settings-duplicate'"
     [disabled]="selectedSurveys.length !== 1"
     (buttonClick)="duplicateSurvey()"
   >
-    <span class="create-button-name">{{ 'app.duplicate' | translate }}</span>
+    <mat-icon icon svgIcon="copy" class="button-icon"></mat-icon>
+    <span class="button-name">{{ 'app.duplicate' | translate }}</span>
   </mzima-client-button>
 </app-settings-header>
 

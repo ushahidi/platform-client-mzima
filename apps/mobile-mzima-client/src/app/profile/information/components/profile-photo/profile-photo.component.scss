@@ -1,0 +1,28 @@
+.avatar {
+  --size: 128px;
+  margin: 0 auto;
+  width: var(--size);
+  height: var(--size);
+}
+
+.controls {
+  gap: 16px;
+  justify-content: center;
+}
+
+.controls-button {
+  --button-padding-end: 16px;
+  --button-padding-start: 16px;
+
+  &__icon {
+    font-size: 24px;
+    margin-left: -4px;
+  }
+
+  &__inner {
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}

@@ -19,8 +19,8 @@ $laptop: 1439px;
   }
 }
 
-@mixin breakpoint-min-max($rule) {
-  @media only screen and (max-width: #{$rule}) and (min-width: #{$rule + 1}) {
+@mixin breakpoint-min-max($rule-min, $rule-max) {
+  @media only screen and (max-width: #{$rule-max}) and (min-width: #{$rule-min + 1}) {
     @content;
   }
 }

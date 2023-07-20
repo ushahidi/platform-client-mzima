@@ -128,14 +128,12 @@
     footer: true,
     offsetBottom: false
   }"
+  [title]="selectedCategory?.label?.toString() ?? ''"
 >
-  <div class="subcategories-modal__header" header>
-    <span class="subcategories-modal__title">{{ selectedCategory?.label }}</span>
-    <ion-text color="medium" class="subcategories-modal__total-posts">
-      Found posts:
-      <strong class="subcategories-modal__total-posts__count">{{ totalPosts }}</strong>
-    </ion-text>
-  </div>
+  <ion-text color="medium" class="subcategories-modal__total-posts" header-end>
+    Found posts:
+    <strong class="subcategories-modal__total-posts__count">{{ totalPosts }}</strong>
+  </ion-text>
   <div class="subcategories-modal__filters">
     <app-checkbox
       type="item"
