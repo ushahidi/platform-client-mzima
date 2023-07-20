@@ -93,6 +93,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // change tracking for search when entering text in geocoder search input (and debounce to reduce geocoding requests sent)
     const geocoderInputElement = this.geocoderControl.getContainer().querySelector('input');
+    geocoderInputElement.setAttribute('data-qa', 'location-search');
     fromEvent(geocoderInputElement, 'input')
       .pipe(
         filter(Boolean),
