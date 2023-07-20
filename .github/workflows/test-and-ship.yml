@@ -6,7 +6,9 @@ on:
 
 env:
   CYPRESS_PROJECT_ID: '43gftm'
-  DEFAULT_NODE_VERSION: "16"
+  DEFAULT_NODE_VERSION: '16'
+  LC_ALL: en_US.UTF-8
+  TZ: UTC
 
 jobs:
   test:
@@ -18,12 +20,12 @@ jobs:
     strategy:
       matrix:
         node_version:
-          - "14"
-          - "16"
-          - "18"
+          - '14'
+          - '16'
+          - '18'
         include:
-        - node_version: "16"    # update along with DEFAULT_NODE_VERSION
-          run_lint_tests: "True"
+          - node_version: '16' # update along with DEFAULT_NODE_VERSION
+            run_lint_tests: 'True'
 
     steps:
       - uses: actions/checkout@v3
@@ -82,6 +84,8 @@ jobs:
           MYSQL_DATABASE: ushahidi
           MYSQL_USER: ushahidi
           MYSQL_PASSWORD: ushahidi
+          LC_ALL: ${{ env.LC_ALL }}
+          TZ: ${{ env.TZ }}
       redis:
         image: redis:4-alpine
       platform:
@@ -109,6 +113,8 @@ jobs:
           REDIS_HOST: redis
           CACHE_DRIVER: redis
           QUEUE_DRIVER: redis
+          LC_ALL: ${{ env.LC_ALL }}
+          TZ: ${{ env.TZ }}
 
     steps:
       - uses: actions/checkout@v3
@@ -142,7 +148,11 @@ jobs:
               sleep 5;
               docker logs ${{ job.services.platform.id }};
               exit 1; }
-          echo 'BACKEND_URL=http://localhost:8080' > .env
+          
+          env_file=./apps/web-mzima-client/src/env.json
+          env_json="$(jq '.backend_url = "http://localhost:8080"' $env_file)" &&
+            echo -E "${env_json}" > $env_file
+
 
       ## same as above step
       - name: Setup Node
@@ -198,6 +208,8 @@ jobs:
           cd e2e-testing
           npm install
           npm run start -- --record
+          with:
+              browser: chrome
 
         env:
           CYPRESS_ush_admin_email: '${{secrets.e2e_ush_admin_email}}'
@@ -255,9 +267,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-
   gh-release:
-    needs: [ test ]
+    needs: [test]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
@@ -289,7 +300,7 @@ jobs:
 
       - name: prod build
         id: bin_build
-        run: | 
+        run: |
           npm run web:build;
           FILENAME="platform-client-mzima-${GITHUB_REF##*/}-bin.tar.gz"
           tar -czv -f ${FILENAME} -C dist/apps/web-mzima-client/ . ;
@@ -298,7 +309,7 @@ jobs:
 
       - name: dev build
         id: bindev_build
-        run: | 
+        run: |
           npm run web:devbuild;
           FILENAME="platform-client-mzima-${GITHUB_REF##*/}-bin-dev.tar.gz" ;
           tar -czv -f ${FILENAME} -C dist/apps/web-mzima-client/ . ;
