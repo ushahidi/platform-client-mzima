@@ -6,8 +6,6 @@ on:
 
 env:
   CYPRESS_PROJECT_ID: '43gftm'
-
-env:
   DEFAULT_NODE_VERSION: "16"
 
 jobs:
@@ -24,7 +22,7 @@ jobs:
           - '16'
           - '18'
         include:
-        - node_version: "18"
+        - node_version: "16"    # update along with DEFAULT_NODE_VERSION
           run_lint_tests: "True"
 
     steps:
@@ -84,6 +82,8 @@ jobs:
           MYSQL_DATABASE: ushahidi
           MYSQL_USER: ushahidi
           MYSQL_PASSWORD: ushahidi
+          LC_ALL: ${{ env.LC_ALL }}
+          TZ: ${{ env.TZ }}
       redis:
         image: redis:4-alpine
       platform:
@@ -111,6 +111,8 @@ jobs:
           REDIS_HOST: redis
           CACHE_DRIVER: redis
           QUEUE_DRIVER: redis
+          LC_ALL: ${{ env.LC_ALL }}
+          TZ: ${{ env.TZ }}
 
     steps:
       - uses: actions/checkout@v3
@@ -145,7 +147,11 @@ jobs:
               sleep 5;
               docker logs ${{ job.services.platform.id }};
               exit 1; }
-          echo 'BACKEND_URL=http://localhost:8080' > .env
+          
+          env_file=./apps/web-mzima-client/src/env.json
+          env_json="$(jq '.backend_url = "http://localhost:8080"' $env_file)" &&
+            echo -E "${env_json}" > $env_file
+
 
       ## same as above step
       - name: Setup Node
@@ -197,11 +203,10 @@ jobs:
           retry 60 timeout 1 curl --silent ${server}/index.html || { echo "Failed getting index.html!" && exit 1; }
 
       - name: Cypress run
-        uses: cypress-io/github-action@v5
-
-        with:
-          record: true
-          working-directory: e2e-testing
+        run: |
+          cd e2e-testing
+          npm install
+          npm run start -- --record
 
         env:
           CYPRESS_ush_admin_email: '${{secrets.e2e_ush_admin_email}}'
