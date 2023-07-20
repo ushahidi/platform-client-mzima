@@ -46,6 +46,9 @@ const SurveyLocators = {
   selectNameField: '[data-qa="selected-field-name"]',
   selectDescField: '[data-qa="selected-field-description"]',
   addOptionBtn: '[data-qa="btn-add-option"]',
+  selectOptionOneField: '[data-qa="option-0"]',
+  selectOptionTwoField: '[data-qa="option-1"]',
+  selectOptionThreeField: '[data-qa="option-2"]',
 
   radioTxtBtn: '[data-qa="select-survey.radio_button"]',
   radioNameField: '[data-qa="selected-field-name"]',
