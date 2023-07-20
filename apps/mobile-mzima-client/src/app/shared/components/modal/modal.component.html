@@ -13,8 +13,9 @@
       (back)="closeModal()"
       *ngIf="modalOptions.header"
     >
+      <ng-content select="[header]"></ng-content>
       <div end>
-        <ng-content select="[header]"></ng-content>
+        <ng-content select="[header-end]"></ng-content>
       </div>
     </app-header>
 

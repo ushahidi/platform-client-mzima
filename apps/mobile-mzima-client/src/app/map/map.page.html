@@ -9,7 +9,6 @@
     [isLight]="mode !== 'fullscreen'"
     header
     class="search-form"
-    [totalPosts]="totalPosts"
     [activatedSavedFilterId]="searchId"
   ></app-filters-form>
   <app-map-view class="map" #map></app-map-view>
@@ -17,11 +16,6 @@
     <app-button shape="normal" [shadow]="true" class="add-post-button" (click)="createPost()">
       <app-icon slot="icon-only" name="plus"></app-icon>
     </app-button>
-    <app-feed-view
-      #feed
-      [atBottom]="mode === 0"
-      [atTop]="mode === 'fullscreen'"
-      (postsUpdated)="updatePostsCount($event)"
-    ></app-feed-view>
+    <app-feed-view #feed [atBottom]="mode === 0" [atTop]="mode === 'fullscreen'"></app-feed-view>
   </ng-container>
 </app-draggable-layout>

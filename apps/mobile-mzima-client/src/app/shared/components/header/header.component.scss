@@ -33,6 +33,13 @@
   &__end {
     overflow: hidden;
   }
+
+  &__title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
 }
 
 .back-button {
