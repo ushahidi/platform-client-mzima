@@ -31,6 +31,7 @@ export abstract class MainViewComponent {
     this.filters = JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters')) ?? '{}',
     );
+    console.log('MainViewComponent > filters', this.filters);
   }
 
   ionViewWillLeave(): void {

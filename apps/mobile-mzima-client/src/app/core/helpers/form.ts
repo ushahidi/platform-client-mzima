@@ -37,3 +37,22 @@ export const roleTransform = (data: any) => {
     },
   ];
 };
+
+export const mapRoleToVisible = (role: any, disabled = false) => {
+  let value = '';
+  if (role) {
+    if (role?.length === 1) {
+      value = 'only_me';
+    }
+    if (role?.length > 1) {
+      value = 'specific';
+    }
+  } else {
+    value = 'everyone';
+  }
+  return {
+    value,
+    options: role,
+    disabled,
+  };
+};

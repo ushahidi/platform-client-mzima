@@ -18,7 +18,7 @@ import {
 } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { cloneDeep } from 'lodash';
-import { CollectionsModalComponent } from '../../../shared/components/collections-modal/collections-modal.component';
+import { CollectionsModalComponent } from '../../../shared/components';
 import { Router } from '@angular/router';
 
 @UntilDestroy()
@@ -29,8 +29,12 @@ import { Router } from '@angular/router';
 })
 export class PostItemComponent implements OnInit {
   @Input() public post: PostResult;
+  @Input() public checkbox = false;
+  @Input() public isProfile?: boolean;
   @Output() public postUpdated = new EventEmitter<{ post: PostResult }>();
   @Output() public postDeleted = new EventEmitter<{ post: PostResult }>();
+  @Output() selected = new EventEmitter<boolean>();
+  public mediaUrl: string;
   public media: any;
   public mediaId?: number;
   public isMediaLoading: boolean;
@@ -70,31 +74,19 @@ export class PostItemComponent implements OnInit {
       },
     });
 
+    if (this.isConnection) {
+      this.getMedia();
+    }
+  }
+
+  private getMedia() {
     this.mediaId = this.post.post_content
       ?.flatMap((c) => c.fields)
       .find((f) => f.input === 'upload')?.value?.value;
 
-    this.isConnection ? this.getMediaOnline() : this.getMediaOffline();
-  }
-
-  private getMediaOnline() {
-    if (!this.mediaId) return;
-    this.isMediaLoading = true;
-    this.mediaService.getById(String(this.mediaId)).subscribe({
-      next: (media) => {
-        this.isMediaLoading = false;
-        this.media = media;
-      },
-      error: () => {
-        this.isMediaLoading = false;
-      },
-    });
-  }
-
-  private getMediaOffline() {
-    this.media = this.post.post_content
+    this.mediaUrl = this.post.post_content
       ?.flatMap((c) => c.fields)
-      .find((f) => f.input === 'upload')?.value?.photo;
+      .find((f) => f.input === 'upload')?.value?.photoUrl;
   }
 
   private async checkNetwork() {
@@ -129,7 +121,7 @@ export class PostItemComponent implements OnInit {
   }
 
   private editPost(): void {
-    this.router.navigate([this.post.id, 'edit']);
+    this.router.navigate([this.post.id, 'edit'], { queryParams: { profile: this.isProfile } });
   }
 
   private async addToCollection(): Promise<void> {
@@ -205,5 +197,9 @@ export class PostItemComponent implements OnInit {
     ev.preventDefault();
     ev.stopPropagation();
     this.isActionsOpen = true;
+  }
+
+  public preventClick(ev: Event): void {
+    ev.stopPropagation();
   }
 }

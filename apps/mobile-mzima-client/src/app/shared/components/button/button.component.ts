@@ -27,6 +27,7 @@ export class ButtonComponent {
   @Input() public radius = '100px';
   @Input() public shadow = false;
   @Input() public height = '40px';
+  @Input() public iconName?: string;
   @Output() public buttonClick = new EventEmitter<Event>();
 
   public onClick(event: Event): void {

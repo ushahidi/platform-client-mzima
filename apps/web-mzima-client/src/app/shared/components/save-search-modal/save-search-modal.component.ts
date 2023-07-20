@@ -137,7 +137,11 @@ export class SaveSearchModalComponent implements OnInit {
         })
         .subscribe({
           next: () => {
-            this.matDialogRef.close(true);
+            this.toggleNotifications(
+              this.data.search.id,
+              this.form.value.is_notifications_enabled,
+              savedSearchParams,
+            );
           },
         });
     } else {
@@ -146,13 +150,49 @@ export class SaveSearchModalComponent implements OnInit {
           ...savedSearchParams,
         })
         .subscribe({
-          next: () => {
-            this.matDialogRef.close(true);
+          next: (newSS) => {
+            this.toggleNotifications(newSS.result.id!, this.form.value.is_notifications_enabled);
           },
           error: (err) => {
             this.formErrors = err.error.errors.failed_validations;
           },
         });
+    }
+  }
+
+  private toggleNotifications(
+    id: string | number,
+    currentNotificationValue: boolean,
+    isUpdate?: any,
+  ) {
+    if (!!this.notification !== currentNotificationValue) {
+      if (currentNotificationValue) {
+        this.notificationsService.post({ set_id: id }).subscribe({
+          next: () => {
+            if (isUpdate) {
+              this.eventBus.next({ payload: isUpdate, type: EventType.UpdateSavedSearch });
+            }
+            this.matDialogRef.close(true);
+          },
+        });
+      } else {
+        this.notificationsService.get(String(id)).subscribe((notif) => {
+          const notification = notif.results[0];
+          this.notificationsService.delete(notification.id).subscribe({
+            next: () => {
+              if (isUpdate) {
+                this.eventBus.next({ payload: isUpdate, type: EventType.UpdateSavedSearch });
+              }
+              this.matDialogRef.close(true);
+            },
+          });
+        });
+      }
+    } else {
+      if (isUpdate) {
+        this.eventBus.next({ payload: isUpdate, type: EventType.UpdateSavedSearch });
+      }
+      this.matDialogRef.close(true);
     }
   }
 

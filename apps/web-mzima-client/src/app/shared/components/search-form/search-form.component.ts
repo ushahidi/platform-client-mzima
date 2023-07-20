@@ -258,6 +258,18 @@ export class SearchFormComponent implements OnInit {
     this.eventBusService.on(EventType.DeleteSavedSearch).subscribe({
       next: () => this.applySavedFilter(null),
     });
+
+    this.eventBusService.on(EventType.UpdateSavedSearch).subscribe({
+      next: (savedSearch) => {
+        if (this.activeSavedSearch) {
+          this.activeSavedSearch.name = savedSearch.name;
+          this.activeSavedSearch.description = savedSearch.description;
+          if (this.isLoggedIn) {
+            this.checkSavedSearchNotifications();
+          }
+        }
+      },
+    });
   }
 
   private getCategories() {
@@ -522,21 +534,9 @@ export class SearchFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe({
-      next: (result: any) => {
+      next: () => {
         this.form.enable();
         this.getSavedFilters();
-        if (search) {
-          this.notificationsService.get(String(search.id)).subscribe({
-            next: (response) => {
-              const notification = response.results[0];
-              if (!notification && result?.is_notifications_enabled) {
-                this.notificationsService.post({ set_id: String(search.id) }).subscribe();
-              } else if (notification && !result?.is_notifications_enabled) {
-                this.notificationsService.delete(notification.id).subscribe();
-              }
-            },
-          });
-        }
       },
     });
   }

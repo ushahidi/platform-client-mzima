@@ -1,19 +1,5 @@
-<ion-content class="page ion-padding-vertical" [fullscreen]="true">
-  <app-logo class="logo"></app-logo>
-  <div class="ion-padding-horizontal">
-    <app-deployment-search-btn class="search-btn"></app-deployment-search-btn>
-    <ng-container *ngIf="deploymentList.length">
-      <ion-text color="medium" class="deployment-title ion-padding-horizontal"
-        >Choose one Deployment from list</ion-text
-      >
-      <ion-list class="deployment-list">
-        <app-deployment-item
-          *ngFor="let item of deploymentList"
-          [deployment]="item"
-          (selectedDeployment)="callModal($event)"
-          (click)="selectDeployment(item)"
-        ></app-deployment-item>
-      </ion-list>
-    </ng-container>
-  </div>
-</ion-content>
+<app-choose-deployment
+  #chooseDeployment
+  (back)="back()"
+  (chosen)="deploymentChosen()"
+></app-choose-deployment>

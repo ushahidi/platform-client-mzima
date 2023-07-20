@@ -25,7 +25,6 @@
       [pattern]="pattern"
       (ionBlur)="handleBlur()"
       (ionFocus)="handleFocus()"
-      (ionChange)="handleInputChange($event)"
       (keyup)="handleInputChange($event)"
     >
     </ion-input>
@@ -42,7 +41,6 @@
       [disabled]="disabled"
       (ionBlur)="handleBlur()"
       (ionFocus)="handleFocus()"
-      (ionChange)="handleInputChange($event)"
       (keyup)="handleInputChange($event)"
     >
     </ion-textarea>
@@ -71,10 +69,10 @@
     </span>
   </ion-item>
   <span *ngIf="hintHTML?.length" class="hint ion-padding-horizontal" [innerHTML]="hintHTML"></span>
-  <span *ngIf="hint?.length && (!errors.length || isOnFocus)" class="hint ion-padding-horizontal">
+  <span *ngIf="hint?.length && (!errors?.length || isOnFocus)" class="hint ion-padding-horizontal">
     {{ hint }}
   </span>
-  <ng-container *ngIf="!isOnFocus && errors.length">
+  <ng-container *ngIf="!isOnFocus && errors?.length">
     <ion-text *ngFor="let error of errors" color="danger" class="error-msg ion-padding-horizontal">
       {{ error }}
     </ion-text>

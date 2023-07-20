@@ -25,6 +25,7 @@ export class GeneralComponent implements OnInit {
   public isDesktop$: Observable<boolean>;
   public generalForm: FormGroup;
   public copySuccess = false;
+  public submitted = false;
   siteConfig: any;
   apiKey: ApiKeyResult;
   uploadedFile?: File;
@@ -114,6 +115,7 @@ export class GeneralComponent implements OnInit {
   }
 
   save() {
+    this.submitted = true;
     this.loader.show();
     if (this.uploadedFile) {
       this.mediaService
@@ -127,9 +129,11 @@ export class GeneralComponent implements OnInit {
         .subscribe({
           complete: () => {
             this.loader.hide();
+            this.submitted = false;
           },
           error: (error) => {
             this.loader.hide();
+            this.submitted = false;
             this.notificationService.showError(error.message);
           },
         });
