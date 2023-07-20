@@ -6,7 +6,7 @@ on:
 
 env:
   DEFAULT_NODE_VERSION: "16"
-  CYPRESS_PROJECT_ID: "43gftm"
+  CYPRESS_PROJECT_ID: '43gftm'
 
 
 jobs:
@@ -147,8 +147,10 @@ jobs:
               sleep 5;
               docker logs ${{ job.services.platform.id }};
               exit 1; }
-          echo 'BACKEND_URL=http://localhost:8080' > .env
-  
+          env_file=./apps/web-mzima-client/src/env.json
+          env_json="$(jq '.backend_url = "http://localhost:8080"' $env_file)" &&
+            echo -E "${env_json}" > $env_file
+
       ## same as above step
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -205,19 +207,11 @@ jobs:
       #     jq '.baseUrl="http://localhost:4200/"' <<<$(cat cypress.env.json) > cypress.env.json
   
       - name: Cypress run
-        # uses: cypress-io/github-action@v5
-  
-        # with:
-        #   browser: chrome
-        #   # install-command: npm install
-        #   record: true
-        #   parallel: true
-        #   working-directory: e2e-testing
-        #   start: npm start
-        run: | 
-          cd: e2e-testing
-          npm run start
-  
+        run: |
+          cd e2e-testing
+          npm install
+          npm run start -- --record
+
         env:
           CYPRESS_ush_admin_email: '${{secrets.e2e_ush_admin_email}}'
           CYPRESS_ush_admin_pwd: '${{secrets.e2e_ush_admin_pwd}}'
