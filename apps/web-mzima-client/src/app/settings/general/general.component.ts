@@ -74,10 +74,8 @@ export class GeneralComponent implements OnInit {
       private: this.siteConfig.private,
       disable_registration: this.siteConfig.disable_registration,
     });
-    this.langService.changeLanguage(this.siteConfig.language);
     this.apiKeyService.get().subscribe((res) => {
-      // FIXME: results[0]
-      this.apiKey = res.results[0];
+      this.apiKey = res.results.shift();
     });
     this.translate.onLangChange.subscribe((newLang) => {
       this.generalForm.controls['language'].setValue(newLang.lang);
