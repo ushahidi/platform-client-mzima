@@ -1,9 +1,15 @@
+@import 'helpers';
+
 .menu {
   &__footer {
     display: flex;
     flex-shrink: 0;
     padding: 16px 12px;
     background: var(--color-neutral-100);
+
+    // @include breakpoint-max($tablet) {
+    //   display: flex;
+    // }
 
     &__button {
       margin: 0 4px;

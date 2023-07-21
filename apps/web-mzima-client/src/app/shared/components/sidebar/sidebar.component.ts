@@ -76,7 +76,6 @@ export class SidebarComponent implements OnInit {
       this.isHost =
         userData.role === Roles.Admin || hostRoles.some((r) => userData.permissions?.includes(r));
       this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
-      this.initMenu();
     });
 
     this.eventBusService.on(EventType.OpenLoginModal).subscribe({
@@ -128,39 +127,6 @@ export class SidebarComponent implements OnInit {
     }
 
     return route;
-  }
-
-  private initMenu() {
-    this.userMenu = [
-      {
-        label: 'nav.collections',
-        icon: 'collections',
-        visible: this.isDesktop,
-        action: () => this.openCollections(),
-        ref: 'collection',
-      },
-      {
-        label: 'nav.login',
-        icon: 'auth',
-        visible: !this.isLoggedIn && !this.canRegister,
-        action: () => this.openLogin(),
-        ref: 'auth',
-      },
-      {
-        label: 'nav.login_register',
-        icon: 'auth',
-        visible: !this.isLoggedIn && this.canRegister,
-        action: () => this.openLogin(),
-        ref: 'auth',
-      },
-      {
-        label: 'nav.help_support',
-        icon: 'info',
-        visible: true,
-        action: () => this.openSupportModal(),
-        ref: 'support',
-      },
-    ];
   }
 
   private openLogin(): void {

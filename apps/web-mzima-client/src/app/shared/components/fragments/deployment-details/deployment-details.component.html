@@ -4,9 +4,9 @@
   <img src="../../../../assets/images/ushahidi-logo.svg" alt="ushahidi" width="172" height="40" />
 </span>
 
-<div class="sidebar__info">
-  <app-company-info *ngIf="isDesktop"></app-company-info>
-  <app-submit-post-button class="sidebar__add-post-btn" *ngIf="isDesktop"></app-submit-post-button>
+<div class="sidebar__info" *ngIf="isDesktop">
+  <app-company-info></app-company-info>
+  <app-submit-post-button class="sidebar__add-post-btn"></app-submit-post-button>
 </div>
 <!-- TODO: Merge markup & styles for toolbar section. The code separation does not make sense -->
 <!-- TODO: you probably need to look at the styles for add post button and the area around it -->

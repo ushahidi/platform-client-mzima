@@ -55,7 +55,7 @@ import { SpinnerModule } from './components/spinner/spinner.module';
 import { DeploymentDetailsComponent } from './components/fragments/deployment-details/deployment-details.component';
 import { MobileMenuComponent } from './components/fragments/mobile-menu/mobile-menu.component';
 import { MenuListNonPageLinksComponent } from './components/fragments/menu-list-non-page-links/menu-list-non-page-links.component';
-import { DeploymentBroadcastComponent } from './components/fragments/deployment-broadcast/deployment-broadcast.component';
+import { ShareAndDonateComponent } from './components/fragments/share-and-donate/share-and-donate.component';
 import { DirectiveModule } from './directive.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddPostModalComponent } from '@post';
@@ -88,7 +88,7 @@ const components = [
   DeploymentDetailsComponent,
   MobileMenuComponent,
   MenuListNonPageLinksComponent,
-  DeploymentBroadcastComponent,
+  ShareAndDonateComponent,
 ];
 
 const modules = [

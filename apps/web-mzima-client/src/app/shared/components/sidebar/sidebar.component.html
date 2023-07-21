@@ -1,6 +1,8 @@
 <div class="sidebar" *ngIf="isDesktop || !isInnerPage">
-  <app-deployment-details *ngIf="isDesktop"></app-deployment-details
-  ><!-- TODO: Adjust markup & styles in this component properly so you dont have to do *ngIf="isDesktop" -->
+  <app-deployment-details *ngIf="isDesktop"></app-deployment-details>
+  <!-- TODO: Adjust markup & styles in this component properly so you dont have to do *ngIf="isDesktop" -->
+  <!-- <app-submit-post-button class="sidebar__add-post-btn"></app-submit-post-button> -->
+
   <nav class="sidebar__controls">
     <div class="sidebar__menu" id="sidebar-menu">
       <ng-container *ngFor="let item of menu">
@@ -37,39 +39,7 @@
         </ng-container>
       </ng-container>
     </div>
-    <div class="sidebar__menu" *ngIf="isDesktop">
-      <ng-container *ngFor="let item of userMenu">
-        <ng-container *ngIf="item.visible && (!item.adminGuard || isHost)">
-          <button
-            [id]="item.ref"
-            (click)="item.action()"
-            class="sidebar-menu-button"
-            [data-qa]="'btn-' + item.icon"
-            *ngIf="item.action; else menuLink"
-            [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
-          >
-            <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
-            <span class="sidebar-menu-button__title">{{ item.label | translate }}</span>
-          </button>
-          <ng-template #menuLink>
-            <a
-              [id]="item.ref"
-              class="sidebar-menu-button"
-              [data-qa]="'btn-' + item.icon"
-              (click)="item.action && item.action()"
-              [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
-              routerLinkActive="sidebar-menu-button--active"
-              [routerLink]="item.router && createRouterLink(item.router)"
-            >
-              <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
-              <span class="sidebar-menu-button__title">
-                {{ item.label | translate }}
-              </span>
-            </a>
-          </ng-template>
-        </ng-container>
-      </ng-container>
-    </div>
+    <app-menu-list-non-page-links *ngIf="isDesktop"></app-menu-list-non-page-links>
   </nav>
   <pre [style]="{ display: 'none' }">>1.0.1</pre>
 </div>

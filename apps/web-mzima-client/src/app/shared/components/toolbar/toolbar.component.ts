@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 import { EnumGtmEvent, EnumGtmSource } from '@enums';
 import { SiteConfigInterface, UserMenuInterface } from '@models';
@@ -15,7 +14,6 @@ import {
   SessionService,
 } from '@services';
 import { filter, Observable } from 'rxjs';
-import { DonationModalComponent } from '../../../settings';
 import { NavToolbarService } from '../../services/shared.navtoolbar.service';
 
 @UntilDestroy()
@@ -42,7 +40,6 @@ export class ToolbarComponent implements OnInit {
 
   constructor(
     private session: SessionService,
-    private dialog: MatDialog,
     private router: Router,
     private breadcrumbService: BreadcrumbService,
     private translate: TranslateService,
@@ -80,15 +77,6 @@ export class ToolbarComponent implements OnInit {
     });
   }
 
-  public showDonation(): void {
-    this.navToolbarService.toggleBurgerMenu(false);
-    this.dialog.open(DonationModalComponent, {
-      width: '100%',
-      maxWidth: 564,
-      panelClass: 'modal',
-    });
-  }
-
   public openAccountSettings(): void {
     this.navToolbarService.openAccountSettings();
   }
@@ -123,9 +111,5 @@ export class ToolbarComponent implements OnInit {
 
   public back(): void {
     this.location.back();
-  }
-
-  openShare() {
-    this.navToolbarService.openShare(this.pageTitle);
   }
 }

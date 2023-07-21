@@ -18,13 +18,7 @@
   </h1>
   <div class="toolbar__controls">
     <app-search-form class="search-form" *ngIf="showSearchForm"></app-search-form>
-    <ng-container *ngIf="isDesktop$ | async">
-      <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
-      <mzima-client-button (buttonClick)="openShare()" color="secondary" class="toolbar__button">
-        <span>{{ 'app.share' | translate }}</span>
-        <mat-icon icon svgIcon="share"></mat-icon>
-      </mzima-client-button>
-    </ng-container>
+    <app-share-and-donate *ngIf="isDesktop$ | async"></app-share-and-donate>
     <app-language
       class="toolbar__language"
       [languages]="languages"
