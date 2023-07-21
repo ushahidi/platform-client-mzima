@@ -317,7 +317,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
       if (!this.activeFilters) {
         const formValue = this.surveys.map((s: SurveyItem) => s.id);
         formFilter.value = formValue;
-        this.activeFilters = searchFormHelper.DEFAULT_FILTERS;
+        this.activeFilters = _.cloneDeep(searchFormHelper.DEFAULT_FILTERS);
         this.activeFilters['form'] = formValue;
         this.applyFilters();
       } else {
