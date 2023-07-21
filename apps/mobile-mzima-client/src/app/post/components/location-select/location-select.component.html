@@ -27,8 +27,6 @@
       <div class="form-row">
         <app-form-control
           [(ngModel)]="location.lat"
-          (ngModelChange)="checkErrors()"
-          (focusout)="onFocusOut()"
           label="Latitude"
           [required]="required"
           [readonly]="true"
@@ -42,8 +40,6 @@
       <div class="form-row">
         <app-form-control
           [(ngModel)]="location.lng"
-          (ngModelChange)="checkErrors()"
-          (focusout)="onFocusOut()"
           label="Longitude"
           [required]="required"
           [readonly]="true"
