@@ -60,6 +60,7 @@ export class MapPage extends MainViewComponent implements OnDestroy {
 
   override ionViewWillEnter() {
     this.layout.updateOffsetHeight();
+    this.updateFilters();
     this.getPost$.next(true);
   }
 
