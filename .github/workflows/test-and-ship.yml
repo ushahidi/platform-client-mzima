@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     ## While tests are not fixed
-    continue-on-error: true
+    continue-on-error: false
 
     strategy:
       matrix:
