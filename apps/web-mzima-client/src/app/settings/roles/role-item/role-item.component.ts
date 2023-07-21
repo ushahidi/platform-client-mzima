@@ -70,9 +70,8 @@ export class RoleItemComponent implements OnInit {
       next: ([role, permissions]) => {
         this.role = role.result;
         this.permissionsList = permissions.results.map((el: any) => {
-          const nameTranslateText = el.name.replaceAll(' ', '_').toLowerCase();
           return {
-            name: this.translate.instant(`settings.roles.${nameTranslateText}`),
+            name: el.name,
             checked: false,
             test: el.name.replace(' ', '-').toLowerCase(),
           };
