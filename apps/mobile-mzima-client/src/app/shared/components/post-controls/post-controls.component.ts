@@ -17,6 +17,7 @@ export class PostControlsComponent {
   @Input() permissions: string[] = [];
   @Input() isProfile?: boolean;
   @Output() postChanged = new EventEmitter();
+  @Output() postDeleted = new EventEmitter();
 
   public isStatusOptionsOpen = false;
   public statusOptionsButtons?: ActionSheetButton[] = getPostStatusActions();
@@ -138,7 +139,7 @@ export class PostControlsComponent {
               this.posts.length > 1 ? count + ' posts' : 'Post'
             } has been successfully deleted`,
           });
-          this.postChanged.emit();
+          this.postDeleted.emit();
         },
       });
     }
