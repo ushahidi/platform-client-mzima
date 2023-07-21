@@ -2,7 +2,7 @@
   <ion-card-header class="post__header">
     <ion-avatar class="post__avatar">
       <ion-img
-        [alt]="post.user?.realname"
+        [alt]="post.user?.realname ?? ''"
         src="https://www.gravatar.com/avatar/{{
           post.user?.gravatar || '00000000000000000000000000000000'
         }}?d=retro&s=40"
@@ -20,22 +20,22 @@
       fill="clear"
       shape="normal"
       color="medium"
+      *ngIf="!checkbox"
       class="post__details"
       (buttonClick)="showOptions($event)"
     >
       <app-icon slot="icon-only" name="dots"></app-icon>
     </app-button>
+    <app-checkbox
+      *ngIf="checkbox"
+      class="post__checkbox"
+      (checkboxChange)="selected.emit($event)"
+      (click)="preventClick($event)"
+    >
+    </app-checkbox>
   </ion-card-header>
-  <ng-container *ngIf="mediaId && post.source !== 'Twitter'">
-    <ion-img
-      *ngIf="!isMediaLoading; else spinner"
-      class="post__media"
-      [src]="media?.original_file_url"
-      (ionError)="mediaId = undefined"
-    ></ion-img>
-    <ng-template #spinner>
-      <app-spinner class="post__media__loader"></app-spinner>
-    </ng-template>
+  <ng-container *ngIf="isConnection && mediaId && post.source !== 'Twitter'">
+    <ion-img class="post__media" [src]="mediaUrl"></ion-img>
   </ng-container>
   <app-twitter-widget
     *ngIf="post.source === 'Twitter' && post.data_source_message_id"

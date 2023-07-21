@@ -160,13 +160,12 @@ export class LocationSelectComponent implements OnInit {
   }
 
   private addMarker() {
-    this.checkErrors();
     if (this.mapMarker) {
       this.map.removeLayer(this.mapMarker);
     }
     this.mapMarker = marker(this.location, {
       draggable: true,
-      icon: mapHelper.pointIcon('default', this.mapConfig.default_view!.color),
+      icon: mapHelper.pointIcon('default', 'var(--color-neutral-100)'),
     }).addTo(this.map);
 
     this.mapMarker.on('dragend', (e) => {

@@ -1,0 +1,15 @@
+<ion-item button class="deployment-info" (click)="handleClick()" *ngIf="deployment">
+  <ion-avatar class="deployment-info__img" slot="start">
+    <ion-img [src]="deployment.image"></ion-img>
+  </ion-avatar>
+  <div class="deployment-info__main">
+    <span class="deployment-info__title">{{ deployment.deployment_name }}</span>
+    <!-- <ion-text color="medium" class="deployment-info__info">{{
+      deployment.domain | lowercase
+    }}</ion-text> -->
+    <ion-text color="medium" class="deployment-info__info">{{
+      deployment.fqdn | lowercase
+    }}</ion-text>
+  </div>
+  <app-icon slot="end" class="deployment-info__icon" name="arrow-right"></app-icon>
+</ion-item>

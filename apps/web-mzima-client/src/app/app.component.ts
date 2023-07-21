@@ -6,6 +6,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
   BreakpointService,
+  EnvService,
   EventBusService,
   EventType,
   GtmTrackingService,
@@ -16,6 +17,7 @@ import {
 } from '@services';
 import { filter, Observable } from 'rxjs';
 import { EnumGtmEvent } from './core/enums/gtm';
+import { Intercom } from '@supy-io/ngx-intercom';
 
 @UntilDestroy()
 @Component({
@@ -41,9 +43,11 @@ export class AppComponent implements OnInit {
     private metaService: Meta,
     private translate: TranslateService,
     private eventBusService: EventBusService,
+    private env: EnvService,
     private breakpointService: BreakpointService,
     private sessionService: SessionService,
     private gtm: GtmTrackingService,
+    private intercom: Intercom,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.selectedLanguage$ = this.languageService.selectedLanguage$.pipe(untilDestroyed(this));
@@ -55,6 +59,7 @@ export class AppComponent implements OnInit {
     });
 
     this.iconService.registerIcons();
+    this.initIntercom();
 
     this.languageService.isRTL$.pipe(untilDestroyed(this)).subscribe({
       next: (isRTL) => {
@@ -163,6 +168,38 @@ export class AppComponent implements OnInit {
     this.metaService.updateTag({ name: 'twitter:title', content: title });
     this.metaService.updateTag({ name: 'twitter:description', content: title });
     sessionStorage.setItem('ogTitle', this.translate.instant(ogTitle));
+  }
+
+  private initIntercom() {
+    this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
+      next: (user) => {
+        if (!user.userId) return this.intercom.shutdown();
+        const site = this.sessionService.getSiteConfigurations();
+        const parsedUrl = new URL(window.location.href);
+        const domain = parsedUrl.origin;
+
+        const io = {
+          app_id: this.env.environment.intercom_appid,
+          custom_launcher_selector: '#intercom_custom_launcher',
+          email: user.email,
+          created_at: user.created?.getDate(),
+          user_id: `${domain}_${user.userId}`,
+          deployment_url: domain,
+          realname: user.realname,
+          last_login: user.last_login,
+          role: user.role,
+          company: {
+            company_id: String(site.id),
+            name: String(site.name),
+            id: domain,
+            created_at: 0, // Faking this because we don't have this data
+            plan: site.tier,
+          },
+        };
+        console.log('Intercom options: ', io);
+        this.intercom.boot(io);
+      },
+    });
   }
 
   private removeTags(tags: string[]) {

@@ -36,13 +36,13 @@ export class LocationControlComponent implements OnInit, AfterViewInit {
           const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
 
           this.leafletOptions = {
-            minZoom: 10,
-            maxZoom: 20,
+            minZoom: 3,
+            maxZoom: 17,
             scrollWheelZoom: true,
             zoomControl: false,
             layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
             center: [this.location.lat, this.location.lon],
-            zoom: 15,
+            zoom: this.mapConfig.default_view!.zoom,
           };
         }
       },
@@ -63,7 +63,7 @@ export class LocationControlComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.isMapReady = true;
-    }, 200);
+    }, 500);
   }
 
   private switchMode(systemInitiatedDark: any) {

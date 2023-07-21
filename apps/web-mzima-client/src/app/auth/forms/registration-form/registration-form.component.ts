@@ -14,6 +14,7 @@ export class RegistrationFormComponent {
   @Output() registered = new EventEmitter();
   public isPasswordVisible = false;
   public form: FormGroup;
+  public submitted = false;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
@@ -58,6 +59,7 @@ export class RegistrationFormComponent {
   signup() {
     const { email, password, name } = this.form.value;
     this.form.disable();
+    this.submitted = true;
     this.authService.signup({ email, password, realname: name }).subscribe({
       next: (response) => {
         this.authService.login(email, password).subscribe({
@@ -68,6 +70,7 @@ export class RegistrationFormComponent {
       },
       error: ({ error }) => {
         this.form.enable();
+        this.submitted = false;
         if (error.errors[1].message === 'email is already in use') {
           this.checkExistEmailError(true);
           setTimeout(() => {

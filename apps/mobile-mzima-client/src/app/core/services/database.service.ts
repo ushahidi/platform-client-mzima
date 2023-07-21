@@ -31,10 +31,7 @@ export class DatabaseService {
     await this._storage?.clear();
   }
 
-  public async get(key: string) {
-    this.toastService.presentToast({
-      message: `${this.getKeyName(key)} got from the local database`,
-    });
+  public async get(key: string): Promise<any> {
     await this.ready();
     return this._storage?.get(key);
   }

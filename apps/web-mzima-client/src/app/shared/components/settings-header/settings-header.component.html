@@ -7,11 +7,13 @@
     <ng-container *ngIf="isShowActions">
       <mzima-client-button
         color="danger"
+        class="delete-button"
         (buttonClick)="deleteEmit()"
         [data-qa]="'btn-settings-delete'"
         [disabled]="!selectedItem.length"
       >
-        {{ 'app.delete' | translate }}
+        <mat-icon icon svgIcon="delete" class="button-icon"></mat-icon>
+        <span class="button-name">{{ 'app.delete' | translate }}</span>
       </mzima-client-button>
       <ng-content></ng-content>
     </ng-container>

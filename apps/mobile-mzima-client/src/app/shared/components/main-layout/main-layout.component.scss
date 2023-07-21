@@ -5,3 +5,90 @@
     flex-direction: column;
   }
 }
+
+.main {
+  position: relative;
+  --padding-bottom: var(--main-offset-bottom, calc(16px + var(--ion-safe-area-bottom)));
+
+  &--no-header {
+    --padding-top: calc(32px + var(--ion-safe-area-top));
+  }
+
+  &--has-search {
+    &:not(.main--no-header) {
+      --padding-top: var(--layout-padding-top, 105px);
+    }
+
+    &.main--search-view {
+      --padding-top: calc(88px + var(--ion-safe-area-top));
+    }
+  }
+}
+
+.header {
+  display: block;
+  overflow: hidden;
+  transition-duration: 0.35s;
+  transition-timing-function: ease;
+  transition-property: height, opacity;
+  height: calc(72px + var(--ion-safe-area-top));
+
+  &--hidden {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+.search-form {
+  left: 0;
+  right: 0;
+  z-index: 150;
+  display: block;
+  position: absolute;
+  transition: all 0.35s ease;
+  background: var(--background);
+  padding: 24px var(--ion-padding);
+  top: var(--search-form-offset, 0px);
+  transition-property: top, position, padding, margin-bottom;
+
+  .main--search-view & {
+    top: 0;
+    position: fixed;
+    margin-bottom: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    --light-border-color: transparent;
+    padding: calc(7px + var(--ion-safe-area-top)) 0 7px;
+
+    @media (prefers-color-scheme: dark) {
+      --input-background: transparent;
+      border-bottom-color: var(--ion-border-color);
+    }
+
+    @media (prefers-color-scheme: light) {
+      border-bottom-color: var(--ion-color-step-200);
+    }
+  }
+
+  &::ng-deep {
+    .ion-margin-bottom {
+      margin-bottom: 0;
+    }
+  }
+
+  &__form-control-container {
+    z-index: 100;
+    position: relative;
+    padding-bottom: 7px;
+    transition-duration: 0.35s;
+    transition-timing-function: ease;
+    border-bottom: 1px solid transparent;
+    padding-top: calc(8px + var(--ion-safe-area-top));
+    transition-property: border-bottom-color background-color;
+
+    .search-form--results-visible & {
+      background-color: var(--ion-background-color);
+      border-bottom-color: var(--ion-color-step-200);
+    }
+  }
+}

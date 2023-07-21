@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService, EventBusService, EventType } from '@services';
 import { regexHelper } from '@helpers';
 import { ForgotPasswordComponent } from '@auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -15,10 +16,12 @@ export class LoginFormComponent {
   public form: FormGroup;
   public loginError: string;
   public isPasswordVisible = false;
+  public submitted = false;
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
+    private router: Router,
     private dialog: MatDialog,
     private eventBusService: EventBusService,
   ) {
@@ -40,12 +43,14 @@ export class LoginFormComponent {
   login() {
     const { email, password } = this.form.value;
     this.form.disable();
+    this.submitted = true;
     this.authService.login(email, password).subscribe({
       next: (response) => {
         this.loggined.emit(response);
       },
       error: (err) => {
         this.loginError = err.error.message;
+        this.submitted = false;
         this.form.enable();
         setTimeout(() => (this.loginError = ''), 4000);
       },
@@ -64,11 +69,15 @@ export class LoginFormComponent {
       panelClass: ['modal', 'forgot-password-modal'],
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.eventBusService.next({
-        type: EventType.OpenLoginModal,
-        payload: true,
-      });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.router.navigate([`/reset`]);
+      } else {
+        this.eventBusService.next({
+          type: EventType.OpenLoginModal,
+          payload: true,
+        });
+      }
     });
   }
 }

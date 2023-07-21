@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, TitleStrategy } from '@angular/router';
-import { HostGuard } from '@guards';
+import { HostGuard, ResetTokenGuard } from '@guards';
 import { PageNotFoundComponent } from './shared/components';
 import { UshahidiPageTitleStrategy } from '@services';
 
@@ -67,6 +67,24 @@ const routes: Routes = [
       breadcrumb: 'nav.resetpassword',
       ogTitle: 'nav.resetpassword',
     },
+  },
+  {
+    path: 'forgotpassword/confirm/:token',
+    canActivate: [ResetTokenGuard],
+    component: PageNotFoundComponent,
+  },
+  {
+    path: 'views',
+    children: [
+      {
+        path: 'map',
+        redirectTo: '/map',
+      },
+      {
+        path: 'data',
+        redirectTo: '/feed',
+      },
+    ],
   },
   {
     path: '**',

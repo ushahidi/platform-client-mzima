@@ -51,7 +51,11 @@
               *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
             >
               <mat-form-field appearance="outline">
-                <input matInput [formControlName]="field.key" />
+                <input
+                  matInput
+                  [formControlName]="field.key"
+                  [data-qa]="field.label.replace(' ', '-') | lowercase"
+                />
               </mat-form-field>
             </ng-container>
 
@@ -63,7 +67,7 @@
                   cdkAutosizeMinRows="2"
                   cdkAutosizeMaxRows="5"
                   [formControlName]="field.key"
-                  [data-qa]="'post-item-' + field.key"
+                  [data-qa]="field.label.replace(' ', '-') | lowercase"
                 >
                 </textarea>
               </mat-form-field>
@@ -77,7 +81,7 @@
                   cdkAutosizeMinRows="2"
                   cdkAutosizeMaxRows="5"
                   [formControlName]="field.key"
-                  [data-qa]="'post-item-' + field.key"
+                  [data-qa]="field.label.replace(' ', '-') | lowercase"
                 >
                 </textarea>
               </mat-form-field>
@@ -122,12 +126,13 @@
                   [matDatepicker]="picker"
                   [formControlName]="field.key"
                   (focus)="picker.open()"
+                  [data-qa]="field.label.replaceAll(' ', '-') | lowercase"
                   #input
                 />
                 <mat-datepicker-toggle
                   matSuffix
                   [for]="picker"
-                  [data-qa]="'post-item-post-date-toggle'"
+                  [data-qa]="field.label.replaceAll(' ', '-') + '-toggle' | lowercase"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #picker (closed)="input.blur()"></mat-datepicker>
               </mat-form-field>
@@ -140,12 +145,13 @@
                   [ngxMatDatetimePicker]="picker"
                   [formControlName]="field.key"
                   (focus)="picker.open()"
+                  [data-qa]="field.label.replaceAll(' ', '-') | lowercase"
                   #input
                 />
                 <mat-datepicker-toggle
                   matSuffix
                   [for]="$any(picker)"
-                  [data-qa]="'post-item-post-date-time-toggle' + field.key"
+                  [data-qa]="field.label.replaceAll(' ', '-') + '-toggle' | lowercase"
                 ></mat-datepicker-toggle>
                 <ngx-mat-datetime-picker #picker (closed)="input.blur()"></ngx-mat-datetime-picker>
               </mat-form-field>
@@ -156,12 +162,18 @@
                 [attr.aria-label]="field.label"
                 [formControlName]="field.key"
                 *ngIf="field.options?.length; else noOptions"
-                [data-qa]="'post-item-post-radio' + field.key"
+                [data-qa]="
+                  field.label.replaceAll(' ', '-').replace('(', '').replace(')', '') | lowercase
+                "
               >
                 <div class="radio-button" *ngFor="let option of field.options">
                   <mat-radio-button
                     [value]="option"
-                    [data-qa]="'post-item-post-radio-option' + option"
+                    [data-qa]="
+                      field.label.replaceAll(' ', '-').replace('(', '').replace(')', '') +
+                        '-' +
+                        option.replaceAll(' ', '-') | lowercase
+                    "
                   >
                     {{ option }}
                   </mat-radio-button>
@@ -173,7 +185,9 @@
               <mat-selection-list
                 [formControlName]="field.key"
                 *ngIf="field.options?.length; else noOptions"
-                [data-qa]="'post-item-post-checkbox' + field.key"
+                [data-qa]="
+                  field.label.replaceAll(' ', '-').replace('(', '').replace(')', '') | lowercase
+                "
               >
                 <mat-list-option
                   color="primary"
@@ -181,7 +195,11 @@
                   class="list-option"
                   checkboxPosition="before"
                   *ngFor="let option of field.options"
-                  [data-qa]="'post-item-post-checkbox-option' + option"
+                  [data-qa]="
+                    field.label.replaceAll(' ', '-').replace('(', '').replace(')', '') +
+                      '-' +
+                      option.replaceAll(' ', '-') | lowercase
+                  "
                 >
                   {{ option }}
                 </mat-list-option>
@@ -213,6 +231,9 @@
                   [formControlName]="field.key"
                   type="number"
                   [pattern]="field.type === 'int' ? '[0-9]*' : ''"
+                  [data-qa]="
+                    field.label.replace(' ', '-').replace('(', '').replace(')', '') | lowercase
+                  "
                 />
               </mat-form-field>
             </ng-container>
@@ -230,7 +251,12 @@
 
             <ng-container *ngIf="field.input === 'video'">
               <mat-form-field appearance="outline">
-                <input matInput [formControlName]="field.key" #videoInput />
+                <input
+                  matInput
+                  [formControlName]="field.key"
+                  [data-qa]="field.label.replace(' ', '-') | lowercase"
+                  #videoInput
+                />
               </mat-form-field>
               <mat-error
                 *ngIf="
@@ -242,8 +268,8 @@
               </mat-error>
               <iframe
                 *ngIf="form.get(field.key)?.value"
-                width="560"
-                height="315"
+                width="400"
+                height="250"
                 [src]="generateSecurityTrustUrl(formValidator.videoUrlPreview(videoInput))"
                 [hidden]="!videoInput.value.length"
               ></iframe>
@@ -280,6 +306,7 @@
                     type="text"
                     [(ngModel)]="relationSearch"
                     [ngModelOptions]="{ standalone: true }"
+                    [data-qa]="field.label.replaceAll(' ', '-') | lowercase"
                   />
                 </mat-form-field>
                 <mzima-client-button
@@ -287,7 +314,7 @@
                   color="secondary"
                   class="relation-button-search"
                   (buttonClick)="relationSearchPosts()"
-                  [data-qa]="'btn-post-item-relation-search'"
+                  [data-qa]="field.label.replaceAll(' ', '-') + '-search' | lowercase"
                 >
                   {{ 'post.relation.search' | translate }}
                 </mzima-client-button>
@@ -312,6 +339,7 @@
                   cdkTextareaAutosize
                   cdkAutosizeMaxRows="5"
                   [placeholder]="field.default"
+                  [data-qa]="field.label.replace(' ', '-') | lowercase"
                 ></textarea>
               </mat-form-field>
             </ng-container>
@@ -346,7 +374,7 @@
         <mzima-client-button
           type="submit"
           [data-qa]="'btn-post-item-submit'"
-          [disabled]="form.disabled || form.invalid || emptyLocation"
+          [disabled]="form.disabled || form.invalid || emptyLocation || submitted"
         >
           {{ 'app.submit' | translate }}
         </mzima-client-button>

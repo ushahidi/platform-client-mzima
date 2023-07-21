@@ -25,6 +25,7 @@ export class TextareaControlComponent implements ControlValueAccessor {
   @Input() public clearable = false;
   @Input() public errors: string[] = [];
   @Input() public color: 'light' | 'default' = 'default';
+  @Input() public rows: number = 2;
   @Output() public inputFocus = new EventEmitter();
   @Output() public inputBlur = new EventEmitter();
   @Output() public inputClear = new EventEmitter();
