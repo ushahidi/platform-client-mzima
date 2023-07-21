@@ -33,6 +33,7 @@
   display: block;
   font-style: italic;
   margin-bottom: 8px;
+  font-size: 12px;
 }
 
 ::ng-deep {
@@ -101,4 +102,5 @@
 
 .location-error {
   color: var(--color-accent);
+  font-size: 12px;
 }

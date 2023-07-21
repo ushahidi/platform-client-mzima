@@ -109,7 +109,7 @@
                     <app-checkbox
                       type="item"
                       [ngClass]="{ 'lvl-2': option.parent }"
-                      [checked]="form.get(field.key)?.value.includes(option.id)"
+                      [checked]="form.get(field.key)?.value?.includes(option.id)"
                       (checkboxChange)="
                                 onCheckChange(
                                   $event,
@@ -241,7 +241,7 @@
                   <app-checkbox
                     type="item"
                     [required]="field?.required"
-                    [checked]="form.get(field.key)?.value.includes(option)"
+                    [checked]="form.get(field.key)?.value?.includes(option)"
                     (checkboxChange)="changeSelectionFields($event, field.key, option)"
                   >
                     {{ option }}
