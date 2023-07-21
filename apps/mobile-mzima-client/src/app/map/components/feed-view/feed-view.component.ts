@@ -92,7 +92,7 @@ export class FeedViewComponent extends MainViewComponent {
       const response = await lastValueFrom(this.postsService.getPosts('', { ...params }));
       await this.updateObjectsWithUploadInput(response);
 
-      const currentPosts = await this.databaseService.get(STORAGE_KEYS.POSTS, false);
+      const currentPosts = await this.databaseService.get(STORAGE_KEYS.POSTS);
       if (currentPosts && currentPosts.results) {
         const currentPostIds = currentPosts.results.map((post: any) => post.id);
         const newResults = response.results.filter(
