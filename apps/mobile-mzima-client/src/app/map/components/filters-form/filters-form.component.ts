@@ -292,6 +292,10 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
         this.surveys = response.results;
         this.initSurveyFilters(isDeplaymentChanged);
       },
+      error: () => {
+        this.surveys = [];
+        this.initSurveyFilters(isDeplaymentChanged);
+      },
     });
   }
 
@@ -373,6 +377,9 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
   public showFiltersModal(ev: Event): void {
     ev.preventDefault();
     ev.stopPropagation();
+    if (!this.surveys?.length) {
+      this.getSurveys();
+    }
     this.isFiltersModalOpen = true;
     setTimeout(() => {
       this.hideSearchResults();
