@@ -30,7 +30,8 @@ import _ from 'lodash';
 })
 export class SurveyItemComponent implements OnInit {
   @ViewChild('configTask') configTask: SurveyTaskComponent;
-  public selectLanguageCode: string;
+  public selectedLang?: LanguageInterface;
+  selectLanguageCode: string;
   public description: string;
   public name: string;
   public form: FormGroup;
@@ -60,9 +61,6 @@ export class SurveyItemComponent implements OnInit {
     private breakpointService: BreakpointService,
     private location: Location,
   ) {
-    this.languages = this.languageService.getLanguages();
-    this.defaultLanguage = this.languages.find((lang) => lang.code === 'en');
-    this.activeLanguages = this.defaultLanguage ? [this.defaultLanguage] : [];
     this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
@@ -91,6 +89,20 @@ export class SurveyItemComponent implements OnInit {
     });
   }
 
+  private initLanguages() {
+    this.languages = this.languageService.getLanguages();
+    this.defaultLanguage = this.languages.find((lang) => lang.code === 'en');
+    this.selectedLang = this.defaultLanguage;
+    const availableLangs = this.form.controls['enabled_languages'].value.available;
+    const active = this.defaultLanguage ? [this.defaultLanguage] : [];
+    if (availableLangs.length) {
+      availableLangs.forEach((langCode: string) => {
+        active.push(this.languages.find((lang) => lang.code === langCode)!);
+      });
+    }
+    this.activeLanguages = active;
+  }
+
   public ngOnInit(): void {
     this.initRoles();
     const id = this.route.snapshot.paramMap.get('id');
@@ -100,10 +112,12 @@ export class SurveyItemComponent implements OnInit {
       this.surveysService.getSurveyById(id).subscribe({
         next: (response) => {
           this.updateForm(response.result);
+          this.initLanguages();
           this.initTasks();
         },
       });
     } else {
+      this.initLanguages();
       this.initTasks(true);
     }
   }
@@ -153,6 +167,7 @@ export class SurveyItemComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe({
       next: (selectedLanguages: LanguageInterface[]) => {
+        console.log('selectedLanguages', selectedLanguages);
         if (!selectedLanguages) return;
         this.getFormControl('enabled_languages').value.available = selectedLanguages
           .filter((language) => language.code !== this.defaultLanguage?.code)
@@ -168,12 +183,14 @@ export class SurveyItemComponent implements OnInit {
             };
           });
         this.getFormControl('translations').setValue(translations);
+        this.chooseTranslation(selectedLanguages[selectedLanguages.length - 1]);
       },
     });
   }
 
   public chooseTranslation(language: LanguageInterface): void {
     this.selectLanguageCode = language.code;
+    this.selectedLang = language;
     this.name = this.description = '';
   }
 

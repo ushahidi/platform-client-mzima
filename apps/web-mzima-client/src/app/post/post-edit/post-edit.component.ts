@@ -158,6 +158,11 @@ export class PostEditComponent implements OnInit, OnChanges {
         this.tasks = result.tasks;
         this.surveyName = result.name;
 
+        const availableLanguages = result.enabled_languages.available;
+        if (availableLanguages.length) {
+          // Show lang switcher
+        }
+
         const fields: any = {};
         for (const task of this.tasks) {
           task.fields
