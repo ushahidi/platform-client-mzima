@@ -9,7 +9,7 @@ import {
 } from '../components';
 import { MatDialog } from '@angular/material/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { CollectionsComponent } from '../../data/collections/collections.component';
+import { CollectionsComponent } from '../components';
 import { UserInterface } from '@mzima-client/sdk';
 import { LoginComponent } from '../../auth/login/login.component';
 import { TranslateService } from '@ngx-translate/core';
