@@ -18,6 +18,7 @@ import {
   AccountNotificationsInterface,
 } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
+import { Permissions } from '@enums';
 
 enum CollectionView {
   List = 'list',
@@ -48,6 +49,7 @@ export class CollectionsComponent implements OnInit {
   isLoggedIn = true;
   private notification: AccountNotificationsInterface;
   private userRole: string;
+  public isManageCollections: boolean;
   public formErrors: any[] = [];
 
   constructor(
@@ -75,6 +77,8 @@ export class CollectionsComponent implements OnInit {
     this.initializeForm();
     this.formSubscribe();
     this.userData$.subscribe((userData) => {
+      this.isManageCollections =
+        userData.permissions?.includes(Permissions.ManageCollections) ?? false;
       this.userRole = userData.role!;
       this.isLoggedIn = !!userData.userId;
       if (this.isLoggedIn) {
