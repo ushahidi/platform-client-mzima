@@ -1,3 +1,4 @@
+<!-- Desktop -->
 <ng-container *ngIf="isDesktop$ | async">
   <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
   <mzima-client-button (buttonClick)="openShare()" color="secondary" class="toolbar__button">
@@ -6,6 +7,7 @@
   </mzima-client-button>
 </ng-container>
 
+<!-- Smaller screens -->
 <div class="menu__footer" *ngIf="!(isDesktop$ | async)!">
   <app-donation-button class="menu__footer__button" *ngIf="isDonateAvailable"></app-donation-button>
   <mzima-client-button

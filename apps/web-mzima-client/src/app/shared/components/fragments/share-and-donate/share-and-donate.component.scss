@@ -7,10 +7,6 @@
     padding: 16px 12px;
     background: var(--color-neutral-100);
 
-    // @include breakpoint-max($tablet) {
-    //   display: flex;
-    // }
-
     &__button {
       margin: 0 4px;
       flex: 1 1 calc(50% - 8px);

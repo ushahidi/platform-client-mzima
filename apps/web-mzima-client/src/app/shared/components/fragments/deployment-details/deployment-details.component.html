@@ -1,5 +1,4 @@
-<!-- desktop -->
-<!-- <div class="sidebar__main"> -->
+<!-- Desktop -->
 <span class="sidebar__logo" *ngIf="isDesktop">
   <img src="../../../../assets/images/ushahidi-logo.svg" alt="ushahidi" width="172" height="40" />
 </span>
@@ -8,11 +7,8 @@
   <app-company-info></app-company-info>
   <app-submit-post-button class="sidebar__add-post-btn"></app-submit-post-button>
 </div>
-<!-- TODO: Merge markup & styles for toolbar section. The code separation does not make sense -->
-<!-- TODO: you probably need to look at the styles for add post button and the area around it -->
-<!-- </div> -->
 
-<!-- Mobile -->
+<!-- Smaller screens -->
 <div class="menu__head" *ngIf="!isDesktop">
   <div class="menu__logo">
     <img src="../../../../assets/images/ushahidi-logo.svg" alt="ushahidi" width="177" height="54" />
@@ -31,9 +27,3 @@
 </div>
 
 <app-company-info *ngIf="!isDesktop"></app-company-info>
-
-<!-- <div class="menu__body" *ngIf="!isDesktop">
-  <app-company-info></app-company-info> -->
-<!-- <app-submit-post-button class="sidebar__add-post-btn"></app-submit-post-button> -->
-<!-- </div> -->
-<!---->
