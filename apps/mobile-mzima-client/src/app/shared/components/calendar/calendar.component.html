@@ -1,6 +1,6 @@
 <div class="calendar-holder ion-padding-vertical">
   <span class="calendar__selected ion-padding-horizontal">
-    {{ value ? formattedDate(value) : 'All time' }}
+    {{ value && value.from && value.to ? formattedDate(value) : 'All time' }}
   </span>
   <ion-calendar
     [options]="optionsRange"

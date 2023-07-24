@@ -74,6 +74,7 @@
     [posts]="[post]"
     [permissions]="permissions"
     (postChanged)="getPost(postId)"
+    (postDeleted)="back()"
   >
   </app-post-controls>
 </app-main-layout>

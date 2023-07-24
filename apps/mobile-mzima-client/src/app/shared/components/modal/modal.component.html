@@ -1,6 +1,7 @@
 <ion-modal
   [isOpen]="isOpen"
   class="modal"
+  [canDismiss]="closable"
   [ngClass]="{ 'modal--search-view': isSearchView }"
   (didDismiss)="closeModalHandle()"
   #modal

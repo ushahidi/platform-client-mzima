@@ -17,9 +17,9 @@ export abstract class MainViewComponent {
     limit: 200,
     offset: 0,
   };
-  filters;
+  filters: any;
   public user: UserInterface;
-  public $destroy = new Subject();
+  public $destroy = new Subject<boolean>();
 
   constructor(
     protected router: Router,
@@ -28,15 +28,21 @@ export abstract class MainViewComponent {
     protected savedSearchesService: SavedsearchesService,
     protected sessionService: SessionService,
   ) {
+    this.updateFilters();
+  }
+
+  public updateFilters(): void {
     this.filters = JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters')) ?? '{}',
     );
-    console.log('MainViewComponent > filters', this.filters);
+  }
+
+  ionViewWillEnter(): void {
+    this.$destroy.next(false);
   }
 
   ionViewWillLeave(): void {
-    this.$destroy.next(null);
-    this.$destroy.complete();
+    this.$destroy.next(true);
   }
 
   abstract loadData(): void;
@@ -45,47 +51,11 @@ export abstract class MainViewComponent {
     this.collectionId = '';
     this.params.set = '';
 
-    switch (this.route.snapshot.data['view']) {
-      case 'collection':
-        this.collectionId = this.route.snapshot.paramMap.get('id')!;
-        this.params.set = this.collectionId;
-        this.postsService.applyFilters({
-          ...this.normalizeFilter(this.filters),
-          set: this.collectionId,
-        });
-        this.searchId = '';
-        break;
-
-      case 'search':
-        this.searchId = this.route.snapshot.paramMap.get('id')!;
-        this.savedSearchesService.getById(this.searchId).subscribe((sSearch) => {
-          this.postsService.applyFilters(Object.assign(sSearch.result.filter, { set: [] }));
-        });
-        break;
-
-      default:
-        this.searchId = '';
-        this.postsService.applyFilters({
-          ...this.normalizeFilter(this.filters),
-          set: [],
-        });
-        break;
+    if (this.route.snapshot.data['view'] === 'search') {
+      this.searchId = this.route.snapshot.paramMap.get('id')!;
+      this.savedSearchesService.getById(this.searchId).subscribe((sSearch) => {
+        this.postsService.applyFilters(Object.assign(sSearch.result.filter, { set: [] }));
+      });
     }
-  }
-
-  private normalizeFilter(values: any) {
-    const filters = {
-      ...values,
-      'form[]': values.form,
-      'source[]': values.source,
-      'status[]': values.status,
-      'tags[]': values.tags,
-    };
-
-    delete filters.form;
-    delete filters.source;
-    delete filters.status;
-    delete filters.tags;
-    return filters;
   }
 }
