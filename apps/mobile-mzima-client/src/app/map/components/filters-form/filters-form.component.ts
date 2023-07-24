@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { FormControlComponent, ModalComponent } from '@components';
 import {
@@ -9,7 +9,7 @@ import {
   SurveyItem,
   SurveysService,
 } from '@mzima-client/sdk';
-import { Subject, debounceTime, lastValueFrom } from 'rxjs';
+import { Subject, debounceTime, lastValueFrom, takeUntil } from 'rxjs';
 import { AlertService, EnvService, SearchService, SessionService } from '@services';
 import { FilterControl, FilterControlOption } from '@models';
 import { searchFormHelper, UTCHelper } from '@helpers';
@@ -24,7 +24,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
   templateUrl: './filters-form.component.html',
   styleUrls: ['./filters-form.component.scss'],
 })
-export class FiltersFormComponent implements OnChanges {
+export class FiltersFormComponent implements OnChanges, OnDestroy {
   @Input() public isLight = true;
   @Input() public activatedSavedFilterId?: string;
   @ViewChild('formControl') formControl: FormControlComponent;
@@ -46,6 +46,7 @@ export class FiltersFormComponent implements OnChanges {
       selected: 'none',
       selectedLabel: 'Selected:',
       value: this.getFilterDefaultValue('saved-filters'),
+      noOptionsText: "You don't have any saved filters yet",
     },
     {
       name: 'form',
@@ -54,6 +55,7 @@ export class FiltersFormComponent implements OnChanges {
       selected: 'none',
       selectedCount: '',
       value: [],
+      noOptionsText: "You don't have surveys yet",
     },
     {
       name: 'source',
@@ -77,6 +79,7 @@ export class FiltersFormComponent implements OnChanges {
       label: 'Categories',
       selected: 'none',
       value: this.getFilterDefaultValue('tags'),
+      noOptionsText: "You don't have categories yet",
     },
     {
       name: 'date',
@@ -95,7 +98,7 @@ export class FiltersFormComponent implements OnChanges {
       value: this.getFilterDefaultValue('location'),
     },
   ];
-  public activeFilters: any;
+  public activeFilters: any | null = null;
   public selectedFilter: FilterControl | null;
   private searchParams = {
     limit: 10,
@@ -108,6 +111,7 @@ export class FiltersFormComponent implements OnChanges {
   });
   private activeSavedFilter?: Savedsearch;
   private surveys: any[] | null = null;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -120,16 +124,14 @@ export class FiltersFormComponent implements OnChanges {
     private searchService: SearchService,
     private envService: EnvService,
   ) {
-    this.getSurveys();
-
-    this.searchSubject.pipe(debounceTime(500)).subscribe({
+    this.searchSubject.pipe(takeUntil(this.destroy$), debounceTime(500)).subscribe({
       next: (query: string) => {
         this.searchParams.page = 1;
         this.searchPosts(query);
       },
     });
 
-    this.form.valueChanges.subscribe({
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe({
       next: (values) => {
         if (values.postsQuery) {
           this.isPostsLoading = true;
@@ -138,21 +140,25 @@ export class FiltersFormComponent implements OnChanges {
       },
     });
 
-    this.envService.deployment$.subscribe({
+    this.envService.deployment$.pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.getSurveys();
         this.resetSearchForm();
         this.initFilters();
-        this.initSurveyFilters();
       },
     });
 
-    this.postsService.totalPosts$.subscribe({
+    this.postsService.totalPosts$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (totalPosts) => {
         this.totalPosts = totalPosts;
         this.isTotalLoading = false;
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public initFilters(): void {
@@ -279,19 +285,31 @@ export class FiltersFormComponent implements OnChanges {
   }
 
   private getSurveys(): void {
+    const isDeplaymentChanged = this.surveys !== null;
+    if (isDeplaymentChanged) {
+      this.activeFilters = null;
+    }
+    this.surveys = null;
     this.surveysService.get().subscribe({
       next: (response) => {
         this.surveys = response.results;
-        this.initSurveyFilters();
+        this.initSurveyFilters(isDeplaymentChanged);
+      },
+      error: () => {
+        this.surveys = [];
+        this.initSurveyFilters(isDeplaymentChanged);
       },
     });
   }
 
-  private initSurveyFilters(): void {
+  private initSurveyFilters(isDeplaymentChanged: boolean): void {
     if (!this.surveys) return;
-    const allSurveysChecked = JSON.parse(
-      localStorage.getItem(this.session.getLocalStorageNameMapper('allSurveysChecked')) || 'false',
-    );
+    const allSurveysChecked =
+      isDeplaymentChanged ??
+      JSON.parse(
+        localStorage.getItem(this.session.getLocalStorageNameMapper('allSurveysChecked')) ||
+          'false',
+      );
     const formIds = new Set(this.activeFilters?.form ?? []);
 
     const formFilter = this.filters.find((f) => f.name === 'form')!;
@@ -304,9 +322,10 @@ export class FiltersFormComponent implements OnChanges {
 
     if (!this.activatedSavedFilterId) {
       if (!this.activeFilters) {
-        formFilter.value = this.surveys.map((s: SurveyItem) => s.id);
-        this.activeFilters = searchFormHelper.DEFAULT_FILTERS;
-        this.activeFilters['form'] = this.surveys.map((s: SurveyItem) => s.id);
+        const formValue = this.surveys.map((s: SurveyItem) => s.id);
+        formFilter.value = formValue;
+        this.activeFilters = _.cloneDeep(searchFormHelper.DEFAULT_FILTERS);
+        this.activeFilters['form'] = formValue;
         this.applyFilters();
       } else {
         formFilter.value = this.surveys
@@ -361,6 +380,9 @@ export class FiltersFormComponent implements OnChanges {
   public showFiltersModal(ev: Event): void {
     ev.preventDefault();
     ev.stopPropagation();
+    if (!this.surveys?.length) {
+      this.getSurveys();
+    }
     this.isFiltersModalOpen = true;
     setTimeout(() => {
       this.hideSearchResults();

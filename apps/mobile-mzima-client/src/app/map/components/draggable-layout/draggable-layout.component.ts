@@ -7,7 +7,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { IonContent } from '@ionic/angular';
+import { IonContent, Platform } from '@ionic/angular';
 import { Observable, fromEvent } from 'rxjs';
 
 @Component({
@@ -43,23 +43,35 @@ export class DraggableLayoutComponent implements AfterViewInit {
   private resizeObservable$: Observable<Event>;
   public fixedContentHeight: number;
 
-  constructor() {
+  constructor(protected platform: Platform) {
     this.resizeObservable$ = fromEvent(window, 'resize');
     this.resizeObservable$.subscribe(() => {
       this.getOffsetHeight();
+    });
+
+    this.platform.backButton.subscribeWithPriority(20, async (processNextHandler) => {
+      if (this.mode === 2) {
+        this.setMode(1);
+      } else {
+        processNextHandler();
+      }
     });
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       if (this.mode) {
-        this.content.scrollToPoint(
-          0,
-          this.mode === 'fullscreen' ? window.innerHeight : this.breakpoints[this.mode],
-          350,
-        );
+        this.setMode(this.mode);
       }
     }, 350);
+  }
+
+  public setMode(mode: number | 'fullscreen'): void {
+    this.content.scrollToPoint(
+      0,
+      mode === 'fullscreen' ? window.innerHeight : this.breakpoints[mode],
+      350,
+    );
   }
 
   public updateOffsetHeight(): void {
