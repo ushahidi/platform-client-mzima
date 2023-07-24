@@ -10,7 +10,6 @@ import { UserInterface } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
-  AuthService,
   BreadcrumbService,
   BreakpointService,
   EventBusService,
@@ -20,7 +19,6 @@ import {
 } from '@services';
 import { filter, Observable } from 'rxjs';
 import { DonationModalComponent } from '../../../settings';
-import { AccountSettingsModalComponent } from '../account-settings-modal/account-settings-modal.component';
 import { ShareModalComponent } from '../share-modal/share-modal.component';
 import { SupportModalComponent } from '../support-modal/support-modal.component';
 
@@ -51,7 +49,6 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private session: SessionService,
     private dialog: MatDialog,
-    private authService: AuthService,
     private router: Router,
     private breadcrumbService: BreadcrumbService,
     private breakpointService: BreakpointService,
@@ -107,19 +104,6 @@ export class ToolbarComponent implements OnInit {
         action: () => this.openSupportModal(),
       },
       {
-        label: 'nav.my_account',
-        icon: 'account',
-        visible: this.isLoggedIn,
-        action: () => this.openSettings(),
-        separator: true,
-      },
-      {
-        label: 'nav.logout',
-        icon: 'logout',
-        visible: this.isLoggedIn,
-        action: () => this.logout(),
-      },
-      {
         label: 'nav.login',
         icon: 'auth',
         visible: !this.isLoggedIn && !this.canRegister,
@@ -141,19 +125,6 @@ export class ToolbarComponent implements OnInit {
       maxWidth: 564,
       panelClass: 'modal',
     });
-  }
-
-  public openSettings(): void {
-    this.toggleBurgerMenu(false);
-    this.dialog.open(AccountSettingsModalComponent, {
-      width: '100%',
-      maxWidth: 800,
-      panelClass: ['modal', 'account-settings-modal'],
-    });
-  }
-
-  public logout(): void {
-    this.authService.logout();
   }
 
   public openShare() {
