@@ -46,6 +46,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
       selected: 'none',
       selectedLabel: 'Selected:',
       value: this.getFilterDefaultValue('saved-filters'),
+      noOptionsText: "You don't have any saved filters yet",
     },
     {
       name: 'form',
@@ -54,6 +55,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
       selected: 'none',
       selectedCount: '',
       value: [],
+      noOptionsText: "You don't have surveys yet",
     },
     {
       name: 'source',
@@ -77,6 +79,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
       label: 'Categories',
       selected: 'none',
       value: this.getFilterDefaultValue('tags'),
+      noOptionsText: "You don't have categories yet",
     },
     {
       name: 'date',

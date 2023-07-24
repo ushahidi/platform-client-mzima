@@ -13,7 +13,7 @@
           Add new filters setting
         </ion-item>
         <ion-radio-group
-          *ngIf="options.length"
+          *ngIf="options?.length && !errorMessage; else emptyBox"
           [value]="value"
           (ionChange)="radioChangeHandle($event)"
         >
@@ -35,14 +35,16 @@
         </ion-radio-group>
       </ng-container>
       <ng-container *ngSwitchCase="filterType.MULTISELECT">
-        <app-checkbox
-          type="item"
-          *ngFor="let option of options"
-          [checked]="value.has(option.value)"
-          (checkboxChange)="optionChanged($event, option)"
-        >
-          {{ option.label }}
-        </app-checkbox>
+        <ng-container *ngIf="options?.length && !errorMessage; else emptyBox">
+          <app-checkbox
+            type="item"
+            *ngFor="let option of options"
+            [checked]="value.has(option.value)"
+            (checkboxChange)="optionChanged($event, option)"
+          >
+            {{ option.label }}
+          </app-checkbox>
+        </ng-container>
       </ng-container>
       <ng-container *ngSwitchCase="filterType.MULTILEVELSELECT">
         <ng-container *ngFor="let option of options">
@@ -117,6 +119,12 @@
   <div class="spinner-container">
     <app-spinner *ngIf="isOptionsLoading"></app-spinner>
   </div>
+</ng-template>
+
+<ng-template #emptyBox>
+  <ion-text class="empty ion-padding" [color]="errorMessage?.length ? 'danger' : 'medium'">
+    {{ errorMessage ?? filter.noOptionsText }}
+  </ion-text>
 </ng-template>
 
 <app-modal
