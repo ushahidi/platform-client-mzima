@@ -19,14 +19,6 @@ const routes: Routes = [
     },
   },
   {
-    path: 'data',
-    loadChildren: () => import('./data/data.module').then((m) => m.DataModule),
-    data: {
-      breadcrumb: 'nav.data',
-      ogTitle: 'nav.data',
-    },
-  },
-  {
     path: 'feed',
     loadChildren: () => import('./feed/feed.module').then((m) => m.FeedModule),
     data: {
