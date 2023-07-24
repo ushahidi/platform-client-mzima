@@ -24,6 +24,15 @@ export class DeploymentService {
     this.deployment.next(this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENT, 'object'));
   }
 
+  public removeDomainForSearch(input: string): string {
+    const parts = input.split('.');
+    if (parts.length > 2) {
+      parts.splice(-2, 2);
+      return parts.join('.');
+    }
+    return input;
+  }
+
   public searchDeployments(search: string): Observable<any> {
     const storeDeployments = this.getDeployments();
 
