@@ -12,7 +12,6 @@ import {
   Savedsearch,
   SavedsearchesService,
 } from '@mzima-client/sdk';
-import { lastValueFrom } from 'rxjs';
 
 export interface SaveSearchModalData {
   search?: Savedsearch;
@@ -137,13 +136,12 @@ export class SaveSearchModalComponent implements OnInit {
           ...savedSearchParams,
         })
         .subscribe({
-          next: async () => {
-            await this.toggleNotifications(
+          next: () => {
+            this.toggleNotifications(
               this.data.search.id,
               this.form.value.is_notifications_enabled,
+              savedSearchParams,
             );
-            this.eventBus.next({ payload: savedSearchParams, type: EventType.UpdateSavedSearch });
-            this.matDialogRef.close(true);
           },
         });
     } else {
@@ -152,12 +150,8 @@ export class SaveSearchModalComponent implements OnInit {
           ...savedSearchParams,
         })
         .subscribe({
-          next: async (newSS) => {
-            await this.toggleNotifications(
-              newSS.result.id!,
-              this.form.value.is_notifications_enabled,
-            );
-            this.matDialogRef.close(true);
+          next: (newSS) => {
+            this.toggleNotifications(newSS.result.id!, this.form.value.is_notifications_enabled);
           },
           error: (err) => {
             this.formErrors = err.error.errors.failed_validations;
@@ -166,17 +160,39 @@ export class SaveSearchModalComponent implements OnInit {
     }
   }
 
-  private async toggleNotifications(id: string | number, currentNotificationValue: boolean) {
+  private toggleNotifications(
+    id: string | number,
+    currentNotificationValue: boolean,
+    isUpdate?: any,
+  ) {
     if (!!this.notification !== currentNotificationValue) {
       if (currentNotificationValue) {
-        return lastValueFrom(this.notificationsService.post({ set_id: id }));
+        this.notificationsService.post({ set_id: id }).subscribe({
+          next: () => {
+            if (isUpdate) {
+              this.eventBus.next({ payload: isUpdate, type: EventType.UpdateSavedSearch });
+            }
+            this.matDialogRef.close(true);
+          },
+        });
       } else {
-        const notif = await lastValueFrom(this.notificationsService.get(String(id)));
-        const notification = notif.results[0];
-        return lastValueFrom(this.notificationsService.delete(notification.id));
+        this.notificationsService.get(String(id)).subscribe((notif) => {
+          const notification = notif.results[0];
+          this.notificationsService.delete(notification.id).subscribe({
+            next: () => {
+              if (isUpdate) {
+                this.eventBus.next({ payload: isUpdate, type: EventType.UpdateSavedSearch });
+              }
+              this.matDialogRef.close(true);
+            },
+          });
+        });
       }
     } else {
-      return Promise.reject(0);
+      if (isUpdate) {
+        this.eventBus.next({ payload: isUpdate, type: EventType.UpdateSavedSearch });
+      }
+      this.matDialogRef.close(true);
     }
   }
 

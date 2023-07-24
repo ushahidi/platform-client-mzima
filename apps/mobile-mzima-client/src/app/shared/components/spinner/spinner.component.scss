@@ -1,4 +1,6 @@
 .spinner {
   margin: auto;
   display: block;
+  width: var(--spinner-size, 24px);
+  height: var(--spinner-size, 24px);
 }
