@@ -105,6 +105,7 @@
           </span>
         </a>
       </ng-container>
+      <app-account-and-logout [isLink]="true"></app-account-and-logout>
       <hr />
       <a class="mobile-menu-button"> {{ 'app.privacy_policy' | translate }} </a>
       <a class="mobile-menu-button">
@@ -131,6 +132,5 @@
 </div>
 
 <mat-menu #accountMenu="matMenu" class="account-menu">
-  <button mat-menu-item (click)="openSettings()">{{ 'nav.account_settings' | translate }}</button>
-  <button mat-menu-item (click)="logout()">{{ 'nav.logout' | translate }}</button>
+  <app-account-and-logout></app-account-and-logout>
 </mat-menu>
