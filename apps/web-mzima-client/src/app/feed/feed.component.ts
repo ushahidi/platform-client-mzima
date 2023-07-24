@@ -37,7 +37,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     page: 1,
     size: this.params.limit,
   };
-  public posts: any[] = [];
+  public posts: PostResult[] = [];
   public postCurrentLength = 0;
   public isLoading = false;
   public mode: FeedMode = FeedMode.Tiles;
@@ -327,8 +327,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public selectAllPosts(): void {
     this.posts.map((post) => {
-      if (this.selectedPosts.find((selectedPost) => selectedPost === post.id)) return;
-      this.selectedPosts.push(post.id);
+      if (this.selectedPosts.find((selectedPost) => selectedPost === String(post.id))) return;
+      this.selectedPosts.push(String(post.id));
     });
   }
 
@@ -462,7 +462,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   refreshPost(post: PostResult) {
     this.postsService.getById(post.id).subscribe((p) => {
-      this.posts.find((tmpP) => tmpP.id === p.id).sets = p.sets;
+      const currPost = this.posts.find((tmpP) => tmpP.id === p.id);
+      if (!currPost) return;
+      currPost.sets = p.sets;
     });
   }
 
