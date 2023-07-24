@@ -42,6 +42,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   public isPristine = true;
   public isSubcategoriesPristine = true;
   public isLoggedIn = false;
+  public errorMessage: string | null = null;
 
   value: any;
   onChange: any = () => {};
@@ -152,10 +153,12 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
           info: `Applied filters: ${this.getObjectKeysCount(filter.filter)} of 24`,
         }));
         this.isOptionsLoading = false;
+        this.errorMessage = null;
       },
       error: (err) => {
-        if (err.message.match(/Http failure response for/)) {
-          this.isOptionsLoading = false;
+        this.isOptionsLoading = false;
+        this.errorMessage = err.message;
+        if (err.message.match(/Http failure response for/) && err.status !== 404) {
           setTimeout(() => this.getSavedFilters(), 5000);
         }
       },
@@ -314,6 +317,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
     });
 
     if (result.role === 'confirm') {
+      this.isSubcategoriesPristine = false;
       this.selectedCategory?.options?.forEach((option) => (option.checked = false));
     }
   }
@@ -349,6 +353,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
     });
 
     if (result.role === 'confirm') {
+      this.isPristine = false;
       this.filterClear.emit();
     }
   }

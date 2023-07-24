@@ -7,6 +7,7 @@ export interface FilterControl {
   selectedCount?: number | string | null;
   options?: FilterControlOption[];
   value: any;
+  noOptionsText?: string;
 }
 
 export interface FilterControlOption {

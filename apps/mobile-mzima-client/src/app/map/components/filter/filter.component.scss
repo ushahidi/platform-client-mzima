@@ -172,3 +172,12 @@
     margin: calc(var(--ion-padding) * -1) calc(var(--ion-padding) * -1) 0;
   }
 }
+
+.empty {
+  display: flex;
+  min-height: 100%;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}

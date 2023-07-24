@@ -33,7 +33,7 @@ export class CalendarComponent implements ControlValueAccessor {
     from: new Date().setFullYear(2000),
     to: new Date(),
   };
-  value: DateRangeFormat;
+  value?: DateRangeFormat;
   onChange: any = () => {};
   onTouched: any = () => {};
 
