@@ -1,5 +1,5 @@
 <ng-container *ngFor="let post_content of postContent">
-  <ng-container *ngFor="let field of post_content.fields | sortByField : 'id' : 'asc'">
+  <ng-container *ngFor="let field of post_content.fields | sortByField : 'priority' : 'asc'">
     <div class="post__group" *ngIf="field.value?.id">
       <ng-container *ngIf="field.type !== 'title' && field.type !== 'description'">
         <h4>{{ field.label }}</h4>

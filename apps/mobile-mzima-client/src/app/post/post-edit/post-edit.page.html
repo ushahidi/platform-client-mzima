@@ -39,7 +39,7 @@
         </ng-container>
         <div
           class="form-row"
-          *ngFor="let field of task.fields | sortByField : 'id' : 'asc'; let i = index"
+          *ngFor="let field of task.fields | sortByField : 'priority' : 'asc'; let i = index"
         >
           <!-- title, varchar -->
           <ng-container
