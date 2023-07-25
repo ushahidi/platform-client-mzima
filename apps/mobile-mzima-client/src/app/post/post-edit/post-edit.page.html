@@ -37,7 +37,10 @@
             </ion-toggle>
           </div>
         </ng-container>
-        <div class="form-row" *ngFor="let field of task.fields; let i = index">
+        <div
+          class="form-row"
+          *ngFor="let field of task.fields | sortByField : 'id' : 'asc'; let i = index"
+        >
           <!-- title, varchar -->
           <ng-container
             *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
@@ -153,7 +156,7 @@
                       size="cover"
                       id="date"
                       presentation="date"
-                      (ionChange)="setCalendar($event, field.key)"
+                      (ionChange)="setCalendar($event, field.key, 'date')"
                     ></ion-datetime>
                   </ion-content>
                 </ng-template>
@@ -185,7 +188,7 @@
                       #dateTimeId
                       size="cover"
                       id="datetime"
-                      (ionChange)="setCalendar($event, field.key, 'dateTime')"
+                      (ionChange)="setCalendar($event, field.key, 'datetimeFormatSeconds')"
                     ></ion-datetime>
                   </ion-content>
                 </ng-template>
