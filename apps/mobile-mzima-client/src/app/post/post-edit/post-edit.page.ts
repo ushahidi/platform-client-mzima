@@ -297,7 +297,7 @@ export class PostEditPage {
     this.cdr.detectChanges();
   }
 
-  public setCalendar(event: any, key: any, type: 'date' | 'datetime') {
+  public setCalendar(event: any, key: any, type: string) {
     this.updateFormControl(key, dateHelper.setDate(event.detail.value, type));
   }
 
@@ -419,7 +419,11 @@ export class PostEditPage {
   }
 
   private handleDateTime(key: string, value: any) {
-    this.updateFormControl(key, value?.value ? dateHelper.setDate(value?.value, 'datetime') : null);
+    this.updateFormControl(
+      key,
+      value?.value ? dateHelper.setDate(value?.value, 'datetimeFormat') : null,
+    );
+    console.log(this.form.controls[key].value);
   }
 
   private handleTitle(key: string) {
@@ -822,5 +826,9 @@ export class PostEditPage {
         this.form.patchValue({ [fieldKey]: this.checkedList });
       }
     }
+  }
+
+  public getDate(value: any, format: string): string {
+    return dateHelper.getDateWithTz(value, format);
   }
 }

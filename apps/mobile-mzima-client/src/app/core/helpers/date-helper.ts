@@ -15,6 +15,13 @@ export function setDate(date: Dayjs, format?: string): any {
       return dayjs(date).format('YYYY-MM-DD');
     case 'datetime':
       return dayjs(date).set('millisecond', 0).toDate();
+    case 'datetimeFormat':
+      return dayjs(date).set('millisecond', 0).format('YYYY-MM-DD, HH:mm:ss');
+    case 'datetimeFormatSeconds':
+      return dayjs(date)
+        .set('seconds', dayjs().second())
+        .set('millisecond', 0)
+        .format('YYYY-MM-DD, HH:mm:ss');
     default:
       return dayjs(date).toDate();
   }
