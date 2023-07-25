@@ -37,7 +37,10 @@
             </ion-toggle>
           </div>
         </ng-container>
-        <div class="form-row" *ngFor="let field of task.fields; let i = index">
+        <div
+          class="form-row"
+          *ngFor="let field of task.fields | sortByField : 'priority' : 'asc'; let i = index"
+        >
           <!-- title, varchar -->
           <ng-container
             *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"

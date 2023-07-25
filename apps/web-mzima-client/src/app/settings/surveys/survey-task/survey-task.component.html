@@ -43,6 +43,36 @@
         </mzima-client-button>
       </div>
 
+      <div cdkDropList class="fields-list" *ngIf="taskFields?.length; else noFields">
+        <div
+          class="field-item"
+          *ngFor="let field of nonDraggableFields | sortByField : 'priority' : 'asc'; let i = index"
+          [data-qa]="'field-' + field"
+        >
+          <div class="field-item__main">
+            <mat-icon
+              cdkDragHandle
+              class="field-item__non-drag-handle"
+              svgIcon="drag-handle"
+            ></mat-icon>
+            <span class="field-item__title" [data-qa]="'field-name'">{{ field.label }}</span>
+          </div>
+          <!-- <span class="field-item__type">{{ field.type }}</span> -->
+          <div class="field-item__controls">
+            <mzima-client-button
+              fill="clear"
+              color="gray"
+              [iconOnly]="true"
+              class="field-item__control"
+              (buttonClick)="editField(field, i)"
+              [data-qa]="'btn-field-edit-' + field.label"
+            >
+              <mat-icon icon svgIcon="pencil"></mat-icon>
+            </mzima-client-button>
+          </div>
+        </div>
+      </div>
+
       <div
         cdkDropList
         class="fields-list"
@@ -51,7 +81,7 @@
       >
         <div
           class="field-item"
-          *ngFor="let field of taskFields; let i = index"
+          *ngFor="let field of draggableFields | sortByField : 'priority' : 'asc'; let i = index"
           cdkDrag
           [data-qa]="'field-' + field"
         >
@@ -79,7 +109,6 @@
               fill="clear"
               color="gray"
               [iconOnly]="true"
-              *ngIf="canDelete(field)"
               class="field-item__control"
               (buttonClick)="deleteField(i)"
               [data-qa]="'btn-field-delete-' + field.label"

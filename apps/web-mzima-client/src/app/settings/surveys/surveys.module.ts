@@ -13,6 +13,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatListModule } from '@angular/material/list';
 import { TranslateModule } from '@ngx-translate/core';
+import { SortByFieldModule } from '@pipes';
 import { ColorPickerComponentModule } from '../../shared/components/color-picker/color-picker-component.module';
 import { GroupCheckboxSelectModule } from '../../shared/components/group-checkbox-select/group-checkbox-select.module';
 import { MultilevelSelectModule } from '../../shared/components/multilevel-select/multilevel-select.module';
@@ -69,6 +70,7 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
     MatTreeModule,
     MatListModule,
     MzimaUiModule,
+    SortByFieldModule,
   ],
 })
 export class SurveysModule {}

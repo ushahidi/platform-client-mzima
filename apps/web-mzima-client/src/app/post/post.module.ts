@@ -20,6 +20,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule } from '@ngx-translate/core';
+import { SortByFieldModule } from '@pipes';
 import { DirectiveModule, MapWithMarkerModule, PipeModule, SpinnerModule } from '@shared';
 import { PostRoutingModule } from './post-routing.module';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -73,6 +74,7 @@ import { ImageUploaderComponent } from './image-uploader/image-uploader.componen
     PipeModule,
     NgxMatNativeDateModule,
     MzimaUiModule,
+    SortByFieldModule,
   ],
   exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent, PostEditComponent],
 })

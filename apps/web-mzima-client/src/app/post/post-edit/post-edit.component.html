@@ -36,7 +36,10 @@
             </div>
           </ng-container>
 
-          <div class="form-row" *ngFor="let field of task.fields; let i = index">
+          <div
+            class="form-row"
+            *ngFor="let field of task.fields | sortByField : 'priority' : 'asc'; let i = index"
+          >
             <mat-label>
               {{ field?.label }} <span class="color-accent" *ngIf="field?.required">*</span>
             </mat-label>
