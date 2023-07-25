@@ -156,7 +156,7 @@
                       size="cover"
                       id="date"
                       presentation="date"
-                      (ionChange)="setCalendar($event, field.key)"
+                      (ionChange)="setCalendar($event, field.key, 'date')"
                     ></ion-datetime>
                   </ion-content>
                 </ng-template>
@@ -188,7 +188,7 @@
                       #dateTimeId
                       size="cover"
                       id="datetime"
-                      (ionChange)="setCalendar($event, field.key, 'dateTime')"
+                      (ionChange)="setCalendar($event, field.key, 'datetimeFormatSeconds')"
                     ></ion-datetime>
                   </ion-content>
                 </ng-template>

@@ -2,7 +2,7 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import dayjs from 'dayjs';
 import { DateRangeFormat } from '@models';
-import { UTCHelper } from '@helpers';
+import { dateHelper } from '@helpers';
 
 @Component({
   selector: 'app-date-select',
@@ -74,36 +74,36 @@ export class DateSelectComponent implements ControlValueAccessor {
     switch (this.dateOption) {
       case 'week':
         this.value = {
-          from: UTCHelper.toUTC(dayjs().subtract(7, 'd').startOf('d')),
-          to: UTCHelper.toUTC(dayjs().endOf('d')),
+          from: dateHelper.toUTC(dayjs().subtract(7, 'd').startOf('d')),
+          to: dateHelper.toUTC(dayjs().endOf('d')),
         };
         break;
 
       case 'month':
         this.value = {
-          from: UTCHelper.toUTC(dayjs().subtract(1, 'M').startOf('d')),
-          to: UTCHelper.toUTC(dayjs().endOf('d')),
+          from: dateHelper.toUTC(dayjs().subtract(1, 'M').startOf('d')),
+          to: dateHelper.toUTC(dayjs().endOf('d')),
         };
         break;
 
       case '3_month':
         this.value = {
-          from: UTCHelper.toUTC(dayjs().subtract(3, 'M').startOf('d')),
-          to: UTCHelper.toUTC(dayjs().endOf('d')),
+          from: dateHelper.toUTC(dayjs().subtract(3, 'M').startOf('d')),
+          to: dateHelper.toUTC(dayjs().endOf('d')),
         };
         break;
 
       case '6_month':
         this.value = {
-          from: UTCHelper.toUTC(dayjs().subtract(6, 'M').startOf('d')),
-          to: UTCHelper.toUTC(dayjs().endOf('d')),
+          from: dateHelper.toUTC(dayjs().subtract(6, 'M').startOf('d')),
+          to: dateHelper.toUTC(dayjs().endOf('d')),
         };
         break;
 
       case 'year':
         this.value = {
-          from: UTCHelper.toUTC(dayjs().subtract(1, 'y').startOf('d')),
-          to: UTCHelper.toUTC(dayjs().endOf('d')),
+          from: dateHelper.toUTC(dayjs().subtract(1, 'y').startOf('d')),
+          to: dateHelper.toUTC(dayjs().endOf('d')),
         };
         break;
 
