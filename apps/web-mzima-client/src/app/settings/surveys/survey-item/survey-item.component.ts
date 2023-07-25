@@ -198,10 +198,7 @@ export class SurveyItemComponent implements OnInit {
     });
   }
 
-  saveRoles(formId: string) {
-    const selectedRoles = this.configTask.selectedRoles.options?.map((r: any) => {
-      return this.roles.find((role) => role.name === r);
-    });
+  saveRoles(formId: string, selectedRoles?: any[]) {
     const admin: any = this.roles.find((r: any) => r.name === 'admin');
     if (
       !this.getFormControl('everyone_can_create').value &&
@@ -227,19 +224,24 @@ export class SurveyItemComponent implements OnInit {
         base_language: defaultLang,
       });
 
+      const selectedRoles = this.configTask.selectedRoles.options?.map((r: any) =>
+        this.roles.find((role) => role.name === r),
+      );
+
       const request = Object.assign(
         {},
         {
           ...this.form.value,
           name: this.form.value.name.trim(),
           description: this.form.value.description.trim(),
+          everyone_can_create: !selectedRoles?.length,
         },
         this.configTask.getConfigOptions(),
       );
       this.surveysService.saveSurvey(request, this.surveyId).subscribe({
         next: (response) => {
           this.updateForm(response.result);
-          this.saveRoles(response.result.id);
+          this.saveRoles(response.result.id, selectedRoles);
           this.router.navigate(['settings/surveys']);
         },
         error: ({ error }) => {
