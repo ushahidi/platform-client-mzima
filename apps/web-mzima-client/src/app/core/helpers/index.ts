@@ -9,3 +9,4 @@ export * as objectHelpers from './object-helpers';
 export * as regexHelper from './regex';
 export * as arrayHelpers from './array-helpers';
 export * as formValidators from './validators';
+export * as dateHelper from './date-helper';
