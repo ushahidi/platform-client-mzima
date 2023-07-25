@@ -57,11 +57,15 @@
           </ng-container>
 
           <ng-container *ngIf="field.input === 'date'">
-            <p>{{ field.value.value | date : 'MMMM d, y' }}</p>
+            <p>{{ getDate(field.value.value, 'LL') }}</p>
           </ng-container>
 
           <ng-container *ngIf="field.input === 'datetime'">
-            <p>{{ field.value.value | date : 'MMMM d, y h:mm aaa' }}</p>
+            <p>{{ getDate(field.value.value, 'LL LTS') }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="field.input === 'time'">
+            <p>{{ getDate(field.value.value, 'LTS') }}</p>
           </ng-container>
 
           <ng-container *ngIf="field.input === 'radio'">
