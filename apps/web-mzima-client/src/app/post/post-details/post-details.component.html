@@ -32,7 +32,7 @@
     </div>
 
     <ng-container *ngFor="let post_content of post.post_content">
-      <ng-container *ngFor="let field of post_content.fields | sortByField : 'id' : 'asc'">
+      <ng-container *ngFor="let field of post_content.fields | sortByField : 'priority' : 'asc'">
         <div *ngIf="field.input !== 'tags' ? field.value : field.value?.length" class="post__group">
           <h3>{{ field.label }}</h3>
 
