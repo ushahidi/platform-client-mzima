@@ -189,6 +189,10 @@ export class FeedViewComponent extends MainViewComponent {
     this.getPosts(this.params);
   }
 
+  public createPost() {
+    this.router.navigate(['/post-edit']);
+  }
+
   public destroy(): void {
     this.destroy$.next(null);
     this.destroy$.complete();

@@ -56,6 +56,7 @@
 .sorting-select {
   height: 57px;
   display: block;
+  overflow: hidden;
   margin-bottom: 16px;
   transition: all 0.35s ease;
 
@@ -68,9 +69,23 @@
 }
 
 .empty-box {
-  height: 220px;
+  height: 156px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+
+  &--loading {
+    height: 220px;
+  }
+}
+
+.empty {
+  display: block;
+  margin-bottom: 40px;
+}
+
+.create-post-btn {
+  --button-padding-end: 24px;
+  --button-padding-start: 24px;
 }
