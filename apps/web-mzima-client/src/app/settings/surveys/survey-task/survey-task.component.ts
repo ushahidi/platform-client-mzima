@@ -43,6 +43,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   @Output() duplicateTaskChange = new EventEmitter();
   @Output() deleteTaskChange = new EventEmitter();
   @Output() errorFieldChange = new EventEmitter();
+  @Output() taskChange = new EventEmitter();
 
   surveyId: string;
   selectedRoles: GroupCheckboxValueInterface = {
@@ -275,7 +276,15 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe({
       next: (response: FormAttributeInterface) => {
         if (response) {
-          this.taskFields[idx] = response;
+          const safePriority: number[] = [1, 2];
+          if (safePriority.includes(response.priority)) {
+            this.nonDraggableFields[idx] = response;
+          } else {
+            this.draggableFields[idx] = response;
+          }
+          this.taskFields = [...this.nonDraggableFields, ...this.draggableFields];
+          this.task.fields = this.taskFields;
+          this.taskChange.emit(this.task);
         }
       },
     });
