@@ -189,9 +189,9 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       this.draggableFields[event.currentIndex].priority =
         this.draggableFields[event.currentIndex].priority + 1;
     }
-
-    this.taskFields = [...this.nonDraggableFields, ...this.draggableFields];
+    this.mergeTaskFieldsData();
     this.changePriority(event);
+    this.taskChangeEmit();
   }
 
   private changePriority(event: any) {
@@ -222,12 +222,17 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       description: `<p>${this.translate.instant('notify.form.delete_attribute_confirm_desc')}</p>`,
     });
     if (!confirmed) return;
-
-    this.taskFields.splice(index, 1);
+    this.draggableFields.splice(index, 1);
+    this.mergeTaskFieldsData();
+    this.taskChangeEmit();
   }
 
   get anonymiseReportersEnabled() {
     return true;
+  }
+
+  private mergeTaskFieldsData() {
+    this.taskFields = [...this.nonDraggableFields, ...this.draggableFields];
   }
 
   addField() {
@@ -282,12 +287,16 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
           } else {
             this.draggableFields[idx] = response;
           }
-          this.taskFields = [...this.nonDraggableFields, ...this.draggableFields];
-          this.task.fields = this.taskFields;
-          this.taskChange.emit(this.task);
+          this.mergeTaskFieldsData();
+          this.taskChangeEmit();
         }
       },
     });
+  }
+
+  private taskChangeEmit() {
+    this.task.fields = this.taskFields;
+    this.taskChange.emit(this.task);
   }
 
   public colorChanged(): void {
