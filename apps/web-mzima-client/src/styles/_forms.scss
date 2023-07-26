@@ -257,6 +257,11 @@
   }
 }
 
+.mat-calendar-body-cell {
+  height: 40px !important;
+  position: relative !important;
+}
+
 @media (hover: hover) {
   .mat-calendar-body-cell {
     &:not(.mat-calendar-body-disabled) {
@@ -693,6 +698,9 @@
 }
 
 .mat-calendar-body-cell-container {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+
   &:first-child {
     .mat-calendar-body-cell::before,
     .mat-calendar-body-cell::after,
