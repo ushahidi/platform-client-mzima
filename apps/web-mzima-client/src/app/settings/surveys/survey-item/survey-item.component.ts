@@ -235,7 +235,6 @@ export class SurveyItemComponent implements OnInit {
       this.form.patchValue({
         base_language: defaultLang,
       });
-      console.log(this.form.value);
       const request = Object.assign(
         {},
         {
