@@ -27,7 +27,7 @@
     [roles]="roles"
     [isMain]="true"
     [survey]="surveyObject"
-    (surveyChange)="updateForm($event)"
+    (taskChange)="taskUpdate($event)"
     *ngIf="mainPost"
     (colorSelected)="setNewColor($event)"
   >
