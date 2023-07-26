@@ -214,7 +214,11 @@
               *ngFor="
                 let post of posts
                   | paginate
-                    : { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: total }
+                    : {
+                        itemsPerPage: mode === FeedMode.Post ? 0 : itemsPerPage,
+                        currentPage: currentPage,
+                        totalItems: total
+                      }
               "
             >
             </app-post-preview>
@@ -227,9 +231,9 @@
             class="feed__load-more"
             *ngIf="
               !isLoading &&
-              params.offset !== undefined &&
+              params.page !== undefined &&
               params.limit !== undefined &&
-              params.offset + params.limit < total
+              params.page * params.limit < total
             "
           >
             <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
