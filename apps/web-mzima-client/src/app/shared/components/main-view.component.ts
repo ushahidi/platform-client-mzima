@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SavedsearchesService, PostsService, UserInterface } from '@mzima-client/sdk';
+import {
+  SavedsearchesService,
+  PostsService,
+  UserInterface,
+  GeoJsonFilter,
+} from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EventBusService, EventType, SessionService } from '@services';
 
@@ -12,7 +17,7 @@ import { EventBusService, EventType, SessionService } from '@services';
 export abstract class MainViewComponent {
   searchId = '';
   collectionId = '';
-  params: any = {
+  params: GeoJsonFilter = {
     limit: 500,
     offset: 0,
   };
