@@ -324,3 +324,11 @@ jobs:
           files: |
             ${{steps.bin_build.outputs.tarball}}
             ${{steps.bindev_build.outputs.tarball}}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            ${{steps.bin_build.outputs.tarball}}
+            ${{steps.bindev_build.outputs.tarball}}
