@@ -151,6 +151,7 @@ export class ChooseDeploymentComponent implements OnInit {
       this.isDeploymentsLoading = false;
       this.foundedDeploymentList = [];
       this.domain = query.toLowerCase().replace('http://', '').replace('https://', '');
+      this.searchSubject.next(this.deploymentService.removeDomainForSearch(this.domain));
     } else if (query.length > 0) {
       this.isDeploymentsLoading = true;
       this.domain = null;
