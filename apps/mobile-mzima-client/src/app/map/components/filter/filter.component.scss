@@ -180,4 +180,8 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
+
+  &--with-button {
+    min-height: calc(100% - 72px);
+  }
 }

@@ -122,7 +122,11 @@
 </ng-template>
 
 <ng-template #emptyBox>
-  <ion-text class="empty ion-padding" [color]="errorMessage?.length ? 'danger' : 'medium'">
+  <ion-text
+    class="empty ion-padding"
+    [color]="errorMessage?.length ? 'danger' : 'medium'"
+    [ngClass]="{ 'empty--with-button': filter.name === 'saved-filters' }"
+  >
     {{ errorMessage ?? filter.noOptionsText }}
   </ion-text>
 </ng-template>
