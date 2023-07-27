@@ -290,6 +290,11 @@ export class SearchFormComponent implements OnInit {
               }),
           };
         });
+        if (!this.categoriesData.length) {
+          document.body.classList.add('filters-panel-no-categories');
+        } else {
+          document.body.classList.remove('filters-panel-no-categories');
+        }
       },
       error: (err) => {
         if (err.message.match(/Http failure response for/)) {
