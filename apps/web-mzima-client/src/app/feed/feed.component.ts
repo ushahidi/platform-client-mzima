@@ -219,7 +219,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   private initGetPostsListener() {
     this.getPostsSubject.pipe(untilDestroyed(this), debounceTime(700)).subscribe({
       next: (params) => {
-        this.getPosts(params);
+        this.getPosts(params, true);
       },
     });
   }
@@ -228,12 +228,17 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     if (!add) {
       this.posts = [];
     }
+    if (this.mode === FeedMode.Post) {
+      this.currentPage = 1;
+    }
     this.isLoading = true;
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
         this.postCurrentLength =
-          data.count < Number(data.meta.per_page) ? data.meta.total : this.currentPage * data.count;
+          data.count < Number(data.meta.per_page)
+            ? data.meta.total
+            : data.meta.current_page * data.count;
         this.eventBusService.next({
           type: EventType.FeedPostsLoaded,
           payload: true,
