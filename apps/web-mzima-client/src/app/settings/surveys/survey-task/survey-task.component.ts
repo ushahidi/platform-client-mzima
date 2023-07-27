@@ -25,8 +25,7 @@ import {
   SurveyItem,
   SurveyItemTask,
 } from '@mzima-client/sdk';
-import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
-import { LanguageService } from '../../../core/services/language.service';
+import { ConfirmModalService, LanguageService } from '@services';
 import _ from 'lodash';
 
 @Component({
