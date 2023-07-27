@@ -1,3 +1,5 @@
+@import 'helpers';
+
 .multilevelselection-holder {
   margin-top: 16px;
 }
@@ -8,6 +10,7 @@
   &__option {
     display: flex;
     min-height: 0;
+    max-width: 100%;
 
     &:not(:first-child) {
       margin-top: 16px;
@@ -15,6 +18,7 @@
 
     &[aria-level='2'] {
       margin-left: 32px;
+      max-width: calc(100% - 32px);
     }
 
     &__arrow {
@@ -37,4 +41,8 @@
     display: block;
     min-height: 32px;
   }
+}
+
+::ng-deep.mat-checkbox-layout {
+  align-items: flex-start !important;
 }

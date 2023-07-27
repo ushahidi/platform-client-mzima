@@ -824,10 +824,18 @@
 
 .mat-checkbox-layout {
   align-items: center !important;
+  white-space: normal !important;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-width: 100%;
 
   @include breakpoint-max($tablet) {
-    white-space: normal !important;
     align-items: flex-start !important;
+  }
+
+  .mat-checkbox-label {
+    max-width: calc(100% - 36px);
+    margin-top: 1px;
   }
 }
 
@@ -857,6 +865,7 @@
 .mat-checkbox {
   font-size: 16px;
   line-height: 1.5;
+  max-width: 100%;
 
   + p {
     margin-top: 8px;
