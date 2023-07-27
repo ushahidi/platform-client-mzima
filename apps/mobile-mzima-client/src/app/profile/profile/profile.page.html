@@ -27,8 +27,6 @@
   [isOpen]="isSupportModalOpen"
   title="Help and Support"
   (modalClose)="isSupportModalOpen = false"
-  [options]="{ searchForm: true }"
-  (search)="filterSupportItems($event)"
 >
   <ng-container *ngIf="filteredSupportItems.length; else emptySupportItems">
     <ion-item
