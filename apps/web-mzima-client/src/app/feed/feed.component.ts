@@ -185,21 +185,39 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   ngOnInit() {
     this.getUserData();
+    this.eventBusListeners();
+  }
 
-    this.eventBusService.on(EventType.DeleteCollection).subscribe({
-      next: (colId) => {
-        if (Number(colId) === Number(this.collectionId)) {
+  private eventBusListeners() {
+    this.eventBusService
+      .on(EventType.DeleteCollection)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (colId) => {
+          if (Number(colId) === Number(this.collectionId)) {
+            this.router.navigate(['/feed']);
+          }
+        },
+      });
+
+    this.eventBusService
+      .on(EventType.DeleteSavedSearch)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: () => {
+          // We can delete search only from edit so redirect anyway
           this.router.navigate(['/feed']);
-        }
-      },
-    });
+        },
+      });
 
-    this.eventBusService.on(EventType.DeleteSavedSearch).subscribe({
-      next: () => {
-        // We can delete search only from edit so redirect anyway
-        this.router.navigate(['/feed']);
-      },
-    });
+    this.eventBusService
+      .on(EventType.UpdatedPost)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (post) => {
+          this.refreshPost(post);
+        },
+      });
 
     this.eventBusService
       .on(EventType.EditPost)
@@ -465,11 +483,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     }
   }
 
-  refreshPost(post: PostResult) {
-    this.postsService.getById(post.id).subscribe((p) => {
-      const currPost = this.posts.find((tmpP) => tmpP.id === p.id);
-      if (!currPost) return;
-      currPost.sets = p.sets;
+  refreshPost({ id }: PostResult) {
+    this.postsService.getById(id).subscribe((p) => {
+      const index = this.posts.findIndex((post) => post.id === p.id);
+      if (index !== -1) this.posts.splice(index, 1, p);
     });
   }
 
