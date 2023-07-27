@@ -42,6 +42,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   @Output() duplicateTaskChange = new EventEmitter();
   @Output() deleteTaskChange = new EventEmitter();
   @Output() errorFieldChange = new EventEmitter();
+  @Output() taskChange = new EventEmitter();
 
   surveyId: string;
   selectedRoles: GroupCheckboxValueInterface = {
@@ -50,6 +51,8 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   };
 
   taskFields: FormAttributeInterface[];
+  nonDraggableFields: FormAttributeInterface[];
+  draggableFields: FormAttributeInterface[];
   isPost = false;
   showLangError = false;
   selectedLanguage: any;
@@ -101,11 +104,21 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.surveyId = this.route.snapshot.paramMap.get('id') || '';
     this.taskFields = this.task.fields;
+    this.splitTaskFields(this.taskFields);
     this.currentInterimId = this.findIntermId();
     this.isPost = this.task.type === 'post';
     if (this.surveyId && this.isPost) {
       this.getSurveyRoles();
     }
+  }
+
+  private splitTaskFields(taskFields: FormAttributeInterface[]) {
+    this.nonDraggableFields = taskFields.filter(
+      (field) => field.priority === 1 || field.priority === 2,
+    );
+    this.draggableFields = taskFields.filter(
+      (field) => field.priority !== 1 && field.priority !== 2,
+    );
   }
 
   private getSurveyRoles() {
@@ -164,7 +177,26 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   }
 
   drop(event: CdkDragDrop<FormAttributeInterface[]>) {
-    moveItemInArray(this.taskFields, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.draggableFields, event.previousIndex, event.currentIndex);
+
+    if (event.previousIndex > event.currentIndex) {
+      this.draggableFields[event.currentIndex].priority =
+        this.draggableFields[event.currentIndex].priority - 1;
+    }
+
+    if (event.previousIndex < event.currentIndex) {
+      this.draggableFields[event.currentIndex].priority =
+        this.draggableFields[event.currentIndex].priority + 1;
+    }
+    this.mergeTaskFieldsData();
+    this.changePriority(event);
+    this.taskChangeEmit();
+  }
+
+  private changePriority(event: any) {
+    for (let i = event.currentIndex; i < this.taskFields.length; i++) {
+      this.taskFields[i].priority = i + 1;
+    }
   }
 
   changeLanguage(event: any) {
@@ -189,12 +221,17 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       description: `<p>${this.translate.instant('notify.form.delete_attribute_confirm_desc')}</p>`,
     });
     if (!confirmed) return;
-
-    this.taskFields.splice(index, 1);
+    this.draggableFields.splice(index, 1);
+    this.mergeTaskFieldsData();
+    this.taskChangeEmit();
   }
 
   get anonymiseReportersEnabled() {
     return true;
+  }
+
+  private mergeTaskFieldsData() {
+    this.taskFields = [...this.nonDraggableFields, ...this.draggableFields];
   }
 
   addField() {
@@ -211,14 +248,21 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe({
       next: (response) => {
         if (response) {
-          this.taskFields.push(response);
+          this.draggableFields.push(this.addPriority(this.taskFields, response));
+          this.taskFields.push(this.addPriority(this.taskFields, response));
+          console.log(this.taskFields);
         }
       },
     });
   }
 
-  canDelete(field: FormAttributeInterface) {
-    return this.isPost ? field.type !== 'title' && field.type !== 'description' : true;
+  addPriority(array: FormAttributeInterface[], newObject: any) {
+    const maxPriority = array.reduce((max, current) => {
+      return current.priority > max ? current.priority : max;
+    }, 0);
+
+    newObject.priority = maxPriority + 1;
+    return newObject;
   }
 
   editField(selectedFieldType: any, idx: number) {
@@ -236,10 +280,22 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe({
       next: (response: FormAttributeInterface) => {
         if (response) {
-          this.taskFields[idx] = response;
+          const safePriority: number[] = [1, 2];
+          if (safePriority.includes(response.priority)) {
+            this.nonDraggableFields[idx] = response;
+          } else {
+            this.draggableFields[idx] = response;
+          }
+          this.mergeTaskFieldsData();
+          this.taskChangeEmit();
         }
       },
     });
+  }
+
+  private taskChangeEmit() {
+    this.task.fields = this.taskFields;
+    this.taskChange.emit(this.task);
   }
 
   public colorChanged(): void {

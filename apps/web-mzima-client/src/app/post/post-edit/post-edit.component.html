@@ -36,7 +36,10 @@
             </div>
           </ng-container>
 
-          <div class="form-row" *ngFor="let field of task.fields; let i = index">
+          <div
+            class="form-row"
+            *ngFor="let field of task.fields | sortByField : 'priority' : 'asc'; let i = index"
+          >
             <mat-label>
               {{ field?.label }} <span class="color-accent" *ngIf="field?.required">*</span>
             </mat-label>
@@ -153,7 +156,11 @@
                   [for]="$any(picker)"
                   [data-qa]="field.label.replaceAll(' ', '-') + '-toggle' | lowercase"
                 ></mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #picker (closed)="input.blur()"></ngx-mat-datetime-picker>
+                <ngx-mat-datetime-picker
+                  #picker
+                  [showSeconds]="true"
+                  (closed)="input.blur()"
+                ></ngx-mat-datetime-picker>
               </mat-form-field>
             </ng-container>
 

@@ -17,6 +17,7 @@ import {
 } from 'rxjs';
 import { BaseComponent } from './base.component';
 import { UploadFileHelper } from './post/helpers';
+import { Location } from '@angular/common';
 
 @UntilDestroy()
 @Component({
@@ -33,6 +34,7 @@ export class AppComponent extends BaseComponent {
     override toastService: ToastService,
     override alertCtrl: AlertController,
     override networkService: NetworkService,
+    override location: Location,
     private dataBaseService: DatabaseService,
     private mediaService: MediaService,
     private postsService: PostsService,
@@ -41,7 +43,7 @@ export class AppComponent extends BaseComponent {
     private listenerService: ListenerService,
     @Optional() override routerOutlet?: IonRouterOutlet,
   ) {
-    super(router, platform, toastService, alertCtrl, networkService, routerOutlet);
+    super(router, platform, toastService, alertCtrl, networkService, routerOutlet, location);
     this.initToastMessageListener();
     this.initNetworkListener();
     this.listenerService.changeDeploymentListener();

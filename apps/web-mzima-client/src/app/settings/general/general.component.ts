@@ -138,9 +138,11 @@ export class GeneralComponent implements OnInit {
     } else {
       this.updateSettings().subscribe({
         complete: () => {
+          this.submitted = false;
           this.loader.hide();
         },
         error: (error) => {
+          this.submitted = false;
           this.loader.hide();
           this.notificationService.showError(error.message);
         },

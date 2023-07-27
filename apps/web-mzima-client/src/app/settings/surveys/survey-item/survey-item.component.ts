@@ -135,6 +135,15 @@ export class SurveyItemComponent implements OnInit {
     });
   }
 
+  taskUpdate(data: any) {
+    let tasks = this.form.controls['tasks'].value;
+    tasks = tasks.map((task: any) => (task.id === data.id ? data : task));
+
+    this.form.patchValue({
+      tasks: tasks,
+    });
+  }
+
   private getFormControl(name: string) {
     return this.form.controls[name];
   }

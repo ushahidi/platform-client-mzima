@@ -45,18 +45,18 @@
 
 ::ng-deep {
   .leaflet-control-geocoder {
-    display: none;
+    display: block;
   }
   .leaflet-control-attribution {
     font-size: 7px;
   }
   .leaflet-touch .leaflet-bar a {
-    display: flex;
+    //display: flex;
     align-items: center;
     justify-content: center;
-    width: 25px;
-    height: 25px;
-    line-height: 20px;
+    //width: 25px;
+    //height: 25px;
+    //line-height: 20px;
   }
 }
 

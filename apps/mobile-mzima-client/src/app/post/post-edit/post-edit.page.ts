@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angu
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CONST, STORAGE_KEYS } from '@constants';
+import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EMPTY, from, lastValueFrom, map, Observable, of, switchMap, tap } from 'rxjs';
 import {
@@ -25,7 +25,7 @@ import { PostEditForm, prepareRelationConfig, UploadFileHelper } from '../helper
 
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
-import { objectHelpers, UTCHelper } from '@helpers';
+import { objectHelpers, dateHelper } from '@helpers';
 
 dayjs.extend(timezone);
 
@@ -220,7 +220,7 @@ export class PostEditPage {
 
   getDefaultValues(field: any) {
     const defaultValues: any = {
-      date: UTCHelper.toUTC(dayjs()),
+      date: dateHelper.setDate(dayjs()),
       location: { lat: '', lng: '' },
       number: 0,
     };
@@ -297,9 +297,8 @@ export class PostEditPage {
     this.cdr.detectChanges();
   }
 
-  setCalendar(event: any, key: any, type: 'date' | 'dateTime' = 'date') {
-    const template = type === 'dateTime' ? CONST.FORMAT_DATE_TIME : CONST.FORMAT_DATE;
-    this.updateFormControl(key, UTCHelper.toUTC(event.detail.value, template));
+  public setCalendar(event: any, key: any, type: string) {
+    this.updateFormControl(key, dateHelper.setDate(event.detail.value, type));
   }
 
   private async loadSurveyFormLocalDB() {
@@ -416,17 +415,15 @@ export class PostEditPage {
   }
 
   private handleDate(key: string, value: any) {
-    this.updateFormControl(
-      key,
-      value?.value ? UTCHelper.toUTC(value?.value, CONST.FORMAT_DATE) : null,
-    );
+    this.updateFormControl(key, value?.value ? dateHelper.setDate(value?.value, 'date') : null);
   }
 
   private handleDateTime(key: string, value: any) {
     this.updateFormControl(
       key,
-      value?.value ? UTCHelper.toUTC(value?.value, CONST.FORMAT_DATE_TIME) : null,
+      value?.value ? dateHelper.setDate(value?.value, 'datetimeFormat') : null,
     );
+    console.log(this.form.controls[key].value);
   }
 
   private handleTitle(key: string) {
@@ -446,14 +443,14 @@ export class PostEditPage {
       date: (value: any) =>
         value
           ? {
-              value: UTCHelper.toUTC(value),
+              value: dateHelper.setDate(value, 'date'),
               value_meta: { from_tz: dayjs.tz.guess() },
             }
           : { value: null },
       datetime: (value: any) =>
         value
           ? {
-              value: UTCHelper.toUTC(value, CONST.FORMAT_DATE_TIME),
+              value: dateHelper.setDate(value, 'datetime'),
               value_meta: { from_tz: dayjs.tz.guess() },
             }
           : { value: null },
@@ -829,5 +826,9 @@ export class PostEditPage {
         this.form.patchValue({ [fieldKey]: this.checkedList });
       }
     }
+  }
+
+  public getDate(value: any, format: string): string {
+    return dateHelper.getDateWithTz(value, format);
   }
 }
