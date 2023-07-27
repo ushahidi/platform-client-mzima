@@ -1,0 +1,18 @@
+.main {
+  font-size: 22px;
+  line-height: 28px;
+  text-align: center;
+  --padding-top: calc(32px + var(--ion-safe-area-top));
+
+  &::part(scroll) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.img {
+  max-width: 480px;
+  overflow: hidden;
+  margin: 0 auto 24px;
+}
