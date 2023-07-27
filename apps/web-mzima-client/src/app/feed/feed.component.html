@@ -203,7 +203,7 @@
               (loaded)="refreshMasonry()"
               (click)="showPostDetails(post)"
               [selectable]="isBulkOptionsVisible"
-              [isChecked]="isPostChecked(post.id)"
+              [isChecked]="isPostChecked(post.id.toString())"
               (statusChanged)="postStatusChanged()"
               (selected)="isPostSelected($event, post.id.toString())"
               [ngClass]="{
