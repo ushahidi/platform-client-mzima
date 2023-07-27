@@ -38,7 +38,7 @@ export interface SurveyItem {
 }
 
 export interface SurveyItemEnabledLanguages {
-  available: any[];
+  available: string[];
   default: string;
 }
 

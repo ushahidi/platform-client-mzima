@@ -11,172 +11,176 @@
   <mat-icon icon svgIcon="close"></mat-icon>
 </mzima-client-button>
 
-<strong mat-dialog-title>{{ 'form.add_field' | translate }}</strong>
+<strong mat-dialog-title>{{
+  isTranslateMode ? ('form.translate_field' | translate) : ('form.add_field' | translate)
+}}</strong>
 <mat-dialog-content>
   <ng-container *ngIf="selectedFieldType; else allFields">
-    <div class="form-row">
-      <mat-label>{{ 'app.name' | translate }}</mat-label>
-      <mat-form-field appearance="outline">
-        <input
-          matInput
-          required
-          [(ngModel)]="selectedFieldType.label"
-          placeholder="{{ 'form.field_name_placeholder' | translate }}"
-          [data-qa]="'selected-field-name'"
-        />
-      </mat-form-field>
-    </div>
-
-    <div class="form-row">
-      <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
-      <quill-editor
-        [(ngModel)]="selectedFieldType.instructions"
-        placeholder="{{ 'app.insert_text_here' | translate }}"
-        [data-qa]="'selected-field-description'"
-      ></quill-editor>
-    </div>
-
-    <!-- Has options -->
-    <div class="form-row" *ngIf="hasOptions">
-      <div class="form-head-panel">
-        <mat-label class="form-label" [data-qa]="'field-options'"
-          >{{ 'form.field_options' | translate }}
-        </mat-label>
-
-        <mzima-client-button
-          fill="outline"
-          color="secondary"
-          (buttonClick)="addOption()"
-          [data-qa]="'btn-add-option'"
-        >
-          {{ 'form.field_add_option' | translate }}
-          <mat-icon icon svgIcon="plus"></mat-icon>
-        </mzima-client-button>
-      </div>
-
-      <div class="form-row__item" *ngFor="let option of fieldOptions; let i = index">
+    <ng-container *ngIf="!isTranslateMode; else translateMode">
+      <div class="form-row">
+        <mat-label>{{ 'app.name' | translate }}</mat-label>
         <mat-form-field appearance="outline">
           <input
             matInput
-            [(ngModel)]="option.value"
-            (input)="onChange(i)"
+            required
+            [(ngModel)]="selectedFieldType.label"
             placeholder="{{ 'form.field_name_placeholder' | translate }}"
-            [data-qa]="'option-' + i"
+            [data-qa]="'selected-field-name'"
           />
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-label>{{ 'survey.show_field_description' | translate }} </mat-label>
+        <quill-editor
+          [(ngModel)]="selectedFieldType.instructions"
+          placeholder="{{ 'app.insert_text_here' | translate }}"
+          [data-qa]="'selected-field-description'"
+        ></quill-editor>
+      </div>
+
+      <!-- Has options -->
+      <div class="form-row" *ngIf="hasOptions">
+        <div class="form-head-panel">
+          <mat-label class="form-label" [data-qa]="'field-options'"
+            >{{ 'form.field_options' | translate }}
+          </mat-label>
 
           <mzima-client-button
-            matSuffix
-            fill="clear"
-            color="danger"
-            [iconOnly]="true"
-            class="button-flat button-beta"
-            (buttonClick)="removeOption(i)"
-            *ngIf="selectedFieldType.options.length > 1"
-            [data-qa]="'btn-remove-option-' + i"
+            fill="outline"
+            color="secondary"
+            (buttonClick)="addOption()"
+            [data-qa]="'btn-add-option'"
           >
-            <mat-icon icon svgIcon="delete"></mat-icon>
+            {{ 'form.field_add_option' | translate }}
+            <mat-icon icon svgIcon="plus"></mat-icon>
           </mzima-client-button>
-        </mat-form-field>
-        <mat-error role="alert" *ngIf="option.error">
-          {{ option.error | translate }}
-        </mat-error>
-      </div>
-    </div>
+        </div>
 
-    <div class="form-row" *ngIf="selectedFieldType.input === 'tags'">
-      <ng-container *ngIf="availableCategories; else spinner">
-        <mat-label>{{ 'category.which_categories' | translate }}</mat-label>
-        <app-multilevel-selection
-          [data]="availableCategories"
-          [(ngModel)]="selectedFieldType.options"
-        >
-        </app-multilevel-selection>
-      </ng-container>
-    </div>
+        <div class="form-row__item" *ngFor="let option of fieldOptions; let i = index">
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              [(ngModel)]="option.value"
+              (input)="onChange(i)"
+              placeholder="{{ 'form.field_name_placeholder' | translate }}"
+              [data-qa]="'option-' + i"
+            />
 
-    <div class="form-row" *ngIf="selectedFieldType.input === 'relation'">
-      <app-multilevel-select
-        [(ngModel)]="selectedFieldType.config.input.form"
-        [placeholder]="'survey.select_related_post' | translate"
-        [data]="availableSurveys"
-        [label]="'survey.field_allowed_relation_survey' | translate"
-      >
-      </app-multilevel-select>
-    </div>
-
-    <div class="form-row" *ngIf="onlyOptional || canDisableCaption || canMakePrivate">
-      <div class="toggle">
-        <mat-slide-toggle
-          *ngIf="onlyOptional"
-          [(ngModel)]="selectedFieldType.required"
-          [data-qa]="'toggle-required'"
-        >
-          {{ 'survey.required' | translate }}
-        </mat-slide-toggle>
+            <mzima-client-button
+              matSuffix
+              fill="clear"
+              color="danger"
+              [iconOnly]="true"
+              class="button-flat button-beta"
+              (buttonClick)="removeOption(i)"
+              *ngIf="selectedFieldType.options.length > 1"
+              [data-qa]="'btn-remove-option-' + i"
+            >
+              <mat-icon icon svgIcon="delete"></mat-icon>
+            </mzima-client-button>
+          </mat-form-field>
+          <mat-error role="alert" *ngIf="option.error">
+            {{ option.error | translate }}
+          </mat-error>
+        </div>
       </div>
 
-      <div class="toggle">
-        <mat-slide-toggle
-          *ngIf="canDisableCaption"
-          [(ngModel)]="selectedFieldType.config.hasCaption"
-        >
-          {{ 'survey.collect_image_caption' | translate }}
-          <p class="init active" *ngIf="!selectedFieldType.config?.hasCaption">
-            <small>{{ 'survey.disable_caption_field_explanation' | translate }}</small>
-          </p>
-        </mat-slide-toggle>
-      </div>
-
-      <div class="toggle">
-        <mat-slide-toggle
-          *ngIf="canMakePrivate"
-          [(ngModel)]="selectedFieldType.response_private"
-          [data-qa]="'toggle-private'"
-        >
-          {{ 'survey.make_response_private' | translate }}
-          <p class="init active" *ngIf="selectedFieldType.response_private">
-            <small>{{ 'survey.response_private_desc' | translate }}</small>
-          </p>
-        </mat-slide-toggle>
-      </div>
-    </div>
-
-    <div id="field_value" class="form-row" *ngIf="canDisplay">
-      <mat-label>{{ 'app.default_value' | translate }} </mat-label>
-      <mat-form-field appearance="outline">
-        <ng-container [ngSwitch]="selectedFieldType.type">
-          <input
-            *ngSwitchCase="'int'"
-            matInput
-            [(ngModel)]="selectedFieldType.default"
-            type="number"
-            step="1"
-            [data-qa]="'default-number'"
-          />
-          <input
-            *ngSwitchCase="'decimal'"
-            matInput
-            [(ngModel)]="selectedFieldType.default"
-            type="text"
-            [data-qa]="'default-number'"
-          />
-          <input
-            *ngSwitchDefault
-            matInput
-            [(ngModel)]="selectedFieldType.default"
-            placeholder="{{ 'form.default_default_placeholder' | translate }}"
-            [data-qa]="'default-value'"
-          />
+      <div class="form-row" *ngIf="selectedFieldType.input === 'tags'">
+        <ng-container *ngIf="availableCategories; else spinner">
+          <mat-label>{{ 'category.which_categories' | translate }}</mat-label>
+          <app-multilevel-selection
+            [data]="availableCategories"
+            [(ngModel)]="selectedFieldType.options"
+          >
+          </app-multilevel-selection>
         </ng-container>
-        <mat-hint
-          *ngIf="numberError"
-          class="alert error"
-          [translate]="'form.error_input_number'"
-          [translateParams]="{ type: selectedFieldType.type }"
+      </div>
+
+      <div class="form-row" *ngIf="selectedFieldType.input === 'relation'">
+        <app-multilevel-select
+          [(ngModel)]="selectedFieldType.config.input.form"
+          [placeholder]="'survey.select_related_post' | translate"
+          [data]="availableSurveys"
+          [label]="'survey.field_allowed_relation_survey' | translate"
         >
-        </mat-hint>
-      </mat-form-field>
-    </div>
+        </app-multilevel-select>
+      </div>
+
+      <div class="form-row" *ngIf="onlyOptional || canDisableCaption || canMakePrivate">
+        <div class="toggle">
+          <mat-slide-toggle
+            *ngIf="onlyOptional"
+            [(ngModel)]="selectedFieldType.required"
+            [data-qa]="'toggle-required'"
+          >
+            {{ 'survey.required' | translate }}
+          </mat-slide-toggle>
+        </div>
+
+        <div class="toggle">
+          <mat-slide-toggle
+            *ngIf="canDisableCaption"
+            [(ngModel)]="selectedFieldType.config.hasCaption"
+          >
+            {{ 'survey.collect_image_caption' | translate }}
+            <p class="init active" *ngIf="!selectedFieldType.config?.hasCaption">
+              <small>{{ 'survey.disable_caption_field_explanation' | translate }}</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+
+        <div class="toggle">
+          <mat-slide-toggle
+            *ngIf="canMakePrivate"
+            [(ngModel)]="selectedFieldType.response_private"
+            [data-qa]="'toggle-private'"
+          >
+            {{ 'survey.make_response_private' | translate }}
+            <p class="init active" *ngIf="selectedFieldType.response_private">
+              <small>{{ 'survey.response_private_desc' | translate }}</small>
+            </p>
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+      <div id="field_value" class="form-row" *ngIf="canDisplay">
+        <mat-label>{{ 'app.default_value' | translate }} </mat-label>
+        <mat-form-field appearance="outline">
+          <ng-container [ngSwitch]="selectedFieldType.type">
+            <input
+              *ngSwitchCase="'int'"
+              matInput
+              [(ngModel)]="selectedFieldType.default"
+              type="number"
+              step="1"
+              [data-qa]="'default-number'"
+            />
+            <input
+              *ngSwitchCase="'decimal'"
+              matInput
+              [(ngModel)]="selectedFieldType.default"
+              type="text"
+              [data-qa]="'default-number'"
+            />
+            <input
+              *ngSwitchDefault
+              matInput
+              [(ngModel)]="selectedFieldType.default"
+              placeholder="{{ 'form.default_default_placeholder' | translate }}"
+              [data-qa]="'default-value'"
+            />
+          </ng-container>
+          <mat-hint
+            *ngIf="numberError"
+            class="alert error"
+            [translate]="'form.error_input_number'"
+            [translateParams]="{ type: selectedFieldType.type }"
+          >
+          </mat-hint>
+        </mat-form-field>
+      </div>
+    </ng-container>
   </ng-container>
 </mat-dialog-content>
 
@@ -217,6 +221,51 @@
       <p>{{ field.instructions | translate }}</p>
     </div>
   </div>
+</ng-template>
+
+<ng-template #translateMode>
+  <div class="form-row">
+    <mat-label>{{ 'app.name' | translate }}</mat-label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        required
+        [(ngModel)]="selectedFieldType.label"
+        placeholder="{{ 'form.field_name_placeholder' | translate }}"
+        disabled
+      />
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-label>{{ 'app.name' | translate }} ({{ selectLanguageCode }})</mat-label>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        required
+        [(ngModel)]="selectedFieldType.translations[selectLanguageCode].label"
+        placeholder="{{ 'form.field_name_placeholder' | translate }}"
+      />
+    </mat-form-field>
+  </div>
+  <ng-container *ngIf="selectedFieldType.instructions">
+    <div class="form-row">
+      <mat-label>{{ 'survey.show_field_description' | translate }}</mat-label>
+      <quill-editor
+        [(ngModel)]="selectedFieldType.instructions"
+        placeholder="{{ 'app.insert_text_here' | translate }}"
+        [disabled]="true"
+      ></quill-editor>
+    </div>
+    <div class="form-row">
+      <mat-label
+        >{{ 'survey.show_field_description' | translate }} ({{ selectLanguageCode }})</mat-label
+      >
+      <quill-editor
+        [(ngModel)]="selectedFieldType.translations[selectLanguageCode].instructions"
+        placeholder="{{ 'app.insert_text_here' | translate }}"
+      ></quill-editor>
+    </div>
+  </ng-container>
 </ng-template>
 
 <ng-template #spinner>

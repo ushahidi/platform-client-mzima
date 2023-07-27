@@ -32,6 +32,7 @@ import { TwitterWidgetComponent } from './twitter-widget/twitter-widget.componen
 import { PostHeadComponent } from './post-head/post-head.component';
 import { MzimaUiModule } from '@mzima-client/mzima-ui';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ImageUploaderComponent } from './image-uploader/image-uploader.componen
     DirectiveModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTooltipModule,
     MatGridListModule,
     FormsModule,
     MapWithMarkerModule,

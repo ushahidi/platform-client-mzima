@@ -15,7 +15,7 @@
           </mat-form-field>
         </div>
         <div class="form-row">
-          <mat-label>{{ 'app.description' | translate }}</mat-label>
+          <mat-label>{{ 'app.description' | translate }}111</mat-label>
           <mat-form-field appearance="outline">
             <textarea
               matInput
@@ -31,12 +31,19 @@
       <ng-content *ngIf="isPost" select="[survey-info]"></ng-content>
 
       <div class="form-head-panel">
-        <h2>{{ 'survey.fields.fields_title' | translate }}:</h2>
+        <h2>
+          {{
+            isDefaultLanguageSelected
+              ? ('survey.fields.fields_title' | translate)
+              : ('translations.field_add_translation' | translate)
+          }}
+        </h2>
         <mzima-client-button
           color="secondary"
           fill="outline"
           (buttonClick)="addField()"
           [data-qa]="'btn-survey-add-field'"
+          *ngIf="isDefaultLanguageSelected"
         >
           <span>{{ 'form.add_field' | translate }}</span>
           <mat-icon icon svgIcon="plus"></mat-icon>
@@ -53,6 +60,7 @@
           class="field-item"
           *ngFor="let field of taskFields; let i = index"
           cdkDrag
+          [cdkDragDisabled]="!isDefaultLanguageSelected"
           [data-qa]="'field-' + field"
         >
           <div class="field-item__main">
@@ -61,7 +69,11 @@
               class="field-item__drag-handle"
               svgIcon="drag-handle"
             ></mat-icon>
-            <span class="field-item__title" [data-qa]="'field-name'">{{ field.label }}</span>
+            <span class="field-item__title" [data-qa]="'field-name'">{{
+              isDefaultLanguageSelected
+                ? field.label
+                : field.translations[selectLanguageCode]?.label || field.label
+            }}</span>
           </div>
           <!-- <span class="field-item__type">{{ field.type }}</span> -->
           <div class="field-item__controls">
@@ -93,7 +105,7 @@
         <div class="form-row empty">{{ 'survey.no_fields' | translate }}</div>
       </ng-template>
 
-      <div class="form-controls-panel" *ngIf="!isPost">
+      <div class="form-controls-panel" *ngIf="!isPost && isDefaultLanguageSelected">
         <mzima-client-button color="danger" (buttonClick)="deleteTask(task)">
           {{ 'survey.delete_task' | translate }}
         </mzima-client-button>
@@ -106,6 +118,7 @@
       [label]="'survey.configure' | translate"
       *ngIf="!isPost"
       [data-qa]="'survey-configure'"
+      [disabled]="!isDefaultLanguageSelected"
     >
       <div class="toggle">
         <mat-slide-toggle [(ngModel)]="task.required" name="accept-survey">
@@ -132,7 +145,12 @@
         </mat-slide-toggle>
       </div>
     </mat-tab>
-    <mat-tab [label]="'survey.configure' | translate" *ngIf="isPost" [data-qa]="'survey-configure'">
+    <mat-tab
+      [label]="'survey.configure' | translate"
+      *ngIf="isPost"
+      [data-qa]="'survey-configure'"
+      [disabled]="!isDefaultLanguageSelected"
+    >
       <ng-container *ngIf="survey">
         <div class="form-row">
           <div class="toggle">

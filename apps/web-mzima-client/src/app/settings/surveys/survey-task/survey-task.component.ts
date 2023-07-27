@@ -37,9 +37,12 @@ import _ from 'lodash';
 export class SurveyTaskComponent implements OnInit, OnChanges {
   @Input() task: SurveyItemTask;
   @Input() survey: SurveyItem;
+  @Input() isDefaultLanguageSelected: boolean;
+  @Input() selectLanguageCode: string;
   @Input() roles: RoleResult[];
   @Input() isMain: boolean;
   @Output() colorSelected = new EventEmitter();
+  @Output() languageChange = new EventEmitter();
   @Output() duplicateTaskChange = new EventEmitter();
   @Output() deleteTaskChange = new EventEmitter();
   @Output() errorFieldChange = new EventEmitter();
@@ -170,6 +173,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
 
   changeLanguage(event: any) {
     const newLang = event.value;
+    this.languageChange.emit(newLang);
     if (this.survey.enabled_languages.available.some((l) => l === newLang)) {
       this.showLangError = true;
     } else {
@@ -206,6 +210,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       panelClass: 'modal',
       data: {
         surveyId: this.surveyId,
+        isTranslateMode: !this.isDefaultLanguageSelected,
       },
     });
 
@@ -219,7 +224,10 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   }
 
   canDelete(field: FormAttributeInterface) {
-    return this.isPost ? field.type !== 'title' && field.type !== 'description' : true;
+    return (
+      this.isDefaultLanguageSelected &&
+      (this.isPost ? field.type !== 'title' && field.type !== 'description' : true)
+    );
   }
 
   editField(selectedFieldType: any, idx: number) {
@@ -231,6 +239,8 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       data: {
         selectedFieldType: _.cloneDeep(selectedFieldType),
         surveyId: this.surveyId,
+        isTranslateMode: !this.isDefaultLanguageSelected,
+        selectLanguageCode: this.selectLanguageCode,
       },
     });
 
