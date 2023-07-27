@@ -17,7 +17,7 @@ import {
   UserInterface,
   AccountNotificationsInterface,
 } from '@mzima-client/sdk';
-import { ConfirmModalService } from '../../core/services/confirm-modal.service';
+import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { Permissions } from '@enums';
 
 enum CollectionView {

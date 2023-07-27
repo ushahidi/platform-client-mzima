@@ -21,7 +21,6 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
 import { preparingVideoUrl } from '../../core/helpers/validators';
-import { CollectionsModalComponent } from '../../shared/components';
 
 @Component({
   selector: 'app-post-details',
@@ -157,19 +156,6 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     category_id: number,
   ): boolean {
     return !!categories?.find((category: CategoryInterface) => category.parent_id === category_id);
-  }
-
-  public addToCollection(): void {
-    this.dialog.open(CollectionsModalComponent, {
-      width: '100%',
-      maxWidth: 480,
-      height: 'auto',
-      maxHeight: '90vh',
-      panelClass: 'modal',
-      data: {
-        title: this.translate.instant('app.edit_collection'),
-      },
-    });
   }
 
   private setMetaData(post: PostResult) {

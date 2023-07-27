@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoginComponent } from '@auth';
-import { CollectionsComponent } from '@data';
+import { CollectionsComponent } from '../index';
 import { EnumGtmEvent, EnumGtmSource, Roles, Permissions } from '@enums';
 import { takeUntilDestroy$ } from '@helpers';
 import { MenuInterface, SiteConfigInterface, UserMenuInterface } from '@models';

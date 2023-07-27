@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 import { LoginComponent } from '@auth';
-import { CollectionsComponent } from '@data';
+import { CollectionsComponent } from '../index';
 import { EnumGtmEvent, EnumGtmSource } from '@enums';
 import { SiteConfigInterface, UserMenuInterface } from '@models';
 import { UserInterface } from '@mzima-client/sdk';
