@@ -21,6 +21,7 @@
   display: block;
   max-width: 100%;
   overflow: hidden;
+  margin-bottom: 16px;
 
   @include breakpoint-max($tablet) {
     margin-bottom: 24px;
@@ -84,7 +85,8 @@
     }
   }
 
-  &__drag-handle {
+  &__drag-handle,
+  &__non-drag-handle {
     width: 1em;
     height: 1em;
     cursor: move;
@@ -95,6 +97,10 @@
     @include breakpoint-max($tablet) {
       margin-inline-end: 8px;
     }
+  }
+
+  &__non-drag-handle {
+    color: var(--color-neutral-40);
   }
 }
 

@@ -11,6 +11,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { untilDestroyed } from '@ngneat/until-destroy';
 import { distinctUntilChanged } from 'rxjs';
 import { NetworkService, ToastService } from '@services';
+import { Location } from '@angular/common';
 
 export class BaseComponent {
   tap = 0;
@@ -22,6 +23,7 @@ export class BaseComponent {
     protected alertCtrl: AlertController,
     protected networkService: NetworkService,
     @Optional() protected routerOutlet?: IonRouterOutlet,
+    @Optional() protected location?: Location,
   ) {
     this.platform.ready().then(async () => {
       if (this.platform.is('hybrid')) {
@@ -100,6 +102,8 @@ export class BaseComponent {
             if (this.tap === 2) await App.exitApp();
             else this.doubleTapExistToast();
           }
+        } else {
+          this.location?.back();
         }
       });
     }

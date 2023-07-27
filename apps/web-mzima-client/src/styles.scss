@@ -186,3 +186,10 @@ a {
     margin-top: 0;
   }
 }
+
+.intercom-namespace .intercom-dfosxs,
+.intercom-lightweight-app-launcher {
+  @include breakpoint-max($tablet) {
+    bottom: 100px !important;
+  }
+}

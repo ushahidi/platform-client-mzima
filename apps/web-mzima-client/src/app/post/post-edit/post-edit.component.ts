@@ -24,7 +24,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService, EventBusService, LanguageService, SessionService } from '@services';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -43,8 +42,8 @@ import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LanguageInterface } from '../../core/interfaces/language.interface';
 import { MatSelectChange } from '@angular/material/select';
+import { dateHelper } from '@helpers';
 
-dayjs.extend(utc);
 dayjs.extend(timezone);
 
 @UntilDestroy()
@@ -295,7 +294,13 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleDate(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value ? new Date(value?.value) : null });
+    this.form.patchValue({ [key]: value?.value ? dateHelper.setDate(value?.value, 'date') : null });
+  }
+
+  private handleDateTime(key: string, value: any) {
+    this.form.patchValue({
+      [key]: value?.value ? dateHelper.setDate(value?.value, 'datetime') : null,
+    });
   }
 
   private handleTitle(key: string) {
@@ -328,7 +333,7 @@ export class PostEditComponent implements OnInit, OnChanges {
         checkbox: this.handleCheckbox.bind(this),
         location: this.handleLocation.bind(this),
         date: this.handleDate.bind(this),
-        datetime: this.handleDate.bind(this),
+        datetime: this.handleDateTime.bind(this),
         upload: this.handleUpload.bind(this),
       };
 
@@ -422,10 +427,19 @@ export class PostEditComponent implements OnInit, OnChanges {
 
           switch (field.input) {
             case 'date':
+              value = this.form.value[field.key]
+                ? {
+                    value: dateHelper.setDate(this.form.value[field.key], 'date'),
+                    value_meta: {
+                      from_tz: dayjs.tz.guess(),
+                    },
+                  }
+                : { value: null };
+              break;
             case 'datetime':
               value = this.form.value[field.key]
                 ? {
-                    value: dayjs(this.form.value[field.key]).format('YYYY-MM-DD'),
+                    value: dateHelper.setDate(this.form.value[field.key], 'datetime'),
                     value_meta: {
                       from_tz: dayjs.tz.guess(),
                     },

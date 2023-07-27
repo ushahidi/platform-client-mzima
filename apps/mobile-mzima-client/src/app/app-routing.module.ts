@@ -48,6 +48,10 @@ const routes: Routes = [
       import('./privacy-policy/privacy-policy.module').then((m) => m.PrivacyPolicyPageModule),
   },
   {
+    path: 'activity',
+    loadChildren: () => import('./activity/activity.module').then((m) => m.ActivityPageModule),
+  },
+  {
     path: ':id',
     loadChildren: () => import('./post/post.module').then((m) => m.PostPageModule),
   },

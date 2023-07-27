@@ -126,8 +126,8 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     this.map = map;
     control.zoom({ position: 'bottomleft' }).addTo(this.map);
     this.map.panTo(this.location);
-
     this.geocoderControl.addTo(this.map);
+
     this.addMarker();
 
     this.map.on('click', (e) => {

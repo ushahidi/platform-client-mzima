@@ -168,7 +168,11 @@
 
   &::ng-deep {
     .mat-checkbox-layout {
-      width: 100%;
+      align-items: flex-start !important;
+
+      .mat-checkbox-label {
+        margin-top: 1px;
+      }
     }
   }
 
