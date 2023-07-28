@@ -200,7 +200,6 @@
               (edit)="editPost(post)"
               (refresh)="refreshPost(post)"
               (deleted)="postDeleted([post.id.toString()])"
-              (loaded)="refreshMasonry()"
               (click)="showPostDetails(post)"
               [selectable]="isBulkOptionsVisible"
               [isChecked]="isPostChecked(post.id.toString())"
