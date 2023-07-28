@@ -202,7 +202,7 @@ jobs:
           retry 60 timeout 1 curl --silent ${server}/index.html || { echo "Failed getting index.html!" && exit 1; }
 
       - name: Cypress run
-        uses: cypress-io/github-action@5
+        uses: cypress-io/github-action@v5
         with:
           build: npm run build
           start: npm start
