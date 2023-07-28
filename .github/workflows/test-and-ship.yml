@@ -202,11 +202,10 @@ jobs:
           retry 60 timeout 1 curl --silent ${server}/index.html || { echo "Failed getting index.html!" && exit 1; }
 
       - name: Cypress run
-        run: |
-          cd e2e-testing
-          npm install
-          cypress install
-          npm run start -- --record --browser chrome
+        uses: cypress-io/github-action@5
+        with:
+          build: npm run build
+          start: npm start
 
         env:
           CYPRESS_ush_admin_email: '${{secrets.e2e_ush_admin_email}}'
