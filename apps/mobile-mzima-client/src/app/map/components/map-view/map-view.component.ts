@@ -1,6 +1,9 @@
 import { AfterViewInit, Component } from '@angular/core';
+import { Dialog } from '@capacitor/dialog';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { tileLayerOffline, savetiles, TileLayerOffline } from 'leaflet.offline';
+// import { Geolocation } from '@capacitor/geolocation';
 import {
   FitBoundsOptions,
   geoJSON,
@@ -40,6 +43,7 @@ export class MapViewComponent implements AfterViewInit {
   private isDarkMode = false;
   private baseLayer: 'streets' | 'satellite' | 'hOSM' | 'MapQuestAerial' | 'MapQuest' | 'dark';
   public isConnection = true;
+  offlineLayer: TileLayerOffline;
 
   constructor(
     private postsService: PostsService,
@@ -61,13 +65,13 @@ export class MapViewComponent implements AfterViewInit {
 
           this.baseLayer = this.mapConfig.default_view!.baselayer;
           const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
-
+          this.offlineLayer = tileLayerOffline(currentLayer.url, currentLayer.layerOptions);
           this.leafletOptions = {
             minZoom: 3,
             maxZoom: 17,
             scrollWheelZoom: true,
             zoomControl: false,
-            layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+            layers: [this.offlineLayer],
             center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
             zoom: this.mapConfig.default_view!.zoom,
           };
@@ -104,8 +108,59 @@ export class MapViewComponent implements AfterViewInit {
     }, 200);
   }
 
+  // public async getCurrentLocation() {
+  //   try {
+  //     const status = await Geolocation.requestPermissions();
+  //     // if (status?.location === 'granted') {
+  //     //   const location = await Geolocation.getCurrentPosition();
+  //     //   const {
+  //     //     coords: { latitude, longitude },
+  //     //   } = location;
+  //       // this.location.lat = latitude;
+  //       // this.location.lng = longitude;
+  //       // this.addMarker();
+  //       // this.map.setView([latitude, longitude], 12);
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
+
   public onMapReady(map: Map) {
     this.map = map;
+    const currentZoom = map.getZoom();
+
+    console.log('currentZoom', currentZoom);
+    const saveControl = savetiles(this.offlineLayer, {
+      position: 'bottomleft',
+      saveWhatYouSee: true,
+      zoomlevels: [currentZoom],
+      alwaysDownload: false,
+      confirm: async (layer: any, successCallback: any) => {
+        const { value } = await Dialog.confirm({
+          title: 'Offline',
+          message: `Save ${layer._tilesforSave.length} current tiles for offline use?`,
+        });
+
+        if (value) {
+          successCallback();
+        }
+      },
+      confirmRemoval: async (layer: any, successCallback: any) => {
+        console.log('layerlayer', layer);
+        const { value } = await Dialog.confirm({
+          title: 'Offline',
+          message: `Remove all the tiles?`,
+        });
+
+        if (value) {
+          successCallback();
+        }
+      },
+      saveText: 'S',
+      rmText: 'D',
+    });
+    saveControl.addTo(this.map);
   }
 
   public getPostsGeoJson() {

@@ -55,6 +55,7 @@
     "leaflet": "^1.9.3",
     "leaflet-control-geocoder": "^2.4.0",
     "leaflet.markercluster": "^1.5.3",
+    "leaflet.offline": "^3.0.0",
     "lodash": "^4.17.21",
     "lottie-web": "^5.10.2",
     "masonry-layout": "^4.2.2",
