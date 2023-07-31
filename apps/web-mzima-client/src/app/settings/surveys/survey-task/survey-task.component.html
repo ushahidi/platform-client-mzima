@@ -9,18 +9,44 @@
               matInput
               [(ngModel)]="task.label"
               [placeholder]="'survey.untitled_task' | translate"
+              [readonly]="!isDefaultLanguageSelected"
               (ngModelChange)="changeLabel($event)"
               required
             />
           </mat-form-field>
         </div>
+        <div class="form-row" *ngIf="!isDefaultLanguageSelected">
+          <mat-label>{{ 'survey.task_name' | translate }} ({{ selectLanguageCode }})</mat-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              [(ngModel)]="task.translations[selectLanguageCode].label"
+              [placeholder]="'survey.untitled_task' | translate"
+              (ngModelChange)="changeLabel($event)"
+            />
+          </mat-form-field>
+        </div>
         <div class="form-row">
-          <mat-label>{{ 'app.description' | translate }}111</mat-label>
+          <mat-label>{{ 'app.description' | translate }}</mat-label>
           <mat-form-field appearance="outline">
             <textarea
               matInput
               cdkTextareaAutosize
+              [readonly]="!isDefaultLanguageSelected"
               [(ngModel)]="task.description"
+              [placeholder]="'survey.describe_this_task' | translate"
+            >
+            </textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row" *ngIf="!isDefaultLanguageSelected">
+          <mat-label>{{ 'app.description' | translate }} ({{ selectLanguageCode }})</mat-label>
+          <mat-form-field appearance="outline">
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              [(ngModel)]="task.translations[selectLanguageCode].description"
               [placeholder]="'survey.describe_this_task' | translate"
             >
             </textarea>
@@ -62,7 +88,11 @@
               class="field-item__non-drag-handle"
               svgIcon="drag-handle"
             ></mat-icon>
-            <span class="field-item__title" [data-qa]="'field-name'">{{ field.label }}</span>
+            <span class="field-item__title" [data-qa]="'field-name'">{{
+              isDefaultLanguageSelected
+                ? field.label
+                : field.translations[selectLanguageCode]?.label || field.label
+            }}</span>
           </div>
           <!-- <span class="field-item__type">{{ field.type }}</span> -->
           <div class="field-item__controls">
@@ -122,6 +152,7 @@
               color="gray"
               [iconOnly]="true"
               class="field-item__control"
+              *ngIf="isDefaultLanguageSelected"
               (buttonClick)="deleteField(i)"
               [data-qa]="'btn-field-delete-' + field.label"
             >

@@ -30,7 +30,7 @@ export interface SurveyItem {
   require_approval: boolean;
   targeted_survey: boolean;
   tasks: SurveyItemTask[];
-  translations: any[];
+  translations: any;
   type: string;
   total?: number;
   visible?: boolean;
@@ -52,6 +52,6 @@ export interface SurveyItemTask {
   required: boolean;
   show_when_published: boolean;
   task_is_internal_only: boolean;
-  translations: any[];
+  translations: any;
   type: string;
 }

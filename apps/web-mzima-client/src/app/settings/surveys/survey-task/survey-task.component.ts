@@ -64,6 +64,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   roleOptions: GroupCheckboxItemInterface[] = [];
   selectedColor: string;
   currentInterimId = 0;
+  selectedTab: number;
 
   constructor(
     private confirm: ConfirmModalService,
@@ -75,6 +76,18 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['task']) {
+      if (Array.isArray(this.task.translations)) {
+        this.task.translations = {};
+      }
+    }
+
+    if (changes['selectLanguageCode']) {
+      if (!this.task.translations[this.selectLanguageCode]) {
+        this.task.translations[this.selectLanguageCode] = { label: '' };
+      }
+    }
+
     if (changes['roles']) {
       this.roleOptions = [
         {
