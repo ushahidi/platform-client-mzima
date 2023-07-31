@@ -22,7 +22,13 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService, EventBusService, LanguageService, SessionService } from '@services';
+import {
+  BreakpointService,
+  EventBusService,
+  EventType,
+  SessionService,
+  LanguageService,
+} from '@services';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import { TranslateService } from '@ngx-translate/core';
@@ -125,9 +131,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       }
       if (params.get('id')) {
         this.postId = Number(params.get('id'));
-        this.postsService.lockPost(this.postId).subscribe((p) => {
-          console.log('Post locked: ', p);
-        });
+        this.postsService.lockPost(this.postId).subscribe();
         this.loadPostData(this.postId);
       }
     });
@@ -548,6 +552,12 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private updatePost(postId: number, postData: any) {
     this.postsService.update(postId, postData).subscribe({
+      next: ({ result }) => {
+        this.eventBusService.next({
+          type: EventType.UpdatedPost,
+          payload: result,
+        });
+      },
       error: () => {
         this.form.enable();
         this.submitted = false;

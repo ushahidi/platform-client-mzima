@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
+import { SortByFieldModule } from '@pipes';
 import { SpinnerModule } from '../shared/components/spinner/spinner.module';
 import { FeedComponent } from './feed.component';
 import { FeedRoutingModule } from './feed-routing.module';
@@ -30,6 +31,7 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
     SpinnerModule,
     FormsModule,
     MzimaUiModule,
+    SortByFieldModule,
   ],
 })
 export class FeedModule {}
