@@ -1,6 +1,6 @@
 <div class="task" [ngClass]="{ 'task--main': isMain }">
   <mat-tab-group dynamicHeight disableRipple disablePagination>
-    <mat-tab label="Main info" [data-qa]="'survey-main-info'">
+    <mat-tab [label]="'survey.main_info' | translate" [data-qa]="'survey-main-info'">
       <ng-container *ngIf="!isPost">
         <div class="form-row">
           <mat-label>{{ 'survey.task_name' | translate }} *</mat-label>

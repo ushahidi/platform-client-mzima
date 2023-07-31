@@ -60,14 +60,16 @@
           </ng-container>
 
           <ng-container matColumnDef="expires">
-            <th mat-header-cell *matHeaderCellDef>Expires</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'global_filter.expires' | translate }}</th>
             <td mat-cell [align]="!job.url_expiration ? 'center' : 'left'" *matCellDef="let job">
               {{ job.url_expiration || '-' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="download">
-            <th mat-header-cell *matHeaderCellDef align="center">Download</th>
+            <th mat-header-cell *matHeaderCellDef align="center">
+              {{ 'global_filter.download' | translate }}
+            </th>
             <td mat-cell align="center" *matCellDef="let job">
               <mzima-client-button
                 fill="clear"
