@@ -473,7 +473,7 @@
         expand="inline"
         type="button"
         *ngIf="form"
-        [disabled]="form.disabled || form.invalid || emptyLocation"
+        [disabled]="form.disabled || form.invalid || emptyLocation || taskForm.invalid"
         (buttonClick)="submitPost()"
       >
         Submit
