@@ -9,6 +9,7 @@ import {
   GeoJsonFilter,
   MediaService,
   PostContent,
+  postHelpers,
   PostResult,
   PostsService,
   SurveysService,
@@ -42,6 +43,7 @@ export class PostEditPage {
   public date: string;
   public color: string;
   public form: FormGroup;
+  public taskForm: FormGroup;
   private initialFormData: any;
   private relationConfigForm: any;
   private relationConfigSource: any;
@@ -279,6 +281,11 @@ export class PostEditPage {
           }
         });
     }
+
+    this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks), {
+      validators: postHelpers.requiredTasksValidator,
+    });
+
     this.form = new FormGroup(fields);
     this.initialFormData = this.form.value;
 
@@ -629,7 +636,15 @@ export class PostEditPage {
   /** Create post */
   private createPost(postData: any) {
     this.postsService.post(postData).subscribe({
-      error: () => this.form.enable(),
+      error: ({ error }) => {
+        this.form.enable();
+        if (error.errors[0].status === 403) {
+          this.toastService.presentToast({
+            message: `Failed to create a post. ${error.errors[0].message}`,
+            duration: 3000,
+          });
+        }
+      },
       complete: async () => {
         await this.postComplete(
           'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
@@ -703,6 +718,7 @@ export class PostEditPage {
   }
 
   public taskComplete({ id }: any, event: any) {
+    this.taskForm.patchValue({ [id]: event.checked });
     if (event.checked) {
       this.completeStages.push(id);
     } else {
