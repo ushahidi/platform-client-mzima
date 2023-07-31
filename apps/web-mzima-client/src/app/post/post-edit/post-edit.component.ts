@@ -38,6 +38,7 @@ import {
   GeoJsonFilter,
   PostResult,
   MediaService,
+  postHelpers,
 } from '@mzima-client/sdk';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
@@ -65,6 +66,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   @Output() updated = new EventEmitter();
   public color: string;
   public form: FormGroup;
+  public taskForm: FormGroup;
   public description: string;
   public title: string;
   private formId?: number;
@@ -169,6 +171,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
         const { result } = data;
+        console.log(result);
         this.color = result.color;
         this.tasks = result.tasks;
         this.surveyName = result.name;
@@ -233,6 +236,11 @@ export class PostEditComponent implements OnInit, OnChanges {
               }
             });
         }
+
+        this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks), {
+          validators: postHelpers.requiredTasksValidator,
+        });
+
         this.form = new FormGroup(fields);
         this.initialFormData = this.form.value;
 
@@ -749,6 +757,8 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   public taskComplete({ id }: any, event: MatSlideToggleChange) {
+    this.taskForm.patchValue({ [id]: event.checked });
+
     if (event.checked) {
       this.completeStages.push(id);
     } else {
