@@ -578,7 +578,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     this.postsService.post(postData).subscribe({
       error: ({ error }) => {
         if (error.errors[0].status === 403) {
-          this.showMessage(`Post creating failed. ${error.errors[0].message}`, 'error');
+          this.showMessage(`Failed to create a post. ${error.errors[0].message}`, 'error');
         }
         this.form.enable();
         this.submitted = false;
