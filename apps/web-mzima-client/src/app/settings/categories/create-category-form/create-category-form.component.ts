@@ -53,7 +53,7 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
     private location: Location,
   ) {
     this.languages = this.languageService.getLanguages();
-    this.defaultLanguage = this.languages.find((lang) => lang.code === 'en');
+    this.defaultLanguage = this.languages.find((lang) => lang.code === 'en'); // FIXME
     this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
@@ -181,7 +181,7 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
         });
 
         if (this.category) {
-          this.checkRoleOptions(this.category.parent.id);
+          this.checkRoleOptions(this.category.parent?.id);
         }
       },
     });

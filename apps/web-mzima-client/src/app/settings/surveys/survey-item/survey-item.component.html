@@ -13,9 +13,10 @@
     [newButtonTitle]="isDesktop ? 'translations.add_translation_lang' : 'Translation'"
     [isShowActionsButton]="false"
     [isShowCreation]="false"
-    [isShowTranslation]="false"
-    [selectedLanguage]="defaultLanguage"
+    [isShowTranslation]="true"
+    [selectedLanguage]="selectedLang"
     [languages]="activeLanguages"
+    [defaultLanguage]="defaultLanguage"
     (showLanguagesCall)="addTranslation()"
     (selectLanguageCall)="chooseTranslation($event)"
   >
@@ -30,12 +31,20 @@
     (taskChange)="taskUpdate($event)"
     *ngIf="mainPost"
     (colorSelected)="setNewColor($event)"
+    (languageChange)="languageChange($event)"
+    [isDefaultLanguageSelected]="isDefaultLanguageSelected"
+    [selectLanguageCode]="selectLanguageCode"
   >
     <ng-container survey-info>
       <div class="form-row">
         <mat-label>{{ 'survey.survey_name' | translate }} *</mat-label>
         <mat-form-field appearance="outline">
-          <input matInput formControlName="name" [placeholder]="'survey.survey_name' | translate" />
+          <input
+            matInput
+            formControlName="name"
+            [placeholder]="'survey.survey_name' | translate"
+            [readonly]="!isDefaultLanguageSelected"
+          />
           <mat-error *ngIf="form.get('name')?.hasError('required')">
             {{ 'survey.fields.validation.required' | translate }}
           </mat-error>
@@ -48,7 +57,7 @@
         </mat-form-field>
       </div>
 
-      <div class="form-row" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
+      <div class="form-row" *ngIf="!isDefaultLanguageSelected">
         <mat-label> {{ 'survey.survey_name' | translate }} ({{ selectLanguageCode }})</mat-label>
         <mat-form-field appearance="outline">
           <input
@@ -72,12 +81,13 @@
             [placeholder]="'survey.description' | translate"
             formControlName="description"
             [data-qa]="'description'"
+            [readonly]="!isDefaultLanguageSelected"
           >
           </textarea>
         </mat-form-field>
       </div>
 
-      <div class="form-row" *ngIf="selectLanguageCode && selectLanguageCode !== 'en'">
+      <div class="form-row" *ngIf="!isDefaultLanguageSelected">
         <mat-label> {{ 'survey.description' | translate }} ({{ selectLanguageCode }})</mat-label>
         <mat-form-field appearance="outline">
           <textarea
@@ -104,6 +114,7 @@
     fill="outline"
     (click)="addTask()"
     [data-qa]="'btn-add-task'"
+    *ngIf="isDefaultLanguageSelected"
   >
     <span>{{ 'survey.add_task' | translate }}</span>
     <mat-icon icon svgIcon="plus"></mat-icon>
@@ -114,6 +125,8 @@
   <app-survey-task
     *ngFor="let task of additionalTasks"
     [task]="task"
+    [isDefaultLanguageSelected]="isDefaultLanguageSelected"
+    [selectLanguageCode]="selectLanguageCode"
     (deleteTaskChange)="deleteTask($event)"
     (duplicateTaskChange)="duplicateTask($event)"
     (errorFieldChange)="setErrorTaskField($event)"

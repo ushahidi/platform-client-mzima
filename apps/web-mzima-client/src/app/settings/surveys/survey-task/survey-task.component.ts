@@ -36,9 +36,12 @@ import _ from 'lodash';
 export class SurveyTaskComponent implements OnInit, OnChanges {
   @Input() task: SurveyItemTask;
   @Input() survey: SurveyItem;
+  @Input() isDefaultLanguageSelected: boolean;
+  @Input() selectLanguageCode: string;
   @Input() roles: RoleResult[];
   @Input() isMain: boolean;
   @Output() colorSelected = new EventEmitter();
+  @Output() languageChange = new EventEmitter();
   @Output() duplicateTaskChange = new EventEmitter();
   @Output() deleteTaskChange = new EventEmitter();
   @Output() errorFieldChange = new EventEmitter();
@@ -61,6 +64,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   roleOptions: GroupCheckboxItemInterface[] = [];
   selectedColor: string;
   currentInterimId = 0;
+  selectedTab: number;
 
   constructor(
     private confirm: ConfirmModalService,
@@ -72,6 +76,18 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['task']) {
+      if (Array.isArray(this.task.translations)) {
+        this.task.translations = {};
+      }
+    }
+
+    if (changes['selectLanguageCode']) {
+      if (!this.task.translations[this.selectLanguageCode]) {
+        this.task.translations[this.selectLanguageCode] = { label: '' };
+      }
+    }
+
     if (changes['roles']) {
       this.roleOptions = [
         {
@@ -201,6 +217,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
 
   changeLanguage(event: any) {
     const newLang = event.value;
+    this.languageChange.emit(newLang);
     if (this.survey.enabled_languages.available.some((l) => l === newLang)) {
       this.showLangError = true;
     } else {
@@ -242,6 +259,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       panelClass: 'modal',
       data: {
         surveyId: this.surveyId,
+        isTranslateMode: !this.isDefaultLanguageSelected,
       },
     });
 
@@ -274,6 +292,8 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       data: {
         selectedFieldType: _.cloneDeep(selectedFieldType),
         surveyId: this.surveyId,
+        isTranslateMode: !this.isDefaultLanguageSelected,
+        selectLanguageCode: this.selectLanguageCode,
       },
     });
 
