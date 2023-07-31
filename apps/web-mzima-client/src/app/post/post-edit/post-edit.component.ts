@@ -518,7 +518,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     try {
       await this.preparationData();
     } catch (error: any) {
-      this.snackBar.open(error, 'Close', { panelClass: ['error'], duration: 3000 });
+      this.showMessage(error, 'error');
       return;
     }
 
@@ -576,7 +576,10 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private createPost(postData: any) {
     this.postsService.post(postData).subscribe({
-      error: () => {
+      error: ({ error }) => {
+        if (error.errors[0].status === 403) {
+          this.showMessage(`Post creating failed. ${error.errors[0].message}`, 'error');
+        }
         this.form.enable();
         this.submitted = false;
       },
@@ -584,6 +587,13 @@ export class PostEditComponent implements OnInit, OnChanges {
         await this.postComplete();
         this.router.navigate(['/feed']);
       },
+    });
+  }
+
+  private showMessage(message: string, type: string) {
+    this.snackBar.open(message, 'Close', {
+      panelClass: [type],
+      duration: 3000,
     });
   }
 
