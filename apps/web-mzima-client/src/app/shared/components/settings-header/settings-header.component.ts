@@ -19,6 +19,7 @@ export class SettingsHeaderComponent {
   @Input() isSelectTranslate = false;
   @Input() isShowTranslation = false;
   @Input() selectedLanguage: any;
+  @Input() defaultLanguage: any;
   @Input() languages: any[];
   @Output() isShowActionsChange = new EventEmitter();
   @Output() deleteCall = new EventEmitter();

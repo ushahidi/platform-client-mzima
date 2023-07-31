@@ -22,7 +22,13 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
+import {
+  BreakpointService,
+  EventBusService,
+  EventType,
+  SessionService,
+  LanguageService,
+} from '@services';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import { TranslateService } from '@ngx-translate/core';
@@ -40,6 +46,8 @@ import { AlphanumericValidatorValidator } from '../../core/validators';
 import { PhotoRequired } from '../../core/validators/photo-required';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LanguageInterface } from '../../core/interfaces/language.interface';
+import { MatSelectChange } from '@angular/material/select';
 import { dateHelper } from '@helpers';
 
 dayjs.extend(timezone);
@@ -74,6 +82,8 @@ export class PostEditComponent implements OnInit, OnChanges {
   private fieldsFormArray = ['tags'];
   public surveyName: string;
   private postId?: number;
+  formInfo: any;
+
   private post?: any;
   public isDesktop: boolean;
   public atLeastOneFieldHasValidationError: boolean;
@@ -82,6 +92,8 @@ export class PostEditComponent implements OnInit, OnChanges {
   public emptyLocation = false;
   public submitted = false;
   public filters;
+  selectedLanguage: any;
+  postLanguages: LanguageInterface[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -95,6 +107,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     private location: Location,
     private breakpointService: BreakpointService,
     private mediaService: MediaService,
+    private languageService: LanguageService,
     private snackBar: MatSnackBar,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
@@ -136,6 +149,11 @@ export class PostEditComponent implements OnInit, OnChanges {
     }
   }
 
+  selectLanguageEmit(event: MatSelectChange) {
+    this.activeLanguage = event.value.code;
+    this.surveyName = this.formInfo.translations[this.activeLanguage]?.name || this.formInfo.name;
+  }
+
   private loadPostData(postId: number) {
     this.postsService.getById(postId).subscribe({
       next: (post) => {
@@ -154,6 +172,17 @@ export class PostEditComponent implements OnInit, OnChanges {
         this.color = result.color;
         this.tasks = result.tasks;
         this.surveyName = result.name;
+        this.formInfo = result;
+        const languages = this.languageService.getLanguages();
+
+        const availableLanguages: any[] = result.enabled_languages.available;
+        if (availableLanguages.length) {
+          availableLanguages.unshift(result.enabled_languages.default);
+          availableLanguages.forEach((langCode: string) => {
+            this.postLanguages.push(languages.find((lang) => lang.code === langCode)!);
+          });
+          this.selectedLanguage = this.postLanguages[0];
+        }
 
         const fields: any = {};
         for (const task of this.tasks) {

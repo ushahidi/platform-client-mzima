@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { surveyHelper } from '@helpers';
+import { surveyHelper, regexHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs';
-import { alphaNumeric } from '../../../core/helpers/regex';
 import { MultilevelSelectOption } from '../../../shared/components';
 import {
   CategoriesService,
@@ -12,7 +11,7 @@ import {
   FormAttributeInterface,
   SurveyItem,
 } from '@mzima-client/sdk';
-import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationService } from '@services';
 import _ from 'lodash';
 
 @Component({
@@ -32,6 +31,8 @@ export class CreateFieldModalComponent implements OnInit {
   public fieldOptions: Array<{ value: string; error: string }> = [];
   public emptyTitleOption = false;
   public numberError = false;
+  isTranslateMode = false;
+  selectLanguageCode = 'en';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -43,6 +44,8 @@ export class CreateFieldModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isTranslateMode = this.data?.isTranslateMode;
+    this.selectLanguageCode = this.data?.selectLanguageCode;
     if (this.data?.selectedFieldType) {
       this.editField();
     }
@@ -60,11 +63,18 @@ export class CreateFieldModalComponent implements OnInit {
       this.selectedFieldType.options = this.selectedFieldType.options.map(
         (option: any) => option.id,
       );
+      this.setTempSelectedFieldType();
     }
     this.editMode = true;
     this.setHasOptionValidate();
     this.checkLoadAvailableData(this.selectedFieldType.input);
-    this.setTempSelectedFieldType();
+    if (Array.isArray(this.selectedFieldType.translations)) {
+      this.selectedFieldType.translations = {};
+    }
+
+    if (!this.selectedFieldType.translations[this.selectLanguageCode]) {
+      this.selectedFieldType.translations[this.selectLanguageCode] = { label: '' };
+    }
   }
 
   private getCategories() {
@@ -110,7 +120,7 @@ export class CreateFieldModalComponent implements OnInit {
   optionValidation(index: number) {
     const option = this.fieldOptions[index];
 
-    if (!alphaNumeric(option.value)) {
+    if (!regexHelper.alphaNumeric(option.value)) {
       option.error = 'survey.special_characters_option';
     } else {
       const duplicates = this.fieldOptions.filter(
@@ -194,6 +204,11 @@ export class CreateFieldModalComponent implements OnInit {
       this.notificationService.showError(this.translate.instant('survey.add_options_first'));
       return;
     }
+
+    if (!this.selectedFieldType.translations) {
+      this.selectedFieldType.translations = {};
+    }
+
     this.matDialogRef.close({
       ...this.selectedFieldType,
       label: this.selectedFieldType.label.trim(),
