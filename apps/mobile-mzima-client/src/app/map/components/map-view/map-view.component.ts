@@ -3,7 +3,6 @@ import { Dialog } from '@capacitor/dialog';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { tileLayerOffline, savetiles, TileLayerOffline } from 'leaflet.offline';
-// import { Geolocation } from '@capacitor/geolocation';
 import {
   FitBoundsOptions,
   geoJSON,
@@ -108,46 +107,16 @@ export class MapViewComponent implements AfterViewInit {
     }, 200);
   }
 
-  // public async getCurrentLocation() {
-  //   try {
-  //     const status = await Geolocation.requestPermissions();
-  //     // if (status?.location === 'granted') {
-  //     //   const location = await Geolocation.getCurrentPosition();
-  //     //   const {
-  //     //     coords: { latitude, longitude },
-  //     //   } = location;
-  //       // this.location.lat = latitude;
-  //       // this.location.lng = longitude;
-  //       // this.addMarker();
-  //       // this.map.setView([latitude, longitude], 12);
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
-
   public onMapReady(map: Map) {
     this.map = map;
-    const currentZoom = map.getZoom();
 
-    console.log('currentZoom', currentZoom);
     const saveControl = savetiles(this.offlineLayer, {
       position: 'bottomleft',
-      saveWhatYouSee: true,
-      zoomlevels: [currentZoom],
-      alwaysDownload: false,
       confirm: async (layer: any, successCallback: any) => {
-        const { value } = await Dialog.confirm({
-          title: 'Offline',
-          message: `Save ${layer._tilesforSave.length} current tiles for offline use?`,
-        });
-
-        if (value) {
-          successCallback();
-        }
+        console.log('SAVING: ', layer._tilesforSave.length);
+        successCallback();
       },
       confirmRemoval: async (layer: any, successCallback: any) => {
-        console.log('layerlayer', layer);
         const { value } = await Dialog.confirm({
           title: 'Offline',
           message: `Remove all the tiles?`,
@@ -157,10 +126,25 @@ export class MapViewComponent implements AfterViewInit {
           successCallback();
         }
       },
-      saveText: 'S',
-      rmText: 'D',
     });
+
+    map.on('zoomend', () => {
+      saveControl._saveTiles();
+    });
+    this.initProgressBar();
+
     saveControl.addTo(this.map);
+  }
+
+  initProgressBar() {
+    if (this.offlineLayer) {
+      this.offlineLayer.on('savestart', (e: any) => {
+        console.log('savestart', e._tilesforSave.length);
+      });
+      this.offlineLayer.on('loadtileend', () => {
+        console.log('loadtileend');
+      });
+    }
   }
 
   public getPostsGeoJson() {
