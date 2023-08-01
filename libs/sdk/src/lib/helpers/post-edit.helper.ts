@@ -1,8 +1,7 @@
 import { AbstractControl, FormControl } from '@angular/forms';
 
 export function MustBeTrueValidator(control: AbstractControl) {
-  const isTrue = control.value;
-  return isTrue === true ? null : { mustBeTrue: { value: control.value } };
+  return control.value ? null : { mustBeTrue: { value: control.value } };
 }
 
 export const checkTaskControls = (tasks: any[]) => {
