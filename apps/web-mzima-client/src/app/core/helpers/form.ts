@@ -61,8 +61,8 @@ export const roleTransform = (data: any) => {
         return {
           name: role.display_name,
           value: role.name,
-          checked: role.name === 'admin',
-          disabled: role.name === 'admin',
+          checked: role.name === 'admin' || role.name === userRole,
+          disabled: role.name === 'admin' || role.name === userRole,
         };
       }),
     },
