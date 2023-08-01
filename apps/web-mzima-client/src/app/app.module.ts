@@ -7,8 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ConfigService, EnvService } from '@services';
+import { ConfigService, CustomTranslateHttpLoader, EnvService } from '@services';
 import { SharedModule, SpinnerModule } from '@shared';
 import { CookieService } from 'ngx-cookie-service';
 import { LottieModule } from 'ngx-lottie';
@@ -67,8 +66,8 @@ export const loadConfigProvider: FactoryProvider = {
   multi: true,
 };
 
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, './assets/locales/', '.json');
+export function HttpLoaderFactory(http: HttpClient): any {
+  return new CustomTranslateHttpLoader(http, './assets/locales/', '.json');
 }
 
 export function EnvLoaderFactory(env: EnvService): any {
