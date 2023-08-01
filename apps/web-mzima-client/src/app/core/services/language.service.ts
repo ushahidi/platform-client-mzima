@@ -21,6 +21,7 @@ export class LanguageService {
   public isRTL$ = this.isRTL.asObservable();
 
   constructor(private translate: TranslateService, private session: SessionService) {
+    this.translate.setDefaultLang('en');
     if (this.initialLanguage === 'null' || this.initialLanguage === null) {
       this.initialLanguage = this.session.getSiteConfigurations().language || 'en';
       this.setLanguage(this.initialLanguage!);
@@ -54,7 +55,6 @@ export class LanguageService {
   }
 
   private setLanguage(lang: string) {
-    this.translate.setDefaultLang(lang);
     this.translate.use(lang);
     this.selectedLanguage.next(lang);
     this.changeDirection(lang);

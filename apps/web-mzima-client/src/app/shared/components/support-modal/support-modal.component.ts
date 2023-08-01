@@ -59,8 +59,8 @@ export class SupportModalComponent {
         },
       },
       {
-        title: 'Onboarding',
-        description: 'Take a look at the Ushahidi onboarding again.',
+        title: this.translate.instant('app.onboarding.title'),
+        description: this.translate.instant('app.onboarding.description'),
         action: () => {
           this.eventBusService.next({
             type: EventType.ShowOnboarding,
