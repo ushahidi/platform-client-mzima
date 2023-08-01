@@ -171,7 +171,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
         const { result } = data;
-        console.log(result);
+
         this.color = result.color;
         this.tasks = result.tasks;
         this.surveyName = result.name;
@@ -237,9 +237,7 @@ export class PostEditComponent implements OnInit, OnChanges {
             });
         }
 
-        this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks), {
-          validators: postHelpers.requiredTasksValidator,
-        });
+        this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks));
 
         this.form = new FormGroup(fields);
         this.initialFormData = this.form.value;
