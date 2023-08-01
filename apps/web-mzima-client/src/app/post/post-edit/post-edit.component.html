@@ -410,7 +410,9 @@
         <mzima-client-button
           type="submit"
           [data-qa]="'btn-post-item-submit'"
-          [disabled]="form.disabled || form.invalid || emptyLocation || submitted"
+          [disabled]="
+            form.disabled || form.invalid || emptyLocation || submitted || taskForm.invalid
+          "
         >
           {{ 'app.submit' | translate }}
         </mzima-client-button>

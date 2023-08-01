@@ -125,6 +125,7 @@ export function playerFactory(): any {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
       },
+      useDefaultLang: true,
     }),
     FormsModule,
     LottieModule.forRoot({ player: playerFactory }),
