@@ -9,7 +9,7 @@
   <ng-container *ngIf="posts.length">
     <div class="feed-page__info-panel" *ngIf="isDesktop">
       <span class="feed-page__results-info"
-        >Current results: {{ postCurrentLength }} / {{ total }}</span
+        >{{ 'app.current_results' | translate }} {{ postCurrentLength }} / {{ total }}</span
       >
       <div class="feed-page__mode-switcher">
         <mzima-client-button

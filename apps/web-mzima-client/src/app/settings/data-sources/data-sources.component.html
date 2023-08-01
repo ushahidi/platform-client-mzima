@@ -1,11 +1,11 @@
 <div class="form-head-panel">
-  <h1 *ngIf="isDesktop$ | async">Data Source</h1>
+  <h1 *ngIf="isDesktop$ | async">{{ 'data_sources.data_sources' | translate }}</h1>
   <mzima-client-button
     [routerLink]="['create']"
     *ngIf="isAllProvidersAdded"
     [data-qa]="'btn-add-provider'"
   >
-    <span>Add source</span>
+    <span>{{ 'data_sources.add_source' | translate }}</span>
     <mat-icon icon svgIcon="plus"></mat-icon>
   </mzima-client-button>
 </div>
