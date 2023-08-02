@@ -18,18 +18,7 @@
     <p>{{ 'app.forbidden-login' | translate }}</p>
   </div>
 
-  <app-login-form (loggined)="successfully($event)">
-    <mzima-client-button
-      btn-cancel
-      fill="outline"
-      color="secondary"
-      (buttonClick)="cancel()"
-      [data-qa]="'btn-cancel'"
-      *ngIf="(isDesktop$ | async) && !isDisableClose"
-    >
-      {{ 'app.cancel' | translate }}
-    </mzima-client-button>
-  </app-login-form>
+  <app-login-form (loggined)="successfully($event)"></app-login-form>
 </ng-container>
 
 <mat-tab-group
