@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 export class LoginComponent {
   public isDesktop$: Observable<boolean>;
   public isSignupActive: boolean;
+  public isDisableClose: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -21,6 +22,7 @@ export class LoginComponent {
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.isSignupActive = this.data.isSignupActive;
+    this.isDisableClose = this.data.isDisableClose;
   }
 
   public cancel() {

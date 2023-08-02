@@ -80,7 +80,7 @@ export class SidebarComponent implements OnInit {
     });
 
     this.eventBusService.on(EventType.OpenLoginModal).subscribe({
-      next: () => this.openLogin(),
+      next: (config) => this.openLogin(config),
     });
   }
 
@@ -163,14 +163,19 @@ export class SidebarComponent implements OnInit {
     ];
   }
 
-  private openLogin(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
+  private openLogin(config?: any): void {
+    const dialogConfig = {
       width: '100%',
       maxWidth: 576,
       panelClass: ['modal', 'login-modal'],
       data: {
         isSignupActive: this.canRegister,
+        isDisableClose: config?.disableClose || false,
       },
+    };
+    const dialogRef = this.dialog.open(LoginComponent, {
+      ...dialogConfig,
+      ...config,
     });
     dialogRef.afterClosed().subscribe({
       next: () => this.removeFocusFromMenuItem('auth'),
