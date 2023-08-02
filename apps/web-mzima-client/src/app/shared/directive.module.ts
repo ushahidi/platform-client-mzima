@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataQaDirective, GtmDirective } from '@directives';
+import { DataQaDirective, DataQaInputDirective, GtmDirective } from '@directives';
 
 @NgModule({
-  declarations: [GtmDirective, DataQaDirective],
+  declarations: [GtmDirective, DataQaInputDirective, DataQaDirective],
   imports: [CommonModule],
-  exports: [GtmDirective, DataQaDirective],
+  exports: [GtmDirective, DataQaInputDirective, DataQaDirective],
 })
 export class DirectiveModule {}
