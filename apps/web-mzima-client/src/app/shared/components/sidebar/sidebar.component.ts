@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { LoginComponent } from '@auth';
 import { CollectionsComponent } from '@data';
 import { EnumGtmEvent, EnumGtmSource, Roles, Permissions } from '@enums';
-import { takeUntilDestroy$ } from '@helpers';
 import { MenuInterface, SiteConfigInterface, UserMenuInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -14,7 +13,6 @@ import {
   GtmTrackingService,
   SessionService,
 } from '@services';
-import { Observable } from 'rxjs';
 import { BaseComponent } from '../../../base.component';
 import { SupportModalComponent } from '../support-modal/support-modal.component';
 
@@ -26,30 +24,22 @@ import { SupportModalComponent } from '../support-modal/support-modal.component'
 export class SidebarComponent extends BaseComponent implements OnInit {
   public isHost = false;
   public userMenu: UserMenuInterface[] = [];
-  private isDesktop$: Observable<boolean>;
   public siteConfig: SiteConfigInterface;
   public canRegister = false;
-  public isDesktop = false;
   public isInnerPage = false;
   public menu: MenuInterface[] = [];
 
   constructor(
     protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private dialog: MatDialog,
     private gtmTracking: GtmTrackingService,
     private router: Router,
     private translate: TranslateService,
     private eventBusService: EventBusService,
-    private breakpointService: BreakpointService,
   ) {
-    super(sessionService);
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(takeUntilDestroy$());
-    this.isDesktop$.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-        this.initNavigationMenu();
-      },
-    });
+    super(sessionService, breakpointService);
+    this.checkDesktop();
 
     this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
       next: (option) => {
@@ -64,13 +54,14 @@ export class SidebarComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.getUserData();
+    this.initNavigationMenu();
 
     this.eventBusService.on(EventType.OpenLoginModal).subscribe({
       next: (config) => this.openLogin(config),
     });
   }
 
-  loadData() {
+  loadData(): void {
     this.siteConfig = this.sessionService.getSiteConfigurations();
     const hostRoles = [
       Permissions.ManageUsers,

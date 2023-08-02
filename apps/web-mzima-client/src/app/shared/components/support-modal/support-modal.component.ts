@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { EventBusService, EventType, SessionService } from '@services';
+import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 import { BaseComponent } from '../../../base.component';
 
 interface SupportMenuItemInterface {
@@ -20,16 +20,17 @@ export class SupportModalComponent extends BaseComponent {
 
   constructor(
     protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private translate: TranslateService,
     private matDialogRef: MatDialogRef<SupportModalComponent>,
     private eventBusService: EventBusService,
   ) {
-    super(sessionService);
+    super(sessionService, breakpointService);
     this.getUserData();
     this.initMenu();
   }
 
-  loadData() {}
+  loadData(): void {}
 
   private initMenu(): void {
     this.menu = [

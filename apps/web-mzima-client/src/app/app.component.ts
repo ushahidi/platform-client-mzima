@@ -16,7 +16,7 @@ import {
   LoaderService,
   SessionService,
 } from '@services';
-import { filter, Observable } from 'rxjs';
+import { filter } from 'rxjs';
 import { BaseComponent } from './base.component';
 import { EnumGtmEvent } from './core/enums/gtm';
 import { Intercom } from '@supy-io/ngx-intercom';
@@ -29,7 +29,6 @@ import { Intercom } from '@supy-io/ngx-intercom';
 })
 export class AppComponent extends BaseComponent implements OnInit {
   public isShowLoader = false;
-  public isDesktop$: Observable<boolean>;
   public languages: LanguageInterface[];
   public selectedLanguage$;
   public isInnerPage = false;
@@ -38,6 +37,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   constructor(
     protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private loaderService: LoaderService,
     private iconService: IconService,
     private languageService: LanguageService,
@@ -47,12 +47,12 @@ export class AppComponent extends BaseComponent implements OnInit {
     private translate: TranslateService,
     private eventBusService: EventBusService,
     private env: EnvService,
-    private breakpointService: BreakpointService,
     private gtm: GtmTrackingService,
     private intercom: Intercom,
   ) {
-    super(sessionService);
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+    super(sessionService, breakpointService);
+    this.checkDesktop();
+
     this.selectedLanguage$ = this.languageService.selectedLanguage$.pipe(untilDestroyed(this));
 
     this.loaderService.isActive$.pipe(untilDestroyed(this)).subscribe({

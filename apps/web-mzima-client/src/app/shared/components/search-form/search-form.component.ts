@@ -45,7 +45,6 @@ import dayjs from 'dayjs';
   styleUrls: ['./search-form.component.scss'],
 })
 export class SearchFormComponent extends BaseComponent implements OnInit {
-  public isDesktop$: Observable<boolean>;
   public _array = Array;
   public filterType = FilterType;
   public form: FormGroup;
@@ -77,6 +76,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
 
   constructor(
     protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private formBuilder: FormBuilder,
     private savedsearchesService: SavedsearchesService,
     private surveysService: SurveysService,
@@ -87,11 +87,11 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     private router: Router,
     private session: SessionService,
     private eventBusService: EventBusService,
-    private breakpointService: BreakpointService,
     private notificationsService: NotificationsService,
   ) {
-    super(sessionService);
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+    super(sessionService, breakpointService);
+    this.checkDesktop();
+
     this.form = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS);
     this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
     this.filters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'))!;

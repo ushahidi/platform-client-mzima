@@ -30,7 +30,7 @@
       </mzima-client-button>
     </strong>
     <mzima-client-button
-      *ngIf="isLoggedIn && !post && (isDesktop$ | async)"
+      *ngIf="isLoggedIn && !post && isDesktop"
       (buttonClick)="addNewCollection()"
       tabindex="-1"
     >
@@ -64,7 +64,7 @@
       </mat-form-field>
     </div>
     <mzima-client-button
-      *ngIf="isLoggedIn && !post && !(isDesktop$ | async)!"
+      *ngIf="isLoggedIn && !post && !isDesktop"
       (buttonClick)="addNewCollection()"
       tabindex="-1"
     >

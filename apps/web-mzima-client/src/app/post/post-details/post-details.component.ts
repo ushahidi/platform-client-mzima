@@ -24,7 +24,7 @@ import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { CollectionsModalComponent } from '../../shared/components';
 import { dateHelper } from '@helpers';
-import { SessionService } from '@services';
+import { BreakpointService, SessionService } from '@services';
 
 @Component({
   selector: 'app-post-details',
@@ -47,6 +47,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
 
   constructor(
     protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private dialog: MatDialog,
     private translate: TranslateService,
     private mediaService: MediaService,
@@ -55,8 +56,9 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     private postsService: PostsService,
     private sanitizer: DomSanitizer,
   ) {
-    super(sessionService);
+    super(sessionService, breakpointService);
     this.getUserData();
+
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.post = undefined;

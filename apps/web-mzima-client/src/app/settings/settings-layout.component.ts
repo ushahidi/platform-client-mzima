@@ -1,43 +1,34 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Roles } from '@enums';
-import { takeUntilDestroy$ } from '@helpers';
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { BreakpointService, EventBusService, EventType } from '@services';
 import { filter } from 'rxjs';
 import { BaseComponent } from '../base.component';
 import { SessionService } from '../core/services/session.service';
 
-@UntilDestroy()
 @Component({
   selector: 'app-settings-layout',
   templateUrl: './settings-layout.component.html',
   styleUrls: ['./settings-layout.component.scss'],
 })
 export class SettingsLayoutComponent extends BaseComponent {
-  public isDesktop = false;
   public isInnerPage = false;
 
   constructor(
     protected override sessionService: SessionService,
-    private breakpointService: BreakpointService,
+    protected override breakpointService: BreakpointService,
     private router: Router,
     private eventBusService: EventBusService,
   ) {
-    super(sessionService);
+    super(sessionService, breakpointService);
     this.getUserData();
+    this.checkDesktop();
 
-    this.breakpointService.isDesktop$.pipe(takeUntilDestroy$()).subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
+    this.checkIsInnerPage();
 
-        this.checkIsInnerPage();
-
-        if (this.isDesktop && !this.isInnerPage) {
-          this.navigateToInnerPage();
-        }
-      },
-    });
+    if (this.isDesktop && !this.isInnerPage) {
+      this.navigateToInnerPage();
+    }
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe({
       next: () => {
@@ -46,7 +37,7 @@ export class SettingsLayoutComponent extends BaseComponent {
     });
   }
 
-  loadData() {}
+  loadData(): void {}
 
   private navigateToInnerPage(): void {
     switch (this.user.role) {

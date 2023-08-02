@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { surveyHelper, formHelper } from '@helpers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
 import {
   CollectionsService,
@@ -33,8 +32,6 @@ enum CollectionView {
 })
 export class CollectionsComponent extends BaseComponent implements OnInit {
   CollectionView = CollectionView;
-  // private userData$: Observable<UserInterface>;
-  public isDesktop$: Observable<boolean>;
   public collectionList: CollectionResult[];
   public isLoading: boolean;
   views = surveyHelper.views;
@@ -52,6 +49,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
 
   constructor(
     protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private matDialogRef: MatDialogRef<CollectionsComponent>,
     @Inject(MAT_DIALOG_DATA) public post: PostResult,
     private collectionsService: CollectionsService,
@@ -61,11 +59,11 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     private eventBus: EventBusService,
     private router: Router,
     private rolesService: RolesService,
-    private breakpointService: BreakpointService,
     private notificationsService: NotificationsService,
   ) {
-    super(sessionService);
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+    super(sessionService, breakpointService);
+    this.checkDesktop();
+
     this.searchForm = this.formBuilder.group({
       query: ['', []],
     });

@@ -15,7 +15,7 @@ import {
   EventType,
   SessionService,
 } from '@services';
-import { filter, Observable } from 'rxjs';
+import { filter } from 'rxjs';
 import { BaseComponent } from '../../../base.component';
 import { AccountSettingsModalComponent } from '../account-settings-modal/account-settings-modal.component';
 import { ShareModalComponent } from '../share-modal/share-modal.component';
@@ -30,7 +30,6 @@ import { SupportModalComponent } from '../support-modal/support-modal.component'
 export class ToolbarComponent extends BaseComponent implements OnInit {
   @Input() languages: any;
   @Input() selectedLanguage: any;
-  public isDesktop$: Observable<boolean>;
   public isDonateAvailable = false;
   public showSearchForm: boolean;
   public pageTitle: string;
@@ -44,17 +43,18 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
 
   constructor(
     protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private dialog: MatDialog,
     private authService: AuthService,
     private router: Router,
     private breadcrumbService: BreadcrumbService,
-    private breakpointService: BreakpointService,
     private translate: TranslateService,
     private eventBusService: EventBusService,
     private location: Location,
   ) {
-    super(sessionService);
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+    super(sessionService, breakpointService);
+    this.checkDesktop();
+
     this.siteConfig = this.sessionService.getSiteConfigurations();
     this.isDonateAvailable = <boolean>this.sessionService.getSiteConfigurations().donation?.enabled;
 
@@ -79,7 +79,7 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
     this.getUserData();
   }
 
-  loadData() {
+  loadData(): void {
     this.isAdmin = this.user.role === 'admin';
     this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
     this.initMenu();
