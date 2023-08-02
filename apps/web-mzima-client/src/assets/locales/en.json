@@ -1013,7 +1013,7 @@
   },
   "collection": {
     "visible_to_public": "This Collection is visible to the public",
-    "visible_to_you": "This Collection is visible to just you and admins",
+    "visible_to_you": "This collection will only be visible to you and admins",
     "visible_to_roles": "This Collection is visible to {{roles}}",
     "validation": {
       "required": {

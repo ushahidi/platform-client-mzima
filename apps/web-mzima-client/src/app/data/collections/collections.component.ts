@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { surveyHelper, formHelper } from '@helpers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -156,7 +155,19 @@ export class CollectionsComponent implements OnInit {
 
     this.collectionsService.getCollections(params).subscribe({
       next: (response) => {
-        this.collectionList = response.results;
+        this.collectionList = response.results.map((item) => {
+          const currentUserId = Number(
+            localStorage.getItem(this.session.getLocalStorageNameMapper('userId')),
+          );
+          const isOwner = item.user_id === currentUserId;
+
+          return {
+            ...item,
+            my_collection: isOwner,
+            visible: this.isManageCollections || !(item.featured && !isOwner),
+          };
+        });
+        this.collectionList = this.collectionList.filter((collection) => collection.visible);
         this.isLoading = false;
       },
     });
@@ -226,15 +237,16 @@ export class CollectionsComponent implements OnInit {
     // $state.go(`posts.${viewParam}.collection`, {collectionId: collection.id}, {reload: true});
   }
 
-  featuredChange(event: MatSlideToggleChange) {
+  featuredChange(checked: boolean = false) {
     this.updateForm('visible_to', {
       value: 'only_me',
       options: [this.userRole],
-      disabled: event.checked,
+      disabled: checked,
     });
   }
 
   saveCollection() {
+    if (!this.isManageCollections) this.featuredChange();
     const collectionData = this.collectionForm.value;
     collectionData.role =
       this.collectionForm.value.visible_to.value === 'everyone'

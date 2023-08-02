@@ -97,7 +97,7 @@ export class ToolbarComponent implements OnInit {
       {
         label: 'nav.collections',
         icon: 'collections',
-        visible: true,
+        visible: !this.siteConfig.private || this.isLoggedIn,
         action: () => this.openCollections(),
       },
       {

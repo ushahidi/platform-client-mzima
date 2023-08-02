@@ -46,7 +46,6 @@ export class SidebarComponent implements OnInit {
   ) {
     this.userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(takeUntilDestroy$());
-    this.siteConfig = this.sessionService.getSiteConfigurations();
     this.isDesktop$.subscribe({
       next: (isDesktop) => {
         this.isDesktop = isDesktop;
@@ -68,6 +67,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.userData$.subscribe((userData) => {
       this.isLoggedIn = !!userData.userId;
+      this.siteConfig = this.sessionService.getSiteConfigurations();
       const hostRoles = [
         Permissions.ManageUsers,
         Permissions.ManageSettings,
@@ -135,7 +135,7 @@ export class SidebarComponent implements OnInit {
       {
         label: 'nav.collections',
         icon: 'collections',
-        visible: this.isDesktop,
+        visible: this.isDesktop && (!this.siteConfig.private || this.isLoggedIn),
         action: () => this.openCollections(),
         ref: 'collection',
       },

@@ -14,10 +14,12 @@ export interface CollectionResult {
   role?: string[];
   updated?: string;
   url?: string;
-  user_id?: string;
+  user_id?: string | number;
   view: string;
   view_options?: string;
   posts_count?: number;
+  my_collection?: boolean;
+  visible?: boolean;
 }
 
 export interface CollectionItem extends CollectionResult {

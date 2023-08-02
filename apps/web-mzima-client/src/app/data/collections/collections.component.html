@@ -78,7 +78,7 @@
       <div class="collection-list">
         <app-collection-item
           [collection]="item"
-          [actions]="isManageCollections"
+          [actions]="item.my_collection || isManageCollections"
           class="collection-list__item"
           (edit)="editCollection(item)"
           (click)="goToCollection(item)"
@@ -146,7 +146,7 @@
           <mat-slide-toggle
             formControlName="featured"
             name="first-name"
-            (change)="featuredChange($event)"
+            (change)="featuredChange($event.checked)"
           >
             {{ 'set.featured' | translate }}
           </mat-slide-toggle>
@@ -154,7 +154,12 @@
       </div>
       <div class="form-row">
         <mat-label>{{ 'app.who_can_see_this' | translate }}</mat-label>
-        <app-group-checkbox-select [data]="roleOptions" formControlName="visible_to">
+        <p *ngIf="!isManageCollections">{{ 'collection.visible_to_you' | translate }}</p>
+        <app-group-checkbox-select
+          *ngIf="isManageCollections"
+          [data]="roleOptions"
+          formControlName="visible_to"
+        >
         </app-group-checkbox-select>
       </div>
       <div class="form-row">
@@ -183,7 +188,11 @@
     <mzima-client-button fill="outline" color="secondary" (buttonClick)="closeModal()">
       {{ 'app.cancel' | translate }}
     </mzima-client-button>
-    <mzima-client-button (buttonClick)="saveCollection()" id="save-collection-btn">
+    <mzima-client-button
+      (buttonClick)="saveCollection()"
+      [disabled]="collectionForm.invalid"
+      id="save-collection-btn"
+    >
       {{ 'app.save' | translate }}
     </mzima-client-button>
   </mat-dialog-actions>
