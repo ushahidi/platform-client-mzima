@@ -12,7 +12,7 @@ import {
 import { Subject, debounceTime, lastValueFrom, takeUntil } from 'rxjs';
 import { AlertService, EnvService, SearchService, SessionService } from '@services';
 import { FilterControl, FilterControlOption } from '@models';
-import { searchFormHelper, UTCHelper } from '@helpers';
+import { searchFormHelper, dateHelper } from '@helpers';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import _ from 'lodash';
 import { Router } from '@angular/router';
@@ -547,9 +547,9 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
           filter.selectedCount = 'All Time';
         } else {
           filter.selectedCount = `
-            ${UTCHelper.toUTC(filter.value.start, 'DD MMM')}
+            ${dateHelper.toUTC(filter.value.start, 'DD MMM')}
             -
-            ${UTCHelper.toUTC(filter.value.end, 'DD MMM')}
+            ${dateHelper.toUTC(filter.value.end, 'DD MMM')}
           `;
         }
         break;

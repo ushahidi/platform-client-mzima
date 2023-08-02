@@ -117,11 +117,10 @@ export const surveyFields = [
 ];
 
 export const fieldHasTranslations = (field: any, lang: any) => {
-  return (
-    field.translations[lang] &&
-    field.translations[lang].options &&
-    Object.values(field.translations[lang].options).length > 0
-  );
+  if (!field.translations) return false;
+  return field.translations[lang]?.options
+    ? Object.values(field.translations[lang]?.options).length > 0
+    : false;
 };
 
 export const fieldCanHaveOptions = (field: any = {}) => {

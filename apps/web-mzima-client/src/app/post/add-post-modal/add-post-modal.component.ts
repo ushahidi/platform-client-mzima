@@ -20,7 +20,8 @@ export class AddPostModalComponent {
         this.types = types.results || [];
         this.types.map((el) => {
           el.visible =
-            el.everyone_can_create || !!localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`);
+            el.everyone_can_create ||
+            el.can_create.includes(localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`));
         });
       },
     });

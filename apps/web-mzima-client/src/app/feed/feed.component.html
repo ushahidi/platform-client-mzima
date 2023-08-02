@@ -9,7 +9,7 @@
   <ng-container *ngIf="posts.length">
     <div class="feed-page__info-panel" *ngIf="isDesktop">
       <span class="feed-page__results-info"
-        >Current results: {{ postCurrentLength }} / {{ total }}</span
+        >{{ 'app.current_results' | translate }} {{ postCurrentLength }} / {{ total }}</span
       >
       <div class="feed-page__mode-switcher">
         <mzima-client-button
@@ -200,10 +200,9 @@
               (edit)="editPost(post)"
               (refresh)="refreshPost(post)"
               (deleted)="postDeleted([post.id.toString()])"
-              (loaded)="refreshMasonry()"
               (click)="showPostDetails(post)"
               [selectable]="isBulkOptionsVisible"
-              [isChecked]="isPostChecked(post.id)"
+              [isChecked]="isPostChecked(post.id.toString())"
               (statusChanged)="postStatusChanged()"
               (selected)="isPostSelected($event, post.id.toString())"
               [ngClass]="{
@@ -214,7 +213,11 @@
               *ngFor="
                 let post of posts
                   | paginate
-                    : { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: total }
+                    : {
+                        itemsPerPage: mode === FeedMode.Post ? 0 : itemsPerPage,
+                        currentPage: currentPage,
+                        totalItems: total
+                      }
               "
             >
             </app-post-preview>
@@ -227,9 +230,9 @@
             class="feed__load-more"
             *ngIf="
               !isLoading &&
-              params.offset !== undefined &&
+              params.page !== undefined &&
               params.limit !== undefined &&
-              params.offset + params.limit < total
+              params.page * params.limit < total
             "
           >
             <mat-icon iconPrefix svgIcon="refresh"></mat-icon>

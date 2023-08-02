@@ -22,9 +22,14 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService, EventBusService, SessionService } from '@services';
+import {
+  BreakpointService,
+  EventBusService,
+  EventType,
+  SessionService,
+  LanguageService,
+} from '@services';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -33,6 +38,7 @@ import {
   GeoJsonFilter,
   PostResult,
   MediaService,
+  postHelpers,
 } from '@mzima-client/sdk';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
@@ -41,8 +47,10 @@ import { AlphanumericValidatorValidator } from '../../core/validators';
 import { PhotoRequired } from '../../core/validators/photo-required';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LanguageInterface } from '../../core/interfaces/language.interface';
+import { MatSelectChange } from '@angular/material/select';
+import { dateHelper } from '@helpers';
 
-dayjs.extend(utc);
 dayjs.extend(timezone);
 
 @UntilDestroy()
@@ -58,6 +66,7 @@ export class PostEditComponent implements OnInit, OnChanges {
   @Output() updated = new EventEmitter();
   public color: string;
   public form: FormGroup;
+  public taskForm: FormGroup;
   public description: string;
   public title: string;
   private formId?: number;
@@ -75,6 +84,8 @@ export class PostEditComponent implements OnInit, OnChanges {
   private fieldsFormArray = ['tags'];
   public surveyName: string;
   private postId?: number;
+  formInfo: any;
+
   private post?: any;
   public isDesktop: boolean;
   public atLeastOneFieldHasValidationError: boolean;
@@ -83,6 +94,8 @@ export class PostEditComponent implements OnInit, OnChanges {
   public emptyLocation = false;
   public submitted = false;
   public filters;
+  selectedLanguage: any;
+  postLanguages: LanguageInterface[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -96,6 +109,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     private location: Location,
     private breakpointService: BreakpointService,
     private mediaService: MediaService,
+    private languageService: LanguageService,
     private snackBar: MatSnackBar,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
@@ -119,9 +133,7 @@ export class PostEditComponent implements OnInit, OnChanges {
       }
       if (params.get('id')) {
         this.postId = Number(params.get('id'));
-        this.postsService.lockPost(this.postId).subscribe((p) => {
-          console.log('Post locked: ', p);
-        });
+        this.postsService.lockPost(this.postId).subscribe();
         this.loadPostData(this.postId);
       }
     });
@@ -139,6 +151,11 @@ export class PostEditComponent implements OnInit, OnChanges {
     }
   }
 
+  selectLanguageEmit(event: MatSelectChange) {
+    this.activeLanguage = event.value.code;
+    this.surveyName = this.formInfo.translations[this.activeLanguage]?.name || this.formInfo.name;
+  }
+
   private loadPostData(postId: number) {
     this.postsService.getById(postId).subscribe({
       next: (post) => {
@@ -154,9 +171,21 @@ export class PostEditComponent implements OnInit, OnChanges {
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
         const { result } = data;
+
         this.color = result.color;
         this.tasks = result.tasks;
         this.surveyName = result.name;
+        this.formInfo = result;
+        const languages = this.languageService.getLanguages();
+
+        const availableLanguages: any[] = result.enabled_languages.available;
+        if (availableLanguages.length) {
+          availableLanguages.unshift(result.enabled_languages.default);
+          availableLanguages.forEach((langCode: string) => {
+            this.postLanguages.push(languages.find((lang) => lang.code === langCode)!);
+          });
+          this.selectedLanguage = this.postLanguages[0];
+        }
 
         const fields: any = {};
         for (const task of this.tasks) {
@@ -207,6 +236,9 @@ export class PostEditComponent implements OnInit, OnChanges {
               }
             });
         }
+
+        this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks));
+
         this.form = new FormGroup(fields);
         this.initialFormData = this.form.value;
 
@@ -272,7 +304,13 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   private handleDate(key: string, value: any) {
-    this.form.patchValue({ [key]: value?.value ? new Date(value?.value) : null });
+    this.form.patchValue({ [key]: value?.value ? dateHelper.setDate(value?.value, 'date') : null });
+  }
+
+  private handleDateTime(key: string, value: any) {
+    this.form.patchValue({
+      [key]: value?.value ? dateHelper.setDate(value?.value, 'datetime') : null,
+    });
   }
 
   private handleTitle(key: string) {
@@ -305,7 +343,7 @@ export class PostEditComponent implements OnInit, OnChanges {
         checkbox: this.handleCheckbox.bind(this),
         location: this.handleLocation.bind(this),
         date: this.handleDate.bind(this),
-        datetime: this.handleDate.bind(this),
+        datetime: this.handleDateTime.bind(this),
         upload: this.handleUpload.bind(this),
       };
 
@@ -399,10 +437,19 @@ export class PostEditComponent implements OnInit, OnChanges {
 
           switch (field.input) {
             case 'date':
+              value = this.form.value[field.key]
+                ? {
+                    value: dateHelper.setDate(this.form.value[field.key], 'date'),
+                    value_meta: {
+                      from_tz: dayjs.tz.guess(),
+                    },
+                  }
+                : { value: null };
+              break;
             case 'datetime':
               value = this.form.value[field.key]
                 ? {
-                    value: dayjs(this.form.value[field.key]).format('YYYY-MM-DD'),
+                    value: dateHelper.setDate(this.form.value[field.key], 'datetime'),
                     value_meta: {
                       from_tz: dayjs.tz.guess(),
                     },
@@ -477,7 +524,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     try {
       await this.preparationData();
     } catch (error: any) {
-      this.snackBar.open(error, 'Close', { panelClass: ['error'], duration: 3000 });
+      this.showMessage(error, 'error');
       return;
     }
 
@@ -511,6 +558,12 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private updatePost(postId: number, postData: any) {
     this.postsService.update(postId, postData).subscribe({
+      next: ({ result }) => {
+        this.eventBusService.next({
+          type: EventType.UpdatedPost,
+          payload: result,
+        });
+      },
       error: () => {
         this.form.enable();
         this.submitted = false;
@@ -529,7 +582,10 @@ export class PostEditComponent implements OnInit, OnChanges {
 
   private createPost(postData: any) {
     this.postsService.post(postData).subscribe({
-      error: () => {
+      error: ({ error }) => {
+        if (error.errors[0].status === 403) {
+          this.showMessage(`Failed to create a post. ${error.errors[0].message}`, 'error');
+        }
         this.form.enable();
         this.submitted = false;
       },
@@ -537,6 +593,13 @@ export class PostEditComponent implements OnInit, OnChanges {
         await this.postComplete();
         this.router.navigate(['/feed']);
       },
+    });
+  }
+
+  private showMessage(message: string, type: string) {
+    this.snackBar.open(message, 'Close', {
+      panelClass: [type],
+      duration: 3000,
     });
   }
 
@@ -692,6 +755,8 @@ export class PostEditComponent implements OnInit, OnChanges {
   }
 
   public taskComplete({ id }: any, event: MatSlideToggleChange) {
+    this.taskForm.patchValue({ [id]: event.checked });
+
     if (event.checked) {
       this.completeStages.push(id);
     } else {

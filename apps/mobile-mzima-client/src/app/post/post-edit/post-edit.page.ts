@@ -2,13 +2,14 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angu
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CONST, STORAGE_KEYS } from '@constants';
+import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EMPTY, from, lastValueFrom, map, Observable, of, switchMap, tap } from 'rxjs';
 import {
   GeoJsonFilter,
   MediaService,
   PostContent,
+  postHelpers,
   PostResult,
   PostsService,
   SurveysService,
@@ -25,7 +26,7 @@ import { PostEditForm, prepareRelationConfig, UploadFileHelper } from '../helper
 
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
-import { objectHelpers, UTCHelper } from '@helpers';
+import { objectHelpers, dateHelper } from '@helpers';
 
 dayjs.extend(timezone);
 
@@ -42,6 +43,7 @@ export class PostEditPage {
   public date: string;
   public color: string;
   public form: FormGroup;
+  public taskForm: FormGroup;
   private initialFormData: any;
   private relationConfigForm: any;
   private relationConfigSource: any;
@@ -220,7 +222,7 @@ export class PostEditPage {
 
   getDefaultValues(field: any) {
     const defaultValues: any = {
-      date: UTCHelper.toUTC(dayjs()),
+      date: dateHelper.setDate(dayjs()),
       location: { lat: '', lng: '' },
       number: 0,
     };
@@ -279,6 +281,9 @@ export class PostEditPage {
           }
         });
     }
+
+    this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks));
+
     this.form = new FormGroup(fields);
     this.initialFormData = this.form.value;
 
@@ -297,9 +302,8 @@ export class PostEditPage {
     this.cdr.detectChanges();
   }
 
-  setCalendar(event: any, key: any, type: 'date' | 'dateTime' = 'date') {
-    const template = type === 'dateTime' ? CONST.FORMAT_DATE_TIME : CONST.FORMAT_DATE;
-    this.updateFormControl(key, UTCHelper.toUTC(event.detail.value, template));
+  public setCalendar(event: any, key: any, type: string) {
+    this.updateFormControl(key, dateHelper.setDate(event.detail.value, type));
   }
 
   private async loadSurveyFormLocalDB() {
@@ -416,17 +420,15 @@ export class PostEditPage {
   }
 
   private handleDate(key: string, value: any) {
-    this.updateFormControl(
-      key,
-      value?.value ? UTCHelper.toUTC(value?.value, CONST.FORMAT_DATE) : null,
-    );
+    this.updateFormControl(key, value?.value ? dateHelper.setDate(value?.value, 'date') : null);
   }
 
   private handleDateTime(key: string, value: any) {
     this.updateFormControl(
       key,
-      value?.value ? UTCHelper.toUTC(value?.value, CONST.FORMAT_DATE_TIME) : null,
+      value?.value ? dateHelper.setDate(value?.value, 'datetimeFormat') : null,
     );
+    console.log(this.form.controls[key].value);
   }
 
   private handleTitle(key: string) {
@@ -446,14 +448,14 @@ export class PostEditPage {
       date: (value: any) =>
         value
           ? {
-              value: UTCHelper.toUTC(value),
+              value: dateHelper.setDate(value, 'date'),
               value_meta: { from_tz: dayjs.tz.guess() },
             }
           : { value: null },
       datetime: (value: any) =>
         value
           ? {
-              value: UTCHelper.toUTC(value, CONST.FORMAT_DATE_TIME),
+              value: dateHelper.setDate(value, 'datetime'),
               value_meta: { from_tz: dayjs.tz.guess() },
             }
           : { value: null },
@@ -632,7 +634,15 @@ export class PostEditPage {
   /** Create post */
   private createPost(postData: any) {
     this.postsService.post(postData).subscribe({
-      error: () => this.form.enable(),
+      error: ({ error }) => {
+        this.form.enable();
+        if (error.errors[0].status === 403) {
+          this.toastService.presentToast({
+            message: `Failed to create a post. ${error.errors[0].message}`,
+            duration: 3000,
+          });
+        }
+      },
       complete: async () => {
         await this.postComplete(
           'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
@@ -706,6 +716,7 @@ export class PostEditPage {
   }
 
   public taskComplete({ id }: any, event: any) {
+    this.taskForm.patchValue({ [id]: event.checked });
     if (event.checked) {
       this.completeStages.push(id);
     } else {
@@ -829,5 +840,9 @@ export class PostEditPage {
         this.form.patchValue({ [fieldKey]: this.checkedList });
       }
     }
+  }
+
+  public getDate(value: any, format: string): string {
+    return dateHelper.getDateWithTz(value, format);
   }
 }

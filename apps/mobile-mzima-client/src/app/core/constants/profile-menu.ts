@@ -1,8 +1,8 @@
 export enum ProfileMenuActions {
   LOGOUT = 'LOGOUT',
   SUPPORT = 'SUPPORT',
-  RESET_DATA = 'RESET_DATA',
-  CLEAR_PENDING_POSTS = 'CLEAR_PENDING_POSTS',
+  // RESET_DATA = 'RESET_DATA',
+  // CLEAR_PENDING_POSTS = 'CLEAR_PENDING_POSTS',
 }
 
 export interface ProfileMenuItem {
@@ -38,18 +38,18 @@ export const profileMenu: ProfileMenuItem[] = [
     route: '/profile/posts',
     isLoggedGuard: true,
   },
-  {
-    label: 'Clear pending posts',
-    icon: 'cloud',
-    action: ProfileMenuActions.CLEAR_PENDING_POSTS,
-    hideDetails: true,
-  },
-  {
-    label: 'Reset App data',
-    icon: 'reset',
-    action: ProfileMenuActions.RESET_DATA,
-    hideDetails: true,
-  },
+  // {
+  //   label: 'Clear pending posts',
+  //   icon: 'cloud',
+  //   action: ProfileMenuActions.CLEAR_PENDING_POSTS,
+  //   hideDetails: true,
+  // },
+  // {
+  //   label: 'Reset App data',
+  //   icon: 'reset',
+  //   action: ProfileMenuActions.RESET_DATA,
+  //   hideDetails: true,
+  // },
   {
     label: 'Log out',
     icon: 'logout',

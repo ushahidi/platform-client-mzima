@@ -18,8 +18,10 @@
       <app-icon name="sorting"></app-icon>
     </ng-container>
   </app-select>
+  <div class="total-posts" *ngIf="!isPostsLoading">
+    {{ totalPosts }} {{ totalPosts > 1 ? 'posts' : 'post' }}
+  </div>
   <ng-container *ngIf="posts.length; else emptyBox">
-    <div class="total-posts">{{ totalPosts }} posts</div>
     <app-post-item
       *ngFor="let post of posts"
       [post]="post"
@@ -39,10 +41,15 @@
 </div>
 
 <ng-template #emptyBox>
-  <div class="empty-box">
-    <ion-text color="medium" class="empty ion-text-center" *ngIf="!posts.length && !isPostsLoading">
-      There are no posts yet!
-    </ion-text>
+  <div class="empty-box" [ngClass]="{ 'empty-box--loading': isPostsLoading }">
+    <ng-container *ngIf="!posts.length && !isPostsLoading">
+      <ion-text color="medium" class="empty ion-text-center">
+        There is no post yet. Add a post.
+      </ion-text>
+      <app-button class="create-post-btn" (buttonClick)="createPost()" iconName="plus">
+        Add post
+      </app-button>
+    </ng-container>
     <app-spinner *ngIf="isPostsLoading"></app-spinner>
   </div>
 </ng-template>

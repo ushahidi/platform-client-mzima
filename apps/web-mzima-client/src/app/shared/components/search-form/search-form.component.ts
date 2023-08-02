@@ -163,6 +163,11 @@ export class SearchFormComponent implements OnInit {
       next: (isMainFiltersHidden: boolean) => {
         setTimeout(() => {
           this.isMainFiltersOpen = !isMainFiltersHidden;
+          if (this.isMainFiltersOpen) {
+            document.body.classList.remove('main-filters-closed');
+          } else {
+            document.body.classList.add('main-filters-closed');
+          }
         }, 1);
       },
       error: (err) => console.log('isMainFiltersHidden:', err),
@@ -290,6 +295,11 @@ export class SearchFormComponent implements OnInit {
               }),
           };
         });
+        if (!this.categoriesData.length) {
+          document.body.classList.add('filters-panel-no-categories');
+        } else {
+          document.body.classList.remove('filters-panel-no-categories');
+        }
       },
       error: (err) => {
         if (err.message.match(/Http failure response for/)) {

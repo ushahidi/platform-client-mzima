@@ -20,6 +20,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule } from '@ngx-translate/core';
+import { SortByFieldModule } from '@pipes';
 import { DirectiveModule, MapWithMarkerModule, PipeModule, SpinnerModule } from '@shared';
 import { PostRoutingModule } from './post-routing.module';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -32,6 +33,7 @@ import { TwitterWidgetComponent } from './twitter-widget/twitter-widget.componen
 import { PostHeadComponent } from './post-head/post-head.component';
 import { MzimaUiModule } from '@mzima-client/mzima-ui';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import { ImageUploaderComponent } from './image-uploader/image-uploader.componen
     DirectiveModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTooltipModule,
     MatGridListModule,
     FormsModule,
     MapWithMarkerModule,
@@ -73,6 +76,7 @@ import { ImageUploaderComponent } from './image-uploader/image-uploader.componen
     PipeModule,
     NgxMatNativeDateModule,
     MzimaUiModule,
+    SortByFieldModule,
   ],
   exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent, PostEditComponent],
 })

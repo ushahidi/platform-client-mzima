@@ -32,12 +32,12 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     page: 1,
     // created_before_by_id: '',
   };
-  private readonly getPostsSubject = new Subject<GeoJsonFilter>();
+  private readonly getPostsSubject = new Subject<{ params: GeoJsonFilter; add?: boolean }>();
   public pagination = {
     page: 1,
     size: this.params.limit,
   };
-  public posts: any[] = [];
+  public posts: PostResult[] = [];
   public postCurrentLength = 0;
   public isLoading = false;
   public mode: FeedMode = FeedMode.Tiles;
@@ -122,7 +122,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         this.params.page = this.currentPage;
         this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedMode.Tiles;
         this.posts = [];
-        this.getPostsSubject.next(this.params);
+        this.getPostsSubject.next({ params: this.params });
       },
     });
 
@@ -136,7 +136,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           queryParamsHandling: 'merge',
         });
         this.posts = [];
-        this.getPostsSubject.next(this.params);
+        this.getPostsSubject.next({ params: this.params });
       },
     });
 
@@ -185,21 +185,39 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   ngOnInit() {
     this.getUserData();
+    this.eventBusListeners();
+  }
 
-    this.eventBusService.on(EventType.DeleteCollection).subscribe({
-      next: (colId) => {
-        if (Number(colId) === Number(this.collectionId)) {
+  private eventBusListeners() {
+    this.eventBusService
+      .on(EventType.DeleteCollection)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (colId) => {
+          if (Number(colId) === Number(this.collectionId)) {
+            this.router.navigate(['/feed']);
+          }
+        },
+      });
+
+    this.eventBusService
+      .on(EventType.DeleteSavedSearch)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: () => {
+          // We can delete search only from edit so redirect anyway
           this.router.navigate(['/feed']);
-        }
-      },
-    });
+        },
+      });
 
-    this.eventBusService.on(EventType.DeleteSavedSearch).subscribe({
-      next: () => {
-        // We can delete search only from edit so redirect anyway
-        this.router.navigate(['/feed']);
-      },
-    });
+    this.eventBusService
+      .on(EventType.UpdatedPost)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (post) => {
+          this.refreshPost(post);
+        },
+      });
 
     this.eventBusService
       .on(EventType.EditPost)
@@ -213,27 +231,32 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   loadData(): void {
     this.params.page = 1;
-    this.getPostsSubject.next(this.params);
+    this.getPostsSubject.next({ params: this.params });
   }
 
   private initGetPostsListener() {
     this.getPostsSubject.pipe(untilDestroyed(this), debounceTime(700)).subscribe({
-      next: (params) => {
-        this.getPosts(params);
+      next: ({ params, add }) => {
+        this.getPosts(params, add);
       },
     });
   }
 
-  private getPosts(params: any, add?: boolean): void {
+  private getPosts(params: any, add = true): void {
     if (!add) {
       this.posts = [];
+    }
+    if (this.mode === FeedMode.Post) {
+      this.currentPage = 1;
     }
     this.isLoading = true;
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
         this.postCurrentLength =
-          data.count < Number(data.meta.per_page) ? data.meta.total : this.currentPage * data.count;
+          data.count < Number(data.meta.per_page)
+            ? data.meta.total
+            : data.meta.current_page * data.count;
         this.eventBusService.next({
           type: EventType.FeedPostsLoaded,
           payload: true,
@@ -249,7 +272,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public pageChanged(page: any): void {
     this.pagination.page = page;
     this.params.page = page;
-    this.getPostsSubject.next(this.params);
+    this.getPostsSubject.next({ params: this.params });
   }
 
   public showPostDetails(post: any): void {
@@ -281,7 +304,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
       this.postDetailsModal.afterClosed().subscribe((data) => {
         if (data?.update) {
-          this.getPostsSubject.next(this.params);
+          this.getPostsSubject.next({ params: this.params });
         }
         if (this.collectionId) {
           this.router.navigate(['/feed', 'collection', this.collectionId], {
@@ -318,7 +341,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public changePostsStatus(status: string): void {
     forkJoin(this.selectedPosts.map((p) => this.postsService.update(p, { status }))).subscribe({
       complete: () => {
-        this.getPostsSubject.next(this.params);
+        this.getPostsSubject.next({ params: this.params, add: false });
         this.selectedStatus = undefined;
         this.deselectAllPosts();
       },
@@ -327,8 +350,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public selectAllPosts(): void {
     this.posts.map((post) => {
-      if (this.selectedPosts.find((selectedPost) => selectedPost === post.id)) return;
-      this.selectedPosts.push(post.id);
+      if (this.selectedPosts.find((selectedPost) => selectedPost === String(post.id))) return;
+      this.selectedPosts.push(String(post.id));
     });
   }
 
@@ -354,7 +377,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public postDeleted(postIds: string[], count?: number): void {
-    this.getPostsSubject.next(this.params);
+    this.getPostsSubject.next({ params: this.params, add: false });
     if (this.activePostId && postIds.includes(this.activePostId)) {
       if (this.collectionId) {
         this.router.navigate(['feed', 'collection', this.collectionId]);
@@ -376,7 +399,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public postStatusChanged(): void {
-    this.getPostsSubject.next(this.params);
+    this.getPostsSubject.next({ params: this.params, add: false });
     this.selectedPosts = [];
   }
 
@@ -398,7 +421,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public sortPosts(value: any): void {
     this.activeSorting = value;
     this.postsService.setSorting(this.activeSorting);
-    this.getPostsSubject.next(this.params);
+    this.getPostsSubject.next({ params: this.params, add: false });
   }
 
   public refreshMasonry(): void {
@@ -409,7 +432,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     if (this.params.limit !== undefined && this.params.limit * this.params.page! < this.total) {
       this.currentPage++;
       this.params.page!++;
-      this.getPostsSubject.next(this.params);
+      this.getPostsSubject.next({ params: this.params });
     }
   }
 
@@ -460,9 +483,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     }
   }
 
-  refreshPost(post: PostResult) {
-    this.postsService.getById(post.id).subscribe((p) => {
-      this.posts.find((tmpP) => tmpP.id === p.id).sets = p.sets;
+  refreshPost({ id }: PostResult) {
+    this.postsService.getById(id).subscribe((p) => {
+      const index = this.posts.findIndex((post) => post.id === p.id);
+      if (index !== -1) this.posts.splice(index, 1, p);
     });
   }
 
@@ -527,7 +551,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.postDetailsModal.afterClosed().subscribe((data) => {
       if (data?.update) {
-        this.getPostsSubject.next(this.params);
+        this.getPostsSubject.next({ params: this.params, add: false });
       }
     });
   }
