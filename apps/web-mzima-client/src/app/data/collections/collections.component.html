@@ -42,7 +42,7 @@
   <form
     class="search-form"
     [formGroup]="searchForm"
-    (ngSubmit)="getCollections(searchForm.get('query')?.value)"
+    (ngSubmit)="loadData(searchForm.get('query')?.value)"
   >
     <div class="form-row">
       <mat-form-field appearance="outline">

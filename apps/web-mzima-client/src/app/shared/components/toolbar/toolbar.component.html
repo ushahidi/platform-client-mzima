@@ -40,14 +40,14 @@
     [matMenuTriggerFor]="accountMenu"
   >
     <div class="account-info__main">
-      <span class="account-info__name">{{ profile.realname }}</span>
-      <span class="account-info__email">{{ profile.email }}</span>
+      <span class="account-info__name">{{ user.realname }}</span>
+      <span class="account-info__email">{{ user.email }}</span>
     </div>
     <img
-      [alt]="profile.realname"
+      [alt]="user.realname"
       class="account-info__avatar"
       src="//www.gravatar.com/avatar/{{
-        profile.gravatar || '00000000000000000000000000000000'
+        user.gravatar || '00000000000000000000000000000000'
       }}?d=retro&s=64"
     />
     <mat-icon class="account-info__arrow" svgIcon="arrow-down"></mat-icon>

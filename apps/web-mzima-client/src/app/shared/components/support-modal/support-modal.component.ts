@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { EventBusService, EventType, SessionService } from '@services';
+import { BaseComponent } from '../../../base.component';
 
 interface SupportMenuItemInterface {
   title: string;
@@ -14,23 +15,21 @@ interface SupportMenuItemInterface {
   templateUrl: './support-modal.component.html',
   styleUrls: ['./support-modal.component.scss'],
 })
-export class SupportModalComponent {
+export class SupportModalComponent extends BaseComponent {
   public menu: SupportMenuItemInterface[];
-  isLoggedIn = false;
 
   constructor(
+    protected override sessionService: SessionService,
     private translate: TranslateService,
     private matDialogRef: MatDialogRef<SupportModalComponent>,
     private eventBusService: EventBusService,
-    private session: SessionService,
   ) {
+    super(sessionService);
+    this.getUserData();
     this.initMenu();
-    this.session.currentUserData$.subscribe({
-      next: (userData) => {
-        this.isLoggedIn = !!userData.userId;
-      },
-    });
   }
+
+  loadData() {}
 
   private initMenu(): void {
     this.menu = [

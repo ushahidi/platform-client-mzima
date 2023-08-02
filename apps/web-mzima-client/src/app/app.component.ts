@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LanguageInterface } from '@models';
+import { UserInterface } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -16,6 +17,7 @@ import {
   SessionService,
 } from '@services';
 import { filter, Observable } from 'rxjs';
+import { BaseComponent } from './base.component';
 import { EnumGtmEvent } from './core/enums/gtm';
 import { Intercom } from '@supy-io/ngx-intercom';
 
@@ -25,7 +27,7 @@ import { Intercom } from '@supy-io/ngx-intercom';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent extends BaseComponent implements OnInit {
   public isShowLoader = false;
   public isDesktop$: Observable<boolean>;
   public languages: LanguageInterface[];
@@ -35,6 +37,7 @@ export class AppComponent implements OnInit {
   public isOnboardingDone = false;
 
   constructor(
+    protected override sessionService: SessionService,
     private loaderService: LoaderService,
     private iconService: IconService,
     private languageService: LanguageService,
@@ -45,10 +48,10 @@ export class AppComponent implements OnInit {
     private eventBusService: EventBusService,
     private env: EnvService,
     private breakpointService: BreakpointService,
-    private sessionService: SessionService,
     private gtm: GtmTrackingService,
     private intercom: Intercom,
   ) {
+    super(sessionService);
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.selectedLanguage$ = this.languageService.selectedLanguage$.pipe(untilDestroyed(this));
 
@@ -59,7 +62,6 @@ export class AppComponent implements OnInit {
     });
 
     this.iconService.registerIcons();
-    this.initIntercom();
 
     this.languageService.isRTL$.pipe(untilDestroyed(this)).subscribe({
       next: (isRTL) => {
@@ -103,6 +105,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getUserData();
     this.setMetaData();
   }
 
@@ -170,36 +173,33 @@ export class AppComponent implements OnInit {
     sessionStorage.setItem('ogTitle', this.translate.instant(ogTitle));
   }
 
-  private initIntercom() {
-    this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
-      next: (user) => {
-        if (!user.userId) return this.intercom.shutdown();
-        const site = this.sessionService.getSiteConfigurations();
-        const parsedUrl = new URL(window.location.href);
-        const domain = parsedUrl.origin;
+  loadData(): void {
+    const user: UserInterface = this.user;
+    if (!user.userId) return this.intercom.shutdown();
+    const site = this.sessionService.getSiteConfigurations();
+    const parsedUrl = new URL(window.location.href);
+    const domain = parsedUrl.origin;
 
-        const io = {
-          app_id: this.env.environment.intercom_appid,
-          custom_launcher_selector: '#intercom_custom_launcher',
-          email: user.email,
-          created_at: user.created?.getDate(),
-          user_id: `${domain}_${user.userId}`,
-          deployment_url: domain,
-          realname: user.realname,
-          last_login: user.last_login,
-          role: user.role,
-          company: {
-            company_id: String(site.id),
-            name: String(site.name),
-            id: domain,
-            created_at: 0, // Faking this because we don't have this data
-            plan: site.tier,
-          },
-        };
-        console.log('Intercom options: ', io);
-        this.intercom.boot(io);
+    const io = {
+      app_id: this.env.environment.intercom_appid,
+      custom_launcher_selector: '#intercom_custom_launcher',
+      email: user.email,
+      created_at: user.created?.getDate(),
+      user_id: `${domain}_${user.userId}`,
+      deployment_url: domain,
+      realname: user.realname,
+      last_login: user.last_login,
+      role: user.role,
+      company: {
+        company_id: String(site.id),
+        name: String(site.name),
+        id: domain,
+        created_at: 0, // Faking this because we don't have this data
+        plan: site.tier,
       },
-    });
+    };
+    console.log('Intercom options: ', io);
+    this.intercom.boot(io);
   }
 
   private removeTags(tags: string[]) {

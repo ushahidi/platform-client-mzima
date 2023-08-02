@@ -17,23 +17,21 @@ import {
   PostContentField,
   PostResult,
   PostsService,
-  UserInterface,
 } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
+import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { CollectionsModalComponent } from '../../shared/components';
 import { dateHelper } from '@helpers';
 import { SessionService } from '@services';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-@UntilDestroy()
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
   styleUrls: ['./post-details.component.scss'],
 })
-export class PostDetailsComponent implements OnChanges, OnDestroy {
+export class PostDetailsComponent extends BaseComponent implements OnChanges, OnDestroy {
   @Input() post?: PostResult;
   @Input() feedView: boolean = true;
   @Input() userId?: number | string;
@@ -46,9 +44,9 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   public postId: number;
   public videoUrls: any[] = [];
   public isPostLoading: boolean = true;
-  public user: UserInterface;
 
   constructor(
+    protected override sessionService: SessionService,
     private dialog: MatDialog,
     private translate: TranslateService,
     private mediaService: MediaService,
@@ -56,8 +54,9 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     private route: ActivatedRoute,
     private postsService: PostsService,
     private sanitizer: DomSanitizer,
-    private sessionService: SessionService,
   ) {
+    super(sessionService);
+    this.getUserData();
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.post = undefined;
@@ -69,16 +68,9 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
         this.getPost(this.postId);
       }
     });
-    this.getUserData();
   }
 
-  getUserData(): void {
-    this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
-      next: (userData) => {
-        this.user = userData;
-      },
-    });
-  }
+  loadData(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post']) {

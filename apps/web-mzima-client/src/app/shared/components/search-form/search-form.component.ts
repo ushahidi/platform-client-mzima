@@ -18,6 +18,7 @@ import {
   Subject,
   switchMap,
 } from 'rxjs';
+import { BaseComponent } from '../../../base.component';
 import { FilterType } from '../filter-control/filter-control.component';
 import { SearchResponse } from '../location-selection/location-selection.component';
 import { MultilevelSelectOption } from '../multilevel-select/multilevel-select.component';
@@ -43,7 +44,7 @@ import dayjs from 'dayjs';
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.scss'],
 })
-export class SearchFormComponent implements OnInit {
+export class SearchFormComponent extends BaseComponent implements OnInit {
   public isDesktop$: Observable<boolean>;
   public _array = Array;
   public filterType = FilterType;
@@ -64,7 +65,6 @@ export class SearchFormComponent implements OnInit {
   private readonly searchSubject = new Subject<string>();
   public citiesOptions = new BehaviorSubject<any[]>([]);
   public notShownPostsCount: number;
-  public isLoggedIn = false;
   public isMainFiltersOpen = true;
   public surveysLoaded: boolean;
   public isOnboardingActive: boolean;
@@ -76,6 +76,7 @@ export class SearchFormComponent implements OnInit {
   public isNotificationLoading: boolean;
 
   constructor(
+    protected override sessionService: SessionService,
     private formBuilder: FormBuilder,
     private savedsearchesService: SavedsearchesService,
     private surveysService: SurveysService,
@@ -89,6 +90,7 @@ export class SearchFormComponent implements OnInit {
     private breakpointService: BreakpointService,
     private notificationsService: NotificationsService,
   ) {
+    super(sessionService);
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.form = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS);
     this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
@@ -99,6 +101,7 @@ export class SearchFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getUserData();
     this.eventBusInit();
     this.getSavedFilters();
     this.getSurveys();
@@ -146,15 +149,6 @@ export class SearchFormComponent implements OnInit {
       },
     });
 
-    this.session.currentUserData$.pipe(untilDestroyed(this)).subscribe((userData) => {
-      this.isLoggedIn = !!userData.userId;
-      this.getSavedFilters();
-      this.getPostsStatistic();
-      if (this.isLoggedIn && this.collectionInfo) {
-        this.getNotification(String(this.collectionInfo.id));
-      }
-    });
-
     this.session.isFiltersVisible$
       .pipe(untilDestroyed(this))
       .subscribe((isVisible) => (this.isFiltersVisible = isVisible));
@@ -175,6 +169,14 @@ export class SearchFormComponent implements OnInit {
 
     this.getPostsFilters();
     this.getTotalPosts();
+  }
+
+  loadData(): void {
+    this.getSavedFilters();
+    this.getPostsStatistic();
+    if (this.isLoggedIn && this.collectionInfo) {
+      this.getNotification(String(this.collectionInfo.id));
+    }
   }
 
   private initFilters() {
