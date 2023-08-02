@@ -144,19 +144,23 @@
 
 .category {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
+  word-break: break-word;
 
   &:not(:last-child) {
     margin-bottom: 8px;
   }
 
   &__icon {
+    min-width: 1em;
+    min-height: 1em;
     width: 1em;
     height: 1em;
     line-height: 1;
     font-size: 16px;
     margin-inline-end: 8px;
+    margin-top: 2px;
   }
 }
 

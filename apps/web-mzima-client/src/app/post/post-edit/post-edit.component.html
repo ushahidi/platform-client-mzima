@@ -1,7 +1,35 @@
 <div class="post-item-page">
   <div class="page-content">
-    <h1 class="survey-name">{{ surveyName }}</h1>
-
+    <div class="translate-container">
+      <h1 class="survey-name">{{ surveyName }}</h1>
+      <div class="form-row" *ngIf="postLanguages.length">
+        <mzima-client-button
+          fill="clear"
+          color="secondary"
+          [iconOnly]="true"
+          class="tooltip-btn"
+          tabindex="-1"
+          matTooltipPosition="above"
+          matTooltip="View and add to this survey in another language"
+        >
+          <mat-icon icon svgIcon="tooltip"></mat-icon>
+        </mzima-client-button>
+        <mat-form-field appearance="outline" class="feed-page__control">
+          <mat-select
+            name="language"
+            disableOptionCentering
+            [(ngModel)]="selectedLanguage"
+            [placeholder]="'select_language' | translate"
+            (selectionChange)="selectLanguageEmit($event)"
+            [data-qa]="'select_language'"
+          >
+            <mat-option *ngFor="let language of postLanguages" [value]="language">
+              {{ language?.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
     <form
       novalidate
       [formGroup]="form"
@@ -36,14 +64,18 @@
             </div>
           </ng-container>
 
-          <div class="form-row" *ngFor="let field of task.fields; let i = index">
+          <div
+            class="form-row"
+            *ngFor="let field of task.fields | sortByField : 'priority' : 'asc'; let i = index"
+          >
             <mat-label>
-              {{ field?.label }} <span class="color-accent" *ngIf="field?.required">*</span>
+              {{ field?.translations[activeLanguage]?.label || field?.label }}
+              <span class="color-accent" *ngIf="field?.required">*</span>
             </mat-label>
             <span
               class="form-row__instruction"
               *ngIf="field?.instructions"
-              [innerHTML]="field?.instructions"
+              [innerHTML]="field?.translations[activeLanguage]?.instructions || field?.instructions"
             >
             </span>
 
@@ -153,7 +185,11 @@
                   [for]="$any(picker)"
                   [data-qa]="field.label.replaceAll(' ', '-') + '-toggle' | lowercase"
                 ></mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #picker (closed)="input.blur()"></ngx-mat-datetime-picker>
+                <ngx-mat-datetime-picker
+                  #picker
+                  [showSeconds]="true"
+                  (closed)="input.blur()"
+                ></ngx-mat-datetime-picker>
               </mat-form-field>
             </ng-container>
 
@@ -374,7 +410,9 @@
         <mzima-client-button
           type="submit"
           [data-qa]="'btn-post-item-submit'"
-          [disabled]="form.disabled || form.invalid || emptyLocation || submitted"
+          [disabled]="
+            form.disabled || form.invalid || emptyLocation || submitted || taskForm.invalid
+          "
         >
           {{ 'app.submit' | translate }}
         </mzima-client-button>

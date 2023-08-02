@@ -22,6 +22,22 @@
   }
 }
 
+.translate-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .form-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 200px;
+    margin-bottom: 0;
+    .tooltip-btn {
+      margin-right: 5px;
+    }
+  }
+}
+
 .page-content {
   padding: 24px;
   margin: 0 auto;
@@ -75,12 +91,6 @@
 
 .form-controls-panel .mat-button-base {
   padding: 0 25px;
-}
-
-.task-container {
-  //border: 1px solid var(--color-neutral-30);
-  //padding: 20px;
-  //margin-bottom: 20px;
 }
 
 .relation {
@@ -158,7 +168,11 @@
 
   &::ng-deep {
     .mat-checkbox-layout {
-      width: 100%;
+      align-items: flex-start !important;
+
+      .mat-checkbox-label {
+        margin-top: 1px;
+      }
     }
   }
 

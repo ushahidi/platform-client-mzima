@@ -21,6 +21,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
 import { preparingVideoUrl } from '../../core/helpers/validators';
+import { dateHelper } from '@helpers';
 
 @Component({
   selector: 'app-post-details',
@@ -177,5 +178,9 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
       content: sessionStorage.getItem('ogTitle')!,
     });
     this.metaService.removeTag("property='og:description'");
+  }
+
+  public getDate(value: any, format: string): string {
+    return dateHelper.getDateWithTz(value, format);
   }
 }

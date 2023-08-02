@@ -54,8 +54,8 @@ export class ProfilePage {
     const actions: Record<profileMenu.ProfileMenuActions, () => void> = {
       [profileMenu.ProfileMenuActions.LOGOUT]: () => this.logout(),
       [profileMenu.ProfileMenuActions.SUPPORT]: () => this.showSupportModal(),
-      [profileMenu.ProfileMenuActions.RESET_DATA]: () => this.resetAppData(),
-      [profileMenu.ProfileMenuActions.CLEAR_PENDING_POSTS]: () => this.clearPosts(),
+      // [profileMenu.ProfileMenuActions.RESET_DATA]: () => this.resetAppData(),
+      // [profileMenu.ProfileMenuActions.CLEAR_PENDING_POSTS]: () => this.clearPosts(),
     };
     actions[action]();
   }
@@ -147,13 +147,5 @@ export class ProfilePage {
 
   public resetSearchForm(): void {
     this.supportSearchQuery = '';
-  }
-
-  public filterSupportItems(q: string): void {
-    this.filteredSupportItems = this.supportItems.filter(
-      (i) =>
-        i.title.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
-        i.description.toLowerCase().indexOf(q.toLowerCase()) > -1,
-    );
   }
 }

@@ -49,7 +49,7 @@ export interface FormAttributeInterface {
   priority: number;
   required: boolean;
   response_private: boolean;
-  translations: any[];
+  translations: any;
   type: string;
 }
 

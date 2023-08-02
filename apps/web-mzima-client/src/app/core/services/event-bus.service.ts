@@ -12,6 +12,7 @@ export const enum EventType {
   DeleteSavedSearch = 'DELETE_SAVED_SEARCH',
   UpdateSavedSearch = 'UPDATE_SAVED_SEARCH',
   EditPost = 'EDIT_POST',
+  UpdatedPost = 'UPDATED_POST',
   IsSettingsInnerPage = 'IS_SETTINGS_INNER_PAGE',
   ShowOnboarding = 'SHOW_ONBOARDING',
   FinishOnboarding = 'FINISH_ONBOARDING',

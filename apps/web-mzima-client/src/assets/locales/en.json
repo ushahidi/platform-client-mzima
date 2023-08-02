@@ -37,6 +37,10 @@
       "intercom": "Intercom",
       "description": "Contact Ushahidi staff for chat support"
     },
+    "onboarding": {
+      "title": "Onboarding",
+      "description": "Take a look at the Ushahidi onboarding again."
+    },
     "report_a_bug": {
       "title": "Report a bug",
       "description": "Tell us when something doesn't work the way you expected."
@@ -95,6 +99,7 @@
     "show_hide": "Show/Hide",
     "fields": "Fields",
     "no_results": "No results found.",
+    "current_results": "Current results:",
     "filter_by": "Filter by...",
     "sort_filter": "Sort & filter",
     "apply_filters": "Apply",
@@ -273,6 +278,7 @@
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Delete task",
     "duplicate_survey": "Duplicate",
+    "main_info": "Main info",
     "internal_use_task": "Task is only for internal use",
     "internal_use_task_desc": "This task will only be visible to User who have Manage Post permission.",
     "duplicate_task": "Duplicate task",
@@ -529,6 +535,8 @@
       "current_stage": "Current Task",
       "set": "Collection",
       "status": "Status",
+      "expires": "Expires",
+      "download": "Download",
       "location_value": "Within {{km}} km of {{value}}",
       "visible_to": "Visible to",
       "user": "User",
