@@ -115,7 +115,11 @@ export class AuthService extends ResourceService<any> {
     this.gtm.clearUserLayer();
     this.sessionService.clearSessionData();
     this.sessionService.clearUserData();
-    this.router.navigate(['/map']);
+    if (this.sessionService.accessToSite) {
+      this.router.navigate(['/map']);
+    } else {
+      this.router.navigate(['/forbidden']);
+    }
   }
 
   public getControlError(form: FormGroup, field: string, errorCodes: string[]) {

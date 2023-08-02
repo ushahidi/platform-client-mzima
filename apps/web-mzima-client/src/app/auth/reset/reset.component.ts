@@ -19,7 +19,7 @@ export class ResetComponent {
   public openLoginModal(): void {
     this.eventBusService.next({
       type: EventType.OpenLoginModal,
-      payload: true,
+      payload: {},
     });
     this.router.navigate(['map']);
   }

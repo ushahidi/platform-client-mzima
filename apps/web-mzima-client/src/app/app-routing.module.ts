@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, TitleStrategy } from '@angular/router';
-import { HostGuard, ResetTokenGuard } from '@guards';
+import { HostGuard, AccessDeniedGuard, ResetTokenGuard, AccessAllowGuard } from '@guards';
 import { PageNotFoundComponent } from './shared/components';
 import { UshahidiPageTitleStrategy } from '@services';
+import { AccessDeniedComponent } from './shared/components/access-denied/access-denied.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
   {
     path: 'map',
     loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
+    canActivate: [AccessDeniedGuard],
     data: {
       breadcrumb: 'nav.map',
       ogTitle: 'nav.map',
@@ -21,6 +23,7 @@ const routes: Routes = [
   {
     path: 'data',
     loadChildren: () => import('./data/data.module').then((m) => m.DataModule),
+    canActivate: [AccessDeniedGuard],
     data: {
       breadcrumb: 'nav.data',
       ogTitle: 'nav.data',
@@ -29,6 +32,7 @@ const routes: Routes = [
   {
     path: 'feed',
     loadChildren: () => import('./feed/feed.module').then((m) => m.FeedModule),
+    canActivate: [AccessDeniedGuard],
     data: {
       breadcrumb: 'nav.feed',
       ogTitle: 'nav.feed',
@@ -37,6 +41,7 @@ const routes: Routes = [
   {
     path: 'activity',
     loadChildren: () => import('./activity/activity.module').then((m) => m.ActivityModule),
+    canActivate: [AccessDeniedGuard],
     data: {
       breadcrumb: 'nav.activity',
       ogTitle: 'nav.activity',
@@ -45,7 +50,7 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
-    canActivate: [HostGuard],
+    canActivate: [HostGuard, AccessDeniedGuard],
     data: {
       breadcrumb: 'nav.settings',
       ogTitle: 'nav.settings',
@@ -54,6 +59,7 @@ const routes: Routes = [
   {
     path: 'post',
     loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
+    canActivate: [AccessDeniedGuard],
     data: {
       breadcrumb: 'nav.posts',
       ogTitle: 'nav.posts',
@@ -72,6 +78,15 @@ const routes: Routes = [
     path: 'forgotpassword/confirm/:token',
     canActivate: [ResetTokenGuard],
     component: PageNotFoundComponent,
+  },
+  {
+    path: 'forbidden',
+    component: AccessDeniedComponent,
+    canActivate: [AccessAllowGuard],
+    data: {
+      breadcrumb: 'nav.forbidden',
+      ogTitle: 'nav.forbidden',
+    },
   },
   {
     path: 'views',

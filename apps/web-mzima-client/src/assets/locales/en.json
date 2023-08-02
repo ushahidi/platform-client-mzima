@@ -51,6 +51,7 @@
       "description": "See what Ushahidi can do and how it works."
     },
     "forbidden": "Sorry, you're not allowed to do that.",
+    "forbidden-login": "Please enter your login details to access the deployment",
     "404": "That URL doesn't exist",
     "page-not-found": "Page not found",
     "get_notifications": "Get notifications",
