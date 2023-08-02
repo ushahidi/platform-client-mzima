@@ -540,8 +540,8 @@
     height: 24px;
     padding: 7px 21px;
     border-radius: 4px;
+    background: transparent;
     max-width: calc(100% - 45px);
-    background: var(--color-light);
     color: var(--color-neutral-100);
 
     @include breakpoint-max($tablet) {
@@ -584,7 +584,7 @@
     height: 38px;
     border-radius: 4px;
     width: calc(100% - 2px);
-    background: var(--color-light);
+    background: transparent;
 
     @include breakpoint-max($tablet) {
       height: 46px;
@@ -652,6 +652,13 @@
     .mat-datepicker-toggle-default-icon {
       width: 1em !important;
       height: 1em !important;
+    }
+
+    mat-datepicker-toggle {
+      .mat-icon-button {
+        background: transparent;
+        border-color: transparent;
+      }
     }
   }
 
