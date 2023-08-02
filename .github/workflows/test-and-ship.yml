@@ -24,8 +24,8 @@ jobs:
           - '16'
           - '18'
         include:
-        - node_version: "16"    # update along with DEFAULT_NODE_VERSION
-          run_lint_tests: "True"
+          - node_version: '16' # update along with DEFAULT_NODE_VERSION
+            run_lint_tests: 'True'
 
     steps:
       - uses: actions/checkout@v3
@@ -118,7 +118,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-  
+
       ## set up API endpoint
       - name: Setup API endpoint
         run: |
@@ -203,10 +203,10 @@ jobs:
           retry 60 timeout 1 curl --silent ${server}/index.html || { echo "Failed getting index.html!" && exit 1; }
 
       - name: Cypress run
-        run: |
-          cd e2e-testing
-          npm install
-          npm run start -- --record --browser chrome
+        uses: cypress-io/github-action@v5
+        with:
+          record: true
+          working-directory: e2e-testing
 
         env:
           CYPRESS_ush_admin_email: '${{secrets.e2e_ush_admin_email}}'
