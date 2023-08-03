@@ -234,12 +234,25 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
             });
         }
 
-        this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks));
+        this.taskForm = this.formBuilder.group(postHelpers.createTaskFormControls(this.tasks));
 
         this.form = new FormGroup(fields);
         this.initialFormData = this.form.value;
 
         if (updateContent) {
+          this.tasks = postHelpers.markCompletedTasks(this.tasks, this.post);
+
+          this.tasks.forEach((task, index) => {
+            if (task.completed) {
+              this.taskForm.patchValue({
+                [task.id]: task.completed,
+              });
+              if (index !== 0) {
+                this.completeStages.push(task.id);
+              }
+            }
+          });
+
           this.updateForm(updateContent);
         }
       },

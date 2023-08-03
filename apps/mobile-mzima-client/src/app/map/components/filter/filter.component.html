@@ -13,7 +13,7 @@
           Add new filters setting
         </ion-item>
         <ion-radio-group
-          *ngIf="options?.length && !errorMessage; else emptyBox"
+          *ngIf="options?.length; else emptyBox"
           [value]="value"
           (ionChange)="radioChangeHandle($event)"
         >
@@ -35,7 +35,7 @@
         </ion-radio-group>
       </ng-container>
       <ng-container *ngSwitchCase="filterType.MULTISELECT">
-        <ng-container *ngIf="options?.length && !errorMessage; else emptyBox">
+        <ng-container *ngIf="options?.length; else emptyBox">
           <app-checkbox
             type="item"
             *ngFor="let option of options"
@@ -47,38 +47,44 @@
         </ng-container>
       </ng-container>
       <ng-container *ngSwitchCase="filterType.MULTILEVELSELECT">
-        <ng-container *ngFor="let option of options">
-          <app-checkbox
-            type="item"
-            [(ngModel)]="option.checked"
-            *ngIf="!option.options?.length"
-            (checkboxChange)="optionChanged($event, option)"
-          >
-            {{ option.label }}
-          </app-checkbox>
-          <ion-item
-            button
-            class="multiselect-option"
-            lines="none"
-            *ngIf="option.options?.length"
-            (click)="showSubcategories(option)"
-          >
-            <ion-avatar
-              slot="start"
-              class="multiselect-option__visual"
-              [ngStyle]="{ '--item-color': option.color }"
+        <ng-container *ngIf="options?.length; else emptyBox">
+          <ng-container *ngFor="let option of options">
+            <app-checkbox
+              type="item"
+              [(ngModel)]="option.checked"
+              *ngIf="!option.options?.length"
+              (checkboxChange)="optionChanged($event, option)"
             >
-              {{ getFirstLetter(option.label) }}
-            </ion-avatar>
-            <div>
               {{ option.label }}
-              <span class="multiselect-option__info">
-                Selected {{ getCheckedSubcategoriesLength(option.options) }} of
-                {{ option.options?.length }}
-              </span>
-            </div>
-            <app-icon class="multiselect-option__details" slot="end" name="arrow-right"></app-icon>
-          </ion-item>
+            </app-checkbox>
+            <ion-item
+              button
+              class="multiselect-option"
+              lines="none"
+              *ngIf="option.options?.length"
+              (click)="showSubcategories(option)"
+            >
+              <ion-avatar
+                slot="start"
+                class="multiselect-option__visual"
+                [ngStyle]="{ '--item-color': option.color }"
+              >
+                {{ getFirstLetter(option.label) }}
+              </ion-avatar>
+              <div>
+                {{ option.label }}
+                <span class="multiselect-option__info">
+                  Selected {{ getCheckedSubcategoriesLength(option.options) }} of
+                  {{ option.options?.length }}
+                </span>
+              </div>
+              <app-icon
+                class="multiselect-option__details"
+                slot="end"
+                name="arrow-right"
+              ></app-icon>
+            </ion-item>
+          </ng-container>
         </ng-container>
       </ng-container>
       <ng-container *ngSwitchCase="filterType.DATE">
@@ -123,11 +129,11 @@
 
 <ng-template #emptyBox>
   <ion-text
+    color="medium"
     class="empty ion-padding"
-    [color]="errorMessage?.length ? 'danger' : 'medium'"
     [ngClass]="{ 'empty--with-button': filter.name === 'saved-filters' }"
   >
-    {{ errorMessage ?? filter.noOptionsText }}
+    {{ filter.noOptionsText }}
   </ion-text>
 </ng-template>
 

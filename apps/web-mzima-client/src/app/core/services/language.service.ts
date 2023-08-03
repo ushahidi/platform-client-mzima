@@ -22,7 +22,11 @@ export class LanguageService {
 
   constructor(private translate: TranslateService, private session: SessionService) {
     this.translate.setDefaultLang('en');
-    if (this.initialLanguage === 'null' || this.initialLanguage === null) {
+    if (
+      this.initialLanguage === 'null' ||
+      this.initialLanguage === null ||
+      !this.languages.value.find((language) => language.code === this.initialLanguage)
+    ) {
       this.initialLanguage = this.session.getSiteConfigurations().language || 'en';
       this.setLanguage(this.initialLanguage!);
     } else {
