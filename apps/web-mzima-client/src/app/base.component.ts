@@ -37,4 +37,8 @@ export abstract class BaseComponent {
       },
     });
   }
+
+  public checkAllowedAccessToSite() {
+    return this.sessionService.accessToSite;
+  }
 }
