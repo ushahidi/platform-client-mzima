@@ -1,26 +1,39 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { EventBusService, EventType } from '@services';
+import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
+import { BaseComponent } from '../../base.component';
 
 @Component({
   selector: 'app-reset',
   templateUrl: './reset.component.html',
   styleUrls: ['./reset.component.scss'],
 })
-export class ResetComponent {
+export class ResetComponent extends BaseComponent {
   public isPasswordRestored: boolean;
 
-  constructor(private eventBusService: EventBusService, private router: Router) {}
+  constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
+    private eventBusService: EventBusService,
+    private router: Router,
+  ) {
+    super(sessionService, breakpointService);
+  }
+
+  loadData() {}
 
   public passwordRestored(): void {
     this.isPasswordRestored = true;
   }
 
   public openLoginModal(): void {
-    this.eventBusService.next({
-      type: EventType.OpenLoginModal,
-      payload: {},
-    });
+    if (this.checkAllowedAccessToSite()) {
+      this.eventBusService.next({
+        type: EventType.OpenLoginModal,
+        payload: {},
+      });
+    }
+
     this.router.navigate(['map']);
   }
 }

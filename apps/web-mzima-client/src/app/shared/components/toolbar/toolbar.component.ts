@@ -199,8 +199,4 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
       panelClass: ['modal', 'support-modal'],
     });
   }
-
-  public getAccessToSite() {
-    return this.sessionService.accessToSite;
-  }
 }

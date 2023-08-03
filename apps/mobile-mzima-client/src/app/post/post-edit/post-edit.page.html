@@ -30,6 +30,7 @@
             <ion-toggle
               name="accept-survey"
               labelPlacement="start"
+              [checked]="task.completed"
               (ionChange)="taskComplete(task, $event)"
             >
               Task completed

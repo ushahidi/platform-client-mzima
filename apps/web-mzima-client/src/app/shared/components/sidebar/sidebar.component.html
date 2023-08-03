@@ -10,9 +10,9 @@
     </span>
 
     <div class="sidebar__info">
-      <app-company-info *ngIf="isDesktop && getAccessToSite()"></app-company-info>
+      <app-company-info *ngIf="isDesktop && checkAllowedAccessToSite()"></app-company-info>
       <app-submit-post-button
-        *ngIf="getAccessToSite()"
+        *ngIf="checkAllowedAccessToSite()"
         class="sidebar__add-post-btn"
       ></app-submit-post-button>
     </div>
