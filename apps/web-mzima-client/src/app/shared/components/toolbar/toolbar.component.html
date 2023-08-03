@@ -88,7 +88,7 @@
   </div>
 
   <div class="menu__body">
-    <app-company-info></app-company-info>
+    <app-company-info *ngIf="getAccessToSite()"></app-company-info>
 
     <div class="mobile-menu">
       <ng-container *ngFor="let item of menu">
