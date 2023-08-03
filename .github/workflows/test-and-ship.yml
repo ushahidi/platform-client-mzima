@@ -69,7 +69,6 @@ jobs:
     #     npm run test;
 
   e2e-test:
-    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     continue-on-error: true
@@ -219,7 +218,6 @@ jobs:
 
   ship:
     needs: [test, e2e-test]
-    if: github.event_name == 'push' # not on PRs
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
