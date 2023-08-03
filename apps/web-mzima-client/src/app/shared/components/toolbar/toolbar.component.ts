@@ -201,6 +201,6 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
   }
 
   public getAccessToSite() {
-    return this.session.accessToSite;
+    return this.sessionService.accessToSite;
   }
 }
