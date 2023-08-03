@@ -240,7 +240,10 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         this.initialFormData = this.form.value;
 
         if (updateContent) {
+          console.log('🚀 update 🚀');
+
           this.tasks = postHelpers.markCompletedTasks(this.tasks, this.post);
+          console.log('💡 tasks:', this.tasks);
 
           this.tasks.forEach((task, index) => {
             if (task.completed) {
@@ -252,8 +255,11 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
               }
             }
           });
+          console.log('💡 completeStages:', this.completeStages);
 
           this.updateForm(updateContent);
+
+          console.log('✅ update ✅');
         }
       },
     });
