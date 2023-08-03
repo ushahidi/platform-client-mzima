@@ -5,8 +5,23 @@ export function MustBeTrueValidator(control: AbstractControl) {
 }
 
 export const checkTaskControls = (tasks: any[]) => {
-  return tasks.reduce((controls, task) => {
-    controls[task.id] = new FormControl(!task.required, task.required ? MustBeTrueValidator : null);
+  return tasks.reduce((controls, task, index) => {
+    controls[task.id] = new FormControl(index === 0, task.required ? MustBeTrueValidator : null);
     return controls;
   }, {});
+};
+
+export const markCompletedTasks = (tasks: any[], post: any) => {
+  post.completed_stages = post.completed_stages || [];
+
+  return tasks.map((task, index) => {
+    const matchedStage = post.completed_stages.find(
+      (stage: any) => stage.form_stage_id === task.id,
+    );
+
+    if (matchedStage || index === 0) {
+      return { ...task, completed: matchedStage ? matchedStage.completed === 1 : true };
+    }
+    return task;
+  });
 };
