@@ -207,4 +207,8 @@ export class AppComponent implements OnInit {
       this.metaService.removeTag(`property='${tag}'`);
     }
   }
+
+  public getAccessToSite() {
+    return this.sessionService.accessToSite;
+  }
 }
