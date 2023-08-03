@@ -56,7 +56,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     orderby: 'created',
   };
   public updateMasonryLayout: boolean;
-  public isDesktop = false;
   private isRTL?: boolean;
   public masonryOptions: NgxMasonryOptions = {
     originLeft: false,
@@ -80,30 +79,35 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     protected override savedSearchesService: SavedsearchesService,
     protected override eventBusService: EventBusService,
     protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private confirmModalService: ConfirmModalService,
     private dialog: MatDialog,
     private translate: TranslateService,
-    private breakpointService: BreakpointService,
     private languageService: LanguageService,
   ) {
-    super(router, route, postsService, savedSearchesService, eventBusService, sessionService);
+    super(
+      router,
+      route,
+      postsService,
+      savedSearchesService,
+      eventBusService,
+      sessionService,
+      breakpointService,
+    );
+    this.checkDesktop();
     this.initGetPostsListener();
-    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-        if (!this.isDesktop) {
-          this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: {
-              mode: FeedMode.Tiles,
-            },
-            queryParamsHandling: 'merge',
-          });
-        } else {
-          this.postDetailsModal?.close();
-        }
-      },
-    });
+
+    if (!this.isDesktop) {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: {
+          mode: FeedMode.Tiles,
+        },
+        queryParamsHandling: 'merge',
+      });
+    } else {
+      this.postDetailsModal?.close();
+    }
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       this.activePostId = this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1];

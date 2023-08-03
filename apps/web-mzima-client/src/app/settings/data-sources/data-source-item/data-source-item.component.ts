@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { arrayHelpers } from '@helpers';
 import { combineLatest } from 'rxjs';
@@ -18,18 +17,18 @@ import {
   SurveysService,
   DataSourceResult,
 } from '@mzima-client/sdk';
+import { BaseComponent } from '../../../base.component';
 import { ConfigService } from '../../../core/services/config.service';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
-import { BreakpointService } from '@services';
+import { BreakpointService, SessionService } from '@services';
 
-@UntilDestroy()
 @Component({
   selector: 'app-data-source-item',
   templateUrl: './data-source-item.component.html',
   styleUrls: ['./data-source-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataSourceItemComponent implements AfterContentChecked, OnInit {
+export class DataSourceItemComponent extends BaseComponent implements AfterContentChecked, OnInit {
   public provider: any;
   public surveyList: any[];
   public form: FormGroup;
@@ -39,12 +38,13 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
   public currentProviderId: string | null;
   private availableProviders: any[];
   public onCreating: boolean;
-  public isDesktop = false;
   public submitted = false;
   providersData: any;
   cloneProviders: any;
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private fb: FormBuilder,
     private ref: ChangeDetectorRef,
     private route: ActivatedRoute,
@@ -55,14 +55,11 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     private surveysService: SurveysService,
     private formsService: FormsService,
     private translate: TranslateService,
-    private breakpointService: BreakpointService,
     private location: Location,
   ) {
-    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
+    super(sessionService, breakpointService);
+    this.checkDesktop();
+
     this.form = this.fb.group({});
   }
 
@@ -73,6 +70,8 @@ export class DataSourceItemComponent implements AfterContentChecked, OnInit {
     }
     this.getProviders();
   }
+
+  loadData(): void {}
 
   private getAvailableProviders(providers: any) {
     const tempProviders: any[] = [];

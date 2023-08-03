@@ -30,7 +30,7 @@
       </mzima-client-button>
     </strong>
     <mzima-client-button
-      *ngIf="isLoggedIn && !post && (isDesktop$ | async)"
+      *ngIf="isLoggedIn && !post && isDesktop"
       (buttonClick)="addNewCollection()"
       tabindex="-1"
     >
@@ -42,7 +42,7 @@
   <form
     class="search-form"
     [formGroup]="searchForm"
-    (ngSubmit)="getCollections(searchForm.get('query')?.value)"
+    (ngSubmit)="loadData(searchForm.get('query')?.value)"
   >
     <div class="form-row">
       <mat-form-field appearance="outline">
@@ -64,7 +64,7 @@
       </mat-form-field>
     </div>
     <mzima-client-button
-      *ngIf="isLoggedIn && !post && !(isDesktop$ | async)!"
+      *ngIf="isLoggedIn && !post && !isDesktop"
       (buttonClick)="addNewCollection()"
       tabindex="-1"
     >
