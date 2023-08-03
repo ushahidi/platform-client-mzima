@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { omit, clone, invert, keys, includes } from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, Observable } from 'rxjs';
@@ -11,11 +10,12 @@ import {
   FormCSVInterface,
   FormInterface,
 } from '@mzima-client/sdk';
+import { BaseComponent } from '../../base.component';
 import { NotificationService } from '../../core/services/notification.service';
 import { PollingService } from '../../core/services/polling.service';
 import { LoaderService } from '../../core/services/loader.service';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-import { BreakpointService } from '@services';
+import { BreakpointService, SessionService } from '@services';
 
 enum PostStatus {
   Published = 'published',
@@ -23,13 +23,12 @@ enum PostStatus {
   Archived = 'archived',
 }
 
-@UntilDestroy()
 @Component({
   selector: 'app-data-import',
   templateUrl: './data-import.component.html',
   styleUrls: ['./data-import.component.scss'],
 })
-export class DataImportComponent implements OnInit {
+export class DataImportComponent extends BaseComponent implements OnInit {
   PostStatus = PostStatus;
   selectedFile: File;
   selectedForm: FormInterface;
@@ -43,9 +42,10 @@ export class DataImportComponent implements OnInit {
   statusOption: string;
   selectedStatus: PostStatus;
   displayedColumns: string[] = ['survey', 'csv'];
-  public isDesktop = false;
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private importService: DataImportService,
     private translateService: TranslateService,
     private notification: NotificationService,
@@ -55,18 +55,16 @@ export class DataImportComponent implements OnInit {
     private route: ActivatedRoute,
     private confirm: ConfirmModalService,
     private formsService: FormsService,
-    private breakpointService: BreakpointService,
   ) {
-    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
+    super(sessionService, breakpointService);
+    this.checkDesktop();
   }
 
   ngOnInit() {
     this.forms$ = this.formsService.getFresh();
   }
+
+  loadData(): void {}
 
   uploadFile($event: any) {
     const reader = new FileReader();

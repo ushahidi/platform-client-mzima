@@ -1,9 +1,10 @@
-<app-onboarding *ngIf="!isOnboardingDone && (isDesktop$ | async)"></app-onboarding>
+<app-onboarding *ngIf="!isOnboardingDone && isDesktop && getAccessToSite()"></app-onboarding>
 
 <mat-sidenav-container
   [dir]="isRTL ? 'rtl' : 'ltr'"
   class="main"
-  [ngClass]="{ 'main--inner': !(isDesktop$ | async)! && isInnerPage }">
+  [ngClass]="{ 'main--inner': !isDesktop && isInnerPage }"
+>
   <mat-sidenav opened mode="side" disableClose class="sidebar">
     <app-sidebar></app-sidebar>
   </mat-sidenav>

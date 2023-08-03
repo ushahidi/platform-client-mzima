@@ -1,45 +1,34 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Roles } from '@enums';
-import { takeUntilDestroy$ } from '@helpers';
-import { UserInterface } from '@mzima-client/sdk';
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { BreakpointService, EventBusService, EventType } from '@services';
 import { filter } from 'rxjs';
+import { BaseComponent } from '../base.component';
 import { SessionService } from '../core/services/session.service';
 
-@UntilDestroy()
 @Component({
   selector: 'app-settings-layout',
   templateUrl: './settings-layout.component.html',
   styleUrls: ['./settings-layout.component.scss'],
 })
-export class SettingsLayoutComponent {
-  public isDesktop = false;
+export class SettingsLayoutComponent extends BaseComponent {
   public isInnerPage = false;
-  public userData: UserInterface;
 
   constructor(
-    private breakpointService: BreakpointService,
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private router: Router,
     private eventBusService: EventBusService,
-    private sessionService: SessionService,
   ) {
-    this.sessionService.currentUserData$.pipe(takeUntilDestroy$()).subscribe({
-      next: (userData) => (this.userData = userData),
-    });
+    super(sessionService, breakpointService);
+    this.getUserData();
+    this.checkDesktop();
 
-    this.breakpointService.isDesktop$.pipe(takeUntilDestroy$()).subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
+    this.checkIsInnerPage();
 
-        this.checkIsInnerPage();
-
-        if (this.isDesktop && !this.isInnerPage) {
-          this.navigateToInnerPage();
-        }
-      },
-    });
+    if (this.isDesktop && !this.isInnerPage) {
+      this.navigateToInnerPage();
+    }
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe({
       next: () => {
@@ -48,8 +37,10 @@ export class SettingsLayoutComponent {
     });
   }
 
+  loadData(): void {}
+
   private navigateToInnerPage(): void {
-    switch (this.userData.role) {
+    switch (this.user.role) {
       case Roles.Admin:
       case Roles.ManageSettings:
         this.router.navigate(['settings/general']);
