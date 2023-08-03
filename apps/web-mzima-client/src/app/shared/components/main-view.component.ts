@@ -7,7 +7,7 @@ import {
   GeoJsonFilter,
 } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { EventBusService, EventType, SessionService } from '@services';
+import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 
 @UntilDestroy()
 @Component({
@@ -23,6 +23,7 @@ export abstract class MainViewComponent {
   };
   filters;
   public user: UserInterface;
+  public isDesktop: boolean = false;
 
   constructor(
     protected router: Router,
@@ -31,6 +32,7 @@ export abstract class MainViewComponent {
     protected savedSearchesService: SavedsearchesService,
     protected eventBusService: EventBusService,
     protected sessionService: SessionService,
+    protected breakpointService: BreakpointService,
   ) {
     this.filters = JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
@@ -108,6 +110,14 @@ export abstract class MainViewComponent {
       next: () => {
         // We can delete search only from edit so redirect anyway
         this.router.navigate(['/map']);
+      },
+    });
+  }
+
+  public checkDesktop() {
+    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
+      next: (isDesktop) => {
+        this.isDesktop = isDesktop;
       },
     });
   }

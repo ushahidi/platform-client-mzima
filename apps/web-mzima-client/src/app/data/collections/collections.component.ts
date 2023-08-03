@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { surveyHelper, formHelper } from '@helpers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
 import {
   CollectionsService,
@@ -13,9 +12,9 @@ import {
   RolesService,
   CollectionResult,
   PostResult,
-  UserInterface,
   AccountNotificationsInterface,
 } from '@mzima-client/sdk';
+import { BaseComponent } from '../../base.component';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { Permissions } from '@enums';
 
@@ -31,10 +30,8 @@ enum CollectionView {
   templateUrl: './collections.component.html',
   styleUrls: ['./collections.component.scss'],
 })
-export class CollectionsComponent implements OnInit {
+export class CollectionsComponent extends BaseComponent implements OnInit {
   CollectionView = CollectionView;
-  private userData$: Observable<UserInterface>;
-  public isDesktop$: Observable<boolean>;
   public collectionList: CollectionResult[];
   public isLoading: boolean;
   views = surveyHelper.views;
@@ -45,13 +42,14 @@ export class CollectionsComponent implements OnInit {
   collectionForm: FormGroup;
   roleOptions: any;
   tmpCollectionToEditId = 0;
-  isLoggedIn = true;
   private notification: AccountNotificationsInterface;
   private userRole: string;
   public isManageCollections: boolean;
   public formErrors: any[] = [];
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private matDialogRef: MatDialogRef<CollectionsComponent>,
     @Inject(MAT_DIALOG_DATA) public post: PostResult,
     private collectionsService: CollectionsService,
@@ -60,40 +58,34 @@ export class CollectionsComponent implements OnInit {
     private translate: TranslateService,
     private eventBus: EventBusService,
     private router: Router,
-    private session: SessionService,
     private rolesService: RolesService,
-    private breakpointService: BreakpointService,
     private notificationsService: NotificationsService,
   ) {
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
-    this.userData$ = this.session.currentUserData$.pipe(untilDestroyed(this));
+    super(sessionService, breakpointService);
+    this.checkDesktop();
+
     this.searchForm = this.formBuilder.group({
       query: ['', []],
     });
   }
 
   ngOnInit() {
+    this.getUserData();
     this.initializeForm();
     this.formSubscribe();
-    this.userData$.subscribe((userData) => {
-      this.isManageCollections =
-        userData.permissions?.includes(Permissions.ManageCollections) ?? false;
-      this.userRole = userData.role!;
-      this.isLoggedIn = !!userData.userId;
-      if (this.isLoggedIn) {
-        this.initRoles();
-      }
-    });
+    this.checkPermission();
 
     const permissions = localStorage.getItem('USH_permissions')!;
-    // console.log(permissions);
-    if (permissions) {
-      this.featuredEnabled = permissions.split(',').includes('Manage Posts');
-    } else {
-      this.featuredEnabled = false;
-    }
+    this.featuredEnabled = permissions ? permissions.split(',').includes('Manage Posts') : false;
+  }
 
-    this.getCollections();
+  checkPermission() {
+    this.isManageCollections =
+      this.user.permissions?.includes(Permissions.ManageCollections) ?? false;
+    this.userRole = this.user.role!;
+    if (this.isLoggedIn) {
+      this.initRoles();
+    }
   }
 
   private initializeForm() {
@@ -140,7 +132,7 @@ export class CollectionsComponent implements OnInit {
     });
   }
 
-  getCollections(query = '') {
+  loadData(query = '') {
     this.isLoading = true;
     let params: any = new Map();
     params = {
@@ -156,10 +148,7 @@ export class CollectionsComponent implements OnInit {
     this.collectionsService.getCollections(params).subscribe({
       next: (response) => {
         this.collectionList = response.results.map((item) => {
-          const currentUserId = Number(
-            localStorage.getItem(this.session.getLocalStorageNameMapper('userId')),
-          );
-          const isOwner = item.user_id === currentUserId;
+          const isOwner = item.user_id === Number(this.user.userId);
 
           return {
             ...item,
@@ -254,32 +243,30 @@ export class CollectionsComponent implements OnInit {
         : this.collectionForm.value.visible_to.options;
     collectionData.featured = collectionData.visible_to.value === 'only_me';
     delete collectionData.visible_to;
-    this.userData$.subscribe((userData) => {
-      collectionData.user_id = userData.userId;
-      if (this.currentView === CollectionView.Create) {
-        this.collectionsService.post(collectionData).subscribe({
-          next: () => {
-            this.matDialogRef.close();
-          },
-          error: ({ error }) => {
-            this.formErrors = error.errors.failed_validations;
-          },
-        });
-      } else {
-        this.collectionsService.update(this.tmpCollectionToEditId, collectionData).subscribe({
-          next: () => {
-            this.eventBus.next({
-              type: EventType.UpdateCollection,
-              payload: this.tmpCollectionToEditId,
-            });
-            this.matDialogRef.close();
-          },
-          error: ({ error }) => {
-            this.formErrors = error.errors.failed_validations;
-          },
-        });
-      }
-    });
+    collectionData.user_id = Number(this.user.userId);
+    if (this.currentView === CollectionView.Create) {
+      this.collectionsService.post(collectionData).subscribe({
+        next: () => {
+          this.matDialogRef.close();
+        },
+        error: ({ error }) => {
+          this.formErrors = error.errors.failed_validations;
+        },
+      });
+    } else {
+      this.collectionsService.update(this.tmpCollectionToEditId, collectionData).subscribe({
+        next: () => {
+          this.eventBus.next({
+            type: EventType.UpdateCollection,
+            payload: this.tmpCollectionToEditId,
+          });
+          this.matDialogRef.close();
+        },
+        error: ({ error }) => {
+          this.formErrors = error.errors.failed_validations;
+        },
+      });
+    }
 
     if (!this.notification && collectionData.is_notifications_enabled) {
       this.notificationsService.post({ set_id: String(this.tmpCollectionToEditId) }).subscribe();

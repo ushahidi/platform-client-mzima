@@ -1,31 +1,32 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService } from '@services';
-import { Observable } from 'rxjs';
+import { BreakpointService, SessionService } from '@services';
+import { BaseComponent } from '../../base.component';
 
-@UntilDestroy()
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
-  public isDesktop$: Observable<boolean>;
+export class LoginComponent extends BaseComponent {
   public isSignupActive: boolean;
   public isDisableClose: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private matDialogRef: MatDialogRef<LoginComponent>,
-    private breakpointService: BreakpointService,
   ) {
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+    super(sessionService, breakpointService);
+    this.checkDesktop();
     this.isSignupActive = this.data.isSignupActive;
     this.isDisableClose = this.data.isDisableClose;
   }
 
-  public cancel() {
+  loadData(): void {}
+
+  public cancel(): void {
     this.matDialogRef.close('cancel');
   }
 

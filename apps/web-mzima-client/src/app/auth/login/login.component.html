@@ -38,7 +38,7 @@
         color="secondary"
         (buttonClick)="cancel()"
         [data-qa]="'btn-cancel'"
-        *ngIf="isDesktop$ | async"
+        *ngIf="isDesktop"
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
@@ -52,7 +52,7 @@
         color="secondary"
         (buttonClick)="cancel()"
         [data-qa]="'btn-cancel'"
-        *ngIf="isDesktop$ | async"
+        *ngIf="isDesktop"
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>

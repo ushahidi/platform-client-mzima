@@ -33,10 +33,10 @@
   </mat-form-field>
 
   <mzima-client-button
-    [fill]="(isDesktop$ | async) ? 'clear' : 'outline'"
-    [color]="(isDesktop$ | async) ? 'gray' : 'secondary'"
+    [fill]="isDesktop ? 'clear' : 'outline'"
+    [color]="isDesktop ? 'gray' : 'secondary'"
     class="search-form__filters"
-    *ngIf="(isDesktop$ | async) || isMapView"
+    *ngIf="isDesktop || isMapView"
     (buttonClick)="toggleFilters(!isFiltersVisible)"
   >
     <span>{{ 'app.filters' | translate }}</span>
@@ -216,10 +216,10 @@
   <div
     data-filter-highlight
     class="search-form__filters-panel"
-    *ngIf="(isDesktop$ | async)! || isFiltersVisible"
+    *ngIf="isDesktop || isFiltersVisible"
     [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
   >
-    <div class="search-form__filters-panel__head" *ngIf="!(isDesktop$ | async)!">
+    <div class="search-form__filters-panel__head" *ngIf="!isDesktop">
       <h3>Filters and sorting</h3>
       <mzima-client-button
         tabindex="-1"
@@ -236,7 +236,7 @@
     </div>
 
     <div class="search-form__filters-panel__inner">
-      <ng-container *ngIf="!(isDesktop$ | async)!">
+      <ng-container *ngIf="!isDesktop">
         <app-filter-control
           class="search-form__filters-panel__item"
           formControlName="form"
@@ -397,7 +397,7 @@
           {{ 'global_filter.clear_all_filters' | translate }}
         </mzima-client-button>
         <mzima-client-button
-          *ngIf="!(isDesktop$ | async)!"
+          *ngIf="!isDesktop"
           (buttonClick)="applyAndClose()"
           [disabled]="form.disabled"
           class="search-form__button"

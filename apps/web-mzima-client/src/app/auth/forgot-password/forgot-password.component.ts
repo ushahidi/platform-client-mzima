@@ -1,21 +1,24 @@
 import { Component } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService } from '@services';
-import { Observable } from 'rxjs';
+import { BreakpointService, SessionService } from '@services';
+import { BaseComponent } from '../../base.component';
 
-@UntilDestroy()
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss'],
 })
-export class ForgotPasswordComponent {
-  public isDesktop$: Observable<boolean>;
+export class ForgotPasswordComponent extends BaseComponent {
   public isPasswordSent: boolean;
 
-  constructor(private breakpointService: BreakpointService) {
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
+  constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
+  ) {
+    super(sessionService, breakpointService);
+    this.checkDesktop();
   }
+
+  loadData(): void {}
 
   public submitted(state: boolean | string): void {
     this.isPasswordSent = state === 'sent';

@@ -4,9 +4,7 @@ import { Router } from '@angular/router';
 import { LoginComponent } from '@auth';
 import { CollectionsComponent } from '@data';
 import { EnumGtmEvent, EnumGtmSource, Roles, Permissions } from '@enums';
-import { takeUntilDestroy$ } from '@helpers';
 import { MenuInterface, SiteConfigInterface, UserMenuInterface } from '@models';
-import { UserInterface } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import {
   BreakpointService,
@@ -15,7 +13,7 @@ import {
   GtmTrackingService,
   SessionService,
 } from '@services';
-import { Observable } from 'rxjs';
+import { BaseComponent } from '../../../base.component';
 import { SupportModalComponent } from '../support-modal/support-modal.component';
 
 @Component({
@@ -23,35 +21,25 @@ import { SupportModalComponent } from '../support-modal/support-modal.component'
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent implements OnInit {
-  isLoggedIn = false;
+export class SidebarComponent extends BaseComponent implements OnInit {
   public isHost = false;
   public userMenu: UserMenuInterface[] = [];
-  private userData$: Observable<UserInterface>;
-  private isDesktop$: Observable<boolean>;
   public siteConfig: SiteConfigInterface;
   public canRegister = false;
-  public isDesktop = false;
   public isInnerPage = false;
   public menu: MenuInterface[] = [];
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private dialog: MatDialog,
-    private sessionService: SessionService,
     private gtmTracking: GtmTrackingService,
     private router: Router,
     private translate: TranslateService,
     private eventBusService: EventBusService,
-    private breakpointService: BreakpointService,
   ) {
-    this.userData$ = this.sessionService.currentUserData$.pipe(takeUntilDestroy$());
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(takeUntilDestroy$());
-    this.isDesktop$.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-        this.initNavigationMenu();
-      },
-    });
+    super(sessionService, breakpointService);
+    this.checkDesktop();
 
     this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
       next: (option) => {
@@ -65,23 +53,25 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userData$.subscribe((userData) => {
-      this.isLoggedIn = !!userData.userId;
-      this.siteConfig = this.sessionService.getSiteConfigurations();
-      const hostRoles = [
-        Permissions.ManageUsers,
-        Permissions.ManageSettings,
-        Permissions.ImportExport,
-      ];
-      this.isHost =
-        userData.role === Roles.Admin || hostRoles.some((r) => userData.permissions?.includes(r));
-      this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
-      this.initMenu();
-    });
+    this.getUserData();
+    this.initNavigationMenu();
 
     this.eventBusService.on(EventType.OpenLoginModal).subscribe({
       next: (config) => this.openLogin(config),
     });
+  }
+
+  loadData(): void {
+    this.siteConfig = this.sessionService.getSiteConfigurations();
+    const hostRoles = [
+      Permissions.ManageUsers,
+      Permissions.ManageSettings,
+      Permissions.ImportExport,
+    ];
+    this.isHost =
+      this.user.role === Roles.Admin || hostRoles.some((r) => this.user.permissions?.includes(r));
+    this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
+    this.initMenu();
   }
 
   private initNavigationMenu(): void {
