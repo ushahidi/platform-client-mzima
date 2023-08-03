@@ -234,7 +234,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
             });
         }
 
-        this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks));
+        this.taskForm = this.formBuilder.group(postHelpers.createTaskFormControls(this.tasks));
 
         this.form = new FormGroup(fields);
         this.initialFormData = this.form.value;
@@ -252,6 +252,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
               }
             }
           });
+
           this.updateForm(updateContent);
         }
       },

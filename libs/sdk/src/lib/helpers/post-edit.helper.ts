@@ -4,7 +4,7 @@ export function MustBeTrueValidator(control: AbstractControl) {
   return control.value ? null : { mustBeTrue: { value: control.value } };
 }
 
-export const checkTaskControls = (tasks: any[]) => {
+export const createTaskFormControls = (tasks: any[]) => {
   return tasks.reduce((controls, task, index) => {
     controls[task.id] = new FormControl(index === 0, task.required ? MustBeTrueValidator : null);
     return controls;
