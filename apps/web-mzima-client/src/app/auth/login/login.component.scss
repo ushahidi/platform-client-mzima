@@ -91,3 +91,13 @@
     }
   }
 }
+
+.access-denied__info {
+  margin-bottom: 30px;
+
+  &-title {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}

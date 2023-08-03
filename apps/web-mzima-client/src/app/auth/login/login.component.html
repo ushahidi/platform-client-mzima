@@ -1,4 +1,5 @@
 <mzima-client-button
+  *ngIf="!isDisableClose"
   tabindex="-1"
   fill="outline"
   [iconOnly]="true"
@@ -11,7 +12,17 @@
   <mat-icon icon svgIcon="close"></mat-icon>
 </mzima-client-button>
 
+<ng-container *ngIf="isDisableClose">
+  <div class="access-denied__info">
+    <h2 class="access-denied__info-title">{{ 'nav.forbidden' | translate }}!</h2>
+    <p>{{ 'app.forbidden-login' | translate }}</p>
+  </div>
+
+  <app-login-form (loggined)="successfully($event)"></app-login-form>
+</ng-container>
+
 <mat-tab-group
+  *ngIf="!isDisableClose"
   class="tabs"
   dynamicHeight
   disableRipple

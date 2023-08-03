@@ -18,3 +18,4 @@ export { DonationService } from './donation.service';
 export { UshahidiPageTitleStrategy } from './page-title.service';
 export { TwitterService } from './twitter.service';
 export { SearchService } from './search.service';
+export { CustomTranslateHttpLoader } from './translate-http-loader';

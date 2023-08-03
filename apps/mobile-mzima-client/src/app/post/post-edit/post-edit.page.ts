@@ -282,9 +282,7 @@ export class PostEditPage {
         });
     }
 
-    this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks), {
-      validators: postHelpers.requiredTasksValidator,
-    });
+    this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks));
 
     this.form = new FormGroup(fields);
     this.initialFormData = this.form.value;
