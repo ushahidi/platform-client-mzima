@@ -1,4 +1,4 @@
-<app-onboarding *ngIf="!isOnboardingDone && isDesktop"></app-onboarding>
+<app-onboarding *ngIf="!isOnboardingDone && isDesktop && getAccessToSite()"></app-onboarding>
 
 <mat-sidenav-container
   [dir]="isRTL ? 'rtl' : 'ltr'"
