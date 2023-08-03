@@ -129,11 +129,7 @@ export class SessionService {
   }
 
   get accessToSite(): boolean {
-    if (this.currentConfig.site.private) {
-      return !!this.currentAuthToken && this.currentConfig.site.private;
-    } else {
-      return true;
-    }
+    return !this.currentConfig.site.private || !!this.currentAuthToken;
   }
 
   get currentAuthTokenType() {

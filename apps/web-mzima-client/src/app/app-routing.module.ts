@@ -69,6 +69,7 @@ const routes: Routes = [
     path: 'reset',
     title: 'reset',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    canActivate: [AccessDeniedGuard],
     data: {
       breadcrumb: 'nav.resetpassword',
       ogTitle: 'nav.resetpassword',
@@ -104,6 +105,7 @@ const routes: Routes = [
   {
     path: '**',
     pathMatch: 'full',
+    canActivate: [AccessDeniedGuard],
     component: PageNotFoundComponent,
     data: {
       breadcrumb: 'app.page-not-found',
