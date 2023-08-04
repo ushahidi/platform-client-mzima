@@ -67,8 +67,8 @@ export class CalendarComponent implements ControlValueAccessor {
   }
 
   public formattedDate(val: DateRangeFormat): string {
-    return `${dayjs.utc(val.from).format('MMM D, YYYY')}
-            -
-            ${dayjs.utc(val.to).format('MMM D, YYYY')}`;
+    return val.from !== val.to
+      ? `${dayjs.utc(val.from).format('MMM D, YYYY')} - ${dayjs.utc(val.to).format('MMM D, YYYY')}`
+      : dayjs.utc(val.from).format('MMM D, YYYY');
   }
 }

@@ -24,6 +24,12 @@
       height: 40px !important;
       margin-bottom: 8px !important;
 
+      &.startSelection.endSelection {
+        &:before {
+          display: none !important;
+        }
+      }
+
       &:not(.startSelection):not(.between):not(.endSelection) {
         button.days-btn {
           &.today {
