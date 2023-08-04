@@ -9,6 +9,7 @@ import { dateHelper } from '@helpers';
 })
 export class PostContentComponent {
   @Input() postContent: PostContent[];
+  @Input() postStatus: string;
   @Input() categories: CategoryInterface[];
   @Input() isConnection: boolean;
   @Input() videoUrls: any[] = [];

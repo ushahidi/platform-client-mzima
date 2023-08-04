@@ -1,138 +1,146 @@
 <ng-container *ngFor="let post_content of postContent">
-  <ng-container *ngFor="let field of post_content.fields | sortByField : 'priority' : 'asc'">
-    <div class="post__group" *ngIf="field.value?.id">
-      <ng-container *ngIf="field.type !== 'title' && field.type !== 'description'">
-        <h4>{{ field.label }}</h4>
-      </ng-container>
+  <ng-container
+    *ngIf="
+      post_content?.completed &&
+      ((post_content?.show_when_published && postStatus === 'published') ||
+        !post_content?.show_when_published)
+    "
+  >
+    <ng-container *ngFor="let field of post_content.fields | sortByField : 'priority' : 'asc'">
+      <div class="post__group" *ngIf="field.value?.id">
+        <ng-container *ngIf="field.type !== 'title' && field.type !== 'description'">
+          <h4>{{ field.label }}</h4>
+        </ng-container>
 
-      <ng-container *ngIf="field.input === 'text' && field.label === 'Media Link'">
-        <a [href]="field.value.value" target="_blank">{{ field.value.value }}</a>
-      </ng-container>
+        <ng-container *ngIf="field.input === 'text' && field.label === 'Media Link'">
+          <a [href]="field.value.value" target="_blank">{{ field.value.value }}</a>
+        </ng-container>
 
-      <ng-container *ngIf="field.input === 'text' && field.type === 'varchar'">
-        <p>{{ field.value.value }}</p>
-      </ng-container>
+        <ng-container *ngIf="field.input === 'text' && field.type === 'varchar'">
+          <p>{{ field.value.value }}</p>
+        </ng-container>
 
-      <ng-container *ngIf="field.input === 'textarea'">
-        <p>{{ field.value.value }}</p>
-      </ng-container>
+        <ng-container *ngIf="field.input === 'textarea'">
+          <p>{{ field.value.value }}</p>
+        </ng-container>
 
-      <ng-container *ngIf="field.input === 'tags'">
-        <!--        {{ field | json }}-->
-        <ng-container *ngFor="let field of post_content.fields">
-          <ng-container>
-            <ul class="category__item">
-              <li
-                *ngFor="let value of field.value"
-                [ngClass]="{ 'category__margin-item': value.parent_id }"
-              >
-                {{ value.tag }}
-              </li>
-            </ul>
+        <ng-container *ngIf="field.input === 'tags'">
+          <!--        {{ field | json }}-->
+          <ng-container *ngFor="let field of post_content.fields">
+            <ng-container>
+              <ul class="category__item">
+                <li
+                  *ngFor="let value of field.value"
+                  [ngClass]="{ 'category__margin-item': value.parent_id }"
+                >
+                  {{ value.tag }}
+                </li>
+              </ul>
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngFor="let category of categories">
+            <div class="category" *ngIf="!isParentCategory(categories, category.id)">
+              <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
+              {{ category.tag }}
+            </div>
           </ng-container>
         </ng-container>
 
-        <ng-container *ngFor="let category of categories">
-          <div class="category" *ngIf="!isParentCategory(categories, category.id)">
-            <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
-            {{ category.tag }}
+        <ng-container *ngIf="field.input === 'date'">
+          <p>{{ getDate(field.value.value, 'LL') }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'datetime'">
+          <p>{{ getDate(field.value.value, 'LL LTS') }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'time'">
+          <p>{{ getDate(field.value.value, 'LTS') }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'radio'">
+          <p>{{ field.value.value }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'checkbox'">
+          <span *ngIf="!field.options.length">-</span>
+          <ul class="post--checkbox-list">
+            <li *ngFor="let option of field.value.value">
+              <p>{{ option }}</p>
+            </li>
+          </ul>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'select'">
+          <p>{{ field.value.value }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'number'">
+          <p>{{ field.value.value }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'upload'">
+          <ng-container *ngIf="isConnection; else noConnection">
+            <div class="post__media">
+              <ion-img
+                *ngIf="field.value?.photoUrl"
+                class="post__media"
+                [src]="field.value.photoUrl"
+              ></ion-img>
+              <span *ngIf="field.value?.caption" class="post__media__caption">
+                {{ field.value.caption }}
+              </span>
+            </div>
+            <!--          <ng-template #spinner>-->
+            <!--            <app-spinner class="post__media__loader"></app-spinner>-->
+            <!--          </ng-template>-->
+          </ng-container>
+
+          <ng-template #noConnection>
+            <app-offline-notification></app-offline-notification>
+          </ng-template>
+        </ng-container>
+
+        <ng-container *ngIf="field.input === 'video'">
+          <ng-container *ngIf="videoUrls.length && isConnection">
+            <div *ngIf="field.value.value">
+              <iframe
+                id="player"
+                [src]="getVideoUrlForField(field)"
+                width="100%"
+                height="215"
+              ></iframe>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="!isConnection">
+            <app-offline-notification></app-offline-notification>
+          </ng-container>
+          <div>
+            <a [href]="field.value.value" target="_blank">{{ field.value.value }}</a>
           </div>
         </ng-container>
-      </ng-container>
 
-      <ng-container *ngIf="field.input === 'date'">
-        <p>{{ getDate(field.value.value, 'LL') }}</p>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'datetime'">
-        <p>{{ getDate(field.value.value, 'LL LTS') }}</p>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'time'">
-        <p>{{ getDate(field.value.value, 'LTS') }}</p>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'radio'">
-        <p>{{ field.value.value }}</p>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'checkbox'">
-        <span *ngIf="!field.options.length">-</span>
-        <ul class="post--checkbox-list">
-          <li *ngFor="let option of field.value.value">
-            <p>{{ option }}</p>
-          </li>
-        </ul>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'select'">
-        <p>{{ field.value.value }}</p>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'number'">
-        <p>{{ field.value.value }}</p>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'upload'">
-        <ng-container *ngIf="isConnection; else noConnection">
-          <div class="post__media">
-            <ion-img
-              *ngIf="field.value?.photoUrl"
-              class="post__media"
-              [src]="field.value.photoUrl"
-            ></ion-img>
-            <span *ngIf="field.value?.caption" class="post__media__caption">
-              {{ field.value.caption }}
-            </span>
-          </div>
-          <!--          <ng-template #spinner>-->
-          <!--            <app-spinner class="post__media__loader"></app-spinner>-->
-          <!--          </ng-template>-->
+        <ng-container *ngIf="field.input === 'location'">
+          <app-location-control
+            class="post__location"
+            [location]="field.value.value"
+          ></app-location-control>
         </ng-container>
 
-        <ng-template #noConnection>
-          <app-offline-notification></app-offline-notification>
-        </ng-template>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'video'">
-        <ng-container *ngIf="videoUrls.length && isConnection">
-          <div *ngIf="field.value.value">
-            <iframe
-              id="player"
-              [src]="getVideoUrlForField(field)"
-              width="100%"
-              height="215"
-            ></iframe>
-          </div>
+        <ng-container *ngIf="field.input === 'relation'">
+          <a [href]="field.value.postUrl" target="_blank">
+            {{ field.value.postTitle }}
+          </a>
         </ng-container>
 
-        <ng-container *ngIf="!isConnection">
-          <app-offline-notification></app-offline-notification>
+        <ng-container *ngIf="field.input === 'markdown'">
+          <span class="code-container">
+            <code>{{ field.value.value }}</code>
+          </span>
         </ng-container>
-        <div>
-          <a [href]="field.value.value" target="_blank">{{ field.value.value }}</a>
-        </div>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'location'">
-        <app-location-control
-          class="post__location"
-          [location]="field.value.value"
-        ></app-location-control>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'relation'">
-        <a [href]="field.value.postUrl" target="_blank">
-          {{ field.value.postTitle }}
-        </a>
-      </ng-container>
-
-      <ng-container *ngIf="field.input === 'markdown'">
-        <span class="code-container">
-          <code>{{ field.value.value }}</code>
-        </span>
-      </ng-container>
-    </div>
+      </div>
+    </ng-container>
   </ng-container>
 </ng-container>

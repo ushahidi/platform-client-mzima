@@ -131,6 +131,7 @@ export interface PostContent {
   task_is_internal_only: boolean;
   translations: any[];
   type: string;
+  completed?: boolean;
 }
 
 interface PostStatsItem {

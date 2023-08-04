@@ -5,6 +5,7 @@ import {
   MediaService,
   PostContent,
   PostContentField,
+  postHelpers,
   PostResult,
   PostsService,
 } from '@mzima-client/sdk';
@@ -93,6 +94,10 @@ export class PostPage implements OnDestroy {
       this.isPostLoading = false;
       this.checkPermissions();
       this.getData(this.post);
+      this.post.post_content = postHelpers.markCompletedTasks(
+        this.post?.post_content || [],
+        this.post,
+      );
     }
   }
 
