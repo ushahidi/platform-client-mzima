@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
 import { LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService } from '@services';
+import { BreakpointService, SessionService } from '@services';
+import { BaseComponent } from '../../../base.component';
 import { AlphanumericValidatorValidator, noWhitespaceValidator } from '../../../core/validators';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
@@ -29,7 +30,7 @@ import _ from 'lodash';
   templateUrl: './survey-item.component.html',
   styleUrls: ['./survey-item.component.scss'],
 })
-export class SurveyItemComponent implements OnInit {
+export class SurveyItemComponent extends BaseComponent implements OnInit {
   @ViewChild('configTask') configTask: SurveyTaskComponent;
   public selectedLang?: LanguageInterface;
   selectLanguageCode: string;
@@ -45,12 +46,13 @@ export class SurveyItemComponent implements OnInit {
   public languages: LanguageInterface[];
   public defaultLanguage?: LanguageInterface;
   public activeLanguages: LanguageInterface[];
-  public isDesktop = false;
   public errorTaskField = false;
   public submitted = false;
   isDefaultLanguageSelected = true;
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private formBuilder: FormBuilder,
     private router: Router,
     private dialog: MatDialog,
@@ -60,14 +62,11 @@ export class SurveyItemComponent implements OnInit {
     private rolesService: RolesService,
     private notification: NotificationService,
     private languageService: LanguageService,
-    private breakpointService: BreakpointService,
     private location: Location,
   ) {
-    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
+    super(sessionService, breakpointService);
+    this.checkDesktop();
+
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, noWhitespaceValidator, AlphanumericValidatorValidator()]],
       description: [''],
@@ -90,6 +89,8 @@ export class SurveyItemComponent implements OnInit {
       type: [''],
     });
   }
+
+  loadData(): void {}
 
   private initLanguages(enabledLanguages: SurveyItemEnabledLanguages) {
     this.languages = this.languageService.getLanguages();

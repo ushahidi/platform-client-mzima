@@ -1,33 +1,28 @@
 import { Component } from '@angular/core';
-import { takeUntilDestroy$ } from '@helpers';
-import { BreakpointService, EventBusService, EventType } from '@services';
-import { Observable } from 'rxjs';
+import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
+import { BaseComponent } from '../../../../base.component';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent {
-  private isDesktop$: Observable<boolean>;
-  public isDesktop = false;
+export class SidebarComponent extends BaseComponent {
   public isInnerPage = false;
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private eventBusService: EventBusService,
-    private breakpointService: BreakpointService,
   ) {
-    this.isDesktop$ = this.breakpointService.isDesktop$.pipe(takeUntilDestroy$());
-    this.isDesktop$.subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-
+    super(sessionService, breakpointService);
+    this.checkDesktop();
     this.eventBusService.on(EventType.IsSettingsInnerPage).subscribe({
       next: (option) => {
         this.isInnerPage = Boolean(option.inner);
       },
     });
   }
+
+  loadData(): void {}
 }

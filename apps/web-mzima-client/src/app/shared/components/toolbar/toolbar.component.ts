@@ -2,10 +2,16 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { SiteConfigInterface, UserMenuInterface } from '@models';
-import { UserInterface } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreadcrumbService, EventBusService, EventType, SessionService } from '@services';
-import { filter, Observable } from 'rxjs';
+import {
+  BreadcrumbService,
+  BreakpointService,
+  EventBusService,
+  EventType,
+  SessionService,
+} from '@services';
+import { filter } from 'rxjs';
+import { BaseComponent } from '../../../base.component';
 import { NavToolbarService } from '../../helpers/navtoolbar.service';
 
 @UntilDestroy()
@@ -14,36 +20,33 @@ import { NavToolbarService } from '../../helpers/navtoolbar.service';
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent extends BaseComponent implements OnInit {
   @Input() languages: any;
   @Input() selectedLanguage: any;
-  private userData$: Observable<UserInterface>;
-  public isDesktop$: Observable<boolean>;
-  public isLoggedIn: boolean;
   public isDonateAvailable = false;
-  public profile: UserInterface;
   public showSearchForm: boolean;
   public pageTitle: string;
   public isBurgerMenuOpen = false;
   public siteConfig: SiteConfigInterface;
   public menu: UserMenuInterface[];
-  public isAdmin = false;
   public canRegister = false;
   public isInnerPage = false;
   public isSettingsPage = false;
 
   constructor(
-    private session: SessionService,
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private router: Router,
     private breadcrumbService: BreadcrumbService,
     private eventBusService: EventBusService,
     private location: Location,
     private navToolbarService: NavToolbarService,
   ) {
-    this.userData$ = this.navToolbarService.getUserData(this);
-    this.isDesktop$ = this.navToolbarService.getScreenSizeAsync(this);
-    this.siteConfig = this.session.getSiteConfigurations(); // Remove this line?
-    this.isDonateAvailable = <boolean>this.session.getSiteConfigurations().donation?.enabled;
+    super(sessionService, breakpointService);
+    this.checkDesktop();
+
+    this.siteConfig = this.sessionService.getSiteConfigurations();
+    this.isDonateAvailable = <boolean>this.sessionService.getSiteConfigurations().donation?.enabled;
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       const url = router.routerState.snapshot.url;
@@ -63,10 +66,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userData$.subscribe((userData) => {
-      this.profile = userData;
-      this.isLoggedIn = !!userData.userId;
-    });
+    this.getUserData();
   }
 
   public openAccountSettings(): void {
@@ -84,4 +84,6 @@ export class ToolbarComponent implements OnInit {
   public back(): void {
     this.location.back();
   }
+
+  loadData(): void {}
 }

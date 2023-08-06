@@ -1,58 +1,50 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavToolbarService } from '../../../helpers/navtoolbar.service';
 import { SiteConfigInterface, MenuInterface } from '@models';
 import { Observable } from 'rxjs';
 import { UserInterface } from '@mzima-client/sdk';
-import { UntilDestroy } from '@ngneat/until-destroy';
-import { GtmTrackingService, SessionService } from '@services';
+import { BreakpointService, GtmTrackingService, SessionService } from '@services';
 import { EnumGtmEvent, EnumGtmSource, Permissions, Roles } from '@enums';
 import { TranslateService } from '@ngx-translate/core';
+import { BaseComponent } from '../../../../base.component';
 
-@UntilDestroy() //Angular screams if this is not added even though it is already added in the NavToolbarService
 @Component({
   selector: 'app-menu-list-links',
   templateUrl: './menu-list-links.component.html',
   styleUrls: ['./menu-list-links.component.scss'],
 })
-export class MenuListLinksComponent implements OnInit {
+export class MenuListLinksComponent extends BaseComponent implements OnInit {
   public userData$: Observable<UserInterface>;
   public menu: MenuInterface[] = [];
-  public isDesktop: boolean;
-  public isLoggedIn: boolean;
   public siteConfig: SiteConfigInterface;
   public canRegister = false;
   public isHost = false;
 
   constructor(
-    private navToolbarService: NavToolbarService,
-    private session: SessionService,
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private gtmTracking: GtmTrackingService,
     private translate: TranslateService,
     private router: Router,
   ) {
-    this.navToolbarService.getScreenSize().subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-        this.initNavigationMenu();
-      },
-    });
-    this.userData$ = this.navToolbarService.getUserData(this);
-    this.siteConfig = this.session.getSiteConfigurations();
+    super(sessionService, breakpointService);
   }
 
   ngOnInit(): void {
-    this.userData$.subscribe((userData) => {
-      this.isLoggedIn = !!userData.userId;
-      const hostRoles = [
-        Permissions.ManageUsers,
-        Permissions.ManageSettings,
-        Permissions.ImportExport,
-      ];
-      this.isHost =
-        userData.role === Roles.Admin || hostRoles.some((r) => userData.permissions?.includes(r));
-      this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
-    });
+    this.getUserData();
+    this.initNavigationMenu();
+  }
+
+  loadData(): void {
+    this.siteConfig = this.sessionService.getSiteConfigurations();
+    const hostRoles = [
+      Permissions.ManageUsers,
+      Permissions.ManageSettings,
+      Permissions.ImportExport,
+    ];
+    this.isHost =
+      this.user.role === Roles.Admin || hostRoles.some((r) => this.user.permissions?.includes(r));
+    this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
   }
 
   private initNavigationMenu(): void {

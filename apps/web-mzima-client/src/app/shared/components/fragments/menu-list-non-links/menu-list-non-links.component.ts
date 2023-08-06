@@ -5,11 +5,12 @@ import { UserInterface } from '@mzima-client/sdk';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { NavToolbarService } from '../../../helpers/navtoolbar.service';
 import { SiteConfigInterface, UserMenuInterface } from '@models';
-import { EventBusService, EventType, SessionService } from '@services';
+import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 import { Permissions, Roles } from '@enums';
 import { LoginComponent } from '@auth';
 import { SupportModalComponent } from '../../support-modal/support-modal.component';
 import { CollectionsComponent } from '../../collections/collections.component';
+import { BaseComponent } from '../../../../base.component';
 
 @UntilDestroy() //Angular screams if this is not added even though it is already added in the NavToolbarService
 @Component({
@@ -17,48 +18,44 @@ import { CollectionsComponent } from '../../collections/collections.component';
   templateUrl: './menu-list-non-links.component.html',
   styleUrls: ['./menu-list-non-links.component.scss'],
 })
-export class MenuListNonLinksComponent implements OnInit {
+export class MenuListNonLinksComponent extends BaseComponent implements OnInit {
   public userData$: Observable<UserInterface>;
   public menu: UserMenuInterface[];
-  public isDesktop: boolean;
-  public isLoggedIn: boolean;
   public siteConfig: SiteConfigInterface;
   public canRegister = false;
   public isHost = false;
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private dialog: MatDialog,
     private navToolbarService: NavToolbarService,
-    private session: SessionService,
     private eventBusService: EventBusService,
   ) {
-    this.navToolbarService.getScreenSize().subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
-    this.userData$ = this.navToolbarService.getUserData(this);
-    this.siteConfig = this.session.getSiteConfigurations();
+    super(sessionService, breakpointService);
+    this.checkDesktop();
     this.eventBusService.on(EventType.OpenSupportModal).subscribe({
       next: () => this.openSupportModal(),
     });
   }
 
   ngOnInit(): void {
-    this.userData$.subscribe((userData) => {
-      this.isLoggedIn = !!userData.userId;
-      const hostRoles = [
-        Permissions.ManageUsers,
-        Permissions.ManageSettings,
-        Permissions.ImportExport,
-      ];
-      this.isHost =
-        userData.role === Roles.Admin || hostRoles.some((r) => userData.permissions?.includes(r));
-      this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
-      this.initMenu();
-    });
+    this.getUserData();
+  }
+
+  loadData(): void {
+    this.siteConfig = this.sessionService.getSiteConfigurations();
+    const hostRoles = [
+      Permissions.ManageUsers,
+      Permissions.ManageSettings,
+      Permissions.ImportExport,
+    ];
+    this.isHost =
+      this.user.role === Roles.Admin || hostRoles.some((r) => this.user.permissions?.includes(r));
+    this.canRegister = !this.siteConfig.private && !this.siteConfig.disable_registration;
+    this.initMenu();
     this.eventBusService.on(EventType.OpenLoginModal).subscribe({
-      next: () => this.openLogin(),
+      next: (config) => this.openLogin(config),
     });
   }
 
@@ -70,7 +67,7 @@ export class MenuListNonLinksComponent implements OnInit {
       {
         label: 'nav.collections',
         icon: 'collections',
-        visible: true,
+        visible: !this.siteConfig.private || this.isLoggedIn,
         action: () => {
           this.openCollections();
           hideMobileMenuOnSmallerDevices();
@@ -116,14 +113,19 @@ export class MenuListNonLinksComponent implements OnInit {
     ];
   }
 
-  private openLogin(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
+  private openLogin(config?: any): void {
+    const dialogConfig = {
       width: '100%',
       maxWidth: 576,
       panelClass: ['modal', 'login-modal'],
       data: {
         isSignupActive: this.canRegister,
+        isDisableClose: config?.disableClose || false,
       },
+    };
+    const dialogRef = this.dialog.open(LoginComponent, {
+      ...dialogConfig,
+      ...config,
     });
     dialogRef.afterClosed().subscribe({
       next: () => this.removeFocusFromMenuItem('auth'),

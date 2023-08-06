@@ -8,11 +8,10 @@
     color="custom"
     [iconOnly]="true"
     class="menu__head__close"
-    id="closeMenu"
     (buttonClick)="toggleBurgerMenu(false)"
     [ariaLabel]="'modal.button.close' | translate"
   >
     <mat-icon icon svgIcon="close"></mat-icon>
   </mzima-client-button>
 </div>
-<app-company-info></app-company-info>
+<app-company-info *ngIf="checkAllowedAccessToSite()"></app-company-info>

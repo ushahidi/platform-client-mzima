@@ -51,6 +51,7 @@ import {
   MenuListLinksComponent,
   ShareAndDonateComponent,
 } from './components';
+import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { CollectionItemModule } from './components/collection-item/collection-item.module';
 import { FilterControlModule } from './components/filter-control/filter-control.module';
 import { GroupCheckboxSelectModule } from './components/group-checkbox-select/group-checkbox-select.module';
@@ -88,6 +89,7 @@ const components = [
   AddPostModalComponent,
   DonationModalComponent,
   NotificationComponent,
+  AccessDeniedComponent,
   SafePipe,
 ];
 

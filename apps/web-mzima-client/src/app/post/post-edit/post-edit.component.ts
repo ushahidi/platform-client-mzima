@@ -21,7 +21,6 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   BreakpointService,
   EventBusService,
@@ -40,6 +39,7 @@ import {
   MediaService,
   postHelpers,
 } from '@mzima-client/sdk';
+import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
@@ -53,13 +53,12 @@ import { dateHelper } from '@helpers';
 
 dayjs.extend(timezone);
 
-@UntilDestroy()
 @Component({
   selector: 'app-post-edit',
   templateUrl: './post-edit.component.html',
   styleUrls: ['./post-edit.component.scss'],
 })
-export class PostEditComponent implements OnInit, OnChanges {
+export class PostEditComponent extends BaseComponent implements OnInit, OnChanges {
   @Input() public postInput: any;
   @Input() public modalView: boolean;
   @Output() cancel = new EventEmitter();
@@ -87,7 +86,6 @@ export class PostEditComponent implements OnInit, OnChanges {
   formInfo: any;
 
   private post?: any;
-  public isDesktop: boolean;
   public atLeastOneFieldHasValidationError: boolean;
   public formValidator = new formValidators.FormValidator();
   public locationRequired = false;
@@ -98,6 +96,8 @@ export class PostEditComponent implements OnInit, OnChanges {
   postLanguages: LanguageInterface[] = [];
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private route: ActivatedRoute,
     private surveysService: SurveysService,
     private formBuilder: FormBuilder,
@@ -107,19 +107,14 @@ export class PostEditComponent implements OnInit, OnChanges {
     private confirmModalService: ConfirmModalService,
     private eventBusService: EventBusService,
     private location: Location,
-    private breakpointService: BreakpointService,
     private mediaService: MediaService,
     private languageService: LanguageService,
     private snackBar: MatSnackBar,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
-    private sessionService: SessionService,
   ) {
-    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
+    super(sessionService, breakpointService);
+    this.checkDesktop();
     this.filters = JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
     );
@@ -129,7 +124,7 @@ export class PostEditComponent implements OnInit, OnChanges {
     this.route.paramMap.subscribe((params) => {
       if (params.get('type')) {
         this.formId = Number(params.get('type'));
-        this.loadData(this.formId);
+        this.loadSurveyData(this.formId);
       }
       if (params.get('id')) {
         this.postId = Number(params.get('id'));
@@ -147,9 +142,11 @@ export class PostEditComponent implements OnInit, OnChanges {
       this.post = this.postInput;
       this.formId = this.post.form_id;
       this.postId = this.post.id;
-      this.loadData(this.formId!, this.post.post_content);
+      this.loadSurveyData(this.formId!, this.post.post_content);
     }
   }
+
+  loadData(): void {}
 
   selectLanguageEmit(event: MatSelectChange) {
     this.activeLanguage = event.value.code;
@@ -161,12 +158,12 @@ export class PostEditComponent implements OnInit, OnChanges {
       next: (post) => {
         this.formId = post.form_id;
         this.post = post;
-        this.loadData(this.formId!, post.post_content);
+        this.loadSurveyData(this.formId!, post.post_content);
       },
     });
   }
 
-  private loadData(formId: number | null, updateContent?: any[]) {
+  private loadSurveyData(formId: number | null, updateContent?: any[]) {
     if (!formId) return;
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
@@ -237,12 +234,25 @@ export class PostEditComponent implements OnInit, OnChanges {
             });
         }
 
-        this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks));
+        this.taskForm = this.formBuilder.group(postHelpers.createTaskFormControls(this.tasks));
 
         this.form = new FormGroup(fields);
         this.initialFormData = this.form.value;
 
         if (updateContent) {
+          this.tasks = postHelpers.markCompletedTasks(this.tasks, this.post);
+
+          this.tasks.forEach((task, index) => {
+            if (task.completed) {
+              this.taskForm.patchValue({
+                [task.id]: task.completed,
+              });
+              if (index !== 0) {
+                this.completeStages.push(task.id);
+              }
+            }
+          });
+
           this.updateForm(updateContent);
         }
       },
