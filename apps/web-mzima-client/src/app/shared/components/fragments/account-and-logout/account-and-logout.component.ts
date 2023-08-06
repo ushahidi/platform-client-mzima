@@ -5,7 +5,7 @@ import { UserInterface } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AuthService, SessionService } from '@services';
 import { Observable } from 'rxjs';
-import { AccountSettingsModalComponent } from '../account-settings-modal/account-settings-modal.component';
+import { AccountSettingsModalComponent } from '../../account-settings-modal/account-settings-modal.component';
 
 @UntilDestroy()
 @Component({
