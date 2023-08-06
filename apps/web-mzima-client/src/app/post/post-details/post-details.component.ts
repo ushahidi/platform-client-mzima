@@ -20,15 +20,17 @@ import {
 } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
+import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { dateHelper } from '@helpers';
+import { BreakpointService, SessionService } from '@services';
 
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
   styleUrls: ['./post-details.component.scss'],
 })
-export class PostDetailsComponent implements OnChanges, OnDestroy {
+export class PostDetailsComponent extends BaseComponent implements OnChanges, OnDestroy {
   @Input() post?: PostResult;
   @Input() feedView: boolean = true;
   @Input() userId?: number | string;
@@ -43,6 +45,8 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   public isPostLoading: boolean = true;
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private dialog: MatDialog,
     private translate: TranslateService,
     private mediaService: MediaService,
@@ -51,6 +55,9 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     private postsService: PostsService,
     private sanitizer: DomSanitizer,
   ) {
+    super(sessionService, breakpointService);
+    this.getUserData();
+
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.post = undefined;
@@ -63,6 +70,8 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
       }
     });
   }
+
+  loadData(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post']) {

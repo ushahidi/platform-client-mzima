@@ -38,7 +38,6 @@ import {
   SearchFormComponent,
   SelectLanguagesModalComponent,
   ShareModalComponent,
-  SidebarComponent,
   SnackbarComponent,
   SubmitPostButtonComponent,
   SupportModalComponent,
@@ -46,7 +45,14 @@ import {
   ToolbarComponent,
   NotificationComponent,
   AccountAndLogoutComponent,
+  SidebarComponent,
+  MobileMenuComponent,
+  DeploymentDetailsComponent,
+  MenuListNonLinksComponent,
+  MenuListLinksComponent,
+  ShareAndDonateComponent,
 } from './components';
+import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { CollectionItemModule } from './components/collection-item/collection-item.module';
 import { FilterControlModule } from './components/filter-control/filter-control.module';
 import { GroupCheckboxSelectModule } from './components/group-checkbox-select/group-checkbox-select.module';
@@ -59,6 +65,11 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 const components = [
   SidebarComponent,
+  MobileMenuComponent,
+  DeploymentDetailsComponent,
+  MenuListNonLinksComponent,
+  MenuListLinksComponent,
+  ShareAndDonateComponent,
   ToolbarComponent,
   SubmitPostButtonComponent,
   LanguageComponent,
@@ -80,6 +91,7 @@ const components = [
   DonationModalComponent,
   NotificationComponent,
   AccountAndLogoutComponent,
+  AccessDeniedComponent,
   SafePipe,
 ];
 

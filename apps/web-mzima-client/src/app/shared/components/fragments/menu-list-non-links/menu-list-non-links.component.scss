@@ -1,0 +1,183 @@
+@import 'helpers';
+
+.sidebar {
+  &__menu {
+    margin: 0 calc(var(--side-offset) * -1); //repeated
+
+    &:first-child {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--color-neutral-90);
+    }
+  }
+}
+
+.sidebar-menu-button {
+  display: flex;
+  color: inherit;
+  cursor: pointer;
+  width: 100%; //only for non-links
+  font-size: 16px;
+  border-radius: 0;
+  line-height: 1.6;
+  text-align: start;
+  font-weight: normal;
+  align-items: center;
+  border-style: solid;
+  font-family: inherit;
+  text-decoration: none;
+  border-width: 0 0 0 4px;
+  border-color: transparent;
+  transition-duration: 0.35s;
+  justify-content: flex-start;
+  box-shadow: none !important;
+  transition-timing-function: ease;
+  background: var(--color-neutral-100);
+  transition-property: color, background-color, border-color;
+
+  @include breakpoint-min($tablet) {
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-inline-start: calc(var(--side-offset) - 4px);
+    padding-inline-end: var(--side-offset);
+  }
+
+  @include breakpoint-max($tablet) {
+    flex: 1 1 100%;
+    border-width: 0;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 13px 8px;
+    flex-direction: column;
+
+    &:before {
+      left: 0;
+      right: 0;
+      top: -1px;
+      margin: 0;
+      content: '';
+      height: 2px;
+      border: none;
+      bottom: auto;
+      display: block;
+      border-radius: 0;
+      position: absolute;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      background-color: var(--color-primary-60);
+    }
+
+    &:not(.sidebar-menu-button--active) {
+      &:before {
+        opacity: 0;
+      }
+    }
+  }
+
+  &:hover {
+    color: var(--color-primary-60);
+  }
+
+  &:focus {
+    color: var(--color-primary-60);
+    border-color: var(--color-primary-60);
+  }
+
+  &--active {
+    color: var(--color-primary-60);
+    background-color: var(--color-black);
+    border-color: var(--color-primary-60);
+  }
+
+  &:not(:first-child) {
+    @include breakpoint-min($tablet) {
+      margin-top: 8px;
+    }
+  }
+
+  &__icon {
+    width: 1em;
+    height: 1em;
+    display: block;
+    font-size: 30px;
+    margin-inline-end: 12px;
+    margin-right: 12px !important;
+
+    @include breakpoint-max($laptop-small) {
+      margin-inline-end: 8px;
+      margin-right: 8px !important;
+    }
+
+    @include breakpoint-max($tablet) {
+      font-size: 32px;
+      margin-bottom: 4px;
+      margin-right: 0 !important;
+      margin-inline-end: 0 !important;
+    }
+
+    &::ng-deep {
+      svg {
+        display: block;
+      }
+    }
+
+    img {
+      font-size: 14px;
+      fill: currentColor;
+    }
+  }
+}
+
+.menu {
+  //Using css display property to hide and show non-links instead of javascript's isDesktop
+  &__body {
+    display: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    height: calc(100% - 220px);
+    -webkit-overflow-scrolling: touch;
+
+    @include breakpoint-max($tablet) {
+      display: block;
+    }
+  }
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  hr {
+    height: 1px;
+    border: none;
+    margin: 4px 0;
+    background: var(--color-neutral-90);
+  }
+}
+
+.mobile-menu-button {
+  display: flex;
+  margin: 4px 0;
+  padding: 0 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 0;
+  font-weight: 400;
+  text-align: start;
+  line-height: 56px;
+  align-items: center;
+  text-decoration: none;
+  justify-content: flex-start;
+  color: var(--color-neutral-50);
+  background: var(--color-neutral-100);
+
+  &__icon {
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    font-size: 32px;
+    margin-right: 12px;
+  }
+}

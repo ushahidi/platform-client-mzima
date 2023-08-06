@@ -71,7 +71,7 @@ export class SessionService {
     return `${CONST.LOCAL_STORAGE_PREFIX}${key}`;
   }
 
-  getSiteConfigurations() {
+  getSiteConfigurations(): SiteConfigInterface {
     return this.currentConfig.site;
   }
 
@@ -96,6 +96,7 @@ export class SessionService {
       title: this.currentConfig['site']?.name ?? '',
       description: this.currentConfig['site']?.description ?? '',
       logo: this.currentConfig['site']?.image_header ?? '',
+      private: this.currentConfig['site']?.private ?? false,
     });
   }
 
@@ -125,6 +126,10 @@ export class SessionService {
 
   get currentAuthToken() {
     return this.currentSessionData.accessToken;
+  }
+
+  get accessToSite(): boolean {
+    return !this.currentConfig.site.private || !!this.currentAuthToken;
   }
 
   get currentAuthTokenType() {

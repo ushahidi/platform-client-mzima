@@ -51,6 +51,7 @@
       "description": "See what Ushahidi can do and how it works."
     },
     "forbidden": "Sorry, you're not allowed to do that.",
+    "forbidden-login": "Please enter your login details to access the deployment",
     "404": "That URL doesn't exist",
     "page-not-found": "Page not found",
     "get_notifications": "Get notifications",
@@ -1013,7 +1014,7 @@
   },
   "collection": {
     "visible_to_public": "This Collection is visible to the public",
-    "visible_to_you": "This Collection is visible to just you and admins",
+    "visible_to_you": "This collection will only be visible to you and admins",
     "visible_to_roles": "This Collection is visible to {{roles}}",
     "validation": {
       "required": {

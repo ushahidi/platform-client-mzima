@@ -28,7 +28,7 @@ import {
   PostsService,
   GeoJsonPostsResponse,
 } from '@mzima-client/sdk';
-import { SessionService, EventBusService, EventType } from '@services';
+import { SessionService, EventBusService, EventType, BreakpointService } from '@services';
 
 @UntilDestroy()
 @Component({
@@ -61,12 +61,21 @@ export class MapComponent extends MainViewComponent implements OnInit {
     protected override savedSearchesService: SavedsearchesService,
     protected override eventBusService: EventBusService,
     protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private view: ViewContainerRef,
     private dialog: MatDialog,
     private zone: NgZone,
     private mediaService: MediaService,
   ) {
-    super(router, route, postsService, savedSearchesService, eventBusService, sessionService);
+    super(
+      router,
+      route,
+      postsService,
+      savedSearchesService,
+      eventBusService,
+      sessionService,
+      breakpointService,
+    );
     this.filtersSubscription$ = this.postsService.postsFilters$.pipe(takeUntilDestroy$());
   }
 

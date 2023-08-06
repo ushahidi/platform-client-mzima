@@ -5,3 +5,5 @@ export { AdminGuard } from './admin.guard';
 export { ManageUsersGuard } from './manage-users.guard';
 export { ManageSettingsGuard } from './manage-settings.guard';
 export { DataImportExportGuard } from './data-import-export.guard';
+export { AccessDeniedGuard } from './access-denied.guard';
+export { AccessAllowGuard } from './access-allow.guard';

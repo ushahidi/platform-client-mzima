@@ -2,8 +2,8 @@
   <app-settings
     class="settings-menu"
     *ngIf="isDesktop || !isInnerPage"
-    [userRole]="userData.role!"
-    [permissions]="userData.permissions!"
+    [userRole]="user.role!"
+    [permissions]="user.permissions!"
   ></app-settings>
   <div class="settings-router" *ngIf="isDesktop || isInnerPage">
     <div [ngClass]="{ 'page-content': isDesktop }">

@@ -17,4 +17,5 @@ export interface UserMenuInterface {
   action?: () => void;
   ref?: string;
   adminGuard?: boolean;
+  forDesktop?: boolean;
 }

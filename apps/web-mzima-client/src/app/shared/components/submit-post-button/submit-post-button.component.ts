@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -13,6 +13,10 @@ import { Observable } from 'rxjs';
   styleUrls: ['./submit-post-button.component.scss'],
 })
 export class SubmitPostButtonComponent implements OnInit {
+  @Input() isRound: boolean;
+  @Input() hasIconOnly: boolean;
+  @Input() hasText: boolean;
+
   public isDesktop$: Observable<boolean>;
 
   constructor(
