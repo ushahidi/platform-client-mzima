@@ -1,0 +1,18 @@
+<div class="menu__head">
+  <span class="menu__logo">
+    <img src="../../../../assets/images/ushahidi-logo.svg" alt="ushahidi" />
+  </span>
+  <mzima-client-button
+    *ngIf="!isDesktop"
+    fill="outline"
+    color="custom"
+    [iconOnly]="true"
+    class="menu__head__close"
+    id="closeMenu"
+    (buttonClick)="toggleBurgerMenu(false)"
+    [ariaLabel]="'modal.button.close' | translate"
+  >
+    <mat-icon icon svgIcon="close"></mat-icon>
+  </mzima-client-button>
+</div>
+<app-company-info></app-company-info>

@@ -1,9 +1,10 @@
+<!-- Getting rounded & icon only's true or false using @Input instead fixes flickering issue on resize - Yay! -->
 <mzima-client-button
   (buttonClick)="addPost()"
   class="submit-post-button"
-  [rounded]="!(isDesktop$ | async)!"
-  [iconOnly]="!(isDesktop$ | async)!"
+  [rounded]="isRound"
+  [iconOnly]="hasIconOnly"
 >
-  <span *ngIf="isDesktop$ | async">{{ 'app.add_new_post' | translate }}</span>
+  <span *ngIf="hasText">{{ 'app.add_new_post' | translate }}</span>
   <mat-icon icon svgIcon="plus"></mat-icon>
 </mzima-client-button>
