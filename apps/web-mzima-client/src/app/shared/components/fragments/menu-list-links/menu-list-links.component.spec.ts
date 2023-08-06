@@ -1,17 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MenuListLinksComponent } from './menu-list-links.component';
 
-import { SidebarComponent } from './sidebar.component';
-
-describe('SidebarComponent', () => {
-  let component: SidebarComponent;
-  let fixture: ComponentFixture<SidebarComponent>;
+describe('MenuListLinksComponent', () => {
+  let component: MenuListLinksComponent;
+  let fixture: ComponentFixture<MenuListLinksComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SidebarComponent],
+      declarations: [MenuListLinksComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SidebarComponent);
+    fixture = TestBed.createComponent(MenuListLinksComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

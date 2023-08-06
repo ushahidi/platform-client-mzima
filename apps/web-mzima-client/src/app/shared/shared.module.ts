@@ -38,13 +38,18 @@ import {
   SearchFormComponent,
   SelectLanguagesModalComponent,
   ShareModalComponent,
-  SidebarComponent,
   SnackbarComponent,
   SubmitPostButtonComponent,
   SupportModalComponent,
   OnboardingComponent,
   ToolbarComponent,
   NotificationComponent,
+  SidebarComponent,
+  MobileMenuComponent,
+  DeploymentDetailsComponent,
+  MenuListNonLinksComponent,
+  MenuListLinksComponent,
+  ShareAndDonateComponent,
 } from './components';
 import { CollectionItemModule } from './components/collection-item/collection-item.module';
 import { FilterControlModule } from './components/filter-control/filter-control.module';
@@ -58,6 +63,11 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 const components = [
   SidebarComponent,
+  MobileMenuComponent,
+  DeploymentDetailsComponent,
+  MenuListNonLinksComponent,
+  MenuListLinksComponent,
+  ShareAndDonateComponent,
   ToolbarComponent,
   SubmitPostButtonComponent,
   LanguageComponent,
