@@ -15,6 +15,7 @@ import {
   MediaService,
   PostContent,
   PostContentField,
+  postHelpers,
   PostResult,
   PostsService,
 } from '@mzima-client/sdk';
@@ -87,7 +88,17 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   private async getPost(id: number): Promise<void> {
     if (!this.postId) return;
     this.post = await this.getPostInformation(id);
-    if (this.post) this.getData(this.post);
+
+    if (this.post) {
+      this.getData(this.post);
+      this.post.post_content = postHelpers.markCompletedTasks(
+        this.post?.post_content || [],
+        this.post,
+      );
+
+      // TODO: remove me after testing on dev
+      console.log('💬 post task modify:', this.post);
+    }
   }
 
   private getData(post: PostResult): void {
