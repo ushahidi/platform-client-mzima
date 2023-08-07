@@ -52,11 +52,6 @@
 .mat-dialog-content {
   padding-left: 0;
   padding-right: 0;
-
-  @include breakpoint-max($tablet) {
-    overflow: visible;
-    max-height: none !important;
-  }
 }
 
 .tab-content {
@@ -263,35 +258,27 @@
 ::ng-deep {
   @include breakpoint-max($tablet) {
     .account-settings-modal {
-      height: 100%;
-      width: 100% !important;
-      max-width: none !important;
-
+      @include menu-modal-styles;
       .mat-dialog-container {
-        border-radius: 0 !important;
         padding: 96px 16px 80px !important;
 
         .modal {
           &__close-btn {
             top: 24px;
-            position: fixed;
-            inset-inline-end: 16px;
           }
         }
       }
 
+      .mat-dialog-content {
+        overflow: visible;
+        max-height: none !important;
+      }
+
       .mat-dialog-actions {
-        left: 0;
-        right: 0;
         gap: 10px;
-        bottom: 0;
-        margin: 0;
-        z-index: 25;
-        position: fixed;
         margin-bottom: 0 !important;
         min-height: 48px !important;
         padding: 12px 16px !important;
-        background: var(--color-light);
         border-top: 1px solid var(--color-neutral-20);
       }
     }

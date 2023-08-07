@@ -42,22 +42,16 @@
 }
 
 ::ng-deep {
-  .support-modal {
-    @include breakpoint-max($tablet) {
-      height: 100%;
-      width: 100% !important;
-      max-width: none !important;
-
+  @include breakpoint-max($tablet) {
+    .support-modal {
+      @include menu-modal-styles;
       .mat-dialog-container {
         overflow: hidden;
         padding: 0 !important;
-        border-radius: 0 !important;
 
         .modal {
           &__close-btn {
             top: 24px;
-            position: fixed;
-            inset-inline-end: 16px;
           }
         }
       }
@@ -66,7 +60,6 @@
         margin: 0 !important;
         overflow-x: hidden !important;
         padding: 24px 16px !important;
-        max-height: calc(100vh - 80px) !important;
       }
 
       .mat-dialog-title {
