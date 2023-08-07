@@ -2,7 +2,7 @@ import { AfterViewInit, Component } from '@angular/core';
 import { Dialog } from '@capacitor/dialog';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { tileLayerOffline, savetiles, TileLayerOffline } from 'leaflet.offline';
+import { tileLayerOffline, savetiles, TileLayerOffline, getStorageInfo, getStoredTilesAsJson, getBlobByKey, downloadTile, saveTile } from 'leaflet.offline';
 import {
   FitBoundsOptions,
   geoJSON,
@@ -43,6 +43,8 @@ export class MapViewComponent implements AfterViewInit {
   private baseLayer: 'streets' | 'satellite' | 'hOSM' | 'MapQuestAerial' | 'MapQuest' | 'dark';
   public isConnection = true;
   offlineLayer: TileLayerOffline;
+  savedOfflineTiles = 0;
+  l:any;
 
   constructor(
     private postsService: PostsService,
@@ -65,12 +67,14 @@ export class MapViewComponent implements AfterViewInit {
           this.baseLayer = this.mapConfig.default_view!.baselayer;
           const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
           this.offlineLayer = tileLayerOffline(currentLayer.url, currentLayer.layerOptions);
+          this.l = tileLayer(currentLayer.url, currentLayer.layerOptions)
+
           this.leafletOptions = {
-            minZoom: 3,
+            minZoom: 4,
             maxZoom: 17,
             scrollWheelZoom: true,
             zoomControl: false,
-            layers: [this.offlineLayer],
+            layers: [this.offlineLayer, this.l],
             center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
             zoom: this.mapConfig.default_view!.zoom,
           };
@@ -110,8 +114,12 @@ export class MapViewComponent implements AfterViewInit {
   public onMapReady(map: Map) {
     this.map = map;
 
+    this.initOfflineTiles(mapHelper.getMapLayer(this.baseLayer, this.isDarkMode).url);
+
     const saveControl = savetiles(this.offlineLayer, {
       position: 'bottomleft',
+      alwaysDownload: false,
+      // maxZoom: 14,
       confirm: async (layer: any, successCallback: any) => {
         console.log('SAVING: ', layer._tilesforSave.length);
         successCallback();
@@ -128,23 +136,85 @@ export class MapViewComponent implements AfterViewInit {
       },
     });
 
-    map.on('zoomend', () => {
-      saveControl._saveTiles();
-    });
     this.initProgressBar();
 
     saveControl.addTo(this.map);
+
+    this.l.on('tileloadstart', (event:any) => {
+      const { tile } = event;
+      const url = tile.src;
+      console.log('tile', tile);
+
+      // reset tile.src, to not start download yet
+      tile.src = '';
+      getBlobByKey(url).then((blob) => {
+        if (blob) {
+          tile.src = URL.createObjectURL(blob);
+          console.debug(`Loaded ${url} from idb`);
+          return;
+        }
+        tile.src = url;
+        // create helper function for it?
+        const { x, y, z } = event.coords;
+        const { _url: urlTemplate } = event.target;
+        const tileInfo = {
+          key: url,
+          url,
+          x,
+          y,
+          z,
+          urlTemplate,
+          createdAt: Date.now(),
+        };
+        // console.log('tileInfo', tileInfo);
+        downloadTile(url)
+          .then((dl) => saveTile(tileInfo, dl))
+          .then(() => console.debug(`Saved ${url} in idb`));
+      });
+    });
+
   }
 
   initProgressBar() {
-    if (this.offlineLayer) {
-      this.offlineLayer.on('savestart', (e: any) => {
-        console.log('savestart', e._tilesforSave.length);
+    // if (this.offlineLayer) {
+    //   this.offlineLayer.on('savestart', (e: any) => {
+    //     // console.log('!!!!22222333', e);
+    //     // e._tilesforSave.
+    //     // console.log('saaaaavestart', e._tilesforSave[0]);
+    // })
+    // }
+  }
+
+  initOfflineTiles(urlTemplate: string) {
+    let layer: any;
+
+    const getGeoJsonData = () =>
+      getStorageInfo(urlTemplate).then((tiles) =>
+        getStoredTilesAsJson(this.offlineLayer, tiles)
+      );
+
+
+    const addStorageLayer = () => {
+      getGeoJsonData().then((geojson) => {
+        layer = geoJSON(geojson).bindPopup(
+          (clickedLayer: any) => clickedLayer.feature.properties.key
+        );
+
+        console.log('111', layer);
+        setTimeout(() => {
+          this.mapLayers.push(layer);
+
+        }, 4000)
+
       });
+
+
+
       this.offlineLayer.on('loadtileend', () => {
         console.log('loadtileend');
       });
     }
+    addStorageLayer();
   }
 
   public getPostsGeoJson() {
@@ -198,6 +268,8 @@ export class MapViewComponent implements AfterViewInit {
     } else {
       this.mapLayers.push(geoPosts);
     }
+
+    console.log('mapLayers', this.mapLayers);
 
     if (posts.results.length) {
       this.mapFitToBounds = geoPosts.getBounds();
