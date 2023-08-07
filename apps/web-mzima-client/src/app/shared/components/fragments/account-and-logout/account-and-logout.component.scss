@@ -1,37 +1,79 @@
-.mobile-menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+@import 'helpers';
 
-  hr {
-    height: 1px;
-    border: none;
-    margin: 4px 0;
-    background: var(--color-neutral-90);
+.account-info {
+  display: flex;
+  height: 100%;
+  --min-height: 100%;
+  flex-shrink: 0;
+  --font-size: 14px;
+  --min-width: 236px;
+  --font-weight: 400;
+  --max-width: 250px;
+  --line-height: 17px;
+  padding-bottom: 0;
+  --justify-content: flex-end;
+  white-space: normal;
+  margin-inline-end: -24px;
+  --padding-end: 0px;
+  margin-inline-start: 16px;
+  --padding-start: 16px;
+  border-left: 1px solid var(--color-neutral-30);
+
+  @include breakpoint-max($laptop-small) {
+    --min-width: 106px;
+  }
+
+  &::ng-deep {
+    .mzima-button {
+      &__text {
+        display: flex;
+        text-align: right;
+        align-items: center;
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 50%;
+    margin-inline-start: 12px;
+
+    @include breakpoint-max($laptop-small) {
+      margin-inline-start: 0;
+    }
+  }
+
+  &__main {
+    max-width: calc(100% - 44px);
+
+    @include breakpoint-max($laptop-small) {
+      display: none;
+    }
+  }
+
+  &__name {
+    display: block;
+  }
+
+  &__email {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  &__arrow {
+    flex-shrink: 0;
+    font-size: 24px;
+    margin-inline-start: 12px;
   }
 }
 
-.mobile-menu-button {
-  display: flex;
-  margin: 4px 0;
-  padding: 0 16px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 0;
-  font-weight: 400;
-  text-align: start;
-  line-height: 56px;
-  align-items: center;
-  text-decoration: none;
-  justify-content: flex-start;
-  color: var(--color-neutral-50);
-  background: var(--color-neutral-100);
-
-  &__icon {
-    width: 1em;
-    height: 1em;
-    line-height: 1;
-    font-size: 32px;
-    margin-right: 12px;
+::ng-deep {
+  .account-menu {
+    width: 236px;
   }
 }

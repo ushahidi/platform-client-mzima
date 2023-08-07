@@ -21,27 +21,7 @@
       [selectedLanguage]="selectedLanguage"
     ></app-language>
   </div>
-  <mzima-client-button
-    fill="clear"
-    color="secondary"
-    class="account-info"
-    [data-qa]="'account-info'"
-    *ngIf="isLoggedIn && isDesktop"
-    [matMenuTriggerFor]="accountMenu"
-  >
-    <div class="account-info__main">
-      <span class="account-info__name">{{ user.realname }}</span>
-      <span class="account-info__email">{{ user.email }}</span>
-    </div>
-    <img
-      [alt]="user.realname"
-      class="account-info__avatar"
-      src="//www.gravatar.com/avatar/{{
-        user.gravatar || '00000000000000000000000000000000'
-      }}?d=retro&s=64"
-    />
-    <mat-icon class="account-info__arrow" svgIcon="arrow-down"></mat-icon>
-  </mzima-client-button>
+  <app-account-and-logout class="account"></app-account-and-logout>
   <mzima-client-button
     fill="clear"
     class="burger"
@@ -56,7 +36,3 @@
 </mat-toolbar>
 
 <app-mobile-menu></app-mobile-menu>
-
-<mat-menu #accountMenu="matMenu" class="account-menu">
-  <app-account-and-logout></app-account-and-logout>
-</mat-menu>
