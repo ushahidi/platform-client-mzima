@@ -5,6 +5,7 @@ export * from './fragments/menu-list-non-links/menu-list-non-links.component';
 export * from './fragments/mobile-menu/mobile-menu.component';
 export * from './fragments/menu-list-links/menu-list-links.component';
 export * from './fragments/share-and-donate/share-and-donate.component';
+export * from './fragments/account-and-logout/account-and-logout.component';
 export * from './submit-post-button/submit-post-button.component';
 export * from './select-languages-modal/select-languages-modal.component';
 export * from './spinner/spinner.component';

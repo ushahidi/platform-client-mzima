@@ -44,6 +44,7 @@ import {
   OnboardingComponent,
   ToolbarComponent,
   NotificationComponent,
+  AccountAndLogoutComponent,
   SidebarComponent,
   MobileMenuComponent,
   DeploymentDetailsComponent,
@@ -89,6 +90,7 @@ const components = [
   AddPostModalComponent,
   DonationModalComponent,
   NotificationComponent,
+  AccountAndLogoutComponent,
   AccessDeniedComponent,
   SafePipe,
 ];
