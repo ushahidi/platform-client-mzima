@@ -1,25 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { UserInterface } from '@mzima-client/sdk';
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { NavToolbarService } from '../../../helpers/navtoolbar.service';
 import { SiteConfigInterface, UserMenuInterface } from '@models';
-import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
+import {
+  AuthService,
+  BreakpointService,
+  EventBusService,
+  EventType,
+  SessionService,
+} from '@services';
 import { Permissions, Roles } from '@enums';
 import { LoginComponent } from '@auth';
 import { SupportModalComponent } from '../../support-modal/support-modal.component';
 import { CollectionsComponent } from '../../collections/collections.component';
 import { BaseComponent } from '../../../../base.component';
 
-@UntilDestroy() //Angular screams if this is not added even though it is already added in the NavToolbarService
 @Component({
   selector: 'app-menu-list-non-links',
   templateUrl: './menu-list-non-links.component.html',
   styleUrls: ['./menu-list-non-links.component.scss'],
 })
 export class MenuListNonLinksComponent extends BaseComponent implements OnInit {
-  public userData$: Observable<UserInterface>;
   public menu: UserMenuInterface[];
   public siteConfig: SiteConfigInterface;
   public canRegister = false;
@@ -31,6 +32,7 @@ export class MenuListNonLinksComponent extends BaseComponent implements OnInit {
     private dialog: MatDialog,
     private navToolbarService: NavToolbarService,
     private eventBusService: EventBusService,
+    private authService: AuthService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -97,7 +99,7 @@ export class MenuListNonLinksComponent extends BaseComponent implements OnInit {
         label: 'nav.logout',
         icon: 'logout',
         visible: this.isLoggedIn && !this.isDesktop,
-        action: () => this.navToolbarService.logout(),
+        action: () => this.authService.logout(),
       },
       {
         label: 'nav.login_register',

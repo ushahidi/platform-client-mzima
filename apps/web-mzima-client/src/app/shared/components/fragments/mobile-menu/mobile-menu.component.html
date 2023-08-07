@@ -1,5 +1,5 @@
 <!-- Smaller screens only -->
-<div class="menu" *ngIf="!(isDesktop$ | async)!" [ngClass]="{ 'menu--open': isBurgerMenuOpen }">
+<div class="menu" *ngIf="!isDesktop" [ngClass]="{ 'menu--open': isBurgerMenuOpen }">
   <app-deployment-details></app-deployment-details>
   <app-menu-list-non-links></app-menu-list-non-links>
   <app-share-and-donate></app-share-and-donate>

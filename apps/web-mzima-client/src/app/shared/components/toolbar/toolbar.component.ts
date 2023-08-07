@@ -4,6 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { SiteConfigInterface, UserMenuInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
+  AuthService,
   BreadcrumbService,
   BreakpointService,
   EventBusService,
@@ -41,6 +42,7 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
     private eventBusService: EventBusService,
     private location: Location,
     private navToolbarService: NavToolbarService,
+    private authService: AuthService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -74,7 +76,7 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
   }
 
   public logout(): void {
-    this.navToolbarService.logout();
+    this.authService.logout();
   }
 
   public toggleBurgerMenu(): void {

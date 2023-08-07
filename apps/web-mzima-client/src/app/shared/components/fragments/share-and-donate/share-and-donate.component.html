@@ -1,5 +1,5 @@
 <!-- Desktop -->
-<div class="toolbar__controls" *ngIf="isDesktop$ | async">
+<div class="toolbar__controls" *ngIf="isDesktop">
   <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
   <mzima-client-button (buttonClick)="openShare()" color="secondary" class="toolbar__button">
     <span>{{ 'app.share' | translate }}</span>
@@ -8,7 +8,7 @@
 </div>
 
 <!-- Smaller screens -->
-<div class="menu__footer" *ngIf="!(isDesktop$ | async)!">
+<div class="menu__footer" *ngIf="!isDesktop">
   <app-donation-button class="menu__footer__button" *ngIf="isDonateAvailable"></app-donation-button>
   <mzima-client-button
     fill="outline"

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { UntilDestroy } from '@ngneat/until-destroy';
-import { SessionService } from '@services';
-import { NavToolbarService } from '../../../helpers/navtoolbar.service';
-import { Observable } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BreadcrumbService, BreakpointService, SessionService } from '@services';
 import { ShareModalComponent } from '../../share-modal/share-modal.component';
 import { TranslateService } from '@ngx-translate/core';
+import { BaseComponent } from '../../../../base.component';
 
 @UntilDestroy()
 @Component({
@@ -13,23 +12,26 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './share-and-donate.component.html',
   styleUrls: ['./share-and-donate.component.scss'],
 })
-export class ShareAndDonateComponent {
-  public isDesktop$: Observable<boolean>;
+export class ShareAndDonateComponent extends BaseComponent {
   public isDonateAvailable = false;
   public pageTitle: string;
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private dialog: MatDialog,
     private translate: TranslateService,
-    private session: SessionService,
-    private navToolbarService: NavToolbarService,
+    private breadcrumbService: BreadcrumbService,
   ) {
-    this.isDesktop$ = this.navToolbarService.getScreenSizeAsync(this);
-    this.isDonateAvailable = <boolean>this.session.getSiteConfigurations().donation?.enabled;
-    this.navToolbarService.getPageTitle(this).subscribe({
+    super(sessionService, breakpointService);
+    this.checkDesktop();
+    this.isDonateAvailable = <boolean>this.sessionService.getSiteConfigurations().donation?.enabled;
+    this.breadcrumbService.breadcrumbs$.pipe(untilDestroyed(this)).subscribe({
       next: (res) => (this.pageTitle = res[res.length - 1]?.instance),
     });
   }
+
+  loadData(): void {}
 
   public openShare() {
     this.dialog.open(ShareModalComponent, {
