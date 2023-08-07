@@ -69,6 +69,20 @@ export class SupportModalComponent extends BaseComponent {
           this.closeModal();
         },
       },
+      {
+        title: this.translate.instant('app.terms_and_conditions'),
+        action: () => {
+          this.openUrl('https://www.ushahidi.com/terms-of-service/');
+          this.closeModal();
+        },
+      },
+      {
+        title: this.translate.instant('app.privacy_policy'),
+        action: () => {
+          this.openUrl('https://www.ushahidi.com/privacy-policy/');
+          this.closeModal();
+        },
+      },
       // {
       //   title: this.translate.instant('app.intercom.intercom'),
       //   description: this.translate.instant('app.intercom.description'),
