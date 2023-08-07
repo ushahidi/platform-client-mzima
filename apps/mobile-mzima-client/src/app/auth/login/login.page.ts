@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { regexHelper } from '@helpers';
-import { AlertService, AuthService, DeploymentService } from '@services';
+import { AlertService, AuthService, DeploymentService, SessionService } from '@services';
 import { fieldErrorMessages } from '@helpers';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-login',
   templateUrl: 'login.page.html',
@@ -22,6 +24,8 @@ export class LoginPage {
   public loginError: string;
   public forgotPasswordError: string;
   public fieldErrorMessages = fieldErrorMessages;
+  public isPrivate = true;
+  public adminEmail = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,7 +33,23 @@ export class LoginPage {
     private authService: AuthService,
     private router: Router,
     private deploymentService: DeploymentService,
-  ) {}
+    private sessionService: SessionService,
+  ) {
+    const siteConfig = this.sessionService.getSiteConfigurations();
+    this.isPrivate = !!siteConfig.private;
+
+    this.sessionService.siteConfig$.pipe(untilDestroyed(this)).subscribe({
+      next: (config) => {
+        this.isPrivate = !!config.private;
+      },
+    });
+
+    this.deploymentService.deployment$.pipe(untilDestroyed(this)).subscribe({
+      next: (deployment) => {
+        this.adminEmail = `admin@${deployment?.fqdn.toLowerCase()}`;
+      },
+    });
+  }
 
   public login(): void {
     const { email, password } = this.form.value;
