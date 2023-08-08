@@ -37,16 +37,12 @@ export class LoginPage {
   ) {
     const siteConfig = this.sessionService.getSiteConfigurations();
     this.isPrivate = !!siteConfig.private;
+    this.adminEmail = siteConfig.email ?? '';
 
     this.sessionService.siteConfig$.pipe(untilDestroyed(this)).subscribe({
       next: (config) => {
         this.isPrivate = !!config.private;
-      },
-    });
-
-    this.deploymentService.deployment$.pipe(untilDestroyed(this)).subscribe({
-      next: (deployment) => {
-        this.adminEmail = `admin@${deployment?.fqdn.toLowerCase()}`;
+        this.adminEmail = config.email ?? '';
       },
     });
   }
