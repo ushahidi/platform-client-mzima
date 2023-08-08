@@ -98,6 +98,8 @@ export class PostPage implements OnDestroy {
         this.post?.post_content || [],
         this.post,
       );
+      this.post.post_content = postHelpers.replaceNewlinesWithBreaks(this.post?.post_content || []);
+      this.post.content = postHelpers.replaceNewlinesInString(this.post.content);
     }
   }
 

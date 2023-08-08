@@ -28,7 +28,7 @@
     <h2 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h2>
 
     <div class="post__description" *ngIf="post.title?.length && post.content?.length">
-      {{ post.content }}
+      <p [innerHTML]="post.content"></p>
     </div>
 
     <ng-container *ngFor="let post_content of post.post_content">
@@ -99,7 +99,7 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'textarea'">
-              <p>{{ field.value.value || '-' }}</p>
+              <p [innerHTML]="field.value.value"></p>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'checkbox'">
