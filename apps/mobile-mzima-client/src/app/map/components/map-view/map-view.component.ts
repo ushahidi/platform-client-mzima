@@ -2,7 +2,14 @@ import { AfterViewInit, Component } from '@angular/core';
 import { Dialog } from '@capacitor/dialog';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { tileLayerOffline, savetiles, TileLayerOffline, getBlobByKey, downloadTile, saveTile } from 'leaflet.offline';
+import {
+  tileLayerOffline,
+  savetiles,
+  TileLayerOffline,
+  getBlobByKey,
+  downloadTile,
+  saveTile,
+} from 'leaflet.offline';
 import {
   FitBoundsOptions,
   geoJSON,
@@ -12,7 +19,7 @@ import {
   MarkerClusterGroup,
   MarkerClusterGroupOptions,
   tileLayer,
-  TileLayer
+  TileLayer,
 } from 'leaflet';
 import { mapHelper } from '@helpers';
 import { GeoJsonPostsResponse, PostsService } from '@mzima-client/sdk';
@@ -68,7 +75,7 @@ export class MapViewComponent implements AfterViewInit {
           this.baseLayer = this.mapConfig.default_view!.baselayer;
           const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
           this.offlineLayer = tileLayerOffline(currentLayer.url, currentLayer.layerOptions);
-          this.onlineLayer = tileLayer(currentLayer.url, currentLayer.layerOptions)
+          this.onlineLayer = tileLayer(currentLayer.url, currentLayer.layerOptions);
 
           this.leafletOptions = {
             minZoom: 4,
@@ -140,7 +147,7 @@ export class MapViewComponent implements AfterViewInit {
 
     saveControl.addTo(this.map);
 
-    this.onlineLayer.on('tileloadstart', (event:any) => {
+    this.onlineLayer.on('tileloadstart', (event: any) => {
       const { tile } = event;
       const url = tile.src;
 
@@ -149,7 +156,7 @@ export class MapViewComponent implements AfterViewInit {
       getBlobByKey(url).then((blob) => {
         if (blob) {
           tile.src = URL.createObjectURL(blob);
-          console.debug(`Loaded ${url} from idb`);
+          console.log(`Loaded ${url} from idb`);
           return;
         }
         tile.src = url;
@@ -158,20 +165,19 @@ export class MapViewComponent implements AfterViewInit {
         const { _url: urlTemplate } = event.target;
         const tileInfo = {
           key: url,
-          url,
+          url: url,
           x,
           y,
           z,
           urlTemplate,
           createdAt: Date.now(),
         };
-        // console.log('tileInfo', tileInfo);
+
         downloadTile(url)
           .then((dl) => saveTile(tileInfo, dl))
-          .then(() => console.debug(`Saved ${url} in idb`));
+          .then(() => console.log(`Saved ${url} in idb`));
       });
     });
-
   }
 
   // initOfflineTiles(urlTemplate: string) {
@@ -181,7 +187,6 @@ export class MapViewComponent implements AfterViewInit {
   //     getStorageInfo(urlTemplate).then((tiles) =>
   //       getStoredTilesAsJson(this.offlineLayer, tiles)
   //     );
-
 
   //   const addStorageLayer = () => {
   //     getGeoJsonData().then((geojson) => {
@@ -195,9 +200,6 @@ export class MapViewComponent implements AfterViewInit {
   //       }, 4000)
 
   //     });
-
-
-
 
   //   }
   //   this.offlineLayer.on('tileload', () => {
@@ -261,8 +263,6 @@ export class MapViewComponent implements AfterViewInit {
     } else {
       this.mapLayers.push(geoPosts);
     }
-
-    console.log('mapLayers', this.mapLayers);
 
     if (posts.results.length) {
       this.mapFitToBounds = geoPosts.getBounds();
