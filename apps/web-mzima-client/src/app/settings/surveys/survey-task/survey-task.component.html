@@ -231,9 +231,11 @@
             <mat-slide-toggle [(ngModel)]="survey.hide_location" name="import-to-survey">
               {{ 'survey.hide_location_information' | translate }}
             </mat-slide-toggle>
-            <p class="toggle__description">
-              {{ 'survey.hide_location_information_desc' | translate }}
-            </p>
+            <p
+              class="toggle__description"
+              [translate]="'survey.hide_location_information_desc'"
+              [translateParams]="{ precision: 100 }"
+            ></p>
           </div>
           <div class="toggle" *ngIf="anonymiseReportersEnabled">
             <mat-slide-toggle [(ngModel)]="survey.hide_time" name="import-to-survey">
