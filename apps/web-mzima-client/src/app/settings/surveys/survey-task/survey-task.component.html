@@ -234,7 +234,7 @@
             <p
               class="toggle__description"
               [translate]="'survey.hide_location_information_desc'"
-              [translateParams]="{ precision: 100 }"
+              [translateParams]="{ precision: locationPrecision }"
             ></p>
           </div>
           <div class="toggle" *ngIf="anonymiseReportersEnabled">
