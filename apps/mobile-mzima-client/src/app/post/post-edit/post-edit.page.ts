@@ -528,6 +528,7 @@ export class PostEditPage {
     } catch (error: any) {
       this.toastService.presentToast({
         message: error,
+        layout: 'stacked',
         duration: 3000,
       });
       console.log(error);

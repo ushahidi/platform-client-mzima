@@ -13,7 +13,7 @@ import {
 } from 'leaflet';
 import { mapHelper } from '@helpers';
 import { GeoJsonPostsResponse, PostsService } from '@mzima-client/sdk';
-import { DatabaseService, SessionService } from '@services';
+import { DatabaseService, SessionService, ToastService } from '@services';
 import { MapConfigInterface } from '@models';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -46,6 +46,7 @@ export class MapViewComponent implements AfterViewInit {
     private sessionService: SessionService,
     private router: Router,
     private databaseService: DatabaseService,
+    private toastService: ToastService,
   ) {
     const mediaDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
     mediaDarkMode.addEventListener('change', (ev) => this.switchMode(ev));
@@ -117,8 +118,13 @@ export class MapViewComponent implements AfterViewInit {
           await this.databaseService.set(STORAGE_KEYS.GEOJSONPOSTS, postsResponse);
           this.geoJsonDataProcessor(postsResponse);
         },
-        error: async (err) => {
-          if (err.message.match(/Http failure response for/)) {
+        error: async ({ message }) => {
+          this.toastService.presentToast({
+            message,
+            layout: 'stacked',
+            duration: 3000,
+          });
+          if (message.match(/Http failure response for/)) {
             const posts = await this.databaseService.get(STORAGE_KEYS.GEOJSONPOSTS);
             if (posts) {
               this.geoJsonDataProcessor(posts);

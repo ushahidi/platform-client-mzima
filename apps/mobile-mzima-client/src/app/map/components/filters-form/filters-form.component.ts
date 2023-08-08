@@ -162,17 +162,23 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
   }
 
   public initFilters(): void {
-    const storageFilters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'))!;
+    const storageFilters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'));
 
     if (storageFilters) {
-      this.activeFilters = JSON.parse(storageFilters!);
+      this.activeFilters = JSON.parse(storageFilters);
+    }
 
-      this.filters.map((f) => {
-        if (f.name !== 'saved-filters') {
-          f.value = this.activeFilters[f.name];
-          this.updateFilterSelectedText(f);
-        }
-      });
+    this.filters.map((f) => {
+      if (f.name !== 'saved-filters') {
+        f.value =
+          this.activeFilters && this.activeFilters[f.name]
+            ? this.activeFilters[f.name]
+            : this.getFilterDefaultValue(f.name);
+        this.updateFilterSelectedText(f);
+      }
+    });
+
+    if (this.activeFilters) {
       this.applyFilters();
     }
 
@@ -545,6 +551,11 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
       case 'date':
         if (!filter.value?.start || !filter.value?.start) {
           filter.selectedCount = 'All Time';
+        } else if (
+          dateHelper.toUTC(filter.value.start, 'DD MMM') ===
+          dateHelper.toUTC(filter.value.end, 'DD MMM')
+        ) {
+          filter.selectedCount = `${dateHelper.toUTC(filter.value.end, 'DD MMM')}`;
         } else {
           filter.selectedCount = `
             ${dateHelper.toUTC(filter.value.start, 'DD MMM')}

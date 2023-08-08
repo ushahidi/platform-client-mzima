@@ -23,6 +23,7 @@
         <ng-container *ngIf="post.source !== 'Twitter'">
           <app-post-content
             [postContent]="post.post_content!"
+            [postStatus]="post.status!"
             [categories]="post.categories!"
             [isConnection]="isConnection"
             [videoUrls]="videoUrls"
@@ -51,9 +52,11 @@
             </ion-text>
 
             <ion-text color="medium" class="post__info-item">
-              <ng-container *ngIf="post.status === 'published'">Published</ng-container>
-              <ng-container *ngIf="post.status === 'draft'">Under review</ng-container>
-              <ng-container *ngIf="post.status === 'archived'">Archived</ng-container>
+              <ng-container [ngSwitch]="post.status">
+                <ng-container *ngSwitchCase="'published'">Published</ng-container>
+                <ng-container *ngSwitchCase="'draft'">Under review</ng-container>
+                <ng-container *ngSwitchCase="'archived'">Archived</ng-container>
+              </ng-container>
             </ion-text>
 
             <ion-text color="medium" class="post__info-item">via {{ post.source }}</ion-text>
