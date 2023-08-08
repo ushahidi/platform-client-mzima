@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
+import { Permissions } from '@enums';
 import { searchFormHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -71,6 +72,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public itemsPerPage = 20;
   private postDetailsModal: MatDialogRef<PostDetailsModalComponent>;
   public isMainFiltersOpen: boolean;
+  public isManagePosts: boolean;
 
   constructor(
     protected override router: Router,
@@ -189,6 +191,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   ngOnInit() {
     this.getUserData();
+    this.checkPermission();
     this.eventBusListeners();
   }
 
@@ -231,6 +234,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           this.editPost(post);
         },
       });
+  }
+
+  private checkPermission() {
+    this.isManagePosts = this.user.permissions?.includes(Permissions.ManagePosts) ?? false;
   }
 
   loadData(): void {
