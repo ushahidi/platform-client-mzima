@@ -76,7 +76,7 @@
         </mzima-client-button>
       </div>
 
-      <div cdkDropList class="fields-list" *ngIf="taskFields?.length; else noFields">
+      <div cdkDropList class="fields-list" *ngIf="taskFields?.length">
         <div
           class="field-item"
           *ngFor="let field of nonDraggableFields | sortByField : 'priority' : 'asc'; let i = index"
