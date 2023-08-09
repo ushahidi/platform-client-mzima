@@ -97,7 +97,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       );
 
       // TODO: remove me after testing on dev
-      console.log('💬 post task modify:', this.post);
+      // console.log('💬 post task modify:', this.post);
     }
   }
 
