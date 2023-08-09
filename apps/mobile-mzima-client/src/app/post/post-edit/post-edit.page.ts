@@ -859,4 +859,9 @@ export class PostEditPage {
   public getDate(value: any, format: string): string {
     return dateHelper.getDateWithTz(value, format);
   }
+
+  public clearField(event: any, key: string) {
+    event.stopPropagation();
+    this.form.patchValue({ [key]: null });
+  }
 }
