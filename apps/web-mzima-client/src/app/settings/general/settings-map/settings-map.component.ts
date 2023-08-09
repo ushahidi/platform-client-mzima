@@ -33,7 +33,7 @@ export class SettingsMapComponent implements OnInit {
   mapReady = false;
   maxZoom = 18;
   minZoom = 0;
-  baseLayers = Object.keys(mapHelper.getMapLayers().baselayers);
+  baseLayers = Object.values(mapHelper.getMapLayers().baselayers);
 
   public geocoderControl: any;
   public queryLocation: string = '';
@@ -158,7 +158,13 @@ export class SettingsMapComponent implements OnInit {
   private setCoordinates(lat: number, lon: number) {
     this.mapConfig.default_view!.lat = lat;
     this.mapConfig.default_view!.lon = lon;
-    this.updateMapPreview();
     this.addMarker();
+    this.updateMapPreview();
+  }
+
+  public onZoomChange(): void {
+    if (this.map) {
+      this.map.setZoom(this.mapConfig.default_view!.zoom);
+    }
   }
 }

@@ -9,6 +9,6 @@ export const emailValidate = () => {
 // };
 
 export const alphaNumeric = (value: string) => {
-  const pattern = XRegExp('^[\\p{L}\\p{N}\\s\\-".?!;,@\'()“”«»]*$', 'gu');
+  const pattern = XRegExp('^[\\p{L}\\p{N}\\s\\-".?!;:,@\'()“”«»\\\\/|]*$', 'gu');
   return pattern.test(value);
 };
