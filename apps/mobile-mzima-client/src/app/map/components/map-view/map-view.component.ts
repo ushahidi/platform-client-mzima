@@ -153,30 +153,43 @@ export class MapViewComponent implements AfterViewInit {
 
       // reset tile.src, to not start download yet
       tile.src = '';
-      getBlobByKey(url).then((blob) => {
-        if (blob) {
-          tile.src = URL.createObjectURL(blob);
-          console.log(`Loaded ${url} from idb`);
-          return;
-        }
-        tile.src = url;
-        // create helper function for it?
-        const { x, y, z } = event.coords;
-        const { _url: urlTemplate } = event.target;
-        const tileInfo = {
-          key: url,
-          url: url,
-          x,
-          y,
-          z,
-          urlTemplate,
-          createdAt: Date.now(),
-        };
+      getBlobByKey(url).then(
+        (blob) => {
+          console.log('blob>>>>>', blob);
+          if (blob) {
+            tile.src = URL.createObjectURL(blob);
+            console.log(`Loaded ${url} from idb`);
+            return;
+          }
+          tile.src = url;
+          // create helper function for it?
+          const { x, y, z } = event.coords;
+          const { _url: urlTemplate } = event.target;
+          const tileInfo = {
+            key: url,
+            url: url,
+            x,
+            y,
+            z,
+            urlTemplate,
+            createdAt: Date.now(),
+          };
 
-        downloadTile(url)
-          .then((dl) => saveTile(tileInfo, dl))
-          .then(() => console.log(`Saved ${url} in idb`));
-      });
+          console.log('SAVE THE url', url);
+
+          downloadTile(url)
+            .then(
+              (dl) => saveTile(tileInfo, dl),
+              (eee) => {
+                console.log('downloadTile error', eee);
+              },
+            )
+            .then(() => console.log(`Saved ${url} in idb`));
+        },
+        (err) => {
+          console.log('Failed BLOB>>>>>', err);
+        },
+      );
     });
   }
 
