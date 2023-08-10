@@ -43,6 +43,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   @Input() public required: boolean;
   @Input() public color = 'var(--color-neutral-100)';
   @Input() public type = 'default';
+  @Input() public isEditPost: boolean = false;
   @Output() locationChange = new EventEmitter();
   public emptyFieldLat = false;
   public emptyFieldLng = false;
@@ -74,7 +75,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.mapConfig = this.getMapConfigurations();
 
-    if (!this.location.lat) {
+    if (!this.isEditPost && !this.location.lat) {
       this.location.lat = this.mapConfig.default_view!.lat;
       this.location.lng = this.mapConfig.default_view!.lon;
     }

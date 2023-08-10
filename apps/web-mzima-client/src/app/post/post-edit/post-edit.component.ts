@@ -76,6 +76,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private relationConfigSource: any;
   private relationConfigKey: string;
   private isSearching = false;
+  public isEditPost = false;
   public relatedPosts: PostResult[];
   public relationSearch: string;
   public selectedRelatedPost: any;
@@ -240,6 +241,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         this.initialFormData = this.form.value;
 
         if (updateContent) {
+          this.isEditPost = true;
           this.tasks = postHelpers.markCompletedTasks(this.tasks, this.post);
 
           this.tasks.forEach((task, index) => {
