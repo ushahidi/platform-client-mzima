@@ -86,7 +86,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private postId?: number;
   formInfo: any;
 
-  private post?: any;
+  public post?: any;
   public atLeastOneFieldHasValidationError: boolean;
   public formValidator = new formValidators.FormValidator();
   public locationRequired = false;
