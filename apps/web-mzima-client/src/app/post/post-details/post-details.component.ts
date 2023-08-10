@@ -97,9 +97,14 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   }
 
   private getData(post: PostResult): void {
-    this.preparingMediaField((post.post_content as PostContent[])[0].fields);
-    this.preparingSafeVideoUrls((post.post_content as PostContent[])[0].fields);
-    this.preparingRelatedPosts((post.post_content as PostContent[])[0].fields);
+    for (const content of post.post_content as PostContent[]) {
+      this.preparingMediaField(content.fields);
+      this.preparingSafeVideoUrls(content.fields);
+      this.preparingRelatedPosts(content.fields);
+    }
+    // this.preparingMediaField((post.post_content as PostContent[])[0].fields);
+    // this.preparingSafeVideoUrls((post.post_content as PostContent[])[0].fields);
+    // this.preparingRelatedPosts((post.post_content as PostContent[])[0].fields);
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {

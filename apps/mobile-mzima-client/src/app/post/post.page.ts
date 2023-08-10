@@ -1,13 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import {
-  MediaService,
-  PostContent,
-  PostContentField,
-  PostResult,
-  PostsService,
-} from '@mzima-client/sdk';
+import { PostContent, PostContentField, PostResult, PostsService } from '@mzima-client/sdk';
 import { LatLon } from '@models';
 import { DatabaseService, DeploymentService, NetworkService, SessionService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -41,7 +35,6 @@ export class PostPage implements OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private postsService: PostsService,
-    private mediaService: MediaService,
     protected sessionService: SessionService,
     private databaseService: DatabaseService,
     private sanitizer: DomSanitizer,
@@ -93,13 +86,28 @@ export class PostPage implements OnDestroy {
       this.isPostLoading = false;
       this.checkPermissions();
       this.getData(this.post);
+      this.saveOpenedPostToDb(this.post);
+    }
+  }
+
+  private async saveOpenedPostToDb(post: PostResult) {
+    const dataFromDb = await this.databaseService.get(STORAGE_KEYS.POSTS);
+    if (
+      dataFromDb?.results.length &&
+      !dataFromDb.results.some((el: PostResult) => el.id === post.id)
+    ) {
+      dataFromDb.results.push(post);
+      dataFromDb.results.sort((a: PostResult, b: PostResult) => a.id - b.id);
+      dataFromDb.count = dataFromDb.results.length;
+      await this.databaseService.set(STORAGE_KEYS.POSTS, dataFromDb);
     }
   }
 
   private getData(post: PostResult): void {
-    this.preparingMediaField((post.post_content as PostContent[])[0].fields);
-    this.preparingSafeVideoUrls((post.post_content as PostContent[])[0].fields);
-    this.preparingRelatedPosts((post.post_content as PostContent[])[0].fields);
+    for (const content of post.post_content as PostContent[]) {
+      this.preparingSafeVideoUrls(content.fields);
+      this.preparingRelatedPosts(content.fields);
+    }
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {
@@ -118,31 +126,9 @@ export class PostPage implements OnDestroy {
       });
   }
 
-  private preparingMediaField(fields: PostContentField[]): void {
-    fields
-      .filter((field: any) => field.type === 'media')
-      .map(async (mediaField) => {
-        if (mediaField.value && mediaField.value?.value) {
-          const media = await this.getPostMedia(mediaField.value.value);
-          const { original_file_url: originalFileUrl, caption } = media;
-          mediaField.value.photoUrl = originalFileUrl;
-          mediaField.value.caption = caption;
-        }
-      });
-  }
-
   private async getPostInformation(postId: number): Promise<any> {
     try {
       return await lastValueFrom(this.postsService.getById(postId));
-    } catch (err) {
-      console.error(err);
-      return err;
-    }
-  }
-
-  private async getPostMedia(mediaId: string): Promise<any> {
-    try {
-      return await lastValueFrom(this.mediaService.getById(mediaId));
     } catch (err) {
       console.error(err);
       return err;
