@@ -337,7 +337,7 @@
                 [zoom]="12"
                 [location]="form.get(field.key)?.value"
                 [required]="locationRequired"
-                [type]="post.source?.toLowerCase() || 'default'"
+                [type]="post?.source?.toLowerCase() || 'default'"
                 (locationChange)="changeLocation($event, field.key)"
               ></app-location-select>
             </ng-container>
