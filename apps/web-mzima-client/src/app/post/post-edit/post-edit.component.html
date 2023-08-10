@@ -335,6 +335,7 @@
             <ng-container *ngIf="field.input === 'location'">
               <app-location-select
                 [zoom]="12"
+                [isEditPost]="isEditPost"
                 [location]="form.get(field.key)?.value"
                 [required]="locationRequired"
                 (locationChange)="changeLocation($event, field.key)"
