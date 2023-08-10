@@ -1,5 +1,4 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { Dialog } from '@capacitor/dialog';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
@@ -9,6 +8,7 @@ import {
   getBlobByKey,
   downloadTile,
   saveTile,
+  ControlSaveTiles,
 } from 'leaflet.offline';
 import {
   FitBoundsOptions,
@@ -53,6 +53,7 @@ export class MapViewComponent implements AfterViewInit {
   offlineLayer: TileLayerOffline;
   savedOfflineTiles = 0;
   onlineLayer: TileLayer;
+  saveControl: ControlSaveTiles;
 
   constructor(
     private postsService: PostsService,
@@ -125,27 +126,26 @@ export class MapViewComponent implements AfterViewInit {
     // For highlighting Saved layers in DB
     // this.initOfflineTiles(mapHelper.getMapLayer(this.baseLayer, this.isDarkMode).url);
 
-    const saveControl = savetiles(this.offlineLayer, {
+    this.saveControl = savetiles(this.offlineLayer, {
       position: 'bottomleft',
       alwaysDownload: false,
       // maxZoom: 14,
       confirm: async (layer: any, successCallback: any) => {
-        console.log('SAVING: ', layer._tilesforSave.length);
         successCallback();
       },
       confirmRemoval: async (layer: any, successCallback: any) => {
-        const { value } = await Dialog.confirm({
-          title: 'Offline',
-          message: `Remove all the tiles?`,
-        });
-
-        if (value) {
-          successCallback();
-        }
+        console.log('***Clearing Storage***');
+        successCallback();
       },
     });
 
-    saveControl.addTo(this.map);
+    this.saveControl.addTo(this.map);
+
+    if (this.offlineLayer) {
+      this.offlineLayer.on('storagesize', (event: any) => {
+        this.savedOfflineTiles = event.storagesize;
+      });
+    }
 
     this.onlineLayer.on('tileloadstart', (event: any) => {
       const { tile } = event;
@@ -178,16 +178,20 @@ export class MapViewComponent implements AfterViewInit {
             .then(
               (dl) => saveTile(tileInfo, dl),
               (dTileErr) => {
-                console.log('DownloadTile error', dTileErr);
+                console.log('Download Tile error', dTileErr);
               },
             )
             .then(() => console.log(`Saved ${url} in idb`));
         },
         (err) => {
-          console.log('Failed BLOB>>>>>', err);
+          console.log('Failed to get Blob', err);
         },
       );
     });
+  }
+
+  clearStorage() {
+    this.saveControl._rmTiles();
   }
 
   // initOfflineTiles(urlTemplate: string) {
