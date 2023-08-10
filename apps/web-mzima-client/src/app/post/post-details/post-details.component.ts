@@ -99,7 +99,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       this.post.content = postHelpers.replaceNewlinesInString(this.post.content);
 
       // TODO: remove me after testing on dev
-      console.log('💬 post task modify:', this.post);
+      // console.log('💬 post task modify:', this.post);
     }
   }
 
