@@ -29,7 +29,7 @@ export class PostPage implements OnDestroy {
   public isMediaLoading: boolean;
   public location: LatLon;
   public permissions: string[] = [];
-  private user: { id?: string; role?: string; permissions?: any } = {
+  public user: { id?: string | number; role?: string; permissions?: any } = {
     id: undefined,
     role: undefined,
     permissions: undefined,

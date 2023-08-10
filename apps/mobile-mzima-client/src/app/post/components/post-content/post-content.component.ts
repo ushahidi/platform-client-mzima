@@ -9,6 +9,8 @@ import { dateHelper } from '@helpers';
 })
 export class PostContentComponent {
   @Input() postContent: PostContent[];
+  @Input() userId: string | number;
+  @Input() postUserId: number;
   @Input() postStatus: string;
   @Input() categories: CategoryInterface[];
   @Input() isConnection: boolean;

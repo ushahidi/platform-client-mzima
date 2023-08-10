@@ -34,7 +34,8 @@
     <ng-container *ngFor="let post_content of post.post_content; let i = index">
       <ng-container
         *ngIf="
-          this.isManagePosts ||
+          isManagePosts ||
+          userId === post?.user_id ||
           (i === 0 && post_content?.completed) ||
           (i !== 0 &&
             post_content?.completed &&
