@@ -155,7 +155,6 @@ export class MapViewComponent implements AfterViewInit {
       tile.src = '';
       getBlobByKey(url).then(
         (blob) => {
-          console.log('blob>>>>>', blob);
           if (blob) {
             tile.src = URL.createObjectURL(blob);
             console.log(`Loaded ${url} from idb`);
@@ -175,13 +174,11 @@ export class MapViewComponent implements AfterViewInit {
             createdAt: Date.now(),
           };
 
-          console.log('SAVE THE url', url);
-
           downloadTile(url)
             .then(
               (dl) => saveTile(tileInfo, dl),
-              (eee) => {
-                console.log('downloadTile error', eee);
+              (dTileErr) => {
+                console.log('DownloadTile error', dTileErr);
               },
             )
             .then(() => console.log(`Saved ${url} in idb`));
