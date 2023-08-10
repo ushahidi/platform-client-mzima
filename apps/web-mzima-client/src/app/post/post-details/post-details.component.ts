@@ -10,6 +10,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { Permissions } from '@enums';
 import {
   CategoryInterface,
   MediaService,
@@ -45,6 +46,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public postId: number;
   public videoUrls: any[] = [];
   public isPostLoading: boolean = true;
+  public isManagePosts: boolean = false;
 
   constructor(
     protected override sessionService: SessionService,
@@ -59,6 +61,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   ) {
     super(sessionService, breakpointService);
     this.getUserData();
+    this.checkPermission();
 
     this.route.params.subscribe((params) => {
       if (params['id']) {
@@ -74,6 +77,10 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   }
 
   loadData(): void {}
+
+  private checkPermission() {
+    this.isManagePosts = this.user.permissions?.includes(Permissions.ManagePosts) ?? false;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post']) {
@@ -97,7 +104,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       );
 
       // TODO: remove me after testing on dev
-      console.log('💬 post task modify:', this.post);
+      // console.log('💬 post task modify:', this.post);
     }
   }
 

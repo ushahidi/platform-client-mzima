@@ -29,13 +29,15 @@ export class PostPage implements OnDestroy {
   public isMediaLoading: boolean;
   public location: LatLon;
   public permissions: string[] = [];
-  private user: { id?: string; role?: string } = {
+  private user: { id?: string; role?: string; permissions?: any } = {
     id: undefined,
     role: undefined,
+    permissions: undefined,
   };
   public isConnection = true;
   public videoUrls: any[] = [];
   private queryParams: Params;
+  public isManagePosts: boolean = false;
 
   constructor(
     private networkService: NetworkService,
@@ -49,10 +51,11 @@ export class PostPage implements OnDestroy {
     private deploymentService: DeploymentService,
   ) {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
-      next: ({ userId, role }) => {
+      next: ({ userId, role, permissions }) => {
         this.user = {
           id: userId ? String(userId) : undefined,
           role,
+          permissions,
         };
         this.checkPermissions();
       },
@@ -182,6 +185,8 @@ export class PostPage implements OnDestroy {
     if (this.user.role === 'admin') {
       this.permissions = ['add_to_collection', 'edit', 'change_status'];
     }
+
+    this.isManagePosts = this.user.permissions?.includes('Manage Posts') ?? false;
   }
 
   public back(): void {

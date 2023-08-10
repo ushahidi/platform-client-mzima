@@ -45,7 +45,7 @@ export class MapWithMarkerComponent implements OnInit {
       zoomControl: false,
       layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
       center: [this.marker.lat, this.marker.lon],
-      zoom: 15,
+      zoom: this.mapConfig.default_view!.zoom,
     };
 
     const mapMarker = marker(

@@ -14,6 +14,7 @@ export class PostContentComponent {
   @Input() isConnection: boolean;
   @Input() videoUrls: any[] = [];
   @Input() isMediaLoading: boolean;
+  @Input() isManagePosts: boolean;
 
   public isParentCategory(
     categories: CategoryInterface[] | undefined,

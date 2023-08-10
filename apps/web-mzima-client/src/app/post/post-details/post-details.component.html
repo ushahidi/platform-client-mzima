@@ -31,12 +31,15 @@
       {{ post.content }}
     </div>
 
-    <ng-container *ngFor="let post_content of post.post_content">
+    <ng-container *ngFor="let post_content of post.post_content; let i = index">
       <ng-container
         *ngIf="
-          post_content?.completed &&
-          ((post_content?.show_when_published && post.status === 'published') ||
-            !post_content?.show_when_published)
+          this.isManagePosts ||
+          (i === 0 && post_content?.completed) ||
+          (i !== 0 &&
+            post_content?.completed &&
+            ((post_content?.show_when_published && post.status === 'published') ||
+              !post_content?.show_when_published))
         "
       >
         <ng-container *ngFor="let field of post_content.fields | sortByField : 'priority' : 'asc'">
