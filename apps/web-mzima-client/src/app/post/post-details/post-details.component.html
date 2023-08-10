@@ -28,15 +28,17 @@
     <h2 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h2>
 
     <div class="post__description" *ngIf="post.title?.length && post.content?.length">
-      {{ post.content }}
+      <p [innerHTML]="post.content"></p>
     </div>
 
-    <ng-container *ngFor="let post_content of post.post_content">
+    <ng-container *ngFor="let post_content of post.post_content; let i = index">
       <ng-container
         *ngIf="
-          post_content?.completed &&
-          ((post_content?.show_when_published && post.status === 'published') ||
-            !post_content?.show_when_published)
+          (i === 0 && post_content?.completed) ||
+          (i !== 0 &&
+            post_content?.completed &&
+            ((post_content?.show_when_published && post.status === 'published') ||
+              !post_content?.show_when_published))
         "
       >
         <ng-container *ngFor="let field of post_content.fields | sortByField : 'priority' : 'asc'">
@@ -99,7 +101,7 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'textarea'">
-              <p>{{ field.value.value || '-' }}</p>
+              <p [innerHTML]="field.value.value"></p>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'checkbox'">

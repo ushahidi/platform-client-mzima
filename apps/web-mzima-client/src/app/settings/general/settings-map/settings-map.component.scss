@@ -82,3 +82,9 @@
     }
   }
 }
+
+::ng-deep {
+  .leaflet-control-geocoder {
+    display: none;
+  }
+}

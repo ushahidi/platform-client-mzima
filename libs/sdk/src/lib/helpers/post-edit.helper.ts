@@ -1,4 +1,5 @@
 import { AbstractControl, FormControl } from '@angular/forms';
+import { PostContent } from '../models';
 
 export function MustBeTrueValidator(control: AbstractControl) {
   return control.value ? null : { mustBeTrue: { value: control.value } };
@@ -23,5 +24,23 @@ export const markCompletedTasks = (tasks: any[], post: any) => {
       return { ...task, completed: matchedStage ? matchedStage.completed === 1 : true };
     }
     return task;
+  });
+};
+
+export const replaceNewlinesInString = (input: string): string => {
+  return input.replace(/\n/g, '<br>');
+};
+
+export const replaceNewlinesWithBreaks = (data: PostContent[]) => {
+  return data.map((item: PostContent) => {
+    if (item.fields) {
+      item.fields = item.fields.map((field) => {
+        if (field.value && typeof field.value.value === 'string') {
+          field.value.value = replaceNewlinesInString(field.value.value);
+        }
+        return field;
+      });
+    }
+    return item;
   });
 };
