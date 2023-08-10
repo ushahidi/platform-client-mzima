@@ -41,6 +41,8 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   @Input() public zoom: number;
   @Input() public location: any;
   @Input() public required: boolean;
+  @Input() public color = 'var(--color-neutral-100)';
+  @Input() public type = 'default';
   @Input() public isEditPost: boolean = false;
   @Output() locationChange = new EventEmitter();
   public emptyFieldLat = false;
@@ -157,7 +159,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     }
     this.mapMarker = marker(this.location, {
       draggable: true,
-      icon: pointIcon(this.mapConfig.default_view!.color),
+      icon: pointIcon(this.color, this.type === 'web' ? 'default' : this.type),
     }).addTo(this.map);
 
     this.mapMarker.on('dragend', (e) => {
