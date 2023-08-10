@@ -104,9 +104,11 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   }
 
   private getData(post: PostResult): void {
-    this.preparingMediaField((post.post_content as PostContent[])[0].fields);
-    this.preparingSafeVideoUrls((post.post_content as PostContent[])[0].fields);
-    this.preparingRelatedPosts((post.post_content as PostContent[])[0].fields);
+    (post.post_content as PostContent[]).forEach((content) => {
+      this.preparingMediaField(content.fields);
+      this.preparingSafeVideoUrls(content.fields);
+      this.preparingRelatedPosts(content.fields);
+    });
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {
