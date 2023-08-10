@@ -230,6 +230,7 @@
             class="feed__load-more"
             *ngIf="
               !isLoading &&
+              mode === FeedMode.Post &&
               params.page !== undefined &&
               params.limit !== undefined &&
               params.page * params.limit < total
