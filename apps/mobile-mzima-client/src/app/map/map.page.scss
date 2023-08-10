@@ -33,3 +33,13 @@
   --button-border-radius: 16px;
   margin-bottom: var(--ion-padding);
 }
+
+.clear-storage-button {
+  bottom: 100%;
+  --size: 56px;
+  --icon-size: 24px;
+  position: absolute;
+  left: var(--ion-padding);
+  --button-border-radius: 16px;
+  margin-bottom: var(--ion-padding);
+}
