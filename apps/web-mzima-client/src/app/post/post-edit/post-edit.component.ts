@@ -799,4 +799,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   public generateSecurityTrustUrl(unsafeUrl: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
   }
+
+  public clearField(event: any, key: string) {
+    event.stopPropagation();
+    this.form.patchValue({ [key]: null });
+  }
 }

@@ -24,7 +24,7 @@
         </ng-container>
 
         <ng-container *ngIf="field.input === 'textarea'">
-          <p>{{ field.value.value }}</p>
+          <p [innerHTML]="field.value.value"></p>
         </ng-container>
 
         <ng-container *ngIf="field.input === 'tags'">
