@@ -29,7 +29,7 @@ export class PostPage implements OnDestroy {
   public isMediaLoading: boolean;
   public location: LatLon;
   public permissions: string[] = [];
-  public user: { id?: string | number; role?: string; permissions?: any } = {
+  public user: { id?: number; role?: string; permissions?: any } = {
     id: undefined,
     role: undefined,
     permissions: undefined,
@@ -53,7 +53,7 @@ export class PostPage implements OnDestroy {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: ({ userId, role, permissions }) => {
         this.user = {
-          id: userId ? String(userId) : undefined,
+          id: userId ? Number(userId) : undefined,
           role,
           permissions,
         };
@@ -181,7 +181,7 @@ export class PostPage implements OnDestroy {
     if (this.user.role === 'member') {
       this.permissions = ['add_to_collection'];
     }
-    if (this.user.role === 'admin' || this.user.id === String(this.post?.user_id)) {
+    if (this.user.role === 'admin' || this.user.id === this.post?.user_id) {
       this.permissions = ['add_to_collection', 'edit'];
     }
     if (this.user.role === 'admin') {

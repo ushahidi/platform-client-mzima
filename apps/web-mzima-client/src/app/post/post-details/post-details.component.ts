@@ -62,6 +62,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     super(sessionService, breakpointService);
     this.getUserData();
     this.checkPermission();
+    this.userId = Number(this.user.userId);
 
     this.route.params.subscribe((params) => {
       if (params['id']) {
