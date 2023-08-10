@@ -39,7 +39,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class LocationSelectComponent implements OnInit, AfterViewInit {
   @Input() public center: LatLngLiteral;
   @Input() public zoom: number;
-  @Input() public location: LatLngLiteral;
+  @Input() public location: any;
   @Input() public required: boolean;
   @Output() locationChange = new EventEmitter();
   public emptyFieldLat = false;
@@ -209,6 +209,14 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   }
 
   public onFocusOut() {
+    this.checkErrors();
+  }
+
+  public clearLocationField() {
+    this.location = {
+      lat: '',
+      lng: '',
+    };
     this.checkErrors();
   }
 }
