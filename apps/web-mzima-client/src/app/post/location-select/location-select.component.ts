@@ -72,6 +72,11 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.mapConfig = this.getMapConfigurations();
 
+    if (!this.location.lat) {
+      this.location.lat = this.mapConfig.default_view!.lat;
+      this.location.lng = this.mapConfig.default_view!.lon;
+    }
+
     const currentLayer =
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
@@ -83,7 +88,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
         this.location?.lat || this.mapConfig.default_view!.lat,
         this.location?.lng || this.mapConfig.default_view!.lon,
       ],
-      zoom: this.zoom || this.mapConfig.default_view!.zoom,
+      zoom: this.mapConfig.default_view!.zoom || this.zoom,
     };
     this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
 
