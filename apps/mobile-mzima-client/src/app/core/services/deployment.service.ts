@@ -65,7 +65,29 @@ export class DeploymentService {
 
   public addDeployments(data: Deployment[]) {
     const deployments = this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENTS, 'array');
-    this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENTS, [...data, ...deployments], 'array');
+    const uniqueData: Deployment[] = this.getUniqueItems(data, deployments);
+    const filteredArray: Deployment[] = this.removeDuplicates([...uniqueData, ...deployments]);
+    this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENTS, filteredArray, 'array');
+  }
+
+  private getUniqueItems(data: Deployment[], deployments: Deployment[]): Deployment[] {
+    return data.filter(
+      (itemData: Deployment) =>
+        !deployments.some((itemDeploy: Deployment) => itemData.id === itemDeploy.id),
+    );
+  }
+
+  public removeDuplicates(deployments: Deployment[]): Deployment[] {
+    return deployments.filter(
+      (item, index, array) => index === array.findIndex((deployment) => deployment.id === item.id),
+    );
+  }
+
+  public hasDuplicates(deployments: Deployment[]): boolean {
+    return deployments.some(
+      (item: Deployment, index: number, array: Deployment[]) =>
+        array.findIndex((deployment) => deployment.id === item.id) !== index,
+    );
   }
 
   public getDeployments(): any[] {
