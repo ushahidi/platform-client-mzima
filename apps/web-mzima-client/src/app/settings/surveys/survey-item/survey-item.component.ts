@@ -288,7 +288,11 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
         },
         error: ({ error }) => {
           this.submitted = false;
-          this.notification.showError(JSON.stringify(error.name[0]));
+          if (error.errors.status === 422) {
+            this.notification.showError(JSON.stringify(error.errors.message));
+          } else {
+            this.notification.showError(JSON.stringify(error.name[0]));
+          }
         },
       });
     } else {
