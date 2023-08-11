@@ -43,7 +43,6 @@ import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
-import { AlphanumericValidatorValidator } from '../../core/validators';
 import { PhotoRequired } from '../../core/validators/photo-required';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -408,15 +407,11 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         }
         break;
       case 'description':
-        validators.push(Validators.minLength(2), AlphanumericValidatorValidator());
+        validators.push(Validators.minLength(2));
         if (field.required) validators.push(Validators.required);
         break;
       case 'title':
-        validators.push(
-          Validators.required,
-          Validators.minLength(2),
-          AlphanumericValidatorValidator(),
-        );
+        validators.push(Validators.required, Validators.minLength(2));
         break;
       case 'media':
         if (field.required) {
@@ -576,9 +571,12 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
           payload: result,
         });
       },
-      error: () => {
+      error: ({ error }) => {
         this.form.enable();
         this.submitted = false;
+        if (error.errors.status === 422) {
+          this.showMessage(`Failed to update a post. ${error.errors.message}`, 'error');
+        }
       },
       complete: async () => {
         await this.postComplete();
@@ -595,6 +593,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private createPost(postData: any) {
     this.postsService.post(postData).subscribe({
       error: ({ error }) => {
+        if (error.errors.status === 422) {
+          this.showMessage(`Failed to create a post. ${error.errors.message}`, 'error');
+        }
         if (error.errors[0].status === 403) {
           this.showMessage(`Failed to create a post. ${error.errors[0].message}`, 'error');
         }
