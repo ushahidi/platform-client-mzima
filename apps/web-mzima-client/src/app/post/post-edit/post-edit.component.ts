@@ -43,7 +43,6 @@ import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
-import { AlphanumericValidatorValidator } from '../../core/validators';
 import { PhotoRequired } from '../../core/validators/photo-required';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -408,15 +407,11 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         }
         break;
       case 'description':
-        validators.push(Validators.minLength(2), AlphanumericValidatorValidator());
+        validators.push(Validators.minLength(2));
         if (field.required) validators.push(Validators.required);
         break;
       case 'title':
-        validators.push(
-          Validators.required,
-          Validators.minLength(2),
-          AlphanumericValidatorValidator(),
-        );
+        validators.push(Validators.required, Validators.minLength(2));
         break;
       case 'media':
         if (field.required) {

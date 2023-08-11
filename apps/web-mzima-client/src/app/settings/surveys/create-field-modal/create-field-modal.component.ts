@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { surveyHelper, regexHelper } from '@helpers';
+import { surveyHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs';
 import { MultilevelSelectOption } from '../../../shared/components';
@@ -120,14 +120,8 @@ export class CreateFieldModalComponent implements OnInit {
   optionValidation(index: number) {
     const option = this.fieldOptions[index];
 
-    if (!regexHelper.alphaNumeric(option.value)) {
-      option.error = 'survey.special_characters_option';
-    } else {
-      const duplicates = this.fieldOptions.filter(
-        (e, i) => e.value === option.value && i !== index,
-      );
-      option.error = duplicates.length ? 'survey.duplicate_option' : '';
-    }
+    const duplicates = this.fieldOptions.filter((e, i) => e.value === option.value && i !== index);
+    option.error = duplicates.length ? 'survey.duplicate_option' : '';
   }
 
   public checkForSpecialOptions(): boolean {
