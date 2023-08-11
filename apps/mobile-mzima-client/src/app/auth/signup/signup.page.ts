@@ -3,9 +3,11 @@ import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/
 import { Router } from '@angular/router';
 import { CONST } from '@constants';
 import { fieldErrorMessages, regexHelper } from '@helpers';
-import { AuthService, DeploymentService } from '@services';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { AuthService, DeploymentService, SessionService } from '@services';
 import { emailExistsValidator } from '@validators';
 
+@UntilDestroy()
 @Component({
   selector: 'app-signup',
   templateUrl: 'signup.page.html',
@@ -33,7 +35,21 @@ export class SignupPage {
     private authService: AuthService,
     private router: Router,
     private deploymentService: DeploymentService,
-  ) {}
+    private sessionService: SessionService,
+  ) {
+    const siteConfig = this.sessionService.getSiteConfigurations();
+    if (siteConfig.private) {
+      this.router.navigate(['auth/login']);
+    }
+
+    this.sessionService.siteConfig$.pipe(untilDestroyed(this)).subscribe({
+      next: (config) => {
+        if (config.private) {
+          this.router.navigate(['auth/login']);
+        }
+      },
+    });
+  }
 
   public signUp(): void {
     const { name, email, password } = this.form.value;

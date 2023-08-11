@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
 import { Deployment } from '@mzima-client/sdk';
 import { Subject, debounceTime } from 'rxjs';
-import { AlertService, ConfigService, DeploymentService, EnvService } from '@services';
+import { AlertService, AuthService, ConfigService, DeploymentService, EnvService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -31,6 +31,7 @@ export class ChooseDeploymentComponent implements OnInit {
     private configService: ConfigService,
     private deploymentService: DeploymentService,
     private alertService: AlertService,
+    private authService: AuthService,
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: (query: string) => {
@@ -116,6 +117,7 @@ export class ChooseDeploymentComponent implements OnInit {
   }
 
   public chooseDeployment(deployment: any) {
+    this.authService.logout();
     this.deploymentService.setDeployment(deployment);
     this.envService.setDynamicBackendUrl();
     this.configService.initAllConfigurations();

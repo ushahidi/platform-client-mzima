@@ -8,7 +8,9 @@
 }
 
 .main {
+  display: flex;
   flex: 1 1 100%;
+  flex-direction: column;
 }
 
 .page-title {
@@ -21,8 +23,8 @@
 
 .form {
   display: flex;
+  flex: 1 1 100%;
   flex-direction: column;
-  min-height: calc(100% - 101px);
   justify-content: space-between;
 }
 
