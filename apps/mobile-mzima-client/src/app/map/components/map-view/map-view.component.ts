@@ -2,6 +2,15 @@ import { AfterViewInit, Component } from '@angular/core';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
+  tileLayerOffline,
+  savetiles,
+  TileLayerOffline,
+  getBlobByKey,
+  downloadTile,
+  saveTile,
+  ControlSaveTiles,
+} from 'leaflet.offline';
+import {
   FitBoundsOptions,
   geoJSON,
   LatLngBounds,
@@ -10,6 +19,7 @@ import {
   MarkerClusterGroup,
   MarkerClusterGroupOptions,
   tileLayer,
+  TileLayer,
 } from 'leaflet';
 import { mapHelper } from '@helpers';
 import { GeoJsonPostsResponse, PostsService } from '@mzima-client/sdk';
@@ -40,6 +50,10 @@ export class MapViewComponent implements AfterViewInit {
   private isDarkMode = false;
   private baseLayer: 'streets' | 'satellite' | 'hOSM' | 'MapQuestAerial' | 'MapQuest' | 'dark';
   public isConnection = true;
+  offlineLayer: TileLayerOffline;
+  savedOfflineTiles = 0;
+  onlineLayer: TileLayer;
+  saveControl: ControlSaveTiles;
 
   constructor(
     private postsService: PostsService,
@@ -62,13 +76,15 @@ export class MapViewComponent implements AfterViewInit {
 
           this.baseLayer = this.mapConfig.default_view!.baselayer;
           const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
+          this.offlineLayer = tileLayerOffline(currentLayer.url, currentLayer.layerOptions);
+          this.onlineLayer = tileLayer(currentLayer.url, currentLayer.layerOptions);
 
           this.leafletOptions = {
-            minZoom: 3,
+            minZoom: 4,
             maxZoom: 17,
             scrollWheelZoom: true,
             zoomControl: false,
-            layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+            layers: [this.offlineLayer, this.onlineLayer],
             center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
             zoom: this.mapConfig.default_view!.zoom,
           };
@@ -107,7 +123,109 @@ export class MapViewComponent implements AfterViewInit {
 
   public onMapReady(map: Map) {
     this.map = map;
+
+    // For highlighting Saved layers in DB
+    // this.initOfflineTiles(mapHelper.getMapLayer(this.baseLayer, this.isDarkMode).url);
+
+    this.saveControl = savetiles(this.offlineLayer, {
+      position: 'bottomleft',
+      alwaysDownload: false,
+      // maxZoom: 14,
+      confirm: async (layer: any, successCallback: any) => {
+        successCallback();
+      },
+      confirmRemoval: async (layer: any, successCallback: any) => {
+        console.log('***Clearing Storage***');
+        successCallback();
+      },
+    });
+
+    this.saveControl.addTo(this.map);
+
+    if (this.offlineLayer) {
+      this.offlineLayer.on('storagesize', (event: any) => {
+        this.savedOfflineTiles = event.storagesize;
+      });
+    }
+
+    this.onlineLayer.on('tileloadstart', (event: any) => {
+      const { tile } = event;
+      const url = tile.src;
+
+      // reset tile.src, to not start download yet
+      tile.src = '';
+      getBlobByKey(url).then(
+        (blob) => {
+          if (blob) {
+            tile.src = URL.createObjectURL(blob);
+            console.log(`Loaded ${url} from idb`);
+            return;
+          }
+          tile.src = url;
+          // create helper function for it?
+          const { x, y, z } = event.coords;
+          const { _url: urlTemplate } = event.target;
+          const tileInfo = {
+            key: url,
+            url: url,
+            x,
+            y,
+            z,
+            urlTemplate,
+            createdAt: Date.now(),
+          };
+
+          downloadTile(url)
+            .then(
+              (dl) => saveTile(tileInfo, dl),
+              (dTileErr) => {
+                console.log('Download Tile error', dTileErr);
+              },
+            )
+            .then(() => console.log(`Saved ${url} in idb`));
+        },
+        (err) => {
+          console.log('Failed to get Blob', err);
+        },
+      );
+    });
   }
+
+  clearStorage() {
+    this.saveControl._rmTiles();
+  }
+
+  // initOfflineTiles(urlTemplate: string) {
+  //   let layer: any;
+
+  //   const getGeoJsonData = () =>
+  //     getStorageInfo(urlTemplate).then((tiles) =>
+  //       getStoredTilesAsJson(this.offlineLayer, tiles)
+  //     );
+
+  //   const addStorageLayer = () => {
+  //     getGeoJsonData().then((geojson) => {
+  //       layer = geoJSON(geojson).bindPopup(
+  //         (clickedLayer: any) => clickedLayer.feature.properties.key
+  //       );
+
+  //       console.log('111', layer);
+  //       setTimeout(() => {
+  //         this.mapLayers.push(layer);
+  //       }, 4000)
+
+  //     });
+
+  //   }
+  //   this.offlineLayer.on('tileload', () => {
+  //     console.log('tileloadtileload');
+  //   });
+
+  //   this.offlineLayer.on('loadtileend', () => {
+  //     console.log('loadtileend');
+  //   });
+  //   addStorageLayer();
+  // }
 
   public getPostsGeoJson() {
     this.postsService

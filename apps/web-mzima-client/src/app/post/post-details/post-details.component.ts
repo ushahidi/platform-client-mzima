@@ -112,11 +112,11 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   }
 
   private getData(post: PostResult): void {
-    (post.post_content as PostContent[]).forEach((content) => {
+    for (const content of post.post_content as PostContent[]) {
       this.preparingMediaField(content.fields);
       this.preparingSafeVideoUrls(content.fields);
       this.preparingRelatedPosts(content.fields);
-    });
+    }
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {

@@ -87,13 +87,9 @@
         <ng-container *ngIf="field.input === 'upload'">
           <ng-container *ngIf="isConnection; else noConnection">
             <div class="post__media">
-              <ion-img
-                *ngIf="field.value?.photoUrl"
-                class="post__media"
-                [src]="field.value.photoUrl"
-              ></ion-img>
-              <span *ngIf="field.value?.caption" class="post__media__caption">
-                {{ field.value.caption }}
+              <ion-img class="post__media" [src]="field.value.mediaSrc"></ion-img>
+              <span class="post__media__caption">
+                {{ field.value.mediaCaption }}
               </span>
             </div>
             <!--          <ng-template #spinner>-->

@@ -93,9 +93,10 @@ export class ConfigService {
     if (action === 'set') {
       await this.databaseService.set(key, config);
     } else {
-      config = await this.databaseService.get(STORAGE_KEYS.MAP);
+      config = await this.databaseService.get(key);
     }
     this.sessionService.setConfigurations(key, config);
+    return config;
   }
 
   update(id: string | number, resource: any) {
@@ -111,9 +112,9 @@ export class ConfigService {
     } else {
       return lastValueFrom(
         forkJoin([
-          this.databaseService.get(STORAGE_KEYS.SITE),
-          this.databaseService.get(STORAGE_KEYS.FEATURES),
-          this.databaseService.get(STORAGE_KEYS.MAP),
+          this.setConfigurations('get', STORAGE_KEYS.SITE),
+          this.setConfigurations('get', STORAGE_KEYS.FEATURES),
+          this.setConfigurations('get', STORAGE_KEYS.MAP),
         ]),
       );
     }

@@ -378,11 +378,11 @@ export class PostEditPage {
 
   private async handleUpload(key: string, value: any) {
     if (!value?.value) return;
-    if (value.photoUrl) {
+    if (value.mediaSrc) {
       this.updateFormControl(key, {
         id: value.value,
-        caption: value.caption,
-        photo: value.photoUrl,
+        caption: value.mediaCaption,
+        photo: value.mediaSrc,
       });
     } else {
       try {
