@@ -25,7 +25,6 @@ import {
 } from 'leaflet';
 import 'leaflet.markercluster';
 import { pointIcon } from '../../core/helpers/map';
-import { alphaNumeric } from '../../core/helpers/regex';
 import Geocoder from 'leaflet-control-geocoder';
 import { fromEvent, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -176,27 +175,13 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
 
   public checkErrors() {
     this.emptyFieldLat = this.emptyFieldLng = false;
-    this.noSpecialCharactersLat = this.noSpecialCharactersLng = false;
 
     if (this.required) {
       this.emptyFieldLat = this.location.lat.toString() === '';
       this.emptyFieldLng = this.location.lng.toString() === '';
     }
 
-    if (this.location.lat) {
-      this.noSpecialCharactersLat = !alphaNumeric(this.location.lat.toString());
-    }
-
-    if (this.location.lng) {
-      this.noSpecialCharactersLng = !alphaNumeric(this.location.lng.toString());
-    }
-
-    this.changeCoords(
-      this.emptyFieldLat ||
-        this.emptyFieldLng ||
-        this.noSpecialCharactersLat ||
-        this.noSpecialCharactersLng,
-    );
+    this.changeCoords(this.emptyFieldLat || this.emptyFieldLng);
   }
 
   public getCurrentLocation() {

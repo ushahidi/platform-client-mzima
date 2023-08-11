@@ -8,7 +8,7 @@ import { LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService, SessionService } from '@services';
 import { BaseComponent } from '../../../base.component';
-import { AlphanumericValidatorValidator, noWhitespaceValidator } from '../../../core/validators';
+import { noWhitespaceValidator } from '../../../core/validators';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
@@ -68,7 +68,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     this.checkDesktop();
 
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, noWhitespaceValidator, AlphanumericValidatorValidator()]],
+      name: ['', [Validators.required, noWhitespaceValidator]],
       description: [''],
       color: [null],
       enabled_languages: this.formBuilder.group({
@@ -288,7 +288,11 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
         },
         error: ({ error }) => {
           this.submitted = false;
-          this.notification.showError(JSON.stringify(error.name[0]));
+          if (error.errors.status === 422) {
+            this.notification.showError(JSON.stringify(error.errors.message));
+          } else {
+            this.notification.showError(JSON.stringify(error.name[0]));
+          }
         },
       });
     } else {
