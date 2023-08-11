@@ -282,12 +282,25 @@ export class PostEditPage {
         });
     }
 
-    this.taskForm = this.formBuilder.group(postHelpers.checkTaskControls(this.tasks));
+    this.taskForm = this.formBuilder.group(postHelpers.createTaskFormControls(this.tasks));
 
     this.form = new FormGroup(fields);
     this.initialFormData = this.form.value;
 
     if (updateContent) {
+      this.tasks = postHelpers.markCompletedTasks(this.tasks, this.post);
+
+      this.tasks.forEach((task, index) => {
+        if (task.completed) {
+          this.taskForm.patchValue({
+            [task.id]: task.completed,
+          });
+          if (index !== 0) {
+            this.completeStages.push(task.id);
+          }
+        }
+      });
+
       this.updateForm(updateContent);
     }
   }
@@ -515,6 +528,7 @@ export class PostEditPage {
     } catch (error: any) {
       this.toastService.presentToast({
         message: error,
+        layout: 'stacked',
         duration: 3000,
       });
       console.log(error);
@@ -844,5 +858,10 @@ export class PostEditPage {
 
   public getDate(value: any, format: string): string {
     return dateHelper.getDateWithTz(value, format);
+  }
+
+  public clearField(event: any, key: string) {
+    event.stopPropagation();
+    this.form.patchValue({ [key]: null });
   }
 }

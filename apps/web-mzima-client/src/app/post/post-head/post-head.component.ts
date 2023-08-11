@@ -1,30 +1,21 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { CollectionsComponent } from '@data';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
+import { BaseComponent } from '../../base.component';
 import { ShareModalComponent } from '../../shared/components';
-import {
-  PostPropertiesInterface,
-  PostResult,
-  PostsService,
-  PostStatus,
-  UserInterface,
-} from '@mzima-client/sdk';
+import { PostPropertiesInterface, PostResult, PostsService, PostStatus } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 
-@UntilDestroy()
 @Component({
   selector: 'app-post-head',
   templateUrl: './post-head.component.html',
   styleUrls: ['./post-head.component.scss'],
 })
-export class PostHeadComponent {
+export class PostHeadComponent extends BaseComponent {
   PostStatus = PostStatus;
   @Input() public post: PostResult | PostPropertiesInterface;
-  @Input() public user: UserInterface;
   @Input() public editable: boolean;
   @Input() public feedView: boolean;
   @Input() public deleteable: boolean;
@@ -32,24 +23,22 @@ export class PostHeadComponent {
   @Output() refresh = new EventEmitter();
   @Output() deleted = new EventEmitter();
   @Output() statusChanged = new EventEmitter();
-  public isDesktop = false;
 
   constructor(
-    private session: SessionService,
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private postsService: PostsService,
     private dialog: MatDialog,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
     private eventBusService: EventBusService,
-    private router: Router,
-    private breakpointService: BreakpointService,
   ) {
-    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
+    super(sessionService, breakpointService);
+    this.checkDesktop();
+    this.getUserData();
   }
+
+  loadData(): void {}
 
   addToCollection() {
     const dialogRef = this.dialog.open(CollectionsComponent, {

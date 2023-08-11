@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { FilterControl, FilterControlOption } from '@models';
 import { CategoriesService, CategoryInterface, SavedsearchesService } from '@mzima-client/sdk';
-import { AlertService, SessionService } from '@services';
+import { AlertService, SessionService, ToastService } from '@services';
 import { searchFormHelper } from '@helpers';
 import _ from 'lodash';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -42,7 +42,6 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   public isPristine = true;
   public isSubcategoriesPristine = true;
   public isLoggedIn = false;
-  public errorMessage: string | null = null;
 
   value: any;
   onChange: any = () => {};
@@ -53,6 +52,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
     private alertService: AlertService,
     private categoriesService: CategoriesService,
     private sessionService: SessionService,
+    private toastService: ToastService,
   ) {
     this.sessionService.currentUserData$.subscribe({
       next: () => {
@@ -153,12 +153,15 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
           info: `Applied filters: ${this.getObjectKeysCount(filter.filter)} of 24`,
         }));
         this.isOptionsLoading = false;
-        this.errorMessage = null;
       },
-      error: (err) => {
+      error: ({ message, status }) => {
         this.isOptionsLoading = false;
-        this.errorMessage = err.message;
-        if (err.message.match(/Http failure response for/) && err.status !== 404) {
+        this.toastService.presentToast({
+          message,
+          layout: 'stacked',
+          duration: 3000,
+        });
+        if (message.match(/Http failure response for/) && status !== 404) {
           setTimeout(() => this.getSavedFilters(), 5000);
         }
       },

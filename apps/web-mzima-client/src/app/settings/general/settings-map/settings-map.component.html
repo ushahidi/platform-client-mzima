@@ -74,8 +74,8 @@
           [(value)]="mapConfig.default_view!.baselayer"
           (valueChange)="layerChange($event)"
         >
-          <mat-option *ngFor="let layer of baseLayers" [value]="layer">
-            {{ layer }}
+          <mat-option *ngFor="let layer of baseLayers | filterVisibleLayers" [value]="layer.code">
+            {{ layer.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -88,6 +88,7 @@
           type="number"
           matInput
           [(ngModel)]="mapConfig.default_view!.zoom"
+          (ngModelChange)="onZoomChange()"
           [max]="maxZoom"
           [min]="minZoom"
         />

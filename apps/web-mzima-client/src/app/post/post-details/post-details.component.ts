@@ -10,30 +10,30 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { Permissions } from '@enums';
 import {
   CategoryInterface,
   MediaService,
   PostContent,
   PostContentField,
+  postHelpers,
   PostResult,
   PostsService,
-  UserInterface,
 } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
+import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { CollectionsModalComponent } from '../../shared/components';
 import { dateHelper } from '@helpers';
-import { SessionService } from '@services';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BreakpointService, SessionService } from '@services';
 
-@UntilDestroy()
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
   styleUrls: ['./post-details.component.scss'],
 })
-export class PostDetailsComponent implements OnChanges, OnDestroy {
+export class PostDetailsComponent extends BaseComponent implements OnChanges, OnDestroy {
   @Input() post?: PostResult;
   @Input() feedView: boolean = true;
   @Input() userId?: number | string;
@@ -46,9 +46,11 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   public postId: number;
   public videoUrls: any[] = [];
   public isPostLoading: boolean = true;
-  public user: UserInterface;
+  public isManagePosts: boolean = false;
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private dialog: MatDialog,
     private translate: TranslateService,
     private mediaService: MediaService,
@@ -56,8 +58,12 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
     private route: ActivatedRoute,
     private postsService: PostsService,
     private sanitizer: DomSanitizer,
-    private sessionService: SessionService,
   ) {
+    super(sessionService, breakpointService);
+    this.getUserData();
+    this.checkPermission();
+    this.userId = Number(this.user.userId);
+
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.post = undefined;
@@ -69,15 +75,12 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
         this.getPost(this.postId);
       }
     });
-    this.getUserData();
   }
 
-  getUserData(): void {
-    this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
-      next: (userData) => {
-        this.user = userData;
-      },
-    });
+  loadData(): void {}
+
+  private checkPermission() {
+    this.isManagePosts = this.user.permissions?.includes(Permissions.ManagePosts) ?? false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -93,7 +96,19 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
   private async getPost(id: number): Promise<void> {
     if (!this.postId) return;
     this.post = await this.getPostInformation(id);
-    if (this.post) this.getData(this.post);
+
+    if (this.post) {
+      this.getData(this.post);
+      this.post.post_content = postHelpers.markCompletedTasks(
+        this.post?.post_content || [],
+        this.post,
+      );
+      this.post.post_content = postHelpers.replaceNewlinesWithBreaks(this.post?.post_content || []);
+      this.post.content = postHelpers.replaceNewlinesInString(this.post.content);
+
+      // TODO: remove me after testing on dev
+      // console.log('💬 post task modify:', this.post);
+    }
   }
 
   private getData(post: PostResult): void {
@@ -102,9 +117,6 @@ export class PostDetailsComponent implements OnChanges, OnDestroy {
       this.preparingSafeVideoUrls(content.fields);
       this.preparingRelatedPosts(content.fields);
     }
-    // this.preparingMediaField((post.post_content as PostContent[])[0].fields);
-    // this.preparingSafeVideoUrls((post.post_content as PostContent[])[0].fields);
-    // this.preparingRelatedPosts((post.post_content as PostContent[])[0].fields);
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {

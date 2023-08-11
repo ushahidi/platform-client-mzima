@@ -56,6 +56,7 @@
                 name="accept-survey"
                 [required]="task.reqiured"
                 labelPosition="before"
+                [checked]="task.completed"
                 (change)="taskComplete(task, $event)"
               >
                 {{ 'post.task_completed' | translate }}
@@ -161,6 +162,16 @@
                   [data-qa]="field.label.replaceAll(' ', '-') | lowercase"
                   #input
                 />
+                <mzima-client-button
+                  matSuffix
+                  fill="clear"
+                  color="secondary"
+                  [iconOnly]="true"
+                  (buttonClick)="clearField($event, field.key)"
+                  *ngIf="form.get(field.key)?.value"
+                >
+                  <mat-icon icon svgIcon="close"></mat-icon>
+                </mzima-client-button>
                 <mat-datepicker-toggle
                   matSuffix
                   [for]="picker"
@@ -180,6 +191,16 @@
                   [data-qa]="field.label.replaceAll(' ', '-') | lowercase"
                   #input
                 />
+                <mzima-client-button
+                  matSuffix
+                  fill="clear"
+                  color="secondary"
+                  [iconOnly]="true"
+                  (buttonClick)="clearField($event, field.key)"
+                  *ngIf="form.get(field.key)?.value"
+                >
+                  <mat-icon icon svgIcon="close"></mat-icon>
+                </mzima-client-button>
                 <mat-datepicker-toggle
                   matSuffix
                   [for]="$any(picker)"
@@ -314,8 +335,10 @@
             <ng-container *ngIf="field.input === 'location'">
               <app-location-select
                 [zoom]="12"
+                [isEditPost]="isEditPost"
                 [location]="form.get(field.key)?.value"
                 [required]="locationRequired"
+                [type]="post?.source?.toLowerCase() || 'default'"
                 (locationChange)="changeLocation($event, field.key)"
               ></app-location-select>
             </ng-container>

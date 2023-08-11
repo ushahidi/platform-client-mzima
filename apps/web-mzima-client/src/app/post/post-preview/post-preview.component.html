@@ -13,7 +13,6 @@
       <mat-checkbox [(ngModel)]="isChecked"></mat-checkbox>
     </ng-container>
     <app-post-head
-      [user]="user"
       [post]="post"
       [feedView]="!!feedView"
       (refresh)="refresh.emit()"

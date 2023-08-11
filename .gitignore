@@ -45,7 +45,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Cypress videos
+# Cypress e2e tests
+e2e-testing/node_modules
 cypress/videos/*
 
 .angular

@@ -28,7 +28,7 @@ import {
   PostsService,
   GeoJsonPostsResponse,
 } from '@mzima-client/sdk';
-import { SessionService, EventBusService, EventType } from '@services';
+import { SessionService, EventBusService, EventType, BreakpointService } from '@services';
 
 @UntilDestroy()
 @Component({
@@ -61,12 +61,21 @@ export class MapComponent extends MainViewComponent implements OnInit {
     protected override savedSearchesService: SavedsearchesService,
     protected override eventBusService: EventBusService,
     protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private view: ViewContainerRef,
     private dialog: MatDialog,
     private zone: NgZone,
     private mediaService: MediaService,
   ) {
-    super(router, route, postsService, savedSearchesService, eventBusService, sessionService);
+    super(
+      router,
+      route,
+      postsService,
+      savedSearchesService,
+      eventBusService,
+      sessionService,
+      breakpointService,
+    );
     this.filtersSubscription$ = this.postsService.postsFilters$.pipe(takeUntilDestroy$());
   }
 
@@ -159,18 +168,19 @@ export class MapComponent extends MainViewComponent implements OnInit {
         next: (posts) => {
           const oldGeoJson: any = posts.results.map((r) => {
             return {
-              type: r.geojson.type,
-              features: r.geojson.features.map((f) => {
-                f.properties = {
-                  data_source_message_id: r.data_source_message_id,
-                  description: r.description,
-                  id: r.id,
-                  'marker-color': r['marker-color'],
-                  source: r.source,
-                  title: r.title,
-                };
-                return f;
-              }),
+              type: r.geojson?.type,
+              features:
+                r.geojson?.features.map((f) => {
+                  f.properties = {
+                    data_source_message_id: r.data_source_message_id,
+                    description: r.description,
+                    id: r.id,
+                    'marker-color': r['marker-color'],
+                    source: r.source,
+                    title: r.title,
+                  };
+                  return f;
+                }) ?? [],
             };
           });
           const geoPosts = geoJSON(oldGeoJson, {

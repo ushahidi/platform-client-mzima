@@ -1,7 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { PostContent, PostContentField, PostResult, PostsService } from '@mzima-client/sdk';
+import {
+  MediaService,
+  PostContent,
+  PostContentField,
+  postHelpers,
+  PostResult,
+  PostsService,
+} from '@mzima-client/sdk';
 import { LatLon } from '@models';
 import { DatabaseService, DeploymentService, NetworkService, SessionService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -22,29 +29,33 @@ export class PostPage implements OnDestroy {
   public isMediaLoading: boolean;
   public location: LatLon;
   public permissions: string[] = [];
-  private user: { id?: string; role?: string } = {
+  public user: { id?: number; role?: string; permissions?: any } = {
     id: undefined,
     role: undefined,
+    permissions: undefined,
   };
   public isConnection = true;
   public videoUrls: any[] = [];
   private queryParams: Params;
+  public isManagePosts: boolean = false;
 
   constructor(
     private networkService: NetworkService,
     private router: Router,
     private route: ActivatedRoute,
     private postsService: PostsService,
+    private mediaService: MediaService,
     protected sessionService: SessionService,
     private databaseService: DatabaseService,
     private sanitizer: DomSanitizer,
     private deploymentService: DeploymentService,
   ) {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
-      next: ({ userId, role }) => {
+      next: ({ userId, role, permissions }) => {
         this.user = {
-          id: userId ? String(userId) : undefined,
+          id: userId ? Number(userId) : undefined,
           role,
+          permissions,
         };
         this.checkPermissions();
       },
@@ -86,6 +97,13 @@ export class PostPage implements OnDestroy {
       this.isPostLoading = false;
       this.checkPermissions();
       this.getData(this.post);
+      this.post.post_content = postHelpers.markCompletedTasks(
+        this.post?.post_content || [],
+        this.post,
+      );
+      this.post.post_content = postHelpers.replaceNewlinesWithBreaks(this.post?.post_content || []);
+      this.post.content = postHelpers.replaceNewlinesInString(this.post.content);
+
       this.saveOpenedPostToDb(this.post);
     }
   }
@@ -157,12 +175,14 @@ export class PostPage implements OnDestroy {
     if (this.user.role === 'member') {
       this.permissions = ['add_to_collection'];
     }
-    if (this.user.role === 'admin' || this.user.id === String(this.post?.user_id)) {
+    if (this.user.role === 'admin' || this.user.id === this.post?.user_id) {
       this.permissions = ['add_to_collection', 'edit'];
     }
     if (this.user.role === 'admin') {
       this.permissions = ['add_to_collection', 'edit', 'change_status'];
     }
+
+    this.isManagePosts = this.user.permissions?.includes('Manage Posts') ?? false;
   }
 
   public back(): void {

@@ -44,18 +44,24 @@ export class DateSelectComponent implements ControlValueAccessor {
       value: null,
       label: 'All time',
     },
-    // {
-    //   value: 'custom',
-    //   label: 'Custom',
-    // },
   ];
 
-  value?: DateRangeFormat;
+  value: DateRangeFormat | null = {
+    from: null,
+    to: null,
+  };
   onChange: any = () => {};
   onTouched: any = () => {};
 
   writeValue(value: any): void {
-    this.value = value;
+    if (value?.from && value?.to) {
+      this.value = {
+        from: dateHelper.toUTC(value?.from),
+        to: dateHelper.toUTC(value?.to),
+      };
+    } else {
+      this.value = null;
+    }
   }
 
   registerOnChange(fn: any): void {

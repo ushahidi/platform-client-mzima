@@ -8,6 +8,7 @@ import { TranslationInterface, LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { formHelper } from '@helpers';
+import { BaseComponent } from '../../../base.component';
 import {
   GroupCheckboxItemInterface,
   SelectLanguagesModalComponent,
@@ -15,7 +16,7 @@ import {
 import { LanguageService } from '../../../core/services/language.service';
 import { CategoriesService, RolesService, CategoryInterface } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
-import { BreakpointService } from '@services';
+import { BreakpointService, SessionService } from '@services';
 
 @UntilDestroy()
 @Component({
@@ -23,7 +24,7 @@ import { BreakpointService } from '@services';
   templateUrl: './create-category-form.component.html',
   styleUrls: ['./create-category-form.component.scss'],
 })
-export class CreateCategoryFormComponent implements OnInit, OnDestroy {
+export class CreateCategoryFormComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() public loading: boolean;
   @Input() public category: CategoryInterface;
   @Output() formSubmit = new EventEmitter<any>();
@@ -35,12 +36,13 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
   public selectedTranslation?: string;
   public roleOptions: GroupCheckboxItemInterface[] = [];
   public isUpdate = false;
-  public isDesktop = false;
   public form: FormGroup;
   private userRole: string;
   public formErrors: any[] = [];
 
   constructor(
+    protected override sessionService: SessionService,
+    protected override breakpointService: BreakpointService,
     private fb: FormBuilder,
     private categoriesService: CategoriesService,
     private rolesService: RolesService,
@@ -48,17 +50,14 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
-    private breakpointService: BreakpointService,
     private router: Router,
     private location: Location,
   ) {
+    super(sessionService, breakpointService);
+    this.checkDesktop();
+
     this.languages = this.languageService.getLanguages();
     this.defaultLanguage = this.languages.find((lang) => lang.code === 'en'); // FIXME
-    this.breakpointService.isDesktop$.pipe(untilDestroyed(this)).subscribe({
-      next: (isDesktop) => {
-        this.isDesktop = isDesktop;
-      },
-    });
 
     this.categoriesService.categoryErrors$.pipe(untilDestroyed(this)).subscribe((value) => {
       this.formErrors = value;
@@ -100,6 +99,8 @@ export class CreateCategoryFormComponent implements OnInit, OnDestroy {
     }
     this.activeLanguages.push(this.defaultLanguage!);
   }
+
+  loadData(): void {}
 
   ngOnDestroy() {
     this.categoriesService.categoryErrors.next(null);

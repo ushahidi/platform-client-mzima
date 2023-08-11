@@ -5,20 +5,16 @@
     [iconOnly]="true"
     (buttonClick)="back()"
     class="toolbar__back"
-    *ngIf="!(isDesktop$ | async)! && isInnerPage"
+    *ngIf="!isDesktop && isInnerPage"
   >
     <mat-icon icon svgIcon="back"></mat-icon>
   </mzima-client-button>
-  <h1
-    class="toolbar__page-title"
-    [data-qa]="'page-title'"
-    *ngIf="(isDesktop$ | async) || !showSearchForm"
-  >
+  <h1 class="toolbar__page-title" [data-qa]="'page-title'" *ngIf="isDesktop || !showSearchForm">
     {{ pageTitle | translate }}
   </h1>
   <div class="toolbar__controls">
     <app-search-form class="search-form" *ngIf="showSearchForm"></app-search-form>
-    <ng-container *ngIf="isDesktop$ | async">
+    <ng-container *ngIf="isDesktop">
       <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
       <mzima-client-button (buttonClick)="openShare()" color="secondary" class="toolbar__button">
         <span>{{ 'app.share' | translate }}</span>
@@ -36,18 +32,18 @@
     color="secondary"
     class="account-info"
     [data-qa]="'account-info'"
-    *ngIf="isLoggedIn && (isDesktop$ | async)"
+    *ngIf="isLoggedIn && isDesktop"
     [matMenuTriggerFor]="accountMenu"
   >
     <div class="account-info__main">
-      <span class="account-info__name">{{ profile.realname }}</span>
-      <span class="account-info__email">{{ profile.email }}</span>
+      <span class="account-info__name">{{ user.realname }}</span>
+      <span class="account-info__email">{{ user.email }}</span>
     </div>
     <img
-      [alt]="profile.realname"
+      [alt]="user.realname"
       class="account-info__avatar"
       src="//www.gravatar.com/avatar/{{
-        profile.gravatar || '00000000000000000000000000000000'
+        user.gravatar || '00000000000000000000000000000000'
       }}?d=retro&s=64"
     />
     <mat-icon class="account-info__arrow" svgIcon="arrow-down"></mat-icon>
@@ -57,7 +53,7 @@
     class="burger"
     color="secondary"
     [iconOnly]="true"
-    *ngIf="!(isDesktop$ | async)!"
+    *ngIf="!isDesktop"
     (buttonClick)="toggleBurgerMenu()"
     [ariaLabel]="'nav.open_menu' | translate"
   >
@@ -65,7 +61,7 @@
   </mzima-client-button>
 </mat-toolbar>
 
-<div class="menu" *ngIf="!(isDesktop$ | async)!" [ngClass]="{ 'menu--open': isBurgerMenuOpen }">
+<div class="menu" *ngIf="!isDesktop" [ngClass]="{ 'menu--open': isBurgerMenuOpen }">
   <div class="menu__head">
     <div class="menu__logo">
       <img
@@ -88,7 +84,7 @@
   </div>
 
   <div class="menu__body">
-    <app-company-info></app-company-info>
+    <app-company-info *ngIf="checkAllowedAccessToSite()"></app-company-info>
 
     <div class="mobile-menu">
       <ng-container *ngFor="let item of menu">
