@@ -68,6 +68,7 @@
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 16px;
+    word-break: break-word;
 
     @include breakpoint-max($tablet) {
       font-size: 16px;
@@ -89,6 +90,7 @@
       font-weight: 700;
       line-height: 1.25;
       margin-bottom: 15px;
+      word-break: break-word;
 
       @include breakpoint-max($tablet) {
         font-size: 14px;
@@ -134,6 +136,7 @@
 
   &__description {
     margin-bottom: 16px;
+    word-break: break-word;
   }
 
   &__twitter {
