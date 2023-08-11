@@ -65,6 +65,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   selectedColor: string;
   currentInterimId = 0;
   selectedTab: number;
+  locationPrecision = 100;
 
   constructor(
     private confirm: ConfirmModalService,
