@@ -25,7 +25,7 @@ import {
   SurveyItem,
   SurveyItemTask,
 } from '@mzima-client/sdk';
-import { ConfirmModalService, LanguageService } from '@services';
+import { ConfirmModalService, LanguageService, SessionService } from '@services';
 import _ from 'lodash';
 
 @Component({
@@ -65,7 +65,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   selectedColor: string;
   currentInterimId = 0;
   selectedTab: number;
-  locationPrecision = 100;
+  locationPrecision = 1000;
 
   constructor(
     private confirm: ConfirmModalService,
@@ -74,6 +74,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     private route: ActivatedRoute,
     private languageService: LanguageService,
     private translate: TranslateService,
+    private sessionService: SessionService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -119,6 +120,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.getMapConfig();
     this.surveyId = this.route.snapshot.paramMap.get('id') || '';
     this.taskFields = this.task.fields;
     this.splitTaskFields(this.taskFields);
@@ -129,12 +131,18 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     }
   }
 
+  private getMapConfig() {
+    const { location_precision: locationPrecision } = this.sessionService.getMapConfigurations();
+    this.locationPrecision = this.sessionService.getPrecision(locationPrecision!);
+  }
+
   private splitTaskFields(taskFields: FormAttributeInterface[]) {
-    this.nonDraggableFields = taskFields.filter(
-      (field) => field.priority === 1 || field.priority === 2,
+    const nonDraggableType = ['title', 'description'];
+    this.nonDraggableFields = taskFields.filter((field) =>
+      nonDraggableType.includes(field.label.toLowerCase()),
     );
     this.draggableFields = taskFields.filter(
-      (field) => field.priority !== 1 && field.priority !== 2,
+      (field) => !nonDraggableType.includes(field.label.toLowerCase()),
     );
   }
 
@@ -245,7 +253,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   }
 
   get anonymiseReportersEnabled() {
-    return true;
+    return !!this.sessionService.getFeatureConfigurations()['anonymise-reporters']?.enabled;
   }
 
   private mergeTaskFieldsData() {

@@ -94,6 +94,24 @@
         />
       </mat-form-field>
     </div>
+
+    <div class="form-row" *ngIf="locationPrecisionEnabled">
+      <mat-label>{{ 'settings.map_location_precision' | translate }}</mat-label>
+      <mat-form-field appearance="outline">
+        <input
+          type="number"
+          matInput
+          [(ngModel)]="mapConfig.location_precision"
+          (ngModelChange)="updatePrecision()"
+          [max]="maxObfuscation"
+          [min]="minObfuscation"
+        />
+      </mat-form-field>
+      <p>
+        <span>{{ 'settings.map_precise_to' | translate }}</span
+        >{{ currentPrecision }}km
+      </p>
+    </div>
   </div>
 
   <div class="form-row">
