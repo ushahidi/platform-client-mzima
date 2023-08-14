@@ -40,6 +40,10 @@ export class SettingsMapComponent implements OnInit {
   private searchSubject = new Subject<string>();
   public geocodingResults: any[] = [];
   public isShowGeocodingResults = false;
+  locationPrecisionEnabled: any;
+  currentPrecision = 9;
+  minObfuscation = 0;
+  maxObfuscation = 9;
 
   constructor(private sessionService: SessionService, private changeDetector: ChangeDetectorRef) {}
 
@@ -49,6 +53,10 @@ export class SettingsMapComponent implements OnInit {
     });
 
     this.mapConfig = this.sessionService.getMapConfigurations();
+    this.currentPrecision = this.getPrecision();
+
+    this.locationPrecisionEnabled =
+      !!this.sessionService.getFeatureConfigurations()['anonymise-reporters']?.enabled;
 
     this.leafletOptions = {
       scrollWheelZoom: true,
@@ -166,5 +174,14 @@ export class SettingsMapComponent implements OnInit {
     if (this.map) {
       this.map.setZoom(this.mapConfig.default_view!.zoom);
     }
+  }
+
+  public updatePrecision() {
+    this.currentPrecision = this.getPrecision();
+    this.updateMapPreview();
+  }
+
+  private getPrecision() {
+    return this.sessionService.getPrecision(this.mapConfig.location_precision!);
   }
 }
