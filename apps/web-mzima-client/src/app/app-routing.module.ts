@@ -66,6 +66,15 @@ const routes: Routes = [
     },
   },
   {
+    path: 'posts', // For support legacy URL routes
+    loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
+    canActivate: [AccessDeniedGuard],
+    data: {
+      breadcrumb: 'nav.posts',
+      ogTitle: 'nav.posts',
+    },
+  },
+  {
     path: 'reset',
     title: 'reset',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),

@@ -7,3 +7,4 @@ export { ManageSettingsGuard } from './manage-settings.guard';
 export { DataImportExportGuard } from './data-import-export.guard';
 export { AccessDeniedGuard } from './access-denied.guard';
 export { AccessAllowGuard } from './access-allow.guard';
+export { RedirectGuard } from './redirect.guard';
