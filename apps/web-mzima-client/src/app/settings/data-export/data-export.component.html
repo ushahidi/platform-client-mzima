@@ -1,7 +1,10 @@
 <ng-container *ngIf="exportView; else fieldSelector">
   <h1>{{ (hxlEnabled ? 'data_export.title_hxl' : 'data_export.title') | translate }}</h1>
   <div class="description">
-    <p *ngIf="showProgress; else description">{{ 'data_export.export_progress' | translate }}</p>
+    <p
+      *ngIf="showProgress; else description"
+      [innerHTML]="'data_export.export_progress' | translate"
+    ></p>
   </div>
   <mat-tab-group dynamicHeight disableRipple disablePagination animationDuration="0ms">
     <mat-tab [label]="'data_export.export' | translate" [data-qa]="'tab-export'">

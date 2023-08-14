@@ -11,6 +11,7 @@ import {
   map,
 } from 'rxjs';
 import { DataImportService, ExportJobsService, ExportJobInterface } from '@mzima-client/sdk';
+import { EventBusService, EventType } from './event-bus.service';
 import { NotificationService } from './notification.service';
 import { EnvService } from './env.service';
 
@@ -34,6 +35,7 @@ export class PollingService implements OnDestroy {
     private notificationService: NotificationService,
     private env: EnvService,
     private rendererFactory: RendererFactory2,
+    private eventBusService: EventBusService,
   ) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
   }
@@ -120,6 +122,7 @@ export class PollingService implements OnDestroy {
                 text: 'notify.export.cancel_export',
                 handler: () => {
                   this.stopExportPolling.next(true);
+                  this.eventBus(false);
                 },
               },
               {
@@ -171,6 +174,7 @@ export class PollingService implements OnDestroy {
   }
 
   private startExportPolling(queries: Observable<any>[]) {
+    this.eventBus(true);
     this.currentPool.exporting = queries.length;
 
     const nextQueries: Observable<any>[] = [];
@@ -195,6 +199,7 @@ export class PollingService implements OnDestroy {
           } else {
             nextQueries.push(this.exportJobsService.getById(job.id));
           }
+          this.eventBus(false);
         });
         if (nextQueries.length) {
           this.startExportPolling(nextQueries);
@@ -202,6 +207,13 @@ export class PollingService implements OnDestroy {
           this.currentPool.exporting = 0;
         }
       });
+  }
+
+  eventBus(value: boolean) {
+    this.eventBusService.next({
+      type: EventType.StopExportPolling,
+      payload: { process: value },
+    });
   }
 
   ngOnDestroy() {
