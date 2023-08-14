@@ -87,6 +87,10 @@ export class SessionService {
     return this.currentConfig.map;
   }
 
+  getPrecision(locationPrecision: number) {
+    return 1000 / Math.pow(10, locationPrecision);
+  }
+
   setConfigurations(
     type: keyof SessionConfigInterface,
     data: FeaturesConfigInterface | SiteConfigInterface | MapConfigInterface,
