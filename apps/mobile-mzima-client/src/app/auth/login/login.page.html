@@ -79,7 +79,7 @@
   class="forgot-password-modal"
   [isOpen]="isForgotPasswordModalOpen"
   title="Password recovery"
-  (modalClose)="isForgotPasswordModalOpen = false"
+  (modalClose)="forgotPasswordModalCloseHandle()"
 >
   <div class="forgot-password-modal__info">
     <ion-text class="forgot-password-modal__title">Forgot your password?</ion-text>
