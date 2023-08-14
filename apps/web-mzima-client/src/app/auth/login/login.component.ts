@@ -11,6 +11,7 @@ import { BaseComponent } from '../../base.component';
 export class LoginComponent extends BaseComponent {
   public isSignupActive: boolean;
   public isDisableClose: boolean;
+  public adminEmail: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -20,11 +21,16 @@ export class LoginComponent extends BaseComponent {
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
+    this.getAdminContact();
     this.isSignupActive = this.data.isSignupActive;
     this.isDisableClose = this.data.isDisableClose;
   }
 
   loadData(): void {}
+
+  private getAdminContact() {
+    this.adminEmail = this.sessionService.getSiteConfigurations().email!;
+  }
 
   public cancel(): void {
     this.matDialogRef.close('cancel');
