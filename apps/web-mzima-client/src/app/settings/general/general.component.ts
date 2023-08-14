@@ -28,6 +28,8 @@ export class GeneralComponent implements OnInit {
   siteConfig: any;
   apiKey: ApiKeyResult;
   uploadedFile?: File;
+  minObfuscation = 0;
+  maxObfuscation = 9;
 
   constructor(
     private sessionService: SessionService,
@@ -159,5 +161,9 @@ export class GeneralComponent implements OnInit {
   public copyToClipboard(str: string): void {
     this.copySuccess = this.clipboard.copy(str);
     setTimeout(() => (this.copySuccess = !this.copySuccess), 2000);
+  }
+
+  isInteger(value: any): boolean {
+    return Number.isInteger(value) && value >= this.minObfuscation && value <= this.maxObfuscation;
   }
 }

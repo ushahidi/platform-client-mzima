@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface, MapViewInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -25,6 +25,8 @@ import { pointIcon } from '../../../core/helpers/map';
   styleUrls: ['./settings-map.component.scss'],
 })
 export class SettingsMapComponent implements OnInit {
+  @Input() minObfuscation = 0;
+  @Input() maxObfuscation = 9;
   leafletOptions: any;
   map: Map;
   mapMarker: Marker;
@@ -42,8 +44,6 @@ export class SettingsMapComponent implements OnInit {
   public isShowGeocodingResults = false;
   locationPrecisionEnabled: any;
   currentPrecision = 9;
-  minObfuscation = 0;
-  maxObfuscation = 9;
 
   constructor(private sessionService: SessionService, private changeDetector: ChangeDetectorRef) {}
 
