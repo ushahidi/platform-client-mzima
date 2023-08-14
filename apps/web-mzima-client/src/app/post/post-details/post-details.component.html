@@ -51,7 +51,7 @@
             <h3>{{ field.label }}</h3>
 
             <ng-container *ngIf="field.input === 'tags'">
-              <ng-container *ngFor="let category of post.categories">
+              <ng-container *ngFor="let category of field.value">
                 <div class="category" *ngIf="!isParentCategory(post.categories, category.id)">
                   <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
                   {{ category.tag }}
