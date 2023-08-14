@@ -9,8 +9,8 @@ $leftSidePanelWidth: 64px;
       max-width: none;
       border-radius: 0;
       transform-origin: 50% 100%;
-      margin: 0 0 0 $leftSidePanelWidth;
-      width: calc(100vw - $leftSidePanelWidth);
+      margin: 0;
+      width: 100vw;
     }
   }
 }
@@ -68,6 +68,10 @@ $leftSidePanelWidth: 64px;
     margin: 0 -8px;
     align-items: flex-start;
     justify-content: flex-start;
+
+    .button:not(:last-child) {
+      margin-right: 15px;
+    }
 
     .mat-button-base {
       line-height: 28px;

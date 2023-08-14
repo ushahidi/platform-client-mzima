@@ -186,6 +186,7 @@ export class PollingService implements OnDestroy {
           if (job.status === 'SUCCESS') {
             if (job.send_to_browser) {
               this.downloadFile(job.url);
+              this.showNotification('success');
             } else {
               this.showNotification('success');
             }
