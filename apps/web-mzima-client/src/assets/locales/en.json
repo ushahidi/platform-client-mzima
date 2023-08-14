@@ -365,7 +365,7 @@
     "who_can_add": "Who can add to this survey",
     "survey_field": "Survey field",
     "choose_survey_field": "Choose what should be assigned to each survey field",
-    "choose_survey_field_descchoose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
+    "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "Who can contribute to fields in this task",
     "view_detail": "Detail",
     "no_options_for_this_field": "No options for this field",
@@ -1204,7 +1204,7 @@
           "event_type": "Event type is required",
           "event_entity": "Event entity is required"
         },
-        "please_provide_valid_api_url": "Please provide valid API URL",
+        "please_provide_valid_api_url": "Please provide valid API URL with http(s)://",
         "secret_key_cannot_be_less_start": "Shared secret key can not less than",
         "secret_key_cannot_be_less_end": "characters"
       }
