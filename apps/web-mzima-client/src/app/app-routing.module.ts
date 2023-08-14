@@ -66,7 +66,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'posts',
+    path: 'posts', // For support legacy URL routes
     loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
     canActivate: [AccessDeniedGuard],
     data: {
