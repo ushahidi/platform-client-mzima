@@ -43,7 +43,7 @@ export class MapViewComponent implements AfterViewInit {
   public fitBoundsOptions: FitBoundsOptions = {
     animate: true,
   };
-  private mapConfig: MapConfigInterface;
+  public mapConfig: MapConfigInterface;
   public markerClusterData = new MarkerClusterGroup();
   public markerClusterOptions: MarkerClusterGroupOptions = { animate: true, maxClusterRadius: 50 };
   public $destroy = new Subject();
