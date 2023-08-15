@@ -11,7 +11,9 @@ export class RedirectGuard implements CanActivate {
   // Guard created for handling old urls
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
     const id = route.paramMap.get('id');
-    this.router.navigate([`/feed/${id}/view`], { queryParams: { mode: 'POST', page: 1 } });
+    this.router.navigate([`/feed/${id}/${route.data['edit'] ? 'edit' : 'view'}`], {
+      queryParams: { mode: 'POST', page: 1 },
+    });
     return false;
   }
 }
