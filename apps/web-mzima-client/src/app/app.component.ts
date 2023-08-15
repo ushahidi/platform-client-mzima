@@ -198,7 +198,6 @@ export class AppComponent extends BaseComponent implements OnInit {
         plan: site.tier,
       },
     };
-    console.log('Intercom options: ', io);
     this.intercom.boot(io);
   }
 
