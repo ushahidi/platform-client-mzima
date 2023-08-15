@@ -65,7 +65,7 @@ export class LoginPage {
   }
 
   public forgotPassword(): void {
-    const { email } = this.form.value;
+    const { email } = this.forgotPasswordForm.value;
     if (!email) return;
     this.forgotPasswordForm.disable();
     this.authService.resetPassword({ email }).subscribe({
@@ -76,7 +76,9 @@ export class LoginPage {
             'We sent a reset link to your Email. Follow the instructions to reset your password.',
         });
         this.router.navigate(['auth/login']);
-        this.form.enable();
+        this.forgotPasswordForm.reset();
+        this.forgotPasswordForm.enable();
+        this.isForgotPasswordModalOpen = false;
       },
       error: (err) => {
         this.forgotPasswordError = err?.error?.message ?? err?.message;
@@ -88,10 +90,18 @@ export class LoginPage {
 
   public openForgotPasswordModal(): void {
     this.isForgotPasswordModalOpen = true;
+    if (this.form.value.email?.length) {
+      this.forgotPasswordForm.patchValue({ email: this.form.value.email });
+    }
   }
 
   public chooseDeployment(): void {
     this.deploymentService.removeDeployment();
     this.router.navigate(['deployment']);
+  }
+
+  public forgotPasswordModalCloseHandle(): void {
+    this.isForgotPasswordModalOpen = false;
+    this.forgotPasswordForm.reset();
   }
 }
