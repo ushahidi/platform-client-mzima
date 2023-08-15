@@ -83,7 +83,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private fieldsFormArray = ['tags'];
   public surveyName: string;
   private postId?: number;
-  formInfo: any;
+  private formInfo: any;
+  public requireApproval = false;
 
   public post?: any;
   public atLeastOneFieldHasValidationError: boolean;
@@ -168,7 +169,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
         const { result } = data;
-
+        this.requireApproval = result.require_approval;
         this.color = result.color;
         this.tasks = result.tasks;
         this.surveyName = result.name;
