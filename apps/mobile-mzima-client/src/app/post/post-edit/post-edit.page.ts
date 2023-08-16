@@ -75,6 +75,7 @@ export class PostEditPage {
   public isConnection = true;
   public connectionInfo = '';
   private queryParams: Params;
+  public requireApproval = false;
 
   dateOption: any;
 
@@ -245,6 +246,7 @@ export class PostEditPage {
     this.clearData();
 
     this.selectedSurvey = this.surveyList.find((item: any) => item.id === this.selectedSurveyId);
+    this.requireApproval = this.selectedSurvey?.require_approval;
     this.color = this.selectedSurvey?.color;
     this.tasks = this.selectedSurvey?.tasks;
 

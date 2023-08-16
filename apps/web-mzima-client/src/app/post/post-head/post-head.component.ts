@@ -6,7 +6,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 import { BaseComponent } from '../../base.component';
 import { ShareModalComponent } from '../../shared/components';
-import { PostPropertiesInterface, PostResult, PostsService, PostStatus } from '@mzima-client/sdk';
+import {
+  PostPropertiesInterface,
+  PostResult,
+  PostsService,
+  PostStatus,
+  postHelpers,
+} from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 
 @Component({
@@ -58,17 +64,6 @@ export class PostHeadComponent extends BaseComponent {
     });
   }
 
-  isAllRequiredCompleted(post: any): boolean {
-    for (const content of post.post_content) {
-      if (content.required === 1) {
-        if (!post.completed_stages.some((stage: any) => stage.form_stage_id === content.id)) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
   underReview() {
     this.postsService.updateStatus(this.post.id, PostStatus.Draft).subscribe((res) => {
       this.post = res.result;
@@ -77,7 +72,7 @@ export class PostHeadComponent extends BaseComponent {
   }
 
   publish() {
-    if (this.isAllRequiredCompleted(this.post)) {
+    if (postHelpers.isAllRequiredCompleted(this.post)) {
       this.postsService.updateStatus(this.post.id, PostStatus.Published).subscribe((res) => {
         this.post = res.result;
         this.statusChanged.emit();
