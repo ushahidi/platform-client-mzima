@@ -12,6 +12,8 @@
       <mat-icon svgIcon="arrow-down" class="company-info__header__arrow"></mat-icon>
     </mat-panel-title>
   </mat-expansion-panel-header>
-
-  <div [innerHTML]="description | safeUrl"></div>
+  <div>
+    <a class="company-info__email" href="mailto:{{ email }}">{{ email }}</a>
+    <p [innerHTML]="description | safeUrl"></p>
+  </div>
 </mat-expansion-panel>
