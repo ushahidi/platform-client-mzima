@@ -101,6 +101,7 @@ export class SessionService {
       description: this.currentConfig['site']?.description ?? '',
       logo: this.currentConfig['site']?.image_header ?? '',
       private: this.currentConfig['site']?.private ?? false,
+      email: this.currentConfig['site']?.email ?? '',
     });
   }
 
