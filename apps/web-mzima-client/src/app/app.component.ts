@@ -34,7 +34,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   public isInnerPage = false;
   public isRTL?: boolean;
   public isOnboardingDone = false;
-  public showOnboarding = false;
+  public showOnboarding = true;
 
   constructor(
     protected override sessionService: SessionService,
