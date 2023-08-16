@@ -108,7 +108,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   }
 
   private shouldShowOnboarding(url: string): boolean {
-    const allowedPaths = ['/feed', '/map'];
+    const allowedPaths = ['/', '/feed', '/map'];
 
     let urlObj;
     try {
