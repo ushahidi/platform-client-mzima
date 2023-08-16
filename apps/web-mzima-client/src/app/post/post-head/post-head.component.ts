@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CollectionsComponent } from '@data';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
@@ -32,6 +33,7 @@ export class PostHeadComponent extends BaseComponent {
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
     private eventBusService: EventBusService,
+    private snackBar: MatSnackBar,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -56,6 +58,17 @@ export class PostHeadComponent extends BaseComponent {
     });
   }
 
+  isAllRequiredCompleted(post: any): boolean {
+    for (const content of post.post_content) {
+      if (content.required === 1) {
+        if (!post.completed_stages.some((stage: any) => stage.form_stage_id === content.id)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   underReview() {
     this.postsService.updateStatus(this.post.id, PostStatus.Draft).subscribe((res) => {
       this.post = res.result;
@@ -64,10 +77,14 @@ export class PostHeadComponent extends BaseComponent {
   }
 
   publish() {
-    this.postsService.updateStatus(this.post.id, PostStatus.Published).subscribe((res) => {
-      this.post = res.result;
-      this.statusChanged.emit();
-    });
+    if (this.isAllRequiredCompleted(this.post)) {
+      this.postsService.updateStatus(this.post.id, PostStatus.Published).subscribe((res) => {
+        this.post = res.result;
+        this.statusChanged.emit();
+      });
+    } else {
+      this.showMessage(this.translate.instant('notify.post.unfinished_post_task'), 'error', 5000);
+    }
   }
 
   archive() {
@@ -120,6 +137,13 @@ export class PostHeadComponent extends BaseComponent {
         title: this.post.title,
         description: this.post.content,
       },
+    });
+  }
+
+  private showMessage(message: string, type: string, duration = 3000) {
+    this.snackBar.open(message, 'Close', {
+      panelClass: [type],
+      duration,
     });
   }
 }

@@ -1713,7 +1713,8 @@
       "update_status_success_bulk": "Status updated for {{count}} posts",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "unfinished_post_task": "You cannot publish this post, the post has unfinished tasks"
     },
     "category": {
       "save_success": "Saved category {{name}}",
