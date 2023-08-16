@@ -1,5 +1,6 @@
 {
   "app": {
+    "contact_email_address": "Contact email address:",
     "powered_by_ushahidi": "Powered by Ushahidi.",
     "support": "Ushahidi Support",
     "by": "by",

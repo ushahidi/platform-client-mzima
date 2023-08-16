@@ -13,7 +13,10 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <div>
-    <a class="company-info__email" href="mailto:{{ email }}">{{ email }}</a>
+    <p>
+      {{ 'app.contact_email_address' | translate }}
+      <a class="company-info__email" href="mailto:{{ email }}">{{ email }}</a>
+    </p>
     <p [innerHTML]="description | safeUrl"></p>
   </div>
 </mat-expansion-panel>
