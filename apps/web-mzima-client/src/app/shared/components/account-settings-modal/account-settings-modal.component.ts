@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -44,6 +44,7 @@ interface AccountTypeInterface {
   styleUrls: ['./account-settings-modal.component.scss'],
 })
 export class AccountSettingsModalComponent implements OnInit {
+  @ViewChild('updatePasswordFields') public updatePasswordFields: ElementRef;
   public profile: UserInterface;
   public contacts: ContactsInterface[];
   public isUpdatingPassword = false;
@@ -191,6 +192,13 @@ export class AccountSettingsModalComponent implements OnInit {
 
   public updatePassword(isOpen: boolean): void {
     this.isUpdatingPassword = isOpen;
+
+    if (this.isUpdatingPassword) {
+      this.updatePasswordFields.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        this.updatePasswordFields.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      }, 350);
+    }
 
     if (this.isUpdatingPassword) {
       this.setFieldsValidators(
