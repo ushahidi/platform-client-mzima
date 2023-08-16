@@ -1,5 +1,5 @@
 <app-onboarding
-  *ngIf="!isOnboardingDone && isDesktop && checkAllowedAccessToSite()"
+  *ngIf="!isOnboardingDone && isDesktop && checkAllowedAccessToSite() && this.showOnboarding"
 ></app-onboarding>
 
 <mat-sidenav-container
