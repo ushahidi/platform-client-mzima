@@ -31,6 +31,7 @@ export function loadSentryFactory(envService: EnvService) {
         dsn: envService.environment.sentry_dsn,
         debug: envService.environment.sentry_debug_mode,
         environment: envService.environment.sentry_environment || 'default',
+        ignoreErrors: ['Non-Error exception captured'],
         integrations: [
           new BrowserTracing({
             tracePropagationTargets: [],
