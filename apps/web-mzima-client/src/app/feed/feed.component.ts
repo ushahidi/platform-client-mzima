@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import { Permissions } from '@enums';
 import { searchFormHelper } from '@helpers';
@@ -12,7 +14,14 @@ import { MainViewComponent } from '@shared';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
 import { ConfirmModalService } from '../core/services/confirm-modal.service';
 import { LanguageService } from '../core/services/language.service';
-import { SavedsearchesService, PostsService, GeoJsonFilter, PostResult } from '@mzima-client/sdk';
+import {
+  SavedsearchesService,
+  PostsService,
+  GeoJsonFilter,
+  PostResult,
+  PostStatus,
+  postHelpers,
+} from '@mzima-client/sdk';
 
 enum FeedMode {
   Tiles = 'TILES',
@@ -42,15 +51,14 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public postCurrentLength = 0;
   public isLoading = false;
   public mode: FeedMode = FeedMode.Tiles;
-  public activePostId: any;
+  public activePostId: number;
   public total: number;
   public postDetails?: PostResult;
   public isPostLoading: boolean;
   public isFiltersVisible: boolean;
   public isBulkOptionsVisible: boolean;
-  public selectedPosts: string[] = [];
+  public selectedPosts: PostResult[] = [];
   public statuses = searchFormHelper.statuses;
-  public selectedStatus?: string;
   public sortingOptions = searchFormHelper.sortingOptions;
   public activeSorting = {
     order: 'desc',
@@ -73,6 +81,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   private postDetailsModal: MatDialogRef<PostDetailsModalComponent>;
   public isMainFiltersOpen: boolean;
   public isManagePosts: boolean;
+  public statusControl = new FormControl();
 
   constructor(
     protected override router: Router,
@@ -86,6 +95,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     private dialog: MatDialog,
     private translate: TranslateService,
     private languageService: LanguageService,
+    private snackBar: MatSnackBar,
   ) {
     super(
       router,
@@ -112,7 +122,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     }
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-      this.activePostId = this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1];
+      this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
       if (this.activePostId && !this.isDesktop) {
         this.showPostModal(this.activePostId);
       }
@@ -350,10 +360,30 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public changePostsStatus(status: string): void {
-    forkJoin(this.selectedPosts.map((p) => this.postsService.update(p, { status }))).subscribe({
+    if (status === PostStatus.Published) {
+      const uncompletedPosts: PostResult[] = this.selectedPosts.filter(
+        (post: PostResult) => !postHelpers.isAllRequiredCompleted(post),
+      );
+
+      if (uncompletedPosts.length > 0) {
+        this.showMessage(
+          this.translate.instant('notify.post.posts_can_t_be_published', {
+            titles: uncompletedPosts.map((p) => p.title).join(', '),
+          }),
+          'error',
+          0,
+        );
+        this.statusControl.reset();
+        return;
+      }
+    }
+
+    forkJoin(
+      this.selectedPosts.map((p: PostResult) => this.postsService.update(p.id, { status })),
+    ).subscribe({
       complete: () => {
         this.getPostsSubject.next({ params: this.params, add: false });
-        this.selectedStatus = undefined;
+        this.statusControl.reset();
         this.deselectAllPosts();
       },
     });
@@ -361,8 +391,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public selectAllPosts(): void {
     this.posts.map((post) => {
-      if (this.selectedPosts.find((selectedPost) => selectedPost === String(post.id))) return;
-      this.selectedPosts.push(String(post.id));
+      if (this.selectedPosts.find((selectedPost: PostResult) => selectedPost.id === post.id))
+        return;
+      this.selectedPosts.push(post);
     });
   }
 
@@ -380,16 +411,16 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     if (!confirmed) return;
 
     const count = this.selectedPosts.length;
-    forkJoin(this.selectedPosts.map((p) => this.postsService.delete(p))).subscribe({
+    forkJoin(this.selectedPosts.map((p: PostResult) => this.postsService.delete(p.id))).subscribe({
       complete: () => {
         this.postDeleted(this.selectedPosts, count);
       },
     });
   }
 
-  public postDeleted(postIds: string[], count?: number): void {
+  public postDeleted(posts: PostResult[], count?: number): void {
     this.getPostsSubject.next({ params: this.params, add: false });
-    if (this.activePostId && postIds.includes(this.activePostId)) {
+    if (this.activePostId && posts.some((p: PostResult) => p.id === this.activePostId)) {
       if (this.collectionId) {
         this.router.navigate(['feed', 'collection', this.collectionId]);
       } else {
@@ -414,19 +445,19 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.selectedPosts = [];
   }
 
-  public isPostSelected(isChecked: boolean, id: string): void {
+  public isPostSelected(isChecked: boolean, post: PostResult): void {
     if (isChecked) {
-      this.selectedPosts.push(id);
+      this.selectedPosts.push(post);
     } else {
-      const index = this.selectedPosts.findIndex((postId) => postId === id);
+      const index = this.selectedPosts.findIndex((p: PostResult) => p.id === post.id);
       if (index > -1) {
         this.selectedPosts.splice(index, 1);
       }
     }
   }
 
-  public isPostChecked(id: string): boolean {
-    return !!this.selectedPosts.find((postId) => postId === id);
+  public isPostChecked(post: PostResult): boolean {
+    return !!this.selectedPosts.find((p: PostResult) => p.id === post.id);
   }
 
   public sortPosts(value: any): void {
@@ -513,7 +544,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     });
   }
 
-  public showPostModal(id: string): void {
+  public showPostModal(id: number): void {
     this.postsService.getById(id).subscribe({
       next: (post: any) => {
         this.showPostDetails(post);
@@ -564,6 +595,13 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       if (data?.update) {
         this.getPostsSubject.next({ params: this.params, add: false });
       }
+    });
+  }
+
+  private showMessage(message: string, type: string, duration = 3000) {
+    this.snackBar.open(message, 'Close', {
+      panelClass: [type],
+      duration,
     });
   }
 }

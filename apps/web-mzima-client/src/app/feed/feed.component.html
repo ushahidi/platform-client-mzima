@@ -90,9 +90,8 @@
           <ng-container *ngIf="isDesktop">
             <mat-form-field *ngIf="isManagePosts" appearance="outline" class="feed-page__control">
               <mat-select
-                name="filter"
                 disableOptionCentering
-                [(ngModel)]="selectedStatus"
+                [formControl]="statusControl"
                 [disabled]="!selectedPosts.length"
                 [placeholder]="'app.mark_as' | translate"
                 (selectionChange)="changePostsStatus($event.value)"
@@ -202,16 +201,16 @@
               [feedView]="true"
               (edit)="editPost(post)"
               (refresh)="refreshPost(post)"
-              (deleted)="postDeleted([post.id.toString()])"
+              (deleted)="postDeleted([post])"
               (click)="showPostDetails(post)"
               [selectable]="isBulkOptionsVisible"
-              [isChecked]="isPostChecked(post.id.toString())"
+              [isChecked]="isPostChecked(post)"
               (statusChanged)="postStatusChanged()"
-              (selected)="isPostSelected($event, post.id.toString())"
+              (selected)="isPostSelected($event, post)"
               [ngClass]="{
                 'post--selected':
                   post.id === postDetails?.id ||
-                  (mode === FeedMode.Post && post.id.toString() === activePostId)
+                  (mode === FeedMode.Post && post.id === activePostId)
               }"
               *ngFor="
                 let post of posts

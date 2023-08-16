@@ -44,3 +44,14 @@ export const replaceNewlinesWithBreaks = (data: PostContent[]) => {
     return item;
   });
 };
+
+export const isAllRequiredCompleted = (post: any): boolean => {
+  for (const content of post.post_content) {
+    if (content.required) {
+      if (!post.completed_stages.some((stage: any) => stage.form_stage_id === content.id)) {
+        return false;
+      }
+    }
+  }
+  return true;
+};
