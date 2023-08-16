@@ -438,7 +438,7 @@
             form.invalid ||
             emptyLocation ||
             submitted ||
-            (!requireApproval ? taskForm.invalid : false)
+            (!requireApproval || post.status === 'published' ? taskForm.invalid : false)
           "
         >
           {{ 'app.submit' | translate }}
