@@ -96,8 +96,8 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   private async getPost(id: number): Promise<void> {
     if (!this.postId) return;
     this.post = await this.getPostInformation(id);
-
     if (this.post) {
+      this.isPostLoading = false;
       this.getData(this.post);
       this.post.post_content = postHelpers.markCompletedTasks(
         this.post?.post_content || [],
@@ -126,9 +126,11 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         if (relativeField.value?.value) {
           const url = `${window.location.origin}/feed/${relativeField.value.value}/view?mode=POST`;
           const relative = await this.getPostInformation(relativeField.value.value);
-          const { title } = relative;
-          relativeField.value.postTitle = title;
-          relativeField.value.postUrl = url;
+          if (relative) {
+            const { title } = relative;
+            relativeField.value.postTitle = title;
+            relativeField.value.postUrl = url;
+          }
         }
       });
   }
@@ -160,10 +162,12 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
 
   private async getPostInformation(postId: number): Promise<any> {
     try {
+      this.isPostLoading = true;
       return await lastValueFrom(this.postsService.getById(postId));
     } catch (err) {
-      console.error(err);
-      return err;
+      this.isPostLoading = false;
+      console.log(err);
+      return;
     }
   }
 
@@ -172,7 +176,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       return await lastValueFrom(this.mediaService.getById(mediaId));
     } catch (err) {
       console.error(err);
-      return err;
+      return;
     }
   }
 
