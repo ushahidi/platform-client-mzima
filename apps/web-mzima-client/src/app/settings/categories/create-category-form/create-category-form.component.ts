@@ -13,10 +13,8 @@ import {
   GroupCheckboxItemInterface,
   SelectLanguagesModalComponent,
 } from '../../../shared/components';
-import { LanguageService } from '../../../core/services/language.service';
 import { CategoriesService, RolesService, CategoryInterface } from '@mzima-client/sdk';
-import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
-import { BreakpointService, SessionService } from '@services';
+import { BreakpointService, SessionService, LanguageService, ConfirmModalService } from '@services';
 
 @UntilDestroy()
 @Component({
@@ -222,7 +220,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
       icon: 'tag',
       parent: this.form.value.parent,
       parent_id: this.form.value.is_child_to || null,
-      parent_id_original: this.form.value.is_child_to || null,
+      parent_id_original: this.category?.parent?.id || null,
       role:
         this.form.value.visible_to.value === 'everyone' ? null : this.form.value.visible_to.options,
       slug: this.form.value.name,
