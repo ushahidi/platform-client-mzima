@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CollectionsComponent } from '@data';
+import { untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 import { BaseComponent } from '../../base.component';
@@ -38,6 +39,13 @@ export class PostHeadComponent extends BaseComponent {
     super(sessionService, breakpointService);
     this.checkDesktop();
     this.getUserData();
+
+    this.sessionService.deploymentInfo$.pipe(untilDestroyed(this)).subscribe({
+      next: (deploymentInfo) => {
+        console.log(deploymentInfo);
+        // this.logo = deploymentInfo.logo;
+      },
+    });
   }
 
   loadData(): void {}
@@ -128,6 +136,7 @@ export class PostHeadComponent extends BaseComponent {
 
   public sharePost() {
     event?.stopPropagation();
+    // if (this.post.status === PostStatus.Published) {
     this.dialog.open(ShareModalComponent, {
       width: '100%',
       maxWidth: 564,
@@ -138,6 +147,9 @@ export class PostHeadComponent extends BaseComponent {
         description: this.post.content,
       },
     });
+    // } else {
+    //   this.showMessage(this.translate.instant('notify.post.can_t_share_this_post'), 'error', 5000);
+    // }
   }
 
   private showMessage(message: string, type: string, duration = 3000) {

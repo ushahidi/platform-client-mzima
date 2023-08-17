@@ -1689,6 +1689,7 @@
       "success": "Registration complete! You can now log in.."
     },
     "post": {
+      "can_t_share_this_post": "You can't share this post, you have to publish it first",
       "delete_image_confirm": "Are you sure you want to remove this image?",
       "save_success": "Post {{name}} saved",
       "save_success_review": "Post {{name}} saved. Your post will be reviewed by a moderator before publishing.",
