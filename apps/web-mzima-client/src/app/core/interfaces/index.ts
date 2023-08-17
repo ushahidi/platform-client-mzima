@@ -3,7 +3,6 @@ export * from './breadcrumb.interface';
 export * from './session.interface';
 export * from './country-code.interface';
 export * from './auth-response.interface';
-export * from './settings.interface';
 export * from './env.interface';
 export * from './language.interface';
 export * from './gtm-track.interface';

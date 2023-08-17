@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Clipboard } from '@angular/cdk/clipboard';
-import { ApiKeyResult } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionService, BreakpointService, NotificationService } from '@services';
 import { mergeMap, Observable } from 'rxjs';
 import { SettingsMapComponent } from './settings-map/settings-map.component';
-import { MediaService, ApiKeyService } from '@mzima-client/sdk';
+import { MediaService, ApiKeyService, ApiKeysResultInterface } from '@mzima-client/sdk';
 import { ConfigService } from '../../core/services/config.service';
 import { LoaderService } from '../../core/services/loader.service';
 import { LanguageService } from '../../core/services/language.service';
@@ -26,7 +25,7 @@ export class GeneralComponent implements OnInit {
   public copySuccess = false;
   public submitted = false;
   siteConfig: any;
-  apiKey: ApiKeyResult;
+  apiKey: ApiKeysResultInterface;
   uploadedFile?: File;
   minObfuscation = 0;
   maxObfuscation = 9;
@@ -68,7 +67,7 @@ export class GeneralComponent implements OnInit {
       disable_registration: this.siteConfig.disable_registration,
     });
     this.apiKeyService.get().subscribe((res) => {
-      this.apiKey = res.results.shift();
+      this.apiKey = res.results.shift()!;
     });
     this.translate.onLangChange.subscribe((newLang) => {
       this.generalForm.controls['language'].setValue(newLang.lang);
@@ -96,11 +95,11 @@ export class GeneralComponent implements OnInit {
 
     if (this.apiKey) {
       this.apiKeyService.update(this.apiKey.id, this.apiKey).subscribe((newKey: any) => {
-        this.apiKey = newKey;
+        this.apiKey = newKey.result;
       });
     } else {
       this.apiKeyService.post({}).subscribe((newKey: any) => {
-        this.apiKey = newKey;
+        this.apiKey = newKey.result;
       });
     }
   }
