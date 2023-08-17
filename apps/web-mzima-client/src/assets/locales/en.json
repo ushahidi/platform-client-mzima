@@ -1,5 +1,6 @@
 {
   "app": {
+    "contact_email_address": "Contact email address:",
     "powered_by_ushahidi": "Powered by Ushahidi.",
     "support": "Ushahidi Support",
     "by": "by",
@@ -1715,7 +1716,8 @@
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
       "leave_confirm": "Continue without saving",
-      "unfinished_post_task": "You cannot publish this post, the post has unfinished tasks"
+      "unfinished_post_task": "You cannot publish this post, the post has unfinished tasks",
+      "posts_can_t_be_published": "The following posts can't be published: {{titles}}"
     },
     "category": {
       "save_success": "Saved category {{name}}",
