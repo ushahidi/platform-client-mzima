@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { regexHelper, takeUntilDestroy$ } from '@helpers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { BreakpointService } from '@services';
+import { BreakpointService, ConfirmModalService } from '@services';
 import {
   FormsService,
   SurveysService,
@@ -14,7 +14,6 @@ import {
   SurveyItem,
   WebhookResultInterface,
 } from '@mzima-client/sdk';
-import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { Observable } from 'rxjs';
 
 @UntilDestroy()
@@ -101,8 +100,8 @@ export class WebhookItemComponent implements OnInit {
   private getWebhook(id: string) {
     this.webhooksService.getById(id).subscribe({
       next: (webhook) => {
-        this.webhook = webhook;
-        this.fillInForm(webhook);
+        this.webhook = webhook.result;
+        this.fillInForm(webhook.result);
       },
       error: (err) => console.log(err),
     });
