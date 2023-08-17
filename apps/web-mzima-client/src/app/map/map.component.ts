@@ -240,7 +240,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
                             if (mediaField && mediaField.value?.value) {
                               this.mediaService.getById(mediaField.value.value).subscribe({
                                 next: (media) => {
-                                  comp.setInput('media', media);
+                                  comp.setInput('media', media.result);
                                 },
                               });
                             }

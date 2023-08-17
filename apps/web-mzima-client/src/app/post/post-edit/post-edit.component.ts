@@ -285,8 +285,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       this.form.patchValue({
         [key]: {
           id: value.value,
-          caption: response.caption,
-          photo: response.original_file_url,
+          caption: response.result.caption,
+          photo: response.result.original_file_url,
         },
       });
     } catch (error: any) {
@@ -496,7 +496,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                     this.form.value[field.key]?.caption,
                   );
                   const response: any = await lastValueFrom(uploadObservable);
-                  value.value = response.id;
+                  value.value = response.result.id;
                 } catch (error: any) {
                   throw new Error(`Error uploading file: ${error.message}`);
                 }

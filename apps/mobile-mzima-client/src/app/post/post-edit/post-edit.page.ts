@@ -392,8 +392,8 @@ export class PostEditPage {
         const response: any = await lastValueFrom(uploadObservable);
         this.updateFormControl(key, {
           id: value.value,
-          caption: response.caption,
-          photo: response.original_file_url,
+          caption: response.result.caption,
+          photo: response.result.original_file_url,
         });
       } catch (error: any) {
         this.form.patchValue({ [key]: null });
