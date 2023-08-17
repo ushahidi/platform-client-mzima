@@ -34,12 +34,12 @@
   </div>
 
   <div class="post__main">
-    <div class="post__visual" *ngIf="media && post.source !== 'Twitter'">
-      <img [src]="media.original_file_url" [alt]="post.title" />
-    </div>
     <div class="post__content">
       <h3 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h3>
       <p *ngIf="post.title?.length && post.content?.length">{{ post.content }}</p>
+    </div>
+    <div class="post__visual" *ngIf="media && post.source !== 'Twitter'">
+      <img [src]="media.original_file_url" [alt]="media.caption || post.title" />
     </div>
   </div>
   <div class="post__more" *ngIf="!feedView">
@@ -48,5 +48,5 @@
     </mzima-client-button>
   </div>
 
-  <app-post-metadata [post]="post"></app-post-metadata>
+  <app-post-metadata class="post__metadata" [post]="post"></app-post-metadata>
 </div>

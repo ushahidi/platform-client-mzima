@@ -43,19 +43,18 @@
     }
   }
 
-  &__main {
-    display: flex;
-    justify-content: flex-start;
-  }
-
   &__visual {
-    flex: 0 0 45%;
+    margin-top: 8px;
     overflow: hidden;
-    max-width: 178px;
-    margin-inline-end: 8px;
-    min-height: 168px;
+    max-height: 200px;
     border-radius: 4px;
     position: relative;
+
+    &:before {
+      content: '';
+      display: block;
+      padding-top: 50%;
+    }
 
     img {
       top: 0;
@@ -98,7 +97,6 @@
     font-size: 14px;
     line-height: 1.3;
     font-weight: 400;
-    margin-bottom: 8px;
     word-break: break-word;
 
     h3 {
@@ -138,5 +136,10 @@
       vertical-align: top;
       display: inline-block;
     }
+  }
+
+  &__metadata {
+    display: block;
+    margin-top: 8px;
   }
 }

@@ -284,10 +284,14 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         });
         setTimeout(() => {
           this.isLoading = false;
-          this.masonry?.layout();
+          this.updateMasonry();
         }, 500);
       },
     });
+  }
+
+  public updateMasonry(): void {
+    this.masonry?.layout();
   }
 
   public pageChanged(page: any): void {
