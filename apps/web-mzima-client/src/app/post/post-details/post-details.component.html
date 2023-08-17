@@ -3,14 +3,6 @@
   [ngClass]="{ 'post--feed': feedView }"
   [ngStyle]="{ '--color': color || 'var(--color-neutral-100)' }"
 >
-  <ng-container *ngIf="!isManagePosts">
-    <p class="cant-see-post">{{ 'notify.post.can_t_view_this_post' | translate }}</p>
-    <p class="cant-see-post">
-      {{ 'notify.post.contact_for_details' | translate }} <br />
-      <a href="mailto:{{ adminEmail }}">{{ adminEmail }}</a>
-    </p>
-  </ng-container>
-
   <ng-container *ngIf="post; else spinner">
     <div class="post__head">
       <app-post-head
@@ -174,5 +166,10 @@
 </div>
 
 <ng-template #spinner>
-  <app-spinner class="spinner"></app-spinner>
+  <app-spinner *ngIf="isPostLoading" class="spinner"></app-spinner>
+  <p
+    *ngIf="!isManagePosts && !isPostLoading"
+    class="cant-see-post"
+    [innerHTML]="'notify.post.can_t_view_this_post' | translate"
+  ></p>
 </ng-template>

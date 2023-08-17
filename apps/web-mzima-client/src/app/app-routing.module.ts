@@ -111,6 +111,14 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'not-found',
+    component: PageNotFoundComponent,
+    data: {
+      breadcrumb: 'app.page-not-found',
+      ogTitle: 'app.page-not-found',
+    },
+  },
+  {
     path: '**',
     pathMatch: 'full',
     canActivate: [AccessDeniedGuard],

@@ -317,7 +317,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
         width: '100%',
         maxWidth: 576,
-        data: { color: post.color, twitterId: post.data_source_message_id },
+        data: { post: post, color: post.color, twitterId: post.data_source_message_id },
         height: 'auto',
         maxHeight: '90vh',
         panelClass: ['modal', 'post-modal'],
@@ -342,12 +342,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
             queryParamsHandling: 'merge',
           });
         }
-      });
-
-      this.postsService.getById(post.id).subscribe({
-        next: (postV5: PostResult) => {
-          this.postDetailsModal.componentInstance.post = postV5;
-        },
       });
     }
   }
@@ -548,6 +542,12 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.postsService.getById(id).subscribe({
       next: (post: any) => {
         this.showPostDetails(post);
+      },
+      error: (err) => {
+        // console.log(err.status);
+        if (err.status === 404) {
+          this.router.navigate(['/not-found']);
+        }
       },
     });
   }
