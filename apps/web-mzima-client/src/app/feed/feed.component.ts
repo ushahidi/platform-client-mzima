@@ -371,7 +371,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
             titles: uncompletedPosts.map((p) => p.title).join(', '),
           }),
           'error',
-          0,
+          5000,
         );
         this.statusControl.reset();
         return;
