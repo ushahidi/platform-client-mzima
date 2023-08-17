@@ -4,11 +4,13 @@
   [ngStyle]="{ '--color': color || 'var(--color-neutral-100)' }"
 >
   <ng-container *ngIf="!isManagePosts">
+    <p class="cant-see-post">{{ 'notify.post.can_t_view_this_post' | translate }}</p>
     <p class="cant-see-post">
-      This post is not published, you do not have permission to view it: Contact the admin for
-      further details:
+      {{ 'notify.post.contact_for_details' | translate }} <br />
+      <a href="mailto:{{ adminEmail }}">{{ adminEmail }}</a>
     </p>
   </ng-container>
+
   <ng-container *ngIf="post; else spinner">
     <div class="post__head">
       <app-post-head

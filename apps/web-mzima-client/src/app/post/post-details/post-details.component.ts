@@ -20,6 +20,7 @@ import {
   PostResult,
   PostsService,
 } from '@mzima-client/sdk';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
 import { BaseComponent } from '../../base.component';
@@ -28,6 +29,7 @@ import { CollectionsModalComponent } from '../../shared/components';
 import { dateHelper } from '@helpers';
 import { BreakpointService, SessionService } from '@services';
 
+@UntilDestroy()
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
@@ -47,6 +49,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public videoUrls: any[] = [];
   public isPostLoading: boolean = true;
   public isManagePosts: boolean = false;
+  public adminEmail: string;
 
   constructor(
     protected override sessionService: SessionService,
@@ -63,6 +66,10 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     this.getUserData();
     this.checkPermission();
     this.userId = Number(this.user.userId);
+
+    this.sessionService.deploymentInfo$.pipe(untilDestroyed(this)).subscribe({
+      next: ({ email }) => (this.adminEmail = email),
+    });
 
     this.route.params.subscribe((params) => {
       if (params['id']) {
