@@ -207,6 +207,7 @@
               [isChecked]="isPostChecked(post)"
               (statusChanged)="postStatusChanged()"
               (selected)="isPostSelected($event, post)"
+              (mediaLoaded)="updateMasonry()"
               [ngClass]="{
                 'post--selected':
                   post.id === postDetails?.id ||
