@@ -15,9 +15,9 @@ export class PostDetailsModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private matDialogRef: MatDialogRef<PostDetailsModalComponent>,
   ) {
-    this.post = data.post;
-    this.color = data.color;
-    this.editable = data.editable;
+    this.post = data?.post;
+    this.color = data?.color;
+    this.editable = data?.editable;
   }
 
   public handleEditPost(): void {
