@@ -123,7 +123,6 @@ export class PostHeadComponent extends BaseComponent {
 
   public sharePost() {
     event?.stopPropagation();
-    // if (this.post.status === PostStatus.Published) {
     this.dialog.open(ShareModalComponent, {
       width: '100%',
       maxWidth: 564,
@@ -134,9 +133,6 @@ export class PostHeadComponent extends BaseComponent {
         description: this.post.content,
       },
     });
-    // } else {
-    //   this.showMessage(this.translate.instant('notify.post.can_t_share_this_post'), 'error', 5000);
-    // }
   }
 
   private showMessage(message: string, type: string, duration = 3000) {
