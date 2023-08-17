@@ -22,6 +22,7 @@ import {
   PostStatus,
   postHelpers,
 } from '@mzima-client/sdk';
+import _ from 'lodash';
 
 enum FeedMode {
   Tiles = 'TILES',
@@ -531,8 +532,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   refreshPost({ id }: PostResult) {
     this.postsService.getById(id).subscribe((p) => {
-      const index = this.posts.findIndex((post) => post.id === p.id);
-      if (index !== -1) this.posts.splice(index, 1, p);
+      const updatedPost = this.posts.find((post) => post.id === id);
+      if (updatedPost) updatedPost.sets = _.cloneDeep(p.sets);
     });
   }
 

@@ -25,7 +25,7 @@ export class WebhooksService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return apiHelpers.API_V_3;
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {
@@ -36,11 +36,14 @@ export class WebhooksService extends ResourceService<any> {
     return super.get();
   }
 
-  override getById(id: string): Observable<WebhookResultInterface> {
+  override getById(id: string): Observable<{ result: WebhookResultInterface }> {
     return super.getById(id);
   }
 
-  override update(id: string | number, resource: any): Observable<WebhookResultInterface> {
+  override update(
+    id: string | number,
+    resource: any,
+  ): Observable<{ result: WebhookResultInterface }> {
     return super.update(id, resource);
   }
 
