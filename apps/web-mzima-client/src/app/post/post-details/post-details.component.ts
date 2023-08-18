@@ -141,8 +141,8 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       .map(async (mediaField) => {
         if (mediaField.value?.value) {
           const media = await this.getPostMedia(mediaField.value.value);
-          mediaField.value.mediaSrc = media.original_file_url;
-          mediaField.value.mediaCaption = media.caption;
+          mediaField.value.mediaSrc = media.result.original_file_url;
+          mediaField.value.mediaCaption = media.result.caption;
         }
       });
   }

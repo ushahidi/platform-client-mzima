@@ -51,7 +51,7 @@ export class PostPreviewComponent implements OnInit, OnChanges {
       if (mediaField?.value?.id) {
         this.mediaService.getById(mediaField.value.value).subscribe({
           next: (media) => {
-            this.media = media;
+            this.media = media.result;
             this.mediaLoaded.emit();
           },
         });

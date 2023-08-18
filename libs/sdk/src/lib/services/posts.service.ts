@@ -96,7 +96,7 @@ export class PostsService extends ResourceService<any> {
             const uploadObservable: any = await this.mediaService.getById(mediaField.value.value);
             const media: any = await lastValueFrom(uploadObservable);
 
-            const { original_file_url: originalFileUrl, caption } = media;
+            const { original_file_url: originalFileUrl, caption } = media.result;
             mediaField.value.mediaSrc = originalFileUrl;
             mediaField.value.mediaCaption = caption;
           } catch (e) {

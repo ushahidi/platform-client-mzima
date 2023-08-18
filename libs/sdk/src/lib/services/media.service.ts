@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
-import { PermissionResult } from '../models';
+import { MediaResponse } from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MediaService extends ResourceService<PermissionResult> {
+export class MediaService extends ResourceService<MediaResponse> {
   constructor(
     protected override httpClient: HttpClient,
     protected override currentLoader: EnvLoader,
@@ -18,7 +17,7 @@ export class MediaService extends ResourceService<PermissionResult> {
   }
 
   getApiVersions(): string {
-    return apiHelpers.API_V_3;
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {
@@ -35,9 +34,5 @@ export class MediaService extends ResourceService<PermissionResult> {
     }
 
     return this.httpClient.post(apiUrl, formData);
-  }
-
-  override getById(id: string): Observable<any> {
-    return super.get(id);
   }
 }
