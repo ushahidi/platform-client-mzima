@@ -86,7 +86,7 @@
     </div>
   </ng-template>
 
-  <div class="form-row">
+  <div class="form-row" *ngIf="!isParent">
     <mat-label>{{ 'category.parent_category' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <mat-select
