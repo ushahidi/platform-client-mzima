@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { CONST } from '@constants';
 import { AuthService } from '@services';
 import { regexHelper } from '@helpers';
 import { emailExistsValidator } from '../../../core/validators';
+import { generalHelpers } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-registration-form',
@@ -24,8 +24,8 @@ export class RegistrationFormComponent {
         '',
         [
           Validators.required,
-          Validators.minLength(CONST.MIN_PASSWORD_LENGTH),
-          Validators.maxLength(CONST.MAX_PASSWORD_LENGTH),
+          Validators.minLength(generalHelpers.CONST.MIN_PASSWORD_LENGTH),
+          Validators.maxLength(generalHelpers.CONST.MAX_PASSWORD_LENGTH),
         ],
       ],
       agreement: [false, [Validators.required]],

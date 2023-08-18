@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
-import { CONST } from '@constants';
 import { Permissions, Roles } from '@enums';
+import { generalHelpers } from '@mzima-client/sdk';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,10 @@ export class HostGuard implements CanActivate {
       Permissions.ImportExport,
     ];
 
-    const role = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`);
-    const permissions = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}permissions`);
+    const role = localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}role`);
+    const permissions = localStorage.getItem(
+      `${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}permissions`,
+    );
     return !!permissions?.split(',').some((p) => hostRoles.includes(p)) || role === Roles.Admin;
   }
 }

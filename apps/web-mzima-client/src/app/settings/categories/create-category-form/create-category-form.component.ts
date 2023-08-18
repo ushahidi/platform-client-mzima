@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { CONST } from '@constants';
 import { TranslationInterface, LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,7 +12,12 @@ import {
   GroupCheckboxItemInterface,
   SelectLanguagesModalComponent,
 } from '../../../shared/components';
-import { CategoriesService, RolesService, CategoryInterface } from '@mzima-client/sdk';
+import {
+  CategoriesService,
+  RolesService,
+  CategoryInterface,
+  generalHelpers,
+} from '@mzima-client/sdk';
 import { BreakpointService, SessionService, LanguageService, ConfirmModalService } from '@services';
 
 @UntilDestroy()
@@ -67,7 +71,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
     this.formSubscribe();
     this.getCategories();
     this.getRoles();
-    this.userRole = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`)!;
+    this.userRole = localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}role`)!;
     if (this.category) {
       this.isUpdate = !!this.category;
       this.form.patchValue({

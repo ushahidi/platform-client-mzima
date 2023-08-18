@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CONST } from '@constants';
 import dayjs from 'dayjs';
 import { forkJoin, Observable } from 'rxjs';
 import { BreakpointService } from '@services';
-import { UsersService } from '@mzima-client/sdk';
+import { generalHelpers, UsersService } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -24,7 +23,7 @@ export class UserSettingsComponent implements OnInit {
     private breakpointService: BreakpointService,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
-    this.userId = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}userId`)!;
+    this.userId = localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}userId`)!;
     this.form = this.formBuilder.group({
       user: ['', [Validators.required]],
       hdx_maintainer_id: ['', [Validators.required]],
