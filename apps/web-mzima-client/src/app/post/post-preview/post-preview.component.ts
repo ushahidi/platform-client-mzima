@@ -45,7 +45,7 @@ export class PostPreviewComponent implements OnInit, OnChanges {
       this.allowed_privileges = this.post?.allowed_privileges ?? '';
       const mediaField = this.post.post_content?.flatMap((post_content) => {
         return post_content.fields.filter((field) => {
-          return field.type === 'media';
+          return field.type === 'media' && field.value?.id;
         });
       })[0];
       if (mediaField?.value?.id) {
