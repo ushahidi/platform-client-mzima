@@ -56,7 +56,7 @@ export class PostEditPage {
   public description: string;
   public title: string;
   public postId: number;
-  private post: any;
+  public post: any;
   public tasks: any[] = [];
   private completeStages: number[] = [];
   public surveyName: string;
@@ -277,8 +277,11 @@ export class PostEditPage {
             fields[field.key] = this.createField(field, value);
 
             if (field.type === 'point') {
+              console.log(field.required);
               this.locationRequired = field.required;
-              if (value.lat === '' || value.lng === '') this.emptyLocation = true;
+              if (value.lat === '' || value.lng === '') {
+                this.emptyLocation = true;
+              }
             }
           }
         });
@@ -309,6 +312,7 @@ export class PostEditPage {
 
   public changeLocation(data: any, formKey: string) {
     const { location, error } = data;
+    console.log(location);
     const { lat, lng } = location;
 
     this.updateFormControl(formKey, { lat: lat, lng: lng });

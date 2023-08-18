@@ -30,11 +30,14 @@
           label="Latitude"
           [required]="required"
           [readonly]="true"
-        ></app-form-control>
+        >
+          <ng-container end>
+            <ng-container *ngIf="location.lat">
+              <app-icon name="close" (click)="clearLocationField()"></app-icon>
+            </ng-container>
+          </ng-container>
+        </app-form-control>
         <p *ngIf="emptyFieldLat" class="location-error">Empty latitude</p>
-        <p *ngIf="noSpecialCharactersLat" class="location-error">
-          Field latitude contains special characters
-        </p>
       </div>
 
       <div class="form-row">
@@ -43,11 +46,14 @@
           label="Longitude"
           [required]="required"
           [readonly]="true"
-        ></app-form-control>
+        >
+          <ng-container end>
+            <ng-container *ngIf="location.lng">
+              <app-icon name="close" (click)="clearLocationField()"></app-icon>
+            </ng-container>
+          </ng-container>
+        </app-form-control>
         <p *ngIf="emptyFieldLng" class="location-error">Empty longitude</p>
-        <p *ngIf="noSpecialCharactersLng" class="location-error">
-          Field longitude contains special characters
-        </p>
       </div>
     </div>
   </div>
