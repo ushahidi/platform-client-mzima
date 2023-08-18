@@ -15,7 +15,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class LoginPage {
   public form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
-    password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
+    password: ['', [Validators.required]],
   });
   public forgotPasswordForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],

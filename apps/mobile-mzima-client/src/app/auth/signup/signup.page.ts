@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CONST } from '@constants';
 import { fieldErrorMessages, regexHelper } from '@helpers';
+import { generalHelpers } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AuthService, DeploymentService, SessionService } from '@services';
 import { emailExistsValidator } from '@validators';
@@ -21,8 +21,8 @@ export class SignupPage {
       '',
       [
         Validators.required,
-        Validators.minLength(CONST.MIN_PASSWORD_LENGTH),
-        Validators.maxLength(CONST.MAX_PASSWORD_LENGTH),
+        Validators.minLength(generalHelpers.CONST.MIN_PASSWORD_LENGTH),
+        Validators.maxLength(generalHelpers.CONST.MAX_PASSWORD_LENGTH),
       ],
     ],
     agreement: [false, [Validators.required]],
