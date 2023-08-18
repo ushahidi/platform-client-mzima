@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CONST } from '@constants';
 import {
   ExportJobInterface,
   ExportJobsService,
   FormInterface,
   FormsService,
+  generalHelpers,
   UsersService,
 } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -65,7 +65,7 @@ export class DataExportComponent implements OnInit {
   }
 
   initUserSettings() {
-    const userId = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}userId`);
+    const userId = localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}userId`);
     if (userId) {
       this.usersService.getUserSettings(userId).subscribe({
         next: (response) => {

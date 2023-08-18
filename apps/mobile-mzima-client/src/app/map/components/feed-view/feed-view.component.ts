@@ -135,8 +135,8 @@ export class FeedViewComponent extends MainViewComponent {
 
       field.value = {
         ...field.value,
-        mediaCaption: response.caption,
-        mediaSrc: response.original_file_url,
+        mediaCaption: response.result.caption,
+        mediaSrc: response.result.original_file_url,
       };
     } catch (e) {
       console.error('An error occurred: ', e);

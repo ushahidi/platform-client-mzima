@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { CONST } from '@constants';
 import { LanguageInterface } from '@models';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -24,6 +23,7 @@ import {
   RoleResult,
   SurveyItem,
   SurveyItemTask,
+  generalHelpers,
 } from '@mzima-client/sdk';
 import { ConfirmModalService, LanguageService, SessionService } from '@services';
 import _ from 'lodash';
@@ -181,7 +181,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   private initLanguages() {
     this.languagesToSelect = this.languageService.getLanguages();
 
-    const language = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}language`);
+    const language = localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}language`);
 
     if (!this.survey.enabled_languages) {
       this.survey.enabled_languages = {

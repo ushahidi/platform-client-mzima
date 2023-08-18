@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { CONST } from '@constants';
-import { SurveysService, SurveyItem } from '@mzima-client/sdk';
+import { SurveysService, SurveyItem, generalHelpers } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-add-post-modal',
@@ -21,7 +20,9 @@ export class AddPostModalComponent {
         this.types.map((el) => {
           el.visible =
             el.everyone_can_create ||
-            el.can_create.includes(localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`));
+            el.can_create.includes(
+              localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}role`),
+            );
         });
       },
     });

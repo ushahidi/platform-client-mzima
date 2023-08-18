@@ -8,11 +8,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CONST, profileMenu } from '@constants';
+import { profileMenu } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AuthService, SessionService, ToastService } from '@services';
 import { fieldErrorMessages, regexHelper } from '@helpers';
 import {
+  generalHelpers,
   RolesService,
   UserDataInterface,
   UserInterfaceResponse,
@@ -74,16 +75,16 @@ export class InformationPage {
         '',
         [
           Validators.required,
-          Validators.minLength(CONST.MIN_PASSWORD_LENGTH),
-          Validators.maxLength(CONST.MAX_PASSWORD_LENGTH),
+          Validators.minLength(generalHelpers.CONST.MIN_PASSWORD_LENGTH),
+          Validators.maxLength(generalHelpers.CONST.MAX_PASSWORD_LENGTH),
         ],
       ],
       repeatPassword: [
         '',
         [
           Validators.required,
-          Validators.minLength(CONST.MIN_PASSWORD_LENGTH),
-          Validators.maxLength(CONST.MAX_PASSWORD_LENGTH),
+          Validators.minLength(generalHelpers.CONST.MIN_PASSWORD_LENGTH),
+          Validators.maxLength(generalHelpers.CONST.MAX_PASSWORD_LENGTH),
         ],
       ],
     },
