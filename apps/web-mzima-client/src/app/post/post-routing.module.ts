@@ -20,11 +20,6 @@ const routes: Routes = [
     component: PostEditComponent,
     data: { breadcrumb: 'Edit Post', edit: true },
   },
-  {
-    path: ':id',
-    canActivate: [RedirectGuard],
-    component: PostEditComponent,
-  },
 ];
 
 @NgModule({
