@@ -131,12 +131,7 @@
                       {{ 'nav.select_all' | translate }}
                     </mat-checkbox>
                   </li>
-                  <li
-                    *ngFor="
-                      let option of field.options | sortByField : 'parent_id' : 'asc';
-                      trackBy: trackById
-                    "
-                  >
+                  <li *ngFor="let option of field.options; trackBy: trackById">
                     <mat-checkbox
                       [ngClass]="{ 'lvl-2': option.parent }"
                       [checked]="form.get(field.key)?.value.includes(option.id)"
@@ -439,11 +434,7 @@
           type="submit"
           [data-qa]="'btn-post-item-submit'"
           [disabled]="
-            form.disabled ||
-            form.invalid ||
-            emptyLocation ||
-            submitted ||
-            (!requireApproval || post?.status === 'published' ? taskForm.invalid : false)
+            form.disabled || form.invalid || emptyLocation || submitted || taskForm.invalid
           "
         >
           {{ 'app.submit' | translate }}
