@@ -29,6 +29,10 @@ ARG HTTP_PORT=8080
 WORKDIR /usr/share/nginx/html
 COPY --from=0 /var/app/dist/apps/web-mzima-client ./
 COPY docker/ /opt/docker/
+RUN apt update && \
+    apt install --no-install-recommends -y jq && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN cp /opt/docker/nginx.default.conf /etc/nginx/conf.d/default.conf && \
     sed -i 's/$HTTP_PORT/'$HTTP_PORT'/' /etc/nginx/conf.d/default.conf && \
     mkdir /var/lib/nginx && \
@@ -40,5 +44,5 @@ RUN cp /opt/docker/nginx.default.conf /etc/nginx/conf.d/default.conf && \
 ENV HTTP_PORT=$HTTP_PORT
 EXPOSE $HTTP_PORT
 
-ENTRYPOINT [ "/bin/sh", "/opt/docker/nginx.run.sh" ]
+ENTRYPOINT [ "/bin/bash", "/opt/docker/nginx.run.sh" ]
 CMD [ "/usr/sbin/nginx", "-g", "daemon off;" ]
