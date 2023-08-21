@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 import { forkJoin, Observable } from 'rxjs';
 import { BreakpointService } from '@services';
 import { generalHelpers, UsersService } from '@mzima-client/sdk';
@@ -16,6 +16,7 @@ export class UserSettingsComponent implements OnInit {
   private userId: string;
   public isDesktop$: Observable<boolean>;
   public form: FormGroup;
+  public submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,17 +26,17 @@ export class UserSettingsComponent implements OnInit {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.userId = localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}userId`)!;
     this.form = this.formBuilder.group({
-      user: ['', [Validators.required]],
+      // user: ['', [Validators.required]],
       hdx_maintainer_id: ['', [Validators.required]],
-      maintainer_privileges: ['', [Validators.required]],
-      maintainer_id: ['', [Validators.required]],
-      maintainer_created: ['', [Validators.required]],
-      maintainer_url: ['', [Validators.required]],
+      // maintainer_privileges: ['', [Validators.required]],
+      maintainer_id: [''],
+      // maintainer_created: ['', [Validators.required]],
+      // maintainer_url: ['', [Validators.required]],
       hdx_api_key: ['', [Validators.required]],
-      api_privileges: ['', [Validators.required]],
-      api_id: ['', [Validators.required]],
-      api_created: ['', [Validators.required]],
-      api_url: ['', [Validators.required]],
+      // api_privileges: ['', [Validators.required]],
+      api_id: [''],
+      // api_created: ['', [Validators.required]],
+      // api_url: ['', [Validators.required]],
     });
   }
 
@@ -54,17 +55,17 @@ export class UserSettingsComponent implements OnInit {
   }
 
   private updateSettings(setting: any) {
-    this.form.patchValue({ user: setting.user });
+    // this.form.patchValue({ user: setting.user });
     if (setting.config_key === 'hdx_api_key') {
       setting.config_value =
         '*** *** *** *** *** *** *** ' +
         setting.config_value.slice(setting.config_value.length - 4);
       this.form.patchValue({
         hdx_api_key: setting.config_value,
-        api_privileges: setting.allowed_privileges,
+        // api_privileges: setting.allowed_privileges,
         api_id: setting.id,
-        api_created: setting.created,
-        api_url: setting.url,
+        // api_created: setting.created,
+        // api_url: setting.url,
       });
     }
 
@@ -72,16 +73,18 @@ export class UserSettingsComponent implements OnInit {
       this.form.patchValue({
         hdx_maintainer_id: setting.config_value,
         maintainer_id: setting.id,
-        maintainer_privileges: setting.allowed_privileges,
-        maintainer_created: setting.created,
-        maintainer_url: setting.url,
+        // maintainer_privileges: setting.allowed_privileges,
+        // maintainer_created: setting.created,
+        // maintainer_url: setting.url,
       });
     }
   }
 
   public saveInformation() {
+    this.submitted = true;
     const params = {
-      user: this.form.controls['user'].value,
+      // user: this.form.controls['user'].value,
+      user_id: this.userId!,
     };
     const queries = [];
     queries.push(this.saveMaintainer(params));
@@ -89,40 +92,49 @@ export class UserSettingsComponent implements OnInit {
       queries.push(this.saveHdxApi(params));
     }
     forkJoin(queries).subscribe({
-      next: () => this.getSettingsHDX(),
+      next: () => {
+        this.submitted = false;
+        this.getSettingsHDX();
+      },
+      error: (err) => {
+        console.log(err);
+        this.submitted = false;
+      },
     });
   }
 
   private saveMaintainer(params: any) {
+    const config = {
+      ...params,
+      // allowed_privileges: this.form.controls['maintainer_privileges'].value,
+      // created: this.form.controls['maintainer_created'].value,
+      // updated: dayjs().format(),
+      // url: this.form.controls['maintainer_url'].value,
+      id: this.form.controls['maintainer_id'].value,
+      config_key: 'hdx_maintainer_id',
+      config_value: this.form.controls['hdx_maintainer_id'].value,
+    };
     return this.usersService.updateUserSettings(
       this.userId!,
-      {
-        ...params,
-        allowed_privileges: this.form.controls['maintainer_privileges'].value,
-        created: this.form.controls['maintainer_created'].value,
-        updated: dayjs().format(),
-        url: this.form.controls['maintainer_url'].value,
-        id: this.form.controls['maintainer_id'].value,
-        config_key: 'hdx_maintainer_id',
-        config_value: this.form.controls['hdx_maintainer_id'].value,
-      },
+      config,
       this.form.controls['maintainer_id'].value,
     );
   }
 
   private saveHdxApi(params: any) {
+    const config = {
+      ...params,
+      // allowed_privileges: this.form.controls['api_privileges'].value,
+      // created: this.form.controls['api_created'].value,
+      // updated: dayjs().format(),
+      // url: this.form.controls['api_url'].value,
+      id: this.form.controls['api_id'].value,
+      config_key: 'hdx_api_key',
+      config_value: this.form.controls['hdx_api_key'].value,
+    };
     return this.usersService.updateUserSettings(
       this.userId!,
-      {
-        ...params,
-        allowed_privileges: this.form.controls['api_privileges'].value,
-        created: this.form.controls['api_created'].value,
-        updated: dayjs().format(),
-        url: this.form.controls['api_url'].value,
-        id: this.form.controls['api_id'].value,
-        config_key: 'hdx_api_key',
-        config_value: this.form.controls['hdx_api_key'].value,
-      },
+      config,
       this.form.controls['api_id'].value,
     );
   }
