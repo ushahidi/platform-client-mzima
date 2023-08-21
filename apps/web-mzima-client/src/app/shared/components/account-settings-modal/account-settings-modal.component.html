@@ -122,7 +122,12 @@
                   </mat-slide-toggle>
 
                   <div class="form-row">
-                    <mat-label>{{ 'contact.edit_email_address' | translate }}</mat-label>
+                    <mat-label>{{
+                      (contact.type === 'email'
+                        ? 'contact.edit_email_address'
+                        : 'contact.edit_phone_number'
+                      ) | translate
+                    }}</mat-label>
                     <mat-form-field appearance="outline">
                       <input
                         matInput
@@ -276,7 +281,7 @@
         isLoading ||
         (selectedTabIndex === 0
           ? profileForm.invalid || profileForm.pristine || profileForm.disabled
-          : !isContactsChanged)
+          : false)
       "
     >
       {{ 'form.save_and_close' | translate }}

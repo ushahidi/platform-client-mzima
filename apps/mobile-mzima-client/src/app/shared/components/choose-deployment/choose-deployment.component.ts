@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
 import { Deployment } from '@mzima-client/sdk';
 import { Subject, debounceTime } from 'rxjs';
-import { AlertService, ConfigService, DeploymentService, EnvService } from '@services';
+import { AlertService, AuthService, ConfigService, DeploymentService, EnvService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -11,7 +11,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   templateUrl: './choose-deployment.component.html',
   styleUrls: ['./choose-deployment.component.scss'],
 })
-export class ChooseDeploymentComponent implements OnInit {
+export class ChooseDeploymentComponent {
   @Input() isProfile: boolean;
   @Output() back = new EventEmitter();
   @Output() chosen = new EventEmitter();
@@ -31,6 +31,7 @@ export class ChooseDeploymentComponent implements OnInit {
     private configService: ConfigService,
     private deploymentService: DeploymentService,
     private alertService: AlertService,
+    private authService: AuthService,
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: (query: string) => {
@@ -54,16 +55,19 @@ export class ChooseDeploymentComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.loadDeployments();
-  }
-
   public backHandle(): void {
     this.back.emit();
   }
 
   public loadDeployments() {
     this.deploymentList = this.deploymentService.getDeployments();
+
+    if (this.deploymentService.hasDuplicates(this.deploymentList)) {
+      this.deploymentService.setDeployments(
+        this.deploymentService.removeDuplicates(this.deploymentList),
+      );
+      this.deploymentList = this.deploymentService.getDeployments();
+    }
 
     const index = this.deploymentList.findIndex((i: any) => i.deployment_name === 'mzima-api');
     if (index === -1) {
@@ -116,6 +120,7 @@ export class ChooseDeploymentComponent implements OnInit {
   }
 
   public chooseDeployment(deployment: any) {
+    this.authService.logout();
     this.deploymentService.setDeployment(deployment);
     this.envService.setDynamicBackendUrl();
     this.configService.initAllConfigurations();

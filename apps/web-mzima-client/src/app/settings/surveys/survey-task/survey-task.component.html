@@ -76,7 +76,7 @@
         </mzima-client-button>
       </div>
 
-      <div cdkDropList class="fields-list" *ngIf="taskFields?.length; else noFields">
+      <div cdkDropList class="fields-list" *ngIf="taskFields?.length">
         <div
           class="field-item"
           *ngFor="let field of nonDraggableFields | sortByField : 'priority' : 'asc'; let i = index"
@@ -217,13 +217,15 @@
             <mat-slide-toggle [(ngModel)]="survey.require_approval" name="accept-survey">
               {{ 'survey.require_review' | translate }}
             </mat-slide-toggle>
-            <p class="toggle__description">{{ 'survey.require_review_desc' | translate }}</p>
+            <p *ngIf="survey.require_approval" class="toggle__description">
+              {{ 'survey.require_review_desc' | translate }}
+            </p>
           </div>
           <div class="toggle">
             <mat-slide-toggle [(ngModel)]="survey.hide_author" name="import-to-survey">
               {{ 'survey.hide_author_information' | translate }}
             </mat-slide-toggle>
-            <p class="toggle__description">
+            <p *ngIf="survey.hide_author" class="toggle__description">
               {{ 'survey.hide_author_information_desc' | translate }}
             </p>
           </div>
@@ -231,15 +233,20 @@
             <mat-slide-toggle [(ngModel)]="survey.hide_location" name="import-to-survey">
               {{ 'survey.hide_location_information' | translate }}
             </mat-slide-toggle>
-            <p class="toggle__description">
-              {{ 'survey.hide_location_information_desc' | translate }}
-            </p>
+            <p
+              *ngIf="survey.hide_location"
+              class="toggle__description"
+              [translate]="'survey.hide_location_information_desc'"
+              [translateParams]="{ precision: locationPrecision }"
+            ></p>
           </div>
           <div class="toggle" *ngIf="anonymiseReportersEnabled">
             <mat-slide-toggle [(ngModel)]="survey.hide_time" name="import-to-survey">
               {{ 'survey.hide_time_information' | translate }}
             </mat-slide-toggle>
-            <p class="toggle__description">{{ 'survey.hide_time_information_desc' | translate }}</p>
+            <p *ngIf="survey.hide_time" class="toggle__description">
+              {{ 'survey.hide_time_information_desc' | translate }}
+            </p>
           </div>
         </div>
         <div class="form-row">

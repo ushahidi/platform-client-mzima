@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { CONST } from '@constants';
-import { Observable } from 'rxjs';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { PollingService, SessionService, BreakpointService } from '@services';
 import {
-  ExportJobsService,
-  FormsService,
-  FormInterface,
   ExportJobInterface,
+  ExportJobsService,
+  FormInterface,
+  FormsService,
+  generalHelpers,
   UsersService,
 } from '@mzima-client/sdk';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {
+  BreakpointService,
+  EventBusService,
+  EventType,
+  PollingService,
+  SessionService,
+} from '@services';
+import { Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -35,11 +41,13 @@ export class DataExportComponent implements OnInit {
     private exportJobsService: ExportJobsService,
     private pollingService: PollingService,
     private breakpointService: BreakpointService,
+    private eventBusService: EventBusService,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   }
 
   ngOnInit() {
+    this.listenEventProcess();
     this.formsService.get().subscribe((forms) => {
       this.forms = forms.results;
       this.attachFormAttributes();
@@ -50,8 +58,14 @@ export class DataExportComponent implements OnInit {
     this.loadExportJobs();
   }
 
+  listenEventProcess() {
+    this.eventBusService.on(EventType.StopExportPolling).subscribe({
+      next: (value) => (this.showProgress = value.process),
+    });
+  }
+
   initUserSettings() {
-    const userId = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}userId`);
+    const userId = localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}userId`);
     if (userId) {
       this.usersService.getUserSettings(userId).subscribe({
         next: (response) => {
@@ -81,7 +95,6 @@ export class DataExportComponent implements OnInit {
     this.pollingService
       .startExport({ send_to_hdx: false, include_hxl: false, send_to_browser: true })
       .subscribe();
-    this.showProgress = true;
   }
 
   selectAll(form: FormInterface) {
@@ -105,6 +118,7 @@ export class DataExportComponent implements OnInit {
   }
 
   exportSelected() {
+    this.selectFields();
     const fields: string[] = [];
     Object.keys(this.fieldsMap).forEach((form) => {
       Object.keys(this.fieldsMap[form]).forEach((key) => {

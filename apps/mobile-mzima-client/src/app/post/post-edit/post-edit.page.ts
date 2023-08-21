@@ -75,6 +75,7 @@ export class PostEditPage {
   public isConnection = true;
   public connectionInfo = '';
   private queryParams: Params;
+  public requireApproval = false;
 
   dateOption: any;
 
@@ -245,6 +246,7 @@ export class PostEditPage {
     this.clearData();
 
     this.selectedSurvey = this.surveyList.find((item: any) => item.id === this.selectedSurveyId);
+    this.requireApproval = this.selectedSurvey?.require_approval;
     this.color = this.selectedSurvey?.color;
     this.tasks = this.selectedSurvey?.tasks;
 
@@ -378,11 +380,11 @@ export class PostEditPage {
 
   private async handleUpload(key: string, value: any) {
     if (!value?.value) return;
-    if (value.photoUrl) {
+    if (value.mediaSrc) {
       this.updateFormControl(key, {
         id: value.value,
-        caption: value.caption,
-        photo: value.photoUrl,
+        caption: value.mediaCaption,
+        photo: value.mediaSrc,
       });
     } else {
       try {
@@ -390,8 +392,8 @@ export class PostEditPage {
         const response: any = await lastValueFrom(uploadObservable);
         this.updateFormControl(key, {
           id: value.value,
-          caption: response.caption,
-          photo: response.original_file_url,
+          caption: response.result.caption,
+          photo: response.result.original_file_url,
         });
       } catch (error: any) {
         this.form.patchValue({ [key]: null });

@@ -2,10 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { takeUntilDestroy$ } from '@helpers';
+import { regexHelper, takeUntilDestroy$ } from '@helpers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { BreakpointService } from '@services';
+import { BreakpointService, ConfirmModalService } from '@services';
 import {
   FormsService,
   SurveysService,
@@ -14,7 +14,6 @@ import {
   SurveyItem,
   WebhookResultInterface,
 } from '@mzima-client/sdk';
-import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { Observable } from 'rxjs';
 
 @UntilDestroy()
@@ -64,19 +63,13 @@ export class WebhookItemComponent implements OnInit {
       destination_field_key: [null],
       entity_type: ['', [Validators.required]],
       event_type: ['', [Validators.required]],
-      form_id: [0],
+      form_id: [null],
       id: [0],
       name: ['', [Validators.required]],
       shared_secret: ['', [Validators.required, Validators.minLength(20)]],
       source_field_key: [null],
       updated: [''],
-      url: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?'),
-        ],
-      ],
+      url: ['', [Validators.required, Validators.pattern(regexHelper.urlValidate())]],
       user: [''],
       webhook_uuid: [''],
       is_source_destination: [false],
@@ -107,8 +100,8 @@ export class WebhookItemComponent implements OnInit {
   private getWebhook(id: string) {
     this.webhooksService.getById(id).subscribe({
       next: (webhook) => {
-        this.webhook = webhook;
-        this.fillInForm(webhook);
+        this.webhook = webhook.result;
+        this.fillInForm(webhook.result);
       },
       error: (err) => console.log(err),
     });
@@ -193,7 +186,6 @@ export class WebhookItemComponent implements OnInit {
 
   private postWebhook() {
     this.deleteFormFields(['id', 'created', 'updated', 'allowed_privileges', 'user']);
-    if (this.form.controls['form_id'].value) this.deleteFormFields(['form_id']);
     this.webhooksService.post(this.form.value).subscribe({
       next: () => this.navigateToWebhooks(),
       error: (err) => {

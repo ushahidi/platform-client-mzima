@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { mapHelper } from '@helpers';
 import { MapConfigInterface, MapViewInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -25,6 +25,8 @@ import { pointIcon } from '../../../core/helpers/map';
   styleUrls: ['./settings-map.component.scss'],
 })
 export class SettingsMapComponent implements OnInit {
+  @Input() minObfuscation = 0;
+  @Input() maxObfuscation = 9;
   leafletOptions: any;
   map: Map;
   mapMarker: Marker;
@@ -40,6 +42,8 @@ export class SettingsMapComponent implements OnInit {
   private searchSubject = new Subject<string>();
   public geocodingResults: any[] = [];
   public isShowGeocodingResults = false;
+  locationPrecisionEnabled: any;
+  currentPrecision = 9;
 
   constructor(private sessionService: SessionService, private changeDetector: ChangeDetectorRef) {}
 
@@ -49,6 +53,10 @@ export class SettingsMapComponent implements OnInit {
     });
 
     this.mapConfig = this.sessionService.getMapConfigurations();
+    this.currentPrecision = this.getPrecision();
+
+    this.locationPrecisionEnabled =
+      !!this.sessionService.getFeatureConfigurations()['anonymise-reporters']?.enabled;
 
     this.leafletOptions = {
       scrollWheelZoom: true,
@@ -166,5 +174,14 @@ export class SettingsMapComponent implements OnInit {
     if (this.map) {
       this.map.setZoom(this.mapConfig.default_view!.zoom);
     }
+  }
+
+  public updatePrecision() {
+    this.currentPrecision = this.getPrecision();
+    this.updateMapPreview();
+  }
+
+  private getPrecision() {
+    return this.sessionService.getPrecision(this.mapConfig.location_precision!);
   }
 }

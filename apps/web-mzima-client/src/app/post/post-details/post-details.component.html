@@ -6,6 +6,7 @@
   <ng-container *ngIf="post; else spinner">
     <div class="post__head">
       <app-post-head
+        *ngIf="post.id"
         [post]="post"
         [feedView]="feedView"
         (edit)="edit.emit()"
@@ -51,7 +52,7 @@
             <h3>{{ field.label }}</h3>
 
             <ng-container *ngIf="field.input === 'tags'">
-              <ng-container *ngFor="let category of post.categories">
+              <ng-container *ngFor="let category of field.value">
                 <div class="category" *ngIf="!isParentCategory(post.categories, category.id)">
                   <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
                   {{ category.tag }}
@@ -160,10 +161,15 @@
       </ng-container>
     </ng-container>
 
-    <app-post-metadata [post]="post"></app-post-metadata>
+    <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
   </ng-container>
 </div>
 
 <ng-template #spinner>
-  <app-spinner class="spinner"></app-spinner>
+  <app-spinner *ngIf="isPostLoading" class="spinner"></app-spinner>
+  <p
+    *ngIf="!isManagePosts && !isPostLoading"
+    class="cant-see-post"
+    [innerHTML]="'notify.post.can_t_view_this_post' | translate"
+  ></p>
 </ng-template>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { formHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
+import { regexHelper } from '@helpers';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import {
   ContactsService,
@@ -43,6 +44,7 @@ interface AccountTypeInterface {
   styleUrls: ['./account-settings-modal.component.scss'],
 })
 export class AccountSettingsModalComponent implements OnInit {
+  @ViewChild('updatePasswordFields') public updatePasswordFields: ElementRef;
   public profile: UserInterface;
   public contacts: ContactsInterface[];
   public isUpdatingPassword = false;
@@ -99,9 +101,13 @@ export class AccountSettingsModalComponent implements OnInit {
       { validators: this.checkPasswords },
     );
 
+    this.initAccountForm();
+  }
+
+  private initAccountForm() {
     this.addAccountForm = this.formBuilder.group({
       type: ['email', [Validators.required]],
-      name: ['', [Validators.required, Validators.email]],
+      name: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
     });
   }
 
@@ -188,6 +194,13 @@ export class AccountSettingsModalComponent implements OnInit {
     this.isUpdatingPassword = isOpen;
 
     if (this.isUpdatingPassword) {
+      this.updatePasswordFields.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        this.updatePasswordFields.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      }, 350);
+    }
+
+    if (this.isUpdatingPassword) {
       this.setFieldsValidators(
         [this.profileForm.controls['password'], this.profileForm.controls['confirmPassword']],
         [Validators.required, Validators.minLength(8), Validators.maxLength(64)],
@@ -265,6 +278,7 @@ export class AccountSettingsModalComponent implements OnInit {
           this.addAccountForm.reset();
           this.addAccountForm.markAsPristine();
           this.addAccountForm.enable();
+          this.initAccountForm();
         },
       });
   }
@@ -277,7 +291,10 @@ export class AccountSettingsModalComponent implements OnInit {
     const value: AccountTypeEnum = event.value;
 
     const actions = {
-      [AccountTypeEnum.Email]: () => [Validators.required, Validators.email],
+      [AccountTypeEnum.Email]: () => [
+        Validators.required,
+        Validators.pattern(regexHelper.emailValidate()),
+      ],
       [AccountTypeEnum.Phone]: () => [Validators.required, Validators.pattern('[- +()0-9]{13}')],
     };
 

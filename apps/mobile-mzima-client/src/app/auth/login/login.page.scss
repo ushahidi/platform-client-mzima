@@ -8,21 +8,35 @@
 }
 
 .main {
+  display: flex;
   flex: 1 1 100%;
+  flex-direction: column;
+}
+
+.page-head {
+  font-weight: 700;
+  margin-top: 32px;
+  margin-bottom: 24px;
+
+  &__info {
+    display: block;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
 }
 
 .page-title {
   font-size: 24px;
-  margin-top: 32px;
+  padding-left: 0;
+  padding-right: 0;
+  font-weight: 700;
   line-height: 32px;
-  margin-bottom: 24px;
-  font-weight: normal;
 }
 
 .form {
   display: flex;
+  flex: 1 1 100%;
   flex-direction: column;
-  min-height: calc(100% - 101px);
   justify-content: space-between;
 }
 

@@ -83,7 +83,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private fieldsFormArray = ['tags'];
   public surveyName: string;
   private postId?: number;
-  formInfo: any;
+  private formInfo: any;
+  public requireApproval = false;
 
   public post?: any;
   public atLeastOneFieldHasValidationError: boolean;
@@ -168,7 +169,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
         const { result } = data;
-
+        this.requireApproval = result.require_approval;
         this.color = result.color;
         this.tasks = result.tasks;
         this.surveyName = result.name;
@@ -284,8 +285,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       this.form.patchValue({
         [key]: {
           id: value.value,
-          caption: response.caption,
-          photo: response.original_file_url,
+          caption: response.result.caption,
+          photo: response.result.original_file_url,
         },
       });
     } catch (error: any) {
@@ -495,7 +496,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                     this.form.value[field.key]?.caption,
                   );
                   const response: any = await lastValueFrom(uploadObservable);
-                  value.value = response.id;
+                  value.value = response.result.id;
                 } catch (error: any) {
                   throw new Error(`Error uploading file: ${error.message}`);
                 }

@@ -86,7 +86,7 @@ export class PostItemComponent implements OnInit {
 
     this.mediaUrl = this.post.post_content
       ?.flatMap((c) => c.fields)
-      .find((f) => f.input === 'upload')?.value?.photoUrl;
+      .find((f) => f.input === 'upload')?.value?.mediaSrc;
   }
 
   private async checkNetwork() {

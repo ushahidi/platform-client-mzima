@@ -1,7 +1,10 @@
 <ng-container *ngIf="exportView; else fieldSelector">
   <h1>{{ (hxlEnabled ? 'data_export.title_hxl' : 'data_export.title') | translate }}</h1>
   <div class="description">
-    <p *ngIf="showProgress; else description">{{ 'data_export.export_progress' | translate }}</p>
+    <p
+      *ngIf="showProgress; else description"
+      [innerHTML]="'data_export.export_progress' | translate"
+    ></p>
   </div>
   <mat-tab-group dynamicHeight disableRipple disablePagination animationDuration="0ms">
     <mat-tab [label]="'data_export.export' | translate" [data-qa]="'tab-export'">
@@ -60,7 +63,9 @@
           </ng-container>
 
           <ng-container matColumnDef="expires">
-            <th mat-header-cell *matHeaderCellDef>{{ 'global_filter.expires' | translate }}</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ 'global_filter.filter_tabs.expires' | translate }}
+            </th>
             <td mat-cell [align]="!job.url_expiration ? 'center' : 'left'" *matCellDef="let job">
               {{ job.url_expiration || '-' }}
             </td>
@@ -68,7 +73,7 @@
 
           <ng-container matColumnDef="download">
             <th mat-header-cell *matHeaderCellDef align="center">
-              {{ 'global_filter.download' | translate }}
+              {{ 'global_filter.filter_tabs.download' | translate }}
             </th>
             <td mat-cell align="center" *matCellDef="let job">
               <mzima-client-button
