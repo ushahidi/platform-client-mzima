@@ -57,6 +57,7 @@
   <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <mzima-client-button
+      type="button"
       fill="outline"
       color="secondary"
       *ngIf="!(isDesktop$ | async)!"
@@ -65,7 +66,11 @@
     >
       {{ 'app.cancel' | translate }}
     </mzima-client-button>
-    <mzima-client-button (buttonClick)="saveInformation()" [disabled]="form.invalid">
+    <mzima-client-button
+      type="submit"
+      (buttonClick)="saveInformation()"
+      [disabled]="form.invalid || submitted"
+    >
       {{ 'app.save' | translate }}
     </mzima-client-button>
   </div>
