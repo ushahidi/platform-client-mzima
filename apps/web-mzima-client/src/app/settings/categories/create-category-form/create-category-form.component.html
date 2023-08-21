@@ -107,11 +107,11 @@
   <div class="form-row">
     <mat-label>{{ 'app.who_can_see_this_category' | translate }}</mat-label>
     <app-group-checkbox-select
-      *ngIf="!category.parent?.id"
+      *ngIf="!category?.parent?.id"
       [data]="roleOptions"
       formControlName="visible_to"
     ></app-group-checkbox-select>
-    <div class="radio-buttons" *ngIf="category.parent?.id">
+    <div class="radio-buttons" *ngIf="category?.parent?.id">
       <p class="radio-buttons__info">
         <mat-icon>group</mat-icon>
         {{ 'category.child_permissions' | translate }}
