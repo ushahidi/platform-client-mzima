@@ -43,7 +43,6 @@ import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { objectHelpers, formValidators } from '@helpers';
-import { AlphanumericValidatorValidator } from '../../core/validators';
 import { PhotoRequired } from '../../core/validators/photo-required';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -76,6 +75,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private relationConfigSource: any;
   private relationConfigKey: string;
   private isSearching = false;
+  public isEditPost = false;
   public relatedPosts: PostResult[];
   public relationSearch: string;
   public selectedRelatedPost: any;
@@ -83,9 +83,10 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private fieldsFormArray = ['tags'];
   public surveyName: string;
   private postId?: number;
-  formInfo: any;
+  private formInfo: any;
+  public requireApproval = false;
 
-  private post?: any;
+  public post?: any;
   public atLeastOneFieldHasValidationError: boolean;
   public formValidator = new formValidators.FormValidator();
   public locationRequired = false;
@@ -168,7 +169,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
         const { result } = data;
-
+        this.requireApproval = result.require_approval;
         this.color = result.color;
         this.tasks = result.tasks;
         this.surveyName = result.name;
@@ -240,6 +241,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         this.initialFormData = this.form.value;
 
         if (updateContent) {
+          this.isEditPost = true;
           this.tasks = postHelpers.markCompletedTasks(this.tasks, this.post);
 
           this.tasks.forEach((task, index) => {
@@ -283,8 +285,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       this.form.patchValue({
         [key]: {
           id: value.value,
-          caption: response.caption,
-          photo: response.original_file_url,
+          caption: response.result.caption,
+          photo: response.result.original_file_url,
         },
       });
     } catch (error: any) {
@@ -406,15 +408,11 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         }
         break;
       case 'description':
-        validators.push(Validators.minLength(2), AlphanumericValidatorValidator());
+        validators.push(Validators.minLength(2));
         if (field.required) validators.push(Validators.required);
         break;
       case 'title':
-        validators.push(
-          Validators.required,
-          Validators.minLength(2),
-          AlphanumericValidatorValidator(),
-        );
+        validators.push(Validators.required, Validators.minLength(2));
         break;
       case 'media':
         if (field.required) {
@@ -498,7 +496,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                     this.form.value[field.key]?.caption,
                   );
                   const response: any = await lastValueFrom(uploadObservable);
-                  value.value = response.id;
+                  value.value = response.result.id;
                 } catch (error: any) {
                   throw new Error(`Error uploading file: ${error.message}`);
                 }
@@ -574,9 +572,12 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
           payload: result,
         });
       },
-      error: () => {
+      error: ({ error }) => {
         this.form.enable();
         this.submitted = false;
+        if (error.errors.status === 422) {
+          this.showMessage(`Failed to update a post. ${error.errors.message}`, 'error');
+        }
       },
       complete: async () => {
         await this.postComplete();
@@ -593,6 +594,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private createPost(postData: any) {
     this.postsService.post(postData).subscribe({
       error: ({ error }) => {
+        if (error.errors.status === 422) {
+          this.showMessage(`Failed to create a post. ${error.errors.message}`, 'error');
+        }
         if (error.errors[0].status === 403) {
           this.showMessage(`Failed to create a post. ${error.errors[0].message}`, 'error');
         }
@@ -798,5 +802,10 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
 
   public generateSecurityTrustUrl(unsafeUrl: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
+  }
+
+  public clearField(event: any, key: string) {
+    event.stopPropagation();
+    this.form.patchValue({ [key]: null });
   }
 }

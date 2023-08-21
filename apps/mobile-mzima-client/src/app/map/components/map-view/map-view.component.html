@@ -1,6 +1,6 @@
 <div
   class="map"
-  *ngIf="isMapReady"
+  *ngIf="isMapReady && mapConfig"
   leaflet
   [leafletOptions]="leafletOptions"
   [leafletLayers]="mapLayers"

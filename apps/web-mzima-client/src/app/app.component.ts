@@ -34,6 +34,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   public isInnerPage = false;
   public isRTL?: boolean;
   public isOnboardingDone = false;
+  public showOnboarding = true;
 
   constructor(
     protected override sessionService: SessionService,
@@ -102,6 +103,35 @@ export class AppComponent extends BaseComponent implements OnInit {
       this.sessionService.getLocalStorageNameMapper('is_onboarding_done')!,
     );
     this.isOnboardingDone = isOnboardingDone ? JSON.parse(isOnboardingDone) : false;
+
+    this.showOnboarding = this.shouldShowOnboarding(window.location.href);
+  }
+
+  private shouldShowOnboarding(url: string): boolean {
+    const allowedPaths = ['/', '/feed', '/map'];
+
+    let urlObj;
+    try {
+      urlObj = new URL(url);
+    } catch (e) {
+      console.error('Invalid URL:', url);
+      return false;
+    }
+
+    const path = urlObj.pathname;
+
+    if (allowedPaths.includes(path)) {
+      if (path === '/feed') {
+        const params = urlObj.searchParams;
+        const paramKeys = params
+          .toString()
+          .split('&')
+          .map((param) => param.split('=')[0]);
+        return params.has('page') && params.get('page') === '1' && paramKeys.length === 1;
+      }
+      return true;
+    }
+    return false;
   }
 
   ngOnInit() {
@@ -198,7 +228,6 @@ export class AppComponent extends BaseComponent implements OnInit {
         plan: site.tier,
       },
     };
-    console.log('Intercom options: ', io);
     this.intercom.boot(io);
   }
 

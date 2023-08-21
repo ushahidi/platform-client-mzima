@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EventBusService, EventType } from '@services';
+import { EventBusService, EventType, SessionService } from '@services';
 
 @Component({
   selector: 'app-access-denied',
@@ -7,10 +7,17 @@ import { EventBusService, EventType } from '@services';
   styleUrls: ['./access-denied.component.scss'],
 })
 export class AccessDeniedComponent {
-  constructor(private eventBusService: EventBusService) {
+  public adminEmail: string;
+
+  constructor(private eventBusService: EventBusService, private sessionService: SessionService) {
+    this.getAdminContact();
     this.eventBusService.next({
       type: EventType.OpenLoginModal,
       payload: { hasBackdrop: true, disableClose: true },
     });
+  }
+
+  private getAdminContact() {
+    this.adminEmail = this.sessionService.getSiteConfigurations().email!;
   }
 }

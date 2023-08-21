@@ -119,7 +119,11 @@
   </mzima-client-button>
 </div>
 
-<app-settings-map #mapSettings></app-settings-map>
+<app-settings-map
+  #mapSettings
+  [minObfuscation]="minObfuscation"
+  [maxObfuscation]="maxObfuscation"
+></app-settings-map>
 
 <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
 <div class="form-controls-panel form-controls-panel--sticky">
@@ -137,7 +141,12 @@
     type="submit"
     data-qa="btn-save"
     (buttonClick)="save()"
-    [disabled]="generalForm.invalid || generalForm.disabled || submitted"
+    [disabled]="
+      generalForm.invalid ||
+      generalForm.disabled ||
+      submitted ||
+      !isInteger(mapSettings.mapConfig.location_precision)
+    "
   >
     {{ 'app.save' | translate }}
   </mzima-client-button>

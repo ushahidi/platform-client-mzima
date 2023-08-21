@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { regexHelper } from '@helpers';
-import { AlertService, AuthService, DeploymentService } from '@services';
+import { AlertService, AuthService, DeploymentService, SessionService } from '@services';
 import { fieldErrorMessages } from '@helpers';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-login',
   templateUrl: 'login.page.html',
@@ -13,7 +15,7 @@ import { fieldErrorMessages } from '@helpers';
 export class LoginPage {
   public form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
-    password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
+    password: ['', [Validators.required]],
   });
   public forgotPasswordForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
@@ -22,6 +24,8 @@ export class LoginPage {
   public loginError: string;
   public forgotPasswordError: string;
   public fieldErrorMessages = fieldErrorMessages;
+  public isPrivate = true;
+  public adminEmail = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,7 +33,19 @@ export class LoginPage {
     private authService: AuthService,
     private router: Router,
     private deploymentService: DeploymentService,
-  ) {}
+    private sessionService: SessionService,
+  ) {
+    const siteConfig = this.sessionService.getSiteConfigurations();
+    this.isPrivate = !!siteConfig.private;
+    this.adminEmail = siteConfig.email ?? '';
+
+    this.sessionService.siteConfig$.pipe(untilDestroyed(this)).subscribe({
+      next: (config) => {
+        this.isPrivate = !!config.private;
+        this.adminEmail = config.email ?? '';
+      },
+    });
+  }
 
   public login(): void {
     const { email, password } = this.form.value;
@@ -49,7 +65,7 @@ export class LoginPage {
   }
 
   public forgotPassword(): void {
-    const { email } = this.form.value;
+    const { email } = this.forgotPasswordForm.value;
     if (!email) return;
     this.forgotPasswordForm.disable();
     this.authService.resetPassword({ email }).subscribe({
@@ -60,7 +76,9 @@ export class LoginPage {
             'We sent a reset link to your Email. Follow the instructions to reset your password.',
         });
         this.router.navigate(['auth/login']);
-        this.form.enable();
+        this.forgotPasswordForm.reset();
+        this.forgotPasswordForm.enable();
+        this.isForgotPasswordModalOpen = false;
       },
       error: (err) => {
         this.forgotPasswordError = err?.error?.message ?? err?.message;
@@ -72,10 +90,18 @@ export class LoginPage {
 
   public openForgotPasswordModal(): void {
     this.isForgotPasswordModalOpen = true;
+    if (this.form.value.email?.length) {
+      this.forgotPasswordForm.patchValue({ email: this.form.value.email });
+    }
   }
 
   public chooseDeployment(): void {
     this.deploymentService.removeDeployment();
     this.router.navigate(['deployment']);
+  }
+
+  public forgotPasswordModalCloseHandle(): void {
+    this.isForgotPasswordModalOpen = false;
+    this.forgotPasswordForm.reset();
   }
 }

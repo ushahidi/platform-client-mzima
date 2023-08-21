@@ -13,6 +13,15 @@
   ></app-filters-form>
   <app-map-view class="map" #map></app-map-view>
   <ng-container draggable>
+    <app-button
+      shape="normal"
+      [shadow]="true"
+      class="clear-storage-button"
+      *ngIf="map.savedOfflineTiles > OFFLINE_TILES"
+      (click)="clearStorage()"
+    >
+      <app-icon slot="icon-only" name="info"></app-icon>
+    </app-button>
     <app-button shape="normal" [shadow]="true" class="add-post-button" (click)="createPost()">
       <app-icon slot="icon-only" name="plus"></app-icon>
     </app-button>

@@ -131,7 +131,12 @@
                       {{ 'nav.select_all' | translate }}
                     </mat-checkbox>
                   </li>
-                  <li *ngFor="let option of field.options; trackBy: trackById">
+                  <li
+                    *ngFor="
+                      let option of field.options | sortByField : 'parent_id' : 'asc';
+                      trackBy: trackById
+                    "
+                  >
                     <mat-checkbox
                       [ngClass]="{ 'lvl-2': option.parent }"
                       [checked]="form.get(field.key)?.value.includes(option.id)"
@@ -162,6 +167,16 @@
                   [data-qa]="field.label.replaceAll(' ', '-') | lowercase"
                   #input
                 />
+                <mzima-client-button
+                  matSuffix
+                  fill="clear"
+                  color="secondary"
+                  [iconOnly]="true"
+                  (buttonClick)="clearField($event, field.key)"
+                  *ngIf="form.get(field.key)?.value"
+                >
+                  <mat-icon icon svgIcon="close"></mat-icon>
+                </mzima-client-button>
                 <mat-datepicker-toggle
                   matSuffix
                   [for]="picker"
@@ -181,6 +196,16 @@
                   [data-qa]="field.label.replaceAll(' ', '-') | lowercase"
                   #input
                 />
+                <mzima-client-button
+                  matSuffix
+                  fill="clear"
+                  color="secondary"
+                  [iconOnly]="true"
+                  (buttonClick)="clearField($event, field.key)"
+                  *ngIf="form.get(field.key)?.value"
+                >
+                  <mat-icon icon svgIcon="close"></mat-icon>
+                </mzima-client-button>
                 <mat-datepicker-toggle
                   matSuffix
                   [for]="$any(picker)"
@@ -315,8 +340,10 @@
             <ng-container *ngIf="field.input === 'location'">
               <app-location-select
                 [zoom]="12"
+                [isEditPost]="isEditPost"
                 [location]="form.get(field.key)?.value"
                 [required]="locationRequired"
+                [type]="post?.source?.toLowerCase() || 'default'"
                 (locationChange)="changeLocation($event, field.key)"
               ></app-location-select>
             </ng-container>
@@ -412,7 +439,11 @@
           type="submit"
           [data-qa]="'btn-post-item-submit'"
           [disabled]="
-            form.disabled || form.invalid || emptyLocation || submitted || taskForm.invalid
+            form.disabled ||
+            form.invalid ||
+            emptyLocation ||
+            submitted ||
+            (!requireApproval || post?.status === 'published' ? taskForm.invalid : false)
           "
         >
           {{ 'app.submit' | translate }}

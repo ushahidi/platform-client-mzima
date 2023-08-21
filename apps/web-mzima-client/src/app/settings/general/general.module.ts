@@ -10,6 +10,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MzimaUiModule } from '@mzima-client/mzima-ui';
 import { TranslateModule } from '@ngx-translate/core';
 import { DirectiveModule } from '@shared';
+import { FilterVisibleLayersModule } from '@pipes';
 import { SettingsModule } from '../settings.module';
 import { GeneralRoutingModule } from './general-routing.module';
 import { GeneralComponent } from './general.component';
@@ -32,6 +33,7 @@ import { SettingsMapComponent } from './settings-map/settings-map.component';
     DirectiveModule,
     FormsModule,
     MzimaUiModule,
+    FilterVisibleLayersModule,
   ],
 })
 export class GeneralModule {}

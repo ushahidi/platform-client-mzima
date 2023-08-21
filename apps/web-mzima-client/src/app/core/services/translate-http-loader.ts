@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { CONST } from '@constants';
+import { generalHelpers } from '@mzima-client/sdk';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, map, catchError } from 'rxjs';
 
 export class CustomTranslateHttpLoader implements TranslateLoader {
-  private languageKey = `${CONST.LOCAL_STORAGE_PREFIX}language`;
+  private languageKey = `${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}language`;
 
   constructor(
     private http: HttpClient,

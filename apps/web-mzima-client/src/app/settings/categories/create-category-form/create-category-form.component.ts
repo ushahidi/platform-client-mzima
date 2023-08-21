@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { CONST } from '@constants';
 import { TranslationInterface, LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,10 +12,13 @@ import {
   GroupCheckboxItemInterface,
   SelectLanguagesModalComponent,
 } from '../../../shared/components';
-import { LanguageService } from '../../../core/services/language.service';
-import { CategoriesService, RolesService, CategoryInterface } from '@mzima-client/sdk';
-import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
-import { BreakpointService, SessionService } from '@services';
+import {
+  CategoriesService,
+  RolesService,
+  CategoryInterface,
+  generalHelpers,
+} from '@mzima-client/sdk';
+import { BreakpointService, SessionService, LanguageService, ConfirmModalService } from '@services';
 
 @UntilDestroy()
 @Component({
@@ -36,6 +38,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
   public selectedTranslation?: string;
   public roleOptions: GroupCheckboxItemInterface[] = [];
   public isUpdate = false;
+  isParent = false;
   public form: FormGroup;
   private userRole: string;
   public formErrors: any[] = [];
@@ -69,8 +72,9 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
     this.formSubscribe();
     this.getCategories();
     this.getRoles();
-    this.userRole = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`)!;
+    this.userRole = localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}role`)!;
     if (this.category) {
+      this.isParent = !!this.category.children?.length;
       this.isUpdate = !!this.category;
       this.form.patchValue({
         id: this.category.id,
@@ -222,7 +226,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
       icon: 'tag',
       parent: this.form.value.parent,
       parent_id: this.form.value.is_child_to || null,
-      parent_id_original: this.form.value.is_child_to || null,
+      parent_id_original: this.category?.parent?.id || null,
       role:
         this.form.value.visible_to.value === 'everyone' ? null : this.form.value.visible_to.options,
       slug: this.form.value.name,

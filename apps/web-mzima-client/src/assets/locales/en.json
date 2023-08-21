@@ -1,5 +1,6 @@
 {
   "app": {
+    "contact_email_address": "Contact email address:",
     "powered_by_ushahidi": "Powered by Ushahidi.",
     "support": "Ushahidi Support",
     "by": "by",
@@ -51,7 +52,8 @@
       "description": "See what Ushahidi can do and how it works."
     },
     "forbidden": "Sorry, you're not allowed to do that.",
-    "forbidden-login": "Please enter your login details to access the deployment",
+    "forbidden-login": "Please enter your login details to access the deployment.",
+    "contact_with_admin": "Or contact the Admin ",
     "404": "That URL doesn't exist",
     "page-not-found": "Page not found",
     "get_notifications": "Get notifications",
@@ -364,7 +366,7 @@
     "who_can_add": "Who can add to this survey",
     "survey_field": "Survey field",
     "choose_survey_field": "Choose what should be assigned to each survey field",
-    "choose_survey_field_descchoose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
+    "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "Who can contribute to fields in this task",
     "view_detail": "Detail",
     "no_options_for_this_field": "No options for this field",
@@ -1203,7 +1205,7 @@
           "event_type": "Event type is required",
           "event_entity": "Event entity is required"
         },
-        "please_provide_valid_api_url": "Please provide valid API URL",
+        "please_provide_valid_api_url": "Please provide valid API URL with http(s)://",
         "secret_key_cannot_be_less_start": "Shared secret key can not less than",
         "secret_key_cannot_be_less_end": "characters"
       }
@@ -1688,6 +1690,8 @@
       "success": "Registration complete! You can now log in.."
     },
     "post": {
+      "can_t_view_this_post": "You do not have permission to view this post.<br> It is still being reviewed by the admin.<br> It will be available to you once it is published.",
+      "contact_for_details": "Contact the admin for further details:",
       "delete_image_confirm": "Are you sure you want to remove this image?",
       "save_success": "Post {{name}} saved",
       "save_success_review": "Post {{name}} saved. Your post will be reviewed by a moderator before publishing.",
@@ -1712,7 +1716,9 @@
       "update_status_success_bulk": "Status updated for {{count}} posts",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "unfinished_post_task": "You cannot publish this post, the post has unfinished tasks",
+      "posts_can_t_be_published": "The following posts can't be published: {{titles}}"
     },
     "category": {
       "save_success": "Saved category {{name}}",

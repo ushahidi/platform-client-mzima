@@ -1,3 +1,5 @@
+@import 'helpers';
+
 .page-not-found {
   height: 100vh;
   background: url(/assets/images/logo-bottom-bg.svg) 50% 95% repeat-x;
@@ -17,9 +19,19 @@
     font-weight: 800;
     margin-bottom: 0;
 
+    @include breakpoint-max($mobile) {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+
     &-404 {
       font-size: 200px;
       margin-inline-end: 30px;
+
+      @include breakpoint-max($mobile) {
+        font-size: inherit;
+        margin-inline-end: 0;
+      }
     }
   }
 
@@ -27,6 +39,7 @@
     font-size: 16px;
     font-weight: 400;
     margin-bottom: 32px;
+    text-align: center;
   }
 
   mzima-client-button {

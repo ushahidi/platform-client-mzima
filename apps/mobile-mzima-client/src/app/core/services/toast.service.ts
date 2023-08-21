@@ -22,6 +22,7 @@ export class ToastService {
           layout: params.layout ?? 'baseline',
           position: params.position ?? 'bottom',
           icon: params.icon,
+          color: params.color ?? undefined,
         })
         .then((toast) => {
           this.toast = toast;

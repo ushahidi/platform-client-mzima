@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CONST } from '@constants';
+import { generalHelpers } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { LanguageInterface } from '@models';
@@ -13,7 +13,7 @@ export class LanguageService {
   private languages = new BehaviorSubject<LanguageInterface[]>(this.getLanguages());
   public languages$ = this.languages.asObservable();
 
-  private languageKey = `${CONST.LOCAL_STORAGE_PREFIX}language`;
+  private languageKey = `${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}language`;
 
   private selectedLanguage = new BehaviorSubject<string>('');
   public selectedLanguage$ = this.selectedLanguage.asObservable();

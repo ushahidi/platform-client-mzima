@@ -59,37 +59,39 @@
             <span class="feed-page__controls__info">
               {{ selectedPosts.length }}/{{ posts.length }} Selected
             </span>
-            <mzima-client-button
-              [iconOnly]="true"
-              color="light-gray"
-              class="feed-page__control"
-              [disabled]="!selectedPosts.length"
-              [matMenuTriggerFor]="selectedPosts.length ? statusesMenu : null"
-            >
-              <mat-icon icon svgIcon="dots"></mat-icon>
-            </mzima-client-button>
-            <mat-menu
-              #statusesMenu="matMenu"
-              xPosition="after"
-              class="statuses-menu"
-              backdropClass="statuses-menu__backdrop"
-            >
-              <h3 class="menu-title">{{ 'app.mark_as' | translate }}</h3>
-              <button
-                mat-menu-item
-                *ngFor="let status of statuses"
-                (click)="changePostsStatus(status.value)"
+            <ng-container *ngIf="isManagePosts">
+              <mzima-client-button
+                [iconOnly]="true"
+                color="light-gray"
+                class="feed-page__control"
+                [disabled]="!selectedPosts.length"
+                [matMenuTriggerFor]="selectedPosts.length ? statusesMenu : null"
               >
-                {{ status.name | translate }}
-              </button>
-            </mat-menu>
+                <mat-icon icon svgIcon="dots"></mat-icon>
+              </mzima-client-button>
+
+              <mat-menu
+                #statusesMenu="matMenu"
+                xPosition="after"
+                class="statuses-menu"
+                backdropClass="statuses-menu__backdrop"
+              >
+                <h3 class="menu-title">{{ 'app.mark_as' | translate }}</h3>
+                <button
+                  mat-menu-item
+                  *ngFor="let status of statuses"
+                  (click)="changePostsStatus(status.value)"
+                >
+                  {{ status.name | translate }}
+                </button>
+              </mat-menu>
+            </ng-container>
           </ng-container>
           <ng-container *ngIf="isDesktop">
-            <mat-form-field appearance="outline" class="feed-page__control">
+            <mat-form-field *ngIf="isManagePosts" appearance="outline" class="feed-page__control">
               <mat-select
-                name="filter"
                 disableOptionCentering
-                [(ngModel)]="selectedStatus"
+                [formControl]="statusControl"
                 [disabled]="!selectedPosts.length"
                 [placeholder]="'app.mark_as' | translate"
                 (selectionChange)="changePostsStatus($event.value)"
@@ -199,16 +201,17 @@
               [feedView]="true"
               (edit)="editPost(post)"
               (refresh)="refreshPost(post)"
-              (deleted)="postDeleted([post.id.toString()])"
+              (deleted)="postDeleted([post])"
               (click)="showPostDetails(post)"
               [selectable]="isBulkOptionsVisible"
-              [isChecked]="isPostChecked(post.id.toString())"
+              [isChecked]="isPostChecked(post)"
               (statusChanged)="postStatusChanged()"
-              (selected)="isPostSelected($event, post.id.toString())"
+              (selected)="isPostSelected($event, post)"
+              (mediaLoaded)="updateMasonry()"
               [ngClass]="{
                 'post--selected':
                   post.id === postDetails?.id ||
-                  (mode === FeedMode.Post && post.id.toString() === activePostId)
+                  (mode === FeedMode.Post && post.id === activePostId)
               }"
               *ngFor="
                 let post of posts
@@ -230,6 +233,7 @@
             class="feed__load-more"
             *ngIf="
               !isLoading &&
+              mode === FeedMode.Post &&
               params.page !== undefined &&
               params.limit !== undefined &&
               params.page * params.limit < total

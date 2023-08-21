@@ -3,8 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable, mergeMap } from 'rxjs';
 import { EnvService, SessionService } from '@services';
 import { Router } from '@angular/router';
-import { CONST } from '@constants';
-import { EnvLoader, ResourceService, UserInterface, UsersService } from '@mzima-client/sdk';
+import {
+  EnvLoader,
+  generalHelpers,
+  ResourceService,
+  UserInterface,
+  UsersService,
+} from '@mzima-client/sdk';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +41,7 @@ export class AuthService extends ResourceService<any> {
       grant_type: 'password',
       client_id: this.env.environment.oauth_client_id,
       client_secret: this.env.environment.oauth_client_secret,
-      scope: CONST.CLAIMED_USER_SCOPES.join(' '),
+      scope: generalHelpers.CONST.CLAIMED_USER_SCOPES.join(' '),
     };
     return super.post(payload).pipe(
       mergeMap(async (authResponse) => {

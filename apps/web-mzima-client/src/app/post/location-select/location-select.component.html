@@ -32,6 +32,16 @@
         (ngModelChange)="checkErrors()"
         (focusout)="onFocusOut()"
       />
+      <mzima-client-button
+        matSuffix
+        fill="clear"
+        color="secondary"
+        [iconOnly]="true"
+        (buttonClick)="clearLocationField()"
+        *ngIf="location.lat"
+      >
+        <mat-icon icon svgIcon="close"></mat-icon>
+      </mzima-client-button>
     </mat-form-field>
     <p *ngIf="emptyFieldLat" class="location-error">
       {{ 'post.location.errors.empty_lat' | translate }}
@@ -55,6 +65,16 @@
         (ngModelChange)="checkErrors()"
         (focusout)="onFocusOut()"
       />
+      <mzima-client-button
+        matSuffix
+        fill="clear"
+        color="secondary"
+        [iconOnly]="true"
+        (buttonClick)="clearLocationField()"
+        *ngIf="location.lng"
+      >
+        <mat-icon icon svgIcon="close"></mat-icon>
+      </mzima-client-button>
     </mat-form-field>
     <p *ngIf="emptyFieldLng" class="location-error">
       {{ 'post.location.errors.empty_lng' | translate }}

@@ -2,11 +2,16 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CONST } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { RolesService, RoleResult, UsersService, UserInterface } from '@mzima-client/sdk';
+import {
+  RolesService,
+  RoleResult,
+  UsersService,
+  UserInterface,
+  generalHelpers,
+} from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { BreakpointService } from '@services';
 import { regexHelper } from '@helpers';
@@ -52,8 +57,8 @@ export class UserItemComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.minLength(CONST.MIN_PASSWORD_LENGTH),
-          Validators.maxLength(CONST.MAX_PASSWORD_LENGTH),
+          Validators.minLength(generalHelpers.CONST.MIN_PASSWORD_LENGTH),
+          Validators.maxLength(generalHelpers.CONST.MAX_PASSWORD_LENGTH),
         ],
       ],
       role: ['', [Validators.required]],
@@ -74,12 +79,13 @@ export class UserItemComponent implements OnInit {
         this.fillInForm(result);
         this.form.controls['password'].removeValidators([
           Validators.required,
-          Validators.minLength(CONST.MIN_PASSWORD_LENGTH),
-          Validators.maxLength(CONST.MAX_PASSWORD_LENGTH),
+          Validators.minLength(generalHelpers.CONST.MIN_PASSWORD_LENGTH),
+          Validators.maxLength(generalHelpers.CONST.MAX_PASSWORD_LENGTH),
         ]);
         this.form.controls['password'].updateValueAndValidity();
         this.isMyProfile =
-          this.form.value.email === localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}email`);
+          this.form.value.email ===
+          localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}email`);
       },
       error: (err) => console.log(err),
     });

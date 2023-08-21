@@ -17,6 +17,7 @@ export const enum EventType {
   ShowOnboarding = 'SHOW_ONBOARDING',
   FinishOnboarding = 'FINISH_ONBOARDING',
   FeedPostsLoaded = 'FEED_POSTS_LOADED',
+  StopExportPolling = 'STOP_EXPORT_POLLING',
 }
 
 export interface BusEvent<T = any> {
