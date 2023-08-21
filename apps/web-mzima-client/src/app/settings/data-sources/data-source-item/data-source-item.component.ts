@@ -21,6 +21,7 @@ import { BaseComponent } from '../../../base.component';
 import { ConfigService } from '../../../core/services/config.service';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { BreakpointService, SessionService } from '@services';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-data-source-item',
@@ -77,9 +78,9 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
     const tempProviders: any[] = [];
     for (const key in providers) {
       tempProviders.push({
-        id: key.toLowerCase(),
-        name: key.toLowerCase(),
-        type: providers[key as keyof typeof providers],
+        id: providers[key]['provider-name'],
+        name: providers[key]['provider-name'],
+        type: providers[key]['enabled'],
       });
     }
     return arrayHelpers.sortArray(tempProviders.filter((provider) => !provider.type));
@@ -96,8 +97,8 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
           (dataSource: DataSourceResult) => dataSource.id !== 'gmail',
         );
         this.providersData = this.removeProvider(providersData, 'gmail');
-        this.cloneProviders = JSON.parse(JSON.stringify(this.providersData));
-        this.availableProviders = this.getAvailableProviders(this.providersData.providers);
+        this.cloneProviders = _.cloneDeep(this.providersData);
+        this.availableProviders = this.getAvailableProviders(this.providersData);
         this.surveyList = surveys.results;
         this.dataSourceList = this.dataSourcesService.combineDataSource(
           this.providersData,
@@ -112,7 +113,6 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
   // temporary removal of the provider, waiting for an update of the api to v5
   private removeProvider(providersData: any, providerId: string) {
     delete providersData[providerId];
-    delete providersData.providers[providerId];
     return providersData;
   }
 
@@ -158,7 +158,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
 
   private createForm(provider: any) {
     this.addControlsToForm('form_id', this.fb.control(this.provider?.selected_survey));
-    this.createControls(provider.control_options);
+    // this.createControls(provider.control_options);
     this.createControls(provider.control_inbound_fields);
   }
 
@@ -196,7 +196,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
 
   public async turnOffDataSource(event: any): Promise<void> {
     if (!event.checked) {
-      this.cloneProviders.providers[this.provider.id] = event.checked;
+      this.cloneProviders[this.provider.id].enabled = event.checked;
       const confirmed = await this.confirmModalService.open({
         title: this.translate.instant(`settings.data_sources.provider_name`, {
           providerName: this.provider.name,
@@ -213,7 +213,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
       }
     }
 
-    this.cloneProviders.providers[this.provider.id] = event.checked;
+    this.cloneProviders[this.provider.id].enabled = event.checked;
   }
 
   public saveProviderData(): void {
@@ -229,8 +229,8 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
     }
 
     if (this.cloneProviders[this.form.value.id]) {
-      for (const providerKey in this.cloneProviders[this.form.value.id]) {
-        this.cloneProviders[this.form.value.id][providerKey] = this.form.value[providerKey];
+      for (const providerKey in this.cloneProviders[this.form.value.id].params) {
+        this.cloneProviders[this.form.value.id].params[providerKey] = this.form.value[providerKey];
       }
       if (this.provider.visible_survey) {
         this.cloneProviders[this.form.value.id].form_id = this.form.value.form_id.id;
@@ -297,5 +297,9 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
     } else {
       this.location.back();
     }
+  }
+
+  public isProviderEnabled(provider: any): boolean {
+    return provider.enabled;
   }
 }
