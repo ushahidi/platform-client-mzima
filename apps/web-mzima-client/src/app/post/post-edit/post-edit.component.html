@@ -131,7 +131,12 @@
                       {{ 'nav.select_all' | translate }}
                     </mat-checkbox>
                   </li>
-                  <li *ngFor="let option of field.options; trackBy: trackById">
+                  <li
+                    *ngFor="
+                      let option of field.options | sortByField : 'parent_id' : 'asc';
+                      trackBy: trackById
+                    "
+                  >
                     <mat-checkbox
                       [ngClass]="{ 'lvl-2': option.parent }"
                       [checked]="form.get(field.key)?.value.includes(option.id)"
