@@ -16,10 +16,6 @@ export class ConfigService {
   ) {}
 
   getApiVersions(): string {
-    return this.env.environment.api_v5;
-  }
-
-  getApiVersions3(): string {
     return this.env.environment.api_v3;
   }
 
@@ -34,9 +30,8 @@ export class ConfigService {
       )
       .pipe(
         tap({
-          next: (data: any) => {
-            this.sessionService.setConfigurations('site', data.result);
-            return data.result;
+          next: (data) => {
+            this.sessionService.setConfigurations('site', data);
           },
           error: () => setTimeout(() => this.getSite(), 5000),
         }),
@@ -52,9 +47,8 @@ export class ConfigService {
       )
       .pipe(
         tap({
-          next: (data: any) => {
-            this.sessionService.setConfigurations('features', data.result);
-            return data.result;
+          next: (data) => {
+            this.sessionService.setConfigurations('features', data);
           },
           error: () => setTimeout(() => this.getFeatures(), 5000),
         }),
@@ -68,15 +62,14 @@ export class ConfigService {
       )
       .pipe(
         tap({
-          next: (data: any) => {
-            if (data.result.default_view?.baselayer === 'MapQuest') {
-              data.result.default_view.baselayer = 'streets';
+          next: (data) => {
+            if (data.default_view?.baselayer === 'MapQuest') {
+              data.default_view.baselayer = 'streets';
             }
-            if (data.result.default_view?.baselayer === 'MapQuestAerial') {
-              data.result.default_view.baselayer = 'satellite';
+            if (data.default_view?.baselayer === 'MapQuestAerial') {
+              data.default_view.baselayer = 'satellite';
             }
-            this.sessionService.setConfigurations('map', data.result);
-            return data.result;
+            this.sessionService.setConfigurations('map', data);
           },
           error: () => setTimeout(() => this.getMap(), 5000),
         }),
@@ -104,20 +97,18 @@ export class ConfigService {
       .pipe(
         map((data) => {
           let providers: any[] = [];
-          delete data.result['id'];
-          delete data.result['allowed_privileges'];
-          for (const dataKey in data.result) {
+          for (const dataKey in data.providers) {
             if (dataSources?.length) {
               for (const { id } of dataSources) {
                 if (dataKey === id) {
-                  providers = [...providers, this.addToProviderSArray(dataKey, data.result)];
+                  providers = [...providers, this.addToProviderSArray(dataKey, data)];
                 }
               }
             } else {
-              providers = [...providers, this.addToProviderSArray(dataKey, data.result)];
+              providers = [...providers, this.addToProviderSArray(dataKey, data)];
             }
           }
-          return isAllData ? data.result : providers;
+          return isAllData ? data : providers;
         }),
       );
   }
@@ -133,8 +124,8 @@ export class ConfigService {
 
   private addToProviderSArray(dataKey: string, data: any) {
     return {
-      label: data[dataKey]['provider-name'],
-      value: data[dataKey].enabled,
+      label: dataKey.toLowerCase(),
+      value: data.providers[dataKey],
     };
   }
 }
