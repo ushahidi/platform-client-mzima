@@ -29,7 +29,7 @@ export class DataExportComponent implements OnInit {
   fieldsMap: any = {};
   exportJobs: ExportJobInterface[] = [];
   hxlEnabled = false;
-  hxlApiKey = false;
+  hxlApiKey = true;
   showProgress = false;
   exportView = true;
   exportJobsReady = false;

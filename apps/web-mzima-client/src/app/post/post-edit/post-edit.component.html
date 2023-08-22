@@ -434,7 +434,11 @@
           type="submit"
           [data-qa]="'btn-post-item-submit'"
           [disabled]="
-            form.disabled || form.invalid || emptyLocation || submitted || taskForm.invalid
+            form.disabled ||
+            form.invalid ||
+            emptyLocation ||
+            submitted ||
+            (!requireApproval || post?.status === 'published' ? taskForm.invalid : false)
           "
         >
           {{ 'app.submit' | translate }}
