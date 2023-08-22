@@ -28,7 +28,7 @@ import {
 } from 'leaflet';
 import Geocoder from 'leaflet-control-geocoder';
 import { debounceTime, Subject } from 'rxjs';
-import { mapHelper, regexHelper } from '@helpers';
+import { mapHelper } from '@helpers';
 import { Platform } from '@ionic/angular';
 
 export interface MapViewInterface {
@@ -59,13 +59,14 @@ export class LocationSelectComponent implements OnInit {
   @ViewChild('resultList') resultList: ElementRef;
   @Input() public center: LatLngLiteral;
   @Input() public zoom: number;
-  @Input() public location: LatLngLiteral;
+  @Input() public location: any;
   @Input() public required: boolean;
+  @Input() public color = 'var(--color-neutral-100)';
+  @Input() public type = 'default';
+  @Input() public isEditPost: boolean = false;
   @Output() locationChange = new EventEmitter();
   public emptyFieldLat = false;
   public emptyFieldLng = false;
-  public noSpecialCharactersLat = false;
-  public noSpecialCharactersLng = false;
   private map: Map;
   public mapLayers: any[] = [];
   public mapReady = false;
@@ -106,6 +107,11 @@ export class LocationSelectComponent implements OnInit {
 
     this.mapConfig = await this.dataBaseService.get(STORAGE_KEYS.MAP);
 
+    if (!this.isEditPost && !this.location.lat) {
+      this.location.lat = this.mapConfig.default_view!.lat;
+      this.location.lng = this.mapConfig.default_view!.lon;
+    }
+
     const currentLayer =
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
@@ -117,7 +123,7 @@ export class LocationSelectComponent implements OnInit {
         this.location?.lat || this.mapConfig.default_view!.lat,
         this.location?.lng || this.mapConfig.default_view!.lon,
       ],
-      zoom: this.zoom || this.mapConfig.default_view!.zoom,
+      zoom: this.mapConfig.default_view!.zoom || this.zoom,
     };
     this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
 
@@ -160,12 +166,14 @@ export class LocationSelectComponent implements OnInit {
   }
 
   private addMarker() {
+    this.checkErrors();
+
     if (this.mapMarker) {
       this.map.removeLayer(this.mapMarker);
     }
     this.mapMarker = marker(this.location, {
       draggable: true,
-      icon: mapHelper.pointIcon('default', 'var(--color-neutral-100)'),
+      icon: mapHelper.pointIcon(this.type === 'web' ? 'default' : this.type, this.color),
     }).addTo(this.map);
 
     this.mapMarker.on('dragend', (e) => {
@@ -182,27 +190,13 @@ export class LocationSelectComponent implements OnInit {
 
   public checkErrors() {
     this.emptyFieldLat = this.emptyFieldLng = false;
-    this.noSpecialCharactersLat = this.noSpecialCharactersLng = false;
 
     if (this.required) {
       this.emptyFieldLat = this.location.lat.toString() === '';
       this.emptyFieldLng = this.location.lng.toString() === '';
     }
 
-    if (this.location.lat) {
-      this.noSpecialCharactersLat = !regexHelper.alphaNumeric(this.location.lat.toString());
-    }
-
-    if (this.location.lng) {
-      this.noSpecialCharactersLng = !regexHelper.alphaNumeric(this.location.lng.toString());
-    }
-
-    this.changeCoords(
-      this.emptyFieldLat ||
-        this.emptyFieldLng ||
-        this.noSpecialCharactersLat ||
-        this.noSpecialCharactersLng,
-    );
+    this.changeCoords(this.emptyFieldLat || this.emptyFieldLng);
   }
 
   public async getCurrentLocation() {
@@ -244,5 +238,13 @@ export class LocationSelectComponent implements OnInit {
     this.addMarker();
     this.map.fitBounds(item.bbox);
     this.geocodingResults = [];
+  }
+
+  public clearLocationField() {
+    this.location = {
+      lat: '',
+      lng: '',
+    };
+    this.checkErrors();
   }
 }

@@ -56,7 +56,7 @@ export class PostEditPage {
   public description: string;
   public title: string;
   public postId: number;
-  private post: any;
+  public post: any;
   public tasks: any[] = [];
   private completeStages: number[] = [];
   public surveyName: string;
