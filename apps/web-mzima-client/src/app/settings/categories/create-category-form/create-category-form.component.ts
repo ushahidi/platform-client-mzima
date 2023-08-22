@@ -38,6 +38,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
   public selectedTranslation?: string;
   public roleOptions: GroupCheckboxItemInterface[] = [];
   public isUpdate = false;
+  isParent = false;
   public form: FormGroup;
   private userRole: string;
   public formErrors: any[] = [];
@@ -73,6 +74,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
     this.getRoles();
     this.userRole = localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}role`)!;
     if (this.category) {
+      this.isParent = !!this.category.children?.length;
       this.isUpdate = !!this.category;
       this.form.patchValue({
         id: this.category.id,
@@ -166,7 +168,9 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
   private getCategories() {
     this.categoriesService.get().subscribe({
       next: (data) => {
-        this.categories = data.results.filter((cat: CategoryInterface) => !cat.parent_id);
+        this.categories = data.results
+          .filter((cat: CategoryInterface) => !cat.parent_id)
+          .filter((cat: CategoryInterface) => cat.id !== this.category?.id);
       },
     });
   }
