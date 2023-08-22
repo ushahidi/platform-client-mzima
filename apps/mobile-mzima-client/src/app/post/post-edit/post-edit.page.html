@@ -9,7 +9,13 @@
     (ngModelChange)="loadForm()"
   >
   </app-select>
-  <form novalidate [formGroup]="form" autocomplete="off" *ngIf="form && tasks?.length">
+  <form
+    class="form-post-create"
+    novalidate
+    [formGroup]="form"
+    autocomplete="off"
+    *ngIf="form && tasks?.length"
+  >
     <div *ngFor="let task of tasks; let i = index" class="task-container">
       <div [ngStyle]="{ '--color': color }">
         <ng-container *ngIf="task.type !== 'post'">
@@ -26,6 +32,7 @@
             </p>
           </div>
 
+          <!-- task complete -->
           <div class="form-row">
             <ion-toggle
               name="accept-survey"
@@ -149,7 +156,11 @@
                 </ng-container>
                 <ng-container end>
                   <ng-container *ngIf="form.get(field.key)?.value">
-                    <app-icon name="close" (click)="clearField($event, field.key)"></app-icon>
+                    <app-icon
+                      name="close"
+                      class="icon-close"
+                      (click)="clearField($event, field.key)"
+                    ></app-icon>
                   </ng-container>
                 </ng-container>
               </app-form-control>
@@ -351,7 +362,7 @@
 
           <!-- location -->
           <ng-container *ngIf="field.input === 'location'">
-            <div>
+            <div class="form-row__label-instruction">
               <ion-label>
                 {{ field?.label }}
                 <span class="color-accent" *ngIf="field?.required">*</span>
@@ -487,7 +498,7 @@
         [disabled]="form.disabled || form.invalid || emptyLocation || (!requireApproval || post?.status === 'published' ? taskForm.invalid : false)"
         (buttonClick)="submitPost()"
       >
-        Submit
+        Submit {{emptyLocation}}
       </app-button>
       <app-button color="medium" fill="outline" expand="inline" (buttonClick)="backNavigation()">
         Cancel

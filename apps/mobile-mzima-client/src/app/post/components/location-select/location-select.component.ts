@@ -166,6 +166,8 @@ export class LocationSelectComponent implements OnInit {
   }
 
   private addMarker() {
+    this.checkErrors();
+
     if (this.mapMarker) {
       this.map.removeLayer(this.mapMarker);
     }
