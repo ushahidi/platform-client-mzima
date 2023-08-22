@@ -278,9 +278,7 @@ export class PostEditPage {
 
             if (field.type === 'point') {
               this.locationRequired = field.required;
-              if (value.lat === '' || value.lng === '') {
-                this.emptyLocation = true;
-              }
+              if (value.lat === '' || value.lng === '') this.emptyLocation = true;
             }
           }
         });
