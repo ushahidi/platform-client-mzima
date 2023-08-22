@@ -18,8 +18,12 @@
       (selectionChange)="setCurrentProvider($event.value)"
       [data-qa]="'select-provider'"
     >
-      <ng-container *ngFor="let provider of providersData?.providers | keyvalue">
-        <mat-option [value]="provider.key" *ngIf="!provider.value" [data-qa]="provider.key">
+      <ng-container *ngFor="let provider of providersData | keyvalue">
+        <mat-option
+          [value]="provider.key"
+          *ngIf="!isProviderEnabled(provider.value)"
+          [data-qa]="provider.key"
+        >
           {{ provider.key }}
         </mat-option>
       </ng-container>
@@ -212,7 +216,11 @@
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
-      <mzima-client-button [disabled]="form.invalid || submitted" [data-qa]="'btn-provider-save'">
+      <mzima-client-button
+        [disabled]="form.invalid || submitted"
+        [data-qa]="'btn-provider-save'"
+        type="submit"
+      >
         {{ 'app.save' | translate }}
       </mzima-client-button>
     </div>

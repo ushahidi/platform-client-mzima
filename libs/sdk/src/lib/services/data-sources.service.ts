@@ -31,7 +31,7 @@ export class DataSourcesService extends ResourceService<any> {
 
   combineDataSource(providersData: any, dataSources: any, surveyList: any): any {
     const controls: any[] = [];
-    for (const dataSourceKey in providersData.providers) {
+    for (const dataSourceKey in providersData) {
       const item = dataSources.find((el: { id: string }) => el.id === dataSourceKey);
 
       if (item) {
@@ -49,20 +49,20 @@ export class DataSourcesService extends ResourceService<any> {
           }
         }
         item.control_options = Object.values(item.options);
-        item.available_provider = providersData.providers[dataSourceKey] || false;
+        item.available_provider = providersData[dataSourceKey]['enabled'] || false;
         item.visible_survey = !!providersData[dataSourceKey]?.form_id;
         item.form_id = providersData[dataSourceKey]?.form_id || null;
         item.selected_survey =
           surveyList.find((el: any) => el.id === providersData[dataSourceKey]?.form_id) || null;
 
         const inboundFieldsArr: any[] = [];
-        for (const dataKey in item.inbound_fields) {
+        for (const dataKey in item.options) {
           inboundFieldsArr.push({
-            control_label: dataKey.toLowerCase(),
-            type: item.inbound_fields[dataKey],
+            control_label: item.options[dataKey].control_label,
+            type: item.options[dataKey].input,
             key: dataKey,
-            control_value: providersData[dataSourceKey]?.inbound_fields
-              ? providersData[dataSourceKey]?.inbound_fields[dataKey]
+            control_value: providersData[dataSourceKey]?.params[item.options[dataKey].control_label]
+              ? providersData[dataSourceKey]?.params[item.options[dataKey].control_label]
               : null,
           });
         }
