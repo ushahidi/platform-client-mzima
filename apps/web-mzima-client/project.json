@@ -68,6 +68,7 @@
               "with": "apps/web-mzima-client/src/environments/environment.prod.ts"
             }
           ],
+          "sourceMap": true,
           "outputHashing": "all"
         },
         "development": {
@@ -75,7 +76,12 @@
           "optimization": false,
           "vendorChunk": true,
           "extractLicenses": false,
-          "sourceMap": true,
+          "sourceMap": {
+            "scripts": true,
+            "styles": true,
+            "hidden": false,
+            "vendor": true
+          },
           "namedChunks": true
         }
       },
