@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, Meta } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Permissions } from '@enums';
 import {
   CategoryInterface,
@@ -47,6 +47,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public videoUrls: any[] = [];
   public isPostLoading: boolean = true;
   public isManagePosts: boolean = false;
+  public postNotFound: boolean = false;
 
   constructor(
     protected override sessionService: SessionService,
@@ -58,7 +59,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     private route: ActivatedRoute,
     private postsService: PostsService,
     private sanitizer: DomSanitizer,
-    private router: Router,
   ) {
     super(sessionService, breakpointService);
     this.getUserData();
@@ -168,9 +168,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     } catch (err: any) {
       this.isPostLoading = false;
       console.log(err);
-      if (err.status === 404) {
-        this.router.navigate(['/not-found']);
-      }
+      if (err.status === 404) this.postNotFound = true;
       return;
     }
   }
