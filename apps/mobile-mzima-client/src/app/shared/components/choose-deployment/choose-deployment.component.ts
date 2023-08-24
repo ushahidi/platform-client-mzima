@@ -69,17 +69,17 @@ export class ChooseDeploymentComponent {
       this.deploymentList = this.deploymentService.getDeployments();
     }
 
-    const index = this.deploymentList.findIndex((i: any) => i.deployment_name === 'mzima-api');
+    const index = this.deploymentList.findIndex((i: any) => i.deployment_name === 'mzima-dev-api');
     if (index === -1) {
       this.deploymentList = [
         {
           id: 1,
           domain: 'staging.ush.zone',
-          subdomain: 'mzima-api',
+          subdomain: 'mzima-dev-api',
           fqdn: 'mzima.staging.ush.zone',
           status: 'deployed',
-          deployment_name: 'mzima-api',
-          description: 'mzima-api for testing',
+          deployment_name: 'mzima-dev-api',
+          description: 'mzima-dev-api for testing',
           image: 'https://via.placeholder.com/150/B186D1/FFFFFF?text=M',
           tier: 'level_1',
           selected: false,

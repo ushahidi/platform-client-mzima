@@ -19,10 +19,6 @@ export class ConfigService {
     return this.env.environment.api_v5;
   }
 
-  getApiVersions3(): string {
-    return this.env.environment.api_v3;
-  }
-
   getResourceUrl(): string {
     return 'config';
   }

@@ -12,6 +12,16 @@
 
 .alert-head.sc-ion-alert-md {
   padding: 24px 24px 16px;
+
+  .custom-alert-icon {
+    width: auto;
+    display: block;
+    line-height: 1;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 16px;
+    color: var(--ion-color-base);
+  }
 }
 
 .alert-message.sc-ion-alert-md,

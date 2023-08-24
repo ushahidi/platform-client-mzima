@@ -4,12 +4,15 @@
   </ion-avatar>
   <div class="deployment-info__main">
     <span class="deployment-info__title">{{ deployment.deployment_name }}</span>
-    <!-- <ion-text color="medium" class="deployment-info__info">{{
-      deployment.domain | lowercase
-    }}</ion-text> -->
     <ion-text color="medium" class="deployment-info__info">{{
       deployment.fqdn | lowercase
     }}</ion-text>
   </div>
-  <app-icon slot="end" class="deployment-info__icon" name="arrow-right"></app-icon>
+  <app-icon
+    slot="end"
+    class="deployment-info__icon"
+    [ngClass]="{ 'ion-color-danger': isDeploymentOutdated }"
+    [name]="!isDeploymentOutdated ? 'arrow-right' : 'warning'"
+    (click)="isDeploymentOutdated && showDeploumentWarningInfo($event)"
+  ></app-icon>
 </ion-item>

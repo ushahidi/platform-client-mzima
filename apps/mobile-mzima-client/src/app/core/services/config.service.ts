@@ -19,7 +19,7 @@ export class ConfigService {
   ) {}
 
   getApiVersions(): string {
-    return this.env.environment.api_v3;
+    return this.env.environment.api_v5;
   }
 
   getResourceUrl(): string {
@@ -33,8 +33,8 @@ export class ConfigService {
       )
       .pipe(
         tap({
-          next: (data) => {
-            this.setConfigurations('set', STORAGE_KEYS.SITE, data);
+          next: (data: any) => {
+            this.setConfigurations('set', STORAGE_KEYS.SITE, data.result);
           },
           error: () => {
             this.setConfigurations('get', STORAGE_KEYS.SITE);
@@ -53,8 +53,8 @@ export class ConfigService {
       )
       .pipe(
         tap({
-          next: (data) => {
-            this.setConfigurations('set', STORAGE_KEYS.FEATURES, data);
+          next: (data: any) => {
+            this.setConfigurations('set', STORAGE_KEYS.FEATURES, data.result);
           },
           error: () => {
             this.setConfigurations('get', STORAGE_KEYS.FEATURES);
@@ -71,14 +71,14 @@ export class ConfigService {
       )
       .pipe(
         tap({
-          next: (data) => {
-            if (data.default_view?.baselayer === 'MapQuest') {
-              data.default_view.baselayer = 'streets';
+          next: (data: any) => {
+            if (data.result.default_view?.baselayer === 'MapQuest') {
+              data.result.default_view.baselayer = 'streets';
             }
-            if (data.default_view?.baselayer === 'MapQuestAerial') {
-              data.default_view.baselayer = 'satellite';
+            if (data.result.default_view?.baselayer === 'MapQuestAerial') {
+              data.result.default_view.baselayer = 'satellite';
             }
-            this.setConfigurations('set', STORAGE_KEYS.MAP, data);
+            this.setConfigurations('set', STORAGE_KEYS.MAP, data.result);
           },
           error: () => {
             this.setConfigurations('get', STORAGE_KEYS.MAP);

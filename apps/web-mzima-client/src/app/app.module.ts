@@ -23,6 +23,7 @@ import { IntercomModule } from '@supy-io/ngx-intercom';
 import { RouterModule } from '@angular/router';
 import * as Sentry from '@sentry/angular-ivy';
 import { BrowserTracing } from '@sentry/tracing';
+import { ToolbarModule } from './shared/components/toolbar/toolbar.module';
 
 export function loadSentryFactory(envService: EnvService) {
   return () =>
@@ -131,6 +132,7 @@ export function playerFactory(): any {
     LottieModule.forRoot({ player: playerFactory }),
     MatSidenavModule,
     SpinnerModule,
+    ToolbarModule,
   ],
   providers: [
     loadSentryProvider,
