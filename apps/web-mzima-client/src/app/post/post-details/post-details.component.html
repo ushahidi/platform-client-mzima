@@ -11,12 +11,8 @@
         [feedView]="feedView"
         (edit)="edit.emit()"
         (refresh)="refresh.emit()"
-        [editable]="
-          allowed_privileges.includes('update') && post.allowed_privileges.includes('update')
-        "
-        [deleteable]="
-          allowed_privileges.includes('delete') && post.allowed_privileges.includes('delete')
-        "
+        [editable]="post.allowed_privileges.includes('update')"
+        [deleteable]="post.allowed_privileges.includes('delete')"
         (statusChanged)="statusChangedHandle()"
       >
       </app-post-head>
@@ -168,8 +164,13 @@
 <ng-template #spinner>
   <app-spinner *ngIf="isPostLoading" class="spinner"></app-spinner>
   <p
-    *ngIf="!isManagePosts && !isPostLoading"
+    *ngIf="!isManagePosts && !isPostLoading && !postNotFound"
     class="cant-see-post"
     [innerHTML]="'notify.post.can_t_view_this_post' | translate"
+  ></p>
+  <p
+    *ngIf="!postNotFound"
+    class="cant-see-post"
+    [innerHTML]="'notify.post.post_not_found' | translate"
   ></p>
 </ng-template>

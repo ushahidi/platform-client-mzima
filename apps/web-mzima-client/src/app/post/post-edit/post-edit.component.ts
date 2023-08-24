@@ -27,6 +27,7 @@ import {
   EventType,
   SessionService,
   LanguageService,
+  ConfirmModalService,
 } from '@services';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
@@ -41,14 +42,12 @@ import {
 } from '@mzima-client/sdk';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
-import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-import { objectHelpers, formValidators } from '@helpers';
+import { objectHelpers, formValidators, dateHelper } from '@helpers';
 import { PhotoRequired } from '../../core/validators/photo-required';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LanguageInterface } from '../../core/interfaces/language.interface';
 import { MatSelectChange } from '@angular/material/select';
-import { dateHelper } from '@helpers';
 
 dayjs.extend(timezone);
 
@@ -164,6 +163,17 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     });
   }
 
+  getOrderedOptions(options: any[]) {
+    const result: any[] = [];
+    options
+      .filter((opt: any) => !opt.parent_id)
+      .forEach((parent) => {
+        result.push(parent);
+        result.push(...options.filter((opt: any) => opt.parent_id === parent.id));
+      });
+    return result;
+  }
+
   private loadSurveyData(formId: number | null, updateContent?: any[]) {
     if (!formId) return;
     this.surveysService.getSurveyById(formId).subscribe({
@@ -195,6 +205,10 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   this.title = field.default;
                   break;
                 case 'description':
+                  this.description = field.default;
+                  break;
+                case 'tags':
+                  field.options = this.getOrderedOptions(field.options);
                   this.description = field.default;
                   break;
                 case 'relation':
@@ -580,7 +594,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         }
       },
       complete: async () => {
-        await this.postComplete();
+        // await this.postComplete();
         this.updated.emit();
         if (this.checkRoutes('feed')) this.backNavigation();
       },

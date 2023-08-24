@@ -1185,7 +1185,9 @@
       "start_tagging": "Start tagging data",
       "HDX": "Humanitarian Data Exchange",
       "please_enter_maintainer_id": "Please enter maintainer id",
-      "please_enter_api_key": "Please enter API key"
+      "please_enter_api_key": "Please enter API key",
+      "hdx_maintainer_id_min_length" : "HDX Maintainer Id is too short",
+      "api_key_min_length" : "API key is too short"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
@@ -1718,7 +1720,8 @@
       "leave_confirm_message": "If you continue, all of your changes will be lost",
       "leave_confirm": "Continue without saving",
       "unfinished_post_task": "You cannot publish this post, the post has unfinished tasks",
-      "posts_can_t_be_published": "The following posts can't be published: {{titles}}"
+      "posts_can_t_be_published": "The following posts can't be published: {{titles}}",
+      "post_not_found": "Post not found"
     },
     "category": {
       "save_success": "Saved category {{name}}",

@@ -54,7 +54,28 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   private editField() {
+    this.editMode = true;
+
     this.selectedFieldType = this.data.selectedFieldType;
+
+    this.updateRadioCheckboxFields();
+
+    this.updateTags();
+
+    this.setHasOptionValidate();
+
+    this.checkLoadAvailableData(this.selectedFieldType.input);
+
+    if (Array.isArray(this.selectedFieldType.translations)) {
+      this.selectedFieldType.translations = {};
+    }
+
+    if (!this.selectedFieldType.translations[this.selectLanguageCode]) {
+      this.selectedFieldType.translations[this.selectLanguageCode] = { label: '' };
+    }
+  }
+
+  private updateTags() {
     if (
       this.selectedFieldType.input === 'tags' &&
       this.selectedFieldType.options?.length &&
@@ -65,15 +86,15 @@ export class CreateFieldModalComponent implements OnInit {
       );
       this.setTempSelectedFieldType();
     }
-    this.editMode = true;
-    this.setHasOptionValidate();
-    this.checkLoadAvailableData(this.selectedFieldType.input);
-    if (Array.isArray(this.selectedFieldType.translations)) {
-      this.selectedFieldType.translations = {};
-    }
+  }
 
-    if (!this.selectedFieldType.translations[this.selectLanguageCode]) {
-      this.selectedFieldType.translations[this.selectLanguageCode] = { label: '' };
+  private updateRadioCheckboxFields() {
+    const checkTypes = ['radio', 'checkbox', 'select'];
+    if (checkTypes.includes(this.selectedFieldType.input)) {
+      this.fieldOptions = this.data?.selectedFieldType.options?.map((option: any) => ({
+        value: option,
+        error: '',
+      }));
     }
   }
 

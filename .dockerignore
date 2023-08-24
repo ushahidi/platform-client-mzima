@@ -6,3 +6,4 @@ apps/mobile-mzima-client/node_modules
 .env
 .env.docker
 dist/
+Dockerfile

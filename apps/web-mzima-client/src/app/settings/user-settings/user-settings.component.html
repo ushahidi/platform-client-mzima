@@ -25,19 +25,17 @@
         required
       />
       <mat-hint>{{ 'settings.user_settings.profile_page' | translate }}</mat-hint>
-      <mat-error *ngIf="form.get('hdx_maintainer_id')?.invalid">
-        {{ 'settings.user_settings.valid_user' | translate }}
+      <mat-error
+        *ngIf="form.get('hdx_maintainer_id')?.touched && form.get('hdx_maintainer_id')?.invalid"
+      >
+        <div *ngIf="form.get('hdx_maintainer_id')?.hasError('required')">
+          {{ 'settings.user_settings.valid_user' | translate }}
+        </div>
+        <div *ngIf="form.get('hdx_maintainer_id')?.hasError('minlength')">
+          {{ 'settings.user_settings.hdx_maintainer_id_min_length' | translate }}
+        </div>
       </mat-error>
     </mat-form-field>
-    <!--      <button-->
-    <!--        type="button"-->
-    <!--        color="primary"-->
-    <!--        mat-raised-button-->
-    <!--        (click)="saveMaintainerId()"-->
-    <!--        [disabled]="form.get('hdx_maintainer_id')?.invalid"-->
-    <!--      >-->
-    <!--        {{ 'app.save' | translate }}-->
-    <!--      </button>-->
   </div>
   <div class="form-row">
     <mat-label>{{ 'settings.user_settings.api_key' | translate }}</mat-label>
@@ -49,14 +47,20 @@
         required
       />
       <mat-hint>{{ 'settings.user_settings.profile_page' | translate }}</mat-hint>
-      <mat-error *ngIf="form.get('hdx_api_key')?.invalid">
-        {{ 'settings.user_settings.valid_key' | translate }}
+      <mat-error *ngIf="form.get('hdx_api_key')?.touched && form.get('hdx_api_key')?.invalid">
+        <div *ngIf="form.get('hdx_api_key')?.hasError('required')">
+          {{ 'settings.user_settings.valid_key' | translate }}
+        </div>
+        <div *ngIf="form.get('hdx_api_key')?.hasError('minlength')">
+          {{ 'settings.user_settings.api_key_min_length' | translate }}
+        </div>
       </mat-error>
     </mat-form-field>
   </div>
   <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
   <div class="form-controls-panel form-controls-panel--sticky">
     <mzima-client-button
+      type="button"
       fill="outline"
       color="secondary"
       *ngIf="!(isDesktop$ | async)!"
@@ -65,7 +69,11 @@
     >
       {{ 'app.cancel' | translate }}
     </mzima-client-button>
-    <mzima-client-button (buttonClick)="saveInformation()" [disabled]="form.invalid">
+    <mzima-client-button
+      type="submit"
+      (buttonClick)="saveInformation()"
+      [disabled]="form.invalid || submitted"
+    >
       {{ 'app.save' | translate }}
     </mzima-client-button>
   </div>
