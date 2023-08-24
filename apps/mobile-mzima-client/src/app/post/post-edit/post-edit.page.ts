@@ -275,11 +275,6 @@ export class PostEditPage {
             const value = this.getDefaultValues(field);
             field.value = value;
             fields[field.key] = this.createField(field, value);
-
-            if (field.type === 'point') {
-              this.locationRequired = field.required;
-              if (value.lat === '' || value.lng === '') this.emptyLocation = true;
-            }
           }
         });
     }
@@ -865,5 +860,9 @@ export class PostEditPage {
   public clearField(event: any, key: string) {
     event.stopPropagation();
     this.form.patchValue({ [key]: null });
+  }
+
+  public isLocationRequired(field: any): boolean {
+    return field?.required || false;
   }
 }

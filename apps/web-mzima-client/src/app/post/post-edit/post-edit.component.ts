@@ -43,7 +43,7 @@ import {
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { objectHelpers, formValidators, dateHelper } from '@helpers';
-import { PhotoRequired } from '../../core/validators/photo-required';
+import { PhotoRequired, PointValidator } from '../../core/validators';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LanguageInterface } from '../../core/interfaces/language.interface';
@@ -88,7 +88,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   public post?: any;
   public atLeastOneFieldHasValidationError: boolean;
   public formValidator = new formValidators.FormValidator();
-  public locationRequired = false;
+  // public locationRequired = false;
   public emptyLocation = false;
   public submitted = false;
   public filters;
@@ -415,10 +415,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     switch (field.type) {
       case 'point':
         if (field.required) {
-          this.locationRequired = field.required;
-          if (value.lat === '' || value.lng === '') {
-            this.emptyLocation = true;
-          }
+          validators.push(PointValidator());
         }
         break;
       case 'description':
@@ -821,5 +818,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   public clearField(event: any, key: string) {
     event.stopPropagation();
     this.form.patchValue({ [key]: null });
+  }
+
+  public isLocationRequired(field: any): boolean {
+    return field?.required || false;
   }
 }
