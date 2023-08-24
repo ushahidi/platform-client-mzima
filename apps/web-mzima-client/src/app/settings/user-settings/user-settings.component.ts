@@ -140,14 +140,14 @@ export class UserSettingsComponent implements OnInit {
           title: 'settings.user_settings.api_key_saved',
           buttons: [
             // {
-            //   color: 'primary',
+            //   color: 'gray',
             //   text: 'settings.user_settings.start_tagging',
             //   handler: () => {
-            //     this.router.navigate(['/settings/hdx'])
+            //     this.router.navigate(['/settings/hdx']);
             //   },
             // },
             {
-              color: 'accent',
+              color: 'primary',
               text: 'notify.export.confirmation',
             },
           ],
