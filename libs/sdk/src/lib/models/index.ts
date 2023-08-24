@@ -19,3 +19,4 @@ export * from './search-response.interface';
 export * from './account-notification.interface';
 export * from './deployment.interface';
 export * from './media.interface';
+export * from './hxl.interface';

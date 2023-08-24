@@ -17,12 +17,8 @@
       [feedView]="!!feedView"
       (refresh)="refresh.emit()"
       (edit)="edit.emit()"
-      [editable]="
-        allowed_privileges.includes('update') && post.allowed_privileges.includes('update')
-      "
-      [deleteable]="
-        allowed_privileges.includes('delete') && post.allowed_privileges.includes('delete')
-      "
+      [editable]="post.allowed_privileges.includes('update')"
+      [deleteable]="post.allowed_privileges.includes('delete')"
       (deleted)="deletedHandle()"
       (statusChanged)="statusChangedHandle()"
     >

@@ -89,7 +89,7 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   private updateRadioCheckboxFields() {
-    const checkTypes = ['radio', 'checkbox'];
+    const checkTypes = ['radio', 'checkbox', 'select'];
     if (checkTypes.includes(this.selectedFieldType.input)) {
       this.fieldOptions = this.data?.selectedFieldType.options?.map((option: any) => ({
         value: option,

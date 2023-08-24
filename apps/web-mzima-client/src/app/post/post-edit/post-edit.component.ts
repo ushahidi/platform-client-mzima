@@ -594,7 +594,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         }
       },
       complete: async () => {
-        await this.postComplete();
+        // await this.postComplete();
         this.updated.emit();
         if (this.checkRoutes('feed')) this.backNavigation();
       },
