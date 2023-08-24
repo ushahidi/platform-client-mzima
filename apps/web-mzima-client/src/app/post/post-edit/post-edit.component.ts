@@ -556,7 +556,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       form_id: this.formId,
       locale: 'en_US',
       post_content: this.tasks,
-      post_date: new Date().toISOString(),
       published_to: [],
       title: this.title,
       type: 'report',
@@ -566,7 +565,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     this.preventSubmitIncaseTheresNoBackendValidation();
 
     if (this.postId) {
-      postData.post_date = this.post.post_date || new Date().toISOString();
       this.updatePost(this.postId, postData);
     } else {
       if (!this.atLeastOneFieldHasValidationError) {

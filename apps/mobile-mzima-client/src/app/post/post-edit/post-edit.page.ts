@@ -541,7 +541,6 @@ export class PostEditPage {
       form_id: this.selectedSurveyId,
       locale: 'en_US',
       post_content: this.tasks,
-      post_date: new Date().toISOString(),
       published_to: [],
       title: this.title,
       type: 'report',
@@ -552,8 +551,6 @@ export class PostEditPage {
     if (!this.form.valid) this.form.markAllAsTouched();
 
     this.preventSubmitIncaseTheresNoBackendValidation();
-
-    if (this.postId) postData.post_date = this.post.post_date || new Date().toISOString();
 
     await this.offlineStore(postData);
 
