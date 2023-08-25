@@ -337,7 +337,7 @@
                 [zoom]="12"
                 [isEditPost]="isEditPost"
                 [location]="form.get(field.key)?.value"
-                [required]="locationRequired"
+                [required]="isLocationRequired(field)"
                 [type]="post?.source?.toLowerCase() || 'default'"
                 (locationChange)="changeLocation($event, field.key)"
               ></app-location-select>
