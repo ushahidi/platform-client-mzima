@@ -277,7 +277,6 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
         if (response) {
           this.draggableFields.push(this.addPriority(this.taskFields, response));
           this.taskFields.push(this.addPriority(this.taskFields, response));
-          console.log(this.taskFields);
         }
       },
     });
