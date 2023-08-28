@@ -630,11 +630,7 @@ export class PostEditPage {
     this.postsService.update(postId, postData).subscribe({
       error: () => this.form.enable(),
       complete: async () => {
-        await this.postComplete(
-          'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
-        );
         this.backNavigation();
-        // this.updated.emit();
       },
     });
   }
