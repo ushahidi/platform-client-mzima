@@ -188,7 +188,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       }
       this.updateForm(filters);
       this.getActiveFilters(filters);
-      this.applyFilters();
+      this.applyFilters(false);
     } else {
       localStorage.setItem(
         this.session.getLocalStorageNameMapper('filters'),
@@ -635,8 +635,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
   }
 
-  public applyFilters(): void {
-    this.postsService.applyFilters(this.activeFilters);
+  public applyFilters(updated = true): void {
+    this.postsService.applyFilters(this.activeFilters, updated);
   }
 
   public applyAndClose(): void {
