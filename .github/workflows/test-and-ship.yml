@@ -215,6 +215,10 @@ jobs:
           CYPRESS_ush_user_pwd: '${{secrets.e2e_ush_user_pwd}}'
           CYPRESS_RECORD_KEY: ${{ secrets.E2E_CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+      - uses: actions/download-artifact@v3
+        with:
+          name: e2e-artifact
 
   ship:
     needs: [test, e2e-test]
