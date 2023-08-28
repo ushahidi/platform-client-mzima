@@ -499,7 +499,7 @@
         [disabled]="form.disabled || form.invalid || emptyLocation || (!requireApproval || post?.status === 'published' ? taskForm.invalid : false)"
         (buttonClick)="submitPost()"
       >
-        Submit {{emptyLocation}}
+        Submit
       </app-button>
       <app-button color="medium" fill="outline" expand="inline" (buttonClick)="backNavigation()">
         Cancel
