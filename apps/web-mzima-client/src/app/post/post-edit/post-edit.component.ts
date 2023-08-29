@@ -685,7 +685,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       let queryParams = {};
       if (urlParts[1]) {
         const params = new URLSearchParams(urlParts[1]);
-        queryParams = { mode: params.get('mode') };
+        queryParams = { mode: params.get('mode'), page: params.get('page') };
       }
       this.router.navigate([url], { queryParams: queryParams });
     } else {
