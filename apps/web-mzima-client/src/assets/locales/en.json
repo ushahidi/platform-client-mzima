@@ -1094,7 +1094,7 @@
     },
     "placeholder": {
       "name": "Enter name",
-      "descriptions": "Enter descriptions...",
+      "descriptions": "Enter description...",
       "choose_parent_category": "Choose parent category..."
     },
     "types": {

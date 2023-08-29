@@ -132,9 +132,12 @@
                       <input
                         matInput
                         [(ngModel)]="contact.contact"
-                        (ngModelChange)="isContactsChanged = true"
+                        (ngModelChange)="validateContact(contact)"
                       />
                     </mat-form-field>
+                    <mat-error *ngIf="errorMap[contact.id]">
+                      {{ errorMap[contact.id] }}
+                    </mat-error>
                   </div>
 
                   <div class="contact-item__buttons">
@@ -275,15 +278,7 @@
     <mzima-client-button fill="outline" color="secondary" [mat-dialog-close]="false">
       {{ 'app.cancel' | translate }}
     </mzima-client-button>
-    <mzima-client-button
-      (buttonClick)="applyChanges()"
-      [disabled]="
-        isLoading ||
-        (selectedTabIndex === 0
-          ? profileForm.invalid || profileForm.pristine || profileForm.disabled
-          : false)
-      "
-    >
+    <mzima-client-button (buttonClick)="applyChanges()" [disabled]="isButtonDisabled()">
       {{ 'form.save_and_close' | translate }}
     </mzima-client-button>
   </mat-dialog-actions>
@@ -292,9 +287,3 @@
 <ng-template #spinner>
   <app-spinner class="spinner"></app-spinner>
 </ng-template>
-
-<pre [style]="{ display: 'none' }">
-  {{ profileForm.invalid }}
-  {{ profileForm.pristine }}
-  {{ profileForm.disabled }}
-</pre>
