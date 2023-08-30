@@ -9,6 +9,8 @@
 
 .feed-page {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   @include breakpoint-min($tablet) {
     transition: margin-inline-start 0.35s ease;
@@ -30,7 +32,8 @@
 
   &__main {
     @include breakpoint-min($tablet) {
-      height: 100%;
+      flex: 1 1 100%;
+      overflow: hidden;
     }
 
     .feed-page--post-view & {
@@ -47,13 +50,13 @@
 
   &__post {
     width: 100%;
+    height: 100%;
     overflow-y: auto;
     margin-left: 8px;
     overflow-x: hidden;
     border-radius: 4px;
     padding-bottom: 24px;
     scroll-behavior: smooth;
-    height: calc(100% - 64px - 60px);
     -webkit-overflow-scrolling: touch;
 
     @include breakpoint-max($laptop-small) {
@@ -281,6 +284,7 @@
 }
 
 .feed {
+  height: 100%;
   flex-shrink: 0;
   overflow-y: auto;
   overflow-x: hidden;
@@ -288,7 +292,6 @@
   padding-bottom: 32px;
   padding-inline-end: 8px;
   padding-inline-start: 24px;
-  height: calc(100% - 64px - 60px);
   -webkit-overflow-scrolling: touch;
 
   @include breakpoint-max($laptop-small) {
@@ -371,6 +374,7 @@
   display: block;
   position: relative;
   margin: 0 8px 16px;
+  scroll-margin-top: 8px;
   width: calc(33.3333% - 18px);
 
   @media screen and (max-width: 1640px) {

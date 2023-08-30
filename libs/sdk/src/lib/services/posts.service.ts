@@ -255,14 +255,16 @@ export class PostsService extends ResourceService<any> {
     return super.delete(id, 'lock');
   }
 
-  public applyFilters(filters: any): void {
+  public applyFilters(filters: any, updated = true): void {
     const newFilters: any = {};
     for (const key in filters) {
       if (filters[key] || this.postsFilters.value[key]) {
         newFilters[key] = filters[key] || this.postsFilters.value[key];
       }
     }
-    this.postsFilters.next(newFilters);
+    if (updated) {
+      this.postsFilters.next(newFilters);
+    }
   }
 
   public setSorting(sorting: any): void {

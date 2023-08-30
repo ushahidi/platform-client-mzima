@@ -43,7 +43,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     page: 1,
     // created_before_by_id: '',
   };
-  private readonly getPostsSubject = new Subject<{ params: GeoJsonFilter; add?: boolean }>();
+  private readonly getPostsSubject = new Subject<{
+    params: GeoJsonFilter;
+    add?: boolean;
+  }>();
   public pagination = {
     page: 1,
     size: this.params.limit,
@@ -83,6 +86,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public isMainFiltersOpen: boolean;
   public isManagePosts: boolean;
   public statusControl = new FormControl();
+  public initialLoad = true;
 
   constructor(
     protected override router: Router,
@@ -145,6 +149,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
+        if (this.initialLoad) {
+          this.initialLoad = false;
+          return;
+        }
         this.router.navigate([], {
           relativeTo: this.route,
           queryParams: {
@@ -252,7 +260,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   loadData(): void {
-    this.params.page = 1;
+    // this.params.page = 1;
     this.getPostsSubject.next({ params: this.params });
   }
 
@@ -268,9 +276,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     if (!add) {
       this.posts = [];
     }
-    if (this.mode === FeedMode.Post) {
-      this.currentPage = 1;
-    }
+    // if (this.mode === FeedMode.Post) {
+    //   this.currentPage = 1;
+    // }
     this.isLoading = true;
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
@@ -286,6 +294,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         setTimeout(() => {
           this.isLoading = false;
           this.updateMasonry();
+          setTimeout(() => {
+            document.querySelector('.post--selected')?.scrollIntoView();
+          }, 250);
         }, 500);
       },
     });
@@ -527,7 +538,12 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   refreshPost({ id }: PostResult) {
     this.postsService.getById(id).subscribe((p) => {
       const updatedPost = this.posts.find((post) => post.id === id);
-      if (updatedPost) updatedPost.sets = _.cloneDeep(p.sets);
+      if (updatedPost) {
+        updatedPost.sets = _.cloneDeep(p.sets);
+        updatedPost.title = p.title;
+        updatedPost.content = p.content;
+        updatedPost.status = p.status;
+      }
     });
   }
 
