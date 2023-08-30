@@ -4,6 +4,7 @@ import { Deployment } from '@mzima-client/sdk';
 import { Subject, debounceTime } from 'rxjs';
 import { AlertService, AuthService, ConfigService, DeploymentService, EnvService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { getDeploymentAvatarPlaceholder } from '@helpers';
 
 @UntilDestroy()
 @Component({
@@ -80,7 +81,7 @@ export class ChooseDeploymentComponent {
           status: 'deployed',
           deployment_name: 'mzima-api',
           description: 'mzima-api for testing',
-          image: 'https://via.placeholder.com/150/B186D1/FFFFFF?text=M',
+          avatar: getDeploymentAvatarPlaceholder('mzima-api'),
           tier: 'level_1',
           selected: false,
         },
