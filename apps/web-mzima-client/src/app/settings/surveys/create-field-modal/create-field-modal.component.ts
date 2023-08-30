@@ -196,6 +196,7 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   private isNumber({ default: val, type }: any): boolean {
+    if (!val) return true;
     if (type === 'decimal') {
       return /((?<!\S)[-+]?[0-9]*[.,][0-9]+$)/gm.test(String(val).trim());
     }
