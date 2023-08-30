@@ -74,6 +74,7 @@ export abstract class MainViewComponent {
 
   private normalizeFilter(values: any) {
     if (!values) return {};
+
     const filters = {
       ...values,
       'form[]': values.form,

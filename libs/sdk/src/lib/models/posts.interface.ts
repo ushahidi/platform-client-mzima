@@ -117,6 +117,8 @@ interface PostTag {
 interface PostForm {
   id: number;
   url: string;
+  description?: string;
+  name?: string;
 }
 
 export interface PostContent {
