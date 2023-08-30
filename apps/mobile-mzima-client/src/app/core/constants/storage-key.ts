@@ -10,4 +10,5 @@ export const STORAGE_KEYS = {
   SURVEYS: 'surveys',
   POSTS: 'posts',
   GEOJSONPOSTS: 'geoJsonPosts',
+  MAP_POSITION: 'mapPosition',
 };
