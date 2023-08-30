@@ -239,12 +239,6 @@ export class CreateFieldModalComponent implements OnInit {
     );
     this.setHasOptionValidate();
     this.checkLoadAvailableData(this.selectedFieldType.input);
-    if (this.selectedFieldType.input === 'number' && this.selectedFieldType.type === 'int') {
-      this.selectedFieldType.default = 0;
-    }
-    if (this.selectedFieldType.input === 'number' && this.selectedFieldType.type === 'decimal') {
-      this.selectedFieldType.default = '0.0';
-    }
   }
 
   private checkLoadAvailableData(input: string) {
