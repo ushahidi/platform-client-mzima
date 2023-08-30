@@ -80,7 +80,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
       this.loader.show();
       this.importService.uploadFile(this.selectedFile, this.selectedForm.id).subscribe({
         next: (csv) => {
-          this.uploadedCSV = csv;
+          this.uploadedCSV = csv.result;
 
           if (this.uploadedCSV.columns?.every((c: any) => c === ''))
             return this.notification.showError(

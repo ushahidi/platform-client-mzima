@@ -44,13 +44,13 @@ export class PollingService implements OnDestroy {
     this.dataImportService.get().subscribe((allJobs) => {
       const q = allJobs.results
         .filter((job: any) => job.status !== 'SUCCESS' && job.status !== 'FAILED')
-        .map((j: any) => this.dataImportService.getById(j.id));
+        .map((j: any) => this.dataImportService.getById(j.id).pipe(map((jo) => jo.result)));
       this.startImportPolling(q);
     });
   }
 
   getImportJobsById(jobs: string[]) {
-    const q = jobs.map((j) => this.dataImportService.getById(j));
+    const q = jobs.map((j) => this.dataImportService.getById(j).pipe(map((jo) => jo.result)));
     this.startImportPolling(q);
   }
 
@@ -72,7 +72,7 @@ export class PollingService implements OnDestroy {
           } else if (job.status === 'FAILED') {
             this.notificationService.showError('JOB FAILED');
           } else {
-            nextQueries.push(this.dataImportService.getById(job.id));
+            nextQueries.push(this.dataImportService.getById(job.id).pipe(map((jo) => jo.result)));
           }
         });
         if (nextQueries.length) {

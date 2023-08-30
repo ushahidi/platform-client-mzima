@@ -18,14 +18,14 @@ export class DataImportService extends ResourceService<any> {
   }
 
   getApiVersions(): string {
-    return apiHelpers.API_V_3;
+    return apiHelpers.API_V_5;
   }
 
   getResourceUrl(): string {
     return 'csv';
   }
 
-  override getById(id: string | number): Observable<ImportCSVFileInterface> {
+  override getById(id: string | number): Observable<{ result: ImportCSVFileInterface }> {
     return super.getById(id);
   }
 
