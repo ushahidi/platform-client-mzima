@@ -26,7 +26,7 @@ import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { CollectionsModalComponent } from '../../shared/components';
 import { dateHelper } from '@helpers';
-import { BreakpointService, SessionService } from '@services';
+import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 
 @Component({
   selector: 'app-post-details',
@@ -59,6 +59,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     private route: ActivatedRoute,
     private postsService: PostsService,
     private sanitizer: DomSanitizer,
+    private eventBusService: EventBusService,
   ) {
     super(sessionService, breakpointService);
     this.getUserData();
@@ -222,6 +223,10 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public statusChangedHandle(): void {
     this.getPost(this.postId);
     this.statusChanged.emit();
+    this.eventBusService.next({
+      type: EventType.UpdatedPost,
+      payload: this.post,
+    });
   }
 
   ngOnDestroy() {
