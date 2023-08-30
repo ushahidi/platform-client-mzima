@@ -22,7 +22,7 @@
       <app-twitter-widget [id]="post.data_source_message_id"></app-twitter-widget>
     </div>
 
-    <div class="post__survey">
+    <div class="post__survey" *ngIf="post.form">
       <h3>{{ post.form.name }}</h3>
       <p>{{ post.form.description }}</p>
     </div>

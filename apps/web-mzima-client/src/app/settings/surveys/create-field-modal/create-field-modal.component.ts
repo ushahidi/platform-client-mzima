@@ -196,6 +196,7 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   private isNumber({ default: val, type }: any): boolean {
+    if (!val) return true;
     if (type === 'decimal') {
       return /((?<!\S)[-+]?[0-9]*[.,][0-9]+$)/gm.test(String(val).trim());
     }
@@ -238,12 +239,6 @@ export class CreateFieldModalComponent implements OnInit {
     );
     this.setHasOptionValidate();
     this.checkLoadAvailableData(this.selectedFieldType.input);
-    if (this.selectedFieldType.input === 'number' && this.selectedFieldType.type === 'int') {
-      this.selectedFieldType.default = 0;
-    }
-    if (this.selectedFieldType.input === 'number' && this.selectedFieldType.type === 'decimal') {
-      this.selectedFieldType.default = '0.0';
-    }
   }
 
   private checkLoadAvailableData(input: string) {
