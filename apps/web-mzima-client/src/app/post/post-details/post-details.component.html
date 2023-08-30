@@ -22,6 +22,11 @@
       <app-twitter-widget [id]="post.data_source_message_id"></app-twitter-widget>
     </div>
 
+    <div class="post__survey">
+      <h3>{{ post.form.name }}</h3>
+      <p>{{ post.form.description }}</p>
+    </div>
+
     <h2 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h2>
 
     <div class="post__description" *ngIf="post.title?.length && post.content?.length">
