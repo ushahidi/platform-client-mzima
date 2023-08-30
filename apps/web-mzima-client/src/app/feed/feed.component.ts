@@ -273,6 +273,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   private getPosts(params: any, add = true): void {
+    const isPostsAlreadyExist = !!this.posts.length;
     if (!add) {
       this.posts = [];
     }
@@ -295,7 +296,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           this.isLoading = false;
           this.updateMasonry();
           setTimeout(() => {
-            document.querySelector('.post--selected')?.scrollIntoView();
+            if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
+              document.querySelector('.post--selected')?.scrollIntoView();
+            }
           }, 250);
         }, 500);
       },
