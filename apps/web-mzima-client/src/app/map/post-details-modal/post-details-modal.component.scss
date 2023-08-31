@@ -41,6 +41,14 @@
           bottom: -16px;
         }
       }
+
+      app-post-edit {
+        ::ng-deep {
+          .form-row {
+            margin-right: 40px;
+          }
+        }
+      }
     }
 
     .post-item-page {

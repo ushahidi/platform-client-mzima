@@ -308,7 +308,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   ): void {
     this.dialog.open(PostDetailsModalComponent, {
       width: '100%',
-      maxWidth: 576,
+      maxWidth: 626,
       data: { post, color, twitterId, editable },
       height: 'auto',
       maxHeight: '90vh',
