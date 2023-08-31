@@ -4,7 +4,20 @@
   class="deployment-item"
   [ngStyle]="{ '--background': isBackgroundVisible, '--border-style': isBorderVisible }"
 >
-  <img class="deployment-item__image" [src]="deployment.image" [alt]="deployment.name" />
+  <img
+    *ngIf="deployment.image; else deploymentAvatarPlaceholder"
+    class="deployment-item__image"
+    [src]="deployment.image"
+    [alt]="deployment.name"
+  />
+  <ng-template #deploymentAvatarPlaceholder>
+    <span
+      class="deployment-item__image deployment-item__image--placeholder"
+      [ngStyle]="{ '--color': deployment.avatar }"
+    >
+      {{ deployment.deployment_name[0] }}
+    </span>
+  </ng-template>
   <ion-label class="deployment-item__content">
     <span class="deployment-item__title">{{ deployment.deployment_name | truncate : 50 }}</span>
     <ion-text
