@@ -23,7 +23,7 @@ import {
 } from 'leaflet';
 import { mapHelper } from '@helpers';
 import { GeoJsonPostsResponse, PostsService } from '@mzima-client/sdk';
-import { DatabaseService, SessionService, ToastService } from '@services';
+import { DatabaseService, SessionService, StorageService, ToastService } from '@services';
 import { MapConfigInterface } from '@models';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -61,6 +61,7 @@ export class MapViewComponent implements AfterViewInit {
     private router: Router,
     private databaseService: DatabaseService,
     private toastService: ToastService,
+    private storageService: StorageService,
   ) {
     const mediaDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
     mediaDarkMode.addEventListener('change', (ev) => this.switchMode(ev));
@@ -272,6 +273,14 @@ export class MapViewComponent implements AfterViewInit {
           layer.unbindPopup();
         });
         layer.on('click', () => {
+          this.storageService.setStorage(
+            STORAGE_KEYS.MAP_POSITION,
+            {
+              center: this.map.getCenter(),
+              zoom: this.map.getZoom(),
+            },
+            'object',
+          );
           this.router.navigate([feature.properties.id]);
         });
       },
@@ -284,7 +293,11 @@ export class MapViewComponent implements AfterViewInit {
       this.mapLayers.push(geoPosts);
     }
 
-    if (posts.results.length) {
+    const lastMapBounds = this.storageService.getStorage(STORAGE_KEYS.MAP_POSITION, 'object');
+    this.storageService.deleteStorage(STORAGE_KEYS.MAP_POSITION);
+    if (lastMapBounds) {
+      this.map.setView(lastMapBounds.center, lastMapBounds.zoom);
+    } else if (posts.results.length) {
       this.mapFitToBounds = geoPosts.getBounds();
     }
   }
