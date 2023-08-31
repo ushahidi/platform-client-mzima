@@ -35,7 +35,7 @@
       lines="none"
       *ngFor="let supportItem of filteredSupportItems"
     >
-      <div>
+      <div (click)="supportItem.action()">
         <span class="support-item__title">{{ supportItem.title }}</span>
         <ion-text class="support-item__description" color="medium"
           >{{ supportItem.description }}</ion-text

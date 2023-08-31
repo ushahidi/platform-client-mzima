@@ -63,6 +63,27 @@
     }
   }
 
+  &__survey {
+    padding: 16px;
+    border-radius: 4px;
+    background: var(--color-neutral-10);
+    margin-bottom: 16px;
+    line-height: 1.3;
+    font-size: 14px;
+    color: var(--color-neutral-80);
+    white-space: pre-wrap;
+    h3 {
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: var(--color-neutral-100);
+    }
+    p {
+      margin-bottom: 0;
+    }
+  }
+
   h2 {
     font-size: 24px;
     font-weight: 700;

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SavedsearchesService, PostsService, UserInterface } from '@mzima-client/sdk';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SessionService } from '@services';
 import { Subject } from 'rxjs';
 
@@ -29,6 +29,14 @@ export abstract class MainViewComponent {
     protected sessionService: SessionService,
   ) {
     this.updateFilters();
+  }
+
+  public getUserData(): void {
+    this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
+      next: (userData) => {
+        this.user = userData;
+      },
+    });
   }
 
   public updateFilters(): void {

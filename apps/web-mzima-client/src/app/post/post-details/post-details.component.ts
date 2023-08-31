@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Permissions } from '@enums';
 import {
   CategoryInterface,
+  FormsService,
   MediaService,
   PostContent,
   PostContentField,
@@ -58,6 +59,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     private metaService: Meta,
     private route: ActivatedRoute,
     private postsService: PostsService,
+    private formsService: FormsService,
     private sanitizer: DomSanitizer,
     private eventBusService: EventBusService,
   ) {
@@ -99,6 +101,9 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     if (!this.postId) return;
     this.post = await this.getPostInformation(id);
     if (this.post) {
+      this.formsService.getById(this.post.form_id!).subscribe((form) => {
+        this.post!.form = form;
+      });
       this.isPostLoading = false;
       this.getData(this.post);
       this.post.post_content = postHelpers.markCompletedTasks(
