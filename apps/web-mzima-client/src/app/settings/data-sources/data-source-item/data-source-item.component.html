@@ -36,7 +36,7 @@
     <div class="toggle">
       <mat-slide-toggle
         name="accept-survey"
-        [(ngModel)]="provider.available_provider"
+        [(ngModel)]="provider.enabled"
         (change)="turnOffDataSource($event)"
         [data-qa]="'toogle-available-provider'"
       >
@@ -88,14 +88,14 @@
       <p>{{ 'survey.choose_survey_field_desc' | translate }}</p>
       <table
         mat-table
-        [dataSource]="provider.control_inbound_fields"
+        [dataSource]="provider.inbound_fields"
         class="survey__table"
         [data-qa]="'survey-table'"
       >
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>{{ provider?.name | titlecase }} data</th>
           <td mat-cell *matCellDef="let element">
-            {{ element.control_label | titlecase }}
+            {{ element.label | titlecase }}
           </td>
         </ng-container>
         <ng-container matColumnDef="field">
@@ -104,10 +104,10 @@
             <div class="form-row">
               <mat-form-field appearance="outline" [data-qa]="'source-select'">
                 <mat-select
-                  [formControlName]="element.control_label"
+                  [formControlName]="element.label"
                   disableOptionCentering
                   [placeholder]="'data_import.leave_empty' | translate"
-                  [data-qa]="element.control_label"
+                  [data-qa]="element.label"
                 >
                   <mat-option [value]="null">
                     {{ 'data_import.leave_empty' | translate }}
@@ -138,7 +138,7 @@
 
   <br />
 
-  <div *ngFor="let control of provider?.control_options" [data-qa]="'provider-options'">
+  <div *ngFor="let control of provider?.options" [data-qa]="'provider-options'">
     <ng-container *ngIf="control.input === 'read-only-text'">
       <h2 *ngIf="control.label?.length">{{ control.label }}</h2>
       <p *ngIf="control.description?.length" [innerHTML]="control.description"></p>
@@ -146,7 +146,10 @@
 
     <ng-container *ngIf="control.input !== 'read-only-text'">
       <div class="form-row">
-        <mat-label>{{ control.label }}<span class="color-accent"> *</span></mat-label>
+        <mat-label>
+          {{ control.label }}
+          <span class="color-accent" *ngIf="control.rules.indexOf('required') > -1">*</span>
+        </mat-label>
         <mat-form-field
           *ngIf="control.input === 'text'"
           appearance="outline"
@@ -155,9 +158,9 @@
           <input
             matInput
             [placeholder]="control.description"
-            [formControlName]="control.control_label"
+            [formControlName]="control.id"
             [type]="control.input"
-            [data-qa]="'control-text' + control.control_label"
+            [data-qa]="'control-text' + control.id"
           />
           <mat-hint
             *ngIf="control.description?.length"
@@ -165,9 +168,8 @@
           ></mat-hint>
           <mat-error
             *ngIf="
-              (form.get(control.control_label)?.touched ||
-                form.get(control.control_label)?.dirty) &&
-              form.get(control.control_label)?.hasError('required')
+              (form.get(control.id)?.touched || form.get(control.id)?.dirty) &&
+              form.get(control.id)?.hasError('required')
             "
           >
             {{ 'form.field_required' | translate }}
@@ -177,7 +179,7 @@
         <mat-radio-group
           *ngIf="control.input === 'radio'"
           aria-label="Select an option"
-          [formControlName]="control.control_label"
+          [formControlName]="control.label"
           [data-qa]="'control-type-radio'"
         >
           <mat-radio-button

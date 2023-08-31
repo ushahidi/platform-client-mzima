@@ -26,7 +26,17 @@ export class DataSourcesService extends ResourceService<any> {
   }
 
   getDataSource(): Observable<DataSourceResult[]> {
-    return super.get().pipe(map((data) => data.results));
+    return super.get().pipe(
+      map((data) => {
+        return data.results.map((result: any) => ({
+          ...result,
+          options: Object.keys(result.options).map((key: string) => ({
+            ...result.options[key],
+            id: key,
+          })),
+        }));
+      }),
+    );
   }
 
   combineDataSource(providersData: any, dataSources: any, surveyList: any): any {

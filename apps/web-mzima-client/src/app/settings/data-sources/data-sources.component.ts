@@ -30,11 +30,16 @@ export class DataSourcesComponent implements OnInit {
   public getProvidersList() {
     this.dataSourcesService
       .getDataSource()
-      .pipe(switchMap((dataSources) => this.configService.getProvidersData(false, dataSources)))
+      .pipe(switchMap((dataSources) => this.configService.getProvidersData(dataSources)))
       .subscribe({
         next: (providers) => {
-          this.providersData = arrayHelpers.sortArray(providers, 'label');
-          this.isAllProvidersAdded = !!this.providersData.filter((el: any) => !el.value);
+          this.providersData = arrayHelpers.sortArray(
+            providers.filter((provider: any) => provider.enabled),
+            'name',
+          );
+          this.isAllProvidersAdded = !!this.providersData.find(
+            (provider: any) => !provider.enabled,
+          );
         },
       });
   }

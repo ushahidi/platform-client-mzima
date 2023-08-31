@@ -54,7 +54,7 @@ export class ConfigService {
     return lastValueFrom(this.getConfig());
   }
 
-  public getProvidersData(isAllData = false, dataSources?: any): Observable<any> {
+  public getProvidersData(dataSources?: any): Observable<any> {
     return this.httpClient
       .get<any>(
         `${
@@ -63,24 +63,57 @@ export class ConfigService {
       )
       .pipe(
         map((data) => {
-          let providers: any[] = [];
-          delete data.result['id'];
-          delete data.result['allowed_privileges'];
-          for (const dataKey in data.result) {
-            if (dataSources?.length) {
-              for (const { id } of dataSources) {
-                if (dataKey === id) {
-                  providers = [...providers, this.addToProviderSArray(dataKey, data.result)];
-                }
-              }
-            } else {
-              providers = [...providers, this.addToProviderSArray(dataKey, data.result)];
-            }
-          }
-          return isAllData ? data.result : providers;
+          return dataSources
+            .filter(
+              (dataSource: any) =>
+                data.results.findIndex((result: any) => dataSource.id === result['provider-name']) >
+                -1,
+            )
+            .map((dataSource: any) => {
+              return {
+                ...dataSource,
+                enabled: data.results.find(
+                  (result: any) => dataSource.id === result['provider-name'],
+                ).enabled,
+                options: dataSource.options.map((option: any) => ({
+                  ...option,
+                  value: data.results.find(
+                    (result: any) => dataSource.id === result['provider-name'],
+                  ).params[option.id],
+                })),
+              };
+            });
         }),
       );
   }
+
+  // public getProvidersData(isAllData = false, dataSources?: any): Observable<any> {
+  //   return this.httpClient
+  //     .get<any>(
+  //       `${
+  //         this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
+  //       }/data-provider`,
+  //     )
+  //     .pipe(
+  //       map((data) => {
+  //         let providers: any[] = [];
+  //         delete data.result['id'];
+  //         delete data.result['allowed_privileges'];
+  //         for (const dataKey in data.result) {
+  //           if (dataSources?.length) {
+  //             for (const { id } of dataSources) {
+  //               if (dataKey === id) {
+  //                 providers = [...providers, this.addToProviderSArray(dataKey, data.result)];
+  //               }
+  //             }
+  //           } else {
+  //             providers = [...providers, this.addToProviderSArray(dataKey, data.result)];
+  //           }
+  //         }
+  //         return isAllData ? data.result : providers;
+  //       }),
+  //     );
+  // }
 
   public updateProviders(providers: any): Observable<any> {
     return this.httpClient.put(

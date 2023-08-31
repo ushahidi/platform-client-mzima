@@ -9,18 +9,11 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { arrayHelpers } from '@helpers';
-import { combineLatest } from 'rxjs';
+import { combineLatest, switchMap } from 'rxjs';
 import { Location } from '@angular/common';
-import {
-  FormsService,
-  DataSourcesService,
-  SurveysService,
-  DataSourceResult,
-} from '@mzima-client/sdk';
+import { FormsService, DataSourcesService, SurveysService } from '@mzima-client/sdk';
 import { BaseComponent } from '../../../base.component';
-import { ConfigService } from '../../../core/services/config.service';
-import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
-import { BreakpointService, SessionService } from '@services';
+import { BreakpointService, SessionService, ConfigService, ConfirmModalService } from '@services';
 import _ from 'lodash';
 
 @Component({
@@ -87,33 +80,42 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
   }
 
   private getProviders(): void {
-    const providers$ = this.configService.getProvidersData(true);
-    const surveys$ = this.surveysService.get();
-    const dataSources$ = this.dataSourcesService.getDataSource();
+    // this.dataSourcesService
+    //   .getDataSource()
+    //   .pipe(switchMap((dataSources) => this.configService.getProvidersData(dataSources)))
+    //   .subscribe({
+    //     next: (providers) => {
+    //       this.providersData = arrayHelpers.sortArray(providers, 'name');
+    //       this.cloneProviders = _.cloneDeep(this.providersData);
+    //       // this.availableProviders = this.getAvailableProviders(this.providersData);
+    //       console.log('providers: ', this.providersData);
+    //     },
+    //   });
 
-    combineLatest([providers$, surveys$, dataSources$]).subscribe({
-      next: ([providersData, surveys, dataSources]) => {
-        const dataSourcesResult = dataSources.filter(
-          (dataSource: DataSourceResult) => dataSource.id !== 'gmail',
-        );
-        this.providersData = this.removeProvider(providersData, 'gmail');
+    const providers$ = this.dataSourcesService
+      .getDataSource()
+      .pipe(switchMap((dataSources) => this.configService.getProvidersData(dataSources)));
+    const surveys$ = this.surveysService.get();
+    // const dataSources$ = this.dataSourcesService.getDataSource();
+
+    combineLatest([providers$, surveys$]).subscribe({
+      next: ([providers, surveys]) => {
+        // const dataSourcesResult = dataSources.filter(
+        //   (dataSource: DataSourceResult) => dataSource.id !== 'gmail',
+        // );
+        // this.providersData = this.removeProvider(providersData, 'gmail');
+        this.providersData = arrayHelpers.sortArray(providers, 'name');
         this.cloneProviders = _.cloneDeep(this.providersData);
-        this.availableProviders = this.getAvailableProviders(this.providersData);
+        // this.availableProviders = this.getAvailableProviders(this.providersData);
         this.surveyList = surveys.results;
-        this.dataSourceList = this.dataSourcesService.combineDataSource(
-          this.providersData,
-          dataSourcesResult,
-          this.surveyList,
-        );
+        // this.dataSourceList = this.dataSourcesService.combineDataSource(
+        //   this.providersData,
+        //   dataSourcesResult,
+        //   this.surveyList,
+        // );
         this.setCurrentProvider();
       },
     });
-  }
-
-  // temporary removal of the provider, waiting for an update of the api to v5
-  private removeProvider(providersData: any, providerId: string) {
-    delete providersData[providerId];
-    return providersData;
   }
 
   public setCurrentProvider(providerId?: any): void {
@@ -122,7 +124,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
     }
     const id = this.currentProviderId || providerId;
     if (id) {
-      this.provider = this.dataSourceList.find((provider) => provider.id === id);
+      this.provider = this.providersData.find((provider: any) => provider.id === id);
       this.removeControls(this.form.controls);
       this.createForm(this.provider);
       this.addControlsToForm('id', this.fb.control(this.provider.id, Validators.required));
@@ -143,9 +145,9 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
     this.formsService.getAttributes(survey.id, queryParams).subscribe({
       next: (response) => {
         this.surveyAttributesList = response;
-        for (const el of this.provider.control_inbound_fields) {
+        for (const el of this.provider.inbound_fields) {
           this.form.patchValue({
-            [el.control_label]: this.checkKeyFields(el.control_value),
+            [el.label]: this.checkKeyFields(el.value),
           });
         }
       },
@@ -158,8 +160,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
 
   private createForm(provider: any) {
     this.addControlsToForm('form_id', this.fb.control(this.provider?.selected_survey));
-    // this.createControls(provider.control_options);
-    this.createControls(provider.control_inbound_fields);
+    this.createControls(provider.options);
   }
 
   private removeControls(controls: any) {
@@ -172,9 +173,9 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
     for (const control of controls) {
       const validatorsToAdd = [];
 
-      if (control?.control_rules) {
-        for (const rule of control.control_rules) {
-          switch (Object.keys(rule).join()) {
+      if (control?.rules) {
+        for (const rule of control.rules) {
+          switch (rule) {
             case 'required':
               validatorsToAdd.push(Validators.required);
               break;
@@ -183,10 +184,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
           }
         }
       }
-      this.addControlsToForm(
-        control.control_label,
-        this.fb.control(control.control_value, validatorsToAdd),
-      );
+      this.addControlsToForm(control.id, this.fb.control(control.value, validatorsToAdd));
     }
   }
 
@@ -208,7 +206,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
         cancelButtonText: this.translate.instant('app.no_go_back'),
       });
       if (!confirmed) {
-        this.provider.available_provider = true;
+        this.provider.enabled = true;
         return;
       }
     }
@@ -219,10 +217,10 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
   public saveProviderData(): void {
     this.submitted = true;
     if (this.form.value.form_id) {
-      for (const field of this.provider.control_inbound_fields) {
+      for (const field of this.provider.inbound_fields) {
         this.form.patchValue({
-          [field.control_label]: this.fillForApi(
-            this.filterAttributes('key', this.form.controls[field.control_label].value),
+          [field.label]: this.fillForApi(
+            this.filterAttributes('key', this.form.controls[field.label].value),
           ),
         });
       }
@@ -236,8 +234,8 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
         this.cloneProviders[this.form.value.id].form_id = this.form.value.form_id.id;
         if (this.cloneProviders[this.form.value.id].form_id) {
           const obj: any = {};
-          for (const field of this.provider.control_inbound_fields) {
-            obj[field.key] = this.form.value[field.control_label];
+          for (const field of this.provider.inbound_fields) {
+            obj[field.key] = this.form.value[field.label];
           }
           this.cloneProviders[this.form.value.id].inbound_fields = obj;
         }
@@ -252,8 +250,8 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
         provider[this.form.value.id].form_id = this.form.value.form_id.id;
         if (provider[this.form.value.id].form_id) {
           const obj: any = {};
-          for (const field of this.provider.control_inbound_fields) {
-            obj[field.key] = this.form.value[field.control_label];
+          for (const field of this.provider.inbound_fields) {
+            obj[field.key] = this.form.value[field.label];
           }
           provider[this.form.value.id].inbound_fields = obj;
         }
