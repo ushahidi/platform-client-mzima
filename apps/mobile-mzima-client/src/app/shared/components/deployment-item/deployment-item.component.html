@@ -21,6 +21,12 @@
 
   <div class="deployment-item__end" slot="end">
     <ion-text color="primary" class="deployment-item__current" *ngIf="isCurrent">Current</ion-text>
+    <ion-icon
+      color="danger"
+      name="warning"
+      class="deployment-item__outdated"
+      *ngIf="isOutdated"
+    ></ion-icon>
     <app-button
       fill="clear"
       color="medium"

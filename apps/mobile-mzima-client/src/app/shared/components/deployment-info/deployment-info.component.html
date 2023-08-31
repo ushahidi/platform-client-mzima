@@ -13,6 +13,6 @@
     class="deployment-info__icon"
     [ngClass]="{ 'ion-color-danger': isDeploymentOutdated }"
     [name]="!isDeploymentOutdated ? 'arrow-right' : 'warning'"
-    (click)="isDeploymentOutdated && showDeploumentWarningInfo($event)"
+    (click)="isDeploymentOutdated && showDeploymentWarningInfo($event)"
   ></app-icon>
 </ion-item>

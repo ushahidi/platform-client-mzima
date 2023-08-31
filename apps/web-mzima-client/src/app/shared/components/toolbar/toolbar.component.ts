@@ -90,6 +90,8 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
   }
 
   private checkApiVersion(): void {
+    this.currentApiVersion = this.sessionService.getSiteConfigurations().api_version ?? 'v3';
+
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: (userData) => {
         this.isAdmin = userData?.role === 'admin';
@@ -99,7 +101,6 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
       },
     });
 
-    this.currentApiVersion = this.sessionService.getSiteConfigurations().api_version ?? 'v3';
     if (this.currentApiVersion !== 'v5') {
       const apiMesssageShownTime = JSON.parse(
         localStorage.getItem(

@@ -31,7 +31,7 @@ export class DeploymentInfoComponent {
     this.deploymentClick.emit();
   }
 
-  public showDeploumentWarningInfo(event: Event): void {
+  public showDeploymentWarningInfo(event: Event): void {
     if (this.isDeploymentOutdated) {
       event.preventDefault();
       event.stopPropagation();

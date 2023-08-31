@@ -63,6 +63,12 @@
   strong {
     color: var(--ion-text-color);
   }
+
+  p {
+    &:first-child {
+      margin-top: 0;
+    }
+  }
 }
 
 .alert-button.sc-ion-alert-md {

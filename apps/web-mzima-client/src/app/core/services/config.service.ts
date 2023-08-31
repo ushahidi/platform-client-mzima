@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MapConfigInterface } from '@models';
-import { forkJoin, lastValueFrom, map, Observable, tap } from 'rxjs';
+import { SessionConfigInterface } from '@models';
+import { lastValueFrom, map, Observable, tap } from 'rxjs';
 import { SessionService } from './session.service';
 import { EnvService } from './env.service';
 
@@ -23,62 +23,6 @@ export class ConfigService {
     return 'config';
   }
 
-  getSite(): Observable<any> {
-    return this.httpClient
-      .get(
-        `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/site`,
-      )
-      .pipe(
-        tap({
-          next: (data: any) => {
-            this.sessionService.setConfigurations('site', data.result);
-            return data.result;
-          },
-          error: () => setTimeout(() => this.getSite(), 5000),
-        }),
-      );
-  }
-
-  getFeatures(): Observable<any> {
-    return this.httpClient
-      .get(
-        `${
-          this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
-        }/features`,
-      )
-      .pipe(
-        tap({
-          next: (data: any) => {
-            this.sessionService.setConfigurations('features', data.result);
-            return data.result;
-          },
-          error: () => setTimeout(() => this.getFeatures(), 5000),
-        }),
-      );
-  }
-
-  getMap(): Observable<MapConfigInterface> {
-    return this.httpClient
-      .get<MapConfigInterface>(
-        `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/map`,
-      )
-      .pipe(
-        tap({
-          next: (data: any) => {
-            if (data.result.default_view?.baselayer === 'MapQuest') {
-              data.result.default_view.baselayer = 'streets';
-            }
-            if (data.result.default_view?.baselayer === 'MapQuestAerial') {
-              data.result.default_view.baselayer = 'satellite';
-            }
-            this.sessionService.setConfigurations('map', data.result);
-            return data.result;
-          },
-          error: () => setTimeout(() => this.getMap(), 5000),
-        }),
-      );
-  }
-
   update(id: string | number, resource: any) {
     return this.httpClient.put(
       `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/${id}`,
@@ -86,8 +30,28 @@ export class ConfigService {
     );
   }
 
-  initAllConfigurations() {
-    return lastValueFrom(forkJoin([this.getSite(), this.getFeatures(), this.getMap()]));
+  private getConfig(): Observable<any> {
+    return this.httpClient
+      .get(`${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}`)
+      .pipe(
+        tap({
+          next: (data: any) => {
+            const configKeys: (keyof SessionConfigInterface)[] = ['site', 'features', 'map'];
+            configKeys.forEach((key) => {
+              const config = data.results.find((result: any) => result.id === key);
+              if (config) {
+                this.sessionService.setConfigurations(key, config);
+              }
+            });
+            return data.result;
+          },
+          error: () => setTimeout(() => this.getConfig(), 5000),
+        }),
+      );
+  }
+
+  initAllConfigurations(): Promise<any> {
+    return lastValueFrom(this.getConfig());
   }
 
   public getProvidersData(isAllData = false, dataSources?: any): Observable<any> {
