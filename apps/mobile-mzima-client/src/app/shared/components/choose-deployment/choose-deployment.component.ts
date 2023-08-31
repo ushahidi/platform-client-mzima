@@ -11,6 +11,7 @@ import {
   IntercomService,
 } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { getDeploymentAvatarPlaceholder } from '@helpers';
 
 @UntilDestroy()
 @Component({
@@ -88,7 +89,7 @@ export class ChooseDeploymentComponent {
           status: 'deployed',
           deployment_name: 'mzima-dev-api',
           description: 'mzima-dev-api for testing',
-          image: 'https://via.placeholder.com/150/B186D1/FFFFFF?text=M',
+          avatar: getDeploymentAvatarPlaceholder('mzima-api'),
           tier: 'level_1',
           selected: false,
         },

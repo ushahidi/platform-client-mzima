@@ -1,6 +1,17 @@
 <ion-item button class="deployment-info" (click)="handleClick()" *ngIf="deployment">
-  <ion-avatar class="deployment-info__img" slot="start">
-    <ion-img [src]="deployment.image"></ion-img>
+  <ion-avatar
+    class="deployment-info__img"
+    slot="start"
+    [ngClass]="{ 'deployment-info__img--placeholder': !deployment.image }"
+    [ngStyle]="{ '--color': deployment.avatar }"
+  >
+    <ion-img
+      *ngIf="deployment.image; else deploymentAvatarPlaceholder"
+      [src]="deployment.image"
+    ></ion-img>
+    <ng-template #deploymentAvatarPlaceholder>
+      {{ deployment.deployment_name[0] }}
+    </ng-template>
   </ion-avatar>
   <div class="deployment-info__main">
     <span class="deployment-info__title">{{ deployment.deployment_name }}</span>
