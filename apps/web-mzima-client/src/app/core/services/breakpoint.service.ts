@@ -10,10 +10,13 @@ export class BreakpointService {
   public isDesktop$ = this.isDesktop.asObservable();
 
   constructor(private breakpointObserver: BreakpointObserver) {
-    this.breakpointObserver
-      .observe(['(max-width: 1024px)'])
-      .subscribe((result: BreakpointState) => {
-        this.isDesktop.next(!result.matches);
-      });
+    this.breakpointObserveAndSubscribe('(min-width: 1024px)');
+    this.breakpointObserveAndSubscribe('(max-width: 1024px)');
+  }
+
+  breakpointObserveAndSubscribe(width: string) {
+    this.breakpointObserver.observe([width]).subscribe((result: BreakpointState) => {
+      this.isDesktop.next(!result.matches);
+    });
   }
 }
