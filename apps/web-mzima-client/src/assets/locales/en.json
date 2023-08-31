@@ -1022,6 +1022,9 @@
       "required": {
         "name": "Collection name is required"
       }
+    },
+    "errors": {
+      "permissions": "You do not have permission to view this collection"
     }
   },
   "set": {

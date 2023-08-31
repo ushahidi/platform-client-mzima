@@ -37,6 +37,8 @@ import {
   AccountNotificationsInterface,
 } from '@mzima-client/sdk';
 import dayjs from 'dayjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 @UntilDestroy()
 @Component({
@@ -88,6 +90,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     private session: SessionService,
     private eventBusService: EventBusService,
     private notificationsService: NotificationsService,
+    private snackBar: MatSnackBar,
+    private translate: TranslateService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -363,7 +367,17 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
           this.getNotification(id);
         }
       },
-      error: (err) => console.log('getCollectionInfo:', err),
+      error: (err) => {
+        if (err.status === 403) {
+          this.snackBar.open(this.translate.instant('collection.errors.permissions'), 'Close', {
+            panelClass: ['error'],
+            duration: 5000,
+          });
+          this.router.navigate([this.router.url.includes('/feed') ? '/feed' : '/map']);
+        } else {
+          console.log('getCollectionInfo:', err);
+        }
+      },
     });
   }
 

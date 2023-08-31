@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { getRandomColor } from '@helpers';
+import { getDeploymentAvatarPlaceholder } from '@helpers';
 import { STORAGE_KEYS } from '@constants';
 import { Deployment } from '@mzima-client/sdk';
 import { DatabaseService, SessionService, StorageService } from '@services';
@@ -45,14 +45,10 @@ export class DeploymentService {
             const isSelected = !!storeDeployments.find((item: any) => item.id === deployment.id);
             return {
               ...deployment,
-              image:
-                deployment.image ||
-                (deployment.deployment_name
-                  ? `https://via.placeholder.com/150/${getRandomColor()}/FFFFFF?text=${deployment.deployment_name
-                      .charAt(0)
-                      .toUpperCase()}`
-                  : 'default_image_url'),
               selected: isSelected,
+              avatar: !deployment.image
+                ? getDeploymentAvatarPlaceholder(deployment.deployment_name)
+                : null,
             };
           }),
       ),
