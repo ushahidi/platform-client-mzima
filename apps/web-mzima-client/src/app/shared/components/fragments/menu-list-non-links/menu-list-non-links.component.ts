@@ -102,13 +102,6 @@ export class MenuListNonLinksComponent extends BaseComponent implements OnInit {
         action: () => this.authService.logout(),
       },
       {
-        label: 'nav.login',
-        icon: 'auth',
-        visible: !this.isLoggedIn && !this.canRegister,
-        action: () => this.openLogin(),
-        ref: 'auth',
-      },
-      {
         label: 'nav.login_register',
         icon: 'auth',
         visible: !this.isLoggedIn && this.canRegister,
