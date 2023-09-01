@@ -32,6 +32,7 @@ export interface SiteConfigInterface {
   url?: string;
   private?: boolean;
   donation?: DonationConfigInterface;
+  api_version?: string;
 }
 
 export interface FeatureFlag {

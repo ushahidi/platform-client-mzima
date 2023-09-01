@@ -1,0 +1,44 @@
+<mzima-client-button
+  tabindex="-1"
+  fill="outline"
+  [iconOnly]="true"
+  color="light-gray"
+  class="modal__close-btn"
+  [mat-dialog-close]="false"
+  ariaLabel="{{ 'modal.button.close' | translate }}"
+>
+  <mat-icon icon svgIcon="close"></mat-icon>
+</mzima-client-button>
+
+<div class="dialog-content">
+  <h2 mat-dialog-title>
+    {{ (data.isAdmin ? 'app.your_deployment_is_outdated' : 'app.outdated_deployment') | translate }}
+  </h2>
+
+  <mat-dialog-content>
+    <ng-container *ngIf="data.isAdmin">
+      <p>{{ 'app.we_ve_updated_deployments_to_version_5' | translate }}</p>
+      <p>{{ 'app.for_more_details_on_deployment_update' | translate }}</p>
+      <p>
+        <a href="mailto:{{ adminEmail }}">{{ adminEmail }}</a>
+      </p>
+    </ng-container>
+    <ng-container *ngIf="!data.isAdmin">
+      <p>{{ 'app.the_deployment_is_outdated' | translate }}</p>
+    </ng-container>
+  </mat-dialog-content>
+</div>
+
+<mat-dialog-actions align="end">
+  <mzima-client-button
+    *ngIf="data.isAdmin"
+    [mat-dialog-close]="true"
+    (buttonClick)="openIntercom()"
+    class="intercom_custom_launcher"
+  >
+    {{ 'app.open_chat' | translate }}
+  </mzima-client-button>
+  <mzima-client-button *ngIf="!data.isAdmin" [mat-dialog-close]="true">
+    {{ 'message.button.default' | translate }}
+  </mzima-client-button>
+</mat-dialog-actions>

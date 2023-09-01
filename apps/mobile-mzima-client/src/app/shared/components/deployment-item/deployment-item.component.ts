@@ -12,6 +12,7 @@ export class DeploymentItemComponent {
   @Input() isBackgroundVisible = true;
   @Input() isBorderVisible = true;
   @Input() isCurrent = false;
+  @Input() isOutdated?: boolean = false;
   @Output() selectedDeployment = new EventEmitter();
 
   selectDeployment(state: boolean, deployment: any) {

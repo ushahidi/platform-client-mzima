@@ -10,4 +10,5 @@ export interface Deployment {
   status: string;
   subdomain: string;
   tier: string;
+  isOutdated?: boolean;
 }

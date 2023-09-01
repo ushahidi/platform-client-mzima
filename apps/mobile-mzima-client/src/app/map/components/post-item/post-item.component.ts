@@ -104,7 +104,7 @@ export class PostItemComponent implements OnInit {
         this.shareService.share({
           title: this.post.title,
           text: this.post.title,
-          url: `https://${this.deploymentService.getDeployment().fqdn}/feed/${
+          url: `https://${this.deploymentService.getDeployment()!.fqdn}/feed/${
             this.post.id
           }/view?mode=POST`,
           dialogTitle: 'Share Post',
