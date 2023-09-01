@@ -35,6 +35,7 @@ export class ChooseCollectionComponent {
   @Input() public selectedCollections: Set<number> = new Set();
   @Output() back = new EventEmitter();
   public isAddCollectionModalOpen = false;
+  collectionToEdit: string | number;
   public createCollectionForm = this.formBuilder.group({
     name: ['', [Validators.required]],
     description: [''],
@@ -146,6 +147,7 @@ export class ChooseCollectionComponent {
 
   public addNewCollection(): void {
     this.isAddCollectionModalOpen = true;
+    this.collectionToEdit = '';
   }
 
   public createCollection(): void {
@@ -160,27 +162,51 @@ export class ChooseCollectionComponent {
 
     this.userData$.subscribe((userData) => {
       collectionData.user_id = userData.userId;
-      this.collectionsService.post(collectionData).subscribe({
-        next: (response) => {
-          if (collectionData.is_notifications_enabled) {
-            this.notificationsService.post({ set_id: String(response.result.id) }).subscribe({
-              next: () => {
-                this.collectionCreated();
-              },
-              error: ({ error }) => {
-                console.error(error);
-                this.createCollectionForm.enable();
-              },
-            });
-          } else {
-            this.collectionCreated();
-          }
-        },
-        error: ({ error }) => {
-          console.error(error);
-          this.createCollectionForm.enable();
-        },
-      });
+      if (this.collectionToEdit) {
+        this.collectionsService.update(this.collectionToEdit, collectionData).subscribe({
+          next: (response) => {
+            if (collectionData.is_notifications_enabled) {
+              this.notificationsService.post({ set_id: String(response.result.id) }).subscribe({
+                next: () => {
+                  this.collectionCreated();
+                },
+                error: ({ error }) => {
+                  console.error(error);
+                  this.createCollectionForm.enable();
+                },
+              });
+            } else {
+              this.collectionCreated();
+            }
+          },
+          error: ({ error }) => {
+            console.error(error);
+            this.createCollectionForm.enable();
+          },
+        });
+      } else {
+        this.collectionsService.post(collectionData).subscribe({
+          next: (response) => {
+            if (collectionData.is_notifications_enabled) {
+              this.notificationsService.post({ set_id: String(response.result.id) }).subscribe({
+                next: () => {
+                  this.collectionCreated();
+                },
+                error: ({ error }) => {
+                  console.error(error);
+                  this.createCollectionForm.enable();
+                },
+              });
+            } else {
+              this.collectionCreated();
+            }
+          },
+          error: ({ error }) => {
+            console.error(error);
+            this.createCollectionForm.enable();
+          },
+        });
+      }
     });
   }
 
@@ -239,6 +265,7 @@ export class ChooseCollectionComponent {
 
   public editCollectionHandle(collection: CollectionItem): void {
     this.isAddCollectionModalOpen = true;
+    this.collectionToEdit = collection.id;
 
     this.createCollectionForm.patchValue({
       name: collection.name,
