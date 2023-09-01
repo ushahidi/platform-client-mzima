@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { STORAGE_KEYS } from '@constants';
-import { forkJoin, lastValueFrom, map, Observable, tap } from 'rxjs';
+import { catchError, forkJoin, lastValueFrom, map, Observable, tap, throwError } from 'rxjs';
 import { SessionConfigInterface } from '@models';
 import { DatabaseService } from './database.service';
 import { SessionService } from './session.service';
 import { EnvService } from './env.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class ConfigService {
     private env: EnvService,
     private sessionService: SessionService,
     private databaseService: DatabaseService,
+    private storageService: StorageService,
   ) {}
 
   getApiVersions(): string {
@@ -46,6 +48,12 @@ export class ConfigService {
             });
             setTimeout(() => this.getConfig(), 5000);
           },
+        }),
+        catchError((response: HttpErrorResponse) => {
+          if (response.status === 401) {
+            this.storageService.deleteStorage(STORAGE_KEYS.DEPLOYMENT);
+          }
+          return throwError(() => response);
         }),
       );
   }
