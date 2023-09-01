@@ -18,13 +18,13 @@
       (selectionChange)="setCurrentProvider($event.value)"
       [data-qa]="'select-provider'"
     >
-      <ng-container *ngFor="let provider of providersData | keyvalue">
+      <ng-container *ngFor="let provider of providersData">
         <mat-option
-          [value]="provider.key"
-          *ngIf="!isProviderEnabled(provider.value)"
-          [data-qa]="provider.key"
+          [value]="provider.id"
+          *ngIf="!isProviderEnabled(provider)"
+          [data-qa]="provider.id"
         >
-          {{ provider.key }}
+          {{ provider.name }}
         </mat-option>
       </ng-container>
     </mat-select>
@@ -148,7 +148,7 @@
       <div class="form-row">
         <mat-label>
           {{ control.label }}
-          <span class="color-accent" *ngIf="control.rules.indexOf('required') > -1">*</span>
+          <span class="color-accent" *ngIf="control.rules?.indexOf('required') > -1">*</span>
         </mat-label>
         <mat-form-field
           *ngIf="control.input === 'text'"
@@ -179,7 +179,7 @@
         <mat-radio-group
           *ngIf="control.input === 'radio'"
           aria-label="Select an option"
-          [formControlName]="control.label"
+          [formControlName]="control.id"
           [data-qa]="'control-type-radio'"
         >
           <mat-radio-button

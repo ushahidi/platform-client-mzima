@@ -22,6 +22,7 @@ import _ from 'lodash';
   styleUrls: ['./data-source-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+// WHOLE COMPONENT SHOULD BE REFACTORED BECAUSE OF NEW CONFIG API
 export class DataSourceItemComponent extends BaseComponent implements AfterContentChecked, OnInit {
   public provider: any;
   public surveyList: any[];
@@ -120,7 +121,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
 
   public setCurrentProvider(providerId?: any): void {
     if (!this.currentProviderId && !providerId) {
-      this.currentProviderId = this.availableProviders[0]?.id as string;
+      this.currentProviderId = this.providersData.filter((p: any) => !p.enabled)[0]?.id;
     }
     const id = this.currentProviderId || providerId;
     if (id) {
@@ -259,7 +260,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
         delete provider[this.form.value.id].form_id;
         delete provider[this.form.value.id].inbound_fields;
       }
-      this.cloneProviders = { ...this.cloneProviders, ...provider };
+      this.cloneProviders = { ...provider };
     }
 
     this.configService.updateProviders(this.cloneProviders).subscribe({
