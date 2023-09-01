@@ -7,6 +7,7 @@
   [clearable]="!!value?.length"
   (inputClear)="resetSearchForm()"
   (inputFocus)="showSearchResults()"
+  (inputClear)="searchQueryChanged()"
   (ngModelChange)="searchQueryChanged()"
   [color]="isSearchView ? 'light' : 'default'"
 >

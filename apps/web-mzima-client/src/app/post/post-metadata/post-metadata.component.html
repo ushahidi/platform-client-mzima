@@ -20,13 +20,24 @@
       </span>
 
       <div class="post-info__item">
-        <ng-container [ngSwitch]="post.status">
-          <ng-container *ngSwitchCase="'published'">{{
-            'post.published' | translate
-          }}</ng-container>
-          <ng-container *ngSwitchCase="'draft'">{{ 'post.draft' | translate }}</ng-container>
-          <ng-container *ngSwitchCase="'archived'">{{ 'post.archived' | translate }}</ng-container>
-        </ng-container>
+        <span
+          class="post-info__status"
+          [ngClass]="{
+            'post-info__status--published': post.status === 'published',
+            'post-info__status--draft': post.status === 'draft',
+            'post-info__status--archived': post.status === 'archived'
+          }"
+        >
+          <ng-container [ngSwitch]="post.status">
+            <ng-container *ngSwitchCase="'published'">{{
+              'post.published' | translate
+            }}</ng-container>
+            <ng-container *ngSwitchCase="'draft'">{{ 'post.draft' | translate }}</ng-container>
+            <ng-container *ngSwitchCase="'archived'">{{
+              'post.archived' | translate
+            }}</ng-container>
+          </ng-container>
+        </span>
       </div>
 
       <span class="post-info__item">{{ 'post.source' | translate : { source: post.source } }}</span>

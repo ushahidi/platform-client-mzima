@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Permissions } from '@enums';
 import {
   CategoryInterface,
+  FormsService,
   MediaService,
   PostContent,
   PostContentField,
@@ -25,7 +26,7 @@ import { lastValueFrom } from 'rxjs';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { dateHelper } from '@helpers';
-import { BreakpointService, SessionService } from '@services';
+import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 
 @Component({
   selector: 'app-post-details',
@@ -57,7 +58,9 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     private metaService: Meta,
     private route: ActivatedRoute,
     private postsService: PostsService,
+    private formsService: FormsService,
     private sanitizer: DomSanitizer,
+    private eventBusService: EventBusService,
   ) {
     super(sessionService, breakpointService);
     this.getUserData();
@@ -97,6 +100,9 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     if (!this.postId) return;
     this.post = await this.getPostInformation(id);
     if (this.post) {
+      this.formsService.getById(this.post.form_id!).subscribe((form) => {
+        this.post!.form = form;
+      });
       this.isPostLoading = false;
       this.getData(this.post);
       this.post.post_content = postHelpers.markCompletedTasks(
@@ -208,6 +214,10 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public statusChangedHandle(): void {
     this.getPost(this.postId);
     this.statusChanged.emit();
+    this.eventBusService.next({
+      type: EventType.UpdatedPost,
+      payload: this.post,
+    });
   }
 
   ngOnDestroy() {

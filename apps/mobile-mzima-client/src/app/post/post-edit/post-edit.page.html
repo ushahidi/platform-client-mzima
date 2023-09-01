@@ -378,7 +378,8 @@
               <app-location-select
                 [zoom]="12"
                 [location]="form.get(field.key)?.value"
-                [required]="locationRequired"
+                [required]="isLocationRequired(field)"
+                [type]="post?.source?.toLowerCase() || 'default'"
                 (locationChange)="changeLocation($event, field.key)"
               ></app-location-select>
             </div>
@@ -498,7 +499,7 @@
         [disabled]="form.disabled || form.invalid || emptyLocation || (!requireApproval || post?.status === 'published' ? taskForm.invalid : false)"
         (buttonClick)="submitPost()"
       >
-        Submit {{emptyLocation}}
+        Submit
       </app-button>
       <app-button color="medium" fill="outline" expand="inline" (buttonClick)="backNavigation()">
         Cancel

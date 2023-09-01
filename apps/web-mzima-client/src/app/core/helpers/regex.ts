@@ -16,3 +16,7 @@ export const alphaNumeric = (value: string) => {
 export const urlValidate = () => {
   return '^https?://(?:[a-zA-Z0-9_-]+(?:(?:\\.[a-zA-Z0-9_-]+)+))(?:[\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?$';
 };
+
+export const phonePattern = () => {
+  return '[- +()0-9]{13}';
+};

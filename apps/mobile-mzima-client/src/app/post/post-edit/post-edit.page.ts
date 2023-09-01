@@ -275,11 +275,6 @@ export class PostEditPage {
             const value = this.getDefaultValues(field);
             field.value = value;
             fields[field.key] = this.createField(field, value);
-
-            if (field.type === 'point') {
-              this.locationRequired = field.required;
-              if (value.lat === '' || value.lng === '') this.emptyLocation = true;
-            }
           }
         });
     }
@@ -546,7 +541,6 @@ export class PostEditPage {
       form_id: this.selectedSurveyId,
       locale: 'en_US',
       post_content: this.tasks,
-      post_date: new Date().toISOString(),
       published_to: [],
       title: this.title,
       type: 'report',
@@ -557,8 +551,6 @@ export class PostEditPage {
     if (!this.form.valid) this.form.markAllAsTouched();
 
     this.preventSubmitIncaseTheresNoBackendValidation();
-
-    if (this.postId) postData.post_date = this.post.post_date || new Date().toISOString();
 
     await this.offlineStore(postData);
 
@@ -638,11 +630,7 @@ export class PostEditPage {
     this.postsService.update(postId, postData).subscribe({
       error: () => this.form.enable(),
       complete: async () => {
-        await this.postComplete(
-          'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
-        );
         this.backNavigation();
-        // this.updated.emit();
       },
     });
   }
@@ -865,5 +853,9 @@ export class PostEditPage {
   public clearField(event: any, key: string) {
     event.stopPropagation();
     this.form.patchValue({ [key]: null });
+  }
+
+  public isLocationRequired(field: any): boolean {
+    return field?.required || false;
   }
 }

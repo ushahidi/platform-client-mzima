@@ -42,15 +42,14 @@ import {
   SubmitPostButtonComponent,
   SupportModalComponent,
   OnboardingComponent,
-  ToolbarComponent,
   NotificationComponent,
-  AccountAndLogoutComponent,
   SidebarComponent,
   MobileMenuComponent,
   DeploymentDetailsComponent,
   MenuListNonLinksComponent,
   MenuListLinksComponent,
   ShareAndDonateComponent,
+  AccountAndLogoutComponent,
 } from './components';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { CollectionItemModule } from './components/collection-item/collection-item.module';
@@ -70,7 +69,7 @@ const components = [
   MenuListNonLinksComponent,
   MenuListLinksComponent,
   ShareAndDonateComponent,
-  ToolbarComponent,
+  AccountAndLogoutComponent,
   SubmitPostButtonComponent,
   LanguageComponent,
   SearchFormComponent,
@@ -90,7 +89,6 @@ const components = [
   AddPostModalComponent,
   DonationModalComponent,
   NotificationComponent,
-  AccountAndLogoutComponent,
   AccessDeniedComponent,
   SafePipe,
 ];

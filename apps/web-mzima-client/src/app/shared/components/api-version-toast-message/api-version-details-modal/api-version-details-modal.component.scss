@@ -1,0 +1,66 @@
+@import 'helpers';
+
+::ng-deep {
+  .deployment-info-modal--admin {
+    @include breakpoint-max($mobile) {
+      max-width: none !important;
+      height: calc(100% - 32px);
+    }
+
+    app-api-version-details-modal {
+      @include breakpoint-max($mobile) {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    }
+
+    .dialog-content {
+      @include breakpoint-max($mobile) {
+        display: flex;
+        flex: 1 1 100%;
+        flex-direction: column;
+      }
+    }
+
+    .mat-dialog-content {
+      @include breakpoint-max($mobile) {
+        flex: 1 1 100%;
+        font-size: 16px;
+        line-height: 1.5;
+        letter-spacing: 0.5px;
+        max-height: none !important;
+      }
+
+      a {
+        color: var(--color-primary-50);
+      }
+    }
+  }
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.6666;
+  padding-right: 48px;
+  margin-bottom: 16px;
+  color: var(--color-dark);
+
+  @include breakpoint-max($mobile) {
+    line-height: 1.2;
+  }
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+.mat-dialog-actions {
+  margin-top: 16px;
+
+  &:empty {
+    display: none;
+  }
+}

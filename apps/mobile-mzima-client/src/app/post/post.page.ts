@@ -133,7 +133,7 @@ export class PostPage implements OnDestroy {
       .filter((field: any) => field.type === 'relation')
       .map(async (relativeField) => {
         if (relativeField.value?.value) {
-          const url = `https://${this.deploymentService.getDeployment().fqdn}/feed/${
+          const url = `https://${this.deploymentService.getDeployment()!.fqdn}/feed/${
             relativeField.value.value
           }/view?mode=POST`;
           const relative = await this.getPostInformation(relativeField.value.value);

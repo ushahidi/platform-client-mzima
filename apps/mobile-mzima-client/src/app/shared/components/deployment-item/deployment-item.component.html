@@ -4,7 +4,20 @@
   class="deployment-item"
   [ngStyle]="{ '--background': isBackgroundVisible, '--border-style': isBorderVisible }"
 >
-  <img class="deployment-item__image" [src]="deployment.image" [alt]="deployment.name" />
+  <img
+    *ngIf="deployment.image; else deploymentAvatarPlaceholder"
+    class="deployment-item__image"
+    [src]="deployment.image"
+    [alt]="deployment.name"
+  />
+  <ng-template #deploymentAvatarPlaceholder>
+    <span
+      class="deployment-item__image deployment-item__image--placeholder"
+      [ngStyle]="{ '--color': deployment.avatar }"
+    >
+      {{ deployment.deployment_name[0] }}
+    </span>
+  </ng-template>
   <ion-label class="deployment-item__content">
     <span class="deployment-item__title">{{ deployment.deployment_name | truncate : 50 }}</span>
     <ion-text
@@ -14,9 +27,6 @@
     >
       {{ deployment.description | truncate : 50 }}
     </ion-text>
-    <!-- <ion-text color="medium" class="deployment-item__content-server">
-      {{ deployment.domain | lowercase }}
-    </ion-text> -->
     <ion-text color="medium" class="deployment-item__content-server">
       {{ deployment.fqdn | lowercase }}
     </ion-text>
@@ -24,6 +34,12 @@
 
   <div class="deployment-item__end" slot="end">
     <ion-text color="primary" class="deployment-item__current" *ngIf="isCurrent">Current</ion-text>
+    <ion-icon
+      color="danger"
+      name="warning"
+      class="deployment-item__outdated"
+      *ngIf="isOutdated"
+    ></ion-icon>
     <app-button
       fill="clear"
       color="medium"

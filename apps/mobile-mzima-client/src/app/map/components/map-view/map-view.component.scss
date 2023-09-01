@@ -61,6 +61,7 @@
     }
 
     .marker-cluster-large {
+      border-radius: 50%;
       width: 56px !important;
       height: 56px !important;
       margin-top: -28px !important;
@@ -71,6 +72,7 @@
         width: 34px;
         height: 34px;
         line-height: 34px;
+        border-radius: 50%;
         background: #ff8934;
       }
     }

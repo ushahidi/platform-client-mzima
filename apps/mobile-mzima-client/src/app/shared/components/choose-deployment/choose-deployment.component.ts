@@ -2,8 +2,16 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
 import { Deployment } from '@mzima-client/sdk';
 import { Subject, debounceTime } from 'rxjs';
-import { AlertService, AuthService, ConfigService, DeploymentService, EnvService } from '@services';
+import {
+  AlertService,
+  AuthService,
+  ConfigService,
+  DeploymentService,
+  EnvService,
+  IntercomService,
+} from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { getDeploymentAvatarPlaceholder } from '@helpers';
 
 @UntilDestroy()
 @Component({
@@ -32,6 +40,7 @@ export class ChooseDeploymentComponent {
     private deploymentService: DeploymentService,
     private alertService: AlertService,
     private authService: AuthService,
+    private intercomService: IntercomService,
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: (query: string) => {
@@ -69,18 +78,18 @@ export class ChooseDeploymentComponent {
       this.deploymentList = this.deploymentService.getDeployments();
     }
 
-    const index = this.deploymentList.findIndex((i: any) => i.deployment_name === 'mzima-api');
+    const index = this.deploymentList.findIndex((i: any) => i.deployment_name === 'mzima-dev-api');
     if (index === -1) {
       this.deploymentList = [
         {
           id: 1,
           domain: 'staging.ush.zone',
-          subdomain: 'mzima-api',
+          subdomain: 'mzima-dev-api',
           fqdn: 'mzima.staging.ush.zone',
           status: 'deployed',
-          deployment_name: 'mzima-api',
-          description: 'mzima-api for testing',
-          image: 'https://via.placeholder.com/150/B186D1/FFFFFF?text=M',
+          deployment_name: 'mzima-dev-api',
+          description: 'mzima-dev-api for testing',
+          avatar: getDeploymentAvatarPlaceholder('mzima-api'),
           tier: 'level_1',
           selected: false,
         },
@@ -119,12 +128,51 @@ export class ChooseDeploymentComponent {
     this.deploymentService.setDeployments(this.deploymentList);
   }
 
-  public chooseDeployment(deployment: any) {
+  public async chooseDeployment(deployment: Deployment) {
+    const currentDeployment = this.deploymentService.getDeployment() ?? null;
     this.authService.logout();
     this.deploymentService.setDeployment(deployment);
     this.envService.setDynamicBackendUrl();
-    this.configService.initAllConfigurations();
-    this.chosen.emit();
+    try {
+      await this.configService.initAllConfigurations();
+      deployment.isOutdated = false;
+      this.deploymentService.updateDeployment(deployment.id, { isOutdated: false });
+      this.chosen.emit();
+    } catch (error: any) {
+      if (error.status === 404) {
+        deployment.isOutdated = true;
+        this.deploymentService.updateDeployment(deployment.id, { isOutdated: true });
+        this.showDeploymentOutdatedWarning();
+        this.deploymentService.setDeployment(currentDeployment);
+        this.envService.setDynamicBackendUrl();
+        await this.configService.initAllConfigurations();
+      }
+    }
+  }
+
+  private showDeploymentOutdatedWarning(): void {
+    this.alertService.presentAlert({
+      icon: {
+        name: 'warning',
+        color: 'danger',
+      },
+      header: 'Outdated Deployment!',
+      message:
+        "<p>We're sorry, but the deployment option you're trying to select is not supported by the application as the administrator hasn't updated it yet. Until the update is performed, the deployment won't function properly.</p><p>If you are the administrator of this deployment, please feel free to contact us for more information.</p>",
+      buttons: [
+        {
+          text: 'Contact us',
+          cssClass: 'medium',
+          handler: () => {
+            this.intercomService.displayMessenger();
+          },
+        },
+        {
+          text: 'Ok',
+          cssClass: 'primary',
+        },
+      ],
+    });
   }
 
   public selectDeployment(event: any) {

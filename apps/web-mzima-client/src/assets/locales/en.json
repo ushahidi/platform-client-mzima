@@ -151,7 +151,14 @@
     "terms_and_conditions": "Terms and Conditions",
     "ok_sounds_good": "OK, sounds good",
     "next_step": "Next step",
-    "we_are_aware_there_are_some_issues_here": "We are aware there are some issues here. The team is working on fixing them."
+    "we_are_aware_there_are_some_issues_here": "We are aware there are some issues here. The team is working on fixing them.",
+    "you_are_using_old_deployment_version": "You are using Deployment Version - {{api_version}}. The latest version is v5. Please, update your Deployment for users access.",
+    "outdated_deployment": "Outdated Deployment!",
+    "the_deployment_is_outdated": "The Deployment is outdated, therefore some bugs may occur, till Admin update it.",
+    "your_deployment_is_outdated": "Your Deployment is outdated",
+    "we_ve_updated_deployments_to_version_5": "We’ve updated Deployments to version 5. Users may not have access to your deployment soon. ",
+    "for_more_details_on_deployment_update": "For more details on deployment update, go to Help & Support (this should be a link) or send an email to:",
+    "open_chat": "Open Chat"
   },
   "cookies": {
     "we_use_cookies": "Howdy! We use cookies to make your experience better.",
@@ -1022,6 +1029,9 @@
       "required": {
         "name": "Collection name is required"
       }
+    },
+    "errors": {
+      "permissions": "You do not have permission to view this collection"
     }
   },
   "set": {
@@ -1094,7 +1104,7 @@
     },
     "placeholder": {
       "name": "Enter name",
-      "descriptions": "Enter descriptions...",
+      "descriptions": "Enter description...",
       "choose_parent_category": "Choose parent category..."
     },
     "types": {

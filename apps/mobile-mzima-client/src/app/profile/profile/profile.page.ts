@@ -2,11 +2,18 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { STORAGE_KEYS, profileMenu } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { AlertService, AuthService, DatabaseService, SessionService } from '@services';
+import {
+  AlertService,
+  AuthService,
+  DatabaseService,
+  IntercomService,
+  SessionService,
+} from '@services';
 
 interface SupportItem {
   title: string;
   description: string;
+  action: () => NonNullable<unknown>;
 }
 
 @UntilDestroy()
@@ -25,6 +32,9 @@ export class ProfilePage {
     {
       title: 'Intercom',
       description: 'Contact Ushahidi staff for chat support',
+      action: () => {
+        this.intercomService.displayMessenger();
+      },
     },
   ];
   public filteredSupportItems: SupportItem[] = this.supportItems;
@@ -35,6 +45,7 @@ export class ProfilePage {
     private authService: AuthService,
     private alertService: AlertService,
     private dataBaseService: DatabaseService,
+    private intercomService: IntercomService,
   ) {
     this.sessionService
       .getCurrentUserData()

@@ -67,6 +67,7 @@ export class AccountSettingsModalComponent implements OnInit {
   public addAccountForm: FormGroup;
   public notifications: AccountNotificationsInterface[] = [];
   NotificationTypeEnum = NotificationTypeEnum;
+  errorMap: { [key: string]: string | null } = {};
 
   private checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
     if (!group) return null;
@@ -94,7 +95,7 @@ export class AccountSettingsModalComponent implements OnInit {
       {
         role: [''],
         display_name: ['', [Validators.required]],
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
         password: [''],
         confirmPassword: [''],
       },
@@ -295,7 +296,10 @@ export class AccountSettingsModalComponent implements OnInit {
         Validators.required,
         Validators.pattern(regexHelper.emailValidate()),
       ],
-      [AccountTypeEnum.Phone]: () => [Validators.required, Validators.pattern('[- +()0-9]{13}')],
+      [AccountTypeEnum.Phone]: () => [
+        Validators.required,
+        Validators.pattern(regexHelper.phonePattern()),
+      ],
     };
 
     if (actions[value]) {
@@ -370,5 +374,46 @@ export class AccountSettingsModalComponent implements OnInit {
 
   public filteredNotifications(type: NotificationTypeEnum): AccountNotificationsInterface[] {
     return this.notifications.filter((notification) => notification.type === type);
+  }
+
+  public validateContact(contact: ContactsInterface) {
+    this.isContactsChanged = true;
+    let error: string | null = null;
+
+    if (contact.type === 'email') {
+      const emailPattern = new RegExp(regexHelper.emailValidate());
+      if (!emailPattern.test(contact.contact)) {
+        error = 'Invalid Email';
+      }
+    }
+
+    if (contact.type === 'phone') {
+      const phonePattern = new RegExp(regexHelper.phonePattern());
+      if (!phonePattern.test(contact.contact)) {
+        error = 'Invalid Phone';
+      }
+    }
+
+    this.errorMap[contact.id] = error ? error : null;
+  }
+
+  public checkContactsErrors(): boolean {
+    return Object.values(this.errorMap).some((error) => error !== null);
+  }
+
+  public isButtonDisabled(): boolean {
+    if (this.isLoading) {
+      return true;
+    }
+
+    if (this.selectedTabIndex === 0) {
+      return this.profileForm.invalid || this.profileForm.pristine || this.profileForm.disabled;
+    }
+
+    if (this.selectedTabIndex === 1) {
+      return this.checkContactsErrors();
+    }
+
+    return false;
   }
 }
