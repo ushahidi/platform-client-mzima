@@ -10,7 +10,7 @@ export class BreakpointService {
   public isDesktop$ = this.isDesktop.asObservable();
 
   constructor(private breakpointObserver: BreakpointObserver) {
-    this.breakpointObserveAndSubscribe('(min-width: 1024px)');
+    this.breakpointObserveAndSubscribe('(min-width: 1025px)');
     this.breakpointObserveAndSubscribe('(max-width: 1024px)');
   }
 
