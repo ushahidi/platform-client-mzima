@@ -27,9 +27,6 @@
     >
       {{ deployment.description | truncate : 50 }}
     </ion-text>
-    <!-- <ion-text color="medium" class="deployment-item__content-server">
-      {{ deployment.domain | lowercase }}
-    </ion-text> -->
     <ion-text color="medium" class="deployment-item__content-server">
       {{ deployment.fqdn | lowercase }}
     </ion-text>
@@ -37,6 +34,12 @@
 
   <div class="deployment-item__end" slot="end">
     <ion-text color="primary" class="deployment-item__current" *ngIf="isCurrent">Current</ion-text>
+    <ion-icon
+      color="danger"
+      name="warning"
+      class="deployment-item__outdated"
+      *ngIf="isOutdated"
+    ></ion-icon>
     <app-button
       fill="clear"
       color="medium"

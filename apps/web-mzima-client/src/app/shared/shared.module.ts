@@ -44,7 +44,6 @@ import {
   SubmitPostButtonComponent,
   SupportModalComponent,
   OnboardingComponent,
-  ToolbarComponent,
   NotificationComponent,
 } from './components';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
@@ -60,7 +59,6 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 const components = [
   SidebarComponent,
-  ToolbarComponent,
   SubmitPostButtonComponent,
   LanguageComponent,
   SearchFormComponent,

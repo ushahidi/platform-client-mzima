@@ -71,7 +71,12 @@
     font-size: 14px;
     font-weight: 700;
     line-height: 20px;
-    margin-right: 16px;
     letter-spacing: 0.1px;
+    margin-inline-end: 16px;
+  }
+
+  &__outdated {
+    font-size: 24px;
+    margin-inline-end: 8px;
   }
 }

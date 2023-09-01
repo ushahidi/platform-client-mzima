@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { Deployment } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DeploymentService } from '@services';
+import { AlertService, DeploymentService, SessionService } from '@services';
 
 @UntilDestroy()
 @Component({
@@ -13,15 +12,37 @@ import { DeploymentService } from '@services';
 export class DeploymentInfoComponent {
   @Output() deploymentClick = new EventEmitter();
   public deployment: Deployment | null;
-  constructor(private deploymentService: DeploymentService, private router: Router) {
+  public isDeploymentOutdated = false;
+  constructor(
+    private deploymentService: DeploymentService,
+    private sessionService: SessionService,
+    private alertService: AlertService,
+  ) {
     this.deploymentService.deployment$.pipe(untilDestroyed(this)).subscribe({
       next: (deployment) => {
         this.deployment = deployment;
+        this.isDeploymentOutdated =
+          this.sessionService.getSiteConfigurations().api_version !== 'v5';
       },
     });
   }
 
   public handleClick(): void {
     this.deploymentClick.emit();
+  }
+
+  public showDeploymentWarningInfo(event: Event): void {
+    if (this.isDeploymentOutdated) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.alertService.presentAlert({
+        icon: {
+          name: 'warning',
+          color: 'danger',
+        },
+        header: 'Outdated Deployment!',
+        message: 'The Deployment is outdated, therefore some bugs may occur, till Admin update it.',
+      });
+    }
   }
 }

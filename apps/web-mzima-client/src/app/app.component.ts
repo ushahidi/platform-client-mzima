@@ -212,7 +212,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
     const io = {
       app_id: this.env.environment.intercom_appid,
-      custom_launcher_selector: '#intercom_custom_launcher',
+      custom_launcher_selector: '.intercom_custom_launcher',
       email: user.email,
       created_at: user.created?.getDate(),
       user_id: `${domain}_${user.userId}`,

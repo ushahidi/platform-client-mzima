@@ -66,6 +66,21 @@ export class DeploymentService {
     this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENTS, filteredArray, 'array');
   }
 
+  public updateDeployment(deploymentId: number, data: Partial<Deployment>) {
+    const deployments: Deployment[] = this.storageService.getStorage(
+      STORAGE_KEYS.DEPLOYMENTS,
+      'array',
+    );
+    const index = deployments.findIndex((d) => d.id === deploymentId);
+    if (index !== -1) {
+      deployments[index] = {
+        ...deployments[index],
+        ...data,
+      };
+      this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENTS, deployments, 'array');
+    }
+  }
+
   private getUniqueItems(data: Deployment[], deployments: Deployment[]): Deployment[] {
     return data.filter(
       (itemData: Deployment) =>
@@ -90,13 +105,17 @@ export class DeploymentService {
     return this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENTS, 'array') || [];
   }
 
-  public setDeployment(data: Deployment) {
+  public setDeployment(data: Deployment | null) {
     this.resetData();
-    this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENT, data, 'object');
+    if (data) {
+      this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENT, data, 'object');
+    } else {
+      this.storageService.deleteStorage(STORAGE_KEYS.DEPLOYMENT);
+    }
     this.deployment.next(data);
   }
 
-  public getDeployment(): Deployment {
+  public getDeployment(): Deployment | null {
     return this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENT, 'object');
   }
 

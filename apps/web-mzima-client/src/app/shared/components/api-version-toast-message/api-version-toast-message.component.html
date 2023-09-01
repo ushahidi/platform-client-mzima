@@ -1,0 +1,28 @@
+<div class="toast-message" *ngIf="isOpen">
+  <div class="toast-message__content">
+    <mat-icon class="toast-message__icon" icon svgIcon="warning"></mat-icon>
+    {{
+      'app.you_are_using_old_deployment_version' | translate : { api_version: currentApiVersion }
+    }}
+  </div>
+  <div class="toast-message__more">
+    <mzima-client-button
+      fill="outline"
+      color="custom"
+      [expand]="false"
+      class="toast-message__button toast-message__button--more"
+      (buttonClick)="openApiInstructionsModal()"
+    >
+      Read more
+    </mzima-client-button>
+  </div>
+  <mzima-client-button
+    fill="outline"
+    color="custom"
+    [iconOnly]="true"
+    (buttonClick)="closeToastMessage()"
+    class="toast-message__button toast-message__button--close"
+  >
+    <mat-icon icon svgIcon="close"></mat-icon>
+  </mzima-client-button>
+</div>

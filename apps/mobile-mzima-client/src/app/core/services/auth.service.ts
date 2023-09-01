@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, mergeMap } from 'rxjs';
 import { EnvService, IntercomService, SessionService } from '@services';
-import { Router } from '@angular/router';
 import {
   EnvLoader,
   generalHelpers,
@@ -20,7 +19,6 @@ export class AuthService extends ResourceService<any> {
     protected envLoader: EnvLoader,
     protected env: EnvService,
     private sessionService: SessionService,
-    private router: Router,
     private userService: UsersService,
     private intercomService: IntercomService,
   ) {

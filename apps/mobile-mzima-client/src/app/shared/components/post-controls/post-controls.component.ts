@@ -119,7 +119,7 @@ export class PostControlsComponent {
     const text = this.posts
       .map(
         (post) =>
-          `https://${this.deploymentService.getDeployment().fqdn}/feed/${post.id}/view?mode=POST`,
+          `https://${this.deploymentService.getDeployment()!.fqdn}/feed/${post.id}/view?mode=POST`,
       )
       .join(', ');
     this.shareService.share({
