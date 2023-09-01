@@ -50,7 +50,7 @@ export class ChooseCollectionComponent {
     is_notifications_enabled: [true],
   });
   public fieldErrorMessages = fieldErrorMessages;
-  private readonly searchSubject = new Subject<string>();
+  readonly searchSubject = new Subject<string>();
   public params: CollectionsParams = {
     orderby: 'created',
     order: 'desc',
@@ -87,8 +87,9 @@ export class ChooseCollectionComponent {
     private notificationsService: NotificationsService,
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
-      next: () => {
+      next: (query: string) => {
         this.params.page = 1;
+        this.params.q = query;
         this.getCollections();
       },
     });
