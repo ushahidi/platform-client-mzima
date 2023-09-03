@@ -1,0 +1,32 @@
+<ng-container>
+  <mzima-client-button
+    fill="clear"
+    color="secondary"
+    class="account-info"
+    [data-qa]="'account-info'"
+    *ngIf="isLoggedIn && isDesktop"
+    [matMenuTriggerFor]="accountMenu"
+  >
+    <div class="account-info__main">
+      <span class="account-info__name">{{ user.realname }}</span>
+      <span class="account-info__email">{{ user.email }}</span>
+    </div>
+    <img
+      [alt]="user.realname"
+      class="account-info__avatar"
+      src="//www.gravatar.com/avatar/{{
+        user.gravatar || '00000000000000000000000000000000'
+      }}?d=retro&s=64"
+    />
+    <mat-icon class="account-info__arrow" svgIcon="arrow-down"></mat-icon>
+  </mzima-client-button>
+
+  <mat-menu #accountMenu="matMenu" class="account-menu">
+    <button mat-menu-item (click)="openAccountSettings()">
+      {{ 'nav.account_settings' | translate }}
+    </button>
+    <button mat-menu-item (click)="logout()">{{ 'nav.logout' | translate }}</button>
+  </mat-menu>
+</ng-container>
+
+<!-- For smaller screens, the account settings and logout buttons are in the MenuListNonLinks component -->

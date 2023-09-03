@@ -25,7 +25,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
-import { CollectionsModalComponent } from '../../shared/components';
 import { dateHelper } from '@helpers';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 
@@ -202,19 +201,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     category_id: number,
   ): boolean {
     return !!categories?.find((category: CategoryInterface) => category.parent_id === category_id);
-  }
-
-  public addToCollection(): void {
-    this.dialog.open(CollectionsModalComponent, {
-      width: '100%',
-      maxWidth: 480,
-      height: 'auto',
-      maxHeight: '90vh',
-      panelClass: 'modal',
-      data: {
-        title: this.translate.instant('app.edit_collection'),
-      },
-    });
   }
 
   private setMetaData(post: PostResult) {

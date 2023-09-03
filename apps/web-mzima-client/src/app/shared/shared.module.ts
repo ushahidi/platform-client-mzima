@@ -18,7 +18,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
-import { CollectionsComponent } from '@data';
 import { TranslateModule } from '@ngx-translate/core';
 import { SafePipe } from '@pipes';
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -28,7 +27,7 @@ import { DonationModalComponent } from '../settings';
 
 import {
   AccountSettingsModalComponent,
-  CollectionsModalComponent,
+  CollectionsComponent,
   CompanyInfoComponent,
   ConfirmModalComponent,
   CookiesNotificationComponent,
@@ -39,12 +38,18 @@ import {
   SearchFormComponent,
   SelectLanguagesModalComponent,
   ShareModalComponent,
-  SidebarComponent,
   SnackbarComponent,
   SubmitPostButtonComponent,
   SupportModalComponent,
   OnboardingComponent,
   NotificationComponent,
+  SidebarComponent,
+  MobileMenuComponent,
+  DeploymentDetailsComponent,
+  MenuListNonLinksComponent,
+  MenuListLinksComponent,
+  ShareAndDonateComponent,
+  AccountAndLogoutComponent,
 } from './components';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { CollectionItemModule } from './components/collection-item/collection-item.module';
@@ -59,6 +64,12 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
 
 const components = [
   SidebarComponent,
+  MobileMenuComponent,
+  DeploymentDetailsComponent,
+  MenuListNonLinksComponent,
+  MenuListLinksComponent,
+  ShareAndDonateComponent,
+  AccountAndLogoutComponent,
   SubmitPostButtonComponent,
   LanguageComponent,
   SearchFormComponent,
@@ -66,7 +77,6 @@ const components = [
   DonationButtonComponent,
   CookiesNotificationComponent,
   AccountSettingsModalComponent,
-  CollectionsModalComponent,
   ConfirmModalComponent,
   SaveSearchModalComponent,
   SelectLanguagesModalComponent,

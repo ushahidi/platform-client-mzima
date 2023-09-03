@@ -1,0 +1,79 @@
+@import 'helpers';
+
+.account-info {
+  display: flex;
+  height: 100%;
+  --min-height: 100%;
+  flex-shrink: 0;
+  --font-size: 14px;
+  --min-width: 236px;
+  --font-weight: 400;
+  --max-width: 250px;
+  --line-height: 17px;
+  padding-bottom: 0;
+  --justify-content: flex-end;
+  white-space: normal;
+  margin-inline-end: -24px;
+  --padding-end: 0px;
+  margin-inline-start: 16px;
+  --padding-start: 16px;
+  border-left: 1px solid var(--color-neutral-30);
+
+  @include breakpoint-max($laptop-small) {
+    --min-width: 106px;
+  }
+
+  &::ng-deep {
+    .mzima-button {
+      &__text {
+        display: flex;
+        text-align: right;
+        align-items: center;
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 50%;
+    margin-inline-start: 12px;
+
+    @include breakpoint-max($laptop-small) {
+      margin-inline-start: 0;
+    }
+  }
+
+  &__main {
+    max-width: calc(100% - 44px);
+
+    @include breakpoint-max($laptop-small) {
+      display: none;
+    }
+  }
+
+  &__name {
+    display: block;
+  }
+
+  &__email {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  &__arrow {
+    flex-shrink: 0;
+    font-size: 24px;
+    margin-inline-start: 12px;
+  }
+}
+
+::ng-deep {
+  .account-menu {
+    width: 236px;
+  }
+}
