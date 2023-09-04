@@ -4,7 +4,7 @@ import { EnvService } from '../services/env.service';
 
 export const pointIcon = (color: string, type: string = 'default') => {
   // Test string to make sure that it does not contain injection
-  color = color && /^[a-zA-Z0-9#]+$/.test(color) ? color : 'var(--color-neutral-100)';
+  color = color && /^[a-zA-Z0-9#]+$/.test(color) ? `#${color}` : 'var(--color-neutral-100)';
   const size: any = [30, 40];
   // var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
 
