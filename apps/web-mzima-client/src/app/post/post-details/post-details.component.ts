@@ -88,10 +88,22 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     if (changes['post']) {
       this.allowed_privileges = this.post?.allowed_privileges ?? '';
       if (changes['post'].currentValue?.post_content?.length) {
-        this.setMetaData(this.post!);
         this.getData(changes['post'].currentValue);
+        if (this.post) {
+          this.setMetaData(this.post!);
+          this.preparePostForView();
+        }
       }
     }
+  }
+
+  private preparePostForView() {
+    this.post!.post_content = postHelpers.markCompletedTasks(
+      this.post?.post_content || [],
+      this.post,
+    );
+    this.post!.post_content = postHelpers.replaceNewlinesWithBreaks(this.post?.post_content || []);
+    this.post!.content = postHelpers.replaceNewlinesInString(this.post!.content);
   }
 
   private async getPost(id: number): Promise<void> {
@@ -100,12 +112,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     if (this.post) {
       this.isPostLoading = false;
       this.getData(this.post);
-      this.post.post_content = postHelpers.markCompletedTasks(
-        this.post?.post_content || [],
-        this.post,
-      );
-      this.post.post_content = postHelpers.replaceNewlinesWithBreaks(this.post?.post_content || []);
-      this.post.content = postHelpers.replaceNewlinesInString(this.post.content);
+      this.preparePostForView();
 
       // TODO: remove me after testing on dev
       // console.log('💬 post task modify:', this.post);
