@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { STORAGE_KEYS } from '@constants';
-import { forkJoin, lastValueFrom, map, Observable, tap } from 'rxjs';
-import { MapConfigInterface } from '@models';
+import { catchError, forkJoin, lastValueFrom, map, Observable, tap, throwError } from 'rxjs';
+import { SessionConfigInterface } from '@models';
 import { DatabaseService } from './database.service';
 import { SessionService } from './session.service';
 import { EnvService } from './env.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,74 +17,43 @@ export class ConfigService {
     private env: EnvService,
     private sessionService: SessionService,
     private databaseService: DatabaseService,
+    private storageService: StorageService,
   ) {}
 
   getApiVersions(): string {
-    return this.env.environment.api_v3;
+    return this.env.environment.api_v5;
   }
 
   getResourceUrl(): string {
     return 'config';
   }
 
-  getSite(): Observable<any> {
+  getConfig(): Observable<any> {
+    const configKeys: (keyof SessionConfigInterface)[] = ['site', 'features', 'map'];
     return this.httpClient
-      .get(
-        `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/site`,
-      )
+      .get(`${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}`)
       .pipe(
         tap({
-          next: (data) => {
-            this.setConfigurations('set', STORAGE_KEYS.SITE, data);
+          next: (data: any) => {
+            configKeys.forEach((key) => {
+              const config = data.results.find((result: any) => result.id === key);
+              if (config) {
+                this.setConfigurations('set', key, config);
+              }
+            });
           },
           error: () => {
-            this.setConfigurations('get', STORAGE_KEYS.SITE);
-            setTimeout(() => this.getSite(), 5000);
+            configKeys.forEach((key) => {
+              this.setConfigurations('get', key);
+            });
+            setTimeout(() => this.getConfig(), 5000);
           },
         }),
-      );
-  }
-
-  getFeatures(): Observable<any> {
-    return this.httpClient
-      .get(
-        `${
-          this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
-        }/features`,
-      )
-      .pipe(
-        tap({
-          next: (data) => {
-            this.setConfigurations('set', STORAGE_KEYS.FEATURES, data);
-          },
-          error: () => {
-            this.setConfigurations('get', STORAGE_KEYS.FEATURES);
-            setTimeout(() => this.getFeatures(), 5000);
-          },
-        }),
-      );
-  }
-
-  getMap(): Observable<MapConfigInterface> {
-    return this.httpClient
-      .get<MapConfigInterface>(
-        `${this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()}/map`,
-      )
-      .pipe(
-        tap({
-          next: (data) => {
-            if (data.default_view?.baselayer === 'MapQuest') {
-              data.default_view.baselayer = 'streets';
-            }
-            if (data.default_view?.baselayer === 'MapQuestAerial') {
-              data.default_view.baselayer = 'satellite';
-            }
-            this.setConfigurations('set', STORAGE_KEYS.MAP, data);
-          },
-          error: () => {
-            this.setConfigurations('get', STORAGE_KEYS.MAP);
-            setTimeout(() => this.getMap(), 5000);
-          },
+        catchError((response: HttpErrorResponse) => {
+          if (response.status === 401) {
+            this.storageService.deleteStorage(STORAGE_KEYS.DEPLOYMENT);
+          }
+          return throwError(() => response);
         }),
       );
   }
@@ -106,9 +76,9 @@ export class ConfigService {
     );
   }
 
-  initAllConfigurations() {
+  initAllConfigurations(): Promise<any> {
     if (navigator.onLine) {
-      return lastValueFrom(forkJoin([this.getSite(), this.getFeatures(), this.getMap()]));
+      return lastValueFrom(this.getConfig());
     } else {
       return lastValueFrom(
         forkJoin([

@@ -25,7 +25,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
-import { CollectionsModalComponent } from '../../shared/components';
 import { dateHelper } from '@helpers';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 
@@ -91,10 +90,22 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     if (changes['post']) {
       this.allowed_privileges = this.post?.allowed_privileges ?? '';
       if (changes['post'].currentValue?.post_content?.length) {
-        this.setMetaData(this.post!);
         this.getData(changes['post'].currentValue);
+        if (this.post) {
+          this.setMetaData(this.post!);
+          this.preparePostForView();
+        }
       }
     }
+  }
+
+  private preparePostForView() {
+    this.post!.post_content = postHelpers.markCompletedTasks(
+      this.post?.post_content || [],
+      this.post,
+    );
+    this.post!.post_content = postHelpers.replaceNewlinesWithBreaks(this.post?.post_content || []);
+    this.post!.content = postHelpers.replaceNewlinesInString(this.post!.content);
   }
 
   private async getPost(id: number): Promise<void> {
@@ -106,12 +117,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       });
       this.isPostLoading = false;
       this.getData(this.post);
-      this.post.post_content = postHelpers.markCompletedTasks(
-        this.post?.post_content || [],
-        this.post,
-      );
-      this.post.post_content = postHelpers.replaceNewlinesWithBreaks(this.post?.post_content || []);
-      this.post.content = postHelpers.replaceNewlinesInString(this.post.content);
+      this.preparePostForView();
 
       // TODO: remove me after testing on dev
       // console.log('💬 post task modify:', this.post);
@@ -202,19 +208,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     category_id: number,
   ): boolean {
     return !!categories?.find((category: CategoryInterface) => category.parent_id === category_id);
-  }
-
-  public addToCollection(): void {
-    this.dialog.open(CollectionsModalComponent, {
-      width: '100%',
-      maxWidth: 480,
-      height: 'auto',
-      maxHeight: '90vh',
-      panelClass: 'modal',
-      data: {
-        title: this.translate.instant('app.edit_collection'),
-      },
-    });
   }
 
   private setMetaData(post: PostResult) {

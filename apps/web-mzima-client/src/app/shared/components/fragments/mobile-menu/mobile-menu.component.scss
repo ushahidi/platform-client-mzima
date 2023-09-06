@@ -1,0 +1,29 @@
+@import 'helpers';
+
+.menu {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 700;
+  position: fixed;
+  color: var(--color-neutral-50);
+  background: var(--color-neutral-100);
+  --scrollbar-color: var(--color-neutral-60);
+  --scrollbar-background: var(--color-neutral-100);
+
+  &--open {
+    @include breakpoint-min($tablet) {
+      // stops flicker on resize
+      display: none;
+    }
+  }
+
+  &:not(.menu--open) {
+    opacity: 0;
+    top: -9999px;
+    left: -9999px;
+    right: 9999px;
+    bottom: 9999px;
+  }
+}

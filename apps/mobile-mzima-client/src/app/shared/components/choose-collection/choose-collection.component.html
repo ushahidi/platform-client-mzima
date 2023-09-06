@@ -3,6 +3,7 @@
   [isSearch]="true"
   [title]="isProfile ? 'Collection' : 'Add post to collection'"
   (back)="back.emit()"
+  (search)="searchSubject.next($event)"
   (searchFocus)="isSearchView = true"
   (searchBlur)="isSearchView = false"
   [ngClass]="{ 'main--search-view': isSearchView }"
