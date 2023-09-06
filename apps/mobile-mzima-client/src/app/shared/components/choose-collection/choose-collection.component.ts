@@ -3,7 +3,7 @@ import { Observable, Subject, debounceTime, forkJoin, lastValueFrom } from 'rxjs
 import { fieldErrorMessages, formHelper } from '@helpers';
 import { FormBuilder, Validators } from '@angular/forms';
 import { InfiniteScrollCustomEvent, ModalController } from '@ionic/angular';
-import { SessionService } from '@services';
+import { AlertService, SessionService, ToastService } from '@services';
 import {
   CollectionItem,
   CollectionsService,
@@ -85,6 +85,8 @@ export class ChooseCollectionComponent {
     private formBuilder: FormBuilder,
     private rolesService: RolesService,
     private sessionService: SessionService,
+    private alertService: AlertService,
+    private toastService: ToastService,
     private notificationsService: NotificationsService,
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
@@ -147,8 +149,15 @@ export class ChooseCollectionComponent {
   }
 
   public addNewCollection(): void {
-    this.isAddCollectionModalOpen = true;
     this.collectionToEdit = '';
+    this.createCollectionForm.patchValue({
+      name: '',
+      description: '',
+      featured: false,
+      view: 'map',
+      is_notifications_enabled: true,
+    });
+    this.isAddCollectionModalOpen = true;
   }
 
   public createCollection(): void {
@@ -289,6 +298,34 @@ export class ChooseCollectionComponent {
         });
       },
     });
+  }
+
+  async deleteCollection() {
+    const result = await this.alertService.presentAlert({
+      header: `Are you sure you want to delete this collection?`,
+      message: 'This action cannot be undone. Please proceed with caution.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Delete',
+          role: 'confirm',
+          cssClass: 'danger',
+        },
+      ],
+    });
+
+    if (result.role === 'confirm') {
+      this.collectionsService.delete(this.collectionToEdit).subscribe(() => {
+        this.toastService.presentToast({
+          message: `Collection has been successfully deleted`,
+        });
+        this.modalController.dismiss();
+        this.getCollections();
+      });
+    }
   }
 
   private updateForm(field: string, value: any) {
