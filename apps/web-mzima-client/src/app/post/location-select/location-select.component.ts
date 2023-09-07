@@ -85,6 +85,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     this.leafletOptions = {
       scrollWheelZoom: true,
       zoomControl: false,
+      worldCopyJump: true,
       layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
       center: [
         this.location?.lat || this.mapConfig.default_view!.lat,
@@ -138,7 +139,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     this.addMarker();
 
     this.map.on('click', (e) => {
-      this.location = e.latlng;
+      this.location = e.latlng.wrap();
       this.addMarker();
       this.cdr.detectChanges();
     });
