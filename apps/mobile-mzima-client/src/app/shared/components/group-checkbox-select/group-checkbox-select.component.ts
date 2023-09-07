@@ -62,6 +62,9 @@ export class GroupCheckboxSelectComponent implements ControlValueAccessor {
     if (!value) return;
     this.value = value;
     this.data.find((item) => item.value === value.value)!.checked = true;
+    if (value.value === 'only_me') {
+      this.radioGroupChanged('only_me');
+    }
   }
 
   markAsTouched() {

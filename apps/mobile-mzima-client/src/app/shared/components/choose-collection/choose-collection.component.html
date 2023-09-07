@@ -108,7 +108,9 @@
     </div>
     <div class="create-collection-form__group">
       <ion-title class="create-collection-form__title">Displaying</ion-title>
-      <app-toggle type="item" formControlName="featured">Featured</app-toggle>
+      <app-toggle type="item" formControlName="featured" (toggleChange)="featuredChange($event)"
+        >Featured</app-toggle
+      >
     </div>
     <div class="create-collection-form__group" *ngIf="roleOptions">
       <ion-title class="create-collection-form__title">Who can see this?</ion-title>
