@@ -148,6 +148,14 @@ export class ChooseCollectionComponent {
     }
   }
 
+  featuredChange(checked: boolean = false) {
+    this.updateForm('visible_to', {
+      value: 'only_me',
+      options: [this.userRole],
+      disabled: checked,
+    });
+  }
+
   public addNewCollection(): void {
     this.collectionToEdit = '';
     this.createCollectionForm.patchValue({

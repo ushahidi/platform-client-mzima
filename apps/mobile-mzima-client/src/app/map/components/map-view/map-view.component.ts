@@ -261,6 +261,7 @@ export class MapViewComponent implements AfterViewInit {
           f.properties = {
             id: r.id,
             type: r.source,
+            'marker-color': r['marker-color'],
           };
           return f;
         }),
@@ -285,7 +286,6 @@ export class MapViewComponent implements AfterViewInit {
         });
       },
     });
-
     if (this.mapConfig.clustering) {
       this.markerClusterData.addLayer(geoPosts);
       this.mapLayers.push(this.markerClusterData);

@@ -3,7 +3,7 @@ import { divIcon, marker } from 'leaflet';
 import { EnvService } from '../services/env.service';
 
 export const pointIcon = (type: string = 'default', color?: string) => {
-  color = color && /^[a-zA-Z0-9#]+$/.test(color) ? color : 'var(--color-neutral-100)';
+  color = color && /^[a-zA-Z0-9#]+$/.test(color) ? `#${color}` : 'var(--color-neutral-100)';
   if (type !== 'twitter' && type !== 'sms' && type !== 'email') {
     type = 'default';
   }
@@ -23,7 +23,7 @@ export const pointIcon = (type: string = 'default', color?: string) => {
 
 export const pointToLayer = (feature: any, latlng: any) => {
   return marker(latlng, {
-    icon: pointIcon(feature.properties.type),
+    icon: pointIcon(feature.properties.type, feature.properties['marker-color']),
   });
 };
 
