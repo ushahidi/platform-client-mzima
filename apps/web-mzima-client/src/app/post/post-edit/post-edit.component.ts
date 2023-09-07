@@ -584,7 +584,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       error: ({ error }) => {
         this.form.enable();
         this.submitted = false;
-        if (error.errors.status === 422) {
+        if (error.errors?.status === 422) {
           this.showMessage(`Failed to update a post. ${error.errors.message}`, 'error');
         }
       },
@@ -603,10 +603,10 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private createPost(postData: any) {
     this.postsService.post(postData).subscribe({
       error: ({ error }) => {
-        if (error.errors.status === 422) {
+        if (error.errors?.status === 422) {
           this.showMessage(`Failed to create a post. ${error.errors.message}`, 'error');
         }
-        if (error.errors[0].status === 403) {
+        if (error.errors[0]?.status === 403) {
           this.showMessage(`Failed to create a post. ${error.errors[0].message}`, 'error');
         }
         this.form.enable();
