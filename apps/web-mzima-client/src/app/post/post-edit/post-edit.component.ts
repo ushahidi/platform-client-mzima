@@ -543,6 +543,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     try {
       await this.preparationData();
     } catch (error: any) {
+      this.form.enable();
+      this.submitted = false;
       this.showMessage(error, 'error');
       return;
     }
