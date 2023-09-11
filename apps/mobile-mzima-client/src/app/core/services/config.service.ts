@@ -78,7 +78,12 @@ export class ConfigService {
 
   initAllConfigurations(): Promise<any> {
     if (navigator.onLine) {
-      return lastValueFrom(this.getConfig());
+      return lastValueFrom(this.getConfig()).then(
+        () => {},
+        () => {
+          return lastValueFrom(this.getConfig());
+        },
+      );
     } else {
       return lastValueFrom(
         forkJoin([
