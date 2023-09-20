@@ -42,6 +42,9 @@
     <mat-error class="error-msg" *ngIf="requiredError">
       {{ 'post.image_is_required' | translate }}
     </mat-error>
+    <mat-error class="error-msg" *ngIf="maxSizeError">
+      {{ 'post.image_max_size' | translate }}
+    </mat-error>
   </div>
 
   <div class="form-row" *ngIf="hasCaption">

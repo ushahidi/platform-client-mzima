@@ -84,6 +84,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private postId?: number;
   private formInfo: any;
   public requireApproval = false;
+  maxSizeError = false;
 
   public post?: any;
   public atLeastOneFieldHasValidationError: boolean;
@@ -92,6 +93,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   public emptyLocation = false;
   public submitted = false;
   public filters;
+  maxImageSize: any;
   selectedLanguage: any;
   postLanguages: LanguageInterface[] = [];
 
@@ -135,6 +137,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     this.translate.onLangChange.subscribe((newLang) => {
       this.activeLanguage = newLang.lang;
     });
+
+    this.maxImageSize = Number(this.sessionService.getSiteConfigurations().image_max_size);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -210,6 +214,11 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                 case 'tags':
                   field.options = this.getOrderedOptions(field.options);
                   this.description = field.default;
+                  break;
+                case 'media': // Max image size addition hack
+                  field.instructions = `${field.instructions}. Max size: ${
+                    this.maxImageSize / 1024 / 1024
+                  }MB`;
                   break;
                 case 'relation':
                   const fieldForm: [] = field.config?.input?.form;
@@ -502,12 +511,18 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
             case 'upload':
               if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
                 try {
-                  const uploadObservable = this.mediaService.uploadFile(
-                    this.form.value[field.key]?.photo,
-                    this.form.value[field.key]?.caption,
-                  );
-                  const response: any = await lastValueFrom(uploadObservable);
-                  value.value = response.result.id;
+                  this.maxSizeError = false;
+                  if (this.maxImageSize < this.form.value[field.key].photo.size) {
+                    const uploadObservable = this.mediaService.uploadFile(
+                      this.form.value[field.key]?.photo,
+                      this.form.value[field.key]?.caption,
+                    );
+                    const response: any = await lastValueFrom(uploadObservable);
+                    value.value = response.result.id;
+                  } else {
+                    this.maxSizeError = true;
+                    throw new Error(`Error uploading file: max size exceed`);
+                  }
                 } catch (error: any) {
                   throw new Error(`Error uploading file: ${error.message}`);
                 }
