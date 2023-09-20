@@ -837,6 +837,7 @@
     "my_posts_desc": "Your posts",
     "unknown_posts_desc": "Posts with no assigned survey",
     "image_is_required": "Image is required",
+    "image_max_size": "Image exceed max file size",
     "locking": {
       "unlocked": "Post successfully unlocked",
       "unlock": "Unlock",

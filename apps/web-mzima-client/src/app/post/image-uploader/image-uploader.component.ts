@@ -19,6 +19,7 @@ import { formHelper } from '@helpers';
 })
 export class ImageUploaderComponent implements ControlValueAccessor {
   @Input() public hasCaption: boolean;
+  @Input() public maxSizeError?: boolean;
   @Input() public requiredError?: boolean;
   id?: number;
   captionControl = new FormControl('');
