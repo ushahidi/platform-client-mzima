@@ -13,6 +13,7 @@ import {
   filter,
   firstValueFrom,
   from,
+  forkJoin,
   tap,
 } from 'rxjs';
 import { BaseComponent } from './base.component';
@@ -74,6 +75,16 @@ export class AppComponent extends BaseComponent {
       .subscribe(async (result) => {
         if (result) await this.uploadPendingPosts();
       });
+    this.networkService.networkStatus$
+      .pipe(
+        distinctUntilChanged(),
+        filter((value) => value === true),
+        untilDestroyed(this),
+        concatMap(() => from(this.checkPendingCollections()).pipe(delay(2000))),
+      )
+      .subscribe(async (result) => {
+        if (result) await this.uploadPendingCollections();
+      });
   }
 
   private getCollections(isToast = true) {
@@ -86,7 +97,7 @@ export class AppComponent extends BaseComponent {
 
     return this.collectionsService.getCollections(params).pipe(
       tap(async (response) => {
-        await this.dataBaseService.set(STORAGE_KEYS.COLLECTIONS, response.results);
+        await this.dataBaseService.set(STORAGE_KEYS.COLLECTIONS, response);
         if (isToast) this.toastMessage$.next('Collections data updated');
       }),
     );
@@ -122,5 +133,33 @@ export class AppComponent extends BaseComponent {
     }
     this.toastMessage$.next('All pending posts uploaded to the server');
     await this.dataBaseService.set(STORAGE_KEYS.PENDING_POST_KEY, []);
+  }
+
+  async checkPendingCollections(): Promise<boolean> {
+    const coll: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_COLLECTIONS);
+    if (coll?.length) this.toastMessage$.next('Updating post collections...');
+    return !!coll?.length;
+  }
+
+  async uploadPendingCollections() {
+    const pendingCollections: any[] = await this.dataBaseService.get(
+      STORAGE_KEYS.PENDING_COLLECTIONS,
+    );
+    const observables = [...pendingCollections].map((item) => {
+      if (item.action === 'add') {
+        return this.collectionsService.addToCollection(item.collectionId, item.postId);
+      } else {
+        return this.collectionsService.removeFromCollection(item.collectionId, item.postId);
+      }
+    });
+    forkJoin(observables).subscribe({
+      next: async () => {
+        this.toastMessage$.next('All pending collections updated');
+        await this.dataBaseService.set(STORAGE_KEYS.PENDING_COLLECTIONS, []);
+      },
+      error: ({ error }) => {
+        console.error(error);
+      },
+    });
   }
 }
