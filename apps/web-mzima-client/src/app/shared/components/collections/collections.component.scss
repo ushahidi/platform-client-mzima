@@ -62,13 +62,9 @@
 ::ng-deep {
   @include breakpoint-max($tablet) {
     .collections-modal {
-      height: 100%;
-      width: 100% !important;
-      max-width: none !important;
-
+      @include menu-modal-styles;
       .mat-dialog-container {
         padding: 0 16px !important;
-        border-radius: 0 !important;
 
         .modal {
           &__close-btn {
@@ -96,16 +92,10 @@
       }
 
       .mat-dialog-actions {
-        left: 0;
-        right: 0;
-        bottom: 0;
         gap: 10px;
-        z-index: 25;
-        position: fixed;
         margin: 0 !important;
         min-height: 48px !important;
         padding: 12px 16px !important;
-        background: var(--color-light);
         border-top: 1px solid var(--color-neutral-20);
       }
     }

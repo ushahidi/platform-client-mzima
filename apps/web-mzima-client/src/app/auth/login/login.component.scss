@@ -51,18 +51,13 @@
 ::ng-deep {
   @include breakpoint-max($tablet) {
     .login-modal {
-      height: 100%;
-      width: 100% !important;
-      max-width: none !important;
-
+      @include menu-modal-styles;
       .mat-dialog-container {
-        border-radius: 0 !important;
         padding: 96px 24px 120px !important;
 
         .modal {
           &__close-btn {
             top: 32px;
-            position: fixed;
             inset-inline-end: 24px;
           }
         }
@@ -73,14 +68,7 @@
       }
 
       .mat-dialog-actions {
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: 0;
-        z-index: 25;
-        position: fixed;
         min-height: 56px !important;
-        background: var(--color-light);
         padding: 8px 24px 32px !important;
 
         .mat-raised-button {
