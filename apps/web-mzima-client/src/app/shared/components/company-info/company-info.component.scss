@@ -105,6 +105,12 @@
     object-fit: contain;
     margin-inline-end: 8px;
   }
+
+  &__email {
+    display: block;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+  }
 }
 
 .mat-expansion-panel {

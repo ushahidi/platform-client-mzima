@@ -1,11 +1,25 @@
 @import '/src/styles/helpers';
 
+::ng-deep {
+  app-account-settings-modal {
+    @include breakpoint-min($tablet) {
+      display: flex;
+      flex-direction: column;
+
+      @media screen and (min-height: 570px) {
+        min-height: 490px;
+      }
+    }
+  }
+}
+
 .spinner {
-  margin: 60px 0;
+  margin: 134px 0;
   display: block;
 }
 
 .content {
+  flex: 1 1 100%;
   margin-left: -24px;
   margin-right: -24px;
   padding-left: 24px;
@@ -52,6 +66,15 @@
 .mat-dialog-content {
   padding-left: 0;
   padding-right: 0;
+
+  @include breakpoint-min($tablet) {
+    height: 368px;
+  }
+
+  @include breakpoint-max($tablet) {
+    overflow: visible;
+    max-height: none !important;
+  }
 }
 
 .tab-content {

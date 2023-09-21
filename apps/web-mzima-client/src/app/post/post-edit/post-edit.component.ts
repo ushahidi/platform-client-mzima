@@ -27,6 +27,7 @@ import {
   EventType,
   SessionService,
   LanguageService,
+  ConfirmModalService,
 } from '@services';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
@@ -41,15 +42,12 @@ import {
 } from '@mzima-client/sdk';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
-import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-import { objectHelpers, formValidators } from '@helpers';
-import { AlphanumericValidatorValidator } from '../../core/validators';
-import { PhotoRequired } from '../../core/validators/photo-required';
+import { objectHelpers, formValidators, dateHelper } from '@helpers';
+import { PhotoRequired, PointValidator } from '../../core/validators';
 import { lastValueFrom } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LanguageInterface } from '../../core/interfaces/language.interface';
 import { MatSelectChange } from '@angular/material/select';
-import { dateHelper } from '@helpers';
 
 dayjs.extend(timezone);
 
@@ -76,6 +74,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private relationConfigSource: any;
   private relationConfigKey: string;
   private isSearching = false;
+  public isEditPost = false;
   public relatedPosts: PostResult[];
   public relationSearch: string;
   public selectedRelatedPost: any;
@@ -83,12 +82,13 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private fieldsFormArray = ['tags'];
   public surveyName: string;
   private postId?: number;
-  formInfo: any;
+  private formInfo: any;
+  public requireApproval = false;
 
-  private post?: any;
+  public post?: any;
   public atLeastOneFieldHasValidationError: boolean;
   public formValidator = new formValidators.FormValidator();
-  public locationRequired = false;
+  // public locationRequired = false;
   public emptyLocation = false;
   public submitted = false;
   public filters;
@@ -163,12 +163,23 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     });
   }
 
+  getOrderedOptions(options: any[]) {
+    const result: any[] = [];
+    options
+      .filter((opt: any) => !opt.parent_id)
+      .forEach((parent) => {
+        result.push(parent);
+        result.push(...options.filter((opt: any) => opt.parent_id === parent.id));
+      });
+    return result;
+  }
+
   private loadSurveyData(formId: number | null, updateContent?: any[]) {
     if (!formId) return;
     this.surveysService.getSurveyById(formId).subscribe({
       next: (data) => {
         const { result } = data;
-
+        this.requireApproval = result.require_approval;
         this.color = result.color;
         this.tasks = result.tasks;
         this.surveyName = result.name;
@@ -194,6 +205,10 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   this.title = field.default;
                   break;
                 case 'description':
+                  this.description = field.default;
+                  break;
+                case 'tags':
+                  field.options = this.getOrderedOptions(field.options);
                   this.description = field.default;
                   break;
                 case 'relation':
@@ -240,6 +255,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         this.initialFormData = this.form.value;
 
         if (updateContent) {
+          this.isEditPost = true;
           this.tasks = postHelpers.markCompletedTasks(this.tasks, this.post);
 
           this.tasks.forEach((task, index) => {
@@ -283,8 +299,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       this.form.patchValue({
         [key]: {
           id: value.value,
-          caption: response.caption,
-          photo: response.original_file_url,
+          caption: response.result.caption,
+          photo: response.result.original_file_url,
         },
       });
     } catch (error: any) {
@@ -399,22 +415,15 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     switch (field.type) {
       case 'point':
         if (field.required) {
-          this.locationRequired = field.required;
-          if (value.lat === '' || value.lng === '') {
-            this.emptyLocation = true;
-          }
+          validators.push(PointValidator());
         }
         break;
       case 'description':
-        validators.push(Validators.minLength(2), AlphanumericValidatorValidator());
+        validators.push(Validators.minLength(2));
         if (field.required) validators.push(Validators.required);
         break;
       case 'title':
-        validators.push(
-          Validators.required,
-          Validators.minLength(2),
-          AlphanumericValidatorValidator(),
-        );
+        validators.push(Validators.required, Validators.minLength(2));
         break;
       case 'media':
         if (field.required) {
@@ -498,7 +507,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                     this.form.value[field.key]?.caption,
                   );
                   const response: any = await lastValueFrom(uploadObservable);
-                  value.value = response.id;
+                  value.value = response.result.id;
                 } catch (error: any) {
                   throw new Error(`Error uploading file: ${error.message}`);
                 }
@@ -547,7 +556,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       form_id: this.formId,
       locale: 'en_US',
       post_content: this.tasks,
-      post_date: new Date().toISOString(),
       published_to: [],
       title: this.title,
       type: 'report',
@@ -557,7 +565,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     this.preventSubmitIncaseTheresNoBackendValidation();
 
     if (this.postId) {
-      postData.post_date = this.post.post_date || new Date().toISOString();
       this.updatePost(this.postId, postData);
     } else {
       if (!this.atLeastOneFieldHasValidationError) {
@@ -574,12 +581,15 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
           payload: result,
         });
       },
-      error: () => {
+      error: ({ error }) => {
         this.form.enable();
         this.submitted = false;
+        if (error.errors.status === 422) {
+          this.showMessage(`Failed to update a post. ${error.errors.message}`, 'error');
+        }
       },
       complete: async () => {
-        await this.postComplete();
+        // await this.postComplete();
         this.updated.emit();
         if (this.checkRoutes('feed')) this.backNavigation();
       },
@@ -593,6 +603,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private createPost(postData: any) {
     this.postsService.post(postData).subscribe({
       error: ({ error }) => {
+        if (error.errors.status === 422) {
+          this.showMessage(`Failed to create a post. ${error.errors.message}`, 'error');
+        }
         if (error.errors[0].status === 403) {
           this.showMessage(`Failed to create a post. ${error.errors[0].message}`, 'error');
         }
@@ -672,7 +685,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       let queryParams = {};
       if (urlParts[1]) {
         const params = new URLSearchParams(urlParts[1]);
-        queryParams = { mode: params.get('mode') };
+        queryParams = { mode: params.get('mode'), page: params.get('page') };
       }
       this.router.navigate([url], { queryParams: queryParams });
     } else {
@@ -798,5 +811,14 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
 
   public generateSecurityTrustUrl(unsafeUrl: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
+  }
+
+  public clearField(event: any, key: string) {
+    event.stopPropagation();
+    this.form.patchValue({ [key]: null });
+  }
+
+  public isLocationRequired(field: any): boolean {
+    return field?.required || false;
   }
 }

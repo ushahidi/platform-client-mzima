@@ -86,7 +86,7 @@
     </div>
   </ng-template>
 
-  <div class="form-row">
+  <div class="form-row" *ngIf="!isParent">
     <mat-label>{{ 'category.parent_category' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <mat-select
@@ -107,10 +107,11 @@
   <div class="form-row">
     <mat-label>{{ 'app.who_can_see_this_category' | translate }}</mat-label>
     <app-group-checkbox-select
+      *ngIf="!category?.parent?.id"
       [data]="roleOptions"
       formControlName="visible_to"
     ></app-group-checkbox-select>
-    <div class="radio-buttons" *ngIf="form.value.parent">
+    <div class="radio-buttons" *ngIf="category?.parent?.id">
       <p class="radio-buttons__info">
         <mat-icon>group</mat-icon>
         {{ 'category.child_permissions' | translate }}
@@ -152,3 +153,5 @@
     </div>
   </div>
 </form>
+
+<ng-template #rolesRadio> </ng-template>

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$1" = "noop" ]; then
   # do nothing operator
@@ -18,7 +18,38 @@ if [ -f /opt/docker/env.json.template ]; then
 	echo "- Generating env.json from template:"
 	dockerize -template /opt/docker/env.json.template:/usr/share/nginx/html/env.json /bin/true
 	cat /usr/share/nginx/html/env.json
+
+  echo "- Generating config.json for legacy mobile app:"
+
+  jq_props1() {
+    jq -Ms '.[] | {
+      client_id: .oauth_client_id,
+      client_secret: .oauth_client_secret,
+      intercom_app_id: .intercom_appid,
+      mapbox_api_key: .mapbox_api_key,
+      raven_url: .sentry_dsn
+    }' < /usr/share/nginx/html/env.json ;
+  }
+
+  jq_props2() {
+    jq -Ms '.[] | { backend_domain: .backend_url?.domain? }' < /usr/share/nginx/html/env.json ;
+  }
+
+  jq_props3() {
+    jq -Ms '.[] | { backend_url: .backend_url? }' < /usr/share/nginx/html/env.json ;
+  }
+
+  {
+    if [ -n "$(jq_props2)" ]; then
+      jq -Ms '.[0] * .[1]' <(jq_props1) <(jq_props2)
+    else
+      jq -Ms '.[0] * .[1]' <(jq_props1) <(jq_props3)
+    fi ;
+  } > /usr/share/nginx/html/config.json
+
 fi
+
+
 
 # if [ -f config.json.j2 ]; then
 # 	echo "- Generating config.json from template:"

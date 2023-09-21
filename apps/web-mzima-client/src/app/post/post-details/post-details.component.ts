@@ -10,11 +10,14 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { Permissions } from '@enums';
 import {
   CategoryInterface,
+  FormsService,
   MediaService,
   PostContent,
   PostContentField,
+  postHelpers,
   PostResult,
   PostsService,
 } from '@mzima-client/sdk';
@@ -23,7 +26,7 @@ import { lastValueFrom } from 'rxjs';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { dateHelper } from '@helpers';
-import { BreakpointService, SessionService } from '@services';
+import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 
 @Component({
   selector: 'app-post-details',
@@ -43,6 +46,8 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public postId: number;
   public videoUrls: any[] = [];
   public isPostLoading: boolean = true;
+  public isManagePosts: boolean = false;
+  public postNotFound: boolean = false;
 
   constructor(
     protected override sessionService: SessionService,
@@ -53,10 +58,14 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     private metaService: Meta,
     private route: ActivatedRoute,
     private postsService: PostsService,
+    private formsService: FormsService,
     private sanitizer: DomSanitizer,
+    private eventBusService: EventBusService,
   ) {
     super(sessionService, breakpointService);
     this.getUserData();
+    this.checkPermission();
+    this.userId = Number(this.user.userId);
 
     this.route.params.subscribe((params) => {
       if (params['id']) {
@@ -73,6 +82,10 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
 
   loadData(): void {}
 
+  private checkPermission() {
+    this.isManagePosts = this.user.permissions?.includes(Permissions.ManagePosts) ?? false;
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['post']) {
       this.allowed_privileges = this.post?.allowed_privileges ?? '';
@@ -86,13 +99,30 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   private async getPost(id: number): Promise<void> {
     if (!this.postId) return;
     this.post = await this.getPostInformation(id);
-    if (this.post) this.getData(this.post);
+    if (this.post) {
+      this.formsService.getById(this.post.form_id!).subscribe((form) => {
+        this.post!.form = form;
+      });
+      this.isPostLoading = false;
+      this.getData(this.post);
+      this.post.post_content = postHelpers.markCompletedTasks(
+        this.post?.post_content || [],
+        this.post,
+      );
+      this.post.post_content = postHelpers.replaceNewlinesWithBreaks(this.post?.post_content || []);
+      this.post.content = postHelpers.replaceNewlinesInString(this.post.content);
+
+      // TODO: remove me after testing on dev
+      // console.log('💬 post task modify:', this.post);
+    }
   }
 
   private getData(post: PostResult): void {
-    this.preparingMediaField((post.post_content as PostContent[])[0].fields);
-    this.preparingSafeVideoUrls((post.post_content as PostContent[])[0].fields);
-    this.preparingRelatedPosts((post.post_content as PostContent[])[0].fields);
+    for (const content of post.post_content as PostContent[]) {
+      this.preparingMediaField(content.fields);
+      this.preparingSafeVideoUrls(content.fields);
+      this.preparingRelatedPosts(content.fields);
+    }
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {
@@ -102,9 +132,11 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         if (relativeField.value?.value) {
           const url = `${window.location.origin}/feed/${relativeField.value.value}/view?mode=POST`;
           const relative = await this.getPostInformation(relativeField.value.value);
-          const { title } = relative;
-          relativeField.value.postTitle = title;
-          relativeField.value.postUrl = url;
+          if (relative) {
+            const { title } = relative;
+            relativeField.value.postTitle = title;
+            relativeField.value.postUrl = url;
+          }
         }
       });
   }
@@ -115,8 +147,8 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       .map(async (mediaField) => {
         if (mediaField.value?.value) {
           const media = await this.getPostMedia(mediaField.value.value);
-          mediaField.value.mediaSrc = media.original_file_url;
-          mediaField.value.mediaCaption = media.caption;
+          mediaField.value.mediaSrc = media.result.original_file_url;
+          mediaField.value.mediaCaption = media.result.caption;
         }
       });
   }
@@ -136,10 +168,13 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
 
   private async getPostInformation(postId: number): Promise<any> {
     try {
+      this.isPostLoading = true;
       return await lastValueFrom(this.postsService.getById(postId));
-    } catch (err) {
-      console.error(err);
-      return err;
+    } catch (err: any) {
+      this.isPostLoading = false;
+      console.log(err);
+      if (err.status === 404) this.postNotFound = true;
+      return;
     }
   }
 
@@ -148,7 +183,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       return await lastValueFrom(this.mediaService.getById(mediaId));
     } catch (err) {
       console.error(err);
-      return err;
+      return;
     }
   }
 
@@ -179,6 +214,10 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public statusChangedHandle(): void {
     this.getPost(this.postId);
     this.statusChanged.emit();
+    this.eventBusService.next({
+      type: EventType.UpdatedPost,
+      payload: this.post,
+    });
   }
 
   ngOnDestroy() {

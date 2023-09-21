@@ -154,10 +154,14 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
         }));
         this.isOptionsLoading = false;
       },
-      error: (err) => {
+      error: ({ message, status }) => {
         this.isOptionsLoading = false;
-        this.toastService.presentToast({ message: err.message });
-        if (err.message.match(/Http failure response for/) && err.status !== 404) {
+        this.toastService.presentToast({
+          message,
+          layout: 'stacked',
+          duration: 3000,
+        });
+        if (message.match(/Http failure response for/) && status !== 404) {
           setTimeout(() => this.getSavedFilters(), 5000);
         }
       },

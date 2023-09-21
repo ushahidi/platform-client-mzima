@@ -39,14 +39,14 @@
   }
 
   // Hide sidebar & content on smaller devices
-  // Reminder: May or may not need this (if the ngIf directive hides mat-sidenav)
+  // Reminder: Prevents slide/transition in and out of view of the sidebar after the ngIf directive hides mat-sidenav
   @include breakpoint-max($tablet) {
     display: none;
   }
 }
 
 .mobile-page-nav {
-  display: none;
+  display: block;
   position: fixed;
   width: 100%;
   bottom: 0;
@@ -57,8 +57,8 @@
   margin: 0;
   opacity: 1;
 
-  @include breakpoint-max($tablet) {
-    display: block;
+  @include breakpoint-min($tablet) {
+    display: none;
   }
 
   &__add-post-btn {

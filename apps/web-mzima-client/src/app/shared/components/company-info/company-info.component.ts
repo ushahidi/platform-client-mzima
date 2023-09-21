@@ -12,6 +12,7 @@ export class CompanyInfoComponent {
   public logo: string;
   public title: string;
   public description: string;
+  public email: string;
 
   public isDescriptionOpen = true;
 
@@ -20,10 +21,11 @@ export class CompanyInfoComponent {
     this.isDescriptionOpen = isDescriptionOpen ? JSON.parse(isDescriptionOpen) : true;
 
     this.sessionService.deploymentInfo$.pipe(untilDestroyed(this)).subscribe({
-      next: (deploymentInfo) => {
-        this.title = deploymentInfo.title;
-        this.description = deploymentInfo.description;
-        this.logo = deploymentInfo.logo;
+      next: ({ email, title, description, logo }) => {
+        this.email = email;
+        this.title = title;
+        this.description = description;
+        this.logo = logo;
       },
     });
   }

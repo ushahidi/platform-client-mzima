@@ -56,7 +56,7 @@ export class PostEditPage {
   public description: string;
   public title: string;
   public postId: number;
-  private post: any;
+  public post: any;
   public tasks: any[] = [];
   private completeStages: number[] = [];
   public surveyName: string;
@@ -75,6 +75,7 @@ export class PostEditPage {
   public isConnection = true;
   public connectionInfo = '';
   private queryParams: Params;
+  public requireApproval = false;
 
   dateOption: any;
 
@@ -245,6 +246,7 @@ export class PostEditPage {
     this.clearData();
 
     this.selectedSurvey = this.surveyList.find((item: any) => item.id === this.selectedSurveyId);
+    this.requireApproval = this.selectedSurvey?.require_approval;
     this.color = this.selectedSurvey?.color;
     this.tasks = this.selectedSurvey?.tasks;
 
@@ -273,11 +275,6 @@ export class PostEditPage {
             const value = this.getDefaultValues(field);
             field.value = value;
             fields[field.key] = this.createField(field, value);
-
-            if (field.type === 'point') {
-              this.locationRequired = field.required;
-              if (value.lat === '' || value.lng === '') this.emptyLocation = true;
-            }
           }
         });
     }
@@ -378,11 +375,11 @@ export class PostEditPage {
 
   private async handleUpload(key: string, value: any) {
     if (!value?.value) return;
-    if (value.photoUrl) {
+    if (value.mediaSrc) {
       this.updateFormControl(key, {
         id: value.value,
-        caption: value.caption,
-        photo: value.photoUrl,
+        caption: value.mediaCaption,
+        photo: value.mediaSrc,
       });
     } else {
       try {
@@ -390,8 +387,8 @@ export class PostEditPage {
         const response: any = await lastValueFrom(uploadObservable);
         this.updateFormControl(key, {
           id: value.value,
-          caption: response.caption,
-          photo: response.original_file_url,
+          caption: response.result.caption,
+          photo: response.result.original_file_url,
         });
       } catch (error: any) {
         this.form.patchValue({ [key]: null });
@@ -528,6 +525,7 @@ export class PostEditPage {
     } catch (error: any) {
       this.toastService.presentToast({
         message: error,
+        layout: 'stacked',
         duration: 3000,
       });
       console.log(error);
@@ -543,7 +541,6 @@ export class PostEditPage {
       form_id: this.selectedSurveyId,
       locale: 'en_US',
       post_content: this.tasks,
-      post_date: new Date().toISOString(),
       published_to: [],
       title: this.title,
       type: 'report',
@@ -554,8 +551,6 @@ export class PostEditPage {
     if (!this.form.valid) this.form.markAllAsTouched();
 
     this.preventSubmitIncaseTheresNoBackendValidation();
-
-    if (this.postId) postData.post_date = this.post.post_date || new Date().toISOString();
 
     await this.offlineStore(postData);
 
@@ -635,11 +630,7 @@ export class PostEditPage {
     this.postsService.update(postId, postData).subscribe({
       error: () => this.form.enable(),
       complete: async () => {
-        await this.postComplete(
-          'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
-        );
         this.backNavigation();
-        // this.updated.emit();
       },
     });
   }
@@ -857,5 +848,14 @@ export class PostEditPage {
 
   public getDate(value: any, format: string): string {
     return dateHelper.getDateWithTz(value, format);
+  }
+
+  public clearField(event: any, key: string) {
+    event.stopPropagation();
+    this.form.patchValue({ [key]: null });
+  }
+
+  public isLocationRequired(field: any): boolean {
+    return field?.required || false;
   }
 }

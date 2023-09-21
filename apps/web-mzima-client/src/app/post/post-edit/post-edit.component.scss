@@ -180,3 +180,9 @@
     margin-left: 16px;
   }
 }
+
+::ng-deep {
+  .mat-form-field-appearance-outline .mat-form-field-suffix {
+    flex-direction: row;
+  }
+}

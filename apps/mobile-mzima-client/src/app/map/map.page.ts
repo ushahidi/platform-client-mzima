@@ -1,7 +1,7 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostsService, SavedsearchesService } from '@mzima-client/sdk';
-import { NetworkService, SessionService } from '@services';
+import { AlertService, IntercomService, NetworkService, SessionService } from '@services';
 import { MainViewComponent } from './components/main-view.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
 import { FeedViewComponent } from './components/feed-view/feed-view.component';
@@ -22,6 +22,7 @@ export class MapPage extends MainViewComponent implements OnDestroy {
   public isConnection = true;
   private destroy$: Subject<void> = new Subject<void>();
   private getPost$: Subject<boolean> = new Subject<boolean>();
+  OFFLINE_TILES = 200;
 
   constructor(
     protected override router: Router,
@@ -30,6 +31,8 @@ export class MapPage extends MainViewComponent implements OnDestroy {
     protected override savedSearchesService: SavedsearchesService,
     protected override sessionService: SessionService,
     private networkService: NetworkService,
+    private alertService: AlertService,
+    private intercomService: IntercomService,
   ) {
     super(router, route, postsService, savedSearchesService, sessionService);
     this.route.params.subscribe(() => {
@@ -47,6 +50,8 @@ export class MapPage extends MainViewComponent implements OnDestroy {
     this.initFilterListener();
     this.initNetworkListener();
 
+    this.getUserData();
+
     this.getPost$.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.feed.updatePosts();
@@ -54,6 +59,7 @@ export class MapPage extends MainViewComponent implements OnDestroy {
         this.map.getPostsGeoJson();
       },
     });
+    this.intercomService.registerUser(this.user);
   }
 
   loadData(): void {}
@@ -80,6 +86,28 @@ export class MapPage extends MainViewComponent implements OnDestroy {
           }
         },
       });
+  }
+
+  async clearStorage() {
+    const result = await this.alertService.presentAlert({
+      header: `Offline map`,
+      message: `Phone storage currently contains ${this.map.savedOfflineTiles} saved map tiles. Do you want to clear storage?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Clear',
+          role: 'confirm',
+          cssClass: 'primary',
+        },
+      ],
+    });
+
+    if (result.role === 'confirm') {
+      this.map.clearStorage();
+    }
   }
 
   private initFilterListener() {

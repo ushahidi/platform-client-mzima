@@ -84,7 +84,7 @@ export class SupportModalComponent extends BaseComponent {
     this.matDialogRef.close();
   }
 
-  private openUrl(url: string): void {
+  public openUrl(url: string): void {
     window.open(url, '_blank')?.focus();
   }
 }

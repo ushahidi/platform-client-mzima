@@ -26,6 +26,10 @@
   .form-row {
     width: 49%;
     font-size: 16px;
+
+    .icon-close {
+      font-size: 24px;
+    }
   }
 }
 
@@ -40,9 +44,11 @@
   .leaflet-control-geocoder {
     display: none;
   }
+
   .leaflet-control-attribution {
     font-size: 7px;
   }
+
   .leaflet-touch .leaflet-bar a {
     display: flex;
     align-items: center;
@@ -66,10 +72,12 @@
 
   &__item {
     cursor: pointer;
+
     &:not(:last-child) {
       padding-bottom: 5px;
       border-bottom: 1px solid var(--ion-color-step-600);
     }
+
     &:not(:first-child) {
       padding-top: 5px;
     }

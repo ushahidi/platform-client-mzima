@@ -23,6 +23,7 @@ import { IntercomModule } from '@supy-io/ngx-intercom';
 import { RouterModule } from '@angular/router';
 import * as Sentry from '@sentry/angular-ivy';
 import { BrowserTracing } from '@sentry/tracing';
+import { ToolbarModule } from './shared/components/toolbar/toolbar.module';
 
 export function loadSentryFactory(envService: EnvService) {
   return () =>
@@ -31,6 +32,7 @@ export function loadSentryFactory(envService: EnvService) {
         dsn: envService.environment.sentry_dsn,
         debug: envService.environment.sentry_debug_mode,
         environment: envService.environment.sentry_environment || 'default',
+        ignoreErrors: ['Non-Error exception captured'],
         integrations: [
           new BrowserTracing({
             tracePropagationTargets: [],
@@ -130,6 +132,7 @@ export function playerFactory(): any {
     LottieModule.forRoot({ player: playerFactory }),
     MatSidenavModule,
     SpinnerModule,
+    ToolbarModule,
   ],
   providers: [
     loadSentryProvider,

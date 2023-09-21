@@ -52,8 +52,10 @@
       </a>
     </ng-container>
     <hr *ngIf="isLoggedIn || canRegister" />
-    <a class="mobile-menu-button"> {{ 'app.privacy_policy' | translate }} </a>
-    <a class="mobile-menu-button">
+    <a class="mobile-menu-button" href="https://www.ushahidi.com/privacy-policy" target="_blank">
+      {{ 'app.privacy_policy' | translate }}
+    </a>
+    <a class="mobile-menu-button" href="https://www.ushahidi.com/terms-of-service" target="_blank">
       {{ 'app.terms_and_conditions' | translate }}
     </a>
   </div>

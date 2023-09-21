@@ -196,6 +196,7 @@
     </div>
     <div>
       <mzima-client-button
+        type="button"
         fill="outline"
         color="secondary"
         (buttonClick)="cancel()"
@@ -203,7 +204,11 @@
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
-      <mzima-client-button [data-qa]="'btn-webhook-save'" [disabled]="form.invalid || submitted">
+      <mzima-client-button
+        type="submit"
+        [disabled]="form.invalid || submitted"
+        [data-qa]="'btn-webhook-save'"
+      >
         {{ (isCreateWebhook ? 'app.save' : 'app.edit') | translate }}
       </mzima-client-button>
     </div>

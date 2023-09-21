@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, mergeMap } from 'rxjs';
-import { EnvService, SessionService } from '@services';
-import { Router } from '@angular/router';
-import { CONST } from '@constants';
-import { EnvLoader, ResourceService, UserInterface, UsersService } from '@mzima-client/sdk';
+import { EnvService, IntercomService, SessionService } from '@services';
+import {
+  EnvLoader,
+  generalHelpers,
+  ResourceService,
+  UserInterface,
+  UsersService,
+} from '@mzima-client/sdk';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +19,8 @@ export class AuthService extends ResourceService<any> {
     protected envLoader: EnvLoader,
     protected env: EnvService,
     private sessionService: SessionService,
-    private router: Router,
     private userService: UsersService,
+    private intercomService: IntercomService,
   ) {
     super(httpClient, envLoader);
   }
@@ -36,7 +40,7 @@ export class AuthService extends ResourceService<any> {
       grant_type: 'password',
       client_id: this.env.environment.oauth_client_id,
       client_secret: this.env.environment.oauth_client_secret,
-      scope: CONST.CLAIMED_USER_SCOPES.join(' '),
+      scope: generalHelpers.CONST.CLAIMED_USER_SCOPES.join(' '),
     };
     return super.post(payload).pipe(
       mergeMap(async (authResponse) => {
@@ -99,5 +103,6 @@ export class AuthService extends ResourceService<any> {
     console.log('logout');
     this.sessionService.clearSessionData();
     this.sessionService.clearUserData();
+    this.intercomService.logoutIntercom();
   }
 }

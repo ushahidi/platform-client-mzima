@@ -1,5 +1,16 @@
 <ion-content class="page ion-padding-vertical" [fullscreen]="true">
-  <ion-title class="page-title ion-text-center ion-margin-bottom">Welcome back!</ion-title>
+  <div class="page-head ion-padding-horizontal ion-text-center ion-margin-bottom">
+    <ion-title class="page-title" *ngIf="!isPrivate; else loginToPrivateDeployment">
+      Welcome back!
+    </ion-title>
+    <ng-template #loginToPrivateDeployment>
+      <ion-title class="page-title"> Log in to private Deployment </ion-title>
+      <ion-text class="page-head__info">
+        Please enter your login details to access the deployment. Or contact the Admin
+        <a href="mailto:{{ adminEmail }}">{{ adminEmail }}</a>
+      </ion-text>
+    </ng-template>
+  </div>
   <div class="main ion-padding-horizontal">
     <app-deployment-info (deploymentClick)="chooseDeployment()"></app-deployment-info>
     <form class="form" novalidate [formGroup]="form" (ngSubmit)="login()">
@@ -40,9 +51,25 @@
 
       <div class="bottom-panel">
         <app-button type="submit" [disabled]="form.invalid || form.disabled"> Log in </app-button>
-        <app-button class="ion-margin-top" fill="clear" color="medium" routerLink="/">
+        <app-button
+          fill="clear"
+          color="medium"
+          routerLink="/"
+          *ngIf="!isPrivate; else cancelButton"
+          class="ion-margin-top"
+        >
           Skip for now
         </app-button>
+        <ng-template #cancelButton>
+          <app-button
+            fill="clear"
+            color="medium"
+            class="ion-margin-top"
+            (buttonClick)="chooseDeployment()"
+          >
+            Cancel
+          </app-button>
+        </ng-template>
       </div>
     </form>
   </div>
@@ -52,7 +79,7 @@
   class="forgot-password-modal"
   [isOpen]="isForgotPasswordModalOpen"
   title="Password recovery"
-  (modalClose)="isForgotPasswordModalOpen = false"
+  (modalClose)="forgotPasswordModalCloseHandle()"
 >
   <div class="forgot-password-modal__info">
     <ion-text class="forgot-password-modal__title">Forgot your password?</ion-text>

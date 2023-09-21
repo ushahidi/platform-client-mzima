@@ -9,10 +9,14 @@ import { dateHelper } from '@helpers';
 })
 export class PostContentComponent {
   @Input() postContent: PostContent[];
+  @Input() userId: number;
+  @Input() postUserId: number;
+  @Input() postStatus: string;
   @Input() categories: CategoryInterface[];
   @Input() isConnection: boolean;
   @Input() videoUrls: any[] = [];
   @Input() isMediaLoading: boolean;
+  @Input() isManagePosts: boolean;
 
   public isParentCategory(
     categories: CategoryInterface[] | undefined,

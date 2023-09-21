@@ -10,7 +10,22 @@
   --border-radius: 24px;
 
   &__img {
+    display: flex;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
     margin: 0 16px 0 0;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    letter-spacing: 0.15px;
+    justify-content: center;
+    text-transform: uppercase;
+
+    &--placeholder {
+      background: var(--color);
+    }
   }
 
   &__title {
@@ -28,5 +43,6 @@
   &__icon {
     font-size: 24px;
     margin: 0 0 0 16px;
+    color: var(--ion-color-base);
   }
 }

@@ -68,6 +68,11 @@ export class UsersService extends ResourceService<any> {
     return super.update(id, params, config);
   }
 
+  public postUserSettings(userId: string, params: any) {
+    const config = `${userId}/settings`;
+    return super.post(params, config);
+  }
+
   public getUserById(id: string) {
     return super.get(id);
   }

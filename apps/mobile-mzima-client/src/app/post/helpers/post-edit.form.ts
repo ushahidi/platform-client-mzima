@@ -1,5 +1,10 @@
 import { FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
-import { AlphanumericValidator, FormValidator, PhotoRequiredValidator } from '@validators';
+import {
+  AlphanumericValidator,
+  FormValidator,
+  PhotoRequiredValidator,
+  PointValidator,
+} from '@validators';
 
 export class PostEditForm {
   private formBuilder: FormBuilder;
@@ -20,6 +25,11 @@ export class PostEditForm {
 
     const validators: ValidatorFn[] = [];
     switch (field.type) {
+      case 'point':
+        if (field.required) {
+          validators.push(PointValidator());
+        }
+        break;
       case 'description':
         validators.push(Validators.minLength(2), AlphanumericValidator());
         if (field.required) validators.push(Validators.required);

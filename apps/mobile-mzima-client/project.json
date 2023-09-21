@@ -40,6 +40,7 @@
           "ion2-calendar",
           "leaflet",
           "leaflet.markercluster",
+          "leaflet.offline",
           "localforage",
           "lodash",
           "xregexp"

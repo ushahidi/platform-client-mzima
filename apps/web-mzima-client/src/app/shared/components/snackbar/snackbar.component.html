@@ -13,6 +13,7 @@
 
     <div class="snackbar__buttons" *ngIf="data.buttons?.length">
       <mzima-client-button
+        class="button"
         *ngFor="let button of data.buttons"
         [color]="button.color ?? 'primary'"
         (buttonClick)="closeSnackbar(button.handler)"

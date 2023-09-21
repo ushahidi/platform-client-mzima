@@ -1,11 +1,11 @@
 <div class="form-head-panel">
-  <h1 *ngIf="isDesktop$ | async">{{ 'data_sources.data_sources' | translate }}</h1>
+  <h1 *ngIf="isDesktop$ | async">{{ 'settings.data_sources.data_sources' | translate }}</h1>
   <mzima-client-button
     [routerLink]="['create']"
-    *ngIf="isAllProvidersAdded"
+    *ngIf="!isAllProvidersAdded"
     [data-qa]="'btn-add-provider'"
   >
-    <span>{{ 'data_sources.add_source' | translate }}</span>
+    <span>{{ 'settings.data_sources.add_source' | translate }}</span>
     <mat-icon icon svgIcon="plus"></mat-icon>
   </mzima-client-button>
 </div>
@@ -14,11 +14,10 @@
     <a
       matRipple
       class="data-source-item"
-      *ngIf="provider.value"
-      [routerLink]="['update', provider.label]"
-      [data-qa]="provider.label"
+      [routerLink]="['update', provider.id]"
+      [data-qa]="provider.id"
     >
-      {{ provider.label | titlecase }}
+      {{ provider.name }}
     </a>
   </div>
 </ng-container>

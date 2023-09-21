@@ -117,6 +117,8 @@ interface PostTag {
 interface PostForm {
   id: number;
   url: string;
+  description?: string;
+  name?: string;
 }
 
 export interface PostContent {
@@ -131,6 +133,7 @@ export interface PostContent {
   task_is_internal_only: boolean;
   translations: any[];
   type: string;
+  completed?: boolean;
 }
 
 interface PostStatsItem {

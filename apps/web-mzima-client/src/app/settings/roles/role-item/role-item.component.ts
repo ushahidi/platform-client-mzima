@@ -1,13 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CONST } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, Observable } from 'rxjs';
 import { BreakpointService } from '@services';
 import { Location } from '@angular/common';
-import { PermissionsService, RolesService, RoleResult } from '@mzima-client/sdk';
+import { PermissionsService, RolesService, RoleResult, generalHelpers } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 
 const PERMISSIONS = {
@@ -61,7 +60,7 @@ export class RoleItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userRole = localStorage.getItem(`${CONST.LOCAL_STORAGE_PREFIX}role`) || '';
+    this.userRole = localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}role`) || '';
     this.isUpdate = !!this.route.snapshot.paramMap.get('id');
     const roleId = this.route.snapshot.paramMap.get('id') || '';
     const role$ = this.rolesService.getRoleById(roleId);
