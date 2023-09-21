@@ -512,7 +512,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
               if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
                 try {
                   this.maxSizeError = false;
-                  if (this.maxImageSize < this.form.value[field.key].photo.size) {
+                  if (this.maxImageSize > this.form.value[field.key].photo.size) {
                     const uploadObservable = this.mediaService.uploadFile(
                       this.form.value[field.key]?.photo,
                       this.form.value[field.key]?.caption,
