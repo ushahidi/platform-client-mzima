@@ -108,7 +108,9 @@
     </div>
     <div class="create-collection-form__group">
       <ion-title class="create-collection-form__title">Displaying</ion-title>
-      <app-toggle type="item" formControlName="featured">Featured</app-toggle>
+      <app-toggle type="item" formControlName="featured" (toggleChange)="featuredChange($event)"
+        >Featured</app-toggle
+      >
     </div>
     <div class="create-collection-form__group" *ngIf="roleOptions">
       <ion-title class="create-collection-form__title">Who can see this?</ion-title>
@@ -137,8 +139,23 @@
     >
       Submit
     </app-button>
-    <app-button class="footer__button" fill="outline" color="medium" (buttonClick)="close()">
+    <app-button
+      class="footer__button"
+      fill="outline"
+      color="medium"
+      (buttonClick)="close()"
+      *ngIf="!collectionToEdit"
+    >
       Cancel
+    </app-button>
+    <app-button
+      class="footer__button"
+      fill="outline"
+      color="danger"
+      (buttonClick)="deleteCollection()"
+      *ngIf="collectionToEdit"
+    >
+      Delete
     </app-button>
   </ion-buttons>
 </app-modal>

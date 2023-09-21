@@ -24,6 +24,7 @@ export interface SiteConfigInterface {
   first_login?: boolean;
   id?: string;
   image_header?: string;
+  image_max_size?: string;
   language?: string;
   name?: string;
   tier?: string;

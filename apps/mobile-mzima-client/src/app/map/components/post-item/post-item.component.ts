@@ -7,7 +7,7 @@ import {
   postStatusChangedHeader,
   postStatusChangedMessage,
 } from '@constants';
-import { ActionSheetButton, ModalController } from '@ionic/angular';
+import { ActionSheetButton, ModalController, ActionSheetController } from '@ionic/angular';
 import {
   AlertService,
   DeploymentService,
@@ -38,7 +38,6 @@ export class PostItemComponent implements OnInit {
   public media: any;
   public mediaId?: number;
   public isMediaLoading: boolean;
-  public isActionsOpen = false;
   public actionSheetButtons?: ActionSheetButton[] = getPostItemActions();
   public isConnection = true;
 
@@ -52,6 +51,7 @@ export class PostItemComponent implements OnInit {
     private shareService: ShareService,
     private deploymentService: DeploymentService,
     private modalController: ModalController,
+    private actionSheetController: ActionSheetController,
     private router: Router,
   ) {}
 
@@ -63,11 +63,20 @@ export class PostItemComponent implements OnInit {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
       next: ({ role, userId }) => {
         if (role === 'admin') {
-          this.actionSheetButtons = getPostItemActions(PostItemActionTypeUserRole.ADMIN);
+          this.actionSheetButtons = getPostItemActions(
+            PostItemActionTypeUserRole.ADMIN,
+            this.post.status,
+          );
         } else if (String(userId) === String(this.post.user_id)) {
-          this.actionSheetButtons = getPostItemActions(PostItemActionTypeUserRole.AUTHOR);
+          this.actionSheetButtons = getPostItemActions(
+            PostItemActionTypeUserRole.AUTHOR,
+            this.post.status,
+          );
         } else if (role === 'member') {
-          this.actionSheetButtons = getPostItemActions(PostItemActionTypeUserRole.USER);
+          this.actionSheetButtons = getPostItemActions(
+            PostItemActionTypeUserRole.USER,
+            this.post.status,
+          );
         } else {
           this.actionSheetButtons = getPostItemActions();
         }
@@ -94,7 +103,6 @@ export class PostItemComponent implements OnInit {
   }
 
   public makeAction(ev: any) {
-    this.isActionsOpen = false;
     const role = ev.detail.role;
     if (role === 'cancel' || !ev.detail.data) return;
     const action: PostItemActionType = ev.detail.data.action;
@@ -193,10 +201,22 @@ export class PostItemComponent implements OnInit {
     }
   }
 
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      mode: 'ios',
+      header: 'Post Actions',
+      buttons: this.actionSheetButtons!,
+    });
+    actionSheet.onWillDismiss().then((event) => {
+      this.makeAction({ detail: event });
+    });
+    await actionSheet.present();
+  }
+
   public showOptions(ev: Event): void {
     ev.preventDefault();
     ev.stopPropagation();
-    this.isActionsOpen = true;
+    this.presentActionSheet();
   }
 
   public preventClick(ev: Event): void {

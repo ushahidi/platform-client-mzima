@@ -7,6 +7,7 @@ export const STORAGE_KEYS = {
   DEPLOYMENTS: 'deployments',
   PENDING_POST_KEY: 'pendingPost',
   COLLECTIONS: 'collections',
+  PENDING_COLLECTIONS: 'pendingCollections',
   SURVEYS: 'surveys',
   POSTS: 'posts',
   GEOJSONPOSTS: 'geoJsonPosts',

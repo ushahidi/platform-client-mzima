@@ -12,18 +12,10 @@ export class AuthInterceptor implements HttpInterceptor {
     private authService: AuthService,
   ) {}
 
-  isTokenlessRequest(req: HttpRequest<any>): boolean {
-    if (req.method === 'GET') {
-      if (req.url.includes('site') || req.url.includes('map') || req.url.includes('features'))
-        return true;
-    }
-    return false;
-  }
-
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const authToken = this.session.currentAuthToken;
     const authTokenType = this.session.currentAuthTokenType;
-    if (authToken && !this.isTokenlessRequest(req)) {
+    if (authToken) {
       req = req.clone({
         setHeaders: {
           Authorization: `${authTokenType} ${authToken}`,
