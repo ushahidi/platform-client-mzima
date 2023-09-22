@@ -131,6 +131,7 @@ export class PostHeadComponent extends BaseComponent {
         postId: this.post.id,
         title: this.post.title,
         description: this.post.content,
+        label: this.translate.instant('share.share_post'),
       },
     });
   }
