@@ -41,6 +41,7 @@ export class ShareAndDonateComponent extends BaseComponent {
       data: {
         title: this.translate.instant(this.pageTitle),
         description: this.translate.instant(this.pageTitle),
+        label: this.translate.instant('share.share_deployment'),
       },
     });
   }
