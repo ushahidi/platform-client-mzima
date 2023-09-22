@@ -34,6 +34,7 @@ import { PostHeadComponent } from './post-head/post-head.component';
 import { MzimaUiModule } from '@mzima-client/mzima-ui';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { PostNotFoundComponent } from './post-not-found/post-not-found.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     TwitterWidgetComponent,
     PostHeadComponent,
     ImageUploaderComponent,
+    PostNotFoundComponent,
   ],
   imports: [
     CommonModule,
@@ -78,6 +80,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MzimaUiModule,
     SortByFieldModule,
   ],
-  exports: [PostPreviewComponent, PostDetailsComponent, PostMetadataComponent, PostEditComponent],
+  exports: [
+    PostPreviewComponent,
+    PostDetailsComponent,
+    PostMetadataComponent,
+    PostEditComponent,
+    PostNotFoundComponent,
+  ],
 })
 export class PostModule {}
