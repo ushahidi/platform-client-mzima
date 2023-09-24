@@ -1,0 +1,13 @@
+<ng-container>
+  <p
+    *ngIf="!is_ManagePosts && !is_PostLoading && !post_NotFound"
+    class="cant-see-post"
+    [innerHTML]="'notify.post.can_t_view_this_post' | translate"
+  ></p>
+  <ng-container *ngIf="post_NotFound && !is_PostLoading">
+    <div class="cant-see-post">
+      <p [innerHTML]="'notify.post.post_not_found' | translate"></p>
+      <img src="assets/images/posts/404-post-not-found.svg" alt="Post Not Found SVG image" />
+    </div>
+  </ng-container>
+</ng-container>
