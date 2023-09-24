@@ -1,0 +1,187 @@
+<div
+  class="post"
+  [ngClass]="{ 'post--feed': feedView }"
+  [ngStyle]="{ '--color': color || 'var(--color-neutral-100)' }"
+>
+  <ng-container *ngIf="post; else spinner">
+    <div class="post__head">
+      <app-post-head
+        *ngIf="post.id"
+        [post]="post"
+        [feedView]="feedView"
+        (edit)="edit.emit()"
+        (refresh)="refresh.emit()"
+        [editable]="post.allowed_privileges.includes('update')"
+        [deleteable]="post.allowed_privileges.includes('delete')"
+        (statusChanged)="statusChangedHandle()"
+      >
+      </app-post-head>
+    </div>
+
+    <div class="post__twitter" *ngIf="post.source === 'Twitter' && post.data_source_message_id">
+      <app-twitter-widget [id]="post.data_source_message_id"></app-twitter-widget>
+    </div>
+
+    <div class="post__survey" *ngIf="post.form">
+      <h3>{{ post.form.name }}</h3>
+      <p>{{ post.form.description }}</p>
+    </div>
+
+    <h2 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h2>
+
+    <div class="post__description" *ngIf="post.title?.length && post.content?.length">
+      <p [innerHTML]="post.content"></p>
+    </div>
+
+    <ng-container *ngFor="let post_content of post.post_content; let i = index">
+      <ng-container
+        *ngIf="
+          isManagePosts ||
+          userId === post?.user_id ||
+          (i === 0 && post_content?.completed) ||
+          (i !== 0 &&
+            post_content?.completed &&
+            ((post_content?.show_when_published && post.status === 'published') ||
+              !post_content?.show_when_published))
+        "
+      >
+        <ng-container *ngFor="let field of post_content.fields | sortByField : 'priority' : 'asc'">
+          <div
+            *ngIf="field.input !== 'tags' ? field.value : field.value?.length"
+            class="post__group"
+          >
+            <h3>{{ field.label }}</h3>
+
+            <ng-container *ngIf="field.input === 'tags'">
+              <ng-container *ngFor="let category of field.value">
+                <div class="category" *ngIf="!isParentCategory(post.categories, category.id)">
+                  <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
+                  {{ category.tag }}
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'location'">
+              <app-map-with-marker
+                class="map"
+                [marker]="field.value.value"
+                [color]="color || 'var(--color-neutral-100)'"
+                [type]="post.source?.toLowerCase() || 'default'"
+                tabindex="-1"
+              ></app-map-with-marker>
+              <p>{{ field.value.value.lat }} {{ field.value.value.lon }}</p>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'date'">
+              <p>{{ getDate(field.value.value, 'LL') }}</p>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'datetime'">
+              <p>{{ getDate(field.value.value, 'LL LTS') }}</p>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'time'">
+              <p>{{ getDate(field.value.value, 'LTS') }}</p>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'radio'">
+              <p>{{ field.value.value || '-' }}</p>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'number'">
+              <p>{{ field.value.value }}</p>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'text'">
+              <ng-container *ngIf="field.label === 'Media Link'">
+                <a *ngIf="field.value.value" [href]="field.value.value" target="_blank">{{
+                  field.value.value
+                }}</a>
+                <p *ngIf="!field.value.value">-</p>
+              </ng-container>
+              <ng-container *ngIf="field.label !== 'Media Link'">
+                <p>{{ field.value.value || '-' }}</p>
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'textarea'">
+              <p [innerHTML]="field.value.value"></p>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'checkbox'">
+              <span *ngIf="!field.options.length">-</span>
+              <ul class="post--checkbox-list" *ngIf="field.value?.value?.length">
+                <li *ngFor="let option of field.value.value">
+                  <p>{{ option }}</p>
+                </li>
+              </ul>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'video'">
+              <span *ngIf="!field.value.value">-</span>
+              <div *ngIf="field.value.value">
+                <iframe
+                  id="player"
+                  [src]="getVideoUrlForField(field)"
+                  width="400"
+                  height="250"
+                ></iframe>
+                <div>
+                  <a [href]="field.value.value" target="_blank">{{ field.value.value }}</a>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'upload' && field.value.mediaSrc">
+              <span *ngIf="!field.value.value">-</span>
+              <div class="post__media">
+                <img *ngIf="field.value.value" [src]="field.value.mediaSrc" [alt]="post.title" />
+                <span *ngIf="field.value?.mediaCaption?.length" class="post__media__caption">{{
+                  field.value.mediaCaption
+                }}</span>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'relation'">
+              <a [href]="field.value.postUrl" target="_blank">
+                {{ field.value.postTitle }}
+              </a>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'select'">
+              <p>{{ field.value.value || '-' }}</p>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'markdown'">
+              <span class="code-container">
+                <code>{{ field.value.value || '-' }}</code>
+              </span>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+
+    <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
+  </ng-container>
+</div>
+
+<ng-template #spinner>
+  <app-spinner *ngIf="isPostLoading" class="spinner"></app-spinner>
+  <p
+    *ngIf="!isManagePosts && !isPostLoading && !postNotFound"
+    class="cant-see-post"
+    [innerHTML]="'notify.post.can_t_view_this_post' | translate"
+  ></p>
+  <p
+    *ngIf="postNotFound && !isPostLoading"
+    class="cant-see-post"
+    [innerHTML]="'notify.post.post_not_found' | translate"
+  ></p>
+  <ng-container *ngIf="postNotFound && !isPostLoading">
+    <div class="cant-see-post">
+      <p [innerHTML]="'notify.post.post_not_found' | translate"></p>
+      <img src="assets/images/posts/404-post-not-found.svg" alt="Post Not Found SVG image" />
+    </div>
+  </ng-container>
+</ng-template>

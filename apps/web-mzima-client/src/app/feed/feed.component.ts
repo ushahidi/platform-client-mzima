@@ -2,13 +2,13 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Permissions } from '@enums';
 import { searchFormHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
-import { filter, forkJoin, Subject, debounceTime } from 'rxjs';
+import { forkJoin, Subject, debounceTime } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 import { MainViewComponent } from '@shared';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
@@ -114,25 +114,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.checkDesktop();
     this.initGetPostsListener();
 
-    if (!this.isDesktop) {
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: {
-          mode: FeedMode.Tiles,
-        },
-        queryParamsHandling: 'merge',
-      });
-    } else {
-      this.postDetailsModal?.close();
-    }
-
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-      this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
-      if (this.activePostId && !this.isDesktop) {
-        this.showPostModal(this.activePostId);
-      }
-    });
-
     this.route.params.subscribe(() => {
       this.initCollection();
     });
@@ -141,7 +122,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       next: (params: Params) => {
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
-        this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedMode.Tiles;
+        this.mode = params['mode'];
         this.posts = [];
         this.getPostsSubject.next({ params: this.params });
       },
@@ -188,16 +169,16 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       },
     });
 
-    window.addEventListener('resize', () => {
-      this.masonryOptions.columnWidth =
-        this.mode === FeedMode.Tiles
-          ? window.innerWidth > 1640
-            ? 3
-            : window.innerWidth <= 768
-            ? 1
-            : 2
-          : 1;
-    });
+    // window.addEventListener('resize', () => { // What does this do on resize?
+    //   this.masonryOptions.columnWidth =
+    //     this.mode === FeedMode.Tiles
+    //       ? window.innerWidth > 1640
+    //         ? 3
+    //         : window.innerWidth <= 768
+    //         ? 1
+    //         : 2
+    //       : 1;
+    // });
 
     this.sessionService.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
       next: (isMainFiltersHidden: boolean) => {
@@ -315,54 +296,19 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.getPostsSubject.next({ params: this.params });
   }
 
-  public showPostDetails(post: any): void {
-    if (this.isDesktop) {
-      if (this.collectionId) {
-        this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'view'], {
-          queryParams: {
-            mode: FeedMode.Post,
-          },
-          queryParamsHandling: 'merge',
-        });
-      } else {
-        this.router.navigate(['feed', post.id, 'view'], {
-          queryParams: {
-            mode: FeedMode.Post,
-          },
-          queryParamsHandling: 'merge',
-        });
-      }
-    } else {
-      this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-        width: '100%',
-        maxWidth: 576,
-        data: { post: post, color: post.color, twitterId: post.data_source_message_id },
-        height: 'auto',
-        maxHeight: '90vh',
-        panelClass: ['modal', 'post-modal'],
-      });
+  public navigateToPostRouterOutletChildComponent(post: any): void {
+    const route = {
+      view: ['feed', post.id, 'view'],
+      collection: ['/feed', 'collection', this.collectionId, post.id, 'view'],
+    };
 
-      this.postDetailsModal.afterClosed().subscribe((data) => {
-        if (data?.update) {
-          this.getPostsSubject.next({ params: this.params });
-        }
-        if (this.collectionId) {
-          this.router.navigate(['/feed', 'collection', this.collectionId], {
-            queryParams: {
-              page: this.currentPage,
-            },
-            queryParamsHandling: 'merge',
-          });
-        } else {
-          this.router.navigate(['feed'], {
-            queryParams: {
-              page: this.currentPage,
-            },
-            queryParamsHandling: 'merge',
-          });
-        }
-      });
-    }
+    const toRoute = this.collectionId ? route.collection : route.view;
+    this.router.navigate(toRoute, {
+      queryParams: {
+        mode: FeedMode.Post,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 
   public toggleBulkOptions(state: boolean): void {
@@ -559,20 +505,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         page: this.currentPage,
       },
       queryParamsHandling: 'merge',
-    });
-  }
-
-  public showPostModal(id: number): void {
-    this.postsService.getById(id).subscribe({
-      next: (post: any) => {
-        this.showPostDetails(post);
-      },
-      error: (err) => {
-        // console.log(err.status);
-        if (err.status === 404) {
-          this.router.navigate(['/not-found']);
-        }
-      },
     });
   }
 

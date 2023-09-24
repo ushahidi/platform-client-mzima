@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PostDetailsComponent, PostEditComponent } from '@post';
+import { PostOutletComponent, PostEditComponent } from '@post';
 import { FeedComponent } from './feed.component';
 
 const routes: Routes = [
@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: ':id/view',
-        component: PostDetailsComponent,
+        component: PostOutletComponent,
         data: {
           ogTitle: 'nav.feed',
         },
@@ -37,7 +37,7 @@ const routes: Routes = [
         children: [
           {
             path: ':id/view',
-            component: PostDetailsComponent,
+            component: PostOutletComponent,
             data: {
               ogTitle: 'nav.feed',
             },

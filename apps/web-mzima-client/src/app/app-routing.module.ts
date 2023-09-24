@@ -10,6 +10,7 @@ import {
 import { PageNotFoundComponent } from './shared/components';
 import { UshahidiPageTitleStrategy } from '@services';
 import { AccessDeniedComponent } from './shared/components/access-denied/access-denied.component';
+import { FeedComponent } from './feed/feed.component';
 
 const routes: Routes = [
   {
@@ -110,15 +111,7 @@ const routes: Routes = [
   {
     path: 'posts/:id',
     canActivate: [RedirectGuard],
-    component: PageNotFoundComponent,
-  },
-  {
-    path: 'not-found',
-    component: PageNotFoundComponent,
-    data: {
-      breadcrumb: 'app.page-not-found',
-      ogTitle: 'app.page-not-found',
-    },
+    component: FeedComponent,
   },
   {
     path: '**',

@@ -27,6 +27,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { PostEditComponent } from './post-edit/post-edit.component';
 import { LocationSelectComponent } from './location-select/location-select.component';
 import { PostPreviewComponent } from './post-preview/post-preview.component';
+import { PostOutletComponent } from './post-outlet/post-outlet.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { PostMetadataComponent } from './post-metadata/post-metadata.component';
 import { TwitterWidgetComponent } from './twitter-widget/twitter-widget.component';
@@ -41,6 +42,7 @@ import { PostNotFoundComponent } from './post-not-found/post-not-found.component
     PostEditComponent,
     LocationSelectComponent,
     PostPreviewComponent,
+    PostOutletComponent,
     PostDetailsComponent,
     PostMetadataComponent,
     TwitterWidgetComponent,
@@ -82,6 +84,7 @@ import { PostNotFoundComponent } from './post-not-found/post-not-found.component
   ],
   exports: [
     PostPreviewComponent,
+    PostOutletComponent,
     PostDetailsComponent,
     PostMetadataComponent,
     PostEditComponent,
