@@ -2,6 +2,7 @@ import { ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { Component, Input, Output } from '@angular/core';
 import { formHelper, validateFile } from '@helpers';
 import { NotificationService } from '@services';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-file-uploader',
@@ -17,8 +18,11 @@ export class FileUploaderComponent {
   @Output() delete = new EventEmitter();
   @ViewChild('input') public input: ElementRef<HTMLInputElement>;
 
-  constructor(private notificationService: NotificationService) {}
-
+  constructor(
+    private notificationService: NotificationService,
+    private translateService: TranslateService,
+  ) {}
+  
   uploadFile($event: any) {
     if (!$event.target.files[0]) return;
     if (validateFile($event.target.files[0])) {
@@ -35,7 +39,9 @@ export class FileUploaderComponent {
       };
       reader.readAsDataURL($event.target.files[0]);
     } else {
-      this.notificationService.showError('post.media.error_in_upload');
+      this.notificationService.showError(
+        this.translateService.instant('post.media.error_in_upload'),
+      );
     }
   }
 
