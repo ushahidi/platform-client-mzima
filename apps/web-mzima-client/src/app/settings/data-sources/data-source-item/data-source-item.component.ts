@@ -35,7 +35,8 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
   public onCreating: boolean;
   public submitted = false;
   providersData: any;
-  cloneProviders: any;
+  cloneProviders: any[];
+  tableData: any;
 
   constructor(
     protected override sessionService: SessionService,
@@ -69,6 +70,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
   loadData(): void {}
 
   private getAvailableProviders(providers: any) {
+    // TODO: REWORK
     const tempProviders: any[] = [];
     for (const key in providers) {
       tempProviders.push({
@@ -78,6 +80,10 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
       });
     }
     return arrayHelpers.sortArray(tempProviders.filter((provider) => !provider.type));
+  }
+
+  objectToArray(obj: any) {
+    return Object.keys(obj).map((key) => ({ label: key, value: obj[key] }));
   }
 
   private getProviders(): void {
@@ -97,7 +103,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
       .getDataSource()
       .pipe(switchMap((dataSources) => this.configService.getProvidersData(dataSources)));
     const surveys$ = this.surveysService.get();
-    // const dataSources$ = this.dataSourcesService.getDataSource();
+    // const dataSources$ = this.configService.getAllProvidersData();
 
     combineLatest([providers$, surveys$]).subscribe({
       next: ([providers, surveys]) => {
@@ -105,10 +111,15 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
         //   (dataSource: DataSourceResult) => dataSource.id !== 'gmail',
         // );
         // this.providersData = this.removeProvider(providersData, 'gmail');
+        this.surveyList = surveys.results;
         this.providersData = arrayHelpers.sortArray(providers, 'name');
+        this.providersData.map((p: any) => {
+          p.visible_survey = !!p.params.form_id;
+          p.selected_survey = this.surveyList.find((s) => s.id === p.params.form_id);
+        });
         this.cloneProviders = _.cloneDeep(this.providersData);
         // this.availableProviders = this.getAvailableProviders(this.providersData);
-        this.surveyList = surveys.results;
+
         // this.dataSourceList = this.dataSourcesService.combineDataSource(
         //   this.providersData,
         //   dataSourcesResult,
@@ -146,9 +157,11 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
     this.formsService.getAttributes(survey.id, queryParams).subscribe({
       next: (response) => {
         this.surveyAttributesList = response;
-        for (const el of this.provider.inbound_fields) {
+        this.tableData = this.objectToArray(this.provider.inbound_fields);
+        for (const el of this.tableData) {
+          this.addControlsToForm(el.label, this.fb.control(''));
           this.form.patchValue({
-            [el.label]: this.checkKeyFields(el.value),
+            [el.label]: this.checkKeyFields(this.provider.params[el.label]),
           });
         }
       },
@@ -195,7 +208,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
 
   public async turnOffDataSource(event: any): Promise<void> {
     if (!event.checked) {
-      this.cloneProviders[this.provider.id].enabled = event.checked;
+      this.cloneProviders.find((p) => p.id === this.provider.id).enabled = event.checked;
       const confirmed = await this.confirmModalService.open({
         title: this.translate.instant(`settings.data_sources.provider_name`, {
           providerName: this.provider.name,
@@ -206,67 +219,84 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
         confirmButtonText: this.translate.instant('app.yes_delete'),
         cancelButtonText: this.translate.instant('app.no_go_back'),
       });
-      if (!confirmed) {
-        this.provider.enabled = true;
-        return;
+      // if (!confirmed) {
+      //   this.provider.enabled = true;
+      //   return;
+      // }
+      if (confirmed) {
+        this.configService
+          .updateProviderById(this.form.value.id, this.prepareAPI(false)[this.form.value.id])
+          .subscribe({
+            next: () => this.router.navigate(['/settings/data-sources']),
+            error: () => (this.submitted = false),
+          });
       }
     }
 
-    this.cloneProviders[this.provider.id].enabled = event.checked;
+    this.cloneProviders.find((p) => p.id === this.provider.id).enabled = event.checked;
   }
 
   public saveProviderData(): void {
     this.submitted = true;
-    if (this.form.value.form_id) {
-      for (const field of this.provider.inbound_fields) {
-        this.form.patchValue({
-          [field.label]: this.fillForApi(
-            this.filterAttributes('key', this.form.controls[field.label].value),
-          ),
-        });
-      }
-    }
-
-    if (this.cloneProviders[this.form.value.id]) {
-      for (const providerKey in this.cloneProviders[this.form.value.id].params) {
-        this.cloneProviders[this.form.value.id].params[providerKey] = this.form.value[providerKey];
-      }
-      if (this.provider.visible_survey) {
-        this.cloneProviders[this.form.value.id].form_id = this.form.value.form_id.id;
-        if (this.cloneProviders[this.form.value.id].form_id) {
-          const obj: any = {};
-          for (const field of this.provider.inbound_fields) {
-            obj[field.key] = this.form.value[field.label];
-          }
-          this.cloneProviders[this.form.value.id].inbound_fields = obj;
-        }
-      } else {
-        delete this.cloneProviders[this.form.value.id].form_id;
-        delete this.cloneProviders[this.form.value.id].inbound_fields;
-      }
-    } else {
-      const provider: any = {};
-      provider[this.form.value.id] = this.form.value;
-      if (this.provider.visible_survey) {
-        provider[this.form.value.id].form_id = this.form.value.form_id.id;
-        if (provider[this.form.value.id].form_id) {
-          const obj: any = {};
-          for (const field of this.provider.inbound_fields) {
-            obj[field.key] = this.form.value[field.label];
-          }
-          provider[this.form.value.id].inbound_fields = obj;
-        }
-      } else {
-        delete provider[this.form.value.id].form_id;
-        delete provider[this.form.value.id].inbound_fields;
-      }
-      this.cloneProviders = { ...provider };
-    }
-
-    this.configService.updateProviders(this.cloneProviders).subscribe({
+    // if (this.form.value.form_id) {
+    //   for (const field of this.test) {
+    //     this.form.patchValue({
+    //       [field.label]: this.fillForApi(
+    //         this.filterAttributes('key', this.form.controls[field.label].value),
+    //       ),
+    //     });
+    //   }
+    // }
+    const preparedForAPI = this.prepareAPI()[this.form.value.id];
+    this.configService.updateProviderById(this.form.value.id, preparedForAPI).subscribe({
       next: () => this.router.navigate(['/settings/data-sources']),
       error: () => (this.submitted = false),
     });
+  }
+
+  private prepareAPI(enabled = true) {
+    // REWORK THIS
+    const prov = this.cloneProviders.find((p) => p.id === this.form.value.id);
+    if (!prov) {
+      for (const providerKey in prov.params) {
+        prov.params[providerKey] = this.form.value[providerKey];
+      }
+      if (this.provider.visible_survey) {
+        prov.form_id = this.form.value.form_id.id;
+        if (prov.form_id) {
+          const obj: any = {};
+          for (const field of this.tableData) {
+            obj[field.label] = this.form.value[field.label];
+          }
+          prov.inbound_fields = obj;
+        }
+      } else {
+        delete prov.form_id;
+        delete prov.inbound_fields;
+      }
+      return { ...prov };
+    } else {
+      const provider: any = {};
+      provider[this.form.value.id] = {};
+      provider[this.form.value.id].params = this.form.value;
+      provider[this.form.value.id].enabled = enabled;
+      if (this.provider.visible_survey) {
+        provider[this.form.value.id]['provider-name'] = this.form.value.id;
+        provider[this.form.value.id].params.form_id = this.form.value.form_id.id;
+        // provider[this.form.value.id].form_id = this.form.value.form_id.id;
+        if (provider[this.form.value.id].params.form_id) {
+          const obj: any = {};
+          for (const field of this.tableData) {
+            obj[field.label] = this.form.value[field.label];
+          }
+          provider[this.form.value.id].params.inbound_fields = obj;
+        }
+      } else {
+        delete provider[this.form.value.id].params.form_id;
+        delete provider[this.form.value.id].params.inbound_fields;
+      }
+      return { ...provider };
+    }
   }
 
   private checkKeyFields(field: string): any {
