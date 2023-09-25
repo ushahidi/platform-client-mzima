@@ -22,7 +22,7 @@ export class FileUploaderComponent {
     private notificationService: NotificationService,
     private translateService: TranslateService,
   ) {}
-  
+
   uploadFile($event: any) {
     if (!$event.target.files[0]) return;
     if (validateFile($event.target.files[0])) {
