@@ -45,13 +45,17 @@ export class ConfigService {
             });
             return data.result;
           },
-          error: () => setTimeout(() => this.getConfig(), 5000),
+          error: () => {
+            setTimeout(() => this.getConfig(), 5000);
+          },
         }),
       );
   }
 
   initAllConfigurations(): Promise<any> {
-    return lastValueFrom(this.getConfig());
+    return lastValueFrom(this.getConfig()).catch(() => {
+      lastValueFrom(this.getConfig()); // Retry call config after clearing 401
+    });
   }
 
   public getProvidersData(dataSources?: any): Observable<any> {

@@ -91,7 +91,7 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
       },
     });
 
-    if (this.currentApiVersion !== 'v5') {
+    if (this.isAdmin && this.currentApiVersion !== 'v5') {
       const apiMesssageShownTime = JSON.parse(
         localStorage.getItem(
           this.sessionService.getLocalStorageNameMapper('outdated_api_message_shown'),
