@@ -1,9 +1,6 @@
 @import 'helpers';
 
 .post {
-  font-size: 16px;
-  line-height: 1.5;
-
   .code-container {
     background-color: #f4f4f4;
     border: 1px solid #ddd;
@@ -27,22 +24,8 @@
     }
   }
 
-  @include breakpoint-max($tablet) {
-    font-size: 14px;
-    line-height: 1.3;
-  }
-
   &--checkbox-list {
     padding-left: 15px;
-  }
-
-  &--feed {
-    min-height: 100%;
-    padding: 20px 30px;
-    position: relative;
-    border-radius: 4px;
-    background: var(--color-light);
-    box-shadow: inset 0 0 0 1px var(--color-neutral-30);
   }
 
   &__head {
@@ -193,22 +176,4 @@
   display: block;
   position: relative;
   margin-bottom: 16px;
-}
-
-.spinner {
-  display: block;
-  margin-top: 20vh;
-  margin-bottom: 20vh;
-}
-
-.cant-see-post {
-  font-size: 18px;
-  font-weight: 600;
-  text-align: center;
-  word-wrap: break-word;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
 }
