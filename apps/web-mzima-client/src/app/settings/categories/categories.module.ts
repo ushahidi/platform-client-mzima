@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 import { GroupCheckboxSelectModule } from '../../shared/components/group-checkbox-select/group-checkbox-select.module';
 import { SettingsHeaderModule } from '../../shared/components/settings-header/settings-header.module';
 import { DirectiveModule, SpinnerModule } from '@shared';
@@ -40,6 +42,7 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
     GroupCheckboxSelectModule,
     MatIconModule,
     MatButtonModule,
+    MatCheckboxModule,
     DirectiveModule,
     SettingsHeaderModule,
     MzimaUiModule,

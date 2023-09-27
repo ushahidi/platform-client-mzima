@@ -1743,7 +1743,8 @@
       "destroy_error": "Unable to delete category, please try again",
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} categories?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
-      "bulk_destroy_success": "{{count}} categories deleted"
+      "bulk_destroy_success": "{{count}} categories deleted",
+      "bulk_destroy_success_countless": "Categories deleted"
     },
     "role": {
       "delete_question": "Are you sure you want to delete the role?",
