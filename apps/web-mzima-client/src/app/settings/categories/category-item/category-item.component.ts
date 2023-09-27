@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CategoryInterface } from '@mzima-client/sdk';
 
 @Component({
@@ -9,4 +9,10 @@ import { CategoryInterface } from '@mzima-client/sdk';
 export class CategoryItemComponent {
   @Input() public category: CategoryInterface;
   @Input() public customClass: string;
+  @Input() public isCheckbox: boolean;
+  @Output() public selected = new EventEmitter<CategoryInterface>();
+
+  selectCategory(cat: CategoryInterface) {
+    this.selected.emit(cat);
+  }
 }
