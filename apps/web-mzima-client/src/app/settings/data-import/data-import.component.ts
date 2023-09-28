@@ -275,10 +275,12 @@ export class DataImportComponent extends BaseComponent implements OnInit {
     }
     this.uploadedCSV.fixed = { form: this.selectedForm.id };
 
-    if (this.statusOption === 'mark_as') {
-      this.uploadedCSV.fixed.status = this.selectedStatus;
-    } else {
-      this.uploadedCSV.maps_to[this.selectedStatus] = 'status';
+    if (this.selectedStatus) {
+      if (this.statusOption === 'mark_as') {
+        this.uploadedCSV.fixed.status = this.selectedStatus;
+      } else {
+        this.uploadedCSV.maps_to[this.selectedStatus] = 'status';
+      }
     }
 
     this.updateAndImport();
