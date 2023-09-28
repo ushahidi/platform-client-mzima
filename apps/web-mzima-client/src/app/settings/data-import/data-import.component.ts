@@ -39,6 +39,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   requiredFields = new Map<string, string>();
   maps_to: any = {};
   uploadErrors: any[] = [];
+  fileChanged = false;
 
   statusOption: string;
   selectedStatus: PostStatus;
@@ -68,6 +69,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   loadData(): void {}
 
   uploadFile($event: any) {
+    this.fileChanged = true;
     const reader = new FileReader();
     reader.onload = () => {
       this.selectedFile = $event.target.files[0];
@@ -112,37 +114,46 @@ export class DataImportComponent extends BaseComponent implements OnInit {
 
   private checkFormAndFile() {
     if (this.selectedFile && this.selectedForm) {
-      this.loader.show();
-      this.importService.uploadFile(this.selectedFile, this.selectedForm.id).subscribe({
-        next: (csv) => {
-          this.uploadedCSV = csv;
+      if (this.fileChanged) {
+        this.loader.show();
+        this.importService.uploadFile(this.selectedFile, this.selectedForm.id).subscribe({
+          next: (csv) => {
+            this.uploadedCSV = csv;
+            this.fileChanged = false;
 
-          if (this.uploadedCSV.columns?.every((c: any) => c === ''))
-            return this.notification.showError(
-              this.translateService.instant('notify.data_import.empty_mapping_empty'),
-            );
+            if (this.uploadedCSV.columns?.every((c: any) => c === ''))
+              return this.notification.showError(
+                this.translateService.instant('notify.data_import.empty_mapping_empty'),
+              );
 
-          forkJoin([
-            this.formsService.getStages(this.selectedForm.id.toString()),
-            this.formsService.getAttributes(this.selectedForm.id.toString()),
-          ]).subscribe({
-            next: (result) => {
-              this.loader.hide();
-              this.selectedForm.tasks = result[0];
-              this.selectedForm.attributes = this.transformAttributes(result[1]);
-              this.hasRequiredTask = this.selectedForm.tasks.some((task) => task.required);
-              this.setRequiredFields(this.selectedForm.attributes!);
-            },
-          });
-          this.uploadErrors = [];
-        },
-        error: (err) => {
-          this.uploadErrors = err.error.errors;
-          this.notification.showError(err);
-          this.loader.hide();
-        },
-      });
+            this.proceedAttributes();
+            this.uploadErrors = [];
+          },
+          error: (err) => {
+            this.uploadErrors = err.error.errors;
+            this.notification.showError(err);
+            this.loader.hide();
+          },
+        });
+      } else {
+        this.proceedAttributes();
+      }
     }
+  }
+
+  private proceedAttributes() {
+    forkJoin([
+      this.formsService.getStages(this.selectedForm.id.toString()),
+      this.formsService.getAttributes(this.selectedForm.id.toString()),
+    ]).subscribe({
+      next: (result) => {
+        this.loader.hide();
+        this.selectedForm.tasks = result[0];
+        this.selectedForm.attributes = this.transformAttributes(result[1]);
+        this.hasRequiredTask = this.selectedForm.tasks.some((task) => task.required);
+        this.setRequiredFields(this.selectedForm.attributes!);
+      },
+    });
   }
 
   formChanged() {
