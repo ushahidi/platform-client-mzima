@@ -17,6 +17,7 @@ export const enum EventType {
   ShowOnboarding = 'SHOW_ONBOARDING',
   FinishOnboarding = 'FINISH_ONBOARDING',
   FeedPostsLoaded = 'FEED_POSTS_LOADED',
+  RefreshSurveysCounters = 'REFRESH_SURVEYS_COUNTERS',
   StopExportPolling = 'STOP_EXPORT_POLLING',
 }
 
