@@ -450,6 +450,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         )}</p>`,
         buttonSuccess: this.translate.instant('notify.confirm_modal.deleted.success_button'),
       });
+      this.eventBusService.next({
+        type: EventType.RefreshSurveysCounters,
+        payload: true,
+      });
     }
   }
 
