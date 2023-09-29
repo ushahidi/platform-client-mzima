@@ -160,10 +160,10 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   getConfigOptions() {
     return {
       selectedRoles: this.selectedRoles,
-      hide_time: this.survey.hide_time,
-      hide_location: this.survey.hide_location,
-      hide_author: this.survey.hide_author,
-      require_approval: this.survey.require_approval,
+      hide_time: !!this.survey.hide_time,
+      hide_location: !!this.survey.hide_location,
+      hide_author: !!this.survey.hide_author,
+      require_approval: !!this.survey.require_approval,
       color: this.selectedColor,
     };
   }
