@@ -174,9 +174,6 @@
     [innerHTML]="'notify.post.can_t_view_this_post' | translate"
   ></p>
   <ng-container *ngIf="postNotFound && !isPostLoading">
-    <div class="cant-see-post">
-      <p [innerHTML]="'notify.post.post_not_found' | translate"></p>
-      <img src="assets/images/posts/404-post-not-found.svg" alt="Post Not Found SVG image" />
-    </div>
+    <app-post-not-found></app-post-not-found>
   </ng-container>
 </ng-template>
