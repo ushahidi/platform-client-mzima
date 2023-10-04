@@ -121,7 +121,6 @@ export class AccountSettingsModalComponent implements OnInit {
       next: (response) => {
         const { result } = response;
         this.profile = result;
-
         this.profileForm.patchValue({
           role: this.profile.role,
           display_name: this.profile.realname,
@@ -132,6 +131,10 @@ export class AccountSettingsModalComponent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  canDeleteContact(contact: ContactsInterface) {
+    return contact.allowed_privileges?.includes('delete');
   }
 
   private getContacts(): void {

@@ -1,6 +1,9 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { CategoryItemComponent } from './category-item/category-item.component';
 import { CategoriesService, CategoryInterface } from '@mzima-client/sdk';
+import { forkJoin } from 'rxjs';
+import { ConfirmModalService, NotificationService } from '@services';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-categories',
@@ -10,8 +13,15 @@ import { CategoriesService, CategoryInterface } from '@mzima-client/sdk';
 export class CategoriesComponent {
   @ViewChildren('categoryItem') categoryItems: QueryList<CategoryItemComponent>;
   public categories: CategoryInterface[];
+  selectedCategories: CategoryInterface[] = [];
+  isShowActions = false;
 
-  constructor(private categoriesService: CategoriesService) {
+  constructor(
+    private categoriesService: CategoriesService,
+    private confirmModalService: ConfirmModalService,
+    private translate: TranslateService,
+    private notificationService: NotificationService,
+  ) {
     this.getCategories();
   }
 
@@ -21,6 +31,43 @@ export class CategoriesComponent {
         this.categories = data.results;
       },
     });
+  }
+
+  public async deleteCategories() {
+    const confirmed = await this.confirmModalService.open({
+      title: this.translate.instant('notify.category.bulk_destroy_confirm', {
+        count: this.selectedCategories.length,
+      }),
+      description: this.translate.instant('notify.category.bulk_destroy_confirm_desc'),
+      confirmButtonText: this.translate.instant('app.yes_delete'),
+      cancelButtonText: this.translate.instant('app.no_go_back'),
+    });
+    if (!confirmed) return;
+    forkJoin(this.selectedCategories.map((cat) => this.categoriesService.delete(cat.id))).subscribe(
+      {
+        complete: () => {
+          this.getCategories();
+          this.selectedCategories = [];
+          this.notificationService.showError(
+            this.translate.instant('bulk_destroy_success_countless'),
+          );
+        },
+      },
+    );
+  }
+
+  public showActions(event: boolean) {
+    this.isShowActions = event;
+    if (!event) this.selectedCategories = [];
+  }
+
+  selectCategory(cat: CategoryInterface) {
+    const i = this.selectedCategories.findIndex((sC) => sC.id === cat.id);
+    if (i < 0) {
+      this.selectedCategories.push(cat);
+    } else {
+      this.selectedCategories = this.selectedCategories.filter((sC) => sC.id !== cat.id);
+    }
   }
 
   public getChildCategories(id: number): CategoryInterface[] {

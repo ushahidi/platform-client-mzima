@@ -140,7 +140,7 @@
                     </mat-error>
                   </div>
 
-                  <div class="contact-item__buttons">
+                  <div class="contact-item__buttons" *ngIf="canDeleteContact(contact)">
                     <mzima-client-button
                       color="danger"
                       (buttonClick)="deleteContact(contact.id)"

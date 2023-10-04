@@ -412,7 +412,10 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   public getSurveys(): void {
     this.surveysLoaded = false;
 
-    forkJoin([this.surveysService.get(), this.postsService.getPostStatistics()]).subscribe({
+    forkJoin([
+      this.surveysService.get(),
+      this.postsService.getPostStatistics(null, this.isMapView),
+    ]).subscribe({
       next: (responses) => {
         const values = responses[1].result.group_by_total_posts;
         this.surveyList = responses[0].results;
@@ -479,7 +482,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   public getPostsStatistic(): Observable<any> {
-    return this.postsService.getPostStatistics().pipe(
+    return this.postsService.getPostStatistics(null, this.isMapView).pipe(
       map((res) => {
         this.notShownPostsCount = res.result.unmapped;
         const values = res.result.group_by_total_posts;

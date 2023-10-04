@@ -1,4 +1,10 @@
 <div class="category-item" [routerLink]="['/settings/categories', category.id]">
+  <mat-checkbox
+    *ngIf="isCheckbox"
+    class="category-item__checkbox"
+    (click)="$event.stopPropagation()"
+    (change)="selectCategory(category)"
+  ></mat-checkbox>
   <h4 class="category-item__title" [routerLink]="category.id.toString()" [ngClass]="customClass">
     {{ category.tag }}
   </h4>

@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 interface DataShareModal {
   postId: number;
   title: string;
+  label: string;
   description: string;
 }
 
@@ -21,6 +22,7 @@ export class ShareModalComponent implements OnInit {
   public width = 560;
   public height = 315;
   public title: string;
+  public label: string;
   public description: string;
   public sliceDescription = 100;
   private postId: number;
@@ -28,6 +30,7 @@ export class ShareModalComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: DataShareModal, private clipboard: Clipboard) {
     this.postId = data?.postId;
     this.title = data?.title;
+    this.label = data?.label;
     this.description = this.trimText(data?.description, this.sliceDescription);
   }
 

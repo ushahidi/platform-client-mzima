@@ -17,8 +17,7 @@
   }
 
   &__checkbox {
-    margin-top: 2px;
-    margin-inline-end: 8px;
+    font-size: 14px;
   }
 
   &__content {
@@ -28,6 +27,7 @@
   &__title {
     margin-bottom: 0;
     font-size: 14px;
+    line-height: 28px;
     font-weight: 700;
 
     &--lvl2 {

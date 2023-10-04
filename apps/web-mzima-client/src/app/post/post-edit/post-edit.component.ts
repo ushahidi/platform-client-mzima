@@ -216,9 +216,11 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   this.description = field.default;
                   break;
                 case 'media': // Max image size addition hack
-                  field.instructions = `${field.instructions}. Max size: ${
-                    this.maxImageSize / 1024 / 1024
-                  }MB`;
+                  field.instructions = `${field.instructions}. Max size: ${(
+                    this.maxImageSize /
+                    1000 /
+                    1000
+                  ).toFixed(2)} MB`;
                   break;
                 case 'relation':
                   const fieldForm: [] = field.config?.input?.form;

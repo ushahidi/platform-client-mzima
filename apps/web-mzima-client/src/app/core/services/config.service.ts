@@ -45,13 +45,17 @@ export class ConfigService {
             });
             return data.result;
           },
-          error: () => setTimeout(() => this.getConfig(), 5000),
+          error: () => {
+            setTimeout(() => this.getConfig(), 5000);
+          },
         }),
       );
   }
 
   initAllConfigurations(): Promise<any> {
-    return lastValueFrom(this.getConfig());
+    return lastValueFrom(this.getConfig()).catch(() => {
+      lastValueFrom(this.getConfig()); // Retry call config after clearing 401
+    });
   }
 
   public getProvidersData(dataSources?: any): Observable<any> {
@@ -75,6 +79,9 @@ export class ConfigService {
                 enabled: data.results.find(
                   (result: any) => dataSource.id === result['provider-name'],
                 ).enabled,
+                params: data.results.find(
+                  (result: any) => dataSource.id === result['provider-name'],
+                ).params,
                 options: dataSource.options.map((option: any) => ({
                   ...option,
                   value: data.results.find(
@@ -85,6 +92,14 @@ export class ConfigService {
             });
         }),
       );
+  }
+
+  public getAllProvidersData(): Observable<any> {
+    return this.httpClient.get<any>(
+      `${
+        this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
+      }/data-provider`,
+    );
   }
 
   // public getProvidersData(isAllData = false, dataSources?: any): Observable<any> {
@@ -121,6 +136,14 @@ export class ConfigService {
         this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
       }/data-provider`,
       providers,
+    );
+  }
+  public updateProviderById(id: string, provider: any): Observable<any> {
+    return this.httpClient.put(
+      `${
+        this.env.environment.backend_url + this.getApiVersions() + this.getResourceUrl()
+      }/data-provider/${id}`,
+      provider,
     );
   }
 

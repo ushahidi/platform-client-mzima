@@ -227,7 +227,10 @@ export class PostsService extends ResourceService<any> {
     return params;
   }
 
-  public getPostStatistics(queryParams?: any): Observable<PostStatsResponse> {
+  public getPostStatistics(
+    queryParams?: any,
+    isMapView: boolean = false,
+  ): Observable<PostStatsResponse> {
     const filters = { ...this.postsFilters.value };
 
     delete filters.form;
@@ -241,7 +244,7 @@ export class PostsService extends ResourceService<any> {
         ...this.postParamsMapper(filters),
         group_by: 'form',
         enable_group_by_source: true,
-        has_location: 'all',
+        has_location: isMapView ? 'mapped' : 'all',
         include_unmapped: true,
       },
     );

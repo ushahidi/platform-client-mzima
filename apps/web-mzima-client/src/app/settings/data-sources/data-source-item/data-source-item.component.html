@@ -33,7 +33,7 @@
 
 <div class="survey" *ngIf="provider; else showLoader">
   <div class="form-row toggle-group">
-    <div class="toggle">
+    <div class="toggle" *ngIf="!onCreating">
       <mat-slide-toggle
         name="accept-survey"
         [(ngModel)]="provider.enabled"
@@ -86,12 +86,7 @@
     <ng-container *ngIf="surveyAttributesList?.length">
       <h2>{{ 'survey.choose_survey_field' | translate }}</h2>
       <p>{{ 'survey.choose_survey_field_desc' | translate }}</p>
-      <table
-        mat-table
-        [dataSource]="provider.inbound_fields"
-        class="survey__table"
-        [data-qa]="'survey-table'"
-      >
+      <table mat-table [dataSource]="tableData" class="survey__table" [data-qa]="'survey-table'">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>{{ provider?.name | titlecase }} data</th>
           <td mat-cell *matCellDef="let element">
@@ -117,7 +112,7 @@
                     [data-qa]="'survey-attributes-list'"
                   >
                     <mat-option
-                      *ngIf="element.type === attribute.input"
+                      *ngIf="element.value === attribute.input"
                       [value]="attribute?.key"
                       [data-qa]="attribute.key"
                     >
