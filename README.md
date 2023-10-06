@@ -91,7 +91,7 @@ npm run mobile:serve
 
 Have (up-to-date version of) android studio installed on your computer so that you can be able to open up the the user interface on an android mobile phone emulator.
 
-If you can run the `mobile:serve` script command above without problems, then you can already launch the mobile client on an android emulator if you have android studio.
+If you can run the `mobile:serve` script command above without problems, then you can already launch the mobile client on an android emulator if you have android studio and have set up an android emulator in android studio.
 
 In the root of this repository, run the script command in the code block below to launch/open the mobile client on an android phone emulator:
 
