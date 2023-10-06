@@ -93,7 +93,9 @@ Have (up-to-date version of) android studio installed on your computer so that y
 
 If you can run the `mobile:serve` script command above without problems, then you can already launch the mobile client on an android emulator if you have android studio and have set up an android emulator in android studio.
 
-In the root of this repository, run the script command in the code block below to launch/open the mobile client on an android phone emulator:
+The android emulator devices that would generally work are android versions 11.0 and above.
+
+Once android studio and emulators have been set up, in the root of this repository, run the script command in the code block below to launch/open the mobile client on an android phone emulator:
 
 ````
 npm run mobile:android
@@ -105,6 +107,16 @@ You can only develop for iOS or run an iOS simulator with a Mac OS computer.
 
 Add more info here...
 
+### Mobile Client: Setting up the backend platform API
+After running the `mobile:serve` script command above, you should be able to open up the web client's user interface in the browser. Running the `mobile:android` and `mobile:ios` commands should also open up the mobile client in the mobile and ios simulators respectively.
+
+The mobile client is currently connected to our staging API. This is set in the mobile client's `env.json` file with:
+
+````
+"backend_url": "https://mzima-dev-api.staging.ush.zone/",
+````
+
+You can choose to set up your own backend locally using our [backend platform API](https://github.com/ushahidi/platform), and connect it to the mobile client instead. To set up the backend for yourself, follow the installation instructions on the [backend API's readme](https://github.com/ushahidi/platform#setup-essentials). Then replace the `"backend_url"` value in the mobile client's `env.json` file with the url of the backend you have successfully setup.
 
 ### Mobile Client: Further help incase of errors
 
