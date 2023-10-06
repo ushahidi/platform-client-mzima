@@ -61,7 +61,19 @@ In the root of this repository, run the script command in the code block below t
 npm run web:serve
 ````
 
-> Find the code for web client inside of the `apps/web-mzima-client`
+> Find the code for web client inside of the `apps/web-mzima-client` folder
+
+### Web Client: Setting up the backend platform API
+After running the `web:serve` script command above, you should be able to open up the web client's user interface in the browser. 
+
+The web client is currently connected to our staging API. This is set in the web client's `env.json` file with:
+
+````
+"backend_url": "https://mzima-dev-api.staging.ush.zone/",
+````
+
+You can choose to set up your own backend locally using our [backend platform API](https://github.com/ushahidi/platform), and connect it to the web client instead. To set up the backend for yourself, follow the installation instructions on the [backend API's readme](https://github.com/ushahidi/platform#setup-essentials). Then replace the `"backend_url"` value in the web client's `env.json` file with the url of the backend you have successfully setup.
+
 
 #
 
