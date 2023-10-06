@@ -54,8 +54,8 @@ npm install
 
 #
 
-### Web Client: Development
-In the root of this repository, run the script command in the code block below to get the web client running locally on your computer:
+### Web Client: Launch in web browser
+In the root of this repository, run the script command in the code block below to get the web client running locally on your computer, and in the web browser:
 
 ````
 npm run web:serve
@@ -65,9 +65,9 @@ npm run web:serve
 
 #
 
-### Mobile Client: Development
+### Mobile Client: Launch in web browser
 
-In the root of this repository, run the script command in the code block below to get the mobile client running locally on your computer:
+In the root of this repository, run the script command in the code block below to get the mobile client running locally on your computer, and in the web browser:
 
 ````
 npm run mobile:serve
@@ -75,9 +75,28 @@ npm run mobile:serve
 
 > Find the code for mobile client inside of the `apps/mobile-mzima-client`
 
-#### Mobile client: Further help incase of errors
+### Mobile Client: Launch in Android emulator
 
-If the mobile:serve script command above does not successfully run the app and there are errors in the terminal, you probably don't have capacitor and/or some other dependencies installed in other to run the mobile client. Do the following:
+Have (up-to-date version of) android studio installed on your computer so that you can be able to open up the the user interface on an android mobile phone emulator.
+
+If you can run the `mobile:serve` script command above without problems, then you can already launch the mobile client on an android emulator if you have android studio.
+
+In the root of this repository, run the script command in the code block below to launch/open the mobile client on an android phone emulator:
+
+````
+npm run mobile:android
+````
+
+### Mobile Client: Launch in iOS simulator
+
+You can only develop for iOS or run an iOS simulator with a Mac OS computer. 
+
+Add more info here...
+
+
+### Mobile Client: Further help incase of errors
+
+If the `mobile:serve` script command above does not successfully run the app and there are errors in the terminal, you probably don't have capacitor and/or some other dependencies installed in other to run the mobile client. Do the following:
 
 Change directory into `apps/mobile-mzima-client`. Then install dependencies:
 
@@ -86,7 +105,7 @@ npm install
 ````
 
 You could be having npm installation issues if you don't have vips on your computer or if it's not updated. Install or re-install vips:
-> Note: this vips installation instruction is for mac. For other Operating Systems, you can help improve this doc by letting us know how you were able to resolve this issue.
+> Note: this vips installation instruction is for mac. For other Operating Systems, you can help improve this doc by letting us know how you were able to resolve this issue (if you encounter it too).
 
 Get vips info from homebrew:
 
