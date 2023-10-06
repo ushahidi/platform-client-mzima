@@ -47,7 +47,7 @@ git clone git@github.com:ushahidi/platform-client-mzima.git
 #
 
 ### Installing dependencies
-After cloning, change directory into the root of this repository, then install dependencies:
+You need this step whether you are developing for the web client or the mobile client. After cloning, change directory into the root of this repository, then install dependencies:
 ````
 npm install
 ````
