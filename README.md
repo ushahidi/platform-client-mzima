@@ -79,13 +79,40 @@ You can choose to set up your own backend locally using our [backend platform AP
 
 ### Mobile Client: Launch in web browser
 
+> Ensure you have run the `install` script command in the root of this repository as directed earlier, before you proceed
+
 In the root of this repository, run the script command in the code block below to get the mobile client running locally on your computer, and in the web browser:
 
 ````
 npm run mobile:serve
 ````
 
-> Find the code for mobile client inside of the `apps/mobile-mzima-client`
+If this is the first time you are trying to run the mobile client in the browser, you will need to do some setup otherwise the `mobile:serve` script command will not run the mobile client successfully. The setup steps have been outlined below.
+
+Change directory into `apps/mobile-mzima-client` folder to install dependencies specific to the mobile client:
+
+````
+npm install
+````
+
+Mac OS users may encounter some install request timeout errors caused by vips at this point (for persons using other Operating Systems you can let the community know if you face any install problems and the solution so that it can be documented accordingly). If you are using homebrew, check or get vips info from homebrew:
+
+````
+brew info vips
+````
+
+Then Re-install vips:
+
+````
+brew reinstall vips
+````
+
+After reinstalling vips, run the `install` script command in the `apps/mobile-mzima-client` folder again. It should now install the mobile client dependencies successfully.
+
+Change directory back into the root of this repository and run the `mobile:serve` script command again. The mobile client should now run in the web browser successfully.
+
+> Find the code for mobile client inside of the `apps/mobile-mzima-client` folder
+
 
 ### Mobile Client: Launch in Android emulator
 
@@ -101,11 +128,16 @@ Once android studio and emulators have been set up, in the root of this reposito
 npm run mobile:android
 ````
 
+
 ### Mobile Client: Launch in iOS simulator
 
-You can only develop for iOS or run an iOS simulator with a Mac OS computer. 
+You can only develop the mobile client for iOS or run an iOS simulator with a Mac OS computer.
 
-Add more info here...
+First visit the [iOS requirements](https://capacitorjs.com/docs/getting-started/environment-setup#ios-requirements) section of capacitor js documentation and ensure that you have these 4 tools are installed or updated: Xcode, Xcode Command Line Tools, Homebrew, Cocoapods.
+
+
+
+
 
 ### Mobile Client: Setting up the backend platform API
 After running the `mobile:serve` script command above, you should be able to open up the web client's user interface in the browser. Running the `mobile:android` and `mobile:ios` commands should also open up the mobile client in the mobile and ios simulators respectively.
@@ -117,37 +149,6 @@ The mobile client is currently connected to our staging API. This is set in the 
 ````
 
 You can choose to set up your own backend locally using our [backend platform API](https://github.com/ushahidi/platform), and connect it to the mobile client instead. To set up the backend for yourself, follow the installation instructions on the [backend API's readme](https://github.com/ushahidi/platform#setup-essentials). Then replace the `"backend_url"` value in the mobile client's `env.json` file with the url of the backend you have successfully setup.
-
-### Mobile Client: Further help incase of errors
-
-If the `mobile:serve` script command above does not successfully run the app and there are errors in the terminal, you probably don't have capacitor and/or some other dependencies installed in other to run the mobile client. Do the following:
-
-Change directory into `apps/mobile-mzima-client`. Then install dependencies:
-
-````
-npm install
-````
-
-You could be having npm installation issues if you don't have vips on your computer or if it's not updated. Install or re-install vips:
-> Note: this vips installation instruction is for mac. For other Operating Systems, you can help improve this doc by letting us know how you were able to resolve this issue (if you encounter it too).
-
-Get vips info from homebrew:
-
-````
-brew info vips
-````
-
-Re-install vips:
-
-````
-brew reinstall vips
-````
-
-Continue from here...
-
-Change directory back to the root of the repository and run the mobile:serve script command again. If client successfully runs, you don't need to take any further step. 
-
-If there are still errors in the console,
 
 # 
 
