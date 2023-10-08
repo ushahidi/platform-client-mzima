@@ -63,7 +63,7 @@ npm run web:serve
 
 > Find the code for web client inside of the `apps/web-mzima-client` folder
 
-### Web Client: Setting up the backend platform API
+### Web Client: Set up and connect to the backend platform API
 After running the `web:serve` script command above, you should be able to open up the web client's user interface in the browser. 
 
 The web client is currently connected to our staging API. This is set in the web client's `env.json` file with:
@@ -181,28 +181,4 @@ Remote caching: Run `npx nx connect-to-nx-cloud` to enable [remote caching](http
 
 Further help: Visit the [Nx Documentation](https://nx.dev) to learn more
 
-
-### Mobile Client: Setting up the backend platform API
-After running the `mobile:serve` script command above, you should be able to open up the web client's user interface in the browser. Running the `mobile:android` and `mobile:ios` commands should also open up the mobile client in the mobile and ios simulators respectively.
-
-The mobile client is currently connected to our staging API. This is set in the mobile client's `env.json` file with:
-
-````
-"backend_url": "https://mzima-dev-api.staging.ush.zone/",
-````
-
-You can choose to set up your own backend locally using our [backend platform API](https://github.com/ushahidi/platform), and connect it to the mobile client instead. To set up the backend for yourself, follow the installation instructions on the [backend API's readme](https://github.com/ushahidi/platform#setup-essentials). Then replace the `"backend_url"` value in the mobile client's `env.json` file with the url of the backend you have successfully setup.
-
-# 
-
-### Setting up the backend platform API locally
-After launching any of the clients following the instructions in the **Web Client: Development** or the **Mobile Client: Development** sections above depending on the client you are running, you should be able to open up the user interface in the browser (web client) or on a simulator (mobile client). 
-
-The web client and mobile client currently connected to our staging API. This is set in the web or mobile client's `env.json` file with:
-
-````
-"backend_url": "https://mzima-dev-api.staging.ush.zone/",
-````
-
-You can choose to set up your own backend locally using our [backend platform API](https://github.com/ushahidi/platform), and connect it to the web or mobile client instead. To set up the backend for your self, follow the installation instructions on the [backend API's readme](https://github.com/ushahidi/platform#setup-essentials). Then replace the `"backend_url"` value in the web or mobile client's `env.json` file with the url of the backend you have successfully setup.
 
