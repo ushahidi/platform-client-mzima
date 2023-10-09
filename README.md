@@ -7,12 +7,14 @@ This Platform Client (Mzima) repo houses 2 clients: The web client and the mobil
 #
 
 ### Requirements
-- Node.js version: Node.js versions >= 18
+- Memory (RAM) and storage: RAM - Minimum 8GB, 16GB is recommended for smoother multitasking; Storage - minimum 512GB. Consider 1TB if you plan to have multiple development environments. SSD storage is recommended for faster reading and writing speed
 - Operating systems: Mac OS, Linux, windows (If you are having issues with windows you can set up WSL - windows Subsystem for Linux)
+- Node.js version: Node.js versions >= 18
+- Git: our Git workflow instructions show how to use git on the command line only for now
 
 #
 
-### Cloning Instructions: Contributors
+### Cloning this repository: Contributors
 > Fork this repository. Then clone the forked repository. 
 
 If you are using `https` url, the clone command with your url will look like this:
@@ -27,9 +29,11 @@ If you are using `SSH` url, the clone command with your url will look like this:
 git clone git@github.com:your-own-github-account-user-name-will-be-here-instead/platform-client-mzima.git
 ````
 
+> Also visit [how to make and submit changes to this repository](https://github.com/ushahidi/platform-client-mzima#how-to-make-and-submit-changes-to-this-repository)
+
 #
 
-### Cloning Instructions: Repo maintainers
+### Cloning this repository: Repo maintainers
 > Clone this repository directly.
 
 If you are using `https` url, use:
@@ -43,6 +47,8 @@ If you are using `SSH` url, use:
 ````
 git clone git@github.com:ushahidi/platform-client-mzima.git
 ````
+
+> Also visit [how to make and submit changes to this repository](https://github.com/ushahidi/platform-client-mzima#how-to-make-and-submit-changes-to-this-repository)
 
 #
 
@@ -181,4 +187,32 @@ Remote caching: Run `npx nx connect-to-nx-cloud` to enable [remote caching](http
 
 Further help: Visit the [Nx Documentation](https://nx.dev) to learn more
 
+#
 
+### How to make and submit changes to this repository
+
+Except you are requested to create your branch from another branch, always create your new branch from the `development` branch:
+
+````
+git checkout develop
+````
+
+````
+git checkout -b replace-this-part-with-the-name-of-your-new-branch
+````
+
+Make the desired changes you wish to submit to the project, add, commit and push your changes:
+
+````
+git add .
+````
+
+````
+git commit -m "replace this part with a commit message that describes your changes"
+````
+
+````
+git push origin replace-this-part-with-the-name-of-your-branch
+````
+
+Then send a pull request for your changes to be reviewed.
