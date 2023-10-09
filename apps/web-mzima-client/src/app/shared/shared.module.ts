@@ -46,10 +46,10 @@ import {
   SidebarComponent,
   MobileMenuComponent,
   DeploymentDetailsComponent,
-  MenuModalPopups,
   MenuListLinksComponent,
   ShareAndDonateComponent,
   AccountAndLogoutComponent,
+  MenuModalPopupsComponent,
 } from './components';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { CollectionItemModule } from './components/collection-item/collection-item.module';
@@ -66,7 +66,7 @@ const components = [
   SidebarComponent,
   MobileMenuComponent,
   DeploymentDetailsComponent,
-  MenuModalPopups,
+  MenuModalPopupsComponent,
   MenuListLinksComponent,
   ShareAndDonateComponent,
   AccountAndLogoutComponent,
