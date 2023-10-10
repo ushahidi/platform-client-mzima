@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import CategoryLocators from '../locators/CategoryLocator';
+import CategoryLocators from '../locators/CategoryLocators';
 
 class CategoryFunctions {
   open_category_creation_page_steps() {
