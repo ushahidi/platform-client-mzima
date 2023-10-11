@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { NotAuthorizedGuard } from '@guards';
+import { NotAuthorizedGuard, NotPrivateDeploymentGuard } from '@guards';
 import { PageNotFoundComponent } from '@components';
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./map/map.module').then((m) => m.MapPageModule),
+    canActivate: [NotPrivateDeploymentGuard],
   },
   {
     path: 'auth',
@@ -16,6 +17,7 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then((m) => m.ProfilePageModule),
+    canActivate: [NotPrivateDeploymentGuard],
   },
   {
     path: 'walkthrough',
@@ -34,6 +36,7 @@ const routes: Routes = [
       breadcrumb: 'nav.posts',
       ogTitle: 'nav.posts',
     },
+    canActivate: [NotPrivateDeploymentGuard],
   },
   {
     path: 'terms-and-conditions',
@@ -50,10 +53,12 @@ const routes: Routes = [
   {
     path: 'activity',
     loadChildren: () => import('./activity/activity.module').then((m) => m.ActivityPageModule),
+    canActivate: [NotPrivateDeploymentGuard],
   },
   {
     path: ':id',
     loadChildren: () => import('./post/post.module').then((m) => m.PostPageModule),
+    canActivate: [NotPrivateDeploymentGuard],
   },
   {
     path: '**',

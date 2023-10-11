@@ -55,10 +55,10 @@ export class DonationComponent implements OnInit {
 
   uploadFile($event: any) {
     this.loader.show();
-    this.mediaService.uploadFile($event.file).subscribe((result: any) => {
+    this.mediaService.uploadFile($event.file).subscribe((response: any) => {
       this.donationConfig.images.push({
-        id: result.id,
-        original_file_url: result.original_file_url,
+        id: response.result.id,
+        original_file_url: response.result.original_file_url,
       });
       this.images = this.donationConfig.images.map((image) => image.original_file_url);
       this.loader.hide();

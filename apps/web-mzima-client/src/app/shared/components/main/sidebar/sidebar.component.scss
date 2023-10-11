@@ -1,0 +1,31 @@
+@import 'helpers';
+
+.sidebar {
+  height: 100%;
+  display: flex;
+  font-size: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  line-height: 14px;
+  position: relative;
+  --side-offset: 24px;
+  flex-direction: column;
+  scroll-behavior: smooth;
+  color: var(--color-neutral-50);
+  -webkit-overflow-scrolling: touch;
+  padding: 24px var(--side-offset) 20px;
+
+  &__add-post-btn {
+    display: block;
+    border-width: 1px 0;
+    border-style: solid;
+    padding: 12px var(--side-offset);
+    border-color: var(--color-neutral-90);
+    margin: 0 calc(var(--side-offset) * -1) 8px;
+
+    @include breakpoint-max($laptop-small) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+}

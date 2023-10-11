@@ -37,6 +37,8 @@ import {
   AccountNotificationsInterface,
 } from '@mzima-client/sdk';
 import dayjs from 'dayjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 @UntilDestroy()
 @Component({
@@ -88,6 +90,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     private session: SessionService,
     private eventBusService: EventBusService,
     private notificationsService: NotificationsService,
+    private snackBar: MatSnackBar,
+    private translate: TranslateService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -188,7 +192,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       }
       this.updateForm(filters);
       this.getActiveFilters(filters);
-      this.applyFilters();
+      this.applyFilters(false);
     } else {
       localStorage.setItem(
         this.session.getLocalStorageNameMapper('filters'),
@@ -363,7 +367,17 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
           this.getNotification(id);
         }
       },
-      error: (err) => console.log('getCollectionInfo:', err),
+      error: (err) => {
+        if (err.status === 403) {
+          this.snackBar.open(this.translate.instant('collection.errors.permissions'), 'Close', {
+            panelClass: ['error'],
+            duration: 5000,
+          });
+          this.router.navigate([this.router.url.includes('/feed') ? '/feed' : '/map']);
+        } else {
+          console.log('getCollectionInfo:', err);
+        }
+      },
     });
   }
 
@@ -398,7 +412,10 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   public getSurveys(): void {
     this.surveysLoaded = false;
 
-    forkJoin([this.surveysService.get(), this.postsService.getPostStatistics()]).subscribe({
+    forkJoin([
+      this.surveysService.get(),
+      this.postsService.getPostStatistics(null, this.isMapView),
+    ]).subscribe({
       next: (responses) => {
         const values = responses[1].result.group_by_total_posts;
         this.surveyList = responses[0].results;
@@ -465,7 +482,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   public getPostsStatistic(): Observable<any> {
-    return this.postsService.getPostStatistics().pipe(
+    return this.postsService.getPostStatistics(null, this.isMapView).pipe(
       map((res) => {
         this.notShownPostsCount = res.result.unmapped;
         const values = res.result.group_by_total_posts;
@@ -635,8 +652,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
   }
 
-  public applyFilters(): void {
-    this.postsService.applyFilters(this.activeFilters);
+  public applyFilters(updated = true): void {
+    this.postsService.applyFilters(this.activeFilters, updated);
   }
 
   public applyAndClose(): void {

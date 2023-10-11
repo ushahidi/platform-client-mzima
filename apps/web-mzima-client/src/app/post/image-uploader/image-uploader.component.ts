@@ -3,7 +3,6 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-import { AlphanumericValidatorValidator } from '../../core/validators';
 import { formHelper } from '@helpers';
 
 @Component({
@@ -20,9 +19,10 @@ import { formHelper } from '@helpers';
 })
 export class ImageUploaderComponent implements ControlValueAccessor {
   @Input() public hasCaption: boolean;
+  @Input() public maxSizeError?: boolean;
   @Input() public requiredError?: boolean;
   id?: number;
-  captionControl = new FormControl('', AlphanumericValidatorValidator());
+  captionControl = new FormControl('');
   photo: File | null;
   preview: string | SafeUrl | null;
   isDisabled = false;

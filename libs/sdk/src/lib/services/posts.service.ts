@@ -1,15 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, map, mergeMap, Observable, Subject, tap } from 'rxjs';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
 import {
   GeoJsonFilter,
   GeoJsonPostsResponse,
   PostApiResponse,
+  PostContent,
+  PostContentField,
   PostResult,
   PostStatsResponse,
 } from '../models';
+import { MediaService } from './media.service';
 import { ResourceService } from './resource.service';
 
 @Injectable({
@@ -37,6 +40,7 @@ export class PostsService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
     protected override currentLoader: EnvLoader,
+    private mediaService: MediaService,
   ) {
     super(httpClient, currentLoader);
   }
@@ -63,19 +67,46 @@ export class PostsService extends ResourceService<any> {
 
   override getById(id: string | number): Observable<PostResult> {
     return super.getById(id).pipe(
-      map((response) => {
+      mergeMap(async (response) => {
         const source =
           response.result.source === 'sms'
             ? 'SMS'
             : response.result.source
             ? response.result.source.charAt(0).toUpperCase() + response.result.source.slice(1)
             : 'Web';
+
+        for (const content of response.result.post_content as PostContent[]) {
+          await this.preparingMediaField(content.fields);
+        }
+
         return {
           ...response.result,
           source,
         };
       }),
     );
+  }
+
+  private async preparingMediaField(fields: PostContentField[]): Promise<void> {
+    const promises = fields
+      .filter((field: any) => field.type === 'media')
+      .map(async (mediaField) => {
+        if (mediaField.value && mediaField.value?.value) {
+          try {
+            const uploadObservable: any = await this.mediaService.getById(mediaField.value.value);
+            const media: any = await lastValueFrom(uploadObservable);
+
+            const { original_file_url: originalFileUrl, caption } = media.result;
+            mediaField.value.mediaSrc = originalFileUrl;
+            mediaField.value.mediaCaption = caption;
+          } catch (e) {
+            mediaField.value.mediaSrc = null;
+            mediaField.value.mediaCaption = null;
+          }
+        }
+      });
+
+    await Promise.all(promises);
   }
 
   override delete(id: string | number): Observable<any> {
@@ -196,7 +227,10 @@ export class PostsService extends ResourceService<any> {
     return params;
   }
 
-  public getPostStatistics(queryParams?: any): Observable<PostStatsResponse> {
+  public getPostStatistics(
+    queryParams?: any,
+    isMapView: boolean = false,
+  ): Observable<PostStatsResponse> {
     const filters = { ...this.postsFilters.value };
 
     delete filters.form;
@@ -210,7 +244,7 @@ export class PostsService extends ResourceService<any> {
         ...this.postParamsMapper(filters),
         group_by: 'form',
         enable_group_by_source: true,
-        has_location: 'all',
+        has_location: isMapView ? 'mapped' : 'all',
         include_unmapped: true,
       },
     );
@@ -224,14 +258,16 @@ export class PostsService extends ResourceService<any> {
     return super.delete(id, 'lock');
   }
 
-  public applyFilters(filters: any): void {
+  public applyFilters(filters: any, updated = true): void {
     const newFilters: any = {};
     for (const key in filters) {
       if (filters[key] || this.postsFilters.value[key]) {
         newFilters[key] = filters[key] || this.postsFilters.value[key];
       }
     }
-    this.postsFilters.next(newFilters);
+    if (updated) {
+      this.postsFilters.next(newFilters);
+    }
   }
 
   public setSorting(sorting: any): void {

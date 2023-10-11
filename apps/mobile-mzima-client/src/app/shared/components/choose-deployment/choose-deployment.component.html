@@ -25,7 +25,8 @@
         *ngFor="let item of deploymentList"
         [deployment]="item"
         (selectedDeployment)="callModal($event)"
-        [isCurrent]="item.id === currentDeploymentId"
+        [isCurrent]="!item.isOutdated && item.id === currentDeploymentId"
+        [isOutdated]="item.isOutdated"
         (click)="chooseDeployment(item)"
       ></app-deployment-item>
     </ion-list>

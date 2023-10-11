@@ -114,8 +114,8 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['options']?.currentValue) {
-      if (this.type === FilterType.Multilevelselect) {
+    if (this.type === FilterType.Multilevelselect) {
+      if (changes['options']?.currentValue) {
         setTimeout(() => {
           this.dataSource = new MatTreeFlatDataSource(
             this.treeControl,
@@ -124,6 +124,15 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
           );
         }, 10);
       }
+
+      const descendants = this.treeControl.dataNodes;
+      descendants.map((dataNode) => {
+        if (changes['selectedFields'].currentValue.indexOf(dataNode.id) > -1) {
+          this.checklistSelection.select(dataNode);
+        } else {
+          this.checklistSelection.deselect(dataNode);
+        }
+      });
     }
   }
 

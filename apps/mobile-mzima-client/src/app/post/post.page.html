@@ -4,7 +4,7 @@
     <ng-container *ngIf="post; else errorMessage">
       <div class="post">
         <strong class="post__title">{{ post.title }}</strong>
-        <p *ngIf="post.content">{{ post.content }}</p>
+        <p *ngIf="post.content" [innerHTML]="post.content"></p>
 
         <ng-container *ngIf="post.source === 'Twitter'">
           <app-twitter-widget
@@ -28,6 +28,9 @@
             [isConnection]="isConnection"
             [videoUrls]="videoUrls"
             [isMediaLoading]="isMediaLoading"
+            [isManagePosts]="isManagePosts"
+            [userId]="user.id!"
+            [postUserId]="post.user_id!"
           ></app-post-content>
         </ng-container>
 

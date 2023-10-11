@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { getRandomColor } from '@helpers';
+import { getDeploymentAvatarPlaceholder } from '@helpers';
 import { STORAGE_KEYS } from '@constants';
 import { Deployment } from '@mzima-client/sdk';
 import { DatabaseService, SessionService, StorageService } from '@services';
@@ -45,14 +45,10 @@ export class DeploymentService {
             const isSelected = !!storeDeployments.find((item: any) => item.id === deployment.id);
             return {
               ...deployment,
-              image:
-                deployment.image ||
-                (deployment.deployment_name
-                  ? `https://via.placeholder.com/150/${getRandomColor()}/FFFFFF?text=${deployment.deployment_name
-                      .charAt(0)
-                      .toUpperCase()}`
-                  : 'default_image_url'),
               selected: isSelected,
+              avatar: !deployment.image
+                ? getDeploymentAvatarPlaceholder(deployment.deployment_name)
+                : null,
             };
           }),
       ),
@@ -65,20 +61,61 @@ export class DeploymentService {
 
   public addDeployments(data: Deployment[]) {
     const deployments = this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENTS, 'array');
-    this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENTS, [...data, ...deployments], 'array');
+    const uniqueData: Deployment[] = this.getUniqueItems(data, deployments);
+    const filteredArray: Deployment[] = this.removeDuplicates([...uniqueData, ...deployments]);
+    this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENTS, filteredArray, 'array');
+  }
+
+  public updateDeployment(deploymentId: number, data: Partial<Deployment>) {
+    const deployments: Deployment[] = this.storageService.getStorage(
+      STORAGE_KEYS.DEPLOYMENTS,
+      'array',
+    );
+    const index = deployments.findIndex((d) => d.id === deploymentId);
+    if (index !== -1) {
+      deployments[index] = {
+        ...deployments[index],
+        ...data,
+      };
+      this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENTS, deployments, 'array');
+    }
+  }
+
+  private getUniqueItems(data: Deployment[], deployments: Deployment[]): Deployment[] {
+    return data.filter(
+      (itemData: Deployment) =>
+        !deployments.some((itemDeploy: Deployment) => itemData.id === itemDeploy.id),
+    );
+  }
+
+  public removeDuplicates(deployments: Deployment[]): Deployment[] {
+    return deployments.filter(
+      (item, index, array) => index === array.findIndex((deployment) => deployment.id === item.id),
+    );
+  }
+
+  public hasDuplicates(deployments: Deployment[]): boolean {
+    return deployments.some(
+      (item: Deployment, index: number, array: Deployment[]) =>
+        array.findIndex((deployment) => deployment.id === item.id) !== index,
+    );
   }
 
   public getDeployments(): any[] {
     return this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENTS, 'array') || [];
   }
 
-  public setDeployment(data: Deployment) {
+  public setDeployment(data: Deployment | null) {
     this.resetData();
-    this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENT, data, 'object');
+    if (data) {
+      this.storageService.setStorage(STORAGE_KEYS.DEPLOYMENT, data, 'object');
+    } else {
+      this.storageService.deleteStorage(STORAGE_KEYS.DEPLOYMENT);
+    }
     this.deployment.next(data);
   }
 
-  public getDeployment(): Deployment {
+  public getDeployment(): Deployment | null {
     return this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENT, 'object');
   }
 

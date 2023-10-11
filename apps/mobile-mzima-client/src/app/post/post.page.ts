@@ -29,13 +29,15 @@ export class PostPage implements OnDestroy {
   public isMediaLoading: boolean;
   public location: LatLon;
   public permissions: string[] = [];
-  private user: { id?: string; role?: string } = {
+  public user: { id?: number; role?: string; permissions?: any } = {
     id: undefined,
     role: undefined,
+    permissions: undefined,
   };
   public isConnection = true;
   public videoUrls: any[] = [];
   private queryParams: Params;
+  public isManagePosts: boolean = false;
 
   constructor(
     private networkService: NetworkService,
@@ -49,10 +51,11 @@ export class PostPage implements OnDestroy {
     private deploymentService: DeploymentService,
   ) {
     this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
-      next: ({ userId, role }) => {
+      next: ({ userId, role, permissions }) => {
         this.user = {
-          id: userId ? String(userId) : undefined,
+          id: userId ? Number(userId) : undefined,
           role,
+          permissions,
         };
         this.checkPermissions();
       },
@@ -98,13 +101,31 @@ export class PostPage implements OnDestroy {
         this.post?.post_content || [],
         this.post,
       );
+      this.post.post_content = postHelpers.replaceNewlinesWithBreaks(this.post?.post_content || []);
+      this.post.content = postHelpers.replaceNewlinesInString(this.post.content);
+
+      this.saveOpenedPostToDb(this.post);
+    }
+  }
+
+  private async saveOpenedPostToDb(post: PostResult) {
+    const dataFromDb = await this.databaseService.get(STORAGE_KEYS.POSTS);
+    if (
+      dataFromDb?.results.length &&
+      !dataFromDb.results.some((el: PostResult) => el.id === post.id)
+    ) {
+      dataFromDb.results.push(post);
+      dataFromDb.results.sort((a: PostResult, b: PostResult) => a.id - b.id);
+      dataFromDb.count = dataFromDb.results.length;
+      await this.databaseService.set(STORAGE_KEYS.POSTS, dataFromDb);
     }
   }
 
   private getData(post: PostResult): void {
-    this.preparingMediaField((post.post_content as PostContent[])[0].fields);
-    this.preparingSafeVideoUrls((post.post_content as PostContent[])[0].fields);
-    this.preparingRelatedPosts((post.post_content as PostContent[])[0].fields);
+    for (const content of post.post_content as PostContent[]) {
+      this.preparingSafeVideoUrls(content.fields);
+      this.preparingRelatedPosts(content.fields);
+    }
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {
@@ -112,7 +133,7 @@ export class PostPage implements OnDestroy {
       .filter((field: any) => field.type === 'relation')
       .map(async (relativeField) => {
         if (relativeField.value?.value) {
-          const url = `https://${this.deploymentService.getDeployment().fqdn}/feed/${
+          const url = `https://${this.deploymentService.getDeployment()!.fqdn}/feed/${
             relativeField.value.value
           }/view?mode=POST`;
           const relative = await this.getPostInformation(relativeField.value.value);
@@ -123,31 +144,9 @@ export class PostPage implements OnDestroy {
       });
   }
 
-  private preparingMediaField(fields: PostContentField[]): void {
-    fields
-      .filter((field: any) => field.type === 'media')
-      .map(async (mediaField) => {
-        if (mediaField.value && mediaField.value?.value) {
-          const media = await this.getPostMedia(mediaField.value.value);
-          const { original_file_url: originalFileUrl, caption } = media;
-          mediaField.value.photoUrl = originalFileUrl;
-          mediaField.value.caption = caption;
-        }
-      });
-  }
-
   private async getPostInformation(postId: number): Promise<any> {
     try {
       return await lastValueFrom(this.postsService.getById(postId));
-    } catch (err) {
-      console.error(err);
-      return err;
-    }
-  }
-
-  private async getPostMedia(mediaId: string): Promise<any> {
-    try {
-      return await lastValueFrom(this.mediaService.getById(mediaId));
     } catch (err) {
       console.error(err);
       return err;
@@ -176,12 +175,14 @@ export class PostPage implements OnDestroy {
     if (this.user.role === 'member') {
       this.permissions = ['add_to_collection'];
     }
-    if (this.user.role === 'admin' || this.user.id === String(this.post?.user_id)) {
+    if (this.user.role === 'admin' || this.user.id === this.post?.user_id) {
       this.permissions = ['add_to_collection', 'edit'];
     }
     if (this.user.role === 'admin') {
       this.permissions = ['add_to_collection', 'edit', 'change_status'];
     }
+
+    this.isManagePosts = this.user.permissions?.includes('Manage Posts') ?? false;
   }
 
   public back(): void {

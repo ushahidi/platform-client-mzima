@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { UserInterface } from '@mzima-client/sdk';
+import { generalHelpers, UserInterface } from '@mzima-client/sdk';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { CONST } from '../constants';
 import {
   DonationConfigInterface,
   FeaturesConfigInterface,
@@ -78,7 +77,7 @@ export class SessionService {
   }
 
   getLocalStorageNameMapper(key: string) {
-    return `${CONST.LOCAL_STORAGE_PREFIX}${key}`;
+    return `${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}${key}`;
   }
 
   getSiteConfigurations() {

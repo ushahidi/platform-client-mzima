@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { formHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
+import { regexHelper } from '@helpers';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import {
   ContactsService,
@@ -43,6 +44,7 @@ interface AccountTypeInterface {
   styleUrls: ['./account-settings-modal.component.scss'],
 })
 export class AccountSettingsModalComponent implements OnInit {
+  @ViewChild('updatePasswordFields') public updatePasswordFields: ElementRef;
   public profile: UserInterface;
   public contacts: ContactsInterface[];
   public isUpdatingPassword = false;
@@ -65,6 +67,7 @@ export class AccountSettingsModalComponent implements OnInit {
   public addAccountForm: FormGroup;
   public notifications: AccountNotificationsInterface[] = [];
   NotificationTypeEnum = NotificationTypeEnum;
+  errorMap: { [key: string]: string | null } = {};
 
   private checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
     if (!group) return null;
@@ -92,16 +95,20 @@ export class AccountSettingsModalComponent implements OnInit {
       {
         role: [''],
         display_name: ['', [Validators.required]],
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
         password: [''],
         confirmPassword: [''],
       },
       { validators: this.checkPasswords },
     );
 
+    this.initAccountForm();
+  }
+
+  private initAccountForm() {
     this.addAccountForm = this.formBuilder.group({
       type: ['email', [Validators.required]],
-      name: ['', [Validators.required, Validators.email]],
+      name: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
     });
   }
 
@@ -114,7 +121,6 @@ export class AccountSettingsModalComponent implements OnInit {
       next: (response) => {
         const { result } = response;
         this.profile = result;
-
         this.profileForm.patchValue({
           role: this.profile.role,
           display_name: this.profile.realname,
@@ -125,6 +131,10 @@ export class AccountSettingsModalComponent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  canDeleteContact(contact: ContactsInterface) {
+    return contact.allowed_privileges?.includes('delete');
   }
 
   private getContacts(): void {
@@ -186,6 +196,13 @@ export class AccountSettingsModalComponent implements OnInit {
 
   public updatePassword(isOpen: boolean): void {
     this.isUpdatingPassword = isOpen;
+
+    if (this.isUpdatingPassword) {
+      this.updatePasswordFields.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        this.updatePasswordFields.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      }, 350);
+    }
 
     if (this.isUpdatingPassword) {
       this.setFieldsValidators(
@@ -265,6 +282,7 @@ export class AccountSettingsModalComponent implements OnInit {
           this.addAccountForm.reset();
           this.addAccountForm.markAsPristine();
           this.addAccountForm.enable();
+          this.initAccountForm();
         },
       });
   }
@@ -277,8 +295,14 @@ export class AccountSettingsModalComponent implements OnInit {
     const value: AccountTypeEnum = event.value;
 
     const actions = {
-      [AccountTypeEnum.Email]: () => [Validators.required, Validators.email],
-      [AccountTypeEnum.Phone]: () => [Validators.required, Validators.pattern('[- +()0-9]{13}')],
+      [AccountTypeEnum.Email]: () => [
+        Validators.required,
+        Validators.pattern(regexHelper.emailValidate()),
+      ],
+      [AccountTypeEnum.Phone]: () => [
+        Validators.required,
+        Validators.pattern(regexHelper.phonePattern()),
+      ],
     };
 
     if (actions[value]) {
@@ -353,5 +377,46 @@ export class AccountSettingsModalComponent implements OnInit {
 
   public filteredNotifications(type: NotificationTypeEnum): AccountNotificationsInterface[] {
     return this.notifications.filter((notification) => notification.type === type);
+  }
+
+  public validateContact(contact: ContactsInterface) {
+    this.isContactsChanged = true;
+    let error: string | null = null;
+
+    if (contact.type === 'email') {
+      const emailPattern = new RegExp(regexHelper.emailValidate());
+      if (!emailPattern.test(contact.contact)) {
+        error = 'Invalid Email';
+      }
+    }
+
+    if (contact.type === 'phone') {
+      const phonePattern = new RegExp(regexHelper.phonePattern());
+      if (!phonePattern.test(contact.contact)) {
+        error = 'Invalid Phone';
+      }
+    }
+
+    this.errorMap[contact.id] = error ? error : null;
+  }
+
+  public checkContactsErrors(): boolean {
+    return Object.values(this.errorMap).some((error) => error !== null);
+  }
+
+  public isButtonDisabled(): boolean {
+    if (this.isLoading) {
+      return true;
+    }
+
+    if (this.selectedTabIndex === 0) {
+      return this.profileForm.invalid || this.profileForm.pristine || this.profileForm.disabled;
+    }
+
+    if (this.selectedTabIndex === 1) {
+      return this.checkContactsErrors();
+    }
+
+    return false;
   }
 }

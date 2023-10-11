@@ -7,9 +7,8 @@ import {
   SessionTokenInterface,
   SiteConfigInterface,
 } from '@models';
-import { UserInterface } from '@mzima-client/sdk';
+import { generalHelpers, UserInterface } from '@mzima-client/sdk';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CONST } from '@constants';
 
 @Injectable({
   providedIn: 'root',
@@ -68,7 +67,7 @@ export class SessionService {
   }
 
   getLocalStorageNameMapper(key: string) {
-    return `${CONST.LOCAL_STORAGE_PREFIX}${key}`;
+    return `${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}${key}`;
   }
 
   getSiteConfigurations(): SiteConfigInterface {
@@ -87,6 +86,10 @@ export class SessionService {
     return this.currentConfig.map;
   }
 
+  getPrecision(locationPrecision: number) {
+    return 1000 / Math.pow(10, locationPrecision);
+  }
+
   setConfigurations(
     type: keyof SessionConfigInterface,
     data: FeaturesConfigInterface | SiteConfigInterface | MapConfigInterface,
@@ -97,6 +100,7 @@ export class SessionService {
       description: this.currentConfig['site']?.description ?? '',
       logo: this.currentConfig['site']?.image_header ?? '',
       private: this.currentConfig['site']?.private ?? false,
+      email: this.currentConfig['site']?.email ?? '',
     });
   }
 

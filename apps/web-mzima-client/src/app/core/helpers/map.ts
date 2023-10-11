@@ -4,7 +4,7 @@ import { EnvService } from '../services/env.service';
 
 export const pointIcon = (color: string, type: string = 'default') => {
   // Test string to make sure that it does not contain injection
-  color = color && /^[a-zA-Z0-9#]+$/.test(color) ? color : 'var(--color-neutral-100)';
+  color = color && /^[a-zA-Z0-9#]+$/.test(color) ? `#${color}` : 'var(--color-neutral-100)';
   const size: any = [30, 40];
   // var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
 
@@ -28,7 +28,7 @@ export const pointToLayer = (feature: any, latlng: any) => {
   });
 };
 
-export const mapboxStaticTiles = (name: string, mapid: string) => {
+export const mapboxStaticTiles = (name: string, mapid: string, code: string, visible = true) => {
   return {
     name,
     url: 'https://api.mapbox.com/styles/v1/{mapid}/tiles/{z}/{x}/{y}?access_token={apikey}',
@@ -41,16 +41,23 @@ export const mapboxStaticTiles = (name: string, mapid: string) => {
       attribution:
         '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
     },
+    visible,
+    code,
   };
 };
 
 export const getMapLayers = () => {
   return {
     baselayers: {
-      satellite: mapboxStaticTiles('Satellite', 'mapbox/satellite-v9'),
-      MapQuestAerial: mapboxStaticTiles('Satellite', 'mapbox/satellite-v9'),
-      streets: mapboxStaticTiles('Streets', 'mapbox/streets-v11'),
-      MapQuest: mapboxStaticTiles('Streets', 'mapbox/streets-v11'),
+      satellite: mapboxStaticTiles('Satellite', 'mapbox/satellite-v9', 'satellite'),
+      MapQuestAerial: mapboxStaticTiles(
+        'Satellite',
+        'mapbox/satellite-v9',
+        'MapQuestAerial',
+        false,
+      ),
+      streets: mapboxStaticTiles('Streets', 'mapbox/streets-v11', 'streets'),
+      MapQuest: mapboxStaticTiles('Streets', 'mapbox/streets-v11', 'MapQuest', false),
       hOSM: {
         name: 'Humanitarian',
         url: '//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
@@ -58,6 +65,8 @@ export const getMapLayers = () => {
           attribution:
             '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>',
         },
+        visible: true,
+        code: 'hOSM',
       },
     },
   };

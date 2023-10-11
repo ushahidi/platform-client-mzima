@@ -15,6 +15,7 @@ export interface DonationConfigInterface {
 
 export interface SiteConfigInterface {
   allowed_privileges?: string[];
+  api_version?: string;
   client_url?: boolean;
   date_format?: string;
   description?: string;
@@ -23,6 +24,7 @@ export interface SiteConfigInterface {
   first_login?: boolean;
   id?: string;
   image_header?: string;
+  image_max_size?: string;
   language?: string;
   name?: string;
   tier?: string;

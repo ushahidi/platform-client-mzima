@@ -47,5 +47,6 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
     PasswordStrengthModule,
     MzimaUiModule,
   ],
+  exports: [LoginFormComponent],
 })
 export class AuthModule {}

@@ -3,6 +3,7 @@ import { PostStatus } from '@mzima-client/sdk';
 
 interface PostItemAction extends ActionSheetButton {
   guard: PostItemActionTypeUserRole[];
+  status?: string;
 }
 
 export enum PostItemActionType {
@@ -67,6 +68,7 @@ export const postItemActions: PostItemAction[] = [
   },
   {
     role: 'status',
+    status: 'published',
     text: 'Publish',
     icon: '/assets/icon/publish.svg',
     data: {
@@ -76,6 +78,7 @@ export const postItemActions: PostItemAction[] = [
   },
   {
     role: 'status',
+    status: 'draft',
     text: 'Put under review',
     icon: '/assets/icon/put-under-review.svg',
     data: {
@@ -85,6 +88,7 @@ export const postItemActions: PostItemAction[] = [
   },
   {
     role: 'status',
+    status: 'archived',
     text: 'Archive',
     icon: '/assets/icon/archive.svg',
     data: {
@@ -112,18 +116,27 @@ export const postItemActions: PostItemAction[] = [
   },
 ];
 
-export const getPostItemActions = (role?: PostItemActionTypeUserRole): ActionSheetButton[] => {
-  return postItemActions.filter((postItemAction) =>
-    role
-      ? !postItemAction.guard.length || postItemAction.guard.indexOf(role) > -1
-      : !postItemAction.guard.length,
-  );
+export const getPostItemActions = (
+  role?: PostItemActionTypeUserRole,
+  currentStatus?: 'published' | 'draft' | 'archived',
+): ActionSheetButton[] => {
+  return postItemActions
+    .filter((postItemAction) =>
+      role
+        ? !postItemAction.guard.length || postItemAction.guard.indexOf(role) > -1
+        : !postItemAction.guard.length,
+    )
+    .filter((action) => currentStatus !== action.status);
 };
 
-export const getPostStatusActions = (): ActionSheetButton[] => {
-  return postItemActions.filter(
-    (postItemAction) => postItemAction.role === 'status' || postItemAction.role === 'cancel',
-  );
+export const getPostStatusActions = (
+  currentStatus?: 'published' | 'draft' | 'archived',
+): ActionSheetButton[] => {
+  return postItemActions
+    .filter(
+      (postItemAction) => postItemAction.role === 'status' || postItemAction.role === 'cancel',
+    )
+    .filter((action) => currentStatus !== action.status);
 };
 
 export const postStatusChangedHeader: Record<PostStatus, string> = {

@@ -25,8 +25,8 @@ $laptop: 1439px;
 
   // Size
   &--medium {
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: var(--button-padding-top, 8px);
+    padding-bottom: var(--button-padding-bottom, 8px);
     font-size: var(--font-size, 16px);
     min-height: var(--min-height, 40px);
     font-weight: var(--font-weight, 500);
@@ -253,6 +253,12 @@ $laptop: 1439px;
   }
 
   &--custom {
+    --color: var(--button-color);
+    --background-color: var(--button-background);
+    --hover-background-color: var(--button-background-hover);
+    --active-background-color: var(--button-background-active, var(--button-background-hover));
+    --disabled-color: var(--button-disabled-color);
+    --disabled-background-color: var(--button-disabled-background);
   }
 
   &__content {

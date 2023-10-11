@@ -25,7 +25,6 @@ import {
 } from 'leaflet';
 import 'leaflet.markercluster';
 import { pointIcon } from '../../core/helpers/map';
-import { alphaNumeric } from '../../core/helpers/regex';
 import Geocoder from 'leaflet-control-geocoder';
 import { fromEvent, filter, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -39,8 +38,11 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class LocationSelectComponent implements OnInit, AfterViewInit {
   @Input() public center: LatLngLiteral;
   @Input() public zoom: number;
-  @Input() public location: LatLngLiteral;
+  @Input() public location: any;
   @Input() public required: boolean;
+  @Input() public color = 'var(--color-neutral-100)';
+  @Input() public type = 'default';
+  @Input() public isEditPost: boolean = false;
   @Output() locationChange = new EventEmitter();
   public emptyFieldLat = false;
   public emptyFieldLng = false;
@@ -72,18 +74,24 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.mapConfig = this.getMapConfigurations();
 
+    if (!this.isEditPost && !this.location.lat) {
+      this.location.lat = this.mapConfig.default_view!.lat;
+      this.location.lng = this.mapConfig.default_view!.lon;
+    }
+
     const currentLayer =
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
     this.leafletOptions = {
       scrollWheelZoom: true,
       zoomControl: false,
+      worldCopyJump: true,
       layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
       center: [
         this.location?.lat || this.mapConfig.default_view!.lat,
         this.location?.lng || this.mapConfig.default_view!.lon,
       ],
-      zoom: this.zoom || this.mapConfig.default_view!.zoom,
+      zoom: this.mapConfig.default_view!.zoom || this.zoom,
     };
     this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
 
@@ -131,7 +139,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     this.addMarker();
 
     this.map.on('click', (e) => {
-      this.location = e.latlng;
+      this.location = e.latlng.wrap();
       this.addMarker();
       this.cdr.detectChanges();
     });
@@ -151,7 +159,7 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
     }
     this.mapMarker = marker(this.location, {
       draggable: true,
-      icon: pointIcon(this.mapConfig.default_view!.color),
+      icon: pointIcon(this.color, this.type === 'web' ? 'default' : this.type),
     }).addTo(this.map);
 
     this.mapMarker.on('dragend', (e) => {
@@ -168,27 +176,13 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
 
   public checkErrors() {
     this.emptyFieldLat = this.emptyFieldLng = false;
-    this.noSpecialCharactersLat = this.noSpecialCharactersLng = false;
 
     if (this.required) {
       this.emptyFieldLat = this.location.lat.toString() === '';
       this.emptyFieldLng = this.location.lng.toString() === '';
     }
 
-    if (this.location.lat) {
-      this.noSpecialCharactersLat = !alphaNumeric(this.location.lat.toString());
-    }
-
-    if (this.location.lng) {
-      this.noSpecialCharactersLng = !alphaNumeric(this.location.lng.toString());
-    }
-
-    this.changeCoords(
-      this.emptyFieldLat ||
-        this.emptyFieldLng ||
-        this.noSpecialCharactersLat ||
-        this.noSpecialCharactersLng,
-    );
+    this.changeCoords(this.emptyFieldLat || this.emptyFieldLng);
   }
 
   public getCurrentLocation() {
@@ -204,6 +198,14 @@ export class LocationSelectComponent implements OnInit, AfterViewInit {
   }
 
   public onFocusOut() {
+    this.checkErrors();
+  }
+
+  public clearLocationField() {
+    this.location = {
+      lat: '',
+      lng: '',
+    };
     this.checkErrors();
   }
 }

@@ -2,13 +2,21 @@
   <app-settings-header
     [settingsTitle]="'app.categories'"
     [newButtonTitle]="'app.add_new_category'"
-    [isShowActionsButton]="false"
+    [selectedItem]="selectedCategories"
+    (isShowActionsChange)="showActions($event)"
+    (deleteCall)="deleteCategories()"
   >
   </app-settings-header>
   <ul *ngIf="categories; else spinner" class="categories-list">
     <ng-container *ngFor="let category of categories">
       <li *ngIf="!category.parent_id" class="categories-list__item">
-        <app-category-item #categoryItem [category]="category"> </app-category-item>
+        <app-category-item
+          #categoryItem
+          [category]="category"
+          (selected)="selectCategory($event)"
+          [isCheckbox]="isShowActions"
+        >
+        </app-category-item>
 
         <ul *ngIf="category.children?.length" class="categories-list categories-list--lvl2">
           <li
@@ -17,6 +25,8 @@
           >
             <app-category-item
               #categoryItem
+              [isCheckbox]="isShowActions"
+              (selected)="selectCategory($event)"
               [category]="category"
               [customClass]="'category-item__title--lvl2'"
             >

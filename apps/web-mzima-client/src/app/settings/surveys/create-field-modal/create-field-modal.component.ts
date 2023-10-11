@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { surveyHelper, regexHelper } from '@helpers';
+import { surveyHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs';
 import { MultilevelSelectOption } from '../../../shared/components';
@@ -54,7 +54,28 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   private editField() {
+    this.editMode = true;
+
     this.selectedFieldType = this.data.selectedFieldType;
+
+    this.updateRadioCheckboxFields();
+
+    this.updateTags();
+
+    this.setHasOptionValidate();
+
+    this.checkLoadAvailableData(this.selectedFieldType.input);
+
+    if (Array.isArray(this.selectedFieldType.translations)) {
+      this.selectedFieldType.translations = {};
+    }
+
+    if (!this.selectedFieldType.translations[this.selectLanguageCode]) {
+      this.selectedFieldType.translations[this.selectLanguageCode] = { label: '' };
+    }
+  }
+
+  private updateTags() {
     if (
       this.selectedFieldType.input === 'tags' &&
       this.selectedFieldType.options?.length &&
@@ -65,15 +86,15 @@ export class CreateFieldModalComponent implements OnInit {
       );
       this.setTempSelectedFieldType();
     }
-    this.editMode = true;
-    this.setHasOptionValidate();
-    this.checkLoadAvailableData(this.selectedFieldType.input);
-    if (Array.isArray(this.selectedFieldType.translations)) {
-      this.selectedFieldType.translations = {};
-    }
+  }
 
-    if (!this.selectedFieldType.translations[this.selectLanguageCode]) {
-      this.selectedFieldType.translations[this.selectLanguageCode] = { label: '' };
+  private updateRadioCheckboxFields() {
+    const checkTypes = ['radio', 'checkbox', 'select'];
+    if (checkTypes.includes(this.selectedFieldType.input)) {
+      this.fieldOptions = this.data?.selectedFieldType.options?.map((option: any) => ({
+        value: option,
+        error: '',
+      }));
     }
   }
 
@@ -120,14 +141,8 @@ export class CreateFieldModalComponent implements OnInit {
   optionValidation(index: number) {
     const option = this.fieldOptions[index];
 
-    if (!regexHelper.alphaNumeric(option.value)) {
-      option.error = 'survey.special_characters_option';
-    } else {
-      const duplicates = this.fieldOptions.filter(
-        (e, i) => e.value === option.value && i !== index,
-      );
-      option.error = duplicates.length ? 'survey.duplicate_option' : '';
-    }
+    const duplicates = this.fieldOptions.filter((e, i) => e.value === option.value && i !== index);
+    option.error = duplicates.length ? 'survey.duplicate_option' : '';
   }
 
   public checkForSpecialOptions(): boolean {
@@ -181,6 +196,7 @@ export class CreateFieldModalComponent implements OnInit {
   }
 
   private isNumber({ default: val, type }: any): boolean {
+    if (!val) return true;
     if (type === 'decimal') {
       return /((?<!\S)[-+]?[0-9]*[.,][0-9]+$)/gm.test(String(val).trim());
     }
@@ -223,12 +239,6 @@ export class CreateFieldModalComponent implements OnInit {
     );
     this.setHasOptionValidate();
     this.checkLoadAvailableData(this.selectedFieldType.input);
-    if (this.selectedFieldType.input === 'number' && this.selectedFieldType.type === 'int') {
-      this.selectedFieldType.default = 0;
-    }
-    if (this.selectedFieldType.input === 'number' && this.selectedFieldType.type === 'decimal') {
-      this.selectedFieldType.default = '0.0';
-    }
   }
 
   private checkLoadAvailableData(input: string) {

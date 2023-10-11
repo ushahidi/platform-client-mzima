@@ -13,3 +13,4 @@ export * from './twitter.service';
 export * from './network.service';
 export * from './share.service';
 export * from './listener.service';
+export * from './intercom.service';

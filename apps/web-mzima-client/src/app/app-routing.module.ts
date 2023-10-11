@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, TitleStrategy } from '@angular/router';
-import { HostGuard, AccessDeniedGuard, ResetTokenGuard, AccessAllowGuard } from '@guards';
+import {
+  HostGuard,
+  AccessDeniedGuard,
+  ResetTokenGuard,
+  AccessAllowGuard,
+  RedirectGuard,
+} from '@guards';
 import { PageNotFoundComponent } from './shared/components';
 import { UshahidiPageTitleStrategy } from '@services';
 import { AccessDeniedComponent } from './shared/components/access-denied/access-denied.component';
@@ -18,15 +24,6 @@ const routes: Routes = [
     data: {
       breadcrumb: 'nav.map',
       ogTitle: 'nav.map',
-    },
-  },
-  {
-    path: 'data',
-    loadChildren: () => import('./data/data.module').then((m) => m.DataModule),
-    canActivate: [AccessDeniedGuard],
-    data: {
-      breadcrumb: 'nav.data',
-      ogTitle: 'nav.data',
     },
   },
   {
@@ -54,15 +51,6 @@ const routes: Routes = [
     data: {
       breadcrumb: 'nav.settings',
       ogTitle: 'nav.settings',
-    },
-  },
-  {
-    path: 'post',
-    loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
-    canActivate: [AccessDeniedGuard],
-    data: {
-      breadcrumb: 'nav.posts',
-      ogTitle: 'nav.posts',
     },
   },
   {
@@ -100,6 +88,37 @@ const routes: Routes = [
         redirectTo: '/feed',
       },
     ],
+  },
+  {
+    path: 'post',
+    loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
+    canActivate: [AccessDeniedGuard],
+    data: {
+      breadcrumb: 'nav.posts',
+      ogTitle: 'nav.posts',
+    },
+  },
+  {
+    path: 'posts', // For support legacy URL routes
+    loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
+    canActivate: [AccessDeniedGuard],
+    data: {
+      breadcrumb: 'nav.posts',
+      ogTitle: 'nav.posts',
+    },
+  },
+  {
+    path: 'posts/:id',
+    canActivate: [RedirectGuard],
+    component: PageNotFoundComponent,
+  },
+  {
+    path: 'not-found',
+    component: PageNotFoundComponent,
+    data: {
+      breadcrumb: 'app.page-not-found',
+      ogTitle: 'app.page-not-found',
+    },
   },
   {
     path: '**',

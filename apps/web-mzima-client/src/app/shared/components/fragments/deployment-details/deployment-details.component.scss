@@ -1,0 +1,59 @@
+@import 'helpers';
+
+.menu {
+  &__head {
+    @include breakpoint-max($tablet) {
+      display: flex;
+      flex-shrink: 0;
+      padding: 0 16px;
+      min-height: 80px;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-neutral-90);
+    }
+
+    &__close {
+      display: none;
+      --size: 40px;
+      --icon-size: 32px;
+      margin-inline-start: 24px;
+      --color: var(--color-neutral-40);
+      --background-color: var(--color-black);
+      --border-color: var(--color-neutral-90);
+      --hover-background-color: var(--color-black);
+
+      @include breakpoint-max($tablet) {
+        display: block;
+      }
+    }
+  }
+
+  &__logo {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px var(--side-offset) 0;
+    border-bottom: 1px solid var(--color-neutral-90);
+    margin: -24px calc(var(--side-offset) * -1) 8px;
+
+    @include breakpoint-max($tablet) {
+      border-bottom: 0;
+      width: 177px;
+      height: 54px;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      width: 172px;
+      height: 40px;
+
+      @include breakpoint-max($tablet) {
+        width: 177px;
+        height: 54px;
+      }
+    }
+  }
+}

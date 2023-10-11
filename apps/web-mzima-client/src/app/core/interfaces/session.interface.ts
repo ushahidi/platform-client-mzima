@@ -25,6 +25,7 @@ export interface SiteConfigInterface {
   first_login?: boolean;
   id?: string;
   image_header?: string;
+  image_max_size?: string;
   language?: string;
   name?: string;
   tier?: string;
@@ -32,6 +33,7 @@ export interface SiteConfigInterface {
   url?: string;
   private?: boolean;
   donation?: DonationConfigInterface;
+  api_version?: string;
 }
 
 export interface FeatureFlag {
