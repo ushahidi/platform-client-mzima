@@ -6,6 +6,7 @@
   "scripts": {
     "cy:open": "cypress open",
     "start": "cypress run",
+    "run-test": "node ./node_modules/cypress/bin/cypress open --browser chrome",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "walter",

@@ -8,7 +8,7 @@ class RoleFunctions {
 
   add_role(roleName, roleDescription) {
     cy.get(RoleLocators.addRoleBtn).click();
-    cy.get(RoleLocators.roleNameFld).type(roleName);
+    cy.get(RoleLocators.roleNameFld).type(roleName).clear();
     cy.get(RoleLocators.roleDescFld).type(roleDescription);
     cy.get(RoleLocators.manageCollectionsBox).click();
     cy.get(RoleLocators.addSaveBtn).click();
