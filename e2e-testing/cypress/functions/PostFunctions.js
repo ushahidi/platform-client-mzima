@@ -13,28 +13,44 @@ class PostFunctions {
   }
 
   fill_required_form_fields() {
-    cy.get('mat-form-field.mat-form-field').find('input.mat-input-element').type(this.postTitle);
-    cy.get(PostFunctions.descField).type(this.postDescription);
-    cy.get(PostFunctions.lngTextField).type('This is an automated long text response');
-    cy.get(PostFunctions.decimalField).type(99.9);
-    cy.get(PostFunctions.intField).type(100);
+    cy.contains('mat-label', 'Title')
+      .siblings('mat-form-field')
+      .find('input.mat-input-element')
+      .type(this.postTitle);
+    cy.get(PostLocators.descField).type(this.postDescription);
+    cy.get(PostLocators.lngTextField).type('This is an automated long text response');
+    cy.contains('mat-label', 'Number (Decimal) Field')
+      .siblings('mat-form-field')
+      .find('input.mat-input-element')
+      .type(99.9);
+    cy.contains('mat-label', 'Number (Integer) Field')
+      .siblings('mat-form-field')
+      .find('input.mat-input-element')
+      .type(100);
     // click on date field to open pop up
-    cy.get(PostFunctions.dateField).click();
+    cy.contains('mat-label', 'Date & Time Field')
+      .siblings('mat-form-field')
+      .find('input.mat-input-element')
+      .click();
     cy.get('.mat-button.mat-stroked-button').click(); // click on the checkmark button to select today's date
-    cy.get(PostFunctions.selectFieldBtn).click();
-    cy.get(PostFunctions.selectFieldOption1).click();
-    cy.get(PostFunctions.radioFieldOption2).click();
-    cy.get(PostFunctions.checkboxFieldOption3).click();
-    cy.get(PostFunctions.relatedPostField).type(
+    cy.get(PostLocators.selectFieldBtn).click();
+    cy.get(PostLocators.selectFieldOption1).click();
+    cy.get(PostLocators.radioFieldOption2).click();
+    cy.get(PostLocators.checkboxFieldOption3).click();
+    cy.get(PostLocators.relatedPostField).type(
       'http://localhost:4200/feed/103214/view?page=1&mode=POST',
     );
-    cy.get(PostFunctions.intField).type('https://youtu.be/EhT3co2qNAA?si=Z6f5Ao1VHWItT4Fe');
+    cy.contains('mat-label', 'Embed video Field')
+      .siblings('mat-form-field')
+      .find('input.mat-input-element')
+      .type('https://youtu.be/EhT3co2qNAA?si=Z6f5Ao1VHWItT4Fe');
   }
 
   complete_add_post_steps() {
-    cy.get(PostFunctions.submitBtn).click();
+    cy.get(PostLocators.submitBtn).should('be.enabled');
+    cy.get(PostLocators.submitBtn).click();
     cy.get('div.confirm-content').should('be.visible');
-    cy.get(PostFunctions.successButton).click();
+    cy.get(PostLocators.successButton).click();
   }
 
   verify_created_post_exists() {
