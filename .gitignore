@@ -48,5 +48,7 @@ Thumbs.db
 # Cypress e2e tests
 e2e-testing/node_modules
 cypress/videos/*
+e2e-testing/cypress/screenshots/*
+e2e-testing/cypress/videos/*
 
 .angular
