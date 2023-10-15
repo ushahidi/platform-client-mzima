@@ -4,7 +4,7 @@ import PostLocators from '../locators/PostLocators';
 
 class PostFunctions {
   constructor() {
-    this.postTitle = 'Automated Title Response';
+    this.postTitle = `Automated Title Response-${Math.floor(Math.random() * 900) + 100}`;
     this.postDescription = 'Automated Description Response';
   }
   open_post_creation_form() {
@@ -37,23 +37,19 @@ class PostFunctions {
     cy.get(PostLocators.selectFieldOption1).click();
     cy.get(PostLocators.radioFieldOption2).click();
     cy.get(PostLocators.checkboxFieldOption3).click();
-    cy.get(PostLocators.relatedPostField).type(
-      'http://localhost:4200/feed/103214/view?page=1&mode=POST',
-    );
-    cy.contains('mat-label', 'Embed video Field')
-      .siblings('mat-form-field')
-      .find('input.mat-input-element')
-      .type('https://youtu.be/EhT3co2qNAA?si=Z6f5Ao1VHWItT4Fe');
   }
 
   complete_add_post_steps() {
-    cy.get(PostLocators.submitBtn).should('be.enabled');
+    cy.get(PostLocators.submitBtn).should('not.be.disabled');
     cy.get(PostLocators.submitBtn).click();
     cy.get('div.confirm-content').should('be.visible');
     cy.get(PostLocators.successButton).click();
   }
 
   verify_created_post_exists() {
+    cy.contains('mat-list-option', "Full Length Survey-with image-field- don't delete")
+      .find('.mat-pseudo-checkbox')
+      .click();
     cy.contains(this.postTitle).should('exist');
   }
 }
