@@ -37,6 +37,10 @@ class PostFunctions {
     cy.get(PostLocators.selectFieldOption1).click();
     cy.get(PostLocators.radioFieldOption2).click();
     cy.get(PostLocators.checkboxFieldOption3).click();
+    cy.contains('mat-label', 'Short text Field (last)')
+      .siblings('mat-form-field')
+      .find('input.mat-input-element')
+      .type('Automated Short text');
   }
 
   complete_add_post_steps() {
