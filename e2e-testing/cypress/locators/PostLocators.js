@@ -7,6 +7,7 @@ const PostLocators = {
   titleField: '[data-qa="title"]',
   descField: '[data-qa="description"]',
   lngTextField: '[data-qa="long-text field"]',
+  shtTextField: '[data-qa="short-text field"]',
   decimalField: '[data-qa="number-decimal field"]',
   intField: '[data-qa="number-integer field"]',
   dateField: '[data-qa="date-&-time-field"]',
