@@ -217,6 +217,19 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
 
   public submit(): void {
     if (this.form.invalid) return;
+
+    let role;
+    switch (this.form.value.visible_to.value) {
+      case 'only_me':
+        role = ['me'];
+        break;
+      case 'everyone':
+        role = ['everyone'];
+        break;
+      default:
+        role = this.form.value.visible_to.options;
+    }
+
     const category = {
       base_language: this.form.value.language,
       color: '',
@@ -229,8 +242,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
       parent: this.form.value.parent,
       parent_id: this.form.value.is_child_to || null,
       parent_id_original: this.category?.parent?.id || null,
-      role:
-        this.form.value.visible_to.value === 'everyone' ? null : this.form.value.visible_to.options,
+      role,
       slug: this.form.value.name,
       tag: this.form.value.name,
       translations: this.form.value.translations.reduce(

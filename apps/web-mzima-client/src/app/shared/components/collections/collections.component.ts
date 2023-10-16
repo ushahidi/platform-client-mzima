@@ -96,7 +96,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
       visible_to: [
         {
           value: 'everyone',
-          options: [],
+          options: ['everyone'],
           disabled: false,
         },
       ],
@@ -237,12 +237,18 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   saveCollection() {
     if (!this.isManageCollections) this.featuredChange();
     const collectionData = this.collectionForm.value;
-    collectionData.role =
-      this.collectionForm.value.visible_to.value === 'everyone'
-        ? null
-        : this.collectionForm.value.visible_to.options;
-    collectionData.featured = collectionData.visible_to.value === 'only_me';
+
+    const visibleTo = collectionData.visible_to.value;
+    if (visibleTo === 'only_me') {
+      collectionData.role = ['me'];
+      collectionData.view_only['only_me'] = true;
+    } else if (visibleTo === 'everyone') {
+      collectionData.role = ['everyone'];
+    } else {
+      collectionData.role = collectionData.visible_to.options;
+    }
     delete collectionData.visible_to;
+
     collectionData.user_id = Number(this.user.userId);
     if (this.currentView === CollectionView.Create) {
       this.collectionsService.post(collectionData).subscribe({
