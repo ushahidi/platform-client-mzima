@@ -258,6 +258,10 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       },
     });
 
+    this.eventBusService.on(EventType.RefreshSurveysCounters).subscribe({
+      next: () => this.getSurveys(),
+    });
+
     this.eventBusService.on(EventType.ShowOnboarding).subscribe({
       next: () => (this.isOnboardingActive = true),
     });
