@@ -226,7 +226,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     // $state.go(`posts.${viewParam}.collection`, {collectionId: collection.id}, {reload: true});
   }
 
-  featuredChange(checked: boolean = false) {
+  withoutManageCollectionsPrivilege(checked: boolean = false) {
     this.updateForm('visible_to', {
       value: 'only_me',
       options: [this.userRole],
@@ -235,13 +235,13 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   }
 
   saveCollection() {
-    if (!this.isManageCollections) this.featuredChange();
+    if (!this.isManageCollections) this.withoutManageCollectionsPrivilege();
     const collectionData = this.collectionForm.value;
 
     const visibleTo = collectionData.visible_to.value;
     if (visibleTo === 'only_me') {
       collectionData.role = ['me'];
-      collectionData.view_only['only_me'] = true;
+      collectionData['view_only']['only_me'] = true;
     } else if (visibleTo === 'everyone') {
       collectionData.role = ['everyone'];
     } else {

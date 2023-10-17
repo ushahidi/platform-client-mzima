@@ -68,6 +68,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
   }
 
   ngOnInit(): void {
+    this.getUserData();
     this.initializeForm();
     this.formSubscribe();
     this.getCategories();
@@ -231,6 +232,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
     }
 
     const category = {
+      user_id: Number(this.user.userId),
       base_language: this.form.value.language,
       color: '',
       description: this.form.value.description,
@@ -254,6 +256,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
       ),
       type: 'category',
     };
+
     this.formSubmit.emit(category);
   }
 
