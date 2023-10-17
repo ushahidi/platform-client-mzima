@@ -1,5 +1,7 @@
 import UserLocators from '../locators/UserLocators';
 
+const usersToDelete = ['delete4', 'delete5', 'delete6'];
+
 class UserFunctions {
   open_user_page_steps() {
     cy.wait(2000);
@@ -33,6 +35,36 @@ class UserFunctions {
     cy.get(UserLocators.deleteUsersBtn).click();
     cy.get(UserLocators.deleteUserConfirmBtn).click();
   }
+
+  delete_multiple_users(userNames = []) {
+    if (userNames.length === 0) {
+      // Use the default 'usersToDelete' array if 'userNames' is empty
+      userNames = usersToDelete;
+    }
+  
+    this.open_user_page_steps();
+    cy.get(UserLocators.bulkActionsBtn).click();
+    userNames.forEach((userName, index) => {
+      // Type the user name in the search input
+      cy.get('.p-inputtext').clear().type(userName);
+
+      // Select the checkbox next to the user
+      cy.get(`:contains("${userName}") .p-checkbox-box`).eq(0).click();
+
+      // Clear the search input for the next iteration (except the last one)
+    if (index < userNames.length - 1) {
+      cy.get('.p-inputtext').clear();
+    }
+    });
+  
+    // Click the "Delete Users" button after selecting all users
+    cy.get(UserLocators.deleteUsersBtn).click();
+    // Confirm deletion
+    cy.get(UserLocators.deleteUserConfirmBtn).click();
+  }
+  
+
+  
 
   add_user() {
     this.open_user_page_steps();
