@@ -2,30 +2,28 @@ import CollectionLocators from '../locators/CollectionLocators';
 
 class CollectionFunctions {
 
-    launch_collection_modal(collectionURL) {
-        cy.visit(collectionURL);
-        cy.get(CollectionLocators.collectionModal).click();
+    click_collections_button() {
+        cy.get(CollectionLocators.collectionBtn).click();
         cy.get(CollectionLocators.addcollectionBtn).click();
       }
 
-      type_name(name) {
+    type_name(name) {
         cy.get(CollectionLocators.collectionNameField)
           .type(name)
           .should('have.value', name);
       }
     
-      type_description(description) {
+    type_description(description) {
         cy.get(CollectionLocators.collectionDescField)
           .clear()
           .type(description)
       }
 
-      visibility(){
+    visibility(){
         cy.get('.mat-radio-container')
           .find('.mat-radio-input')
           .eq(0)
           .click({force: true})
-
       }
 
     save_collection() {
@@ -33,9 +31,9 @@ class CollectionFunctions {
         .click();
     }
     
-    open_collections(collectionURL){
-        cy.visit(collectionURL);
-        cy.get(CollectionLocators.collectionModal).click();
+    open_collections(){
+      cy.get(CollectionLocators.collectionBtn)
+        .click();
     }
 
     select_collections(){
@@ -75,18 +73,16 @@ class CollectionFunctions {
         .eq(0)
         .click({force: true})
       cy.contains('Post Title').should('exist');
-     
     }
 
     add_collections() {
-      let collectionURL = "http://localhost:4200/collections?orderby=created&order=desc&q=";
       let collectionName = `Automated Collection-${Math.floor(Math.random() * 100000000000)}`
-      this.launch_collection_modal(collectionURL);
+      this.click_collections_button();
       this.type_name(collectionName);
       this.type_description("Automated Description");
       this.visibility();
       this.save_collection();
-      this.open_collections(collectionURL);
+      this.open_collections();
       this.select_collections()
       this.post_to_collection()
       this.verify_post_added_to_collection()
