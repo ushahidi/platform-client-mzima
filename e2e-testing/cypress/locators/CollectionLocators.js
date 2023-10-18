@@ -1,5 +1,5 @@
 const CollectionLocators = {
-    collectionModal: '[data-qa="btn-collections"]',
+    collectionBtn: '[data-qa="btn-collections"]',
     addcollectionBtn: '[data-qa="add-collection"]',
     collectionNameField: '[data-qa="name"]',
     collectionDescField: '[data-qa="description"]',
