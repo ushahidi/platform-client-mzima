@@ -15,12 +15,13 @@ class GeneralSettingsFunctions{
 
     // edit description
     type_site_description(description){
-        cy.wait(1000);
+        cy.wait(5000);
         cy.get(GeneralSettingsLocator.descriptionField).clear().type(description).should('have.value', description);
     }
 
     // click save button
     click_save_button(){
+        cy.wait(1000);
         cy.get(GeneralSettingsLocator.saveButton).click();
     }
 
@@ -30,11 +31,14 @@ class GeneralSettingsFunctions{
         cy.get(GeneralSettingsLocator.apiKeyField).should('not.be.empty');
     }
 
+
+
     // tests
     edit_general_page(){
-        this.type_deployment_name("Monovista");
+        this.type_deployment_name("-Automated");
+        this.click_save_button();
         this.type_site_description("Fixtures are a great way to mock data for responses to routes");
-        this.click_save_button()
+        this.click_save_button();
     }
 }
 
