@@ -7,6 +7,7 @@
         matInput
         placeholder="{{ 'settings.deployment_name' | translate }}"
         formControlName="name"
+        [data-qa]="'name'"
         required
       />
     </mat-form-field>
@@ -33,6 +34,7 @@
         [cdkAutosizeMinRows]="(isDesktop$ | async) ? 6 : 3"
         placeholder="{{ 'settings.site_description' | translate }}"
         formControlName="description"
+        [data-qa]="'description'"
       ></textarea>
     </mat-form-field>
   </div>
@@ -48,7 +50,13 @@
   <div class="form-row">
     <mat-label>{{ 'settings.site_email' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
-      <input matInput placeholder="name@domain.com" formControlName="email" required />
+      <input
+        matInput
+        placeholder="name@domain.com"
+        formControlName="email"
+        required
+        [data-qa]="'email'"
+      />
     </mat-form-field>
     <ng-container *ngIf="generalForm.get('email')?.invalid">
       <mat-error
@@ -62,7 +70,7 @@
   <div class="form-row">
     <mat-label>{{ 'settings.site_language' | translate }}</mat-label>
     <mat-form-field appearance="outline">
-      <mat-select formControlName="language" disableOptionCentering>
+      <mat-select formControlName="language" disableOptionCentering [data-qa]="'language'">
         <mat-option *ngFor="let lang of langService.getLanguages()" [value]="lang.code">
           {{ lang.name }}
         </mat-option>
@@ -95,7 +103,7 @@
   <div class="form-row" *ngIf="apiKey">
     <mat-label>{{ 'settings.general_settings.api_key' | translate }}</mat-label>
     <mat-form-field appearance="outline" class="copy">
-      <input matInput [value]="apiKey.api_key" readonly />
+      <input matInput [value]="apiKey.api_key" readonly [data-qa]="'api_key'" />
       <div class="copy-success" *ngIf="copySuccess">{{ 'share.copied' | translate }}</div>
 
       <mzima-client-button
