@@ -9,8 +9,18 @@ class DataViewFunctions {
     this.postDescription = 'Automated Description Response';
   }
 
+  open_user_data_view_page() {
+    cy.wait(2000);
+    cy.get(DataViewLocators.dataViewBtn).click();
+    cy.contains('button', 'Clear').click();
+    cy.wait(1000);
+    cy.contains('mat-list-option', "A Simple survey - don't delete ")
+      .find('.mat-pseudo-checkbox')
+      .click();
+  }
+
   create_simple_post(title, description) {
-    cy.get('.sidebar__add-post-btn .submit-post-button .mzima-button--primary').click();
+    cy.get(DataViewLocators.addNewPostBtn).click();
     cy.get(DataViewLocators.srvyItemBtn).click(); /* simple survey form button */
     cy.contains('mat-label', 'Title')
       .siblings('mat-form-field')
@@ -21,18 +31,44 @@ class DataViewFunctions {
     cy.get(DataViewLocators.successButton).click();
   }
 
+  edit_simple_post(post) {
+    cy.contains('app-post-preview', post).within(() => {
+      cy.get(DataViewLocators.editPostBtn).click();
+    });
+    cy.get(DataViewLocators.descField).clear().type('This automated post has been edited');
+    cy.get(DataViewLocators.submitBtn).click();
+  }
+
+  delete_simple_post(post) {
+    cy.contains('app-post-preview', post).within(() => {
+      cy.get(DataViewLocators.postActionsBtn).click();
+    });
+    cy.get(DataViewLocators.deletePostBtn).click();
+    cy.get(DataViewLocators.confirmDeletePostBtn).click();
+    cy.get(DataViewLocators.successButton).click();
+  }
+
   create_comparison_posts() {
     this.create_simple_post(this.simplePost1, this.postDescription);
     this.create_simple_post(this.simplePost2, this.postDescription);
   }
 
+  edit_comparison_posts() {
+    this.open_user_data_view_page();
+    this.edit_simple_post(this.simplePost2);
+    cy.wait(1000);
+    cy.get('#switcher-button-tiles').click();
+    this.edit_simple_post(this.simplePost1);
+  }
+
+  delete_comparison_posts() {
+    this.open_user_data_view_page();
+    this.delete_simple_post(this.simplePost1);
+    this.delete_simple_post(this.simplePost2);
+  }
+
   sort_by_date_created_newest_first() {
-    cy.get(DataViewLocators.dataViewBtn).click();
-    cy.contains('button', 'Clear').click();
-    cy.wait(1500);
-    cy.contains('mat-list-option', "A Simple survey - don't delete ")
-      .find('.mat-pseudo-checkbox')
-      .click();
+    this.open_user_data_view_page();
     cy.contains('mzima-client-button', 'Sorting').find('button').click();
     cy.contains('button', 'Date created (Newest first)').click();
     // verify simplePost2 comes before simplePost1
@@ -47,12 +83,7 @@ class DataViewFunctions {
   }
 
   sort_by_date_created_oldest_first() {
-    cy.get(DataViewLocators.dataViewBtn).click();
-    cy.contains('button', 'Clear').click();
-    cy.wait(1500);
-    cy.contains('mat-list-option', "A Simple survey - don't delete ")
-      .find('.mat-pseudo-checkbox')
-      .click();
+    this.open_user_data_view_page();
     cy.contains('mzima-client-button', 'Sorting').find('button').click();
     cy.contains('button', 'Date created (Oldest first)').click();
     // go to last page
@@ -64,6 +95,36 @@ class DataViewFunctions {
         const simplePost1Idx = posts.indexOf(this.simplePost1);
         const simplePost2Idx = posts.indexOf(this.simplePost2);
         expect(simplePost1Idx).to.be.lessThan(simplePost2Idx);
+      });
+    });
+  }
+
+  sort_by_date_updated_newest_first() {
+    this.open_user_data_view_page();
+    cy.contains('mzima-client-button', 'Sorting').find('button').click();
+    cy.contains('button', 'Date updated (Newest first)').click();
+    // verify simplePost1 comes before simplePost2
+    cy.get('ngx-masonry').within(() => {
+      cy.get('.post__content h3').then(($posts) => {
+        const posts = $posts.map((_, el) => Cypress.$(el).text()).get();
+        const simplePost1Idx = posts.indexOf(this.simplePost1);
+        const simplePost2Idx = posts.indexOf(this.simplePost2);
+        expect(simplePost1Idx).to.be.lessThan(simplePost2Idx);
+      });
+    });
+  }
+
+  sort_by_date_updated_oldest_first() {
+    this.open_user_data_view_page();
+    cy.contains('mzima-client-button', 'Sorting').find('button').click();
+    cy.contains('button', 'Date updated (Oldest first)').click();
+    // verify simplePost2 comes before simplePost1
+    cy.get('ngx-masonry').within(() => {
+      cy.get('.post__content h3').then(($posts) => {
+        const posts = $posts.map((_, el) => Cypress.$(el).text()).get();
+        const simplePost1Idx = posts.indexOf(this.simplePost1);
+        const simplePost2Idx = posts.indexOf(this.simplePost2);
+        expect(simplePost1Idx).to.be.greaterThan(simplePost2Idx);
       });
     });
   }
