@@ -3,4 +3,3 @@ const ResultsCountLocators = {
 };
 
 export default ResultsCountLocators;
-  
