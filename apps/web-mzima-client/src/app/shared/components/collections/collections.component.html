@@ -33,6 +33,7 @@
       *ngIf="isLoggedIn && !post && isDesktop"
       (buttonClick)="addNewCollection()"
       tabindex="-1"
+      [data-qa]="'add-collection'"
     >
       <span>{{ 'app.add_collection' | translate }}</span>
       <mat-icon icon svgIcon="plus"></mat-icon>
@@ -116,6 +117,7 @@
             placeholder="{{ 'set.name_your_collection' | translate }}"
             formControlName="name"
             required
+            [data-qa]="'name'"
           />
           <mat-error *ngIf="collectionForm.get('name')?.hasError('required')">
             {{ 'collection.validation.required.name' | translate }}
@@ -138,6 +140,7 @@
             cdkAutosizeMinRows="3"
             cdkAutosizeMaxRows="6"
             formControlName="description"
+            [data-qa]="'description'"
           ></textarea>
         </mat-form-field>
       </div>

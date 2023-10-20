@@ -173,9 +173,7 @@
     class="cant-see-post"
     [innerHTML]="'notify.post.can_t_view_this_post' | translate"
   ></p>
-  <p
-    *ngIf="postNotFound && !isPostLoading"
-    class="cant-see-post"
-    [innerHTML]="'notify.post.post_not_found' | translate"
-  ></p>
+  <ng-container *ngIf="postNotFound && !isPostLoading">
+    <app-post-not-found></app-post-not-found>
+  </ng-container>
 </ng-template>
