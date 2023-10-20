@@ -21,8 +21,8 @@ class UserFunctions {
   delete_user_steps() {
     //type search term in bits for search to actually happen
     //typing all at once, search doesn't happen
-    cy.get('.p-inputtext').type('Aut');
-    cy.get('.p-inputtext').type('o');
+    cy.get(UserLocators.searchUserField).type('Aut');
+    cy.get(UserLocators.searchUserField).type('o');
 
     cy.get(UserLocators.bulkActionsBtn).click();
     cy.wait(1000);

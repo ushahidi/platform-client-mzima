@@ -38,6 +38,7 @@
                 type="text"
                 (input)="globalSearch($event)"
                 placeholder="{{ 'user.search_by_name' | translate }}"
+                [data-qa]="'search-user'"
               />
             </span>
           </div>
