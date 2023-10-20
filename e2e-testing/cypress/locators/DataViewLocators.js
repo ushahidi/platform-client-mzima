@@ -8,9 +8,13 @@ const DataViewLocators = {
   postActionsBtn: '[data-qa="post-actions-btn"]',
   deletePostBtn: '[data-qa="delete-post-btn"]',
   confirmDeletePostBtn: '[data-qa="btn-confirm-delete"]',
+  closeDialogBtn: '[data-qa="btn-close"]',
+  accountInfoBtn: '[data-qa="account-info"]',
+  accountStnsBtn: '[data-qa="account-settings"]',
 
   titleField: '[data-qa="title"]',
   descField: '[data-qa="description"]',
+  displayNameField: '[data-qa="display_name"]',
 };
 
 export default DataViewLocators;

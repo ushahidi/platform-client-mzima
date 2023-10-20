@@ -24,4 +24,8 @@ describe("Automated Tests for Sorting data view", () => {
   it("It deletes dummy posts created", () => {
     dataViewFunctions.delete_comparison_posts()
   });
+
+  it("creates and verifies a post card", () => {
+    dataViewFunctions.create_and_verify_post();
+  });
 });

@@ -48,6 +48,34 @@ class DataViewFunctions {
     cy.get(DataViewLocators.successButton).click();
   }
 
+  get_user_display_name() {
+    let display_name = '';
+    cy.get(DataViewLocators.accountInfoBtn).click();
+    cy.get(DataViewLocators.accountStnsBtn).click();
+    cy.get(DataViewLocators.displayNameField)
+      .invoke('val')
+      .then((text) => {
+        display_name = text;
+      });
+    cy.get(DataViewLocators.closeDialogBtn).click();
+    return display_name;
+  }
+
+  create_and_verify_post() {
+    this.open_user_data_view_page();
+    this.create_simple_post(this.simplePost1, this.postDescription);
+    const user = this.get_user_display_name();
+    cy.get('app-post-preview')
+      .eq(0)
+      .within(() => {
+        cy.contains('h3', this.simplePost1).should('be.visible');
+        cy.contains('p', this.postDescription).should('be.visible');
+        cy.get('.post-info__username.ng-star-inserted').should('contain', user);
+        cy.get('.post-info__status.post-info__status--draft').should('contain', 'Under review');
+      });
+    this.delete_simple_post(this.simplePost1);
+  }
+
   create_comparison_posts() {
     this.create_simple_post(this.simplePost1, this.postDescription);
     this.create_simple_post(this.simplePost2, this.postDescription);
