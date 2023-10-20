@@ -31,12 +31,8 @@ class EditPostFunctions {
   }
 
   check_for_added_post_in_survey() {
-    // cy.get('mat-selection-list[name="surveys"]')
-    //   .children('mat-list-option')
-    //   .eq(0)
-    // .click({force: true})
-    cy.contains('Filter').click();
-    cy.contains('Clear all filters').click();
+    cy.get('.search-form__filters > .mzima-button').click();
+    cy.get('.search-form__button > .mzima-button').click();
     cy.get('ngx-masonry').children('app-post-preview').contains('New Post Title');
     cy.get(
       '.mzima-button.mzima-button--gray.mzima-button--clear.mzima-button--medium.mzima-button--block.mzima-button--icon-only.ng-star-inserted',
