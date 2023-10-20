@@ -9,6 +9,7 @@ describe("Automated Tests for ResultsCount on Data View", () => {
     resultsCountFunctions.visit_landing_page();
     loginFunctions.click_through_onboarding();
     resultsCountFunctions.click_data_view_btn();
+    resultsCountFunctions.verify_results_count_on_data_view();
 
   });
 });
