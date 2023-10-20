@@ -1,0 +1,14 @@
+{
+  "skipCi": true,
+  "files": [
+    "docs/contributors-to-ushahidi.md"
+  ],
+  "imageSize": 50,
+  "commit": false,
+  "contributorsPerLine": 2,
+  "contributors":[],
+  "projectName": "platform-client-mzima",
+  "projectOwner": "ushahidi",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
