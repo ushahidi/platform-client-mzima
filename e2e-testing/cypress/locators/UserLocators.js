@@ -12,8 +12,7 @@ const UserLocators = {
   saveBtn: '[data-qa="btn-user-save"]',
   searchUserField: '[data-qa="search-user"]',
   bulkActionsBtn: '[data-qa="btn-settings-action"]',
-  checkUser:
-    '[".p-datatable-tbody > :nth-child(1) > :nth-child(1) > .p-element > .p-checkbox > .p-checkbox-box"]',
+  checkUser: '[data-qa="td-checkbox-auto-user"]',
   deleteUsersBtn: '[data-qa="btn-settings-delete"]',
   deleteUserCancelBtn: '[data-qa="btn-confirm-cancel"]',
   deleteUserConfirmBtn: '[data-qa="btn-confirm-delete"]',

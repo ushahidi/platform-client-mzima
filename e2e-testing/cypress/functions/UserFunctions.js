@@ -26,10 +26,7 @@ class UserFunctions {
 
     cy.get(UserLocators.bulkActionsBtn).click();
     cy.wait(1000);
-    //add unique selector for checkbox
-    cy.get(
-      '.p-selectable-row > :nth-child(1) > .p-element > .p-checkbox > .p-checkbox-box > .p-checkbox-icon',
-    ).click({ force: true });
+    cy.get(UserLocators.checkUser).click();
     cy.get(UserLocators.deleteUsersBtn).click();
     cy.get(UserLocators.deleteUserConfirmBtn).click();
   }
