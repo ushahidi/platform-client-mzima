@@ -16,6 +16,7 @@
           [fill]="mode === FeedMode.Tiles ? 'outline' : 'solid'"
           [iconOnly]="true"
           id="switcher-button-tiles"
+          [dataQa]="'tile-view'"
           [color]="mode === FeedMode.Tiles ? 'primary' : 'light'"
           [isActive]="mode === FeedMode.Tiles"
           (buttonClick)="switchMode(FeedMode.Tiles)"
@@ -27,6 +28,7 @@
           [fill]="mode === FeedMode.Post ? 'outline' : 'solid'"
           [iconOnly]="true"
           id="switcher-button-post"
+          [dataQa]="'post-view'"
           [color]="mode === FeedMode.Post ? 'primary' : 'light'"
           [isActive]="mode === FeedMode.Post"
           (buttonClick)="switchMode(FeedMode.Post)"
@@ -141,6 +143,7 @@
           <mzima-client-button
             fill="outline"
             color="secondary"
+            [dataQa]="'sorting'"
             [iconOnly]="!isDesktop"
             [matMenuTriggerFor]="sortingMenu"
             class="feed-page__control feed-page__control--sorting"
@@ -153,6 +156,7 @@
             <button
               mat-menu-item
               *ngFor="let sorting of sortingOptions"
+              [attr.data-qa]="(sorting.orderBy | translate).replace(' ', '-') + '-' + (sorting.order | translate).replace(' ', '-') | lowercase"
               (click)="sortPosts(sorting.value)"
               [ngClass]="{
                 active:
@@ -189,12 +193,14 @@
         <div class="feed__posts" *ngIf="posts?.length; else postsEmpty">
           <ngx-masonry
             #masonry
+            [attr.data-qa]="'feed-posts'"
             [ordered]="true"
             [options]="masonryOptions"
             [updateLayout]="updateMasonryLayout"
           >
             <app-post-preview
               class="post"
+              [attr.data-qa]="'post-preview'"
               [post]="post"
               [user]="user"
               ngxMasonryItem

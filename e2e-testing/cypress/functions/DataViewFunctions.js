@@ -12,16 +12,14 @@ class DataViewFunctions {
   open_user_data_view_page() {
     cy.wait(2000);
     cy.get(DataViewLocators.dataViewBtn).click();
-    cy.contains('button', 'Clear').click();
+    cy.get(DataViewLocators.clearSrvyFiltersBtn).click();
     cy.wait(1000);
-    cy.contains('mat-list-option', "A Simple survey - don't delete ")
-      .find('.mat-pseudo-checkbox')
-      .click();
+    cy.get(DataViewLocators.srvyFilterBtn).click();
   }
 
   create_simple_post(title, description) {
     cy.get(DataViewLocators.addNewPostBtn).click();
-    cy.get(DataViewLocators.srvyItemBtn).click(); /* simple survey form button */
+    cy.get(DataViewLocators.srvyItemBtn).click();
     cy.contains('mat-label', 'Title')
       .siblings('mat-form-field')
       .find('input.mat-input-element')
@@ -32,7 +30,7 @@ class DataViewFunctions {
   }
 
   edit_simple_post(post) {
-    cy.contains('app-post-preview', post).within(() => {
+    cy.contains(DataViewLocators.postPreview, post).within(() => {
       cy.get(DataViewLocators.editPostBtn).click();
     });
     cy.get(DataViewLocators.descField).clear().type('This automated post has been edited');
@@ -40,7 +38,7 @@ class DataViewFunctions {
   }
 
   delete_simple_post(post) {
-    cy.contains('app-post-preview', post).within(() => {
+    cy.contains(DataViewLocators.postPreview, post).within(() => {
       cy.get(DataViewLocators.postActionsBtn).click();
     });
     cy.get(DataViewLocators.deletePostBtn).click();
@@ -57,26 +55,28 @@ class DataViewFunctions {
     this.open_user_data_view_page();
     this.edit_simple_post(this.simplePost2);
     cy.wait(1000);
-    cy.get('#switcher-button-tiles').click();
+    cy.get(DataViewLocators.tileViewBtn).click();
     this.edit_simple_post(this.simplePost1);
   }
 
   delete_comparison_posts() {
     this.open_user_data_view_page();
     this.delete_simple_post(this.simplePost1);
+    cy.wait(1000);
     this.delete_simple_post(this.simplePost2);
   }
 
   sort_by_date_created_newest_first() {
     this.open_user_data_view_page();
-    cy.contains('mzima-client-button', 'Sorting').find('button').click();
-    cy.contains('button', 'Date created (Newest first)').click();
+    cy.get(DataViewLocators.sortingBtn).click();
+    cy.get(DataViewLocators.createAtNewFirst).click();
+
     // verify simplePost2 comes before simplePost1
-    cy.get('ngx-masonry').within(() => {
-      cy.get('.post__content h3').then(($posts) => {
-        const posts = $posts.map((_, el) => Cypress.$(el).text()).get();
-        const simplePost1Idx = posts.indexOf(this.simplePost1);
-        const simplePost2Idx = posts.indexOf(this.simplePost2);
+    cy.get(DataViewLocators.feedPosts).within(() => {
+      cy.get(DataViewLocators.postTitle).then(($postTitles) => {
+        const postTitles = $postTitles.map((_, el) => Cypress.$(el).text()).get();
+        const simplePost1Idx = postTitles.indexOf(this.simplePost1);
+        const simplePost2Idx = postTitles.indexOf(this.simplePost2);
         expect(simplePost1Idx).to.be.greaterThan(simplePost2Idx);
       });
     });
@@ -84,31 +84,34 @@ class DataViewFunctions {
 
   sort_by_date_created_oldest_first() {
     this.open_user_data_view_page();
-    cy.contains('mzima-client-button', 'Sorting').find('button').click();
-    cy.contains('button', 'Date created (Oldest first)').click();
+    cy.get(DataViewLocators.sortingBtn).click();
+    cy.get(DataViewLocators.createdAtOldestFirst).click();
+
     // go to last page
     cy.get('ul.ngx-pagination li.pagination-next').prev().click();
     // verify simplePost1 comes before simplePost2
-    cy.get('ngx-masonry').within(() => {
-      cy.get('.post__content h3').then(($posts) => {
-        const posts = $posts.map((_, el) => Cypress.$(el).text()).get();
-        const simplePost1Idx = posts.indexOf(this.simplePost1);
-        const simplePost2Idx = posts.indexOf(this.simplePost2);
+    cy.get(DataViewLocators.feedPosts).within(() => {
+      cy.get(DataViewLocators.postTitle).then(($postTitles) => {
+        const postTitles = $postTitles.map((_, el) => Cypress.$(el).text()).get();
+        const simplePost1Idx = postTitles.indexOf(this.simplePost1);
+        const simplePost2Idx = postTitles.indexOf(this.simplePost2);
         expect(simplePost1Idx).to.be.lessThan(simplePost2Idx);
       });
     });
   }
 
+  // Edit posts and sort
   sort_by_date_updated_newest_first() {
     this.open_user_data_view_page();
-    cy.contains('mzima-client-button', 'Sorting').find('button').click();
-    cy.contains('button', 'Date updated (Newest first)').click();
+    cy.get(DataViewLocators.sortingBtn).click();
+    cy.get(DataViewLocators.updatedAtNewFirst).click();
+
     // verify simplePost1 comes before simplePost2
-    cy.get('ngx-masonry').within(() => {
-      cy.get('.post__content h3').then(($posts) => {
-        const posts = $posts.map((_, el) => Cypress.$(el).text()).get();
-        const simplePost1Idx = posts.indexOf(this.simplePost1);
-        const simplePost2Idx = posts.indexOf(this.simplePost2);
+    cy.get(DataViewLocators.feedPosts).within(() => {
+      cy.get(DataViewLocators.postTitle).then(($postTitles) => {
+        const postTitles = $postTitles.map((_, el) => Cypress.$(el).text()).get();
+        const simplePost1Idx = postTitles.indexOf(this.simplePost1);
+        const simplePost2Idx = postTitles.indexOf(this.simplePost2);
         expect(simplePost1Idx).to.be.lessThan(simplePost2Idx);
       });
     });
@@ -116,14 +119,15 @@ class DataViewFunctions {
 
   sort_by_date_updated_oldest_first() {
     this.open_user_data_view_page();
-    cy.contains('mzima-client-button', 'Sorting').find('button').click();
-    cy.contains('button', 'Date updated (Oldest first)').click();
+    cy.get(DataViewLocators.sortingBtn).click();
+    cy.get(DataViewLocators.updatedAtOldestFirst).click();
+
     // verify simplePost2 comes before simplePost1
-    cy.get('ngx-masonry').within(() => {
-      cy.get('.post__content h3').then(($posts) => {
-        const posts = $posts.map((_, el) => Cypress.$(el).text()).get();
-        const simplePost1Idx = posts.indexOf(this.simplePost1);
-        const simplePost2Idx = posts.indexOf(this.simplePost2);
+    cy.get(DataViewLocators.feedPosts).within(() => {
+      cy.get(DataViewLocators.postTitle).then(($postTitles) => {
+        const postTitles = $postTitles.map((_, el) => Cypress.$(el).text()).get();
+        const simplePost1Idx = postTitles.indexOf(this.simplePost1);
+        const simplePost2Idx = postTitles.indexOf(this.simplePost2);
         expect(simplePost1Idx).to.be.greaterThan(simplePost2Idx);
       });
     });
