@@ -18,8 +18,8 @@ class PostFunctions {
       .find('input.mat-input-element')
       .type(this.postTitle);
     cy.get(PostLocators.descField).type(this.postDescription);
+
     cy.get(PostLocators.lngTextField).type('This is an automated long text response');
-    cy.get(PostLocators.shtTextField).type('Automated Short text');
     cy.contains('mat-label', 'Number (Decimal) Field')
       .siblings('mat-form-field')
       .find('input.mat-input-element')
