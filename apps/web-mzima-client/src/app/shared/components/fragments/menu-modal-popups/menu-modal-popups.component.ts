@@ -16,11 +16,11 @@ import { CollectionsComponent } from '../../collections/collections.component';
 import { BaseComponent } from '../../../../base.component';
 
 @Component({
-  selector: 'app-menu-list-non-links',
-  templateUrl: './menu-list-non-links.component.html',
-  styleUrls: ['./menu-list-non-links.component.scss'],
+  selector: 'app-menu-modal-popups',
+  templateUrl: './menu-modal-popups.component.html',
+  styleUrls: ['./menu-modal-popups.component.scss'],
 })
-export class MenuListNonLinksComponent extends BaseComponent implements OnInit {
+export class MenuModalPopupsComponent extends BaseComponent implements OnInit {
   public menu: UserMenuInterface[];
   public siteConfig: SiteConfigInterface;
   public canRegister = false;
