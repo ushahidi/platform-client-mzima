@@ -1,34 +1,18 @@
-## Description
+## This pull request makes the following changes
 
-Please include the summary of the changes made and any relevant context for this ticket.
+Fixes ushahidi/platform-client-mzima#replace-this-text-with-issue-ticket-number
 
-## Type of change
+## Pull request change details
 
-Please delete options that are not relevant.
+What fixes does this pull request contain? - Add them here using ordered or unordered list.
 
-- [ ] Bug fix (non-breaking change which fixes an issue).
-- [ ] New feature (non-breaking change which adds functionality).
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected).
-- [ ] This change requires a documentation update.
-- [ ] This is a software / dependency update.
+## Testing checklist
 
-## Testing Checklist
+What reviewers or QA should check for while reviewing this pull request:
 
-Add the dependencies and testing instructions for the changes made.
+[ ] Add checklist item 1 here
+[ ] Add cheklist item 2 here... Continue adding as much checklist items as you would like
+[ ] I certify that I ran my checklist
 
-- [ ] Example test instruction 1
-- [ ] Example test instruction 2
-- [ ] Example test instruction 3
-
-
-## Screenshots (if appropriate):
-
-
-
-## Issue fixed
-
-
-
-## Certification
-- [ ] I certify that have performed a self-review following the testing checklist above.
+Ping @ushahidi/platform-client-mzima
 
