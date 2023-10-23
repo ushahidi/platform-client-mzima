@@ -1,6 +1,6 @@
 import UserLocators from '../locators/UserLocators';
 
-const usersToDelete = ['delete4', 'delete5', 'delete6'];
+const usersToDelete = ['delete1', 'delete2', 'delete3'];
 
 class UserFunctions {
   open_user_page_steps() {
