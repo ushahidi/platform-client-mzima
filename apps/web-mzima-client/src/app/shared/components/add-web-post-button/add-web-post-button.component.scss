@@ -1,6 +1,6 @@
 @import 'helpers';
 
-.submit-post-button {
+.add-web-post-button {
   &::ng-deep {
     .mzima-button {
       @include breakpoint-max($laptop) {

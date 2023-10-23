@@ -19,14 +19,14 @@
       <router-outlet></router-outlet>
     </div>
     <div class="mobile-page-nav" *ngIf="!isDesktop && !isInnerPage">
-      <app-submit-post-button
+      <app-add-web-post-button
         class="mobile-page-nav__add-post-btn"
         [isRound]="true"
         [hasIconOnly]="true"
         [hasText]="false"
         *ngIf="checkAllowedAccessToSite()"
       >
-      </app-submit-post-button>
+      </app-add-web-post-button>
       <app-menu-list-links></app-menu-list-links>
     </div>
   </mat-sidenav-content>
