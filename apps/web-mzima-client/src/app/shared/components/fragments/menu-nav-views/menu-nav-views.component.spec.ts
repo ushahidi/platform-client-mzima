@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuListLinksComponent } from './menu-list-links.component';
+import { MenuListLinksComponent } from './menu-nav-views.component';
 
 describe('MenuListLinksComponent', () => {
   let component: MenuListLinksComponent;

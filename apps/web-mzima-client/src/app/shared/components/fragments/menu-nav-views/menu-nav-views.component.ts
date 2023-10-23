@@ -9,9 +9,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../../../base.component';
 
 @Component({
-  selector: 'app-menu-list-links',
-  templateUrl: './menu-list-links.component.html',
-  styleUrls: ['./menu-list-links.component.scss'],
+  selector: 'app-menu-nav-views',
+  templateUrl: './menu-nav-views.component.html',
+  styleUrls: ['./menu-nav-views.component.scss'],
 })
 export class MenuListLinksComponent extends BaseComponent implements OnInit {
   public userData$: Observable<UserInterface>;
