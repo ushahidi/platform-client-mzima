@@ -9,16 +9,18 @@ class ResultsCountFunctions {
     }
 
     verify_results_count_on_data_view(){
-        cy.get(".search-form__main-filters__total.ng-star-inserted")
+        cy.get(ResultsCountLocators.postResultsCount)
           .contains('Results: 0').should('exist');
-        cy.get('mat-selection-list[name="surveys"]')
-        .children('mat-list-option')
+        cy.get(ResultsCountLocators.surveySelectionList)
+        .children(ResultsCountLocators.surveySelectItem)
         .eq(0)
         .click({force: true})
-        cy.get('ngx-masonry')
-        .children('app-post-preview')
-        cy.get(".search-form__main-filters__total.ng-star-inserted")
-          .contains('Results: 2').should('exist');
+        cy.get(ResultsCountLocators.postPreview)
+        .children(ResultsCountLocators.postItem)
+        .then(($el) => {
+            cy.get(ResultsCountLocators.postResultsCount)
+            .contains($el.length).should('exist');
+        })
 
     }
 
