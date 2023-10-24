@@ -47,7 +47,7 @@ import {
   MobileMenuComponent,
   DeploymentDetailsComponent,
   MenuListNonLinksComponent,
-  MenuListLinksComponent,
+  MenuNavViewsComponent,
   ShareAndDonateComponent,
   AccountAndLogoutComponent,
 } from './components';
@@ -67,7 +67,7 @@ const components = [
   MobileMenuComponent,
   DeploymentDetailsComponent,
   MenuListNonLinksComponent,
-  MenuListLinksComponent,
+  MenuNavViewsComponent,
   ShareAndDonateComponent,
   AccountAndLogoutComponent,
   SubmitPostButtonComponent,
