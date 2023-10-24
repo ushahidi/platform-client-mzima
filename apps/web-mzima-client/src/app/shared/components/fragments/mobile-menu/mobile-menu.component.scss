@@ -7,6 +7,7 @@
   bottom: 0;
   z-index: 700;
   position: fixed;
+  overflow-y: scroll;
   color: var(--color-neutral-50);
   background: var(--color-neutral-100);
   --scrollbar-color: var(--color-neutral-60);
