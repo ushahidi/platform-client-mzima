@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthService, BreakpointService, SessionService } from '@services';
+import { AuthService, BreakpointService, ConfigService, SessionService } from '@services';
 import { NavToolbarService } from '../../../helpers/navtoolbar.service';
 import { BaseComponent } from '../../../../base.component';
 
@@ -13,6 +13,7 @@ export class AccountAndLogoutComponent extends BaseComponent implements OnInit {
   constructor(
     protected override sessionService: SessionService,
     protected override breakpointService: BreakpointService,
+    private configService: ConfigService,
     private authService: AuthService,
     private navToolbarService: NavToolbarService,
   ) {
@@ -32,5 +33,6 @@ export class AccountAndLogoutComponent extends BaseComponent implements OnInit {
 
   public logout(): void {
     this.authService.logout();
+    this.configService.initAllConfigurations();
   }
 }
