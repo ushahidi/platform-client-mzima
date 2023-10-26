@@ -58,7 +58,7 @@ class CollectionFunctions {
         .click();
     }
     post_to_collection(){
-      cy.get(".submit-post-button").click()
+      cy.get(".add-web-post-button").click()
       cy.get(CollectionLocators.surveyItem).click();
       this.type_post_title("Post Title");
       this.type_post_description("Post Description");

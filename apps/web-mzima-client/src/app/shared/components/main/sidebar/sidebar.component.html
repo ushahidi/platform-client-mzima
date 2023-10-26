@@ -1,16 +1,16 @@
 <div class="sidebar" *ngIf="isDesktop || !isInnerPage">
   <app-deployment-details></app-deployment-details>
-  <app-submit-post-button
+  <app-add-web-post-button
     class="sidebar__add-post-btn"
     [isRound]="false"
     [hasIconOnly]="false"
     [hasText]="true"
     *ngIf="checkAllowedAccessToSite()"
   >
-  </app-submit-post-button>
+  </app-add-web-post-button>
 
   <nav class="sidebar__controls">
     <app-menu-nav-views></app-menu-nav-views>
-    <app-menu-list-non-links></app-menu-list-non-links>
+    <app-menu-modal-popups></app-menu-modal-popups>
   </nav>
 </div>
