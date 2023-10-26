@@ -10,19 +10,23 @@ class GeneralSettingsFunction{
     type_deployment_name(deploymentName){
         cy.wait(1000);
         cy.get(GeneralSettingsLocator.deploymentNameField).type(deploymentName).should('have.value', deploymentName);
-
     }
-    // check edited deployment name persist
-    check_deployment_name(deploymentName){
+    // verify edited deployment name persist
+    verify_deployment_name(deploymentName){
         cy.wait(5000);
         cy.get(GeneralSettingsLocator.deploymentNameField).should('have.value', deploymentName);
-
     }
 
     // edit description
     type_site_description(description){
         cy.wait(5000);
         cy.get(GeneralSettingsLocator.descriptionField).clear().type(description).should('have.value', description);
+    }
+
+    // verify description is updated
+    verify_site_description(deploymentName){
+        cy.wait(5000);
+        cy.get(GeneralSettingsLocator.descriptionField).should('have.value', deploymentName);
     }
 
     // click save button
@@ -43,8 +47,10 @@ class GeneralSettingsFunction{
     edit_general_page(){
         this.type_deployment_name("-Automated");
         this.click_save_button();
+        this.verify_deployment_name("-Automated");
         this.type_site_description("Fixtures are a great way to mock data for responses to routes");
         this.click_save_button();
+        this.verify_site_description("Fixtures are a great way to mock data for responses to routes");
     }
 }
 
