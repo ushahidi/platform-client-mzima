@@ -1,6 +1,6 @@
 import GeneralSettingsLocator from "../locators/GeneralSettingsLocator";
 
-class GeneralSettingsFunctions{
+class GeneralSettingsFunction{
     // navigate to general settings
     open_general_settings_page(){
         cy.get(GeneralSettingsLocator.settingsBtn).click();
