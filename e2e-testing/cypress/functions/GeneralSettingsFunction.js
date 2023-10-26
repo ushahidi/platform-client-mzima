@@ -9,8 +9,14 @@ class GeneralSettingsFunction{
     // edit deployment name
     type_deployment_name(deploymentName){
         cy.wait(1000);
-        cy.get(GeneralSettingsLocator.deploymentNameField).clear().type(deploymentName).should('have.value', deploymentName);
+        cy.get(GeneralSettingsLocator.deploymentNameField).type(deploymentName).should('have.value', deploymentName);
 
+    }
+
+    check_deployment_name(deploymentName){
+        cy.wait(5000);
+        cy.get(GeneralSettingsLocator.deploymentNameField).should('have.value', deploymentName);
+        
     }
 
     // edit description
