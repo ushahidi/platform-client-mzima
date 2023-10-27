@@ -1423,7 +1423,7 @@
     "finish_import": "Encerrar importação",
     "which_survey": "qual pesquisa?",
     "get_polling_info": "Obter informações de sondagem",
-    "change_csv_file": "Alterar arquivo CSV",
+    "change_csv_file": "Alterar {{selectedfile}} arquivo CSV",
     "upload_csv_file": "Upload do arquivo CSV",
     "choose_status_to_imported_posts": "Escolha o status das postagens importadas:",
     "has_tasks_required_start": "Seu questionário",
