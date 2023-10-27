@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuListLinksComponent } from './menu-list-links.component';
+import { MenuNavViewsComponent } from './menu-nav-views.component';
 
-describe('MenuListLinksComponent', () => {
-  let component: MenuListLinksComponent;
-  let fixture: ComponentFixture<MenuListLinksComponent>;
+describe('MenuNavViewsComponent', () => {
+  let component: MenuNavViewsComponent;
+  let fixture: ComponentFixture<MenuNavViewsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MenuListLinksComponent],
+      declarations: [MenuNavViewsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MenuListLinksComponent);
+    fixture = TestBed.createComponent(MenuNavViewsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

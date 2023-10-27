@@ -2,7 +2,7 @@ import EditPostLocators from '../locators/EditPostLocators';
 
 class EditPostFunctions {
   click_add_post_btn() {
-    cy.get('.submit-post-button').click();
+    cy.get('.add-web-post-button').click();
   }
 
   select_survey_item() {

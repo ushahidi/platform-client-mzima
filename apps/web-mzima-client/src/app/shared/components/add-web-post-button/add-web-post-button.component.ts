@@ -8,11 +8,11 @@ import { Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-submit-post-button',
-  templateUrl: './submit-post-button.component.html',
-  styleUrls: ['./submit-post-button.component.scss'],
+  selector: 'app-add-web-post-button',
+  templateUrl: './add-web-post-button.component.html',
+  styleUrls: ['./add-web-post-button.component.scss'],
 })
-export class SubmitPostButtonComponent implements OnInit {
+export class AddWebPostButtonComponent implements OnInit {
   @Input() isRound: boolean;
   @Input() hasIconOnly: boolean;
   @Input() hasText: boolean;

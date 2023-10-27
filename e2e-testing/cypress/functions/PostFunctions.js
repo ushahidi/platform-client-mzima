@@ -8,7 +8,7 @@ class PostFunctions {
     this.postDescription = 'Automated Description Response';
   }
   open_post_creation_form() {
-    cy.get('.sidebar__add-post-btn .submit-post-button .mzima-button--primary').click();
+    cy.get('.sidebar__add-post-btn .add-web-post-button .mzima-button--primary').click();
     cy.get(PostLocators.srvyItemBtn).click();
   }
 
