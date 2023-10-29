@@ -122,7 +122,44 @@
     "select_language": "Válassz nyelvet",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "Kapcsolattartási e-mail cím:",
+    "add_collection": "Gyűjtemény hozzáadása",
+    "choose_photo": "Válasszon fotót",
+    "choose": "Válassz...",
+    "add_all_fields": "Az összes mező hozzáadása",
+    "insert_text_here": "Szöveg beszúrása ide...",
+    "onboarding": {
+      "title": "Bevezetés",
+      "description": "Vessen egy pillantást ismét az Ushahidi fedélzetére."
+    },
+    "forbidden-login": "Kérjük, adja meg bejelentkezési adatait az üzembe helyezés eléréséhez.",
+    "contact_with_admin": "Vagy forduljon a rendszergazdához ",
+    "page-not-found": "Az oldal nem található",
+    "update": "Frissítés",
+    "current_results": "Jelenlegi eredmények:",
+    "duplicate": "Duplikálás",
+    "yes_delete": "Igen, törlés",
+    "no_go_back": "Nem, menj vissza",
+    "are_you_sure_you_want_to_delete": "Biztosan törölni szeretné",
+    "action_cannot_be_undone": "<p>Ez a művelet nem vonható vissza.</p><p>Biztos vagy benne?</p>",
+    "you_are_not_authorized": "Ön nem jogosult",
+    "lost_internet_connection": "Megszakadt az internetkapcsolat",
+    "tweet_is_unavailable": "Ez a tweet nem érhető el",
+    "file_uploader": "Fájl feltöltő",
+    "preview_image": "Előnézeti kép",
+    "privacy_policy": "Adatvédelmi irányelv",
+    "terms_and_conditions": "Felhasználási feltételek",
+    "ok_sounds_good": "Rendben, jól hangzik",
+    "next_step": "Következő lépés",
+    "we_are_aware_there_are_some_issues_here": "Tisztában vagyunk azzal, hogy van itt néhány kérdés. A csapat dolgozik a javításukon.",
+    "you_are_using_old_deployment_version": "Központi telepítési verziót használ – {{api_version}}. A legújabb verzió a v5. Kérjük, frissítse a telepítést a felhasználók hozzáférése érdekében.",
+    "outdated_deployment": "Elavult telepítés!",
+    "the_deployment_is_outdated": "A telepítés elavult, ezért előfordulhatnak hibák, amíg az adminisztrátor nem frissíti.",
+    "your_deployment_is_outdated": "Az üzemelő példány elavult",
+    "we_ve_updated_deployments_to_version_5": "Frissítettük az üzemelő példányokat az 5-ös verzióra. Előfordulhat, hogy a felhasználók hamarosan nem férnek hozzá az üzemelő példányhoz. ",
+    "for_more_details_on_deployment_update": "A telepítési frissítéssel kapcsolatos további részletekért látogasson el a Súgó &támogatás oldalra (ennek hivatkozásnak kell lennie), vagy küldjön e-mailt a következő címre:",
+    "open_chat": "Beszélgetés megnyitása"
   },
   "toolbar": {
     "searchbar": {
@@ -238,7 +275,9 @@
     "step_required": "A feladat elvégzése kötelező",
     "post_step": "Bejegyzés",
     "type": "típus",
-    "visible_to": "Látható"
+    "visible_to": "Látható",
+    "choose_language": "Válassza ki a fordítás nyelvét",
+    "error_input_number": "Kérjük, adja meg {{type}} típusszámot"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -357,8 +396,10 @@
     },
     "fields": {
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
-      }
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}} mező speciális karaktereket tartalmaz"
+      },
+      "fields_title": "Mezők"
     },
     "targeted_survey": {
       "title": "Új célzott kérdőív létrehozása",
@@ -421,7 +462,17 @@
       "pending_messages": "Feldolgozás alatt {{totalPending}} üzenet.",
       "pending_message": "Feldolgozás alatt {{totalPending}} üzenet.",
       "cancel": "Mégsem"
-    }
+    },
+    "no_tasks": "Nincs feladat",
+    "select_categories": "Válasszon kategóriákat",
+    "select_related_post": "Kapcsolódó bejegyzés kiválasztása",
+    "no_fields": "Nincsenek mezők",
+    "select_color": "Válassza ki a színt",
+    "choose_survey": "Válassza ki a felmérést",
+    "main_info": "Fő információk",
+    "special_characters_option": "Ez a beállítás speciális karaktereket tartalmaz",
+    "no_options_for_this_field": "Nincs lehetőség ehhez a mezőhöz",
+    "add_options_first": "Először adja hozzá az opciókat"
   },
   "global_filter": {
     "filter": "Szűrő",
@@ -502,7 +553,9 @@
       "all_posts": "Összes bejegyzés",
       "unmapped": "Mutasd a nem térképre vitt bejegyzéseket",
       "mapped": "Mutasd a helyszínnel rendelkező bejegyzéseket",
-      "source": "Forrás"
+      "source": "Forrás",
+      "expires": "Lejár",
+      "download": "Letöltés"
     },
     "unmapped_start_one": "Van",
     "unmapped_start_many": "Van",
@@ -536,7 +589,11 @@
     "source": "Forrás",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "Város vagy cím",
+    "viewing_mode": "Megtekintési mód",
+    "saved_filter": "Mentett szűrő",
+    "delete_this_saved_filter": "Biztosan törli ezt a mentett szűrőt?"
   },
   "graph": {
     "all_posts": "Semmi; Minden bejegyzés mutatása",
@@ -574,6 +631,12 @@
   "modal": {
     "button": {
       "close": "Bezárás"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "A webes bevételszerzés engedélyezve van ezen a webhelyen. Köszönjük adományát. Ön adományozott",
+      "thank_you_for_your_donation_end": "eddig",
+      "web_monetization_text": "Az Ushahidi üzemelő példányok mostantól engedélyezve vannak a webes bevételszerzéshez. A webes bevételszerzés egy módja annak, hogy támogassa a szeretett webhelyeket anélkül, hogy hirdetői játékot játszana. Mindössze annyit kell tennie, hogy beállítja a böngészőt. Kattintson az alábbi linkre, hogy megtudja, hogyan adományozhat.",
+      "how_can_i_donate": "Hogyan adományozhatok?"
     }
   },
   "nav": {
@@ -646,7 +709,15 @@
     "user": "Felhasználó",
     "users": "Felhasználók",
     "views": "Megtekintések",
-    "yesterday": "Tegnap"
+    "yesterday": "Tegnap",
+    "open_menu": "Menü megnyitása",
+    "my_account": "Fiókom",
+    "login_register": "Bejelentkezés / Regisztráció",
+    "help_support": "Segítség & Támogatás",
+    "receive_notifications": "Értesítések fogadása",
+    "map": "Bản đồ",
+    "data": "Adat",
+    "feed": "Adatok nézet"
   },
   "views": {
     "map": "Térkép",
@@ -727,7 +798,18 @@
     "unpublished": "Nem publikált",
     "published_by": "Publikálta",
     "can_see_this_post": "láthatja ezt a bejegyzést",
-    "location": "Hely",
+    "location": {
+      "location": "Helyszín",
+      "you_can_search_or_click": "Megkeresheti vagy rákattinthat a térkép azon területére, ahol el szeretné helyezni a jelölőt.",
+      "search_address": "Címek, helynevek vagy koordináták keresése...",
+      "nothing_found": "Nincs találat",
+      "errors": {
+        "empty_lat": "A szélesség üres mező",
+        "empty_lng": "A hosszúság üres mező",
+        "decimal_lat": "Csak szélességi decimális szám",
+        "decimal_lng": "Csak hosszúsági decimális szám"
+      }
+    },
     "categories": "Kategóriák",
     "status": "Állapot",
     "type": "Típus",
@@ -881,6 +963,13 @@
         "save_and_edit": "Kérdőívhez/felméréshez hozzáadás, &amp; szerkesztés"
       },
       "survey_title": "Ismeretlen kérdőív"
+    },
+    "post_count": "{{count}} hozzászólások",
+    "read_more": "Bővebben",
+    "image_is_required": "Kép megadása kötelező",
+    "image_max_size": "A kép meghaladja a maximális fájlméretet",
+    "relation": {
+      "search": "Keresés"
     }
   },
   "role": {
@@ -895,7 +984,13 @@
     "delete_role": "Szerep törlése",
     "delete_role_desc": "<strong>Ha kitörlöd ezt a szerepet</strong>, minden felhasználó, akinek ki volt osztva ez a szerep, alapértelmezett jogosultságot fog kapni. Szükséges körültekintően folytatni.",
     "everyone": "Mindenki",
-    "just_you": "Csak Te"
+    "just_you": "Csak Te",
+    "are_you_sure_you_want_to_delete_role": "Biztosan törölni szeretné a szerepkör {{roleName}}?",
+    "placeholder": {
+      "name": "Adja meg a szerepkör nevét",
+      "description": "Adja meg a szerepkör leírását"
+    },
+    "only_me": "Csak én"
   },
   "webhook": {
     "add_webhook": "Szerepkör hozzáadása",
@@ -922,7 +1017,15 @@
   "collection": {
     "visible_to_public": "Ez a gyűjtemény publikusan elérhető",
     "visible_to_you": "Ezt a gyűjteményt csak Te és az adminok láthatják",
-    "visible_to_roles": "Ez a gyűjtemény {{roles}} számára látható"
+    "visible_to_roles": "Ez a gyűjtemény {{roles}} számára látható",
+    "validation": {
+      "required": {
+        "name": "A gyűjtemény neve kötelező"
+      }
+    },
+    "errors": {
+      "permissions": "Nincs engedélye a gyűjtemény megtekintésére"
+    }
   },
   "set": {
     "by": "szerző:",
@@ -957,7 +1060,9 @@
     "edit_savedsearch": "Keresés szerkesztése",
     "set_settings": "Gyűjtemény beállítása",
     "add_notification": "Értesítés hozzáadása",
-    "remove": "eltávolítás"
+    "remove": "eltávolítás",
+    "update_saved_filter": "Mentett szűrő frissítése",
+    "create_saved_filter": "Mentett szűrő létrehozása"
   },
   "category": {
     "add_tag": "Kategória hozzáadása",
@@ -989,7 +1094,18 @@
       "category": "Kategória",
       "status": "Státusz"
     },
-    "delete": "Törlés"
+    "delete": "Törlés",
+    "validation": {
+      "required": {
+        "name": "A kategória neve kötelező"
+      }
+    },
+    "placeholder": {
+      "name": "Név megadása",
+      "descriptions": "Adja meg a leírást...",
+      "choose_parent_category": "Válassza ki a szülőkategóriát..."
+    },
+    "parent_category": "Szülő kategória"
   },
   "tool": {
     "manage_forms": "Űrlapok kezelése",
@@ -1061,13 +1177,35 @@
       "valid_key": "Érvényes kulcs szükséges",
       "valid_user": "Érvényes karbantartói azonosító szükséges",
       "api_key_saved": "Az API-kulcs mentve! Immáron megjelölheted az adataidat és feltöltheted a Humanitárius Adat Tőzsde (Humanitarian Data Exchange (HDX)) felhasználódba.",
-      "start_tagging": "Adatok címkézésének megkezdése"
+      "start_tagging": "Adatok címkézésének megkezdése",
+      "HDX": "Humanitárius adatcsere",
+      "please_enter_maintainer_id": "Kérjük, adja meg a karbantartó azonosítóját",
+      "please_enter_api_key": "Adja meg az API-kulcsot",
+      "hdx_maintainer_id_min_length": "A HDX karbantartó azonosítója túl rövid",
+      "api_key_min_length": "Az API-kulcs túl rövid"
     },
     "webhooks": {
       "use_webhook_for": "Webhook használata ehhez:",
       "enable_source_destination": "Forrás és cél mezők engedélyezése",
       "enable_source_destination_desc": "Ez a webhook csak a kiválasztott típusú kérdőíveknél lesz használatban.",
-      "destination": "Cél/célállomás"
+      "destination": "Cél/célállomás",
+      "placeholder": {
+        "name": "Adja meg a webhook nevét",
+        "shared_secret": "Kérjük, adja meg a közös titkot",
+        "api_url": "Kérjük, adja meg az API URL-címét"
+      },
+      "validation": {
+        "required": {
+          "name": "Webhook neve kötelező",
+          "shared_secret": "Közös titkos kulcs szükséges",
+          "api_url": "API URL szükséges",
+          "event_type": "Az esemény típusa kötelező",
+          "event_entity": "Az eseményentitás kötelező"
+        },
+        "please_provide_valid_api_url": "Kérjük, adjon meg érvényes API URL-címet a http(s):// előtaggal",
+        "secret_key_cannot_be_less_start": "A megosztott titkos kulcs nem lehet kevesebb, mint",
+        "secret_key_cannot_be_less_end": "karakter"
+      }
     },
     "data_sources": {
       "associate_with_form": "Importálás kérdőívbe",
@@ -1159,7 +1297,12 @@
         "access_token_secret_desc": "A generált hozzáférési titkos kulcs hozzáadása a Twitter alkalmazásból.",
         "search_terms": "Twitter keresési feltételek",
         "search_terms_desc": "Add meg a keresési kifejezéseket vesszővel elválasztva"
-      }
+      },
+      "choose_data_source": "Válassza az Adatforrás lehetőséget...",
+      "type_of_data_source": "Adatforrás típusa",
+      "provider_name": "{{providerName}} adatforrás?",
+      "do_you_really_want_to_disconnect": "Tényleg le akarja választani a szolgáltatóját?",
+      "add_source": "Forrás hozzáadása"
     },
     "donation": {
       "title": {
@@ -1168,7 +1311,23 @@
         "required": "Donation title is required"
       },
       "wallet": {
-        "required": "Donation wallet address is required"
+        "required": "Donation wallet address is required",
+        "label": "Pénztárca címe",
+        "placeholder": "Adja meg a pénztárca címét, pl. $ilp.uphold.com/example"
+      },
+      "description": {
+        "label": "Írja le adományát",
+        "placeholder": "Írja be az adományról bővebben árulkodó szöveget"
+      },
+      "images": {
+        "label": "Adományozási képek"
+      },
+      "info": {
+        "start_one": "Kérjük, győződjön meg róla, hogy be van állítva a pénztárcája",
+        "start_two": "gombra a webes bevételszerzés beállításához.",
+        "start_three": "Ha még nincs pénztárcája, kattintson a",
+        "here": "itt",
+        "end": "gombra a létrehozásához."
       }
     },
     "roles": {
@@ -1181,7 +1340,10 @@
       "edit_their_own_posts": "A saját bejegyzéseit szerkeszthetik",
       "registred_member": "Regisztrált tag",
       "administrator": "Adminisztrátor",
-      "roles_description": "Ezen lehetőségek által lehet vezérelni, hogy ez a típusú szerep miben végezhet változtatásokat. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Keresd fel a támogatással kapcsolatos útmutatónkat még több információért."
+      "roles_description": "Ezen lehetőségek által lehet vezérelni, hogy ez a típusú szerep miben végezhet változtatásokat. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Keresd fel a támogatással kapcsolatos útmutatónkat még több információért.",
+      "manage_collections_and_saved_searches": "Gyűjtemények és mentett keresések kezelése",
+      "delete_posts": "Bejegyzések törlése",
+      "delete_their_own_posts": "Saját bejegyzések törlése"
     },
     "deployment_delete_this": "Telepített változat törlése",
     "deployment_delete": "Telepített változat törlése",
@@ -1226,9 +1388,20 @@
     "add_new_users": "Új felhasználók hozzáadása",
     "valid": {
       "name": {
-        "required": "Szükséges megadni az oldal nevét"
+        "required": "Szükséges megadni az oldal nevét",
+        "pattern": "Érvénytelen formátum",
+        "minlength": "A webhely neve túl rövid"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "API-kulcs létrehozása",
+      "private_settings": "Privát beállítások:",
+      "api_key": "API kulcs",
+      "placeholder": {
+        "pick_location": "Válassza ki a helyet..."
+      }
+    },
+    "bulk_actions": "Csoportos művelet"
   },
   "data_import": {
     "survey_field": "Kérdőív mező",
@@ -1271,7 +1444,13 @@
     "leave_empty": "Üresen hagyandó",
     "cancel_import": "Import elvetése",
     "finish_import": "Importálás befejezése",
-    "which_survey": "melyik kérdőív?"
+    "which_survey": "melyik kérdőív?",
+    "get_polling_info": "Szavazási információk lekérése",
+    "change_csv_file": "{{selectedfile}} CSV-fájl módosítása",
+    "upload_csv_file": "CSV fájl feltöltése",
+    "choose_status_to_imported_posts": "Válassza ki az importált bejegyzések állapotát:",
+    "has_tasks_required_start": "Az Ön felmérése",
+    "has_tasks_required_end": ", olyan feladatokat tartalmaz, amelyeket általában minden bejegyzésnél el kell végezni, mielőtt \"közzétéve\" jelölést kaphatnának. Az importálás során az összes importált bejegyzés feladatai \"befejezetlenként\" lesznek megjelölve, miközben továbbra is lehetővé teszik, hogy állapotuk \"közzétettként\" legyen megjelölve. Ha azonban az importálás után módosítod ezeket a bejegyzéseket, a rendszer megkér, hogy végezd el ezeket a feladatokat, mielőtt újra közzétennéd őket."
   },
   "data_export": {
     "title": "Adatok exportálása",
@@ -1405,14 +1584,38 @@
       "email": {
         "required": "E-mail cím szükséges",
         "email": "Ez az E-mail cím nem érvényes",
-        "maxlength": "Az E-mail cím túl hosszú"
+        "maxlength": "Az E-mail cím túl hosszú",
+        "pattern": "Ez az e-mail cím érvénytelen",
+        "emailExists": "Az e-mail cím már használatban van"
       },
       "password": {
         "required": "Jelszó szükséges",
         "minlength": "A jelszó túl rövid",
-        "maxlength": "A jelszó túl hosszú"
+        "maxlength": "A jelszó túl hosszú",
+        "weak": "Ez a jelszó nagyon gyenge"
+      },
+      "fields": {
+        "email must be unique": "Az ezzel az e-mail-címmel rendelkező felhasználó már létezik"
+      },
+      "name": {
+        "required": "A megjelenési név mező kötelező.",
+        "maxlength": "A megjelenítendő név túl hosszú"
+      },
+      "token": {
+        "required": "Jogkivonat szükséges"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "Biztosan törölni akarod ezt a fiókot?",
+    "name_will_be_a_display_name": "A megadott név megjelenítendő név lesz.",
+    "placeholder": {
+      "realname": "Írja be a nevét...",
+      "email": "Adja meg az e-mail címet...",
+      "password": "Írja be a jelszót..."
+    },
+    "password_notify": "Ha üresen hagyja a mezőt, a jelszó nem változik",
+    "avatar": "Avatar",
+    "name": "Név",
+    "search_by_name": "Keresés terméknévre"
   },
   "user_profile": {
     "title": "Fiók beállításai",
@@ -1424,7 +1627,9 @@
     },
     "nav": {
       "general": "Általános",
-      "notifications": "Értesítések"
+      "notifications": "Értesítések",
+      "account_settings": "Fiókbeállítások",
+      "notifications_settings": "Értesítési beállítások"
     }
   },
   "user_create": {
@@ -1454,7 +1659,8 @@
       "bulk_destroy_confirm": "Biztos, hogy törölni akarod a {{count}} erőforrást?",
       "bulk_destroy_success": "Törölt erőforrás",
       "bulk_destroy_error": "Erőforrás törlése nem sikerült, kérlek, próbáld újra",
-      "bulk_destroy_cancelled": "Elvetett törlése"
+      "bulk_destroy_cancelled": "Elvetett törlése",
+      "are_you_sure_you_want_to_delete_this": "Biztos, hogy törölni akarja ezt?"
     },
     "data_import": {
       "see_imported_posts": "Importált bejegyzések megtekintése",
@@ -1518,7 +1724,12 @@
       "update_status_success_bulk": "{{count}} bejegyzés státusza frissítve",
       "leave_without_save": "Mentés nélkül akarod hagyni a bejegyzésed?",
       "leave_confirm_message": "Folytatás esetén minden változtatásod elveszik",
-      "leave_confirm": "Folytatás mentés nélkül"
+      "leave_confirm": "Folytatás mentés nélkül",
+      "can_t_view_this_post": "Nincs engedélye a bejegyzés megtekintésére.<br> Az adminisztrátor még mindig felülvizsgálja.<br> A közzétételt követően elérhető lesz az Ön számára.",
+      "contact_for_details": "További részletekért forduljon a rendszergazdához:",
+      "unfinished_post_task": "Ezt a bejegyzést nem lehet közzétenni, a bejegyzés befejezetlen feladatokat tartalmaz",
+      "posts_can_t_be_published": "A következő bejegyzések nem tehetők közzé: {{titles}}",
+      "post_not_found": "Bejegyzés nem található"
     },
     "category": {
       "save_success": "Kategória mentve {{name}}",
@@ -1528,7 +1739,8 @@
       "destroy_error": "Kategória törlése sikertelen, kérjük próbáld újra",
       "bulk_destroy_confirm": "Biztos, hogy törölni szeretnél {{count}} kategóriát?",
       "bulk_destroy_confirm_desc": " \nE kategória törlésével a kategória törlődni fog az összes bejegyzésből. Ez a művelet nem vonható vissza.",
-      "bulk_destroy_success": "{{count}} kategória törölve"
+      "bulk_destroy_success": "{{count}} kategória törölve",
+      "bulk_destroy_success_countless": "Törölt kategóriák"
     },
     "role": {
       "delete_question": "Biztos törölni akarod ezt a szerepet {{role}}?",
@@ -1553,7 +1765,8 @@
       "bulk_destroy_confirm": "Bizots vagy benne, hogy törölsz {{count}} felhasználót?",
       "bulk_destroy_success": "Felhasználók törölve",
       "bulk_role_change_confirm": "Biztos módosítani akarod {{count}} felhasználó szerepkörét {{role}} szerepkörre?",
-      "bulk_role_change_success": "Felhasználói jogosultsági kör(ök) módosul(tak) {{role_name}} jogosultsági kör(ök)re"
+      "bulk_role_change_success": "Felhasználói jogosultsági kör(ök) módosul(tak) {{role_name}} jogosultsági kör(ök)re",
+      "are_you_sure_you_want_to_delete_user": "Biztosan törölni szeretné {{username}}"
     },
     "video": {
       "incorrect_url": "Az általad megadott URL {{url}} nem felel meg a Youtube vagy Vimeo URL formátumnak."
@@ -1626,7 +1839,23 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "Biztosan törli {{count}} felméréseket?"
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Sikeres!",
+        "success_description": "Köszönjük, hogy benyújtotta jelentését. A bejegyzést csapatunk felülvizsgálja, és hamarosan megjelenik a platformon.",
+        "success_button": "Rendben, jól hangzik"
+      },
+      "deleted": {
+        "success": "Sikeres!",
+        "success_description": "Véglegesen töröltél {{count}} bejegyzést.",
+        "success_button": "Rendben, jól hangzik"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Tényleg törölni akarja {{lang}} nyelvet?"
     }
   },
   "empty": {
@@ -1660,7 +1889,10 @@
     "send_to_address": "Értesítések küldése erre a címre",
     "button": {
       "delete": "Értesítés törlése"
-    }
+    },
+    "what_you_get_notification_about": "Miről kap értesítést?",
+    "removed": "Az értesítés el lett távolítva",
+    "are_you_sure_you_want_to_remove_this_notification": "Biztosan el szeretné távolítani ezt az értesítést?"
   },
   "contact": {
     "edit": "Szerkesztés",
@@ -1684,7 +1916,8 @@
       "email": {
         "required": "Az értesítésekhez szükséges emailcím megadása",
         "email": "Érvénytelen emailcím",
-        "maxlength": "Ez az emailcím túl hosszú..."
+        "maxlength": "Ez az emailcím túl hosszú...",
+        "not_valid": "Ez az e-mail cím érvénytelen"
       },
       "phone": {
         "required": "Telefonszám szükséges az értesítések fogadásához",
@@ -1698,7 +1931,8 @@
     "title": "Ushahidi ÁSZF",
     "terms_of_service": "Frissítettük az <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Általános Szolgáltatási Feltételeinket </a> és az <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Adatkezelési tájékozatót</a>. Kérjük, tekintsd át ezeket a dokumentumokat alaposan, és fogadd el a feltételeket annak érdekében, hogy megkezdhesd az Ushahidi szolgáltatások használatát.",
     "agree": "Elfogadom az Ushahidi ÁSZF-jét",
-    "accept_and_continue": "Elfogadás és folytatás"
+    "accept_and_continue": "Elfogadás és folytatás",
+    "i_agree": "Elfogadom az Ushahidi <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">adatvédelmi irányelveit</a> a\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Általános Szerződési Feltételek</a>."
   },
   "translations": {
     "languages": "Nyelvek",
@@ -2455,5 +2689,33 @@
     "isUniqueUsername": "{{field}} már használatban van",
     "isUserSelf": "Nem tudod a saját szereped megváltoztatni",
     "adminUserLimitReached": "limit:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "hiba",
+    "description": "Hoppá... Sajnáljuk, nem találjuk a keresett oldalt. <br> Kérjük, keressen egy másik kifejezéssel, vagy térjen vissza a térképnézethez.",
+    "button": "Ugrás a térképnézetre"
+  },
+  "cookies": {
+    "we_use_cookies": "Szervusz! A felhasználói élmény javítása érdekében cookie-kat használunk.",
+    "cookies_privacy": "Ha többet szeretne megtudni, vagy visszavonja hozzájárulását, kérjük, olvassa el <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Adatvédelmi irányelveinket</a>.",
+    "decline": "Elutasít",
+    "accept_cookies": "Sütik elfogadása"
+  },
+  "share": {
+    "share_deployment": "Központi telepítés megosztása",
+    "share_post": "Megosztás",
+    "web_address": "A felmérés webcíme",
+    "embed_on_websites": "HTML-beágyazás webhelyekre",
+    "copied": "Másolva!",
+    "share_on_twitter": "Megosztás a Twitteren",
+    "share_on_facebook": "Megosztás a Facebook-on"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Általános Szerződési Feltételek</a>."
+      }
+    }
   }
 }
