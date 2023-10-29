@@ -208,7 +208,7 @@ export class AppComponent extends BaseComponent implements OnInit {
     if (!user.userId) return this.intercom.shutdown();
     const site = this.sessionService.getSiteConfigurations();
     const parsedUrl = new URL(window.location.href);
-    const domain = parsedUrl.origin;
+    const domain = parsedUrl.host;
 
     const io = {
       app_id: this.env.environment.intercom_appid,
@@ -221,7 +221,7 @@ export class AppComponent extends BaseComponent implements OnInit {
       last_login: user.last_login,
       role: user.role,
       company: {
-        company_id: String(site.id),
+        company_id: domain,
         name: String(site.name),
         id: domain,
         created_at: 0, // Faking this because we don't have this data
