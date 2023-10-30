@@ -122,7 +122,44 @@
     "select_language": "Ընտրել լեզուն",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "Հետադարձ կապ էլ. փոստի հասցեով.",
+    "add_collection": "Ավելացնել հավաքածու",
+    "choose_photo": "Ընտրեք լուսանկար",
+    "choose": "Ընտրեք...",
+    "add_all_fields": "Ավելացնել բոլոր դաշտերը",
+    "insert_text_here": "Տեքստ ներմուծեք այստեղ...",
+    "onboarding": {
+      "title": "Նավարկություն",
+      "description": "Կրկին նայեք Ուշահիդիի նավարկությանը:"
+    },
+    "forbidden-login": "Խնդրում ենք մուտք գործել ձեր մուտքի մանրամասները, որպեսզի մուտք գործեք տեղադրման համակարգ:",
+    "contact_with_admin": "Կամ կապ հաստատեք Admin-ի հետ ",
+    "page-not-found": "Էջը չի գտնվել",
+    "update": "Հաստատել",
+    "current_results": "Ընթացիկ արդյունքներ.",
+    "duplicate": "Կրկնօրինակել",
+    "yes_delete": "Այո, ջնջեք",
+    "no_go_back": "Չէ, հետ գնացեք",
+    "are_you_sure_you_want_to_delete": "Համոզվա՞ծ եք, որ ցանկանում եք ջնջել",
+    "action_cannot_be_undone": "<p>Այս գործողությունը հնարավոր չէ անել։</p><p>Վստահ ես?</p>",
+    "you_are_not_authorized": "Դուք լիազորված չեք",
+    "lost_internet_connection": "Կորցված համացանցային կապ",
+    "tweet_is_unavailable": "Այս տվիտն անհասանելի է",
+    "file_uploader": "Ֆայլ վերբեռնող",
+    "preview_image": "Նախադիտման պատկեր",
+    "privacy_policy": "Գաղտնիության քաղաքականություն",
+    "terms_and_conditions": "Պայմաններ եւ պայմաններ",
+    "ok_sounds_good": "Լավ, լավ է հնչում",
+    "next_step": "Հաջորդ քայլը",
+    "we_are_aware_there_are_some_issues_here": "Մենք տեղյակ ենք, որ այստեղ որոշ հարցեր կան: Թիմն աշխատում է դրանք շտկելու վրա:",
+    "you_are_using_old_deployment_version": "Դուք օգտագործում եք Deployment Version - {{api_version}}. Վերջին տարբերակն է v5. Խնդրում ենք, թարմացնել ձեր Առաքումը օգտվողների համար:",
+    "outdated_deployment": "Հնացած տեղակայում!",
+    "the_deployment_is_outdated": "Deployment-ը հնացած է, հետեւաբար որոշ խայթոցներ կարող են առաջանալ, մինչեւ Admin-ը թարմացնի այն:",
+    "your_deployment_is_outdated": "Ձեր առաքումը հնացած է",
+    "we_ve_updated_deployments_to_version_5": "Մենք թարմացրել ենք Deployments to version 5. Օգտագործողները գուցե շուտով հնարավորություն չունենան օգտվելու ձեր ծառայությունից։ ",
+    "for_more_details_on_deployment_update": "Տեղադրման թարմացման մասին լրացուցիչ մանրամասների համար դիմեք Help & Support (սա պետք է լինի հղում) կամ ուղարկեք էլ. նամակ.",
+    "open_chat": "Բաց չաթ"
   },
   "toolbar": {
     "searchbar": {
@@ -238,7 +275,9 @@
     "step_required": "This task is required",
     "post_step": "Post",
     "type": "type",
-    "visible_to": "Visible To"
+    "visible_to": "Visible To",
+    "choose_language": "Թարգմանության համար ընտրեք լեզուն",
+    "error_input_number": "Խնդրում ենք մուտքագրել {{type}} տեսակի համարը"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -357,8 +396,10 @@
     },
     "fields": {
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
-      }
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}} դաշտը պարունակում է հատուկ տառատեսակներ"
+      },
+      "fields_title": "Դաշտեր"
     },
     "targeted_survey": {
       "title": "Create a new targeted survey",
@@ -421,7 +462,17 @@
       "pending_messages": "We are processing {{totalPending}} messages.",
       "pending_message": "We are processing {{totalPending}} message.",
       "cancel": "Cancel"
-    }
+    },
+    "no_tasks": "Ոչ մի առաջադրանք",
+    "select_categories": "Ընտրեք կատեգորիաներ",
+    "select_related_post": "Ընտրեք առնչվող post",
+    "no_fields": "Ոչ դաշտեր",
+    "select_color": "Ընտրեք գույնը",
+    "choose_survey": "Ընտրեք հարցումը",
+    "main_info": "Գլխավոր ինֆո",
+    "special_characters_option": "Այս տարբերակը պարունակում է հատուկ կերպարներ",
+    "no_options_for_this_field": "Այս ոլորտի համար ոչ մի տարբերակ չկա",
+    "add_options_first": "Նախ ավելացրեք տարբերակները"
   },
   "global_filter": {
     "filter": "Ֆիլտեր",
@@ -502,7 +553,9 @@
       "all_posts": "Ցուցադրել բոլոր գրառումները",
       "unmapped": "Ցուցադրել քարտեզից հանված գրառումները",
       "mapped": "Ցուցադրել գրառումները տվյալ վայրի շրջանակներում",
-      "source": "Աղբյուրը"
+      "source": "Աղբյուրը",
+      "expires": "Լրանում է",
+      "download": "Ներբեռնել"
     },
     "unmapped_start_one": "Կա",
     "unmapped_start_many": "Կան",
@@ -536,7 +589,11 @@
     "source": "Աղբյուր",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "Քաղաք կամ հասցե",
+    "viewing_mode": "Դիտման ռեժիմ",
+    "saved_filter": "Պահված ֆիլտր",
+    "delete_this_saved_filter": "Համոզվա՞ծ եք, որ ցանկանում եք ջնջել այս պահպանված ֆիլտրը:"
   },
   "graph": {
     "all_posts": "Ոչինչ; Ցույց տալ բոլոր գրառումները",
@@ -574,6 +631,12 @@
   "modal": {
     "button": {
       "close": "Փակել"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "Վեբ-մոնետիզացիան հնարավորություն է ընձեռում այս կայքում: Շնորհակալություն ձեր նվիրատվության համար: Նվիրաբերել եք",
+      "thank_you_for_your_donation_end": "մինչեւ հիմա",
+      "web_monetization_text": "Ուշահիդիի տեղադրումը այժմ հնարավորություն է տալիս վեբ դրամափոխության։ Վեբ մոնետիզացիան ձեր սիրած կայքերին աջակցելու միջոց է առանց գովազդատուների խաղ խաղալու: Ձեզ անհրաժեշտ է միայն ստանալ ձեր բրաուզերի տեղադրումը: Սեղմեք ներքեւի հղումը, որպեսզի իմանաք, թե ինչպես կարող եք նվիրաբերել:",
+      "how_can_i_donate": "Ինչպե՞ս կարող եմ նվիրաբերել:"
     }
   },
   "nav": {
@@ -646,7 +709,15 @@
     "user": "Օգտատեր",
     "users": "Օգտատերեր",
     "views": "Views",
-    "yesterday": "Երեկ"
+    "yesterday": "Երեկ",
+    "open_menu": "Բաց մենյու",
+    "my_account": "Իմ հաշիվը",
+    "login_register": "Մուտք գործեք / sign up",
+    "help_support": "Օգնություն & Աջակցություն",
+    "receive_notifications": "Ստացեք ծանուցումներ",
+    "map": "Քարտեզ",
+    "data": "Տվյալ",
+    "feed": "Տվյալների դիտում"
   },
   "views": {
     "map": "Քարտեզ",
@@ -727,7 +798,18 @@
     "unpublished": "Ապահրապարակված",
     "published_by": "Հրապարակման հեղինակ",
     "can_see_this_post": "կարող է տեսնել այս գրառումը",
-    "location": "Գտնվելու վայրը",
+    "location": {
+      "location": "Գտնվելու վայրը",
+      "you_can_search_or_click": "Դուք կարող եք որոնել կամ սեղմել քարտեզի այն տարածքը, որտեղ ցանկանում եք տեղադրել նշիչը:",
+      "search_address": "Որոնել հասցեներ, տեղադրել անուններ կամ կոորդինատներ...",
+      "nothing_found": "Ոչինչ չգտնվեց",
+      "errors": {
+        "empty_lat": "Latitude-ը դատարկ դաշտ է",
+        "empty_lng": "Longitude-ը դատարկ դաշտ է",
+        "decimal_lat": "Latitude միայն տասնորդական թիվ",
+        "decimal_lng": "Longitude միայն տասնորդական թիվ"
+      }
+    },
     "categories": "Կատեգորիաներ",
     "status": "Կարգավիճակ",
     "type": "Տեսակ",
@@ -881,6 +963,13 @@
         "save_and_edit": "Add to survey &amp; edit"
       },
       "survey_title": "Unknown Survey"
+    },
+    "post_count": "{{count}} posts",
+    "read_more": "Կարդալ ավելին",
+    "image_is_required": "Պահանջվում է պատկեր",
+    "image_max_size": "Պատկերը գերազանցում է max ֆայլի չափը",
+    "relation": {
+      "search": "Որոնում"
     }
   },
   "role": {
@@ -895,7 +984,13 @@
     "delete_role": "Delete this role",
     "delete_role_desc": "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
     "everyone": "Բոլորը",
-    "just_you": "Just you"
+    "just_you": "Just you",
+    "are_you_sure_you_want_to_delete_role": "Համոզվա՞ծ եք, որ ցանկանում եք ջնջել {{roleName}} դերը:",
+    "placeholder": {
+      "name": "Գտի՛ր դերանունը",
+      "description": "Գտի՛ր դերային նկարագիրը"
+    },
+    "only_me": "Միայն ես"
   },
   "webhook": {
     "add_webhook": "Ավելացնել դեր",
@@ -922,7 +1017,15 @@
   "collection": {
     "visible_to_public": "This Collection is visible to the public",
     "visible_to_you": "This Collection is visible to just you and admins",
-    "visible_to_roles": "This Collection is visible to {{roles}}"
+    "visible_to_roles": "This Collection is visible to {{roles}}",
+    "validation": {
+      "required": {
+        "name": "Հավաքածուի անվանումը պարտադիր է"
+      }
+    },
+    "errors": {
+      "permissions": "Դուք չունեք այս հավաքածուն դիտելու թույլտվություն"
+    }
   },
   "set": {
     "by": "կողմից",
@@ -957,7 +1060,9 @@
     "edit_savedsearch": "Խմբագրել որոնումը",
     "set_settings": "Հավաքածուի կարգավորումները",
     "add_notification": "Ավելացնել ծանուցում",
-    "remove": "հեռացնել"
+    "remove": "հեռացնել",
+    "update_saved_filter": "Թարմացնել Saved filter",
+    "create_saved_filter": "Ստեղծել Saved filter"
   },
   "category": {
     "add_tag": "Add Category",
@@ -989,7 +1094,18 @@
       "category": "Category",
       "status": "Status"
     },
-    "delete": "Delete"
+    "delete": "Delete",
+    "validation": {
+      "required": {
+        "name": "Կատեգորիա անվանումը պարտադիր է"
+      }
+    },
+    "placeholder": {
+      "name": "Մուտքագրեք անունը",
+      "descriptions": "Մուտքագրեք նկարագրությունը...",
+      "choose_parent_category": "Ընտրեք ծնողների կատեգորիան..."
+    },
+    "parent_category": "Ծնողների դասակարգում"
   },
   "tool": {
     "manage_forms": "Manage Forms",
@@ -1061,13 +1177,35 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "Հումանիտար տվյալների փոխանակում",
+      "please_enter_maintainer_id": "Խնդրում ենք մուտք գործել պահնորդական id",
+      "please_enter_api_key": "Խնդրում ենք մուտք գործել API բանալի",
+      "hdx_maintainer_id_min_length": "HDX-ի պահպանիչ id-ը չափազանց կարճ է",
+      "api_key_min_length": "API բանալին չափազանց կարճ է"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
-      "destination": "Destination"
+      "destination": "Destination",
+      "placeholder": {
+        "name": "Խնդրում ենք մուտքագրել webhook անունը",
+        "shared_secret": "Խնդրում ենք մուտք գործել shared secret",
+        "api_url": "Խնդրում ենք մուտք գործել api url"
+      },
+      "validation": {
+        "required": {
+          "name": "Պահանջվում է Webhook անուն",
+          "shared_secret": "Պահանջվում է կիսել գաղտնի բանալին",
+          "api_url": "API URL պահանջվում է",
+          "event_type": "Դեպքի տեսակը պարտադիր է",
+          "event_entity": "Դեպքի առթիվ անհրաժեշտ է"
+        },
+        "please_provide_valid_api_url": "Խնդրում ենք տրամադրել վավերական API URL՝ http(s)://",
+        "secret_key_cannot_be_less_start": "Կիսված գաղտնի բանալին կարող է ոչ պակաս, քան",
+        "secret_key_cannot_be_less_end": "տառեր"
+      }
     },
     "data_sources": {
       "associate_with_form": "Import to survey",
@@ -1159,7 +1297,12 @@
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
         "search_terms": "Twitter search terms",
         "search_terms_desc": "Add search terms separated with commas"
-      }
+      },
+      "choose_data_source": "Ընտրեք տվյալների աղբյուրը...",
+      "type_of_data_source": "Տվյալների աղբյուրի տեսակը",
+      "provider_name": "{{providerName}} տվյալների աղբյուր?",
+      "do_you_really_want_to_disconnect": "Իսկապե՞ս ցանկանում եք անջատել ձեր մատակարարին։",
+      "add_source": "Ավելացնել աղբյուրը"
     },
     "donation": {
       "title": {
@@ -1168,7 +1311,23 @@
         "required": "Donation title is required"
       },
       "wallet": {
-        "required": "Donation wallet address is required"
+        "required": "Donation wallet address is required",
+        "label": "Դրամապանակի հասցեն",
+        "placeholder": "Մուտքագրեք դրամապանակի հասցեն e.g $ ilp.uphold.com/example"
+      },
+      "description": {
+        "label": "Նկարագրեք ձեր նվիրատվությունը",
+        "placeholder": "Այս նվիրատվության մասին ավելին պատմելու համար տեքստ մտեք"
+      },
+      "images": {
+        "label": "Նվիրաբերության պատկերներ"
+      },
+      "info": {
+        "start_one": "Խնդրում ենք համոզվեք, որ ձեր դրամապանակը տեղադրված է",
+        "start_two": "վեբ-մոնետիզացիա սահմանելու համար:",
+        "start_three": "Եթե դրամապանակ չունեք, խնդրում ենք սեղմել",
+        "here": "այստեղ",
+        "end": "ստեղծել մեկը:"
       }
     },
     "roles": {
@@ -1181,7 +1340,10 @@
       "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "manage_collections_and_saved_searches": "Կառավարել հավաքածուները եւ խնայված որոնումները",
+      "delete_posts": "Ջնջել posts",
+      "delete_their_own_posts": "Ջնջեք իրենց սեփական պոստերը"
     },
     "deployment_delete_this": "Delete this deployment",
     "deployment_delete": "Delete deployment",
@@ -1226,9 +1388,20 @@
     "add_new_users": "Add New Users",
     "valid": {
       "name": {
-        "required": "Site name is required"
+        "required": "Site name is required",
+        "pattern": "Անվավեր ձեւանմուշ",
+        "minlength": "Կայքի անվանումը չափազանց կարճ է"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "Գեներացնել API բանալի",
+      "private_settings": "Սեփական պարամետրերը.",
+      "api_key": "API բանալին",
+      "placeholder": {
+        "pick_location": "Փիք Տեղ..."
+      }
+    },
+    "bulk_actions": "Բուլկի գործողություններ"
   },
   "data_import": {
     "survey_field": "Survey field",
@@ -1271,7 +1444,13 @@
     "leave_empty": "Leave empty",
     "cancel_import": "Cancel import",
     "finish_import": "Finish import",
-    "which_survey": "which survey?"
+    "which_survey": "which survey?",
+    "get_polling_info": "Ստացեք Polling Info",
+    "change_csv_file": "Փոխել {{selectedfile}} CSV ֆայլը",
+    "upload_csv_file": "Վերբեռնել CSV ֆայլը",
+    "choose_status_to_imported_posts": "Ընտրեք կարգավիճակը ներմուծված հոստինգի.",
+    "has_tasks_required_start": "Ձեր հարցումը",
+    "has_tasks_required_end": ", ներառում է առաջադրանքներ, որոնք սովորաբար պետք է կատարվեն յուրաքանչյուր պաշտոնի համար, նախքան դրանք կնշվեն «հրապարակված»: Այս ներմուծման ընթացքում ձեր բոլոր ներմուծված փոստերը կունենան իրենց առաջադրանքները, որոնք նշված են որպես «անավարտ», միեւնույն ժամանակ թույլ կտան, որ իրենց կարգավիճակը նշվի որպես «հրատարակված»։ Եթե դուք խմբագրեք այս հոդվածներից որեւէ մեկը դրանք ներմուծելուց հետո, այնուամենայնիվ, ձեզ կխնդրեն կատարել այդ առաջադրանքները նախքան դրանք կրկին հրապարակելը:"
   },
   "data_export": {
     "title": "Export data",
@@ -1405,14 +1584,38 @@
       "email": {
         "required": "էլ. փոստի հասցեն պետք է լրացվի",
         "email": "Սխալ էլ. փոստի հասցե",
-        "maxlength": "Այս էլ. փոստի հասցեն չափազանց երկար է"
+        "maxlength": "Այս էլ. փոստի հասցեն չափազանց երկար է",
+        "pattern": "Այս էլ-փոստի հասցեն անվավեր է",
+        "emailExists": "Email-ն արդեն օգտագործվում է"
       },
       "password": {
         "required": "Գաղտնաբառը պետք է լրացվի",
         "minlength": "Այս գաղտնաբառը չափազանց կարճ է",
-        "maxlength": "Այս գաղտնաբառը չափազանց երկար է"
+        "maxlength": "Այս գաղտնաբառը չափազանց երկար է",
+        "weak": "Այս գաղտնաբառը շատ թույլ է"
+      },
+      "fields": {
+        "email must be unique": "Այս էլփոստով օգտատերն արդեն գոյություն ունի"
+      },
+      "name": {
+        "required": "Ցուցադրման անունը պարտադիր է",
+        "maxlength": "Ցուցադրման անունը չափազանց երկար է"
+      },
+      "token": {
+        "required": "Խնդրում ենք մուտքագրել համակարգ մուտքի լրացուցիչ գաղտնաբառը:"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "Համոզվա՞ծ եք, որ ցանկանում եք ջնջել այս հաշիվը:",
+    "name_will_be_a_display_name": "Ձեր մուտքանունը կլինի ցուցադրական անուն:",
+    "placeholder": {
+      "realname": "Անունդ մտիր...",
+      "email": "Մուտքագրեք էլ. փոստի հասցեն...",
+      "password": "Մուտքագրեք գաղտնաբառը..."
+    },
+    "password_notify": "Եթե դաշտը բաց թողնեք, ձեր գաղտնաբառը չի փոխվի",
+    "avatar": "Անձնանշան",
+    "name": "Անուն",
+    "search_by_name": "Որոնել ըստ անվանման"
   },
   "user_profile": {
     "title": "օգտահաշվի կարգավորումները",
@@ -1424,7 +1627,9 @@
     },
     "nav": {
       "general": "Ընդհանուր",
-      "notifications": "Ծանուցումներ"
+      "notifications": "Ծանուցումներ",
+      "account_settings": "Հաշվի կարգավորումներ",
+      "notifications_settings": "Ծանուցումների կարգավորումներ"
     }
   },
   "user_create": {
@@ -1454,7 +1659,8 @@
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} resources?",
       "bulk_destroy_success": "Deleted resource",
       "bulk_destroy_error": "Unable to delete resource, please try again",
-      "bulk_destroy_cancelled": "Delete cancelled"
+      "bulk_destroy_cancelled": "Delete cancelled",
+      "are_you_sure_you_want_to_delete_this": "Համոզվա՞ծ եք, որ ցանկանում եք ջնջել սա:"
     },
     "data_import": {
       "see_imported_posts": "See imported posts",
@@ -1518,7 +1724,12 @@
       "update_status_success_bulk": "Status updated for {{count}} posts",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "can_t_view_this_post": "Դուք չունեք թույլտվություն դիտելու այս փոստը:<br> Այն դեռ վերանայվում է ադմինիստրատորի կողմից։<br> Այն մատչելի կլինի ձեզ, երբ այն հրատարակվի։",
+      "contact_for_details": "Լրացուցիչ մանրամասների համար կապվեք ադմինիստրատորի հետ.",
+      "unfinished_post_task": "Դուք չեք կարող հրապարակել այս պոստը, պոստը անավարտ գործեր ունի",
+      "posts_can_t_be_published": "Չի կարելի հրապարակել հետեւյալ գրառումները. {{titles}}",
+      "post_not_found": "Գրառումը չի գտնվել"
     },
     "category": {
       "save_success": "Saved category {{name}}",
@@ -1528,7 +1739,8 @@
       "destroy_error": "Unable to delete category, please try again",
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} categories?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
-      "bulk_destroy_success": "{{count}} categories deleted"
+      "bulk_destroy_success": "{{count}} categories deleted",
+      "bulk_destroy_success_countless": "Կատեգորիաներ ջնջված"
     },
     "role": {
       "delete_question": "Are you sure you want to delete the role {{role}}?",
@@ -1553,7 +1765,8 @@
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} users?",
       "bulk_destroy_success": "Users deleted",
       "bulk_role_change_confirm": "Are you sure you want to change the role of {{count}} users to {{role}}?",
-      "bulk_role_change_success": "User roles changed to {{role_name}}"
+      "bulk_role_change_success": "User roles changed to {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "Համոզվա՞ծ եք, որ ցանկանում եք ջնջել {{username}}"
     },
     "video": {
       "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
@@ -1626,7 +1839,23 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "Համոզվա՞ծ եք, որ ցանկանում եք ջնջել {{count}} հարցումները:"
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Uğurlu!",
+        "success_description": "Շնորհակալություն ձեր հաշվետվությունը ներկայացնելու համար: Պոստը վերանայվում է մեր թիմի կողմից եւ շուտով կհայտնվի հարթակում:",
+        "success_button": "Լավ, լավ է հնչում"
+      },
+      "deleted": {
+        "success": "Uğurlu!",
+        "success_description": "Դուք մշտապես ջնջել եք {{count}} հեշթեգերը:",
+        "success_button": "Լավ, լավ է հնչում"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Իսկապե՞ս ուզում եք ջնջել {{lang}} լեզուն։"
     }
   },
   "empty": {
@@ -1660,7 +1889,10 @@
     "send_to_address": "Ծանուցումներ ուղարկել այս հասցեին",
     "button": {
       "delete": "Հեռացնել ծանուցումը"
-    }
+    },
+    "what_you_get_notification_about": "Ինչի մասին եք ծանուցում ստանում",
+    "removed": "Ծանուցումը հանվել է",
+    "are_you_sure_you_want_to_remove_this_notification": "Համոզվա՞ծ եք, որ ցանկանում եք հեռացնել այս ծանուցումը:"
   },
   "contact": {
     "edit": "Խմբագրել",
@@ -1684,7 +1916,8 @@
       "email": {
         "required": "Ծանուցումներ ստանալու համար անհրաժեշտ է էլ. փոստի հասցե",
         "email": "Այս էլ. փոստի հասցեն սխալ է",
-        "maxlength": "Այս էլ. փոստի հասցեն չափազանց երկար է"
+        "maxlength": "Այս էլ. փոստի հասցեն չափազանց երկար է",
+        "not_valid": "Այս էլփոստը վավեր չէ"
       },
       "phone": {
         "required": "Ծանուցումներ ստանալու համար անհրաժեշտ է հեռախոսահամար",
@@ -1698,7 +1931,8 @@
     "title": "Ushahidi Terms of Service",
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
     "agree": "I agree to Ushahidi's Terms of Service.",
-    "accept_and_continue": "Accept and Continue"
+    "accept_and_continue": "Accept and Continue",
+    "i_agree": "Ես համաձայն եմ Ushahidi <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Գաղտնիության քաղաքականությանը</a> \n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Պայմաններ եւ պայմաններ</a>:"
   },
   "translations": {
     "languages": "Languages",
@@ -2455,5 +2689,33 @@
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "You cannot change your own role",
     "adminUserLimitReached": "limit:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "սխալ",
+    "description": "Oops... Կներեք, չենք կարող գտնել այն էջը, որը փնտրում եք: <br> Խնդրում ենք որոնել մեկ այլ արտահայտությամբ կամ վերադառնալ Քարտեզի view:",
+    "button": "Գնացեք քարտեզի տեսադաշտ"
+  },
+  "cookies": {
+    "we_use_cookies": "Բարև! Մենք օգտագործում ենք cookie- ներ Ձեր փորձը ավելի լավը դարձնելու համար:",
+    "cookies_privacy": "Եթե ցանկանում եք իմանալ ավելին կամ հանել Ձեր համաձայնությունը, խնդրում ենք դիմել մեր <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Գաղտնիության քաղաքականությանը</a>:",
+    "decline": "Չեղարկել",
+    "accept_cookies": "Ընդունել թխահերներ"
+  },
+  "share": {
+    "share_deployment": "Կիսվեք տեղաբաշխումով",
+    "share_post": "Share post",
+    "web_address": "You survey's web address",
+    "embed_on_websites": "HTML-ը embed է կայքերում",
+    "copied": "Պատճենվել է!",
+    "share_on_twitter": "Տարածեք Twitter- ում",
+    "share_on_facebook": "Կիսվեք Ֆեյսբուքում"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Պայմաններ եւ պայմաններ</a>:"
+      }
+    }
   }
 }

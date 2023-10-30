@@ -122,7 +122,44 @@
     "select_language": "言語を選択",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "連絡先メールアドレス:",
+    "add_collection": "イベントを追加",
+    "choose_photo": "写真を選ぶ",
+    "choose": "選択…",
+    "add_all_fields": "すべてのフィールドを追加",
+    "insert_text_here": "ここにテキストを挿入...",
+    "onboarding": {
+      "title": "オンボーディング",
+      "description": "Ushahidiのオンボーディングをもう一度見てみましょう。"
+    },
+    "forbidden-login": "デプロイにアクセスするには、ログインの詳細を入力してください。",
+    "contact_with_admin": "または、管理者に連絡してください",
+    "page-not-found": "ページが見つかりませんでした",
+    "update": "更新",
+    "current_results": "現在の実績:",
+    "duplicate": "複製",
+    "yes_delete": "はい、削除します",
+    "no_go_back": "いいえ戻ります",
+    "are_you_sure_you_want_to_delete": "削除してもよろしいですか?",
+    "action_cannot_be_undone": "<p>この操作は元に戻せません。</p><p>確かですか。</p>",
+    "you_are_not_authorized": "権限がありません",
+    "lost_internet_connection": "インターネット接続が失われました",
+    "tweet_is_unavailable": "このツイートは利用できません",
+    "file_uploader": "ファイルアップローダー",
+    "preview_image": "プレビューイメージ",
+    "privacy_policy": "プライバシーポリシー",
+    "terms_and_conditions": "利用規約",
+    "ok_sounds_good": "OK、いいですね",
+    "next_step": "次のステップ",
+    "we_are_aware_there_are_some_issues_here": "ここにはいくつかの問題があることを認識しています。チームはそれらの修正に取り組んでいます。",
+    "you_are_using_old_deployment_version": "[Deployment Version - {{api_version}}] を使用しています。最新バージョンは v5 です。ユーザーアクセス用にDeploymentを更新してください。",
+    "outdated_deployment": "時代遅れのデプロイ!",
+    "the_deployment_is_outdated": "Deploymentは古くなっているため、管理者が更新するまで、いくつかのバグが発生する可能性があります。",
+    "your_deployment_is_outdated": "デプロイが古くなっています",
+    "we_ve_updated_deployments_to_version_5": "デプロイをバージョン 5 に更新しました。ユーザーは、すぐにはデプロイにアクセスできなくなる可能性があります。",
+    "for_more_details_on_deployment_update": "デプロイの更新の詳細については、ヘルプ&サポート(これはリンクである必要があります)にアクセスするか、次の宛先に電子メールを送信してください。",
+    "open_chat": "オープンチャット"
   },
   "toolbar": {
     "searchbar": {
@@ -238,7 +275,9 @@
     "step_required": "このタスクは必須です",
     "post_step": "Post",
     "type": "タイプ",
-    "visible_to": "Visible To"
+    "visible_to": "Visible To",
+    "choose_language": "翻訳する言語を選択",
+    "error_input_number": "タイプ番号{{type}}入力してください"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -357,8 +396,10 @@
     },
     "fields": {
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
-      }
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}}フィールドに特殊文字が含まれています"
+      },
+      "fields_title": "フィールド"
     },
     "targeted_survey": {
       "title": "Create a new targeted survey",
@@ -421,7 +462,17 @@
       "pending_messages": "We are processing {{totalPending}} messages.",
       "pending_message": "We are processing {{totalPending}} message.",
       "cancel": "キャンセル"
-    }
+    },
+    "no_tasks": "タスクなし",
+    "select_categories": "カテゴリを選択",
+    "select_related_post": "関連記事を選択",
+    "no_fields": "フィールド",
+    "select_color": "カラーを選択",
+    "choose_survey": "アンケートを選択",
+    "main_info": "主な情報",
+    "special_characters_option": "このオプションには特殊文字が含まれています",
+    "no_options_for_this_field": "このフィールドにはオプションがありません",
+    "add_options_first": "最初にオプションを追加する"
   },
   "global_filter": {
     "filter": "Filter",
@@ -502,7 +553,9 @@
       "all_posts": "Show all posts",
       "unmapped": "Show unmapped posts",
       "mapped": "Show posts with a location",
-      "source": "Source"
+      "source": "Source",
+      "expires": "期限切れ",
+      "download": "ダウンロード"
     },
     "unmapped_start_one": "There is",
     "unmapped_start_many": "There are",
@@ -536,7 +589,11 @@
     "source": "Source",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "市区町村または住所",
+    "viewing_mode": "表示モード",
+    "saved_filter": "保存済みフィルター",
+    "delete_this_saved_filter": "この保存済みフィルタを削除してもよろしいですか?"
   },
   "graph": {
     "all_posts": "Nothing; Show all posts",
@@ -574,6 +631,12 @@
   "modal": {
     "button": {
       "close": "Close"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "この Web サイトでは、Web 収益化が有効になっています。ご寄付ありがとうございます。あなたは寄付をしました",
+      "thank_you_for_your_donation_end": "今までに",
+      "web_monetization_text": "Ushahidi のデプロイで Web の収益化が有効になりました。Web収益化は、広告主のゲームをプレイすることなく、お気に入りのWebサイトをサポートする方法です。必要なのは、ブラウザの設定だけです。以下のリンクをクリックして、寄付の方法をご覧ください。",
+      "how_can_i_donate": "どうすれば寄付できますか?"
     }
   },
   "nav": {
@@ -646,7 +709,15 @@
     "user": "User",
     "users": "ユーザー",
     "views": "閲覧",
-    "yesterday": "Yesterday"
+    "yesterday": "Yesterday",
+    "open_menu": "メニューを開く",
+    "my_account": "マイアカウント",
+    "login_register": "ログイン / サインアップ",
+    "help_support": "ヘルプとサポート",
+    "receive_notifications": "お知らせを受け取る",
+    "map": "マップ",
+    "data": "データ",
+    "feed": "データビュー"
   },
   "views": {
     "map": "Map",
@@ -727,7 +798,18 @@
     "unpublished": "Unpublished",
     "published_by": "公開者",
     "can_see_this_post": "can see this post",
-    "location": "場所",
+    "location": {
+      "location": "場所",
+      "you_can_search_or_click": "マーカーを配置するマップの領域を検索またはクリックできます。",
+      "search_address": "住所、地名、座標の検索...",
+      "nothing_found": "何も見つかりません",
+      "errors": {
+        "empty_lat": "緯度が空のフィールドです",
+        "empty_lng": "経度は空のフィールドです",
+        "decimal_lat": "緯度のみの 10 進数",
+        "decimal_lng": "経度のみの 10 進数"
+      }
+    },
     "categories": "カテゴリ",
     "status": "Status",
     "type": "Type",
@@ -881,6 +963,13 @@
         "save_and_edit": "Add to survey &amp; edit"
       },
       "survey_title": "Unknown Survey"
+    },
+    "post_count": "{{count}}投稿",
+    "read_more": "続きを読む",
+    "image_is_required": "画像が必要です",
+    "image_max_size": "画像が最大ファイルサイズを超えています",
+    "relation": {
+      "search": "検索"
     }
   },
   "role": {
@@ -895,7 +984,13 @@
     "delete_role": "Delete this role",
     "delete_role_desc": "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
     "everyone": "Everyone",
-    "just_you": "Just you"
+    "just_you": "Just you",
+    "are_you_sure_you_want_to_delete_role": "ロール{{roleName}}を削除してもよろしいですか?",
+    "placeholder": {
+      "name": "ロール名を入力",
+      "description": "役割の説明を入力"
+    },
+    "only_me": "非公開"
   },
   "webhook": {
     "add_webhook": "役割の追加",
@@ -922,7 +1017,15 @@
   "collection": {
     "visible_to_public": "This Collection is visible to the public",
     "visible_to_you": "This Collection is visible to just you and admins",
-    "visible_to_roles": "This Collection is visible to {{roles}}"
+    "visible_to_roles": "This Collection is visible to {{roles}}",
+    "validation": {
+      "required": {
+        "name": "コレクション名は必須です"
+      }
+    },
+    "errors": {
+      "permissions": "このコレクションを表示する権限がありません"
+    }
   },
   "set": {
     "by": "by",
@@ -957,7 +1060,9 @@
     "edit_savedsearch": "Edit Search",
     "set_settings": "Collection Settings",
     "add_notification": "Add Notification",
-    "remove": "remove"
+    "remove": "remove",
+    "update_saved_filter": "保存済みフィルターの更新",
+    "create_saved_filter": "保存済みフィルタを作成"
   },
   "category": {
     "add_tag": "カテゴリを追加",
@@ -989,7 +1094,18 @@
       "category": "Category",
       "status": "Status"
     },
-    "delete": "削除"
+    "delete": "削除",
+    "validation": {
+      "required": {
+        "name": "カテゴリー名は必須です。"
+      }
+    },
+    "placeholder": {
+      "name": "名前を入力",
+      "descriptions": "説明を入力...",
+      "choose_parent_category": "親カテゴリを選択..."
+    },
+    "parent_category": "親カテゴリ"
   },
   "tool": {
     "manage_forms": "フォームを管理",
@@ -1061,13 +1177,35 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "人道的データ交換",
+      "please_enter_maintainer_id": "メンテナIDを入力してください",
+      "please_enter_api_key": "APIキーを入力してください",
+      "hdx_maintainer_id_min_length": "HDXメンテナーIDが短すぎます",
+      "api_key_min_length": "APIキーが短すぎます"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
-      "destination": "Destination"
+      "destination": "Destination",
+      "placeholder": {
+        "name": "Webhook 名を入力してください",
+        "shared_secret": "共有シークレットを入力してください",
+        "api_url": "APIのURLを入力してください"
+      },
+      "validation": {
+        "required": {
+          "name": "Webhook 名は必須です",
+          "shared_secret": "共有秘密鍵が必要です",
+          "api_url": "API URL が必要",
+          "event_type": "イベントの種類は必須です",
+          "event_entity": "イベント エンティティは必須です"
+        },
+        "please_provide_valid_api_url": "http(s):// で有効な API URL を指定してください。",
+        "secret_key_cannot_be_less_start": "共有秘密鍵は",
+        "secret_key_cannot_be_less_end": "字数    "
+      }
     },
     "data_sources": {
       "associate_with_form": "Import to survey",
@@ -1159,7 +1297,12 @@
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
         "search_terms": "Twitter search terms",
         "search_terms_desc": "Add search terms separated with commas"
-      }
+      },
+      "choose_data_source": "データソースを選択...",
+      "type_of_data_source": "データソースの種類",
+      "provider_name": "データソース{{providerName}}?",
+      "do_you_really_want_to_disconnect": "本当にプロバイダーを切断しますか?",
+      "add_source": "ソースを追加"
     },
     "donation": {
       "title": {
@@ -1168,7 +1311,23 @@
         "required": "Donation title is required"
       },
       "wallet": {
-        "required": "Donation wallet address is required"
+        "required": "Donation wallet address is required",
+        "label": "ウォレットアドレス",
+        "placeholder": "ウォレットアドレスを入力します(例:$ilp.uphold.com/example"
+      },
+      "description": {
+        "label": "寄付について教えてください",
+        "placeholder": "この寄付の詳細をテキストで入力する"
+      },
+      "images": {
+        "label": "寄贈画像"
+      },
+      "info": {
+        "start_one": "ウォレットが設定されていることを確認してください",
+        "start_two": "をクリックして、ウェブ収益化を設定します。",
+        "start_three": "ウォレットをまだお持ちでない場合は、",
+        "here": "こちら",
+        "end": "をクリックして作成します。"
       }
     },
     "roles": {
@@ -1181,7 +1340,10 @@
       "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "manage_collections_and_saved_searches": "コレクションと保存済み検索の管理",
+      "delete_posts": "次のボタンをクリックして、投稿やページに追加、置き換え、削除する画像を選択します。",
+      "delete_their_own_posts": "自分の投稿を削除する"
     },
     "deployment_delete_this": "Delete this deployment",
     "deployment_delete": "Delete deployment",
@@ -1226,9 +1388,20 @@
     "add_new_users": "Add New Users",
     "valid": {
       "name": {
-        "required": "Site name is required"
+        "required": "Site name is required",
+        "pattern": "無効な形式です",
+        "minlength": "サイト名が短すぎます"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "APIキーを生成",
+      "private_settings": "プライベート設定:",
+      "api_key": "APIキー",
+      "placeholder": {
+        "pick_location": "場所を選択..."
+      }
+    },
+    "bulk_actions": "一括操作"
   },
   "data_import": {
     "survey_field": "Survey field",
@@ -1271,7 +1444,13 @@
     "leave_empty": "Leave empty",
     "cancel_import": "Cancel import",
     "finish_import": "Finish import",
-    "which_survey": "which survey?"
+    "which_survey": "which survey?",
+    "get_polling_info": "投票情報の取得",
+    "change_csv_file": "CSVファイル{{selectedfile}}変更",
+    "upload_csv_file": "CSV ファイルのアップロード",
+    "choose_status_to_imported_posts": "インポートされた投稿のステータスを選択します。",
+    "has_tasks_required_start": "アンケート",
+    "has_tasks_required_end": "には、通常、「公開済み」としてマークされる前に各投稿で完了する必要があるタスクが含まれます。このインポート中、インポートされたすべての投稿のタスクは「未完了」とマークされますが、ステータスは「公開済み」としてマークされます。ただし、これらの投稿をインポート後に編集する場合は、再公開する前にこれらのタスクを完了するように求められます。"
   },
   "data_export": {
     "title": "Export data",
@@ -1405,14 +1584,38 @@
       "email": {
         "required": "Email address is required",
         "email": "This email address is invalid",
-        "maxlength": "This email address is too long"
+        "maxlength": "This email address is too long",
+        "pattern": "このメールアドレスは無効です",
+        "emailExists": "メールは既に使用されています"
       },
       "password": {
         "required": "Password is required",
         "minlength": "This password is too short",
-        "maxlength": "This password is too long"
+        "maxlength": "This password is too long",
+        "weak": "このパスワードは非常に脆弱です"
+      },
+      "fields": {
+        "email must be unique": "このメールアドレスのユーザーは既に存在します"
+      },
+      "name": {
+        "required": "表示名は必須です",
+        "maxlength": "表示名が長すぎます"
+      },
+      "token": {
+        "required": "トークンは必須です"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "このアカウントを削除してもよろしいですか?",
+    "name_will_be_a_display_name": "入力した名前が表示名になります。",
+    "placeholder": {
+      "realname": "名前を入力してください。",
+      "email": "メールアドレスを入力してください…",
+      "password": "パスワードを入力..."
+    },
+    "password_notify": "このフィールドを空白のままにすると、パスワードは変更されません",
+    "avatar": "アバター",
+    "name": "名前",
+    "search_by_name": "名前で検索"
   },
   "user_profile": {
     "title": "account settings",
@@ -1424,7 +1627,9 @@
     },
     "nav": {
       "general": "一般",
-      "notifications": "Notifications"
+      "notifications": "Notifications",
+      "account_settings": "ユーザーアカウント設定",
+      "notifications_settings": "通知設定"
     }
   },
   "user_create": {
@@ -1453,7 +1658,9 @@
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} resources?",
       "bulk_destroy_success": "Deleted resource",
       "bulk_destroy_error": "Unable to delete resource, please try again",
-      "bulk_destroy_cancelled": "Delete cancelled"
+      "bulk_destroy_cancelled": "Delete cancelled",
+      "data_has_not_been_saved": "データが保存されていません!",
+      "are_you_sure_you_want_to_delete_this": "これを削除してもよろしいですか？"
     },
     "data_import": {
       "data_has_not_been_saved": "The data has not been saved!",
@@ -1518,7 +1725,12 @@
       "update_status_success_bulk": "Status updated for {{count}} posts",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "can_t_view_this_post": "この投稿を表示する権限がありません。<br> 現在も管理者による審査中です。<br> 公開されると利用できるようになります。",
+      "contact_for_details": "詳細については、管理者にお問い合わせください。",
+      "unfinished_post_task": "この投稿は公開できません。投稿には未完了のタスクがあります",
+      "posts_can_t_be_published": "次の投稿は公開できません。 {{titles}}",
+      "post_not_found": "投稿が見つかりません"
     },
     "category": {
       "save_success": "Saved category {{name}}",
@@ -1528,7 +1740,8 @@
       "destroy_error": "Unable to delete category, please try again",
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} categories?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
-      "bulk_destroy_success": "{{count}} categories deleted"
+      "bulk_destroy_success": "{{count}} categories deleted",
+      "bulk_destroy_success_countless": "削除されたカテゴリ"
     },
     "role": {
       "delete_question": "Are you sure you want to delete the role {{role}}?",
@@ -1553,7 +1766,8 @@
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} users?",
       "bulk_destroy_success": "Users deleted",
       "bulk_role_change_confirm": "Are you sure you want to change the role of {{count}} users to {{role}}?",
-      "bulk_role_change_success": "User roles changed to {{role_name}}"
+      "bulk_role_change_success": "User roles changed to {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "削除してもよろしいですか{{username}}"
     },
     "video": {
       "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
@@ -1626,7 +1840,23 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "{{count}}アンケートを削除してもよろしいですか?"
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "成功！",
+        "success_description": "レポートを提出していただきありがとうございます。投稿は私たちのチームによってレビューされており、まもなくプラットフォームに表示されます。",
+        "success_button": "OK、いいですね"
+      },
+      "deleted": {
+        "success": "成功！",
+        "success_description": "{{count}}投稿を完全に削除しました。",
+        "success_button": "OK、いいですね"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "{{lang}}言語を削除してもよろしいですか?"
     }
   },
   "empty": {
@@ -1660,7 +1890,10 @@
     "send_to_address": "Send notifications to this address",
     "button": {
       "delete": "Delete notification"
-    }
+    },
+    "what_you_get_notification_about": "通知を受け取る内容",
+    "removed": "通知が削除されました",
+    "are_you_sure_you_want_to_remove_this_notification": "この通知を削除してもよろしいですか?"
   },
   "contact": {
     "edit": "編集",
@@ -1684,7 +1917,8 @@
       "email": {
         "required": "An email address is required to receive notifications",
         "email": "This email address is invalid",
-        "maxlength": "This email address is too long"
+        "maxlength": "This email address is too long",
+        "not_valid": "電子メールが無効です"
       },
       "phone": {
         "required": "A phone number is required to receive notifications",
@@ -1698,7 +1932,8 @@
     "title": "Ushahidi Terms of Service",
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
     "agree": "I agree to Ushahidi's Terms of Service.",
-    "accept_and_continue": "Accept and Continue"
+    "accept_and_continue": "Accept and Continue",
+    "i_agree": "私はUshahidi <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">プライバシーポリシー</a> に同意します\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">利用規約</a>。"
   },
   "translations": {
     "languages": "Languages",
@@ -2455,5 +2690,33 @@
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "You cannot change your own role",
     "adminUserLimitReached": "limit:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "エラー",
+    "description": "おっと。。。申し訳ありませんが、お探しのページが見つかりません。 <br> 別のフレーズで検索するか、マップビューに戻ってください。",
+    "button": "マップビューに移動"
+  },
+  "cookies": {
+    "we_use_cookies": "こんにちは！当社は、お客様の体験を向上させるためにクッキーを使用しています。",
+    "cookies_privacy": "詳細をお知りになりたい場合、または同意を撤回したい場合は、 <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">プライバシーポリシー</a>をご覧ください。",
+    "decline": "拒否",
+    "accept_cookies": "クッキーを受け入れる"
+  },
+  "share": {
+    "share_deployment": "共有展開",
+    "share_post": "投稿を共有",
+    "web_address": "アンケートのウェブアドレス",
+    "embed_on_websites": "Web サイトへの HTML の埋め込み",
+    "copied": "コピーしました!",
+    "share_on_twitter": "Twitterでシェア",
+    "share_on_facebook": "Facebookでシェア"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">利用規約</a>。"
+      }
+    }
   }
 }

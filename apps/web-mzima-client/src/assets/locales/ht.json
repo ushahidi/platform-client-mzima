@@ -115,7 +115,51 @@
     "select_language": "Select language",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "Kontakte adrès imèl:",
+    "add_collection": "Ajoute koleksyon",
+    "choose_photo": "Chwazi foto",
+    "choose": "Chwazi...",
+    "add_all_fields": "Ajoute tout jaden yo",
+    "insert_text_here": "Insert tèks isit la ...",
+    "donate": "Donate",
+    "donation": "Donasyon",
+    "disable_monetization": "Monetizasyon andikape",
+    "enable_monetization": "Pèmèt Monetizasyon",
+    "enable_monetization_error": "Ranpli jaden ki nesesè anwo a anvan pèmèt monetizasyon.",
+    "enable_monetization_info": "Monetizasyon se kounye a andikape.",
+    "onboarding": {
+      "title": "Anbochaj",
+      "description": "Pran yon gade nan Ushidi a sou bande ankò."
+    },
+    "forbidden-login": "Tanpri antre nan detay login ou jwenn aksè nan deplwaman an.",
+    "contact_with_admin": "Oswa kontakte Admin la ",
+    "page-not-found": "Paj yo pa jwenn",
+    "update": "Mizajou",
+    "current_results": "Rezilta aktyèl yo:",
+    "close_and_view": "Fèmen ak wè rezilta yo",
+    "duplicate": "Doub",
+    "yes_delete": "Wi, efase",
+    "no_go_back": "Non, tounen",
+    "are_you_sure_you_want_to_delete": "Èske ou sèten ou vle efase",
+    "action_cannot_be_undone": "<p>Aksyon sa a pa ka defèt.</p><p>Eske ou si?</p>",
+    "you_are_not_authorized": "Ou pa otorize",
+    "lost_internet_connection": "Pèdi koneksyon entènèt",
+    "tweet_is_unavailable": "Tweet sa a pa ka fè nou konprann",
+    "file_uploader": "Ranpli Uploader",
+    "preview_image": "Imaj Preview",
+    "privacy_policy": "Règleman sou konfidansyalite sou konfidansyalite",
+    "terms_and_conditions": "Tèm ak Kondisyon yo",
+    "ok_sounds_good": "Dakò, son bon",
+    "next_step": "pwochen etap",
+    "we_are_aware_there_are_some_issues_here": "Nou okouran gen kèk pwoblèm isit la. Ekip la ap travay sou ranje yo.",
+    "you_are_using_old_deployment_version": "W ap itilize Vèsyon Deplwaman - {{api_version}}. Vèsyon an dènye se v5. Tanpri, mete ajou Deplwaman ou pou itilizatè jwenn aksè.",
+    "outdated_deployment": "Deplwaman demode!",
+    "the_deployment_is_outdated": "Deplwaman an demode, Se poutèt sa kèk pinèz ka rive, jouk Admin ajou li.",
+    "your_deployment_is_outdated": "Deplwaman ou demode",
+    "we_ve_updated_deployments_to_version_5": "Nou te mete ajou Deplwaman yo nan vèsyon 5. Itilizatè yo ka pa gen aksè a deplwaman ou byento. ",
+    "for_more_details_on_deployment_update": "Pou plis detay sou aktyalizasyon deplwaman, ale nan Ede ak Sipò (sa a ta dwe yon lyen) oswa voye yon imèl bay:",
+    "open_chat": "Louvri Chat"
   },
   "toolbar": {
     "searchbar": {
@@ -229,7 +273,11 @@
     "step_required": "Travay sa exijib",
     "post_step": "Pòs",
     "type": "Tip",
-    "visible_to": "Vizib pa"
+    "visible_to": "Vizib pa",
+    "add_language": "Ajoute lang",
+    "select_language": "Chwazi lang",
+    "choose_language": "Chwazi lang pou tradiksyon",
+    "error_input_number": "Tanpri opininite {{type}} nimewo kalite"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -404,6 +452,26 @@
       "pending_messages": "We are processing {{totalPending}} messages.",
       "pending_message": "We are processing {{totalPending}} message.",
       "cancel": "Cancel"
+    },
+    "no_tasks": "Pa gen travay",
+    "select_categories": "Chwazi kategori",
+    "select_related_post": "Chwazi pòs ki gen rapò",
+    "no_fields": "Pa gen jaden",
+    "select_color": "Chwazi koulè",
+    "choose_survey": "Chwazi sondaj",
+    "main_info": "Prensipal info",
+    "duplicate_option": "Opsyon kopi se prezan",
+    "special_characters_option": "Opsyon sa a gen karaktè espesyal",
+    "related_post_info": "Tanpri sonje, posts yo gen rapò ak bezwen yo dwe pibliye, posts ki \"anba revizyon\" pa pral parèt nan rezilta rechèch yo",
+    "only_edit": "Se sèlman moun ki gen pèmisyon pou edite repons yo pral kapab wè repons a jaden sa a.",
+    "no_options_for_this_field": "Pa gen opsyon pou jaden sa a",
+    "add_options_first": "Ajoute opsyon premye",
+    "fields": {
+      "fields_title": "Tèren yo",
+      "validation": {
+        "required": "Jaden obligatwa yo manke, jaden sa yo make ak yon *.",
+        "special_characters": "{{name}} jaden gen karaktè espesyal"
+      }
     }
   },
   "global_filter": {
@@ -485,7 +553,9 @@
       "all_posts": "Show all posts",
       "unmapped": "Show unmapped posts",
       "mapped": "Show posts with a location",
-      "source": "Source"
+      "source": "Source",
+      "expires": "Eksplike",
+      "download": "Rale li"
     },
     "unmapped_start_one": "There is",
     "unmapped_start_many": "There are",
@@ -519,7 +589,11 @@
     "source": "Source",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "Vil oswa adrès vil la",
+    "viewing_mode": "Gade mòd",
+    "saved_filter": "Sove filtre",
+    "delete_this_saved_filter": "Èske ou sèten ou vle efase sa a filtre sove?"
   },
   "graph": {
     "all_posts": "Anyen; Montre tout Pòs yo",
@@ -557,6 +631,12 @@
   "modal": {
     "button": {
       "close": "Fèmen"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "Se monetizasyon entènèt pèmèt sou sit entènèt sa a. Mèsi pou don ou an. Ou te bay",
+      "thank_you_for_your_donation_end": "jistan lwen",
+      "web_monetization_text": "Ushadi deplwaman yo kounye a se monetizasyon entènèt pèmèt. Web monetizasyon se yon fason pou sipòte sit entènèt yo ou renmen san yo pa jwe piblisite jwèt. Tout sa ou bezwen se jwenn konfigirasyon navigatè ou a. Klike sou lyen ki anba a pou aprann kijan ou ka bay.",
+      "how_can_i_donate": "Kouman mwen ka bay?"
     }
   },
   "nav": {
@@ -629,7 +709,15 @@
     "user": "itilizatè",
     "users": "Itilizatè yo",
     "views": "kantite wè yo",
-    "yesterday": "yè"
+    "yesterday": "yè",
+    "open_menu": "Meni louvri",
+    "my_account": "Kont mwen",
+    "login_register": "Konekte nan / Enskri",
+    "help_support": "Ede -Sipòte",
+    "receive_notifications": "Resevwa notifikasyon",
+    "map": "Kat",
+    "data": "Done",
+    "feed": "Done view"
   },
   "views": {
     "map": "Kat",
@@ -703,7 +791,18 @@
     "unpublished": "Depibliye",
     "published_by": "Pibliye pa",
     "can_see_this_post": "Ou k wè pòs sa",
-    "location": "Lokasyon",
+    "location": {
+      "location": "Kote",
+      "you_can_search_or_click": "Ou ka fè rechèch oswa klike sou zòn nan nan kat kote ou vle mete makè a.",
+      "search_address": "Chèche adrès, non plas, oswa kowòdone ...",
+      "nothing_found": "Pa gen anyen yo te jwenn",
+      "errors": {
+        "empty_lat": "Latitid vid",
+        "empty_lng": "Longitude se tèren ki chè",
+        "decimal_lat": "Latitid sèlman nimewo desimal",
+        "decimal_lng": "Lonjitid sèlman nimewo desimal"
+      }
+    },
     "categories": "Kategori yo",
     "status": "Stati",
     "type": "Tip",
@@ -824,14 +923,16 @@
         "required": "{{label}} exijib",
         "parse": "\"{{label}} pat k analize",
         "date": "{{label}} dwe yon dat",
-        "number": "{{label}} dwe yon nimewo"
+        "number": "{{label}} dwe yon nimewo",
+        "step": "\"{{label}}\" dwe yon nonb antye"
       },
       "author_name": {
         "maxlength": "Non an twò long"
       },
       "author_email": {
         "email": "Imel invalid"
-      }
+      },
+      "validation_fail_other": "Te gen yon erè valide done yo. Jaden echwe validasyon ap montre yon erè."
     },
     "media": {
       "enter_a": "Enter a",
@@ -855,6 +956,20 @@
         "save_and_edit": "Ajoute nan ankèt & amp; modifye"
       },
       "survey_title": "Ankèt enkoni"
+    },
+    "post_count": "pòs {{count}} yo",
+    "post_title": "Post",
+    "post_desc": "Post deskripsyon",
+    "posts_total_map": "Montre {{posts}} nan posts {{total_nb}} ak enfòmasyon kote sou kat la.",
+    "search_results": "Rezilta:",
+    "duplicate_option": "Gen yon pwoblèm ak konfigirasyon an nan jaden sa a paske nan kopi, tanpri ale nan anviwònman yo sondaj ak ranje li.",
+    "no_search_results_location": "Rechèch ou an pa t 'matche ak okenn posts ak enfòmasyon kote",
+    "no_posts_yet_location": "Pa gen okenn pòs ak enfòmasyon kote ankò!",
+    "read_more": "Li plis",
+    "image_is_required": "Imaj obligatwa",
+    "image_max_size": "Imaj depase gwosè dosye maksimòm",
+    "relation": {
+      "search": "Rechèch"
     }
   },
   "role": {
@@ -869,7 +984,13 @@
     "delete_role": "efase wòl sa",
     "delete_role_desc": "<strong>Si ou efase wòl sa</strong>, tout itilizatè  ki afekte ak li yo ap tounen nan pèmisyon pa  defo. Kidonk pwosede ak prekosyon.",
     "everyone": "chak moun",
-    "just_you": "sèl ou menm"
+    "just_you": "sèl ou menm",
+    "are_you_sure_you_want_to_delete_role": "Èske ou sèten ou vle efase wòl {{roleName}}?",
+    "placeholder": {
+      "name": "Antre non wòl",
+      "description": "Antre nan wòl deskripsyon"
+    },
+    "only_me": "Sèlman mwen"
   },
   "webhook": {
     "add_webhook": "Add Role",
@@ -896,7 +1017,15 @@
   "collection": {
     "visible_to_public": "Koleksyon sa vizib pou piblik la",
     "visible_to_you": "Koleksyon sa vizib sèlman pou  wou ak administratè a.",
-    "visible_to_roles": "koleksyon sa vizib pou {{roles}}"
+    "visible_to_roles": "koleksyon sa vizib pou {{roles}}",
+    "validation": {
+      "required": {
+        "name": "Non koleksyon obligatwa"
+      }
+    },
+    "errors": {
+      "permissions": "Ou pa gen pèmisyon pou wè koleksyon sa a"
+    }
   },
   "set": {
     "by": "pa",
@@ -931,7 +1060,9 @@
     "edit_savedsearch": "Edit Search",
     "set_settings": "Paramèt koleksyon ",
     "add_notification": "Ajoute notifikasyon",
-    "remove": "Retire"
+    "remove": "Retire",
+    "update_saved_filter": "Mizajou Sove Filter",
+    "create_saved_filter": "Kreye Filter Sove"
   },
   "category": {
     "add_tag": "Ajoute kategori",
@@ -962,7 +1093,19 @@
       "category": "kategori",
       "status": "Estati"
     },
-    "delete": "efase"
+    "delete": "efase",
+    "which_categories": "Ki kategori ki ta dwe disponib",
+    "validation": {
+      "required": {
+        "name": "Non kategori obligatwa"
+      }
+    },
+    "placeholder": {
+      "name": "Non antre",
+      "descriptions": "Antre deskripsyon ...",
+      "choose_parent_category": "Chwazi kategori paran ..."
+    },
+    "parent_category": "paran kategori"
   },
   "tool": {
     "manage_forms": "Jere fòmilè yo",
@@ -1019,7 +1162,9 @@
       "webhooks": "Webhooks",
       "webhooks_desc": "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
       "plans": "Plan yo",
-      "plan_desc": "Plan deplwaman aktyèl ou a se <stong>{{current_plan}}</strong>."
+      "plan_desc": "Plan deplwaman aktyèl ou a se <stong>{{current_plan}}</strong>.",
+      "donation": "Donasyon",
+      "donation_desc": "Kreye ak jere don yo moun ka fè nan direksyon pou òganizasyon ou an."
     },
     "user_settings": {
       "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1032,13 +1177,35 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "Echanj Done imanitè",
+      "please_enter_maintainer_id": "Tanpri antre nan id kenbe",
+      "please_enter_api_key": "Tanpri antre nan kle API",
+      "hdx_maintainer_id_min_length": "HDX Id se twò kout",
+      "api_key_min_length": "API kle se twò kout"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
-      "destination": "Destination"
+      "destination": "Destination",
+      "placeholder": {
+        "name": "Tanpri antre nan non webhook",
+        "shared_secret": "Tanpri antre nan sekrè pataje",
+        "api_url": "Tanpri antre nan url api"
+      },
+      "validation": {
+        "required": {
+          "name": "Yo obligatwa non webhook obligatwa",
+          "shared_secret": "Pataje kle sekrè obligatwa",
+          "api_url": "API URL obligatwa",
+          "event_type": "Kalite evènman obligatwa",
+          "event_entity": "Antite evènman obligatwa"
+        },
+        "please_provide_valid_api_url": "Tanpri bay valab API URL ak http (s)//",
+        "secret_key_cannot_be_less_start": "Pataje kle sekrè pa ka mwens pase",
+        "secret_key_cannot_be_less_end": "karaktè"
+      }
     },
     "data_sources": {
       "associate_with_form": "Import to survey",
@@ -1130,7 +1297,12 @@
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
         "search_terms": "Twitter search terms",
         "search_terms_desc": "Add search terms separated with commas"
-      }
+      },
+      "choose_data_source": "Chwazi Done Sous ...",
+      "type_of_data_source": "Kalite Done Sous",
+      "provider_name": "{{providerName}} Done Sous?",
+      "do_you_really_want_to_disconnect": "Èske ou reyèlman vle dekonekte founisè ou a?",
+      "add_source": "Ajoute sous"
     },
     "roles": {
       "member": "Member",
@@ -1142,7 +1314,10 @@
       "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "manage_collections_and_saved_searches": "Jere Koleksyon ak Rechèch Sove",
+      "delete_posts": "Efase posts",
+      "delete_their_own_posts": "Efase pwòp posts yo"
     },
     "deployment_delete_this": "Efase deplwaman sa",
     "deployment_delete": "Efase deplwaman",
@@ -1185,9 +1360,48 @@
     "add_new_users": "Ajoute nouvo itilizatè",
     "valid": {
       "name": {
-        "required": "Non sit la exijib"
+        "required": "Non sit la exijib",
+        "pattern": "Fòma envalid",
+        "minlength": "Non sit se twò kout"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "Jenere API Key",
+      "private_settings": "Anviwònman prive:",
+      "api_key": "Kle API",
+      "placeholder": {
+        "pick_location": "Chwazi Kote ..."
+      }
+    },
+    "donation": {
+      "title": {
+        "label": "donasyon",
+        "placeholder": "Antre don ou",
+        "required": "Don obligatwa"
+      },
+      "description": {
+        "label": "Dekri don ou",
+        "placeholder": "Antre nan tèks pou pale plis sou don sa a"
+      },
+      "images": {
+        "label": "Imaj Don"
+      },
+      "wallet": {
+        "label": "Adrès mache",
+        "placeholder": "Antre nan yon adrès bous e.g $ ilp.uphold.com/example",
+        "required": "Adrès donasyon obligatwa"
+      },
+      "info": {
+        "start_one": "Tanpri asire ou ke ou mete bous ou mete kanpe sou",
+        "start_two": "pou mete monetizasyon entènèt.",
+        "start_three": "Si ou pa gen yon bous deja tanpri klike sou",
+        "here": "Isit",
+        "end": "kreye yon sèl."
+      }
+    },
+    "site_disable_registration": "Enfim itilizatè enskri?",
+    "site_disable_registration_desc": "Tcheke sa a enfim karakteristik enskripsyon an. Admins ap gen manyèlman ajoute itilizatè yo.",
+    "bulk_actions": "Aksyon esansyèl yo"
   },
   "data_import": {
     "survey_field": "Chan analiz",
@@ -1230,7 +1444,13 @@
     "leave_empty": "Kite vid",
     "cancel_import": "Anile enpòtasyon sa",
     "finish_import": "Fini enpòtasyon",
-    "which_survey": "Ki ankèt?"
+    "which_survey": "Ki ankèt?",
+    "get_polling_info": "Jwenn biwo vòt info",
+    "change_csv_file": "Chanjman {{selectedfile}} dosye CSV",
+    "upload_csv_file": "Upload CSV dosye",
+    "choose_status_to_imported_posts": "Chwazi estati enpòte:",
+    "has_tasks_required_start": "Sondaj ou",
+    "has_tasks_required_end": ", gen ladan travay ki tipikman dwe ranpli pou chak pòs anvan yo ka make 'pibliye.' Pandan enpòte sa a, tout posts enpòte ou yo pral gen travay yo make kòm 'enkonplè', pandan y ap toujou pèmèt estati yo yo dwe make kòm 'pibliye.' Si ou edite nenpòt nan pòs sa yo apre yo te enpòte, sepandan, ou pral mande ranpli travay sa yo anvan re-pibliye yo."
   },
   "data_export": {
     "title": "Export data",
@@ -1364,14 +1584,38 @@
       "email": {
         "required": "Adrès imel exijib",
         "email": "Adrès imel sa pa valid",
-        "maxlength": "Adrès imel sa twò long"
+        "maxlength": "Adrès imel sa twò long",
+        "pattern": "Adrès kouryèll sa a envalid",
+        "emailExists": "Imèl deja nan itilize"
       },
       "password": {
         "required": "Mod pas exijib",
         "minlength": "Mod pas sa twò kout",
-        "maxlength": "Mod pas lan twò long"
+        "maxlength": "Mod pas lan twò long",
+        "weak": "Modpas sa a trè fèb"
+      },
+      "fields": {
+        "email must be unique": "Itilizatè ak imèl sa a deja egziste"
+      },
+      "name": {
+        "required": "Non ekspozisyon obligatwa",
+        "maxlength": "Non ekspozisyon twò lontan"
+      },
+      "token": {
+        "required": "Token obligatwa"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "Èske ou sèten ou vle efase istwa sa a?",
+    "name_will_be_a_display_name": "Non ou antre nan pral yon non ekspozisyon.",
+    "placeholder": {
+      "realname": "Antre non ou ...",
+      "email": "Antre nan adrès imèl ...",
+      "password": "Antre modpas ..."
+    },
+    "password_notify": "Si ou kite jaden an vid modpas ou pa pral chanje",
+    "avatar": "Avatar",
+    "name": "Non:",
+    "search_by_name": "Chèche non"
   },
   "user_profile": {
     "title": "paramèt kont la",
@@ -1383,7 +1627,9 @@
     },
     "nav": {
       "general": "jeneral",
-      "notifications": "notifikasyon"
+      "notifications": "notifikasyon",
+      "account_settings": "Anviwònman kont",
+      "notifications_settings": "Notifikasyon anviwònman"
     }
   },
   "user_create": {
@@ -1413,7 +1659,8 @@
       "bulk_destroy_confirm": "Eske ou si ou vle efase {{count}} resous yo?",
       "bulk_destroy_success": "Resous ki efase",
       "bulk_destroy_error": "Pa kapab efase resous la, tanpri eseye ankò.",
-      "bulk_destroy_cancelled": "Efasman konplete"
+      "bulk_destroy_cancelled": "Efasman konplete",
+      "are_you_sure_you_want_to_delete_this": "Èske ou sèten ou vle efase sa a?"
     },
     "data_import": {
       "see_imported_posts": "Gade pòs ki enpòte yo.",
@@ -1473,7 +1720,12 @@
       "update_status_success_bulk": "Stati mete a jou pou  {{count}} pòs yo.",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "can_t_view_this_post": "Ou pa gen pèmisyon pou wè pòs sa a.<br> Li toujou ke yo te revize pa admin.<br> Li pral disponib pou ou yon fwa li pibliye.",
+      "contact_for_details": "Kontakte admin la pou plis detay:",
+      "unfinished_post_task": "Ou pa ka pibliye pòs sa a, pòs la gen travay enkoni",
+      "posts_can_t_be_published": "Posts sa yo pa ka pibliye: {{titles}}",
+      "post_not_found": "Post pa jwenn"
     },
     "category": {
       "save_success": "kategori ki anrejistre{{name}}",
@@ -1483,7 +1735,8 @@
       "destroy_error": "Pa kapab efase kategori a, tanpri esye ankò",
       "bulk_destroy_confirm": "Eske ou si ou vle efase {{count}}  kategori yo?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
-      "bulk_destroy_success": "{{count}} kategori yo efase"
+      "bulk_destroy_success": "{{count}} kategori yo efase",
+      "bulk_destroy_success_countless": "Kategori efase"
     },
     "role": {
       "delete_question": "Eske ou si ou vle efase wòl sa {{role}}?",
@@ -1508,7 +1761,8 @@
       "bulk_destroy_confirm": "Eske ou si ou vle efase {{ count }} itilizatè yo?",
       "bulk_destroy_success": "Itilizatè yo efase",
       "bulk_role_change_confirm": "Eske ou si ou vle chanje wòl {{count}} itilizatè an {{role}}?",
-      "bulk_role_change_success": "Wòl itilizatè a chanje an {{ role_name}}"
+      "bulk_role_change_success": "Wòl itilizatè a chanje an {{ role_name}}",
+      "are_you_sure_you_want_to_delete_user": "Èske ou sèten ou vle efase {{username}}"
     },
     "video": {
       "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
@@ -1540,7 +1794,8 @@
         "description": {
           "required": "Description cannot be empty"
         }
-      }
+      },
+      "survey_name_required": "Non sondaj yo obligatwa"
     },
     "collection": {
       "delete_collection_confirm": "Eske ou si ou vle efase koleksyon sa?",
@@ -1580,7 +1835,27 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "Èske ou sèten ou vle efase sondaj {{count}}?"
+    },
+    "donation_settings": {
+      "save_success": "Anviwònman don sove",
+      "delete_question": "Èske ou sèten ou vle efase {{name}} sa a."
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Siksè!",
+        "success_description": "Mèsi pou soumèt rapò ou. Pòs la ke yo te revize pa ekip nou an ak byento ap parèt sou platfòm la.",
+        "success_button": "Dakò, son bon"
+      },
+      "deleted": {
+        "success": "Siksè!",
+        "success_description": "Ou te efase pou chak {{count}} posts.",
+        "success_button": "Dakò, son bon"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Èske w vrèman vle efase lang {{lang}}?"
     }
   },
   "empty": {
@@ -1602,7 +1877,9 @@
     "error": "Nou regrèt nou paka jwenn yon lokasyon pou rechèch ou a",
     "my_location_error": "Sorry we could not find your location",
     "update_map": "Update map",
-    "no_matching_locations": "No matching locations"
+    "no_matching_locations": "No matching locations",
+    "invalid_lat": "Valè yo bay la se pa yon latitid valab.",
+    "invalid_lon": "Valè yo bay la se pa yon longitude."
   },
   "notification": {
     "title": "notifikasyon yo",
@@ -1612,7 +1889,10 @@
     "send_to_address": "voye notifikasyon nan adrès sa",
     "button": {
       "delete": "Efase notifikasyon"
-    }
+    },
+    "what_you_get_notification_about": "Ki sa ou jwenn notifikasyon sou",
+    "removed": "Notifikasyon te retire",
+    "are_you_sure_you_want_to_remove_this_notification": "Èske ou sèten ou vle retire notifikasyon sa a?"
   },
   "contact": {
     "edit": "modifye",
@@ -1636,7 +1916,8 @@
       "email": {
         "required": "Yon adrès imel exijib pou k resevwa notifikasyon yo.",
         "email": "Imel adrès la pa valid",
-        "maxlength": "Imel adrès sa twò long"
+        "maxlength": "Imel adrès sa twò long",
+        "not_valid": "Imèl sa a pa valab"
       },
       "phone": {
         "required": "Yon nimewo telefòn exijib pou resevwa notifikasyon",
@@ -1650,7 +1931,8 @@
     "title": "Ushahidi Terms of Service",
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
     "agree": "I agree to Ushahidi's Terms of Service.",
-    "accept_and_continue": "Accept and Continue"
+    "accept_and_continue": "Accept and Continue",
+    "i_agree": "Mwen dakò ak <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Règleman sou enfòmasyon prive</a> Ushidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Tèm ak Kondisyon yo</a>."
   },
   "languages": {
     "ach": "Acoli",
@@ -2057,7 +2339,8 @@
     "yi": "Yidich",
     "yo": "Yowouba",
     "zu": "Zoulou",
-    "zu-ZA": "Zoulou (Afrik di Sid)"
+    "zu-ZA": "Zoulou (Afrik di Sid)",
+    "en-EN": "Angle"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -2382,5 +2665,57 @@
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "You cannot change your own role",
     "adminUserLimitReached": "limit:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "Erè",
+    "description": "Oops ... Padon, nou pa ka jwenn paj la ke w ap chèche pou. <br> Tanpri rechèch pa yon lòt fraz oswa tounen nan View la Map.",
+    "button": "Ale nan View la kat"
+  },
+  "cookies": {
+    "we_use_cookies": "Ala! Nou itilize bonbon fè eksperyans ou pi byen.",
+    "cookies_privacy": "Si ou vle konnen plis oswa retire konsantman ou, tanpri ale nan <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Règleman sou enfòmasyon prive</a> nou an.",
+    "decline": "refize",
+    "accept_cookies": "Bonbon aksepte"
+  },
+  "share": {
+    "share_deployment": "Pataje deplwaman",
+    "share_post": "Pataje pòs",
+    "web_address": "Adrès entènèt sondaj ou",
+    "embed_on_websites": "HTML entegre sou sit entènèt",
+    "copied": "Kopye!",
+    "share_on_twitter": "Pataje sou Twitter",
+    "share_on_facebook": "Pataje sou Facebook"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Tèm ak Kondisyon yo</a>."
+      }
+    }
+  },
+  "translations": {
+    "languages": "Lang",
+    "language": "Lang",
+    "default": "default",
+    "translate_field": "Tèren tradui",
+    "survey_select_default": "Chwazi lang default pou sondaj sa a",
+    "category_select_default": "Chwazi lang default pou kategori sa a",
+    "error_translation_exists": "Ou pa ka chwazi lang sa a depi gen deja yon tradiksyon pou li.",
+    "edit_default_text": "Tèks nan lang default",
+    "edit_placeholder": "Ekri tradiksyon ou isit la",
+    "add_translation": "Ajoute tradiksyon ou anba a:",
+    "survey_name_required": "Tradiksyon pou non sondaj obligatwa",
+    "field_add_translation": "Jaden (klike sou yo ajoute tradiksyon):",
+    "add_translation_lang": "Ajoute tradiksyon",
+    "translate_field_name": "Non tèren tradui",
+    "translate_field_desc": "Tradui deskripsyon jaden",
+    "category_translations_link": "Tanpri sonje, ajoute tradiksyon nan kategori-non, tèt sou <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">anviwònman kategori</a>",
+    "parent_child_lang": "Tanpri sonje ke lang default chwazi pou kategori timoun sa a diferan de paran li",
+    "post_title_required": "Tradiksyon pou pòs-obligatwa",
+    "add_a_language": "Ajoute yon lang",
+    "error_no_default": "Ou bezwen presize yon lang default anvan ou ajoute yon nouvo tradiksyon.",
+    "select_language": "Chwazi yon lang pou ajoute tradiksyon pou",
+    "default_lang_info": "Sa a se lang ki pral itilize si pa gen okenn tradiksyon ki disponib pou lang itilizatè a mete pou deplwaman an."
   }
 }

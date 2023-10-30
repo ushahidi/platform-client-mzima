@@ -144,7 +144,22 @@
     "terms_and_conditions": "Termos e Condições",
     "ok_sounds_good": "OK, soa bem",
     "next_step": "Próximo passo",
-    "we_are_aware_there_are_some_issues_here": "Estamos cientes de que há algumas questões aqui. A equipe está trabalhando para consertá-los."
+    "we_are_aware_there_are_some_issues_here": "Estamos cientes de que há algumas questões aqui. A equipe está trabalhando para consertá-los.",
+    "contact_email_address": "Endereço de e-mail para contato:",
+    "onboarding": {
+      "title": "Integração",
+      "description": "Dê uma olhada no onboarding Ushahidi novamente."
+    },
+    "forbidden-login": "Insira seus detalhes de login para acessar a implantação.",
+    "contact_with_admin": "Ou entre em contato com o administrador ",
+    "current_results": "Resultados atuais:",
+    "you_are_using_old_deployment_version": "Você está usando a Versão de Implantação - {{api_version}}. A última versão é v5. Por favor, atualize sua Implantação para acesso dos usuários.",
+    "outdated_deployment": "Implantação desatualizada!",
+    "the_deployment_is_outdated": "A implantação está desatualizada, portanto, alguns bugs podem ocorrer, até que o administrador a atualize.",
+    "your_deployment_is_outdated": "Sua implantação está desatualizada",
+    "we_ve_updated_deployments_to_version_5": "Atualizamos as implantações para a versão 5. Os usuários podem não ter acesso à sua implantação em breve. ",
+    "for_more_details_on_deployment_update": "Para obter mais detalhes sobre a atualização de implantação, vá para Ajuda & Suporte (este deve ser um link) ou envie um e-mail para:",
+    "open_chat": "Abrir"
   },
   "toolbar": {
     "searchbar": {
@@ -457,7 +472,8 @@
     "special_characters_option": "Esta opção contém caracteres especiais",
     "choose_survey_field_descchoose_survey_field_desc": "Cada um dos campos da pesquisa está listado abaixo. Escolha os dados de {{datasource_type}} que você deseja usar para preencher cada um desses campos.",
     "no_options_for_this_field": "Não há opções para este campo",
-    "add_options_first": "Adicionar opções primeiro"
+    "add_options_first": "Adicionar opções primeiro",
+    "main_info": "Informações principais"
   },
   "global_filter": {
     "filter": "Filtrar",
@@ -538,7 +554,9 @@
       "all_posts": "Mostrar todos os posts",
       "unmapped": "Mostrar posts sem localização",
       "mapped": "Mostrar posts localizados",
-      "source": "Fonte"
+      "source": "Fonte",
+      "expires": "Expira",
+      "download": "Download"
     },
     "unmapped_start_one": "Há",
     "unmapped_start_many": "Há",
@@ -952,7 +970,8 @@
     "image_is_required": "A imagem é obrigatória",
     "relation": {
       "search": "Pesquisar"
-    }
+    },
+    "image_max_size": "Imagem excede o tamanho máximo do arquivo"
   },
   "role": {
     "add_role": "Adicionar papel",
@@ -1004,6 +1023,9 @@
       "required": {
         "name": "O nome da coleção é obrigatório"
       }
+    },
+    "errors": {
+      "permissions": "Você não tem permissão para exibir esta coleção"
     }
   },
   "set": {
@@ -1159,7 +1181,9 @@
       "start_tagging": "Start tagging data",
       "HDX": "Intercâmbio de dados humanitários",
       "please_enter_maintainer_id": "Insira o ID do mantenedor",
-      "please_enter_api_key": "Insira a chave da API"
+      "please_enter_api_key": "Insira a chave da API",
+      "hdx_maintainer_id_min_length": "O ID do mantenedor HDX é muito curto",
+      "api_key_min_length": "A chave da API é muito curta"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
@@ -1423,7 +1447,7 @@
     "finish_import": "Encerrar importação",
     "which_survey": "qual pesquisa?",
     "get_polling_info": "Obter informações de sondagem",
-    "change_csv_file": "Alterar arquivo CSV",
+    "change_csv_file": "Alterar {{selectedfile}} arquivo CSV",
     "upload_csv_file": "Upload do arquivo CSV",
     "choose_status_to_imported_posts": "Escolha o status das postagens importadas:",
     "has_tasks_required_start": "Seu questionário",
@@ -1701,7 +1725,12 @@
       "update_status_success_bulk": "Status atualizado por {{count}} postagens",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "can_t_view_this_post": "Você não tem permissão para visualizar este post.<br> Ele ainda está sendo analisado pelo administrador.<br> Ele estará disponível para você assim que for publicado.",
+      "contact_for_details": "Entre em contato com o administrador para obter mais detalhes:",
+      "unfinished_post_task": "Você não pode publicar este post, o post tem tarefas inacabadas",
+      "posts_can_t_be_published": "As seguintes postagens não podem ser publicadas: {{titles}}",
+      "post_not_found": "Artigo não encontrado"
     },
     "category": {
       "save_success": "Categoria salva {{name}}",
@@ -1711,7 +1740,8 @@
       "destroy_error": "Não foi possível excluir a categoria, tente novamente",
       "bulk_destroy_confirm": "Tem certeza de que deseja excluir {{count}} categorias?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
-      "bulk_destroy_success": "{{count}} categorias excluídas"
+      "bulk_destroy_success": "{{count}} categorias excluídas",
+      "bulk_destroy_success_countless": "Categorias excluídas"
     },
     "role": {
       "delete_question": "Tem certeza de que deseja excluir este papel {{role}}?",
@@ -2679,6 +2709,7 @@
     "embed_on_websites": "Incorporação de HTML em sites",
     "copied": "Copiado!",
     "share_on_twitter": "Compartilhar no Twitter",
-    "share_on_facebook": "Compartilhar no Facebook"
+    "share_on_facebook": "Compartilhar no Facebook",
+    "share_post": "Compartilhar Postagem"
   }
 }

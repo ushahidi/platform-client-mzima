@@ -146,11 +146,7 @@
       </div>
       <div class="form-row" *ngIf="featuredEnabled">
         <div class="toggle">
-          <mat-slide-toggle
-            formControlName="featured"
-            name="first-name"
-            (change)="featuredChange($event.checked)"
-          >
+          <mat-slide-toggle formControlName="featured" name="first-name">
             {{ 'set.featured' | translate }}
           </mat-slide-toggle>
         </div>
