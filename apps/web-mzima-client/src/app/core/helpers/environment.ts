@@ -1,5 +1,5 @@
 export const checkBackendURL = (backendUrl: string) => {
-  let parseURL = (url: string) => {
+  const parseURL = (url: string) => {
     try {
       return new URL(url);
     } catch (e) {
@@ -11,15 +11,15 @@ export const checkBackendURL = (backendUrl: string) => {
       }
     }
   };
-  
+
   let result = parseURL(backendUrl);
 
   // Query string or hash not allowed
-  if ((result.search !== '') || (result.hash !== '')) {
+  if (result.search !== '' || result.hash !== '') {
     throw new Error('Invalid backend URL');
   }
 
-  // Ensure the path ends in / 
+  // Ensure the path ends in /
   if (result.pathname.slice(-1) !== '/') {
     result.pathname += '/';
   }
