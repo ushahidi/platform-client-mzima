@@ -122,7 +122,44 @@
     "select_language": "Select language",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "Adresse e-mail de contact :",
+    "add_collection": "Ajouter une collection",
+    "choose_photo": "Choisir une photo",
+    "choose": "Choisir...",
+    "add_all_fields": "Ajouter tous les champs",
+    "insert_text_here": "Insérez du texte ici...",
+    "onboarding": {
+      "title": "Embarquement",
+      "description": "Jetez un coup d’œil à l’intégration d’Ushahidi."
+    },
+    "forbidden-login": "Veuillez saisir vos informations de connexion pour accéder au déploiement.",
+    "contact_with_admin": "Ou contactez l’administrateur ",
+    "page-not-found": "Page non trouvée",
+    "update": "Mettre à jour",
+    "current_results": "Résultats actuels :",
+    "duplicate": "Dupliquer",
+    "yes_delete": "Oui, supprimer",
+    "no_go_back": "Retour",
+    "are_you_sure_you_want_to_delete": "Voulez-vous vraiment supprimer",
+    "action_cannot_be_undone": "<p>Cette action ne peut pas être annulée.</p><p>Es-tu sûr?</p>",
+    "you_are_not_authorized": "Vous n’êtes pas autorisé à consulter cette page",
+    "lost_internet_connection": "Perte de connexion Internet",
+    "tweet_is_unavailable": "Ce tweet n’est pas disponible",
+    "file_uploader": "Chargeur de fichiers",
+    "preview_image": "Aperçu de l'image",
+    "privacy_policy": "Politique de confidentialité",
+    "terms_and_conditions": "Termes et Conditions",
+    "ok_sounds_good": "OK, ça sonne bien",
+    "next_step": "Étape suivante",
+    "we_are_aware_there_are_some_issues_here": "Nous sommes conscients qu’il y a des problèmes ici. L’équipe travaille à les réparer.",
+    "you_are_using_old_deployment_version": "Vous utilisez la version de déploiement - {{api_version}}. La dernière version est la v5. Veuillez mettre à jour votre déploiement pour l’accès des utilisateurs.",
+    "outdated_deployment": "Déploiement obsolète !",
+    "the_deployment_is_outdated": "Le déploiement est obsolète, donc certains bogues peuvent survenir, jusqu’à ce que l’administrateur le mette à jour.",
+    "your_deployment_is_outdated": "Votre déploiement est obsolète",
+    "we_ve_updated_deployments_to_version_5": "Nous avons mis à jour les déploiements vers la version 5. Il se peut que les utilisateurs n’aient bientôt plus accès à votre déploiement. ",
+    "for_more_details_on_deployment_update": "Pour plus d’informations sur la mise à jour du déploiement, accédez à Aide et support (il doit s’agir d’un lien) ou envoyez un e-mail à l’adresse suivante :",
+    "open_chat": "Ouvrir le tchat en Live"
   },
   "toolbar": {
     "searchbar": {
@@ -238,7 +275,9 @@
     "step_required": "Cette tâche est requise",
     "post_step": "Publication",
     "type": "type",
-    "visible_to": "Visible pour"
+    "visible_to": "Visible pour",
+    "choose_language": "Choisissez la langue de traduction",
+    "error_input_number": "Veuillez saisir {{type}} numéro de type"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -357,8 +396,10 @@
     },
     "fields": {
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
-      }
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}} champ contient des caractères spéciaux"
+      },
+      "fields_title": "Champs"
     },
     "targeted_survey": {
       "title": "Create a new targeted survey",
@@ -421,7 +462,17 @@
       "pending_messages": "We are processing {{totalPending}} messages.",
       "pending_message": "We are processing {{totalPending}} message.",
       "cancel": "Cancel"
-    }
+    },
+    "no_tasks": "Aucune Tâche",
+    "select_categories": "Select categories",
+    "select_related_post": "Sélectionner un poste connexe",
+    "no_fields": "Nombre de champs",
+    "select_color": "Sélectionner la couleur",
+    "choose_survey": "Choisir un sondage",
+    "main_info": "Information principale",
+    "special_characters_option": "Cette option contient des caractères spéciaux",
+    "no_options_for_this_field": "Aucune option pour ce champ",
+    "add_options_first": "Ajouter des options en premier"
   },
   "global_filter": {
     "filter": "Filtre",
@@ -502,7 +553,9 @@
       "all_posts": "Afficher toute les publications",
       "unmapped": "Show unmapped posts",
       "mapped": "Afficher les publications avec localisation ",
-      "source": "Source"
+      "source": "Source",
+      "expires": "Expire",
+      "download": "Télécharger"
     },
     "unmapped_start_one": "Il y a ",
     "unmapped_start_many": "Il y a ",
@@ -536,7 +589,11 @@
     "source": "Source",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "Ville ou adresse",
+    "viewing_mode": "Mode d’affichage",
+    "saved_filter": "Filtre enregistré",
+    "delete_this_saved_filter": "Êtes-vous certain de vouloir supprimer ce filtre sauvegardé?"
   },
   "graph": {
     "all_posts": "Néant ; Afficher toutes les publications",
@@ -574,6 +631,12 @@
   "modal": {
     "button": {
       "close": "Fermer"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "La monétisation Web est activée sur ce site Web. Merci de votre don. Vous avez fait un don",
+      "thank_you_for_your_donation_end": "jusqu’à présent",
+      "web_monetization_text": "Les déploiements Ushahidi sont désormais activés pour la monétisation Web. La monétisation Web est un moyen de soutenir les sites Web que vous aimez sans jouer au jeu des annonceurs. Tout ce dont vous avez besoin est d’obtenir la configuration de votre navigateur. Cliquez sur le lien ci-dessous pour savoir comment faire un don.",
+      "how_can_i_donate": "Comment puis-je faire un don?"
     }
   },
   "nav": {
@@ -646,7 +709,15 @@
     "user": "Utilisateur",
     "users": "Utilisateurs",
     "views": "Vues",
-    "yesterday": "Hier"
+    "yesterday": "Hier",
+    "open_menu": "Ouvrir le menu",
+    "my_account": "Mon compte",
+    "login_register": "Se connecter / S’inscrire",
+    "help_support": "Aide & Support",
+    "receive_notifications": "Recevoir les notifications",
+    "map": "Carte",
+    "data": "Données",
+    "feed": "Vue des données"
   },
   "views": {
     "map": "Plan",
@@ -727,7 +798,18 @@
     "unpublished": "Retiré de la publication",
     "published_by": "Publié par",
     "can_see_this_post": "peut voir cette publication",
-    "location": "Emplacement",
+    "location": {
+      "location": "Emplacement",
+      "you_can_search_or_click": "Vous pouvez rechercher ou cliquer sur la zone de la carte où vous souhaitez placer le marqueur.",
+      "search_address": "Rechercher des adresses, des noms de lieux ou des coordonnées...",
+      "nothing_found": "Aucun résultat",
+      "errors": {
+        "empty_lat": "Latitude est un champ vide",
+        "empty_lng": "Champ Longitude vide",
+        "decimal_lat": "Nombre décimal de latitude uniquement",
+        "decimal_lng": "Nombre décimal de longitude seulement"
+      }
+    },
     "categories": "Catégories",
     "status": "Statut",
     "type": "Type",
@@ -881,6 +963,13 @@
         "save_and_edit": "Ajouter à l'enquête &amp; modifier"
       },
       "survey_title": "Enquête inconnue"
+    },
+    "post_count": "{{count}} postes",
+    "read_more": "Lire la suite",
+    "image_is_required": "L'image est requis",
+    "image_max_size": "L’image dépasse la taille maximale du fichier",
+    "relation": {
+      "search": "Rechercher"
     }
   },
   "role": {
@@ -895,7 +984,13 @@
     "delete_role": "Supprimer ce rôle",
     "delete_role_desc": "<strong>Si vous supprimez ce rôle</strong>, tous les utilisateurs qui y sont affectés recevront des autorisations par défaut. Utilisez cette commande avec prudence.",
     "everyone": "Tous",
-    "just_you": "Uniquement vous"
+    "just_you": "Uniquement vous",
+    "are_you_sure_you_want_to_delete_role": "Voulez-vous vraiment supprimer le rôle {{roleName}} ?",
+    "placeholder": {
+      "name": "Saisissez un nom de rôle",
+      "description": "Entrez la description du rôle"
+    },
+    "only_me": "Seulement moi"
   },
   "webhook": {
     "add_webhook": "Ajouter un rôle",
@@ -922,7 +1017,15 @@
   "collection": {
     "visible_to_public": "Cette Collection est visible au public",
     "visible_to_you": "Cette collection est visible uniquement pour vous et les administrateurs",
-    "visible_to_roles": "Cette Collection est visible à {{roles}}"
+    "visible_to_roles": "Cette Collection est visible à {{roles}}",
+    "validation": {
+      "required": {
+        "name": "Le nom de la collection est obligatoire"
+      }
+    },
+    "errors": {
+      "permissions": "Vous n’avez pas l’autorisation de consulter cette collection"
+    }
   },
   "set": {
     "by": "de",
@@ -957,7 +1060,9 @@
     "edit_savedsearch": "Edit Search",
     "set_settings": "Paramètres de la collecte",
     "add_notification": "Ajouter une notification",
-    "remove": "supprimer"
+    "remove": "supprimer",
+    "update_saved_filter": "Mettre à jour le filtre enregistré",
+    "create_saved_filter": "Créer un filtre enregistré"
   },
   "category": {
     "add_tag": "Ajouter Catégorie",
@@ -989,7 +1094,18 @@
       "category": "Catégorie",
       "status": "Statut"
     },
-    "delete": "Supprimer"
+    "delete": "Supprimer",
+    "validation": {
+      "required": {
+        "name": "Le nom de la catégorie est requis  "
+      }
+    },
+    "placeholder": {
+      "name": "Entrez le nom",
+      "descriptions": "Saisir la description",
+      "choose_parent_category": "Choisissez la catégorie parente..."
+    },
+    "parent_category": "Catégorie parente"
   },
   "tool": {
     "manage_forms": "Gérer les formulaires",
@@ -1061,13 +1177,35 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "Échange de données humanitaires",
+      "please_enter_maintainer_id": "Veuillez saisir l’identifiant du responsable",
+      "please_enter_api_key": "Veuillez saisir la clé API",
+      "hdx_maintainer_id_min_length": "L’ID du mainteneur HDX est trop court",
+      "api_key_min_length": "La clé API est trop courte"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
-      "destination": "Destination"
+      "destination": "Destination",
+      "placeholder": {
+        "name": "Veuillez saisir le nom du webhook",
+        "shared_secret": "Veuillez entrer le secret partagé",
+        "api_url": "Veuillez saisir l’URL de l’api"
+      },
+      "validation": {
+        "required": {
+          "name": "Le nom du webhook est requis",
+          "shared_secret": "Une clé secrète partagée est requise",
+          "api_url": "URL de l’API requise",
+          "event_type": "Le type d’événement est requis",
+          "event_entity": "L’entité d’événement est requise"
+        },
+        "please_provide_valid_api_url": "Veuillez fournir une URL d’API valide avec http(s) ://",
+        "secret_key_cannot_be_less_start": "La clé secrète partagée ne peut pas être inférieure à",
+        "secret_key_cannot_be_less_end": "caractères"
+      }
     },
     "data_sources": {
       "associate_with_form": "Import to survey",
@@ -1159,7 +1297,12 @@
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
         "search_terms": "Twitter search terms",
         "search_terms_desc": "Add search terms separated with commas"
-      }
+      },
+      "choose_data_source": "Choisissez la source de données...",
+      "type_of_data_source": "Type de source de données",
+      "provider_name": "{{providerName}} Source de données?",
+      "do_you_really_want_to_disconnect": "Voulez-vous vraiment déconnecter votre fournisseur?",
+      "add_source": "Ajouter une source"
     },
     "donation": {
       "title": {
@@ -1168,7 +1311,23 @@
         "required": "Donation title is required"
       },
       "wallet": {
-        "required": "Donation wallet address is required"
+        "required": "Donation wallet address is required",
+        "label": "Adresse du portefeuille",
+        "placeholder": "Entrez une adresse de portefeuille, par exemple ilp.uphold.com/example $"
+      },
+      "description": {
+        "label": "Décrivez votre don",
+        "placeholder": "Entrez un texte en disant plus sur ce don"
+      },
+      "images": {
+        "label": "Images de dons"
+      },
+      "info": {
+        "start_one": "Assurez-vous d’avoir configuré votre portefeuille sur",
+        "start_two": "pour définir la monétisation Web.",
+        "start_three": "Si vous n’avez pas encore de portefeuille, veuillez cliquer sur",
+        "here": "ici",
+        "end": "en créer un."
       }
     },
     "roles": {
@@ -1181,7 +1340,10 @@
       "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "manage_collections_and_saved_searches": "Gérer les collections et les recherches enregistrées",
+      "delete_posts": "Supprimer les articles",
+      "delete_their_own_posts": "Supprimer leurs propres messages"
     },
     "deployment_delete_this": "Supprimer ce déploiement",
     "deployment_delete": "Supprimer déploiement",
@@ -1226,9 +1388,20 @@
     "add_new_users": "Ajouter de nouveaux utilisateurs",
     "valid": {
       "name": {
-        "required": "Le nom du site est requis"
+        "required": "Le nom du site est requis",
+        "pattern": "Format invalide",
+        "minlength": "Le nom du site est trop court"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "Générer une clé API",
+      "private_settings": "Paramètres privés :",
+      "api_key": "Clé API",
+      "placeholder": {
+        "pick_location": "Choisissez l’emplacement..."
+      }
+    },
+    "bulk_actions": "Actions groupées"
   },
   "data_import": {
     "survey_field": "Champ d'enquête",
@@ -1271,7 +1444,13 @@
     "leave_empty": "Laisser vide",
     "cancel_import": "Annuler l'importation",
     "finish_import": "Terminer l'importation",
-    "which_survey": "quelle enquête ?"
+    "which_survey": "quelle enquête ?",
+    "get_polling_info": "Obtenir des informations sur le sondage",
+    "change_csv_file": "Modifier {{selectedfile}} fichier CSV",
+    "upload_csv_file": "Téléverser un fichier CSV",
+    "choose_status_to_imported_posts": "Choisissez le statut des publications importées :",
+    "has_tasks_required_start": "Votre sondage",
+    "has_tasks_required_end": ", inclut les tâches qui doivent généralement être effectuées pour chaque publication avant de pouvoir être marquées comme « publiées ». Lors de cette importation, toutes vos publications importées verront leurs tâches marquées comme « incomplètes », tout en permettant à leur statut d’être marqué comme « publié ». Toutefois, si vous modifiez l’un de ces messages après son importation, vous serez invité à effectuer ces tâches avant de les republier."
   },
   "data_export": {
     "title": "Export data",
@@ -1405,14 +1584,38 @@
       "email": {
         "required": "Adresse électronique requise",
         "email": "Cette adresse électronique est invalide",
-        "maxlength": "Cette adresse électronique est trop longue"
+        "maxlength": "Cette adresse électronique est trop longue",
+        "pattern": "Cette adresse e-mail n’est pas valide",
+        "emailExists": "Cette adresse courriel est déjà utilisée"
       },
       "password": {
         "required": "Mot de passe requis",
         "minlength": "Ce mot de passe est trop court",
-        "maxlength": "Ce mot de passe est trop long"
+        "maxlength": "Ce mot de passe est trop long",
+        "weak": "Ce mot de passe est très faible"
+      },
+      "fields": {
+        "email must be unique": "L’utilisateur avec cette adresse e-mail existe déjà"
+      },
+      "name": {
+        "required": "Le nom à afficher est nécessaire",
+        "maxlength": "Le nom d’affichage est trop long"
+      },
+      "token": {
+        "required": "Un jeton est requis"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "Etes-vous sûr de vouloir supprimer ce compte?",
+    "name_will_be_a_display_name": "Le nom que vous entrez sera un nom d’affichage.",
+    "placeholder": {
+      "realname": "Saisissez votre nom…",
+      "email": "Entrez votre e-mail…",
+      "password": "Entrez le mot de passe..."
+    },
+    "password_notify": "Si vous laissez le champ vide, votre mot de passe ne changera pas",
+    "avatar": "Avatar",
+    "name": "Nom",
+    "search_by_name": "Rechercher par nom"
   },
   "user_profile": {
     "title": "paramètres du compte",
@@ -1424,7 +1627,9 @@
     },
     "nav": {
       "general": "Général",
-      "notifications": "Notifications"
+      "notifications": "Notifications",
+      "account_settings": "Paramètres du compte",
+      "notifications_settings": "Paramètres de notifications"
     }
   },
   "user_create": {
@@ -1454,7 +1659,8 @@
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} resources?",
       "bulk_destroy_success": "Supprimer la ressource",
       "bulk_destroy_error": "Unable to delete resource, please try again",
-      "bulk_destroy_cancelled": "Delete cancelled"
+      "bulk_destroy_cancelled": "Delete cancelled",
+      "are_you_sure_you_want_to_delete_this": "Êtes-vous sûr de vouloir supprimer ceci ?"
     },
     "data_import": {
       "see_imported_posts": "Voir les publications importées",
@@ -1518,7 +1724,12 @@
       "update_status_success_bulk": "Statut actualisé pour {{count}} publications",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "can_t_view_this_post": "Vous n’avez pas l’autorisation de voir cet article.<br> Il est toujours en cours d’examen par l’administrateur.<br> Il sera à votre disposition une fois qu’il sera publié.",
+      "contact_for_details": "Contactez l’administrateur pour plus de détails :",
+      "unfinished_post_task": "Vous ne pouvez pas publier cet article, il contient des tâches inachevées",
+      "posts_can_t_be_published": "Les publications suivantes ne peuvent pas être publiées : {{titles}}",
+      "post_not_found": "Article non trouvé"
     },
     "category": {
       "save_success": "Catégorie {{name}} sauvegardée",
@@ -1528,7 +1739,8 @@
       "destroy_error": "Échec de la suppression d'1 catégorie, veuillez réessayer",
       "bulk_destroy_confirm": "Êtes-vous sûr de vouloir supprimer {{count}} catégories ?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
-      "bulk_destroy_success": "{{count}} catégories supprimées"
+      "bulk_destroy_success": "{{count}} catégories supprimées",
+      "bulk_destroy_success_countless": "Catégories supprimées"
     },
     "role": {
       "delete_question": "Êtes-vous sûr de vouloir supprimer le rôle {{role}} ?",
@@ -1553,7 +1765,8 @@
       "bulk_destroy_confirm": "Êtes-vous sûr de vouloir supprimer {{count}} utilisateurs ?",
       "bulk_destroy_success": "Utilisateurs supprimés",
       "bulk_role_change_confirm": "Êtes-vous sûr de vouloir changer le rôle de {{count}} utilisateurs en {{role}} ?",
-      "bulk_role_change_success": "Rôles des utilisateurs changés en {{role_name}}"
+      "bulk_role_change_success": "Rôles des utilisateurs changés en {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "Voulez-vous vraiment supprimer {{username}}"
     },
     "video": {
       "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
@@ -1626,7 +1839,23 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "Voulez-vous vraiment supprimer {{count}} enquêtes ?"
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Succès !",
+        "success_description": "Merci d’avoir soumis votre rapport. Le message est en cours de révision par notre équipe et apparaîtra bientôt sur la plateforme.",
+        "success_button": "OK, ça sonne bien"
+      },
+      "deleted": {
+        "success": "Succès !",
+        "success_description": "Vous avez définitivement supprimé {{count}} publications.",
+        "success_button": "OK, ça sonne bien"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Voulez-vous vraiment supprimer {{lang}} langue?"
     }
   },
   "empty": {
@@ -1660,7 +1889,10 @@
     "send_to_address": "Envoyer des notifications à cette adresse",
     "button": {
       "delete": "Supprimer la notification"
-    }
+    },
+    "what_you_get_notification_about": "Ce que vous recevez une notification",
+    "removed": "La notification a été supprimée",
+    "are_you_sure_you_want_to_remove_this_notification": "Voulez-vous vraiment supprimer cette notification ?"
   },
   "contact": {
     "edit": "Modifier",
@@ -1684,7 +1916,8 @@
       "email": {
         "required": "Une adresse électronique est requise pour recevoir les notifications",
         "email": "Cette adresse électronique est invalide",
-        "maxlength": "Cette adresse électronique est trop longue"
+        "maxlength": "Cette adresse électronique est trop longue",
+        "not_valid": "Cette adresse e-mail n'est pas valide"
       },
       "phone": {
         "required": "Un numéro de téléphone est requis pour recevoir des notifications",
@@ -1698,7 +1931,8 @@
     "title": "Ushahidi Terms of Service",
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
     "agree": "I agree to Ushahidi's Terms of Service.",
-    "accept_and_continue": "Accept and Continue"
+    "accept_and_continue": "Accept and Continue",
+    "i_agree": "J’accepte la <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">politique de confidentialité</a> d’Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Termes et conditions</a>."
   },
   "translations": {
     "languages": "Languages",
@@ -2455,5 +2689,33 @@
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "You cannot change your own role",
     "adminUserLimitReached": "limit:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "erreur",
+    "description": "Oups... Désolé, nous ne trouvons pas la page que vous recherchez. <br> Veuillez effectuer une recherche par une autre phrase ou revenir à la vue cartographique.",
+    "button": "Accéder à la vue Carte"
+  },
+  "cookies": {
+    "we_use_cookies": "Salut! Nous utilisons des cookies pour améliorer votre expérience.",
+    "cookies_privacy": "Si vous souhaitez en savoir plus ou retirer votre consentement, veuillez consulter notre <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Politique de confidentialité</a>.",
+    "decline": "Refuser",
+    "accept_cookies": "Accepter les cookies"
+  },
+  "share": {
+    "share_deployment": "Déploiement de partage",
+    "share_post": "Partager",
+    "web_address": "L’adresse Web de votre enquête",
+    "embed_on_websites": "Intégration HTML sur les sites Web",
+    "copied": "Copié !",
+    "share_on_twitter": "Partager sur Twitter",
+    "share_on_facebook": "Partager sur Facebook"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Termes et conditions</a>."
+      }
+    }
   }
 }
