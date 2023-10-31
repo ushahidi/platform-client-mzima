@@ -12,7 +12,7 @@ export const checkBackendURL = (backendUrl: string) => {
     }
   };
 
-  let result = parseURL(backendUrl);
+  const result = parseURL(backendUrl);
 
   // Query string or hash not allowed
   if (result.search !== '' || result.hash !== '') {
