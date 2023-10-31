@@ -102,6 +102,7 @@ jobs:
           ENABLE_NGINX: 'true'
           ENABLE_PHPFPM: 'true'
           ENABLE_PLATFORM_TASKS: 'false'
+          DB_MIGRATIONS_HANDLED: 'false'
           RUN_PLATFORM_MIGRATIONS: 'false'
           DB_CONNECTION: mysql
           DB_DATABASE: ushahidi
@@ -121,7 +122,7 @@ jobs:
       ## set up API endpoint
       - name: Setup API endpoint
         run: |
-          set -e;
+          set -ex;
 
           SNAPSHOT_URL="https://ushahidi-static-web-assets.s3.eu-west-1.amazonaws.com/ushahidi-e2e-data-2023.07.05.sql.gz"
           wget -O sql-snapshot.sql.gz ${SNAPSHOT_URL} 2>/dev/null || { echo "Failed downloading snapshot!" && exit 1; }
@@ -136,13 +137,20 @@ jobs:
             echo "Waiting for platform container to start..."
             sleep 1
           done
-          docker exec ${{ job.services.platform.id }} util wait_bootstrap
+          while ! docker exec ${{ job.services.platform.id }} util wait_bootstrap 60; do
+            echo "Platform still bootstrapping (logs follow)..."
+            docker logs ${{ job.services.platform.id }}
+          done
+
+          echo "Waiting for MySQL to be ready..."
           docker exec ${{ job.services.platform.id }} util wait_for_mysql
+
+          echo "Running migrations..."
           docker exec ${{ job.services.platform.id }} util run_migrations
 
       - name: Verify and setup API endpoint
         run: |
-          set -e;
+          set -ex;
           curl --fail http://localhost:8080/api/v3/config || \
             { echo "Failed getting API config!";
               sleep 5;
