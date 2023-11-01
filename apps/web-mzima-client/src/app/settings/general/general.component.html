@@ -75,14 +75,14 @@
     <div class="checkbox-group">
       <div class="checkbox">
         <!-- FIXME: isPrivateEnabled -->
-        <mat-checkbox formControlName="private">
+        <mat-checkbox [data-qa]="'site-private'" formControlName="private">
           {{ 'settings.site_private' | translate }}
         </mat-checkbox>
         <p class="small">{{ 'settings.site_private_desc' | translate }}</p>
       </div>
       <div class="checkbox">
         <!-- FIXME: isDisableRegistrationEnabled -->
-        <mat-checkbox formControlName="disable_registration">
+        <mat-checkbox [data-qa]="'site-disable-registration'" formControlName="disable_registration">
           {{ 'settings.site_disable_registration' | translate }}
         </mat-checkbox>
         <p translate="settings.site_disable_registration_desc"></p>
