@@ -63,7 +63,7 @@ jobs:
           path: ./.eslintcache
           key: ${{ runner.os }}-eslint-${{ hashFiles('.eslintrc.js', './apps/**/.eslintrc.js') }}-${{ github.ref_name }}
           restore-keys: |
-            ${{ runner.os }}-eslint-${{ hashFiles('.eslintrc.js', './apps/**/.eslintrc.js') }}-development
+            ${{ runner.os }}-eslint-${{ hashFiles('.eslintrc.js', './apps/**/.eslintrc.js') }}-${{ github.event.repository.default_branch }}
 
       - name: Run lint tests (web)
         if: ${{ matrix.run_lint_tests }}
