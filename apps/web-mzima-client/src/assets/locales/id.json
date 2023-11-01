@@ -115,7 +115,51 @@
     "select_language": "Select language",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "Alamat email kontak:",
+    "add_collection": "Tambahkan koleksi",
+    "choose_photo": "Pilih foto",
+    "choose": "memilih",
+    "add_all_fields": "Menambahkan semua bidang",
+    "insert_text_here": "Sisipkan teks di sini...",
+    "donate": "Donasi",
+    "donation": "Donasi",
+    "disable_monetization": "Nonaktifkan Monetisasi",
+    "enable_monetization": "Aktifkan Monetisasi",
+    "enable_monetization_error": "Isi kolom wajib diisi di atas sebelum mengaktifkan monetisasi.",
+    "enable_monetization_info": "Monetisasi saat ini dinonaktifkan.",
+    "onboarding": {
+      "title": "Orientasi",
+      "description": "Lihatlah orientasi Ushahidi lagi."
+    },
+    "forbidden-login": "Silakan masukkan detail login Anda untuk mengakses penyebaran.",
+    "contact_with_admin": "Atau hubungi Admin ",
+    "page-not-found": "Halaman tidak ditemukan",
+    "update": "Perbarui",
+    "current_results": "Hasil saat ini:",
+    "close_and_view": "Menutup dan melihat hasil",
+    "duplicate": "Duplikat",
+    "yes_delete": "Ya, hapus",
+    "no_go_back": "Tidak, kembali",
+    "are_you_sure_you_want_to_delete": "Apakah Anda yakin ingin Menghapus",
+    "action_cannot_be_undone": "<p>Tindakan ini tidak dapat dibatalkan.</p><p>Kamu yakin?</p>",
+    "you_are_not_authorized": "Anda tidak berwenang",
+    "lost_internet_connection": "Kehilangan koneksi internet",
+    "tweet_is_unavailable": "Tweet ini tidak tersedia",
+    "file_uploader": "Pengunggah file",
+    "preview_image": "Gambar pratinjau",
+    "privacy_policy": "Kebijakan Privasi",
+    "terms_and_conditions": "Syarat dan Ketentuan",
+    "ok_sounds_good": "OK, kedengarannya bagus",
+    "next_step": "Langkah berikutnya",
+    "we_are_aware_there_are_some_issues_here": "Kami menyadari ada beberapa masalah di sini. Tim sedang berupaya memperbaikinya.",
+    "you_are_using_old_deployment_version": "Anda menggunakan Versi Penyebaran - {{api_version}}. Versi terbaru adalah v5. Harap perbarui Penyebaran Anda untuk akses pengguna.",
+    "outdated_deployment": "Penerapan Usang!",
+    "the_deployment_is_outdated": "Penyebaran sudah usang, oleh karena itu beberapa bug dapat terjadi, hingga Admin memperbaruinya.",
+    "your_deployment_is_outdated": "Penyebaran Anda sudah usang",
+    "we_ve_updated_deployments_to_version_5": "Kami telah memperbarui Penyebaran ke versi 5. Pengguna mungkin tidak segera memiliki akses ke penyebaran Anda. ",
+    "for_more_details_on_deployment_update": "Untuk detail selengkapnya tentang pembaruan penyebaran, buka Bantuan &; Dukungan (ini harus berupa tautan) atau kirim email ke:",
+    "open_chat": "Buka Chat"
   },
   "toolbar": {
     "searchbar": {
@@ -229,7 +273,11 @@
     "step_required": "Tugas ini diperlukan",
     "post_step": "Postingan",
     "type": "jenis",
-    "visible_to": "Terlihat Untuk"
+    "visible_to": "Terlihat Untuk",
+    "add_language": "Tambahkan bahasa",
+    "select_language": "Pilih bahasa",
+    "choose_language": "Pilih bahasa untuk terjemahan",
+    "error_input_number": "Silakan masukkan nomor jenis {{type}}"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -404,6 +452,26 @@
       "pending_messages": "We are processing {{totalPending}} messages.",
       "pending_message": "We are processing {{totalPending}} message.",
       "cancel": "Cancel"
+    },
+    "no_tasks": "Tidak ada tugas",
+    "select_categories": "Pilih kategori",
+    "select_related_post": "Pilih posting terkait",
+    "no_fields": "Tidak ada bidang",
+    "select_color": "Pilih warna",
+    "choose_survey": "Pilih survei",
+    "main_info": "Info utama",
+    "duplicate_option": "Opsi duplikat ada",
+    "special_characters_option": "Opsi ini berisi karakter khusus",
+    "related_post_info": "Harap dicatat, posting yang berhubungan dengan perlu dipublikasikan, posting yang \"Dalam peninjauan\" tidak akan muncul di hasil pencarian",
+    "only_edit": "Hanya orang dengan izin untuk mengedit respons yang dapat melihat respons ke bidang ini.",
+    "no_options_for_this_field": "Tidak ada opsi untuk bidang ini",
+    "add_options_first": "Tambahkan opsi terlebih dahulu",
+    "fields": {
+      "fields_title": "Bidang",
+      "validation": {
+        "required": "Ruas yang wajib diisi tidak ada, kolom ini ditandai dengan *.",
+        "special_characters": "Bidang {{name}} berisi karakter khusus"
+      }
     }
   },
   "global_filter": {
@@ -485,7 +553,9 @@
       "all_posts": "Show all posts",
       "unmapped": "Show unmapped posts",
       "mapped": "Show posts with a location",
-      "source": "Source"
+      "source": "Source",
+      "expires": "Kedaluarsa",
+      "download": "Unduh"
     },
     "unmapped_start_one": "There is",
     "unmapped_start_many": "There are",
@@ -519,7 +589,11 @@
     "source": "Source",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "Kota atau alamat",
+    "viewing_mode": "Mode tampilan",
+    "saved_filter": "Filter tersimpan",
+    "delete_this_saved_filter": "Apakah Anda yakin ingin menghapus filter tersimpan ini?"
   },
   "graph": {
     "all_posts": "Tidak ada hasil; Tampilkan semua postingan",
@@ -557,6 +631,12 @@
   "modal": {
     "button": {
       "close": "Tutup"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "Monetisasi web diaktifkan di situs web ini. Terima kasih atas donasi Anda. Anda telah menyumbang",
+      "thank_you_for_your_donation_end": "Sejauh",
+      "web_monetization_text": "Penyebaran Ushahidi sekarang monetisasi web diaktifkan. Monetisasi web adalah cara mendukung situs web yang Anda sukai tanpa bermain game pengiklan. Yang Anda butuhkan hanyalah menyiapkan browser Anda. Klik tautan di bawah ini untuk mempelajari bagaimana Anda dapat menyumbang.",
+      "how_can_i_donate": "Bagaimana saya bisa menyumbang?"
     }
   },
   "nav": {
@@ -629,7 +709,15 @@
     "user": "Pengguna",
     "users": "Pengguna",
     "views": "Tampilan",
-    "yesterday": "Kemarin"
+    "yesterday": "Kemarin",
+    "open_menu": "Buka menu",
+    "my_account": "Akun Saya",
+    "login_register": "Masuk / Daftar",
+    "help_support": "Bantuan &; Dukungan",
+    "receive_notifications": "Menerima notifikasi",
+    "map": "Peta",
+    "data": "Data",
+    "feed": "Tampilan data"
   },
   "views": {
     "map": "Peta",
@@ -703,7 +791,18 @@
     "unpublished": "Tidak dipublikasikan",
     "published_by": "Diterbitkan oleh",
     "can_see_this_post": "dapat melihat postingan ini",
-    "location": "Lokasi",
+    "location": {
+      "location": "Lokasi",
+      "you_can_search_or_click": "Anda dapat mencari atau mengklik area peta tempat Anda ingin menempatkan penanda.",
+      "search_address": "Cari alamat, nama tempat, atau koordinat...",
+      "nothing_found": "Tidak ditemukan",
+      "errors": {
+        "empty_lat": "Lintang adalah bidang kosong",
+        "empty_lng": "Garis bujur adalah bidang kosong",
+        "decimal_lat": "Lintang saja angka desimal",
+        "decimal_lng": "Garis bujur saja angka desimal"
+      }
+    },
     "categories": "Kategori-kategori",
     "status": "Status",
     "type": "Tipe",
@@ -824,14 +923,16 @@
         "required": "\"{{label}}\" dibutuhkan",
         "parse": "\"{{label}}\" tidak dapat diuraikan",
         "date": "\"{{label}}\" harus tanggal",
-        "number": "\"{{label}}\" harus angka"
+        "number": "\"{{label}}\" harus angka",
+        "step": "\"{{label}}\" harus berupa bilangan bulat"
       },
       "author_name": {
         "maxlength": "Nama terlalu panjang"
       },
       "author_email": {
         "email": "Surel tidak valid"
-      }
+      },
+      "validation_fail_other": "Terjadi kesalahan saat memvalidasi data. Bidang yang gagal validasi akan menampilkan kesalahan."
     },
     "media": {
       "enter_a": "Enter a",
@@ -855,6 +956,20 @@
         "save_and_edit": "Tambah ke survei & amp; sunting"
       },
       "survey_title": "Survei Tak Dikenal"
+    },
+    "post_count": "{{count}} posting",
+    "post_title": "Judul Pos",
+    "post_desc": "Deskripsi posting",
+    "posts_total_map": "Menampilkan {{posts}} dari {{total_nb}} posting dengan informasi lokasi di peta.",
+    "search_results": "Hasil:",
+    "duplicate_option": "Ada masalah dengan konfigurasi bidang ini karena duplikat, silakan buka pengaturan survei dan perbaiki.",
+    "no_search_results_location": "Pencarian Anda tidak cocok dengan postingan apa pun dengan informasi lokasi",
+    "no_posts_yet_location": "Belum ada posting dengan informasi lokasi!",
+    "read_more": "Selengkapnya",
+    "image_is_required": "Gambar diperlukan",
+    "image_max_size": "Gambar melebihi ukuran file maksimal",
+    "relation": {
+      "search": "Cari"
     }
   },
   "role": {
@@ -869,7 +984,13 @@
     "delete_role": "Hapus peran ini",
     "delete_role_desc": "<strong>Jika anda menghapus peran ini</strong>, semua pengguna yang bertugas di dalamnya akan bertugas dengan ijin pengaturan awal. Lanjutkan dengan kehati-hatian.",
     "everyone": "Semua orang",
-    "just_you": "Hanya anda"
+    "just_you": "Hanya anda",
+    "are_you_sure_you_want_to_delete_role": "Apakah Anda yakin ingin menghapus peran {{roleName}}?",
+    "placeholder": {
+      "name": "Masukkan nama peran",
+      "description": "Masukkan deskripsi peran"
+    },
+    "only_me": "Hanya saya"
   },
   "webhook": {
     "add_webhook": "Add Role",
@@ -896,7 +1017,15 @@
   "collection": {
     "visible_to_public": "Koleksi ini terlihat oleh publik",
     "visible_to_you": "Koleksi ini hanya terlihat oleh anda dan admin",
-    "visible_to_roles": "Koleksi ini terlihat oleh {{roles}}"
+    "visible_to_roles": "Koleksi ini terlihat oleh {{roles}}",
+    "validation": {
+      "required": {
+        "name": "Nama koleksi wajib diisi"
+      }
+    },
+    "errors": {
+      "permissions": "Anda tidak memiliki izin untuk melihat koleksi ini"
+    }
   },
   "set": {
     "by": "oleh",
@@ -931,7 +1060,9 @@
     "edit_savedsearch": "Edit Search",
     "set_settings": "Pengaturan Koleksi",
     "add_notification": "Tambah Notifikasi",
-    "remove": "hapus"
+    "remove": "hapus",
+    "update_saved_filter": "Perbarui Filter Tersimpan",
+    "create_saved_filter": "Buat Filter Tersimpan"
   },
   "category": {
     "add_tag": "Tambah Kategori",
@@ -962,7 +1093,19 @@
       "category": "Kategori",
       "status": "Status"
     },
-    "delete": "Hapus"
+    "delete": "Hapus",
+    "which_categories": "Kategori mana yang harus tersedia",
+    "validation": {
+      "required": {
+        "name": "Nama kategori wajib diisi"
+      }
+    },
+    "placeholder": {
+      "name": "Nama",
+      "descriptions": "Masukkan deskripsi...",
+      "choose_parent_category": "Pilih kategori induk..."
+    },
+    "parent_category": "Kategori induk"
   },
   "tool": {
     "manage_forms": "Kelola Formulir",
@@ -1019,7 +1162,9 @@
       "webhooks": "Webhooks",
       "webhooks_desc": "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
       "plans": "Rencana",
-      "plan_desc": "Rencana penugasan anda saat ini <strong>{{current_plan}}</strong>."
+      "plan_desc": "Rencana penugasan anda saat ini <strong>{{current_plan}}</strong>.",
+      "donation": "Donasi",
+      "donation_desc": "Buat dan kelola donasi yang dapat diberikan orang lain ke organisasi Anda."
     },
     "user_settings": {
       "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1032,13 +1177,35 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "Pertukaran Data Kemanusiaan",
+      "please_enter_maintainer_id": "Silakan masukkan id pengelola",
+      "please_enter_api_key": "Silakan masukkan kunci API",
+      "hdx_maintainer_id_min_length": "HDX Maintainer Id terlalu pendek",
+      "api_key_min_length": "Kunci API terlalu pendek"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
-      "destination": "Destination"
+      "destination": "Destination",
+      "placeholder": {
+        "name": "Silakan masukkan nama webhook",
+        "shared_secret": "Silakan masukkan rahasia bersama",
+        "api_url": "Silakan masukkan url api"
+      },
+      "validation": {
+        "required": {
+          "name": "Nama webhook wajib diisi",
+          "shared_secret": "Kunci rahasia bersama diperlukan",
+          "api_url": "URL API diperlukan",
+          "event_type": "Jenis acara wajib diisi",
+          "event_entity": "Entitas peristiwa diperlukan"
+        },
+        "please_provide_valid_api_url": "Harap berikan URL API yang valid dengan http(s)://",
+        "secret_key_cannot_be_less_start": "Kunci rahasia bersama tidak bisa kurang dari",
+        "secret_key_cannot_be_less_end": "karakter"
+      }
     },
     "data_sources": {
       "associate_with_form": "Import to survey",
@@ -1130,7 +1297,12 @@
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
         "search_terms": "Twitter search terms",
         "search_terms_desc": "Add search terms separated with commas"
-      }
+      },
+      "choose_data_source": "Pilih Sumber Data...",
+      "type_of_data_source": "Jenis Sumber Data",
+      "provider_name": "{{providerName}} Sumber Data?",
+      "do_you_really_want_to_disconnect": "Apakah Anda benar-benar ingin memutuskan sambungan penyedia Anda?",
+      "add_source": "Tambahkan sumber"
     },
     "roles": {
       "member": "Member",
@@ -1142,7 +1314,10 @@
       "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "manage_collections_and_saved_searches": "Mengelola koleksi dan pencarian tersimpan",
+      "delete_posts": "Delete Posts",
+      "delete_their_own_posts": "Menghapus postingan mereka sendiri"
     },
     "deployment_delete_this": "Hapus penugasan ini",
     "deployment_delete": "Hapus penugasan",
@@ -1185,9 +1360,48 @@
     "add_new_users": "Tambah Pengguna Baru",
     "valid": {
       "name": {
-        "required": "Nama situs diperlukan"
+        "required": "Nama situs diperlukan",
+        "pattern": "Format tidak valid",
+        "minlength": "Nama situs terlalu pendek"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "Generate API Key",
+      "private_settings": "Pengaturan pribadi:",
+      "api_key": "API Key",
+      "placeholder": {
+        "pick_location": "Pilih Lokasi..."
+      }
+    },
+    "donation": {
+      "title": {
+        "label": "Judul donasi",
+        "placeholder": "Masukkan judul donasi Anda",
+        "required": "Judul donasi wajib diisi"
+      },
+      "description": {
+        "label": "Jelaskan donasi Anda",
+        "placeholder": "Masukkan teks yang menceritakan lebih banyak tentang donasi ini"
+      },
+      "images": {
+        "label": "Gambar donasi"
+      },
+      "wallet": {
+        "label": "Alamat wallet",
+        "placeholder": "Masukkan alamat dompet, misalnya $ilp.uphold.com/example",
+        "required": "Alamat dompet donasi diperlukan"
+      },
+      "info": {
+        "start_one": "Pastikan dompet Anda sudah terpasang",
+        "start_two": "untuk menetapkan monetisasi web.",
+        "start_three": "Jika Anda belum memiliki dompet, silakan klik",
+        "here": "disini",
+        "end": "untuk membuatnya."
+      }
+    },
+    "site_disable_registration": "Nonaktifkan pendaftaran pengguna?",
+    "site_disable_registration_desc": "Memeriksa ini menonaktifkan fitur pendaftaran. Admin harus menambahkan pengguna secara manual.",
+    "bulk_actions": "Tindakan massal"
   },
   "data_import": {
     "survey_field": "Bidang survei",
@@ -1230,7 +1444,13 @@
     "leave_empty": "Biarkan kosong",
     "cancel_import": "Batalkan impor",
     "finish_import": "Selesaikan impor",
-    "which_survey": "survei yang mana"
+    "which_survey": "survei yang mana",
+    "get_polling_info": "Dapatkan Info Polling",
+    "change_csv_file": "Mengubah file CSV {{selectedfile}}",
+    "upload_csv_file": "Unggah file CSV",
+    "choose_status_to_imported_posts": "Pilih status postingan yang diimpor:",
+    "has_tasks_required_start": "Survei Anda",
+    "has_tasks_required_end": ", termasuk tugas yang biasanya harus diselesaikan untuk setiap postingan sebelum dapat ditandai sebagai 'dipublikasikan'. Selama impor ini, semua postingan Anda yang diimpor akan ditandai sebagai 'tidak selesai', sementara statusnya tetap diizinkan ditandai sebagai 'diterbitkan'. Namun, jika Anda mengedit salah satu postingan ini setelah diimpor, Anda akan diminta untuk menyelesaikan tugas tersebut sebelum menerbitkannya kembali."
   },
   "data_export": {
     "title": "Export data",
@@ -1364,14 +1584,38 @@
       "email": {
         "required": "Alamat surel dibutuhkan",
         "email": "Alamat surel ini tidak valid",
-        "maxlength": "Alamat surel ini terlalu panjang"
+        "maxlength": "Alamat surel ini terlalu panjang",
+        "pattern": "Alamat email ini tidak valid",
+        "emailExists": "Email sudah digunakan"
       },
       "password": {
         "required": "Kata sandi dibutuhkan",
         "minlength": "Kata sandi ini terlalu pendek",
-        "maxlength": "Kata sandi ini terlalu panjang"
+        "maxlength": "Kata sandi ini terlalu panjang",
+        "weak": "Kata sandi ini sangat lemah"
+      },
+      "fields": {
+        "email must be unique": "Pengguna dengan email ini sudah ada"
+      },
+      "name": {
+        "required": "Nama tampilan wajib diisi",
+        "maxlength": "Nama tampilan terlalu panjang"
+      },
+      "token": {
+        "required": "Token diperlukan"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "Apakah Anda yakin ingin menghapus akun ini?",
+    "name_will_be_a_display_name": "Nama yang Anda masukkan akan menjadi nama tampilan.",
+    "placeholder": {
+      "realname": "Masukkan nama Anda...",
+      "email": "Masukkan alamat email...",
+      "password": "Masukkan kata sandi..."
+    },
+    "password_notify": "Jika Anda membiarkan bidang kosong, kata sandi Anda tidak akan berubah",
+    "avatar": "Avatar",
+    "name": "Nama",
+    "search_by_name": "Cari berdasarkan nama"
   },
   "user_profile": {
     "title": "pengaturan akun",
@@ -1383,7 +1627,9 @@
     },
     "nav": {
       "general": "Umum",
-      "notifications": "Notifikasi"
+      "notifications": "Notifikasi",
+      "account_settings": "Pengaturan akun",
+      "notifications_settings": "Pengaturan notifikasi"
     }
   },
   "user_create": {
@@ -1413,7 +1659,8 @@
       "bulk_destroy_confirm": "Apakah Anda yakin ingin menghapus {{count}} sumber daya?",
       "bulk_destroy_success": "Hapus sumber daya",
       "bulk_destroy_error": "Tidak dapat menghapus sumber daya, silakan coba lagi",
-      "bulk_destroy_cancelled": "Penghapusan dibatalkan"
+      "bulk_destroy_cancelled": "Penghapusan dibatalkan",
+      "are_you_sure_you_want_to_delete_this": "Apa kamu yakin ingin menghapus ini?"
     },
     "data_import": {
       "see_imported_posts": "Lihat postingan yang diimpor",
@@ -1473,7 +1720,12 @@
       "update_status_success_bulk": "Status diperbarui untuk {{count}} postingan",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "can_t_view_this_post": "Anda tidak memiliki izin untuk melihat posting ini.<br> Ini masih ditinjau oleh admin.<br> Ini akan tersedia untuk Anda setelah dipublikasikan.",
+      "contact_for_details": "Hubungi admin untuk keterangan lebih lanjut:",
+      "unfinished_post_task": "Anda tidak dapat mempublikasikan posting ini, posting memiliki tugas yang belum selesai",
+      "posts_can_t_be_published": "Postingan berikut tidak dapat dipublikasikan: {{titles}}",
+      "post_not_found": "Postingan tidak ditemukan"
     },
     "category": {
       "save_success": "Kategori tersimpan {{name}}",
@@ -1483,7 +1735,8 @@
       "destroy_error": "Tidak bisa menghapus kategori, silahkan coba lagi",
       "bulk_destroy_confirm": "Apa anda yakin ingin menghapus {{count}} categories?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
-      "bulk_destroy_success": "{{count}} kategori dihapus"
+      "bulk_destroy_success": "{{count}} kategori dihapus",
+      "bulk_destroy_success_countless": "Kategori dihapus"
     },
     "role": {
       "delete_question": "Apa anda yakin ingin menghapus peran {{role}}?",
@@ -1508,7 +1761,8 @@
       "bulk_destroy_confirm": "Apakah Anda yakin inging menghapus {{count}} pengguna-pengguna?",
       "bulk_destroy_success": "Pengguna dihapus",
       "bulk_role_change_confirm": "Apakah Anda yakin ingin mengubah peran dari {{count}} pengguna ke {{role}}?",
-      "bulk_role_change_success": "Peran pengguna diubah menjadi {{role_name}}"
+      "bulk_role_change_success": "Peran pengguna diubah menjadi {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "Anda yakin ingin menghapus {{username}}"
     },
     "video": {
       "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
@@ -1540,7 +1794,8 @@
         "description": {
           "required": "Description cannot be empty"
         }
-      }
+      },
+      "survey_name_required": "Nama survei wajib diisi"
     },
     "collection": {
       "delete_collection_confirm": "Apa anda yakin ingin menghapus koleksi ini",
@@ -1580,7 +1835,27 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "Apakah Anda yakin ingin menghapus survei {{count}}?"
+    },
+    "donation_settings": {
+      "save_success": "Pengaturan donasi disimpan",
+      "delete_question": "Anda yakin ingin menghapus {{name}} ini."
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Sukses!",
+        "success_description": "Terima kasih telah mengirimkan laporan Anda. Postingan sedang ditinjau oleh tim kami dan akan segera muncul di platform.",
+        "success_button": "OK, kedengarannya bagus"
+      },
+      "deleted": {
+        "success": "Sukses!",
+        "success_description": "Anda telah menghapus postingan {{count}} secara permanen.",
+        "success_button": "OK, kedengarannya bagus"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Apakah Anda benar-benar ingin menghapus bahasa {{lang}}?"
     }
   },
   "empty": {
@@ -1602,7 +1877,9 @@
     "error": "Maaf kami tidak dapat menemukan sebuah lokasi yang cocok dengan penelusuran anda",
     "my_location_error": "Sorry we could not find your location",
     "update_map": "Update map",
-    "no_matching_locations": "No matching locations"
+    "no_matching_locations": "No matching locations",
+    "invalid_lat": "Nilai yang diberikan bukan garis lintang yang valid.",
+    "invalid_lon": "Nilai yang diberikan bukan bujur yang valid."
   },
   "notification": {
     "title": "Notifikasi",
@@ -1612,7 +1889,10 @@
     "send_to_address": "Kirim notifikasi ke alamat ini",
     "button": {
       "delete": "Hapus notifikasi"
-    }
+    },
+    "what_you_get_notification_about": "Yang Anda dapatkan notifikasinya",
+    "removed": "Pemberitahuan telah dihapus",
+    "are_you_sure_you_want_to_remove_this_notification": "Apakah Anda yakin ingin menghapus pemberitahuan ini?"
   },
   "contact": {
     "edit": "Sunting",
@@ -1636,7 +1916,8 @@
       "email": {
         "required": "Semua alamat email diperlukan untuk menerima notifikasi",
         "email": "Alamat email invalid",
-        "maxlength": "Alamat email ini terlalu panjang"
+        "maxlength": "Alamat email ini terlalu panjang",
+        "not_valid": "Email ini tidak valid"
       },
       "phone": {
         "required": "Nomor telepon diperlukan untuk menerima notifikasi",
@@ -1650,7 +1931,8 @@
     "title": "Ushahidi Terms of Service",
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
     "agree": "I agree to Ushahidi's Terms of Service.",
-    "accept_and_continue": "Accept and Continue"
+    "accept_and_continue": "Accept and Continue",
+    "i_agree": "Saya setuju dengan <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Kebijakan Privasi</a> Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Syarat dan Ketentuan</a>."
   },
   "languages": {
     "ach": "Acoli",
@@ -2057,7 +2339,8 @@
     "yi": "Yiddish",
     "yo": "Yoruba",
     "zu": "Zulu",
-    "zu-ZA": "Zulu (South Africa)"
+    "zu-ZA": "Zulu (South Africa)",
+    "en-EN": "Inggris (English)"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -2382,5 +2665,57 @@
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "You cannot change your own role",
     "adminUserLimitReached": "limit:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "galat",
+    "description": "Ups... Maaf, kami tidak dapat menemukan halaman yang Anda cari. <br> Silakan cari dengan frasa lain atau kembali ke Tampilan Peta.",
+    "button": "Pergi ke tampilan peta"
+  },
+  "cookies": {
+    "we_use_cookies": "Hai! Kami menggunakan cookie untuk membuat pengalaman Anda lebih baik.",
+    "cookies_privacy": "Jika Anda ingin mengetahui lebih lanjut atau menarik persetujuan Anda, silakan kunjungi <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Kebijakan Privasi</a> kami.",
+    "decline": "Ditolak",
+    "accept_cookies": "Terima cookie"
+  },
+  "share": {
+    "share_deployment": "Berbagi penyebaran",
+    "share_post": "Bagikan postingan",
+    "web_address": "Alamat web survei Anda",
+    "embed_on_websites": "HTML disematkan di situs web",
+    "copied": "Disalin!",
+    "share_on_twitter": "Share on Twitter",
+    "share_on_facebook": "Bagikan di Facebook"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Syarat dan Ketentuan</a>."
+      }
+    }
+  },
+  "translations": {
+    "languages": "Bahasa",
+    "language": "Bahasa",
+    "default": "bawaan",
+    "translate_field": "Bidang Terjemahkan",
+    "survey_select_default": "Pilih bahasa default untuk survei ini",
+    "category_select_default": "Pilih bahasa default untuk kategori ini",
+    "error_translation_exists": "Anda tidak dapat memilih bahasa ini karena sudah ada terjemahan untuk itu.",
+    "edit_default_text": "Teks dalam bahasa default",
+    "edit_placeholder": "Tulis terjemahan Anda di sini",
+    "add_translation": "Tambahkan terjemahan Anda di bawah ini:",
+    "survey_name_required": "Terjemahan untuk nama survei diperlukan",
+    "field_add_translation": "Bidang (klik untuk menambahkan terjemahan):",
+    "add_translation_lang": "Menambahkan terjemahan",
+    "translate_field_name": "Menerjemahkan nama bidang",
+    "translate_field_desc": "Menerjemahkan deskripsi kolom",
+    "category_translations_link": "Harap dicatat, untuk menambahkan terjemahan ke nama kategori, buka <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Pengaturan Kategori</a>",
+    "parent_child_lang": "Harap dicatat bahwa bahasa default yang dipilih untuk kategori anak ini berbeda dari induknya",
+    "post_title_required": "Terjemahan untuk post-title diperlukan",
+    "add_a_language": "Menambahkan bahasa",
+    "error_no_default": "Anda perlu menentukan bahasa default sebelum menambahkan terjemahan baru.",
+    "select_language": "Pilih bahasa untuk menambahkan terjemahan",
+    "default_lang_info": "Ini adalah bahasa yang akan digunakan jika tidak ada terjemahan yang tersedia untuk bahasa yang telah ditetapkan pengguna untuk penyebaran."
   }
 }

@@ -4,6 +4,7 @@
       [value]="item.value"
       [checked]="item.value === value.value"
       [disabled]="value.disabled!"
+      [attr.data-qa]="item.name.split(' ').join('-')| lowercase"
     >
       <mat-icon *ngIf="isIconVisible && item?.icon">{{ item.icon }}</mat-icon>
       {{ item.name }}
@@ -20,6 +21,7 @@
           checkboxPosition="before"
           [selected]="option.checked"
           [disabled]="option.disabled"
+          [attr.data-qa]="option.name.split(' ').join('-')| lowercase"
           *ngFor="let option of item.options"
         >
           {{ option.name }}

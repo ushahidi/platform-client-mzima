@@ -122,7 +122,44 @@
     "select_language": "اختر اللغة",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "عنوان البريد الإلكتروني للاتصال:",
+    "add_collection": "إضافة مجموعة",
+    "choose_photo": "اختر صورة",
+    "choose": "اختر...",
+    "add_all_fields": "إضافة جميع الحقول",
+    "insert_text_here": "أدخل النص هنا...",
+    "onboarding": {
+      "title": "الإعداد",
+      "description": "ألق نظرة على إعداد أوشاهيدي مرة أخرى."
+    },
+    "forbidden-login": "الرجاء إدخال تفاصيل تسجيل الدخول الخاصة بك للوصول إلى النشر.",
+    "contact_with_admin": "أو اتصل بالمسؤول ",
+    "page-not-found": "الصفحة غير موجودة",
+    "update": "تحديث",
+    "current_results": "النتائج الحالية:",
+    "duplicate": "تكرار",
+    "yes_delete": "نعم، حذف",
+    "no_go_back": "لا، عد",
+    "are_you_sure_you_want_to_delete": "هل أنت متأكد من أنك تريد الحذف",
+    "action_cannot_be_undone": "<p>لا يمكن التراجع عن هذا الإجراء.</p><p>هل أنت متأكد؟</p>",
+    "you_are_not_authorized": "أنت غير مصرح لك",
+    "lost_internet_connection": "فقدان الاتصال بالإنترنت",
+    "tweet_is_unavailable": "هذه التغريدة غير متوفرة",
+    "file_uploader": "رافع الملفات",
+    "preview_image": "معاينة الصورة",
+    "privacy_policy": "سياسة الخصوصية",
+    "terms_and_conditions": "الأحكام والشروط",
+    "ok_sounds_good": "حسنا ، يبدو جيدا",
+    "next_step": "الخطوة التالية",
+    "we_are_aware_there_are_some_issues_here": "نحن ندرك أن هناك بعض القضايا هنا. يعمل الفريق على إصلاحها.",
+    "you_are_using_old_deployment_version": "أنت تستخدم إصدار النشر - {{api_version}}. أحدث إصدار هو v5. يرجى تحديث النشر الخاص بك لوصول المستخدمين.",
+    "outdated_deployment": "نشر عفا عليه الزمن!",
+    "the_deployment_is_outdated": "النشر قديم ، لذلك قد تحدث بعض الأخطاء ، حتى يقوم المسؤول بتحديثه.",
+    "your_deployment_is_outdated": "النشر الخاص بك قديم",
+    "we_ve_updated_deployments_to_version_5": "لقد قمنا بتحديث عمليات النشر إلى الإصدار 5. قد لا يتمكن المستخدمون من الوصول إلى النشر الخاص بك قريبا. ",
+    "for_more_details_on_deployment_update": "لمزيد من التفاصيل حول تحديث النشر، انتقل إلى التعليمات والدعم (يجب أن يكون هذا ارتباطا) أو أرسل بريدا إلكترونيا إلى:",
+    "open_chat": "افتح الدردشة"
   },
   "toolbar": {
     "searchbar": {
@@ -238,7 +275,9 @@
     "step_required": "هذه المهمة الزامية  ",
     "post_step": "منشور ",
     "type": "نوع",
-    "visible_to": "يظهر لـ"
+    "visible_to": "يظهر لـ",
+    "choose_language": "اختر لغة للترجمة",
+    "error_input_number": "يرجى إدخال رقم النوع {{type}}"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -357,8 +396,10 @@
     },
     "fields": {
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
-      }
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "يحتوي {{name}} الحقل على أحرف خاصة"
+      },
+      "fields_title": "حقول"
     },
     "targeted_survey": {
       "title": "قم بإنشاء استطلاع مستهدف جديد",
@@ -421,7 +462,17 @@
       "pending_messages": "نحن نعالج {{totalPending}} رسالة",
       "pending_message": "نحن نعالج {{totalPending}} رسالة",
       "cancel": "إلغاء"
-    }
+    },
+    "no_tasks": "لا توجد مهام",
+    "select_categories": "اختار التصنيفات",
+    "select_related_post": "حدد منشورا ذا صلة",
+    "no_fields": "لا توجد حقول",
+    "select_color": "حدد اللون",
+    "choose_survey": "اختر الاستطلاع",
+    "main_info": "المعلومات الرئيسية",
+    "special_characters_option": "يحتوي هذا الخيار على أحرف خاصة",
+    "no_options_for_this_field": "لا توجد خيارات لهذا الحقل",
+    "add_options_first": "إضافة الخيارات أولا"
   },
   "global_filter": {
     "filter": "تصفية",
@@ -502,7 +553,9 @@
       "all_posts": "اظهر كافة المنشورات",
       "unmapped": "اظهار بوستات غير موضوعة على الخريطة",
       "mapped": "اظهر البوستات مع الموقع",
-      "source": "مصدر"
+      "source": "مصدر",
+      "expires": "ينتهي",
+      "download": "تحميل"
     },
     "unmapped_start_one": "يوجد",
     "unmapped_start_many": "يوجد",
@@ -536,7 +589,11 @@
     "source": "مصدر",
     "saved_filters": "Saved filters ar",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "المدينة أو العنوان",
+    "viewing_mode": "وضع العرض",
+    "saved_filter": "الفلتر المحفوظ",
+    "delete_this_saved_filter": "هل أنت متأكد من أنك تريد حذف هذا الفلتر المحفوظ؟"
   },
   "graph": {
     "all_posts": "لا شيء: إظهار كل المنشورات",
@@ -574,6 +631,12 @@
   "modal": {
     "button": {
       "close": "إغلاق"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "يتم تمكين تسييل الويب على هذا الموقع. شكرا لك على تبرعك. لقد تبرعت",
+      "thank_you_for_your_donation_end": "حتى الآن",
+      "web_monetization_text": "أصبحت عمليات نشر Ushahidi الآن ممكنة لتحقيق الدخل من الويب. تسييل الويب هو وسيلة لدعم مواقع الويب التي تحبها دون لعب لعبة المعلنين. كل ما تحتاجه هو الحصول على إعداد المتصفح الخاص بك. انقر على الرابط أدناه لمعرفة كيف يمكنك التبرع.",
+      "how_can_i_donate": "كيف يمكنني التبرع؟"
     }
   },
   "nav": {
@@ -646,7 +709,15 @@
     "user": "المستخدم ",
     "users": "مستخدمين",
     "views": "المشاهدات",
-    "yesterday": "البارحة "
+    "yesterday": "البارحة ",
+    "open_menu": "فتح القائمة",
+    "my_account": "حسابي",
+    "login_register": "تسجيل الدخول / التسجيل",
+    "help_support": "المساعدة والدعم",
+    "receive_notifications": "تلقي الإخطارات",
+    "map": "خريطة",
+    "data": "البيانات",
+    "feed": "عرض البيانات"
   },
   "views": {
     "map": "الخريطة",
@@ -727,7 +798,18 @@
     "unpublished": "غير منشور",
     "published_by": "تم النشر بواسطة",
     "can_see_this_post": "يمكنه/يمكنهم مشاهدة هذا المنشور",
-    "location": "الموقع",
+    "location": {
+      "location": "الموقع",
+      "you_can_search_or_click": "يمكنك البحث أو النقر فوق منطقة الخريطة حيث تريد وضع العلامة.",
+      "search_address": "ابحث عن العناوين أو أسماء الأماكن أو الإحداثيات ...",
+      "nothing_found": "لم يتم العثور على شيء",
+      "errors": {
+        "empty_lat": "خط العرض حقل فارغ",
+        "empty_lng": "خط الطول حقل فارغ",
+        "decimal_lat": "خط العرض رقم عشري فقط",
+        "decimal_lng": "خط الطول رقم عشري فقط"
+      }
+    },
     "categories": "الفئات",
     "status": "الحالات",
     "type": "نوع / صنف",
@@ -881,6 +963,13 @@
         "save_and_edit": "ربط باستطلاع &amp; تعديل"
       },
       "survey_title": " استظلاع غير معروف "
+    },
+    "post_count": "المشاركات {{count}}",
+    "read_more": "اقرأ المزيد",
+    "image_is_required": "الصورة مطلوبة",
+    "image_max_size": "الصورة تتجاوز الحد الأقصى لحجم الملف",
+    "relation": {
+      "search": "بحث"
     }
   },
   "role": {
@@ -895,7 +984,13 @@
     "delete_role": "حذف هذا الدور",
     "delete_role_desc": "<strong>إذا حذفت هذا الدور</strong>، فسيقترن كل المستخدمين المعينين له بالأذونات الافتراضية. يرجى المتابعة مع توخي الحرص.",
     "everyone": "الكل",
-    "just_you": "أنت فقط"
+    "just_you": "أنت فقط",
+    "are_you_sure_you_want_to_delete_role": "هل أنت متأكد من أنك تريد حذف الدور {{roleName}}؟",
+    "placeholder": {
+      "name": "أدخل اسم الدور",
+      "description": "أدخل وصف الدور"
+    },
+    "only_me": "أنا فقط"
   },
   "webhook": {
     "add_webhook": "قم بإضافة دور",
@@ -922,7 +1017,15 @@
   "collection": {
     "visible_to_public": "هذه المجموعة تظهر للجميع",
     "visible_to_you": "هذه المجموعة تظهر لك أنت والمسؤولين فقط",
-    "visible_to_roles": "هذه المجموعة تظهر لـ {{roles}}"
+    "visible_to_roles": "هذه المجموعة تظهر لـ {{roles}}",
+    "validation": {
+      "required": {
+        "name": "اسم المجموعة مطلوب"
+      }
+    },
+    "errors": {
+      "permissions": "ليس لديك إذن لعرض هذه المجموعة"
+    }
   },
   "set": {
     "by": "بواسطة",
@@ -957,7 +1060,9 @@
     "edit_savedsearch": "تعديل البحث",
     "set_settings": "اعدادات المجموعة  ",
     "add_notification": "اضافة إشعار",
-    "remove": "إزالة"
+    "remove": "إزالة",
+    "update_saved_filter": "تحديث عامل التصفية المحفوظ",
+    "create_saved_filter": "إنشاء فلتر محفوظ"
   },
   "category": {
     "add_tag": "إضافة فئة",
@@ -989,7 +1094,18 @@
       "category": "الفئة",
       "status": "الحالة"
     },
-    "delete": "حذف"
+    "delete": "حذف",
+    "validation": {
+      "required": {
+        "name": "اسم التصنيف مطلوب"
+      }
+    },
+    "placeholder": {
+      "name": "أدخل الاسم",
+      "descriptions": "أدخل الوصف...",
+      "choose_parent_category": "اختر فئة الوالدين..."
+    },
+    "parent_category": "القسم الرئيسي"
   },
   "tool": {
     "manage_forms": "إدارة النماذج",
@@ -1061,13 +1177,35 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "تبادل البيانات الإنسانية",
+      "please_enter_maintainer_id": "الرجاء إدخال معرف المشرف",
+      "please_enter_api_key": "الرجاء إدخال مفتاح API",
+      "hdx_maintainer_id_min_length": "معرف مشرف HDX قصير جدا",
+      "api_key_min_length": "مفتاح واجهة برمجة التطبيقات قصير جدا"
     },
     "webhooks": {
       "use_webhook_for": "استخدم webhook لـ ",
       "enable_source_destination": "تفعيل حقول المصدر و الوجه",
       "enable_source_destination_desc": "هذا webhook سيستخدم فقط لكي يطبق في الاستطلاع المختار",
-      "destination": "الوجهة"
+      "destination": "الوجهة",
+      "placeholder": {
+        "name": "الرجاء إدخال اسم خطاف الويب",
+        "shared_secret": "الرجاء إدخال السر المشترك",
+        "api_url": "الرجاء إدخال عنوان url لواجهة برمجة التطبيقات"
+      },
+      "validation": {
+        "required": {
+          "name": "اسم خطاف الويب مطلوب",
+          "shared_secret": "مطلوب مفتاح سري مشترك",
+          "api_url": "عنوان URL لواجهة برمجة التطبيقات مطلوب",
+          "event_type": "نوع الحدث مطلوب",
+          "event_entity": "كيان الحدث مطلوب"
+        },
+        "please_provide_valid_api_url": "يرجى تقديم عنوان URL صالح لواجهة برمجة التطبيقات مع http(s)://",
+        "secret_key_cannot_be_less_start": "المفتاح السري المشترك لا يمكن أن يقل عن",
+        "secret_key_cannot_be_less_end": "الأحرف"
+      }
     },
     "data_sources": {
       "associate_with_form": "تصدير للاستطلاع",
@@ -1159,7 +1297,12 @@
         "access_token_secret_desc": "قم بإضافة سر الوصول الذي انتجته لتطبيقک التويتر",
         "search_terms": "مصطلحات البحث في التويتر",
         "search_terms_desc": "اضف مصطلحات البحث منفصلة بفواصل"
-      }
+      },
+      "choose_data_source": "اختر مصدر البيانات...",
+      "type_of_data_source": "نوع مصدر البيانات",
+      "provider_name": "{{providerName}} مصدر البيانات؟",
+      "do_you_really_want_to_disconnect": "هل تريد حقا فصل مزود الخدمة الخاص بك؟",
+      "add_source": "إضافة مصدر"
     },
     "donation": {
       "title": {
@@ -1168,7 +1311,23 @@
         "required": "Donation title is required"
       },
       "wallet": {
-        "required": "Donation wallet address is required"
+        "required": "Donation wallet address is required",
+        "label": "عنوان المحفظة",
+        "placeholder": "أدخل عنوان المحفظة على سبيل المثال ilp.uphold.com/example دولار"
+      },
+      "description": {
+        "label": "صف تبرعك",
+        "placeholder": "أدخل نصا يخبر المزيد عن هذا التبرع"
+      },
+      "images": {
+        "label": "صور التبرع"
+      },
+      "info": {
+        "start_one": "يرجى التأكد من إعداد محفظتك على",
+        "start_two": "لتعيين تحقيق الدخل من الويب.",
+        "start_three": "إذا لم يكن لديك محفظة بالفعل ، فيرجى النقر فوق",
+        "here": "هنا",
+        "end": "لإنشاء واحد."
       }
     },
     "roles": {
@@ -1181,7 +1340,10 @@
       "edit_their_own_posts": "تعديل منشوراتهم",
       "registred_member": "عضو مسجل",
       "administrator": "المشرف",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "manage_collections_and_saved_searches": "إدارة المجموعات وعمليات البحث المحفوظة",
+      "delete_posts": "حذف المشاركات",
+      "delete_their_own_posts": "حذف مشاركاتهم الخاصة"
     },
     "deployment_delete_this": "حذف عملية النشر هذه",
     "deployment_delete": "حذف عملية النشر",
@@ -1226,9 +1388,20 @@
     "add_new_users": " إضافة مستخدم جديد",
     "valid": {
       "name": {
-        "required": "اسم الموقع مطلوب"
+        "required": "اسم الموقع مطلوب",
+        "pattern": "تنسيق غير صالح",
+        "minlength": "اسم الموقع قصير جدا"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "توليد مفتاح API",
+      "private_settings": "الإعدادات الخاصة:",
+      "api_key": "مفتاح API",
+      "placeholder": {
+        "pick_location": "اختر الموقع..."
+      }
+    },
+    "bulk_actions": "إجراءات جملة"
   },
   "data_import": {
     "survey_field": "حقل استطلاع",
@@ -1271,7 +1444,13 @@
     "leave_empty": "يترك فارغا",
     "cancel_import": "الغاء الإستيراد",
     "finish_import": "إنتهى الإستيراد",
-    "which_survey": "اي استقصاء"
+    "which_survey": "اي استقصاء",
+    "get_polling_info": "الحصول على معلومات الاقتراع",
+    "change_csv_file": "تغيير ملف CSV {{selectedfile}}",
+    "upload_csv_file": "تحميل ملف CSV",
+    "choose_status_to_imported_posts": "اختر حالة المشاركات المستوردة:",
+    "has_tasks_required_start": "الاستطلاع الخاص بك",
+    "has_tasks_required_end": "، المهام التي يجب إكمالها عادة لكل منشور قبل وضع علامة \"منشورة\" عليها. أثناء عملية الاستيراد هذه، سيتم وضع علامة على مهامها على أنها \"غير مكتملة\" على جميع مشاركاتك التي تم استيرادها، مع السماح بوضع علامة \"منشورة\" على حالتها. ومع ذلك، إذا قمت بتحرير أي من هذه المنشورات بعد استيرادها، فستتم مطالبتك بإكمال هذه المهام قبل إعادة نشرها."
   },
   "data_export": {
     "title": "بيانات التصدير",
@@ -1405,14 +1584,38 @@
       "email": {
         "required": "مطلوب عنوان البريد الالكتروني",
         "email": "البريد الإلكتروني غير صحيح",
-        "maxlength": "البريد الإلكتروني طويل جدا"
+        "maxlength": "البريد الإلكتروني طويل جدا",
+        "pattern": "عنوان البريد الإلكتروني هذا غير صالح",
+        "emailExists": "البريد الإلكتروني قيد الاستخدام بالفعل"
       },
       "password": {
         "required": "كلمة المرور مطلوبة",
         "minlength": "كلمة المرور قصيرة جدا",
-        "maxlength": "كلمة المرور طويلة جدا"
+        "maxlength": "كلمة المرور طويلة جدا",
+        "weak": "كلمة المرور هذه ضعيفة جدا"
+      },
+      "fields": {
+        "email must be unique": "المستخدم مع هذا البريد الإلكتروني موجود بالفعل"
+      },
+      "name": {
+        "required": "اسم العرض مطلوب",
+        "maxlength": "اسم العرض طويل جدا"
+      },
+      "token": {
+        "required": "الرمز المميز مطلوب"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "هل تريد بالتاكيد حذف هذا الحساب؟",
+    "name_will_be_a_display_name": "سيكون الاسم الذي تدخله اسم عرض.",
+    "placeholder": {
+      "realname": "أدخل اسمك...",
+      "email": "أدخل عنوان البريد الإلكتروني...",
+      "password": "أدخل كلمة المرور..."
+    },
+    "password_notify": "إذا تركت الحقل فارغا ، فلن تتغير كلمة المرور الخاصة بك",
+    "avatar": "الصورة الشخصية",
+    "name": "الاسم",
+    "search_by_name": "البحث بواسطة الاسم"
   },
   "user_profile": {
     "title": "إعدادات الحساب",
@@ -1424,7 +1627,9 @@
     },
     "nav": {
       "general": "عام",
-      "notifications": "الإشعارات"
+      "notifications": "الإشعارات",
+      "account_settings": "إعدادات الحساب",
+      "notifications_settings": "إعدادات الإخطارات"
     }
   },
   "user_create": {
@@ -1454,7 +1659,8 @@
       "bulk_destroy_confirm": "هل ترغب بالتأكيد في حذف {{count}} من الموارد؟",
       "bulk_destroy_success": "محو المصدر",
       "bulk_destroy_error": "تعذر حذف المورد، يرجى إعادة المحاولة",
-      "bulk_destroy_cancelled": "تم إلغاء الحذف"
+      "bulk_destroy_cancelled": "تم إلغاء الحذف",
+      "are_you_sure_you_want_to_delete_this": "هل أنت متأكد أنك تريد حذف هذا؟"
     },
     "data_import": {
       "see_imported_posts": "عرض المنشورات المستوردة",
@@ -1518,7 +1724,12 @@
       "update_status_success_bulk": "تم تحديث حالة {{count}} منشور ",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "عند الاستمرار، کل التغيرات سيضيع",
-      "leave_confirm": "استمرار بدون حفظ"
+      "leave_confirm": "استمرار بدون حفظ",
+      "can_t_view_this_post": "ليس لديك إذن لعرض هذا المنشور.<br> لا يزال قيد المراجعة من قبل المسؤول.<br> سيكون متاحا لك بمجرد نشره.",
+      "contact_for_details": "اتصل بالمسؤول للحصول على مزيد من التفاصيل:",
+      "unfinished_post_task": "لا يمكنك نشر هذا المنشور ، فالمنشور يحتوي على مهام غير مكتملة",
+      "posts_can_t_be_published": "لا يمكن نشر المشاركات التالية: {{titles}}",
+      "post_not_found": "المقالة  غير موجودة"
     },
     "category": {
       "save_success": "الفئات المحفوظة {{name}}",
@@ -1528,7 +1739,8 @@
       "destroy_error": "تعذر حذف الفئة، يرجى إعادة المحاولة",
       "bulk_destroy_confirm": "هل ترغب بالتأكيد في حذف {{count}} الفئات؟",
       "bulk_destroy_confirm_desc": "سيؤدي حذف هذه الفئات إلى إزالتها من جميع البوستات الموجودة. لا يمكن التراجع من هذه العملية",
-      "bulk_destroy_success": "{{count}} فئات تم إلغاؤها"
+      "bulk_destroy_success": "{{count}} فئات تم إلغاؤها",
+      "bulk_destroy_success_countless": "الفئات المحذوفة"
     },
     "role": {
       "delete_question": "هل ترغب بالتأكيد في حذف الدور {{role}}؟",
@@ -1553,7 +1765,8 @@
       "bulk_destroy_confirm": "هل ترغب بالتأكيد في حذف {{count}} المستخدمين؟",
       "bulk_destroy_success": "تم حذف المستخدم",
       "bulk_role_change_confirm": "هل أنت متأكد أنك تريد تغيير اصناف المستخدمين من {{count}}  إلى {{role}}",
-      "bulk_role_change_success": "اصناف المستخدم تم تغيرها إلى {{role_name}}"
+      "bulk_role_change_success": "اصناف المستخدم تم تغيرها إلى {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "هل أنت متأكد من أنك تريد حذف {{username}}"
     },
     "video": {
       "incorrect_url": "الـ URL، {{url}} الذي دخلته لم يطابق اي URL من يوتيوب او فيميو"
@@ -1626,7 +1839,23 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "هل أنت متأكد من رغبتك في حذف {{count}} الاستطلاعات؟"
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "نجاح!",
+        "success_description": "شكرا لك على تقديم تقريرك. تتم مراجعة المنشور من قبل فريقنا وسيظهر قريبا على المنصة.",
+        "success_button": "حسنا ، يبدو جيدا"
+      },
+      "deleted": {
+        "success": "نجاح!",
+        "success_description": "لقد حذفت {{count}} مشاركات نهائيا.",
+        "success_button": "حسنا ، يبدو جيدا"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "هل تريد حقا حذف لغة {{lang}}؟"
     }
   },
   "empty": {
@@ -1660,7 +1889,10 @@
     "send_to_address": "إرسال الإشعارات إلى هذا العنوان",
     "button": {
       "delete": "حذف الإشعار"
-    }
+    },
+    "what_you_get_notification_about": "ما تتلقى إشعارا بشأنه",
+    "removed": "تمت إزالة الإشعار",
+    "are_you_sure_you_want_to_remove_this_notification": "هل أنت متأكد من رغبتك في إزالة هذا الإشعار؟"
   },
   "contact": {
     "edit": "تعديل",
@@ -1684,7 +1916,8 @@
       "email": {
         "required": "امتلاك بريد الكتروني مطلوب لتلقي الإخطارات",
         "email": "البريد الإلكتوني غير صحيح",
-        "maxlength": "البريد الإلكتروني طويل جدا"
+        "maxlength": "البريد الإلكتروني طويل جدا",
+        "not_valid": "هذا البريد الإلكتروني غير صالح"
       },
       "phone": {
         "required": "رقم الهاتف مطلوب من أجل تلقي الإشعارات",
@@ -1698,7 +1931,8 @@
     "title": "شروط و خدمات اوشاهيدي",
     "terms_of_service": "لقد قمنا بتجديد <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">شروط و الخدمات</a> و <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\"> سياسة الخصوصية</a>. رجاءا راجع هذ‌ه المستندات بعناية و قم بقبول الشروط لكي تستمر في استخدام خدمات اوشاهيدي",
     "agree": "اقبل بشروط و خدمات اوشاهيدي",
-    "accept_and_continue": "قبول و الاستمرار"
+    "accept_and_continue": "قبول و الاستمرار",
+    "i_agree": "أوافق على <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">سياسة الخصوصية</a> ل Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">الشروط والأحكام</a>."
   },
   "translations": {
     "languages": "اللغات",
@@ -2455,5 +2689,33 @@
     "isUniqueUsername": "{{field}} مستخدم",
     "isUserSelf": "لا تستطيع ان تغيير دورك",
     "adminUserLimitReached": "الحد:  {{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "خطأ",
+    "description": "عفوا... عذرا، لا يمكننا العثور على الصفحة التي تبحث عنها. <br> يرجى البحث بعبارة أخرى أو العودة إلى عرض الخريطة.",
+    "button": "انتقل إلى عرض الخريطة"
+  },
+  "cookies": {
+    "we_use_cookies": "مرحبًا! نحن نستخدم ملفات تعريف الارتباط لجعل تجربتك أفضل.",
+    "cookies_privacy": "إذا كنت تريد معرفة المزيد أو سحب موافقتك ، فيرجى الانتقال إلى <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">سياسة الخصوصية</a> الخاصة بنا.",
+    "decline": "الغاء",
+    "accept_cookies": "قبول ملفات تعريف الارتباط"
+  },
+  "share": {
+    "share_deployment": "مشاركة النشر",
+    "share_post": "مشاركة",
+    "web_address": "عنوان الويب الخاص بالاستطلاع",
+    "embed_on_websites": "تضمين HTML على مواقع الويب",
+    "copied": "نسخ!",
+    "share_on_twitter": "شارك على تويتر",
+    "share_on_facebook": "شارك على الفيسبوك"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">الشروط والأحكام</a>."
+      }
+    }
   }
 }

@@ -122,7 +122,44 @@
     "select_language": "Odaberi jezik",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "Adresa e-pošte za kontakt:",
+    "add_collection": "Dodaj zbirku",
+    "choose_photo": "Odabir fotografije",
+    "choose": "Izabrati...",
+    "add_all_fields": "Dodaj sva polja",
+    "insert_text_here": "Ovdje umetni tekst...",
+    "onboarding": {
+      "title": "Ukrcavanje",
+      "description": "Pogledajte ponovno Ushahidi ukrcavanje."
+    },
+    "forbidden-login": "Unesite svoje podatke za prijavu da biste pristupili implementaciji.",
+    "contact_with_admin": "Ili se obratite administratoru ",
+    "page-not-found": "Stranica nije pronađena",
+    "update": "Ažuriraj",
+    "current_results": "Trenutni rezultati:",
+    "duplicate": "Dupliciraj",
+    "yes_delete": "Da, izbriši",
+    "no_go_back": "Ne, vrati se.",
+    "are_you_sure_you_want_to_delete": "Jeste li sigurni da želite izbrisati",
+    "action_cannot_be_undone": "<p>Ovu akciju nije moguće poništiti.</p><p>Jesi siguran?</p>",
+    "you_are_not_authorized": "Niste ovlašteni",
+    "lost_internet_connection": "Izgubljena internetska veza",
+    "tweet_is_unavailable": "Ovaj tweet nije dostupan",
+    "file_uploader": "Prenositelj datoteka",
+    "preview_image": "Slika pretpregleda",
+    "privacy_policy": "Postavke pravila o privatnosti",
+    "terms_and_conditions": "Uvjeti i odredbe ",
+    "ok_sounds_good": "OK, zvuči dobro",
+    "next_step": "Sljedeči korak",
+    "we_are_aware_there_are_some_issues_here": "Svjesni smo da ovdje ima nekih problema. Tim radi na njihovom popravljanju.",
+    "you_are_using_old_deployment_version": "Koristite verziju implementacije - {{api_version}}. Najnovija verzija je v5. Ažurirajte pristup implementaciji za korisnike.",
+    "outdated_deployment": "Zastarjela implementacija!",
+    "the_deployment_is_outdated": "Implementacija je zastarjela, stoga se mogu pojaviti neke greške dok je administrator ne ažurira.",
+    "your_deployment_is_outdated": "Vaša implementacija je zastarjela",
+    "we_ve_updated_deployments_to_version_5": "Ažurirali smo implementacije na verziju 5. Korisnici možda uskoro neće imati pristup vašoj implementaciji. ",
+    "for_more_details_on_deployment_update": "Dodatne informacije o ažuriranju implementacije potražite u pomoći i podršci (to bi trebala biti veza) ili pošaljite poruku e-pošte na:",
+    "open_chat": "Otvori chat"
   },
   "toolbar": {
     "searchbar": {
@@ -238,7 +275,9 @@
     "step_required": "Ovaj zadatak je obavezan",
     "post_step": "Post",
     "type": "vrsta",
-    "visible_to": "Vidljivo"
+    "visible_to": "Vidljivo",
+    "choose_language": "Odabir jezika za prijevod",
+    "error_input_number": "Unesite {{type}} broj vrste"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -357,8 +396,10 @@
     },
     "fields": {
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
-      }
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}} polje sadrži posebne znakove"
+      },
+      "fields_title": "Polja"
     },
     "targeted_survey": {
       "title": "Kreiraj novu ciljanu anketu",
@@ -421,7 +462,17 @@
       "pending_messages": "Obrađujemo {{totalPending}} poruka.",
       "pending_message": "Obrađujemo {{totalPending}} poruku.",
       "cancel": "Odustani"
-    }
+    },
+    "no_tasks": "Nema zadataka",
+    "select_categories": "Odaberite kategorije",
+    "select_related_post": "Odabir povezane objave",
+    "no_fields": "Nema polja",
+    "select_color": "Odabir boje",
+    "choose_survey": "Odabir ankete",
+    "main_info": "Glavne informacije",
+    "special_characters_option": "Ova mogućnost sadrži posebne znakove",
+    "no_options_for_this_field": "Nema mogućnosti za ovo polje",
+    "add_options_first": "Najprije dodajte mogućnosti"
   },
   "global_filter": {
     "filter": "Filter",
@@ -502,7 +553,9 @@
       "all_posts": "Prikaži sve postove",
       "unmapped": "Prikaži postove koji nisu mapirani",
       "mapped": "Prikaži postove sa lokacijom",
-      "source": "Izvor"
+      "source": "Izvor",
+      "expires": "Ističe",
+      "download": "Preuzimanja"
     },
     "unmapped_start_one": "Tamo je",
     "unmapped_start_many": "Postoji",
@@ -536,7 +589,11 @@
     "source": "Izvor",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "Grad ili adresa",
+    "viewing_mode": "Način prikaza",
+    "saved_filter": "Spremljeni filtar",
+    "delete_this_saved_filter": "Jeste li sigurni da želite izbrisati ovaj spremljeni filtar?"
   },
   "graph": {
     "all_posts": "Ništa; Prikaži sve postove",
@@ -574,6 +631,12 @@
   "modal": {
     "button": {
       "close": "Zatvori"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "Web-unovčavanje omogućeno je na ovom web-mjestu. Hvala vam na donaciji. Donirali ste",
+      "thank_you_for_your_donation_end": "Do sada",
+      "web_monetization_text": "Ushahidi implementacije sada su omogućene za unovčavanje weba. Unovčavanje weba način je podrške web stranicama koje volite bez igranja igre oglašivača. Sve što trebate je postaviti preglednik. Kliknite donju vezu da biste saznali kako možete donirati.",
+      "how_can_i_donate": "Kako mogu donirati?"
     }
   },
   "nav": {
@@ -646,7 +709,15 @@
     "user": "Korisnik",
     "users": "Korisnici",
     "views": "Pogledi",
-    "yesterday": "Jučer"
+    "yesterday": "Jučer",
+    "open_menu": "Otvori izbornik",
+    "my_account": "Moj račun",
+    "login_register": "Prijava / prijava",
+    "help_support": "Pomoć i podrška",
+    "receive_notifications": "Primanje obavijesti",
+    "map": "Karta",
+    "data": "Podaci",
+    "feed": "Prikaz podataka"
   },
   "views": {
     "map": "Karta",
@@ -727,7 +798,18 @@
     "unpublished": "Neobjavljeno",
     "published_by": "Objavio",
     "can_see_this_post": "može vidjeti ovaj post",
-    "location": "Lokacija",
+    "location": {
+      "location": "Lokacija",
+      "you_can_search_or_click": "Možete pretraživati ili kliknuti područje karte na koje želite smjestiti oznaku.",
+      "search_address": "Traženje adresa, imena mjesta ili koordinata...",
+      "nothing_found": "Ništa nije pronađeno",
+      "errors": {
+        "empty_lat": "Zemljopisna širina je prazno polje",
+        "empty_lng": "Zemljopisna dužina je prazno polje",
+        "decimal_lat": "Decimalni broj samo zemljopisne širine",
+        "decimal_lng": "Decimalni broj samo zemljopisne dužine"
+      }
+    },
     "categories": "Kategorije",
     "status": "Status",
     "type": "Vrsta",
@@ -881,6 +963,13 @@
         "save_and_edit": "Dodaj u anketu &amp; uredi"
       },
       "survey_title": "Nepoznata anketa"
+    },
+    "post_count": "{{count}} postovi",
+    "read_more": "Pročitaj više",
+    "image_is_required": "Potrebna je slika",
+    "image_max_size": "Slika premašuje maksimalnu veličinu datoteke",
+    "relation": {
+      "search": "Traži"
     }
   },
   "role": {
@@ -895,7 +984,13 @@
     "delete_role": "Obriši ovu ulogu",
     "delete_role_desc": "<strong>Ako obrišete ovu ulogu</strong>, svim korisnicima koji su imali tu ulogu bit će vraćena zadana dopuštenja. Nastavite s oprezom.",
     "everyone": "Svi",
-    "just_you": "Samo Vi"
+    "just_you": "Samo Vi",
+    "are_you_sure_you_want_to_delete_role": "Jeste li sigurni da želite izbrisati {{roleName}} uloge?",
+    "placeholder": {
+      "name": "Unesite naziv uloge",
+      "description": "Unesite opis uloge"
+    },
+    "only_me": "Samo ja"
   },
   "webhook": {
     "add_webhook": "Dodaj ulogu",
@@ -922,7 +1017,15 @@
   "collection": {
     "visible_to_public": "Ova kolekcija je javno vidljiva",
     "visible_to_you": "Ova kolekcija je vidljiva samo Vama i administratorima",
-    "visible_to_roles": "Ova kolekcija vidljiva je {{roles}}"
+    "visible_to_roles": "Ova kolekcija vidljiva je {{roles}}",
+    "validation": {
+      "required": {
+        "name": "Naziv zbirke je obavezan"
+      }
+    },
+    "errors": {
+      "permissions": "Nemate dozvolu za prikaz ove zbirke"
+    }
   },
   "set": {
     "by": "po",
@@ -957,7 +1060,9 @@
     "edit_savedsearch": "Uredi pretragu",
     "set_settings": "Postavke kolekcije",
     "add_notification": "Dodaj obavijest",
-    "remove": "ukloni"
+    "remove": "ukloni",
+    "update_saved_filter": "Ažuriraj spremljeni filtar",
+    "create_saved_filter": "Stvori spremljeni filtar"
   },
   "category": {
     "add_tag": "Dodaj kategoriju",
@@ -989,7 +1094,18 @@
       "category": "Kategorija",
       "status": "Status"
     },
-    "delete": "Obriši"
+    "delete": "Obriši",
+    "validation": {
+      "required": {
+        "name": "Naziv kategorije je obavezan"
+      }
+    },
+    "placeholder": {
+      "name": "Unesite naziv",
+      "descriptions": "Unesite opis...",
+      "choose_parent_category": "Odabir nadređene kategorije..."
+    },
+    "parent_category": "Nadkategorija"
   },
   "tool": {
     "manage_forms": "Upravljaj formama",
@@ -1061,13 +1177,35 @@
       "valid_key": "Ispravan ključ je obavezan",
       "valid_user": "Ispravan id održavatelja je obavezan",
       "api_key_saved": "API ključ spremljen! Možete sada označiti Vaše podatke i prenijeti u Humanitarian Data Exchange (HDX) račun.",
-      "start_tagging": "Počni označivanje podataka"
+      "start_tagging": "Počni označivanje podataka",
+      "HDX": "Razmjena humanitarnih podataka",
+      "please_enter_maintainer_id": "Unesite ID održavatelja",
+      "please_enter_api_key": "Unesite API ključ",
+      "hdx_maintainer_id_min_length": "ID održavatelja HDX-a je prekratak",
+      "api_key_min_length": "API tipka je prekratka"
     },
     "webhooks": {
       "use_webhook_for": "Koristi webhook za",
       "enable_source_destination": "Omogući izvorna i odredišna polja",
       "enable_source_destination_desc": "Ovaj webhook će biti primjenjen samo na ankete odabrane vrste.",
-      "destination": "Odredište"
+      "destination": "Odredište",
+      "placeholder": {
+        "name": "Unesite naziv web-dojavnika",
+        "shared_secret": "Unesite zajedničku tajnu",
+        "api_url": "Unesite API URL"
+      },
+      "validation": {
+        "required": {
+          "name": "Naziv web-dojavnika je obavezan",
+          "shared_secret": "Potreban je zajednički tajni ključ",
+          "api_url": "Potreban je API URL",
+          "event_type": "Potrebna je vrsta događaja",
+          "event_entity": "Potreban je entitet događaja"
+        },
+        "please_provide_valid_api_url": "Navedite valjani API URL s http(s)://",
+        "secret_key_cannot_be_less_start": "Zajednički tajni ključ ne može biti manji od",
+        "secret_key_cannot_be_less_end": "znakova"
+      }
     },
     "data_sources": {
       "associate_with_form": "Uvezi u anketu",
@@ -1159,7 +1297,12 @@
         "access_token_secret_desc": "Dodajte pristupnu tajnu koju ste generirali za Vašu Twitter aplikaciju. ",
         "search_terms": "Twitter pojmovi za pretraživanje",
         "search_terms_desc": "Dodaj pojmove za pretraživanje odvojene zarezima"
-      }
+      },
+      "choose_data_source": "Odabir izvora podataka...",
+      "type_of_data_source": "Vrsta izvora podataka",
+      "provider_name": "{{providerName}} izvor podataka?",
+      "do_you_really_want_to_disconnect": "Želite li zaista prekinuti vezu s davateljem usluga?",
+      "add_source": "Dodaj izvor"
     },
     "donation": {
       "title": {
@@ -1168,7 +1311,23 @@
         "required": "Donation title is required"
       },
       "wallet": {
-        "required": "Donation wallet address is required"
+        "required": "Donation wallet address is required",
+        "label": "Adresa novčanika",
+        "placeholder": "Unesite adresu novčanika, npr. $ilp.uphold.com/example"
+      },
+      "description": {
+        "label": "Opišite svoju donaciju",
+        "placeholder": "Unesite tekst koji govori više o ovoj donaciji"
+      },
+      "images": {
+        "label": "Donacijske slike"
+      },
+      "info": {
+        "start_one": "Provjerite jeste li postavili novčanik",
+        "start_two": "da biste postavili unovčavanje weba.",
+        "start_three": "Ako već nemate novčanik, kliknite",
+        "here": "ovdje",
+        "end": "da biste ga stvorili."
       }
     },
     "roles": {
@@ -1181,7 +1340,10 @@
       "edit_their_own_posts": "Uredi njihove vlastite postove",
       "registred_member": "Registrirani član",
       "administrator": "Administrator",
-      "roles_description": "Ove opcije kontroliraju čemu ova vrsta uloge može raditi promjene. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Posjetite naše upute podrške kako bi saznali više."
+      "roles_description": "Ove opcije kontroliraju čemu ova vrsta uloge može raditi promjene. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Posjetite naše upute podrške kako bi saznali više.",
+      "manage_collections_and_saved_searches": "Upravljanje zbirkama i spremljenim pretraživanjima",
+      "delete_posts": "Izbriši objave",
+      "delete_their_own_posts": "Brisanje vlastitih objava"
     },
     "deployment_delete_this": "Obriši ovu implementaciju",
     "deployment_delete": "Obriši implementaciju",
@@ -1226,9 +1388,20 @@
     "add_new_users": "Dodaj nove korisnike",
     "valid": {
       "name": {
-        "required": "Naziv web mjesta je obavezan"
+        "required": "Naziv web mjesta je obavezan",
+        "pattern": "Neispravan oblik",
+        "minlength": "Naziv web-mjesta je prekratak"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "Generiraj API ključ",
+      "private_settings": "Privatne postavke:",
+      "api_key": "API ključ",
+      "placeholder": {
+        "pick_location": "Odabir mjesta..."
+      }
+    },
+    "bulk_actions": "Skupna akcija"
   },
   "data_import": {
     "survey_field": "Polje ankete",
@@ -1271,7 +1444,13 @@
     "leave_empty": "Ostavi prazno",
     "cancel_import": "Prekini uvoz",
     "finish_import": "Završi uvoz",
-    "which_survey": "koja anketa?"
+    "which_survey": "koja anketa?",
+    "get_polling_info": "Dohvaćanje informacija o anketama",
+    "change_csv_file": "Promjena CSV datoteke {{selectedfile}}",
+    "upload_csv_file": "Prenesi CSV datoteku",
+    "choose_status_to_imported_posts": "Odaberite status uvezenih objava:",
+    "has_tasks_required_start": "Vaša anketa",
+    "has_tasks_required_end": ", uključuje zadatke koji se obično moraju dovršiti za svaku objavu prije nego što se mogu označiti kao \"objavljeni\". Tijekom ovog uvoza sva uvezena radna mjesta označit će svoje zadatke kao \"nepotpune\", a istovremeno će omogućiti da njihov status bude označen kao \"objavljen\". Međutim, ako uredite bilo koji od ovih postova nakon uvoza, od vas će se tražiti da dovršite te zadatke prije nego što ih ponovno objavite."
   },
   "data_export": {
     "title": "Izvoz podataka",
@@ -1405,14 +1584,38 @@
       "email": {
         "required": "E-mail adresa je obavezna",
         "email": "E-mail adresa je neispravna",
-        "maxlength": "E-mail adresa je preduga"
+        "maxlength": "E-mail adresa je preduga",
+        "pattern": "Ova adresa e-pošte nije valjana",
+        "emailExists": "E-pošta se već koristi"
       },
       "password": {
         "required": "Lozinka je obavezna",
         "minlength": "Ova lozinka je prekratka",
-        "maxlength": "Ova lozinka je preduga"
+        "maxlength": "Ova lozinka je preduga",
+        "weak": "Ova lozinka je vrlo slaba"
+      },
+      "fields": {
+        "email must be unique": "Korisnik s ovom e-poštom već postoji"
+      },
+      "name": {
+        "required": "Zaslonsko ime je obavezno",
+        "maxlength": "Zaslonsko ime je predugačko"
+      },
+      "token": {
+        "required": "Token je obavezan"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "Jeste li sigurni da želite izbrisati ovaj račun?",
+    "name_will_be_a_display_name": "Ime koje unesete bit će zaslonsko ime.",
+    "placeholder": {
+      "realname": "Unesite svoje ime...",
+      "email": "Unesite adresu e-pošte...",
+      "password": "Unos lozinke..."
+    },
+    "password_notify": "Ako polje ostavite prazno, lozinka se neće promijeniti",
+    "avatar": "Avatar",
+    "name": "Ime",
+    "search_by_name": "Pretraži po nazivu"
   },
   "user_profile": {
     "title": "postavke računa",
@@ -1424,7 +1627,9 @@
     },
     "nav": {
       "general": "Opće",
-      "notifications": "Obavijesti"
+      "notifications": "Obavijesti",
+      "account_settings": "Postavke računa",
+      "notifications_settings": "Postavke obavijesti"
     }
   },
   "user_create": {
@@ -1454,7 +1659,8 @@
       "bulk_destroy_confirm": "Jeste li sigurni da želite obrisati {{count}} resursa?",
       "bulk_destroy_success": "Obrisani resurs",
       "bulk_destroy_error": "Nemoguće obrisati resurs, molimo pokušajte ponovno",
-      "bulk_destroy_cancelled": "Obriši otkazano"
+      "bulk_destroy_cancelled": "Obriši otkazano",
+      "are_you_sure_you_want_to_delete_this": "Jeste li sigurni da želite izbrisati:"
     },
     "data_import": {
       "see_imported_posts": "Vidi uvezene postove",
@@ -1518,7 +1724,12 @@
       "update_status_success_bulk": "Status ažuriran za {{count}} postova",
       "leave_without_save": "Želite li napustiti ova post bez spremanja?",
       "leave_confirm_message": "Ako nastavite, sve Vaše promjene će biti izgubljene",
-      "leave_confirm": "Nastavi bez spremanja"
+      "leave_confirm": "Nastavi bez spremanja",
+      "can_t_view_this_post": "Nemate dozvolu za prikaz ovog posta.<br> Administrator ga još uvijek pregledava.<br> Bit će vam dostupan nakon objavljivanja.",
+      "contact_for_details": "Dodatne informacije zatražite od administratora:",
+      "unfinished_post_task": "Ovaj post ne možete objaviti, objava ima nedovršene zadatke",
+      "posts_can_t_be_published": "Sljedeći postovi ne mogu se objaviti: {{titles}}",
+      "post_not_found": "Objava nije pronađena"
     },
     "category": {
       "save_success": "Spremljena kategorija {{naziv}}",
@@ -1528,7 +1739,8 @@
       "destroy_error": "Nemoguće obrisati kategoriju, molimo pokušajte ponovno",
       "bulk_destroy_confirm": "Jeste li sigurni da želite obrisati {{count}} kategorija?",
       "bulk_destroy_confirm_desc": "Brisanjem ovih kategorija ukloniti će se iz svih postojećih postova. Ovu akciju nije moguće vratiti.",
-      "bulk_destroy_success": "{{count}} kategorija obrisano"
+      "bulk_destroy_success": "{{count}} kategorija obrisano",
+      "bulk_destroy_success_countless": "Kategorije izbrisane"
     },
     "role": {
       "delete_question": "Jeste li sigurni da želite obrisati ovu ulogu {{role}}?",
@@ -1553,7 +1765,8 @@
       "bulk_destroy_confirm": "Jeste li sigurni da želite obrisati {{count}} korisnika?",
       "bulk_destroy_success": "Korisnici obrisani",
       "bulk_role_change_confirm": "Jeste li sigurni da želite promijeniti ulogu {{count}} korisnika u {{role}}?",
-      "bulk_role_change_success": "Korisničke uloge promijenjene u {{role_name}}"
+      "bulk_role_change_success": "Korisničke uloge promijenjene u {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "Jeste li sigurni da želite izbrisati {{username}}"
     },
     "video": {
       "incorrect_url": "URL, {{url}}, koji ste unijeli ne odgovara Youtube ili Vimeo URL formatu."
@@ -1626,7 +1839,23 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "Jeste li sigurni da želite izbrisati {{count}} upitnika?"
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Uspješno!",
+        "success_description": "Hvala vam što ste predali izvještaj. Post pregledava naš tim i uskoro će se pojaviti na platformi.",
+        "success_button": "OK, zvuči dobro"
+      },
+      "deleted": {
+        "success": "Uspješno!",
+        "success_description": "Trajno ste izbrisali {{count}} objave.",
+        "success_button": "OK, zvuči dobro"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Želite li zaista izbrisati {{lang}} jezik?"
     }
   },
   "empty": {
@@ -1660,7 +1889,10 @@
     "send_to_address": "Pošalji obavijesti na ovu adresu",
     "button": {
       "delete": "Obriši obavijest"
-    }
+    },
+    "what_you_get_notification_about": "O čemu primate obavijest",
+    "removed": "Obavijest je uklonjena",
+    "are_you_sure_you_want_to_remove_this_notification": "Jeste li sigurni da želite ukloniti ovu obavijest?"
   },
   "contact": {
     "edit": "Uredi",
@@ -1684,7 +1916,8 @@
       "email": {
         "required": "E-mail adresa je obavezna za primanje obavijesti",
         "email": "E-mail adresa je neispravna",
-        "maxlength": "E-mail adresa je preduga"
+        "maxlength": "E-mail adresa je preduga",
+        "not_valid": "Ova e-pošta nije valjana"
       },
       "phone": {
         "required": "Broj telefona je obavezan za primanje obavijesti",
@@ -1698,7 +1931,8 @@
     "title": "Ushahidi Pravila korištenja",
     "terms_of_service": "Ažurirali smo naše <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Uvjete i odredbe</a> i <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">politiku privatnosti</a>. Molimo pažljivo pregledajte ove dokumente i prihvatite uvjete kako bi nastavili koristiti Ushahidi usluge.",
     "agree": "Pristajem na Ushahidi Pravila korištenja",
-    "accept_and_continue": "Prihvati i nastavi"
+    "accept_and_continue": "Prihvati i nastavi",
+    "i_agree": "Slažem se s Ushahidi <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Pravila privatnosti</a> \n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Uvjeti i odredbe</a>."
   },
   "translations": {
     "languages": "Languages",
@@ -2455,5 +2689,33 @@
     "isUniqueUsername": "{{field}}: se već koristi",
     "isUserSelf": "Ne možete promijeniti vlastitu ulogu",
     "adminUserLimitReached": "ograničenje:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "greška",
+    "description": "Ups... Žao nam je, ne možemo pronaći stranicu koju tražite. <br> Pretražite po drugom izrazu ili se vratite u prikaz karte.",
+    "button": "Idi na prikaz karte"
+  },
+  "cookies": {
+    "we_use_cookies": "Zdravo! Koristimo kolačiće kako bismo poboljšali vaše iskustvo.",
+    "cookies_privacy": "Ako želite znati više ili povući svoj pristanak, posjetite naša <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Pravila o privatnosti</a>.",
+    "decline": "Odbij",
+    "accept_cookies": "Prihvati kolačiće"
+  },
+  "share": {
+    "share_deployment": "Zajedničko korištenje implementacije",
+    "share_post": "Zajedničko korištenje objave",
+    "web_address": "Web-adresa ankete",
+    "embed_on_websites": "HTML ugrađivanje na web-mjesta",
+    "copied": "Kopirano!",
+    "share_on_twitter": "Podijelite na Twitteru",
+    "share_on_facebook": "Podijeli na Facebooku"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Uvjeti i odredbe</a>."
+      }
+    }
   }
 }
