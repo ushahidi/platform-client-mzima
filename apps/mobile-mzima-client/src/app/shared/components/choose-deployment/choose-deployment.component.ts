@@ -26,7 +26,7 @@ export class ChooseDeploymentComponent {
   @ViewChild('layout') public layout: MainLayoutComponent;
   public isSearchView = false;
   public deploymentList: Deployment[] = [];
-  public foundDeploymentList: Deployment[] = [];
+  public foundedDeploymentList: Deployment[] = [];
   private selectedDeployments: Deployment[] = [];
   public isDeploymentsLoading = false;
   public addButtonVisible = false;
@@ -47,7 +47,7 @@ export class ChooseDeploymentComponent {
         this.deploymentService.searchDeployments(query).subscribe({
           next: (deployments: any[]) => {
             this.isDeploymentsLoading = false;
-            this.foundDeploymentList = deployments;
+            this.foundedDeploymentList = deployments;
           },
           error: (err: any) => {
             this.isDeploymentsLoading = false;
@@ -194,7 +194,7 @@ export class ChooseDeploymentComponent {
   public searchDeployments(query: string | null): void {
     if (query == null) {
       this.isDeploymentsLoading = false;
-      this.foundDeploymentList = [];
+      this.foundedDeploymentList = [];
       this.domain = null;
     } else if (
       query.indexOf('.') != -1 ||
@@ -202,7 +202,7 @@ export class ChooseDeploymentComponent {
       query.indexOf('https:') != -1
     ) {
       this.isDeploymentsLoading = false;
-      this.foundDeploymentList = [];
+      this.foundedDeploymentList = [];
       this.domain = query.toLowerCase().replace('http://', '').replace('https://', '');
       this.searchSubject.next(this.deploymentService.removeDomainForSearch(this.domain));
     } else if (query.length > 0) {
@@ -211,14 +211,14 @@ export class ChooseDeploymentComponent {
       this.searchSubject.next(query);
     } else {
       this.isDeploymentsLoading = false;
-      this.foundDeploymentList = [];
+      this.foundedDeploymentList = [];
     }
   }
 
   public addDeployment(): void {
     this.deploymentService.addDeployments(this.selectedDeployments);
     this.layout.closeSearchForm();
-    this.foundDeploymentList = [];
+    this.foundedDeploymentList = [];
     this.addButtonVisible = false;
     this.loadDeployments();
   }

@@ -33,14 +33,14 @@
   </ng-container>
   <ng-container *ngIf="isSearchView">
     <ng-container *ngIf="!isDeploymentsLoading; else spinner">
-      <ng-container *ngIf="foundDeploymentList.length; else emptyList">
+      <ng-container *ngIf="foundedDeploymentList.length; else emptyList">
         <ion-text color="medium" class="title">
-          Found {{ foundDeploymentList.length }} items
+          Founded {{ foundedDeploymentList.length }} items
         </ion-text>
         <ion-list class="search-list" [ngStyle]="{ background: 'none' }">
           <app-deployment-item
             class="search-result"
-            *ngFor="let item of foundDeploymentList"
+            *ngFor="let item of foundedDeploymentList"
             [deployment]="item"
             [buttonVisible]="false"
             [checkboxVisible]="true"
