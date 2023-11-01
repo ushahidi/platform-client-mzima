@@ -38,7 +38,7 @@ export class SupportModalComponent extends BaseComponent {
         title: this.translate.instant('app.documentation.title'),
         description: this.translate.instant('app.documentation.description'),
         action: () => {
-          this.openUrl('https://docs.ushahidi.com/platform-user-manual/v/mzima');
+          this.openUrl('https://docs.ushahidi.com/ushahidi-platform-user-manual');
           this.closeModal();
         },
       },
