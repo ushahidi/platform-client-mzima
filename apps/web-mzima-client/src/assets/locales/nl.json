@@ -122,7 +122,44 @@
     "select_language": "Selecteer taal",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "E-mailadres voor contact:",
+    "add_collection": "Collectie toevoegen",
+    "choose_photo": "Foto kiezen",
+    "choose": "Kies...",
+    "add_all_fields": "Voeg alle velden toe",
+    "insert_text_here": "Voeg hier tekst in...",
+    "onboarding": {
+      "title": "Onboarding",
+      "description": "Kijk nog eens naar de Ushahidi onboarding."
+    },
+    "forbidden-login": "Voer uw inloggegevens in om toegang te krijgen tot de implementatie.",
+    "contact_with_admin": "Of neem contact op met de beheerder ",
+    "page-not-found": "Pagina niet gevonden",
+    "update": "Bijwerken",
+    "current_results": "Huidige resultaten:",
+    "duplicate": "Kopiëren",
+    "yes_delete": "Ja, verwijderen",
+    "no_go_back": "Nee, ga terug",
+    "are_you_sure_you_want_to_delete": "Weet u zeker dat u wilt verwijderen?",
+    "action_cannot_be_undone": "<p>Deze actie kan niet ongedaan worden gemaakt.</p><p>Weet je het zeker?</p>",
+    "you_are_not_authorized": "U bent niet geautoriseerd",
+    "lost_internet_connection": "Internetverbinding verbroken",
+    "tweet_is_unavailable": "Deze tweet is niet beschikbaar",
+    "file_uploader": "Bestand uploader",
+    "preview_image": "Voorvertoning afbeelding",
+    "privacy_policy": "Privacybeleid",
+    "terms_and_conditions": "Algemene voorwaarden",
+    "ok_sounds_good": "OK, klinkt goed",
+    "next_step": "Volgende stap",
+    "we_are_aware_there_are_some_issues_here": "We zijn ons ervan bewust dat er hier enkele problemen zijn. Het team werkt eraan om ze op te lossen.",
+    "you_are_using_old_deployment_version": "U gebruikt Implementatieversie - {{api_version}}. De nieuwste versie is v5. Werk uw implementatie bij voor gebruikerstoegang.",
+    "outdated_deployment": "Verouderde implementatie!",
+    "the_deployment_is_outdated": "De implementatie is verouderd, daarom kunnen er enkele bugs optreden, totdat de beheerder deze bijwerkt.",
+    "your_deployment_is_outdated": "Uw implementatie is verouderd",
+    "we_ve_updated_deployments_to_version_5": "We hebben implementaties bijgewerkt naar versie 5. Gebruikers hebben mogelijk binnenkort geen toegang tot uw implementatie. ",
+    "for_more_details_on_deployment_update": "Ga voor meer informatie over de implementatie-update naar Help en ondersteuning (dit zou een link moeten zijn) of stuur een e-mail naar:",
+    "open_chat": "Chat openen"
   },
   "toolbar": {
     "searchbar": {
@@ -238,7 +275,9 @@
     "step_required": "Taak is vereist",
     "post_step": "Plaatsing",
     "type": "soort",
-    "visible_to": "Zichtbaar voor"
+    "visible_to": "Zichtbaar voor",
+    "choose_language": "Kies de taal voor vertaling",
+    "error_input_number": "Voer a.u.b. {{type}} typenummer in"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -357,8 +396,10 @@
     },
     "fields": {
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
-      }
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}} veld bevat speciale tekens"
+      },
+      "fields_title": "Velden"
     },
     "targeted_survey": {
       "title": "Create a new targeted survey",
@@ -421,7 +462,17 @@
       "pending_messages": "{{totalPending}} berichten worden verwerkt.",
       "pending_message": "{{totalPending}} bericht wordt verwerkt.",
       "cancel": "Annuleren"
-    }
+    },
+    "no_tasks": "Geen taken",
+    "select_categories": "Selecteer Categorieën",
+    "select_related_post": "Selecteer gerelateerd bericht",
+    "no_fields": "Geen velden",
+    "select_color": "Kleur selecteren",
+    "choose_survey": "Enquête kiezen",
+    "main_info": "Hoofdinformatie",
+    "special_characters_option": "Deze optie bevat speciale tekens",
+    "no_options_for_this_field": "Geen opties voor dit veld",
+    "add_options_first": "Voeg eerst opties toe"
   },
   "global_filter": {
     "filter": "Filter",
@@ -502,7 +553,9 @@
       "all_posts": "Alle plaatsingen tonen",
       "unmapped": "Toon niet-toegewezen plaatsingen",
       "mapped": "Plaatsingen met een locatie tonen",
-      "source": "Bron"
+      "source": "Bron",
+      "expires": "Verloopt",
+      "download": "Download"
     },
     "unmapped_start_one": "Er is",
     "unmapped_start_many": "Er zijn",
@@ -536,7 +589,11 @@
     "source": "Bron",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "Plaats of adres",
+    "viewing_mode": "Weergave modus",
+    "saved_filter": "Opgeslagen filter",
+    "delete_this_saved_filter": "Weet u zeker dat u dit opgeslagen filter wilt verwijderen?"
   },
   "graph": {
     "all_posts": "Niets, toon alle plaatsingen",
@@ -574,6 +631,12 @@
   "modal": {
     "button": {
       "close": "Sluit"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "Het genereren van inkomsten via het web is ingeschakeld op deze website. Hartelijk dank voor uw donatie. Je hebt gedoneerd",
+      "thank_you_for_your_donation_end": "tot nu toe",
+      "web_monetization_text": "Ushahidi-implementaties zijn nu ingeschakeld voor het genereren van inkomsten met het web. Het genereren van inkomsten met het web is een manier om de websites waar u van houdt te ondersteunen zonder het spel van adverteerders te spelen. Het enige dat u hoeft te doen, is uw browser instellen. Klik op de onderstaande link voor meer informatie over hoe u kunt doneren.",
+      "how_can_i_donate": "Hoe kan ik doneren?"
     }
   },
   "nav": {
@@ -646,7 +709,15 @@
     "user": "User",
     "users": "Gebruikers",
     "views": "Bezichtigingen",
-    "yesterday": "Yesterday"
+    "yesterday": "Yesterday",
+    "open_menu": "Open menu",
+    "my_account": "Mijn account",
+    "login_register": "Inloggen / Aanmelden",
+    "help_support": "Help & Support",
+    "receive_notifications": "Notificaties ontvangen",
+    "map": "Kaart",
+    "data": "Gegevens",
+    "feed": "Weergave van gegevens"
   },
   "views": {
     "map": "Kaart",
@@ -727,7 +798,18 @@
     "unpublished": "Ongepubliceerd",
     "published_by": "Gepubliceerd door",
     "can_see_this_post": "mag de plaatsing zien",
-    "location": "Locatie",
+    "location": {
+      "location": "Locatie",
+      "you_can_search_or_click": "U kunt zoeken of klikken op het gebied van de kaart waar u de markering wilt plaatsen.",
+      "search_address": "Zoeken naar adressen, plaatsnamen of coördinaten...",
+      "nothing_found": "Niets gevonden",
+      "errors": {
+        "empty_lat": "Breedtegraad is leeg veld",
+        "empty_lng": "Lengtegraad is leeg veld",
+        "decimal_lat": "Alleen decimaal getal in de breedtegraad",
+        "decimal_lng": "Lengtegraad alleen decimaal getal"
+      }
+    },
     "categories": "Categories",
     "status": "Status",
     "type": "Type",
@@ -881,6 +963,13 @@
         "save_and_edit": "Toevoegen aan formulier &amp; wijzigen"
       },
       "survey_title": "Onbekend formulier"
+    },
+    "post_count": "{{count}} berichten",
+    "read_more": "Lees verder",
+    "image_is_required": "Plaatje is verplicht",
+    "image_max_size": "Afbeelding overschrijdt maximale bestandsgrootte",
+    "relation": {
+      "search": "Zoeken"
     }
   },
   "role": {
@@ -895,7 +984,13 @@
     "delete_role": "Verwijder de rol",
     "delete_role_desc": "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
     "everyone": "Iedereen",
-    "just_you": "Alleen jij"
+    "just_you": "Alleen jij",
+    "are_you_sure_you_want_to_delete_role": "Weet je zeker dat je rol {{roleName}} wilt verwijderen?",
+    "placeholder": {
+      "name": "Voer rolnaam in",
+      "description": "Rolbeschrijving invoeren"
+    },
+    "only_me": "Alleen Ik (privé)"
   },
   "webhook": {
     "add_webhook": "Voeg rol toe",
@@ -922,7 +1017,15 @@
   "collection": {
     "visible_to_public": "De collectie is zichtbaar voor iedereen",
     "visible_to_you": "De collectie is alleen zichtbaar voor jou en beheerders",
-    "visible_to_roles": "De collectie is zichtbaar voor {{roles}}"
+    "visible_to_roles": "De collectie is zichtbaar voor {{roles}}",
+    "validation": {
+      "required": {
+        "name": "Naam van de collectie is vereist"
+      }
+    },
+    "errors": {
+      "permissions": "Je hebt geen toestemming om deze collectie te bekijken"
+    }
   },
   "set": {
     "by": "door",
@@ -957,7 +1060,9 @@
     "edit_savedsearch": "Zoekopdracht bewerken",
     "set_settings": "Collectie instellingen",
     "add_notification": "Notificatie toevoegen",
-    "remove": "verwijderen"
+    "remove": "verwijderen",
+    "update_saved_filter": "Opgeslagen filter bijwerken",
+    "create_saved_filter": "Opgeslagen filter maken"
   },
   "category": {
     "add_tag": "Categorie toevoegen",
@@ -989,7 +1094,18 @@
       "category": "Categorie",
       "status": "Status"
     },
-    "delete": "Verwijderen"
+    "delete": "Verwijderen",
+    "validation": {
+      "required": {
+        "name": "Categorienaam is verplicht"
+      }
+    },
+    "placeholder": {
+      "name": "Vul de naam in",
+      "descriptions": "Geef een beschrijving...",
+      "choose_parent_category": "Kies een bovenliggende categorie..."
+    },
+    "parent_category": "Hoofdcategorie"
   },
   "tool": {
     "manage_forms": "Formulieren beheren",
@@ -1061,13 +1177,35 @@
       "valid_key": "Een geldige sleutel is vereist",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "Uitwisseling van humanitaire gegevens",
+      "please_enter_maintainer_id": "Voer de beheerders-ID in",
+      "please_enter_api_key": "Voer de API-sleutel in",
+      "hdx_maintainer_id_min_length": "HDX Maintainer Id is te kort",
+      "api_key_min_length": "API-sleutel is te kort"
     },
     "webhooks": {
       "use_webhook_for": "Gebruik webhook voor",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
-      "destination": "Bestemming"
+      "destination": "Bestemming",
+      "placeholder": {
+        "name": "Voer de naam van de webhook in",
+        "shared_secret": "Voer het gedeelde geheim in",
+        "api_url": "Voer de api-url in"
+      },
+      "validation": {
+        "required": {
+          "name": "De naam van de webhook is vereist",
+          "shared_secret": "Gedeelde geheime sleutel is vereist",
+          "api_url": "API-URL vereist",
+          "event_type": "Gebeurtenistype is vereist",
+          "event_entity": "Gebeurtenisentiteit is vereist"
+        },
+        "please_provide_valid_api_url": "Geef een geldige API-URL op met http(s)://",
+        "secret_key_cannot_be_less_start": "Gedeelde geheime sleutel kan niet minder dan",
+        "secret_key_cannot_be_less_end": "karakters"
+      }
     },
     "data_sources": {
       "associate_with_form": "Importeren in formulier",
@@ -1159,7 +1297,12 @@
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
         "search_terms": "Twitter zoektermen",
         "search_terms_desc": "Voeg zoektermen toe, gescheiden door komma's"
-      }
+      },
+      "choose_data_source": "Kies Gegevensbron...",
+      "type_of_data_source": "Type gegevensbron",
+      "provider_name": "{{providerName}} gegevensbron?",
+      "do_you_really_want_to_disconnect": "Wil je echt de verbinding met je provider verbreken?",
+      "add_source": "Bron toevoegen"
     },
     "donation": {
       "title": {
@@ -1168,7 +1311,23 @@
         "required": "Donation title is required"
       },
       "wallet": {
-        "required": "Donation wallet address is required"
+        "required": "Donation wallet address is required",
+        "label": "Wallet-adres",
+        "placeholder": "Voer een wallet-adres in, bijvoorbeeld $ilp.uphold.com/example"
+      },
+      "description": {
+        "label": "Beschrijf uw donatie",
+        "placeholder": "Voer tekst in die meer vertelt over deze donatie"
+      },
+      "images": {
+        "label": "Donatie foto's"
+      },
+      "info": {
+        "start_one": "Zorg ervoor dat je je portemonnee hebt ingesteld op",
+        "start_two": "om het genereren van inkomsten met het web in te stellen.",
+        "start_three": "Als je nog geen wallet hebt, klik dan op",
+        "here": "hier",
+        "end": "om er een te creëren."
       }
     },
     "roles": {
@@ -1181,7 +1340,10 @@
       "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Geregistreerd lid",
       "administrator": "Beheerder",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "manage_collections_and_saved_searches": "Verzamelingen en opgeslagen zoekopdrachten beheren",
+      "delete_posts": "Berichten verwijderen",
+      "delete_their_own_posts": "Hun eigen berichten verwijderen"
     },
     "deployment_delete_this": "Verwijder dit platform",
     "deployment_delete": "Platform verwijderen",
@@ -1226,9 +1388,20 @@
     "add_new_users": "Add New Users",
     "valid": {
       "name": {
-        "required": "Site name is required"
+        "required": "Site name is required",
+        "pattern": "Ongeldig formaat",
+        "minlength": "Sitenaam is te kort"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "Genereer API Sleutel",
+      "private_settings": "Privé-instellingen:",
+      "api_key": "API sleutel",
+      "placeholder": {
+        "pick_location": "Kies locatie..."
+      }
+    },
+    "bulk_actions": "Bulk acties"
   },
   "data_import": {
     "survey_field": "Formulierveld",
@@ -1271,7 +1444,13 @@
     "leave_empty": "Leeg laten",
     "cancel_import": "Import annuleren",
     "finish_import": "Import voltooien",
-    "which_survey": "Welk formulier?"
+    "which_survey": "Welk formulier?",
+    "get_polling_info": "Polling-informatie ophalen",
+    "change_csv_file": "Wijzig {{selectedfile}} CSV-bestand",
+    "upload_csv_file": "CSV-bestand uploaden",
+    "choose_status_to_imported_posts": "Kies de status van geïmporteerde berichten:",
+    "has_tasks_required_start": "Uw enquête",
+    "has_tasks_required_end": ", bevat taken die normaal gesproken voor elk bericht moeten worden voltooid voordat ze kunnen worden gemarkeerd als 'gepubliceerd'. Tijdens deze import worden de taken van al je geïmporteerde berichten gemarkeerd als 'onvoltooid', terwijl hun status nog steeds kan worden gemarkeerd als 'gepubliceerd'. Als je echter een van deze berichten bewerkt nadat ze zijn geïmporteerd, wordt je gevraagd deze taken uit te voeren voordat je ze opnieuw publiceert."
   },
   "data_export": {
     "title": "Export data",
@@ -1405,14 +1584,38 @@
       "email": {
         "required": "Emailadres is vereist",
         "email": "Geen geldig emailadres",
-        "maxlength": "Emailadres is te lang"
+        "maxlength": "Emailadres is te lang",
+        "pattern": "Dit e-mailadres is ongeldig",
+        "emailExists": "E-mail is al in gebruik"
       },
       "password": {
         "required": "Wachtwoord is vereist",
         "minlength": "Gebruik een langer wachtwoord",
-        "maxlength": "Gebruik een korter wachtwoord"
+        "maxlength": "Gebruik een korter wachtwoord",
+        "weak": "Dit wachtwoord is erg zwak"
+      },
+      "fields": {
+        "email must be unique": "Gebruiker met dit e-mailadres bestaat al"
+      },
+      "name": {
+        "required": "Weergavenaam is vereist",
+        "maxlength": "Weergavenaam is te lang"
+      },
+      "token": {
+        "required": "Token is vereist"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "Weet u zeker dat u dit account wilt verwijderen?",
+    "name_will_be_a_display_name": "De naam die u invoert, is een weergavenaam.",
+    "placeholder": {
+      "realname": " ",
+      "email": "Voer e-mailadres in...",
+      "password": "Voer wachtwoord in..."
+    },
+    "password_notify": "Als u het veld leeg laat, verandert uw wachtwoord niet",
+    "avatar": "Profielfoto",
+    "name": "Naam",
+    "search_by_name": "Zoek op naam"
   },
   "user_profile": {
     "title": "gebruikersinstellingen",
@@ -1424,7 +1627,9 @@
     },
     "nav": {
       "general": "Algemeen",
-      "notifications": "Notificaties"
+      "notifications": "Notificaties",
+      "account_settings": "Accountinstellingen",
+      "notifications_settings": "Instellingen meldingen "
     }
   },
   "user_create": {
@@ -1454,7 +1659,8 @@
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} resources?",
       "bulk_destroy_success": "Verwijderde bron",
       "bulk_destroy_error": "Unable to delete resource, please try again",
-      "bulk_destroy_cancelled": "Verwijderen geannuleerd"
+      "bulk_destroy_cancelled": "Verwijderen geannuleerd",
+      "are_you_sure_you_want_to_delete_this": "Weet je zeker dat je dit wilt verwijderen?"
     },
     "data_import": {
       "see_imported_posts": "Geïmporteerde plaatsingen bekijken",
@@ -1518,7 +1724,12 @@
       "update_status_success_bulk": "Status veranderd voor {{count}} plaatsingen",
       "leave_without_save": "Wil je de plaatsing verlaten zonder op te slaan?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Doorgaan zonder op te slaan"
+      "leave_confirm": "Doorgaan zonder op te slaan",
+      "can_t_view_this_post": "Je hebt geen toestemming om dit bericht te bekijken.<br> Het wordt nog steeds beoordeeld door de beheerder.<br> Het zal voor u beschikbaar zijn zodra het is gepubliceerd.",
+      "contact_for_details": "Neem contact op met de beheerder voor meer informatie:",
+      "unfinished_post_task": "Je kunt dit bericht niet publiceren, het bericht bevat onvoltooide taken",
+      "posts_can_t_be_published": "De volgende berichten kunnen niet worden gepubliceerd: {{titles}}",
+      "post_not_found": "Bericht niet gevonden"
     },
     "category": {
       "save_success": "Categorie {{name}} opgeslagen",
@@ -1528,7 +1739,8 @@
       "destroy_error": "De categorie kon niet worden verwijderd, probeer het nog eens",
       "bulk_destroy_confirm": "Weet je zeker dat je {{count}} categorieën wilt verwijderen?",
       "bulk_destroy_confirm_desc": "Als u deze categorieën verwijdert, worden ze uit alle bestaande berichten verwijderd. Deze actie kan niet ongedaan gemaakt worden.",
-      "bulk_destroy_success": "{{count}} categorieën verwijderd"
+      "bulk_destroy_success": "{{count}} categorieën verwijderd",
+      "bulk_destroy_success_countless": "Categorieën verwijderd"
     },
     "role": {
       "delete_question": "Weet je zeker dat je de rol {{role}} wilt verwijderen?",
@@ -1553,7 +1765,8 @@
       "bulk_destroy_confirm": "Weet je zeker dat je {{count}} gebruikers wilt verwijderen?",
       "bulk_destroy_success": "Gebruikers verwijderd",
       "bulk_role_change_confirm": "Are you sure you want to change the role of {{count}} users to {{role}}?",
-      "bulk_role_change_success": "User roles changed to {{role_name}}"
+      "bulk_role_change_success": "User roles changed to {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "Weet je zeker dat je {{username}} wilt verwijderen?"
     },
     "video": {
       "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
@@ -1626,7 +1839,23 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "Weet u zeker dat u {{count}} enquêtes wilt verwijderen?"
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Succes!",
+        "success_description": "Bedankt voor het indienen van uw melding. Het bericht wordt beoordeeld door ons team en zal binnenkort op het platform verschijnen.",
+        "success_button": "OK, klinkt goed"
+      },
+      "deleted": {
+        "success": "Succes!",
+        "success_description": "Je hebt {{count}} berichten permanent verwijderd.",
+        "success_button": "OK, klinkt goed"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Wil je echt {{lang}} taal verwijderen?"
     }
   },
   "empty": {
@@ -1660,7 +1889,10 @@
     "send_to_address": "Send notifications to this address",
     "button": {
       "delete": "Notificatie verwijderen"
-    }
+    },
+    "what_you_get_notification_about": "Waar je een melding over krijgt",
+    "removed": "Melding is verwijderd",
+    "are_you_sure_you_want_to_remove_this_notification": "Weet je zeker dat je deze melding wilt verwijderen?"
   },
   "contact": {
     "edit": "Wijzigen",
@@ -1684,7 +1916,8 @@
       "email": {
         "required": "An email address is required to receive notifications",
         "email": "Geen geldig emailadres",
-        "maxlength": "Het emailadres is te lang"
+        "maxlength": "Het emailadres is te lang",
+        "not_valid": "Dit e-mailadres is niet geldig"
       },
       "phone": {
         "required": "Een telefoonnummer is vereist om meldingen te ontvangen",
@@ -1698,7 +1931,8 @@
     "title": "Ushahidi gebruiksvoorwaarden",
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
     "agree": "Ik ga akkoord met de gebruiksvoorwaarden.",
-    "accept_and_continue": "Accepteren en doorgaan"
+    "accept_and_continue": "Accepteren en doorgaan",
+    "i_agree": "Ik ga akkoord met het <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">privacybeleid van</a> Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Algemene voorwaarden</a>."
   },
   "translations": {
     "languages": "Languages",
@@ -2455,5 +2689,33 @@
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "You cannot change your own role",
     "adminUserLimitReached": "limit:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "fout",
+    "description": "Oeps... Sorry, we kunnen de pagina die u zoekt niet vinden. <br> Zoek op een andere zin of ga terug naar de kaartweergave.",
+    "button": "Ga naar de kaartweergave"
+  },
+  "cookies": {
+    "we_use_cookies": "Hallo! We gebruiken cookies om uw ervaring te verbeteren.",
+    "cookies_privacy": "Als u meer wilt weten of uw toestemming wilt intrekken, ga dan naar ons <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacybeleid</a>.",
+    "decline": "Afwijzen",
+    "accept_cookies": "Accepteer cookies"
+  },
+  "share": {
+    "share_deployment": "Implementatie delen",
+    "share_post": "Delen op",
+    "web_address": "Het webadres van uw enquête",
+    "embed_on_websites": "HTML-insluiting op websites",
+    "copied": "Gekopieerd!",
+    "share_on_twitter": "Deel op Twitter",
+    "share_on_facebook": "Deel op Facebook"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Algemene voorwaarden</a>."
+      }
+    }
   }
 }

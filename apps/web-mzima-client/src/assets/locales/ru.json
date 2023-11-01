@@ -122,7 +122,44 @@
     "select_language": "Select language",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "Контактный адрес электронной почты:",
+    "add_collection": "Добавить коллекцию",
+    "choose_photo": "Выберите фотографию",
+    "choose": "Выберите...",
+    "add_all_fields": "Добавить все поля",
+    "insert_text_here": "Вставьте текст сюда...",
+    "onboarding": {
+      "title": "Онбординг",
+      "description": "Взгляните еще раз на онбординг Ушахиди."
+    },
+    "forbidden-login": "Введите свои данные для входа, чтобы получить доступ к развертыванию.",
+    "contact_with_admin": "Или свяжитесь с администратором ",
+    "page-not-found": "Страница не найдена",
+    "update": "Обновить",
+    "current_results": "Текущие результаты:",
+    "duplicate": "Дублировать",
+    "yes_delete": "Да, удалить",
+    "no_go_back": "Нет, вернуться",
+    "are_you_sure_you_want_to_delete": "Вы уверены, что хотите удалить",
+    "action_cannot_be_undone": "<p>Это действие нельзя отменить.</p><p>Уверен?</p>",
+    "you_are_not_authorized": "У вас нет полномочий на выполнение данного действия",
+    "lost_internet_connection": "Потеря подключения к Интернету",
+    "tweet_is_unavailable": "Этот твит недоступен",
+    "file_uploader": "Загрузчик файлов",
+    "preview_image": "Предварительный просмотр изображения",
+    "privacy_policy": "Политика конфиденциальности",
+    "terms_and_conditions": "Условия и положения",
+    "ok_sounds_good": "Хорошо, звучит неплохо",
+    "next_step": "Следующий шаг",
+    "we_are_aware_there_are_some_issues_here": "Мы понимаем, что здесь есть некоторые проблемы. Команда работает над их исправлением.",
+    "you_are_using_old_deployment_version": "Вы используете Deployment Version - {{api_version}}. Последняя версия — v5. Пожалуйста, обновите Развертывание для доступа пользователей.",
+    "outdated_deployment": "Устаревшее развертывание!",
+    "the_deployment_is_outdated": "Развертывание устарело, поэтому могут возникать некоторые ошибки, пока администратор не обновит его.",
+    "your_deployment_is_outdated": "Развертывание устарело",
+    "we_ve_updated_deployments_to_version_5": "Мы обновили развертывания до версии 5. В ближайшее время у пользователей может не быть доступа к вашему развертыванию. ",
+    "for_more_details_on_deployment_update": "Для получения более подробной информации об обновлении развертывания перейдите в раздел «Справка и поддержка» (это должна быть ссылка) или отправьте электронное письмо по адресу:",
+    "open_chat": "Открыть чат"
   },
   "toolbar": {
     "searchbar": {
@@ -238,7 +275,9 @@
     "step_required": "Эта задача является обязательной",
     "post_step": "Публикация",
     "type": "тип",
-    "visible_to": "Видно для"
+    "visible_to": "Видно для",
+    "choose_language": "Выберите язык для перевода",
+    "error_input_number": "Пожалуйста{{type}} введите номер типа"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -357,8 +396,10 @@
     },
     "fields": {
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
-      }
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}} поле содержит специальные символы"
+      },
+      "fields_title": "Поля"
     },
     "targeted_survey": {
       "title": "Create a new targeted survey",
@@ -421,7 +462,17 @@
       "pending_messages": "We are processing {{totalPending}} messages.",
       "pending_message": "We are processing {{totalPending}} message.",
       "cancel": "Cancel"
-    }
+    },
+    "no_tasks": "Нет задач",
+    "select_categories": "Выберите категории",
+    "select_related_post": "Выберите публикацию по теме",
+    "no_fields": "Полей нет",
+    "select_color": "Выберите цвет",
+    "choose_survey": "Выбрать опрос",
+    "main_info": "Основная информация",
+    "special_characters_option": "Этот параметр содержит специальные символы",
+    "no_options_for_this_field": "Параметры для этого поля отсутствуют",
+    "add_options_first": "Сначала добавьте параметры"
   },
   "global_filter": {
     "filter": "Фильтр",
@@ -502,7 +553,9 @@
       "all_posts": "Показать все публикации",
       "unmapped": "Показать публикации без привязки",
       "mapped": "Показать публикации с местоположением",
-      "source": "Источник"
+      "source": "Источник",
+      "expires": "Истекает",
+      "download": "Скачать"
     },
     "unmapped_start_one": "Есть",
     "unmapped_start_many": "Есть",
@@ -536,7 +589,11 @@
     "source": "Source",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "Город или адрес",
+    "viewing_mode": "Режим просмотра",
+    "saved_filter": "Сохраненный фильтр",
+    "delete_this_saved_filter": "Вы уверены, что хотите удалить этот сохраненный фильтр?"
   },
   "graph": {
     "all_posts": "Нет; показать все публикации",
@@ -574,6 +631,12 @@
   "modal": {
     "button": {
       "close": "Закрыть"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "На этом веб-сайте включена веб-монетизация. Спасибо за ваше пожертвование. Вы пожертвовали",
+      "thank_you_for_your_donation_end": "до сих пор",
+      "web_monetization_text": "Для развертывания Ushahidi теперь включена веб-монетизация. Веб-монетизация — это способ поддержки любимых веб-сайтов, не играя в игру рекламодателей. Все, что вам нужно, это настроить браузер. Нажмите на ссылку ниже, чтобы узнать, как сделать пожертвование.",
+      "how_can_i_donate": "Как я могу сделать пожертвование?"
     }
   },
   "nav": {
@@ -646,7 +709,15 @@
     "user": "Пользователь",
     "users": "Пользователи",
     "views": "Просмотры",
-    "yesterday": "Вчера"
+    "yesterday": "Вчера",
+    "open_menu": "Открыть меню",
+    "my_account": "Мой аккаунт",
+    "login_register": "Вход / Регистрация",
+    "help_support": "Помощь и поддержка",
+    "receive_notifications": "Получать уведомления",
+    "map": "Карта",
+    "data": "Данные",
+    "feed": "Представление данных"
   },
   "views": {
     "map": "Карта",
@@ -727,7 +798,18 @@
     "unpublished": "Неопубликованные",
     "published_by": "Опубликовано",
     "can_see_this_post": "эта публикация видна",
-    "location": "Местоположение",
+    "location": {
+      "location": "Местоположение",
+      "you_can_search_or_click": "Вы можете найти или щелкнуть область карты, где вы хотите разместить маркер.",
+      "search_address": "Поиск адресов, географических названий или координат...",
+      "nothing_found": "Ничего не найдено",
+      "errors": {
+        "empty_lat": "Широта - пустое поле",
+        "empty_lng": "Долгота - пустое поле",
+        "decimal_lat": "Широта только десятичное число",
+        "decimal_lng": "Долгота только десятичное число"
+      }
+    },
     "categories": "Категории",
     "status": "Статус",
     "type": "Тип",
@@ -881,6 +963,13 @@
         "save_and_edit": "Добавить в опрос и редактировать"
       },
       "survey_title": "Неизвестный опрос"
+    },
+    "post_count": "{{count}} постов",
+    "read_more": "Подробнее",
+    "image_is_required": "Изображение требуется",
+    "image_max_size": "Изображение превышает максимальный размер файла",
+    "relation": {
+      "search": "Поиск"
     }
   },
   "role": {
@@ -895,7 +984,13 @@
     "delete_role": "Удалить эту роль",
     "delete_role_desc": "<strong>Внимание! Если вы удалите эту роль</strong>, для всех связанных с ней пользователей будут установлены настройки доступа по умолчанию.",
     "everyone": "Для всех",
-    "just_you": "Только для вас"
+    "just_you": "Только для вас",
+    "are_you_sure_you_want_to_delete_role": "Вы уверены, что хотите удалить {{roleName}} роли?",
+    "placeholder": {
+      "name": "Введите имя роли",
+      "description": "Введите описание роли"
+    },
+    "only_me": "Только я"
   },
   "webhook": {
     "add_webhook": "Добавить роль",
@@ -922,7 +1017,15 @@
   "collection": {
     "visible_to_public": "Эта коллекция доступна для общего просмотра",
     "visible_to_you": "Эта коллекция доступна только для вас и администраторов",
-    "visible_to_roles": "Эта коллекция доступна для {{roles}}"
+    "visible_to_roles": "Эта коллекция доступна для {{roles}}",
+    "validation": {
+      "required": {
+        "name": "Имя коллекции обязательно для заполнения"
+      }
+    },
+    "errors": {
+      "permissions": "У вас нет разрешения на просмотр этой коллекции"
+    }
   },
   "set": {
     "by": "от",
@@ -957,7 +1060,9 @@
     "edit_savedsearch": "Edit Search",
     "set_settings": "Настройки коллекции",
     "add_notification": "Добавить уведомление",
-    "remove": "удалить"
+    "remove": "удалить",
+    "update_saved_filter": "Обновить сохраненный фильтр",
+    "create_saved_filter": "Создать сохраненный фильтр"
   },
   "category": {
     "add_tag": "Добавить категорию",
@@ -989,7 +1094,18 @@
       "category": "Категория",
       "status": "Статус"
     },
-    "delete": "Удалить"
+    "delete": "Удалить",
+    "validation": {
+      "required": {
+        "name": "Имя категории обязательно"
+      }
+    },
+    "placeholder": {
+      "name": "Введите имя",
+      "descriptions": "Введите описание...",
+      "choose_parent_category": "Выберите родительскую категорию..."
+    },
+    "parent_category": "Родительская категория"
   },
   "tool": {
     "manage_forms": "Управление формами",
@@ -1061,13 +1177,35 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "Обмен гуманитарными данными",
+      "please_enter_maintainer_id": "Пожалуйста, введите идентификатор сопровождающего",
+      "please_enter_api_key": "Пожалуйста, введите ключ API",
+      "hdx_maintainer_id_min_length": "HDX Maintainer Id слишком короткий",
+      "api_key_min_length": "Ключ API слишком короткий"
     },
     "webhooks": {
       "use_webhook_for": "Использовать вебхук для",
       "enable_source_destination": "Включить поля источника и приемника",
       "enable_source_destination_desc": "Этот вебхук можно применить только к опросам выбранного типа",
-      "destination": "Место назначения"
+      "destination": "Место назначения",
+      "placeholder": {
+        "name": "Пожалуйста, введите имя вебхука",
+        "shared_secret": "Пожалуйста, введите общий секрет",
+        "api_url": "Пожалуйста, введите api url"
+      },
+      "validation": {
+        "required": {
+          "name": "Имя вебхука является обязательным",
+          "shared_secret": "Требуется общий секретный ключ",
+          "api_url": "Требуется URL-адрес API",
+          "event_type": "Тип события обязателен для заполнения",
+          "event_entity": "Сущность события обязательна"
+        },
+        "please_provide_valid_api_url": "Пожалуйста, укажите действительный URL-адрес API с http(s)://",
+        "secret_key_cannot_be_less_start": "Общий секретный ключ может быть не менее",
+        "secret_key_cannot_be_less_end": "символов"
+      }
     },
     "data_sources": {
       "associate_with_form": "Импортировать в опрос",
@@ -1159,7 +1297,12 @@
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
         "search_terms": "Twitter search terms",
         "search_terms_desc": "Add search terms separated with commas"
-      }
+      },
+      "choose_data_source": "Выберите Источник данных...",
+      "type_of_data_source": "Тип источника данных",
+      "provider_name": "{{providerName}} источник данных?",
+      "do_you_really_want_to_disconnect": "Вы действительно хотите отключить своего провайдера?",
+      "add_source": "Добавить источник"
     },
     "donation": {
       "title": {
@@ -1168,7 +1311,23 @@
         "required": "Заголовок пожертвования является обязательным полем"
       },
       "wallet": {
-        "required": "Необходим адрес кошелька для пожертвований"
+        "required": "Необходим адрес кошелька для пожертвований",
+        "label": "Адрес кошелька",
+        "placeholder": "Введите адрес кошелька, например $ilp.uphold.com/example"
+      },
+      "description": {
+        "label": "Опишите свое пожертвование",
+        "placeholder": "Введите текст, рассказывающий подробнее об этом пожертвовании"
+      },
+      "images": {
+        "label": "Изображения для пожертвований"
+      },
+      "info": {
+        "start_one": "Пожалуйста, убедитесь, что ваш кошелек настроен на",
+        "start_two": ", чтобы настроить веб-монетизацию.",
+        "start_three": "Если у вас еще нет кошелька, нажмите",
+        "here": "здесь",
+        "end": ", чтобы создать его."
       }
     },
     "roles": {
@@ -1181,7 +1340,10 @@
       "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "manage_collections_and_saved_searches": "Управление коллекциями и сохраненными поисковыми запросами",
+      "delete_posts": "Удалить сообщения",
+      "delete_their_own_posts": "Удалять собственные сообщения"
     },
     "deployment_delete_this": "Удалить этот сайт",
     "deployment_delete": "Удалить сайт",
@@ -1226,9 +1388,20 @@
     "add_new_users": "Добавить новых пользователей",
     "valid": {
       "name": {
-        "required": "Необходимо ввести название сайта"
+        "required": "Необходимо ввести название сайта",
+        "pattern": "Неправильный формат",
+        "minlength": "Слишком короткое имя сайта"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "Генерировать ключ API",
+      "private_settings": "Приватные настройки:",
+      "api_key": "Ключ API",
+      "placeholder": {
+        "pick_location": "Выберите местоположение..."
+      }
+    },
+    "bulk_actions": "Массовые действия"
   },
   "data_import": {
     "survey_field": "Сфера исследований",
@@ -1271,7 +1444,13 @@
     "leave_empty": "Оставить пустым",
     "cancel_import": "Отменить импорт",
     "finish_import": "Завершить импорт",
-    "which_survey": "какой опрос?"
+    "which_survey": "какой опрос?",
+    "get_polling_info": "Получить информацию об опросах",
+    "change_csv_file": "Изменение {{selectedfile}} CSV-файл",
+    "upload_csv_file": "Загрузить файл CSV",
+    "choose_status_to_imported_posts": "Выберите статус для импортируемых постов:",
+    "has_tasks_required_start": "Ваш опрос",
+    "has_tasks_required_end": "включает задачи, которые обычно должны быть выполнены для каждой записи, прежде чем она может быть помечена как опубликованная. Во время этого импорта все ваши импортированные записи будут помечены как «незавершенные», но их статус по-прежнему будет помечен как «опубликован». Однако, если вы отредактируете какую-либо из этих записей после того, как они были импортированы, вам будет предложено выполнить эти задачи перед их повторной публикацией."
   },
   "data_export": {
     "title": "Экспорт данных",
@@ -1405,14 +1584,38 @@
       "email": {
         "required": "Необходимо ввести Email адрес",
         "email": "Неверный Email адрес",
-        "maxlength": "Этот email адрес слишком длинный"
+        "maxlength": "Этот email адрес слишком длинный",
+        "pattern": "Этот адрес электронной почты недействителен",
+        "emailExists": "Email уже используется"
       },
       "password": {
         "required": "Необходимо ввести пароль",
         "minlength": "Пароль слишком короткий",
-        "maxlength": "Пароль слишком длинный"
+        "maxlength": "Пароль слишком длинный",
+        "weak": "Этот пароль очень слабый"
+      },
+      "fields": {
+        "email must be unique": "Пользователь с таким email уже существует"
+      },
+      "name": {
+        "required": "Отображаемое имя обязательно",
+        "maxlength": "Отображаемое имя слишком длинное"
+      },
+      "token": {
+        "required": "Пожалуйста, введите токен."
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "Вы уверены, что хотите удалить эту учетную запись?",
+    "name_will_be_a_display_name": "Введенное имя будет отображаемым именем.",
+    "placeholder": {
+      "realname": "Введите свое имя...",
+      "email": "Введите адрес электронной почты...",
+      "password": "Введите пароль..."
+    },
+    "password_notify": "Если вы оставите поле пустым, ваш пароль не изменится",
+    "avatar": "Аватар",
+    "name": "Имя",
+    "search_by_name": "Искать по имени"
   },
   "user_profile": {
     "title": "настройки учетной записи",
@@ -1424,7 +1627,9 @@
     },
     "nav": {
       "general": "Общие данные",
-      "notifications": "Уведомления"
+      "notifications": "Уведомления",
+      "account_settings": "Настройки аккаунта",
+      "notifications_settings": "Настройки уведомлений"
     }
   },
   "user_create": {
@@ -1454,7 +1659,8 @@
       "bulk_destroy_confirm": "Вы уверены, что хотите удалить эти {{count}} ресурсы?",
       "bulk_destroy_success": "Удаленный ресурс",
       "bulk_destroy_error": "Невозможно удалить ресурс, пожалуйста, попробуйте ещё раз",
-      "bulk_destroy_cancelled": "Удаление отменено"
+      "bulk_destroy_cancelled": "Удаление отменено",
+      "are_you_sure_you_want_to_delete_this": "Вы уверены, что хотите это удалить?"
     },
     "data_import": {
       "see_imported_posts": "Посмотреть импортированные публикации",
@@ -1518,7 +1724,12 @@
       "update_status_success_bulk": "Статус обновлен для такого количества публикаций: {{count}}",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "can_t_view_this_post": "У вас нет разрешения на просмотр этого поста.<br> Он все еще находится на рассмотрении у администратора.<br> Он будет доступен вам после публикации.",
+      "contact_for_details": "Свяжитесь с администратором для получения более подробной информации:",
+      "unfinished_post_task": "Вы не можете опубликовать этот пост, в посте есть незавершенные задачи",
+      "posts_can_t_be_published": "Следующие посты не могут быть опубликованы: {{titles}}",
+      "post_not_found": "Пост не найден"
     },
     "category": {
       "save_success": "Сохраненная категория {{name}}",
@@ -1528,7 +1739,8 @@
       "destroy_error": "Не удается удалить категорию, повторите попытку",
       "bulk_destroy_confirm": "Удалить категории: {{count}}?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
-      "bulk_destroy_success": "Количество удаленных категорий: {{count}}"
+      "bulk_destroy_success": "Количество удаленных категорий: {{count}}",
+      "bulk_destroy_success_countless": "Категории удалены"
     },
     "role": {
       "delete_question": "Удалить роль {{role}}?",
@@ -1553,7 +1765,8 @@
       "bulk_destroy_confirm": "Вы уверены, что хотите удалить этих {{count}} пользователей?",
       "bulk_destroy_success": "Удаленные пользователи",
       "bulk_role_change_confirm": "Вы уверены, что хотите изменить роль этих {{count}} пользователей на {{role}}?",
-      "bulk_role_change_success": "Ваши роли изменены на {{role_name}}"
+      "bulk_role_change_success": "Ваши роли изменены на {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "Вы уверены, что хотите удалить {{username}}"
     },
     "video": {
       "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
@@ -1626,7 +1839,23 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "Вы уверены, что хотите удалить {{count}} опросы?"
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Успешно!",
+        "success_description": "Благодарим Вас за отправку доклада. Пост находится на рассмотрении нашей команды и скоро появится на платформе.",
+        "success_button": "Хорошо, звучит неплохо"
+      },
+      "deleted": {
+        "success": "Успешно!",
+        "success_description": "Вы безвозвратно удалили {{count}} публикации.",
+        "success_button": "Хорошо, звучит неплохо"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Вы действительно хотите удалить {{lang}} язык?"
     }
   },
   "empty": {
@@ -1660,7 +1889,10 @@
     "send_to_address": "Отправить уведомления на данный адрес",
     "button": {
       "delete": "Удалить уведомление"
-    }
+    },
+    "what_you_get_notification_about": "О чем вы получаете уведомление",
+    "removed": "Оповещение было удалено",
+    "are_you_sure_you_want_to_remove_this_notification": "Вы уверены, что хотите удалить это уведомление?"
   },
   "contact": {
     "edit": "Редактировать",
@@ -1684,7 +1916,8 @@
       "email": {
         "required": "Чтобы получать уведомления, необходимо указать адрес электронной почты",
         "email": "Указан неправильный адрес электронной почты",
-        "maxlength": "Этот адрес электронной почты слишком длинный"
+        "maxlength": "Этот адрес электронной почты слишком длинный",
+        "not_valid": "Этот адрес электронной почты недействителен"
       },
       "phone": {
         "required": "Чтобы получать уведомления, необходимо указать номер телефона",
@@ -1698,7 +1931,8 @@
     "title": "Пользовательское соглашение Ushahidi",
     "terms_of_service": "Мы обновили наше <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Пользовательское соглашение и <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Политику приватности</a>. Пожалуйста, тщательно изучите эти документы и примите условия, чтобы продолжать использовать сервисы Ushahidi.",
     "agree": "Я принимаю Пользовательское Соглашение Ushahidi.",
-    "accept_and_continue": "Принять и продолжить"
+    "accept_and_continue": "Принять и продолжить",
+    "i_agree": "Я согласен с <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Политикой конфиденциальности</a> Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Правила и условия</a>."
   },
   "translations": {
     "languages": "Языки",
@@ -2455,5 +2689,33 @@
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "You cannot change your own role",
     "adminUserLimitReached": "limit:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "ошибка",
+    "description": "Ой... К сожалению, мы не можем найти страницу, которую вы ищете. <br> Пожалуйста, выполните поиск по другой фразе или вернитесь к виду карты.",
+    "button": "Перейти к представлению карты"
+  },
+  "cookies": {
+    "we_use_cookies": "Как ты! Мы используем файлы cookie, чтобы сделать ваш опыт лучше.",
+    "cookies_privacy": "Если вы хотите узнать больше или отозвать свое согласие, ознакомьтесь с нашей <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Политикой конфиденциальности</a>.",
+    "decline": "Отклонить",
+    "accept_cookies": "Принять файлы cookie"
+  },
+  "share": {
+    "share_deployment": "Совместное развертывание",
+    "share_post": "Поделиться публикацией",
+    "web_address": "Веб-адрес вашего опроса",
+    "embed_on_websites": "Встраивание HTML на веб-сайты",
+    "copied": "Скопировано!",
+    "share_on_twitter": "Поделиться в Twitter",
+    "share_on_facebook": "Поделиться в Facebook"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Правила и условия</a>."
+      }
+    }
   }
 }

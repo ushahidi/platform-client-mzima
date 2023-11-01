@@ -13,6 +13,7 @@
         <app-category-item
           #categoryItem
           [category]="category"
+          [data-qa]="category.slug.split(' ').join('-') | lowercase"
           (selected)="selectCategory($event)"
           [isCheckbox]="isShowActions"
         >
@@ -28,6 +29,7 @@
               [isCheckbox]="isShowActions"
               (selected)="selectCategory($event)"
               [category]="category"
+              [data-qa]="category.slug.split(' ').join('-') + '-' + '(' +category.parent.slug +')' | lowercase"
               [customClass]="'category-item__title--lvl2'"
             >
             </app-category-item>

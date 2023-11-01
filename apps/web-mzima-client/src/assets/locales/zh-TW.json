@@ -122,7 +122,44 @@
     "select_language": "選擇語言",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "聯絡電子郵件地址：",
+    "add_collection": "添加集合",
+    "choose_photo": "選擇照片",
+    "choose": "選擇...",
+    "add_all_fields": "添加所有欄位",
+    "insert_text_here": "在這裡插入文字...",
+    "onboarding": {
+      "title": "上線",
+      "description": "再次看看 Ushahidi 入職。"
+    },
+    "forbidden-login": "請輸入您的登錄詳細資訊以訪問部署。",
+    "contact_with_admin": "或聯繫管理員",
+    "page-not-found": "找不到頁面",
+    "update": "更新",
+    "current_results": "目前結果：",
+    "duplicate": "複製",
+    "yes_delete": "是的，刪除",
+    "no_go_back": "不，回去",
+    "are_you_sure_you_want_to_delete": "是否確實要刪除",
+    "action_cannot_be_undone": "<p>此操作無法復原。</p><p>是否確定？</p>",
+    "you_are_not_authorized": "您未獲得授權",
+    "lost_internet_connection": "互聯網連接丟失",
+    "tweet_is_unavailable": "此推文不可用",
+    "file_uploader": "檔上傳器",
+    "preview_image": "預覽圖像",
+    "privacy_policy": "隱私權政策",
+    "terms_and_conditions": "條款及規則",
+    "ok_sounds_good": "好吧，聽起來不錯",
+    "next_step": "下一步",
+    "we_are_aware_there_are_some_issues_here": "我們知道這裡存在一些問題。該團隊正在努力修復它們。",
+    "you_are_using_old_deployment_version": "您使用的是部署版本 - {{api_version}}。最新版本是 v5。請更新您的部署以供用戶訪問。",
+    "outdated_deployment": "過時的部署！",
+    "the_deployment_is_outdated": "部署已過時，因此可能會出現一些錯誤，直到管理員更新它。",
+    "your_deployment_is_outdated": "您的部署已過時",
+    "we_ve_updated_deployments_to_version_5": "我們已將部署更新到版本 5。使用者可能無法很快訪問您的部署。",
+    "for_more_details_on_deployment_update": "有關部署更新的更多詳細資訊，請轉到「幫助和支援」（這應該是一個連結）或發送電子郵件至：",
+    "open_chat": "打開聊天"
   },
   "toolbar": {
     "searchbar": {
@@ -238,7 +275,9 @@
     "step_required": "This task is required",
     "post_step": "資料",
     "type": "類型",
-    "visible_to": "顯示對象"
+    "visible_to": "顯示對象",
+    "choose_language": "選擇翻譯語言",
+    "error_input_number": "請輸入{{type}}型號"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -357,8 +396,10 @@
     },
     "fields": {
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
-      }
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}}欄位包含特殊字元"
+      },
+      "fields_title": "欄位"
     },
     "targeted_survey": {
       "title": "Create a new targeted survey",
@@ -421,7 +462,17 @@
       "pending_messages": "We are processing {{totalPending}} messages.",
       "pending_message": "We are processing {{totalPending}} message.",
       "cancel": "Cancel"
-    }
+    },
+    "no_tasks": "沒有任務",
+    "select_categories": "選擇類別",
+    "select_related_post": "選擇相關文章",
+    "no_fields": "無欄位",
+    "select_color": "選擇顏色",
+    "choose_survey": "選擇調查",
+    "main_info": "主要資訊",
+    "special_characters_option": "這個選項包含特殊字元",
+    "no_options_for_this_field": "此欄位沒有選項",
+    "add_options_first": "首先添加選項"
   },
   "global_filter": {
     "filter": "過濾",
@@ -502,7 +553,9 @@
       "all_posts": "Show all posts",
       "unmapped": "Show unmapped posts",
       "mapped": "Show posts with a location",
-      "source": "Source"
+      "source": "Source",
+      "expires": "到期",
+      "download": "下載"
     },
     "unmapped_start_one": "有",
     "unmapped_start_many": "有",
@@ -536,7 +589,11 @@
     "source": "Source",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "城市或位址",
+    "viewing_mode": "查看模式",
+    "saved_filter": "保存的篩檢程式",
+    "delete_this_saved_filter": "您確定要刪除此已儲存的過濾器嗎？"
   },
   "graph": {
     "all_posts": "無：顯示所有資料",
@@ -574,6 +631,12 @@
   "modal": {
     "button": {
       "close": "關閉"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "本網站啟用了網路貨幣化。感謝您的捐贈。您已經捐款",
+      "thank_you_for_your_donation_end": "迄今",
+      "web_monetization_text": "Ushahidi 部署現在啟用了 Web 貨幣化。網路貨幣化是一種支援您喜歡的網站的方式，而無需玩廣告商遊戲。您只需要設定瀏覽器即可。點擊下面的連結，瞭解如何捐款。",
+      "how_can_i_donate": "我該如何捐款？"
     }
   },
   "nav": {
@@ -646,7 +709,15 @@
     "user": "會員",
     "users": "會員",
     "views": "檢視",
-    "yesterday": "昨天"
+    "yesterday": "昨天",
+    "open_menu": "開啟選單",
+    "my_account": "我的帳戶",
+    "login_register": "登錄 / 註冊",
+    "help_support": "幫助 & 支援",
+    "receive_notifications": "接收通知",
+    "map": "地圖",
+    "data": "數據",
+    "feed": "數據檢視"
   },
   "views": {
     "map": "地圖",
@@ -727,7 +798,18 @@
     "unpublished": "未發布",
     "published_by": "發布者",
     "can_see_this_post": "可以看到這筆資料",
-    "location": "位置",
+    "location": {
+      "location": "地點",
+      "you_can_search_or_click": "您可以搜索或按下要放置標記的地圖區域。",
+      "search_address": "搜尋位址、地名或座標...",
+      "nothing_found": "什麼都沒找到",
+      "errors": {
+        "empty_lat": "緯度為空欄位",
+        "empty_lng": "經度為空欄位",
+        "decimal_lat": "僅緯度十進位數",
+        "decimal_lng": "僅經度十進位數"
+      }
+    },
     "categories": "分類",
     "status": "狀態",
     "type": "類型",
@@ -881,6 +963,13 @@
         "save_and_edit": "Add to survey &amp; edit"
       },
       "survey_title": "不明調查"
+    },
+    "post_count": "{{count}}帖子",
+    "read_more": "閱讀更多",
+    "image_is_required": "圖片為必填項",
+    "image_max_size": "圖像超過最大檔案大小",
+    "relation": {
+      "search": "搜尋"
     }
   },
   "role": {
@@ -895,7 +984,13 @@
     "delete_role": "刪除這個角色",
     "delete_role_desc": "<strong>如果你刪除這個角色</strong>, 身為此角色的使用者都將成為預設角色。請小心處理。",
     "everyone": "所有人",
-    "just_you": "只有你"
+    "just_you": "只有你",
+    "are_you_sure_you_want_to_delete_role": "是否確實要刪除角色{{roleName}}？",
+    "placeholder": {
+      "name": "輸入角色名稱",
+      "description": "輸入角色描述"
+    },
+    "only_me": "僅我自己"
   },
   "webhook": {
     "add_webhook": "新增角色",
@@ -922,7 +1017,15 @@
   "collection": {
     "visible_to_public": "這個集合是公開的",
     "visible_to_you": "這個集合只有你和管理者能看見",
-    "visible_to_roles": "這個集合開放給 {{roles}}"
+    "visible_to_roles": "這個集合開放給 {{roles}}",
+    "validation": {
+      "required": {
+        "name": "集合名稱為必填項"
+      }
+    },
+    "errors": {
+      "permissions": "您無權查看此集合"
+    }
   },
   "set": {
     "by": "由",
@@ -957,7 +1060,9 @@
     "edit_savedsearch": "Edit Search",
     "set_settings": "集合設定",
     "add_notification": "Add Notification",
-    "remove": "remove"
+    "remove": "remove",
+    "update_saved_filter": "更新已保存的篩檢程式",
+    "create_saved_filter": "創建保存的篩檢程式"
   },
   "category": {
     "add_tag": "新增分類",
@@ -989,7 +1094,18 @@
       "category": "Category",
       "status": "Status"
     },
-    "delete": "刪除"
+    "delete": "刪除",
+    "validation": {
+      "required": {
+        "name": "類別名稱為必填"
+      }
+    },
+    "placeholder": {
+      "name": "輸入名字",
+      "descriptions": "輸入描述...",
+      "choose_parent_category": "選擇父類別..."
+    },
+    "parent_category": "上層分類"
   },
   "tool": {
     "manage_forms": "管理表單",
@@ -1061,13 +1177,35 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "人道主義數據交換",
+      "please_enter_maintainer_id": "請輸入維護者ID",
+      "please_enter_api_key": "請輸入 API 金鑰",
+      "hdx_maintainer_id_min_length": "HDX 維護者ID太短",
+      "api_key_min_length": "API 金鑰太短"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
-      "destination": "Destination"
+      "destination": "Destination",
+      "placeholder": {
+        "name": "請輸入 webhook 名稱",
+        "shared_secret": "請輸入共用金鑰",
+        "api_url": "請輸入api url"
+      },
+      "validation": {
+        "required": {
+          "name": "Webhook 名稱為必填項",
+          "shared_secret": "共用金鑰是必需的",
+          "api_url": "API URL 必填",
+          "event_type": "事件類型為必填項",
+          "event_entity": "事件實體是必需的"
+        },
+        "please_provide_valid_api_url": "請提供有效的 API URL，網址為 HTTP（s）：//",
+        "secret_key_cannot_be_less_start": "共用金鑰不能小於",
+        "secret_key_cannot_be_less_end": "字符"
+      }
     },
     "data_sources": {
       "associate_with_form": "Import to survey",
@@ -1159,7 +1297,12 @@
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
         "search_terms": "Twitter search terms",
         "search_terms_desc": "Add search terms separated with commas"
-      }
+      },
+      "choose_data_source": "選擇資料來源...",
+      "type_of_data_source": "數據源的類型",
+      "provider_name": "{{providerName}}數據源？",
+      "do_you_really_want_to_disconnect": "您真的想斷開提供者的連接嗎？",
+      "add_source": "添加源"
     },
     "donation": {
       "title": {
@@ -1168,7 +1311,23 @@
         "required": "Donation title is required"
       },
       "wallet": {
-        "required": "Donation wallet address is required"
+        "required": "Donation wallet address is required",
+        "label": "錢包位址",
+        "placeholder": "輸入錢包位址，例如 $ilp.uphold.com/example"
+      },
+      "description": {
+        "label": "描述您的捐款",
+        "placeholder": "輸入文字，詳細介紹此捐贈資訊"
+      },
+      "images": {
+        "label": "捐贈圖片"
+      },
+      "info": {
+        "start_one": "請確保您已設置好錢包",
+        "start_two": "設置網路貨幣化。",
+        "start_three": "如果您還沒有錢包，請點擊",
+        "here": "這裡",
+        "end": "創建一個"
       }
     },
     "roles": {
@@ -1181,7 +1340,10 @@
       "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "manage_collections_and_saved_searches": "管理集合和保存的搜索",
+      "delete_posts": "刪除文章",
+      "delete_their_own_posts": "刪除自己的帖子"
     },
     "deployment_delete_this": "Delete this deployment",
     "deployment_delete": "Delete deployment",
@@ -1226,9 +1388,20 @@
     "add_new_users": "新增新會員",
     "valid": {
       "name": {
-        "required": "網站名稱是必填的"
+        "required": "網站名稱是必填的",
+        "pattern": "格式無效",
+        "minlength": "網站名稱太短"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "生成API密鑰",
+      "private_settings": "私人設定：",
+      "api_key": "API 金鑰",
+      "placeholder": {
+        "pick_location": "選擇位置..."
+      }
+    },
+    "bulk_actions": "批次操作"
   },
   "data_import": {
     "survey_field": "Survey field",
@@ -1271,7 +1444,13 @@
     "leave_empty": "Leave empty",
     "cancel_import": "Cancel import",
     "finish_import": "完成匯入",
-    "which_survey": "which survey?"
+    "which_survey": "which survey?",
+    "get_polling_info": "獲取投票資訊",
+    "change_csv_file": "變更 CSV 檔案{{selectedfile}}",
+    "upload_csv_file": "上傳CSV檔案",
+    "choose_status_to_imported_posts": "選擇匯入帖子的狀態：",
+    "has_tasks_required_start": "您的調查",
+    "has_tasks_required_end": "，包括通常必須為每篇文章完成的任務，然後才能將其標記為“已發佈”。在此導入期間，您導入的所有帖子的任務都將標記為“未完成”，同時仍允許將其狀態標記為“已發佈”。但是，如果您在導入這些帖子后對其進行了編輯，系統會要求您在重新發佈之前完成這些任務。"
   },
   "data_export": {
     "title": "Export data",
@@ -1405,14 +1584,38 @@
       "email": {
         "required": "信箱是必填的",
         "email": "信箱有誤",
-        "maxlength": "信箱太長"
+        "maxlength": "信箱太長",
+        "pattern": "此電子郵件地址無效",
+        "emailExists": "電子郵件地址已有其他使用者使用"
       },
       "password": {
         "required": "密碼是必填的",
         "minlength": "密碼太短",
-        "maxlength": "密碼太長"
+        "maxlength": "密碼太長",
+        "weak": "此密碼非常弱"
+      },
+      "fields": {
+        "email must be unique": "具有此電子郵件的使用者已存在"
+      },
+      "name": {
+        "required": "顯示名稱為必填項",
+        "maxlength": "顯示名稱太長"
+      },
+      "token": {
+        "required": "令牌是必需的"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "您確定要刪除此帳戶嗎？",
+    "name_will_be_a_display_name": "您輸入的名稱將是顯示名稱。",
+    "placeholder": {
+      "realname": "輸入您的姓名...",
+      "email": "請輸入您的郵件信箱...",
+      "password": "輸入密碼..."
+    },
+    "password_notify": "如果將該欄位留空，則密碼不會更改",
+    "avatar": "頭像",
+    "name": "名稱",
+    "search_by_name": "按名稱搜索"
   },
   "user_profile": {
     "title": "帳號設定",
@@ -1424,7 +1627,9 @@
     },
     "nav": {
       "general": "一般",
-      "notifications": "Notifications"
+      "notifications": "Notifications",
+      "account_settings": "帳號設置",
+      "notifications_settings": "通知設定"
     }
   },
   "user_create": {
@@ -1454,7 +1659,8 @@
       "bulk_destroy_confirm": "您確定要刪除 {{count}} 個資源？",
       "bulk_destroy_success": "刪除的資源",
       "bulk_destroy_error": "無法刪除資源，請重試",
-      "bulk_destroy_cancelled": "刪除取消了"
+      "bulk_destroy_cancelled": "刪除取消了",
+      "are_you_sure_you_want_to_delete_this": "你確定要刪除這個嗎？"
     },
     "data_import": {
       "see_imported_posts": "See imported posts",
@@ -1518,7 +1724,12 @@
       "update_status_success_bulk": "Status updated for {{count}} posts",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "can_t_view_this_post": "您無權查看此帖子。<br> 管理員仍在審核中。<br> 一旦發佈，您將可以使用它。",
+      "contact_for_details": "有關更多詳細資訊，請與管理員聯繫：",
+      "unfinished_post_task": "您無法發佈此帖子，該帖子有未完成的任務",
+      "posts_can_t_be_published": "以下帖子無法發佈： {{titles}}",
+      "post_not_found": "沒有發現修訂"
     },
     "category": {
       "save_success": "Saved category {{name}}",
@@ -1528,7 +1739,8 @@
       "destroy_error": "Unable to delete category, please try again",
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} categories?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
-      "bulk_destroy_success": "{{count}} categories deleted"
+      "bulk_destroy_success": "{{count}} categories deleted",
+      "bulk_destroy_success_countless": "已刪除的類別"
     },
     "role": {
       "delete_question": "Are you sure you want to delete the role {{role}}?",
@@ -1553,7 +1765,8 @@
       "bulk_destroy_confirm": "您確定要刪除 {{count}} 個會員？",
       "bulk_destroy_success": "Users deleted",
       "bulk_role_change_confirm": "您確定要異動 {{count}} 個會員成為 {{role}} 角色？",
-      "bulk_role_change_success": "User roles changed to {{role_name}}"
+      "bulk_role_change_success": "User roles changed to {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "是否確實要刪除{{username}}"
     },
     "video": {
       "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
@@ -1626,7 +1839,23 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "您確定要刪除{{count}}調查嗎？"
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "成功！",
+        "success_description": "感謝您提交報告。我們的團隊正在審核該帖子，很快就會出現在平臺上。",
+        "success_button": "好吧，聽起來不錯"
+      },
+      "deleted": {
+        "success": "成功！",
+        "success_description": "您已永久刪除{{count}}帖子。",
+        "success_button": "好吧，聽起來不錯"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "你真的要刪除{{lang}}語言嗎？"
     }
   },
   "empty": {
@@ -1660,7 +1889,10 @@
     "send_to_address": "Send notifications to this address",
     "button": {
       "delete": "Delete notification"
-    }
+    },
+    "what_you_get_notification_about": "您收到的通知內容",
+    "removed": "通知已刪除",
+    "are_you_sure_you_want_to_remove_this_notification": "您確定要刪除此通知嗎？"
   },
   "contact": {
     "edit": "編輯",
@@ -1684,7 +1916,8 @@
       "email": {
         "required": "An email address is required to receive notifications",
         "email": "This email address is invalid",
-        "maxlength": "信箱太長"
+        "maxlength": "信箱太長",
+        "not_valid": "E-mail 地址無效"
       },
       "phone": {
         "required": "A phone number is required to receive notifications",
@@ -1698,7 +1931,8 @@
     "title": "Ushahidi Terms of Service",
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
     "agree": "I agree to Ushahidi's Terms of Service.",
-    "accept_and_continue": "Accept and Continue"
+    "accept_and_continue": "Accept and Continue",
+    "i_agree": "我同意 Ushahidi <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">隱私政策</a> \n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">條款和條件</a>。"
   },
   "translations": {
     "languages": "Languages",
@@ -2455,5 +2689,33 @@
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "You cannot change your own role",
     "adminUserLimitReached": "limit:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "錯誤",
+    "description": "哎呀。。。很抱歉，我們找不到您要查找的頁面。 <br> 請按其他短語搜索或返回地圖檢視。",
+    "button": "轉到地圖檢視"
+  },
+  "cookies": {
+    "we_use_cookies": "你好！我們使用 cookie 來改善您的體驗。",
+    "cookies_privacy": "如果您想瞭解更多資訊或撤回您的同意，請訪問我們的 <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">隱私政策</a>。",
+    "decline": "拒絕",
+    "accept_cookies": "接受 Cookie"
+  },
+  "share": {
+    "share_deployment": "共用部署",
+    "share_post": "分享",
+    "web_address": "您調查的網址",
+    "embed_on_websites": "HTML 嵌入網站",
+    "copied": "已複製！",
+    "share_on_twitter": "分享到 Twitter",
+    "share_on_facebook": "分享到 Facebook"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">條款和條件</a>。"
+      }
+    }
   }
 }

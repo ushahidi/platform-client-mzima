@@ -3,7 +3,13 @@
   <mzima-client-button class="upload-button" [data-qa]="'btn-upload'">
     <span>
       {{
-        (selectedFile ? 'data_import.change_csv_file' : 'data_import.upload_csv_file') | translate
+        (selectedFile ? 'data_import.change_csv_file' : 'data_import.upload_csv_file')
+          | translate
+            : {
+                selectedfile: selectedFile
+                  ? selectedFile.name.slice(0, selectedFile.name.length - 4)
+                  : null
+              }
       }}
     </span>
     <mat-icon icon svgIcon="plus"></mat-icon>
