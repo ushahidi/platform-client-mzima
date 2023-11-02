@@ -1,18 +1,18 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ApiVersionDetailsModalComponent } from './api-version-details-modal/api-version-details-modal.component';
+import { InfoToastDetailsModalComponent } from './info-toast-details-modal/info-toast-details-modal.component';
 
 @Component({
-  selector: 'app-api-version-toast-message',
-  templateUrl: './api-version-toast-message.component.html',
-  styleUrls: ['./api-version-toast-message.component.scss'],
+  selector: 'app-info-toast-message',
+  templateUrl: './info-toast-message.component.html',
+  styleUrls: ['./info-toast-message.component.scss'],
 })
-export class ApiVersionToastMessageComponent implements OnChanges {
+export class InfoToastMessageComponent implements OnChanges {
   @Input() public isOpen = false;
   @Input() public isAdmin = false;
   @Input() public currentApiVersion: string;
   @Output() closeMessage = new EventEmitter();
-  private apiVersionDetailsModal?: MatDialogRef<ApiVersionDetailsModalComponent>;
+  private apiVersionDetailsModal?: MatDialogRef<InfoToastDetailsModalComponent>;
 
   constructor(private dialog: MatDialog) {}
 
@@ -28,7 +28,7 @@ export class ApiVersionToastMessageComponent implements OnChanges {
   }
 
   public async openApiInstructionsModal(): Promise<void> {
-    this.apiVersionDetailsModal = this.dialog.open(ApiVersionDetailsModalComponent, {
+    this.apiVersionDetailsModal = this.dialog.open(InfoToastDetailsModalComponent, {
       width: '100%',
       maxWidth: 448,
       panelClass: [
