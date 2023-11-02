@@ -253,7 +253,7 @@
         </div>
       </ng-container>
     </div>
-    <div class="feed-page__post" *ngIf="mode === FeedMode.Post">
+    <div class="feed-page__post" *ngIf="mode === FeedMode.Post" [attr.data-qa]="'post-details'">
       <router-outlet></router-outlet>
     </div>
   </div>
