@@ -28,7 +28,7 @@
     *ngFor="let survey of surveys"
     [routerLink]="['update', survey.id]"
     [ngStyle]="{ '--color': survey.color }"
-    [data-qa]="'survey-item' + survey.id"
+    [data-qa]="generateDataQa(survey.name)"
   >
     <mat-checkbox
       *ngIf="isShowActions"

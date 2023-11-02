@@ -10,10 +10,9 @@ const UserLocators = {
   roleMember: '[data-qa="user"]',
   cancelBtn: '[data-qa="btn-user-cancel"]',
   saveBtn: '[data-qa="btn-user-save"]',
-  // searchUserField: '[".p-inputtext"]',
+  searchUserField: '[data-qa="search-user"]',
   bulkActionsBtn: '[data-qa="btn-settings-action"]',
-  checkUser:
-    '[".p-datatable-tbody > :nth-child(1) > :nth-child(1) > .p-element > .p-checkbox > .p-checkbox-box"]',
+  checkUser: '[data-qa="td-checkbox-auto-user"]',
   deleteUsersBtn: '[data-qa="btn-settings-delete"]',
   deleteUserCancelBtn: '[data-qa="btn-confirm-cancel"]',
   deleteUserConfirmBtn: '[data-qa="btn-confirm-delete"]',

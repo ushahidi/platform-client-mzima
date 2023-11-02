@@ -138,4 +138,8 @@ export class SurveysComponent implements OnInit {
       this.getSurveys(true);
     }
   }
+
+  public generateDataQa(name: string): string {
+    return name.replace(/ /g, '-').toLowerCase();
+  }
 }
