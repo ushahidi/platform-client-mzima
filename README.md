@@ -194,7 +194,7 @@ Further help: Visit the [Nx Documentation](https://nx.dev) to learn more
 Except you are requested to create your branch from another branch, always create your new branch from the `development` branch:
 
 ````
-git checkout development
+git checkout develop
 ````
 
 ````
