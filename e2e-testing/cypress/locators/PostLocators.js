@@ -1,10 +1,16 @@
 const PostLocators = {
+  addPostBtn: '[data-qa="submit-post-button"]',
   srvyItemBtn: '[data-qa="add-post-modal-surveys-item125"]',
   successButton: '[data-qa="btn-confirm-success"]',
   submitBtn: '[data-qa="btn-post-item-submit"]',
+  postPreview: '[data-qa="post-preview"]',
+  postItem: '[data-qa="post-item"]',
+  surveySelectionList: '[data-qa="survey-selection-list"]',
+  surveySelectItem: '[data-qa="survey-select-item"]',
+  confirmContent: '[data-qa="confirm-content"]',
 
   /* Input fields */
-  titleField: '[data-qa="title"]',
+  titleField: '[data-qa="null"]',
   descField: '[data-qa="description"]',
   shtTextField: '[data-qa="short-text field"]',
   lngTextField: '[data-qa="long-text field"]',
@@ -18,5 +24,7 @@ const PostLocators = {
   relatedPostField: '[data-qa="related-post-field"]',
   embedVideoField: '[data-qa="embed-video field"]',
 };
+
+export const getUniqueSelector = (name) => name.split(' ').join('-').toLowerCase();
 
 export default PostLocators;

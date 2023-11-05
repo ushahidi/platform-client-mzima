@@ -4,6 +4,7 @@
   class="submit-post-button"
   [rounded]="isRound"
   [iconOnly]="hasIconOnly"
+  [data-qa]="'submit-post-button'"
 >
   <span *ngIf="hasText">{{ 'app.add_new_post' | translate }}</span>
   <mat-icon icon svgIcon="plus"></mat-icon>

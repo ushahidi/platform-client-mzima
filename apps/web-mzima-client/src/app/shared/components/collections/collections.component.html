@@ -191,6 +191,7 @@
       (buttonClick)="saveCollection()"
       [disabled]="collectionForm.invalid"
       id="save-collection-btn"
+      [attr.data-qa]="'save-collection-btn'"
     >
       {{ 'app.save' | translate }}
     </mzima-client-button>

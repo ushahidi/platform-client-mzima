@@ -49,6 +49,7 @@
           cdkAutosizeMinRows="2"
           cdkAutosizeMaxRows="5"
           formControlName="description"
+          [data-qa]="'description'"
         >
         </textarea>
       </mat-form-field>
@@ -99,7 +100,11 @@
         <mat-option value="">{{
           'category.placeholder.choose_parent_category' | translate
         }}</mat-option>
-        <mat-option [value]="category.id" *ngFor="let category of categories" [data-qa]="category.slug.split(' ').join('-') | lowercase">
+        <mat-option
+          [value]="category.id"
+          *ngFor="let category of categories"
+          [data-qa]="category.slug.split(' ').join('-') | lowercase"
+        >
           {{ category.tag }}
         </mat-option>
       </mat-select>
@@ -114,7 +119,7 @@
       formControlName="visible_to"
     ></app-group-checkbox-select>
     <div class="radio-buttons" *ngIf="category?.parent?.id">
-      <p class="radio-buttons__info">
+      <p class="radio-buttons__info" [data-qa]="'option'">
         <mat-icon>group</mat-icon>
         {{ 'category.child_permissions' | translate }}
       </p>

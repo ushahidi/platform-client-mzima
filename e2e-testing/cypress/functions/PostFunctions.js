@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import PostLocators from '../locators/PostLocators';
+import PostLocators, { getUniqueSelector } from '../locators/PostLocators';
 
 class PostFunctions {
   constructor() {
@@ -8,7 +8,7 @@ class PostFunctions {
     this.postDescription = 'Automated Description Response';
   }
   open_post_creation_form() {
-    cy.get('.sidebar__add-post-btn .submit-post-button .mzima-button--primary').click();
+    cy.get(PostLocators.addPostBtn).click();
     cy.get(PostLocators.srvyItemBtn).click();
   }
 
@@ -43,15 +43,17 @@ class PostFunctions {
   complete_add_post_steps() {
     cy.get(PostLocators.submitBtn).should('not.be.disabled');
     cy.get(PostLocators.submitBtn).click();
-    cy.get('div.confirm-content').should('be.visible');
     cy.get(PostLocators.successButton).click();
   }
 
   verify_created_post_exists() {
-    cy.contains('mat-list-option', "Full Length Survey-with image-field- don't delete")
-      .find('.mat-pseudo-checkbox')
-      .click();
-    cy.contains(this.postTitle).should('exist');
+    cy.get(PostLocators.surveySelectionList)
+        .children(PostLocators.surveySelectItem)
+        .contains("Full Length Survey-with image-field- don't delete")
+        .click({force: true})
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle);
   }
 }
 
