@@ -14,7 +14,13 @@ const CollectionLocators = {
     postDescField: '[data-qa="description"]',
     postCheckBox: '[data-qa="nature-of-this-incident-failure-to-announce-results-by-iebc-officials"]',
     savePostBtn: '[data-qa="btn-post-item-submit"]',
-    successBtn: '[data-qa="btn-confirm-success"]'
+    successBtn: '[data-qa="btn-confirm-success"]',
+    surveySelectionList: '[data-qa="survey-selection-list"]',
+    surveySelectItem: '[data-qa="survey-select-item"]',
+    addPostButton: '[data-qa="submit-post-button"]',
+    saveCollectionButton: '[data-qa="save-collection-btn"]',
+    collectionItem: '[data-qa="collection-item"]',
+    visibilityOption: '[data-qa="option"]'
   };
   
 export default CollectionLocators;

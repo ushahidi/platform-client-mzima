@@ -12,9 +12,9 @@ const PostLocators = {
   /* Input fields */
   titleField: '[data-qa="null"]',
   descField: '[data-qa="description"]',
-  shtTextField: '[data-qa="short-text field"]',
+  shtTextField: '[data-qa="null"]',
   lngTextField: '[data-qa="long-text field"]',
-  decimalField: '[data-qa="number-decimal field"]',
+  decimalField: '[data-qa="null"]',
   intField: '[data-qa="number-integer field"]',
   dateField: '[data-qa="date-&-time-field"]',
   selectFieldBtn: '[data-qa="post-item-post-selectc5394e60-350d-4948-af81-6e8bf0502761"]',

@@ -118,8 +118,8 @@
       [data]="roleOptions"
       formControlName="visible_to"
     ></app-group-checkbox-select>
-    <div class="radio-buttons" *ngIf="category?.parent?.id">
-      <p class="radio-buttons__info" [data-qa]="'option'">
+    <div class="radio-buttons" *ngIf="category?.parent?.id" [data-qa]="'category-option'">
+      <p class="radio-buttons__info">
         <mat-icon>group</mat-icon>
         {{ 'category.child_permissions' | translate }}
       </p>

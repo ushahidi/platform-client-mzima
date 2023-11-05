@@ -12,22 +12,22 @@ class PostFunctions {
     cy.get(PostLocators.srvyItemBtn).click();
   }
 
-  fill_required_form_fields() {
-    cy.contains('mat-label', 'Title')
-      .siblings('mat-form-field')
-      .find('input.mat-input-element')
-      .type(this.postTitle);
-    cy.get(PostLocators.descField).type(this.postDescription);
+  type_post_title(title) {
+    cy.get(PostLocators.titleField).eq(0).type(title).should('have.value', title);
+  }
 
+  type_post_description(description) {
+    cy.get(PostLocators.descField).type(description).should('have.value', description);
+  }
+
+  fill_required_form_fields() {
+    this.type_post_title(this.postTitle);
+    this.type_post_description(this.postDescription);
     cy.get(PostLocators.lngTextField).type('This is an automated long text response');
-    cy.contains('mat-label', 'Number (Decimal) Field')
-      .siblings('mat-form-field')
-      .find('input.mat-input-element')
-      .type(99.9);
-    cy.contains('mat-label', 'Number (Integer) Field')
-      .siblings('mat-form-field')
-      .find('input.mat-input-element')
-      .type(100);
+    cy.get(PostLocators.shtTextField).type('Automated Short text');
+    cy.get(PostLocators.decimalField).type(99.9);
+    cy.get(PostLocators.intField).type(100);
+
     // click on date field to open pop up
     cy.contains('mat-label', 'Date & Time Field')
       .siblings('mat-form-field')

@@ -88,6 +88,7 @@
           *ngFor="let item of collectionList"
           [checked]="isPostInCollection(item)"
           (checkedChange)="onCheckChange($event, item)"
+          [data-qa]="'collection-item'"
         >
         </app-collection-item>
       </div>
@@ -158,6 +159,7 @@
           *ngIf="isManageCollections"
           [data]="roleOptions"
           formControlName="visible_to"
+          [data-qa]="'visible_to_you'"
         >
         </app-group-checkbox-select>
       </div>

@@ -38,6 +38,7 @@
     class="search-form__filters"
     *ngIf="isDesktop || isMapView"
     (buttonClick)="toggleFilters(!isFiltersVisible)"
+    [data-qa]="'search-form__filters'"
   >
     <span>{{ 'app.filters' | translate }}</span>
     <mat-icon iconPrefix svgIcon="filters"></mat-icon>
@@ -395,6 +396,7 @@
           [disabled]="form.disabled"
           class="search-form__button"
           (buttonClick)="resetSavedFilter()"
+          [data-qa]="'search-form__button'"
         >
           {{ 'global_filter.clear_all_filters' | translate }}
         </mzima-client-button>
