@@ -8,7 +8,6 @@ class GeneralSettingsFunctions {
 
   // edit deployment name
   type_deployment_name(deploymentName) {
-    // cy.wait(1000);
     cy.get(GeneralSettingsLocator.deploymentNameField)
       .type(deploymentName)
       .should(($input) => {
@@ -19,7 +18,6 @@ class GeneralSettingsFunctions {
 
   // edit description
   type_site_description(description) {
-    cy.wait(5000);
     cy.get(GeneralSettingsLocator.descriptionField)
       .clear()
       .type(description)
@@ -28,13 +26,11 @@ class GeneralSettingsFunctions {
 
   // click save button
   click_save_button() {
-    cy.wait(1000);
     cy.get(GeneralSettingsLocator.saveButton).click();
   }
 
   // Api Key value
   get_api_key_field_value() {
-    cy.wait(1000);
     cy.get(GeneralSettingsLocator.apiKeyField).should('not.be.empty');
   }
 
