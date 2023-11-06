@@ -24,15 +24,12 @@ class PostFunctions {
     this.type_post_title(this.postTitle);
     this.type_post_description(this.postDescription);
     cy.get(PostLocators.lngTextField).type('This is an automated long text response');
-    cy.get(PostLocators.shtTextField).type('Automated Short text');
-    cy.get(PostLocators.decimalField).type(99.9);
-    cy.get(PostLocators.intField).type(100);
+    cy.get(PostLocators.shtTextField).eq(1).type('Automated Short text');
+    cy.get(PostLocators.decimalField).eq(2).type(99.9);
+    cy.get(PostLocators.intField).eq(4).type(100);
 
     // click on date field to open pop up
-    cy.contains('mat-label', 'Date & Time Field')
-      .siblings('mat-form-field')
-      .find('input.mat-input-element')
-      .click();
+    cy.get(PostLocators.dateField).eq(6).click();
     cy.get('.mat-button.mat-stroked-button').click(); // click on the checkmark button to select today's date
     cy.get(PostLocators.selectFieldBtn).click();
     cy.get(PostLocators.selectFieldOption1).click();

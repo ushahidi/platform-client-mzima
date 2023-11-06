@@ -15,8 +15,8 @@ const PostLocators = {
   shtTextField: '[data-qa="null"]',
   lngTextField: '[data-qa="long-text field"]',
   decimalField: '[data-qa="null"]',
-  intField: '[data-qa="number-integer field"]',
-  dateField: '[data-qa="date-&-time-field"]',
+  intField: '[data-qa="null"]',
+  dateField: '[data-qa="null"]',
   selectFieldBtn: '[data-qa="post-item-post-selectc5394e60-350d-4948-af81-6e8bf0502761"]',
   selectFieldOption1: '[data-qa="post-item-post-select-optionS1"]',
   radioFieldOption2: '[data-qa="radio-buttons-field-r2"]',
@@ -24,7 +24,5 @@ const PostLocators = {
   relatedPostField: '[data-qa="related-post-field"]',
   embedVideoField: '[data-qa="embed-video field"]',
 };
-
-export const getUniqueSelector = (name) => name.split(' ').join('-').toLowerCase();
 
 export default PostLocators;
