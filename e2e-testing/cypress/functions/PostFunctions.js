@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import PostLocators, { getUniqueSelector } from '../locators/PostLocators';
+import PostLocators from '../locators/PostLocators';
 
 class PostFunctions {
   constructor() {
