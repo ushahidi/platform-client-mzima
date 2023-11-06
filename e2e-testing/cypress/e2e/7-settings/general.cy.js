@@ -1,9 +1,9 @@
 import LoginFunctions from "../../functions/LoginFunctions";
-import GeneralSettingsFunction from "../../functions/GeneralSettingsFunctions";
+import GeneralSettingsFunctions from "../../functions/GeneralSettingsFunctions";
 
 describe("Automated Tests for Settings", () => {
   const loginFunctions = new LoginFunctions();
-  const generalSettingsFunctions = new GeneralSettingsFunction();
+  const generalSettingsFunctions = new GeneralSettingsFunctions();
 
   before(() => {
     loginFunctions.login_as_admin();
