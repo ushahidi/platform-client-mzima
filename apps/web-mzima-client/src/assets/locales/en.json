@@ -1444,7 +1444,7 @@
     "file_csv": "CSV file",
     "import_csv": "Import CSV",
     "import_to": "Import to ",
-    "change_csv_file": "Change CSV file",
+    "change_csv_file": "Change {{selectedfile}} CSV file",
     "upload_csv_file": "Upload CSV file",
     "choose_status_to_imported_posts": "Choose status to imported posts:",
     "has_tasks_required_start": "Your survey",

@@ -67,8 +67,6 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
         this.isInnerPage = Boolean(option.inner);
       },
     });
-
-    this.checkApiVersion();
   }
 
   ngOnInit(): void {
@@ -77,42 +75,6 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
 
   loadData(): void {
     this.isAdmin = this.user.role === 'admin';
-  }
-
-  private checkApiVersion(): void {
-    this.currentApiVersion = this.sessionService.getSiteConfigurations().api_version ?? 'v3';
-
-    this.sessionService.currentUserData$.pipe(untilDestroyed(this)).subscribe({
-      next: (userData) => {
-        this.isAdmin = userData?.role === 'admin';
-        if (this.isAdmin && this.currentApiVersion !== 'v5') {
-          this.isToastMessageVisible = true;
-        }
-      },
-    });
-
-    if (this.isAdmin && this.currentApiVersion !== 'v5') {
-      const apiMesssageShownTime = JSON.parse(
-        localStorage.getItem(
-          this.sessionService.getLocalStorageNameMapper('outdated_api_message_shown'),
-        ) ?? '0',
-      );
-
-      const twentyFourHours = 24 * 60 * 60 * 1000;
-      const currentTime = Date.now();
-
-      if (currentTime > apiMesssageShownTime + twentyFourHours) {
-        this.isToastMessageVisible = true;
-      }
-    }
-  }
-
-  public closeToastMessage(): void {
-    this.isToastMessageVisible = false;
-    localStorage.setItem(
-      this.sessionService.getLocalStorageNameMapper('outdated_api_message_shown'),
-      JSON.stringify(Date.now()),
-    );
   }
 
   public openAccountSettings(): void {

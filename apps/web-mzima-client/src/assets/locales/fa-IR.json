@@ -122,7 +122,44 @@
     "select_language": "انتخاب زبان",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "ادرس ایمیل تماس:",
+    "add_collection": "افزودن مجموعه",
+    "choose_photo": "انتخاب تصویر",
+    "choose": "انتخاب کنید...",
+    "add_all_fields": "اضافه کردن همه فیلدها",
+    "insert_text_here": "درج متن در اینجا...",
+    "onboarding": {
+      "title": "شبانه روزی",
+      "description": "دوباره به یوشاهیدی نگاه کنید."
+    },
+    "forbidden-login": "لطفا جزئیات ورود خود را برای دسترسی به استقرار وارد کنید.",
+    "contact_with_admin": "یا با Admin تماس برقرار کنید ",
+    "page-not-found": "صفحه یافت نشد",
+    "update": "بروزرسانی",
+    "current_results": "نتایج فعلی:",
+    "duplicate": "تکراری",
+    "yes_delete": "بله حذف کنید",
+    "no_go_back": "نه، بازگشت",
+    "are_you_sure_you_want_to_delete": "ایا مطمئن هستید که می خواهید حذف کنید",
+    "action_cannot_be_undone": "<p>این عمل را نمیتوان لغو کرد.</p><p>مطمئنی?</p>",
+    "you_are_not_authorized": "شما مجاز نیستید",
+    "lost_internet_connection": "اتصال اینترنت از دست رفته",
+    "tweet_is_unavailable": "این توییت در دسترس نیست",
+    "file_uploader": "بارگذاری فایل",
+    "preview_image": "پیش‌نمایش تصویر",
+    "privacy_policy": "سیاست حفظ حریم خصوصی",
+    "terms_and_conditions": "شرایط و ضوابط",
+    "ok_sounds_good": "باشه، به نظر خوب میاد",
+    "next_step": "گام بعدی",
+    "we_are_aware_there_are_some_issues_here": "ما می دانیم که برخی از مسائل در اینجا وجود دارد. تیم در حال تلاش برای اصلاح انها است.",
+    "you_are_using_old_deployment_version": "شما در حال استفاده از نسخه استقرار -- {{api_version}}. اخرین نسخه V5 است. لطفا Deployment خود را برای دسترسی کاربران به روز کنید.",
+    "outdated_deployment": "استقرار منسوخ شده!",
+    "the_deployment_is_outdated": "استقرار منسوخ شده است، بنابراین برخی از اشکالات ممکن است رخ دهد، تا زمانی که Admin ان را به روز کند.",
+    "your_deployment_is_outdated": "استقرار شما منسوخ شده است",
+    "we_ve_updated_deployments_to_version_5": "ما Deployments را به نسخه 5 ارتقا داده ایم. کاربران ممکن است به زودی به استقرار شما دسترسی نداشته باشند. ",
+    "for_more_details_on_deployment_update": "برای جزئیات بیشتر در مورد به روز رسانی استقرار، به Help & Support بروید (این باید یک لینک باشد) یا یک ایمیل به:",
+    "open_chat": "گفتگوی باز"
   },
   "toolbar": {
     "searchbar": {
@@ -238,7 +275,9 @@
     "step_required": "این وظیفه مورد نیاز است",
     "post_step": "نوشته",
     "type": "نوع",
-    "visible_to": "قابل مشاهده برای"
+    "visible_to": "قابل مشاهده برای",
+    "choose_language": "انتخاب زبان برای ترجمه",
+    "error_input_number": "لطفا شماره نوع {{type}} وارد کنید"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -357,8 +396,10 @@
     },
     "fields": {
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
-      }
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}} زمینه شامل نویسه های ویژه است"
+      },
+      "fields_title": "فیلدها"
     },
     "targeted_survey": {
       "title": "ایجاد نظرسنجی هدفمند",
@@ -421,7 +462,17 @@
       "pending_messages": "در حال پردازش  {{totalPending}} پیام هستیم.",
       "pending_message": "در حال پردازش  {{totalPending}} پیام هستیم.",
       "cancel": "انصراف"
-    }
+    },
+    "no_tasks": "بدون وظیفه",
+    "select_categories": "انتخاب دسته بندی ها",
+    "select_related_post": "انتخاب مرتبط",
+    "no_fields": "بدون فیلد",
+    "select_color": "انتخاب رنگ",
+    "choose_survey": "انتخاب نظرسنجی",
+    "main_info": "اطلاعات اصلی",
+    "special_characters_option": "این گزینه شامل نویسه های ویژه است",
+    "no_options_for_this_field": "هیچ گزینه ای برای این زمینه وجود ندارد",
+    "add_options_first": "ابتدا گزینهها را اضافه کنید"
   },
   "global_filter": {
     "filter": "فیلتر",
@@ -502,7 +553,9 @@
       "all_posts": "نمایش همه نوشته ها",
       "unmapped": "نمایش نوشته های ترسیم نشده در نقشه",
       "mapped": "نمایش نوشته های دارای مکان",
-      "source": "منبع"
+      "source": "منبع",
+      "expires": "منقضی می شود",
+      "download": "دانلود"
     },
     "unmapped_start_one": "اینجا هست",
     "unmapped_start_many": "اینجا هست",
@@ -536,7 +589,11 @@
     "source": "منبع",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "شهر یا ادرس",
+    "viewing_mode": "حالت مشاهده",
+    "saved_filter": "فیلتر ذخیره شده",
+    "delete_this_saved_filter": "ایا مطمئن هستید که می خواهید این فیلتر ذخیره شده را حذف کنید؟"
   },
   "graph": {
     "all_posts": "هیچ چیز؛ نمایش همه نوشته ها",
@@ -574,6 +631,12 @@
   "modal": {
     "button": {
       "close": "بستن"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "کسب درامد وب در این وب سایت فعال است. با تشکر از شما برای کمک مالی خود را. شما اهدا کرده اید",
+      "thank_you_for_your_donation_end": "تا کنون",
+      "web_monetization_text": "استقرار Ushahidi در حال حاضر کسب درامد وب فعال است. کسب درامد از وب راهی برای حمایت از وب سایت هایی است که دوست دارید بدون بازی تبلیغ کنندگان بازی کنید. تنها چیزی که نیاز دارید این است که مرورگر خود را راه اندازی کنید. روی لینک زیر کلیک کنید تا یاد بگیرید چگونه می توانید اهدا کنید.",
+      "how_can_i_donate": "چگونه می توانم اهدا کنم؟"
     }
   },
   "nav": {
@@ -646,7 +709,15 @@
     "user": "کاربر",
     "users": "کاربران",
     "views": "بازدیدها",
-    "yesterday": "دیروز"
+    "yesterday": "دیروز",
+    "open_menu": "باز کردن فهرست",
+    "my_account": "حساب کاربری من",
+    "login_register": "وارد شوید / ثبت نام کنید",
+    "help_support": "کمک و پشتیبانی",
+    "receive_notifications": "دریافت اعلان ها",
+    "map": "نقشه",
+    "data": "داده",
+    "feed": "نمای داده ها"
   },
   "views": {
     "map": "نقشه",
@@ -727,7 +798,18 @@
     "unpublished": "منتشر نشده",
     "published_by": "منتشر شده توسط",
     "can_see_this_post": "می تواند این نوشته را ببیند",
-    "location": "موقعیت مکانی",
+    "location": {
+      "location": "مکان",
+      "you_can_search_or_click": "شما می توانید جستجو و یا کلیک بر روی منطقه نقشه که در ان شما می خواهید برای قرار دادن نشانگر.",
+      "search_address": "جستجو برای ادرس، نام مکان، و یا مختصات ...",
+      "nothing_found": "چیزی پیدا نشد",
+      "errors": {
+        "empty_lat": "عرض جغرافیایی فیلد خالی است",
+        "empty_lng": "طول جغرافیایی میدان خالی است",
+        "decimal_lat": "فقط عدد دهدهی عرض جغرافیایی",
+        "decimal_lng": "فقط طول جغرافیایی عدد دهدهی"
+      }
+    },
     "categories": "دسته بندی ها",
     "status": "وضعیت",
     "type": "نوع",
@@ -881,6 +963,13 @@
         "save_and_edit": "افزودن به نظرسنجی و ویرایش"
       },
       "survey_title": "نظرسنجی نامشخص"
+    },
+    "post_count": "های {{count}}",
+    "read_more": "ادامه مطلب",
+    "image_is_required": "تصویر مورد نیاز است",
+    "image_max_size": "تصویر بیش از حداکثر اندازه پرونده",
+    "relation": {
+      "search": "جستجو"
     }
   },
   "role": {
@@ -895,7 +984,13 @@
     "delete_role": "این نقش حذف شود",
     "delete_role_desc": "<strong> اگر این نقش را حذف کنید </ strong>، به تمام کاربران این نقش، مجوزهای پیش فرض اختصاص داده خواهد شد. با احتیاط ادامه بدهید.",
     "everyone": "همه",
-    "just_you": "فقط شما"
+    "just_you": "فقط شما",
+    "are_you_sure_you_want_to_delete_role": "ایا مطمئن هستید که می خواهید {{roleName}} نقش را حذف کنید؟",
+    "placeholder": {
+      "name": "نام نقش را وارد نمایید ",
+      "description": "توصیف نقش را وارد کنید"
+    },
+    "only_me": "فقط من"
   },
   "webhook": {
     "add_webhook": "اضافه کردن نقش",
@@ -922,7 +1017,15 @@
   "collection": {
     "visible_to_public": "این مجموعه برای عموم قابل مشاهده است",
     "visible_to_you": "این مجموعه فقط برای شما و مدیران قابل مشاهده است",
-    "visible_to_roles": "این مجموعه برای {{roles}} قابل مشاهده است"
+    "visible_to_roles": "این مجموعه برای {{roles}} قابل مشاهده است",
+    "validation": {
+      "required": {
+        "name": "نام مجموعه مورد نیاز است"
+      }
+    },
+    "errors": {
+      "permissions": "شما اجازهی دیدن این مجموعه را ندارید"
+    }
   },
   "set": {
     "by": "توسط",
@@ -957,7 +1060,9 @@
     "edit_savedsearch": "ویرایش جستجو",
     "set_settings": "تنظیمات مجموعه",
     "add_notification": "افزودن اعلان",
-    "remove": "حذف"
+    "remove": "حذف",
+    "update_saved_filter": "بهروزرسانی پالیهای ذخیره شده",
+    "create_saved_filter": "ایجاد پالیهای ذخیره شده"
   },
   "category": {
     "add_tag": "اضافه کردن دسته بندی",
@@ -989,7 +1094,18 @@
       "category": "دسته بندی",
       "status": "وضعیت"
     },
-    "delete": "حذف"
+    "delete": "حذف",
+    "validation": {
+      "required": {
+        "name": "نام دسته الزامی است"
+      }
+    },
+    "placeholder": {
+      "name": "نام را وارد کنید",
+      "descriptions": "وارد کردن توصیف...",
+      "choose_parent_category": "برگزیدن ردهی والد..."
+    },
+    "parent_category": "دسته بندی والد"
   },
   "tool": {
     "manage_forms": "مدیریت فرم ها",
@@ -1061,13 +1177,35 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "تبادل اطلاعات بشردوستانه",
+      "please_enter_maintainer_id": "لطفا شناسه نگهدارنده را وارد کنید",
+      "please_enter_api_key": "لطفا کلید API را وارد کنید",
+      "hdx_maintainer_id_min_length": "HDX Maintainer Id بسیار کوتاه است",
+      "api_key_min_length": "کلید API خیلی کوتاه است"
     },
     "webhooks": {
       "use_webhook_for": "استفاده از وب هوک برای",
       "enable_source_destination": "فعال کردن فیلدهای منبع و مقصد",
       "enable_source_destination_desc": "این وب هوک فقط در مورد نظرسنجی هایی از نوع انتخاب شده اعمال خواهد شد.",
-      "destination": "مقصد"
+      "destination": "مقصد",
+      "placeholder": {
+        "name": "لطفا نام webhook را وارد کنید",
+        "shared_secret": "لطفا راز مشترک را وارد کنید",
+        "api_url": "لطفا ادرس API را وارد کنید"
+      },
+      "validation": {
+        "required": {
+          "name": "نام Webhook مورد نیاز است",
+          "shared_secret": "کلید مخفی مشترک مورد نیاز است",
+          "api_url": "ادرس API مورد نیاز است",
+          "event_type": "نوع رویداد مورد نیاز است",
+          "event_entity": "موجودیت رویداد مورد نیاز است"
+        },
+        "please_provide_valid_api_url": "لطفا ادرس معتبر API را با http(s)://",
+        "secret_key_cannot_be_less_start": "کلید مخفی به اشتراک گذاشته شده نمی تواند کمتر از",
+        "secret_key_cannot_be_less_end": "کاراکترها"
+      }
     },
     "data_sources": {
       "associate_with_form": "وارد کردن به نظرسنجی ",
@@ -1159,7 +1297,12 @@
         "access_token_secret_desc": "اضافه کردن رمز تولید شده به اپلیکیشن توئیتر",
         "search_terms": "شرایط جستجوی توییتر",
         "search_terms_desc": "کلمات جستجو را با کاما از هم جدا کنید."
-      }
+      },
+      "choose_data_source": "برگزیدن متن داده...",
+      "type_of_data_source": "نوع منبع داده",
+      "provider_name": "{{providerName}} منبع داده؟",
+      "do_you_really_want_to_disconnect": "ایا واقعا می خواهید ارائه دهنده خود را قطع کنید؟",
+      "add_source": "افزودن منبع"
     },
     "donation": {
       "title": {
@@ -1168,7 +1311,23 @@
         "required": "Donation title is required"
       },
       "wallet": {
-        "required": "Donation wallet address is required"
+        "required": "Donation wallet address is required",
+        "label": "آدرس والت",
+        "placeholder": "یک ادرس کیف پول را وارد کنید به عنوان مثال $ilp.uphold.com/example"
+      },
+      "description": {
+        "label": "کمک مالی خود را توصیف کنید",
+        "placeholder": "متن را وارد کنید گفتن بیشتر در مورد این کمک مالی"
+      },
+      "images": {
+        "label": "تصاویر اهدایی"
+      },
+      "info": {
+        "start_one": "لطفا مطمئن شوید که کیف پول خود را تنظیم کرده اید",
+        "start_two": "برای تنظیم کسب درامد از وب.",
+        "start_three": "اگر کیف پول ندارید لطفا کلیک کنید",
+        "here": "اینجا",
+        "end": "برای ایجاد."
       }
     },
     "roles": {
@@ -1181,7 +1340,10 @@
       "edit_their_own_posts": "ویرایش نوشته های خودشان",
       "registred_member": "شماره ثبت شده",
       "administrator": "مدیریت",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "manage_collections_and_saved_searches": "مدیریت مجموعه ها و جستجوهای ذخیره شده",
+      "delete_posts": "حذف نوشته",
+      "delete_their_own_posts": "های خود را حذف کنید"
     },
     "deployment_delete_this": "حذف این گسترش",
     "deployment_delete": "حذف گسترش",
@@ -1226,9 +1388,20 @@
     "add_new_users": "افزودن کاربران جدید",
     "valid": {
       "name": {
-        "required": "نام سایت مورد نیاز است"
+        "required": "نام سایت مورد نیاز است",
+        "pattern": "فرمت نادرست",
+        "minlength": "نام سایت خیلی کوتاه است"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "ایجاد کلید API",
+      "private_settings": "تنظیمات خصوصی:",
+      "api_key": "کلید API",
+      "placeholder": {
+        "pick_location": "انتخاب مکان..."
+      }
+    },
+    "bulk_actions": "اعمال توده"
   },
   "data_import": {
     "survey_field": "فیلد نظرسنجی",
@@ -1271,7 +1444,13 @@
     "leave_empty": "خالی بگذارید",
     "cancel_import": "لغو وارد کردن",
     "finish_import": "پایان وارد کردن",
-    "which_survey": "کدام نظرسنجی؟"
+    "which_survey": "کدام نظرسنجی؟",
+    "get_polling_info": "دریافت اطلاعات نظرسنجی",
+    "change_csv_file": "تغییر {{selectedfile}} فایل CSV",
+    "upload_csv_file": "آپلود فایل CSV",
+    "choose_status_to_imported_posts": "انتخاب وضعیت برای های وارد شده:",
+    "has_tasks_required_start": "نظرسنجی شما",
+    "has_tasks_required_end": "، شامل وظایفی است که معمولا باید برای هر تکمیل شود قبل از اینکه بتوان انها را \"منتشر شده\" علامت گذاری کرد. در طول این واردات، تمام های وارداتی شما وظایف خود را به عنوان \"ناقص\" مشخص می کنند، در حالی که هنوز هم اجازه می دهد وضعیت انها به عنوان \"منتشر شده\" مشخص شود. با این حال، اگر هر یک از این ها را پس از وارد شدن ویرایش کنید، از شما خواسته می شود قبل از انتشار مجدد انها، این وظایف را انجام دهید."
   },
   "data_export": {
     "title": "داده های خروجی",
@@ -1405,14 +1584,38 @@
       "email": {
         "required": "آدرس ایمیل الزامی هست",
         "email": "این آدرس ایمیل معتبر نیست",
-        "maxlength": "این آدرس ایمیل خیلی طولانی است"
+        "maxlength": "این آدرس ایمیل خیلی طولانی است",
+        "pattern": "این ادرس ایمیل نامعتبر است",
+        "emailExists": "ایمیل در حال حاضر در حال استفاده است"
       },
       "password": {
         "required": "گذرواژه الزامی است",
         "minlength": "گذرواژه بسیار کوتاه است",
-        "maxlength": "این گذرواژه بسیار طولانی است"
+        "maxlength": "این گذرواژه بسیار طولانی است",
+        "weak": "این رمز عبور بسیار ضعیف است"
+      },
+      "fields": {
+        "email must be unique": "کاربر با این ایمیل در حال حاضر وجود دارد"
+      },
+      "name": {
+        "required": "نام نمایش الزامی است",
+        "maxlength": "نام نمایشی خیلی طولانی است"
+      },
+      "token": {
+        "required": "Token مورد نیاز است"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "آیا مطمئن هستید که می خواهید این حساب را حذف کنید؟",
+    "name_will_be_a_display_name": "نامی که وارد می کنید یک نام نمایشی خواهد بود.",
+    "placeholder": {
+      "realname": "نام خود را وارد کنید",
+      "email": "آدرس ایمیل را وارد کنید...",
+      "password": "گذرواژه را وارد کنید..."
+    },
+    "password_notify": "اگر فیلد را خالی بگذارید، گذرواژه شما تغییر نخواهد کرد",
+    "avatar": "آواتار",
+    "name": "نام",
+    "search_by_name": "جستجو بر اساس نام"
   },
   "user_profile": {
     "title": "تنظیمات حساب",
@@ -1424,7 +1627,9 @@
     },
     "nav": {
       "general": "عمومی",
-      "notifications": "اعلان ها"
+      "notifications": "اعلان ها",
+      "account_settings": "تنظیمات حساب کاربری",
+      "notifications_settings": "اعلان ها"
     }
   },
   "user_create": {
@@ -1454,7 +1659,8 @@
       "bulk_destroy_confirm": "آیا از حذف {{count}} منبع مطمئن هستید؟",
       "bulk_destroy_success": "منبعِ حذف شده",
       "bulk_destroy_error": "امکان حذف منبع وجود ندارد، لطفا دوباره امتحان کنید",
-      "bulk_destroy_cancelled": "حذف لغو شد"
+      "bulk_destroy_cancelled": "حذف لغو شد",
+      "are_you_sure_you_want_to_delete_this": "آیا مطمئن هستید که می خواهید این را حذف کنید؟"
     },
     "data_import": {
       "see_imported_posts": "مشاهده پست های وارد شده",
@@ -1518,7 +1724,12 @@
       "update_status_success_bulk": "وضعیت {{count}} برای پست ها بروزرسانی شد",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "اگر ادامه دهید، تمام تغییرات شما از دست خواهد رفت",
-      "leave_confirm": "بدون ذخیره ادامه دهید"
+      "leave_confirm": "بدون ذخیره ادامه دهید",
+      "can_t_view_this_post": "شما اجازه مشاهده این را ندارید.<br> هنوز توسط admin بررسی می شود.<br> پس از انتشار ان در دسترس شما خواهد بود.",
+      "contact_for_details": "برای اطلاعات بیشتر با مدیر تماس بگیرید:",
+      "unfinished_post_task": "شما نمی توانید این را منتشر کنید، وظایف ناتمام دارد",
+      "posts_can_t_be_published": "های زیر را نمی توان منتشر کرد: {{titles}}",
+      "post_not_found": "پست پیدا نشد"
     },
     "category": {
       "save_success": "دسته بندی {{name}} ذخیره شد",
@@ -1528,7 +1739,8 @@
       "destroy_error": "امکان حذف دسته وجود ندارد، لطفا دوباره امتحان کنید",
       "bulk_destroy_confirm": "آیا از حذف {{count}} دسته مطمئن هستید؟",
       "bulk_destroy_confirm_desc": "حذف این دسته ها آنها را از همه پست های موجود حذف خواهد کرد. این کار قابل بازگشت نیست.",
-      "bulk_destroy_success": "{{count}} دسته حذف شد"
+      "bulk_destroy_success": "{{count}} دسته حذف شد",
+      "bulk_destroy_success_countless": "دستهها حذف شدند"
     },
     "role": {
       "delete_question": "آیا از حذف نقش {{role}} مطمئن هستید؟",
@@ -1553,7 +1765,8 @@
       "bulk_destroy_confirm": "آیا از حذف {{count}} کاربر مطمئن هستید؟",
       "bulk_destroy_success": "کاربران حذف شدند",
       "bulk_role_change_confirm": "آیا مطمئن هستید که می خواهید نقش {{count}} کاربر را به {{role}} تغییر دهید؟",
-      "bulk_role_change_success": "نقش کاربران به {{role_name}} تغییر یافت"
+      "bulk_role_change_success": "نقش کاربران به {{role_name}} تغییر یافت",
+      "are_you_sure_you_want_to_delete_user": "ایا مطمئن هستید که می خواهید {{username}}"
     },
     "video": {
       "incorrect_url": "نشانی اینترنتی {{url}} که وارد کردید، با هیچ یک از قالب های URL یوتیوب یا ویمیو مطابقت نداشت."
@@ -1626,7 +1839,23 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "ایا مطمئن هستید که می خواهید نظرسنجی های {{count}} حذف کنید؟"
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "موفقیت!",
+        "success_description": "با تشکر از شما برای ارائه گزارش خود را. این توسط تیم ما بررسی می شود و به زودی در پلت فرم ظاهر خواهد شد.",
+        "success_button": "باشه، به نظر خوب میاد"
+      },
+      "deleted": {
+        "success": "موفقیت!",
+        "success_description": "شما های {{count}} را برای همیشه حذف کرده اید.",
+        "success_button": "باشه، به نظر خوب میاد"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "ایا واقعا می خواهید زبان {{lang}} حذف کنید؟"
     }
   },
   "empty": {
@@ -1660,7 +1889,10 @@
     "send_to_address": "ارسال اعلان‌ها به این آدرس",
     "button": {
       "delete": "حذف اعلان"
-    }
+    },
+    "what_you_get_notification_about": "چه اطلاعیه ای در مورد ان دریافت می کنید",
+    "removed": "اعلان حذف شد",
+    "are_you_sure_you_want_to_remove_this_notification": "آیا مطمئن هستید که‌ می‌خواهید این نوتیفیکیشن را حذف کنید؟ "
   },
   "contact": {
     "edit": "ویرایش",
@@ -1684,7 +1916,8 @@
       "email": {
         "required": "برای دریافت اعلان‌ها، یک آدرس ایمیل ضروری است",
         "email": "این آدرس ایمیل معتبر نیست",
-        "maxlength": "این آدرس ایمیل خیلی طولانی است"
+        "maxlength": "این آدرس ایمیل خیلی طولانی است",
+        "not_valid": "این ایمیل معتبر نیست"
       },
       "phone": {
         "required": "برای دریافت اعلان‌ها، یک شماره تلفن لازم است",
@@ -1698,7 +1931,8 @@
     "title": "شرایط خدمات Ushahidi",
     "terms_of_service": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\"> Terms and Conditions </a> ما و <a href=\"https://www. ushahidi.com/privacy-policy \"target =\" _ blank \"> Privacy Policy </a> بروزرسانی شد. لطفا این اسناد را به دقت بررسی کرده و شرایط را بپزیرید تا بتوانید کماکان از خدمات Ushahidi استفاده کنید.",
     "agree": "شرایط خدمات Ushahidi را قبول می کنم.",
-    "accept_and_continue": "پذیرفتن و ادامه"
+    "accept_and_continue": "پذیرفتن و ادامه",
+    "i_agree": "من با <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Ushahidi موافقم سیاست حفظ حریم خصوصی</a> \n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">شرایط و ضوابط</a>."
   },
   "translations": {
     "languages": "Languages",
@@ -2455,5 +2689,33 @@
     "isUniqueUsername": "فیلد:  {{field}} در حال استفاده است",
     "isUserSelf": "شما نمیتوانید نقش خود را تغییر دهید",
     "adminUserLimitReached": "محدودیت:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "خطا",
+    "description": "اوه... متاسفم، ما نمی توانیم صفحه ای را که به دنبال ان هستید پیدا کنیم. <br> لطفا با عبارت دیگری جستجو کنید یا به نمای نقشه برگردید.",
+    "button": "رفتن به نمای نقشه"
+  },
+  "cookies": {
+    "we_use_cookies": "سلام! ما از کوکی ها استفاده می کنیم تا تجربه شما را بهتر کنیم.",
+    "cookies_privacy": "اگر می خواهید بیشتر بدانید یا رضایت خود را پس بگیرید، لطفا به <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">سیاست حفظ حریم خصوصی</a> ما بروید.",
+    "decline": "رد کردن",
+    "accept_cookies": "پذیرش کوکی ها"
+  },
+  "share": {
+    "share_deployment": "به اشتراک گذاشتن استقرار",
+    "share_post": "اشتراک گذاری مطلب",
+    "web_address": "نشانی وب نظرسنجی شما",
+    "embed_on_websites": "جاسازی HTML در وب سایت ها",
+    "copied": "کپی شد!",
+    "share_on_twitter": "اشتراک گذاری در توییتر",
+    "share_on_facebook": "اشتراک گذاری در فیسبوک"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">شرایط و ضوابط</a>."
+      }
+    }
   }
 }
