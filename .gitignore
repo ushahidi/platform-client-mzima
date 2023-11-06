@@ -52,3 +52,4 @@ e2e-testing/cypress/screenshots
 cypress/videos/*
 
 .angular
+.eslintcache

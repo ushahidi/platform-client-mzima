@@ -91,13 +91,14 @@
     <mat-form-field appearance="outline">
       <mat-select
         formControlName="is_child_to"
+        [data-qa]="'select-parent-category'"
         (selectionChange)="parentChanged($event)"
         disableOptionCentering
       >
         <mat-option value="">{{
           'category.placeholder.choose_parent_category' | translate
         }}</mat-option>
-        <mat-option [value]="category.id" *ngFor="let category of categories">
+        <mat-option [value]="category.id" *ngFor="let category of categories" [data-qa]="category.slug.split(' ').join('-') | lowercase">
           {{ category.tag }}
         </mat-option>
       </mat-select>

@@ -115,7 +115,51 @@
     "select_language": "Select language",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "Adresa e emailit të kontaktit:",
+    "add_collection": "Shto koleksionin",
+    "choose_photo": "Zgjidh foton",
+    "choose": "Zgjidh...",
+    "add_all_fields": "Shto të gjitha fushat",
+    "insert_text_here": "Fut tekstin këtu...",
+    "donate": "Dhuro",
+    "donation": "Donacion",
+    "disable_monetization": "Çaktivizo Monetizimin",
+    "enable_monetization": "Aktivizo monetizimin",
+    "enable_monetization_error": "Plotësoni fushat e kërkuara më sipër para se të mundësoni monetizimin.",
+    "enable_monetization_info": "Monetizimi aktualisht është invalid.",
+    "onboarding": {
+      "title": "Hipnotizimi",
+      "description": "Hidhi një sy Ushahidit në bord përsëri."
+    },
+    "forbidden-login": "Ju lutemi të hyni në detajet tuaja të hyrjes për të hyrë në vendosjen.",
+    "contact_with_admin": "Ose kontakto Adminin ",
+    "page-not-found": "Faqja nuk u gjet",
+    "update": "Aktualizo",
+    "current_results": "Rezultatet aktuale:",
+    "close_and_view": "Mbyllni dhe shikoni rezultatet",
+    "duplicate": "Dyfisho",
+    "yes_delete": "Po, fshije",
+    "no_go_back": "Jo, kthehu mbrapa.",
+    "are_you_sure_you_want_to_delete": "Je i sigurt që dëshiron të fshish",
+    "action_cannot_be_undone": "<p>Ky veprim nuk mund të zhbëhet.</p><p>A je i sigurt?</p>",
+    "you_are_not_authorized": "Ju nuk jeni të autorizuar",
+    "lost_internet_connection": "Lidhja e humbur e internetit",
+    "tweet_is_unavailable": "Ky tweet është i padisponueshëm",
+    "file_uploader": "File file",
+    "preview_image": "Figura e pamjes së parë",
+    "privacy_policy": "Politika e privatësisë",
+    "terms_and_conditions": "Termat dhe Kushtet",
+    "ok_sounds_good": "Ok, tingëllon mirë",
+    "next_step": "Hapi tjetër",
+    "we_are_aware_there_are_some_issues_here": "Ne jemi të vetëdijshëm se ka disa çështje këtu. Ekipi po punon për rregullimin e tyre.",
+    "you_are_using_old_deployment_version": "Ju jeni duke përdorur Deployment Version - {{api_version}}. Versioni i fundit është V5. Ju lutemi, përditësoni Vendosjen tuaj për aksesin e përdoruesve.",
+    "outdated_deployment": "Vendosje e vjetëruar!",
+    "the_deployment_is_outdated": "Vendosja është e vjetëruar, prandaj disa bugs mund të ndodhin, deri sa Admin update atë.",
+    "your_deployment_is_outdated": "Vendosja juaj është e vjetëruar",
+    "we_ve_updated_deployments_to_version_5": "Kemi përditësuar Vendosjet në versionin 5. Përdoruesit mund të mos kenë akses në vendosjen tuaj së shpejti. ",
+    "for_more_details_on_deployment_update": "Për më shumë detaje mbi përditësimin e vendosjes, shkoni në Help & Support (kjo duhet të jetë një link) ose dërgoni një e-mail në:",
+    "open_chat": "Biseda e hapur"
   },
   "toolbar": {
     "searchbar": {
@@ -229,7 +273,11 @@
     "step_required": "Kjo kërkesë është e detyrueshme",
     "post_step": "Raporto",
     "type": "lloji",
-    "visible_to": "E dukshme ndaj"
+    "visible_to": "E dukshme ndaj",
+    "add_language": "Shto gjuhën",
+    "select_language": "Zgjidh gjuhët",
+    "choose_language": "Zgjidhni gjuhën për përkthim",
+    "error_input_number": "Ju lutemi të futni numrin {{type}} llojit"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -404,6 +452,26 @@
       "pending_messages": "We are processing {{totalPending}} messages.",
       "pending_message": "We are processing {{totalPending}} message.",
       "cancel": "Cancel"
+    },
+    "no_tasks": "Nuk ka detyra",
+    "select_categories": "Zgjedh kategoritë",
+    "select_related_post": "Zgjidh postimin e lidhur",
+    "no_fields": "Nuk ka fusha",
+    "select_color": "Zgjidh ngjyrën",
+    "choose_survey": "Zgjidh sondazhin",
+    "main_info": "Info kryesore",
+    "duplicate_option": "Opsioni i duplikuar është i pranishëm",
+    "special_characters_option": "Ky opsion përmban karaktere të veçanta",
+    "related_post_info": "Ju lutem vini re, postimet që duhet të lidhen me duhet të publikohen, postimet që janë \"Nën shqyrtim\" nuk do të shfaqen në kërkim-rezultatet",
+    "only_edit": "Vetëm njerëzit me leje për të redaktuar përgjigjet do të jenë në gjendje të shohin përgjigjet në këtë fushë.",
+    "no_options_for_this_field": "Nuk ka opsione për këtë fushë",
+    "add_options_first": "Shto opsionet së pari",
+    "fields": {
+      "fields_title": "Fushat",
+      "validation": {
+        "required": "Fushat e kërkuara mungojnë, këto fusha shënohen me një *.",
+        "special_characters": "{{name}} fushë përmban karaktere të veçanta"
+      }
     }
   },
   "global_filter": {
@@ -485,7 +553,9 @@
       "all_posts": "Show all posts",
       "unmapped": "Show unmapped posts",
       "mapped": "Show posts with a location",
-      "source": "Source"
+      "source": "Source",
+      "expires": "Skadon",
+      "download": "Shkarko"
     },
     "unmapped_start_one": "There is",
     "unmapped_start_many": "There are",
@@ -519,7 +589,11 @@
     "source": "Source",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "Qyteti ose adresa",
+    "viewing_mode": "Modaliteti i shikimit",
+    "saved_filter": "Filtri i ruajtur",
+    "delete_this_saved_filter": "Je i sigurt që dëshiron ta fshish këtë filtër të ruajtur?"
   },
   "graph": {
     "all_posts": "Asgjë; Shfaq të gjitha raportimet",
@@ -557,6 +631,12 @@
   "modal": {
     "button": {
       "close": "Mbyll"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "Monetizimi i uebit është mundësuar në këtë faqe interneti. Faleminderit për dhurimin tuaj. Ju keni dhuruar",
+      "thank_you_for_your_donation_end": "Deri tani",
+      "web_monetization_text": "Dislokimet e Ushahidit tani janë mundësuar monetizimi i uebit. Monetizimi i uebit është një mënyrë për të mbështetur faqet e internetit që ju pëlqejnë pa luajtur lojë reklamuesit. Gjithçka që ju duhet është të merrni instalimin e shfletuesit tuaj. Kliko linkun më poshtë për të mësuar se si mund të dhurosh.",
+      "how_can_i_donate": "Si mund të dhuroj?"
     }
   },
   "nav": {
@@ -629,7 +709,15 @@
     "user": "Përdorues",
     "users": "Përdoruesit",
     "views": "Shikime",
-    "yesterday": "Dje"
+    "yesterday": "Dje",
+    "open_menu": "Hap menynë",
+    "my_account": "Llogaria ime",
+    "login_register": "Regjistrohu / Regjistrohu",
+    "help_support": "Ndihma & Mbështetja",
+    "receive_notifications": "Merrni njoftime",
+    "map": "Harta",
+    "data": "Të dhëna",
+    "feed": "Pamja e të dhënave"
   },
   "views": {
     "map": "Harta",
@@ -703,7 +791,18 @@
     "unpublished": "E papublikuar",
     "published_by": "E publikuar nga",
     "can_see_this_post": "mund ta shohë këtë postim",
-    "location": "Vendodhje",
+    "location": {
+      "location": "Lokacioni",
+      "you_can_search_or_click": "Ju mund të kërkoni ose të klikoni zonën e hartës ku dëshironi të vendosni shënuesin.",
+      "search_address": "Kërko adresat, emrat e vendeve ose koordinatat...",
+      "nothing_found": "Asgjë nuk u gjet",
+      "errors": {
+        "empty_lat": "Gjerësia gjeografike është fushë bosh",
+        "empty_lng": "Gjatësia është fushë bosh",
+        "decimal_lat": "Gjerësia gjeografike vetëm numri decimal",
+        "decimal_lng": "Gjatësia vetëm numri decimal"
+      }
+    },
     "categories": "Kategoritë",
     "status": "Status",
     "type": "Lloji",
@@ -824,14 +923,16 @@
         "required": "\"{{label}}\" është i detyrueshëm",
         "parse": "\"{{label}}\" nuk mund të analizohet",
         "date": "\"{{label}}\" duhet të jetë datë",
-        "number": "\"{{label}}\" duhet të jetë numër"
+        "number": "\"{{label}}\" duhet të jetë numër",
+        "step": "\"{{label}}\" duhet të jetë një integer"
       },
       "author_name": {
         "maxlength": "Emri është shumë i gjate "
       },
       "author_email": {
         "email": "Email i pasaktë"
-      }
+      },
+      "validation_fail_other": "Kishte një gabim që validonte të dhënat. Fushat që dështojnë validimin do të shfaqin një gabim."
     },
     "media": {
       "enter_a": "Enter a",
@@ -855,6 +956,20 @@
         "save_and_edit": "Shto në kategori &amp; edit"
       },
       "survey_title": "Kategori e panjohur"
+    },
+    "post_count": "Postimet {{count}}",
+    "post_title": "Titulli i postimit",
+    "post_desc": "Përshkrimi i postës",
+    "posts_total_map": "Duke shfaqur {{posts}} të postimeve të {{total_nb}} me informacionin e vendndodhjes në hartë.",
+    "search_results": "Rezultatet:",
+    "duplicate_option": "Ka një problem me konfigurimin e kësaj fushe për shkak të duplikimeve. Ju lutemi të shkoni tek survey-settings dhe ta rregulloni atë.",
+    "no_search_results_location": "Kërkimi juaj nuk përputhej me asnjë postim me informacionin e vendndodhjes",
+    "no_posts_yet_location": "Nuk ka ende postime me informacione për vendndodhjen!",
+    "read_more": "Lexo më shumë",
+    "image_is_required": "Imazhi është i nevojshëm",
+    "image_max_size": "Imazhi tejkalon madhësinë maksimale të skedarit",
+    "relation": {
+      "search": "Kërko"
     }
   },
   "role": {
@@ -869,7 +984,13 @@
     "delete_role": "Fshi këtë rolin",
     "delete_role_desc": "<strong>Në qoftë se e fshin këtë rol</strong>, të gjithë përdoruesit e lidhur me këtë rol do të marrin leje të paracaktuara. Vazhdo me kauzën. ",
     "everyone": "Të gjithë",
-    "just_you": "Vetëm ju"
+    "just_you": "Vetëm ju",
+    "are_you_sure_you_want_to_delete_role": "Je i sigurt që dëshiron të fshish rolin {{roleName}}?",
+    "placeholder": {
+      "name": "Shkruaj emrin e rolit",
+      "description": "Shkruaj përshkrimin e rolit"
+    },
+    "only_me": "Vetëm unë"
   },
   "webhook": {
     "add_webhook": "Add Role",
@@ -896,7 +1017,15 @@
   "collection": {
     "visible_to_public": "Ky koleksion është vizual ndaj publikut",
     "visible_to_you": "Ky koleksion është i dukshëm vetëm ndaj teje dhe administruesve",
-    "visible_to_roles": "Ky koleksion është i dukshëm ndaj {{roles}}"
+    "visible_to_roles": "Ky koleksion është i dukshëm ndaj {{roles}}",
+    "validation": {
+      "required": {
+        "name": "Emri i mbledhjes është i nevojshëm"
+      }
+    },
+    "errors": {
+      "permissions": "Ju nuk keni leje për të parë këtë koleksion"
+    }
   },
   "set": {
     "by": "nga",
@@ -931,7 +1060,9 @@
     "edit_savedsearch": "Edit Search",
     "set_settings": "Konfigurime të Koleksioneve",
     "add_notification": "Shto njoftim",
-    "remove": "hiq"
+    "remove": "hiq",
+    "update_saved_filter": "Filtri i ruajtur i azhornimit",
+    "create_saved_filter": "Krijo filtrin e ruajtur"
   },
   "category": {
     "add_tag": "Shto nën-kategori",
@@ -962,7 +1093,19 @@
       "category": "Nën-Kategori",
       "status": "Status"
     },
-    "delete": "Fshij"
+    "delete": "Fshij",
+    "which_categories": "Cilat kategori duhet të jenë në dispozicion",
+    "validation": {
+      "required": {
+        "name": "Emri i kategorisë është i nevojshëm"
+      }
+    },
+    "placeholder": {
+      "name": "Emri i hyrjes",
+      "descriptions": "Shkruaj përshkrimin...",
+      "choose_parent_category": "Zgjidhni kategorinë e prindërve..."
+    },
+    "parent_category": "Kategoria kryesore"
   },
   "tool": {
     "manage_forms": "Menaxho Format",
@@ -1019,7 +1162,9 @@
       "webhooks": "Webhooks",
       "webhooks_desc": "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
       "plans": "Plane",
-      "plan_desc": "Your deployment's current plan is <strong>{{current_plan}}</strong>."
+      "plan_desc": "Your deployment's current plan is <strong>{{current_plan}}</strong>.",
+      "donation": "Donacion",
+      "donation_desc": "Krijoni dhe menaxhoni donacionet që njerëzit mund të bëjnë ndaj organizatës suaj."
     },
     "user_settings": {
       "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1032,13 +1177,35 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "Shkëmbimi i të Dhënave Humanitare",
+      "please_enter_maintainer_id": "Ju lutem hyni në letërnjoftimin e mirëmbajtësit",
+      "please_enter_api_key": "Ju lutem hyni në çelësin API",
+      "hdx_maintainer_id_min_length": "HDX Maintainer Id është shumë i shkurtër",
+      "api_key_min_length": "Çelësi API është shumë i shkurtër"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
-      "destination": "Destination"
+      "destination": "Destination",
+      "placeholder": {
+        "name": "Ju lutem hyni në emrin webhook",
+        "shared_secret": "Ju lutemi të hyni në sekretin e përbashkët",
+        "api_url": "Ju lutemi hyni në url api"
+      },
+      "validation": {
+        "required": {
+          "name": "Emri Webhook është i nevojshëm",
+          "shared_secret": "Kërkohet çelësi sekret i përbashkët",
+          "api_url": "URL API kërkohet",
+          "event_type": "Lloji i ngjarjes është i nevojshëm",
+          "event_entity": "Njësia e veprimtarisë është e nevojshme"
+        },
+        "please_provide_valid_api_url": "Please provide valid API URL with http(s)://",
+        "secret_key_cannot_be_less_start": "Çelësi sekret i përbashkët nuk mund të jetë më pak se",
+        "secret_key_cannot_be_less_end": "Karakteret"
+      }
     },
     "data_sources": {
       "associate_with_form": "Import to survey",
@@ -1130,7 +1297,12 @@
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
         "search_terms": "Twitter search terms",
         "search_terms_desc": "Add search terms separated with commas"
-      }
+      },
+      "choose_data_source": "Zgjidh Burimin e të Dhënave...",
+      "type_of_data_source": "Lloji i burimit të të dhënave",
+      "provider_name": "{{providerName}} Burimi i të dhënave?",
+      "do_you_really_want_to_disconnect": "Dëshironi vërtet të shkëputni ofruesin tuaj?",
+      "add_source": "Shto burimin"
     },
     "roles": {
       "member": "Member",
@@ -1142,7 +1314,10 @@
       "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "manage_collections_and_saved_searches": "Menaxhoni koleksionet dhe kërkimet e ruajtura",
+      "delete_posts": "Fshi postimet",
+      "delete_their_own_posts": "Fshini postimet e tyre"
     },
     "deployment_delete_this": "Fshi këtë platformë",
     "deployment_delete": "Fshini të dhënat në platformë",
@@ -1185,9 +1360,48 @@
     "add_new_users": "Shto përdorues të rinj",
     "valid": {
       "name": {
-        "required": "Emri i faqes është i detyrueshëm"
+        "required": "Emri i faqes është i detyrueshëm",
+        "pattern": "Formati i pavlefshëm",
+        "minlength": "Emri i faqes është shumë i shkurtër"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "Generate API Key",
+      "private_settings": "Rregullimet private:",
+      "api_key": "Çelësi API",
+      "placeholder": {
+        "pick_location": "Zgjidh vendndodhjen..."
+      }
+    },
+    "donation": {
+      "title": {
+        "label": "Titulli i dhurimit",
+        "placeholder": "Shkruani titullin e dhurimit tuaj",
+        "required": "Titulli i dhurimit është i nevojshëm"
+      },
+      "description": {
+        "label": "Përshkruaj dhurimin tënd",
+        "placeholder": "Shkruaj tekstin duke treguar më shumë për këtë donacion"
+      },
+      "images": {
+        "label": "Imazhet e dhurimit"
+      },
+      "wallet": {
+        "label": "Adresa e portofolit",
+        "placeholder": "Shkruaj një adresë portofoli p.sh.ilp.uphold.com/example $",
+        "required": "Kërkohet adresa e portofolit të dhurimit"
+      },
+      "info": {
+        "start_one": "Ju lutem sigurohuni që të keni portofolin tuaj të vendosur në",
+        "start_two": "Për të vendosur monetizimin e uebit.",
+        "start_three": "Nëse nuk keni një portofol tashmë ju lutemi kliko",
+        "here": "këtu",
+        "end": "Për të krijuar një të tillë."
+      }
+    },
+    "site_disable_registration": "Çaktivizoni regjistrimin e përdoruesit?",
+    "site_disable_registration_desc": "Kontrolli i kësaj çaktivizon funksionin e regjistrimit. Adminët do të duhet të shtojnë manualisht përdoruesit.",
+    "bulk_actions": "Veprime masive"
   },
   "data_import": {
     "survey_field": "Fushë e kategorisë",
@@ -1230,7 +1444,13 @@
     "leave_empty": "Lëre bosh",
     "cancel_import": "Anullo importin",
     "finish_import": "Përfundo importin",
-    "which_survey": "cila kategori?"
+    "which_survey": "cila kategori?",
+    "get_polling_info": "Merrni informacionin e votimit",
+    "change_csv_file": "Ndrysho skedarin CSV {{selectedfile}}",
+    "upload_csv_file": "Ngarko skedarin CSV",
+    "choose_status_to_imported_posts": "Zgjidhni statusin në postimet e importuara:",
+    "has_tasks_required_start": "Sondazhi juaj",
+    "has_tasks_required_end": ", përfshin detyra që zakonisht duhet të përfundojnë për çdo postim para se të mund të shënohen 'të botuara'. Gjatë këtij importi, të gjitha postet tuaja të importuara do të kenë detyrat e tyre të shënuara si 'jo të plota', ndërsa do të lejojnë ende që statusi i tyre të shënohet si 'i publikuar'. Nëse redaktoni ndonjë nga këto postime pasi të jenë importuar, megjithatë, do t'ju kërkohet t'i përfundoni ato detyra para se t'i ripublikoni ato."
   },
   "data_export": {
     "title": "Export data",
@@ -1364,14 +1584,38 @@
       "email": {
         "required": "Adresa email është e detyrueshme",
         "email": "Kjo adresë email është e pavlefshme",
-        "maxlength": "Kjo adresë email është mjaft e gjatë"
+        "maxlength": "Kjo adresë email është mjaft e gjatë",
+        "pattern": "Kjo adresë emaili është e pavlefshme",
+        "emailExists": "Emaili është tashmë në përdorim"
       },
       "password": {
         "required": "Fjalëkalimi është i detyrueshmëm",
         "minlength": "Ky fjalëkalim është mjaft i shkurtër",
-        "maxlength": "Ky fjalëkalim është mjaft i gjatë"
+        "maxlength": "Ky fjalëkalim është mjaft i gjatë",
+        "weak": "Ky fjalëkalim është shumë i dobët"
+      },
+      "fields": {
+        "email must be unique": "Përdoruesi me këtë email ekziston tashmë"
+      },
+      "name": {
+        "required": "Emri i shfaqjes është i nevojshëm",
+        "maxlength": "Emri i shfaqjes është shumë i gjatë"
+      },
+      "token": {
+        "required": "Token është e nevojshme"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "Je i sigurt që dëshiron ta fshish këtë llogari?",
+    "name_will_be_a_display_name": "Emri që do të hyni do të jetë një emër ekrani.",
+    "placeholder": {
+      "realname": "Hyr në emrin tënd...",
+      "email": "Shkruaj adresën e emailit...",
+      "password": "Shkruaj fjalëkalimin..."
+    },
+    "password_notify": "Nëse e lini fushën bosh fjalëkalimi juaj nuk do të ndryshojë",
+    "avatar": "Avatar",
+    "name": "Emri",
+    "search_by_name": "Kërko sipas emrit"
   },
   "user_profile": {
     "title": "Konfigurimet e llogarisë",
@@ -1383,7 +1627,9 @@
     },
     "nav": {
       "general": "Të përgjithshme",
-      "notifications": "Njoftime"
+      "notifications": "Njoftime",
+      "account_settings": "Rregullimet e llogarisë",
+      "notifications_settings": "Rregullimet e njoftimeve"
     }
   },
   "user_create": {
@@ -1413,7 +1659,8 @@
       "bulk_destroy_confirm": "Jeni i sigurt nëse doni të fshini {{count}} burime?",
       "bulk_destroy_success": "Burim i fshirë",
       "bulk_destroy_error": "E pamundur për të fshirë burimin, ju lutem provoni përsëri",
-      "bulk_destroy_cancelled": "Fshirja u anullua"
+      "bulk_destroy_cancelled": "Fshirja u anullua",
+      "are_you_sure_you_want_to_delete_this": "A jeni i sigurt se doni të fshini këtë?"
     },
     "data_import": {
       "see_imported_posts": "Shiko raportime të importuara",
@@ -1473,7 +1720,12 @@
       "update_status_success_bulk": "Përditësimi i statusit për  {{count}} postime",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "can_t_view_this_post": "Ju nuk keni leje për të parë këtë postim.<br> Ajo është ende duke u shqyrtuar nga admin.<br> Ajo do të jetë në dispozicionin tuaj sapo të publikohet.",
+      "contact_for_details": "Kontaktoni adminin për detaje të mëtejshme:",
+      "unfinished_post_task": "Ju nuk mund të publikoni këtë postim, posti ka detyra të papërfunduara",
+      "posts_can_t_be_published": "Postimet e mëposhtme nuk mund të publikohen: {{titles}}",
+      "post_not_found": "Posta nuk u gjet"
     },
     "category": {
       "save_success": "Nën-Kategoria u ruajt {{name}}",
@@ -1483,7 +1735,8 @@
       "destroy_error": "E pamundur për të ruajtur nën-kategorinë, ju lutem provoni sërisht",
       "bulk_destroy_confirm": "Jeni i sigurt nëse dëshironi të fshini {{count}} kateogri?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
-      "bulk_destroy_success": "{{count}} nën-kategori u fshinë"
+      "bulk_destroy_success": "{{count}} nën-kategori u fshinë",
+      "bulk_destroy_success_countless": "Kategoritë e fshirëa"
     },
     "role": {
       "delete_question": "Jeni i sigurt nëse doni të fshini rolin {{role}}?",
@@ -1508,7 +1761,8 @@
       "bulk_destroy_confirm": "Jeni i sigurt nëse doni të fshini {{count}} perdoruesë?",
       "bulk_destroy_success": "Përdoruesit u fshinë",
       "bulk_role_change_confirm": "Jeni i sigurt nëse doni të ndryshoni rolin e {{count}} përdoruesve në {{role}}?",
-      "bulk_role_change_success": "Rolet e përdoruesit ndryshuan në {{role_name}}"
+      "bulk_role_change_success": "Rolet e përdoruesit ndryshuan në {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "Je i sigurt që dëshiron ta fshish {{username}}"
     },
     "video": {
       "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
@@ -1540,7 +1794,8 @@
         "description": {
           "required": "Description cannot be empty"
         }
-      }
+      },
+      "survey_name_required": "Emri i sondazhit është i nevojshëm"
     },
     "collection": {
       "delete_collection_confirm": "Jeni i sigurt nëse doni të fshini këtë koleksion?",
@@ -1580,7 +1835,27 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "Je i sigurt që dëshiron të fshish sondazhet {{count}}?"
+    },
+    "donation_settings": {
+      "save_success": "Rregullimet e dhurimit të ruajtura",
+      "delete_question": "Je i sigurt që dëshiron ta fshish këtë {{name}}."
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Sukses!",
+        "success_description": "Faleminderit për paraqitjen e raportit tuaj. Posti është duke u shqyrtuar nga ekipi ynë dhe së shpejti do të shfaqet në platformë.",
+        "success_button": "Ok, tingëllon mirë"
+      },
+      "deleted": {
+        "success": "Sukses!",
+        "success_description": "Ju keni fshirë përgjithmonë postimet {{count}}.",
+        "success_button": "Ok, tingëllon mirë"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Dëshiron vërtet të fshish gjuhën {{lang}}?"
     }
   },
   "empty": {
@@ -1602,7 +1877,9 @@
     "error": "Na vjen keq, nuk mund të gjejmë një vendodhje sipas kërkimit tuaj",
     "my_location_error": "Sorry we could not find your location",
     "update_map": "Update map",
-    "no_matching_locations": "No matching locations"
+    "no_matching_locations": "No matching locations",
+    "invalid_lat": "Vlera e dhënë nuk është një gjerësi e vlefshme.",
+    "invalid_lon": "Vlera e dhënë nuk është një gjatësi e vlefshme."
   },
   "notification": {
     "title": "Njoftime",
@@ -1612,7 +1889,10 @@
     "send_to_address": "Dërgo njoftime në këtë adresë",
     "button": {
       "delete": "Fshij njoftim"
-    }
+    },
+    "what_you_get_notification_about": "Për çfarë ju merrni njoftim në lidhje me",
+    "removed": "Njoftimi u hoq",
+    "are_you_sure_you_want_to_remove_this_notification": "Je i sigurt që dëshiron ta heqësh këtë njoftim?"
   },
   "contact": {
     "edit": "Edito",
@@ -1636,7 +1916,8 @@
       "email": {
         "required": "Një adresë email kërkohet për të marrë njoftime",
         "email": "Adresë email e pavlefshme",
-        "maxlength": "Adresa email është shumë e gjatë"
+        "maxlength": "Adresa email është shumë e gjatë",
+        "not_valid": "Ky email nuk është i vlefshëm"
       },
       "phone": {
         "required": "Një numër telefoni është i detyrueshëm për të marrë lajmërime",
@@ -1650,7 +1931,8 @@
     "title": "Ushahidi Terms of Service",
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
     "agree": "I agree to Ushahidi's Terms of Service.",
-    "accept_and_continue": "Accept and Continue"
+    "accept_and_continue": "Accept and Continue",
+    "i_agree": "Unë pajtohem me Ushahidi <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a> \n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Kushtet dhe kushtet</a>."
   },
   "languages": {
     "ach": "Acoli",
@@ -2057,7 +2339,8 @@
     "yi": "Yiddish",
     "yo": "Yoruba",
     "zu": "Zulu",
-    "zu-ZA": "Zulu (South Africa)"
+    "zu-ZA": "Zulu (South Africa)",
+    "en-EN": "Anglisht"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -2382,5 +2665,57 @@
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "You cannot change your own role",
     "adminUserLimitReached": "limit:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "gabim",
+    "description": "Oops... Na vjen keq, ne nuk mund të gjeni faqen që ju jeni duke kërkuar për. <br> Ju lutem kërkoni me një frazë tjetër ose kthehuni në Pamjen e Hartës.",
+    "button": "Shko tek Pamja e Hartës"
+  },
+  "cookies": {
+    "we_use_cookies": "Ngjatjeta! Ne përdorim cookies për të bërë përvojën tuaj më të mirë.",
+    "cookies_privacy": "Nëse doni të dini më shumë ose të tërhiqni pëlqimin tuaj, ju lutemi shkoni në Politikën tonë të <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privatësisë</a>.",
+    "decline": "Nuk pranoj",
+    "accept_cookies": "Pranoni cookies"
+  },
+  "share": {
+    "share_deployment": "Vendosja e aksioneve",
+    "share_post": "Share post",
+    "web_address": "Adresa web e sondazhit",
+    "embed_on_websites": "HTML e mishëruar në faqet e internetit",
+    "copied": "Kopjuar!",
+    "share_on_twitter": "Shperndaje ne Twitter",
+    "share_on_facebook": "Shpërndaje në Facebook"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Kushtet dhe kushtet</a>."
+      }
+    }
+  },
+  "translations": {
+    "languages": "Gjuhët",
+    "language": "Gjuha",
+    "default": "parazgjedhur",
+    "translate_field": "Fusha e përkthimit",
+    "survey_select_default": "Zgjidh gjuhën e prezgjedhur për këtë sondazh",
+    "category_select_default": "Zgjidh gjuhën e prezgjedhur për këtë kategori",
+    "error_translation_exists": "Ju nuk mund të zgjidhni këtë gjuhë pasi tashmë ka një përkthim për të.",
+    "edit_default_text": "Teksti në gjuhën e prezgjedhur",
+    "edit_placeholder": "Shkruaj përkthimin tënd këtu",
+    "add_translation": "Shto përkthimin tënd më poshtë:",
+    "survey_name_required": "Kërkohet përkthimi për emrin e sondazhit",
+    "field_add_translation": "Fields (kliko për të shtuar përkthimin):",
+    "add_translation_lang": "Shto përkthimin",
+    "translate_field_name": "Përktheu emrin e fushës",
+    "translate_field_desc": "Përktheu përshkrimin e fushës",
+    "category_translations_link": "Ju lutem vini re, për të shtuar përkthimet në kategori-emra, drejtohuni tek <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
+    "parent_child_lang": "Ju lutem vini re se gjuha e zgjedhur e prezgjedhur për këtë kategori fëmijësh është e ndryshme nga prindi i saj",
+    "post_title_required": "Përkthimi për post-titull është i nevojshëm",
+    "add_a_language": "Shto një gjuhë",
+    "error_no_default": "Ju duhet të specifikoni një gjuhë të prezgjedhur para se të shtoni një përkthim të ri.",
+    "select_language": "Zgjidh një gjuhë për të shtuar përkthimin për",
+    "default_lang_info": "Kjo është gjuha që do të përdoret nëse nuk ka përkthime në dispozicion për gjuhën që përdoruesi ka vendosur për vendosjen."
   }
 }
