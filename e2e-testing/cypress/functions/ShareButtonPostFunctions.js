@@ -13,10 +13,23 @@ class ShareButtonPostFunctions {
         .children(ShareButtonPostLocators.postItem)
         .eq(0)
         .find(ShareButtonPostLocators.postShare)
-        // .get(ShareButtonPostLocators.postShare)
-        .click()
+        .click({force: true})
 
+        // let postId = "";
+        // cy.get("mat-icon")
+        //   .eq(0)
+        //   .find("post")
+        //   .then((post) => {
+        //     postId=post;
+        //     console.log(">>>>>>", postId)
+
+        //   });
+
+        // cy.get(ShareButtonPostLocators.surveyWebAddress)
+        //   .should(
+        //     'have.value',
+        //     `http://localhost:4200/feed/${postId}/view?mode=POST`)
+          }
     }
-}
 
 export default ShareButtonPostFunctions;
