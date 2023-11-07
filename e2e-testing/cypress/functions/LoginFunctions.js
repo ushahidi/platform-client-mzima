@@ -40,6 +40,17 @@ class LoginFunctions {
     cy.get(LoginLocators.accountBtn).should('exist');
   }
 
+  verify_negative_login() {
+    this.launch_login_modal(Cypress.env('baseUrl'));
+    this.type_email('test');
+    cy.get(LoginLocators.emailField).blur();
+    cy.get(LoginLocators.invalidEmail).should('be.visible');
+    cy.get(LoginLocators.emailField).type('@gmail.com');
+    this.type_password('Password@@@2023');
+    this.click_login_button();
+    cy.get(LoginLocators.invalidCredentials).should('be.visible');
+  }
+
   login_as_admin() {
     this.launch_login_modal(Cypress.env('baseUrl'));
     this.type_email(Cypress.env('ush_admin_email'));
