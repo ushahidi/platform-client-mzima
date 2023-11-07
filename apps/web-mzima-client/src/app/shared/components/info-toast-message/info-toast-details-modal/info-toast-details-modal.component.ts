@@ -2,17 +2,17 @@ import { Component, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-api-version-details-modal',
-  templateUrl: './api-version-details-modal.component.html',
-  styleUrls: ['./api-version-details-modal.component.scss'],
+  selector: 'app-info-toast-details-modal',
+  templateUrl: './info-toast-details-modal.component.html',
+  styleUrls: ['./info-toast-details-modal.component.scss'],
 })
-export class ApiVersionDetailsModalComponent {
+export class InfoToastDetailsModalComponent {
   @Input() public isAdmin: boolean;
   public adminEmail = 'support@ushahidi.com';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private matDialogRef: MatDialogRef<ApiVersionDetailsModalComponent>,
+    private matDialogRef: MatDialogRef<InfoToastDetailsModalComponent>,
   ) {}
 
   public closeModal(): void {

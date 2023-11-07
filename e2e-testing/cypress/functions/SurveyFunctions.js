@@ -77,9 +77,9 @@ class SurveyFunctions {
     //add select options
     cy.get(SurveyLocators.addOptionBtn).click();
     cy.get(SurveyLocators.selectOptionOneField).type('S1');
-    cy.get(':nth-child(3) > .form-head-panel > mzima-client-button > .mzima-button').click();
+    cy.get(SurveyLocators.addOptionBtn).click();
     cy.get(SurveyLocators.selectOptionTwoField).type('S2');
-    cy.get(':nth-child(3) > .form-head-panel > mzima-client-button > .mzima-button').click();
+    cy.get(SurveyLocators.addOptionBtn).click();
     cy.get(SurveyLocators.selectOptionThreeField).type('S3');
 
     cy.get(SurveyLocators.saveBtn).click();
@@ -91,9 +91,9 @@ class SurveyFunctions {
     //add radio options
     cy.get(SurveyLocators.addOptionBtn).click();
     cy.get(SurveyLocators.selectOptionOneField).type('R1');
-    cy.get(':nth-child(3) > .form-head-panel > mzima-client-button > .mzima-button').click();
+    cy.get(SurveyLocators.addOptionBtn).click();
     cy.get(SurveyLocators.selectOptionTwoField).type('R2');
-    cy.get(':nth-child(3) > .form-head-panel > mzima-client-button > .mzima-button').click();
+    cy.get(SurveyLocators.addOptionBtn).click();
     cy.get(SurveyLocators.selectOptionThreeField).type('R3');
     cy.get(SurveyLocators.saveBtn).click();
 
@@ -104,9 +104,9 @@ class SurveyFunctions {
     //add checkbox options
     cy.get(SurveyLocators.addOptionBtn).click();
     cy.get(SurveyLocators.selectOptionOneField).type('C1');
-    cy.get(':nth-child(3) > .form-head-panel > mzima-client-button > .mzima-button').click();
+    cy.get(SurveyLocators.addOptionBtn).click();
     cy.get(SurveyLocators.selectOptionTwoField).type('C2');
-    cy.get(':nth-child(3) > .form-head-panel > mzima-client-button > .mzima-button').click();
+    cy.get(SurveyLocators.addOptionBtn).click();
     cy.get(SurveyLocators.selectOptionThreeField).type('C3');
     cy.get(SurveyLocators.saveBtn).click();
 
@@ -143,8 +143,7 @@ class SurveyFunctions {
   }
 
   verify_created_survey_exists() {
-    // cy.get(SurveyLocators.createdSurveyBtn).should('exist')
-    cy.contains('.mat-ripple.type-item.ng-star-inserted', 'Automated Survey').should('exist');
+    cy.get(SurveyLocators.createdSurveyBtn).should('exist');
   }
 }
 

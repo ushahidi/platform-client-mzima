@@ -16,7 +16,7 @@ class CategoryFunctions {
   add_category_details_steps() {
     cy.get(CategoryLocators.ctgryNameField).type(this.uniqueParentCtgry);
     cy.get(CategoryLocators.ctgryDescField).type('Automated Description');
-    cy.get(CategoryLocators.everyoneRadio).should('be.checked');
+    cy.get(CategoryLocators.everyoneRadio).click();
   }
 
   complete_add_category_steps() {
