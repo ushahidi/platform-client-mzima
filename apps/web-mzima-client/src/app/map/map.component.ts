@@ -90,8 +90,8 @@ export class MapComponent extends MainViewComponent implements OnInit {
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
     this.leafletOptions = {
-      minZoom: 3,
-      maxZoom: 17,
+      minZoom: 0,
+      maxZoom: 22,
       scrollWheelZoom: true,
       zoomControl: false,
       layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
