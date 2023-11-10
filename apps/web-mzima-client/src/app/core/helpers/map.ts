@@ -35,7 +35,7 @@ export const mapboxStaticTiles = (name: string, mapid: string, code: string, vis
     layerOptions: {
       apikey: EnvService.ENV.mapbox_api_key,
       tileSize: 512,
-      maxZoom: 18,
+      maxZoom: 22, // "Default zoom level" input field in general settings
       zoomOffset: -1,
       mapid: mapid,
       attribution:
