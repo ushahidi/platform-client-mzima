@@ -43,6 +43,7 @@
       <mat-form-field appearance="outline">
         <textarea
           placeholder="{{ 'category.placeholder.descriptions' | translate }}"
+          [data-qa]="'description'"
           matInput
           cdkTextareaAutosize
           cdkAutosizeMinRows="2"
@@ -98,7 +99,11 @@
         <mat-option value="">{{
           'category.placeholder.choose_parent_category' | translate
         }}</mat-option>
-        <mat-option [value]="category.id" *ngFor="let category of categories" [data-qa]="category.slug.split(' ').join('-') | lowercase">
+        <mat-option
+          [value]="category.id"
+          *ngFor="let category of categories"
+          [data-qa]="category.slug.split(' ').join('-') | lowercase"
+        >
           {{ category.tag }}
         </mat-option>
       </mat-select>

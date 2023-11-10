@@ -1,4 +1,4 @@
-<section class="share-modal">
+<section class="share-modal" [data-qa]="'share-modal'">
   <mzima-client-button
     tabindex="-1"
     fill="outline"
@@ -18,7 +18,12 @@
     <div class="form-row">
       <mat-label>{{ 'share.web_address' | translate }}</mat-label>
       <mat-form-field appearance="outline">
-        <input matInput [(ngModel)]="address" (input)="changeAddress($event)" />
+        <input
+          matInput
+          [(ngModel)]="address"
+          (input)="changeAddress($event)"
+          [data-qa]="'survey-web-address'"
+        />
       </mat-form-field>
     </div>
     <div class="form-row">
@@ -53,6 +58,7 @@
         [description]="description"
         shareButton="twitter"
         [url]="address"
+        [data-qa]="'share-twitter'"
       >
         {{ 'share.share_on_twitter' | translate }}
         <mat-icon icon class="fab-button__icon twitter-icon" svgIcon="twitter-fill"></mat-icon>
@@ -65,6 +71,7 @@
         [description]="description"
         shareButton="facebook"
         [url]="address"
+        [data-qa]="'share-facebook'"
       >
         {{ 'share.share_on_facebook' | translate }}
         <mat-icon icon class="fab-button__icon facebook-icon" svgIcon="facebook-fill"></mat-icon>
