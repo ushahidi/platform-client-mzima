@@ -169,7 +169,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
         animate: false,
       });
     }
-    // Later TODO: Check -> Does this check take care of when there are no markers on the map on initial load?
+    // Later TODO: Check -> Does this check take care of when there are no posts with location info in deployment (at the time when bounds is null)?
     //---------------------
 
     control.zoom({ position: 'bottomleft' }).addTo(map);
