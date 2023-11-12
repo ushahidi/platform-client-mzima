@@ -1,4 +1,5 @@
 import SettingsLocators from '../locators/SettingsLocators';
+import LoginLocators from '../locators/LoginLocators';
 
 class SettingsFunctions {
   open_general_settings_page() {
@@ -13,11 +14,8 @@ class SettingsFunctions {
   }
 
   verify_signup_is_disabled() {
-    cy.get(SettingsLocators.authBtnLabel)
-      .invoke('text')
-      .then((buttonText) => {
-        expect(buttonText).to.not.include('/Sign up');
-      });
+    cy.get(LoginLocators.loginModal).click();
+    cy.get(SettingsLocators.modalTabs).eq(1).should('not.exist')
   }
 
   disable_signup_and_verify() {

@@ -7,6 +7,7 @@ const SettingsLocator = {
     loginBtn: '[data-qa="btn-auth"]',
     logOutBtn: '[data-qa="log-out"]',
     authBtnLabel: '[data-qa="auth-btn-label"]',
+    modalTabs: '[role="tab"]',
 };
   
 export default SettingsLocator;
