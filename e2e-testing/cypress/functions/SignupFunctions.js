@@ -72,12 +72,24 @@ class SignupFunctions {
     cy.get(SignupLocators.signupBtn).click();
   }
 
-  verify_signed_user() {
+  open_account_modal() {
     cy.get(SignupLocators.accountInfoBtn).click();
     cy.get(SignupLocators.accountStnsBtn).click();
+  }
+
+  close_account_modal() {
+    cy.get(SignupLocators.closeDialogBtn).click();
+  }
+
+  verify_name_and_email_matches() {
     cy.get(SignupLocators.displayNameField).should('have.value', this.uniqueName);
     cy.get(SignupLocators.emailField).should('have.value', this.uniqueEmail);
-    cy.get(SignupLocators.closeDialogBtn).click();
+  }
+
+  verify_signed_user() {
+    this.open_account_modal();
+    this.verify_name_and_email_matches();
+    this.close_account_modal();
   }
 
   signup() {
