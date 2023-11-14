@@ -65,7 +65,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   public searchQuery: string;
   private readonly searchSubject = new Subject<string>();
   public citiesOptions = new BehaviorSubject<any[]>([]);
-  public notShownPostsCount: number;
+  public notMappedPostsCount: number;
   public isMainFiltersOpen = true;
   public surveysLoaded: boolean;
   public isOnboardingActive: boolean;
@@ -119,6 +119,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       this.checkSavedSearchNotifications();
     }
 
+    // TODO: There should be a better way to check if the context is a map view
     this.isMapView = this.router.url.includes('/map');
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
@@ -320,11 +321,23 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   private getActiveFilters(values: any): void {
+    // Check if values.form contains an item with id 0
+    let fetchPostsWithoutFormId = false;
+    if (Array.isArray(values.form)) {
+      const index = values.form.findIndex((id: any) => id === 0);
+      if (index !== -1) {
+        // Remove the item with id 0
+        values.form.splice(index, 1);
+        fetchPostsWithoutFormId = true;
+      }
+    }
+
     const filters: any = {
       'source[]': values.source,
       'status[]': values.status,
       'form[]': values.form,
       'tags[]': values.tags,
+      include_unstructured_posts: fetchPostsWithoutFormId,
       set: values.set,
       date_after: values.date.start ? dayjs(values.date.start).toISOString() : null,
       date_before: values.date.end
@@ -417,13 +430,12 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     this.surveysLoaded = false;
 
     forkJoin([
-      this.surveysService.get(),
+      this.surveysService.get('', { show_unknown_form: true }),
       this.postsService.getPostStatistics(null, this.isMapView),
     ]).subscribe({
       next: (responses) => {
         const values = responses[1].result.group_by_total_posts;
         this.surveyList = responses[0].results;
-
         if (this.filters) {
           const data = JSON.parse(this.filters);
           const formIds = new Set(data.form);
@@ -470,8 +482,6 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
           survey.total = (survey.total || 0) + value.total;
         }
       });
-
-      // this.total = this.getTotal(this.surveyList);
     }
 
     if (this.sources?.length) {
@@ -488,7 +498,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   public getPostsStatistic(): Observable<any> {
     return this.postsService.getPostStatistics(null, this.isMapView).pipe(
       map((res) => {
-        this.notShownPostsCount = res.result.unmapped;
+        this.notMappedPostsCount = res.result.unmapped;
         const values = res.result.group_by_total_posts;
         this.calculateCounters(values);
         return res;
@@ -666,12 +676,22 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   public resetForm(filters: any = {}): void {
+    // Check if this.surveyList contains an item with id 0
+    let fetchPostsWithoutFormId = false;
+    const index = this.surveyList.findIndex((s) => s.id === 0);
+    if (index !== -1) {
+      // Remove the item with id 0
+      this.surveyList.splice(index, 1);
+      fetchPostsWithoutFormId = true;
+    }
+
     this.form.patchValue({
       query: '',
       status: ['published', 'draft'],
       tags: [],
       source: this.sources.map((s) => s.value),
       form: this.surveyList.map((s) => s.id),
+      include_unstructured_posts: fetchPostsWithoutFormId,
       date: {
         start: '',
         end: '',

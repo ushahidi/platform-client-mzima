@@ -90,8 +90,8 @@ export class MapComponent extends MainViewComponent implements OnInit {
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
     this.leafletOptions = {
-      minZoom: 3,
-      maxZoom: 17,
+      minZoom: 0,
+      maxZoom: 22,
       scrollWheelZoom: true,
       zoomControl: false,
       layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
@@ -157,6 +157,21 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
   onMapReady(map: Map) {
     this.map = map;
+
+    // Fix initial zoom flicker of map view's map when bounds exist in local storage
+    const bounds = localStorage.getItem('bounds');
+    if (bounds === null) {
+      this.map.setZoom(0);
+    } else {
+      const { fit, zoom, center } = JSON.parse(bounds as string);
+      this.map.setMaxBounds(fit);
+      this.map.setView([center.lat, center.lng], zoom, {
+        animate: false,
+      });
+    }
+    // Later TODO: Check -> Does this check take care of when there are no posts with location info in deployment (at the time when bounds is null)?
+    //---------------------
+
     control.zoom({ position: 'bottomleft' }).addTo(map);
   }
 
@@ -285,6 +300,14 @@ export class MapComponent extends MainViewComponent implements OnInit {
             this.progress = 100;
             if (posts.results.length) {
               this.mapFitToBounds = geoPosts.getBounds();
+
+              // Save bounds to localstorage to fix flicker when map is ready
+              const bounds = {
+                fit: this.mapFitToBounds,
+                zoom: this.map.getBoundsZoom(this.mapFitToBounds),
+                center: this.map.getCenter(),
+              };
+              localStorage.setItem('bounds', JSON.stringify(bounds));
             }
           }
 
