@@ -7,7 +7,7 @@ const ShareButtonPostLocators = {
     postHead: '[data-qa="post-head"]',
     postShare: '[data-qa="share-post"]',
     postDetails: '[data-qa="post-details"]',
-    // postId: "[id=id]",
+    // postId: "[postId=id]",
     surveyWebAddress: '[data-qa="survey-web-address"]',
 };
 

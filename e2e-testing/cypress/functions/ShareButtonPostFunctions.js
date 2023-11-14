@@ -5,6 +5,7 @@ class ShareButtonPostFunctions {
     }
 
     verify_share_button_on_post(){
+        var postId = '';
         cy.get(ShareButtonPostLocators.surveySelectionList)
         .children(ShareButtonPostLocators.surveySelectItem)
         .eq(0)
@@ -12,24 +13,24 @@ class ShareButtonPostFunctions {
         cy.get(ShareButtonPostLocators.postPreview)
         .children(ShareButtonPostLocators.postItem)
         .eq(0)
+        .should('have.attr', 'postId')
+        .then(value => {
+            postId = value;
+
+        cy.get(ShareButtonPostLocators.postPreview)
+        .children(ShareButtonPostLocators.postItem)
+        .eq(0)
         .find(ShareButtonPostLocators.postShare)
         .click({force: true})
+        cy.get(ShareButtonPostLocators.surveyWebAddress)
+        .should('have.value', `http://localhost:4200/feed/${postId}/view?mode=POST`)
+        })
 
-        // let postId = "";
-        // cy.get("mat-icon")
-        //   .eq(0)
-        //   .find("post")
-        //   .then((post) => {
-        //     postId=post;
-        //     console.log(">>>>>>", postId)
-
-        //   });
-
-        // cy.get(ShareButtonPostLocators.surveyWebAddress)
-        //   .should(
-        //     'have.value',
-        //     `http://localhost:4200/feed/${postId}/view?mode=POST`)
-          }
+        
+      
+        
     }
+
+}
 
 export default ShareButtonPostFunctions;
