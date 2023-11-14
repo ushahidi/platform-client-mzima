@@ -1,16 +1,16 @@
 import LoginFunctions from "../../functions/LoginFunctions";
-import SettingsFunctions from "../../functions/SettingsFunctions";
+import GeneralSettingsFunctions from "../../functions/GeneralSettingsFunctions";
 
 describe("Automated Tests for Settings", () => {
   const loginFunctions = new LoginFunctions();
-  const settingsFunctions = new SettingsFunctions();
+  const generalSettingsFunctions = new GeneralSettingsFunctions();
 
   beforeEach(() => {
     loginFunctions.login_as_admin();
   });
 
   it("Disable user sign up and", () => {
-    settingsFunctions.open_general_settings_page();
-    settingsFunctions.disable_signup_and_verify();
+    generalSettingsFunctions.open_general_settings_page();
+    generalSettingsFunctions.disable_signup_and_verify();
   });
 });
