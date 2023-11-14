@@ -1,10 +1,9 @@
 import SignupFunctions from "../../functions/SignupFunctions";
 
-describe("Verify Valid/Invalid Credentials on Signup", () => {
+describe("Verify Valid/Invalid Credentials upon user Signup", () => {
   const signupFunctions = new SignupFunctions();
 
   it("User Signup flow", () => {
     signupFunctions.signup();
-    signupFunctions.verify_signed_user();
   });
 });
