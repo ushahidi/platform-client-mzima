@@ -22,10 +22,10 @@
   </mzima-client-button>
 
   <mat-menu #accountMenu="matMenu" class="account-menu">
-    <button mat-menu-item (click)="openAccountSettings()">
+    <button [data-qa]="'account-settings'" mat-menu-item (click)="openAccountSettings()">
       {{ 'nav.account_settings' | translate }}
     </button>
-    <button mat-menu-item (click)="logout()">{{ 'nav.logout' | translate }}</button>
+    <button [data-qa]="'log-out'" mat-menu-item (click)="logout()">{{ 'nav.logout' | translate }}</button>
   </mat-menu>
 </ng-container>
 
