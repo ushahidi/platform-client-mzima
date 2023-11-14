@@ -6,6 +6,8 @@ const LoginLocators = {
   logoutButton: '[data-qa="btn-logout"]',
   accountBtn: '[data-qa="account-info"]',
   declineCookiesBtn: '[data-qa="button-decline-cookies"]',
+  accountInfoBtn: '[data-qa="account-info"]',
+  logOutBtn: '[data-qa="log-out"]',
 };
 
 export default LoginLocators;
