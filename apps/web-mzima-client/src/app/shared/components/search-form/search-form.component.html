@@ -38,6 +38,7 @@
     class="search-form__filters"
     *ngIf="isDesktop || isMapView"
     (buttonClick)="toggleFilters(!isFiltersVisible)"
+    [data-qa]="'search-form__filters'"
   >
     <span>{{ 'app.filters' | translate }}</span>
     <mat-icon iconPrefix svgIcon="filters"></mat-icon>
@@ -162,23 +163,24 @@
             </mat-selection-list>
 
             <div class="filter-group__info" *ngIf="isMapView">
-              <span *ngIf="notShownPostsCount <= 0">{{
+              <span *ngIf="notMappedPostsCount <= 0">{{
                 'global_filter.unmapped_none' | translate
               }}</span>
-              <span *ngIf="notShownPostsCount === 1">{{
+              <span *ngIf="notMappedPostsCount === 1">{{
                 'global_filter.unmapped_start_one' | translate
               }}</span>
-              <span *ngIf="notShownPostsCount >= 2">{{
+              <span *ngIf="notMappedPostsCount >= 2">{{
                 'global_filter.unmapped_start_many' | translate
               }}</span>
-              <a [routerLink]="['feed']" *ngIf="notShownPostsCount >= 1">
-                {{ notShownPostsCount }} post{{ notShownPostsCount >= 2 ? 's' : '' }}
+              <a [routerLink]="['feed']" *ngIf="notMappedPostsCount >= 1">
+                {{ notMappedPostsCount }} post{{ notMappedPostsCount >= 2 ? 's' : '' }}
               </a>
-              <span *ngIf="notShownPostsCount >= 1">{{
+              <span *ngIf="notMappedPostsCount >= 1">{{
                 'global_filter.unmapped_end' | translate
               }}</span>
             </div>
           </mat-tab>
+
           <mat-tab [label]="'global_filter.source' | translate">
             <div class="tabs__clear">
               <mzima-client-button
@@ -390,6 +392,7 @@
           [disabled]="form.disabled"
           class="search-form__button"
           (buttonClick)="resetSavedFilter()"
+          [data-qa]="'search-form__button'"
         >
           {{ 'global_filter.clear_all_filters' | translate }}
         </mzima-client-button>

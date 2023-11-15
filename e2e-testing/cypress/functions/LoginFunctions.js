@@ -40,6 +40,12 @@ class LoginFunctions {
     cy.get(LoginLocators.accountBtn).should('exist');
   }
 
+  logout() {
+    cy.get(LoginLocators.accountInfoBtn).click();
+    cy.get(LoginLocators.logOutBtn).click();
+    cy.reload();
+  }
+
   login_as_admin() {
     this.launch_login_modal(Cypress.env('baseUrl'));
     this.type_email(Cypress.env('ush_admin_email'));
