@@ -35,6 +35,15 @@ class LoginFunctions {
     cy.get(LoginLocators.declineCookiesBtn).click();
   }
 
+  verify_invalid_email_error_exist() {
+    cy.get(LoginLocators.emailField).blur();
+    cy.get(LoginLocators.invalidEmail).should('be.visible');
+  }
+
+  verify_invalid_credentials_error_exist() {
+    cy.get(LoginLocators.invalidCredentials).should('be.visible');
+  }
+
   verify_login() {
     cy.get(LoginLocators.loginButton).should('not.exist');
     cy.get(LoginLocators.accountBtn).should('exist');
@@ -43,12 +52,11 @@ class LoginFunctions {
   verify_negative_login() {
     this.launch_login_modal(Cypress.env('baseUrl'));
     this.type_email('test');
-    cy.get(LoginLocators.emailField).blur();
-    cy.get(LoginLocators.invalidEmail).should('be.visible');
+    this.verify_invalid_email_error_exist()
     cy.get(LoginLocators.emailField).type('@gmail.com');
     this.type_password('Password@@@2023');
     this.click_login_button();
-    cy.get(LoginLocators.invalidCredentials).should('be.visible');
+    this.verify_invalid_credentials_error_exist()
   }
   
   logout() {
