@@ -17,15 +17,6 @@
       --size: 40px;
       --icon-size: 32px;
       margin-inline-start: 24px;
-      &::ng-deep {
-        button {
-          border: 0.5px solid;
-          --color: var(--color-neutral-40);
-          --background-color: var(--color-black);
-          --border-color: var(--color-neutral-90);
-          --hover-background-color: var(--color-black);
-        }
-      }
 
       @include breakpoint-max($tablet) {
         display: block;
