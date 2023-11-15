@@ -50,6 +50,12 @@ class LoginFunctions {
     this.click_login_button();
     cy.get(LoginLocators.invalidCredentials).should('be.visible');
   }
+  
+  logout() {
+    cy.get(LoginLocators.accountInfoBtn).click();
+    cy.get(LoginLocators.logOutBtn).click();
+    cy.reload();
+  }
 
   login_as_admin() {
     this.launch_login_modal(Cypress.env('baseUrl'));

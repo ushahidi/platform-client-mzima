@@ -2,7 +2,7 @@ import EditPostLocators from '../locators/EditPostLocators';
 
 class EditPostFunctions {
   click_add_post_btn() {
-    cy.get('.submit-post-button').click();
+    cy.get(EditPostLocators.addPostBtn).click();
   }
 
   select_survey_item() {
@@ -31,12 +31,12 @@ class EditPostFunctions {
   }
 
   check_for_added_post_in_survey() {
-    cy.get('.search-form__filters > .mzima-button').click();
-    cy.get('.search-form__button > .mzima-button').click();
-    cy.get('ngx-masonry').children('app-post-preview').contains('New Post Title');
-    cy.get(
-      '.mzima-button.mzima-button--gray.mzima-button--clear.mzima-button--medium.mzima-button--block.mzima-button--icon-only.ng-star-inserted',
-    )
+    cy.get(EditPostLocators.surveySelectionList)
+        .children(EditPostLocators.surveySelectItem)
+        .eq(0)
+        .click({force: true})
+    cy.get(EditPostLocators.postPreview).children(EditPostLocators.postItem).contains('New Post Title');
+    cy.get(EditPostLocators.editPostBtn)
       .eq(0)
       .click({ force: true });
   }
@@ -47,7 +47,7 @@ class EditPostFunctions {
   }
 
   check_edit_post() {
-    cy.get('ngx-masonry').children('app-post-preview').contains('New Post Title 2');
+    cy.get(EditPostLocators.postPreview).children(EditPostLocators.postItem).contains('New Post Title 2');
   }
 
   edit_post_steps() {

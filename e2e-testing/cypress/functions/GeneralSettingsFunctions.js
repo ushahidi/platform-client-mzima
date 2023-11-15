@@ -1,4 +1,8 @@
-import GeneralSettingsLocator from "../locators/GeneralSettingsLocator";
+import GeneralSettingsLocator from '../locators/GeneralSettingsLocator';
+import LoginLocators from '../locators/LoginLocators';
+import LoginFunctions from './LoginFunctions';
+
+const loginFunctions = new LoginFunctions();
 
 class GeneralSettingsFunctions {
   // navigate to general settings
@@ -32,6 +36,25 @@ class GeneralSettingsFunctions {
   // Api Key value
   get_api_key_field_value() {
     cy.get(GeneralSettingsLocator.apiKeyField).should('not.be.empty');
+  }
+
+  // verify signup is disabled
+  verify_signup_is_disabled() {
+    cy.get(LoginLocators.loginModal).click();
+    cy.get(GeneralSettingsLocator.modalTabs).eq(1).should('not.exist');
+  }
+
+  // disable signup and save
+  disable_signup_and_save() {
+    cy.get(GeneralSettingsLocator.disableUserSignupCheckbox).check({ force: true });
+    cy.get(GeneralSettingsLocator.saveButton).click();
+  }
+
+  // disable signup and verify
+  disable_signup_and_verify() {
+    this.disable_signup_and_save();
+    loginFunctions.logout();
+    this.verify_signup_is_disabled();
   }
 
   // tests
