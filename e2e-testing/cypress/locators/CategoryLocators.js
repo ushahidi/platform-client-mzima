@@ -5,7 +5,6 @@ const CategoryLocators = {
   ctgryNameField: '[data-qa="name"]',
   ctgryDescField: '[data-qa="description"]',
   saveCtgryBtn: '[data-qa="btn-category-save"]',
-
   selectParentCtgry: '[data-qa="select-parent-category"]',
   everyoneRadio: '[data-qa="everyone"]',
   specificRolesRadioOption: '[data-qa="specific-roles..."]',
