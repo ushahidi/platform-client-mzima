@@ -122,7 +122,44 @@
     "select_language": "Избери език",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "choose_survey": "Choose survey",
+    "contact_email_address": "Имейл адрес за контакт:",
+    "add_collection": "Добавяне на колекция",
+    "choose_photo": "Изберете снимка",
+    "choose": "Избирам...",
+    "add_all_fields": "Добавяне на всички полета",
+    "insert_text_here": "Вмъкване на текст тук...",
+    "onboarding": {
+      "title": "Назначаване",
+      "description": "Обърнете внимание на Ushahidi на борда отново."
+    },
+    "forbidden-login": "Моля, въведете данните си за вход, за да получите достъп до внедряването.",
+    "contact_with_admin": "Или се свържете с администратора ",
+    "page-not-found": "Страницата не е намерена",
+    "update": "Обновяване",
+    "current_results": "Текущи резултати:",
+    "duplicate": "Дублирай",
+    "yes_delete": "Да, изтрийте",
+    "no_go_back": "Не, върни се",
+    "are_you_sure_you_want_to_delete": "Наистина ли искате да изтриете",
+    "action_cannot_be_undone": "<p>Това действие не може да бъде отменено.</p><p>Сигурни ли сте?</p>",
+    "you_are_not_authorized": "Не сте упълномощени",
+    "lost_internet_connection": "Загубена интернет връзка",
+    "tweet_is_unavailable": "Този туит не е достъпен",
+    "file_uploader": "Програма за качване на файлове",
+    "preview_image": "Изображение за визуализация",
+    "privacy_policy": "Политика за поверителност",
+    "terms_and_conditions": "Общи Условия",
+    "ok_sounds_good": "Добре, звучи добре",
+    "next_step": "Следваща стъпка",
+    "we_are_aware_there_are_some_issues_here": "Наясно сме, че тук има някои проблеми. Екипът работи по оправянето им.",
+    "you_are_using_old_deployment_version": "Използвате версия за разполагане - {{api_version}}. Най-новата версия е v5. Моля, актуализирайте разполагането си за достъп на потребителите.",
+    "outdated_deployment": "Остаряло внедряване!",
+    "the_deployment_is_outdated": "Разполагането е остаряло, поради което може да възникнат някои грешки, докато администраторът не го актуализира.",
+    "your_deployment_is_outdated": "Вашето разполагане е остаряло",
+    "we_ve_updated_deployments_to_version_5": "Актуализирахме разполаганията до версия 5. Потребителите може да нямат достъп до вашето разполагане скоро. ",
+    "for_more_details_on_deployment_update": "За повече подробности относно актуализацията на разполагането отидете на Помощ и поддръжка (това трябва да е връзка) или изпратете имейл до:",
+    "open_chat": "Отваряне на чат"
   },
   "toolbar": {
     "searchbar": {
@@ -238,7 +275,9 @@
     "step_required": "Тази задача е задължителна",
     "post_step": "Публикация",
     "type": "тип",
-    "visible_to": "Видимо за"
+    "visible_to": "Видимо за",
+    "choose_language": "Изберете език за превод",
+    "error_input_number": "Моля, въведете номера {{type}} типа"
   },
   "survey": {
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
@@ -357,8 +396,10 @@
     },
     "fields": {
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *."
-      }
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}} поле съдържа специални знаци"
+      },
+      "fields_title": "Полета"
     },
     "targeted_survey": {
       "title": "Създай ново насочено допитване",
@@ -421,7 +462,17 @@
       "pending_messages": "We are processing {{totalPending}} messages.",
       "pending_message": "We are processing {{totalPending}} message.",
       "cancel": "Отказ"
-    }
+    },
+    "no_tasks": "Няма задачи",
+    "select_categories": "Изберете категории",
+    "select_related_post": "Изберете свързана публикация",
+    "no_fields": "Няма полета",
+    "select_color": "Изберете цвят",
+    "choose_survey": "Изберете проучване",
+    "main_info": "Основна информация",
+    "special_characters_option": "Тази опция съдържа специални знаци",
+    "no_options_for_this_field": "Няма опции за това поле",
+    "add_options_first": "Първо добавете опциите"
   },
   "global_filter": {
     "filter": "Пресяване",
@@ -502,7 +553,9 @@
       "all_posts": "Покажи всички публикации",
       "unmapped": "Покажи постове без местоположение",
       "mapped": "Покажи публикации с местоположение",
-      "source": "Източник"
+      "source": "Източник",
+      "expires": "Изтича",
+      "download": "Изтегляне"
     },
     "unmapped_start_one": "Има",
     "unmapped_start_many": "Има",
@@ -536,7 +589,11 @@
     "source": "Източник",
     "saved_filters": "Saved filters",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "city_or_address": "Град или адрес",
+    "viewing_mode": "Режим на преглед",
+    "saved_filter": "Записан филтър",
+    "delete_this_saved_filter": "Наистина ли искате да изтриете този записан филтър?"
   },
   "graph": {
     "all_posts": "Нищо. Покажи всички публикации",
@@ -574,6 +631,12 @@
   "modal": {
     "button": {
       "close": "Затвори"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "Уеб монетизацията е активирана на този уебсайт. Благодарим Ви за дарението. Вие сте дарили",
+      "thank_you_for_your_donation_end": "досега",
+      "web_monetization_text": "Внедряванията на Ushahidi вече са активирани за уеб монетизация. Уеб монетизацията е начин за поддържане на уебсайтовете, които обичате, без да играете игра на рекламодатели. Всичко, от което се нуждаете, е да настроите браузъра си. Кликнете върху връзката по-долу, за да научите как можете да дарите.",
+      "how_can_i_donate": "Как мога да даря?"
     }
   },
   "nav": {
@@ -646,7 +709,15 @@
     "user": "Потребител",
     "users": "Потебители",
     "views": "Изгледи",
-    "yesterday": "Вчера"
+    "yesterday": "Вчера",
+    "open_menu": "Отваряне на меню",
+    "my_account": "Моят профил",
+    "login_register": "Вход / Регистрация",
+    "help_support": "Помощ и поддръжка",
+    "receive_notifications": "Получаване на известия",
+    "map": "Карта",
+    "data": "Данни",
+    "feed": "Изглед на данни"
   },
   "views": {
     "map": "Карта",
@@ -727,7 +798,18 @@
     "unpublished": "Не е публично",
     "published_by": "Публикувано от",
     "can_see_this_post": "може да види тази публикация",
-    "location": "Местоположение",
+    "location": {
+      "location": "Местоположение",
+      "you_can_search_or_click": "Можете да търсите или да щракнете върху областта на картата, където искате да поставите маркера.",
+      "search_address": "Търсене на адреси, имена на места или координати...",
+      "nothing_found": "Няма резултати",
+      "errors": {
+        "empty_lat": "Географска ширина е празно поле",
+        "empty_lng": "Дължина е празно поле",
+        "decimal_lat": "Десетично число само за географска ширина",
+        "decimal_lng": "Десетично число само за дължина"
+      }
+    },
     "categories": "Категории",
     "status": "Статус",
     "type": "Тип",
@@ -881,6 +963,13 @@
         "save_and_edit": "Добави към допитване и промени"
       },
       "survey_title": "Неизвестно допитване"
+    },
+    "post_count": "{{count}} публикации",
+    "read_more": "Прочети повече",
+    "image_is_required": "Изображението е задължително",
+    "image_max_size": "Изображението надвишава максималния размер на файла",
+    "relation": {
+      "search": "Търсене"
     }
   },
   "role": {
@@ -895,7 +984,13 @@
     "delete_role": "Изтрий тази роля",
     "delete_role_desc": "<strong>Ако изтриете тази роля</strong>, всички потребители с нея ще получат права по подразбиране. Продължете внимателно.",
     "everyone": "Всички",
-    "just_you": "Само ти"
+    "just_you": "Само ти",
+    "are_you_sure_you_want_to_delete_role": "Наистина ли искате да изтриете роля {{roleName}}?",
+    "placeholder": {
+      "name": "Въведете име на роля",
+      "description": "Въведете описание на ролята"
+    },
+    "only_me": "Само аз"
   },
   "webhook": {
     "add_webhook": "Добави роля",
@@ -922,7 +1017,15 @@
   "collection": {
     "visible_to_public": "Тази колекция е публично достъпна",
     "visible_to_you": "Тази колекция е видима за теб и администраторите",
-    "visible_to_roles": "Тази колекция е видима за {{roles}}"
+    "visible_to_roles": "Тази колекция е видима за {{roles}}",
+    "validation": {
+      "required": {
+        "name": "Името на колекцията е задължително"
+      }
+    },
+    "errors": {
+      "permissions": "Нямате разрешение да разглеждате тази колекция"
+    }
   },
   "set": {
     "by": "от",
@@ -957,7 +1060,9 @@
     "edit_savedsearch": "Промени търсене",
     "set_settings": "Настройки на колекцията",
     "add_notification": "Добави известие",
-    "remove": "махни"
+    "remove": "махни",
+    "update_saved_filter": "Актуализиране на записания филтър",
+    "create_saved_filter": "Създаване на записан филтър"
   },
   "category": {
     "add_tag": "Добави категория",
@@ -989,7 +1094,18 @@
       "category": "Категория",
       "status": "Статус"
     },
-    "delete": "Изтрий"
+    "delete": "Изтрий",
+    "validation": {
+      "required": {
+        "name": "Изисква се име на категория"
+      }
+    },
+    "placeholder": {
+      "name": "Въведи име",
+      "descriptions": "Въведете описание...",
+      "choose_parent_category": "Избор на родителска категория..."
+    },
+    "parent_category": "Родителска категория"
   },
   "tool": {
     "manage_forms": "Управлявай формулярите",
@@ -1061,13 +1177,35 @@
       "valid_key": "Валиден ключ е задължителен",
       "valid_user": "Нужен е валиден maintainer id",
       "api_key_saved": "API ключ е запазен! Сега може да отбелязвате своите данни и да ги качвате в акаунта си вHumanitarian Data Exchange (HDX).",
-      "start_tagging": "Започни да отбелязваш данните"
+      "start_tagging": "Започни да отбелязваш данните",
+      "HDX": "Обмен на хуманитарни данни",
+      "please_enter_maintainer_id": "Моля, въведете ИД на отговорника",
+      "please_enter_api_key": "Моля, въведете API ключ",
+      "hdx_maintainer_id_min_length": "HDX Maintainer Id е твърде кратък",
+      "api_key_min_length": "API ключът е твърде кратък"
     },
     "webhooks": {
       "use_webhook_for": "Използвай webhook за",
       "enable_source_destination": "Включи полета за източник и цел",
       "enable_source_destination_desc": "Този webhook ще бъде приложено само на допитване от избрания тип.",
-      "destination": "Цел"
+      "destination": "Цел",
+      "placeholder": {
+        "name": "Моля, въведете име на webhook",
+        "shared_secret": "Моля, въведете споделена тайна",
+        "api_url": "Моля, въведете API URL адрес"
+      },
+      "validation": {
+        "required": {
+          "name": "Изисква се име на Webhook",
+          "shared_secret": "Изисква се споделен секретен ключ",
+          "api_url": "Изисква се URL адрес на API",
+          "event_type": "Изисква се тип събитие",
+          "event_entity": "Изисква се обект на събитие"
+        },
+        "please_provide_valid_api_url": "Моля, предоставете валиден API URL адрес с http(s)://",
+        "secret_key_cannot_be_less_start": "Споделеният секретен ключ може не по-малко от",
+        "secret_key_cannot_be_less_end": "знаци"
+      }
     },
     "data_sources": {
       "associate_with_form": "Качи към допитване",
@@ -1159,7 +1297,12 @@
         "access_token_secret_desc": "Добавете тайната за достъп, което създадохте от вашето Twitter приложение.",
         "search_terms": "Думи за търсене в Twitter",
         "search_terms_desc": "Добави думи за търсене отделени със запетая"
-      }
+      },
+      "choose_data_source": "Избор на източник на данни...",
+      "type_of_data_source": "Тип на източника на данни",
+      "provider_name": "{{providerName}} източник на данни?",
+      "do_you_really_want_to_disconnect": "Наистина ли искате да прекъснете връзката с вашия доставчик?",
+      "add_source": "Добави източник"
     },
     "donation": {
       "title": {
@@ -1168,7 +1311,23 @@
         "required": "Donation title is required"
       },
       "wallet": {
-        "required": "Donation wallet address is required"
+        "required": "Donation wallet address is required",
+        "label": "Адрес на портфейла",
+        "placeholder": "Въведете адрес на портфейла, напр. $ilp.uphold.com/example"
+      },
+      "description": {
+        "label": "Опишете дарението си",
+        "placeholder": "Въведете текст, разказващ повече за това дарение"
+      },
+      "images": {
+        "label": "Изображения на дарения"
+      },
+      "info": {
+        "start_one": "Моля, уверете се, че портфейлът ви е настроен на",
+        "start_two": ", за да зададете уеб монетизация.",
+        "start_three": "Ако все още нямате портфейл, моля, кликнете върху",
+        "here": "тук",
+        "end": "За да създадете един."
       }
     },
     "roles": {
@@ -1181,7 +1340,10 @@
       "edit_their_own_posts": "Променят своите публикации",
       "registred_member": "Регистриран член",
       "administrator": "Администратор",
-      "roles_description": "Тези опции контролират какъв тип роли може да променят. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Посетете нашите ръководства, за да научите повече."
+      "roles_description": "Тези опции контролират какъв тип роли може да променят. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Посетете нашите ръководства, за да научите повече.",
+      "manage_collections_and_saved_searches": "Управление на колекции и запазени търсения",
+      "delete_posts": "Изтриване на публикации",
+      "delete_their_own_posts": "Изтриване на собствените си публикации"
     },
     "deployment_delete_this": "Изтрийте тази инсталация",
     "deployment_delete": "Изтрий инсталация",
@@ -1226,9 +1388,20 @@
     "add_new_users": "Добави нови потребители",
     "valid": {
       "name": {
-        "required": "Името на сайта е задължително"
+        "required": "Името на сайта е задължително",
+        "pattern": "Невалиден формат",
+        "minlength": "Името на сайта е твърде кратко"
       }
-    }
+    },
+    "general_settings": {
+      "generate_api_key": "Основен API ключ",
+      "private_settings": "Частни настройки:",
+      "api_key": "API Ключ",
+      "placeholder": {
+        "pick_location": "Избор на местоположение..."
+      }
+    },
+    "bulk_actions": "Групови действия"
   },
   "data_import": {
     "survey_field": "Поле на допитване",
@@ -1271,7 +1444,13 @@
     "leave_empty": "Остави празно",
     "cancel_import": "Откажи качването",
     "finish_import": "Довърши качване",
-    "which_survey": "кое допитване?"
+    "which_survey": "кое допитване?",
+    "get_polling_info": "Получаване на информация за гласуване",
+    "change_csv_file": "Промяна {{selectedfile}} CSV файл",
+    "upload_csv_file": "Качване на CSV файл",
+    "choose_status_to_imported_posts": "Изберете състояние за импортираните публикации:",
+    "has_tasks_required_start": "Вашето проучване",
+    "has_tasks_required_end": ", включва задачи, които обикновено трябва да бъдат изпълнени за всяка публикация, преди да могат да бъдат маркирани като \"публикувани\". По време на това импортиране задачите на всички ваши импортирани публикации ще бъдат маркирани като \"непълни\", като същевременно позволяват състоянието им да бъде маркирано като \"публикувано\". Ако обаче редактирате някоя от тези публикации, след като са били импортирани, ще бъдете помолени да изпълните тези задачи, преди да ги публикувате отново."
   },
   "data_export": {
     "title": "Свали данните",
@@ -1405,14 +1584,38 @@
       "email": {
         "required": "Email адресът е задължителен",
         "email": "Този email адрес е невалиден",
-        "maxlength": "Този email адрес е твърде дълъг"
+        "maxlength": "Този email адрес е твърде дълъг",
+        "pattern": "Този имейл адрес е невалиден",
+        "emailExists": "Имейлът вече се използва"
       },
       "password": {
         "required": "Паролата е задължителна",
         "minlength": "Тази парола е твърде кратка",
-        "maxlength": "Тази парола е твърде дълга"
+        "maxlength": "Тази парола е твърде дълга",
+        "weak": "Тази парола е много слаба"
+      },
+      "fields": {
+        "email must be unique": "Потребителят с този имейл вече съществува"
+      },
+      "name": {
+        "required": "Показваното име е задължително",
+        "maxlength": "Показваното име е твърде дълго"
+      },
+      "token": {
+        "required": "Изисква се маркер"
       }
-    }
+    },
+    "are_you_sure_you_want_to_delete_this_account": "Сигурни ли сте, че искате да азтриете акаунта?",
+    "name_will_be_a_display_name": "Името, което въведете, ще бъде показвано име.",
+    "placeholder": {
+      "realname": "Въведете името си...",
+      "email": "Въведете имейл адрес...",
+      "password": "Въведете парола..."
+    },
+    "password_notify": "Ако оставите полето празно, паролата ви няма да се промени",
+    "avatar": "Аватар",
+    "name": "Име",
+    "search_by_name": "Търсене по име"
   },
   "user_profile": {
     "title": "настройки на акаунт",
@@ -1424,7 +1627,9 @@
     },
     "nav": {
       "general": "Общ",
-      "notifications": "Известия"
+      "notifications": "Известия",
+      "account_settings": "Настройки на акаунт",
+      "notifications_settings": "Настройки за известия"
     }
   },
   "user_create": {
@@ -1454,7 +1659,8 @@
       "bulk_destroy_confirm": "Сигурни ли сте, че искате да изтриете {{count}} ресурси?",
       "bulk_destroy_success": "Изтрий ресурс",
       "bulk_destroy_error": "Неуспешно изтриване на ресурса. Моля опитайте по-късно",
-      "bulk_destroy_cancelled": "Изтрий отказан"
+      "bulk_destroy_cancelled": "Изтрий отказан",
+      "are_you_sure_you_want_to_delete_this": "Сигурни ли сте, че искате да изтриете това?"
     },
     "data_import": {
       "see_imported_posts": "Виж качените публикации",
@@ -1518,7 +1724,12 @@
       "update_status_success_bulk": "Статусът е обновен за {{count}} публикации",
       "leave_without_save": "Искате ли да напуснете тази публикация без да запазите?",
       "leave_confirm_message": "Ако продължите, всички промени ще бъдат изгубени",
-      "leave_confirm": "Продължи без запис"
+      "leave_confirm": "Продължи без запис",
+      "can_t_view_this_post": "Нямате разрешение да разглеждате тази публикация.<br> Тя все още се преглежда от администратора.<br> Тя ще бъде достъпна за вас, след като бъде публикувана.",
+      "contact_for_details": "Свържете се с администратора за повече подробности:",
+      "unfinished_post_task": "Не можете да публикувате тази публикация, публикацията има недовършени задачи",
+      "posts_can_t_be_published": "Следните публикации не могат да бъдат публикувани: {{titles}}",
+      "post_not_found": "Публикацията не бе намерена"
     },
     "category": {
       "save_success": "Запазена категория {{name}}",
@@ -1528,7 +1739,8 @@
       "destroy_error": "Неуспешно изтриване на категория. Моля опитайте отново",
       "bulk_destroy_confirm": "Сигурни ли сте, че искате да изтриете {{count}} категории?",
       "bulk_destroy_confirm_desc": "Изтриването на тези категории ще ги махне от всички публикации. Това не може да бъде обърнато.",
-      "bulk_destroy_success": "{{count}} категории са изтрити"
+      "bulk_destroy_success": "{{count}} категории са изтрити",
+      "bulk_destroy_success_countless": "Категориите са изтрити"
     },
     "role": {
       "delete_question": "Сигурни ли сте, че искате да изтриете ролята {{role}}?",
@@ -1553,7 +1765,8 @@
       "bulk_destroy_confirm": "Сигурни ли сте, че искате да изтриете {{count}} потребителя?",
       "bulk_destroy_success": "Потребителите са изтрити",
       "bulk_role_change_confirm": "Сигурни ли сте, че искате да промените ролята на {{count}} потребителя на {{role}}?",
-      "bulk_role_change_success": "Потребителската роля е сменена на {{role_name}}"
+      "bulk_role_change_success": "Потребителската роля е сменена на {{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "Наистина ли искате да изтриете {{username}}"
     },
     "video": {
       "incorrect_url": "Адресът, {{url}}, който въведохте, не отговаря на формата на Youtube или Vimeo."
@@ -1626,7 +1839,23 @@
     },
     "survey": {
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
+      "bulk_destroy_confirm": "Наистина ли искате да изтриете {{count}} проучвания?"
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Успех!",
+        "success_description": "Благодарим Ви, че изпратихте доклада си. Публикацията се преглежда от нашия екип и скоро ще се появи в платформата.",
+        "success_button": "Добре, звучи добре"
+      },
+      "deleted": {
+        "success": "Успех!",
+        "success_description": "Изтрили сте окончателно {{count}} публикации.",
+        "success_button": "Добре, звучи добре"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Наистина ли искате да изтриете {{lang}} език?"
     }
   },
   "empty": {
@@ -1660,7 +1889,10 @@
     "send_to_address": "Изпрати известия на този адрес",
     "button": {
       "delete": "Изтрий известие"
-    }
+    },
+    "what_you_get_notification_about": "За какво получавате известия",
+    "removed": "Известието е премахнато",
+    "are_you_sure_you_want_to_remove_this_notification": "Наистина ли искате да премахнете това известие?"
   },
   "contact": {
     "edit": "Промени",
@@ -1684,7 +1916,8 @@
       "email": {
         "required": "Нужен е email адрес, за да получавате известия",
         "email": "Този email адрес е невалиден",
-        "maxlength": "Този email адрес е твърде дълъг"
+        "maxlength": "Този email адрес е твърде дълъг",
+        "not_valid": "Този имейл не е валиден"
       },
       "phone": {
         "required": "Нужен е телефонен номер, за да получавате известия",
@@ -1698,7 +1931,8 @@
     "title": "Ushahidi условия на ползване",
     "terms_of_service": "Обновихме нашите <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Условия за ползване</a> и <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Условия на поверителност</a>. Моля прегледайте тези документи и приемете условията, за да може да продължите да използвате услугите на Ushahidi's.",
     "agree": "Съгласявам се с условията на ползване на Ushahidi.",
-    "accept_and_continue": "Съгласи се и продължи"
+    "accept_and_continue": "Съгласи се и продължи",
+    "i_agree": "Съгласен съм с <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Политиката за поверителност</a> на Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Общи условия</a>."
   },
   "translations": {
     "languages": "Languages",
@@ -2455,5 +2689,33 @@
     "isUniqueUsername": "{{field}} вече се използва",
     "isUserSelf": "Не може да променяте своята роля",
     "adminUserLimitReached": "ограничение:{{:admin}}"
+  },
+  "404": {
+    "404": "404",
+    "error": "грешка",
+    "description": "Опа... Съжаляваме, но страницата, която търсите не може да бъде намерена. <br> Моля, потърсете по друга фраза или се върнете в изгледа на картата.",
+    "button": "Отидете в изгледа на картата"
+  },
+  "cookies": {
+    "we_use_cookies": "Здрасти! Ние използваме бисквитки, за да направим Вашето преживяване по-добро.",
+    "cookies_privacy": "Ако искате да научите повече или да оттеглите съгласието си, моля, отидете на нашата <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Политика за поверителност</a>.",
+    "decline": "Отказ",
+    "accept_cookies": "Приемане на бисквитки"
+  },
+  "share": {
+    "share_deployment": "Споделяне на разполагането",
+    "share_post": "Споделяне на публикация",
+    "web_address": "Уеб адресът на проучването ви",
+    "embed_on_websites": "HTML вграждане в уеб сайтове",
+    "copied": "Копирано!",
+    "share_on_twitter": "Сподели в Twitter",
+    "share_on_facebook": "Сподели във Facebook"
+  },
+  "<a href=\"https://www": {
+    "ushahidi": {
+      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
+        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Общи условия</a>."
+      }
+    }
   }
 }

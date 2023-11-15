@@ -81,7 +81,7 @@ const SurveyLocators = {
   saveFieldBtn: '[data-qa="btn-add-field"]',
 
   completeSurveyBtn: '[data-qa="btn-save-survey-item"]',
-  // createdSurveyBtn: '[data-qa=""]'
+  createdSurveyBtn: '[data-qa="automated-survey"]',
 };
 
 export default SurveyLocators;

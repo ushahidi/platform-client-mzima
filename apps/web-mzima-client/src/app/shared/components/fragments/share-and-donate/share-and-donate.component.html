@@ -1,7 +1,12 @@
 <!-- Desktop -->
 <div class="toolbar__controls" *ngIf="isDesktop">
   <app-donation-button class="toolbar__button" *ngIf="isDonateAvailable"></app-donation-button>
-  <mzima-client-button (buttonClick)="openShare()" color="secondary" class="toolbar__button">
+  <mzima-client-button
+    (buttonClick)="openShare()"
+    color="secondary"
+    class="toolbar__button"
+    [data-qa]="'share'"
+  >
     <span>{{ 'app.share' | translate }}</span>
     <mat-icon icon svgIcon="share"></mat-icon>
   </mzima-client-button>

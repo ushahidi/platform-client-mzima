@@ -43,11 +43,13 @@
       <mat-form-field appearance="outline">
         <textarea
           placeholder="{{ 'category.placeholder.descriptions' | translate }}"
+          [data-qa]="'description'"
           matInput
           cdkTextareaAutosize
           cdkAutosizeMinRows="2"
           cdkAutosizeMaxRows="5"
           formControlName="description"
+          [data-qa]="'description'"
         >
         </textarea>
       </mat-form-field>
@@ -91,13 +93,18 @@
     <mat-form-field appearance="outline">
       <mat-select
         formControlName="is_child_to"
+        [data-qa]="'select-parent-category'"
         (selectionChange)="parentChanged($event)"
         disableOptionCentering
       >
         <mat-option value="">{{
           'category.placeholder.choose_parent_category' | translate
         }}</mat-option>
-        <mat-option [value]="category.id" *ngFor="let category of categories">
+        <mat-option
+          [value]="category.id"
+          *ngFor="let category of categories"
+          [data-qa]="category.slug.split(' ').join('-') | lowercase"
+        >
           {{ category.tag }}
         </mat-option>
       </mat-select>
@@ -111,7 +118,7 @@
       [data]="roleOptions"
       formControlName="visible_to"
     ></app-group-checkbox-select>
-    <div class="radio-buttons" *ngIf="category?.parent?.id">
+    <div class="radio-buttons" *ngIf="category?.parent?.id" [data-qa]="'category-option'">
       <p class="radio-buttons__info">
         <mat-icon>group</mat-icon>
         {{ 'category.child_permissions' | translate }}

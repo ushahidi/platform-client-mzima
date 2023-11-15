@@ -32,12 +32,18 @@ class LoginFunctions {
     cy.get('#onboarding-button-activity').click();
     cy.get('#onboarding-button-collections').click();
     cy.get('#onboarding-button-clapper').click();
-    cy.get('[data-qa="button-decline-cookies"]').click();
+    cy.get(LoginLocators.declineCookiesBtn).click();
   }
 
   verify_login() {
     cy.get(LoginLocators.loginButton).should('not.exist');
     cy.get(LoginLocators.accountBtn).should('exist');
+  }
+
+  logout() {
+    cy.get(LoginLocators.accountInfoBtn).click();
+    cy.get(LoginLocators.logOutBtn).click();
+    cy.reload();
   }
 
   login_as_admin() {
