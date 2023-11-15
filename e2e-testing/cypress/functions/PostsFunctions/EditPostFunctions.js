@@ -1,4 +1,4 @@
-import EditPostLocators from '../locators/EditPostLocators';
+import EditPostLocators from '../../locators/PostsLocators/EditPostLocators';
 
 class EditPostFunctions {
   click_add_post_btn() {

@@ -1,7 +1,7 @@
 import LoginFunctions from "../../functions/LoginFunctions";
 import CategoryFunctions from "../../functions/CategoryFunctions";
 
-describe("Automated Tests for Edit Post", () => {
+describe("Automated Tests for Child Category", () => {
   const loginFunctions = new LoginFunctions();
   const categoryFunctions = new CategoryFunctions();
 
