@@ -13,7 +13,7 @@
         [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
       >
         <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
-        <span class="sidebar-menu-button__title">{{ item.label | translate }}</span>
+        <span [attr.data-qa]="'auth-btn-label'" class="sidebar-menu-button__title">{{ item.label | translate }}</span>
       </button>
       <ng-template #menuLink>
         <a
@@ -25,7 +25,7 @@
           routerLinkActive="sidebar-menu-button--active"
         >
           <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
-          <span class="sidebar-menu-button__title">
+          <span [attr.data-qa]="'auth-btn-label'" class="sidebar-menu-button__title">
             {{ item.label | translate }}
           </span>
         </a>
