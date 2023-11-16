@@ -9,7 +9,7 @@
         required
         [data-qa]="'email'"
       />
-      <mat-error *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
+      <mat-error [data-qa]="'invalid-email-error'" *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
     </mat-form-field>
   </div>
 
@@ -34,7 +34,7 @@
         [type]="isPasswordVisible ? 'text' : 'password'"
         [data-qa]="'password'"
       />
-      <mat-error *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
+      <mat-error [data-qa]="'invalid-password-error'" *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
     </mat-form-field>
   </div>
 
@@ -49,7 +49,7 @@
     </mzima-client-button>
   </div>
 
-  <mat-error class="form-error">{{ loginError }}</mat-error>
+  <mat-error [data-qa]="'invalid-credential-error'" class="form-error">{{ loginError }}</mat-error>
 
   <div mat-dialog-actions align="end">
     <ng-content select="[btn-cancel]"></ng-content>
