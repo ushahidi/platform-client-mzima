@@ -1,5 +1,5 @@
 import LoginFunctions from "../../functions/LoginFunctions";
-import PostFunctions from "../../functions/PostFunctions";
+import PostFunctions from "../../functions/PostsFunctions/PostFunctions";
 
 describe("Automated Tests for Posts", () => {
   const loginFunctions = new LoginFunctions();

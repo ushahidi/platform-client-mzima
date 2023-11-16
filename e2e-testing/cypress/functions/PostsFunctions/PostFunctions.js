@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import PostLocators from '../locators/PostLocators';
+import PostLocators from '../../locators/PostsLocators/PostLocators';
 
 class PostFunctions {
   constructor() {

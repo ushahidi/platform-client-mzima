@@ -1,5 +1,5 @@
 import LoginFunctions from "../../functions/LoginFunctions";
-import EditPostFunctions from "../../functions/EditPostFunctions";
+import EditPostFunctions from "../../functions/PostsFunctions/EditPostFunctions";
 
 describe("Automated Tests for Edit Post", () => {
   const loginFunctions = new LoginFunctions();
