@@ -8,6 +8,7 @@ const GeneralSettingsLocator = {
   settingsBtn: '[data-qa="btn-settings"]',
   disableUserSignupCheckbox: '[data-qa="site-disable-registration"] input',
   modalTabs: '[role="tab"]',
+  panelTitle: '[data-qa="panel-title"]'
 };
 
 export default GeneralSettingsLocator;
