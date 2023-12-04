@@ -4,6 +4,7 @@ class LoginFunctions {
   launch_login_modal(launchURL) {
     cy.visit(launchURL);
     this.click_through_onboarding();
+    this.change_laguage();
     cy.get(LoginLocators.loginModal).click();
   }
 
@@ -76,7 +77,6 @@ class LoginFunctions {
     this.type_email(Cypress.env('ush_admin_email'));
     this.type_password(Cypress.env('ush_admin_pwd'));
     this.click_login_button();
-    this.change_laguage();
     this.verify_login();
   }
 }
