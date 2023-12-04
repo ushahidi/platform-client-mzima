@@ -292,7 +292,6 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   }
 
   editField(selectedFieldType: any, idx: number) {
-    console.log({ selectedFieldType, idx });
     const dialogRef = this.dialog.open(CreateFieldModalComponent, {
       width: '100%',
       maxWidth: 576,
@@ -308,11 +307,6 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe({
       next: (response: FormAttributeInterface) => {
-        console.log({ response, priority: response.priority });
-        console.log({
-          nonDraggableFields: this.nonDraggableFields,
-          draggableFields: this.draggableFields,
-        });
         if (response) {
           const safePriority: number[] = [1, 2];
           if (safePriority.includes(response.priority)) {
