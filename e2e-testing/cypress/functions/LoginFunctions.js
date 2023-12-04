@@ -24,6 +24,12 @@ class LoginFunctions {
     cy.get(LoginLocators.loginButton).click();
   }
 
+  //quick-fix, change language to english after logging in
+  change_laguage(){
+    cy.get('.language__selected').click();
+    cy.get('#mat-option-0 > .mat-option-text').click();
+  }
+
   click_through_onboarding() {
     cy.get('#onboarding-button-greeting').click();
     cy.get('#onboarding-button-marker').click();
@@ -70,6 +76,7 @@ class LoginFunctions {
     this.type_email(Cypress.env('ush_admin_email'));
     this.type_password(Cypress.env('ush_admin_pwd'));
     this.click_login_button();
+    this.change_laguage();
     this.verify_login();
   }
 }
