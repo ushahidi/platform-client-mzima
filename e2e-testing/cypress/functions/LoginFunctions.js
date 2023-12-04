@@ -26,9 +26,9 @@ class LoginFunctions {
   }
 
   //quick-fix, change language to english after logging in
-  change_laguage(){
+  change_laguage() {
     cy.get('.language__selected').click();
-    cy.get('#mat-option-0 > .mat-option-text').click();
+    cy.get('#mat-option-7 > .mat-option-text').click();
   }
 
   click_through_onboarding() {
@@ -59,13 +59,13 @@ class LoginFunctions {
   verify_negative_login() {
     this.launch_login_modal(Cypress.env('baseUrl'));
     this.type_email('test');
-    this.verify_invalid_email_error_exist()
+    this.verify_invalid_email_error_exist();
     cy.get(LoginLocators.emailField).type('@gmail.com');
     this.type_password('Password@@@2023');
     this.click_login_button();
-    this.verify_invalid_credentials_error_exist()
+    this.verify_invalid_credentials_error_exist();
   }
-  
+
   logout() {
     cy.get(LoginLocators.accountInfoBtn).click();
     cy.get(LoginLocators.logOutBtn).click();
