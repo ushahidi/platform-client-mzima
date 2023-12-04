@@ -137,13 +137,13 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   }
 
   private splitTaskFields(taskFields: FormAttributeInterface[]) {
-    const nonDraggableType = ['title', 'description'];
-    this.nonDraggableFields = taskFields.filter((field) =>
-      nonDraggableType.includes(field.label.toLowerCase()),
-    );
-    this.draggableFields = taskFields.filter(
-      (field) => !nonDraggableType.includes(field.label.toLowerCase()),
-    );
+    const nonDraggableFieldType = (fieldType: string) =>
+      fieldType === 'title' || fieldType === 'description';
+    console.log({ taskFields });
+    this.nonDraggableFields = taskFields.filter((field) => nonDraggableFieldType(field.type));
+    console.log(this.nonDraggableFields, 'nonDragaggble');
+    this.draggableFields = taskFields.filter((field) => !nonDraggableFieldType(field.type));
+    console.log(this.draggableFields, 'dragaggble');
   }
 
   private getSurveyRoles() {
@@ -292,6 +292,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   }
 
   editField(selectedFieldType: any, idx: number) {
+    console.log({ selectedFieldType, idx });
     const dialogRef = this.dialog.open(CreateFieldModalComponent, {
       width: '100%',
       maxWidth: 576,
@@ -307,6 +308,11 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe({
       next: (response: FormAttributeInterface) => {
+        console.log({ response, priority: response.priority });
+        console.log({
+          nonDraggableFields: this.nonDraggableFields,
+          draggableFields: this.draggableFields,
+        });
         if (response) {
           const safePriority: number[] = [1, 2];
           if (safePriority.includes(response.priority)) {
