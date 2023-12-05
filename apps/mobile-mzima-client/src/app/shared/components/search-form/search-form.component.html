@@ -19,7 +19,7 @@
       color="medium"
       class="back-button"
       *ngIf="isSearchView"
-      (buttonClick)="hideSearchResults()"
+      (buttonClick)="clearSearchOrGoBack()"
     >
       <app-icon slot="icon-only" name="arrow-back"></app-icon>
     </app-button>

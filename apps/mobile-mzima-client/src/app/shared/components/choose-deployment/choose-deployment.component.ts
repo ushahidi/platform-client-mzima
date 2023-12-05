@@ -25,6 +25,7 @@ export class ChooseDeploymentComponent {
   @Output() chosen = new EventEmitter();
   @ViewChild('layout') public layout: MainLayoutComponent;
   public isSearchView = false;
+  public showSearch = true;
   public deploymentList: Deployment[] = [];
   public foundDeploymentList: Deployment[] = [];
   private selectedDeployments: Deployment[] = [];
