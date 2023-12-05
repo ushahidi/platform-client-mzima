@@ -143,13 +143,28 @@
           "parallel": false,
           "cwd": "apps/mobile-mzima-client"
         },
+        "ios:dev": {
+          "commands": ["nx run mobile-mzima-client:build:development", "npx cap copy ios", "npx cap sync ios", "npx cap open ios"],
+          "parallel": false,
+          "cwd": "apps/mobile-mzima-client"
+        },
         "android": {
           "commands": ["nx run mobile-mzima-client:build:production", "npx cap copy android", "npx cap sync android", "npx cap open android"],
           "parallel": false,
           "cwd": "apps/mobile-mzima-client"
         },
+        "android:dev": {
+          "commands": ["nx run mobile-mzima-client:build:development", "npx cap copy android", "npx cap sync android", "npx cap open android"],
+          "parallel": false,
+          "cwd": "apps/mobile-mzima-client"
+        },
         "run-android": {
           "commands": ["nx run mobile-mzima-client:build:production", "npx cap copy android", "npx cap sync android", "npx cap run android -l --external"],
+          "parallel": false,
+          "cwd": "apps/mobile-mzima-client"
+        },
+        "run-android:dev": {
+          "commands": ["nx run mobile-mzima-client:build:development", "npx cap copy android", "npx cap sync android", "npx cap run android -l --external"],
           "parallel": false,
           "cwd": "apps/mobile-mzima-client"
         },
