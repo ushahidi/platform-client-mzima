@@ -29,7 +29,7 @@
     </mat-form-field>
   </div>
 
-  <div class="form-row">
+  <div class="form-row" *ngIf="permissionsList.length; else spinner">
     <mat-label>{{ 'role.permissions' | translate }}</mat-label>
     <p [innerHTML]="'settings.roles.roles_description' | translate"></p>
     <mat-selection-list
@@ -91,3 +91,7 @@
     </div>
   </div>
 </form>
+
+<ng-template #spinner>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>
