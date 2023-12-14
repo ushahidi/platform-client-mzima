@@ -20,6 +20,18 @@ export const statuses = [
 
 export const sources = [
   {
+    name: 'Web',
+    value: 'web',
+    total: 0,
+    checked: true,
+  },
+  {
+    name: 'Mobile',
+    value: 'mobile',
+    total: 0,
+    checked: true,
+  },
+  {
     name: 'Email',
     value: 'email',
     total: 0,
@@ -34,12 +46,6 @@ export const sources = [
   {
     name: 'Twitter',
     value: 'twitter',
-    total: 0,
-    checked: true,
-  },
-  {
-    name: 'Web',
-    value: 'web',
     total: 0,
     checked: true,
   },

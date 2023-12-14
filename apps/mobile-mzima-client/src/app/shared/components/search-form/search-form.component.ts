@@ -57,10 +57,9 @@ export class SearchFormComponent implements ControlValueAccessor {
 
   public clearSearchOrGoBack(): void {
     this.backButtonCalled++;
-    console.log(this.backButtonCalled);
     if (this.backButtonCalled === 2) {
-      this.backButtonCalled = 0;
       this.back.emit();
+      this.backButtonCalled = 0;
       return;
     }
 
