@@ -30,6 +30,7 @@
       <app-search-form
         *ngIf="modalOptions.searchForm"
         class="search-form"
+        (back)="goBackThenCloseModal()"
         (formFocus)="isSearchView = true"
         (formBlur)="isSearchView = false"
         [(ngModel)]="searchFormValue"
