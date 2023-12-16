@@ -17,9 +17,11 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            debuggable rootProject.ext.debuggable
+            debuggable false // rootProject.ext.debuggable
+            testCoverageEnabled false
+            shrinkResources true
         }
     }
 }
