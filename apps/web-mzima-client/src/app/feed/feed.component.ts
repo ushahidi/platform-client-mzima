@@ -253,6 +253,15 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           this.editPost(post);
         },
       });
+
+    this.eventBusService
+      .on(EventType.DeletedPost)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (post) => {
+          this.postDeleted([post], 0);
+        },
+      });
   }
 
   private checkPermission() {
