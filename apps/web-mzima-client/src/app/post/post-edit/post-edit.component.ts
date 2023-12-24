@@ -511,6 +511,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
               value.value = this.form.value[field.key] || null;
               break;
             case 'upload':
+              const originalValue = this.post?.post_content[0]?.fields.filter(
+                (fieldValue: { key: string | number }) => fieldValue.key === field.key,
+              )[0];
               if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
                 try {
                   this.maxSizeError = false;
@@ -535,6 +538,17 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   value.value = null;
                 } catch (error: any) {
                   throw new Error(`Error deleting file: ${error.message}`);
+                }
+              } else if (originalValue.value?.mediaCaption !== value.value?.caption) {
+                try {
+                  const captionObservable = await this.mediaService.updateCaption(
+                    originalValue.value.id,
+                    value.value.caption,
+                  );
+                  const response = await lastValueFrom(captionObservable);
+                  value.value = response.result.id;
+                } catch (error: any) {
+                  throw new Error(`Error updating caption: ${error.message}`);
                 }
               } else {
                 value.value = this.form.value[field.key]?.id || null;

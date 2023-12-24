@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
-import { MediaResponse } from '../models';
+// import { MediaResponse } from '../models';
 import { ResourceService } from './resource.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MediaService extends ResourceService<MediaResponse> {
+export class MediaService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
     protected override currentLoader: EnvLoader,
@@ -34,5 +34,9 @@ export class MediaService extends ResourceService<MediaResponse> {
     }
 
     return this.httpClient.post(apiUrl, formData);
+  }
+
+  updateCaption(id: string | number, caption: string) {
+    return super.patch(id, { caption });
   }
 }
