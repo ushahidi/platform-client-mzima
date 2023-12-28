@@ -30,8 +30,7 @@
     </mat-select>
   </mat-form-field>
 </div>
-
-<div class="survey" *ngIf="provider; else showLoader">
+<div class="survey" *ngIf="currentProviderId">
   <div class="form-row toggle-group">
     <div class="toggle" *ngIf="!onCreating">
       <mat-slide-toggle

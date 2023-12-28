@@ -131,18 +131,13 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
   }
 
   public setCurrentProvider(providerId?: any): void {
-    if (!this.currentProviderId && !providerId) {
-      this.currentProviderId = this.providersData.filter((p: any) => !p.enabled)[0]?.id;
-    }
-    const id = this.currentProviderId || providerId;
-    if (id) {
+    if (this.currentProviderId || providerId) {
+      const id = this.currentProviderId || providerId;
       this.provider = this.providersData.find((provider: any) => provider.id === id);
       this.removeControls(this.form.controls);
       this.createForm(this.provider);
       this.addControlsToForm('id', this.fb.control(this.provider.id, Validators.required));
       this.getSurveyAttributes(this.provider.selected_survey);
-    } else {
-      this.router.navigate(['/settings/data-sources']);
     }
   }
 
