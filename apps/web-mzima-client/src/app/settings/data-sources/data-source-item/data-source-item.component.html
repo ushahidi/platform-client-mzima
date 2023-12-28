@@ -5,51 +5,53 @@
   }}
 </h1>
 
-<div class="form-row" *ngIf="onCreating">
-  <mat-label>
-    {{ 'settings.data_sources.type_of_data_source' | translate }}
-    <span class="color-accent">*</span>
-  </mat-label>
-  <mat-form-field appearance="outline">
-    <mat-select
-      disableOptionCentering
-      [placeholder]="'settings.data_sources.choose_data_source' | translate"
-      [(ngModel)]="currentProviderId"
-      (selectionChange)="setCurrentProvider($event.value)"
-      [data-qa]="'select-provider'"
-    >
-      <ng-container *ngFor="let provider of providersData">
-        <mat-option
-          [value]="provider.id"
-          *ngIf="!isProviderEnabled(provider)"
-          [data-qa]="provider.id"
+<div *ngIf="!isLoading; else showLoader">
+  <div class="form-row" *ngIf="onCreating">
+    <mat-label>
+      {{ 'settings.data_sources.type_of_data_source' | translate }}
+      <span class="color-accent">*</span>
+    </mat-label>
+    <mat-form-field appearance="outline">
+      <mat-select
+        disableOptionCentering
+        [placeholder]="'settings.data_sources.choose_data_source' | translate"
+        [(ngModel)]="currentProviderId"
+        (selectionChange)="setCurrentProvider($event.value)"
+        [data-qa]="'select-provider'"
+      >
+        <ng-container *ngFor="let provider of providersData">
+          <mat-option
+            [value]="provider.id"
+            *ngIf="!isProviderEnabled(provider)"
+            [data-qa]="provider.id"
+          >
+            {{ provider.name }}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="survey" *ngIf="currentProviderId">
+    <div class="form-row toggle-group">
+      <div class="toggle" *ngIf="!onCreating">
+        <mat-slide-toggle
+          name="accept-survey"
+          [(ngModel)]="provider.enabled"
+          (change)="turnOffDataSource($event)"
+          [data-qa]="'toogle-available-provider'"
         >
-          {{ provider.name }}
-        </mat-option>
-      </ng-container>
-    </mat-select>
-  </mat-form-field>
-</div>
-<div class="survey" *ngIf="currentProviderId">
-  <div class="form-row toggle-group">
-    <div class="toggle" *ngIf="!onCreating">
-      <mat-slide-toggle
-        name="accept-survey"
-        [(ngModel)]="provider.enabled"
-        (change)="turnOffDataSource($event)"
-        [data-qa]="'toogle-available-provider'"
-      >
-        {{ 'settings.data_sources.enable_provider_message' | translate }}
-      </mat-slide-toggle>
-    </div>
-    <div class="toggle">
-      <mat-slide-toggle
-        name="import-to-survey"
-        [(ngModel)]="provider.visible_survey"
-        [data-qa]="'toogle-import-to-survey'"
-      >
-        {{ 'settings.data_sources.associate_with_form' | translate }}
-      </mat-slide-toggle>
+          {{ 'settings.data_sources.enable_provider_message' | translate }}
+        </mat-slide-toggle>
+      </div>
+      <div class="toggle">
+        <mat-slide-toggle
+          name="import-to-survey"
+          [(ngModel)]="provider.visible_survey"
+          [data-qa]="'toogle-import-to-survey'"
+        >
+          {{ 'settings.data_sources.associate_with_form' | translate }}
+        </mat-slide-toggle>
+      </div>
     </div>
   </div>
 </div>

@@ -37,6 +37,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
   providersData: any;
   cloneProviders: any[];
   tableData: any;
+  public isLoading = false;
 
   constructor(
     protected override sessionService: SessionService,
@@ -87,6 +88,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
   }
 
   private getProviders(): void {
+    this.isLoading = true;
     // this.dataSourcesService
     //   .getDataSource()
     //   .pipe(switchMap((dataSources) => this.configService.getProvidersData(dataSources)))
@@ -126,6 +128,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
         //   this.surveyList,
         // );
         this.setCurrentProvider();
+        this.isLoading = false;
       },
     });
   }
