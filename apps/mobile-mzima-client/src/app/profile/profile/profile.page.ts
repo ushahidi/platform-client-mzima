@@ -6,7 +6,7 @@ import {
   AlertService,
   AuthService,
   DatabaseService,
-  IntercomService,
+  // IntercomService,
   SessionService,
 } from '@services';
 
@@ -29,13 +29,13 @@ export class ProfilePage {
   public isSupportModalSearchView = false;
   public supportSearchQuery = '';
   public supportItems: SupportItem[] = [
-    {
-      title: 'Intercom',
-      description: 'Contact Ushahidi staff for chat support',
-      action: () => {
-        this.intercomService.displayMessenger();
-      },
-    },
+    // {
+    //   title: 'Intercom',
+    //   description: 'Contact Ushahidi staff for chat support',
+    //   action: () => {
+    //     this.intercomService.displayMessenger();
+    //   },
+    // },
   ];
   public filteredSupportItems: SupportItem[] = this.supportItems;
 
@@ -45,7 +45,7 @@ export class ProfilePage {
     private authService: AuthService,
     private alertService: AlertService,
     private dataBaseService: DatabaseService,
-    private intercomService: IntercomService,
+    // private intercomService: IntercomService,
   ) {
     this.sessionService
       .getCurrentUserData()
