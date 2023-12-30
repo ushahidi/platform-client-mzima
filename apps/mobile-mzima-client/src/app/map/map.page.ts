@@ -32,8 +32,7 @@ export class MapPage extends MainViewComponent implements OnDestroy {
     protected override savedSearchesService: SavedsearchesService,
     protected override sessionService: SessionService,
     private networkService: NetworkService,
-    private alertService: AlertService,
-    // private intercomService: IntercomService,
+    private alertService: AlertService, // private intercomService: IntercomService,
   ) {
     super(router, route, postsService, savedSearchesService, sessionService);
     this.route.params.subscribe(() => {

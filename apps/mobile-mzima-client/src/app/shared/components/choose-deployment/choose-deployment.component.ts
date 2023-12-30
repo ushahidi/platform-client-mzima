@@ -40,8 +40,7 @@ export class ChooseDeploymentComponent {
     private configService: ConfigService,
     private deploymentService: DeploymentService,
     private alertService: AlertService,
-    private authService: AuthService,
-    // private intercomService: IntercomService,
+    private authService: AuthService, // private intercomService: IntercomService,
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: (query: string) => {

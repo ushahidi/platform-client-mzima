@@ -44,8 +44,7 @@ export class ProfilePage {
     private sessionService: SessionService,
     private authService: AuthService,
     private alertService: AlertService,
-    private dataBaseService: DatabaseService,
-    // private intercomService: IntercomService,
+    private dataBaseService: DatabaseService, // private intercomService: IntercomService,
   ) {
     this.sessionService
       .getCurrentUserData()
