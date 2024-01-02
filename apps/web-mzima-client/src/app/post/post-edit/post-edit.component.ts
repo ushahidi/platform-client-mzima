@@ -539,7 +539,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                 } catch (error: any) {
                   throw new Error(`Error deleting file: ${error.message}`);
                 }
-              } else if (originalValue.value?.mediaCaption !== value.value?.caption) {
+              } else if (originalValue?.value?.mediaCaption !== value.value?.caption) {
                 try {
                   const captionObservable = await this.mediaService.updateCaption(
                     originalValue.value.id,

@@ -550,6 +550,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         updatedPost.title = p.title;
         updatedPost.content = p.content;
         updatedPost.status = p.status;
+        updatedPost.post_content = _.cloneDeep(p.post_content);
       }
     });
   }
