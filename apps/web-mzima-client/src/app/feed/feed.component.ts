@@ -544,16 +544,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   refreshPost({ id }: PostResult) {
     this.postsService.getById(id).subscribe((p) => {
-      const oldPost = this.posts.find((post) => post.id === id);
-      if (oldPost) {
-        const updatedPost = _.cloneDeep(oldPost);
-        updatedPost.sets = _.cloneDeep(p.sets);
-        updatedPost.title = p.title;
-        updatedPost.content = p.content;
-        updatedPost.status = p.status;
-        updatedPost.post_content = p.post_content;
-        this.posts = this.posts.map((obj) => (obj.id === updatedPost.id ? updatedPost : obj));
-      }
+      const updatedPost = _.cloneDeep(p);
+      this.posts = this.posts.map((obj) => (obj.id === updatedPost.id ? updatedPost : obj));
     });
   }
 
