@@ -40,10 +40,7 @@
       <mat-error [data-qa]="'invalid-password'" *ngIf="form.get('password')?.invalid">{{
         getErrorMessage('password')
       }}</mat-error>
-      <mat-hint
-        >Password should have at least 8 characters, one lowercase letter, one uppercase letter, one
-        number and one symbol.</mat-hint
-      >
+      <mat-hint>{{ 'user.password_hint' | translate }}.</mat-hint>
     </mat-form-field>
     <app-password-strength [passwordToCheck]="form.value.password"></app-password-strength>
   </div>
