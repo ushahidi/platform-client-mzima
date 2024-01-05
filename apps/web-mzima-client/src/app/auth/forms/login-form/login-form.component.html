@@ -12,16 +12,6 @@
   <div class="form-row">
     <mat-form-field appearance="fill">
       <mat-label>{{ 'user.password' | translate }}</mat-label>
-      <mzima-client-button
-        matSuffix
-        fill="clear"
-        color="secondary"
-        [iconOnly]="true"
-        (buttonClick)="togglePasswordVisible()"
-        [data-qa]="'toggle-password'"
-      >
-        <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
-      </mzima-client-button>
       <input
         matInput
         formControlName="password"
@@ -32,7 +22,20 @@
       <mat-error [data-qa]="'invalid-password-error'" *ngIf="form.get('password')?.invalid">{{
         getErrorMessage('password')
       }}</mat-error>
+      <mzima-client-button
+        matSuffix
+        fill="clear"
+        color="secondary"
+        [iconOnly]="true"
+        (buttonClick)="togglePasswordVisible()"
+        [data-qa]="'toggle-password'"
+      >
+        <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
+      </mzima-client-button>
     </mat-form-field>
+    <mat-error [data-qa]="'invalid-credential-error'" class="form-error">{{
+      loginError
+    }}</mat-error>
   </div>
 
   <div class="form-row controls">
@@ -44,8 +47,6 @@
       Forgot your password?
     </mzima-client-button>
   </div>
-
-  <mat-error [data-qa]="'invalid-credential-error'" class="form-error">{{ loginError }}</mat-error>
 
   <div mat-dialog-actions align="end">
     <ng-content select="[btn-cancel]"></ng-content>
