@@ -1,21 +1,17 @@
-<form novalidate [formGroup]="form" (ngSubmit)="login()" data-qa="form">
+<form novalidate [formGroup]="form" class="auth-form" (ngSubmit)="login()" data-qa="form">
   <div class="form-row">
-    <mat-label>{{ 'user.email' | translate }}</mat-label>
-    <mat-form-field appearance="outline">
-      <input
-        matInput
-        placeholder="pat@example.com"
-        formControlName="email"
-        required
-        [data-qa]="'email'"
-      />
-      <mat-error [data-qa]="'invalid-email-error'" *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'user.email' | translate }}</mat-label>
+      <input matInput formControlName="email" required [data-qa]="'email'" />
+      <mat-error [data-qa]="'invalid-email-error'" *ngIf="form.get('email')?.invalid">{{
+        getErrorMessage('email')
+      }}</mat-error>
     </mat-form-field>
   </div>
 
   <div class="form-row">
-    <mat-label>{{ 'user.password' | translate }}</mat-label>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'user.password' | translate }}</mat-label>
       <mzima-client-button
         matSuffix
         fill="clear"
@@ -28,24 +24,24 @@
       </mzima-client-button>
       <input
         matInput
-        placeholder="{{ 'user.placeholder.password' | translate }}"
         formControlName="password"
         required
         [type]="isPasswordVisible ? 'text' : 'password'"
         [data-qa]="'password'"
       />
-      <mat-error [data-qa]="'invalid-password-error'" *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
+      <mat-error [data-qa]="'invalid-password-error'" *ngIf="form.get('password')?.invalid">{{
+        getErrorMessage('password')
+      }}</mat-error>
     </mat-form-field>
   </div>
 
   <div class="form-row controls">
     <mzima-client-button
       (buttonClick)="restorePassword()"
-      color="secondary"
       fill="clear"
       [data-qa]="'restorePassword'"
     >
-      Forgot password?
+      Forgot your password?
     </mzima-client-button>
   </div>
 
