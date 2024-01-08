@@ -16,6 +16,7 @@
     [ngClass]="{ 'logo--hidden': isSearchView }"
     name="ushahidi"
   ></app-icon>
+
   <ng-container *ngIf="deploymentList.length && !isSearchView">
     <ion-text color="medium" class="title ion-padding-horizontal">
       Choose one Deployment from list
@@ -31,6 +32,7 @@
       ></app-deployment-item>
     </ion-list>
   </ng-container>
+
   <ng-container *ngIf="isSearchView">
     <ng-container *ngIf="!isDeploymentsLoading; else spinner">
       <ng-container *ngIf="foundDeploymentList.length; else emptyList">

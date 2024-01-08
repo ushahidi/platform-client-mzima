@@ -1,5 +1,5 @@
 export interface Deployment {
-  id: number;
+  id: number | string;
   deployment_name: string;
   description: string;
   domain: string;
@@ -7,8 +7,8 @@ export interface Deployment {
   image?: string;
   avatar?: string;
   selected?: boolean;
-  status: string;
-  subdomain: string;
+  status?: string;
+  subdomain?: string;
   tier: string;
   isOutdated?: boolean;
 }
