@@ -33,9 +33,7 @@
         <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
       </mzima-client-button>
     </mat-form-field>
-    <mat-error [data-qa]="'invalid-credential-error'" class="form-error">{{
-      loginError
-    }}</mat-error>
+    <mat-error [data-qa]="'invalid-credential-error'">{{ loginError }}</mat-error>
   </div>
 
   <div class="form-row controls">
