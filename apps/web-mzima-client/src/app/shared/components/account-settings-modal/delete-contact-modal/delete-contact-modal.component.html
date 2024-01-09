@@ -1,0 +1,37 @@
+<mzima-client-button
+  tabindex="-1"
+  fill="outline"
+  [iconOnly]="true"
+  color="light-gray"
+  [data-qa]="'btn-close'"
+  class="modal__close-btn"
+  [mat-dialog-close]="false"
+  ariaLabel="{{ 'modal.button.close' | translate }}"
+>
+  <mat-icon icon svgIcon="close"></mat-icon>
+</mzima-client-button>
+
+<strong mat-dialog-title class="title" [data-qa]="'task-modal-title'">{{
+  'user_profile.nav.delete_contact.title' | translate
+}}</strong>
+
+<mat-dialog-content class="">
+  <div class="form-row">
+    <div class="instructions">{{ 'user_profile.nav.delete_contact.instructions' | translate }}</div>
+  </div>
+  <div class="form-row"></div>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end">
+  <mzima-client-button
+    fill="outline"
+    color="secondary"
+    (buttonClick)="cancel()"
+    [data-qa]="'survey-task-cancel'"
+  >
+    {{ 'user_profile.nav.delete_contact.button.cancel' | translate }}
+  </mzima-client-button>
+  <mzima-client-button type="submit" (buttonClick)="submit()" [data-qa]="'survey-task-add'">
+    {{ 'user_profile.nav.delete_contact.button.delete' | translate }}
+  </mzima-client-button>
+</div>
