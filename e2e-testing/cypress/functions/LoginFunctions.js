@@ -10,13 +10,13 @@ class LoginFunctions {
 
   type_email(email) {
     cy.wait(1000);
-    cy.get(LoginLocators.emailField).type(email).should('have.value', email);
+    cy.get(LoginLocators.emailField).type(email, {force: true}).should('have.value', email);
   }
 
   type_password(password) {
     cy.get(LoginLocators.passwordField)
-      .clear()
-      .type(password)
+      .clear({force: true})
+      .type(password, {force: true})
       .invoke('val')
       .should('have.length.gte', 12);
   }
@@ -27,8 +27,8 @@ class LoginFunctions {
 
   //quick-fix, change language to english after logging in
   change_laguage() {
-    cy.get('.language__selected').click();
-    cy.get('#mat-option-7 > .mat-option-text').click();
+    // cy.get('.language__selected').click();
+    // cy.get('#mat-option-7 > .mat-option-text').click();
   }
 
   click_through_onboarding() {

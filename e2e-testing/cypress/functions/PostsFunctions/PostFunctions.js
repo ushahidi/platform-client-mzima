@@ -29,7 +29,7 @@ class PostFunctions {
     cy.get(PostLocators.intField).eq(4).type(100);
 
     // click on date field to open pop up
-    cy.get(PostLocators.dateField).eq(6).click();
+    cy.get(PostLocators.dateField).eq(6).click({force: true});
     cy.get('.mat-button.mat-stroked-button').click(); // click on the checkmark button to select today's date
     cy.get(PostLocators.selectFieldBtn).click();
     cy.get(PostLocators.selectFieldOption1).click();

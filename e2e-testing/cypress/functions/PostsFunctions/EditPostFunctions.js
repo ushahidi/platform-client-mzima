@@ -22,7 +22,7 @@ class EditPostFunctions {
   save_post() {
     cy.get(EditPostLocators.savePostBtn).click();
   }
-
+  
   add_post() {
     this.click_add_post_btn();
     this.select_survey_item();
