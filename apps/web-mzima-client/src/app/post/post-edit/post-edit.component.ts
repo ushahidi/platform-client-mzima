@@ -545,8 +545,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                     originalValue.value.id,
                     value.value.caption,
                   );
-                  const response = await lastValueFrom(captionObservable);
-                  value.value = response.result.id;
+                  await lastValueFrom(captionObservable);
+                  value.value = originalValue.value.id;
                 } catch (error: any) {
                   throw new Error(`Error updating caption: ${error.message}`);
                 }
