@@ -26,7 +26,7 @@ class UserFunctions {
 
     cy.get(UserLocators.bulkActionsBtn).click();
     cy.wait(1000);
-    cy.get(UserLocators.checkUser).click();
+    cy.get(UserLocators.checkUser).eq(0).click();
     cy.get(UserLocators.deleteUsersBtn).click();
     cy.get(UserLocators.deleteUserConfirmBtn).click();
   }

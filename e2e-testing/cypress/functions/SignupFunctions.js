@@ -17,7 +17,8 @@ class SignupFunctions {
   }
   navigate_to_signup_modal() {
     loginFunctions.launch_login_modal(Cypress.env('baseUrl'));
-    cy.get('#cdk-overlay-0').click()
+    cy.get('#cdk-overlay-0').as('btn').click()
+    cy.get('@btn').click()
     cy.get(SignupLocators.signupTab).eq(1).click();
   }
 
