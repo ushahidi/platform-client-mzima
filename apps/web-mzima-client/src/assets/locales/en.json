@@ -1685,7 +1685,8 @@
       "empty_mapping_empty": "The CSV file does not contain column names. Please check your CSV file and try again",
       "no_mappings": "No fields have been assigned mappings - at least one field must be mapped to continue",
       "csv_import_cancel": "CSV import cancelled",
-      "csv_import_cancel_confirm": "Are you sure you want to cancel importing?"
+      "csv_import_cancel_confirm": "Are you sure you want to cancel importing?",
+      "csv_import_error": "Some of the data in your CSV file does not match the format of the mapped survey field. Please review the data and try again."
     },
     "general_settings": {
       "save_success": "General settings saved"
