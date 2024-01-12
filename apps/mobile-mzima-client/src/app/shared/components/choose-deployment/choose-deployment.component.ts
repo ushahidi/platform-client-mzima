@@ -8,7 +8,7 @@ import {
   ConfigService,
   DeploymentService,
   EnvService,
-  IntercomService,
+  // IntercomService,
 } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { getDeploymentAvatarPlaceholder } from '@helpers';
@@ -40,8 +40,7 @@ export class ChooseDeploymentComponent {
     private configService: ConfigService,
     private deploymentService: DeploymentService,
     private alertService: AlertService,
-    private authService: AuthService,
-    private intercomService: IntercomService,
+    private authService: AuthService, // private intercomService: IntercomService,
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: (query: string) => {
@@ -187,13 +186,13 @@ export class ChooseDeploymentComponent {
       message:
         "<p>We're sorry, but the deployment option you're trying to select is not supported by the application as the administrator hasn't updated it yet. Until the update is performed, the deployment won't function properly.</p><p>If you are the administrator of this deployment, please feel free to contact us for more information.</p>",
       buttons: [
-        {
-          text: 'Contact us',
-          cssClass: 'medium',
-          handler: () => {
-            this.intercomService.displayMessenger();
-          },
-        },
+        // {
+        //   text: 'Contact us',
+        //   cssClass: 'medium',
+        //   handler: () => {
+        //     this.intercomService.displayMessenger();
+        //   },
+        // },
         {
           text: 'Ok',
           cssClass: 'primary',
