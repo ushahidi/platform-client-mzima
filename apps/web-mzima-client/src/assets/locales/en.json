@@ -1587,7 +1587,12 @@
     "search_and_filter": "Search & Filter Users",
     "passwordreset_instructions": "Enter your email to request a password reset",
     "passwordreset_confirm_instructions": "If your email exists in our database, you will receive a password recovery email soon.",
-    "token": "Password reset token",
+    "forgot_instructions": "No worries! Submit your email and check your inbox for a reset link.",
+    "token": "Paste the password reset token from email",
+    "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
+    "password_length": "Password must be at least 8 characters long",
+    "password_match": "Passwords do not match",
+    "check_email": "Check your email",
     "name_will_be_a_display_name": "The name you enter will be a display name.",
     "valid": {
       "fields": {
