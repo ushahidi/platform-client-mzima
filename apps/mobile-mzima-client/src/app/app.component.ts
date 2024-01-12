@@ -44,7 +44,7 @@ export class AppComponent extends BaseComponent {
     private listenerService: ListenerService,
     @Optional() override routerOutlet?: IonRouterOutlet,
   ) {
-    super(router, platform, toastService, alertCtrl, networkService, routerOutlet, location);
+    super(router, platform, toastService, alertCtrl, networkService, location, routerOutlet);
     this.initToastMessageListener();
     this.initNetworkListener();
     this.listenerService.changeDeploymentListener();

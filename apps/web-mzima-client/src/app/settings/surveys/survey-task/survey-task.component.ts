@@ -139,11 +139,8 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   private splitTaskFields(taskFields: FormAttributeInterface[]) {
     const nonDraggableFieldType = (fieldType: string) =>
       fieldType === 'title' || fieldType === 'description';
-    console.log({ taskFields });
     this.nonDraggableFields = taskFields.filter((field) => nonDraggableFieldType(field.type));
-    console.log(this.nonDraggableFields, 'nonDragaggble');
     this.draggableFields = taskFields.filter((field) => !nonDraggableFieldType(field.type));
-    console.log(this.draggableFields, 'dragaggble');
   }
 
   private getSurveyRoles() {

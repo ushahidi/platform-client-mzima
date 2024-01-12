@@ -22,8 +22,8 @@ export class BaseComponent {
     protected toastService: ToastService,
     protected alertCtrl: AlertController,
     protected networkService: NetworkService,
+    protected location: Location,
     @Optional() protected routerOutlet?: IonRouterOutlet,
-    @Optional() protected location?: Location,
   ) {
     this.platform.ready().then(async () => {
       if (this.platform.is('hybrid')) {
@@ -96,14 +96,21 @@ export class BaseComponent {
     const urls = ['/', '/deployment'];
     if (Capacitor.getPlatform() === 'android') {
       this.platform.backButton.subscribeWithPriority(10, async () => {
-        if (urls.includes(this.router.url)) {
-          if (!this.routerOutlet?.canGoBack()) {
+        console.log("We're trying to go back here");
+        if (!this.routerOutlet?.canGoBack()) {
+          if (urls.includes(this.router.url)) {
             this.tap++;
             if (this.tap === 2) await App.exitApp();
             else this.doubleTapExistToast();
+          } else {
+            console.log(this.location);
+            console.log('We can go back in a location');
+            this.location.back();
           }
         } else {
-          this.location?.back();
+          console.log(this.location);
+          console.log('We can go back in a location');
+          this.location.back();
         }
       });
     }

@@ -8,7 +8,7 @@ import {
   ConfigService,
   DeploymentService,
   EnvService,
-  IntercomService,
+  // IntercomService,
 } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { getDeploymentAvatarPlaceholder } from '@helpers';
@@ -25,12 +25,13 @@ export class ChooseDeploymentComponent {
   @Output() chosen = new EventEmitter();
   @ViewChild('layout') public layout: MainLayoutComponent;
   public isSearchView = false;
+  public showSearch = true;
   public deploymentList: Deployment[] = [];
   public foundDeploymentList: Deployment[] = [];
   private selectedDeployments: Deployment[] = [];
   public isDeploymentsLoading = false;
   public addButtonVisible = false;
-  public currentDeploymentId?: number;
+  public currentDeploymentId?: number | string;
   private domain: string | null = null;
   private readonly searchSubject = new Subject<string>();
 
@@ -39,13 +40,14 @@ export class ChooseDeploymentComponent {
     private configService: ConfigService,
     private deploymentService: DeploymentService,
     private alertService: AlertService,
-    private authService: AuthService,
-    private intercomService: IntercomService,
+    private authService: AuthService, // private intercomService: IntercomService,
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: (query: string) => {
+        console.log('Search Subject', query);
         this.deploymentService.searchDeployments(query).subscribe({
           next: (deployments: any[]) => {
+            console.log(deployments);
             this.isDeploymentsLoading = false;
             this.foundDeploymentList = deployments;
           },
@@ -81,6 +83,30 @@ export class ChooseDeploymentComponent {
     const index = this.deploymentList.findIndex((i: any) => i.deployment_name === 'mzima-dev-api');
     if (index === -1) {
       this.deploymentList = [
+        {
+          id: 0,
+          domain: '172.20.10.6:8000',
+          subdomain: '',
+          fqdn: '172.20.10.6:8000',
+          status: 'deployed',
+          deployment_name: 'Localhost',
+          description: 'Local for development',
+          avatar: getDeploymentAvatarPlaceholder('localhost'),
+          tier: 'level_1',
+          selected: false,
+        },
+        {
+          id: 1000010001,
+          domain: 'webhook.site/eafbeb53-383d-4435-a9b7-960f75e61363',
+          subdomain: '',
+          fqdn: 'webhook.site',
+          status: 'deployed',
+          deployment_name: 'Webhook Site',
+          description: 'Webhook Site Tunnel for development',
+          avatar: getDeploymentAvatarPlaceholder('Webhook'),
+          tier: 'level_1',
+          selected: false,
+        },
         {
           id: 1,
           domain: 'staging.ush.zone',
@@ -160,13 +186,13 @@ export class ChooseDeploymentComponent {
       message:
         "<p>We're sorry, but the deployment option you're trying to select is not supported by the application as the administrator hasn't updated it yet. Until the update is performed, the deployment won't function properly.</p><p>If you are the administrator of this deployment, please feel free to contact us for more information.</p>",
       buttons: [
-        {
-          text: 'Contact us',
-          cssClass: 'medium',
-          handler: () => {
-            this.intercomService.displayMessenger();
-          },
-        },
+        // {
+        //   text: 'Contact us',
+        //   cssClass: 'medium',
+        //   handler: () => {
+        //     this.intercomService.displayMessenger();
+        //   },
+        // },
         {
           text: 'Ok',
           cssClass: 'primary',
@@ -192,19 +218,22 @@ export class ChooseDeploymentComponent {
   }
 
   public searchDeployments(query: string | null): void {
+    console.log('Search Deployments', query);
     if (query == null) {
       this.isDeploymentsLoading = false;
       this.foundDeploymentList = [];
       this.domain = null;
     } else if (
-      query.indexOf('.') != -1 ||
+      // query.indexOf('.') != -1 ||
       query.indexOf('http:') != -1 ||
       query.indexOf('https:') != -1
     ) {
       this.isDeploymentsLoading = false;
       this.foundDeploymentList = [];
       this.domain = query.toLowerCase().replace('http://', '').replace('https://', '');
-      this.searchSubject.next(this.deploymentService.removeDomainForSearch(this.domain));
+      const value = this.deploymentService.removeDomainForSearch(this.domain);
+      console.log('Domain for search', value);
+      this.searchSubject.next(value);
     } else if (query.length > 0) {
       this.isDeploymentsLoading = true;
       this.domain = null;
@@ -216,10 +245,26 @@ export class ChooseDeploymentComponent {
   }
 
   public addDeployment(): void {
+    console.log(this.selectedDeployments);
     this.deploymentService.addDeployments(this.selectedDeployments);
     this.layout.closeSearchForm();
     this.foundDeploymentList = [];
     this.addButtonVisible = false;
     this.loadDeployments();
+    this.backHandle();
+  }
+
+  private isValidUrl(url: string): boolean {
+    const urlPattern = new RegExp(
+      '^(https?:\\/\\/)?' + // validate protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
+      'i',
+    ); // fragment locator
+
+    return !!urlPattern.test(url);
   }
 }
