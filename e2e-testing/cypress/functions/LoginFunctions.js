@@ -26,12 +26,12 @@ class LoginFunctions {
   }
 
   check_user_details_correct(){
-    var name = Cypress.env('ush_admin_name');
-    var email = Cypress.env('ush_admin_email');
+    const name = Cypress.env('ush_admin_name');
+    const email = Cypress.env('ush_admin_email');
     cy.get(LoginLocators.accountBtn)
-      .contains(`:contains(“${name}”)`)
+      .should('have.value', name) 
     cy.get(LoginLocators.accountBtn)
-      .contains(`:contains(“${email}”)`)
+      .should('have.value', email)
   }
 
   //quick-fix, change language to english after logging in
