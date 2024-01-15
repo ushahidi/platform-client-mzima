@@ -27,9 +27,9 @@ class LoginFunctions {
 
   check_user_details_correct(name, email){
     cy.get(LoginLocators.accountBtn)
-      .contains(name)
+      .contains(`:contains(“${name}”)`)
     cy.get(LoginLocators.accountBtn)
-      .contains(email)
+      .contains(`:contains(“${email}”)`)
   }
 
   //quick-fix, change language to english after logging in
