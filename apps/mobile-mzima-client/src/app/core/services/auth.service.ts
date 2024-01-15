@@ -20,9 +20,8 @@ export class AuthService extends ResourceService<any> {
     protected envLoader: EnvLoader,
     protected env: EnvService,
     private sessionService: SessionService,
-    private userService: UsersService,
-  ) // private intercomService: IntercomService,
-  {
+    private userService: UsersService, // + private intercomService: IntercomService,
+  ) {
     super(httpClient, envLoader);
   }
 
