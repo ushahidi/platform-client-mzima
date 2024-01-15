@@ -25,7 +25,9 @@ class LoginFunctions {
     cy.get(LoginLocators.loginButton).click();
   }
 
-  check_user_details_correct(name, email){
+  check_user_details_correct(){
+    var name = Cypress.env('ush_admin_name');
+    var email = Cypress.env('ush_admin_email');
     cy.get(LoginLocators.accountBtn)
       .contains(`:contains(“${name}”)`)
     cy.get(LoginLocators.accountBtn)
@@ -85,9 +87,7 @@ class LoginFunctions {
     this.type_password(Cypress.env('ush_admin_pwd'));
     this.click_login_button();
     this.verify_login();
-    this.check_user_details_correct(
-      Cypress.env('ush_admin_name'),Cypress.env('ush_admin_email')
-      )
+    this.check_user_details_correct()
   }
 }
 
