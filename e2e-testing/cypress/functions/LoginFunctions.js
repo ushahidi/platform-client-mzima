@@ -25,11 +25,11 @@ class LoginFunctions {
     cy.get(LoginLocators.loginButton).click();
   }
 
-  check_user_details_correct(){
+  check_user_details_correct(name, email){
     cy.get(LoginLocators.accountBtn)
-      .contains(Cypress.env('ush_admin_name'))
+      .contains(name)
     cy.get(LoginLocators.accountBtn)
-      .contains(Cypress.env('ush_admin_email'))
+      .contains(email)
   }
 
   //quick-fix, change language to english after logging in
@@ -85,7 +85,9 @@ class LoginFunctions {
     this.type_password(Cypress.env('ush_admin_pwd'));
     this.click_login_button();
     this.verify_login();
-    this.check_user_details_correct()
+    this.check_user_details_correct(
+      Cypress.env('ush_admin_name'),Cypress.env('ush_admin_email')
+      )
   }
 }
 
