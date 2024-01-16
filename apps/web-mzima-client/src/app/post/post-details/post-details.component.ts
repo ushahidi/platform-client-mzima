@@ -34,7 +34,7 @@ import { BreakpointService, EventBusService, EventType, SessionService } from '@
   styleUrls: ['./post-details.component.scss'],
 })
 export class PostDetailsComponent extends BaseComponent implements OnChanges, OnDestroy {
-  @Input() post?: PostResult;
+  @Input() post: PostResult;
   @Input() feedView: boolean = true;
   @Input() userId?: number | string;
   @Input() color?: string;
@@ -69,8 +69,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
 
     this.route.params.subscribe((params) => {
       if (params['id']) {
-        this.post = undefined;
-
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
 
         this.postId = Number(params['id']);
@@ -223,6 +221,14 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     this.statusChanged.emit();
     this.eventBusService.next({
       type: EventType.UpdatedPost,
+      payload: this.post,
+    });
+  }
+
+  public deletedHandle(): void {
+    this.getPost(this.postId);
+    this.eventBusService.next({
+      type: EventType.DeletedPost,
       payload: this.post,
     });
   }

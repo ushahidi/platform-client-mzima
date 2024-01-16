@@ -39,6 +39,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   requiredFields = new Map<string, string>();
   maps_to: any = {};
   uploadErrors: any[] = [];
+  importErrors: boolean = false;
   fileChanged = false;
 
   statusOption: string;
@@ -296,8 +297,8 @@ export class DataImportComponent extends BaseComponent implements OnInit {
             queryParams: { job: this.uploadedCSV.id },
           });
         },
-        error: (err) => {
-          this.notification.showError(err);
+        error: () => {
+          this.importErrors = true;
         },
       });
     });

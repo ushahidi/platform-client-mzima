@@ -18,9 +18,12 @@ export class SearchFormComponent implements ControlValueAccessor {
   @Output() public search = new EventEmitter<string>();
   @Output() public formFocus = new EventEmitter();
   @Output() public formBlur = new EventEmitter();
+  @Output() public back = new EventEmitter();
+
   @Input() public value?: string;
   @ViewChild('searchControl') public searchControl: FormControlComponent;
   public isSearchView = false;
+  public backButtonCalled = 0;
 
   onChange: any = () => {};
   onTouched: any = () => {};
@@ -50,6 +53,17 @@ export class SearchFormComponent implements ControlValueAccessor {
     this.isSearchView = false;
     this.formBlur.emit();
     this.searchControl.blurInput();
+  }
+
+  public clearSearchOrGoBack(): void {
+    this.backButtonCalled++;
+    if (this.backButtonCalled === 2) {
+      this.back.emit();
+      this.backButtonCalled = 0;
+      return;
+    }
+
+    this.hideSearchResults();
   }
 
   public searchQueryChanged(): void {
