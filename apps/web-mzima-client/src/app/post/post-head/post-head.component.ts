@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 import { BaseComponent } from '../../base.component';
 import { ShareModalComponent } from '../../shared/components';
+import { ShowMessagesModalComponent } from '../show-messages-modal/show-messages-modal.component';
 import {
   PostPropertiesInterface,
   PostResult,
@@ -119,6 +120,17 @@ export class PostHeadComponent extends BaseComponent {
     } else {
       this.edit.emit();
     }
+  }
+
+  public openMessages() {
+    this.dialog.open(ShowMessagesModalComponent, {
+      width: '100%',
+      maxWidth: 564,
+      panelClass: 'modal',
+      data: {
+        postId: this.post.id,
+      },
+    });
   }
 
   public sharePost() {
