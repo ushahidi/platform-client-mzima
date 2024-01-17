@@ -21,11 +21,13 @@ export class DeleteContactModalComponent {
     private matDialogRef: MatDialogRef<DeleteContactModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DeleteContactModalData,
   ) {
-    // Create an array of can_notify booleans, excluding the contact to be deleted.
-    this.contacts = this.data.contacts.filter((contact) => contact.id != this.data.contactId);
-    this.contacts.forEach((contact) => {
-      this.notificationSwitches.push(contact.can_notify);
-    });
+    if (this.data.contacts) {
+      // Create an array of can_notify booleans, excluding the contact to be deleted.
+      this.contacts = this.data.contacts.filter((contact) => contact.id != this.data.contactId);
+      this.contacts.forEach((contact) => {
+        this.notificationSwitches.push(contact.can_notify);
+      });
+    }
   }
 
   cancel() {
@@ -33,7 +35,7 @@ export class DeleteContactModalComponent {
   }
 
   submit() {
-    // Empty contacts array and then fill with modified contacts for updating.
+    // Empty contacts array and then fill with only modified contacts for updating.
     this.contacts = [];
     this.data.contacts
       .filter((contact) => contact.id != this.data.contactId)

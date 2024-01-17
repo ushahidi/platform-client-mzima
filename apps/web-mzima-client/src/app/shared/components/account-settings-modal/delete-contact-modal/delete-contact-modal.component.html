@@ -17,9 +17,17 @@
 
 <mat-dialog-content class="">
   <div class="form-row">
-    <div class="instructions">{{ 'user_profile.nav.delete_contact.instructions' | translate }}</div>
+    <div class="instructions">
+      {{ 'user_profile.nav.delete_contact.instructions' | translate }}
+      {{
+        (this.notificationSwitches.length > 0
+          ? 'user_profile.nav.delete_contact.switch_instructions'
+          : ''
+        ) | translate
+      }}
+    </div>
   </div>
-  <div class="form-row">
+  <div class="form-row" *ngIf="this.notificationSwitches.length > 0">
     <div class="contact-method" *ngFor="let contact of this.contacts; let i = index">
       <mat-slide-toggle [(ngModel)]="notificationSwitches[i]" [data-qa]="'contact-notify-toggle'">
         {{ contact.contact }}

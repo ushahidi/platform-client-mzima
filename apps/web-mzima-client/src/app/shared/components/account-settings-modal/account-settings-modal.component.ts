@@ -254,13 +254,14 @@ export class AccountSettingsModalComponent implements OnInit {
   }
 
   public async deleteContact(id: number): Promise<void> {
+    const askSwitch = this.contacts.find((contact) => (contact.id = id))?.can_notify;
     const dialogRef = this.dialog.open(DeleteContactModalComponent, {
       width: '100%',
       maxWidth: 576,
       panelClass: ['modal', 'select-languages-modal'],
       data: {
         contactId: id,
-        contacts: this.contacts,
+        contacts: askSwitch ? this.contacts : [],
       },
     });
 
