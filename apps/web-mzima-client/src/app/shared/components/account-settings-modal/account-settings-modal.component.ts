@@ -7,7 +7,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { formHelper } from '@helpers';
@@ -27,6 +27,7 @@ import {
   AccountNotificationsInterface,
   NotificationTypeEnum,
 } from '@mzima-client/sdk';
+import { DeleteContactModalComponent } from './delete-contact-modal/delete-contact-modal.component';
 
 enum AccountTypeEnum {
   Email = 'email',
@@ -88,6 +89,7 @@ export class AccountSettingsModalComponent implements OnInit {
     private collectionsService: CollectionsService,
     private translate: TranslateService,
     private matDialogRef: MatDialogRef<AccountSettingsModalComponent>,
+    private dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private savedsearchesService: SavedsearchesService,
   ) {
@@ -252,16 +254,30 @@ export class AccountSettingsModalComponent implements OnInit {
   }
 
   public async deleteContact(id: number): Promise<void> {
-    const confirmed = await this.confirmModalService.open({
-      title: this.translate.instant('user.are_you_sure_you_want_to_delete_this_account'),
-      description: this.translate.instant('notify.default.proceed_warning'),
-    });
-    if (!confirmed) return;
-
-    this.contactsService.delete(id).subscribe({
-      next: () => {
-        this.getContacts();
+    const dialogRef = this.dialog.open(DeleteContactModalComponent, {
+      width: '100%',
+      maxWidth: 576,
+      panelClass: ['modal', 'select-languages-modal'],
+      data: {
+        contactId: id,
+        contacts: this.contacts,
       },
+    });
+
+    dialogRef.afterClosed().subscribe((changedContacts: ContactsInterface[]) => {
+      if (!changedContacts) return;
+
+      // TODO: This should be a batch update.
+      const requests = changedContacts.map((contact) =>
+        this.contactsService.update(contact.id, contact),
+      );
+      requests.push(this.contactsService.delete(id));
+
+      forkJoin(requests).subscribe({
+        next: () => {
+          this.getContacts();
+        },
+      });
     });
   }
 
