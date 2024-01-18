@@ -254,32 +254,41 @@ export class AccountSettingsModalComponent implements OnInit {
   }
 
   public async deleteContact(id: number): Promise<void> {
-    const askSwitch = this.contacts.find((contact) => (contact.id = id))?.can_notify;
-    const dialogRef = this.dialog.open(DeleteContactModalComponent, {
-      width: '100%',
-      maxWidth: 576,
-      panelClass: ['modal', 'select-languages-modal'],
-      data: {
-        contactId: id,
-        contacts: askSwitch ? this.contacts : [],
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((changedContacts: ContactsInterface[]) => {
-      if (!changedContacts) return;
-
-      // TODO: This should be a batch update.
-      const requests = changedContacts.map((contact) =>
-        this.contactsService.update(contact.id, contact),
-      );
-      requests.push(this.contactsService.delete(id));
-
-      forkJoin(requests).subscribe({
+    const contactToBeDeleted = this.contacts.find((contact) => contact.id == id);
+    if (!contactToBeDeleted?.can_notify) {
+      this.contactsService.delete(id).subscribe({
         next: () => {
           this.getContacts();
         },
       });
-    });
+    } else {
+      const dialogRef = this.dialog.open(DeleteContactModalComponent, {
+        width: '100%',
+        maxWidth: 576,
+        panelClass: ['modal', 'select-languages-modal'],
+        data: {
+          contactId: id,
+          contactType: contactToBeDeleted.type,
+          contacts: this.contacts,
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((changedContacts: ContactsInterface[]) => {
+        if (!changedContacts) return;
+
+        // TODO: This should be a batch update.
+        const requests = changedContacts.map((contact) =>
+          this.contactsService.update(contact.id, contact),
+        );
+        requests.push(this.contactsService.delete(id));
+
+        forkJoin(requests).subscribe({
+          next: () => {
+            this.getContacts();
+          },
+        });
+      });
+    }
   }
 
   public addAccount(): void {

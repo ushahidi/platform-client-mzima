@@ -6,6 +6,7 @@ import { ContactsInterface } from '@mzima-client/sdk';
 export interface DeleteContactModalData {
   contacts: ContactsInterface[];
   contactId: number;
+  contactType: string;
 }
 
 @Component({
