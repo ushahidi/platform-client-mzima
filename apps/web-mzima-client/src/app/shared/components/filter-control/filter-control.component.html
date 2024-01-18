@@ -156,6 +156,7 @@
 
     <ng-container *ngSwitchCase="filterType.Daterange">
       <div class="daterange" *ngIf="value" (click)="$event.stopPropagation()">
+        <div>{{ displayDateRange() }}</div>
         <mat-calendar #calendar [selected]="value" (selectedChange)="selectedChange($event)">
         </mat-calendar>
       </div>
