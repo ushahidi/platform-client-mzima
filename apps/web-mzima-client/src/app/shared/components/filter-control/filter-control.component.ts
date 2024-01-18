@@ -237,6 +237,10 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     this.onChange(this.value);
   }
 
+  public dateIsValid(date: dayjs.Dayjs) {
+    return dayjs(date).isValid();
+  }
+
   public displayDateRange() {
     // Save Dayjs version of selected dates just for reusability later
     const valueDayjs = {
@@ -252,10 +256,9 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     };
 
     // Check that date is only displayed when "valid" i.e. it is valid when selected
-    const dateIsValid = (date: dayjs.Dayjs) => date.isValid();
     const valid = {
-      startDate: dateIsValid(valueDayjs.start) ? selected.dateStart : '',
-      endDate: dateIsValid(valueDayjs.end) ? ` - ${selected.dateEnd}` : '',
+      startDate: this.dateIsValid(valueDayjs.start) ? selected.dateStart : 'Date shows up here',
+      endDate: this.dateIsValid(valueDayjs.end) ? ` - ${selected.dateEnd}` : '',
     };
 
     // Display date range to user
