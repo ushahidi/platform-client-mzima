@@ -39,4 +39,5 @@ export interface MessageFilter {
   limit: number;
   order?: 'desc' | 'asc';
   orderby: string;
+  contact?: number;
 }
