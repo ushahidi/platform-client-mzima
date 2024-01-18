@@ -16,15 +16,20 @@
       </div>
     </div>
   </ng-container>
+  <div class="form-controls-panel" *ngIf="messagesTotal > 0">
+    <mzima-client-button type="button" (buttonClick)="previousPage()">
+      {{ 'post.messages.previous_page' | translate }}
+    </mzima-client-button>
+    <mzima-client-button type="button" (buttonClick)="nextPage()">
+      {{ 'post.messages.next_page' | translate }}
+    </mzima-client-button>
+  </div>
+  <div class="empty-messages" *ngIf="messagesTotal === 0">
+    <p>
+      {{ 'post.messages.no_messages' | translate }}
+    </p>
+  </div>
   <ng-container>
-    <div class="form-controls-panel">
-      <mzima-client-button type="button" (buttonClick)="previousPage()">
-        {{ 'post.messages.previous_page' | translate }}
-      </mzima-client-button>
-      <mzima-client-button type="button" (buttonClick)="nextPage()">
-        {{ 'post.messages.next_page' | translate }}
-      </mzima-client-button>
-    </div>
     <div class="separator"></div>
 
     <form novalidate class="send-new-message">
