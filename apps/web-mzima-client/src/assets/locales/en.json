@@ -1641,7 +1641,7 @@
           "email" : "Email",
           "phone" : "Phone"
         },
-        "instructions" : "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to your email address below.",
+        "instructions" : "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
         "button" : {
           "delete" : "Delete",
           "cancel" : "Cancel"
