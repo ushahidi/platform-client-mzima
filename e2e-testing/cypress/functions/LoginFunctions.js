@@ -28,9 +28,9 @@ class LoginFunctions {
   check_user_details_correct(){
     const name = Cypress.env('ush_admin_name');
     const email = Cypress.env('ush_admin_email');
-    cy.get(LoginLocators.accountBtn)
+    cy.get(LoginLocators.userName)
       .should('have.value', name) 
-    cy.get(LoginLocators.accountBtn)
+    cy.get(LoginLocators.userEmail)
       .should('have.value', email)
   }
 

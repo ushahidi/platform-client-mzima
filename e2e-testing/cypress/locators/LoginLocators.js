@@ -11,6 +11,8 @@ const LoginLocators = {
   invalidCredentials: '[data-qa="invalid-credential-error"]',
   accountInfoBtn: '[data-qa="account-info"]',
   logOutBtn: '[data-qa="log-out"]',
+  userName: '[data-qa]="user_name"',
+  userEmail: '[data-qa]="user_email"'
 };
 
 export default LoginLocators;
