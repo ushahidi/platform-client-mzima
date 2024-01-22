@@ -2,8 +2,7 @@ import PrivateDeploymentLocators from '../locators/PrivateDeploymentLocators';
 
 class PrivateDeploymentFunctions {
     open_general_settings() {
-      cy.get(PrivateDeploymentLocators.settingsBtn).click();
-      cy.get(PrivateDeploymentLocators.generalBtn).click();
+      cy.get(PrivateDeploymentLocators.settingsBtn).click(); 
     }
 
     click_private_deployment() {
