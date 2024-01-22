@@ -1,5 +1,4 @@
 import PrivateDeploymentLocators from '../locators/PrivateDeploymentLocators';
-import LoginFunctions from '../functions/LoginFunctions'
 
 class PrivateDeploymentFunctions {
     open_general_settings() {
@@ -16,10 +15,6 @@ class PrivateDeploymentFunctions {
 
     check_private_deployment() {
         cy.get(PrivateDeploymentLocators.privateCheckbox).should('be.checked');
-    }
-
-    logout_user(){
-        LoginFunctions.logout();
     }
 
     check_access_denied(){
@@ -39,10 +34,6 @@ class PrivateDeploymentFunctions {
         this.click_private_deployment();
         this.click_save_button();
         this.check_private_deployment();
-        this.logout_user();
-        this.check_access_denied();
-        this.check_contact_email();
-        this.check_url_is_forbidden();
     }
   }
   

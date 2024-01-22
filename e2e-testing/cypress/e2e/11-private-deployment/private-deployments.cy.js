@@ -11,5 +11,9 @@ describe("Automated Tests for Private deployment", () => {
 
   it("Steps to make a Private deployment", () => {
     privateDeploymentFunctions.make_deployment_private()
+    loginFunctions.logout();
+    privateDeploymentFunctions.check_access_denied();
+    privateDeploymentFunctions.check_contact_email();
+    privateDeploymentFunctions.check_url_is_forbidden();
   });
 });
