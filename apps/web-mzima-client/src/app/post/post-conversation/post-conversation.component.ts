@@ -19,6 +19,7 @@ export class PostConversationComponent implements OnInit {
   public messages: Observable<MessageResult[]> | any;
   public messagesTotal: number;
   public currentPage: number = 1;
+  public messageLimit: number = 5;
   public newMessage = new FormControl();
 
   constructor(private messagesService: MessagesService) {}
@@ -32,7 +33,7 @@ export class PostConversationComponent implements OnInit {
       .getMessagesByPost(this.post.id, <MessageFilter>{
         page: this.currentPage,
         type: 'sms',
-        limit: 3,
+        limit: this.messageLimit,
         orderby: 'created',
         order: 'desc',
         contact: this.post.contact.id,
