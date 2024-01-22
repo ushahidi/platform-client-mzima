@@ -1,6 +1,6 @@
 import PrivateDeploymentLocators from '../locators/PrivateDeploymentLocators';
-import LoginFunctions from '../../functions/LoginFunctions'
-import { functions } from 'lodash';
+import LoginFunctions from '../functions/LoginFunctions'
+
 class PrivateDeploymentFunctions {
     open_general_settings() {
       cy.get(PrivateDeploymentLocators.settingsBtn).click();
