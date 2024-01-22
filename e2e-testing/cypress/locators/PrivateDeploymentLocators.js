@@ -5,7 +5,7 @@ const PrivateDeploymentLocators = {
     saveBtn: '[data-qa="btn-save"]',
     logoutBtn: '[data-qa="log-out"]',
     denialMsg: '[data-qa="denied"]',
-    contactEmail: '[dta-qa="contact-email"]'
+    contactEmail: '[data-qa="contact-email"]'
     
   };
 
