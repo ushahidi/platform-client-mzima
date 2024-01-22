@@ -10,7 +10,7 @@ class PrivateDeploymentFunctions {
     }
   
     click_save_button() {
-      cy.get(GeneralSettingsLocator.saveButton).click();
+      cy.get(PrivateDeploymentLocators.saveButton).click();
     }
 
     check_private_deployment() {
