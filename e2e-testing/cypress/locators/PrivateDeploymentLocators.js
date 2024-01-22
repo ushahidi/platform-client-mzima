@@ -8,3 +8,6 @@ const PrivateDeploymentLocators = {
     contactEmail: '[dta-qa="contact-email"]'
     
   };
+
+
+export default PrivateDeploymentLocators;
