@@ -38,9 +38,9 @@ export class PostConversationComponent implements OnInit {
         order: 'desc',
         contact: this.post.contact.id,
       })
-      .subscribe((results) => {
+      .subscribe((results: Observable<MessageResult[]> | any) => {
         this.messages = this.sortByDate(of(results.results));
-        this.messagesTotal = results.count;
+        this.messagesTotal = results.meta.total | 0;
       });
   }
   sortByDate(messages: Observable<MessageResult[]> | any) {
@@ -77,12 +77,16 @@ export class PostConversationComponent implements OnInit {
   }
 
   nextPage() {
-    this.currentPage++;
-    this.getMessagesData();
+    if (this.currentPage * this.messageLimit < this.messagesTotal) {
+      this.currentPage++;
+      this.getMessagesData();
+    }
   }
 
   previousPage() {
-    if (this.currentPage > 1) this.currentPage--;
-    this.getMessagesData();
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getMessagesData();
+    }
   }
 }

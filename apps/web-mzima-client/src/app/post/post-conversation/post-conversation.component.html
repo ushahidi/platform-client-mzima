@@ -17,10 +17,18 @@
     </div>
   </ng-container>
   <div class="form-controls-panel" *ngIf="messagesTotal > 0">
-    <mzima-client-button type="button" (buttonClick)="previousPage()">
+    <mzima-client-button
+      type="button"
+      (buttonClick)="previousPage()"
+      [disabled]="currentPage === 1"
+    >
       {{ 'post.messages.previous_page' | translate }}
     </mzima-client-button>
-    <mzima-client-button type="button" (buttonClick)="nextPage()">
+    <mzima-client-button
+      type="button"
+      (buttonClick)="nextPage()"
+      [disabled]="currentPage * messageLimit >= messagesTotal"
+    >
       {{ 'post.messages.next_page' | translate }}
     </mzima-client-button>
   </div>
