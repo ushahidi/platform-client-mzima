@@ -10,7 +10,8 @@ const SignupLocators = {
     closeDialogBtn: '[data-qa="btn-close"]',
     accountInfoBtn: '[data-qa="account-info"]',
     accountStnsBtn: '[data-qa="account-settings"]',
-    displayNameField: '[data-qa="display_name"]',
+    displayName: '[data-qa="user-name"]',
+    displayEmail: '[data-qa="user-email"]',
   };
   
   export default SignupLocators;

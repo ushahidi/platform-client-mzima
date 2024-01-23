@@ -82,14 +82,21 @@ class SignupFunctions {
   }
 
   verify_name_and_email_matches() {
-    cy.get(SignupLocators.displayNameField).should('have.value', this.uniqueName);
-    cy.get(SignupLocators.emailField).should('have.value', this.uniqueEmail);
+    cy.get(SignupLocators.displayName).should('have.value', this.uniqueName);
+    cy.get(SignupLocators.displayEmail).should('have.value', this.uniqueEmail);
   }
 
   verify_signed_user() {
     this.open_account_modal();
     this.verify_name_and_email_matches();
     this.close_account_modal();
+  }
+
+  login_created_user(){
+    loginFunctions.launch_login_modal(Cypress.env('baseUrl'));
+    loginFunctions.type_email(this.uniqueEmail);
+    loginFunctions.type_password('Password@Cypress2023')
+    loginFunctions.click_login_button();
   }
 
   signup() {
@@ -107,6 +114,7 @@ class SignupFunctions {
     this.verify_privacy_and_terms_link();
     this.click_signup_button();
     this.verify_signed_user();
+    this.login_created_user();
   }
 }
 
