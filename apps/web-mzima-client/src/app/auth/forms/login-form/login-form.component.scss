@@ -4,6 +4,8 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  text-decoration: underline;
+  color: var(--color-primary-60);
 
   @include breakpoint-max($tablet) {
     margin-top: -16px;
@@ -16,11 +18,4 @@
       padding-right: 10px;
     }
   }
-}
-
-.form-error {
-  display: block;
-  font-size: 16px;
-  min-height: 24px;
-  line-height: 1.5;
 }

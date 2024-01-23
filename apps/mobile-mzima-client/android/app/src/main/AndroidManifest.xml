@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ushahidi.mobile">
+    >
 
     <application
         android:allowBackup="true"
@@ -40,6 +40,7 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <!-- Geolocation API -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
