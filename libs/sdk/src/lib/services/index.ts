@@ -19,3 +19,4 @@ export * from './layers.service';
 export * from './webhooks.service';
 export * from './switch-api.service';
 export * from './hxl.service';
+export * from './messages.service';
