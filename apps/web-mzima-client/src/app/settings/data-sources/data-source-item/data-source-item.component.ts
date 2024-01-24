@@ -37,6 +37,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
   providersData: any;
   cloneProviders: any[];
   tableData: any;
+  public isLoading = false;
 
   constructor(
     protected override sessionService: SessionService,
@@ -87,6 +88,7 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
   }
 
   private getProviders(): void {
+    this.isLoading = true;
     // this.dataSourcesService
     //   .getDataSource()
     //   .pipe(switchMap((dataSources) => this.configService.getProvidersData(dataSources)))
@@ -126,23 +128,19 @@ export class DataSourceItemComponent extends BaseComponent implements AfterConte
         //   this.surveyList,
         // );
         this.setCurrentProvider();
+        this.isLoading = false;
       },
     });
   }
 
   public setCurrentProvider(providerId?: any): void {
-    if (!this.currentProviderId && !providerId) {
-      this.currentProviderId = this.providersData.filter((p: any) => !p.enabled)[0]?.id;
-    }
-    const id = this.currentProviderId || providerId;
-    if (id) {
+    if (this.currentProviderId || providerId) {
+      const id = this.currentProviderId || providerId;
       this.provider = this.providersData.find((provider: any) => provider.id === id);
       this.removeControls(this.form.controls);
       this.createForm(this.provider);
       this.addControlsToForm('id', this.fb.control(this.provider.id, Validators.required));
       this.getSurveyAttributes(this.provider.selected_survey);
-    } else {
-      this.router.navigate(['/settings/data-sources']);
     }
   }
 
