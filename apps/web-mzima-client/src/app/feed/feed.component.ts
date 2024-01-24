@@ -253,6 +253,15 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           this.editPost(post);
         },
       });
+
+    this.eventBusService
+      .on(EventType.DeletedPost)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (post) => {
+          this.postDeleted([post], 0);
+        },
+      });
   }
 
   private checkPermission() {
@@ -544,13 +553,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   refreshPost({ id }: PostResult) {
     this.postsService.getById(id).subscribe((p) => {
-      const updatedPost = this.posts.find((post) => post.id === id);
-      if (updatedPost) {
-        updatedPost.sets = _.cloneDeep(p.sets);
-        updatedPost.title = p.title;
-        updatedPost.content = p.content;
-        updatedPost.status = p.status;
-      }
+      const updatedPost = _.cloneDeep(p);
+      this.posts = this.posts.map((obj) => (obj.id === updatedPost.id ? updatedPost : obj));
     });
   }
 

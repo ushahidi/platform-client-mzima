@@ -14,6 +14,7 @@
         [editable]="post.allowed_privileges.includes('update')"
         [deleteable]="post.allowed_privileges.includes('delete')"
         (statusChanged)="statusChangedHandle()"
+        (deleted)="deletedHandle()"
       >
       </app-post-head>
     </div>
@@ -165,7 +166,7 @@
     <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
   </ng-container>
 </div>
-
+<app-post-conversation *ngIf="post && post.source === 'SMS'" [post]="post"></app-post-conversation>
 <ng-template #spinner>
   <app-spinner *ngIf="isPostLoading" class="spinner"></app-spinner>
   <p

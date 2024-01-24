@@ -969,3 +969,43 @@
     margin-bottom: 0;
   }
 }
+
+.auth-form {
+  padding-top: 20px;
+
+  .form-row {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+
+  .mat-form-field-wrapper {
+    .mat-form-field-flex {
+      padding-top: 0.15em;
+    }
+  }
+
+  .mat-form-field-suffix {
+    align-self: center;
+  }
+
+  .mat-form-field-label {
+    color: var(--color-black);
+  }
+
+  .mat-form-field-invalid {
+    caret-color: var(--color-accent);
+    .mat-form-field-label {
+      color: var(--color-accent);
+    }
+  }
+
+  .mat-form-field-required-marker {
+    color: var(--color-black);
+  }
+
+  .mat-focused {
+    .mat-form-field-required-marker {
+      color: var(--color-primary-60);
+    }
+  }
+}
