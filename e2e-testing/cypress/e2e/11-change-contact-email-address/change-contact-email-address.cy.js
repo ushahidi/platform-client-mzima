@@ -13,5 +13,7 @@ describe("Automated Tests for change contact email address", () => {
     changeContactEmailAddressFunctions.open_general_settings();
     changeContactEmailAddressFunctions.change_contact_email_address();
     changeContactEmailAddressFunctions.click_save_button();
+    changeContactEmailAddressFunctions.reload_page();
+    changeContactEmailAddressFunctions.check_new_contact_email_address_shows();
   });
 });
