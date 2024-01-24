@@ -14,7 +14,7 @@ class PrivateDeploymentFunctions {
     }
 
     check_private_deployment() {
-        cy.get(PrivateDeploymentLocators.privateCheckbox).should('be.checked');
+        cy.get(PrivateDeploymentLocators.privateCheckboxCheck).should('be.checked');
     }
 
     check_access_denied(){
