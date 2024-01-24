@@ -46,13 +46,14 @@ export class ProfilePage {
         this.profileMenu = profileMenu.profileMenu.filter(
           (i) => i.isLoggedGuard === undefined || i.isLoggedGuard === !!userData.userId,
         );
-        this.supportItems.push(<SupportItem>{
-          title: 'Intercom',
-          description: 'Contact Ushahidi staff for chat support',
-          action: () => {
-            this.intercomService.displayMessenger();
-          },
-        });
+        if (userData.userId)
+          this.supportItems.push(<SupportItem>{
+            title: 'Intercom',
+            description: 'Contact Ushahidi staff for chat support',
+            action: () => {
+              this.intercomService.displayMessenger();
+            },
+          });
       });
   }
 

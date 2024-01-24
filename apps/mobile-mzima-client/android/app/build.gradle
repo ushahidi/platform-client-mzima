@@ -22,7 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false // rootProject.ext.debuggable
             testCoverageEnabled false
-            shrinkResources true
+            shrinkResources false
         }
     }
 }
