@@ -29,9 +29,9 @@ class LoginFunctions {
     const name = Cypress.env('ush_admin_name');
     const email = Cypress.env('ush_admin_email');
     cy.get(LoginLocators.userName)
-      .should('have.value', name) 
+      .contains(name) 
     cy.get(LoginLocators.userEmail)
-      .should('have.value', email)
+      .contains(email)
   }
 
   //quick-fix, change language to english after logging in
