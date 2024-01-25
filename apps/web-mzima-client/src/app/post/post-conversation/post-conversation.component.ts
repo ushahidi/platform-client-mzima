@@ -7,7 +7,9 @@ import {
   PostResult,
   PostPropertiesInterface,
 } from '@mzima-client/sdk';
+import { SessionService } from '@services';
 import { Observable, of, map } from 'rxjs';
+
 @Component({
   selector: 'app-post-conversation',
   templateUrl: './post-conversation.component.html',
@@ -21,11 +23,13 @@ export class PostConversationComponent implements OnInit {
   public currentPage: number = 1;
   public messageLimit: number = 5;
   public newMessage = new FormControl();
+  public sender: string;
 
-  constructor(private messagesService: MessagesService) {}
+  constructor(private messagesService: MessagesService, private sessionService: SessionService) {}
 
   ngOnInit(): void {
     this.getMessagesData();
+    this.getSender();
   }
 
   getMessagesData() {
@@ -43,6 +47,15 @@ export class PostConversationComponent implements OnInit {
         this.messagesTotal = results.meta.total | 0;
       });
   }
+
+  getSender() {
+    this.sessionService.deploymentInfo$.pipe().subscribe({
+      next: ({ title }) => {
+        this.sender = title;
+      },
+    });
+  }
+
   sortByDate(messages: Observable<MessageResult[]> | any) {
     return messages.pipe(
       map((data: any) => {
