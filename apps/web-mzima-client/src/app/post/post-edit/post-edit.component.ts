@@ -152,7 +152,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['postInput'] && changes['postInput'].currentValue) {
-      this.post = this.post ? this.post : this.postInput;
+      this.post = this.postInput;
       this.formId = this.post.form_id;
       this.postId = this.post.id;
       this.loadSurveyData(this.formId!, this.post.post_content);
