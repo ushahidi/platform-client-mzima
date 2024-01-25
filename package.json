@@ -62,6 +62,7 @@
     "@types/leaflet.markercluster": "^1.5.1",
     "angular-google-tag-manager": "^1.6.1",
     "capacitor-native-settings": "^5.0.1",
+    "capacitor-native-settings": "^5.0.1",
     "dayjs": "^1.11.7",
     "ion2-calendar": "^3.5.0",
     "ionicons": "^7.1.0",

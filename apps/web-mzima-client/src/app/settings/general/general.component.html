@@ -90,7 +90,10 @@
       </div>
       <div class="checkbox">
         <!-- FIXME: isDisableRegistrationEnabled -->
-        <mat-checkbox [data-qa]="'site-disable-registration'" formControlName="disable_registration">
+        <mat-checkbox
+          [data-qa]="'site-disable-registration'"
+          formControlName="disable_registration"
+        >
           {{ 'settings.site_disable_registration' | translate }}
         </mat-checkbox>
         <p translate="settings.site_disable_registration_desc"></p>
@@ -153,7 +156,7 @@
       generalForm.invalid ||
       generalForm.disabled ||
       submitted ||
-      !isInteger(mapSettings.mapConfig.location_precision)
+      !isIntegerAndZeroToNine(mapSettings.mapConfig.location_precision)
     "
   >
     {{ 'app.save' | translate }}
