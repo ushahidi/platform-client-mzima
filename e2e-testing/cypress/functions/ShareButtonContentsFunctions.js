@@ -38,10 +38,7 @@ class ShareButtonContentsFunctions {
   }
 
   verify_survey_web_data_view_address() {
-    cy.get(ShareButtonContentsLocators.surveyWebAddress).should(
-      'include',
-      'http://localhost:4200/feed',
-    );
+    cy.get(ShareButtonContentsLocators.surveyWebAddress).should('include', '/feed');
   }
 
   verify_share_button_contents_map_view() {
