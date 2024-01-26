@@ -6,6 +6,7 @@ class ShareButtonContentsFunctions {
   }
 
   click_share_btn() {
+    cy.wait(1000)
     cy.get(ShareButtonContentsLocators.shareBtn).click();
   }
 
