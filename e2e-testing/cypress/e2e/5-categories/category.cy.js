@@ -7,6 +7,7 @@ describe("Automated Tests for Categories", () => {
 
   before(() => {
     loginFunctions.login_as_admin();
+    cy.visit(Cypress.env('baseUrl'));
   });
 
   it("Opens Categories Page", () => {

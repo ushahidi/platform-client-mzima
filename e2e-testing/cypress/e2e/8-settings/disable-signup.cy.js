@@ -7,6 +7,7 @@ describe("Automated Tests for Settings", () => {
 
   beforeEach(() => {
     loginFunctions.login_as_admin();
+    cy.visit(Cypress.env('baseUrl'));
   });
 
   it("Disable user sign up and", () => {

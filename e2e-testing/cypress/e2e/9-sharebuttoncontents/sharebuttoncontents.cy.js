@@ -7,6 +7,7 @@ describe("Automated Tests for Share Button Contents", () => {
 
   beforeEach(() => {
     loginFunctions.login_as_admin();
+    cy.visit(Cypress.env('baseUrl'));
   });
 
   it("Steps to verify Share Button Contents", () => {

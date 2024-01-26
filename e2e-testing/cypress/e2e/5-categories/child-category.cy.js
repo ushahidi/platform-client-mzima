@@ -7,6 +7,7 @@ describe("Automated Tests for Child Category", () => {
 
   beforeEach(() => {
     loginFunctions.login_as_admin();
+    cy.visit(Cypress.env('baseUrl'));
   });
 
   it("Add and verify child category", () => {
