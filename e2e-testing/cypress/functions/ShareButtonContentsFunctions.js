@@ -17,7 +17,7 @@ class ShareButtonContentsFunctions {
   verify_survey_web_map_view_address() {
     cy.get(ShareButtonContentsLocators.surveyWebAddress).should(
       'have.value',
-      'http://localhost:4200/map',
+      'http://localhost:4200//map',
     );
   }
 
@@ -38,7 +38,10 @@ class ShareButtonContentsFunctions {
   }
 
   verify_survey_web_data_view_address() {
-    cy.get(ShareButtonContentsLocators.surveyWebAddress).should('include', '/feed');
+    cy.get(ShareButtonContentsLocators.surveyWebAddress).should(
+      'have.value',
+      'http://localhost:4200/feed?page=1',
+    );
   }
 
   verify_share_button_contents_map_view() {
