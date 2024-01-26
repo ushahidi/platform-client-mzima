@@ -39,7 +39,7 @@ class ShareButtonContentsFunctions {
 
   verify_survey_web_data_view_address() {
     cy.get(ShareButtonContentsLocators.surveyWebAddress).should(
-      'have.contain',
+      'include',
       'http://localhost:4200/feed',
     );
   }
