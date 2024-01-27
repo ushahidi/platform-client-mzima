@@ -29,8 +29,12 @@ class PostFunctions {
     cy.get(PostLocators.intField).type(100);
 
     // click on date field to open pop up
-    cy.get(PostLocators.dateField).click();
-    cy.get('.mat-button.mat-stroked-button').click(); // click on the checkmark button to select today's date
+    cy.get(PostLocators.dateField).click(); //the first click opens the date picker
+    cy.get(PostLocators.dateField).click(); //the second click closes the date picker
+    //add a check that the field is populated with the current day's date
+
+    // cy.get('.mat-button.mat-stroked-button').click(); // click on the checkmark button to select today's date
+    //this works for date&time field, not date only field. date only field has no checkmark
     cy.get(PostLocators.selectFieldBtn).click();
     cy.get(PostLocators.selectFieldOption1).click();
     cy.get(PostLocators.radioFieldOption2).click();
