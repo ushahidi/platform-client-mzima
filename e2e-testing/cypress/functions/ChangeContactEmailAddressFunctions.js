@@ -5,7 +5,7 @@ class ChangeContactEmailAddressFunctions {
       cy.get(ChangeContactEmailAddressLocators.settingsBtn).click(); 
     }
     change_contact_email_address(){
-        cy.get(ChangeContactEmailAddressLocators.email)
+        cy.get(ChangeContactEmailAddressLocators.emailField)
         .clear()
         .type("testnew@gmail.com")
     }
