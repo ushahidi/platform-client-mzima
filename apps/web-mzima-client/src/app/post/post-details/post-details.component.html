@@ -166,7 +166,12 @@
     <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
   </ng-container>
 </div>
-<app-post-conversation *ngIf="post && post.source === 'SMS'" [post]="post"></app-post-conversation>
+<ng-container *ngIf="isManagePosts">
+  <app-post-conversation
+    *ngIf="post && post.source === 'SMS'"
+    [post]="post"
+  ></app-post-conversation>
+</ng-container>
 <ng-template #spinner>
   <app-spinner *ngIf="isPostLoading" class="spinner"></app-spinner>
   <p
