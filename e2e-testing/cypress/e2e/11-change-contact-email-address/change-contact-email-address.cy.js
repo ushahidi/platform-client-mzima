@@ -7,6 +7,7 @@ describe("Automated Tests for change contact email address", () => {
 
   beforeEach(() => {
     loginFunctions.login_as_admin();
+    cy.visit(Cypress.env('baseUrl'));
   });
 
   it("Steps to change contact email address", () => {
