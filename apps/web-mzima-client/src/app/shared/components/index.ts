@@ -32,3 +32,4 @@ export * from './page-not-found/page-not-found.component';
 export * from './share-modal/share-modal.component';
 export * from './onboarding/onboarding.component';
 export * from './notification/notification.component';
+export * from './account-settings-modal/delete-contact-modal/delete-contact-modal.component';

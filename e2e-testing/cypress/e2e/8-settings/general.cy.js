@@ -7,6 +7,7 @@ describe("Automated Tests for Settings", () => {
 
   before(() => {
     loginFunctions.login_as_admin();
+    cy.visit(Cypress.env('baseUrl'));
   });
 
   it("Opens Settings Page", () => {

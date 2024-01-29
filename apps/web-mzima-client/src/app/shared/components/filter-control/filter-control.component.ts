@@ -237,6 +237,35 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
     this.onChange(this.value);
   }
 
+  public dateIsValid(date: dayjs.Dayjs) {
+    return dayjs(date).isValid();
+  }
+
+  public displayDateRange() {
+    // Save Dayjs version of selected dates just for reusability later
+    const valueDayjs = {
+      start: dayjs(this.value.start),
+      end: dayjs(this.value.end),
+    };
+
+    // Format selected date
+    const formatSelectedDate = (date: dayjs.Dayjs) => dayjs(date).format('YYYY/MM/DD');
+    const selected = {
+      dateStart: formatSelectedDate(valueDayjs.start),
+      dateEnd: formatSelectedDate(valueDayjs.end),
+    };
+
+    // Check that date is only displayed when "valid" i.e. it is valid when selected
+    const valid = {
+      startDate: this.dateIsValid(valueDayjs.start) ? selected.dateStart : 'Date shows up here',
+      endDate: this.dateIsValid(valueDayjs.end) ? ` - ${selected.dateEnd}` : '',
+    };
+
+    // Display date range to user
+    const dateRangeSelected = `${valid.startDate}${valid.endDate}`;
+    return dateRangeSelected;
+  }
+
   public toggleModal(value?: boolean): void {
     this.isModalOpen = value ?? !this.isModalOpen;
   }
