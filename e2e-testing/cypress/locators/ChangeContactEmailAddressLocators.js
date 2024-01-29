@@ -1,6 +1,6 @@
 const ChangeContactEmailAddressLocators = {
     settingsBtn: '[data-qa="btn-settings"]',
-    email: '[data-qa="email"]',
+    emailField: '[data-qa="email"]',
     saveBtn: '[data-qa="btn-save"]',
     contactEmail: '[data-qa="contact-email"]'
   };
