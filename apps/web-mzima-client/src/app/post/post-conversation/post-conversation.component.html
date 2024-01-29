@@ -6,7 +6,9 @@
     <div class="message {{ message.direction }}">
       <div class="message--{{ message.direction }}">
         <div class="message--header">
-          <span class="highlighted">{{ message.contact.contact }}</span>
+          <span class="highlighted">{{
+            message.direction === 'incoming' ? message.contact.contact : sender
+          }}</span>
           <span class="date">{{ message.created | dateAgo }}</span>
           <span class="highlighted">via {{ message.type }}</span>
         </div>

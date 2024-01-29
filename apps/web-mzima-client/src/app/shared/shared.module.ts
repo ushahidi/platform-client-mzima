@@ -51,6 +51,7 @@ import {
   ShareAndDonateComponent,
   AccountAndLogoutComponent,
 } from './components';
+import { DeleteContactModalComponent } from './components/account-settings-modal/delete-contact-modal/delete-contact-modal.component';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { CollectionItemModule } from './components/collection-item/collection-item.module';
 import { FilterControlModule } from './components/filter-control/filter-control.module';
@@ -91,6 +92,7 @@ const components = [
   NotificationComponent,
   AccessDeniedComponent,
   SafePipe,
+  DeleteContactModalComponent,
 ];
 
 const modules = [

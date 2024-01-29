@@ -7,6 +7,7 @@ describe("Automated Tests for Users", () => {
 
   beforeEach(() => {
     loginFunctions.login_as_admin();
+    cy.visit(Cypress.env('baseUrl'));
   });
   it("Adds User", () => {
     userFunctions.add_user();

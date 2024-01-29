@@ -1,4 +1,28 @@
-<div class="post-item-page">
+<div *ngIf="!formId" class="post-item-page">
+  <div class="page-content" *ngIf="surveys; else spinner">
+    <h1 class="survey-name">{{ 'post.unstructured.add_survey.title' | translate }}</h1>
+    <span class="info-message">
+      {{ 'post.unstructured.add_survey.info' | translate : { source: post.source } }}</span
+    >
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-select
+          [data-qa]="'select-survey-to-edit'"
+          disableOptionCentering
+          [(value)]="selectedSurvey"
+          placeholder="{{ 'survey.choose_survey' | translate }}"
+          (selectionChange)="formSelected()"
+        >
+          <mat-option *ngFor="let survey of surveys | async" [value]="survey">
+            {{ survey.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div *ngIf="formId" class="post-item-page">
   <div class="page-content">
     <div class="translate-container">
       <h1 class="survey-name">{{ surveyName }}</h1>
