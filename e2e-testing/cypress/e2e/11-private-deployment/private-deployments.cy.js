@@ -7,6 +7,7 @@ describe("Automated Tests for Private deployment", () => {
 
   beforeEach(() => {
     loginFunctions.login_as_admin();
+    cy.visit(Cypress.env('baseUrl'));
   });
 
   it("Steps to make a Private deployment", () => {
