@@ -73,11 +73,17 @@ class LoginFunctions {
   }
 
   login_as_admin() {
-    this.launch_login_modal(Cypress.env('baseUrl'));
-    this.type_email(Cypress.env('ush_admin_email'));
-    this.type_password(Cypress.env('ush_admin_pwd'));
-    this.click_login_button();
-    this.verify_login();
+    cy.session(
+      [Cypress.env('ush_admin_email'), Cypress.env('ush_admin_pwd')],
+      () => {
+        this.launch_login_modal(Cypress.env('baseUrl'));
+        this.type_email(Cypress.env('ush_admin_email'));
+        this.type_password(Cypress.env('ush_admin_pwd'));
+        this.click_login_button();
+        this.verify_login();
+      },
+      { cacheAcrossSpecs: true },
+    );
   }
 }
 

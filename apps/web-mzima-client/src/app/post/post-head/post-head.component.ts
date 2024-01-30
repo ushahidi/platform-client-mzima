@@ -120,7 +120,6 @@ export class PostHeadComponent extends BaseComponent {
       this.edit.emit();
     }
   }
-
   public sharePost() {
     event?.stopPropagation();
     this.dialog.open(ShareModalComponent, {
