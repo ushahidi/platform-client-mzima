@@ -36,7 +36,7 @@ class ShareButtonContentsFunctions {
   verify_survey_web_data_view_address() {
     cy.get(ShareButtonContentsLocators.surveyWebAddress).should(
       'have.value',
-      Cypress.env().baseUrl + 'feed',
+      Cypress.env().baseUrl + 'feed?page=1',
     );
   }
 
