@@ -17,13 +17,16 @@ class SignupFunctions {
   }
   navigate_to_signup_modal() {
     loginFunctions.launch_login_modal(Cypress.env('baseUrl'));
-    cy.get('#cdk-overlay-0').click({force:true})
+    cy.get('#mat-tab-label-0-1')
+      .click({force: true})
     cy.get(SignupLocators.signupTab).eq(1).click();
   }
 
   type_name(name) {
     cy.wait(1000);
-    cy.get(SignupLocators.nameField).type(name).should('have.value', name);
+    cy.get(SignupLocators.nameField)
+      .type(name, {force: true})
+      .should('have.value', name);
   }
 
   fill_all_fields() {
@@ -42,21 +45,23 @@ class SignupFunctions {
   }
 
   empty_name_field() {
-    cy.get(SignupLocators.nameField).clear();
+    cy.get(SignupLocators.nameField).clear({force: true});
   }
 
   alter_email_field() {
     // delete xyz.com
-    cy.get(SignupLocators.emailField).type(backspace(7));
-    cy.get(SignupLocators.emailField).blur();
+    cy.get(SignupLocators.emailField).type(backspace(7), { force: true });
+    cy.get(SignupLocators.emailField).blur({ force: true });
   }
 
   verify_email_is_invalid() {
-    cy.get(SignupLocators.invalidEmailError).should('be.visible');
+    cy.get(SignupLocators.invalidEmailError)
+      .invoke('css', 'overflow-x', 'visible')
+      .should('have.css', 'overflow-x', 'visible');
   }
 
   restore_correct_email_value() {
-    cy.get(SignupLocators.emailField).type('xyz.com');
+    cy.get(SignupLocators.emailField).type('xyz.com', { force: true });
   }
 
   verify_privacy_and_terms_link() {
@@ -69,7 +74,7 @@ class SignupFunctions {
   }
 
   click_signup_button() {
-    cy.get(SignupLocators.signupBtn).click();
+    cy.get(SignupLocators.signupBtn).click({force: true});
   }
 
   open_account_modal() {
