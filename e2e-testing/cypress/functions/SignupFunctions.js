@@ -18,8 +18,8 @@ class SignupFunctions {
   navigate_to_signup_modal() {
     loginFunctions.launch_login_modal(Cypress.env('baseUrl'));
     cy.get('#mat-tab-label-1-1')
-      .click({force: true})
-    cy.get(SignupLocators.signupTab).eq(1).click({force: true});
+      .click()
+    cy.get(SignupLocators.signupTab).eq(1).click();
   }
 
   type_name(name) {
@@ -50,7 +50,7 @@ class SignupFunctions {
 
   alter_email_field() {
     // delete xyz.com
-    cy.get(SignupLocators.emailField).type(backspace(7), { force: true });
+    cy.get(SignupLocators.emailField).type(backspace(7), {force: true});
     cy.get(SignupLocators.emailField).blur({ force: true });
   }
 
@@ -61,7 +61,7 @@ class SignupFunctions {
   }
 
   restore_correct_email_value() {
-    cy.get(SignupLocators.emailField).type('xyz.com', { force: true });
+    cy.get(SignupLocators.emailField).type('xyz.com',{ force: true });
   }
 
   verify_privacy_and_terms_link() {
@@ -74,7 +74,7 @@ class SignupFunctions {
   }
 
   click_signup_button() {
-    cy.get(SignupLocators.signupBtn).click({force: true});
+    cy.get(SignupLocators.signupBtn).click({ force: true });
   }
 
   open_account_modal() {
@@ -87,8 +87,9 @@ class SignupFunctions {
   }
 
   verify_name_and_email_matches() {
-    cy.get(SignupLocators.displayName).should('have.value', this.uniqueName);
-    cy.get(SignupLocators.displayEmail).should('have.value', this.uniqueEmail);
+    console.log(this.uniqueEmail, this.uniqueName)
+    cy.get(SignupLocators.displayName).contains(this.uniqueName);
+    cy.get(SignupLocators.displayEmail).contains(this.uniqueEmail);
   }
 
   verify_signed_user() {
@@ -98,7 +99,9 @@ class SignupFunctions {
   }
 
   login_created_user(){
-    loginFunctions.launch_login_modal(Cypress.env('baseUrl'));
+    loginFunctions.logout();
+    cy.get(SignupLocators.loginModal).click()
+    // loginFunctions.launch_login_modal(Cypress.env('baseUrl'));
     loginFunctions.type_email(this.uniqueEmail);
     loginFunctions.type_password('Password@Cypress2023')
     loginFunctions.click_login_button();

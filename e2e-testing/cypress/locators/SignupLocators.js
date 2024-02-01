@@ -1,4 +1,5 @@
 const SignupLocators = {
+    loginModal: '[data-qa="btn-auth"]',
     signupTab: '[role="tab"]',
     nameField: '[data-qa="name"]',
     emailField: '[data-qa="email"]',
