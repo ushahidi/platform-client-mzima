@@ -19,7 +19,7 @@ class SignupFunctions {
     loginFunctions.launch_login_modal(Cypress.env('baseUrl'));
     cy.get('#mat-tab-label-1-1')
       .click()
-    cy.get(SignupLocators.signupTab).eq(1).click();
+    cy.get(SignupLocators.signupTab).eq(1).click({force: true});
   }
 
   type_name(name) {
