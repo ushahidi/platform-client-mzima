@@ -60,7 +60,6 @@ class CollectionFunctions {
       cy.get(CollectionLocators.surveyItem).click();
       this.type_post_title("Post Title");
       this.type_post_description("Post Description");
-      cy.get(CollectionLocators.postCheckBox).click({force: true});
       this.save_post();
       cy.get(CollectionLocators.successBtn).click()
     }

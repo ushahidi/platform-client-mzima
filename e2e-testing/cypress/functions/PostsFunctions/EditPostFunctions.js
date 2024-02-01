@@ -25,7 +25,6 @@ class EditPostFunctions {
     this.select_survey_item();
     this.type_post_title('New Post Title');
     this.type_post_description('New Post Description');
-    cy.get(EditPostLocators.postCheckBox).click({ force: true });
     this.save_post();
     cy.get(EditPostLocators.successBtn).click();
   }

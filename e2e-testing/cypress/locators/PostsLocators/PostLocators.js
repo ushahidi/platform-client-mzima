@@ -6,13 +6,13 @@ const PostLocators = {
   postPreview: '[data-qa="post-preview"]',
   postItem: '[data-qa="post-item"]',
   surveySelectionList: '[data-qa="survey-selection-list"]',
-  surveySelectItem: '[data-qa="survey-select-item"]',
+  surveySelectItem: '[data-qa="survey-select-item125"]',
   confirmContent: '[data-qa="confirm-content"]',
 
   /* Input fields */
   titleField: '[ng-reflect-data-qa="title"]',
   descField: '[data-qa="description"]',
-  shtTextField: '[ng-reflect-data-qa="short-text field"]',
+  shtTextField: '[ng-reflect-data-qa="short-text"]',
   lngTextField: '[data-qa="long-text field"]',
   decimalField: '[ng-reflect-data-qa="number-decimal field"]',
   intField: '[ng-reflect-data-qa="number-integer field"]',

@@ -53,6 +53,7 @@ class PostFunctions {
       .children(PostLocators.surveySelectItem)
       .contains("Full Length Survey-with image-field- don't delete")
       .click({ force: true });
+    cy.wait(500)
     cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
   }
 }
