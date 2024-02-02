@@ -12,7 +12,7 @@ const PostLocators = {
   /* Input fields */
   titleField: '[ng-reflect-data-qa="title"]',
   descField: '[data-qa="description"]',
-  shtTextField: '[ng-reflect-data-qa="short-text"]',
+  shtTextField: '[ng-reflect-data-qa="short-text field"]',
   lngTextField: '[data-qa="long-text field"]',
   decimalField: '[ng-reflect-data-qa="number-decimal field"]',
   intField: '[ng-reflect-data-qa="number-integer field"]',

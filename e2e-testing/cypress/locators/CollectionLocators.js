@@ -12,6 +12,7 @@ const CollectionLocators = {
     selectedSurveyItem: '[data-qa="survey-select-item2"]',
     postTitleField: '[ng-reflect-data-qa="title"]',
     postDescField: '[data-qa="description"]',
+    postCheckBox: '[data-qa="nature-of-this-incident-failure-to-announce-results-by-iebc-officials"]',
     savePostBtn: '[data-qa="btn-post-item-submit"]',
     successBtn: '[data-qa="btn-confirm-success"]',
     surveySelectionList: '[data-qa="survey-selection-list"]',
