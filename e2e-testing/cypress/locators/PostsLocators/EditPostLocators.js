@@ -12,6 +12,7 @@
         surveySelectionList: '[data-qa="survey-selection-list"]',
         surveySelectItem: '[data-qa="survey-select-item2"]',
         editPostBtn: '[data-qa="edit-post"]',
+        clear: '[data-qa]="clear"'
       };
     
     export default EditPostLocators;

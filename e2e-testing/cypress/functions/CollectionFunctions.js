@@ -41,7 +41,7 @@ class CollectionFunctions {
     }
 
     type_post_title(title) {
-      cy.get(CollectionLocators.postTitleField).eq(0)
+      cy.get(CollectionLocators.postTitleField)
         .type(title)
         .should('have.value', title);
     }
@@ -66,9 +66,9 @@ class CollectionFunctions {
     }
 
     verify_post_added_to_collection(){
+      cy.get(CollectionLocators.clear).click();
       cy.get(CollectionLocators.surveySelectionList)
         .children(CollectionLocators.selectedSurveyItem)
-        .eq(0)
         .click({force: true})
       cy.contains('Post Title').should('exist');
     }

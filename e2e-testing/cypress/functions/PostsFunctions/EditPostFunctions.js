@@ -10,7 +10,7 @@ class EditPostFunctions {
   }
 
   type_post_title(title) {
-    cy.get(EditPostLocators.postTitleField).eq(0).type(title).should('have.value', title);
+    cy.get(EditPostLocators.postTitleField).type(title).should('have.value', title);
   }
 
   type_post_description(description) {
@@ -31,9 +31,9 @@ class EditPostFunctions {
   }
 
   check_for_added_post_in_survey() {
+    cy.get(EditPostLocators.clear).click();
     cy.get(EditPostLocators.surveySelectionList)
         .children(EditPostLocators.surveySelectItem)
-        .eq(0)
         .click({force: true})
     cy.get(EditPostLocators.postPreview).children(EditPostLocators.postItem).contains('New Post Title');
     cy.get(EditPostLocators.editPostBtn)
@@ -42,7 +42,7 @@ class EditPostFunctions {
   }
 
   edit_post() {
-    cy.get(EditPostLocators.postTitleField).eq(0).type(' 2');
+    cy.get(EditPostLocators.postTitleField).type(' 2');
     this.save_post();
   }
 

@@ -13,7 +13,7 @@ class PostFunctions {
   }
 
   type_post_title(title) {
-    cy.get(PostLocators.titleField).eq(0).type(title).should('have.value', title);
+    cy.get(PostLocators.titleField).type(title).should('have.value', title);
   }
 
   type_post_description(description) {
@@ -49,6 +49,7 @@ class PostFunctions {
   }
 
   verify_created_post_exists() {
+    cy.get(PostLocators.clear).click();
     cy.get(PostLocators.surveySelectionList)
       .children(PostLocators.surveySelectItem)
       .contains("Full Length Survey-with image-field- don't delete")
