@@ -13,10 +13,10 @@
 </mzima-client-button>
 
 <ng-container *ngIf="isDisableClose">
-  <div class="access-denied__info">
+  <div class="access-denied__info" [attr.data-qa]="'denied'">
     <h2 class="access-denied__info-title">{{ 'nav.forbidden' | translate }}!</h2>
     <p>{{ 'app.forbidden-login' | translate }}</p>
-    <p>
+    <p [data-qa]="'contact-email'">
       {{ 'app.contact_with_admin' | translate
       }}<a href="mailto:{{ adminEmail }}">{{ adminEmail }}</a>
     </p>
