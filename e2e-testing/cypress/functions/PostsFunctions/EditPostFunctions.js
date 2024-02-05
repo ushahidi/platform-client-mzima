@@ -47,7 +47,7 @@ class EditPostFunctions {
   }
 
   check_edit_post() {
-    cy.get(EditPostLocators.postPreview).children(EditPostLocators.postItem).contains('New Post Title 2');
+    cy.get(EditPostLocators.postPreview).children(EditPostLocators.postItem).eq(0).contains('New Post Title 2');
   }
 
   edit_post_steps() {
