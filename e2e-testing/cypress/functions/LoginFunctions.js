@@ -90,6 +90,7 @@ class LoginFunctions {
         this.type_password(Cypress.env('ush_admin_pwd'));
         this.click_login_button();
         this.verify_login();
+        this.check_user_details_correct()
       },
       { cacheAcrossSpecs: true },
     );
