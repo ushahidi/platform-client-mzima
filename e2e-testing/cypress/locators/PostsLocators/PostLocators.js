@@ -10,13 +10,13 @@ const PostLocators = {
   confirmContent: '[data-qa="confirm-content"]',
 
   /* Input fields */
-  titleField: '[data-qa="null"]',
+  titleField: '[ng-reflect-data-qa="title"]',
   descField: '[data-qa="description"]',
-  shtTextField: '[data-qa="null"]',
+  shtTextField: '[ng-reflect-data-qa="short-text field"]',
   lngTextField: '[data-qa="long-text field"]',
-  decimalField: '[data-qa="null"]',
-  intField: '[data-qa="null"]',
-  dateField: '[data-qa="null"]',
+  decimalField: '[ng-reflect-data-qa="number-decimal field"]',
+  intField: '[ng-reflect-data-qa="number-integer field"]',
+  dateField: '[ng-reflect-data-qa="date-field"]',
   selectFieldBtn: '[data-qa="post-item-post-selectc5394e60-350d-4948-af81-6e8bf0502761"]',
   selectFieldOption1: '[data-qa="post-item-post-select-optionS1"]',
   radioFieldOption2: '[data-qa="radio-buttons-field-r2"]',
