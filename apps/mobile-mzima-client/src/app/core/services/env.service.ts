@@ -31,15 +31,19 @@ export class EnvService {
 
   get deploymentUrl(): string | null {
     const deployment: any = this.deploymentService.getDeployment();
-    return deployment ? checkBackendURL(`${deployment.subdomain}.${deployment.domain}`) : null;
+    let url = null;
+    if (deployment) {
+      const subdomain =
+        deployment.subdomain && deployment.subdomain !== '' ? `${deployment.subdomain}.` : '';
+      url = checkBackendURL(`${subdomain}${deployment.domain}`);
+    }
+    return url;
   }
 
   setDynamicBackendUrl() {
     const deployment: any = this.deploymentService.getDeployment();
     const envy: EnvConfigInterface = this.env;
-    envy.backend_url = deployment
-      ? checkBackendURL(`${deployment.subdomain}.${deployment.domain}`)
-      : null;
+    envy.backend_url = this.deploymentUrl;
     EnvService.ENV = envy;
     this.env = envy;
     this.deployment.next(deployment);

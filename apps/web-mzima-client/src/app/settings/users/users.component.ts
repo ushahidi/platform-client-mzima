@@ -94,8 +94,11 @@ export class UsersComponent implements OnInit {
     if (!confirmed) return;
     forkJoin(this.selectedUsers.map((user) => this.userService.deleteUser(user.id))).subscribe({
       complete: () => {
+        const firstItem =
+          (this.params.limit || 0) * (this.params.page ? this.params.page - 1 : 0) +
+          (this.params.offset || 0);
         this.getUsers({
-          first: this.params.offset,
+          first: firstItem,
           sortOrder: this.params.order === 'asc' ? 1 : 0,
           globalFilter: this.params.q,
         });

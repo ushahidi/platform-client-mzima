@@ -162,7 +162,8 @@ export class GeneralComponent implements OnInit {
     setTimeout(() => (this.copySuccess = !this.copySuccess), 2000);
   }
 
-  isInteger(value: any): boolean {
+  isIntegerAndZeroToNine(value: any): boolean {
+    value === '0' ? (value = parseFloat(value)) : value; // Better fix could be to fix zero being returned as string from the backend
     return Number.isInteger(value) && value >= this.minObfuscation && value <= this.maxObfuscation;
   }
 }

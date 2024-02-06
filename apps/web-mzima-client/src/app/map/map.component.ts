@@ -90,7 +90,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
       mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
     this.leafletOptions = {
-      minZoom: 0,
+      minZoom: 1,
       maxZoom: 22,
       scrollWheelZoom: true,
       zoomControl: false,
@@ -161,7 +161,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
     // Fix initial zoom flicker of map view's map when bounds exist in local storage
     const bounds = localStorage.getItem('bounds');
     if (bounds === null) {
-      this.map.setZoom(0);
+      this.map.setZoom(this.leafletOptions.zoom ?? this.leafletOptions.minZoom ?? 1);
     } else {
       const { fit, zoom, center } = JSON.parse(bounds as string);
       this.map.setMaxBounds(fit);

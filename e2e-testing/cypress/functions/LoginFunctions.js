@@ -4,6 +4,7 @@ class LoginFunctions {
   launch_login_modal(launchURL) {
     cy.visit(launchURL);
     this.click_through_onboarding();
+    this.change_laguage();
     cy.get(LoginLocators.loginModal).click();
   }
 
@@ -22,6 +23,20 @@ class LoginFunctions {
 
   click_login_button() {
     cy.get(LoginLocators.loginButton).click();
+  }
+
+  check_user_details_correct() {
+    const name = Cypress.env('ush_admin_name');
+    const email = Cypress.env('ush_admin_email');
+    cy.viewport(1440, 900);
+    cy.get(LoginLocators.userName).contains(name);
+    cy.get(LoginLocators.userEmail).contains(email);
+  }
+
+  //quick-fix, change language to english after logging in
+  change_laguage() {
+    cy.get('.language__selected').click();
+    cy.get('#mat-option-7 > .mat-option-text').click();
   }
 
   click_through_onboarding() {
@@ -52,13 +67,13 @@ class LoginFunctions {
   verify_negative_login() {
     this.launch_login_modal(Cypress.env('baseUrl'));
     this.type_email('test');
-    this.verify_invalid_email_error_exist()
+    this.verify_invalid_email_error_exist();
     cy.get(LoginLocators.emailField).type('@gmail.com');
     this.type_password('Password@@@2023');
     this.click_login_button();
-    this.verify_invalid_credentials_error_exist()
+    this.verify_invalid_credentials_error_exist();
   }
-  
+
   logout() {
     cy.get(LoginLocators.accountInfoBtn).click();
     cy.get(LoginLocators.logOutBtn).click();
@@ -66,11 +81,18 @@ class LoginFunctions {
   }
 
   login_as_admin() {
-    this.launch_login_modal(Cypress.env('baseUrl'));
-    this.type_email(Cypress.env('ush_admin_email'));
-    this.type_password(Cypress.env('ush_admin_pwd'));
-    this.click_login_button();
-    this.verify_login();
+    cy.session(
+      [Cypress.env('ush_admin_email'), Cypress.env('ush_admin_pwd')],
+      () => {
+        this.launch_login_modal(Cypress.env('baseUrl'));
+        this.type_email(Cypress.env('ush_admin_email'));
+        this.type_password(Cypress.env('ush_admin_pwd'));
+        this.click_login_button();
+        this.verify_login();
+        this.check_user_details_correct();
+      },
+      { cacheAcrossSpecs: true },
+    );
   }
 }
 

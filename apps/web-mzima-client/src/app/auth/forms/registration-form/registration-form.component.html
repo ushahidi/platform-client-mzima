@@ -1,33 +1,27 @@
-<form novalidate [formGroup]="form" (ngSubmit)="signup()">
+<form novalidate [formGroup]="form" class="auth-form" (ngSubmit)="signup()">
   <div class="form-row">
-    <mat-label>{{ 'user.name' | translate }} *</mat-label>
-    <mat-form-field appearance="outline">
-      <input
-        matInput
-        placeholder="{{ 'user.placeholder.realname' | translate }}"
-        formControlName="name"
-        required
-      />
-      <mat-error [data-qa]="'invalid-name'" *ngIf="form.get('name')?.invalid">{{ getErrorMessage('name') }}</mat-error>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'user.name' | translate }}</mat-label>
+      <input matInput formControlName="name" required />
+      <mat-error [data-qa]="'invalid-name'" *ngIf="form.get('name')?.invalid">{{
+        getErrorMessage('name')
+      }}</mat-error>
       <mat-hint>{{ 'user.name_will_be_a_display_name' | translate }}</mat-hint>
     </mat-form-field>
   </div>
   <div class="form-row">
-    <mat-label>{{ 'user.email' | translate }} *</mat-label>
-    <mat-form-field appearance="outline">
-      <input
-        matInput
-        placeholder="{{ 'user.placeholder.email' | translate }}"
-        formControlName="email"
-        required
-      />
-      <mat-error [data-qa]="'invalid-email'" *ngIf="form.get('email')?.invalid">{{ getErrorMessage('email') }}</mat-error>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'user.email' | translate }}</mat-label>
+      <input matInput formControlName="email" required />
+      <mat-error [data-qa]="'invalid-email'" *ngIf="form.get('email')?.invalid">{{
+        getErrorMessage('email')
+      }}</mat-error>
     </mat-form-field>
   </div>
 
   <div class="form-row">
-    <mat-label>{{ 'user.password' | translate }} *</mat-label>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'user.password' | translate }}</mat-label>
       <mzima-client-button
         matSuffix
         fill="clear"
@@ -41,10 +35,12 @@
         matInput
         formControlName="password"
         required
-        placeholder="{{ 'user.placeholder.password' | translate }}"
         [type]="isPasswordVisible ? 'text' : 'password'"
       />
-      <mat-error [data-qa]="'invalid-password'" *ngIf="form.get('password')?.invalid">{{ getErrorMessage('password') }}</mat-error>
+      <mat-error [data-qa]="'invalid-password'" *ngIf="form.get('password')?.invalid">{{
+        getErrorMessage('password')
+      }}</mat-error>
+      <mat-hint>{{ 'user.password_hint' | translate }}.</mat-hint>
     </mat-form-field>
     <app-password-strength [passwordToCheck]="form.value.password"></app-password-strength>
   </div>
