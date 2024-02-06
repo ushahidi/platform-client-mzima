@@ -25,6 +25,14 @@ class LoginFunctions {
     cy.get(LoginLocators.loginButton).click();
   }
 
+  check_user_details_correct() {
+    const name = Cypress.env('ush_admin_name');
+    const email = Cypress.env('ush_admin_email');
+    cy.viewport(1440, 900);
+    cy.get(LoginLocators.userName).contains(name);
+    cy.get(LoginLocators.userEmail).contains(email);
+  }
+
   //quick-fix, change language to english after logging in
   change_laguage() {
     cy.get('.language__selected').click();
@@ -81,6 +89,7 @@ class LoginFunctions {
         this.type_password(Cypress.env('ush_admin_pwd'));
         this.click_login_button();
         this.verify_login();
+        this.check_user_details_correct();
       },
       { cacheAcrossSpecs: true },
     );
