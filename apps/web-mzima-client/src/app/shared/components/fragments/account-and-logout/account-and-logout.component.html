@@ -8,8 +8,8 @@
     [matMenuTriggerFor]="accountMenu"
   >
     <div class="account-info__main">
-      <span class="account-info__name">{{ user.realname }}</span>
-      <span class="account-info__email">{{ user.email }}</span>
+      <span class="account-info__name" [data-qa]="'user_name'">{{ user.realname }}</span>
+      <span class="account-info__email" [data-qa]="'user_email'">{{ user.email }}</span>
     </div>
     <img
       [alt]="user.realname"
@@ -25,7 +25,9 @@
     <button [data-qa]="'account-settings'" mat-menu-item (click)="openAccountSettings()">
       {{ 'nav.account_settings' | translate }}
     </button>
-    <button [data-qa]="'log-out'" mat-menu-item (click)="logout()">{{ 'nav.logout' | translate }}</button>
+    <button [data-qa]="'log-out'" mat-menu-item (click)="logout()">
+      {{ 'nav.logout' | translate }}
+    </button>
   </mat-menu>
 </ng-container>
 
