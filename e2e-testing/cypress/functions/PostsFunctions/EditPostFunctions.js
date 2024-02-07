@@ -42,7 +42,8 @@ class EditPostFunctions {
   }
 
   edit_post() {
-    cy.get(EditPostLocators.postTitleField).type(' 2');
+    cy.get(EditPostLocators.postTitleField)
+      .type(' 2');
     this.save_post();
   }
 
