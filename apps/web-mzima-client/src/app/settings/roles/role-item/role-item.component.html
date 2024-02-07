@@ -6,6 +6,7 @@
       <input
         matInput
         formControlName="display_name"
+        [readonly]="role.protected"
         (ngModelChange)="setName($event)"
         placeholder="{{ 'role.placeholder.name' | translate }}"
       />
