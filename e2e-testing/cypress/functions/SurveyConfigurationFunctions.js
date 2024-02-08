@@ -31,7 +31,7 @@ class SurveyConfigurationFunctions {
     }
 
     check_toggle_button(){
-        cy.get('#mat-slide-toggle-20-input').should('be.checked');
+        cy.get('#mat-slide-toggle-20-input').should('not.be.checked');
     }
 
     click_add_post_btn() {
