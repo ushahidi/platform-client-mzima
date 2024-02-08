@@ -55,10 +55,18 @@
 
             <ng-container *ngIf="field.input === 'tags'">
               <ng-container *ngFor="let category of field.value">
-                <div class="category" *ngIf="!isParentCategory(post.categories, category.id)">
+                <div class="category">
                   <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
                   {{ category.tag }}
                 </div>
+                <ng-container *ngIf="category.children">
+                  <ng-container *ngFor="let child of category.children">
+                    <div class="category child">
+                      <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
+                      {{ child.tag }}
+                    </div>
+                  </ng-container>
+                </ng-container>
               </ng-container>
             </ng-container>
 

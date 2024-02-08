@@ -127,7 +127,32 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       this.preparingMediaField(content.fields);
       this.preparingSafeVideoUrls(content.fields);
       this.preparingRelatedPosts(content.fields);
+      this.preparingCategories(content.fields);
     }
+  }
+
+  private preparingCategories(fields: PostContentField[]): void {
+    fields
+      .filter((field: any) => field.type === 'tags')
+      .map((categories: any) => {
+        categories.value = categories.value.filter((category: any) => {
+          // Adding children to parents
+          if (!category.parent_id) {
+            category.children = categories.value.filter(
+              (child: any) => child.parent_id === category.id,
+            );
+            return category;
+          }
+          // Removing children with parents from values to avoid repetition
+          if (
+            category.parent_id &&
+            categories.value.filter((parent: any) => category.parent_id === parent.id).length === 0
+          ) {
+            return category;
+          }
+        });
+        return categories;
+      });
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {
