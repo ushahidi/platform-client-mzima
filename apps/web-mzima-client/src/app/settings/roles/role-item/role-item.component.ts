@@ -118,6 +118,7 @@ export class RoleItemComponent implements OnInit {
     const roleBody = {
       id: this.form.value.id,
       display_name: this.form.value.display_name,
+      name: this.form.value.display_name, // name: same value as display_name only on initial role add
       description: this.form.value.description,
       permissions: this.form.value.permissions,
       protected: this.form.value.protected,
@@ -133,6 +134,7 @@ export class RoleItemComponent implements OnInit {
         },
       });
     } else {
+      delete roleBody.name; // We don't want to change name property on edit/update
       this.rolesService.updateRole(this.role.id, this.form.value).subscribe({
         next: () => this.navigateToRoles(),
         error: ({ error }) => {
