@@ -51,7 +51,7 @@ class SurveyConfigurationFunctions {
       }
     
       save_post() {
-        cy.get(SurveyConfigurationLocators.savePostBtn).click();
+        cy.get(SurveyConfigurationLocators.savePostBtn).click({force: true});
       }
       add_post() {
         this.click_add_post_btn();
