@@ -159,6 +159,7 @@ export class DeploymentService {
   public convertToUrl(keyword: string): string {
     // Simple regex to check if the keyword is a URL or FQDN
     console.log('convertToURL', keyword);
+    keyword = keyword.toLowerCase();
     if (
       !keyword.match(
         /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
