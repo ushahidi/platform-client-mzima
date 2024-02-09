@@ -146,7 +146,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
           // Removing children with parents from values to avoid repetition
           if (
             category.parent_id &&
-            categories.value.filter((parent: any) => category.parent_id === parent.id).length === 0
+            !categories.value.filter((parent: any) => category.parent_id === parent.id).length
           ) {
             return category;
           }

@@ -186,10 +186,9 @@
     margin-inline-end: 8px;
     margin-top: 2px;
   }
-}
-
-.child {
-  padding-left: 15px;
+  &__child {
+    padding-left: 15px;
+  }
 }
 
 .map {
