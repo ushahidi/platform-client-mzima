@@ -1,28 +1,28 @@
-import PrivateDeploymentLocators from '../locators/PrivateDeploymentLocators';
+import GeneralSettingsLocator from '../locators/GeneralSettingsLocator';
 
 class PrivateDeploymentFunctions {
     open_general_settings() {
-      cy.get(PrivateDeploymentLocators.settingsBtn).click(); 
+      cy.get(GeneralSettingsLocator.settingsBtn).click(); 
     }
 
     click_private_deployment() {
-        cy.get(PrivateDeploymentLocators.privateCheckbox).click();
+        cy.get(GeneralSettingsLocator.privateCheckbox).click();
     }
   
     click_save_button() {
-      cy.get(PrivateDeploymentLocators.saveBtn).click();
+      cy.get(GeneralSettingsLocator.saveButton).click();
     }
 
     check_private_deployment() {
-        cy.get(PrivateDeploymentLocators.privateCheckboxCheck).should('be.checked');
+        cy.get(GeneralSettingsLocator.privateCheckboxCheck).should('be.checked');
     }
 
     check_access_denied(){
-        cy.get(PrivateDeploymentLocators.denialMsg).should('exist');
+        cy.get(GeneralSettingsLocator.denialMsg).should('exist');
     }
 
     check_contact_email(){
-        cy.get(PrivateDeploymentLocators.contactEmail).should('exist');
+        cy.get(GeneralSettingsLocator.contactEmail).should('exist');
     }
 
     check_url_is_forbidden(){
