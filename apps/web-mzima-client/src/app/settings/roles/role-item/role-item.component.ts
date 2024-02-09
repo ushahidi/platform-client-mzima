@@ -54,7 +54,6 @@ export class RoleItemComponent implements OnInit {
       description: [''],
       permissions: [[], [Validators.required]],
       id: [null],
-      name: ['', [Validators.required]],
       protected: [false],
     });
   }
@@ -99,7 +98,6 @@ export class RoleItemComponent implements OnInit {
       id: role.id,
       display_name: role.display_name,
       description: role.description,
-      name: role.name,
       protected: role.protected,
       url: role.url,
       permissions: role.permissions,
@@ -119,7 +117,6 @@ export class RoleItemComponent implements OnInit {
     this.isFormOnSubmit = true;
     const roleBody = {
       id: this.form.value.id,
-      name: this.form.value.name,
       display_name: this.form.value.display_name,
       description: this.form.value.description,
       permissions: this.form.value.permissions,
