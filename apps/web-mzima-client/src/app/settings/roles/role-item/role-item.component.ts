@@ -134,7 +134,7 @@ export class RoleItemComponent implements OnInit {
         },
       });
     } else {
-      delete roleBody.name; // We don't want to change name property on edit/update
+      roleBody.name = this.role.name; // Use role name from API - We don't want to change name property along with display_name on edit/update
       this.rolesService.updateRole(this.role.id, this.form.value).subscribe({
         next: () => this.navigateToRoles(),
         error: ({ error }) => {
