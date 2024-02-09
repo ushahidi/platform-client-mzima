@@ -15,7 +15,9 @@
   <div>
     <p>
       {{ 'app.contact_email_address' | translate }}
-      <a class="company-info__email" href="mailto:{{ email }}">{{ email }}</a>
+      <a class="company-info__email" href="mailto:{{ email }}" [data-qa]="'contact-email'">{{
+        email
+      }}</a>
     </p>
     <p [innerHTML]="description | safeUrl"></p>
   </div>

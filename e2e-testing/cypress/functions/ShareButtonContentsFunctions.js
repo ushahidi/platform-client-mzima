@@ -6,41 +6,43 @@ class ShareButtonContentsFunctions {
   }
 
   click_share_btn() {
+    cy.wait(1000);
     cy.get(ShareButtonContentsLocators.shareBtn).click();
   }
 
-  load_share_modal(){
-    cy.get(ShareButtonContentsLocators.shareModal)
+  verify_survey_web_map_view_address() {
+    cy.get(ShareButtonContentsLocators.surveyWebAddress).should(
+      'have.value',
+      Cypress.env().baseUrl + 'map',
+    );
   }
 
-  verify_survey_web_map_view_address(){
-    cy.get(ShareButtonContentsLocators.surveyWebAddress).should('have.value', "http://localhost:4200/map")
+  verify_twitter_link() {
+    cy.get(ShareButtonContentsLocators.shareTwitterBtn);
   }
 
-  verify_twitter_link(){
-    cy.get(ShareButtonContentsLocators.shareTwitterBtn)
+  verify_facebook_link() {
+    cy.get(ShareButtonContentsLocators.shareFacebookBtn);
   }
 
-  verify_facebook_link(){
-    cy.get(ShareButtonContentsLocators.shareFacebookBtn)
-  }
-
-  close_modal(){
+  close_modal() {
     cy.get(ShareButtonContentsLocators.btnClose).click();
   }
 
-  click_data_view_btn(){
+  click_data_view_btn() {
     cy.get(ShareButtonContentsLocators.dataViewBtn).click();
   }
 
-  verify_survey_web_data_view_address(){
-    cy.get(ShareButtonContentsLocators.surveyWebAddress).should('have.value', "http://localhost:4200/feed")
+  verify_survey_web_data_view_address() {
+    cy.get(ShareButtonContentsLocators.surveyWebAddress).should(
+      'have.value',
+      Cypress.env().baseUrl + 'feed?page=1',
+    );
   }
 
- verify_share_button_contents_map_view() {
+  verify_share_button_contents_map_view() {
     this.click_map_view_btn();
     this.click_share_btn();
-    this.load_share_modal();
     this.verify_survey_web_map_view_address();
     this.verify_twitter_link();
     this.verify_facebook_link();
@@ -50,11 +52,8 @@ class ShareButtonContentsFunctions {
   verify_share_button_contents_data_view() {
     this.click_data_view_btn();
     this.click_share_btn();
-    this.load_share_modal();
     this.verify_survey_web_data_view_address();
-
   }
-
 }
 
 export default ShareButtonContentsFunctions;

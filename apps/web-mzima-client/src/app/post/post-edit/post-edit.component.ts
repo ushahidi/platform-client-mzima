@@ -39,12 +39,13 @@ import {
   PostResult,
   MediaService,
   postHelpers,
+  SurveyItem,
 } from '@mzima-client/sdk';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { objectHelpers, formValidators, dateHelper } from '@helpers';
 import { PhotoRequired, PointValidator } from '../../core/validators';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LanguageInterface } from '../../core/interfaces/language.interface';
 import { MatSelectChange } from '@angular/material/select';
@@ -66,7 +67,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   public taskForm: FormGroup;
   public description: string;
   public title: string;
-  private formId?: number;
+  public formId?: number;
   public tasks: any[];
   public activeLanguage: string;
   private initialFormData: any;
@@ -96,6 +97,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   maxImageSize: any;
   selectedLanguage: any;
   postLanguages: LanguageInterface[] = [];
+  selectedSurvey: SurveyItem;
+  public surveys: Observable<any>;
 
   constructor(
     protected override sessionService: SessionService,
@@ -133,7 +136,13 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         this.postsService.lockPost(this.postId).subscribe();
         this.loadPostData(this.postId);
       }
+      if (!this.formId) {
+        this.surveysService.get().subscribe((result) => {
+          this.surveys = of(result.results);
+        });
+      }
     });
+
     this.translate.onLangChange.subscribe((newLang) => {
       this.activeLanguage = newLang.lang;
     });
@@ -151,6 +160,13 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   loadData(): void {}
+
+  formSelected() {
+    this.formId = this.selectedSurvey.id;
+    this.post.form_id = this.selectedSurvey.id;
+    this.post.post_content = this.selectedSurvey.tasks;
+    this.loadSurveyData(this.formId, this.post.post_content);
+  }
 
   selectLanguageEmit(event: MatSelectChange) {
     this.activeLanguage = event.value.code;
@@ -511,6 +527,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
               value.value = this.form.value[field.key] || null;
               break;
             case 'upload':
+              const originalValue = this.post?.post_content[0]?.fields.filter(
+                (fieldValue: { key: string | number }) => fieldValue.key === field.key,
+              )[0];
               if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
                 try {
                   this.maxSizeError = false;
@@ -535,6 +554,17 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   value.value = null;
                 } catch (error: any) {
                   throw new Error(`Error deleting file: ${error.message}`);
+                }
+              } else if (originalValue?.value?.mediaCaption !== value.value?.caption) {
+                try {
+                  const captionObservable = await this.mediaService.updateCaption(
+                    originalValue.value.id,
+                    value.value.caption,
+                  );
+                  await lastValueFrom(captionObservable);
+                  value.value = originalValue.value.id;
+                } catch (error: any) {
+                  throw new Error(`Error updating caption: ${error.message}`);
                 }
               } else {
                 value.value = this.form.value[field.key]?.id || null;

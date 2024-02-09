@@ -33,3 +33,11 @@ export interface MessageContact {
   created: Date;
   can_notify: number;
 }
+
+export interface MessageFilter {
+  page: number;
+  limit: number;
+  order?: 'desc' | 'asc';
+  orderby: string;
+  contact?: number;
+}

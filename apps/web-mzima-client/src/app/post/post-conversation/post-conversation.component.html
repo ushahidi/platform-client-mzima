@@ -1,0 +1,67 @@
+<div class="page-content post-conversation">
+  <ng-container>
+    <h2>{{ 'post.messages.title' | translate }}</h2>
+  </ng-container>
+  <ng-container *ngFor="let message of messages | async">
+    <div class="message {{ message.direction }}">
+      <div class="message--{{ message.direction }}">
+        <div class="message--header">
+          <span class="highlighted">{{
+            message.direction === 'incoming' ? message.contact.contact : sender
+          }}</span>
+          <span class="date">{{ message.created | dateAgo }}</span>
+          <span class="highlighted">via {{ message.type }}</span>
+        </div>
+        <p>
+          {{ message.message }}
+        </p>
+      </div>
+    </div>
+  </ng-container>
+  <div class="form-controls-panel" *ngIf="messagesTotal > 0">
+    <mzima-client-button
+      type="button"
+      (buttonClick)="previousPage()"
+      [disabled]="currentPage === 1"
+    >
+      {{ 'post.messages.previous_page' | translate }}
+    </mzima-client-button>
+    <mzima-client-button
+      type="button"
+      (buttonClick)="nextPage()"
+      [disabled]="currentPage * messageLimit >= messagesTotal"
+    >
+      {{ 'post.messages.next_page' | translate }}
+    </mzima-client-button>
+  </div>
+  <div class="empty-messages" *ngIf="messagesTotal === 0">
+    <p>
+      {{ 'post.messages.no_messages' | translate }}
+    </p>
+  </div>
+  <ng-container>
+    <div class="separator"></div>
+
+    <form novalidate class="send-new-message">
+      <h2 id="send-message">{{ 'post.messages.send' | translate }}</h2>
+      <mat-form-field appearance="outline" class="form-row">
+        <textarea
+          required
+          aria-labelledby="send-message"
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="2"
+          cdkAutosizeMaxRows="5"
+          [formControl]="newMessage"
+        >
+        </textarea>
+        <mat-error *ngIf="inputError">{{
+          'post.messages.empty_message_error' | translate
+        }}</mat-error>
+      </mat-form-field>
+      <mzima-client-button (click)="addMessage()">{{
+        'post.messages.simple_send' | translate
+      }}</mzima-client-button>
+    </form>
+  </ng-container>
+</div>
