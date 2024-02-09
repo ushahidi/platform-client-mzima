@@ -735,6 +735,11 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       if (field.key === fieldKey) {
         field.options.map((el: any) => {
           this.onCheckChange(event, field.key, el.id);
+          if (el.children?.length) {
+            el.children.map((child: any) => {
+              this.onCheckChange(event, field.key, child.id);
+            });
+          }
         });
       }
     });
