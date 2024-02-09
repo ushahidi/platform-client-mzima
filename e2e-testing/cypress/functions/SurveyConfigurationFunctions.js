@@ -47,7 +47,7 @@ class SurveyConfigurationFunctions {
       }
     
       type_post_description(description) {
-        cy.get(SurveyConfigurationLocators.postDescField).type(description);
+        cy.get(SurveyConfigurationLocators.postDescField).type(description, {force: true});
       }
     
       save_post() {
