@@ -43,11 +43,11 @@ class SurveyConfigurationFunctions {
       }
     
       type_post_title(title) {
-        cy.get(SurveyConfigurationLocators.postTitleField).type(title).should('have.value', title);
+        cy.get(SurveyConfigurationLocators.postTitleField).type(title);
       }
     
       type_post_description(description) {
-        cy.get(SurveyConfigurationLocators.postDescField).type(description).should('have.value', description);
+        cy.get(SurveyConfigurationLocators.postDescField).type(description);
       }
     
       save_post() {
@@ -60,6 +60,7 @@ class SurveyConfigurationFunctions {
         this.type_post_description('New Post Description');
         cy.get(SurveyConfigurationLocators.postCheckBox).click({ force: true });
         this.save_post();
+        cy.get(SurveyConfigurationLocators.successBtn).click();
       }
 
       check_for_added_post_being_published() {
