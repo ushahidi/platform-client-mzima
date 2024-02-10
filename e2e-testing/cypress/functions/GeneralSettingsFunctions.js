@@ -67,9 +67,10 @@ class GeneralSettingsFunctions {
     this.type_site_description('Fixtures are a great way to mock data for responses to routes');
     this.click_save_button();
     cy.reload();
-    this.verify_deployment_changes_reflect('-Automated')
+    this.verify_deployment_changes_reflect('-Automated');
     this.verify_api_field_should_have_value();
   }
+
 }
 
 export default GeneralSettingsFunctions;
