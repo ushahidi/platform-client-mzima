@@ -14,7 +14,7 @@ const SurveyConfigurationLocators = {
     postItem: '[data-qa="post-item"]',
     surveyItem: '[data-qa="add-post-modal-surveys-item2"]',
     surveySelectionList: '[data-qa="survey-selection-list"]',
-    surveySelectItem: '[data-qa="survey-select-item"]',
+    surveySelectItem: '[data-qa="survey-select-item2"]',
     postStatus: '[data-qa="post-info__status"]'
   };
   
