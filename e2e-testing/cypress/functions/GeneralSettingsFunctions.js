@@ -34,8 +34,8 @@ class GeneralSettingsFunctions {
   }
 
   // Api Key value
-  get_api_key_field_value() {
-    cy.get(GeneralSettingsLocator.apiKeyField).should('not.be.empty');
+  verify_api_field_should_have_value() {
+    cy.get(GeneralSettingsLocator.apiKeyField).invoke('val').should('not.be.empty');
   }
 
   // verify signup is disabled
@@ -57,13 +57,20 @@ class GeneralSettingsFunctions {
     this.verify_signup_is_disabled();
   }
 
+  verify_deployment_changes_reflect(deploymentName){
+    cy.get(GeneralSettingsLocator.panelTitle).contains(deploymentName)
+  }
+
   // tests
   edit_general_page() {
     this.type_deployment_name('-Automated');
-    this.click_save_button();
     this.type_site_description('Fixtures are a great way to mock data for responses to routes');
     this.click_save_button();
+    cy.reload();
+    this.verify_deployment_changes_reflect('-Automated');
+    this.verify_api_field_should_have_value();
   }
+
 }
 
 export default GeneralSettingsFunctions;
