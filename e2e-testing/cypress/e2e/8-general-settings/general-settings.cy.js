@@ -31,6 +31,7 @@ describe("Automated Tests for General Settings", () => {
   });
 
   it("Verify API field", () => {
+    generalSettingsFunctions.open_general_settings_page();
     generalSettingsFunctions.verify_api_field_should_have_value();
   })
 });
