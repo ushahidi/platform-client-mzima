@@ -38,6 +38,11 @@ class GeneralSettingsFunctions {
     cy.get(GeneralSettingsLocator.apiKeyField).invoke('val').should('not.be.empty');
   }
 
+  generate_new_api_key() {
+    cy.get(GeneralSettingsLocator.generateAPIKey).click()
+    cy.get(GeneralSettingsLocator.acceptGenerateAPIKey).click()
+  }
+
   // verify signup is disabled
   verify_signup_is_disabled() {
     cy.get(LoginLocators.loginModal).click();
@@ -69,6 +74,10 @@ class GeneralSettingsFunctions {
     cy.reload();
     this.verify_deployment_changes_reflect('-Automated');
     this.verify_api_field_should_have_value();
+    this.generate_new_api_key();
+    cy.reload();
+    this.verify_api_field_should_have_value();
+    this.click_save_button();
   }
 
 }
