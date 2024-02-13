@@ -15,6 +15,7 @@ export class CategoriesComponent {
   public categories: CategoryInterface[];
   selectedCategories: CategoryInterface[] = [];
   isShowActions = false;
+  openedParents: [number?] = [];
 
   constructor(
     private categoriesService: CategoriesService,
@@ -31,6 +32,19 @@ export class CategoriesComponent {
         this.categories = data.results;
       },
     });
+  }
+
+  public displayChildren(id: number) {
+    return this.openedParents.includes(id);
+  }
+
+  public toggleChildren(id: number) {
+    const index = this.openedParents.indexOf(id);
+    if (index > -1) {
+      this.openedParents.splice(index, 1);
+    } else {
+      this.openedParents.push(id);
+    }
   }
 
   public async deleteCategories() {
@@ -68,9 +82,5 @@ export class CategoriesComponent {
     } else {
       this.selectedCategories = this.selectedCategories.filter((sC) => sC.id !== cat.id);
     }
-  }
-
-  public getChildCategories(id: number): CategoryInterface[] {
-    return this.categories.filter((category) => category.parent_id === id);
   }
 }

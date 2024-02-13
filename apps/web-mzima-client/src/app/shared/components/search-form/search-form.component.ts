@@ -296,14 +296,12 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
           return {
             id: category.id,
             name: category.tag,
-            children: response?.results
-              ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
-              .map((cat: CategoryInterface) => {
-                return {
-                  id: cat.id,
-                  name: cat.tag,
-                };
-              }),
+            children: category?.children.map((cat: CategoryInterface) => {
+              return {
+                id: cat.id,
+                name: cat.tag,
+              };
+            }),
           };
         });
         if (!this.categoriesData.length) {
