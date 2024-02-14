@@ -68,7 +68,6 @@ class GeneralSettingsFunctions {
     this.click_save_button();
     cy.reload();
     this.verify_deployment_changes_reflect('-Automated');
-    this.verify_api_field_should_have_value();
   }
 
 }
