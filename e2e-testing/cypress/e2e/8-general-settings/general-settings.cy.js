@@ -35,14 +35,14 @@ describe("Automated Tests for General Settings", () => {
     generalSettingsFunctions.verify_api_field_should_have_value();
   })
 
-  it("Test Change Deployment Image", () => {
-    generalSettingsFunctions.open_general_settings_page();
-    generalSettingsFunctions.change_deployment_image();
-  });
-
   it("Tests Generating New API key", () => {
     generalSettingsFunctions.open_general_settings_page();
     generalSettingsFunctions.steps_to_generate_new_api_key();
+  });
+
+  it("Test Change Deployment Image", () => {
+    generalSettingsFunctions.open_general_settings_page();
+    generalSettingsFunctions.change_deployment_image();
   });
 
 });

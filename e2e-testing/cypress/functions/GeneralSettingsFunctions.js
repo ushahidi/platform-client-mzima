@@ -71,10 +71,10 @@ class GeneralSettingsFunctions {
     this.click_save_button();
     cy.reload();
     cy.get(GeneralSettingsLocator.deploymentLogo).should('not.exist');
-    cy.get('[type="file"]').selectFile('cypress/fixtures/turtle.jpg', {force: true});
+    cy.get('[type="file"]').selectFile('cypress/fixtures/https://748b94fd172930d34f53-1966afbc946da74d7b5149611f42c33a.ssl.cf2.rackcdn.com/mzima-dev/6/5/65cc90504599d-94887890-magnifying-glass-pen-sunglasses-and-notebook-written-with-career-goals-on-white-wooden-background.jpg', {force: true});
     this.click_save_button();
     cy.reload();
-    cy.get(GeneralSettingsLocator.deploymentLogo).should('have.attr', 'src', '/turtle.jpg')
+    cy.get(GeneralSettingsLocator.deploymentLogo).should('have.attr', 'src', 'https://748b94fd172930d34f53-1966afbc946da74d7b5149611f42c33a.ssl.cf2.rackcdn.com/mzima-dev/6/5/65cc90504599d-94887890-magnifying-glass-pen-sunglasses-and-notebook-written-with-career-goals-on-white-wooden-background.jpg')
   }
   
   steps_to_generate_new_api_key(){
