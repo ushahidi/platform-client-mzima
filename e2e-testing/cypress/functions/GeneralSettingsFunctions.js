@@ -61,6 +61,17 @@ class GeneralSettingsFunctions {
     cy.get(GeneralSettingsLocator.panelTitle).contains(deploymentName)
   }
 
+  change_deployment_image(){
+    cy.get(GeneralSettingsLocator.deleteImageBtn).click();
+    this.click_save_button();
+    cy.reload();
+    cy.get(GeneralSettingsLocator.deploymentLogo).should('not.exist');
+    cy.get('[type="file"]').selectFile('cypress/fixtures/turtle.jpg', {force: true});
+    this.click_save_button();
+    cy.reload();
+    cy.get(GeneralSettingsLocator.deploymentLogo).should('have.attr', 'src', '/turtle.jpg')
+  }
+  
   // tests
   edit_general_page() {
     this.type_deployment_name('-Automated');

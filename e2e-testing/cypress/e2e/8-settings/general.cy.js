@@ -13,6 +13,7 @@ describe("Automated Tests for Settings", () => {
   it("Opens Settings Page", () => {
     generalSettingsFunctions.open_general_settings_page();
     generalSettingsFunctions.edit_general_page();
+    generalSettingsFunctions.change_deployment_image();
   });
 });
 
