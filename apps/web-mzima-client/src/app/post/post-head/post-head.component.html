@@ -19,7 +19,7 @@
     (buttonClick)="sharePost()"
     class="post-head__control post-head__control--share"
   >
-    <mat-icon icon svgIcon="share"></mat-icon>
+    <mat-icon icon svgIcon="share" [data-qa]="'share-post'" [attr.post]="post.id"></mat-icon>
   </mzima-client-button>
   <mzima-client-button
     *ngIf="!!user?.userId"
