@@ -34,4 +34,10 @@ describe("Automated Tests for General Settings", () => {
     generalSettingsFunctions.open_general_settings_page();
     generalSettingsFunctions.verify_api_field_should_have_value();
   })
+
+  it("Test Change Deployment Image", () => {
+    generalSettingsFunctions.open_general_settings_page();
+    generalSettingsFunctions.change_deployment_image();
+  });
+
 });
