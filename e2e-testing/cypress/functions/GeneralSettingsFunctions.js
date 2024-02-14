@@ -38,6 +38,11 @@ class GeneralSettingsFunctions {
     cy.get(GeneralSettingsLocator.apiKeyField).invoke('val').should('not.be.empty');
   }
 
+  generate_new_api_key() {
+    cy.get(GeneralSettingsLocator.generateAPIKey).click()
+    cy.get(GeneralSettingsLocator.acceptGenerateAPIKey).click()
+  }
+
   // verify signup is disabled
   verify_signup_is_disabled() {
     cy.get(LoginLocators.loginModal).click();
@@ -72,6 +77,13 @@ class GeneralSettingsFunctions {
     cy.get(GeneralSettingsLocator.deploymentLogo).should('have.attr', 'src', '/turtle.jpg')
   }
   
+  steps_to_generate_new_api_key(){
+    this.generate_new_api_key();
+    cy.reload();
+    this.verify_api_field_should_have_value();
+    this.click_save_button();
+  }
+
   // tests
   edit_general_page() {
     this.type_deployment_name('-Automated');

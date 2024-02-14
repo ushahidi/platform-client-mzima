@@ -18,6 +18,8 @@ const GeneralSettingsLocator = {
   emailField: '[data-qa="email"]',
   deleteImageBtn: '[data-qa="btn-update-logo"]',
   deploymentLogo: '[data-qa="deployment_logo"]',
+  generateAPIKey: '[data-qa="generate_api_key"]',
+  acceptGenerateAPIKey: '[data-qa="btn-confirm-delete"]',
 };
 
 export default GeneralSettingsLocator;

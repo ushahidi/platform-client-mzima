@@ -40,4 +40,9 @@ describe("Automated Tests for General Settings", () => {
     generalSettingsFunctions.change_deployment_image();
   });
 
+  it("Tests Generating New API key", () => {
+    generalSettingsFunctions.open_general_settings_page();
+    generalSettingsFunctions.steps_to_generate_new_api_key();
+  });
+
 });

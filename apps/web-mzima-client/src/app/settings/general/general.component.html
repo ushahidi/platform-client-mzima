@@ -124,7 +124,13 @@
     </mat-form-field>
   </div>
 
-  <mzima-client-button fill="outline" [expand]="false" color="secondary" (click)="generateApiKey()">
+  <mzima-client-button
+    fill="outline"
+    [expand]="false"
+    color="secondary"
+    (click)="generateApiKey()"
+    [data-qa]="'generate_api_key'"
+  >
     <span>{{ 'settings.general_settings.generate_api_key' | translate }}</span>
     <mat-icon icon svgIcon="key"></mat-icon>
   </mzima-client-button>
