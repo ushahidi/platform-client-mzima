@@ -66,6 +66,13 @@ class GeneralSettingsFunctions {
     cy.get(GeneralSettingsLocator.panelTitle).contains(deploymentName)
   }
 
+  steps_to_generate_new_api_key(){
+    this.generate_new_api_key();
+    cy.reload();
+    this.verify_api_field_should_have_value();
+    this.click_save_button();
+  }
+
   // tests
   edit_general_page() {
     this.type_deployment_name('-Automated');
@@ -73,11 +80,6 @@ class GeneralSettingsFunctions {
     this.click_save_button();
     cy.reload();
     this.verify_deployment_changes_reflect('-Automated');
-    this.verify_api_field_should_have_value();
-    this.generate_new_api_key();
-    cy.reload();
-    this.verify_api_field_should_have_value();
-    this.click_save_button();
   }
 
 }
