@@ -58,7 +58,11 @@
     </button>
 
     <div class="search-form__main-filters__inner">
-      <span class="search-form__main-filters__total" *ngIf="total !== undefined">
+      <span
+        class="search-form__main-filters__total"
+        *ngIf="total !== undefined"
+        [data-qa]="'post-results-count'"
+      >
         {{ 'post.search_results' | translate }} {{ total }}
       </span>
 
