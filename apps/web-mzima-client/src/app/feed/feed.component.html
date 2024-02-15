@@ -185,8 +185,8 @@
   <div class="feed-page__main">
     <!-- (scroll)="onScroll($event)" -->
     <div #feed class="feed" [ngClass]="{ 'feed--post-view': mode === FeedMode.Post }">
-      <ng-container *ngIf="!isLoading || posts?.length; else loader">
-        <div class="feed__posts" *ngIf="posts?.length; else postsEmpty">
+      <ng-container *ngIf="!postsCheck().stillLoading; else loader">
+        <div class="feed__posts" *ngIf="postsCheck().atLeastOneExists; else postsEmpty">
           <ngx-masonry
             #masonry
             [ordered]="true"
@@ -228,14 +228,13 @@
             >
             </app-post-preview>
           </ngx-masonry>
-          <app-spinner class="feed__loading" *ngIf="isLoading"></app-spinner>
           <mzima-client-button
             fill="clear"
             color="secondary"
             (buttonClick)="loadMore()"
             class="feed__load-more"
             *ngIf="
-              !isLoading &&
+              !postsCheck().stillLoading &&
               mode === FeedMode.Post &&
               params.page !== undefined &&
               params.limit !== undefined &&
