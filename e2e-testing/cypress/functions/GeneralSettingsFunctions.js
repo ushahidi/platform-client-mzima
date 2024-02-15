@@ -66,6 +66,15 @@ class GeneralSettingsFunctions {
     cy.get(GeneralSettingsLocator.panelTitle).contains(deploymentName)
   }
 
+  verify_the_map_coordinates(){
+    cy.get(GeneralSettingsLocator.queryLocation).type('Nairobi')
+    cy.get(GeneralSettingsLocator.geocoderList)
+      .find(GeneralSettingsLocator.geocoderListItem)
+      .eq(0).click()
+    cy.get(GeneralSettingsLocator.defaultLatitude).should('have.value', '-1.3026148499999999')
+    cy.get(GeneralSettingsLocator.defaultLongitude).should('have.value','36.82884201813725')
+  }
+
   steps_to_generate_new_api_key(){
     this.generate_new_api_key();
     cy.reload();
