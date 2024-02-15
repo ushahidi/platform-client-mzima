@@ -182,7 +182,7 @@
     </div>
   </ng-container>
 
-  <div class="feed-page__main">
+  <div class="feed-page__main" [attr.data-qa]="'posts'">
     <!-- (scroll)="onScroll($event)" -->
     <div #feed class="feed" [ngClass]="{ 'feed--post-view': mode === FeedMode.Post }">
       <ng-container *ngIf="!isLoading || posts?.length; else loader">
