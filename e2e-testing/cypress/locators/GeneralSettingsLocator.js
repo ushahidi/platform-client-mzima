@@ -16,8 +16,10 @@ const GeneralSettingsLocator = {
   denialMsg: '[data-qa="denied"]',
   contactEmail: '[data-qa="contact-email"]',
   emailField: '[data-qa="email"]',
+  deleteImageBtn: '[data-qa="btn-update-logo"]',
+  deploymentLogo: '[data-qa="deployment_logo"]',
   generateAPIKey: '[data-qa="generate_api_key"]',
-  acceptGenerateAPIKey: '[data-qa="btn-confirm-delete"]'
+  acceptGenerateAPIKey: '[data-qa="btn-confirm-delete"]',
 };
 
 export default GeneralSettingsLocator;
