@@ -8,4 +8,20 @@
   <h4 class="category-item__title" [routerLink]="category.id.toString()" [ngClass]="customClass">
     {{ category.tag }}
   </h4>
+  <mzima-client-button
+    *ngIf="category.children?.length"
+    class="category-item--expand"
+    fill="clear"
+    color="secondary"
+    [iconOnly]="true"
+    [data-qa]="'toggle-children'"
+    (buttonClick)="toggleChildren(category.id)"
+    (click)="$event.stopPropagation()"
+  >
+    <mat-icon
+      class="category-item__arrow"
+      [ngClass]="{ 'category-item--expanded': displayChildren }"
+      svgIcon="arrow-down"
+    ></mat-icon>
+  </mzima-client-button>
 </div>

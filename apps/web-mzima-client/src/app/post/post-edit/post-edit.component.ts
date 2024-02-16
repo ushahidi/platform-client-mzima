@@ -183,17 +183,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     });
   }
 
-  getOrderedOptions(options: any[]) {
-    const result: any[] = [];
-    options
-      .filter((opt: any) => !opt.parent_id)
-      .forEach((parent) => {
-        result.push(parent);
-        result.push(...options.filter((opt: any) => opt.parent_id === parent.id));
-      });
-    return result;
-  }
-
   private loadSurveyData(formId: number | null, updateContent?: any[]) {
     if (!formId) return;
     this.surveysService.getSurveyById(formId).subscribe({
@@ -228,7 +217,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   this.description = field.default;
                   break;
                 case 'tags':
-                  field.options = this.getOrderedOptions(field.options);
                   this.description = field.default;
                   break;
                 case 'media': // Max image size addition hack
@@ -747,6 +735,11 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       if (field.key === fieldKey) {
         field.options.map((el: any) => {
           this.onCheckChange(event, field.key, el.id);
+          if (el.children?.length) {
+            el.children.map((child: any) => {
+              this.onCheckChange(event, field.key, child.id);
+            });
+          }
         });
       }
     });

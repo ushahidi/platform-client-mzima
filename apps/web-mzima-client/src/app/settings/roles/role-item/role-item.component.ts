@@ -54,7 +54,6 @@ export class RoleItemComponent implements OnInit {
       description: [''],
       permissions: [[], [Validators.required]],
       id: [null],
-      name: ['', [Validators.required]],
       protected: [false],
     });
   }
@@ -99,7 +98,6 @@ export class RoleItemComponent implements OnInit {
       id: role.id,
       display_name: role.display_name,
       description: role.description,
-      name: role.name,
       protected: role.protected,
       url: role.url,
       permissions: role.permissions,
@@ -117,17 +115,12 @@ export class RoleItemComponent implements OnInit {
 
   public save(): void {
     this.isFormOnSubmit = true;
-    const roleBody = {
-      id: this.form.value.id,
-      name: this.form.value.name,
-      display_name: this.form.value.display_name,
-      description: this.form.value.description,
-      permissions: this.form.value.permissions,
-      protected: this.form.value.protected,
-    };
+
+    const roleBody = this.form.value;
 
     if (!this.isUpdate) {
       delete roleBody.id;
+      roleBody.name = roleBody.display_name; // name: same value as display_name only on initial role add
       this.rolesService.post(roleBody).subscribe({
         next: () => this.navigateToRoles(),
         error: ({ error }) => {
@@ -136,7 +129,8 @@ export class RoleItemComponent implements OnInit {
         },
       });
     } else {
-      this.rolesService.updateRole(this.role.id, this.form.value).subscribe({
+      roleBody.name = this.role.name; // Use role name from API - We don't want to change name property along with display_name on edit/update
+      this.rolesService.updateRole(this.role.id, roleBody).subscribe({
         next: () => this.navigateToRoles(),
         error: ({ error }) => {
           this.formErrors = error.errors.failed_validations;
