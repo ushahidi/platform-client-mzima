@@ -149,7 +149,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
-        this.postIsLoading(true);
+        this.isLoading = true; // "There are no posts yet!" flicker is fixed here and for (most) places where isLoading is set to true
         if (this.initialLoad) {
           this.initialLoad = false;
           return;
@@ -290,7 +290,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // if (this.mode === FeedMode.Post) {
     //   this.currentPage = 1;
     // }
-    this.postIsLoading(true);
+    this.isLoading = true;
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
@@ -303,7 +303,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           payload: true,
         });
         setTimeout(() => {
-          this.postIsLoading(false);
+          this.isLoading = false;
           this.updateMasonry();
           setTimeout(() => {
             if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
@@ -315,13 +315,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     });
   }
 
-  public postIsLoading(value: boolean) {
-    return (this.isLoading = value); // "There are no posts yet!" flicker is fixed for (most) places where the value here is set to true
-  }
-
   public postsCheck() {
     const postsHaveLoaded = this.posts.length > 0;
-    if (postsHaveLoaded) this.postIsLoading(false); // post card/content area and LoadMore button benefits from this
+    if (postsHaveLoaded) this.isLoading = false; // post card/content area and LoadMore button benefits from this
     const posts = {
       atLeastOneExists: postsHaveLoaded,
       stillLoading: this.isLoading, // tracks this.isLoading for post card area content display
@@ -498,7 +494,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public isPostChecked(post: PostResult): boolean {
-    this.postIsLoading(true);
+    this.isLoading = true;
     return !!this.selectedPosts.find((p: PostResult) => p.id === post.id);
   }
 
@@ -509,7 +505,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public refreshMasonry(): void {
-    this.postIsLoading(true);
+    this.isLoading = true;
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 
@@ -528,7 +524,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public switchMode(mode: FeedMode): void {
-    this.postIsLoading(true);
+    this.isLoading = true;
     this.mode = mode;
     if (this.collectionId) {
       this.switchCollectionMode();
