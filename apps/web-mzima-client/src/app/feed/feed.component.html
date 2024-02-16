@@ -234,7 +234,7 @@
             (buttonClick)="loadMore()"
             class="feed__load-more"
             *ngIf="
-              !postsCheck().stillLoading &&
+              !isLoading &&
               mode === FeedMode.Post &&
               params.page !== undefined &&
               params.limit !== undefined &&
