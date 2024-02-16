@@ -227,6 +227,9 @@
                   [data-qa]="field.label.replaceAll(' ', '-') + '-toggle' | lowercase"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #picker (closed)="input.blur()"></mat-datepicker>
+                <mat-hint>{{
+                  'form.default_date_hint' | translate : { field_name: field.label }
+                }}</mat-hint>
               </mat-form-field>
             </ng-container>
 
