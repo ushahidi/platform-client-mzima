@@ -198,6 +198,7 @@
               [attr.data-qa]="'post-item'"
               class="post"
               [post]="post"
+              [attr.postId]="post.id"
               [user]="user"
               ngxMasonryItem
               [feedView]="true"
@@ -252,7 +253,7 @@
         </div>
       </ng-container>
     </div>
-    <div class="feed-page__post" *ngIf="mode === FeedMode.Post">
+    <div class="feed-page__post" *ngIf="mode === FeedMode.Post" [attr.data-qa]="'post-details'">
       <router-outlet></router-outlet>
     </div>
   </div>

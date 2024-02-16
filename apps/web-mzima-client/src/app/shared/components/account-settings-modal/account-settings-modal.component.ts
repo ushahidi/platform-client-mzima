@@ -135,10 +135,6 @@ export class AccountSettingsModalComponent implements OnInit {
     });
   }
 
-  canDeleteContact(contact: ContactsInterface) {
-    return contact.allowed_privileges?.includes('delete');
-  }
-
   private getContacts(): void {
     this.isContactsChanged = false;
     this.contactsService

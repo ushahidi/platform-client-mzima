@@ -8,17 +8,23 @@
         (ngModelChange)="searchLocation()"
         (focusout)="searchLocation()"
         placeholder="{{ 'settings.general_settings.placeholder.pick_location' | translate }}"
+        [data-qa]="'query-location'"
       />
 
       <mzima-client-button [iconOnly]="true" fill="clear" matSuffix color="secondary">
         <mat-icon icon svgIcon="search-small"></mat-icon>
       </mzima-client-button>
     </mat-form-field>
-    <ul class="geocoder-list" *ngIf="isShowGeocodingResults && geocodingResults.length">
+    <ul
+      class="geocoder-list"
+      *ngIf="isShowGeocodingResults && geocodingResults.length"
+      [data-qa]="'geocoder-list'"
+    >
       <li
         class="geocoder-list__item"
         *ngFor="let result of geocodingResults"
         (click)="selectLocation(result)"
+        [data-qa]="'geocoder-list-item'"
       >
         {{ result.name }}
       </li>
@@ -48,6 +54,7 @@
           [max]="90"
           [min]="-90"
           readonly
+          [data-qa]="'default-latitude'"
         />
       </mat-form-field>
     </div>
@@ -62,6 +69,7 @@
           [max]="180"
           [min]="-180"
           readonly
+          [data-qa]="'default-longitude'"
         />
       </mat-form-field>
     </div>
