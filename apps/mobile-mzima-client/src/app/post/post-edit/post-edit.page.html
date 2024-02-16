@@ -211,7 +211,9 @@
                       size="cover"
                       id="datetime"
                       (ionChange)="setCalendar($event, field.key, 'datetimeFormatSeconds')"
-                    ></ion-datetime>
+                    >
+                      <span slot="time-label">Select Time</span>
+                    </ion-datetime>
                   </ion-content>
                 </ng-template>
               </ion-modal>
