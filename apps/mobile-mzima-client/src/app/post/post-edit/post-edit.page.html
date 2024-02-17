@@ -210,6 +210,9 @@
                       #dateTimeId
                       size="cover"
                       id="datetime"
+                      [showDefaultButtons]="true"
+                      doneText="Ok"
+                      cancelText="Cancel"
                       (ionChange)="setCalendar($event, field.key, 'datetimeFormatSeconds')"
                     >
                       <span slot="time-label">Select Time</span>
