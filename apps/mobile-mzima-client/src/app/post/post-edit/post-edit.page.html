@@ -210,8 +210,13 @@
                       #dateTimeId
                       size="cover"
                       id="datetime"
+                      [showDefaultButtons]="true"
+                      doneText="Ok"
+                      cancelText="Cancel"
                       (ionChange)="setCalendar($event, field.key, 'datetimeFormatSeconds')"
-                    ></ion-datetime>
+                    >
+                      <span slot="time-label">Select Time</span>
+                    </ion-datetime>
                   </ion-content>
                 </ng-template>
               </ion-modal>
