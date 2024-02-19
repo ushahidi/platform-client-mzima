@@ -58,24 +58,13 @@ export class UsersService extends ResourceService<any> {
     );
   }
 
-  public getUserSettings(id: string) {
+  public getUserSettings(id: string | number) {
     const url = `${id}/settings`;
     return super.get(url);
   }
 
-  public updateUserSettings(id: string, mediaId: number, photoUrl: string, settingsId?: number) {
+  public updateUserSettings(id: string, params: any, settingsId?: number) {
     const config = settingsId ? `settings/${settingsId}` : 'settings';
-
-    const configValue = {
-      media_id: mediaId,
-      photo_url: photoUrl,
-    };
-
-    const params = {
-      config_key: 'profile_photo',
-      config_value: configValue,
-    };
-
     return super.update(id, params, config);
   }
 
