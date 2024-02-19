@@ -140,9 +140,9 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
-                (buttonClick)="clearFilter('form')"
+                (buttonClick)="toggleSidebarFilters('form')"
               >
-                {{ 'nav.clear' | translate }}
+                {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>
             </div>
             <mat-selection-list
@@ -192,9 +192,9 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
-                (buttonClick)="clearFilter('source')"
+                (buttonClick)="toggleSidebarFilters('source')"
               >
-                {{ 'nav.clear' | translate }}
+                {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>
             </div>
             <mat-selection-list name="source" class="selection-list" formControlName="source">
@@ -256,9 +256,9 @@
               fill="clear"
               size="small"
               class="filter-group__head__button"
-              (buttonClick)="clearFilter('form')"
+              (buttonClick)="toggleSidebarFilters('form')"
             >
-              {{ 'nav.clear' | translate }}
+              {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
           </div>
         </app-filter-control>
@@ -278,9 +278,9 @@
               fill="clear"
               size="small"
               class="filter-group__head__button"
-              (buttonClick)="clearFilter('source')"
+              (buttonClick)="toggleSidebarFilters('source')"
             >
-              {{ 'nav.clear' | translate }}
+              {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
           </div>
         </app-filter-control>
