@@ -149,6 +149,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
+        this.isLoading = true; // "There are no posts yet!" flicker is fixed here and for (most) places where isLoading is set to true
         if (this.initialLoad) {
           this.initialLoad = false;
           return;
@@ -312,6 +313,16 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         }, 500);
       },
     });
+  }
+
+  public postsCheck() {
+    const postsHaveLoaded = this.posts.length > 0;
+    if (postsHaveLoaded) this.isLoading = false; // post card/content area and LoadMore button benefits from this
+    const posts = {
+      atLeastOneExists: postsHaveLoaded,
+      stillLoading: this.isLoading, // tracks this.isLoading for post card area content display
+    };
+    return posts;
   }
 
   public updateMasonry(): void {
@@ -483,6 +494,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public isPostChecked(post: PostResult): boolean {
+    this.isLoading = true;
     return !!this.selectedPosts.find((p: PostResult) => p.id === post.id);
   }
 
@@ -493,6 +505,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public refreshMasonry(): void {
+    this.isLoading = true;
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 
@@ -511,6 +524,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public switchMode(mode: FeedMode): void {
+    this.isLoading = true;
     this.mode = mode;
     if (this.collectionId) {
       this.switchCollectionMode();
