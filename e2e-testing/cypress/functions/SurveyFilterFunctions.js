@@ -14,9 +14,9 @@ class SurveyFilterFunctions {
 
     verify_count_on_results(){
         cy.get(DataViewLocators.searchFormMainFiltersTotal)
-          .contains("Results: 176");
+          .contains("Results: 513");
         cy.get(DataViewLocators.feedPageResults)
-          .contains("Current results: 20 / 176")
+          .contains("Current results: 20 / 513")
         cy.get(DataViewLocators.clearBtn).click();
         cy.get(DataViewLocators.searchFormMainFiltersTotal)
           .contains("Results: 0");
@@ -31,7 +31,7 @@ class SurveyFilterFunctions {
           .eq(1)
           .click();
         cy.get(DataViewLocators.searchFormMainFiltersTotal)
-          .contains("Results: 13");
+          .contains("Results: 12");
           cy.get(DataViewLocators.surveySelectionList)
           .children(DataViewLocators.surveySelectItem)
           .eq(2)
@@ -43,9 +43,9 @@ class SurveyFilterFunctions {
         cy.get(DataViewLocators.searchFormFiltersBtn).click();
         cy.get(DataViewLocators.searchFormButton).click();
         cy.get(DataViewLocators.searchFormMainFiltersTotal)
-          .contains("Results: 176");
+          .contains("Results: 513");
         cy.get(DataViewLocators.feedPageResults)
-          .contains("Current results: 20 / 176");
+          .contains("Current results: 20 / 513");
     }
 }
 
