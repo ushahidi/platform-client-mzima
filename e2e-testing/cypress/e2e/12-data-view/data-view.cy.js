@@ -13,5 +13,6 @@ describe("Automated Tests for Filter by Surveys", () => {
   it("Checks filters by survey", () => {
     surveyFilterFunctions.click_data_view_btn();
     surveyFilterFunctions.check_post_filter_by_survey();
+    surveyFilterFunctions.verify_count_on_results();
   });
 });

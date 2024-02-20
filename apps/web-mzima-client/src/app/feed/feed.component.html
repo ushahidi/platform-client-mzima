@@ -8,7 +8,7 @@
 >
   <ng-container *ngIf="posts.length">
     <div class="feed-page__info-panel" *ngIf="isDesktop">
-      <span class="feed-page__results-info"
+      <span class="feed-page__results-info" [attr.data-qa]="'feed-page-results'"
         >{{ 'app.current_results' | translate }} {{ postCurrentLength }} / {{ total }}</span
       >
       <div class="feed-page__mode-switcher">

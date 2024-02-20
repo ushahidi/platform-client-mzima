@@ -7,13 +7,45 @@ class SurveyFilterFunctions {
     check_post_filter_by_survey(){
         cy.get(DataViewLocators.posts)
         .contains('There are no posts yet!').should('exist');
-        cy.get(DataViewLocators.surveySelectionList)
-        .children(DataViewLocators.surveySelectItem)
-        .eq(0)
-        .click({force: true});
         cy.get(DataViewLocators.postPreview)
         .children(DataViewLocators.postItem)
         .should('not.be.empty');
+    }
+
+    verify_count_on_results(){
+        cy.get(DataViewLocators.searchFormMainFiltersTotal)
+          .contains("Results: 176");
+        cy.get(DataViewLocators.feedPageResults)
+          .contains("Current results: 20 / 176")
+        cy.get(DataViewLocators.clearBtn).click();
+        cy.get(DataViewLocators.searchFormMainFiltersTotal)
+          .contains("Results: 0");
+        cy.get(DataViewLocators.surveySelectionList)
+          .children(DataViewLocators.surveySelectItem)
+          .eq(0)
+          .click();
+        cy.get(DataViewLocators.searchFormMainFiltersTotal)
+          .contains("Results: 9");
+        cy.get(DataViewLocators.surveySelectionList)
+          .children(DataViewLocators.surveySelectItem)
+          .eq(1)
+          .click();
+        cy.get(DataViewLocators.searchFormMainFiltersTotal)
+          .contains("Results: 13");
+          cy.get(DataViewLocators.surveySelectionList)
+          .children(DataViewLocators.surveySelectItem)
+          .eq(2)
+          .click();
+        cy.get(DataViewLocators.searchFormMainFiltersTotal)
+          .contains("Results: 22");
+        cy.get(DataViewLocators.feedPageResults)
+          .contains("Current results: 20 / 22")
+        cy.get(DataViewLocators.searchFormFiltersBtn).click();
+        cy.get(DataViewLocators.searchFormButton).click();
+        cy.get(DataViewLocators.searchFormMainFiltersTotal)
+          .contains("Results: 176");
+        cy.get(DataViewLocators.feedPageResults)
+          .contains("Current results: 20 / 176");
     }
 }
 
