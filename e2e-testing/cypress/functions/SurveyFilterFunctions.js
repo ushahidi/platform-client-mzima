@@ -43,9 +43,9 @@ class SurveyFilterFunctions {
         cy.get(DataViewLocators.searchFormFiltersBtn).click();
         cy.get(DataViewLocators.searchFormButton).click();
         cy.get(DataViewLocators.searchFormMainFiltersTotal)
-          .contains("Results: 513");
+          .contains("Results: 165");
         cy.get(DataViewLocators.feedPageResults)
-          .contains("Current results: 20 / 513");
+          .contains("Current results: 20 / 165");
     }
 }
 
