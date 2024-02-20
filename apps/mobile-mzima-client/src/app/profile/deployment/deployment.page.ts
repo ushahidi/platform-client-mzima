@@ -30,7 +30,7 @@ export class DeploymentPage {
         if (config.private) {
           this.router.navigate(['auth/login']);
         } else {
-          this.router.navigate(['profile']);
+          this.router.navigate(['/']);
         }
       },
     });
