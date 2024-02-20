@@ -323,11 +323,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     let fetchPostsWithoutFormId = false;
     if (Array.isArray(values.form)) {
       const index = values.form.findIndex((id: any) => id === 0);
-      if (index !== -1) {
-        // Remove the item with id 0
-        values.form.splice(index, 1);
-        fetchPostsWithoutFormId = true;
-      }
+      fetchPostsWithoutFormId = index !== -1;
     }
 
     const filters: any = {
@@ -675,13 +671,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
 
   public resetForm(filters: any = {}): void {
     // Check if this.surveyList contains an item with id 0
-    let fetchPostsWithoutFormId = false;
     const index = this.surveyList.findIndex((s) => s.id === 0);
-    if (index !== -1) {
-      // Remove the item with id 0
-      this.surveyList.splice(index, 1);
-      fetchPostsWithoutFormId = true;
-    }
+    const fetchPostsWithoutFormId = index !== -1;
 
     this.form.patchValue({
       query: '',
