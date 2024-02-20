@@ -49,7 +49,7 @@ export class ProfilePhotoComponent {
         console.log(mediaId, photoUrl);
 
         if (mediaId && photoUrl) {
-          this.updateUserProfilePhoto(mediaId, photoUrl);
+          this.saveUserProfilePhoto(mediaId, photoUrl);
         } else {
           console.error('Failed to extract mediaId or photoUrl from the response');
         }
@@ -68,7 +68,7 @@ export class ProfilePhotoComponent {
     );
   }
 
-  updateUserProfilePhoto(mediaId: number, photoUrl: string): void {
+  saveUserProfilePhoto(mediaId: number, photoUrl: string): void {
     //getting current user data
     this.sessionService
       .getCurrentUserData()
@@ -80,21 +80,26 @@ export class ProfilePhotoComponent {
           this.usersService.getUserSettings(userId).subscribe((response: any) => {
             console.log(response);
 
-            const settings = response.results.find(
-              (setting: any) => setting.config_key === 'profile_photo',
-            );
-            console.log(settings.config_key);
+            const configKey = 'profile_photo';
+            const configValue = {
+              media_id: mediaId,
+              photo_url: photoUrl,
+            };
 
+            console.log(configValue);
+
+            const settings = response.results.find(
+              (setting: any) => setting.config_key === configKey,
+            );
+            console.log(settings?.config_key);
+
+            // If profile_photo config exists
             if (settings && settings.id) {
               console.log(settings);
-
-              const configValue: any = {
-                config_value: {
-                  media_id: mediaId,
-                  photo_url: photoUrl,
-                },
+              const payload = {
+                config_value: configValue,
               };
-              this.usersService.update(userId, configValue, 'settings/' + settings.id).subscribe(
+              this.usersService.update(userId, payload, 'settings/' + settings.id).subscribe(
                 (result) => {
                   console.log('Profile photo updated successfully');
                   this.photo = photoUrl;
@@ -105,7 +110,19 @@ export class ProfilePhotoComponent {
                 },
               );
             } else {
-              console.error('Settings object with config key "profile_photo" not found');
+              const payload: any = {
+                config_key: configKey,
+                config_value: configValue,
+              };
+              this.usersService.postUserSettings(userId, payload).subscribe(
+                (result) => {
+                  this.photo = photoUrl;
+                  console.log(result);
+                },
+                (error) => {
+                  console.error('Failed to add profile photo', error);
+                },
+              );
             }
           });
         } else {
