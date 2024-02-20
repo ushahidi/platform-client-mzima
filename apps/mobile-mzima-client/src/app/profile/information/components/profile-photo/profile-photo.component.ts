@@ -104,6 +104,7 @@ export class ProfilePhotoComponent {
                   console.log('Profile photo updated successfully');
                   this.photo = photoUrl;
                   console.log(result);
+                  this.photoUpdated.emit(true);
                 },
                 (error) => {
                   console.error('Failed to update profile photo', error);
@@ -129,7 +130,6 @@ export class ProfilePhotoComponent {
           console.error('User data or user ID is missing');
         }
       });
-    this.photoUpdated.emit(true);
   }
 
   public async deletePhotoHandle(): Promise<void> {
@@ -154,11 +154,35 @@ export class ProfilePhotoComponent {
         .getCurrentUserData()
         .pipe(untilDestroyed(this))
         .subscribe((userData) => {
-          this.photo = `https://www.gravatar.com/avatar/${
-            userData.gravatar || '00000000000000000000000000000000'
-          }?d=retro&s=256`;
+          if (userData && userData.userId) {
+            const userId = userData.userId as string;
+            this.usersService.getUserSettings(userId).subscribe((response: any) => {
+              const settings = response.results.find(
+                (setting: any) => setting.config_key === 'profile_photo',
+              );
+
+              if (settings && settings.id) {
+                // Call the delete method of the service
+                this.usersService.delete(userId, 'settings/' + settings.id).subscribe(
+                  () => {
+                    console.log('Profile photo deleted successfully');
+                    this.photo = `https://www.gravatar.com/avatar/${
+                      userData.gravatar || '00000000000000000000000000000000'
+                    }?d=retro&s=256`;
+                    this.photoUpdated.emit(false);
+                  },
+                  (error) => {
+                    console.error('Failed to delete profile photo', error);
+                  },
+                );
+              } else {
+                console.error('Profile photo settings not found');
+              }
+            });
+          } else {
+            console.error('User data or user ID is missing');
+          }
         });
-      this.photoUpdated.emit(false);
     }
   }
 }
