@@ -20,26 +20,12 @@ export class ProfilePhotoComponent {
   @Output() photoUpdated = new EventEmitter<boolean>();
 
   public currentUser: UserInterface;
-  public currentUserSettings;
   constructor(
-    // private http: HttpClient,
     private alertService: AlertService,
     private sessionService: SessionService,
     private mediaService: MediaService,
     private usersService: UsersService,
-  ) {
-    // this.usersService.getCurrentUser().pipe(
-    //   map((res) => {
-    //     console.log(res);
-    //     this.currentUser = res.result;
-    //   }),
-    // );
-    // this.getCurrentUserSettings(this.currentUser?.userId).pipe(
-    //   map((res) => {
-    //     this.currentUserSettings = res;
-    //   }),
-    // );
-  }
+  ) {}
 
   selectPhoto(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -58,13 +44,9 @@ export class ProfilePhotoComponent {
 
       this.mediaService.uploadFile(file, 'Test caption').subscribe((response: any) => {
         console.log(response);
-        // const mediaId = response.id;
-        // const photoUrl = response.original_file_url;
         const mediaId = response?.result?.id;
         const photoUrl = response?.result?.original_file_url;
-
         console.log(mediaId, photoUrl);
-        // this.updateUserProfilePhoto(mediaId, photoUrl);
 
         if (mediaId && photoUrl) {
           this.updateUserProfilePhoto(mediaId, photoUrl);
@@ -97,8 +79,6 @@ export class ProfilePhotoComponent {
 
           this.usersService.getUserSettings(userId).subscribe((response: any) => {
             console.log(response);
-            // const settingsMap = response.results.map((setting: any) => setting);
-            // console.log(settingsMap);
 
             const settings = response.results.find(
               (setting: any) => setting.config_key === 'profile_photo',
@@ -109,10 +89,12 @@ export class ProfilePhotoComponent {
               console.log(settings);
 
               const configValue: any = {
-                media_id: mediaId,
-                photo_url: photoUrl,
+                config_value: {
+                  media_id: mediaId,
+                  photo_url: photoUrl,
+                },
               };
-              this.usersService.updateUserSettings(userId, configValue, settings.id).subscribe(
+              this.usersService.update(userId, configValue, 'settings/' + settings.id).subscribe(
                 (result) => {
                   console.log('Profile photo updated successfully');
                   this.photo = photoUrl;

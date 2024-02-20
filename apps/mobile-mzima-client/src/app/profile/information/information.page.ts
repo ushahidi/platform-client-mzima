@@ -112,6 +112,15 @@ export class InformationPage {
         this.userPhoto = `https://www.gravatar.com/avatar/${
           userData.gravatar || '00000000000000000000000000000000'
         }?d=retro&s=256`;
+        const userId = userData.userId as string;
+        this.usersService.getUserSettings(userId).subscribe((response: any) => {
+          const settings = response.results.find(
+            (setting: any) => setting.config_key === 'profile_photo',
+          );
+          if (settings?.config_value?.photo_url) {
+            this.userPhoto = settings?.config_value.photo_url;
+          }
+        });
 
         this.form.patchValue({
           realname: userData.realname,
