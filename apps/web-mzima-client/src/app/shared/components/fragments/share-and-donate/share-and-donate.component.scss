@@ -31,10 +31,6 @@
     &__button {
       margin: 0 4px;
       flex: 1 1 calc(50% - 8px);
-      --color: var(--color-light);
-      --background-color: var(--color-black);
-      --border-color: var(--color-neutral-20);
-      --hover-background-color: var(--color-black);
     }
 
     @include breakpoint-min($tablet) {
