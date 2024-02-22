@@ -15,6 +15,13 @@
 }
 
 .menu {
+  &__footer-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+
   &__footer {
     display: flex;
     flex-shrink: 0;
