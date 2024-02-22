@@ -51,6 +51,9 @@ const config: CapacitorConfig = {
     preferredContentMode: 'mobile',
     appendUserAgent: 'Mzima-Mobile-Ios',
   },
+  server: {
+    cleartext: process.env['NODE_ENV'] === 'production' ? false : true,
+  },
 };
 
 export default config;

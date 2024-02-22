@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { Deployment } from '@mzima-client/sdk';
 import { ChooseDeploymentComponent } from '../shared/components/choose-deployment/choose-deployment.component';
@@ -15,18 +14,10 @@ export class DeploymentPage {
   @ViewChild('chooseDeployment') public chooseDeployment: ChooseDeploymentComponent;
   public deploymentList: Deployment[] = [];
 
-  constructor(
-    private location: Location,
-    private router: Router,
-    private sessionService: SessionService,
-  ) {}
+  constructor(private router: Router, private sessionService: SessionService) {}
 
   public backHandle(): void {
-    console.log('back');
-    this.location.back();
     this.router.navigate(['profile']);
-    this.chooseDeployment.layout.closeSearchForm();
-    return;
   }
 
   ionViewWillEnter(): void {
@@ -39,7 +30,7 @@ export class DeploymentPage {
         if (config.private) {
           this.router.navigate(['auth/login']);
         } else {
-          this.router.navigate(['profile']);
+          this.router.navigate(['/']);
         }
       },
     });
