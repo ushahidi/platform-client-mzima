@@ -31,8 +31,8 @@
 
   <div class="post__main">
     <div class="post__content">
-      <h3 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h3>
-      <p *ngIf="post.title?.length && post.content?.length">{{ post.content }}</p>
+      <h3 data-qa="post-preview-title" *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h3>
+      <p data-qa="post-preview-description" *ngIf="post.title?.length && post.content?.length">{{ post.content }}</p>
     </div>
     <div class="post__visual" *ngIf="media && post.source !== 'Twitter'">
       <img [src]="media.original_file_url" [alt]="media.caption || post.title" />

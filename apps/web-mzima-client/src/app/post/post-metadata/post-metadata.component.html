@@ -10,7 +10,7 @@
     />
   </div>
   <div class="post-info__content">
-    <span *ngIf="author" class="post-info__username">
+    <span data-qa="post-metadata-author" *ngIf="author" class="post-info__username">
       {{ author }}
     </span>
 
@@ -22,6 +22,7 @@
       <div class="post-info__item">
         <span
           class="post-info__status"
+          data-qa="post-metadata-status"
           [ngClass]="{
             'post-info__status--published': post.status === 'published',
             'post-info__status--draft': post.status === 'draft',

@@ -5,6 +5,7 @@
     tabindex="-1"
     *ngIf="editable"
     [iconOnly]="true"
+    [data-qa]="'edit-post'"
     (buttonClick)="editPost($event)"
     class="post-head__control"
   >
@@ -27,6 +28,7 @@
     color="gray"
     tabindex="-1"
     [iconOnly]="true"
+    [data-qa]="'post-actions-btn'"
     (click)="$event.stopPropagation()"
     class="post-head__control post-head__control--dots"
     [matMenuTriggerFor]="actions"
@@ -52,7 +54,7 @@
         {{ 'post.post_actions.archive' | translate }}
       </button>
     </ng-container>
-    <button mat-menu-item *ngIf="deleteable" (click)="deletePost()">
+    <button mat-menu-item *ngIf="deleteable" (click)="deletePost()" [data-qa]="'delete-post-btn'">
       {{ 'post.post_actions.delete' | translate }}
     </button>
   </mat-menu>

@@ -139,6 +139,7 @@
               <mzima-client-button
                 fill="clear"
                 size="small"
+                [dataQa]="'clear-survey-filters'"
                 class="filter-group__head__button"
                 (buttonClick)="toggleSidebarFilters('form')"
               >
@@ -154,6 +155,7 @@
               <mat-list-option
                 *ngFor="let survey of surveyList"
                 [selected]="survey.checked"
+                [data-qa]="survey.name.split(' ').join('-') | lowercase"
                 color="primary"
                 [value]="survey.id"
                 checkboxPosition="before"
@@ -191,6 +193,7 @@
               <mzima-client-button
                 fill="clear"
                 size="small"
+                [data-qa]="'clear-sources-filters'"
                 class="filter-group__head__button"
                 (buttonClick)="toggleSidebarFilters('source')"
               >
