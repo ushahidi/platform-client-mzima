@@ -1,8 +1,8 @@
 <app-main-layout
   #layout
   class="main"
-  [isSearch]="true"
   title="Deployments"
+  [isSearch]="showSearch"
   [header]="isProfile"
   (back)="backHandle()"
   (search)="searchDeployments($event)"
