@@ -8,6 +8,33 @@ class SurveyFilterFunctions {
     cy.get(DataViewLocators.posts).contains('There are no posts yet!').should('exist');
     cy.get(DataViewLocators.postPreview).children(DataViewLocators.postItem).should('not.be.empty');
   }
+  check_post_filter_by_status(){
+    cy.get(DataViewLocators.searchFormFiltersBtn)
+      .click();
+    cy.get(DataViewLocators.feedPageResults)
+      // .contains("Current results: 20 / 513")
+      .contains("Current results: 2 / 2")
+    cy.get(DataViewLocators.statusBtn)
+    .click()
+    cy.get(DataViewLocators.filterSelectionList)
+      .find('.mat-list-item-content')
+      .eq(0)
+      .find('.mat-pseudo-checkbox')
+      .invoke('attr', 'class')
+      .should('contain', 'mat-pseudo-checkbox-checked')
+    cy.get(DataViewLocators.filterSelectionList)
+      .children(DataViewLocators.filterListOption)
+      .eq(1)
+      .find('.mat-pseudo-checkbox')
+      .invoke('attr', 'class')
+      .should('contain', 'mat-pseudo-checkbox-checked')
+    cy.get(DataViewLocators.filterSelectionList)
+      .children(DataViewLocators.filterListOption)
+      .eq(2)
+      .find('.mat-pseudo-checkbox')
+      .invoke('attr', 'class')
+      .should('not.contain', 'mat-pseudo-checkbox-checked')
+    }
 
   verify_count_on_results() {
     //verify results on landing on Data view
