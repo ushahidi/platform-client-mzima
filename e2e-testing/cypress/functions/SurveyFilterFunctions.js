@@ -50,7 +50,7 @@ class SurveyFilterFunctions {
 
   check_post_filter_by_status() {
     //click search form filter button
-    cy.get(DataViewLocators.searchFormFiltersBtn)
+    cy.get(DataViewLocators.revealFiltersBtn)
       .click();
     cy.get(DataViewLocators.feedPageResults)
       .contains("Current results: 2 / 2")
@@ -143,7 +143,7 @@ class SurveyFilterFunctions {
       .invoke('attr', 'class')
       .should('contain', 'mat-pseudo-checkbox-checked')
     cy.get(DataViewLocators.feedPageResults)
-      .contains("Current results: 2 / 2")
+      .contains("Current results: 20 / 176")
     }
 
 }
