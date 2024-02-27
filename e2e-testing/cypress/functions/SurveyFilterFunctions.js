@@ -129,6 +129,7 @@ class SurveyFilterFunctions {
     //clear all filters
     cy.get(DataViewLocators.clearFiltersBtn)
       .click({force: true})
+    cy.reload();
     //verify that published and under review are selected
     cy.get(DataViewLocators.filterSelectionList)
       .find('.mat-list-item-content')
