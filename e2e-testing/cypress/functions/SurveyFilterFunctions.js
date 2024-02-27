@@ -128,7 +128,7 @@ class SurveyFilterFunctions {
       .contains("Current results: 20 / 93")
     //clear all filters
     cy.get(DataViewLocators.clearFiltersBtn)
-      .click()
+      .click({force: true})
     //verify that published and under review are selected
     cy.get(DataViewLocators.filterSelectionList)
       .find('.mat-list-item-content')
