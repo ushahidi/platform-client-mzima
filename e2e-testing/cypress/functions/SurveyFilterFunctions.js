@@ -85,7 +85,7 @@ class SurveyFilterFunctions {
       .find('.mat-pseudo-checkbox')
       .click()
     cy.get(DataViewLocators.feedPageResults)
-      .contains("Current results: 20 / 191");
+      .contains("Current results: 20 / 180");
     //unselect archived and under review options
     cy.get(DataViewLocators.filterSelectionList)
       .children(DataViewLocators.filterListOption)
