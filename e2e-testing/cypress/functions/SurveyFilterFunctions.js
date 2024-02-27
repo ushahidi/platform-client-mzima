@@ -53,7 +53,7 @@ class SurveyFilterFunctions {
     cy.get(DataViewLocators.revealFiltersBtn)
       .click();
     cy.get(DataViewLocators.feedPageResults)
-      .contains("Current results: 2 / 2")
+      .contains("Current results: 20 / 513")
     //click status filter button
     cy.get(DataViewLocators.statusBtn)
     .click()
