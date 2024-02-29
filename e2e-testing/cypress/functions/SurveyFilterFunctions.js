@@ -56,7 +56,7 @@ class SurveyFilterFunctions {
       .contains("Current results: 20 / 513")
     //click status filter button
     cy.get(DataViewLocators.statusBtn)
-    .click()
+      .click()
     //check that published option is checked
     cy.get(DataViewLocators.filterSelectionList)
       .find('.mat-list-item-content')
@@ -127,11 +127,13 @@ class SurveyFilterFunctions {
     cy.get(DataViewLocators.feedPageResults)
       .contains("Current results: 20 / 93")
     //clear all filters
-    cy.get(DataViewLocators.statusBtn)
-    .click({force: true})
     cy.get(DataViewLocators.clearFiltersBtn)
       .click({force: true});
     //verify that published and under review are selected
+    cy.get(DataViewLocators.clearFiltersBtn)
+      .click({force: true});
+    cy.get(DataViewLocators.statusBtn)
+      .click()
     cy.get(DataViewLocators.filterSelectionList)
       .find('.mat-list-item-content')
       .eq(0)
