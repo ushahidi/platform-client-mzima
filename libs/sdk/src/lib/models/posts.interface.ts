@@ -26,6 +26,7 @@ export interface GeoJsonFilter {
   offset?: number;
   order?: 'desc' | 'asc';
   order_unlocked_on_top?: boolean;
+  include_unstructured_posts?: boolean;
   orderby?: string;
   set?: string;
   reactToFilters?: boolean;
