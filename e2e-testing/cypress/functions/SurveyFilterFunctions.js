@@ -133,7 +133,7 @@ class SurveyFilterFunctions {
     cy.get(DataViewLocators.clearFiltersBtn)
       .click({force: true});
     cy.get(DataViewLocators.statusBtn)
-      .click()
+      .click({force: true})
     cy.get(DataViewLocators.filterSelectionList)
       .find('.mat-list-item-content')
       .eq(0)
