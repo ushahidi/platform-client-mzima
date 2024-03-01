@@ -80,6 +80,10 @@ export class FormControlComponent implements ControlValueAccessor {
 
   public blurInput(): void {
     this.clearInput();
+    this.setBlur();
+  }
+
+  public setBlur(): void {
     this.input.getInputElement().then((el) => {
       el.blur();
     });
