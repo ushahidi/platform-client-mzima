@@ -17,7 +17,7 @@ import { UserInterface } from '@mzima-client/sdk';
 export class ProfilePhotoComponent {
   @Input() photo: string;
   userId: string;
-  @Output() photoUpdated = new EventEmitter<boolean>();
+  @Output() photoChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public currentUser: UserInterface;
   constructor(
@@ -37,22 +37,21 @@ export class ProfilePhotoComponent {
 
   changePhoto(file: File): void {
     const reader = new FileReader();
-    console.log(reader);
-    console.log(file);
     reader.onload = () => {
       this.photo = reader.result as string;
 
-      this.mediaService.uploadFile(file, 'Test caption').subscribe((response: any) => {
-        console.log(response);
-        const mediaId = response?.result?.id;
-        const photoUrl = response?.result?.original_file_url;
-        console.log(mediaId, photoUrl);
+      this.sessionService.getCurrentUserData().subscribe((userData) => {
+        const caption = userData.realname;
 
-        if (mediaId && photoUrl) {
-          this.saveUserProfilePhoto(mediaId, photoUrl);
-        } else {
-          console.error('Failed to extract mediaId or photoUrl from the response');
-        }
+        this.mediaService.uploadFile(file, caption).subscribe((response: any) => {
+          const mediaId = response?.result?.id;
+          const photoUrl = response?.result?.original_file_url;
+          if (mediaId && photoUrl) {
+            this.saveUserProfilePhoto(mediaId, photoUrl);
+          } else {
+            console.error('Failed to extract mediaId or photoUrl from the response');
+          }
+        });
       });
     };
 
@@ -62,7 +61,6 @@ export class ProfilePhotoComponent {
   getCurrentUserSettings(userId: string | number) {
     return this.usersService.getUserSettings(userId).pipe(
       map((response: any) => {
-        console.log(response);
         return response;
       }),
     );
@@ -78,33 +76,26 @@ export class ProfilePhotoComponent {
           const userId = userData.userId as string;
 
           this.usersService.getUserSettings(userId).subscribe((response: any) => {
-            console.log(response);
-
             const configKey = 'profile_photo';
             const configValue = {
               media_id: mediaId,
               photo_url: photoUrl,
             };
 
-            console.log(configValue);
-
             const settings = response.results.find(
               (setting: any) => setting.config_key === configKey,
             );
-            console.log(settings?.config_key);
 
             // If profile_photo config exists
             if (settings && settings.id) {
-              console.log(settings);
               const payload = {
                 config_value: configValue,
               };
               this.usersService.update(userId, payload, 'settings/' + settings.id).subscribe(
-                (result) => {
+                () => {
                   console.log('Profile photo updated successfully');
                   this.photo = photoUrl;
-                  console.log(result);
-                  this.photoUpdated.emit(true);
+                  this.photoChanged.emit(true);
                 },
                 (error) => {
                   console.error('Failed to update profile photo', error);
@@ -116,9 +107,8 @@ export class ProfilePhotoComponent {
                 config_value: configValue,
               };
               this.usersService.postUserSettings(userId, payload).subscribe(
-                (result) => {
+                () => {
                   this.photo = photoUrl;
-                  console.log(result);
                 },
                 (error) => {
                   console.error('Failed to add profile photo', error);
@@ -169,7 +159,7 @@ export class ProfilePhotoComponent {
                     this.photo = `https://www.gravatar.com/avatar/${
                       userData.gravatar || '00000000000000000000000000000000'
                     }?d=retro&s=256`;
-                    this.photoUpdated.emit(false);
+                    this.photoChanged.emit(true);
                   },
                   (error) => {
                     console.error('Failed to delete profile photo', error);
