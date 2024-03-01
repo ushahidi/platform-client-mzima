@@ -17,7 +17,7 @@ import { UserInterface } from '@mzima-client/sdk';
 export class ProfilePhotoComponent {
   @Input() photo: string;
   userId: string;
-  @Output() photoChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() photoChanged = new EventEmitter<boolean>();
 
   public currentUser: UserInterface;
   constructor(

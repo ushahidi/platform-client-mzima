@@ -1,5 +1,9 @@
 <app-main-layout class="main" title="Profile Information" (back)="back()">
-  <app-profile-photo class="avatar" [photo]="userPhoto"></app-profile-photo>
+  <app-profile-photo
+    class="avatar"
+    [photo]="userPhoto"
+    (photoChanged)="childData($event)"
+  ></app-profile-photo>
   <ion-title class="title">Profile name</ion-title>
   <form class="information-form" novalidate [formGroup]="form" (ngSubmit)="updateUserInformation()">
     <app-form-control
@@ -48,7 +52,8 @@
           expand="inline"
           type="button"
           *ngIf="form"
-          [disabled]="form.disabled || form.invalid || form.pristine"
+          [disabled]="form.disabled || form.invalid || form.pristine "
+          [disabled]=" !isSaveButtonEnabled "
           (buttonClick)="updateUserInformation()"
         >
           Save changes

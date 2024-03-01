@@ -95,6 +95,7 @@ export class InformationPage {
   public userEmail?: string[];
   public isChangeEmailModalOpen = false;
   public isChangePasswordModalOpen = false;
+  public isSaveButtonEnabled: boolean = false;
 
   constructor(
     private sessionService: SessionService,
@@ -132,6 +133,11 @@ export class InformationPage {
           this.userEmail[1] = `@${this.userEmail[1]}`;
         }
       });
+  }
+
+  public childData($event: any): void {
+    console.log($event);
+    this.isSaveButtonEnabled = $event;
   }
 
   ionViewWillEnter(): void {
