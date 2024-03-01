@@ -55,6 +55,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
   public isLoading = false;
+  public loadingMorePosts: boolean;
   public mode: FeedMode = FeedMode.Tiles;
   public activePostId: number;
   public total: number;
@@ -305,6 +306,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         });
         setTimeout(() => {
           this.isLoading = false;
+          this.loadingMorePosts = false; // for load more button's loader/spinner
           this.updateMasonry();
           setTimeout(() => {
             if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
@@ -512,8 +514,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public loadMore(): void {
     if (this.params.limit !== undefined && this.params.limit * this.params.page! < this.total) {
-      this.currentPage++;
-      this.params.page!++;
+      this.loadingMorePosts = true;
+      this.currentPage += 1;
+      this.params.page! += 1;
       this.getPostsSubject.next({ params: this.params });
     }
   }
