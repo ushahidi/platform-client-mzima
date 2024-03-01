@@ -228,22 +228,29 @@
             >
             </app-post-preview>
           </ngx-masonry>
-          <mzima-client-button
-            fill="clear"
-            color="secondary"
-            (buttonClick)="loadMore()"
-            class="feed__load-more"
+          <ng-container
             *ngIf="
               !isLoading &&
               mode === FeedMode.Post &&
               params.page !== undefined &&
-              params.limit !== undefined &&
-              params.page * params.limit < total
+              params.limit !== undefined
             "
           >
-            <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
-            <span>{{ 'app.load_more' | translate }}</span>
-          </mzima-client-button>
+            <mzima-client-button
+              fill="clear"
+              color="secondary"
+              (buttonClick)="loadMore()"
+              class="feed__load-more"
+              *ngIf="!loadingMorePosts && postCurrentLength < total"
+            >
+              <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
+              <span>{{ 'app.load_more' | translate }}</span>
+            </mzima-client-button>
+            <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>
+            <div class="endofPosts" *ngIf="!loadingMorePosts && postCurrentLength >= total">
+              End of Posts
+            </div>
+          </ng-container>
           <pagination-controls
             class="pagination"
             (pageChange)="changePage($event)"
