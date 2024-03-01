@@ -5,26 +5,26 @@
   "scripts": {},
   "private": true,
   "dependencies": {
-    "@capacitor-community/intercom": "^4.0.2",
-    "@capacitor/android": "^4.8.0",
-    "@capacitor/app": "^4.1.1",
-    "@capacitor/camera": "^4.1.5",
-    "@capacitor/core": "^4.8.0",
-    "@capacitor/device": "^4.1.0",
-    "@capacitor/dialog": "^4.1.0",
-    "@capacitor/filesystem": "^4.1.5",
-    "@capacitor/geolocation": "^4.1.0",
-    "@capacitor/haptics": "^4.1.0",
-    "@capacitor/ios": "^4.8.0",
-    "@capacitor/keyboard": "^4.1.1",
-    "@capacitor/network": "^4.1.0",
-    "@capacitor/share": "^4.1.1",
-    "@capacitor/splash-screen": "^4.2.0",
-    "@capacitor/status-bar": "^4.1.1",
-    "capacitor-native-settings": "^4.0.3"
+    "@capacitor-community/intercom": "^5.0.0",
+    "@capacitor/android": "^5.6.0",
+    "@capacitor/app": "^5.6.0",
+    "@capacitor/camera": "^5.0.8",
+    "@capacitor/core": "^5.0.0",
+    "@capacitor/device": "^5.0.6",
+    "@capacitor/dialog": "^5.0.6",
+    "@capacitor/filesystem": "^5.2.0",
+    "@capacitor/geolocation": "^5.0.6",
+    "@capacitor/haptics": "^5.0.0",
+    "@capacitor/ios": "^5.0.0",
+    "@capacitor/keyboard": "^5.0.0",
+    "@capacitor/network": "^5.0.6",
+    "@capacitor/share": "^5.0.6",
+    "@capacitor/splash-screen": "^5.0.0",
+    "@capacitor/status-bar": "^5.0.6",
+    "capacitor-native-settings": "^5.0.1"
   },
   "devDependencies": {
-    "@capacitor/assets": "^2.0.4",
-    "@capacitor/cli": "^4.8.0"
+    "@capacitor/assets": "^3.0.4",
+    "@capacitor/cli": "^5.6.0"
   }
 }

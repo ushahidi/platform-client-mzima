@@ -38,6 +38,7 @@
                 type="text"
                 (input)="globalSearch($event)"
                 placeholder="{{ 'user.search_by_name' | translate }}"
+                [data-qa]="'search-user'"
               />
             </span>
           </div>
@@ -45,7 +46,7 @@
         <ng-template pTemplate="header">
           <tr>
             <th style="width: 4rem">
-              <p-tableHeaderCheckbox *ngIf="isShowActions"></p-tableHeaderCheckbox>
+              <p-tableHeaderCheckbox [data-qa]="'th-checkbox'" *ngIf="isShowActions"></p-tableHeaderCheckbox>
             </th>
             <th pSortableColumn="realname" style="min-width: 14rem">
               {{ 'user.name' | translate }}
@@ -65,7 +66,7 @@
         <ng-template pTemplate="body" let-user>
           <tr class="p-selectable-row">
             <td>
-              <p-tableCheckbox *ngIf="isShowActions" [value]="user"></p-tableCheckbox>
+              <p-tableCheckbox *ngIf="isShowActions" [value]="user" [data-qa]="'td-checkbox-' + user.realname.replaceAll(' ', '-') | lowercase"></p-tableCheckbox>
             </td>
             <td [routerLink]="['update', user.id]">
               <span class="p-column-title">{{ 'user.name' | translate }}</span>

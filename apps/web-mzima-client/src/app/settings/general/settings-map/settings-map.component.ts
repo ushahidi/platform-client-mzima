@@ -33,8 +33,8 @@ export class SettingsMapComponent implements OnInit {
   mapLayers: Layer[] = [];
   mapConfig: MapConfigInterface;
   mapReady = false;
-  maxZoom = 18;
-  minZoom = 0;
+  maxZoom = 22; // affects the arrow on number input field for "Default zoom level"
+  minZoom = 1; // affects the arrow on number input field for "Default zoom level"
   baseLayers = Object.values(mapHelper.getMapLayers().baselayers);
 
   public geocoderControl: any;

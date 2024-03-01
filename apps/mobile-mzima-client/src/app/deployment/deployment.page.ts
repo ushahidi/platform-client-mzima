@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Deployment } from '@mzima-client/sdk';
 import { ChooseDeploymentComponent } from '../shared/components/choose-deployment/choose-deployment.component';
+import { SessionService } from '@services';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-deployment',
@@ -12,9 +14,9 @@ export class DeploymentPage {
   @ViewChild('chooseDeployment') public chooseDeployment: ChooseDeploymentComponent;
   public deploymentList: Deployment[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private sessionService: SessionService) {}
 
-  public back(): void {
+  public backHandle(): void {
     this.router.navigate(['profile']);
   }
 
@@ -23,6 +25,14 @@ export class DeploymentPage {
   }
 
   public deploymentChosen(): void {
-    this.router.navigate(['auth/login']);
+    this.sessionService.siteConfig$.pipe(take(1)).subscribe({
+      next: (config) => {
+        if (config.private) {
+          this.router.navigate(['auth/login']);
+        } else {
+          this.router.navigate(['/']);
+        }
+      },
+    });
   }
 }

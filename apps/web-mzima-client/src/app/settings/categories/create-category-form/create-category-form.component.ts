@@ -225,7 +225,8 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
         role = ['me'];
         break;
       case 'everyone':
-        role = ['everyone'];
+        // role = ['everyone'];
+        role = null;
         break;
       default:
         role = this.form.value.visible_to.options;

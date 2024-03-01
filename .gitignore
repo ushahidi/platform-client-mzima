@@ -53,3 +53,4 @@ cypress/videos/*
 
 .angular
 .eslintcache
+.nx

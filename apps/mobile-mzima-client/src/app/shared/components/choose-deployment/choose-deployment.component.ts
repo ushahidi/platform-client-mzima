@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { App } from '@capacitor/app';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
 import { Deployment } from '@mzima-client/sdk';
 import { Subject, debounceTime } from 'rxjs';
@@ -8,10 +10,10 @@ import {
   ConfigService,
   DeploymentService,
   EnvService,
-  IntercomService,
+  // IntercomService,
 } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { getDeploymentAvatarPlaceholder } from '@helpers';
+import { ToastService } from '@services';
 
 @UntilDestroy()
 @Component({
@@ -25,29 +27,36 @@ export class ChooseDeploymentComponent {
   @Output() chosen = new EventEmitter();
   @ViewChild('layout') public layout: MainLayoutComponent;
   public isSearchView = false;
+  public showSearch = true;
   public deploymentList: Deployment[] = [];
-  public foundedDeploymentList: Deployment[] = [];
+  public foundDeploymentList: Deployment[] = [];
   private selectedDeployments: Deployment[] = [];
   public isDeploymentsLoading = false;
   public addButtonVisible = false;
-  public currentDeploymentId?: number;
+  public currentDeploymentId?: number | string;
   private domain: string | null = null;
   private readonly searchSubject = new Subject<string>();
+
+  tap = 0;
 
   constructor(
     private envService: EnvService,
     private configService: ConfigService,
     private deploymentService: DeploymentService,
     private alertService: AlertService,
-    private authService: AuthService,
-    private intercomService: IntercomService,
+    private authService: AuthService, // private intercomService: IntercomService,
+    protected toastService: ToastService,
+    protected platform: Platform,
   ) {
+    this.showSearch = true;
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: (query: string) => {
+        console.log('Search Subject', query);
         this.deploymentService.searchDeployments(query).subscribe({
           next: (deployments: any[]) => {
+            console.log(deployments);
             this.isDeploymentsLoading = false;
-            this.foundedDeploymentList = deployments;
+            this.foundDeploymentList = deployments;
           },
           error: (err: any) => {
             this.isDeploymentsLoading = false;
@@ -62,10 +71,17 @@ export class ChooseDeploymentComponent {
         this.currentDeploymentId = deployment?.id;
       },
     });
-  }
 
-  public backHandle(): void {
-    this.back.emit();
+    if (!this.isProfile && this.platform.is('android')) {
+      this.platform.backButton.subscribeWithPriority(65, () => {
+        console.log('back button via hardware click from choose deployment view');
+
+        this.tap++;
+        console.log('Back Button Tap', this.tap);
+        if (this.tap === 3) App.exitApp();
+        else if (this.tap === 2) this.doubleTapExistToast();
+      });
+    }
   }
 
   public loadDeployments() {
@@ -76,26 +92,6 @@ export class ChooseDeploymentComponent {
         this.deploymentService.removeDuplicates(this.deploymentList),
       );
       this.deploymentList = this.deploymentService.getDeployments();
-    }
-
-    const index = this.deploymentList.findIndex((i: any) => i.deployment_name === 'mzima-dev-api');
-    if (index === -1) {
-      this.deploymentList = [
-        {
-          id: 1,
-          domain: 'staging.ush.zone',
-          subdomain: 'mzima-dev-api',
-          fqdn: 'mzima.staging.ush.zone',
-          status: 'deployed',
-          deployment_name: 'mzima-dev-api',
-          description: 'mzima-dev-api for testing',
-          avatar: getDeploymentAvatarPlaceholder('mzima-api'),
-          tier: 'level_1',
-          selected: false,
-        },
-        ...this.deploymentList,
-      ];
-      this.deploymentService.setDeployments(this.deploymentList);
     }
   }
 
@@ -160,13 +156,13 @@ export class ChooseDeploymentComponent {
       message:
         "<p>We're sorry, but the deployment option you're trying to select is not supported by the application as the administrator hasn't updated it yet. Until the update is performed, the deployment won't function properly.</p><p>If you are the administrator of this deployment, please feel free to contact us for more information.</p>",
       buttons: [
-        {
-          text: 'Contact us',
-          cssClass: 'medium',
-          handler: () => {
-            this.intercomService.displayMessenger();
-          },
-        },
+        // {
+        //   text: 'Contact us',
+        //   cssClass: 'medium',
+        //   handler: () => {
+        //     this.intercomService.displayMessenger();
+        //   },
+        // },
         {
           text: 'Ok',
           cssClass: 'primary',
@@ -192,34 +188,53 @@ export class ChooseDeploymentComponent {
   }
 
   public searchDeployments(query: string | null): void {
+    console.log('Search Deployments', query);
     if (query == null) {
       this.isDeploymentsLoading = false;
-      this.foundedDeploymentList = [];
+      this.foundDeploymentList = [];
       this.domain = null;
     } else if (
-      query.indexOf('.') != -1 ||
+      // query.indexOf('.') != -1 ||
       query.indexOf('http:') != -1 ||
       query.indexOf('https:') != -1
     ) {
       this.isDeploymentsLoading = false;
-      this.foundedDeploymentList = [];
-      this.domain = query.toLowerCase().replace('http://', '').replace('https://', '');
-      this.searchSubject.next(this.deploymentService.removeDomainForSearch(this.domain));
+      this.foundDeploymentList = [];
+      this.domain = query;
+      // const value = this.deploymentService.removeDomainForSearch(this.domain);
+      console.log('Domain for search', this.domain);
+      this.searchSubject.next(this.domain);
     } else if (query.length > 0) {
       this.isDeploymentsLoading = true;
       this.domain = null;
       this.searchSubject.next(query);
     } else {
       this.isDeploymentsLoading = false;
-      this.foundedDeploymentList = [];
+      this.foundDeploymentList = [];
     }
   }
 
   public addDeployment(): void {
+    console.log('Selected Deployments', this.selectedDeployments);
     this.deploymentService.addDeployments(this.selectedDeployments);
     this.layout.closeSearchForm();
-    this.foundedDeploymentList = [];
+    this.foundDeploymentList = [];
     this.addButtonVisible = false;
     this.loadDeployments();
+  }
+
+  public backHandle(): void {
+    this.showSearch = false;
+    this.back.emit();
+  }
+
+  protected async doubleTapExistToast() {
+    const result = await this.toastService.presentToast({
+      message: 'Tap back button again to exit the App',
+      buttons: [],
+    });
+    if (result) {
+      this.tap = 0;
+    }
   }
 }

@@ -25,6 +25,7 @@ export class PostsService extends ResourceService<any> {
     set: '',
     order_unlocked_on_top: true,
     reactToFilters: true,
+    include_unstructured_posts: true,
     'source[]': [],
     'tags[]': [],
     'form[]': [],
@@ -246,6 +247,7 @@ export class PostsService extends ResourceService<any> {
         enable_group_by_source: true,
         has_location: isMapView ? 'mapped' : 'all',
         include_unmapped: true,
+        include_unstructured_posts: true,
       },
     );
   }

@@ -443,6 +443,36 @@
     padding: 8px 16px;
   }
 
+  &-display {
+    @include breakpoint-min($tablet) {
+      position: absolute;
+      top: 8px;
+      max-width: fit-content;
+    }
+
+    @include breakpoint-max($tablet) {
+      position: relative;
+      width: 300px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    height: 20px;
+    font-weight: 700;
+
+    &__grey {
+      color: var(--color-neutral-50);
+    }
+
+    &__sm {
+      @include breakpoint-max($tablet) {
+        position: absolute;
+        bottom: 22px;
+        font-size: 14px;
+      }
+    }
+  }
+
   &__inputs {
     display: flex;
     margin: 0 -8px;

@@ -29,6 +29,7 @@ export class ButtonComponent {
     | 'gray'
     | 'light'
     | 'light-gray'
+    | 'transparent-style-1'
     | 'custom' = 'primary';
   @Output() public buttonClick = new EventEmitter<Event>();
 

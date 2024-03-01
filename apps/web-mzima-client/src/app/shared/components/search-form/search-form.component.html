@@ -38,6 +38,7 @@
     class="search-form__filters"
     *ngIf="isDesktop || isMapView"
     (buttonClick)="toggleFilters(!isFiltersVisible)"
+    [data-qa]="'search-form__filters'"
   >
     <span>{{ 'app.filters' | translate }}</span>
     <mat-icon iconPrefix svgIcon="filters"></mat-icon>
@@ -57,7 +58,11 @@
     </button>
 
     <div class="search-form__main-filters__inner">
-      <span class="search-form__main-filters__total" *ngIf="total !== undefined">
+      <span
+        class="search-form__main-filters__total"
+        *ngIf="total !== undefined"
+        [data-qa]="'search-form-main-filters-total'"
+      >
         {{ 'post.search_results' | translate }} {{ total }}
       </span>
 
@@ -140,11 +145,18 @@
                 size="small"
                 class="filter-group__head__button"
                 (buttonClick)="clearFilter('form')"
+                [data-qa]="'clear'"
+                (buttonClick)="toggleSidebarFilters('form')"
               >
-                {{ 'nav.clear' | translate }}
+                {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>
             </div>
-            <mat-selection-list name="surveys" class="selection-list" formControlName="form">
+            <mat-selection-list
+              name="surveys"
+              class="selection-list"
+              formControlName="form"
+              [data-qa]="'survey-selection-list'"
+            >
               <mat-list-option
                 *ngFor="let survey of surveyList"
                 [selected]="survey.checked"
@@ -153,6 +165,7 @@
                 checkboxPosition="before"
                 class="selection-list__option"
                 [ngStyle]="{ '--color': survey.color }"
+                [data-qa]="'survey-select-item'"
               >
                 <span class="selection-list__option__border"></span>
                 {{ survey.name }}
@@ -161,32 +174,33 @@
             </mat-selection-list>
 
             <div class="filter-group__info" *ngIf="isMapView">
-              <span *ngIf="notShownPostsCount <= 0">{{
+              <span *ngIf="notMappedPostsCount <= 0">{{
                 'global_filter.unmapped_none' | translate
               }}</span>
-              <span *ngIf="notShownPostsCount === 1">{{
+              <span *ngIf="notMappedPostsCount === 1">{{
                 'global_filter.unmapped_start_one' | translate
               }}</span>
-              <span *ngIf="notShownPostsCount >= 2">{{
+              <span *ngIf="notMappedPostsCount >= 2">{{
                 'global_filter.unmapped_start_many' | translate
               }}</span>
-              <a [routerLink]="['feed']" *ngIf="notShownPostsCount >= 1">
-                {{ notShownPostsCount }} post{{ notShownPostsCount >= 2 ? 's' : '' }}
+              <a [routerLink]="['feed']" *ngIf="notMappedPostsCount >= 1">
+                {{ notMappedPostsCount }} post{{ notMappedPostsCount >= 2 ? 's' : '' }}
               </a>
-              <span *ngIf="notShownPostsCount >= 1">{{
+              <span *ngIf="notMappedPostsCount >= 1">{{
                 'global_filter.unmapped_end' | translate
               }}</span>
             </div>
           </mat-tab>
+
           <mat-tab [label]="'global_filter.source' | translate">
             <div class="tabs__clear">
               <mzima-client-button
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
-                (buttonClick)="clearFilter('source')"
+                (buttonClick)="toggleSidebarFilters('source')"
               >
-                {{ 'nav.clear' | translate }}
+                {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>
             </div>
             <mat-selection-list name="source" class="selection-list" formControlName="source">
@@ -248,9 +262,9 @@
               fill="clear"
               size="small"
               class="filter-group__head__button"
-              (buttonClick)="clearFilter('form')"
+              (buttonClick)="toggleSidebarFilters('form')"
             >
-              {{ 'nav.clear' | translate }}
+              {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
           </div>
         </app-filter-control>
@@ -270,9 +284,9 @@
               fill="clear"
               size="small"
               class="filter-group__head__button"
-              (buttonClick)="clearFilter('source')"
+              (buttonClick)="toggleSidebarFilters('source')"
             >
-              {{ 'nav.clear' | translate }}
+              {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
           </div>
         </app-filter-control>
@@ -389,6 +403,7 @@
           [disabled]="form.disabled"
           class="search-form__button"
           (buttonClick)="resetSavedFilter()"
+          [data-qa]="'search-form__button'"
         >
           {{ 'global_filter.clear_all_filters' | translate }}
         </mzima-client-button>

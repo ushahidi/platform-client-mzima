@@ -231,6 +231,7 @@ jobs:
         env:
           CYPRESS_ush_admin_email: '${{secrets.e2e_ush_admin_email}}'
           CYPRESS_ush_admin_pwd: '${{secrets.e2e_ush_admin_pwd}}'
+          CYPRESS_ush_admin_name: '${{secrets.e2e_ush_admin_name}}'
           CYPRESS_ush_user_name: '${{secrets.e2e_ush_user_name}}'
           CYPRESS_ush_user_email: '${{secrets.e2e_ush_user_email}}'
           CYPRESS_ush_user_pwd: '${{secrets.e2e_ush_user_pwd}}'
