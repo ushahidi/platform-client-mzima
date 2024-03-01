@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Platform } from '@ionic/angular';
 import { FormControlComponent } from '../form-control/form-control.component';
 
 @Component({
@@ -18,13 +19,25 @@ export class SearchFormComponent implements ControlValueAccessor {
   @Output() public search = new EventEmitter<string>();
   @Output() public formFocus = new EventEmitter();
   @Output() public formBlur = new EventEmitter();
+  @Output() public back = new EventEmitter();
+
   @Input() public value?: string;
   @ViewChild('searchControl') public searchControl: FormControlComponent;
+
   public isSearchView = false;
 
   onChange: any = () => {};
   onTouched: any = () => {};
 
+  constructor(protected platform: Platform) {
+    if (this.platform.is('android')) {
+      this.platform.backButton.subscribeWithPriority(75, (processNextHandler) => {
+        console.log('back button via hardware click from search view');
+        this.clearSearchAndGoBack();
+        processNextHandler();
+      });
+    }
+  }
   writeValue(value: any): void {
     this.value = value;
   }
@@ -56,5 +69,10 @@ export class SearchFormComponent implements ControlValueAccessor {
     this.isSearchView = true;
     this.formFocus.emit();
     this.onChange(this.value);
+  }
+
+  public clearSearchAndGoBack(): void {
+    this.hideSearchResults();
+    this.back.emit();
   }
 }

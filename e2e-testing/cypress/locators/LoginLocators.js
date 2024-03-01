@@ -5,6 +5,14 @@ const LoginLocators = {
   loginButton: '[data-qa="btn-login"]',
   logoutButton: '[data-qa="btn-logout"]',
   accountBtn: '[data-qa="account-info"]',
+  declineCookiesBtn: '[data-qa="button-decline-cookies"]',
+  invalidEmail: '[data-qa="invalid-email-error"]',
+  invalidPassword: '[data-qa="invalid-password-error"]',
+  invalidCredentials: '[data-qa="invalid-credential-error"]',
+  accountInfoBtn: '[data-qa="account-info"]',
+  logOutBtn: '[data-qa="log-out"]',
+  userName: '[data-qa="user-name"]',
+  userEmail: '[data-qa="user-email"]',
 };
 
 export default LoginLocators;

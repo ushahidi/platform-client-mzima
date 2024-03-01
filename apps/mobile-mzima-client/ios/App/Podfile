@@ -29,6 +29,8 @@ end
 
 target 'App' do
   capacitor_pods
+  # Downgrade intercom to 15.2.3 to avoid build errors
+  pod 'Intercom', '<= 15.2.3'
   # Add your Pods here
 end
 

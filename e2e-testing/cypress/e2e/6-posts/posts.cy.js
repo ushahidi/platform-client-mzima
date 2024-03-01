@@ -1,5 +1,5 @@
 import LoginFunctions from "../../functions/LoginFunctions";
-import PostFunctions from "../../functions/PostFunctions";
+import PostFunctions from "../../functions/PostsFunctions/PostFunctions";
 
 describe("Automated Tests for Posts", () => {
   const loginFunctions = new LoginFunctions();
@@ -7,6 +7,7 @@ describe("Automated Tests for Posts", () => {
 
   before(() => {
     loginFunctions.login_as_admin();
+    cy.visit(Cypress.env('baseUrl'));
   });
 
   it("Creates and verifies a post", () => {

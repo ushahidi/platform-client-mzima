@@ -110,6 +110,7 @@ export class SessionService {
       this._mapConfig.next(this.currentConfig[type]);
     }
     if (type === 'site') {
+      console.log(this.currentConfig);
       this.siteConfig.next(this.currentConfig[type]);
     }
   }

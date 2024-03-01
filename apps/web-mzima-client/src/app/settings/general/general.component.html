@@ -7,6 +7,7 @@
         matInput
         placeholder="{{ 'settings.deployment_name' | translate }}"
         formControlName="name"
+        [data-qa]="'name'"
         required
       />
     </mat-form-field>
@@ -33,6 +34,7 @@
         [cdkAutosizeMinRows]="(isDesktop$ | async) ? 6 : 3"
         placeholder="{{ 'settings.site_description' | translate }}"
         formControlName="description"
+        [data-qa]="'description'"
       ></textarea>
     </mat-form-field>
   </div>
@@ -48,7 +50,13 @@
   <div class="form-row">
     <mat-label>{{ 'settings.site_email' | translate }} *</mat-label>
     <mat-form-field appearance="outline">
-      <input matInput placeholder="name@domain.com" formControlName="email" required />
+      <input
+        matInput
+        placeholder="name@domain.com"
+        formControlName="email"
+        required
+        [data-qa]="'email'"
+      />
     </mat-form-field>
     <ng-container *ngIf="generalForm.get('email')?.invalid">
       <mat-error
@@ -62,7 +70,7 @@
   <div class="form-row">
     <mat-label>{{ 'settings.site_language' | translate }}</mat-label>
     <mat-form-field appearance="outline">
-      <mat-select formControlName="language" disableOptionCentering>
+      <mat-select formControlName="language" disableOptionCentering [data-qa]="'language'">
         <mat-option *ngFor="let lang of langService.getLanguages()" [value]="lang.code">
           {{ lang.name }}
         </mat-option>
@@ -75,14 +83,17 @@
     <div class="checkbox-group">
       <div class="checkbox">
         <!-- FIXME: isPrivateEnabled -->
-        <mat-checkbox formControlName="private">
+        <mat-checkbox [data-qa]="'site-private'" formControlName="private">
           {{ 'settings.site_private' | translate }}
         </mat-checkbox>
         <p class="small">{{ 'settings.site_private_desc' | translate }}</p>
       </div>
       <div class="checkbox">
         <!-- FIXME: isDisableRegistrationEnabled -->
-        <mat-checkbox formControlName="disable_registration">
+        <mat-checkbox
+          [data-qa]="'site-disable-registration'"
+          formControlName="disable_registration"
+        >
           {{ 'settings.site_disable_registration' | translate }}
         </mat-checkbox>
         <p translate="settings.site_disable_registration_desc"></p>
@@ -95,7 +106,7 @@
   <div class="form-row" *ngIf="apiKey">
     <mat-label>{{ 'settings.general_settings.api_key' | translate }}</mat-label>
     <mat-form-field appearance="outline" class="copy">
-      <input matInput [value]="apiKey.api_key" readonly />
+      <input matInput [value]="apiKey.api_key" readonly [data-qa]="'api_key'" />
       <div class="copy-success" *ngIf="copySuccess">{{ 'share.copied' | translate }}</div>
 
       <mzima-client-button
@@ -113,7 +124,13 @@
     </mat-form-field>
   </div>
 
-  <mzima-client-button fill="outline" [expand]="false" color="secondary" (click)="generateApiKey()">
+  <mzima-client-button
+    fill="outline"
+    [expand]="false"
+    color="secondary"
+    (click)="generateApiKey()"
+    [data-qa]="'generate-api-key'"
+  >
     <span>{{ 'settings.general_settings.generate_api_key' | translate }}</span>
     <mat-icon icon svgIcon="key"></mat-icon>
   </mzima-client-button>
@@ -145,7 +162,7 @@
       generalForm.invalid ||
       generalForm.disabled ||
       submitted ||
-      !isInteger(mapSettings.mapConfig.location_precision)
+      !isIntegerAndZeroToNine(mapSettings.mapConfig.location_precision)
     "
   >
     {{ 'app.save' | translate }}

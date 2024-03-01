@@ -1,12 +1,8 @@
 <app-main-layout
   class="main"
-  [isSearch]="true"
+  [isSearch]="false"
   [title]="isProfile ? 'Collection' : 'Add post to collection'"
   (back)="back.emit()"
-  (search)="searchSubject.next($event)"
-  (searchFocus)="isSearchView = true"
-  (searchBlur)="isSearchView = false"
-  [ngClass]="{ 'main--search-view': isSearchView }"
 >
   <ion-item button lines="none" class="button-add" (click)="addNewCollection()">
     <app-icon class="button-add__icon" name="add" slot="start"></app-icon>
@@ -14,8 +10,7 @@
   </ion-item>
 
   <ion-title class="title">
-    <ng-container *ngIf="!isSearchView">Collections</ng-container>
-    <ng-container *ngIf="isSearchView">Found {{ totalCollections }} collections</ng-container>
+    <ng-container>Collections</ng-container>
   </ion-title>
   <app-spinner
     class="loader"
@@ -45,12 +40,7 @@
     </ng-template>
   </ng-template>
 
-  <ion-footer
-    footer
-    class="footer"
-    [ngClass]="{ 'footer--search-view': isSearchView }"
-    *ngIf="!isProfile"
-  >
+  <ion-footer footer class="footer" *ngIf="!isProfile">
     <ion-buttons class="footer__buttons">
       <app-button
         class="footer__button"
@@ -59,13 +49,7 @@
       >
         Add
       </app-button>
-      <app-button
-        class="footer__button"
-        fill="outline"
-        color="medium"
-        (buttonClick)="back.emit()"
-        *ngIf="!isSearchView"
-      >
+      <app-button class="footer__button" fill="outline" color="medium" (buttonClick)="back.emit()">
         Cancel
       </app-button>
     </ion-buttons>

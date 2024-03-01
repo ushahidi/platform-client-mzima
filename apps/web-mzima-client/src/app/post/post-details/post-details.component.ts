@@ -34,7 +34,7 @@ import { BreakpointService, EventBusService, EventType, SessionService } from '@
   styleUrls: ['./post-details.component.scss'],
 })
 export class PostDetailsComponent extends BaseComponent implements OnChanges, OnDestroy {
-  @Input() post?: PostResult;
+  @Input() post: PostResult;
   @Input() feedView: boolean = true;
   @Input() userId?: number | string;
   @Input() color?: string;
@@ -69,8 +69,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
 
     this.route.params.subscribe((params) => {
       if (params['id']) {
-        this.post = undefined;
-
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
 
         this.postId = Number(params['id']);
@@ -129,7 +127,32 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       this.preparingMediaField(content.fields);
       this.preparingSafeVideoUrls(content.fields);
       this.preparingRelatedPosts(content.fields);
+      this.preparingCategories(content.fields);
     }
+  }
+
+  private preparingCategories(fields: PostContentField[]): void {
+    fields
+      .filter((field: any) => field.type === 'tags')
+      .map((categories: any) => {
+        categories.value = categories.value.filter((category: any) => {
+          // Adding children to parents
+          if (!category.parent_id) {
+            category.children = categories.value.filter(
+              (child: any) => child.parent_id === category.id,
+            );
+            return category;
+          }
+          // Removing children with parents from values to avoid repetition
+          if (
+            category.parent_id &&
+            !categories.value.filter((parent: any) => category.parent_id === parent.id).length
+          ) {
+            return category;
+          }
+        });
+        return categories;
+      });
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {
@@ -223,6 +246,14 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     this.statusChanged.emit();
     this.eventBusService.next({
       type: EventType.UpdatedPost,
+      payload: this.post,
+    });
+  }
+
+  public deletedHandle(): void {
+    this.getPost(this.postId);
+    this.eventBusService.next({
+      type: EventType.DeletedPost,
       payload: this.post,
     });
   }

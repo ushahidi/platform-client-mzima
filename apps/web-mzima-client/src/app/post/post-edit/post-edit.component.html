@@ -1,4 +1,28 @@
-<div class="post-item-page">
+<div *ngIf="!formId" class="post-item-page">
+  <div class="page-content" *ngIf="surveys; else spinner">
+    <h1 class="survey-name">{{ 'post.unstructured.add_survey.title' | translate }}</h1>
+    <span class="info-message">
+      {{ 'post.unstructured.add_survey.info' | translate : { source: post.source } }}</span
+    >
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-select
+          [data-qa]="'select-survey-to-edit'"
+          disableOptionCentering
+          [(value)]="selectedSurvey"
+          placeholder="{{ 'survey.choose_survey' | translate }}"
+          (selectionChange)="formSelected()"
+        >
+          <mat-option *ngFor="let survey of surveys | async" [value]="survey">
+            {{ survey.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div *ngIf="formId" class="post-item-page">
   <div class="page-content">
     <div class="translate-container">
       <h1 class="survey-name">{{ surveyName }}</h1>
@@ -70,6 +94,13 @@
             *ngFor="let field of task.fields | sortByField : 'priority' : 'asc'; let i = index"
           >
             <mat-label>
+              <mat-icon
+                aria-label="Field responses will be private"
+                *ngIf="field.response_private"
+                icon
+                svgIcon="https"
+                class="field__icon"
+              ></mat-icon>
               {{ field?.translations[activeLanguage]?.label || field?.label }}
               <span class="color-accent" *ngIf="field?.required">*</span>
             </mat-label>
@@ -133,7 +164,6 @@
                   </li>
                   <li *ngFor="let option of field.options; trackBy: trackById">
                     <mat-checkbox
-                      [ngClass]="{ 'lvl-2': option.parent }"
                       [checked]="form.get(field.key)?.value.includes(option.id)"
                       (change)="
                         onCheckChange(
@@ -147,6 +177,25 @@
                     >
                       {{ option.tag }}
                     </mat-checkbox>
+                    <ul *ngIf="option.children; trackBy: trackById">
+                      <li *ngFor="let child of option.children">
+                        <mat-checkbox
+                          class="lvl-2"
+                          [checked]="form.get(field.key)?.value.includes(child.id)"
+                          (change)="
+                            onCheckChange(
+                              $event,
+                              field.key,
+                              child.id,
+                              field.options,
+                              child.parent?.id
+                            )
+                          "
+                        >
+                          {{ child.tag }}
+                        </mat-checkbox>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
               </span>
@@ -178,6 +227,9 @@
                   [data-qa]="field.label.replaceAll(' ', '-') + '-toggle' | lowercase"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #picker (closed)="input.blur()"></mat-datepicker>
+                <mat-hint>{{
+                  'form.default_date_hint' | translate : { field_name: field.label }
+                }}</mat-hint>
               </mat-form-field>
             </ng-container>
 

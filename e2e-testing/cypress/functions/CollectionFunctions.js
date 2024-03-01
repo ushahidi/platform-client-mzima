@@ -20,14 +20,12 @@ class CollectionFunctions {
       }
 
     visibility(){
-        cy.get('.mat-radio-container')
-          .find('.mat-radio-input')
-          .eq(0)
+      cy.get(CollectionLocators.onlyMeRadio)
           .click({force: true})
       }
 
     save_collection() {
-      cy.get('#save-collection-btn')
+      cy.get(CollectionLocators.saveCollectionBtn)
         .click();
     }
     
@@ -37,7 +35,7 @@ class CollectionFunctions {
     }
 
     select_collections(){
-      cy.get(".mat-ripple.collection-item")
+      cy.get(CollectionLocators.selectCollection)
         .eq(0)
         .click()
     }
@@ -58,7 +56,7 @@ class CollectionFunctions {
         .click();
     }
     post_to_collection(){
-      cy.get(".submit-post-button").click()
+      cy.get(CollectionLocators.submitPostButton).click()
       cy.get(CollectionLocators.surveyItem).click();
       this.type_post_title("Post Title");
       this.type_post_description("Post Description");
@@ -68,8 +66,8 @@ class CollectionFunctions {
     }
 
     verify_post_added_to_collection(){
-      cy.get('mat-selection-list[name="surveys"]')
-        .children('mat-list-option')
+      cy.get(CollectionLocators.surveySelectionList)
+        .children(CollectionLocators.selectedSurveyItem)
         .eq(0)
         .click({force: true})
       cy.contains('Post Title').should('exist');

@@ -28,15 +28,7 @@ export class ProfilePage {
   public isSupportModalOpen = false;
   public isSupportModalSearchView = false;
   public supportSearchQuery = '';
-  public supportItems: SupportItem[] = [
-    {
-      title: 'Intercom',
-      description: 'Contact Ushahidi staff for chat support',
-      action: () => {
-        this.intercomService.displayMessenger();
-      },
-    },
-  ];
+  public supportItems: SupportItem[] = [];
   public filteredSupportItems: SupportItem[] = this.supportItems;
 
   constructor(
@@ -54,6 +46,14 @@ export class ProfilePage {
         this.profileMenu = profileMenu.profileMenu.filter(
           (i) => i.isLoggedGuard === undefined || i.isLoggedGuard === !!userData.userId,
         );
+        if (userData.userId)
+          this.supportItems.push(<SupportItem>{
+            title: 'Intercom',
+            description: 'Contact Ushahidi staff for chat support',
+            action: () => {
+              this.intercomService.displayMessenger();
+            },
+          });
       });
   }
 

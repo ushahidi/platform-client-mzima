@@ -6,7 +6,7 @@
   (closed)="descriptionToggleHandle(false)"
 >
   <mat-expansion-panel-header>
-    <mat-panel-title class="company-info__header">
+    <mat-panel-title class="company-info__header" [data-qa]="'panel-title'">
       <img [src]="logo" [alt]="title" class="company-info__logo" *ngIf="logo" />
       <span class="company-info__title">{{ title }}</span>
       <mat-icon svgIcon="arrow-down" class="company-info__header__arrow"></mat-icon>
@@ -15,7 +15,9 @@
   <div>
     <p>
       {{ 'app.contact_email_address' | translate }}
-      <a class="company-info__email" href="mailto:{{ email }}">{{ email }}</a>
+      <a class="company-info__email" href="mailto:{{ email }}" [data-qa]="'contact-email'">{{
+        email
+      }}</a>
     </p>
     <p [innerHTML]="description | safeUrl"></p>
   </div>

@@ -14,6 +14,7 @@
         [editable]="post.allowed_privileges.includes('update')"
         [deleteable]="post.allowed_privileges.includes('delete')"
         (statusChanged)="statusChangedHandle()"
+        (deleted)="deletedHandle()"
       >
       </app-post-head>
     </div>
@@ -54,10 +55,18 @@
 
             <ng-container *ngIf="field.input === 'tags'">
               <ng-container *ngFor="let category of field.value">
-                <div class="category" *ngIf="!isParentCategory(post.categories, category.id)">
+                <div class="category">
                   <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
                   {{ category.tag }}
                 </div>
+                <ng-container *ngIf="category.children">
+                  <ng-container *ngFor="let child of category.children">
+                    <div class="category__child">
+                      <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
+                      {{ child.tag }}
+                    </div>
+                  </ng-container>
+                </ng-container>
               </ng-container>
             </ng-container>
 
@@ -165,7 +174,12 @@
     <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
   </ng-container>
 </div>
-
+<ng-container *ngIf="isManagePosts">
+  <app-post-conversation
+    *ngIf="post && post.source === 'SMS'"
+    [post]="post"
+  ></app-post-conversation>
+</ng-container>
 <ng-template #spinner>
   <app-spinner *ngIf="isPostLoading" class="spinner"></app-spinner>
   <p

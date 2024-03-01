@@ -174,7 +174,10 @@
       </table>
     </ng-container>
 
-    <div class="form-controls-spacer" *ngIf="!isDesktop"></div>
+    <mat-error *ngIf="importErrors">
+      {{ 'notify.data_import.csv_import_error' | translate }}
+    </mat-error>
+    <div class="form-controls-spacer"></div>
     <div class="form-controls-panel form-controls-panel--sticky">
       <mzima-client-button
         fill="outline"

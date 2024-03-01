@@ -16,6 +16,8 @@ import { TwitterService } from '../../core/services/twitter.service';
 })
 export class TwitterWidgetComponent implements OnInit {
   @Input() public id: string;
+  public tweet: object;
+
   @Output() loadingFailed = new EventEmitter();
   isTwitterScriptLoading = true;
   isTwitterFailed = false;
@@ -35,17 +37,23 @@ export class TwitterWidgetComponent implements OnInit {
       this._updateTwitterScriptLoadingState();
       twitterData.widgets.createTweet(this.id, this._elementRef.nativeElement, {}).then(
         (tweet: any) => {
+          this.tweet = tweet;
           this.isTwitterScriptLoading = false;
-          if (!tweet) {
-            this.isTwitterFailed = true;
-            this.loadingFailed.emit('Tweet failed to load');
-          }
-          this._changeDetectorRef.detectChanges();
         },
         () => {
           this.isTwitterScriptLoading = false;
         },
       );
+
+      /* The Twitter-widget does not resolve the promise if 
+      the Tweet is deleted, so need to check it with a timeout */
+      setTimeout(() => {
+        this.isTwitterScriptLoading = false;
+        if (!this.tweet) {
+          this.isTwitterFailed = true;
+          this.loadingFailed.emit('Tweet failed to load');
+        }
+      }, 30000);
     });
   }
 

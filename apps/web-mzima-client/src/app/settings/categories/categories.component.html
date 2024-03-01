@@ -16,20 +16,25 @@
           [data-qa]="category.slug.split(' ').join('-') | lowercase"
           (selected)="selectCategory($event)"
           [isCheckbox]="isShowActions"
+          (toggle)="toggleChildren($event)"
+          [displayChildren]="displayChildren(category.id)"
         >
         </app-category-item>
 
-        <ul *ngIf="category.children?.length" class="categories-list categories-list--lvl2">
-          <li
-            class="categories-list__item"
-            *ngFor="let category of getChildCategories(category.id)"
-          >
+        <ul
+          *ngIf="category.children?.length && displayChildren(category.id)"
+          class="categories-list categories-list--lvl2"
+        >
+          <li class="categories-list__item" *ngFor="let category of category.children">
             <app-category-item
               #categoryItem
               [isCheckbox]="isShowActions"
               (selected)="selectCategory($event)"
               [category]="category"
-              [data-qa]="category.slug.split(' ').join('-') + '-' + '(' +category.parent.slug +')' | lowercase"
+              [data-qa]="
+                category.slug.split(' ').join('-') + '-' + '(' + category.parent.slug + ')'
+                  | lowercase
+              "
               [customClass]="'category-item__title--lvl2'"
             >
             </app-category-item>
