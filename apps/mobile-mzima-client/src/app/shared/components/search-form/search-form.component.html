@@ -7,7 +7,6 @@
   [clearable]="!!value?.length"
   (inputClear)="resetSearchForm()"
   (inputFocus)="showSearchResults()"
-  (inputClear)="searchQueryChanged()"
   (ngModelChange)="searchQueryChanged()"
   [color]="isSearchView ? 'light' : 'default'"
 >
@@ -19,7 +18,7 @@
       color="medium"
       class="back-button"
       *ngIf="isSearchView"
-      (buttonClick)="clearSearchOrGoBack()"
+      (buttonClick)="clearSearchAndGoBack()"
     >
       <app-icon slot="icon-only" name="arrow-back"></app-icon>
     </app-button>

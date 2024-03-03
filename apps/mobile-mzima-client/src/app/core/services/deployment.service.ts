@@ -39,11 +39,19 @@ export class DeploymentService {
     try {
       return this.fetchBackendUrl(search).pipe(
         map((backend_url: string) => {
+          const domain = backend_url.toLowerCase();
+          console.log(domain);
+          const isSelected = !!storeDeployments.find(
+            (deployment: any) => deployment.domain === domain,
+          );
+
           return [
             {
               id: this.generateRandomId(),
-              domain: backend_url.toLowerCase().replace('http://', '').replace('https://', ''),
-              deployment_name: this.removeDomainForSearch(search),
+              domain: domain,
+              deployment_name: search.toLowerCase(),
+              selected: isSelected,
+              avatar: getDeploymentAvatarPlaceholder(domain),
             },
           ];
         }),
@@ -75,7 +83,7 @@ export class DeploymentService {
   }
 
   public addDeployments(data: Deployment[]) {
-    const deployments = this.storageService.getStorage(STORAGE_KEYS.DEPLOYMENTS, 'array');
+    const deployments = this.getDeployments();
     const uniqueData: Deployment[] = this.getUniqueItems(data, deployments);
     const filteredArray: Deployment[] = this.removeDuplicates([...uniqueData, ...deployments]);
     console.log('addDeployments', filteredArray);
@@ -157,15 +165,31 @@ export class DeploymentService {
   }
 
   public convertToUrl(keyword: string): string {
-    // Simple regex to check if the keyword is a URL or FQDN
     console.log('convertToURL', keyword);
     keyword = keyword.toLowerCase();
+
+    // Simple regex to check if the keyword is a URL, FQDN, localhost or IP address
+    const regexPattern =
+      '^(https?:\\/\\/)?' + // Match the protocol (http or https), optional
+      '(www\\.)?' + // Match 'www.', optional
+      '(' + // Start of the group for main matching:
+      '(localhost(:[0-9]{1,5})?)' + // Match 'localhost' with an optional port number
+      '|' + // OR
+      '([a-z0-9]+([-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,10})' + // Match a domain name (FQDN)
+      '|' + // OR
+      '((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}' + // Match the first three octets of an IPv4 address
+      '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)' + // Match the last octet of an IPv4 address
+      ')' +
+      '(:[0-9]{1,5})?' + // Match an optional port number
+      '(\\/.*)?' + // Match the optional rest of the URL (path, query, etc.)
+      '$';
     if (
       !keyword.match(
-        /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
+        regexPattern,
+        // /^(https?:\/\/)?(www\.)?((localhost(:[0-9]{1,5})?)|([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5})|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(:[0-9]{1,5})?(\/.*)?$/,
       )
     ) {
-      throw new Error('Invalid keyword. Not a FQDN or URL.');
+      throw new Error('Invalid keyword. Not a FQDN, URL, localhost, or IP address.');
     }
 
     // Check if keyword already includes http/https
@@ -192,5 +216,19 @@ export class DeploymentService {
     }
 
     return result;
+  }
+
+  public isValidUrl(url: string): boolean {
+    const urlPattern = new RegExp(
+      '^(https?:\\/\\/)?' + // validate protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
+      'i',
+    ); // fragment locator
+
+    return !!urlPattern.test(url);
   }
 }

@@ -58,7 +58,11 @@
     </button>
 
     <div class="search-form__main-filters__inner">
-      <span class="search-form__main-filters__total" *ngIf="total !== undefined">
+      <span
+        class="search-form__main-filters__total"
+        *ngIf="total !== undefined"
+        [data-qa]="'search-form-main-filters-total'"
+      >
         {{ 'post.search_results' | translate }} {{ total }}
       </span>
 
@@ -140,6 +144,8 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
+                (buttonClick)="clearFilter('form')"
+                [data-qa]="'clear'"
                 (buttonClick)="toggleSidebarFilters('form')"
               >
                 {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}

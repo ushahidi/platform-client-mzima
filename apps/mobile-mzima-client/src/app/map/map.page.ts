@@ -121,4 +121,18 @@ export class MapPage extends MainViewComponent implements OnDestroy {
   public createPost() {
     this.router.navigate(['/post-edit']);
   }
+
+  public refreshMapData() {
+    // this.feed.totalPosts = 0;
+    this.feed.posts = [];
+    this.feed.isPostsLoading = true;
+    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        // this.getPost$.next(true);
+        this.feed.updatePosts();
+        this.map.reInitParams();
+        this.map.getPostsGeoJson();
+      },
+    });
+  }
 }

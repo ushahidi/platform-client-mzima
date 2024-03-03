@@ -22,9 +22,20 @@
     >
       <app-icon slot="icon-only" name="info"></app-icon>
     </app-button>
-    <app-button shape="normal" [shadow]="true" class="add-post-button" (click)="createPost()">
-      <app-icon slot="icon-only" name="plus"></app-icon>
-    </app-button>
+    <div class="button-group">
+      <app-button
+        shape="normal"
+        [shadow]="true"
+        color="light"
+        class="refresh-map-data-button"
+        (click)="refreshMapData()"
+      >
+        <app-icon slot="icon-only" name="refresh"></app-icon>
+      </app-button>
+      <app-button shape="normal" [shadow]="true" class="add-post-button" (click)="createPost()">
+        <app-icon slot="icon-only" name="plus"></app-icon>
+      </app-button>
+    </div>
     <app-feed-view #feed [atBottom]="mode === 0" [atTop]="mode === 'fullscreen'"></app-feed-view>
   </ng-container>
 </app-draggable-layout>
