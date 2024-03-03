@@ -135,7 +135,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    height: calc(100% - 220px);
+    height: calc(90% - 220px);
     -webkit-overflow-scrolling: touch;
 
     @include breakpoint-max($tablet) {
