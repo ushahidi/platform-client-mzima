@@ -294,9 +294,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     //   this.currentPage = 1;
     // }
     this.isLoading = true;
-    this.loadingMorePosts
-      ? (this.paginationElementsAllowed = true)
-      : (this.paginationElementsAllowed = false); // this check prevents the load more button & area from temporarily disappearing (on click)
+    this.paginationElementsAllowed = this.loadingMorePosts; // this check prevents the load more button & area from temporarily disappearing (on click)
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
