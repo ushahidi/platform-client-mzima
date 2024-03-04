@@ -46,14 +46,6 @@
     }
   }
 
-  &__main {
-    max-width: calc(100% - 44px);
-
-    @include breakpoint-max($laptop-small) {
-      display: none;
-    }
-  }
-
   &__name {
     display: block;
   }
