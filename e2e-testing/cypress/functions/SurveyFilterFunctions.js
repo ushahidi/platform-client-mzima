@@ -133,7 +133,7 @@ class SurveyFilterFunctions {
       .click({force: true});
     //verify that published and under review are selected
     cy.get(DataViewLocators.statusBtn)
-      .click()
+      .click({force: true})
     cy.get(DataViewLocators.filterSelectionList)
       .find('.mat-list-item-content')
       .eq(0)
