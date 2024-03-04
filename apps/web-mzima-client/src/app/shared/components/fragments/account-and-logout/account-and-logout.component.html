@@ -4,7 +4,7 @@
     color="secondary"
     class="account-info"
     [data-qa]="'account-info'"
-    *ngIf="isLoggedIn && isDesktop"
+    *ngIf="isLoggedIn && !isMobile"
     [matMenuTriggerFor]="accountMenu"
   >
     <div class="account-info__main">
