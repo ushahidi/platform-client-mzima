@@ -9,7 +9,7 @@
   <mat-tab-group dynamicHeight disableRipple disablePagination animationDuration="0ms">
     <mat-tab [label]="'data_export.export' | translate" [data-qa]="'tab-export'">
       <ng-container *ngIf="hxlEnabled && !hxlApiKey">
-        <div class="alert">
+        <div class="alert" role="alert">
           <p>{{ 'data_export.hxl_apikey_alert_1' | translate }}</p>
           <p>
             {{ 'data_export.hxl_apikey_alert_2' | translate }}
