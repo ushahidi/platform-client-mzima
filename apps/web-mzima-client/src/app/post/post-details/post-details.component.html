@@ -29,6 +29,9 @@
     </div>
 
     <h2 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h2>
+    <div class="post__metadata-container">
+      <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
+    </div>
 
     <div class="post__description" *ngIf="post.title?.length && post.content?.length">
       <p [innerHTML]="post.content"></p>
@@ -170,8 +173,6 @@
         </ng-container>
       </ng-container>
     </ng-container>
-
-    <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
   </ng-container>
 </div>
 <ng-container *ngIf="isManagePosts">
