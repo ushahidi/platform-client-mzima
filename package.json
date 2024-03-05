@@ -115,7 +115,7 @@
     "jest-environment-jsdom": "29.4.3",
     "jest-preset-angular": "13.0.0",
     "lint-staged": "^13.1.2",
-    "nx": "16.0.2",
+    "nx": "^18.0.7",
     "nx-cloud": "16.0.5",
     "prettier": "^2.6.2",
     "ts-jest": "29.1.0",

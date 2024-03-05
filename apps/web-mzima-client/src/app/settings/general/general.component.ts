@@ -166,4 +166,14 @@ export class GeneralComponent implements OnInit {
     value === '0' ? (value = parseFloat(value)) : value; // Better fix could be to fix zero being returned as string from the backend
     return Number.isInteger(value) && value >= this.minObfuscation && value <= this.maxObfuscation;
   }
+  clearForm() {
+    this.generalForm.get('name')?.setValue('');
+    this.generalForm.get('description')?.setValue('');
+    this.generalForm.get('email')?.setValue('');
+    this.generalForm.get('language')?.setValue('en');
+    this.generalForm.get('private')?.setValue(false);
+    this.generalForm.get('disable_registration')?.setValue(false);
+    this.uploadedFile = undefined;
+    this.siteConfig.image_header = '';
+  }
 }
