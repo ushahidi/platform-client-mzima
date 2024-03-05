@@ -55,7 +55,7 @@
 
             <ng-container *ngIf="field.input === 'tags'">
               <ng-container *ngFor="let category of field.value">
-                <div class="category">
+                <div class="category" *ngIf="category.tag">
                   <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
                   {{ category.tag }}
                 </div>
