@@ -49,10 +49,10 @@ export class CategoriesComponent {
 
   public async deleteCategories() {
     const confirmed = await this.confirmModalService.open({
-      title: this.translate.instant('notify.category.bulk_destroy_confirm', {
+      title: this.translate.instant(this.titleMessage(), {
         count: this.selectedCategories.length,
       }),
-      description: this.translate.instant('notify.category.bulk_destroy_confirm_desc'),
+      description: this.translate.instant(this.descriptionMessage()),
       confirmButtonText: this.translate.instant('app.yes_delete'),
       cancelButtonText: this.translate.instant('app.no_go_back'),
     });
@@ -68,6 +68,17 @@ export class CategoriesComponent {
         },
       },
     );
+  }
+
+  public titleMessage(): string {
+    return this.selectedCategories.length > 1
+      ? 'notify.category.bulk_destroy_confirm'
+      : 'notify.category.destroy_confirm';
+  }
+  public descriptionMessage(): string {
+    return this.selectedCategories.length > 1
+      ? 'notify.category.bulk_destroy_confirm_desc'
+      : 'notify.category.destroy_confirm_desc';
   }
 
   public showActions(event: boolean) {
