@@ -39,7 +39,8 @@ class SurveyConfigurationFunctions {
       }
     
       select_survey_item() {
-        cy.get(SurveyConfigurationLocators.surveyItem).click();
+        cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
+        cy.wait(1000);
       }
     
       type_post_title(title) {
