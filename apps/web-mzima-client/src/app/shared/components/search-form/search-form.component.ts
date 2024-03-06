@@ -296,14 +296,12 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
           return {
             id: category.id,
             name: category.tag,
-            children: response?.results
-              ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
-              .map((cat: CategoryInterface) => {
-                return {
-                  id: cat.id,
-                  name: cat.tag,
-                };
-              }),
+            children: category?.children.map((cat: CategoryInterface) => {
+              return {
+                id: cat.id,
+                name: cat.tag,
+              };
+            }),
           };
         });
         if (!this.categoriesData.length) {
@@ -325,11 +323,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     let fetchPostsWithoutFormId = false;
     if (Array.isArray(values.form)) {
       const index = values.form.findIndex((id: any) => id === 0);
-      if (index !== -1) {
-        // Remove the item with id 0
-        values.form.splice(index, 1);
-        fetchPostsWithoutFormId = true;
-      }
+      fetchPostsWithoutFormId = index !== -1;
     }
 
     const filters: any = {
@@ -677,13 +671,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
 
   public resetForm(filters: any = {}): void {
     // Check if this.surveyList contains an item with id 0
-    let fetchPostsWithoutFormId = false;
     const index = this.surveyList.findIndex((s) => s.id === 0);
-    if (index !== -1) {
-      // Remove the item with id 0
-      this.surveyList.splice(index, 1);
-      fetchPostsWithoutFormId = true;
-    }
+    const fetchPostsWithoutFormId = index !== -1;
 
     this.form.patchValue({
       query: '',
@@ -716,11 +705,33 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
 
   public clearFilter(filterName: string): void {
     this.total = 0;
-    if (filterName === 'form' || filterName === 'source') {
-      this.form.controls[filterName].patchValue(['none']);
+    this.form.controls[filterName].patchValue('');
+  }
+
+  public showAllButton(filterName: string) {
+    return (
+      JSON.stringify(this.form.controls[filterName].getRawValue()) === JSON.stringify(['none'])
+    );
+  }
+
+  public toggleSidebarFilters(filterName: string): void {
+    let newValue;
+    if (this.showAllButton(filterName)) {
+      if (filterName === 'form') {
+        newValue = this.surveyList.map((survey: any) => {
+          return survey.id;
+        });
+      }
+      if (filterName === 'source') {
+        newValue = this.sources.map((source: any) => {
+          return source.value;
+        });
+      }
     } else {
-      this.form.controls[filterName].patchValue('');
+      this.total = 0;
+      newValue = ['none'];
     }
+    this.form.controls[filterName].patchValue(newValue);
   }
 
   public searchPosts(): void {

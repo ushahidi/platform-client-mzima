@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { App } from '@capacitor/app';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
 import { Deployment } from '@mzima-client/sdk';
 import { Subject, debounceTime } from 'rxjs';
@@ -11,7 +13,7 @@ import {
   // IntercomService,
 } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { getDeploymentAvatarPlaceholder } from '@helpers';
+import { ToastService } from '@services';
 
 @UntilDestroy()
 @Component({
@@ -35,13 +37,18 @@ export class ChooseDeploymentComponent {
   private domain: string | null = null;
   private readonly searchSubject = new Subject<string>();
 
+  tap = 0;
+
   constructor(
     private envService: EnvService,
     private configService: ConfigService,
     private deploymentService: DeploymentService,
     private alertService: AlertService,
     private authService: AuthService, // private intercomService: IntercomService,
+    protected toastService: ToastService,
+    protected platform: Platform,
   ) {
+    this.showSearch = true;
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: (query: string) => {
         console.log('Search Subject', query);
@@ -64,10 +71,17 @@ export class ChooseDeploymentComponent {
         this.currentDeploymentId = deployment?.id;
       },
     });
-  }
 
-  public backHandle(): void {
-    this.back.emit();
+    if (!this.isProfile && this.platform.is('android')) {
+      this.platform.backButton.subscribeWithPriority(65, () => {
+        console.log('back button via hardware click from choose deployment view');
+
+        this.tap++;
+        console.log('Back Button Tap', this.tap);
+        if (this.tap === 3) App.exitApp();
+        else if (this.tap === 2) this.doubleTapExistToast();
+      });
+    }
   }
 
   public loadDeployments() {
@@ -78,50 +92,6 @@ export class ChooseDeploymentComponent {
         this.deploymentService.removeDuplicates(this.deploymentList),
       );
       this.deploymentList = this.deploymentService.getDeployments();
-    }
-
-    const index = this.deploymentList.findIndex((i: any) => i.deployment_name === 'mzima-dev-api');
-    if (index === -1) {
-      this.deploymentList = [
-        {
-          id: 0,
-          domain: '172.20.10.6:8000',
-          subdomain: '',
-          fqdn: '172.20.10.6:8000',
-          status: 'deployed',
-          deployment_name: 'Localhost',
-          description: 'Local for development',
-          avatar: getDeploymentAvatarPlaceholder('localhost'),
-          tier: 'level_1',
-          selected: false,
-        },
-        {
-          id: 1000010001,
-          domain: 'webhook.site/eafbeb53-383d-4435-a9b7-960f75e61363',
-          subdomain: '',
-          fqdn: 'webhook.site',
-          status: 'deployed',
-          deployment_name: 'Webhook Site',
-          description: 'Webhook Site Tunnel for development',
-          avatar: getDeploymentAvatarPlaceholder('Webhook'),
-          tier: 'level_1',
-          selected: false,
-        },
-        {
-          id: 1,
-          domain: 'staging.ush.zone',
-          subdomain: 'mzima-dev-api',
-          fqdn: 'mzima.staging.ush.zone',
-          status: 'deployed',
-          deployment_name: 'mzima-dev-api',
-          description: 'mzima-dev-api for testing',
-          avatar: getDeploymentAvatarPlaceholder('mzima-api'),
-          tier: 'level_1',
-          selected: false,
-        },
-        ...this.deploymentList,
-      ];
-      this.deploymentService.setDeployments(this.deploymentList);
     }
   }
 
@@ -230,10 +200,10 @@ export class ChooseDeploymentComponent {
     ) {
       this.isDeploymentsLoading = false;
       this.foundDeploymentList = [];
-      this.domain = query.toLowerCase().replace('http://', '').replace('https://', '');
-      const value = this.deploymentService.removeDomainForSearch(this.domain);
-      console.log('Domain for search', value);
-      this.searchSubject.next(value);
+      this.domain = query;
+      // const value = this.deploymentService.removeDomainForSearch(this.domain);
+      console.log('Domain for search', this.domain);
+      this.searchSubject.next(this.domain);
     } else if (query.length > 0) {
       this.isDeploymentsLoading = true;
       this.domain = null;
@@ -245,26 +215,26 @@ export class ChooseDeploymentComponent {
   }
 
   public addDeployment(): void {
-    console.log(this.selectedDeployments);
+    console.log('Selected Deployments', this.selectedDeployments);
     this.deploymentService.addDeployments(this.selectedDeployments);
     this.layout.closeSearchForm();
     this.foundDeploymentList = [];
     this.addButtonVisible = false;
     this.loadDeployments();
-    this.backHandle();
   }
 
-  private isValidUrl(url: string): boolean {
-    const urlPattern = new RegExp(
-      '^(https?:\\/\\/)?' + // validate protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$',
-      'i',
-    ); // fragment locator
+  public backHandle(): void {
+    this.showSearch = false;
+    this.back.emit();
+  }
 
-    return !!urlPattern.test(url);
+  protected async doubleTapExistToast() {
+    const result = await this.toastService.presentToast({
+      message: 'Tap back button again to exit the App',
+      buttons: [],
+    });
+    if (result) {
+      this.tap = 0;
+    }
   }
 }

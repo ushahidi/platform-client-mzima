@@ -25,6 +25,7 @@ export class PostsService extends ResourceService<any> {
     set: '',
     order_unlocked_on_top: true,
     reactToFilters: true,
+    include_unstructured_posts: true,
     'source[]': [],
     'tags[]': [],
     'form[]': [],

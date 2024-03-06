@@ -58,7 +58,11 @@
     </button>
 
     <div class="search-form__main-filters__inner">
-      <span class="search-form__main-filters__total" *ngIf="total !== undefined">
+      <span
+        class="search-form__main-filters__total"
+        *ngIf="total !== undefined"
+        [data-qa]="'search-form-main-filters-total'"
+      >
         {{ 'post.search_results' | translate }} {{ total }}
       </span>
 
@@ -141,8 +145,10 @@
                 size="small"
                 class="filter-group__head__button"
                 (buttonClick)="clearFilter('form')"
+                [data-qa]="'clear'"
+                (buttonClick)="toggleSidebarFilters('form')"
               >
-                {{ 'nav.clear' | translate }}
+                {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>
             </div>
             <mat-selection-list
@@ -192,9 +198,9 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
-                (buttonClick)="clearFilter('source')"
+                (buttonClick)="toggleSidebarFilters('source')"
               >
-                {{ 'nav.clear' | translate }}
+                {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>
             </div>
             <mat-selection-list name="source" class="selection-list" formControlName="source">
@@ -256,9 +262,9 @@
               fill="clear"
               size="small"
               class="filter-group__head__button"
-              (buttonClick)="clearFilter('form')"
+              (buttonClick)="toggleSidebarFilters('form')"
             >
-              {{ 'nav.clear' | translate }}
+              {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
           </div>
         </app-filter-control>
@@ -278,9 +284,9 @@
               fill="clear"
               size="small"
               class="filter-group__head__button"
-              (buttonClick)="clearFilter('source')"
+              (buttonClick)="toggleSidebarFilters('source')"
             >
-              {{ 'nav.clear' | translate }}
+              {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
           </div>
         </app-filter-control>

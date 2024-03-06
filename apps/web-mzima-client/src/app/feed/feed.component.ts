@@ -41,6 +41,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public override params: GeoJsonFilter = {
     limit: 20,
     page: 1,
+    include_unstructured_posts: true,
     // created_before_by_id: '',
   };
   private readonly getPostsSubject = new Subject<{
@@ -54,6 +55,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
   public isLoading = false;
+  public loadingMorePosts: boolean;
+  public paginationElementsAllowed: boolean = false;
   public mode: FeedMode = FeedMode.Tiles;
   public activePostId: number;
   public total: number;
@@ -149,6 +152,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
+        this.isLoading = true; // "There are no posts yet!" flicker is fixed here and for (most) places where isLoading is set to true
         if (this.initialLoad) {
           this.initialLoad = false;
           return;
@@ -290,19 +294,21 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     //   this.currentPage = 1;
     // }
     this.isLoading = true;
+    this.paginationElementsAllowed = this.loadingMorePosts; // this check prevents the load more button & area from temporarily disappearing (on click)
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
+        const dataMetaPerPage = Number(data.meta.per_page);
         this.postCurrentLength =
-          data.count < Number(data.meta.per_page)
-            ? data.meta.total
-            : data.meta.current_page * data.count;
+          data.count < dataMetaPerPage ? data.meta.total : data.meta.current_page * data.count;
         this.eventBusService.next({
           type: EventType.FeedPostsLoaded,
           payload: true,
         });
         setTimeout(() => {
           this.isLoading = false;
+          this.paginationElementsAllowed = data.meta.total > dataMetaPerPage; // show pagination-related elements
+          this.loadingMorePosts = false; // for load more button's loader/spinner
           this.updateMasonry();
           setTimeout(() => {
             if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
@@ -312,6 +318,16 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         }, 500);
       },
     });
+  }
+
+  public postsCheck() {
+    const postsHaveLoaded = this.posts.length > 0;
+    if (postsHaveLoaded) this.isLoading = false; // post card/content area and LoadMore button benefits from this
+    const posts = {
+      atLeastOneExists: postsHaveLoaded,
+      stillLoading: this.isLoading, // tracks this.isLoading for post card area content display
+    };
+    return posts;
   }
 
   public updateMasonry(): void {
@@ -483,6 +499,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public isPostChecked(post: PostResult): boolean {
+    this.isLoading = true;
     return !!this.selectedPosts.find((p: PostResult) => p.id === post.id);
   }
 
@@ -493,13 +510,15 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public refreshMasonry(): void {
+    this.isLoading = true;
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 
   public loadMore(): void {
     if (this.params.limit !== undefined && this.params.limit * this.params.page! < this.total) {
-      this.currentPage++;
-      this.params.page!++;
+      this.loadingMorePosts = true;
+      this.currentPage += 1;
+      this.params.page! += 1;
       this.getPostsSubject.next({ params: this.params });
     }
   }
@@ -511,6 +530,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public switchMode(mode: FeedMode): void {
+    this.isLoading = true;
     this.mode = mode;
     if (this.collectionId) {
       this.switchCollectionMode();

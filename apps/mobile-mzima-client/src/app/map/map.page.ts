@@ -1,8 +1,7 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostsService, SavedsearchesService } from '@mzima-client/sdk';
-// import { AlertService, IntercomService, NetworkService, SessionService } from '@services';
-import { AlertService, NetworkService, SessionService } from '@services';
+import { AlertService, IntercomService, NetworkService, SessionService } from '@services';
 import { MainViewComponent } from './components/main-view.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
 import { FeedViewComponent } from './components/feed-view/feed-view.component';
@@ -32,7 +31,8 @@ export class MapPage extends MainViewComponent implements OnDestroy {
     protected override savedSearchesService: SavedsearchesService,
     protected override sessionService: SessionService,
     private networkService: NetworkService,
-    private alertService: AlertService, // private intercomService: IntercomService,
+    private alertService: AlertService,
+    private intercomService: IntercomService,
   ) {
     super(router, route, postsService, savedSearchesService, sessionService);
     this.route.params.subscribe(() => {
@@ -59,7 +59,7 @@ export class MapPage extends MainViewComponent implements OnDestroy {
         this.map.getPostsGeoJson();
       },
     });
-    // this.intercomService.registerUser(this.user);
+    if (this.user) this.intercomService.registerUser(this.user);
   }
 
   loadData(): void {}
@@ -120,5 +120,19 @@ export class MapPage extends MainViewComponent implements OnDestroy {
 
   public createPost() {
     this.router.navigate(['/post-edit']);
+  }
+
+  public refreshMapData() {
+    // this.feed.totalPosts = 0;
+    this.feed.posts = [];
+    this.feed.isPostsLoading = true;
+    this.postsService.postsFilters$.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        // this.getPost$.next(true);
+        this.feed.updatePosts();
+        this.map.reInitParams();
+        this.map.getPostsGeoJson();
+      },
+    });
   }
 }
