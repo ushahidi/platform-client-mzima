@@ -3,6 +3,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService } from '@services';
 import { Observable } from 'rxjs';
+import { LanguageInterface } from '../../../core/interfaces/language.interface';
 
 @UntilDestroy()
 @Component({
@@ -19,7 +20,13 @@ export class SettingsHeaderComponent {
   @Input() isSelectTranslate = false;
   @Input() isShowTranslation = false;
   @Input() selectedLanguage: any;
-  @Input() defaultLanguage: any;
+  @Input() defaultLanguage: LanguageInterface = {
+    rtl: false,
+    pluralequation: 'language.pluralequation',
+    code: 'en',
+    name: 'English',
+    nplurals: 2,
+  };
   @Input() languages: any[];
   @Output() isShowActionsChange = new EventEmitter();
   @Output() deleteCall = new EventEmitter();
