@@ -87,7 +87,7 @@ export class PostControlsComponent {
       complete: () => {
         this.toastService.presentToast({
           header: postStatusChangedHeader[status],
-          message: `Post ${this.posts.length > 1 ? 'statuses' : 'status'} have been changed`,
+          message: `Post ${this.posts.length > 1 ? 'statuses' : 'status'} changed`,
           buttons: [],
         });
         this.postChanged.emit();
