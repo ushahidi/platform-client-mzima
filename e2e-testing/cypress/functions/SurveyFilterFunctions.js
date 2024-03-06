@@ -120,8 +120,11 @@ class SurveyFilterFunctions {
       .invoke('attr', 'class')
       .should('contain', 'mat-pseudo-checkbox-checked');
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 440');
+
+    //reload the page since an overlay at this point prevents element from being accessed
+    //not clean implementation, but lets see if it unblocks the tests
+    cy.reload();
     //clear all filters
-    cy.get(DataViewLocators.statusBtn).click({ force: true });
     cy.get(DataViewLocators.clearFiltersBtn).click();
     //verify that published and under review are selected
     cy.get(DataViewLocators.statusBtn).click();
