@@ -1,5 +1,5 @@
 import DataViewLocators from '../locators/DataViewLocators';
-class SurveyFilterFunctions {
+class DataViewFilterFunctions {
   click_data_view_btn() {
     cy.get(DataViewLocators.dataViewBtn).click();
   }
@@ -144,4 +144,4 @@ class SurveyFilterFunctions {
   }
 }
 
-export default SurveyFilterFunctions;
+export default DataViewFilterFunctions;

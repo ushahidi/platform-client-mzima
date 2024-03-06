@@ -1,9 +1,9 @@
 import LoginFunctions from "../../functions/LoginFunctions";
-import SurveyFilterFunctions from "../../functions/SurveyFilterFunctions";
+import DataViewFilterFunctions from "../../functions/DataViewFilterFunctions";
 
 describe("Automated Tests for Filter by Surveys", () => {
   const loginFunctions = new LoginFunctions();
-  const surveyFilterFunctions = new SurveyFilterFunctions();
+  const dataViewFilterFunctions = new DataViewFilterFunctions();
 
   beforeEach(() => {
     loginFunctions.login_as_admin();
@@ -11,15 +11,15 @@ describe("Automated Tests for Filter by Surveys", () => {
   });
 
   it("Checks filters by survey", () => {
-    surveyFilterFunctions.click_data_view_btn();
-    surveyFilterFunctions.check_post_filter_by_survey();
-    surveyFilterFunctions.verify_count_on_results();
+    dataViewFilterFunctions.click_data_view_btn();
+    dataViewFilterFunctions.check_post_filter_by_survey();
+    dataViewFilterFunctions.verify_count_on_results();
   });
 });
 
 describe("Automated Tests for Filter by Status", () => {
   const loginFunctions = new LoginFunctions();
-  const surveyFilterFunctions = new SurveyFilterFunctions();
+  const dataViewFilterFunctions = new DataViewFilterFunctions();
 
   beforeEach(() => {
     loginFunctions.login_as_admin();
@@ -27,8 +27,8 @@ describe("Automated Tests for Filter by Status", () => {
   });
 
   it("Checks filters by status", () => {
-    surveyFilterFunctions.click_data_view_btn();
-    surveyFilterFunctions.check_post_filter_by_status();
+    dataViewFilterFunctions.click_data_view_btn();
+    dataViewFilterFunctions.check_post_filter_by_status();
   });
   
 });
