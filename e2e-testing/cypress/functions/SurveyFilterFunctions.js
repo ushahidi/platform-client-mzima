@@ -140,7 +140,7 @@ class SurveyFilterFunctions {
       .find('.mat-pseudo-checkbox')
       .invoke('attr', 'class')
       .should('contain', 'mat-pseudo-checkbox-checked');
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 176');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 513');
   }
 }
 
