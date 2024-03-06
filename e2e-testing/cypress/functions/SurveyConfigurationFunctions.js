@@ -70,6 +70,7 @@ class SurveyConfigurationFunctions {
             .children(SurveyConfigurationLocators.surveySelectItem)
             .eq(0)
             .click({force: true})
+        cy.wait(3000);
         cy.get(SurveyConfigurationLocators.postPreview).children(SurveyConfigurationLocators.postItem).contains('New Post Title');
         cy.get(SurveyConfigurationLocators.postStatus)
           .contains('Published')
