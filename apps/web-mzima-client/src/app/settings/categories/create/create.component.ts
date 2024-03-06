@@ -23,19 +23,11 @@ export class CreateComponent {
     this.isFormOnSubmit = true;
 
     this.categoriesService.post(category).subscribe({
-      next: (response) => {
-        console.log('Backend response:', response);
-        if (response.OK) {
-          this.notificationService.showError(
-            this.translate.instant('An error occured, please try again'),
-          );
-        }
+      next: () => {
         this.isFormOnSubmit = false;
         this.router.navigate(['settings/categories']);
       },
       error: ({ error }) => {
-        console.log('Backend response:', error);
-        console.log('specific response:', error.errors[0].status);
         if (error.errors[0].status === 404) {
           this.notificationService.showError(
             this.translate.instant('An error occured, please try again'),
