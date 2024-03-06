@@ -65,7 +65,7 @@ class SurveyConfigurationFunctions {
       }
 
       check_for_added_post_being_published() {
-        cy.get(DataViewLocators.clearBtn).click();
+        cy.get(SurveyConfigurationLocators.clearBtn).click();
         cy.get(SurveyConfigurationLocators.surveySelectionList)
             .children(SurveyConfigurationLocators.surveySelectItem)
             .eq(0)
