@@ -4,6 +4,7 @@ import { CategoriesService, CategoryInterface } from '@mzima-client/sdk';
 import { forkJoin } from 'rxjs';
 import { ConfirmModalService, NotificationService } from '@services';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
@@ -22,6 +23,7 @@ export class CategoriesComponent {
     private confirmModalService: ConfirmModalService,
     private translate: TranslateService,
     private notificationService: NotificationService,
+    private router: Router, // Inject Router for checking the current route
   ) {
     this.getCategories();
   }
@@ -30,21 +32,45 @@ export class CategoriesComponent {
     this.categoriesService.get().subscribe({
       next: (data) => {
         this.categories = data.results;
+        // Show success notification only if the current route is '/create'
+        if (this.router.url === '/create') {
+          this.showSuccessNotification('Category successfully created');
+        }
+        this.updateDisplayedChildren();
+      },
+      error: (error) => {
+        console.error('Error fetching categories:', error);
+        this.showErrorNotification('Sorry, Not able to create the category');
       },
     });
   }
 
-  public displayChildren(id: number) {
+  public displayChildren(id: number): boolean {
     return this.openedParents.includes(id);
   }
 
-  public toggleChildren(id: number) {
+  public toggleChildren(id: number): void {
     const index = this.openedParents.indexOf(id);
     if (index > -1) {
       this.openedParents.splice(index, 1);
     } else {
       this.openedParents.push(id);
     }
+    this.updateDisplayedChildren();
+  }
+
+  private showSuccessNotification(key: string): void {
+    this.notificationService.showSuccess(this.translate.instant(key));
+  }
+
+  private showErrorNotification(key: string): void {
+    this.notificationService.showError(this.translate.instant(key));
+  }
+
+  private updateDisplayedChildren(): void {
+    this.categories.forEach((category) => {
+      category.displayChildren = this.openedParents.includes(category.id);
+    });
   }
 
   public async deleteCategories() {
@@ -63,7 +89,7 @@ export class CategoriesComponent {
           this.getCategories();
           this.selectedCategories = [];
           this.notificationService.showError(
-            this.translate.instant('bulk_destroy_success_countless'),
+            this.translate.instant('Category has been successfully deleted'),
           );
         },
       },

@@ -25,4 +25,8 @@ export class NotificationService {
       data,
     });
   }
+  // Add the showSuccess method
+  showSuccess(message: string) {
+    this.snackBar.open(message, 'Close', { panelClass: ['success'], duration: 3000 });
+  }
 }
