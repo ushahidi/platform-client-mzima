@@ -144,6 +144,9 @@
             [data-qa]="'description'"
           ></textarea>
         </mat-form-field>
+        <mat-error *ngIf="descriptionExceededLimit">
+          Exceeded maximum amount of characters
+        </mat-error>
       </div>
       <div class="form-row" *ngIf="featuredEnabled">
         <div class="toggle">
@@ -191,7 +194,7 @@
     </mzima-client-button>
     <mzima-client-button
       (buttonClick)="saveCollection()"
-      [disabled]="collectionForm.invalid"
+      [disabled]="saveButtonDisabled || collectionForm.invalid"
       id="save-collection-btn"
       [attr.data-qa]="'save-collection-btn'"
     >

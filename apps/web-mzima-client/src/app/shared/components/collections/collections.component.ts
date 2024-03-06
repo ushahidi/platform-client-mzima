@@ -69,6 +69,9 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     });
   }
 
+  descriptionExceededLimit: boolean = false;
+  saveButtonDisabled: boolean = false;
+
   ngOnInit() {
     this.getUserData();
     this.initializeForm();
@@ -86,6 +89,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     if (this.isLoggedIn) {
       this.initRoles();
     }
+    this.saveButtonDisabled = false;
   }
 
   private initializeForm() {
@@ -110,9 +114,15 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   }
 
   private formSubscribe() {
-    this.collectionForm.controls['name'].valueChanges.pipe(untilDestroyed(this)).subscribe({
-      next: () => {
-        this.formErrors = [];
+    this.collectionForm.controls['description'].valueChanges.pipe(untilDestroyed(this)).subscribe({
+      next: (value: string) => {
+        if (value.length > 100) {
+          this.descriptionExceededLimit = true;
+          this.saveButtonDisabled = true;
+        } else {
+          this.descriptionExceededLimit = false;
+          this.saveButtonDisabled = false;
+        }
       },
     });
   }
@@ -250,6 +260,13 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     delete collectionData.visible_to;
 
     collectionData.user_id = Number(this.user.userId);
+
+    if (collectionData.description.length > 100) {
+      this.saveButtonDisabled = true;
+    } else {
+      this.saveButtonDisabled = false;
+    }
+
     if (this.currentView === CollectionView.Create) {
       this.collectionsService.post(collectionData).subscribe({
         next: () => {
