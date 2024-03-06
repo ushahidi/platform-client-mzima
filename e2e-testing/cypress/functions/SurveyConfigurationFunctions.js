@@ -43,7 +43,7 @@ class SurveyConfigurationFunctions {
       }
     
       type_post_title(title) {
-        cy.get(SurveyConfigurationLocators.postTitleField).type(title);
+        cy.get(SurveyConfigurationLocators.postTitleField).type(title, {force: true});
       }
     
       type_post_description(description) {
