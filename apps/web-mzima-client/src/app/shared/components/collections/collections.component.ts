@@ -150,14 +150,19 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
         this.collectionList = response.results.map((item) => {
           const isOwner = item.user_id === Number(this.user.userId);
 
+          const hasReadPrivilege =
+            this.user.allowed_privileges?.includes('read') || item.role?.includes('everyone');
+
+          console.log(hasReadPrivilege, item);
           return {
             ...item,
             my_collection: isOwner,
-            visible: this.isManageCollections || !(item.featured && !isOwner),
+            visible: hasReadPrivilege,
           };
         });
         this.collectionList = this.collectionList.filter((collection) => collection.visible);
         this.isLoading = false;
+        console.log(this);
       },
     });
   }

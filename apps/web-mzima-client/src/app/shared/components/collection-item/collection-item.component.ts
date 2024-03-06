@@ -11,6 +11,7 @@ export class CollectionItemComponent {
   @Input() public selectable?: boolean;
   @Input() public checked?: boolean;
   @Input() public actions?: boolean;
+  @Input() public disabled: boolean;
   @Output() public checkedChange = new EventEmitter<boolean>();
   @Output() public edit = new EventEmitter<Event>();
   @Output() public delete = new EventEmitter<Event>();
