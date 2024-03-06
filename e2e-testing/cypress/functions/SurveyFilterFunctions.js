@@ -100,7 +100,7 @@ class SurveyFilterFunctions {
       .find('.mat-pseudo-checkbox')
       .invoke('attr', 'class')
       .should('contain', 'mat-pseudo-checkbox-checked');
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 72');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 73');
     //unselect published and select under review option
     cy.get(DataViewLocators.filterSelectionList)
       .children(DataViewLocators.filterListOption)
