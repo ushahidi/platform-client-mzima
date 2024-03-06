@@ -10,7 +10,7 @@ describe("Automated Tests for Filter by Surveys", () => {
     cy.visit(Cypress.env('baseUrl'));
   });
 
-  it("Checks filters by survey", () => {
+  it("Filter posts by survey", () => {
     dataViewFilterFunctions.click_data_view_btn();
     dataViewFilterFunctions.check_post_filter_by_survey();
     dataViewFilterFunctions.verify_count_on_results();
@@ -26,7 +26,7 @@ describe("Automated Tests for Filter by Status", () => {
     cy.visit(Cypress.env('baseUrl'));
   });
 
-  it("Checks filters by status", () => {
+  it("Filter posts by status", () => {
     dataViewFilterFunctions.click_data_view_btn();
     dataViewFilterFunctions.check_post_filter_by_status();
   });
