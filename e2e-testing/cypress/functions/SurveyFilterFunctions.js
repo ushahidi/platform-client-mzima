@@ -121,7 +121,7 @@ class SurveyFilterFunctions {
       .should('contain', 'mat-pseudo-checkbox-checked');
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 440');
     //clear all filters
-    cy.get(DataViewLocators.statusBtn).click();
+    cy.get(DataViewLocators.statusBtn).focus().click();
     cy.get(DataViewLocators.clearFiltersBtn).click();
     //verify that published and under review are selected
     cy.get(DataViewLocators.statusBtn).click();
