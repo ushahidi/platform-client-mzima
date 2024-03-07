@@ -62,9 +62,7 @@ export class CategoriesComponent {
         complete: () => {
           this.getCategories();
           this.selectedCategories = [];
-          this.notificationService.showError(
-            this.translate.instant('bulk_destroy_success_countless'),
-          );
+          this.notificationService.showError(this.translate.instant(this.toastMessage()));
         },
       },
     );
@@ -79,6 +77,12 @@ export class CategoriesComponent {
     return this.selectedCategories.length > 1
       ? 'notify.category.bulk_destroy_confirm_desc'
       : 'notify.category.destroy_confirm_desc';
+  }
+
+  public toastMessage(): string {
+    return this.selectedCategories.length > 1
+      ? 'notify.category.bulk_destroy_success_countless'
+      : 'notify.category.destroy_success';
   }
 
   public showActions(event: boolean) {
