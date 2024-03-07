@@ -67,7 +67,7 @@ export class PollingService implements OnDestroy {
       .subscribe((result) => {
         result.forEach((job: ExportJobInterface) => {
           if (job.status === 'SUCCESS') {
-            this.notificationService.showError('JOB SUCCESS SUCCESS');
+            this.notificationService.showError('JOB SUCCESSFUL');
             this.importFinished.next(job);
           } else if (job.status === 'FAILED') {
             this.notificationService.showError('JOB FAILED');
