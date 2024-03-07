@@ -195,6 +195,9 @@
             [attr.data-qa]="'post-preview'"
           >
             <app-post-preview
+              tabindex="0"
+              [attr.aria-label]="'Post Item'"
+              role="link"
               [attr.data-qa]="'post-item'"
               class="post"
               [post]="post"
@@ -209,6 +212,7 @@
               [selectable]="isBulkOptionsVisible"
               [isChecked]="isPostChecked(post)"
               (statusChanged)="postStatusChanged()"
+              (keydown.enter)="showPostDetails(post)"
               (selected)="isPostSelected($event, post)"
               (mediaLoaded)="updateMasonry()"
               [ngClass]="{

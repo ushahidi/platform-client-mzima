@@ -2,7 +2,8 @@
   <mzima-client-button
     fill="clear"
     color="gray"
-    tabindex="-1"
+    ariaLabel="Edit this post"
+    tabindex="0"
     *ngIf="editable"
     [iconOnly]="true"
     (buttonClick)="editPost($event)"
@@ -14,8 +15,9 @@
   <mzima-client-button
     fill="clear"
     color="gray"
-    tabindex="-1"
+    tabindex="0"
     [iconOnly]="true"
+    ariaLabel="Share this post"
     (buttonClick)="sharePost()"
     class="post-head__control post-head__control--share"
   >
@@ -25,7 +27,8 @@
     *ngIf="!!user?.userId"
     fill="clear"
     color="gray"
-    tabindex="-1"
+    tabindex="0"
+    ariaLabel="More options"
     [iconOnly]="true"
     (click)="$event.stopPropagation()"
     class="post-head__control post-head__control--dots"
