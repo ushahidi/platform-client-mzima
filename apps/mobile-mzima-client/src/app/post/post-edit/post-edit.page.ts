@@ -518,7 +518,6 @@ export class PostEditPage {
    */
   public async submitPost(): Promise<void> {
     if (this.form.disabled) return;
-    // this.form.disable();
 
     try {
       await this.preparationData();
@@ -554,9 +553,6 @@ export class PostEditPage {
 
     await this.offlineStore(postData);
 
-    // TODO: Remove after testing
-    console.log('postData', postData);
-
     if (this.isConnection) {
       await this.uploadPost();
     } else {
@@ -582,6 +578,7 @@ export class PostEditPage {
    */
   async uploadPost() {
     const pendingPosts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
+    console.log('uploadPosts > pendingPosts', pendingPosts);
     for (let postData of pendingPosts) {
       if (postData?.file?.upload) {
         postData = await new UploadFileHelper(this.mediaService).uploadFile(
