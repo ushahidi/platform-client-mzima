@@ -48,11 +48,10 @@ export class CategoriesComponent {
   }
 
   public async deleteCategories() {
+    const messages = this.confirmationMessages();
     const confirmed = await this.confirmModalService.open({
-      title: this.translate.instant(this.titleMessage(), {
-        count: this.selectedCategories.length,
-      }),
-      description: this.translate.instant(this.descriptionMessage()),
+      title: messages.title,
+      description: messages.description,
       confirmButtonText: this.translate.instant('app.yes_delete'),
       cancelButtonText: this.translate.instant('app.no_go_back'),
     });
@@ -62,27 +61,26 @@ export class CategoriesComponent {
         complete: () => {
           this.getCategories();
           this.selectedCategories = [];
-          this.notificationService.showError(this.translate.instant(this.toastMessage()));
+          this.notificationService.showError(messages.toast);
         },
       },
     );
   }
 
-  public titleMessage(): string {
-    return this.selectedCategories.length > 1
-      ? 'notify.category.bulk_destroy_confirm'
-      : 'notify.category.destroy_confirm';
-  }
-  public descriptionMessage(): string {
-    return this.selectedCategories.length > 1
-      ? 'notify.category.bulk_destroy_confirm_desc'
-      : 'notify.category.destroy_confirm_desc';
+  public confirmationMessages(): { title: string; description: string; toast: string } {
+    const isBulk = this.selectedCategories.length > 1;
+    const count = this.selectedCategories.length;
+    return {
+      title: this.getMessage('destroy_confirm', isBulk, count),
+      description: this.getMessage('destroy_confirm_desc', isBulk, count),
+      toast: this.getMessage('destroy_success', isBulk, count),
+    };
   }
 
-  public toastMessage(): string {
-    return this.selectedCategories.length > 1
-      ? 'notify.category.bulk_destroy_success_countless'
-      : 'notify.category.destroy_success';
+  private getMessage(baseKey: string, isBulk: boolean = false, count?: number): string {
+    const prefix = isBulk ? 'bulk_' : '';
+    const countProperty = count !== undefined ? { count: count } : {};
+    return this.translate.instant(`notify.category.${prefix}${baseKey}`, countProperty);
   }
 
   public showActions(event: boolean) {
