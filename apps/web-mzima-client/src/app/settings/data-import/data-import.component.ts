@@ -2,14 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { omit, clone, invert, keys, includes } from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import {
   DataImportService,
   FormsService,
   FormAttributeInterface,
   FormCSVInterface,
   FormInterface,
+  SurveysService,
+  SurveyItem,
+  SurveyItemTask
 } from '@mzima-client/sdk';
+
 import { BaseComponent } from '../../base.component';
 import { NotificationService } from '../../core/services/notification.service';
 import { PollingService } from '../../core/services/polling.service';
@@ -32,7 +36,7 @@ enum PostStatus {
 export class DataImportComponent extends BaseComponent implements OnInit {
   PostStatus = PostStatus;
   selectedFile: File;
-  selectedForm: FormInterface;
+  selectedForm: SurveyItem;
   forms$: Observable<FormInterface[]>;
   uploadedCSV: FormCSVInterface;
   hasRequiredTask = false;
@@ -41,6 +45,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   uploadErrors: any[] = [];
   importErrors: boolean = false;
   fileChanged = false;
+  public surveys: Observable<any>;
 
   statusOption: string;
   selectedStatus: PostStatus;
@@ -58,15 +63,21 @@ export class DataImportComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private confirm: ConfirmModalService,
     private formsService: FormsService,
+    private surveysService: SurveysService
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
   }
 
   ngOnInit() {
-    this.forms$ = this.formsService.getFresh();
+    this.getSurveys();
   }
 
+  getSurveys() {
+    this.surveysService.get().subscribe((result) => {
+      this.surveys = of(result.results);
+    });
+  }
   loadData(): void {}
 
   uploadFile($event: any) {
@@ -79,38 +90,38 @@ export class DataImportComponent extends BaseComponent implements OnInit {
     reader.readAsDataURL($event.target.files[0]);
   }
 
-  transformAttributes(attributes: any) {
-    const titleAttr = _.find(attributes, { type: 'title' });
-    const descAttr = _.find(attributes, { type: 'description' });
-    const titleLabel = titleAttr
-      ? titleAttr.label
-      : this.translateService.instant('post.modify.form.title');
-    const descLabel = descAttr
-      ? descAttr.label
-      : this.translateService.instant('post.modify.form.description');
+  transformAttributes(attributes: SurveyItemTask) {
+    // const titleAttr = _.find(attributes, { type: 'title' });
+    // const descAttr = _.find(attributes, { type: 'description' });
+    // const titleLabel = titleAttr
+    //   ? titleAttr.label
+    //   : this.translateService.instant('post.modify.form.title');
+    // const descLabel = descAttr
+    //   ? descAttr.label
+    //   : this.translateService.instant('post.modify.form.description');
 
-    attributes = _.chain(attributes)
-      .reject({ type: 'point' })
-      .reject({ type: 'title' })
-      .reject({ type: 'description' })
-      .push(
-        {
-          key: 'title',
-          label: titleLabel,
-          priority: 0,
-          required: true,
-        },
-        {
-          key: 'content',
-          label: descLabel,
-          priority: 1,
-          required: true,
-        },
-      )
-      .sortBy('priority')
-      .value();
+    // attributes = _.chain(attributes)
+    //   .reject({ type: 'point' })
+    //   .reject({ type: 'title' })
+    //   .reject({ type: 'description' })
+    //   .push(
+    //     {
+    //       key: 'title',
+    //       label: titleLabel,
+    //       priority: 0,
+    //       required: true,
+    //     },
+    //     {
+    //       key: 'content',
+    //       label: descLabel,
+    //       priority: 1,
+    //       required: true,
+    //     },
+    //   )
+    //   .sortBy('priority')
+    //   .value();
 
-    return attributes;
+    // return attributes;
   }
 
   private checkFormAndFile() {
@@ -119,8 +130,9 @@ export class DataImportComponent extends BaseComponent implements OnInit {
         this.loader.show();
         this.importService.uploadFile(this.selectedFile, this.selectedForm.id).subscribe({
           next: (csv) => {
-            this.uploadedCSV = csv;
+            this.uploadedCSV = csv.result;
             this.fileChanged = false;
+            console.log(this.uploadedCSV)
 
             if (this.uploadedCSV.columns?.every((c: any) => c === ''))
               return this.notification.showError(
@@ -143,18 +155,30 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   }
 
   private proceedAttributes() {
-    forkJoin([
-      this.formsService.getStages(this.selectedForm.id.toString()),
-      this.formsService.getAttributes(this.selectedForm.id.toString()),
-    ]).subscribe({
-      next: (result) => {
-        this.loader.hide();
-        this.selectedForm.tasks = result[0];
-        this.selectedForm.attributes = this.transformAttributes(result[1]);
-        this.hasRequiredTask = this.selectedForm.tasks.some((task) => task.required);
-        this.setRequiredFields(this.selectedForm.attributes!);
-      },
-    });
+    // forkJoin([
+    //   this.formsService.getStages(this.selectedForm.id.toString()),
+    //   this.formsService.getAttributes(this.selectedForm.id.toString()),
+    // ]).subscribe({
+    //   next: (result) => {
+    //     this.loader.hide();
+    //     this.selectedForm.tasks = result[0];
+    //     this.selectedForm.attributes = this.transformAttributes(result[1]);
+    //     this.hasRequiredTask = this.selectedForm.tasks.some((task) => task.required);
+    //     this.setRequiredFields(this.selectedForm.attributes!);
+    //   },
+    // });
+    this.hasRequiredTask = this.selectedForm.tasks.some((task) => task.required);
+    this.setRequiredFields();
+    this.loader.hide();
+  }
+  getFieldKey(field : any) {
+    if (field.type === 'title') {
+      return 'title';
+    }
+    if (field.type === 'description') {
+      return 'content';
+    }
+    return field.key;
   }
 
   formChanged() {
@@ -163,12 +187,14 @@ export class DataImportComponent extends BaseComponent implements OnInit {
     }
   }
 
-  setRequiredFields(attributes: FormAttributeInterface[]) {
+  setRequiredFields() {
     this.requiredFields.clear();
-    attributes.forEach((attr) => {
-      if (attr.required) {
-        this.requiredFields.set(attr.key, attr.label);
-      }
+    this.selectedForm.tasks.forEach((task) => {
+      task.fields.forEach((field) => {
+        if (field.required) {
+          this.requiredFields.set(this.getFieldKey(field), field.label);
+        }
+      });
     });
   }
 
@@ -260,6 +286,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   }
 
   checkRequiredFields(fields: any) {
+    console.log(fields)
     const missing: any = [];
     this.requiredFields.forEach((v, k) => {
       if (_.isNil(fields[k])) {
