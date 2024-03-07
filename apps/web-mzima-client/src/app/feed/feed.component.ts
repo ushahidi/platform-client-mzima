@@ -55,6 +55,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
   public isLoading = false;
+  public loadingMorePosts: boolean;
+  public paginationElementsAllowed: boolean = false;
   public mode: FeedMode = FeedMode.Tiles;
   public activePostId: number;
   public total: number;
@@ -292,19 +294,21 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     //   this.currentPage = 1;
     // }
     this.isLoading = true;
+    this.paginationElementsAllowed = this.loadingMorePosts; // this check prevents the load more button & area from temporarily disappearing (on click)
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
+        const dataMetaPerPage = Number(data.meta.per_page);
         this.postCurrentLength =
-          data.count < Number(data.meta.per_page)
-            ? data.meta.total
-            : data.meta.current_page * data.count;
+          data.count < dataMetaPerPage ? data.meta.total : data.meta.current_page * data.count;
         this.eventBusService.next({
           type: EventType.FeedPostsLoaded,
           payload: true,
         });
         setTimeout(() => {
           this.isLoading = false;
+          this.paginationElementsAllowed = data.meta.total > dataMetaPerPage; // show pagination-related elements
+          this.loadingMorePosts = false; // for load more button's loader/spinner
           this.updateMasonry();
           setTimeout(() => {
             if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
@@ -512,8 +516,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public loadMore(): void {
     if (this.params.limit !== undefined && this.params.limit * this.params.page! < this.total) {
-      this.currentPage++;
-      this.params.page!++;
+      this.loadingMorePosts = true;
+      this.currentPage += 1;
+      this.params.page! += 1;
       this.getPostsSubject.next({ params: this.params });
     }
   }
