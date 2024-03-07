@@ -8,9 +8,17 @@
 >
   <ng-container>
     <div class="feed-page__info-panel" *ngIf="isDesktop">
-      <span class="feed-page__results-info" [attr.data-qa]="'feed-page-results'"
-        >{{ 'app.current_results' | translate }} {{ postCurrentLength }} / {{ total }}</span
+      <span
+        class="feed-page__results-info"
+        [ngClass]="{ 'feed-page__results-info__dim': !posts.length }"
+        [attr.data-qa]="'feed-page-results'"
       >
+        <ng-container *ngIf="!posts.length">Loading current posts...</ng-container>
+        <ng-container *ngIf="posts.length"
+          >{{ 'app.current_results' | translate }} {{ postCurrentLength }} /
+          {{ total }}</ng-container
+        >
+      </span>
       <div class="feed-page__mode-switcher">
         <mzima-client-button
           [fill]="mode === FeedMode.Tiles ? 'outline' : 'solid'"
