@@ -235,6 +235,10 @@
     font-size: 14px;
     line-height: 17px;
     color: var(--color-neutral-100);
+
+    &__dim {
+      color: var(--color-neutral-70);
+    }
   }
 
   &__mode-switcher {
