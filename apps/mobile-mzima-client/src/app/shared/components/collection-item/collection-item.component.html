@@ -33,8 +33,12 @@
         {{ collection.description }}
       </ion-text>
     </div>
-    <ion-text color="primary" class="collection-item__count">
-      {{ collection.posts_count }}
+    <ion-text
+      color="primary"
+      class="collection-item__count"
+      *ngIf="collection.posts_count !== undefined"
+    >
+      {{ collection.posts_count }} {{ collection.posts_count > 1 ? 'posts' : 'post' }}
     </ion-text>
   </div>
 </ng-template>
