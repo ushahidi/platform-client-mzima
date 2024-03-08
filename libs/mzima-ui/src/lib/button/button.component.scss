@@ -10,7 +10,7 @@ $laptop: 1439px;
   overflow: hidden;
   position: relative;
   text-decoration: none;
-  -webkit-appearance: none;
+  --webkit-appearance: none;
   height: var(--height, auto);
   transition: color 0.35s ease;
   font-family: var(--font-family);
