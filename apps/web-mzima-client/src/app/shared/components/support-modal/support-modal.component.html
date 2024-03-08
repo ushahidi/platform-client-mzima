@@ -18,14 +18,9 @@
     <h4 class="menu-item__title">{{ item.title }}</h4>
     <p *ngIf="item.description?.length">{{ item.description }}</p>
   </div>
+
   <!-- <div matRipple class="menu-item" *ngIf="isLoggedIn">
     <h4 class="menu-item__title">{{ 'app.intercom.intercom' | translate }}</h4>
     <p class="intercom_custom_launcher">{{ 'app.intercom.description' | translate }}</p>
   </div> -->
-  <div matRipple class="menu-item" (click)="openUrl('https://www.ushahidi.com/terms-of-service/')">
-    <h4 class="menu-item__title">{{ 'app.terms_and_conditions' | translate }}</h4>
-  </div>
-  <div matRipple class="menu-item" (click)="openUrl('https://www.ushahidi.com/privacy-policy/')">
-    <h4 class="menu-item__title">{{ 'app.privacy_policy' | translate }}</h4>
-  </div>
 </div>
