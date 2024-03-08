@@ -5,12 +5,14 @@ import { Filesystem } from '@capacitor/filesystem';
 export class ConvertImage {
   async readAsBase64(photo: Photo) {
     if (Capacitor.getPlatform() === 'hybrid') {
+      console.log('Reading in Hybrid mode');
       const file = await Filesystem.readFile({
         path: photo.path!,
       });
 
       return file.data;
     } else {
+      console.log('Reading in Web mode');
       const response = await fetch(photo.webPath!);
       const blob = await response.blob();
 
