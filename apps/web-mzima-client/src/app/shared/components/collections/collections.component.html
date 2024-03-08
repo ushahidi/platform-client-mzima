@@ -89,6 +89,8 @@
           [checked]="isPostInCollection(item)"
           (checkedChange)="onCheckChange($event, item)"
           [data-qa]="'collection-item'"
+          tabindex="0"
+          (keydown.enter)="goToCollection(item)"
         >
         </app-collection-item>
       </div>
