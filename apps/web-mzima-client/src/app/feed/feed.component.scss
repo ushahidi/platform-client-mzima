@@ -449,3 +449,9 @@
     }
   }
 }
+
+@media print {
+  .post {
+    width: calc(50% - 16px);
+  }
+}
