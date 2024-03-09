@@ -12,7 +12,10 @@ describe("Automated Tests for Users", () => {
   it("Adds User", () => {
     userFunctions.add_user();
   });
-  it("Deletes User",()=>{
+  it("Deletes Single User", () => {
     userFunctions.delete_user();
-  })
+  });
+  it("Deletes Multiple Users in Bulk", () => {
+    userFunctions.delete_multiple_users();
+  });
 });
