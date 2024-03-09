@@ -103,6 +103,7 @@ const routes: Routes = [
       breadcrumb: 'nav.posts',
       ogTitle: 'nav.posts',
     },
+    title: 'Post',
   },
   {
     path: 'posts', // For support legacy URL routes
@@ -112,6 +113,7 @@ const routes: Routes = [
       breadcrumb: 'nav.posts',
       ogTitle: 'nav.posts',
     },
+    title: 'Posts',
   },
   {
     path: 'posts/:id',
@@ -125,6 +127,7 @@ const routes: Routes = [
       breadcrumb: 'app.page-not-found',
       ogTitle: 'app.page-not-found',
     },
+    title: 'Not Found',
   },
   {
     path: '**',
