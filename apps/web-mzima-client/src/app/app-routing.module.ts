@@ -25,6 +25,7 @@ const routes: Routes = [
       breadcrumb: 'nav.map',
       ogTitle: 'nav.map',
     },
+    title: 'Map',
   },
   {
     path: 'feed',
