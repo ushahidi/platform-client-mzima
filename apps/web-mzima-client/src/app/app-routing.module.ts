@@ -70,6 +70,7 @@ const routes: Routes = [
     path: 'forgotpassword/confirm/:token',
     canActivate: [ResetTokenGuard],
     component: PageNotFoundComponent,
+    title: 'Forgot Password',
   },
   {
     path: 'forbidden',
@@ -79,6 +80,7 @@ const routes: Routes = [
       breadcrumb: 'nav.forbidden',
       ogTitle: 'nav.forbidden',
     },
+    title: 'forbidden',
   },
   {
     path: 'views',
