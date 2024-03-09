@@ -35,6 +35,7 @@ const routes: Routes = [
       breadcrumb: 'nav.feed',
       ogTitle: 'nav.feed',
     },
+    title: 'Feed',
   },
   {
     path: 'activity',
@@ -44,6 +45,7 @@ const routes: Routes = [
       breadcrumb: 'nav.activity',
       ogTitle: 'nav.activity',
     },
+    title: 'Activity',
   },
   {
     path: 'settings',
