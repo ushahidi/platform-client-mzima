@@ -6,7 +6,8 @@
     'feed-page--no-offset': !isMainFiltersOpen
   }"
 >
-  <ng-container>
+  <!-- Reminder: "isLoading" and "postsCheck().stillLoading" are not the same - see github comment: https://github.com/ushahidi/platform-client-mzima/pull/783#discussion_r1492422808 -->
+  <ng-container *ngIf="(posts.length > 0 && isLoading) || (posts.length === 0 && isLoading)">
     <div class="feed-page__info-panel" *ngIf="isDesktop">
       <span
         class="feed-page__results-info"
@@ -27,7 +28,7 @@
           [color]="mode === FeedMode.Tiles ? 'primary' : 'light'"
           [isActive]="mode === FeedMode.Tiles"
           (buttonClick)="switchMode(FeedMode.Tiles)"
-          [disabled]="!posts.length"
+          [disabled]="posts.length >= 0 && postsCheck().stillLoading"
           class="feed-page__mode-switcher__button"
         >
           <mat-icon icon svgIcon="tiles"></mat-icon>
@@ -39,7 +40,7 @@
           [color]="mode === FeedMode.Post ? 'primary' : 'light'"
           [isActive]="mode === FeedMode.Post"
           (buttonClick)="switchMode(FeedMode.Post)"
-          [disabled]="!posts.length"
+          [disabled]="posts.length >= 0 && postsCheck().stillLoading"
           class="feed-page__mode-switcher__button"
         >
           <mat-icon icon svgIcon="sidebar"></mat-icon>
@@ -144,7 +145,7 @@
           class="feed-page__control feed-page__control--bulk"
           *ngIf="user?.allowed_privileges?.includes('update')"
           (buttonClick)="toggleBulkOptions(!isBulkOptionsVisible)"
-          [disabled]="!posts.length"
+          [disabled]="posts.length >= 0 && postsCheck().stillLoading"
         >
           {{ 'post.modify.bulk_actions' | translate }}
         </mzima-client-button>
@@ -155,7 +156,7 @@
             [iconOnly]="!isDesktop"
             [matMenuTriggerFor]="sortingMenu"
             class="feed-page__control feed-page__control--sorting"
-            [disabled]="!posts.length"
+            [disabled]="posts.length >= 0 && postsCheck().stillLoading"
           >
             <span *ngIf="isDesktop">{{ 'global_filter.sorting' | translate }}</span>
             <mat-icon icon svgIcon="sorting"></mat-icon>
@@ -297,16 +298,11 @@
         </div>
       </ng-container>
     </div>
-    <div
-      class="feed-page__post"
-      [ngClass]="{ 'feed--post-view-skeleton': isLoading }"
-      *ngIf="mode === FeedMode.Post"
-      [attr.data-qa]="'post-details'"
-    >
-      <ng-container *ngIf="isLoading">
-        <app-spinner class="spinner"></app-spinner>
-      </ng-container>
-      <router-outlet *ngIf="!isLoading" (activate)="onOutletLoaded($event)"></router-outlet>
+    <div class="feed-page__post" *ngIf="mode === FeedMode.Post" [attr.data-qa]="'post-details'">
+      <router-outlet
+        *ngIf="posts.length || !postsCheck().stillLoading; else loader"
+        (activate)="onOutletLoaded($event)"
+      ></router-outlet>
     </div>
   </div>
 </div>
