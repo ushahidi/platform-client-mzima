@@ -55,6 +55,7 @@ const routes: Routes = [
       breadcrumb: 'nav.settings',
       ogTitle: 'nav.settings',
     },
+    title: 'Settings',
   },
   {
     path: 'reset',
