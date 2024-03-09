@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatMenu } from '@angular/material/menu';
 
 import { AuthService, BreakpointService, ConfigService, SessionService } from '@services';
 import { NavToolbarService } from '../../../helpers/navtoolbar.service';
@@ -10,6 +11,10 @@ import { BaseComponent } from '../../../../base.component';
   styleUrls: ['./account-and-logout.component.scss'],
 })
 export class AccountAndLogoutComponent extends BaseComponent implements OnInit {
+  isMenuOpen: boolean = false;
+
+  @ViewChild('accountMenu') accountMenu: MatMenu;
+
   constructor(
     protected override sessionService: SessionService,
     protected override breakpointService: BreakpointService,
@@ -25,6 +30,10 @@ export class AccountAndLogoutComponent extends BaseComponent implements OnInit {
     this.getUserData();
   }
 
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
   loadData(): void {}
 
   public openAccountSettings(): void {
@@ -34,5 +43,9 @@ export class AccountAndLogoutComponent extends BaseComponent implements OnInit {
   public logout(): void {
     this.authService.logout();
     this.configService.initAllConfigurations();
+  }
+
+  menuClosed(): void {
+    this.isMenuOpen = false;
   }
 }

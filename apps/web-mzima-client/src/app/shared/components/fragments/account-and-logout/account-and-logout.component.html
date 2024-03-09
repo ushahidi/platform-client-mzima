@@ -18,10 +18,15 @@
         user.gravatar || '00000000000000000000000000000000'
       }}?d=retro&s=64"
     />
-    <mat-icon class="account-info__arrow" svgIcon="arrow-down"></mat-icon>
+    <mat-icon
+      class="account-info__arrow"
+      svgIcon="arrow-down"
+      [class.rotated]="isMenuOpen"
+      (click)="toggleMenu()"
+    ></mat-icon>
   </mzima-client-button>
 
-  <mat-menu #accountMenu="matMenu" class="account-menu">
+  <mat-menu #accountMenu="matMenu" class="account-menu" (closed)="menuClosed()">
     <button [data-qa]="'account-settings'" mat-menu-item (click)="openAccountSettings()">
       {{ 'nav.account_settings' | translate }}
     </button>
