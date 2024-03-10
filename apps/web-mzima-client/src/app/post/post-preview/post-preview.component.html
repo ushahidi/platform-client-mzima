@@ -10,7 +10,7 @@
 >
   <div class="post__head">
     <ng-container *ngIf="selectable">
-      <mat-checkbox [(ngModel)]="isChecked"></mat-checkbox>
+      <mat-checkbox [(ngModel)]="isChecked" (keydown.enter)="postClicked($event)"></mat-checkbox>
     </ng-container>
     <app-post-head
       [post]="post"
@@ -31,7 +31,7 @@
 
   <div class="post__main">
     <div class="post__content">
-      <h3 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h3>
+      <p *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</p>
       <p *ngIf="post.title?.length && post.content?.length">{{ post.content }}</p>
     </div>
     <div class="post__visual" *ngIf="media && post.source !== 'Twitter'">

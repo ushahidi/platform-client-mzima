@@ -5,7 +5,12 @@
   [ngClass]="{ 'collection-item--has-checkbox': selectable }"
   [attr.data-qa]="'collection-item'"
 >
-  <div *ngIf="selectable" class="collection-item__checkbox" (click)="$event.preventDefault()">
+  <div
+    *ngIf="selectable"
+    class="collection-item__checkbox"
+    (click)="$event.preventDefault()"
+    (keydown.enter)="selectable && changeChecked($event)"
+  >
     <mat-checkbox [checked]="checked"> </mat-checkbox>
   </div>
   <div class="collection-item__actions" *ngIf="actions && !selectable">

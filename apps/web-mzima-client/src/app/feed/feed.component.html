@@ -15,7 +15,8 @@
         <mzima-client-button
           [fill]="mode === FeedMode.Tiles ? 'outline' : 'solid'"
           [iconOnly]="true"
-          id="switcher-button-tiles"
+          [id]="'switcher-button-tiles'"
+          ariaLabel="Tile View"
           [color]="mode === FeedMode.Tiles ? 'primary' : 'light'"
           [isActive]="mode === FeedMode.Tiles"
           (buttonClick)="switchMode(FeedMode.Tiles)"
@@ -26,7 +27,8 @@
         <mzima-client-button
           [fill]="mode === FeedMode.Post ? 'outline' : 'solid'"
           [iconOnly]="true"
-          id="switcher-button-post"
+          ariaLabel="Post View"
+          [id]="'switcher-button-post'"
           [color]="mode === FeedMode.Post ? 'primary' : 'light'"
           [isActive]="mode === FeedMode.Post"
           (buttonClick)="switchMode(FeedMode.Post)"
@@ -196,7 +198,7 @@
           >
             <app-post-preview
               tabindex="0"
-              [attr.aria-label]="'Post Item'"
+              [attr.aria-label]="'Post item for' + post.title"
               role="link"
               [attr.data-qa]="'post-item'"
               class="post"

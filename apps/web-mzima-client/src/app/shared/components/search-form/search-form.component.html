@@ -23,6 +23,7 @@
     <mzima-client-button
       matSuffix
       fill="clear"
+      ariaLabel="clear search"
       [iconOnly]="true"
       color="secondary"
       *ngIf="searchQuery?.length"
@@ -52,6 +53,8 @@
     <button
       type="button"
       (click)="toggleMainFilters()"
+      aria-label="toggle main filters"
+      [attr.aria-expanded]="isFiltersVisible ? 'true' : 'false'"
       class="search-form__main-filters__toggle-btn"
     >
       <mat-icon svgIcon="angle-right"></mat-icon>
@@ -155,6 +158,7 @@
               name="surveys"
               class="selection-list"
               formControlName="form"
+              aria-label="survey filters"
               [data-qa]="'survey-selection-list'"
             >
               <mat-list-option
