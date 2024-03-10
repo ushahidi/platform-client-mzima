@@ -1896,6 +1896,41 @@
     "removed": "Oznámení bylo odebráno",
     "are_you_sure_you_want_to_remove_this_notification": "Opravdu chcete toto oznámení odebrat?"
   },
+  "tour": {
+    "steps": {
+      "0": {
+        "title": "Ahoj",
+        "content": "<p>Úspěšně jste vytvořili své nasazení. Nyní, když ho vylepšujeme, se seznamte s funkcemi Ushahidi. Proces seznamování zabere pár minut.</p>"
+      },
+      "1": {
+        "title": "Sběr dat",
+        "content": "<p>Můžete vidět všechna shromážděná data při pohybu v režimu Mapa nebo v režimu Datový pohled.</p>"
+      },
+      "2": {
+        "title": "Filtrování",
+        "content": "<p>Můžete filtrovat výsledky podle jejich stavu, kategorií, rozmezí dat a polohy. Filtry můžete také uložit, abyste se k nim rychle mohli vrátit.</p><p>Pro snížení množství dat rychlým a efektivním způsobem použijte levý panel k výběru konkrétních Průzkumů a Zdrojů dat.</p>"
+      },
+      "3": {
+        "title": "Řazení",
+        "content": "<p>Můžete třídit výsledky podle data zveřejnění, nejnovějších aktualizací a data vytvoření - od nejnovějších po nejstarší.</p>"
+      },
+      "4": {
+        "title": "Aktivita",
+        "content": "<p>Zkontrolujte aktivitu vašeho nasazení podle času a objemu. Přejeďte myší nad každou linkou nebo sloupcem, abyste je zvýraznili a viděli podrobnosti.</p>"
+      },
+      "5": {
+        "title": "Kolekce",
+        "content": "<p>Pro uspořádání vašich příspěvků do skupin můžete vytvořit Kolekce. Stačí vybrat jméno, napsat popis a vybrat zobrazení - je to tak jednoduché!</p>"
+      },
+      "6": {
+        "title": "Nastavení",
+        "content": "<p>Změňte své nasazení v Nastavení. Můžete spravovat detaily vašeho nasazení v oblasti Průzkumy, Zdroje dat, Import a Darování.</p><p>Také vám umožňuje exportovat data, vytvářet kategorie, spravovat oprávnění uživatelů a mnoho dalšího!</p>"
+      },
+      "7": {
+        "title": "Jste připraveni!"
+      }
+    }
+  },
   "contact": {
     "edit": "Upravit",
     "save_changes": "Uložit změny",
