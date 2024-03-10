@@ -32,6 +32,48 @@
       "intercom": "Intercom",
       "description": "Contact Ushahidi staff for chat support"
     },
+    "onboarding_modal": {
+      "start": {
+        "title": "Olá!",
+        "content": "Você criou o seu deployment com sucesso. Agora, enquanto fazemos os ajustes finais, familiarize-se com as funcionalidades do Ushahidi. O processo de integração levará alguns minutos."
+      },
+      "data_collection": {
+        "title": "Coleta de dados",
+        "content": "Você pode visualizar todos os dados coletados enquanto navega pela visualização de Mapa ou pela visualização de Dados."
+      },
+      "filtering": {
+        "title": "Filtragem",
+        "content": {
+          "description": "Você pode filtrar seus resultados por Status, Categorias, Intervalo de datas e Localização. Também pode salvar seus filtros para acessá-los rapidamente.",
+          "tip": "Para reduzir a quantidade de dados de forma rápida e eficiente, utilize a barra lateral esquerda para escolher enquetes e fontes de dados específicas."
+        }
+      },
+      "sorting": {
+        "title": "Ordenação",
+        "content": "Você pode ordenar os resultados por data de postagem, últimas atualizações e data de criação - do mais recente para o mais antigo."
+      },
+      "activity": {
+        "title": "Atividade",
+        "content": "Verifique a atividade do seu deployment ao longo do tempo e por volume. Passe o mouse sobre cada linha ou barra para destacá-la e ver os detalhes."
+      },
+      "collections": {
+        "title": "Coleções",
+        "content": "Para organizar suas postagens em grupos, você pode criar Coleções. Basta escolher um nome, escrever uma descrição e escolher o modo de visualização - é simples assim!"
+      },
+      "settings": {
+        "title": "Configurações",
+        "content": {
+          "description": "Altere seu deployment nas Configurações. Você pode gerenciar os detalhes do seu deployment quando se trata de Enquetes, Fontes de dados, Importação e Doação.",
+          "tip": "Além disso, você pode exportar dados, criar categorias, gerenciar permissões de usuários e muito mais!"
+        }
+      },
+      "end": "Você está pronto!",
+      "onboarding_done": {
+        "description": "Que empolgante! Agora você conhece as funcionalidades mais importantes e está pronto para começar a usar a plataforma Ushahidi.",
+        "tip": "Lembre-se, em caso de dúvidas, não hesite em entrar em contato com nossa equipe através de",
+        "help": "Ajuda e Suporte"
+      }
+    },
     "report_a_bug": {
       "title": "Relate um bug",
       "description": "Diga-nos quando algo não funcionar da forma esperada."
@@ -121,7 +163,7 @@
     "language": "Idioma",
     "select_language": "Selecionar Idioma",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Anterior",
     "choose_survey": "Choose survey",
     "add_collection": "Adicionar coleção",
     "choose_photo": "Escolha a foto",

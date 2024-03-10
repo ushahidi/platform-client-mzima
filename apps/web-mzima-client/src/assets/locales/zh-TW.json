@@ -32,6 +32,48 @@
       "intercom": "Intercom線上客服",
       "description": "聯絡 Ushahidi 公司來取得線上聊天功能"
     },
+    "onboarding_modal": {
+      "start": {
+        "title": "你好！",
+        "content": "您已成功建立您的部署。現在，當我們進行完善時，請開始使用 Ushahidi 功能。導入過程將花費幾分鐘時間。"
+      },
+      "data_collection": {
+        "title": "資料收集",
+        "content": "您可以在地圖視圖或資料視圖中移動時查看所有收集的資料。"
+      },
+      "filtering": {
+        "title": "篩選",
+        "content": {
+          "description": "您可以按狀態、類別、日期範圍和位置篩選您的結果。您也可以保存您的篩選條件，這樣您可以快速返回它們。",
+          "tip": "為了以快速有效的方式減少數據量，請使用左側欄選擇特定的調查和資料來源。"
+        }
+      },
+      "sorting": {
+        "title": "排序",
+        "content": "您可以按發布日期、最新更新和創建日期排序結果 - 從最新到最舊。"
+      },
+      "activity": {
+        "title": "活動",
+        "content": "隨著時間的推移和量的變化，檢查您的部署活動。將滑鼠懸停在每條線或條上以突出顯示它並查看詳細信息。"
+      },
+      "collections": {
+        "title": "收藏",
+        "content": "為了將您的帖子組織成組，您可以創建收藏。只需選擇名稱、撰寫描述並選擇檢視模式 - 就是這麼簡單！"
+      },
+      "settings": {
+        "title": "設置",
+        "content": {
+          "description": "在設置中更改您的部署。當涉及到調查、數據來源、導入和捐贈時，您可以管理您的部署詳細信息。",
+          "tip": "此外，它還允許您導出數據、創建類別、管理用戶權限等等！"
+        }
+      },
+      "end": "你已準備好了！",
+      "onboarding_done": {
+        "description": "多麼令人興奮！現在您已經了解了最重要的功能，並準備開始使用 Ushahidi 平台。",
+        "tip": "請記住，如果有任何問題，請隨時與我們的團隊聯繫，",
+        "help": "幫助與支持"
+      }
+    },
     "report_a_bug": {
       "title": "回報錯誤",
       "description": "如果功能無法正常使用，請告訴我們"
@@ -121,7 +163,7 @@
     "language": "語言",
     "select_language": "選擇語言",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "上一步",
     "choose_survey": "Choose survey",
     "contact_email_address": "聯絡電子郵件地址：",
     "add_collection": "添加集合",

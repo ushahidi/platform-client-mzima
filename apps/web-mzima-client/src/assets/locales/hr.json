@@ -32,6 +32,48 @@
       "intercom": "Intercom",
       "description": "Kontaktiraj Ushahidi tim kroz chat podršku"
     },
+    "onboarding_modal": {
+      "start": {
+        "title": "Pozdrav!",
+        "content": "Uspješno ste kreirali svoje implementacije. Sada, dok je još uvijek doradjujemo, molimo vas da se upoznate s mogućnostima Ushahidi platforme. Proces uvođenja će trajati nekoliko minuta."
+      },
+      "data_collection": {
+        "title": "Prikupljanje podataka",
+        "content": "Možete vidjeti sve prikupljene podatke dok se krećete kroz prikaz karte ili prikaz podataka."
+      },
+      "filtering": {
+        "title": "Filtriranje",
+        "content": {
+          "description": "Možete filtrirati rezultate prema statusu, kategorijama, vremenskom rasponu i lokaciji. Također možete spremiti svoje filtre kako biste se brzo mogli vratiti na njih.",
+          "tip": "Da biste smanjili količinu podataka na brz i učinkovit način, koristite lijevu traku za odabir određenih istraživanja i izvora podataka."
+        }
+      },
+      "sorting": {
+        "title": "Sortiranje",
+        "content": "Možete sortirati rezultate prema datumu objave, najnovijim ažuriranjima i datumu stvaranja - od najnovijih do najstarijih."
+      },
+      "activity": {
+        "title": "Aktivnost",
+        "content": "Provjerite aktivnost vaše implementacije tijekom vremena i prema volumenu. Pomičite mišem preko svake linije ili trake da biste je istaknuli i vidjeli detalje."
+      },
+      "collections": {
+        "title": "Kolekcije",
+        "content": "Da biste organizirali svoje objave u grupe, možete stvoriti Kolekcije. Samo odaberite ime, napišite opis i odaberite način prikaza - tako jednostavno!"
+      },
+      "settings": {
+        "title": "Postavke",
+        "content": {
+          "description": "Promijenite svoju implementaciju u Postavkama. Možete upravljati detaljima svoje implementacije kada je riječ o Istraživanjima, Izvorima podataka, Uvozu i Donacijama.",
+          "tip": "Također vam omogućuje izvoz podataka, stvaranje kategorija, upravljanje dozvolama korisnika i još mnogo toga!"
+        }
+      },
+      "end": "Spremni ste!",
+      "onboarding_done": {
+        "description": "Kako uzbudljivo! Sada znate najvažnije značajke i spremni ste započeti korištenje Ushahidi platforme.",
+        "tip": "Zapamtite, u slučaju bilo kakvih pitanja, slobodno se obratite našem timu putem",
+        "help": "Pomoć i podrška"
+      }
+    },
     "report_a_bug": {
       "title": "Prijavi grešku",
       "description": "Javite nam kada nešto ne radi kako bi trebalo."
@@ -121,7 +163,7 @@
     "language": "Jezik",
     "select_language": "Odaberi jezik",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Prethodni",
     "choose_survey": "Choose survey",
     "contact_email_address": "Adresa e-pošte za kontakt:",
     "add_collection": "Dodaj zbirku",

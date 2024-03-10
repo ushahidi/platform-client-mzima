@@ -32,6 +32,48 @@
       "intercom": "Intercom",
       "description": "Lépj kapcsolatba az Ushahidi csapatával, hogy csetes támogatást kaphass"
     },
+    "onboarding_modal": {
+      "start": {
+        "title": "Helló!",
+        "content": "Sikeresen létrehoztad a telepítésed. Most, amíg finomítjuk, ismerkedj meg az Ushahidi funkcióival. Az onboarding folyamat néhány percet vesz igénybe."
+      },
+      "data_collection": {
+        "title": "Adatgyűjtés",
+        "content": "Az összes gyűjtött adatot megtekintheted a Térképnézet vagy az Adatnézet között navigálva."
+      },
+      "filtering": {
+        "title": "Szűrés",
+        "content": {
+          "description": "Szűrheted az eredményeket státusz, kategóriák, dátumtartomány és helyszín alapján. Mentheted a szűrőket is, hogy gyorsan visszatérhess hozzájuk.",
+          "tip": "Az adatok mennyiségét gyorsan és hatékonyan csökkentheted, ha bal oldali sávon választasz ki konkrét felméréseket és adatforrásokat."
+        }
+      },
+      "sorting": {
+        "title": "Rendezés",
+        "content": "Rendezheted az eredményeket közzététel dátuma, legfrissebb frissítések és létrehozás dátuma szerint - a legújabbtól a legrégebbiig."
+      },
+      "activity": {
+        "title": "Tevékenység",
+        "content": "Nézd meg a telepítésed tevékenységét az idő és a mennyiség szerint. Vigyél az egérkurzort minden vonalra vagy oszlopra, hogy kiemeld, és láss részleteket."
+      },
+      "collections": {
+        "title": "Gyűjtemények",
+        "content": "A hozzászólások csoportokba rendezéséhez gyűjteményeket hozhatsz létre. Csak válassz nevet, írj leírást és válassz megtekintési módot - ennyire egyszerű!"
+      },
+      "settings": {
+        "title": "Beállítások",
+        "content": {
+          "description": "Módosíthatod a telepítésed beállításait. Kezelheted a telepítésed részleteit a Felmérések, Adatforrások, Importálás és Adományozás terén.",
+          "tip": "Emellett lehetővé teszi az adatok exportálását, kategóriák létrehozását, felhasználói jogosultságok kezelését és még sok mást!"
+        }
+      },
+      "end": "Készen állsz!",
+      "onboarding_done": {
+        "description": "Micsoda izgalom! Most már ismered a legfontosabb funkciókat, és készen állsz az Ushahidi platform használatára.",
+        "tip": "Ne feledd, ha kérdésed van, bátran fordulhatsz csapatunkhoz a következőn keresztül",
+        "help": "Segítség és támogatás"
+      }
+    },
     "report_a_bug": {
       "title": "Hiba jelentése",
       "description": "Várjuk visszajelzésed, ha valami nem az elvárásodnak megfelelően működik"
@@ -121,7 +163,7 @@
     "language": "nyelv",
     "select_language": "Válassz nyelvet",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Előző",
     "choose_survey": "Choose survey",
     "contact_email_address": "Kapcsolattartási e-mail cím:",
     "add_collection": "Gyűjtemény hozzáadása",
