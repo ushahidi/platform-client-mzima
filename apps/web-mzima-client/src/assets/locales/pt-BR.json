@@ -121,7 +121,7 @@
     "language": "Idioma",
     "select_language": "Selecionar Idioma",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Anterior",
     "choose_survey": "Choose survey",
     "add_collection": "Adicionar coleção",
     "choose_photo": "Escolha a foto",
@@ -1896,6 +1896,41 @@
     "what_you_get_notification_about": "Sobre o que você recebe notificação",
     "removed": "A notificação foi removida",
     "are_you_sure_you_want_to_remove_this_notification": "Tem certeza de que deseja remover essa notificação?"
+  },
+  "tour": {
+    "steps": {
+      "0": {
+        "title": "Olá",
+        "content": "<p>Você criou sua implantação com sucesso. Enquanto nós a aprimoramos, familiarize-se com os recursos do Ushahidi. O processo de integração levará alguns minutos.</p>"
+      },
+      "1": {
+        "title": "Coleta de Dados",
+        "content": "<p>Você pode ver todos os dados coletados enquanto navega pela visualização de Mapa ou visualização de Dados.</p>"
+      },
+      "2": {
+        "title": "Filtragem",
+        "content": "<p>Você pode filtrar seus resultados por Status, Categorias, Intervalo de Datas e Localização. Você também pode salvar seus filtros, para que possa voltar a eles rapidamente.</p><p>Para reduzir a quantidade de dados de forma rápida e eficiente, use a barra esquerda para escolher Pesquisas e Fontes de Dados específicas.</p>"
+      },
+      "3": {
+        "title": "Ordenação",
+        "content": "<p>Você pode ordenar os resultados por data de postagem, últimas atualizações e data de criação - do mais recente para o mais antigo.</p>"
+      },
+      "4": {
+        "title": "Atividade",
+        "content": "<p>Verifique a atividade de sua implantação ao longo do tempo e por volume. Passe o mouse sobre cada linha ou barra para destacá-la e ver os detalhes.</p>"
+      },
+      "5": {
+        "title": "Coleções",
+        "content": "<p>Para organizar suas postagens em grupos, você pode criar Coleções. Basta escolher um nome, escrever uma descrição e escolher um modo de visualização - é simples assim!</p>"
+      },
+      "6": {
+        "title": "Configurações",
+        "content": "<p>Altere sua implantação em Configurações. Você pode gerenciar os detalhes de sua implantação quando se trata de Pesquisas, Fontes de Dados, Importação e Doação.</p><p>Além disso, você pode exportar dados, criar categorias, gerenciar permissões de usuários e muito mais!</p>"
+      },
+      "7": {
+        "title": "Você está pronto!"
+      }
+    }
   },
   "contact": {
     "edit": "Editar",

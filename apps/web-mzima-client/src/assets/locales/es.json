@@ -121,7 +121,7 @@
     "language": "Idioma",
     "select_language": "Seleccione un idioma",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Anterior",
     "choose_survey": "Choose survey",
     "add_collection": "Agregar colección",
     "choose_photo": "Elegir foto",
@@ -1896,6 +1896,41 @@
     "what_you_get_notification_about": "Sobre qué recibes notificaciones",
     "removed": "Se ha eliminado la notificación",
     "are_you_sure_you_want_to_remove_this_notification": "¿Estás seguro de que quieres eliminar esta notificación?"
+  },
+  "tour": {
+    "steps": {
+      "0": {
+        "title": "Hola",
+        "content": "<p>Has creado tu implementación correctamente. Mientras la pulimos, por favor, familiarízate con las funciones de Ushahidi. El proceso de incorporación llevará solo unos minutos.</p>"
+      },
+      "1": {
+        "title": "Recopilación de datos",
+        "content": "<p>Puedes ver todos los datos recopilados mientras te mueves por la vista de mapa o la vista de datos.</p>"
+      },
+      "2": {
+        "title": "Filtrado",
+        "content": "<p>Puedes filtrar tus resultados por estado, categorías, rango de fechas y ubicación. También puedes guardar tus filtros para acceder rápidamente a ellos.</p><p>Para reducir la cantidad de datos de manera rápida y eficiente, utiliza la barra lateral izquierda para seleccionar encuestas y fuentes de datos específicas.</p>"
+      },
+      "3": {
+        "title": "Ordenación",
+        "content": "<p>Puedes ordenar los resultados por fecha de publicación, últimas actualizaciones y fecha de creación, de más reciente a más antiguo.</p>"
+      },
+      "4": {
+        "title": "Actividad",
+        "content": "<p>Consulta la actividad de tu implementación a lo largo del tiempo y por volumen. Pasa el ratón sobre cada línea o barra para resaltarla y ver los detalles.</p>"
+      },
+      "5": {
+        "title": "Colecciones",
+        "content": "<p>Para organizar tus publicaciones en grupos, puedes crear colecciones. ¡Solo elige un nombre, escribe una descripción y selecciona el modo de visualización, es así de fácil!</p>"
+      },
+      "6": {
+        "title": "Configuración",
+        "content": "<p>Cambia tu implementación en Configuración. Puedes gestionar los detalles de tu implementación en lo que respecta a Encuestas, Fuentes de datos, Importación y Donación.</p><p>¡También te permite exportar datos, crear categorías, gestionar permisos de usuarios y mucho más!</p>"
+      },
+      "7": {
+        "title": "¡Estás listo!"
+      }
+    }
   },
   "contact": {
     "edit": "Editar",

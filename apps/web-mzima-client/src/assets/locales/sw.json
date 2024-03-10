@@ -114,7 +114,7 @@
     "language": "Language",
     "select_language": "Select language",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Nyuma",
     "choose_survey": "Choose survey",
     "contact_email_address": "Anwani ya barua pepe ya mawasiliano:",
     "add_collection": "Ongeza ukusanyaji",
@@ -1895,6 +1895,41 @@
     "what_you_get_notification_about": "Nini kupata taarifa kuhusu",
     "removed": "Taarifa iliondolewa",
     "are_you_sure_you_want_to_remove_this_notification": "Una uhakika unataka kuondoa arifa hii?"
+  },
+  "tour": {
+    "steps": {
+      "0": {
+        "title": "Habari",
+        "content": "<p>Mmeunda mafanikio katika utekelezaji wenu. Huku tukiboresha, tafadhali, eleweni na sifa za Ushahidi. Mchakato wa kujiandikisha utachukua dakika chache.</p>"
+      },
+      "1": {
+        "title": "Ukusanyaji wa Takwimu",
+        "content": "<p>Mnaweza kuona takwimu zote zilizokusanywa huku mkihamia kupitia mtazamo wa Ramani au mtazamo wa Takwimu.</p>"
+      },
+      "2": {
+        "title": "Kuchuja",
+        "content": "<p>Mnaweza kuchuja matokeo yenu kwa Hali, Jamii, Muda wa Tarehe na Eneo. Pia mnaweza kuhifadhi vichujio vyenu, ili mrudi kwavyo kwa haraka.</p><p>Ili kupunguza wingi wa data kwa njia ya haraka na yenye ufanisi, tumia upau wa kushoto kuchagua Uchunguzi na Vyanzo vya Data maalum.</p>"
+      },
+      "3": {
+        "title": "Uratibu",
+        "content": "<p>Mnaweza kuorodhesha matokeo kwa tarehe ya chapisho, sasisho za hivi karibuni na tarehe ya uundaji - kutoka mpya hadi ya zamani.</p>"
+      },
+      "4": {
+        "title": "Shughuli",
+        "content": "<p<Angalia shughuli ya utekelezaji wako kwa muda na kiasi. Jizoleeni juu ya kila mstari au baa ili kuzionyesha na kuziona maelezo.</p>"
+      },
+      "5": {
+        "title": "Makusanyo",
+        "content": "<p>Kuweka machapisho yako katika makundi, mnaweza kuunda Makusanyo. Chagua tu jina, andika maelezo na chagua hali ya kuangalia - ni rahisi kama hiyo!</p>"
+      },
+      "6": {
+        "title": "Mipangilio",
+        "content": "<p>Badilisha utekelezaji wako kwenye Mipangilio. Mnaweza kusimamia maelezo ya utekelezaji wako linapokuja suala la Uchunguzi, Vyanzo vya Data, Uingizaji na Mchango.</p><p>Pia, inakuwezesha kuuza data, kuunda vikundi, kusimamia ruhusa za watumiaji na mengi zaidi!</p>"
+      },
+      "7": {
+        "title": "Mme tayari!"
+      }
+    }
   },
   "contact": {
     "edit": "Hariri",

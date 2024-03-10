@@ -121,7 +121,7 @@
     "language": "Language",
     "select_language": "Select language",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Zurück",
     "choose_survey": "Choose survey",
     "contact_email_address": "Kontakt-E-Mail-Adresse:",
     "add_collection": "Sammlung hinzufügen",
@@ -1903,28 +1903,28 @@
         "content": "<p>Sie haben Ihr Deployment erfolgreich erstellt. Während wir es weiter optimieren, machen Sie sich bitte mit den Funktionen von Ushahidi vertraut. Der Onboarding-Prozess dauert nur wenige Minuten.</p>"
       },
       "1": {
-        "title": "Datensammlung",
-        "content": "<p>Sie können alle gesammelten Daten anzeigen, während Sie sich durch die Kartenansicht oder die Datenansicht bewegen.</p>"
+        "title": "Daten sammeln",
+        "content": "<p>Sie können alle gesammelten Daten sehen, während Sie durch die Kartenansicht oder die Datenansicht navigieren.</p>"
       },
       "2": {
-        "title": "Filterung",
-        "content": "<p>Sie können Ihre Ergebnisse nach ihrem Status, Kategorien, Datumsbereich und Standort filtern. Sie können auch Ihre Filter speichern, um schnell darauf zurückzugreifen.</p><p>Verwenden Sie zur effizienten Reduzierung der Datenmenge die linke Leiste, um bestimmte Umfragen und Datenquellen auszuwählen.</p>"
+        "title": "Filtern",
+        "content": "<p>Sie können Ihre Ergebnisse nach Status, Kategorien, Datumsbereich und Standort filtern. Sie können Ihre Filter auch speichern, um schnell darauf zurückzugreifen.</p><p>Um die Datenmenge schnell und effizient zu reduzieren, verwenden Sie die linke Leiste, um bestimmte Umfragen und Datenquellen auszuwählen.</p>"
       },
       "3": {
-        "title": "Sortierung",
-        "content": "<p>Sie können die Ergebnisse nach Veröffentlichungsdatum, neuesten Updates und Erstellungsdatum sortieren - von neuesten bis ältesten.</p>"
+        "title": "Sortieren",
+        "content": "<p>Sie können die Ergebnisse nach Veröffentlichungsdatum, neuesten Aktualisierungen und Erstellungsdatum sortieren - von neu nach alt.</p>"
       },
       "4": {
         "title": "Aktivität",
-        "content": "<p>Überprüfen Sie Ihre Deployment-Aktivität im Laufe der Zeit und nach Volumen. Fahren Sie mit der Maus über jede Linie oder Balken, um sie hervorzuheben und Details anzuzeigen.</p>"
+        "content": "<p>Überprüfen Sie die Aktivität Ihres Deployments im Laufe der Zeit und nach Volumen. Bewegen Sie den Mauszeiger über jede Linie oder Balken, um sie hervorzuheben und die Details anzuzeigen.</p>"
       },
       "5": {
         "title": "Sammlungen",
-        "content": "<p>Zur Organisation Ihrer Beiträge in Gruppen können Sie Sammlungen erstellen. Wählen Sie einfach einen Namen, schreiben Sie eine Beschreibung und wählen Sie den Anzeigemodus aus - so einfach ist das!</p>"
+        "content": "<p>Um Ihre Beiträge in Gruppen zu organisieren, können Sie Sammlungen erstellen. Wählen Sie einfach einen Namen, schreiben Sie eine Beschreibung und wählen Sie den Anzeigemodus aus - so einfach ist das!</p>"
       },
       "6": {
         "title": "Einstellungen",
-        "content": "<p>Ändern Sie Ihre Bereitstellung in den Einstellungen. Sie können die Details Ihrer Bereitstellung in Bezug auf Umfragen, Datenquellen, Importieren und Spenden verwalten.</p><p>Darüber hinaus können Sie Daten exportieren, Kategorien erstellen, Benutzerberechtigungen verwalten und vieles mehr!</p>"
+        "content": "<p>Ändern Sie Ihr Deployment in den Einstellungen. Sie können die Details Ihres Deployments verwalten, wenn es um Umfragen, Datenquellen, Importieren und Spenden geht.</p><p>Darüber hinaus können Sie Daten exportieren, Kategorien erstellen, Benutzerberechtigungen verwalten und vieles mehr!</p>"
       },
       "7": {
         "title": "Sie sind bereit!"

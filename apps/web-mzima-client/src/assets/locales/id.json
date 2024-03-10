@@ -114,7 +114,7 @@
     "language": "Language",
     "select_language": "Select language",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Sebelumnya",
     "choose_survey": "Choose survey",
     "contact_email_address": "Alamat email kontak:",
     "add_collection": "Tambahkan koleksi",
@@ -1895,6 +1895,41 @@
     "what_you_get_notification_about": "Yang Anda dapatkan notifikasinya",
     "removed": "Pemberitahuan telah dihapus",
     "are_you_sure_you_want_to_remove_this_notification": "Apakah Anda yakin ingin menghapus pemberitahuan ini?"
+  },
+  "tour": {
+    "steps": {
+      "0": {
+        "title": "Halo",
+        "content": "<p>Anda telah berhasil membuat penempatan Anda. Sekarang, sementara kami menyempurnakannya, silakan terbiasa dengan fitur-fitur Ushahidi. Proses pengenalan ini akan memakan waktu beberapa menit.</p>"
+      },
+      "1": {
+        "title": "Pengumpulan Data",
+        "content": "<p>Anda dapat melihat semua data yang terkumpul saat Anda berpindah melalui tampilan Peta atau tampilan Data.</p>"
+      },
+      "2": {
+        "title": "Penyaringan",
+        "content": "<p>Anda dapat menyaring hasil Anda berdasarkan Status, Kategori, Rentang Tanggal, dan Lokasi. Anda juga dapat menyimpan penyaringan Anda, sehingga Anda dapat kembali ke mereka dengan cepat.</p><p>Untuk mengurangi jumlah data dengan cepat dan efisien, gunakan bilah kiri untuk memilih Survei dan Sumber Data tertentu.</p>"
+      },
+      "3": {
+        "title": "Pengurutan",
+        "content": "<p>Anda dapat mengurutkan hasil berdasarkan tanggal posting, pembaruan terbaru, dan tanggal pembuatan - dari yang terbaru ke yang tertua.</p>"
+      },
+      "4": {
+        "title": "Aktivitas",
+        "content": "<p>Periksa aktivitas penempatan Anda dari waktu ke waktu dan menurut volume. Sorot setiap baris atau batang untuk menyoroti dan lihat detailnya.</p>"
+      },
+      "5": {
+        "title": "Koleksi",
+        "content": "<p>Untuk mengorganisir kiriman Anda ke dalam grup, Anda dapat membuat Koleksi. Cukup pilih nama, tulis deskripsi, dan pilih mode tampilan - itu begitu sederhana!</p>"
+      },
+      "6": {
+        "title": "Pengaturan",
+        "content": "<p>Ubah penempatan Anda di Pengaturan. Anda dapat mengelola detail penempatan Anda dalam hal Survei, Sumber Data, Impor, dan Donasi.</p><p>Juga, itu memungkinkan Anda untuk mengekspor data, membuat kategori, mengelola izin pengguna, dan banyak lagi!</p>"
+      },
+      "7": {
+        "title": "Anda sudah siap!"
+      }
+    }
   },
   "contact": {
     "edit": "Sunting",

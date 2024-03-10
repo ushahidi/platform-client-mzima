@@ -114,7 +114,7 @@
     "language": "Language",
     "select_language": "Select language",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Trước",
     "choose_survey": "Choose survey",
     "contact_email_address": "Địa chỉ email liên hệ:",
     "add_collection": "Thêm bộ sưu tập",
@@ -1895,6 +1895,41 @@
     "what_you_get_notification_about": "Nội dung bạn nhận được thông báo",
     "removed": "Thông báo đã bị xóa",
     "are_you_sure_you_want_to_remove_this_notification": "Bạn có chắc chắn muốn xóa thông báo này không?"
+  },
+  "tour": {
+    "steps": {
+      "0": {
+        "title": "Xin chào",
+        "content": "<p>Bạn đã tạo ra triển khai thành công của mình. Trong khi chúng tôi hoàn thiện nó, hãy làm quen với các tính năng của Ushahidi. Quá trình hướng dẫn sẽ mất vài phút.</p>"
+      },
+      "1": {
+        "title": "Thu thập dữ liệu",
+        "content": "<p>Bạn có thể xem tất cả dữ liệu đã thu thập trong khi di chuyển qua chế độ Xem Bản đồ hoặc Xem Dữ liệu.</p>"
+      },
+      "2": {
+        "title": "Lọc",
+        "content": "<p>Bạn có thể lọc kết quả của mình theo Trạng thái, Danh mục, Phạm vi ngày và Địa điểm. Bạn cũng có thể lưu lại các bộ lọc của mình, để bạn có thể quay lại chúng nhanh chóng.</p><p>Để giảm lượng dữ liệu một cách nhanh chóng và hiệu quả, hãy sử dụng thanh bên trái để chọn Các cuộc khảo sát và Nguồn dữ liệu cụ thể.</p>"
+      },
+      "3": {
+        "title": "Sắp xếp",
+        "content": "<p>Bạn có thể sắp xếp các kết quả theo ngày đăng bài, cập nhật mới nhất và ngày tạo - từ mới nhất đến cũ nhất.</p>"
+      },
+      "4": {
+        "title": "Hoạt động",
+        "content": "<p>Kiểm tra hoạt động triển khai của bạn theo thời gian và theo số lượng. Di chuột qua mỗi dòng hoặc thanh để làm nổi bật nó và xem chi tiết.</p>"
+      },
+      "5": {
+        "title": "Bộ sưu tập",
+        "content": "<p>Để tổ chức bài viết của bạn thành các nhóm, bạn có thể tạo Bộ sưu tập. Chỉ cần chọn tên, viết mô tả và chọn chế độ xem - đơn giản như vậy!</p>"
+      },
+      "6": {
+        "title": "Cài đặt",
+        "content": "<p>Thay đổi triển khai của bạn trong Cài đặt. Bạn có thể quản lý các chi tiết của triển khai của mình khi nói đến Cuộc khảo sát, Nguồn dữ liệu, Nhập và Đóng góp.</p><p>Ngoài ra, nó cũng cho phép bạn xuất dữ liệu, tạo danh mục, quản lý quyền của người dùng và nhiều hơn nữa!</p>"
+      },
+      "7": {
+        "title": "Bạn đã sẵn sàng!"
+      }
+    }
   },
   "contact": {
     "edit": "Chỉnh sửa",

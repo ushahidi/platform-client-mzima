@@ -114,7 +114,7 @@
     "language": "Language",
     "select_language": "Select language",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Mbrapa",
     "choose_survey": "Choose survey",
     "contact_email_address": "Adresa e emailit të kontaktit:",
     "add_collection": "Shto koleksionin",
@@ -1895,6 +1895,41 @@
     "what_you_get_notification_about": "Për çfarë ju merrni njoftim në lidhje me",
     "removed": "Njoftimi u hoq",
     "are_you_sure_you_want_to_remove_this_notification": "Je i sigurt që dëshiron ta heqësh këtë njoftim?"
+  },
+  "tour": {
+    "steps": {
+      "0": {
+        "title": "Përshëndetje",
+        "content": "<p>Keni krijuar sukses në implementimin tuaj. Ndërsa ne e përmirësojmë atë, njihuni me veçoritë e Ushahidi. Procesi i orientimit do të zgjasë disa minuta.</p>"
+      },
+      "1": {
+        "title": "Mbledhja e të dhënave",
+        "content": "<p>Ju mund të shikoni të gjitha të dhënat e mbledhura duke lëvizur nëpër pamjen e Hartës ose pamjen e të Dhënave.</p>"
+      },
+      "2": {
+        "title": "Filtrimi",
+        "content": "<p>Ju mund të filtroni rezultatet tuaja sipas Statusit, Kategorive, Rangu të Datave dhe Lokacionit. Mund të ruani gjithashtu filtrat tuaj, kështu që të ktheheni te to shpejt.</p><p>Për të zvogëluar sasinë e të dhënave në një mënyrë të shpejtë dhe efikase, përdorni shiritin e majtë për të zgjedhur Ankete dhe Burimet e Dhënave të caktuara.</p>"
+      },
+      "3": {
+        "title": "Renditja",
+        "content": "<p>Ju mund të renditni rezultatet sipas datës së postimit, përditësimeve më të fundit dhe datës së kriimit - nga më i ri në më të vjetër.</p>"
+      },
+      "4": {
+        "title": "Aktiviteti",
+        "content": "<p>Kontrolloni aktivitetin e implementimit tuaj në kohë dhe sipas vëllimit. Hover mbi çdo vijë ose shirit për ta shënuar atë dhe parë detajet.</p>"
+      },
+      "5": {
+        "title": "Koleksionet",
+        "content": "<p>Për të organizuar postimet tuaja në grupe, mund të krijoni Koleksione. Thjesht zgjidhni një emër, shkruani një përshkrim dhe zgjidhni një mënyrë pamjeje - kaq e thjeshtë!</p>"
+      },
+      "6": {
+        "title": "Cilësimet",
+        "content": "<p>Ndryshoni implementimin tuaj në Cilësime. Mund të menaxhoni detajet e implementimit tuaj kur bëhet fjalë për Anketa, Burime të Dhënash, Importim dhe Dhurim.</p><p>Gjithashtu, mund të eksportoni të dhënat, të krijoni kategori, të menaxhoni lejet e përdoruesve dhe shumë më tepër!</p>"
+      },
+      "7": {
+        "title": "Jeni gati!"
+      }
+    }
   },
   "contact": {
     "edit": "Edito",

@@ -121,7 +121,7 @@
     "language": "Taal",
     "select_language": "Selecteer taal",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Vorige",
     "choose_survey": "Choose survey",
     "contact_email_address": "E-mailadres voor contact:",
     "add_collection": "Collectie toevoegen",
@@ -1895,6 +1895,41 @@
     "what_you_get_notification_about": "Waar je een melding over krijgt",
     "removed": "Melding is verwijderd",
     "are_you_sure_you_want_to_remove_this_notification": "Weet je zeker dat je deze melding wilt verwijderen?"
+  },
+  "tour": {
+    "steps": {
+      "0": {
+        "title": "Hallo",
+        "content": "<p>U hebt uw implementatie succesvol gemaakt. Terwijl we het afronden, maak kennis met de functies van Ushahidi. Het onboardingsproces duurt een paar minuten.</p>"
+      },
+      "1": {
+        "title": "Gegevensverzameling",
+        "content": "<p>U kunt alle verzamelde gegevens bekijken terwijl u door de kaartweergave of de gegevensweergave navigeert.</p>"
+      },
+      "2": {
+        "title": "Filteren",
+        "content": "<p>U kunt uw resultaten filteren op status, categorieën, datumbereik en locatie. U kunt ook uw filters opslaan, zodat u er snel naar terug kunt keren.</p><p>Om de hoeveelheid gegevens snel en efficiënt te verminderen, gebruikt u de linkerbalk om specifieke enquêtes en gegevensbronnen te kiezen.</p>"
+      },
+      "3": {
+        "title": "Sorteren",
+        "content": "<p>U kunt de resultaten sorteren op datum van plaatsing, laatste updates en datum van creatie - van nieuwste naar oudste.</p>"
+      },
+      "4": {
+        "title": "Activiteit",
+        "content": "<p>Controleer de activiteit van uw implementatie in de loop van de tijd en op basis van volume. Zweef over elke lijn of balk om deze te markeren en de details te bekijken.</p>"
+      },
+      "5": {
+        "title": "Collecties",
+        "content": "<p>Om uw berichten in groepen te organiseren, kunt u collecties maken. Kies gewoon een naam, schrijf een beschrijving en kies een weergavemodus - zo eenvoudig is het!</p>"
+      },
+      "6": {
+        "title": "Instellingen",
+        "content": "<p>Wijzig uw implementatie in Instellingen. U kunt uw implementatiedetails beheren als het gaat om enquêtes, gegevensbronnen, importeren en donaties.</p><p>Bovendien kunt u gegevens exporteren, categorieën maken, gebruikersmachtigingen beheren en nog veel meer!</p>"
+      },
+      "7": {
+        "title": "U bent klaar!"
+      }
+    }
   },
   "contact": {
     "edit": "Wijzigen",

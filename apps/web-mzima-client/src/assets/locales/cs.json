@@ -121,7 +121,7 @@
     "language": "Jazyk",
     "select_language": "Zvolit jazyk",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Předchozí",
     "choose_survey": "Choose survey",
     "contact_email_address": "Kontaktní e-mailová adresa:",
     "add_collection": "Přidat kolekci",
@@ -1900,31 +1900,31 @@
     "steps": {
       "0": {
         "title": "Ahoj",
-        "content": "<p>Úspěšně jste vytvořili své nasazení. Nyní, když ho vylepšujeme, se seznamte s funkcemi Ushahidi. Proces seznamování zabere pár minut.</p>"
+        "content": "<p>Úspěšně jste vytvořili své nasazení. Nyní, když ho dokončujeme, se seznámte s funkcemi Ushahidi. Proces zavádění zabere několik minut.</p>"
       },
       "1": {
         "title": "Sběr dat",
-        "content": "<p>Můžete vidět všechna shromážděná data při pohybu v režimu Mapa nebo v režimu Datový pohled.</p>"
+        "content": "<p>Můžete vidět všechna shromážděná data při pohybu v zobrazení mapy nebo v zobrazení dat.</p>"
       },
       "2": {
         "title": "Filtrování",
-        "content": "<p>Můžete filtrovat výsledky podle jejich stavu, kategorií, rozmezí dat a polohy. Filtry můžete také uložit, abyste se k nim rychle mohli vrátit.</p><p>Pro snížení množství dat rychlým a efektivním způsobem použijte levý panel k výběru konkrétních Průzkumů a Zdrojů dat.</p>"
+        "content": "<p>Můžete filtrovat výsledky podle jejich stavu, kategorií, rozsahu dat a polohy. Můžete také uložit své filtry, abyste se k nim mohli rychle vrátit.</p><p>Abyste snížili množství dat rychlým a efektivním způsobem, použijte levý panel k výběru konkrétních průzkumů a zdrojů dat.</p>"
       },
       "3": {
         "title": "Řazení",
-        "content": "<p>Můžete třídit výsledky podle data zveřejnění, nejnovějších aktualizací a data vytvoření - od nejnovějších po nejstarší.</p>"
+        "content": "<p>Můžete řadit výsledky podle data příspěvku, nejnovějších aktualizací a data vytvoření - od nejnovějšího k nejstaršímu.</p>"
       },
       "4": {
         "title": "Aktivita",
-        "content": "<p>Zkontrolujte aktivitu vašeho nasazení podle času a objemu. Přejeďte myší nad každou linkou nebo sloupcem, abyste je zvýraznili a viděli podrobnosti.</p>"
+        "content": "<p>Zkontrolujte aktivitu svého nasazení v čase a objemu. Přejeďte myší přes každou linku nebo sloupec, abyste ji zvýraznili a zobrazili podrobnosti.</p>"
       },
       "5": {
-        "title": "Kolekce",
-        "content": "<p>Pro uspořádání vašich příspěvků do skupin můžete vytvořit Kolekce. Stačí vybrat jméno, napsat popis a vybrat zobrazení - je to tak jednoduché!</p>"
+        "title": "Sbírky",
+        "content": "<p>Pro organizaci svých příspěvků do skupin můžete vytvořit sbírky. Stačí vybrat jméno, napsat popis a vybrat způsob zobrazení - je to tak jednoduché!</p>"
       },
       "6": {
         "title": "Nastavení",
-        "content": "<p>Změňte své nasazení v Nastavení. Můžete spravovat detaily vašeho nasazení v oblasti Průzkumy, Zdroje dat, Import a Darování.</p><p>Také vám umožňuje exportovat data, vytvářet kategorie, spravovat oprávnění uživatelů a mnoho dalšího!</p>"
+        "content": "<p>Změňte své nasazení v nastavení. Můžete spravovat detaily svého nasazení, pokud jde o průzkumy, zdroje dat, import a darování.</p><p>Také vám umožňuje exportovat data, vytvářet kategorie, spravovat oprávnění uživatelů a mnohem víc!</p>"
       },
       "7": {
         "title": "Jste připraveni!"

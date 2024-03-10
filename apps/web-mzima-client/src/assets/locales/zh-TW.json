@@ -121,7 +121,7 @@
     "language": "語言",
     "select_language": "選擇語言",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "上一步",
     "choose_survey": "Choose survey",
     "contact_email_address": "聯絡電子郵件地址：",
     "add_collection": "添加集合",
@@ -1895,6 +1895,41 @@
     "what_you_get_notification_about": "您收到的通知內容",
     "removed": "通知已刪除",
     "are_you_sure_you_want_to_remove_this_notification": "您確定要刪除此通知嗎？"
+  },
+  "tour": {
+    "steps": {
+      "0": {
+        "title": "你好",
+        "content": "<p>你已成功建立你的部署。當我們完善它時，請熟悉 Ushahidi 的功能。引導過程將花費幾分鐘。</p>"
+      },
+      "1": {
+        "title": "資料收集",
+        "content": "<p>當您在地圖檢視或資料檢視中移動時，您可以查看所有已收集的資料。</p>"
+      },
+      "2": {
+        "title": "篩選",
+        "content": "<p>您可以按狀態、類別、日期範圍和位置篩選您的結果。您也可以保存您的篩選器，以便您可以快速返回。</p><p>為了快速有效地減少數據量，請使用左側欄選擇特定的調查和數據來源。</p>"
+      },
+      "3": {
+        "title": "排序",
+        "content": "<p>您可以按發布日期、最新更新和創建日期將結果排序 - 從最新到最舊。</p>"
+      },
+      "4": {
+        "title": "活動",
+        "content": "<p>查看您的部署活動按時間和數量分佈。將鼠標懸停在每條線或條上以突出顯示並查看詳細信息。</p>"
+      },
+      "5": {
+        "title": "收藏",
+        "content": "<p>為了將您的帖子組織成群組，您可以創建收藏。只需選擇名稱，編寫描述並選擇查看模式 - 就是這麼簡單！</p>"
+      },
+      "6": {
+        "title": "設置",
+        "content": "<p>在設置中更改您的部署。當涉及調查、數據源、導入和捐贈時，您可以管理您的部署詳細信息。</p><p>此外，它還允許您導出數據、創建分類、管理用戶權限等等！</p>"
+      },
+      "7": {
+        "title": "您已準備就緒！"
+      }
+    }
   },
   "contact": {
     "edit": "編輯",

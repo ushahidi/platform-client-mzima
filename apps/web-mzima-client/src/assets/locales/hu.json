@@ -121,7 +121,7 @@
     "language": "nyelv",
     "select_language": "Válassz nyelvet",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Előző",
     "choose_survey": "Choose survey",
     "contact_email_address": "Kapcsolattartási e-mail cím:",
     "add_collection": "Gyűjtemény hozzáadása",
@@ -1895,6 +1895,41 @@
     "what_you_get_notification_about": "Miről kap értesítést?",
     "removed": "Az értesítés el lett távolítva",
     "are_you_sure_you_want_to_remove_this_notification": "Biztosan el szeretné távolítani ezt az értesítést?"
+  },
+  "tour": {
+    "steps": {
+      "0": {
+        "title": "Helló",
+        "content": "<p>Sikeresen létrehoztad a telepítésedet. Amíg finomítjuk, kérlek ismerkedj meg az Ushahidi funkcióival. A bevezetési folyamat csak néhány percig tart.</p>"
+      },
+      "1": {
+        "title": "Adatgyűjtés",
+        "content": "<p>Mind a gyűjtött adatokat megtekintheted, miközben átlépsz a Térkép nézetre vagy az Adatok nézetre.</p>"
+      },
+      "2": {
+        "title": "Szűrés",
+        "content": "<p>Szűrheted az eredményeket státuszuk, kategóriáik, dátumtartományuk és helyzetük szerint. Továbbá elmentheted a szűrőidet, hogy gyorsan hozzáférhess hozzájuk.</p><p>Az adatok mennyiségének gyors és hatékony csökkentése érdekében használj bal oldali sávot a specifikus felmérések és adatforrások kiválasztásához.</p>"
+      },
+      "3": {
+        "title": "Rendezés",
+        "content": "<p>Rendezheted az eredményeket a közzététel dátuma, legutóbbi frissítések és létrehozás dátuma szerint - a legújabbtól a legrégebbiig.</p>"
+      },
+      "4": {
+        "title": "Tevékenység",
+        "content": "<p>Nézd meg telepítésed tevékenységét az idő és a mennyiség szerint. Mozgasd az egeret minden soron vagy oszlopon, hogy kiemeld és láss részleteket.</p>"
+      },
+      "5": {
+        "title": "Gyűjtemények",
+        "content": "<p>Szervezd bejegyzéseidet csoportokba gyűjtemények létrehozásával. Csak válassz nevet, írj leírást és válassz megjelenítési módot - ennyire egyszerű!</p>"
+      },
+      "6": {
+        "title": "Beállítások",
+        "content": "<p>Változtasd meg a beállításokat a Telepítés menüpontban. Kezelheted a telepítésed részleteit a felmérésekről, az adatforrásokról, az importálásról és a támogatásról.</p><p>Lehetővé teszi az adatok exportálását, kategóriák létrehozását, felhasználói jogosultságok kezelését és még sok mást!</p>"
+      },
+      "7": {
+        "title": "Készen állsz!"
+      }
+    }
   },
   "contact": {
     "edit": "Szerkesztés",
