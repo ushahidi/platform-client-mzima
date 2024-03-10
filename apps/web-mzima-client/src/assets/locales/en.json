@@ -914,7 +914,7 @@
       "previous_page": "<< Previous page",
       "next_page": "Next page >>",
       "empty_message_error": "You must add a message",
-      "no_messages":"There are no messages yet. Start a conversation with the author by sending a message below."
+      "no_messages": "There are no messages yet. Start a conversation with the author by sending a message below."
     },
     "valid": {
       "no_changes": "You haven’t made any changes",
@@ -1205,8 +1205,8 @@
       "HDX": "Humanitarian Data Exchange",
       "please_enter_maintainer_id": "Please enter maintainer id",
       "please_enter_api_key": "Please enter API key",
-      "hdx_maintainer_id_min_length" : "HDX Maintainer Id is too short",
-      "api_key_min_length" : "API key is too short"
+      "hdx_maintainer_id_min_length": "HDX Maintainer Id is too short",
+      "api_key_min_length": "API key is too short"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
@@ -1645,17 +1645,17 @@
     "nav": {
       "account_settings": "Account settings",
       "notifications_settings": "Notifications settings",
-      "delete_contact" : {
-        "title" : "Delete your",
-        "title_subject" : {
-          "email" : "Email",
-          "phone" : "Phone"
+      "delete_contact": {
+        "title": "Delete your",
+        "title_subject": {
+          "email": "Email",
+          "phone": "Phone"
         },
-        "instructions" : "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
-        "button" : {
-          "delete" : "Delete",
-          "cancel" : "Cancel"
-        }  
+        "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
+        "button": {
+          "delete": "Delete",
+          "cancel": "Cancel"
+        }
       }
     }
   },
@@ -1922,6 +1922,41 @@
     "what_you_get_notification_about": "What you get notification about",
     "removed": "Notification was removed",
     "are_you_sure_you_want_to_remove_this_notification": "Are you sure you want to remove this notification?"
+  },
+  "tour": {
+    "steps": {
+      "0": {
+        "title": "Hello",
+        "content": "<p>You’ve successfully created your deployment. Now, while we polish it up, please, get along with Ushahidi features. The onboarding process will take couple of minutes.</p>"
+      },
+      "1": {
+        "title": "Data collection",
+        "content": "<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>"
+      },
+      "2": {
+        "title": "Filtering",
+        "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
+      },
+      "3": {
+        "title": "Sorting",
+        "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
+      },
+      "4": {
+        "title": "Activity",
+        "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
+      },
+      "5": {
+        "title": "Collections",
+        "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
+      },
+      "6": {
+        "title": "Settings",
+        "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
+      },
+      "7": {
+        "title": "You’re ready!"
+      }
+    }
   },
   "contact": {
     "edit": "Edit",
@@ -2721,4 +2756,3 @@
     "adminUserLimitReached": "limit:{{:admin}}"
   }
 }
-
