@@ -15,9 +15,8 @@
           [category]="category"
           [data-qa]="category.slug.split(' ').join('-') | lowercase"
           (selected)="selectCategory($event)"
-          (keydown.enter)="$event.preventDefault()"
           [isCheckbox]="isShowActions"
-          (toggle)="toggleChildren($event)"
+          (toggle)="toggleChildren(category.id)"
           [displayChildren]="displayChildren(category.id)"
         >
         </app-category-item>

@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LanguageInterface } from '@models';
 import { Observable } from 'rxjs';
@@ -43,11 +42,11 @@ export class SelectLanguagesModalComponent implements OnInit {
     });
   }
 
-  async selectLanguage(event: MatCheckboxChange, lang: LanguageInterface) {
-    if (event.checked) {
+  async selectLanguage(event: any, lang: LanguageInterface) {
+    const index = this.data.activeLanguages.indexOf(lang);
+    if (index < 0) {
       this.data.activeLanguages.push(lang);
     } else {
-      const index = this.data.activeLanguages.indexOf(lang);
       this.data.activeLanguages.splice(index, 1);
     }
   }
