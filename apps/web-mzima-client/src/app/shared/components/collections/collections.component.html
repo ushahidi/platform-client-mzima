@@ -40,7 +40,7 @@
     </mzima-client-button>
   </div>
 
-  <form
+  <search
     class="search-form"
     [formGroup]="searchForm"
     (ngSubmit)="loadData(searchForm.get('query')?.value)"
@@ -72,7 +72,7 @@
       <span>{{ 'app.add' | translate }}</span>
       <mat-icon icon svgIcon="plus"></mat-icon>
     </mzima-client-button>
-  </form>
+  </search>
 
   <ng-container *ngIf="!isLoading; else loader">
     <div mat-dialog-content>
