@@ -118,14 +118,19 @@
 
 @media print {
   .sidebar,
+  .mobile-page-nav,
   app-toolbar {
     display: none;
   }
+  .main {
+    height: unset;
+    overflow: scroll;
+  }
 
   .content-wrapper {
-    position: absolute;
-    left: 0;
-    top: 0;
+    // position: absolute;
+    // left: 0;
+    // top: 0;
     width: 100%;
     border: 1px solid black;
   }

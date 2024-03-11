@@ -451,6 +451,11 @@
 }
 
 @media print {
+  .feed {
+    &__posts {
+      width: 100%;
+    }
+  }
   .post {
     width: calc(50% - 16px);
   }
