@@ -11,6 +11,9 @@ import { LoaderService } from '../../core/services/loader.service';
 import { LanguageService } from '../../core/services/language.service';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent, ConfirmDialogData } from './ confirm-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @UntilDestroy()
 @Component({
@@ -19,6 +22,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./general.component.scss'],
 })
 export class GeneralComponent implements OnInit {
+  openConfirmModal() {
+    throw new Error('Method not implemented.');
+  }
   @ViewChild('mapSettings') mapSettings: SettingsMapComponent;
   public isDesktop$: Observable<boolean>;
   public generalForm: FormGroup;
@@ -43,6 +49,8 @@ export class GeneralComponent implements OnInit {
     private clipboard: Clipboard,
     private breakpointService: BreakpointService,
     private notificationService: NotificationService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.generalForm = this.formBuilder.group({
@@ -166,14 +174,30 @@ export class GeneralComponent implements OnInit {
     value === '0' ? (value = parseFloat(value)) : value; // Better fix could be to fix zero being returned as string from the backend
     return Number.isInteger(value) && value >= this.minObfuscation && value <= this.maxObfuscation;
   }
-  clearForm() {
-    this.generalForm.get('name')?.setValue('');
-    this.generalForm.get('description')?.setValue('');
-    this.generalForm.get('email')?.setValue('');
-    this.generalForm.get('language')?.setValue('en');
-    this.generalForm.get('private')?.setValue(false);
-    this.generalForm.get('disable_registration')?.setValue(false);
-    this.uploadedFile = undefined;
-    this.siteConfig.image_header = '';
+
+  clearForm(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Confirmation',
+        message: 'Are you sure you want to discard the changes?',
+      } as ConfirmDialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.generalForm.get('name')?.setValue('');
+        this.generalForm.get('description')?.setValue('');
+        this.generalForm.get('email')?.setValue('');
+        this.generalForm.get('language')?.setValue('en');
+        this.generalForm.get('private')?.setValue(false);
+        this.generalForm.get('disable_registration')?.setValue(false);
+        this.uploadedFile = undefined;
+        this.siteConfig.image_header = '';
+
+        this.snackBar.open('Changes successfully discarded', 'Close', {
+          duration: 3000,
+        });
+      }
+    });
   }
 }
