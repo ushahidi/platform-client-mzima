@@ -22,6 +22,7 @@ class DataViewFilterFunctions {
       .eq(0)
       .click();
     //verify count
+    cy.wait(1000)
     cy.get(DataViewLocators.mainResultsTotal).contains('Results: 9');
 
     //select second survey
