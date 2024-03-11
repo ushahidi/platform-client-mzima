@@ -20,7 +20,12 @@
         class="menu__footer__button"
         *ngIf="isDonateAvailable"
       ></app-donation-button>
-      <mzima-client-button
+
+      <!-- ------------- -->
+      <!-- Removed share popup so that user can easily navigate pages on the mobile screen or smaller screen -->
+      <!-- -------- -->
+
+      <!-- <mzima-client-button
         fill="outline"
         color="transparent-style-1"
         (buttonClick)="openShare()"
@@ -28,7 +33,7 @@
       >
         {{ 'app.share' | translate }}
         <mat-icon icon svgIcon="share"></mat-icon>
-      </mzima-client-button>
+      </mzima-client-button> -->
     </div>
   </div>
 </ng-container>
