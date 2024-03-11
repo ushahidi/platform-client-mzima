@@ -12,8 +12,10 @@
     <mzima-client-button matPrefix [iconOnly]="true" fill="clear" color="secondary">
       <mat-icon icon svgIcon="search-small"></mat-icon>
     </mzima-client-button>
+    <label for="searchInput" class="visually-hidden">Search</label>
     <input
       matInput
+      id="searchInput"
       [(ngModel)]="searchQuery"
       (ngModelChange)="searchPosts()"
       class="search-form__form-control"
