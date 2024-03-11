@@ -13,14 +13,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     <div class="dialog-actions" style="display: flex; justify-content: flex-end;">
       <button
         class="dialog-button cancel-button"
-        style="color: #333; padding: 12px 24px;  width:20%; margin-right: 10px; border: 1px solid gray; border-radius: 3px; font-size: 14px; font-weight: semi-bold;"
+        style="background-color: white; color: #333; padding: 12px 24px;  width:25%; margin-right: 10px; border: 1px solid gray; border-radius: 3px; font-size: 14px; font-weight: semi-bold;"
         (click)="onCancel()"
       >
         Cancel
       </button>
       <button
         class="dialog-button confirm-button"
-        style="background-color: orange; color: #333; width:20%; padding: 12px 24px; margin-left: 10px; border: none; border-radius: 3px; font-size: 14px; font-weight: semi-bold;"
+        style="background-color: orange; color: #333; width: 25%; padding: 12px 24px; margin-left: 10px; border: none; border-radius: 3px; font-size: 14px; font-weight: semi-bold;"
         (click)="onConfirm()"
       >
         OK
