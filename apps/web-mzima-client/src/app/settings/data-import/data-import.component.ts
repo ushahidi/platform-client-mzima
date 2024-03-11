@@ -2,16 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { omit, clone, invert, keys, includes } from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
-import { forkJoin, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   DataImportService,
   FormsService,
-  FormAttributeInterface,
   FormCSVInterface,
   FormInterface,
   SurveysService,
   SurveyItem,
-  SurveyItemTask
 } from '@mzima-client/sdk';
 
 import { BaseComponent } from '../../base.component';
@@ -63,7 +61,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private confirm: ConfirmModalService,
     private formsService: FormsService,
-    private surveysService: SurveysService
+    private surveysService: SurveysService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -90,38 +88,59 @@ export class DataImportComponent extends BaseComponent implements OnInit {
     reader.readAsDataURL($event.target.files[0]);
   }
 
-  transformAttributes(attributes: SurveyItemTask) {
-    // const titleAttr = _.find(attributes, { type: 'title' });
-    // const descAttr = _.find(attributes, { type: 'description' });
-    // const titleLabel = titleAttr
-    //   ? titleAttr.label
-    //   : this.translateService.instant('post.modify.form.title');
-    // const descLabel = descAttr
-    //   ? descAttr.label
-    //   : this.translateService.instant('post.modify.form.description');
+  transformAttributes(attributes: any[]) {
+    const titleAttr = _.find(attributes, { type: 'title' });
+    const descAttr = _.find(attributes, { type: 'description' });
+    const titleLabel = titleAttr
+      ? titleAttr.label
+      : this.translateService.instant('post.modify.form.title');
+    const descLabel = descAttr
+      ? descAttr.label
+      : this.translateService.instant('post.modify.form.description');
 
-    // attributes = _.chain(attributes)
-    //   .reject({ type: 'point' })
-    //   .reject({ type: 'title' })
-    //   .reject({ type: 'description' })
-    //   .push(
-    //     {
-    //       key: 'title',
-    //       label: titleLabel,
-    //       priority: 0,
-    //       required: true,
-    //     },
-    //     {
-    //       key: 'content',
-    //       label: descLabel,
-    //       priority: 1,
-    //       required: true,
-    //     },
-    //   )
-    //   .sortBy('priority')
-    //   .value();
+    const points: any[] = _.chain(attributes)
+      .filter({ type: 'point' })
+      .reduce(function (collection: any[], item) {
+        return collection.concat(
+          {
+            key: item.key + '.lat',
+            label: item.label + ' (Latitude)',
+            priority: item.priority,
+            required: item.required,
+          },
+          {
+            key: item.key + '.lon',
+            label: item.label + ' (Longitude)',
+            priority: item.priority,
+            required: item.required,
+          },
+        );
+      }, [])
+      .value();
 
-    // return attributes;
+    attributes = _.chain(attributes)
+      .reject({ type: 'point' })
+      .reject({ type: 'title' })
+      .reject({ type: 'description' })
+      .push(
+        {
+          key: 'title',
+          label: titleLabel,
+          priority: 0,
+          required: true,
+        },
+        {
+          key: 'content',
+          label: descLabel,
+          priority: 1,
+          required: true,
+        },
+      )
+      .push(...points)
+      .sortBy('priority')
+      .value();
+
+    return attributes;
   }
 
   private checkFormAndFile() {
@@ -132,7 +151,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
           next: (csv) => {
             this.uploadedCSV = csv.result;
             this.fileChanged = false;
-            console.log(this.uploadedCSV)
+            console.log(this.uploadedCSV);
 
             if (this.uploadedCSV.columns?.every((c: any) => c === ''))
               return this.notification.showError(
@@ -169,9 +188,13 @@ export class DataImportComponent extends BaseComponent implements OnInit {
     // });
     this.hasRequiredTask = this.selectedForm.tasks.some((task) => task.required);
     this.setRequiredFields();
+    this.selectedForm.tasks.forEach((task) => {
+      task.fields = this.transformAttributes(task.fields);
+    });
     this.loader.hide();
   }
-  getFieldKey(field : any) {
+
+  getFieldKey(field: any) {
     if (field.type === 'title') {
       return 'title';
     }
@@ -286,7 +309,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   }
 
   checkRequiredFields(fields: any) {
-    console.log(fields)
+    console.log(fields);
     const missing: any = [];
     this.requiredFields.forEach((v, k) => {
       if (_.isNil(fields[k])) {
