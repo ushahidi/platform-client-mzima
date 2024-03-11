@@ -1647,7 +1647,12 @@
         "content": "<p>Thay đổi triển khai của bạn trong Cài đặt. Bạn có thể quản lý các chi tiết của triển khai của mình khi nói đến Cuộc khảo sát, Nguồn dữ liệu, Nhập và Đóng góp.</p><p>Ngoài ra, nó cũng cho phép bạn xuất dữ liệu, tạo danh mục, quản lý quyền của người dùng và nhiều hơn nữa!</p>"
       },
       "7": {
-        "title": "Bạn đã sẵn sàng!"
+        "title": "Bạn đã sẵn sàng!",
+        "content": {
+          "p1": "Thật là hấp dẫn! Bây giờ bạn đã biết các tính năng quan trọng nhất và sẵn sàng bắt đầu sử dụng nền tảng Ushahidi.",
+          "p2": "Hãy nhớ rằng, nếu có bất kỳ câu hỏi nào, đừng ngần ngại liên hệ với đội của chúng tôi qua",
+          "a": "Trợ giúp và Hỗ trợ"
+        }
       }
     }
   },

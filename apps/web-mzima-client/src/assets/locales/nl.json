@@ -1927,7 +1927,12 @@
         "content": "<p>Wijzig uw implementatie in Instellingen. U kunt uw implementatiedetails beheren als het gaat om enquêtes, gegevensbronnen, importeren en donaties.</p><p>Bovendien kunt u gegevens exporteren, categorieën maken, gebruikersmachtigingen beheren en nog veel meer!</p>"
       },
       "7": {
-        "title": "U bent klaar!"
+        "title": "U bent klaar!",
+        "content": {
+          "p1": "Wat spannend! Nu ken je de belangrijkste functies en ben je klaar om te beginnen met het gebruik van het Ushahidi-platform.",
+          "p2": "Onthoud, als je vragen hebt, aarzel dan niet om contact op te nemen met ons team via",
+          "a": "Help & Ondersteuning"
+        }
       }
     }
   },

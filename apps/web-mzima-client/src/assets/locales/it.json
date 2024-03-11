@@ -1927,7 +1927,12 @@
         "content": "<p>Ubah penempatan Anda di Pengaturan. Anda dapat mengelola detail penempatan Anda dalam hal Survei, Sumber Data, Impor, dan Donasi.</p><p>Juga, itu memungkinkan Anda untuk mengekspor data, membuat kategori, mengelola izin pengguna, dan banyak lagi!</p>"
       },
       "7": {
-        "title": "Anda sudah siap!"
+        "title": "Anda sudah siap!",
+        "content": {
+          "p1": "Che emozione! Ora conosci le funzionalità più importanti e sei pronto a iniziare a utilizzare la piattaforma Ushahidi.",
+          "p2": "Ricorda, in caso di domande, non esitare a contattare il nostro team tramite",
+          "a": "Aiuto e supporto"
+        }
       }
     }
   },

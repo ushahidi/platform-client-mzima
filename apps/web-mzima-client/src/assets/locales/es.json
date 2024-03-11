@@ -1928,7 +1928,12 @@
         "content": "<p>Cambia tu implementación en Configuración. Puedes gestionar los detalles de tu implementación en lo que respecta a Encuestas, Fuentes de datos, Importación y Donación.</p><p>¡También te permite exportar datos, crear categorías, gestionar permisos de usuarios y mucho más!</p>"
       },
       "7": {
-        "title": "¡Estás listo!"
+        "title": "¡Estás listo!",
+        "content": {
+          "p1": "¡Qué emocionante! Ahora conoces las funciones más importantes y estás listo para empezar a usar la plataforma Ushahidi.",
+          "p2": "Recuerda, en caso de cualquier pregunta, no dudes en contactar a nuestro equipo a través de",
+          "a": "Ayuda y soporte"
+        }
       }
     }
   },

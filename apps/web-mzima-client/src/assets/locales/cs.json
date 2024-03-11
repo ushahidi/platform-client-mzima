@@ -1927,7 +1927,12 @@
         "content": "<p>Změňte své nasazení v nastavení. Můžete spravovat detaily svého nasazení, pokud jde o průzkumy, zdroje dat, import a darování.</p><p>Také vám umožňuje exportovat data, vytvářet kategorie, spravovat oprávnění uživatelů a mnohem víc!</p>"
       },
       "7": {
-        "title": "Jste připraveni!"
+        "title": "Jste připraveni!",
+        "content": {
+          "p1": "Jak vzrušující! Nyní znáte nejdůležitější funkce a jste připraveni začít používat platformu Ushahidi.",
+          "p2": "Pamatujte si, že v případě jakýchkoli dotazů neváhejte kontaktovat náš tým pomocí",
+          "a": "Nápověda a podpora"
+        }
       }
     }
   },

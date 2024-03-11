@@ -1927,7 +1927,12 @@
         "content": "<p>Változtasd meg a beállításokat a Telepítés menüpontban. Kezelheted a telepítésed részleteit a felmérésekről, az adatforrásokról, az importálásról és a támogatásról.</p><p>Lehetővé teszi az adatok exportálását, kategóriák létrehozását, felhasználói jogosultságok kezelését és még sok mást!</p>"
       },
       "7": {
-        "title": "Készen állsz!"
+        "title": "Készen állsz!",
+        "content": {
+          "p1": "Milyen izgalmas! Most már ismered a legfontosabb funkciókat, és készen állsz arra, hogy használd az Ushahidi platformot.",
+          "p2": "Ne feledd, ha kérdésed van, ne habozz kapcsolatba lépni csapatunkkal a következőn keresztül",
+          "a": "Segítség és támogatás"
+        }
       }
     }
   },

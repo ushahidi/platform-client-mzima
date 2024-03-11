@@ -1954,7 +1954,12 @@
         "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
       },
       "7": {
-        "title": "You’re ready!"
+        "title": "You’re ready!",
+        "content": {
+          "p1": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
+          "p2": "Remember, in case of any question, don’t hesitate to reach out to our team by",
+          "a": "Help&Support"
+        }
       }
     }
   },

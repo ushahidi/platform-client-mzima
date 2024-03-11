@@ -1927,7 +1927,12 @@
         "content": "<p>Promijenite svoju implementaciju u Postavkama. Možete upravljati detaljima svoje implementacije kada je riječ o anketama, izvorima podataka, uvozu i donacijama.</p><p>Također vam omogućuje izvoz podataka, stvaranje kategorija, upravljanje dozvolama korisnika i mnogo više!</p>"
       },
       "7": {
-        "title": "Spremni ste!"
+        "title": "Spremni ste!",
+        "content": {
+          "p1": "Kako uzbudljivo! Sada znate najvažnije značajke i spremni ste početi koristiti platformu Ushahidi.",
+          "p2": "Zapamtite, u slučaju bilo kakvih pitanja, slobodno se obratite našem timu putem",
+          "a": "Pomoć i podrška"
+        }
       }
     }
   },

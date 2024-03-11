@@ -1927,7 +1927,12 @@
         "content": "<p>Modifiez votre déploiement dans les paramètres. Vous pouvez gérer les détails de votre déploiement en ce qui concerne les enquêtes, les sources de données, l'importation et les dons.</p><p>Il vous permet également d'exporter des données, de créer des catégories, de gérer les autorisations des utilisateurs et bien plus encore !</p>"
       },
       "7": {
-        "title": "Vous êtes prêt !"
+        "title": "Vous êtes prêt !",
+        "content": {
+          "p1": "Quelle excitation ! Maintenant vous connaissez les fonctionnalités les plus importantes et vous êtes prêt à commencer à utiliser la plateforme Ushahidi.",
+          "p2": "N'oubliez pas, en cas de question, n'hésitez pas à contacter notre équipe via",
+          "a": "Aide et support"
+        }
       }
     }
   },

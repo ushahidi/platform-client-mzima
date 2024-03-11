@@ -1927,7 +1927,12 @@
         "content": "<p>Ndryshoni implementimin tuaj në Cilësime. Mund të menaxhoni detajet e implementimit tuaj kur bëhet fjalë për Anketa, Burime të Dhënash, Importim dhe Dhurim.</p><p>Gjithashtu, mund të eksportoni të dhënat, të krijoni kategori, të menaxhoni lejet e përdoruesve dhe shumë më tepër!</p>"
       },
       "7": {
-        "title": "Jeni gati!"
+        "title": "Jeni gati!",
+        "content": {
+          "p1": "Sa emocionues! Tani ju e dini funksionet më të rëndësishme dhe jeni gati të filloni të përdorni platformën Ushahidi.",
+          "p2": "Kujtoni, nëse keni ndonjë pyetje, mos ngurroni të kontaktoni ekipin tonë përmes",
+          "a": "Ndihma dhe Mbështetja"
+        }
       }
     }
   },

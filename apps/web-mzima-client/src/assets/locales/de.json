@@ -1927,7 +1927,12 @@
         "content": "<p>Ändern Sie Ihr Deployment in den Einstellungen. Sie können die Details Ihres Deployments verwalten, wenn es um Umfragen, Datenquellen, Importieren und Spenden geht.</p><p>Darüber hinaus können Sie Daten exportieren, Kategorien erstellen, Benutzerberechtigungen verwalten und vieles mehr!</p>"
       },
       "7": {
-        "title": "Sie sind bereit!"
+        "title": "Sie sind bereit!",
+        "content": {
+          "p1": "Wie aufregend! Jetzt kennen Sie die wichtigsten Funktionen und sind bereit, die Plattform Ushahidi zu nutzen.",
+          "p2": "Denken Sie daran, bei Fragen zögern Sie nicht, unser Team über",
+          "a": "Hilfe und Support"
+        }
       }
     }
   },

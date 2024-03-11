@@ -1927,7 +1927,12 @@
         "content": "<p>Badilisha utekelezaji wako kwenye Mipangilio. Mnaweza kusimamia maelezo ya utekelezaji wako linapokuja suala la Uchunguzi, Vyanzo vya Data, Uingizaji na Mchango.</p><p>Pia, inakuwezesha kuuza data, kuunda vikundi, kusimamia ruhusa za watumiaji na mengi zaidi!</p>"
       },
       "7": {
-        "title": "Mme tayari!"
+        "title": "Mme tayari!",
+        "content": {
+          "p1": "Je! Sasa unajua vipengele muhimu zaidi na uko tayari kuanza kutumia jukwaa la Ushahidi.",
+          "p2": "Kumbuka, kama una maswali yoyote, usisite kuwasiliana na timu yetu kupitia",
+          "a": "Msaada na Usaidizi"
+        }
       }
     }
   },

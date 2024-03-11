@@ -1928,7 +1928,12 @@
         "content": "<p>Altere sua implantação em Configurações. Você pode gerenciar os detalhes de sua implantação quando se trata de Pesquisas, Fontes de Dados, Importação e Doação.</p><p>Além disso, você pode exportar dados, criar categorias, gerenciar permissões de usuários e muito mais!</p>"
       },
       "7": {
-        "title": "Você está pronto!"
+        "title": "Você está pronto!",
+        "content": {
+          "p1": "Que emocionante! Agora você conhece as funcionalidades mais importantes e está pronto para começar a usar a plataforma Ushahidi.",
+          "p2": "Lembre-se, em caso de qualquer dúvida, não hesite em entrar em contato com nossa equipe através de",
+          "a": "Ajuda e Suporte"
+        }
       }
     }
   },
