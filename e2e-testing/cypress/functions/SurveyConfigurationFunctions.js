@@ -31,10 +31,19 @@ class SurveyConfigurationFunctions {
         cy.get(SurveyConfigurationLocators.saveSurveyBtn).click();
     }
 
+    type_email(email) {
+        cy.wait(1000);
+        cy.get(LoginLocators.emailField).type(email, {force: true});
+    }
+    
+    type_password(password) {
+        cy.get(LoginLocators.passwordField).clear({force: true}).type(password, {force: true});
+    }
+
     login_as_different_user(){
         cy.get(SurveyConfigurationLocators.authBtn).click();
-        cy.type(Cypress.env('ush_user_email'));
-        cy.type(Cypress.env('ush_user_pwd'));
+        cy.type_email(Cypress.env('ush_user_email'));
+        cy.type_password(Cypress.env('ush_user_pwd'));
         cy.get(LoginLocators.loginButton).click();
     }
 
