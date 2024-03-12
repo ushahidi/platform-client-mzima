@@ -43,7 +43,7 @@ class SurveyConfigurationFunctions {
     login_as_different_user(){
         cy.get(SurveyConfigurationLocators.authBtn).click();
         this.type_email('testuser@gmail.com');
-        this.type_password('testuser1234');
+        this.type_password('TestUser12345');
         cy.get(LoginLocators.loginButton).click();
     }
 
