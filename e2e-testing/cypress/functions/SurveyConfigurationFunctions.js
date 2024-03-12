@@ -40,6 +40,12 @@ class SurveyConfigurationFunctions {
         cy.get(LoginLocators.passwordField).clear({force: true}).type(password, {force: true});
     }
 
+    login_as_different_user(){
+        cy.get(SurveyConfigurationLocators.authBtn).click();
+        this.type_email('testuser@gmail.com');
+        this.type_password('testuser1234');
+        cy.get(LoginLocators.loginButton).click();
+    }
 
     click_add_post_btn() {
         cy.get(SurveyConfigurationLocators.addPostBtn).click();
