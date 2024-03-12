@@ -42,8 +42,8 @@ class SurveyConfigurationFunctions {
 
     login_as_different_user(){
         cy.get(SurveyConfigurationLocators.authBtn).click();
-        this.type_email(Cypress.env('ush_user_email'));
-        this.type_password(Cypress.env('ush_user_pwd'));
+        this.type_email('testuseremail@xtz.com');
+        this.type_password('Password@Cypress2023');
         cy.get(LoginLocators.loginButton).click();
     }
 
