@@ -18,6 +18,7 @@
     "mobile:lint": "nx lint mobile-mzima-client --cache --cacheStrategy content --cacheLocation .eslintcache",
     "run:android": "nx run mobile-mzima-client:cap:run-android",
     "postinstall": "ngcc --properties es2020 browser module main",
+    "test-pa11y": "pa11y-ci",
     "prepare": "husky install",
     "nx": "nx"
   },
