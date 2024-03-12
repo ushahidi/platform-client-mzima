@@ -29,10 +29,6 @@ class SurveyConfigurationFunctions {
 
     click_save_button() {
         cy.get(SurveyConfigurationLocators.saveSurveyBtn).click();
-      }
-
-    logout_admin() {
-        loginFunctions.logout;
     }
 
     login_as_different_user(){
@@ -44,25 +40,26 @@ class SurveyConfigurationFunctions {
 
     click_add_post_btn() {
         cy.get(SurveyConfigurationLocators.addPostBtn).click();
-      }
+    }
 
-      select_survey_item() {
+    select_survey_item() {
         cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
         cy.wait(1000);
-      }
+    }
 
-      type_post_title(title) {
+    type_post_title(title) {
         cy.get(SurveyConfigurationLocators.postTitleField).type(title, {force: true});
-      }
+    }
 
-      type_post_description(description) {
+    type_post_description(description) {
         cy.get(SurveyConfigurationLocators.postDescField).type(description, {force: true});
-      }
+    }
 
-      save_post() {
+    save_post() {
         cy.get(SurveyConfigurationLocators.savePostBtn).click();
-      }
-      add_post() {
+    }
+
+    add_post() {
         this.click_add_post_btn();
         this.select_survey_item();
         this.type_post_title('New Post Title');
@@ -70,9 +67,18 @@ class SurveyConfigurationFunctions {
         cy.get(SurveyConfigurationLocators.postCheckBox).click({ force: true });
         this.save_post();
         cy.get(SurveyConfigurationLocators.successBtn).click();
-      }
+    }
 
-      check_for_accurate_author_name() {
+    click_hide_author_information(){
+        this.open_settings();
+        this.open_surveys();
+        this.open_particular_survey();
+        this.click_survey_configure_tab();
+        this.click_hide_author_toggle_button();
+        this.click_save_button();
+    }
+
+    check_for_accurate_author_name() {
         cy.get(SurveyConfigurationLocators.clearBtn).click();
         cy.get(SurveyConfigurationLocators.surveySelectionList)
             .children(SurveyConfigurationLocators.surveySelectItem)
@@ -80,12 +86,7 @@ class SurveyConfigurationFunctions {
             .click({force: true})
         cy.wait(3000);
         cy.get(SurveyConfigurationLocators.postPreview).children(SurveyConfigurationLocators.postItem).contains('New Post Title');
-        cy.get(SurveyConfigurationLocators.postAuthor)
-          .contains(Cypress.env('ush_user_name'))
-      }
-
-      logout_user() {
-        loginFunctions.logout();
+        cy.get(SurveyConfigurationLocators.postAuthor).contains(Cypress.env('ush_user_name'))
     }
 
     check_for_anonymous_author_name() {
@@ -96,27 +97,13 @@ class SurveyConfigurationFunctions {
             .click({force: true})
         cy.wait(3000);
         cy.get(SurveyConfigurationLocators.postPreview).children(SurveyConfigurationLocators.postItem).contains('New Post Title');
-        cy.get(SurveyConfigurationLocators.postAuthor)
-          .contains("Anonymous")
-      }
+        cy.get(SurveyConfigurationLocators.postAuthor).contains("Anonymous")
+    }
 
-
-
-
-  require_posts_reviewed_before_published() {
-    this.open_settings();
-    this.open_surveys();
-    this.open_particular_survey();
-    this.click_survey_configure_tab();
-    this.click_hide_author_toggle_button();
-    this.click_save_button();
-    this.logout_admin();
-    this.login_as_different_user();
+    add_new_post() {
     this.open_particular_survey();
     this.add_post();
-    this.check_for_accurate_author_name;
-
-  }
+    }
 }
 
 export default SurveyConfigurationFunctions;
