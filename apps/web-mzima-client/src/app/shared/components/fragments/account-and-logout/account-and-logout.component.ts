@@ -10,9 +10,6 @@ import { BaseComponent } from '../../../../base.component';
   styleUrls: ['./account-and-logout.component.scss'],
 })
 export class AccountAndLogoutComponent extends BaseComponent implements OnInit {
-  public isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent,
-  );
   constructor(
     protected override sessionService: SessionService,
     protected override breakpointService: BreakpointService,
