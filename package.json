@@ -48,6 +48,8 @@
     "@supy-io/ngx-intercom": "^14.2.12",
     "@swimlane/ngx-charts": "^20.1.2",
     "angular-google-tag-manager": "^1.6.1",
+    "axe-core": "^4.8.4",
+    "cypress-axe": "^1.5.0",
     "dayjs": "^1.11.7",
     "ion2-calendar": "^3.5.0",
     "ionicons": "^7.1.0",

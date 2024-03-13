@@ -1,4 +1,5 @@
 import { Login } from '../actions';
+import 'cypress-axe'
 
 describe('Initialize login page', () => {
   before(() => {
@@ -10,5 +11,8 @@ describe('Initialize login page', () => {
 
   it('Input login information', () => {
     Login.loginForm();
+    // Perform accessibility checks
+    cy.injectAxe();
+    cy.checkA11y();
   });
 });
