@@ -228,28 +228,36 @@
             >
             </app-post-preview>
           </ngx-masonry>
-          <mzima-client-button
-            fill="clear"
-            color="secondary"
-            (buttonClick)="loadMore()"
-            class="feed__load-more"
-            *ngIf="
-              !isLoading &&
-              mode === FeedMode.Post &&
-              params.page !== undefined &&
-              params.limit !== undefined &&
-              params.page * params.limit < total
-            "
-          >
-            <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
-            <span>{{ 'app.load_more' | translate }}</span>
-          </mzima-client-button>
-          <pagination-controls
-            class="pagination"
-            (pageChange)="changePage($event)"
-            *ngIf="mode === FeedMode.Tiles"
-          >
-          </pagination-controls>
+          <ng-container *ngIf="!isLoading && paginationElementsAllowed">
+            <!-- load more -->
+            <ng-container
+              *ngIf="
+                mode === FeedMode.Post && params.page !== undefined && params.limit !== undefined
+              "
+            >
+              <mzima-client-button
+                fill="clear"
+                color="secondary"
+                (buttonClick)="loadMore()"
+                class="feed__load-more"
+                *ngIf="!loadingMorePosts && postCurrentLength < total"
+              >
+                <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
+                <span>{{ 'app.load_more' | translate }}</span>
+              </mzima-client-button>
+              <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>
+              <div class="endofPosts" *ngIf="!loadingMorePosts && postCurrentLength >= total">
+                End of Posts
+              </div>
+            </ng-container>
+            <!-- pagination -->
+            <pagination-controls
+              class="pagination"
+              (pageChange)="changePage($event)"
+              *ngIf="mode === FeedMode.Tiles"
+            >
+            </pagination-controls>
+          </ng-container>
         </div>
       </ng-container>
     </div>

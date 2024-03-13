@@ -191,6 +191,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
     });
     this.hasRequiredTask = this.selectedForm.tasks.some((task) => task.required);
     this.setRequiredFields();
+
     this.loader.hide();
   }
 

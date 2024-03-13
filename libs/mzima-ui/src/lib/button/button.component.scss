@@ -121,6 +121,12 @@ $laptop: 1439px;
       }
     }
 
+    &.mzima-button--transparent-style-1 {
+      //e.g. for share & close buttons (in mobile menu)
+      background-color: transparent;
+      --hover-background-color: var(--color-black);
+    }
+
     &:before {
       top: 0;
       left: 0;
@@ -259,6 +265,12 @@ $laptop: 1439px;
     --active-background-color: var(--button-background-active, var(--button-background-hover));
     --disabled-color: var(--button-disabled-color);
     --disabled-background-color: var(--button-disabled-background);
+  }
+
+  &--transparent-style-1 {
+    //e.g. for share & close buttons (in mobile menu)
+    --color: var(--button-color);
+    --background-color: var(--color-light-shade);
   }
 
   &__content {
