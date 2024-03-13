@@ -102,7 +102,7 @@
     "return_to_all_posts": "回到所有帖子",
     "this_deplyment_is_private": "此部署为私密",
     "private_deployment": "私密部署",
-    "mark_as": "标注为",
+    "mark_as": "添加新帖子",
     "who_can_see_this_category": "Who can see this category?",
     "this_category_is_child_to": "This category is a child to <strong>{{parent}}</strong>",
     "nothing": "Nothing",
@@ -114,7 +114,7 @@
     "oldest_first": "Oldest first",
     "language": "Language",
     "select_language": "Select language",
-    "add_new_post": "Add new post",
+    "add_new_post": "新增帖子",
     "previous": "Previous",
     "choose_survey": "Choose survey"
   },
