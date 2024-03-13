@@ -17,9 +17,12 @@
 .menu {
   &__footer-container {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    // bottom: 0;
+    // left: 0;
+    // width: 100%;
+    width: 20%;
+    right: -170px;
+    bottom: 120px;
   }
 
   &__footer {
