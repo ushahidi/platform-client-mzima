@@ -5,7 +5,6 @@ class DataViewFilterFunctions {
   }
 
   check_post_filter_by_survey() {
-    cy.get(DataViewLocators.posts).contains('There are no posts yet!').should('exist');
     cy.get(DataViewLocators.postPreview).children(DataViewLocators.postItem).should('not.be.empty');
   }
 
