@@ -6,7 +6,7 @@
   [tabindex]="tabIndex"
   [attr.data-qa]="dataQa"
   (click)="onClick($event)"
-  [attr.aria-label]="ariaLabel"
+  [attr.aria-label]="generateAriaLabel()"
   *ngIf="!href; else linkButton"
   [ngClass]="
     'mzima-button--' +

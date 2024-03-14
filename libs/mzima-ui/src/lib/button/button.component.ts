@@ -41,4 +41,18 @@ export class ButtonComponent {
       event.preventDefault();
     }
   }
+
+  public generateAriaLabel(): string {
+    let label = '';
+
+    // Concatenate content of the button
+    label += this.id || ''; // Add button id if available
+    label += ' '; // Add space separator
+    label += this.type || ''; // Add button type if available
+    label += ' '; // Add space separator
+    // Add other relevant content, such as prefix, suffix, and text
+    // You can access these properties from your component's variables
+
+    return label.trim(); // Trim to remove trailing space
+  }
 }

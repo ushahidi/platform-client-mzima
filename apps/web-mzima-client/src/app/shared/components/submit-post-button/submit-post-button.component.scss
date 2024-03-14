@@ -19,3 +19,14 @@
     filter: drop-shadow(0 4px 12px rgba(var(--color-light-contrast-rgb), 0.25));
   }
 }
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
