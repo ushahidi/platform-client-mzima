@@ -17,7 +17,7 @@ import {
 import { BaseComponent } from '../../../base.component';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { Permissions } from '@enums';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 enum CollectionView {
   List = 'list',
   Create = 'create',
@@ -60,6 +60,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     private router: Router,
     private rolesService: RolesService,
     private notificationsService: NotificationsService,
+    private snackBar: MatSnackBar,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -279,6 +280,9 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     } else if (this.notification && !collectionData.is_notifications_enabled) {
       this.notificationsService.delete(this.notification.id).subscribe();
     }
+    this.snackBar.open('Collection successfully added', 'Close', {
+      duration: 3000,
+    });
   }
 
   addNewCollection() {
