@@ -26,7 +26,6 @@
     role="listitem"
     class="type-item"
     *ngFor="let survey of surveys"
-    tabindex="0"
     [routerLink]="['update', survey.id]"
     (keydown.enter)="gotoSurvey(survey.id)"
     [ngStyle]="{ '--color': survey.color }"
@@ -36,8 +35,9 @@
       *ngIf="isShowActions"
       class="type-item__checkbox"
       [checked]="isSurveySelected(survey)"
-      (click)="$event.stopPropagation(); selectSurveys(survey)"
-      (keydown.enter)="$event.stopPropagation(); selectSurveys(survey)"
+      (click)="$event.stopPropagation(); $event.preventDefault(); selectSurveys(survey)"
+      (keydown.space)="$event.stopPropagation(); $event.preventDefault(); selectSurveys(survey)"
+      (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); selectSurveys(survey)"
     ></mat-checkbox>
     {{ survey.name }}
   </li>

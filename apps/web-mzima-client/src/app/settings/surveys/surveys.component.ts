@@ -122,26 +122,21 @@ export class SurveysComponent implements OnInit {
       });
   }
 
-  public gotoSurvey(id: number) {
-    this.router.navigate(['/settings/surveys/update', id]);
-  }
-
   public isSurveySelected(survey: SurveyItem) {
-    const surveyIdx = this.selectedSurveys.findIndex((s) => s.id === survey.id);
-    console.log({ surveyIdx });
-    if (surveyIdx >= 0) return true;
-    return false;
+    const idx = this.selectedSurveys.findIndex((svy) => svy.id === survey.id);
+    return idx >= 0;
   }
 
   public selectSurveys(survey: SurveyItem) {
-    if (this.isSurveySelected(survey)) {
-      this.selectedSurveys.push(survey);
+    if (!this.isSurveySelected(survey)) {
+      this.selectedSurveys = [...this.selectedSurveys, survey];
     } else {
       this.selectedSurveys = this.selectedSurveys.filter((s) => s.id !== survey.id);
     }
   }
 
   public showActions(event: boolean) {
+    this.selectedSurveys = [];
     this.isShowActions = event;
   }
 
@@ -150,6 +145,10 @@ export class SurveysComponent implements OnInit {
       this.params.page += 1;
       this.getSurveys(true);
     }
+  }
+
+  public gotoSurvey(id: number) {
+    this.router.navigate(['/settings/surveys/update', id]);
   }
 
   public generateDataQa(name: string): string {
