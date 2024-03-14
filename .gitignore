@@ -54,3 +54,10 @@ cypress/videos/*
 .angular
 .eslintcache
 .nx
+
+# Lighthouse reports
+lighthouse-report.json
+
+# Ignore Lighthouse report files
+localhost_*.report.html
+
