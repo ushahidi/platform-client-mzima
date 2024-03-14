@@ -14,6 +14,8 @@ import {
   PostResult,
   AccountNotificationsInterface,
 } from '@mzima-client/sdk';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { AlertService } from 'libs/sdk/src/lib/services/alerts.service';
 import { BaseComponent } from '../../../base.component';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { Permissions } from '@enums';
@@ -60,6 +62,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     private router: Router,
     private rolesService: RolesService,
     private notificationsService: NotificationsService,
+    private alertService: AlertService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -169,8 +172,10 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   onCheckChange(isChecked: boolean, item: CollectionResult) {
     if (isChecked) {
       this.collectionsService.addToCollection(item.id, this.post.id).subscribe();
+      this.alertService.showMessage(`Post added to the ${item.name} collection`);
     } else {
       this.collectionsService.removeFromCollection(item.id, this.post.id).subscribe();
+      this.alertService.showMessage(`Post removed from the ${item.name} collection`);
     }
   }
 
