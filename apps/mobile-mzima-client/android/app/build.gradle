@@ -7,8 +7,8 @@ android {
         applicationId "com.ushahidi.mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 220235003
-        versionName "2.202350.3"
+        versionCode 220241000
+        versionName "2.202410.0-alpha.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
