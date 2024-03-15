@@ -1,0 +1,41 @@
+.dialog-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .dialog-content {
+    margin-bottom: 20px;
+    font-size: 16px;
+
+  }
+  
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+
+  }
+  
+  .dialog-button {
+    padding: 12px 24px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: semi-bold;
+
+  }
+  
+  .cancel-button {
+    background-color: white;
+    color: #333;
+    border: 1px solid gray;
+    margin-right: 10px;
+    width: 30%;
+
+  }
+  
+  .confirm-button {
+    background-color: orange;
+    color: #333;
+    border: none;
+    margin-left: 10px;
+    width: 30%;
+  }

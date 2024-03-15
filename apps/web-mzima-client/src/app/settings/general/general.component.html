@@ -99,6 +99,7 @@
         <p translate="settings.site_disable_registration_desc"></p>
       </div>
     </div>
+
   </div>
 </form>
 
@@ -145,15 +146,15 @@
 <div class="form-controls-spacer" *ngIf="!(isDesktop$ | async)!"></div>
 <div class="form-controls-panel form-controls-panel--sticky">
   <mzima-client-button
-    type="button"
-    fill="outline"
-    color="secondary"
-    routerLink="/settings"
-    [data-qa]="'btn-cancel'"
-    *ngIf="!(isDesktop$ | async)!"
-  >
-    {{ 'app.cancel' | translate }}
-  </mzima-client-button>
+  type="button"
+  fill="outline"
+  class="cancel-button"
+  color="secondary"
+  (click)="clearForm()"
+  data-qa="'btn-cancel'"
+>
+  {{ 'app.cancel' | translate }}
+</mzima-client-button>
   <mzima-client-button
     type="submit"
     data-qa="btn-save"
