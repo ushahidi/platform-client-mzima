@@ -451,12 +451,19 @@
 }
 
 @media print {
+  .feed-page__controls__inner {
+    display: none;
+  }
   .feed {
+    padding: 0px !important;
+
     &__posts {
+      margin-bottom: 24px !important;
       width: 100%;
     }
   }
   .post {
-    width: calc(50% - 16px);
+    width: calc(50% - 14px);
+    border: 1px solid rgba(var(--color-black-rgb), 0.15);
   }
 }
