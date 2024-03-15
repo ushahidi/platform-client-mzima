@@ -199,7 +199,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
     this.roleOptions.forEach((option) => {
       if (option?.options) {
         option.options.forEach((role) => {
-          if (this.category.role) {
+          if (this.category?.role) {
             role.checked = this.category.role.includes(role.value as string);
             role.disabled = !!parentId;
           } else role.checked = role.value === 'admin';
@@ -213,7 +213,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
   }
 
   public isRoleActive(roleName: string): boolean {
-    return !!this.category.role && this.category.role.indexOf(roleName) > -1;
+    return !!this.category?.role && this.category?.role?.indexOf(roleName) > -1;
   }
 
   public submit(): void {
