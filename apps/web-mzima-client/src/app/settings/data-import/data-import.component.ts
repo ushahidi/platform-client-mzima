@@ -89,11 +89,31 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   }
 
   transformAttributes(attributes: any[]) {
-    // const titleAttr = _.find(attributes, { type: 'title' });
-    // const descAttr = _.find(attributes, { type: 'description' });
-    // const descLabel = descAttr
-    //   ? descAttr.label
-    //   : this.translateService.instant('post.modify.form.description');
+    const title: any = _.chain(attributes)
+      .filter({ type: 'title' })
+      .reduce(function (collection: any[], item) {
+        return collection.concat({
+          key: 'title',
+          label: item.label,
+          priority: 0,
+          required: true,
+          type: 'title',
+        });
+      }, [])
+      .value();
+
+    const description: any = _.chain(attributes)
+      .filter({ type: 'description' })
+      .reduce(function (collection: any[], item) {
+        return collection.concat({
+          key: 'content',
+          label: item.label,
+          priority: 0,
+          required: true,
+          type: 'description',
+        });
+      }, [])
+      .value();
 
     const points: any[] = _.chain(attributes)
       .filter({ type: 'point' })
@@ -112,40 +132,6 @@ export class DataImportComponent extends BaseComponent implements OnInit {
             required: item.required,
           },
         );
-      }, [])
-      .value();
-
-    const title: any = _.chain(attributes)
-      .filter({ type: 'title' })
-      .reduce(function (this: DataImportComponent, collection: any[], item) {
-        const titleLabel = item
-          ? item.label
-          : this.translateService.instant('post.modify.form.title');
-
-        return collection.concat({
-          key: 'title',
-          label: titleLabel,
-          priority: 0,
-          required: true,
-          type: 'title',
-        });
-      }, [])
-      .value();
-
-    const description: any = _.chain(attributes)
-      .filter({ type: 'description' })
-      .reduce(function (this: DataImportComponent, collection: any[], item) {
-        const descLabel = item
-          ? item.label
-          : this.translateService.instant('post.modify.form.title');
-
-        return collection.concat({
-          key: 'content',
-          label: descLabel,
-          priority: 0,
-          required: true,
-          type: 'description',
-        });
       }, [])
       .value();
 
@@ -170,7 +156,6 @@ export class DataImportComponent extends BaseComponent implements OnInit {
           next: (csv) => {
             this.uploadedCSV = csv.result;
             this.fileChanged = false;
-            console.log(this.uploadedCSV);
 
             if (this.uploadedCSV.columns?.every((c: any) => c === ''))
               return this.notification.showError(
