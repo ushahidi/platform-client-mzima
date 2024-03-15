@@ -122,28 +122,6 @@ export class GeneralComponent implements OnInit {
           complete: () => {
             this.loader.hide();
             this.submitted = false;
-            this.notificationService.showError('save successful');
-
-            this.notificationService.showSnackbar(
-              {
-                // icon: {
-                //   color: 'success',
-                //   name: 'thumb-up',
-                // },
-                title: 'notify.export.upload_complete',
-                buttons: [
-                  {
-                    color: 'primary',
-                    text: 'notify.export.confirmation',
-                  },
-                ],
-              },
-              {
-                duration: 0,
-                wide: true,
-              },
-            );
-            // alert('uploaded');
           },
           error: (error) => {
             this.loader.hide();
@@ -172,7 +150,7 @@ export class GeneralComponent implements OnInit {
               ],
             },
             {
-              duration: 3000,
+              duration: 4000,
               wide: false,
             },
           );
