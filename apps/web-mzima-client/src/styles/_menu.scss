@@ -1,4 +1,5 @@
 .cdk-overlay-container {
+  z-index: 9999;
   .mat-menu-panel {
     margin-top: 4px;
     max-width: none;
