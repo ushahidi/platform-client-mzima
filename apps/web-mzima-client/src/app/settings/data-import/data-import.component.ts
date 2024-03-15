@@ -89,14 +89,11 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   }
 
   transformAttributes(attributes: any[]) {
-    const titleAttr = _.find(attributes, { type: 'title' });
-    const descAttr = _.find(attributes, { type: 'description' });
-    const titleLabel = titleAttr
-      ? titleAttr.label
-      : this.translateService.instant('post.modify.form.title');
-    const descLabel = descAttr
-      ? descAttr.label
-      : this.translateService.instant('post.modify.form.description');
+    // const titleAttr = _.find(attributes, { type: 'title' });
+    // const descAttr = _.find(attributes, { type: 'description' });
+    // const descLabel = descAttr
+    //   ? descAttr.label
+    //   : this.translateService.instant('post.modify.form.description');
 
     const points: any[] = _.chain(attributes)
       .filter({ type: 'point' })
@@ -118,26 +115,46 @@ export class DataImportComponent extends BaseComponent implements OnInit {
       }, [])
       .value();
 
-    attributes = _.chain(attributes)
-      .reject({ type: 'point' })
-      .reject({ type: 'title' })
-      .reject({ type: 'description' })
-      .push(
-        {
+    const title: any = _.chain(attributes)
+      .filter({ type: 'title' })
+      .reduce(function (this: DataImportComponent, collection: any[], item) {
+        const titleLabel = item
+          ? item.label
+          : this.translateService.instant('post.modify.form.title');
+
+        return collection.concat({
           key: 'title',
           label: titleLabel,
           priority: 0,
           required: true,
           type: 'title',
-        },
-        {
+        });
+      }, [])
+      .value();
+
+    const description: any = _.chain(attributes)
+      .filter({ type: 'description' })
+      .reduce(function (this: DataImportComponent, collection: any[], item) {
+        const descLabel = item
+          ? item.label
+          : this.translateService.instant('post.modify.form.title');
+
+        return collection.concat({
           key: 'content',
           label: descLabel,
-          priority: 1,
+          priority: 0,
           required: true,
           type: 'description',
-        },
-      )
+        });
+      }, [])
+      .value();
+
+    attributes = _.chain(attributes)
+      .reject({ type: 'point' })
+      .reject({ type: 'title' })
+      .reject({ type: 'description' })
+      .push(...title)
+      .push(...description)
       .push(...points)
       .sortBy('priority')
       .value();
