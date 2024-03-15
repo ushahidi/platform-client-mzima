@@ -128,12 +128,14 @@ export class DataImportComponent extends BaseComponent implements OnInit {
           label: titleLabel,
           priority: 0,
           required: true,
+          type: 'title',
         },
         {
           key: 'content',
           label: descLabel,
           priority: 1,
           required: true,
+          type: 'description',
         },
       )
       .push(...points)
@@ -174,18 +176,6 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   }
 
   private proceedAttributes() {
-    // forkJoin([
-    //   this.formsService.getStages(this.selectedForm.id.toString()),
-    //   this.formsService.getAttributes(this.selectedForm.id.toString()),
-    // ]).subscribe({
-    //   next: (result) => {
-    //     this.loader.hide();
-    //     this.selectedForm.tasks = result[0];
-    //     this.selectedForm.attributes = this.transformAttributes(result[1]);
-    //     this.hasRequiredTask = this.selectedForm.tasks.some((task) => task.required);
-    //     this.setRequiredFields(this.selectedForm.attributes!);
-    //   },
-    // });
     this.selectedForm.tasks.forEach((task) => {
       task.fields = this.transformAttributes(task.fields);
     });
