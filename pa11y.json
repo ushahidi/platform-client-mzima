@@ -1,0 +1,6 @@
+{
+  "standard": "WCAG2AA",
+  "ignore": [
+    "notice"
+  ]
+}
