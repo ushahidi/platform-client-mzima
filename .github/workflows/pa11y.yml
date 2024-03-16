@@ -37,7 +37,6 @@ jobs:
           pa11y http://localhost:4200/settings/roles
           pa11y http://localhost:4200/settings/categories
           pa11y http://localhost:4200/settings/webhooks
-          pally https://www.ushahidi.com/
 
       - name: Check Pa11y test results
         run: |
