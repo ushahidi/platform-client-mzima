@@ -12,6 +12,15 @@ describe("Automated Tests for Users", () => {
   it("Adds User", () => {
     userFunctions.add_user();
   });
+
+  it("Verifies User",()=>{
+    userFunctions.verify_user();
+  })
+
+  it("Verifies User List",()=>{
+    userFunctions.verify_user_list_visible();
+  })
+
   it("Deletes User",()=>{
     userFunctions.delete_user();
   })
