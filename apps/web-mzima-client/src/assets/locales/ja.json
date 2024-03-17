@@ -770,7 +770,7 @@
     "all_posts": "All posts",
     "no_search_results": "Your search didn't match any posts",
     "no_search_results_location": "Your search didn't match any posts with location information",
-    "no_posts_yet": "There are no posts yet!",
+    "no_posts_yet": "Select a survey to show posts!",
     "no_posts_yet_location": "There are no posts with location information yet!",
     "add_first_post": "Add the first post",
     "create_post": "投稿を作成",
