@@ -71,8 +71,8 @@ class GeneralSettingsFunctions {
     cy.get(GeneralSettingsLocator.geocoderList)
       .find(GeneralSettingsLocator.geocoderListItem)
       .eq(0).click()
-    cy.get(GeneralSettingsLocator.defaultLatitudeField).should('have.value', '-1.3026148499999999')
-    cy.get(GeneralSettingsLocator.defaultLongitudeField).should('have.value','36.82884201813725')
+    cy.get(GeneralSettingsLocator.defaultLatitudeField).should('have.value', '-1.2832533')
+    cy.get(GeneralSettingsLocator.defaultLongitudeField).should('have.value','36.8172449')
   }
 
   steps_to_generate_new_api_key(){
