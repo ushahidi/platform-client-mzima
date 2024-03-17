@@ -31,10 +31,10 @@ class EditPostFunctions {
   }
 
   check_for_added_post_in_survey() {
-    cy.get(EditPostLocators.surveySelectionList)
-        .children(EditPostLocators.surveySelectItem)
-        .eq(0)
-        .click({force: true})
+    // cy.get(EditPostLocators.surveySelectionList)
+    //     .children(EditPostLocators.surveySelectItem)
+    //     .eq(0)
+    //     .click({force: true})
     cy.get(EditPostLocators.postPreview).children(EditPostLocators.postItem).contains('New Post Title');
     cy.get(EditPostLocators.editPostBtn)
       .eq(0)
