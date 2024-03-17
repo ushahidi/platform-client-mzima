@@ -1,9 +1,10 @@
 @import 'helpers';
+@import 'typography';
 
 .sidebar {
   height: 100%;
   display: flex;
-  font-size: 12px;
+  font-size: $font-xs;
   overflow-y: auto;
   overflow-x: hidden;
   line-height: 14px;

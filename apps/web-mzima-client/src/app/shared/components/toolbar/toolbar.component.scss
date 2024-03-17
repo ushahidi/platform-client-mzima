@@ -1,4 +1,5 @@
 @import 'helpers';
+@import 'typography';
 
 .toolbar {
   top: 0;
@@ -60,7 +61,7 @@
 
   &__page-title {
     margin: 0;
-    font-size: 24px;
+    font-size: $font-2xl;
     font-weight: 700;
     line-height: 1.2;
 
@@ -71,7 +72,7 @@
     }
 
     @include breakpoint-max($tablet) {
-      font-size: 20px;
+      font-size: $font-xl;
       line-height: 1.28;
     }
   }
@@ -212,7 +213,7 @@
     width: 1em;
     height: 1em;
     line-height: 1;
-    font-size: 32px;
+    font-size: $font-4xl;
     margin-right: 12px;
   }
 }

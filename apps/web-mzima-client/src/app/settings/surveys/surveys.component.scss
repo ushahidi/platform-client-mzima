@@ -1,4 +1,5 @@
 @import 'helpers';
+@import 'typography';
 
 .types-list {
   margin: 0;
@@ -50,7 +51,7 @@
 .load-more {
   display: block;
   min-width: 132px;
-  font-size: 14px;
+  font-size: $font-sm;
   line-height: 1.6;
   font-weight: 500;
   margin: 24px auto 0;
