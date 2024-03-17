@@ -53,6 +53,8 @@ export enum Icons {
   facebookFill = 'facebook-fill',
   cookies = 'cookies',
   hamburger = 'hamburger',
+  lightMode = 'light-mode',
+  darkMode = 'dark-mode',
   account = 'account',
   back = 'back',
   tiles = 'tiles',
