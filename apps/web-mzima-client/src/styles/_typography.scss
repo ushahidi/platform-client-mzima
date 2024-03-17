@@ -57,20 +57,6 @@ $ushahidi-theme: mat.define-light-theme(
   )
 );
 
-// font sizes
-
-$font-base: 2rem;
-
-$font-xxs: $font-base * 0.625;
-$font-xs: $font-base * 0.75;
-$font-sm: $font-base * 0.875;
-$font-lg: $font-base * 1.125;
-$font-xl: $font-base * 1.25;
-$font-2xl: $font-base * 1.5;
-$font-3xl: $font-base * 1.75;
-$font-4xl: $font-base * 2;
-$font-5xl: $font-base * 2.25;
-
 @include mat.all-component-themes($ushahidi-theme);
 @include mat.core($ushahidi-theme);
 
