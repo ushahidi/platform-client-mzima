@@ -249,7 +249,7 @@
       height: 56px;
       line-height: 1;
       cursor: pointer;
-      font-size: $font-2xl;
+      font-size: 24px;
       margin-top: -1px;
       position: absolute;
       border-style: solid;
@@ -476,7 +476,7 @@
     margin: 0 -15px;
     font-size: $font-sm;
     font-weight: 400;
-    line-height: 17px;
+    line-height: 1.2em;
     position: relative;
     white-space: normal;
     width: calc(100% + 30px);
@@ -484,7 +484,7 @@
 
     @include breakpoint-max($laptop-small) {
       font-size: $font-xs;
-      line-height: 14px;
+      line-height: 1.2em;
     }
 
     &:not(:first-child) {
@@ -682,7 +682,7 @@
       flex: 1 1 100%;
       margin: 0 8px;
       padding: 0 8px;
-      font-size: $font-sm;
+      font-size: 14px;
       line-height: 1.5;
       font-weight: 700;
     }
