@@ -53,6 +53,7 @@ class SurveyConfigurationFunctions {
         this.type_post_description('New Post Description');
         cy.get(SurveyConfigurationLocators.postCheckBox).click({ force: true });
         this.save_post();
+        cy.wait(1000);
         cy.get(SurveyConfigurationLocators.successBtn).click();
       }
 
