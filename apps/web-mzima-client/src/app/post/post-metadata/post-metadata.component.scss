@@ -72,6 +72,7 @@
     padding: 0 8px;
     margin-bottom: 4px;
     position: relative;
+    color: var(--color-neutral-80);
 
     &:not(:first-child) {
       &:before {
@@ -90,9 +91,10 @@
     display: block;
     padding: 2px 4px;
     border-radius: 4px;
+    color: var(--color-neutral-80);
 
     &--published {
-      color: var(--color-neutral-70);
+      color: var(--color-neutral-100);
       background-color: var(--color-neutral-10);
     }
 
