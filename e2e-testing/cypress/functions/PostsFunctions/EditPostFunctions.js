@@ -38,7 +38,7 @@ class EditPostFunctions {
   }
 
   edit_post() {
-    cy.get(EditPostLocators.editPostBtn).eq(0).click();
+    cy.get(EditPostLocators.editPostBtn).eq(0).click({ force: true });
     cy.get(EditPostLocators.postTitleField).eq(0).type(' 2');
     this.save_post();
   }
