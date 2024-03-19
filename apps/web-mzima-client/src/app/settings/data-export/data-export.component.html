@@ -13,7 +13,8 @@
           <p>{{ 'data_export.hxl_apikey_alert_1' | translate }}</p>
           <p>
             {{ 'data_export.hxl_apikey_alert_2' | translate }}
-            <a [routerLink]="['/settings/user-settings']" class="link-blue">
+            <!--Inadequate Color Contrast for Accessibility -->
+            <a [routerLink]="['/settings/user-settings']" class="colorLink">
               {{ 'data_export.hxl_configure' | translate }}
             </a>
             {{ 'data_export.hxl_apikey_alert_3' | translate }}
