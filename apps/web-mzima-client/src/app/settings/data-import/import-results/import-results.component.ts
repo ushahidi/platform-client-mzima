@@ -25,6 +25,7 @@ export class ImportResultsComponent implements OnInit {
 
   ngOnInit(): void {
     const jobId = this.route.snapshot.queryParamMap.get('job')?.split(',');
+    console.log(jobId);
     if (jobId) {
       this.pollingService.getImportJobsById(jobId);
       this.pollingImportFinished();
