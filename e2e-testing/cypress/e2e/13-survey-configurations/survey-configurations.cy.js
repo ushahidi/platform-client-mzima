@@ -1,5 +1,4 @@
 import LoginFunctions from "../../functions/LoginFunctions";
-import SignupFunctions from "../../functions/SignupFunctions";
 import SurveyConfigurationFunctions from "../../functions/SurveyConfigurationFunctions";
 
 describe("Automated Tests for Survey Configurations", () => {
