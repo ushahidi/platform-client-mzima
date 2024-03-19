@@ -45,6 +45,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   private notification: AccountNotificationsInterface;
   private userRole: string;
   public isManageCollections: boolean;
+  public isManagePosts: boolean;
   public formErrors: any[] = [];
 
   constructor(
@@ -82,6 +83,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   checkPermission() {
     this.isManageCollections =
       this.user.permissions?.includes(Permissions.ManageCollections) ?? false;
+    this.isManagePosts = Boolean(this.user.permissions?.includes(Permissions.ManagePosts));
     this.userRole = this.user.role!;
     if (this.isLoggedIn) {
       this.initRoles();
@@ -149,15 +151,32 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
       next: (response) => {
         this.collectionList = response.results.map((item) => {
           const isOwner = item.user_id === Number(this.user.userId);
+          const canViewCollections = this.isManageCollections || this.isManagePosts;
+          const userRole = this.userRole;
 
-          const hasReadPrivilege =
-            this.user.allowed_privileges?.includes('read') || item.role?.includes('everyone');
+          function checkReadPrivilege() {
+            // If the collection's role allows everyone to view or the specific role of the current user to view it.
+            if (item.role?.includes('everyone') || item.role?.includes(userRole)) {
+              return true;
+            }
 
-          console.log(hasReadPrivilege, item);
+            // If the current user does not have permissions to view collections
+            if (!canViewCollections) {
+              return false;
+            }
+
+            // If the current user is not the owner of the collection
+            if (item.role?.includes('me') && !isOwner) {
+              return false;
+            }
+
+            return true;
+          }
+
           return {
             ...item,
             my_collection: isOwner,
-            visible: hasReadPrivilege,
+            visible: checkReadPrivilege(),
           };
         });
         this.collectionList = this.collectionList.filter((collection) => collection.visible);
