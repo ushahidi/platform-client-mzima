@@ -22,7 +22,6 @@
     >{{ 'data_import.import_to' | translate }}
     {{ 'data_import.which_survey' | translate }}*</mat-label
   >
-  // add spinner
   <mat-form-field appearance="outline">
     <mat-select
       [data-qa]="'select-survey'"
@@ -140,14 +139,13 @@
       </div>
     </ng-container>
 
-    <ng-container *ngFor="let task of selectedForm.tasks;">
+    <ng-container *ngFor="let task of selectedForm.tasks">
       <div class="table-description">
-
         <mat-label class="form-label">
-          {{task.label}} 
-        </mat-label> 
-        <p>{{task.description}}</p>
-        </div>
+          {{ task.label }}
+        </mat-label>
+        <p>{{ task.description }}</p>
+      </div>
 
       <table mat-table [dataSource]="task.fields">
         <ng-container matColumnDef="survey">
@@ -169,7 +167,7 @@
                 [placeholder]="'data_import.leave_empty' | translate"
               >
                 <mat-option selected="selected" value="">
-                  {{ 'data_import.leave_empty' | translate }} {{field.key}}
+                  {{ 'data_import.leave_empty' | translate }} {{ field.key }}
                 </mat-option>
                 <mat-option *ngFor="let column of uploadedCSV.columns; let i = index" [value]="i">
                   {{ column }}
