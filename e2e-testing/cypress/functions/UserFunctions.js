@@ -31,6 +31,25 @@ class UserFunctions {
     cy.get(UserLocators.deleteUserConfirmBtn).click();
   }
 
+  verify_user_steps() {
+    cy.wait(2000);
+    cy.get(UserLocators.searchUserField).type('automateduser@ushahidi.com');
+    cy.get(UserLocators.userData).contains('automateduser@ushahidi.com');
+
+  }
+
+  verify_user_list_visible_steps(){
+    let getUserEmailCount;
+    cy.get(UserLocators.userData).each((item, index) => {
+      cy.wrap(item)
+        .get(UserLocators.userEmail).then(($value) => {
+          getUserEmailCount = $value.length
+          cy.wrap(getUserEmailCount).should('be.gte', 0)
+      })
+    })
+
+  }
+
   add_user() {
     this.open_user_page_steps();
     this.add_user_steps('Auto User', 'automateduser@ushahidi.com', Cypress.env('ush_user_pwd'));
@@ -38,6 +57,14 @@ class UserFunctions {
   delete_user() {
     this.open_user_page_steps();
     this.delete_user_steps();
+  }
+  verify_user(){
+    this.open_user_page_steps();
+    this.verify_user_steps();
+  }
+  verify_user_list_visible(){
+    this.open_user_page_steps();
+    this.verify_user_list_visible_steps();
   }
 }
 
