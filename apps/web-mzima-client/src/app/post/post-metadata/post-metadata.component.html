@@ -27,6 +27,7 @@
             'post-info__status--draft': post.status === 'draft',
             'post-info__status--archived': post.status === 'archived'
           }"
+          [data-qa]="'status'"
         >
           <ng-container [ngSwitch]="post.status">
             <ng-container *ngSwitchCase="'published'">{{
