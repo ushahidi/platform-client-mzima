@@ -331,7 +331,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       'status[]': values.status,
       'form[]': values.form,
       'tags[]': values.tags,
-      include_unstructured_posts: !this.isMapView && fetchPostsWithoutFormId,
+      include_unstructured_posts: !(this.isMapView && fetchPostsWithoutFormId),
       set: values.set,
       date_after: values.date.start ? dayjs(values.date.start).toISOString() : null,
       date_before: values.date.end
@@ -680,7 +680,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       tags: [],
       source: this.sources.map((s) => s.value),
       form: this.surveyList.map((s) => s.id),
-      include_unstructured_posts: !this.isMapView && fetchPostsWithoutFormId,
+      include_unstructured_posts: !(this.isMapView && fetchPostsWithoutFormId),
       date: {
         start: '',
         end: '',
