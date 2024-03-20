@@ -2,7 +2,7 @@
 
 <ion-content class="ion-padding-horizontal ion-padding-top page">
   <app-select
-    [label]="surveyList.length ? 'Survey name' : 'Getting data...'"
+    [label]="surveyList.length ? 'Survey name' : 'Fetching Surveys...'"
     [options]="surveyListOptions"
     [disabled]="!!postId"
     [(ngModel)]="selectedSurveyId"
