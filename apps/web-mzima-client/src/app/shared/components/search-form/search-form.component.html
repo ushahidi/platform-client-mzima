@@ -144,6 +144,7 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
+                [data-qa]="'clear'"
                 (buttonClick)="toggleSidebarFilters('form')"
               >
                 {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
