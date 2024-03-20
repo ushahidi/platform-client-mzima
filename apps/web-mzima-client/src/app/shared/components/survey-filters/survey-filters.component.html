@@ -1,0 +1,178 @@
+<div
+  data-filter-highlight
+  class="search-form__main-filters"
+  [ngClass]="{ 'search-form__main-filters--closed': !isMainFiltersOpen && !isOnboardingActive }"
+>
+  <button type="button" (click)="toggleMainFilters()" class="search-form__main-filters__toggle-btn">
+    <mat-icon svgIcon="angle-right"></mat-icon>
+  </button>
+
+  <div class="search-form__main-filters__inner">
+    <span
+      class="search-form__main-filters__total"
+      *ngIf="total !== undefined"
+      [data-qa]="'search-form-main-filters-total'"
+    >
+      {{ 'post.search_results' | translate }} {{ total }}
+    </span>
+
+    <div class="collection-info" *ngIf="collectionInfo">
+      <div class="collection-info__head">
+        <span class="collection-info__title">
+          {{ 'app.collection' | translate }}
+          "{{ collectionInfo.name }}"
+        </span>
+        <mzima-client-button
+          fill="clear"
+          size="small"
+          (buttonClick)="clearCollection()"
+          class="filter-group__head__button"
+        >
+          {{ 'nav.clear' | translate }}
+        </mzima-client-button>
+      </div>
+
+      <mat-slide-toggle
+        *ngIf="isLoggedIn"
+        class="notifications-toggle"
+        [(ngModel)]="isNotificationsOn"
+        [disabled]="isNotificationLoading"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="changeNorificationStatus($event, collectionInfo.id.toString())"
+      >
+        {{ 'nav.notifications' | translate }}
+      </mat-slide-toggle>
+
+      <div class="collection-info__description" *ngIf="collectionInfo.description?.length">
+        {{ collectionInfo.description }}
+      </div>
+    </div>
+
+    <div class="collection-info" *ngIf="activeSavedSearch">
+      <div class="collection-info__head">
+        <span class="collection-info__title">
+          {{ 'global_filter.saved_filter' | translate }}
+          "{{ activeSavedSearch.name }}"
+        </span>
+        <mzima-client-button
+          fill="clear"
+          size="small"
+          (buttonClick)="clearSavedFilter()"
+          class="filter-group__head__button"
+        >
+          {{ 'nav.clear' | translate }}
+        </mzima-client-button>
+      </div>
+
+      <mat-slide-toggle
+        class="notifications-toggle"
+        [(ngModel)]="isNotificationsOn"
+        [disabled]="isNotificationLoading"
+        [ngModelOptions]="{ standalone: true }"
+        *ngIf="isLoggedIn && activeSavedSearch.id"
+        (change)="changeNorificationStatus($event, activeSavedSearch.id.toString())"
+      >
+        {{ 'nav.notifications' | translate }}
+      </mat-slide-toggle>
+
+      <div class="collection-info__description" *ngIf="activeSavedSearch.description?.length">
+        {{ activeSavedSearch.description }}
+      </div>
+    </div>
+
+    <ng-container *ngIf="surveysLoaded; else loader">
+      <mat-tab-group
+        class="tabs"
+        dynamicHeight
+        disableRipple
+        disablePagination
+        animationDuration="0ms"
+      >
+        <mat-tab [label]="'app.surveys' | translate" [disabled]="!surveyList.length">
+          <div class="tabs__clear">
+            <mzima-client-button
+              fill="clear"
+              size="small"
+              class="filter-group__head__button"
+              (buttonClick)="clearFilter('form')"
+              [data-qa]="'clear'"
+              (buttonClick)="toggleSidebarFilters('form')"
+            >
+              {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
+            </mzima-client-button>
+          </div>
+          <mat-selection-list
+            name="surveys"
+            class="selection-list"
+            formControlName="form"
+            [data-qa]="'survey-selection-list'"
+          >
+            <mat-list-option
+              *ngFor="let survey of surveyList"
+              [selected]="survey.checked"
+              color="primary"
+              [value]="survey.id"
+              checkboxPosition="before"
+              class="selection-list__option"
+              [ngStyle]="{ '--color': survey.color }"
+              [data-qa]="'survey-select-item'"
+            >
+              <span class="selection-list__option__border"></span>
+              {{ survey.name }}
+              <span class="selection-list__option__total">{{ survey.total }}</span>
+            </mat-list-option>
+          </mat-selection-list>
+
+          <div class="filter-group__info" *ngIf="isMapView">
+            <span *ngIf="notMappedPostsCount <= 0">{{
+              'global_filter.unmapped_none' | translate
+            }}</span>
+            <span *ngIf="notMappedPostsCount === 1">{{
+              'global_filter.unmapped_start_one' | translate
+            }}</span>
+            <span *ngIf="notMappedPostsCount >= 2">{{
+              'global_filter.unmapped_start_many' | translate
+            }}</span>
+            <a [routerLink]="['feed']" *ngIf="notMappedPostsCount >= 1">
+              {{ notMappedPostsCount }} post{{ notMappedPostsCount >= 2 ? 's' : '' }}
+            </a>
+            <span *ngIf="notMappedPostsCount >= 1">{{
+              'global_filter.unmapped_end' | translate
+            }}</span>
+          </div>
+        </mat-tab>
+
+        <mat-tab [label]="'global_filter.source' | translate">
+          <div class="tabs__clear">
+            <mzima-client-button
+              fill="clear"
+              size="small"
+              class="filter-group__head__button"
+              (buttonClick)="toggleSidebarFilters('source')"
+            >
+              {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
+            </mzima-client-button>
+          </div>
+          <mat-selection-list name="source" class="selection-list" formControlName="source">
+            <ng-container *ngFor="let source of sources">
+              <mat-list-option
+                [selected]="source.checked"
+                color="primary"
+                [value]="source.value"
+                checkboxPosition="before"
+                class="selection-list__option"
+              >
+                {{ source.name }}
+                <span class="selection-list__option__total">{{ source.total }}</span>
+              </mat-list-option>
+            </ng-container>
+          </mat-selection-list>
+        </mat-tab>
+      </mat-tab-group>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #loader>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>
