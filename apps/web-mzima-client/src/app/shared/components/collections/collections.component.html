@@ -22,11 +22,11 @@
         class="tooltip-btn"
         tabindex="-1"
         matTooltipPosition="after"
+        ariaLabel="Collections tool tip icon"
         matTooltip='
           A "Collection" is a manually-curated group of posts. You may find it useful in grouping posts that you would like to share with external partners. It is not dynamic, meaning the posts within it do not change unless you manually update them.
         '
       >
-        <span class="collection-visibility">Collection Tool Tip Icon</span>
         <mat-icon icon svgIcon="tooltip"></mat-icon>
       </mzima-client-button>
     </strong>
@@ -60,8 +60,8 @@
           color="secondary"
           [iconOnly]="true"
           type="submit"
+          ariaLabel="Search button"
         >
-          <span class="collection-visibility">Search Icon</span>
           <mat-icon icon svgIcon="search-small"></mat-icon>
         </mzima-client-button>
       </mat-form-field>

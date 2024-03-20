@@ -26,10 +26,11 @@
         matSuffix
         fill="clear"
         color="secondary"
+        role="button"
         [iconOnly]="true"
         (buttonClick)="togglePasswordVisible()"
+        ariaLabel="Password visibility icon"
       >
-        <span class="password-visibility">Password Visibility Icon</span>
         <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
       </mzima-client-button>
       <input
@@ -59,6 +60,8 @@
 
     <mzima-client-button
       type="submit"
+      [attr.aria-label]="'Signup button'"
+      role="button"
       [disabled]="form.invalid || form.disabled || submitted"
       [data-qa]="'btn-register'"
     >
