@@ -29,8 +29,8 @@
         [iconOnly]="true"
         (buttonClick)="togglePasswordVisible()"
         [data-qa]="'toggle-password'"
-        ariaLabel="'Password visibility icon'"
       >
+        <span class="password-visbility">Password Visibility Icon</span>
         <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
       </mzima-client-button>
     </mat-form-field>
