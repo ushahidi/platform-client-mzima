@@ -1,0 +1,46 @@
+name: Pa11y Tests
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    name: Run Pa11y Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Pa11y tests
+        run: |
+          pa11y http://localhost:4200/
+          pa11y http://localhost:4200/settings
+          pa11y http://localhost:4200/map
+          pa11y http://localhost:4200/data
+          pa11y http://localhost:4200/activity
+          pa11y http://localhost:4200/settings/general
+          pa11y http://localhost:4200/settings/surveys
+          pa11y http://localhost:4200/settings/data-sources
+          pa11y http://localhost:4200/settings/data-import
+          pa11y http://localhost:4200/settings/user-settings
+          pa11y http://localhost:4200/settings/data-export
+          pa11y http://localhost:4200/settings/users
+          pa11y http://localhost:4200/settings/roles
+          pa11y http://localhost:4200/settings/categories
+          pa11y http://localhost:4200/settings/webhooks
+
+      - name: Check Pa11y test results
+        run: |
+          if grep -q "ERROR" pa11y_output.txt; then
+            echo "Pa11y tests failed. Errors detected."
+            exit 1
+          fi
