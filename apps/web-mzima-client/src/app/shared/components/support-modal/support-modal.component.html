@@ -14,7 +14,7 @@
 <strong mat-dialog-title>{{ 'nav.help_support' | translate }}</strong>
 
 <div mat-dialog-content>
-  <div
+  <a
     matRipple
     class="menu-item"
     (click)="item?.action()"
@@ -24,12 +24,12 @@
   >
     <h4 class="menu-item__title">{{ item.title }}</h4>
     <p *ngIf="item.description?.length">{{ item.description }}</p>
-  </div>
+  </a>
   <!-- <div matRipple class="menu-item" *ngIf="isLoggedIn">
     <h4 class="menu-item__title">{{ 'app.intercom.intercom' | translate }}</h4>
     <p class="intercom_custom_launcher">{{ 'app.intercom.description' | translate }}</p>
   </div> -->
-  <div
+  <a
     matRipple
     class="menu-item"
     (click)="openUrl('https://www.ushahidi.com/terms-of-service/')"
@@ -37,8 +37,8 @@
     tabindex="0"
   >
     <h4 class="menu-item__title">{{ 'app.terms_and_conditions' | translate }}</h4>
-  </div>
-  <div
+  </a>
+  <a
     matRipple
     class="menu-item"
     (click)="openUrl('https://www.ushahidi.com/privacy-policy/')"
@@ -46,5 +46,5 @@
     tabindex="0"
   >
     <h4 class="menu-item__title">{{ 'app.privacy_policy' | translate }}</h4>
-  </div>
+  </a>
 </div>
