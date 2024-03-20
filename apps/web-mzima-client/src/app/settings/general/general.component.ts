@@ -11,8 +11,7 @@ import { LoaderService } from '../../core/services/loader.service';
 import { LanguageService } from '../../core/services/language.service';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent, ConfirmDialogData } from './ confirm-dialog.component';
+import { EventEmitter, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @UntilDestroy()
@@ -22,9 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./general.component.scss'],
 })
 export class GeneralComponent implements OnInit {
-  openConfirmModal() {
-    throw new Error('Method not implemented.');
-  }
+  @Output() cancel = new EventEmitter();
   @ViewChild('mapSettings') mapSettings: SettingsMapComponent;
   public isDesktop$: Observable<boolean>;
   public generalForm: FormGroup;
@@ -49,7 +46,6 @@ export class GeneralComponent implements OnInit {
     private clipboard: Clipboard,
     private breakpointService: BreakpointService,
     private notificationService: NotificationService,
-    private dialog: MatDialog,
     private snackBar: MatSnackBar,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
@@ -171,33 +167,28 @@ export class GeneralComponent implements OnInit {
   }
 
   isIntegerAndZeroToNine(value: any): boolean {
-    value === '0' ? (value = parseFloat(value)) : value; // Better fix could be to fix zero being returned as string from the backend
+    value === '0' ? (value = parseFloat(value)) : value;
     return Number.isInteger(value) && value >= this.minObfuscation && value <= this.maxObfuscation;
   }
-
-  clearForm(): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: {
-        title: 'Confirmation',
-        message: 'Are you sure you want to discard the changes?',
-      } as ConfirmDialogData,
+  public async openConfirmModal() {
+    const confirmed = await this.confirmModalService.open({
+      title: this.translate.instant('notify.default.data_has_not_been_saved'),
+      description: this.translate.instant('notify.default.proceed_warning'),
+      confirmButtonText: 'OK',
     });
-
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this.generalForm.get('name')?.setValue('');
-        this.generalForm.get('description')?.setValue('');
-        this.generalForm.get('email')?.setValue('');
-        this.generalForm.get('language')?.setValue('en');
-        this.generalForm.get('private')?.setValue(false);
-        this.generalForm.get('disable_registration')?.setValue(false);
-        this.uploadedFile = undefined;
-        this.siteConfig.image_header = '';
-
-        this.snackBar.open('Changes successfully discarded', 'Close', {
-          duration: 3000,
-        });
-      }
+    if (confirmed) {
+      this.generalForm.reset();
+      this.cancel.emit();
+      this.showSnackbar('Changes discarded successfully');
+    } else {
+      // nothing will happen, will remain in the current state
+    }
+  }
+  public showSnackbar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
     });
   }
 }
