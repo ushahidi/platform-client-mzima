@@ -97,9 +97,11 @@ class SurveyConfigurationFunctions {
     this.open_settings();
     this.open_surveys();
     this.open_particular_survey();
-    this.click_survey_configure_tab();
-    this.click_toggle_button();
-    this.click_save_button();
+    this.open_survey_configurations();
+    this.toggle_survey_review_required();
+    this.toggle_hide_exact_time_information();
+    this.save_survey_configurations();
+    this.check_for_time_post_was_added();
   }
 
   require_posts_reviewed_before_published() {
