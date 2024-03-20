@@ -28,8 +28,8 @@
         color="secondary"
         [iconOnly]="true"
         (buttonClick)="togglePasswordVisible()"
+        ariaLabel="Show/hide password"
       >
-        <span class="password-visibility">Password Visibility Icon</span>
         <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
       </mzima-client-button>
       <input
