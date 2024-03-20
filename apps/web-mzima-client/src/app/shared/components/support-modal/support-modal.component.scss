@@ -9,6 +9,10 @@
   color: var(--color-neutral-80);
   background-color: var(--color-neutral-10);
 
+  /* Additional styles for anchor tag */
+  text-decoration: none; /* Remove default underline */
+  display: block; /* Anchor tags are inline by default, change to inline-block for padding and border-radius to take effect */
+
   @include breakpoint-max($tablet) {
     font-size: 14px;
   }
