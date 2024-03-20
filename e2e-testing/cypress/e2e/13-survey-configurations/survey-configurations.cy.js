@@ -10,10 +10,12 @@ describe("Automated Tests for Survey Configurations", () => {
     cy.visit(Cypress.env('baseUrl'));
   });
 
+  it("Verify posts go into Published state as configured", () => {
+    surveyConfigurationFunctions.require_posts_reviewed_before_published()
+  });
+
   it("Steps to require posts to hide exact time information", () => {
     surveyConfigurationFunctions.hide_exact_time_information()
-    loginFunctions.logout();
     surveyConfigurationFunctions.add_post();
-    
   });
 });
