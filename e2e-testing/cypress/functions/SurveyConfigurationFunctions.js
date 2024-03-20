@@ -25,7 +25,7 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.saveSurveyBtn).click();
   }
 
-  reclick_survey_configure_tab() {
+  reopen_survey_configure_tab() {
     cy.get('#mat-tab-label-6-1').click({ force: true });
   }
 
@@ -84,7 +84,7 @@ class SurveyConfigurationFunctions {
     this.toggle_survey_review_required();
     this.save_survey_configurations();
     this.open_particular_survey();
-    this.open_survey_configurations();
+    this.reopen_survey_configure_tab();
     this.verify_button_toggled();
     this.add_post();
     this.check_for_added_post_being_published();
