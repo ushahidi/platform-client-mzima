@@ -44,7 +44,14 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   mainPost: SurveyItemTask;
   surveyObject: any;
   public languages: LanguageInterface[];
-  public defaultLanguage?: LanguageInterface;
+  public defaultLanguage: LanguageInterface = {
+    rtl: false,
+    pluralequation: 'language.pluralequation',
+    code: 'en',
+    name: 'English',
+    nplurals: 2,
+  };
+  // public defaultLanguage?: LanguageInterface;
   public activeLanguages: LanguageInterface[];
   public errorTaskField = false;
   public submitted = false;
@@ -94,7 +101,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
 
   private initLanguages(enabledLanguages: SurveyItemEnabledLanguages) {
     this.languages = this.languageService.getLanguages();
-    this.defaultLanguage = this.languages.find((lang) => lang.code === enabledLanguages.default);
+    // this.defaultLanguage = this.languages.find((lang) => lang.code === enabledLanguages.default);
     this.selectedLang = this.defaultLanguage;
     const availableLangs = enabledLanguages.available;
     const active = this.defaultLanguage ? [this.defaultLanguage] : [];
@@ -245,8 +252,8 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     }
   }
 
-  languageChange(event: any) {
-    this.defaultLanguage = this.languages.find((l) => l.code === event);
+  languageChange(/*event: any*/) {
+    // this.defaultLanguage = this.languages.find((l) => l.code === event);
     this.selectedLang = this.defaultLanguage;
     const availableLangs = this.form.controls['enabled_languages'].value.available;
     const active = this.defaultLanguage ? [this.defaultLanguage] : [];
