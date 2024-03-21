@@ -160,17 +160,17 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
               return true;
             }
 
-            // If the current user does not have permissions to view collections
-            if (!canViewCollections) {
-              return false;
+            // If the current user has manage collections or manage posts permissions and the collection's visibility has not been set to a single person
+            if (canViewCollections && !item.role?.includes('me')) {
+              return true;
             }
 
-            // If the current user is not the owner of the collection
-            if (item.role?.includes('me') && !isOwner) {
-              return false;
+            // If the current user is the owner of the collection
+            if (isOwner) {
+              return true;
             }
 
-            return true;
+            return false;
           }
 
           return {

@@ -6,7 +6,7 @@
   [attr.data-qa]="'collection-item'"
 >
   <div *ngIf="selectable" class="collection-item__checkbox" (click)="$event.preventDefault()">
-    <mat-checkbox [checked]="checked" [disabled]="disabled"> </mat-checkbox>
+    <mat-checkbox [checked]="checked"> </mat-checkbox>
   </div>
   <div class="collection-item__actions" *ngIf="actions && !selectable">
     <mzima-client-button
