@@ -53,6 +53,8 @@
       type="button"
       (click)="toggleMainFilters()"
       class="search-form__main-filters__toggle-btn"
+      role="presentation"
+      title="Toggle main filters"
     >
       <mat-icon svgIcon="angle-right"></mat-icon>
     </button>
@@ -156,6 +158,7 @@
               class="selection-list"
               formControlName="form"
               [data-qa]="'survey-selection-list'"
+              aria-label="Select survey"
             >
               <mat-list-option
                 *ngFor="let survey of surveyList"
