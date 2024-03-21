@@ -23,6 +23,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
   @Input() public requiredError?: boolean;
   id?: number;
   captionControl = new FormControl('');
+  altText?: string = '';
   photo: File | null;
   preview: string | SafeUrl | null;
   isDisabled = false;
