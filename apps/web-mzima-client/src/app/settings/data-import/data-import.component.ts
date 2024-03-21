@@ -89,14 +89,31 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   }
 
   transformAttributes(attributes: any[]) {
-    const titleAttr = _.find(attributes, { type: 'title' });
-    const descAttr = _.find(attributes, { type: 'description' });
-    const titleLabel = titleAttr
-      ? titleAttr.label
-      : this.translateService.instant('post.modify.form.title');
-    const descLabel = descAttr
-      ? descAttr.label
-      : this.translateService.instant('post.modify.form.description');
+    const title: any = _.chain(attributes)
+      .filter({ type: 'title' })
+      .reduce(function (collection: any[], item) {
+        return collection.concat({
+          key: 'title',
+          label: item.label,
+          priority: 0,
+          required: true,
+          type: 'title',
+        });
+      }, [])
+      .value();
+
+    const description: any = _.chain(attributes)
+      .filter({ type: 'description' })
+      .reduce(function (collection: any[], item) {
+        return collection.concat({
+          key: 'content',
+          label: item.label,
+          priority: 0,
+          required: true,
+          type: 'description',
+        });
+      }, [])
+      .value();
 
     const points: any[] = _.chain(attributes)
       .filter({ type: 'point' })
@@ -122,20 +139,8 @@ export class DataImportComponent extends BaseComponent implements OnInit {
       .reject({ type: 'point' })
       .reject({ type: 'title' })
       .reject({ type: 'description' })
-      .push(
-        {
-          key: 'title',
-          label: titleLabel,
-          priority: 0,
-          required: true,
-        },
-        {
-          key: 'content',
-          label: descLabel,
-          priority: 1,
-          required: true,
-        },
-      )
+      .push(...title)
+      .push(...description)
       .push(...points)
       .sortBy('priority')
       .value();
@@ -151,7 +156,6 @@ export class DataImportComponent extends BaseComponent implements OnInit {
           next: (csv) => {
             this.uploadedCSV = csv.result;
             this.fileChanged = false;
-            console.log(this.uploadedCSV);
 
             if (this.uploadedCSV.columns?.every((c: any) => c === ''))
               return this.notification.showError(
@@ -174,18 +178,6 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   }
 
   private proceedAttributes() {
-    // forkJoin([
-    //   this.formsService.getStages(this.selectedForm.id.toString()),
-    //   this.formsService.getAttributes(this.selectedForm.id.toString()),
-    // ]).subscribe({
-    //   next: (result) => {
-    //     this.loader.hide();
-    //     this.selectedForm.tasks = result[0];
-    //     this.selectedForm.attributes = this.transformAttributes(result[1]);
-    //     this.hasRequiredTask = this.selectedForm.tasks.some((task) => task.required);
-    //     this.setRequiredFields(this.selectedForm.attributes!);
-    //   },
-    // });
     this.selectedForm.tasks.forEach((task) => {
       task.fields = this.transformAttributes(task.fields);
     });
