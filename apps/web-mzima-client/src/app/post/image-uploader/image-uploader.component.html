@@ -1,7 +1,7 @@
 <div class="image-loader">
   <div class="image-loader__btn">
     <div class="image-loader__preview" *ngIf="preview">
-      <img [src]="preview" />
+      <img [src]="preview" [alt]="altText" />
     </div>
     <div class="image-loader__controls">
       <mzima-client-button
