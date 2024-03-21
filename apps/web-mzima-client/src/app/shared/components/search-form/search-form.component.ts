@@ -676,7 +676,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
 
     this.form.patchValue({
       query: '',
-      status: ['published', 'draft'],
+      status: [],
       tags: [],
       source: this.sources.map((s) => s.value),
       form: this.surveyList.map((s) => s.id),
