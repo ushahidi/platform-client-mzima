@@ -336,6 +336,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public onOutletLoaded(component: PostDetailsComponent) {
     // This set this.posts @Input() in child(ren) component (if you ever need to use it in there)
     component.posts = this.posts;
+    // component.isLoading = this.isLoading;
+    // component.noPostsYet = this.noPostsYet;
   }
 
   public pageChanged(page: any): void {
