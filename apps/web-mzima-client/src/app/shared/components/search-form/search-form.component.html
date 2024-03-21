@@ -165,7 +165,7 @@
                 checkboxPosition="before"
                 class="selection-list__option"
                 [ngStyle]="{ '--color': survey.color }"
-                [data-qa]="'survey-select-item'"
+                [data-qa]="'survey-select-item' + survey.id"
               >
                 <span class="selection-list__option__border"></span>
                 {{ survey.name }}
