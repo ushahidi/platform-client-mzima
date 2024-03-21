@@ -187,7 +187,7 @@ export class GeneralComponent implements OnInit {
       if (confirmed) {
         const currentFormValue = this.generalForm.value;
         if (JSON.stringify(currentFormValue) !== JSON.stringify(this.initialFormValue)) {
-          this.generalForm.reset();
+          this.generalForm.patchValue(this.initialFormValue);
           this.cancel.emit();
           this.showSnackbar('Changes discarded successfully');
           this.changesMade = false;
