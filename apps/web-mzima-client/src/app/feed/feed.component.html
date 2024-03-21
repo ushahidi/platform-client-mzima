@@ -6,8 +6,9 @@
     'feed-page--no-offset': !isMainFiltersOpen
   }"
 >
-  <!-- Reminder: "isLoading" and "postsCheck().stillLoading" are not the same - see github comment: https://github.com/ushahidi/platform-client-mzima/pull/783#discussion_r1492422808 -->
-  <ng-container *ngIf="(posts.length > 0 && isLoading) || (posts.length === 0 && isLoading)">
+  <!-- When there are no posts or filters match no posts: --
+    -- This entire switch Mode area should not show up    -->
+  <ng-container *ngIf="isLoading || atLeastOnePostExists">
     <div class="feed-page__info-panel" *ngIf="isDesktop">
       <span
         class="feed-page__results-info"
@@ -28,7 +29,7 @@
           [color]="mode === FeedMode.Tiles ? 'primary' : 'light'"
           [isActive]="mode === FeedMode.Tiles"
           (buttonClick)="switchMode(FeedMode.Tiles)"
-          [disabled]="posts.length >= 0 && postsCheck().stillLoading"
+          [disabled]="isLoading"
           class="feed-page__mode-switcher__button"
         >
           <mat-icon icon svgIcon="tiles"></mat-icon>
@@ -40,7 +41,7 @@
           [color]="mode === FeedMode.Post ? 'primary' : 'light'"
           [isActive]="mode === FeedMode.Post"
           (buttonClick)="switchMode(FeedMode.Post)"
-          [disabled]="posts.length >= 0 && postsCheck().stillLoading"
+          [disabled]="isLoading"
           class="feed-page__mode-switcher__button"
         >
           <mat-icon icon svgIcon="sidebar"></mat-icon>
@@ -145,7 +146,7 @@
           class="feed-page__control feed-page__control--bulk"
           *ngIf="user?.allowed_privileges?.includes('update')"
           (buttonClick)="toggleBulkOptions(!isBulkOptionsVisible)"
-          [disabled]="posts.length >= 0 && postsCheck().stillLoading"
+          [disabled]="isLoading"
         >
           {{ 'post.modify.bulk_actions' | translate }}
         </mzima-client-button>
@@ -156,7 +157,7 @@
             [iconOnly]="!isDesktop"
             [matMenuTriggerFor]="sortingMenu"
             class="feed-page__control feed-page__control--sorting"
-            [disabled]="posts.length >= 0 && postsCheck().stillLoading"
+            [disabled]="isLoading"
           >
             <span *ngIf="isDesktop">{{ 'global_filter.sorting' | translate }}</span>
             <mat-icon icon svgIcon="sorting"></mat-icon>
@@ -198,85 +199,97 @@
   <div class="feed-page__main" [attr.data-qa]="'posts'">
     <!-- (scroll)="onScroll($event)" -->
     <div #feed class="feed" [ngClass]="{ 'feed--post-view': mode === FeedMode.Post }">
-      <ng-container *ngIf="!postsCheck().stillLoading; else loader">
-        <div class="feed__posts" *ngIf="postsCheck().atLeastOneExists; else postsEmpty">
-          <ngx-masonry
-            #masonry
-            [ordered]="true"
-            [options]="masonryOptions"
-            [updateLayout]="updateMasonryLayout"
-            [attr.data-qa]="'post-preview'"
-          >
-            <app-post-preview
-              [attr.data-qa]="'post-item'"
-              class="post"
-              [post]="post"
-              [attr.postId]="post.id"
-              [user]="user"
-              ngxMasonryItem
-              [feedView]="true"
-              (edit)="editPost(post)"
-              (refresh)="refreshPost(post)"
-              (deleted)="postDeleted([post])"
-              (click)="showPostDetails(post)"
-              [selectable]="isBulkOptionsVisible"
-              [isChecked]="isPostChecked(post)"
-              (statusChanged)="postStatusChanged()"
-              (selected)="isPostSelected($event, post)"
-              (mediaLoaded)="updateMasonry()"
-              [ngClass]="{
-                'post--selected':
-                  post.id === postDetails?.id ||
-                  (mode === FeedMode.Post && post.id === activePostId)
-              }"
-              *ngFor="
-                let post of posts
-                  | paginate
-                    : {
-                        itemsPerPage: mode === FeedMode.Post ? 0 : itemsPerPage,
-                        currentPage: currentPage,
-                        totalItems: total
-                      }
-              "
-            >
-            </app-post-preview>
-          </ngx-masonry>
-          <ng-container *ngIf="!isLoading && paginationElementsAllowed">
-            <!-- load more -->
-            <ng-container
-              *ngIf="
-                mode === FeedMode.Post && params.page !== undefined && params.limit !== undefined
-              "
-            >
-              <mzima-client-button
-                fill="clear"
-                color="secondary"
-                (buttonClick)="loadMore()"
-                class="feed__load-more"
-                *ngIf="!loadingMorePosts && postCurrentLength < total"
-              >
-                <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
-                <span>{{ 'app.load_more' | translate }}</span>
-              </mzima-client-button>
-              <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>
-              <div class="endofPosts" *ngIf="!loadingMorePosts && postCurrentLength >= total">
-                End of Posts
-              </div>
+      <ng-container>
+        <div class="feed__posts">
+          <ng-container *ngIf="isLoading">
+            <app-spinner class="spinner"></app-spinner>
+          </ng-container>
+          <ng-container *ngIf="!isLoading">
+            <!-- No posts yet -->
+            <ng-container *ngIf="noPostsYet">
+              <span class="posts-empty">{{ 'post.no_posts_yet' | translate }}</span>
             </ng-container>
-            <!-- pagination -->
-            <pagination-controls
-              class="pagination"
-              (pageChange)="changePage($event)"
-              *ngIf="mode === FeedMode.Tiles"
-            >
-            </pagination-controls>
+            <!-- Posts -->
+            <ng-container *ngIf="atLeastOnePostExists">
+              <ngx-masonry
+                #masonry
+                [ordered]="true"
+                [options]="masonryOptions"
+                [updateLayout]="updateMasonryLayout"
+                [attr.data-qa]="'post-preview'"
+              >
+                <app-post-preview
+                  [attr.data-qa]="'post-item'"
+                  class="post"
+                  [post]="post"
+                  [attr.postId]="post.id"
+                  [user]="user"
+                  ngxMasonryItem
+                  [feedView]="true"
+                  (edit)="editPost(post)"
+                  (refresh)="refreshPost(post)"
+                  (deleted)="postDeleted([post])"
+                  (click)="showPostDetails(post)"
+                  [selectable]="isBulkOptionsVisible"
+                  [isChecked]="isPostChecked(post)"
+                  (statusChanged)="postStatusChanged()"
+                  (selected)="isPostSelected($event, post)"
+                  (mediaLoaded)="updateMasonry()"
+                  [ngClass]="{
+                    'post--selected':
+                      post.id === postDetails?.id ||
+                      (mode === FeedMode.Post && post.id === activePostId)
+                  }"
+                  *ngFor="
+                    let post of posts
+                      | paginate
+                        : {
+                            itemsPerPage: mode === FeedMode.Post ? 0 : itemsPerPage,
+                            currentPage: currentPage,
+                            totalItems: total
+                          }
+                  "
+                >
+                </app-post-preview>
+              </ngx-masonry>
+            </ng-container>
+            <ng-container *ngIf="paginationElementsAllowed">
+              <!-- load more -->
+              <ng-container
+                *ngIf="
+                  mode === FeedMode.Post && params.page !== undefined && params.limit !== undefined
+                "
+              >
+                <mzima-client-button
+                  fill="clear"
+                  color="secondary"
+                  (buttonClick)="loadMore()"
+                  class="feed__load-more"
+                  *ngIf="!loadingMorePosts && postCurrentLength < total"
+                >
+                  <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
+                  <span>{{ 'app.load_more' | translate }}</span>
+                </mzima-client-button>
+                <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>
+                <div class="endofPosts" *ngIf="!loadingMorePosts && postCurrentLength >= total">
+                  End of Posts
+                </div>
+              </ng-container>
+              <!-- pagination -->
+              <pagination-controls
+                class="pagination"
+                (pageChange)="changePage($event)"
+                *ngIf="mode === FeedMode.Tiles"
+              >
+              </pagination-controls>
+            </ng-container>
           </ng-container>
         </div>
       </ng-container>
     </div>
     <div class="feed-page__post" *ngIf="mode === FeedMode.Post" [attr.data-qa]="'post-details'">
       <router-outlet
-        *ngIf="posts.length || !postsCheck().stillLoading; else loader"
+        *ngIf="posts.length || !isLoading; else loader"
         (activate)="onOutletLoaded($event)"
       ></router-outlet>
     </div>
@@ -287,6 +300,6 @@
   <app-spinner class="spinner"></app-spinner>
 </ng-template>
 
-<ng-template #postsEmpty>
+<!-- <ng-template #postsEmpty>
   <span class="posts-empty">{{ 'post.no_posts_yet' | translate }}</span>
-</ng-template>
+</ng-template> -->
