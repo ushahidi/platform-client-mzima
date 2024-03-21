@@ -27,6 +27,8 @@ export class GeneralComponent implements OnInit {
   public generalForm: FormGroup;
   public copySuccess = false;
   public submitted = false;
+  initialFormValue: any;
+  changesMade = false;
   siteConfig: any;
   apiKey: ApiKeysResultInterface;
   uploadedFile?: File;
@@ -76,6 +78,10 @@ export class GeneralComponent implements OnInit {
     this.translate.onLangChange.subscribe((newLang) => {
       this.generalForm.controls['language'].setValue(newLang.lang);
     });
+    this.generalForm.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
+      this.changesMade = true;
+    });
+    this.initialFormValue = this.generalForm.value;
   }
 
   fileUploaded(event: any) {
@@ -136,6 +142,7 @@ export class GeneralComponent implements OnInit {
         complete: () => {
           this.submitted = false;
           this.loader.hide();
+          this.changesMade = false;
         },
         error: (error) => {
           this.submitted = false;
@@ -171,17 +178,25 @@ export class GeneralComponent implements OnInit {
     return Number.isInteger(value) && value >= this.minObfuscation && value <= this.maxObfuscation;
   }
   public async openConfirmModal() {
-    const confirmed = await this.confirmModalService.open({
-      title: this.translate.instant('notify.default.data_has_not_been_saved'),
-      description: this.translate.instant('notify.default.proceed_warning'),
-      confirmButtonText: 'OK',
-    });
-    if (confirmed) {
-      this.generalForm.reset();
-      this.cancel.emit();
-      this.showSnackbar('Changes discarded successfully');
+    if (this.changesMade) {
+      const confirmed = await this.confirmModalService.open({
+        title: this.translate.instant('notify.default.data_has_not_been_saved'),
+        description: this.translate.instant('notify.default.proceed_warning'),
+        confirmButtonText: 'OK',
+      });
+      if (confirmed) {
+        const currentFormValue = this.generalForm.value;
+        if (JSON.stringify(currentFormValue) !== JSON.stringify(this.initialFormValue)) {
+          this.generalForm.reset();
+          this.cancel.emit();
+          this.showSnackbar('Changes discarded successfully');
+          this.changesMade = false;
+        }
+      } else {
+        // nothing will happen, will remain in the current state
+      }
     } else {
-      // nothing will happen, will remain in the current state
+      this.showSnackbar('No changes made yet');
     }
   }
   public showSnackbar(message: string) {
