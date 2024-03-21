@@ -126,7 +126,8 @@ export class PostsService extends ResourceService<any> {
   }
 
   public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
-    const tmpParams = { ...this.postsFilters.value, has_location: 'all', ...filter };
+    // const tmpParams = { ...this.postsFilters.value, has_location: 'all', ...filter };
+    const tmpParams = { ...filter, ...this.postsFilters.value, has_location: 'all' };
     return super.get(url, this.postParamsMapper(tmpParams)).pipe(
       map((response) => {
         response.results.map((post: PostResult) => {
@@ -263,8 +264,8 @@ export class PostsService extends ResourceService<any> {
   public applyFilters(filters: any, updated = true): void {
     const newFilters: any = {};
     for (const key in filters) {
-      if (filters[key] || this.postsFilters.value[key]) {
-        newFilters[key] = filters[key] || this.postsFilters.value[key];
+      if (filters[key] !== undefined || this.postsFilters.value[key]) {
+        newFilters[key] = filters[key] !== undefined ? filters[key] : this.postsFilters.value[key];
       }
     }
     if (updated) {

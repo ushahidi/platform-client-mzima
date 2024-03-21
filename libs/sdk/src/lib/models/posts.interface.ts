@@ -37,6 +37,8 @@ export interface GeoJsonFilter {
   'status[]'?: string[];
   'form[]'?: string[];
   created_before_by_id?: string;
+  center_point?: string;
+  within_km?: string;
   q?: string;
   page?: number;
 }

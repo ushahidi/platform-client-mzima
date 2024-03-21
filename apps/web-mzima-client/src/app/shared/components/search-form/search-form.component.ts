@@ -35,6 +35,7 @@ import {
   Savedsearch,
   SurveyItem,
   AccountNotificationsInterface,
+  GeoJsonFilter,
 } from '@mzima-client/sdk';
 import dayjs from 'dayjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -321,37 +322,38 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   private getActiveFilters(values: any): void {
     // Check if values.form contains an item with id 0
     let fetchPostsWithoutFormId = false;
-    if (Array.isArray(values.form)) {
+    if (!this.isMapView && Array.isArray(values.form)) {
       const index = values.form.findIndex((id: any) => id === 0);
       fetchPostsWithoutFormId = index !== -1;
     }
 
-    const filters: any = {
+    const filters: GeoJsonFilter = {
       'source[]': values.source,
       'status[]': values.status,
       'form[]': values.form,
       'tags[]': values.tags,
-      include_unstructured_posts: !(this.isMapView && fetchPostsWithoutFormId),
+      include_unstructured_posts: fetchPostsWithoutFormId,
       set: values.set,
-      date_after: values.date.start ? dayjs(values.date.start).toISOString() : null,
+      date_after: values.date.start ? dayjs(values.date.start).toISOString() : undefined,
       date_before: values.date.end
         ? dayjs(values.date.end)
             .endOf('day')
             .add(dayjs(values.date.end).utcOffset(), 'minute')
             .toISOString()
-        : null,
+        : undefined,
       q: this.searchQuery,
       center_point:
         values.center_point?.location?.lat && values.center_point?.location?.lng
           ? [values.center_point.location.lat, values.center_point.location.lng].join(',')
-          : null,
+          : undefined,
       within_km: values.center_point.distance,
     };
 
     this.activeFilters = {};
     for (const key in filters) {
-      if (!filters[key] && !filters[key]?.length) continue;
-      this.activeFilters[key] = filters[key];
+      const val = filters[key as keyof typeof filters];
+      if (val === undefined) continue;
+      this.activeFilters[key] = val;
     }
   }
 
@@ -670,9 +672,12 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   public resetForm(filters: any = {}): void {
+    let fetchPostsWithoutFormId = false;
     // Check if this.surveyList contains an item with id 0
-    const index = this.surveyList.findIndex((s) => s.id === 0);
-    const fetchPostsWithoutFormId = index !== -1;
+    if (!this.isMapView) {
+      const index = this.surveyList.findIndex((s) => s.id === 0);
+      fetchPostsWithoutFormId = index !== -1;
+    }
 
     this.form.patchValue({
       query: '',
@@ -680,7 +685,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       tags: [],
       source: this.sources.map((s) => s.value),
       form: this.surveyList.map((s) => s.id),
-      include_unstructured_posts: !(this.isMapView && fetchPostsWithoutFormId),
+      include_unstructured_posts: fetchPostsWithoutFormId,
       date: {
         start: '',
         end: '',
