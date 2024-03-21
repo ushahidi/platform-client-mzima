@@ -11,11 +11,13 @@ describe("Automated Tests for Survey Configurations", () => {
   });
 
   it("Verify posts go into Published state as configured", () => {
-    surveyConfigurationFunctions.require_posts_reviewed_before_published()
+    surveyConfigurationFunctions.require_posts_reviewed_before_published();
   });
 
   it("Steps to require posts to hide exact time information", () => {
-    surveyConfigurationFunctions.hide_exact_time_information()
+    surveyConfigurationFunctions.hide_exact_time_information();
+    loginFunctions.logout();
     surveyConfigurationFunctions.add_post();
+    surveyConfigurationFunctions.check_for_time_post_was_added();
   });
 });

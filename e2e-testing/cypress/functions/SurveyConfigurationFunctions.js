@@ -101,7 +101,6 @@ class SurveyConfigurationFunctions {
     this.toggle_survey_review_required();
     this.toggle_hide_exact_time_information();
     this.save_survey_configurations();
-    this.check_for_time_post_was_added();
   }
 
   require_posts_reviewed_before_published() {
