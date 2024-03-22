@@ -9,10 +9,19 @@
   }"
 >
   <mat-form-field appearance="outline" class="search-form__control">
-    <mzima-client-button matPrefix [iconOnly]="true" fill="clear" color="secondary">
+    <mzima-client-button
+      matPrefix
+      [iconOnly]="true"
+      fill="clear"
+      color="secondary"
+      aria-hidden="true"
+      tabindex="-1"
+    >
       <mat-icon icon svgIcon="search-small"></mat-icon>
     </mzima-client-button>
     <input
+      [attr.aria-label]="'global_filter.search' | translate"
+      aria-label=""
       matInput
       [(ngModel)]="searchQuery"
       (ngModelChange)="searchPosts()"
