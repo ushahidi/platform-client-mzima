@@ -298,7 +298,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // if (this.mode === FeedMode.Post) {
     //   this.currentPage = 1;
     // }
-    this.isLoading = true;
+    this.isLoading = !this.posts.length; // With this skeleton loader shows up only on mode switch, and the loadmore button is able to detect to not load the skeleton UI loader on click
     this.paginationElementsAllowed = this.loadingMorePosts; // this check prevents the load more button & area from temporarily disappearing (on click)
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
