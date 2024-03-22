@@ -356,6 +356,8 @@
                   form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
                 "
                 [maxSizeError]="maxSizeError"
+                [form]="form"
+                [key]="field.key"
               >
               </app-image-uploader>
             </ng-container>
