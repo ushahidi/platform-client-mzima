@@ -21,12 +21,24 @@ class SurveyConfigurationFunctions {
     cy.get('#mat-tab-label-0-1').click({ force: true });
   }
 
+  toggle_survey_review_required() {
+    cy.get('#mat-slide-toggle-1-input').click({ force: true });
+  }
+
   toggle_hide_author_information() {
     cy.get('#mat-slide-toggle-2-input').click({ force: true });
   }
 
   save_survey_configurations() {
     cy.get(SurveyConfigurationLocators.saveSurveyBtn).click();
+  }
+
+  reopen_survey_configure_tab() {
+    cy.get('#mat-tab-label-6-1').click({ force: true });
+  }
+
+  verify_button_toggled() {
+    cy.get('#mat-slide-toggle-20-input').should('not.be.checked');
   }
 
   login_as_different_user() {

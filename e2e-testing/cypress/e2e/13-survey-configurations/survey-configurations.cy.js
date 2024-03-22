@@ -15,7 +15,7 @@ describe("Automated Tests for Survey Configurations", () => {
   });
 
   it("Steps to hide author information", () => {
-    surveyConfigurationFunctions.click_hide_author_information();
+    surveyConfigurationFunctions.toggle_hide_author_information();
     loginFunctions.logout();
     surveyConfigurationFunctions.login_as_different_user();
     surveyConfigurationFunctions.add_new_post();
