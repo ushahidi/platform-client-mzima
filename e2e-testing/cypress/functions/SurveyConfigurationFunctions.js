@@ -1,4 +1,8 @@
 import SurveyConfigurationLocators from '../locators/SurveyConfigurationLocators';
+import LoginFunctions from '../functions/LoginFunctions';
+import LoginLocators from '../locators/LoginLocators';
+
+const loginFunctions = new LoginFunctions();
 
 class SurveyConfigurationFunctions {
   open_settings() {
@@ -17,20 +21,19 @@ class SurveyConfigurationFunctions {
     cy.get('#mat-tab-label-0-1').click({ force: true });
   }
 
-  toggle_survey_review_required() {
-    cy.get('#mat-slide-toggle-1-input').click({ force: true });
+  toggle_hide_author_information() {
+    cy.get('#mat-slide-toggle-2-input').click({ force: true });
   }
 
   save_survey_configurations() {
     cy.get(SurveyConfigurationLocators.saveSurveyBtn).click();
   }
 
-  reopen_survey_configure_tab() {
-    cy.get('#mat-tab-label-6-1').click({ force: true });
-  }
-
-  verify_button_toggled() {
-    cy.get('#mat-slide-toggle-20-input').should('not.be.checked');
+  login_as_different_user() {
+    cy.get(SurveyConfigurationLocators.authBtn).click();
+    cy.type(Cypress.env('ush_user_email'));
+    cy.type(Cypress.env('ush_user_pwd'));
+    cy.get(LoginLocators.loginButton).click();
   }
 
   click_add_post_btn() {
@@ -74,6 +77,32 @@ class SurveyConfigurationFunctions {
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
     cy.get(SurveyConfigurationLocators.postStatus).contains('Published');
+  }
+
+  check_for_accurate_author_name() {
+    cy.get(SurveyConfigurationLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveySelectionList)
+      .children(SurveyConfigurationLocators.surveySelectItem)
+      .eq(0)
+      .click({ force: true });
+    cy.wait(3000);
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .contains('New Post Title');
+    cy.get(SurveyConfigurationLocators.postAuthor).contains(Cypress.env('ush_user_name'));
+  }
+
+  check_for_anonymous_author_name() {
+    cy.get(SurveyConfigurationLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveySelectionList)
+      .children(SurveyConfigurationLocators.surveySelectItem)
+      .eq(0)
+      .click({ force: true });
+    cy.wait(3000);
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .contains('New Post Title');
+    cy.get(SurveyConfigurationLocators.postAuthor).contains('Anonymous');
   }
 
   require_posts_reviewed_before_published() {
