@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
@@ -21,6 +21,9 @@ export class ImageUploaderComponent implements ControlValueAccessor {
   @Input() public hasCaption: boolean;
   @Input() public maxSizeError?: boolean;
   @Input() public requiredError?: boolean;
+  @Input() form: FormGroup;
+  @Input() key: string;
+
   id?: number;
   captionControl = new FormControl('');
   photo: File | null;
@@ -64,6 +67,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
       this.photo = formHelper.prepareImageFileToUpload(inputElement.files[0]);
       this.upload = true;
       this.preview = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.photo));
+      this.toggleFormButtonValidity('fileSelected');
       this.onChange({
         caption: this.captionControl.value,
         photo: this.photo,
@@ -84,6 +88,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     if (!confirmed) return;
 
     this.photo = this.preview = null;
+    this.toggleFormButtonValidity('deletePhoto');
     this.onChange({
       caption: this.captionControl.value,
       photo: this.photo,
@@ -93,12 +98,39 @@ export class ImageUploaderComponent implements ControlValueAccessor {
   }
 
   captionChanged() {
-    console.log(this.captionControl.value);
+    this.toggleFormButtonValidity('captionChanged');
+    if (!this.captionControl.value) {
+      return this.form.controls[this.key].reset();
+    }
     this.onChange({
       caption: this.captionControl.value,
       photo: this.photo,
       id: this.id,
       upload: this.upload,
     });
+  }
+
+  toggleFormButtonValidity(action: string) {
+    switch (action) {
+      case 'captionChanged':
+        if (this.captionControl.value && !this.photo) {
+          this.requiredError = true;
+          this.form.disable();
+        } else {
+          this.requiredError = false;
+          this.form.enable();
+        }
+        break;
+      case 'deletePhoto':
+        if (this.captionControl.value) {
+          this.requiredError = true;
+          this.form.disable();
+        }
+        break;
+      case 'fileSelected':
+        this.requiredError = false;
+        this.form.enable();
+        break;
+    }
   }
 }
