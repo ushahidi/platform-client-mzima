@@ -202,6 +202,7 @@
       #feed
       class="feed"
       [ngClass]="{
+        'feed__posts-scroll': !isLoading,
         'feed--post-view': mode === FeedMode.Post,
         'feed--post-view-loaded': mode === FeedMode.Post && !isLoading,
         'feed--post-view-skeleton': mode === FeedMode.Post && isLoading
