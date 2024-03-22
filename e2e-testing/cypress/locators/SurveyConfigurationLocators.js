@@ -4,7 +4,6 @@ const SurveyConfigurationLocators = {
   saveSurveyBtn: '[data-qa="btn-save-survey-item"]',
   settingsBtn: '[data-qa="btn-settings"]',
   surveyBtn: '[data-qa="btn-surveys"]',
-  authBtn: '[data-qa="btn-auth"]',
   addPostBtn: '[data-qa="submit-post-button"]',
   postTitleField: '[ng-reflect-data-qa="title"]',
   postDescField: '[data-qa="description"]',
@@ -17,7 +16,7 @@ const SurveyConfigurationLocators = {
   surveyItemBtn: '[data-qa="add-post-modal-surveys-item2"]',
   surveySelectionList: '[data-qa="survey-selection-list"]',
   surveySelectItem: '[data-qa="survey-select-item2"]',
-  postAuthor: '[data-qa="author"]',
+  postStatus: '[data-qa="status"]',
 };
 
 export default SurveyConfigurationLocators;
