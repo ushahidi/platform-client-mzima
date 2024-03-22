@@ -53,6 +53,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     page: 1,
     size: this.params.limit,
   };
+  public postsSkeleton = new Array(20).fill(''); // used for Post mode's skeleton loader
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
   public isLoading: boolean = true;
