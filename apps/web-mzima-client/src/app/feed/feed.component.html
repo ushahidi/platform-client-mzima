@@ -198,11 +198,22 @@
 
   <div class="feed-page__main" [attr.data-qa]="'posts'">
     <!-- (scroll)="onScroll($event)" -->
-    <div #feed class="feed" [ngClass]="{ 'feed--post-view': mode === FeedMode.Post }">
+    <div
+      #feed
+      class="feed"
+      [ngClass]="{
+        'feed--post-view': mode === FeedMode.Post,
+        'feed--post-view-loaded': mode === FeedMode.Post && !isLoading,
+        'feed--post-view-skeleton': mode === FeedMode.Post && isLoading
+      }"
+    >
       <ng-container>
         <div class="feed__posts">
           <ng-container *ngIf="isLoading">
-            <app-spinner class="spinner"></app-spinner>
+            <app-spinner *ngIf="mode === FeedMode.Tiles" class="spinner"></app-spinner>
+            <ng-container *ngIf="mode === FeedMode.Post">
+              <div *ngFor="let single of postsSkeleton" class="post post--feed-skeleton"></div>
+            </ng-container>
           </ng-container>
           <ng-container *ngIf="!isLoading">
             <!-- No posts yet -->
@@ -287,11 +298,16 @@
         </div>
       </ng-container>
     </div>
-    <div class="feed-page__post" *ngIf="mode === FeedMode.Post" [attr.data-qa]="'post-details'">
-      <router-outlet
-        *ngIf="posts.length || !isLoading; else loader"
-        (activate)="onOutletLoaded($event)"
-      ></router-outlet>
+    <div
+      class="feed-page__post"
+      [ngClass]="{ 'feed--post-view-skeleton': isLoading }"
+      *ngIf="mode === FeedMode.Post"
+      [attr.data-qa]="'post-details'"
+    >
+      <ng-container *ngIf="isLoading">
+        <app-spinner class="spinner"></app-spinner>
+      </ng-container>
+      <router-outlet *ngIf="!isLoading" (activate)="onOutletLoaded($event)"></router-outlet>
     </div>
   </div>
 </div>
