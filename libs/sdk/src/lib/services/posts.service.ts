@@ -25,7 +25,6 @@ export class PostsService extends ResourceService<any> {
     set: '',
     order_unlocked_on_top: true,
     reactToFilters: true,
-    // include_unstructured_posts: true,
     'source[]': [],
     'tags[]': [],
     'form[]': [],
@@ -128,6 +127,7 @@ export class PostsService extends ResourceService<any> {
   public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
     // const tmpParams = { ...this.postsFilters.value, has_location: 'all', ...filter };
     const tmpParams = { ...filter, ...this.postsFilters.value, has_location: 'all' };
+    tmpParams.include_unstructured_posts = tmpParams['form[]'].includes(0);
     return super.get(url, this.postParamsMapper(tmpParams)).pipe(
       map((response) => {
         response.results.map((post: PostResult) => {
@@ -248,7 +248,7 @@ export class PostsService extends ResourceService<any> {
         enable_group_by_source: true,
         has_location: isMapView ? 'mapped' : 'all',
         include_unmapped: true,
-        // include_unstructured_posts: true,
+        // include_unstructured_posts: false,
       },
     );
   }

@@ -18,6 +18,7 @@ export abstract class MainViewComponent {
   searchId = '';
   collectionId = '';
   params: GeoJsonFilter = {
+    include_unstructured_posts: false,
     limit: 500,
     offset: 0,
   };
