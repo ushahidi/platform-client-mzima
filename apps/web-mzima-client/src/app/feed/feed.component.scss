@@ -317,6 +317,14 @@
     padding-inline-end: 16px;
   }
 
+  &__posts-scroll {
+    --scrollbar-background: var(--color-light);
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
   &--post-view {
     padding: 0;
     width: 337px;
@@ -331,11 +339,6 @@
 
     &-loaded {
       background: var(--color-light);
-      --scrollbar-background: var(--color-light);
-      overflow-y: auto;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
     }
 
     &-skeleton {
