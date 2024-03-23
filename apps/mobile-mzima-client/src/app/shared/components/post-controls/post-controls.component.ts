@@ -105,7 +105,7 @@ export class PostControlsComponent {
     const modal = await this.modalController.create({
       component: CollectionsModalComponent,
       componentProps: {
-        postIds: this.posts[0].id,
+        postId: this.posts[0].id,
       },
     });
     modal.onWillDismiss().then(({ data }) => {
