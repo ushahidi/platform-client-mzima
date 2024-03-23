@@ -114,7 +114,7 @@
     "language": "Language",
     "select_language": "Select language",
     "add_new_post": "Add new post",
-    "previous": "Anvan",
+    "previous": "Previous",
     "choose_survey": "Choose survey",
     "contact_email_address": "Kontakte adrès imèl:",
     "add_collection": "Ajoute koleksyon",
@@ -1895,46 +1895,6 @@
     "what_you_get_notification_about": "Ki sa ou jwenn notifikasyon sou",
     "removed": "Notifikasyon te retire",
     "are_you_sure_you_want_to_remove_this_notification": "Èske ou sèten ou vle retire notifikasyon sa a?"
-  },
-  "tour": {
-    "steps": {
-      "0": {
-        "title": "Bonjou",
-        "content": "<p>Ou te kreye deplò ou avèk siksè. Pandan nou pèfeksyone li, tanpri akeyi avèk karakteristik Ushahidi a. Pwosesis gid la pral pran kek minit.</p>"
-      },
-      "1": {
-        "title": "Rekòt Done",
-        "content": "<p>Lè ou deplase nan wè nan kat sou wout la oswa wè done yo, ou ka wè tout done yo rekòte yo.</p>"
-      },
-      "2": {
-        "title": "Seleksyon",
-        "content": "<p>Ou ka seleksyone rezilta ou pa etat, kategori, ranje dat ak kote. Ou kapab tou sove seleksyon ou yo, konsa ou ka tounen vit vit.</p><p>Pou redwi kantite done a nan yon fason rapida ak efikas, itilize ba nan bò gòch pou chwazi sondaj ak sous done espesifik.</p>"
-      },
-      "3": {
-        "title": "Trwaye",
-        "content": "<p>Ou kapab tri rezilta yo pa dat piblikasyon, denye nouvèl ak kreye dat - soti nan dènye a nan pi gran.</p>"
-      },
-      "4": {
-        "title": "Aktivite",
-        "content": "<p>Tcheke aktivite deplò ou pandan tan ak volim. Pase kourèl sou chak liy oswa baw pou mete ladan li ak gade detay yo.</p>"
-      },
-      "5": {
-        "title": "Koleksyon",
-        "content": "<p>Pou oganize poz ou nan gwoup, ou ka kreye koleksyon. Jis chwazi non, ekri deskripsyon ak chwazi fason ou vle gade - se konsa li fasil!</p>"
-      },
-      "6": {
-        "title": "Anviwònman",
-        "content": "<p>Chanje deplò ou nan anviwònman. Lè w gen pou fè ak sondaj, sous done, enpòtasyon ak dòn, ou kapab jere detay deplò ou yo.</p><p>Anplis, li pèmèt ou ekspòte done yo, kreye kategori, jere pèmisyon itilizatè yo elatriye!</p>"
-      },
-      "7": {
-        "title": "Ou pare pou al!",
-        "content": {
-          "p1": "Kijan sa ap espay! Kounye a ou konnen karakteristik pi enpòtan yo ak ou pare pou kòmanse itilize platfòm Ushahidi a.",
-          "p2": "Tanpri sonje, si ou gen nenpòt kesyon, pa ezite kontakte ekip nou an atravè",
-          "a": "Èd ak Sipò"
-        }
-      }
-    }
   },
   "contact": {
     "edit": "modifye",

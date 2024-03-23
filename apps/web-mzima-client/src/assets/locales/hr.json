@@ -121,7 +121,7 @@
     "language": "Jezik",
     "select_language": "Odaberi jezik",
     "add_new_post": "Add new post",
-    "previous": "Prethodno",
+    "previous": "Previous",
     "choose_survey": "Choose survey",
     "contact_email_address": "Adresa e-pošte za kontakt:",
     "add_collection": "Dodaj zbirku",
@@ -1895,46 +1895,6 @@
     "what_you_get_notification_about": "O čemu primate obavijest",
     "removed": "Obavijest je uklonjena",
     "are_you_sure_you_want_to_remove_this_notification": "Jeste li sigurni da želite ukloniti ovu obavijest?"
-  },
-  "tour": {
-    "steps": {
-      "0": {
-        "title": "Pozdrav",
-        "content": "<p>Uspješno ste stvorili svoju implementaciju. Dok je mi još dotjerujemo, molimo vas, upoznajte se s Ushahidi značajkama. Proces uvođenja trajat će samo nekoliko minuta.</p>"
-      },
-      "1": {
-        "title": "Prikupljanje podataka",
-        "content": "<p>Možete vidjeti sve prikupljene podatke dok se krećete kroz prikaz karte ili prikaz podataka.</p>"
-      },
-      "2": {
-        "title": "Filtriranje",
-        "content": "<p>Možete filtrirati rezultate prema njihovom statusu, kategorijama, vremenskom rasponu i lokaciji. Također možete spremiti svoje filtre kako biste im brzo pristupili.</p><p>Za brzo i učinkovito smanjenje količine podataka, koristite lijevu traku za odabir određenih anketa i izvora podataka.</p>"
-      },
-      "3": {
-        "title": "Sortiranje",
-        "content": "<p>Možete sortirati rezultate prema datumu objave, najnovijim ažuriranjima i datumu stvaranja - od najnovijeg do najstarijeg.</p>"
-      },
-      "4": {
-        "title": "Aktivnost",
-        "content": "<p>Pregledajte aktivnost svoje implementacije tijekom vremena i po obujmu. Pomičite mišem preko svake linije ili trake kako biste je istaknuli i vidjeli detalje.</p>"
-      },
-      "5": {
-        "title": "Kolekcije",
-        "content": "<p>Za organizaciju svojih objava u grupe, možete stvoriti kolekcije. Samo odaberite naziv, napišite opis i odaberite način prikaza - tako je jednostavno!</p>"
-      },
-      "6": {
-        "title": "Postavke",
-        "content": "<p>Promijenite svoju implementaciju u Postavkama. Možete upravljati detaljima svoje implementacije kada je riječ o anketama, izvorima podataka, uvozu i donacijama.</p><p>Također vam omogućuje izvoz podataka, stvaranje kategorija, upravljanje dozvolama korisnika i mnogo više!</p>"
-      },
-      "7": {
-        "title": "Spremni ste!",
-        "content": {
-          "p1": "Kako uzbudljivo! Sada znate najvažnije značajke i spremni ste početi koristiti platformu Ushahidi.",
-          "p2": "Zapamtite, u slučaju bilo kakvih pitanja, slobodno se obratite našem timu putem",
-          "a": "Pomoć i podrška"
-        }
-      }
-    }
   },
   "contact": {
     "edit": "Uredi",

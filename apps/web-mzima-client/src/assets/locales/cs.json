@@ -121,7 +121,7 @@
     "language": "Jazyk",
     "select_language": "Zvolit jazyk",
     "add_new_post": "Add new post",
-    "previous": "Předchozí",
+    "previous": "Previous",
     "choose_survey": "Choose survey",
     "contact_email_address": "Kontaktní e-mailová adresa:",
     "add_collection": "Přidat kolekci",
@@ -1895,46 +1895,6 @@
     "what_you_get_notification_about": "O čem dostáváte oznámení",
     "removed": "Oznámení bylo odebráno",
     "are_you_sure_you_want_to_remove_this_notification": "Opravdu chcete toto oznámení odebrat?"
-  },
-  "tour": {
-    "steps": {
-      "0": {
-        "title": "Ahoj",
-        "content": "<p>Úspěšně jste vytvořili své nasazení. Nyní, když ho dokončujeme, se seznámte s funkcemi Ushahidi. Proces zavádění zabere několik minut.</p>"
-      },
-      "1": {
-        "title": "Sběr dat",
-        "content": "<p>Můžete vidět všechna shromážděná data při pohybu v zobrazení mapy nebo v zobrazení dat.</p>"
-      },
-      "2": {
-        "title": "Filtrování",
-        "content": "<p>Můžete filtrovat výsledky podle jejich stavu, kategorií, rozsahu dat a polohy. Můžete také uložit své filtry, abyste se k nim mohli rychle vrátit.</p><p>Abyste snížili množství dat rychlým a efektivním způsobem, použijte levý panel k výběru konkrétních průzkumů a zdrojů dat.</p>"
-      },
-      "3": {
-        "title": "Řazení",
-        "content": "<p>Můžete řadit výsledky podle data příspěvku, nejnovějších aktualizací a data vytvoření - od nejnovějšího k nejstaršímu.</p>"
-      },
-      "4": {
-        "title": "Aktivita",
-        "content": "<p>Zkontrolujte aktivitu svého nasazení v čase a objemu. Přejeďte myší přes každou linku nebo sloupec, abyste ji zvýraznili a zobrazili podrobnosti.</p>"
-      },
-      "5": {
-        "title": "Sbírky",
-        "content": "<p>Pro organizaci svých příspěvků do skupin můžete vytvořit sbírky. Stačí vybrat jméno, napsat popis a vybrat způsob zobrazení - je to tak jednoduché!</p>"
-      },
-      "6": {
-        "title": "Nastavení",
-        "content": "<p>Změňte své nasazení v nastavení. Můžete spravovat detaily svého nasazení, pokud jde o průzkumy, zdroje dat, import a darování.</p><p>Také vám umožňuje exportovat data, vytvářet kategorie, spravovat oprávnění uživatelů a mnohem víc!</p>"
-      },
-      "7": {
-        "title": "Jste připraveni!",
-        "content": {
-          "p1": "Jak vzrušující! Nyní znáte nejdůležitější funkce a jste připraveni začít používat platformu Ushahidi.",
-          "p2": "Pamatujte si, že v případě jakýchkoli dotazů neváhejte kontaktovat náš tým pomocí",
-          "a": "Nápověda a podpora"
-        }
-      }
-    }
   },
   "contact": {
     "edit": "Upravit",

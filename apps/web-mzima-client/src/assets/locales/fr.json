@@ -121,7 +121,7 @@
     "language": "Language",
     "select_language": "Select language",
     "add_new_post": "Add new post",
-    "previous": "Précédent",
+    "previous": "Previous",
     "choose_survey": "Choose survey",
     "contact_email_address": "Adresse e-mail de contact :",
     "add_collection": "Ajouter une collection",
@@ -1895,46 +1895,6 @@
     "what_you_get_notification_about": "Ce que vous recevez une notification",
     "removed": "La notification a été supprimée",
     "are_you_sure_you_want_to_remove_this_notification": "Voulez-vous vraiment supprimer cette notification ?"
-  },
-  "tour": {
-    "steps": {
-      "0": {
-        "title": "Bonjour",
-        "content": "<p>Vous avez créé votre déploiement avec succès. Pendant que nous le peaufinons, veuillez vous familiariser avec les fonctionnalités d'Ushahidi. Le processus d'intégration prendra seulement quelques minutes.</p>"
-      },
-      "1": {
-        "title": "Collecte de données",
-        "content": "<p>Vous pouvez voir toutes les données collectées en naviguant dans la vue de la carte ou la vue des données.</p>"
-      },
-      "2": {
-        "title": "Filtrage",
-        "content": "<p>Vous pouvez filtrer vos résultats par statut, catégories, plage de dates et emplacement. Vous pouvez également enregistrer vos filtres pour y accéder rapidement.</p><p>Pour réduire la quantité de données de manière rapide et efficace, utilisez la barre latérale gauche pour sélectionner des enquêtes spécifiques et des sources de données.</p>"
-      },
-      "3": {
-        "title": "Tri",
-        "content": "<p>Vous pouvez trier les résultats par date de publication, dernières mises à jour et date de création, du plus récent au plus ancien.</p>"
-      },
-      "4": {
-        "title": "Activité",
-        "content": "<p>Vérifiez l'activité de votre déploiement dans le temps et par volume. Passez la souris sur chaque ligne ou barre pour la mettre en surbrillance et voir les détails.</p>"
-      },
-      "5": {
-        "title": "Collections",
-        "content": "<p>Pour organiser vos publications en groupes, vous pouvez créer des collections. Il vous suffit de choisir un nom, d'écrire une description et de choisir le mode d'affichage - c'est aussi simple que cela !</p>"
-      },
-      "6": {
-        "title": "Paramètres",
-        "content": "<p>Modifiez votre déploiement dans les paramètres. Vous pouvez gérer les détails de votre déploiement en ce qui concerne les enquêtes, les sources de données, l'importation et les dons.</p><p>Il vous permet également d'exporter des données, de créer des catégories, de gérer les autorisations des utilisateurs et bien plus encore !</p>"
-      },
-      "7": {
-        "title": "Vous êtes prêt !",
-        "content": {
-          "p1": "Quelle excitation ! Maintenant vous connaissez les fonctionnalités les plus importantes et vous êtes prêt à commencer à utiliser la plateforme Ushahidi.",
-          "p2": "N'oubliez pas, en cas de question, n'hésitez pas à contacter notre équipe via",
-          "a": "Aide et support"
-        }
-      }
-    }
   },
   "contact": {
     "edit": "Modifier",
