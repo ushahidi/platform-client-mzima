@@ -291,7 +291,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   private getPosts(params: any, add = true): void {
-    this.currentMode().set;
+    this.currentFeedViewMode().set;
     const isPostsAlreadyExist = !!this.posts.length;
     if (!add) {
       this.posts = [];
@@ -534,7 +534,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.sessionService.toggleFiltersVisibility(value);
   }
 
-  public currentMode() {
+  public currentFeedViewMode() {
     return {
       get: localStorage.getItem('ui_feed_mode'),
       set: localStorage.setItem('ui_feed_mode', this.mode),
@@ -547,7 +547,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // So the check is a defense for or "validation" against errors that may occur from clicking it - if the button shows up by mistake when it's not supposed to [when there are no posts].
 
     // 2. The switch mode button of the mode you are on should also not work if you click on it while in that mode
-    const localStorageFeedMode = this.currentMode().get;
+    const localStorageFeedMode = this.currentFeedViewMode().get;
     const sameSwitchButtonClicked = localStorageFeedMode === mode;
     if (this.atLeastOnePostExists && !sameSwitchButtonClicked) {
       this.isLoading = true;
