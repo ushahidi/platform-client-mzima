@@ -291,6 +291,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   private getPosts(params: any, add = true): void {
+    this.currentMode().set;
     const isPostsAlreadyExist = !!this.posts.length;
     if (!add) {
       this.posts = [];
@@ -533,11 +534,22 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.sessionService.toggleFiltersVisibility(value);
   }
 
+  public currentMode() {
+    return {
+      get: localStorage.getItem('ui_feed_mode'),
+      set: localStorage.setItem('ui_feed_mode', this.mode),
+    };
+  }
+
   public switchMode(mode: FeedMode): void {
-    // If there are no posts "The switch buttons shouldn't 'try to work'"
+    // 1. If there are no posts "The switch buttons shouldn't 'try to work'"
     // Reason is because the switch buttons alongside all other elements disabled when the page is still loading, shouldn't even show up in the first place) [when there are no posts].
     // So the check is a defense for or "validation" against errors that may occur from clicking it - if the button shows up by mistake when it's not supposed to [when there are no posts].
-    if (this.atLeastOnePostExists) {
+
+    // 2. The switch mode button of the mode you are on should also not work if you click on it while in that mode
+    const localStorageFeedMode = this.currentMode().get;
+    const sameSwitchButtonClicked = localStorageFeedMode === mode;
+    if (this.atLeastOnePostExists && !sameSwitchButtonClicked) {
       this.isLoading = true;
       this.mode = mode;
       if (this.collectionId) {
