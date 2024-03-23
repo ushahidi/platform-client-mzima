@@ -1,8 +1,13 @@
+<!-- POST mode notes [for when there are no posts at all or if there are no posts that match filters]: 
+    When there are no posts in POST mode,
+    Page (css) style just adopts that of TILES mode
+    Better than making extra route request to TILES mode
+-->
 <div
   class="feed-page"
   [ngClass]="{
     'feed-page--filters-visible': isFiltersVisible,
-    'feed-page--post-view': mode === FeedMode.Post,
+    'feed-page--post-view': mode === FeedMode.Post && (isLoading || posts.length),
     'feed-page--no-offset': !isMainFiltersOpen
   }"
 >
@@ -14,7 +19,9 @@
         [ngClass]="{ 'feed-page__results-info__dim': !posts.length }"
         [attr.data-qa]="'feed-page-results'"
       >
-        <ng-container *ngIf="!posts.length && isLoading">Loading posts...</ng-container>
+        <ng-container *ngIf="!posts.length && isLoading"
+          >Loading posts in {{ mode }} mode...</ng-container
+        >
         <ng-container *ngIf="posts.length || (!posts.length && !isLoading)">
           {{ 'app.current_results' | translate }}
           {{ postCurrentLength }}
@@ -202,8 +209,9 @@
       #feed
       class="feed"
       [ngClass]="{
-        'feed--post-view': mode === FeedMode.Post,
-        'feed--post-view-loaded': mode === FeedMode.Post && !isLoading,
+        'feed__posts-scroll': !isLoading,
+        'feed--post-view': mode === FeedMode.Post && (isLoading || posts.length),
+        'feed--post-view-loaded': mode === FeedMode.Post && !isLoading && posts.length,
         'feed--post-view-skeleton': mode === FeedMode.Post && isLoading
       }"
     >
