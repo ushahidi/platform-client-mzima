@@ -76,6 +76,19 @@
         {{ 'share.share_on_facebook' | translate }}
         <mat-icon icon class="fab-button__icon facebook-icon" svgIcon="facebook-fill"></mat-icon>
       </mzima-client-button>
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
+        [autoSetMeta]="true"
+        [title]="title ? title : ''"
+        [description]="description"
+        shareButton="whatsapp"
+        [url]="address"
+        [data-qa]="'share-whatsapp'"
+      >
+        {{ 'Share on Whatsapp' | translate }}
+        <mat-icon icon class="fab-button__icon whatsapp-icon" svgIcon="whatsapp-fill"></mat-icon>
+      </mzima-client-button>
     </div>
   </div>
 </section>
