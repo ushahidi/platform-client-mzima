@@ -11,6 +11,7 @@ import { PollingService } from '../../../core/services/polling.service';
 })
 export class ImportResultsComponent implements OnInit {
   importFinished = false;
+  importSuccess = false;
   filename: string;
   collectionId: any;
   importJobs: any;
@@ -25,7 +26,6 @@ export class ImportResultsComponent implements OnInit {
 
   ngOnInit(): void {
     const jobId = this.route.snapshot.queryParamMap.get('job')?.split(',');
-    console.log(jobId);
     if (jobId) {
       this.pollingService.getImportJobsById(jobId);
       this.pollingImportFinished();
@@ -38,6 +38,7 @@ export class ImportResultsComponent implements OnInit {
   private pollingImportFinished() {
     this.pollingService.importFinished$.pipe(untilDestroyed(this)).subscribe((job: any) => {
       this.importFinished = true;
+      this.importSuccess = job.status === 'SUCCESS';
       this.collectionId = job.collection_id;
       this.filename = job.filename;
     });
