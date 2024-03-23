@@ -1,0 +1,211 @@
+<form
+  novalidate
+  [formGroup]="form"
+  class="search-form"
+  (submit)="applyFilters()"
+  [ngClass]="{
+    'search-form--filters-open': isFiltersVisible,
+    'search-form--main-filters-open': isMainFiltersOpen
+  }"
+>
+  <div
+    data-filter-highlight
+    class="search-form__filters-panel"
+    *ngIf="isDesktop || isFiltersVisible"
+    [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
+  >
+    <div class="search-form__filters-panel__head" *ngIf="!isDesktop">
+      <h3>Filters and sorting</h3>
+      <mzima-client-button
+        tabindex="-1"
+        fill="outline"
+        [iconOnly]="true"
+        color="light-gray"
+        [data-qa]="'btn-close'"
+        class="modal__close-btn"
+        (buttonClick)="toggleFilters(false)"
+        ariaLabel="{{ 'modal.button.close' | translate }}"
+      >
+        <mat-icon icon svgIcon="close"></mat-icon>
+      </mzima-client-button>
+    </div>
+
+    <div class="search-form__filters-panel__inner">
+      <ng-container *ngIf="!isDesktop">
+        <app-filter-control
+          class="search-form__filters-panel__item"
+          formControlName="form"
+          [options]="surveyList"
+          [fields]="['id', 'name']"
+          (clear)="clearFilter('form')"
+          [type]="filterType.Multiselect"
+          [title]="'app.surveys' | translate"
+          [badge]="form.controls['form'].value?.length || null"
+        >
+          <div class="clear-button" suffix>
+            <mzima-client-button
+              fill="clear"
+              size="small"
+              class="filter-group__head__button"
+              (buttonClick)="toggleSidebarFilters('form')"
+            >
+              {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
+            </mzima-client-button>
+          </div>
+        </app-filter-control>
+
+        <app-filter-control
+          class="search-form__filters-panel__item"
+          formControlName="source"
+          [options]="sources"
+          [fields]="['value', 'name']"
+          [type]="filterType.Multiselect"
+          (clear)="clearFilter('source')"
+          [title]="'global_filter.source' | translate"
+          [badge]="form.controls['source'].value?.length || null"
+        >
+          <div class="clear-button" suffix>
+            <mzima-client-button
+              fill="clear"
+              size="small"
+              class="filter-group__head__button"
+              (buttonClick)="toggleSidebarFilters('source')"
+            >
+              {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
+            </mzima-client-button>
+          </div>
+        </app-filter-control>
+      </ng-container>
+
+      <app-filter-control
+        class="search-form__filters-panel__item"
+        [(ngModel)]="activeSavedSearchValue"
+        [ngModelOptions]="{ standalone: true }"
+        [title]="'global_filter.saved_filters' | translate"
+        [type]="filterType.Select"
+        [badge]="activeSavedSearchValue ? 1 : null"
+        [options]="savedSearches"
+        [canEdit]="isEditAvailable"
+        (clear)="applySavedFilter(null)"
+        (editOption)="saveSearch($event)"
+        (filterChange)="applySavedFilter($event)"
+      >
+        <mzima-client-button
+          *ngIf="canCreateSearch"
+          suffix
+          fill="clear"
+          class="save-filter-button"
+          (buttonClick)="saveSearch()"
+        >
+          <mat-icon iconPrefix svgIcon="plus"></mat-icon>
+          {{ 'global_filter.save_new_filter' | translate }}
+        </mzima-client-button>
+        <span class="no-saved-filters" postfix *ngIf="savedSearches?.length === 0"
+          >No saved filters. Saved filter(s) will appear here for you to select once made
+          available.</span
+        >
+      </app-filter-control>
+
+      <app-filter-control
+        class="search-form__filters-panel__item"
+        formControlName="status"
+        [options]="statuses"
+        [fields]="['value', 'name']"
+        [type]="filterType.Multiselect"
+        (clear)="clearFilter('status')"
+        [title]="'global_filter.status' | translate"
+        [badge]="form.controls['status'].value?.length || null"
+        [data-qa]="'status'"
+      >
+        <div class="clear-button" suffix>
+          <mzima-client-button
+            fill="clear"
+            size="small"
+            class="filter-group__head__button"
+            (buttonClick)="clearFilter('status')"
+          >
+            {{ 'nav.clear' | translate }}
+          </mzima-client-button>
+        </div>
+      </app-filter-control>
+
+      <app-filter-control
+        class="search-form__filters-panel__item"
+        *ngIf="categoriesData?.length"
+        formControlName="tags"
+        [options]="categoriesData"
+        (clear)="clearFilter('tags')"
+        [type]="filterType.Multilevelselect"
+        [title]="'app.categories' | translate"
+        [badge]="form.controls['tags'].value?.length || null"
+        [selectedFields]="form.controls['tags'].value"
+      >
+      </app-filter-control>
+
+      <app-filter-control
+        class="search-form__filters-panel__item"
+        formControlName="date"
+        [type]="filterType.Daterange"
+        (clear)="clearFilter('date')"
+        [title]="'global_filter.date_range' | translate"
+        [badge]="form.controls['date'].value?.start || form.controls['date'].value?.end ? 1 : null"
+      >
+        <div class="clear-button" suffix>
+          <mzima-client-button
+            fill="clear"
+            size="small"
+            class="filter-group__head__button"
+            (buttonClick)="clearFilter('date')"
+          >
+            {{ 'nav.clear' | translate }}
+          </mzima-client-button>
+        </div>
+      </app-filter-control>
+
+      <app-filter-control
+        class="search-form__filters-panel__item"
+        formControlName="center_point"
+        [type]="filterType.Location"
+        (clear)="clearFilter('center_point')"
+        [title]="'global_filter.location' | translate"
+        [badge]="form.controls['center_point'].value.location?.lat ? 1 : null"
+      >
+        <div class="clear-button" suffix>
+          <mzima-client-button
+            fill="clear"
+            size="small"
+            class="filter-group__head__button"
+            (buttonClick)="clearFilter('center_point')"
+          >
+            {{ 'nav.clear' | translate }}
+          </mzima-client-button>
+        </div>
+      </app-filter-control>
+
+      <div class="search-form__filters-panel__item search-form__filters-panel__item--controls">
+        <mzima-client-button
+          fill="outline"
+          color="secondary"
+          [disabled]="form.disabled"
+          class="search-form__button"
+          (buttonClick)="resetSavedFilter()"
+          [data-qa]="'search-form__button'"
+        >
+          {{ 'global_filter.clear_all_filters' | translate }}
+        </mzima-client-button>
+        <mzima-client-button
+          *ngIf="!isDesktop"
+          (buttonClick)="applyAndClose()"
+          [disabled]="form.disabled"
+          class="search-form__button"
+        >
+          Apply filters
+        </mzima-client-button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<ng-template #loader>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>

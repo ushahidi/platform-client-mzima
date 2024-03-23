@@ -14,6 +14,17 @@
   </h1>
   <div class="toolbar__controls">
     <app-search-form class="search-form" *ngIf="showSearchForm"></app-search-form>
+    <mzima-client-button
+      [fill]="isDesktop ? 'clear' : 'outline'"
+      [color]="isDesktop ? 'gray' : 'secondary'"
+      class="search-form__filters"
+      *ngIf="isDesktop || isMapView"
+      (buttonClick)="toggleFilters(!isFiltersVisible)"
+      [data-qa]="'search-form__filters'"
+    >
+      <span>{{ 'app.filters' | translate }}</span>
+      <mat-icon iconPrefix svgIcon="filters"></mat-icon>
+    </mzima-client-button>
     <app-share-and-donate *ngIf="isDesktop"></app-share-and-donate>
     <app-language
       class="toolbar__language"
@@ -33,6 +44,8 @@
   >
     <mat-icon icon svgIcon="hamburger"></mat-icon>
   </mzima-client-button>
+  <app-main-filters></app-main-filters>
+  <app-survey-filters></app-survey-filters>
 </mat-toolbar>
 
 <app-mobile-menu></app-mobile-menu>

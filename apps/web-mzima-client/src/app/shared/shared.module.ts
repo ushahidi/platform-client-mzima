@@ -35,6 +35,7 @@ import {
   LanguageComponent,
   PageNotFoundComponent,
   SaveSearchModalComponent,
+  SurveyFiltersComponent,
   SearchFormComponent,
   SelectLanguagesModalComponent,
   ShareModalComponent,
@@ -50,6 +51,7 @@ import {
   MenuListLinksComponent,
   ShareAndDonateComponent,
   AccountAndLogoutComponent,
+  MainFiltersComponent,
 } from './components';
 import { DeleteContactModalComponent } from './components/account-settings-modal/delete-contact-modal/delete-contact-modal.component';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
@@ -74,6 +76,8 @@ const components = [
   SubmitPostButtonComponent,
   LanguageComponent,
   SearchFormComponent,
+  SurveyFiltersComponent,
+  MainFiltersComponent,
   CompanyInfoComponent,
   DonationButtonComponent,
   CookiesNotificationComponent,

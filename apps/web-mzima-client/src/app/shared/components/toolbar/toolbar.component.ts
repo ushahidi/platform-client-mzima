@@ -35,6 +35,8 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
   public isSettingsPage = false;
   public isToastMessageVisible = false;
   public currentApiVersion = '';
+  public isMapView: boolean;
+  public isFiltersVisible: boolean;
 
   constructor(
     protected override sessionService: SessionService,
@@ -45,6 +47,7 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
     private location: Location,
     private navToolbarService: NavToolbarService,
     private authService: AuthService,
+    private session: SessionService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -91,5 +94,11 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
 
   public back(): void {
     this.location.back();
+  }
+
+  public toggleFilters(value: boolean): void {
+    if (value === this.isFiltersVisible) return;
+    this.isFiltersVisible = value;
+    this.session.toggleFiltersVisibility(value);
   }
 }
