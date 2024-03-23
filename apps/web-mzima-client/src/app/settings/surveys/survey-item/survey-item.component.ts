@@ -3,10 +3,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { surveyHelper } from '@helpers';
+import { objectHelpers, surveyHelper } from '@helpers';
 import { LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BreakpointService, SessionService } from '@services';
+import {
+  BreakpointService,
+  ConfirmModalService,
+  LanguageService,
+  NotificationService,
+  SessionService,
+} from '@services';
 import { BaseComponent } from '../../../base.component';
 import { noWhitespaceValidator } from '../../../core/validators';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
@@ -20,9 +26,8 @@ import {
   SurveyItemTask,
   SurveyItemEnabledLanguages,
 } from '@mzima-client/sdk';
-import { NotificationService } from '../../../core/services/notification.service';
-import { LanguageService } from '../../../core/services/language.service';
 import _ from 'lodash';
+import { TranslateService } from '@ngx-translate/core';
 
 @UntilDestroy()
 @Component({
@@ -49,6 +54,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   public errorTaskField = false;
   public submitted = false;
   isDefaultLanguageSelected = true;
+  initialFormData: any = {};
 
   constructor(
     protected override sessionService: SessionService,
@@ -60,7 +66,9 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     private surveysService: SurveysService,
     private formsService: FormsService,
     private rolesService: RolesService,
+    private translate: TranslateService,
     private notification: NotificationService,
+    private confirmModalService: ConfirmModalService,
     private languageService: LanguageService,
     private location: Location,
   ) {
@@ -115,6 +123,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
       this.surveysService.getSurveyById(id).subscribe({
         next: (response) => {
           this.updateForm(response.result);
+          this.initialFormData = this.form.value;
           this.initLanguages(response.result.enabled_languages);
           this.initTasks();
         },
@@ -302,7 +311,21 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     }
   }
 
-  public cancel() {
+  public async cancel() {
+    // for (const key in this.initialFormData) {
+    //   this.initialFormData[key] = this.initialFormData[key]?.value || null;
+    // }
+
+    if (!objectHelpers.objectsCompare(_.clone(this.initialFormData), _.clone(this.form.value))) {
+      const confirmed = await this.confirmModalService.open({
+        title: this.translate.instant('notify.default.data_has_not_been_saved'),
+        description: this.translate.instant('notify.default.proceed_warning'),
+        confirmButtonText: 'OK',
+      });
+
+      if (!confirmed) return;
+    }
+
     if (this.isDesktop) {
       this.router.navigate(['settings/surveys']);
     } else {
