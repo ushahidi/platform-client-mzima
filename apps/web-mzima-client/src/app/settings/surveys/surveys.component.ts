@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { MatCheckboxChange } from '@angular/material/checkbox';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService } from '@services';
 import { forkJoin, Observable, take } from 'rxjs';
