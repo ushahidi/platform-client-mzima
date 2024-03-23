@@ -19,8 +19,8 @@
 
 <div class="form-row">
   <mat-label
-    >{{ 'data_import.import_to' | translate }}
-    {{ 'data_import.which_survey' | translate }}*</mat-label
+    >{{ 'data_import.import_to' | translate }} {{ 'data_import.which_survey' | translate
+    }}<span class="color-accent">*</span></mat-label
   >
   <mat-form-field appearance="outline">
     <mat-select
@@ -152,7 +152,7 @@
           <th mat-header-cell *matHeaderCellDef>{{ 'data_import.survey_field' | translate }}</th>
           <td mat-cell *matCellDef="let field">
             {{ field.label }}&nbsp;
-            <ng-container *ngIf="field.required">*</ng-container>
+            <span class="color-accent" *ngIf="field.required">*</span>
           </td>
         </ng-container>
 
