@@ -459,11 +459,17 @@
 
     &__posts {
       margin-bottom: 24px !important;
+      display: flex;
+      flex-direction: column;
       width: 100%;
     }
   }
   .post {
     width: calc(50% - 14px);
     border: 2px solid rgba(var(--color-black-rgb), 0.15);
+  }
+
+  .pagination {
+    margin-top: 24px;
   }
 }

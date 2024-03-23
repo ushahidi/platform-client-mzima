@@ -149,3 +149,10 @@
     }
   }
 }
+
+@media print {
+  .map-holder {
+    height: 100vh;
+    overflow: scroll;
+  }
+}
