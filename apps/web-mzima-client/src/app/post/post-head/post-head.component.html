@@ -8,6 +8,7 @@
     (buttonClick)="editPost($event)"
     class="post-head__control"
   >
+    <span class="visually-hidden">Edit</span>
     <mat-icon icon svgIcon="edit-post" [data-qa]="'edit-post'"></mat-icon>
   </mzima-client-button>
 
@@ -19,6 +20,7 @@
     (buttonClick)="sharePost()"
     class="post-head__control post-head__control--share"
   >
+    <span class="visually-hidden">Share</span>
     <mat-icon icon svgIcon="share" [data-qa]="'share-post'" [attr.post]="post.id"></mat-icon>
   </mzima-client-button>
   <mzima-client-button
@@ -31,6 +33,7 @@
     class="post-head__control post-head__control--dots"
     [matMenuTriggerFor]="actions"
   >
+    <span class="visually-hidden">More actions</span>
     <mat-icon icon svgIcon="dots"></mat-icon>
   </mzima-client-button>
 
