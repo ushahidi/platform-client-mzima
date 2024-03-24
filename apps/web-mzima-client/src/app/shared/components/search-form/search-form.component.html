@@ -165,7 +165,7 @@
                 checkboxPosition="before"
                 class="selection-list__option"
                 [ngStyle]="{ '--color': survey.color }"
-                [data-qa]="'survey-select-item'"
+                [data-qa]="'survey-select-item' + survey.id"
               >
                 <span class="selection-list__option__border"></span>
                 {{ survey.name }}
@@ -330,6 +330,7 @@
         (clear)="clearFilter('status')"
         [title]="'global_filter.status' | translate"
         [badge]="form.controls['status'].value?.length || null"
+        [data-qa]="'status'"
       >
         <div class="clear-button" suffix>
           <mzima-client-button
