@@ -34,6 +34,7 @@ export class PostItemComponent implements OnInit {
   @Output() public postUpdated = new EventEmitter<{ post: PostResult }>();
   @Output() public postDeleted = new EventEmitter<{ post: PostResult }>();
   @Output() selected = new EventEmitter<boolean>();
+  public backendUrl: string;
   public mediaUrl: string;
   public media: any;
   public mediaId?: number;
@@ -53,7 +54,9 @@ export class PostItemComponent implements OnInit {
     private modalController: ModalController,
     private actionSheetController: ActionSheetController,
     private router: Router,
-  ) {}
+  ) {
+    this.backendUrl = this.mediaService.backendUrl;
+  }
 
   async ionViewWillEnter() {
     await this.checkNetwork();
