@@ -50,8 +50,8 @@ export class ButtonComponent {
     label += ' '; // Add space separator
     label += this.type || ''; // Add button type if available
     label += ' '; // Add space separator
-    // Add other relevant content, such as prefix, suffix, and text
-    // You can access these properties from your component's variables
+    // In here we can add other relevant content, such as prefix, suffix, and btn text
+    // we can access these properties from the component's variables
 
     return label.trim(); // Trim to remove trailing space
   }
