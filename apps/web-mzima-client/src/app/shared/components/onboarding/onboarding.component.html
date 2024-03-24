@@ -12,12 +12,23 @@
     }"
   >
     <div class="onboarding-step__head">
-      <h2>{{ step.title }}</h2>
+      <h2>
+        {{
+          i === 0
+            ? (step.title || '' | translate) + ' ' + (username || '') + '!'
+            : (step.title || '' | translate)
+        }}
+      </h2>
       <mat-icon
         class="onboarding-step__head__icon"
         *ngIf="step.icon"
         [svgIcon]="step.icon"
       ></mat-icon>
+      <app-language
+        class="onboarding-step__language"
+        [languages]="languages"
+        [selectedLanguage]="selectedLanguage$ | async"
+      ></app-language>
       <mzima-client-button
         fill="outline"
         color="secondary"
@@ -32,7 +43,7 @@
     </div>
     <div class="onboarding-step__content">
       <div
-        [innerHTML]="step.content"
+        [innerHTML]="step.content || '' | translate"
         *ngIf="i !== onboardingSteps.length - 1; else finalStepContent"
       ></div>
     </div>
@@ -57,11 +68,11 @@
 
 <ng-template #finalStepContent>
   <p>
-    How exciting! Now you know the most important features and you’re ready to start using Ushahidi
-    platform.
+    {{ 'tour.steps.7.content.p1' | translate }}
   </p>
   <p>
-    Remember, in case of any question, don’t hesitate to reach out to our team by
-    <a (click)="openSupportModal()">Help&Support</a>.
+    {{ 'tour.steps.7.content.p2' | translate }}
+    <a (click)="openSupportModal()">{{ 'tour.steps.7.content.a' | translate }}</a
+    >.
   </p>
 </ng-template>
