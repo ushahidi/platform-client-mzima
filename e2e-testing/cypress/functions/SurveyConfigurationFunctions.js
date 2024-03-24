@@ -21,6 +21,10 @@ class SurveyConfigurationFunctions {
     cy.get('#mat-slide-toggle-1-input').click({ force: true });
   }
 
+  toggle_hide_exact_time_information() {
+    cy.get('#mat-slide-toggle-4-input').click({ force: true });
+  }
+
   save_survey_configurations() {
     cy.get(SurveyConfigurationLocators.saveSurveyBtn).click();
   }
@@ -74,6 +78,29 @@ class SurveyConfigurationFunctions {
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
     cy.get(SurveyConfigurationLocators.postStatus).contains('Published');
+  }
+
+  check_for_time_post_was_added() {
+    cy.get(SurveyConfigurationLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveySelectionList)
+      .children(SurveyConfigurationLocators.surveySelectItem)
+      .eq(0)
+      .click({ force: true });
+    cy.wait(3000);
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .contains('New Post Title');
+    cy.get(SurveyConfigurationLocators.postDate);
+  }
+
+  hide_exact_time_information() {
+    this.open_settings();
+    this.open_surveys();
+    this.open_particular_survey();
+    this.open_survey_configurations();
+    this.toggle_survey_review_required();
+    this.toggle_hide_exact_time_information();
+    this.save_survey_configurations();
   }
 
   require_posts_reviewed_before_published() {
