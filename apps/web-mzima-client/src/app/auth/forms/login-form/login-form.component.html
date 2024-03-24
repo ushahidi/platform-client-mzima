@@ -30,6 +30,7 @@
         (buttonClick)="togglePasswordVisible()"
         [data-qa]="'toggle-password'"
       >
+        <span class="visually-hidden">Toggle password visibility</span>
         <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
       </mzima-client-button>
     </mat-form-field>
