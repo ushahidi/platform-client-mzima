@@ -15,7 +15,7 @@
       [languages]="languages"
       [selectedLanguage]="selectedLanguage$ | async"
     ></app-toolbar>
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="main-content">
       <router-outlet></router-outlet>
     </div>
     <div class="mobile-page-nav" *ngIf="!isDesktop && !isInnerPage">

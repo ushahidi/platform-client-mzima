@@ -8,7 +8,7 @@
     *ngIf="checkAllowedAccessToSite()"
   >
   </app-submit-post-button>
-
+  <button (click)="skipToMain()" class="visibly-hidden">Skip to main content</button>
   <nav class="sidebar__controls">
     <app-menu-list-links></app-menu-list-links>
     <app-menu-list-non-links></app-menu-list-non-links>

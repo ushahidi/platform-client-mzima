@@ -25,4 +25,9 @@ export class SidebarComponent extends BaseComponent {
   }
 
   loadData(): void {}
+  skipToMain() {
+    const element = document.querySelector<HTMLDivElement>('#main-content');
+    element?.setAttribute('tabindex', '-1'); //You can set tabindex in HTML too than in JS
+    element?.focus();
+  }
 }
