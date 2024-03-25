@@ -244,6 +244,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
       if (!collectionData['view_only']) {
         collectionData['view_only'] = {};
       }
+
       collectionData['view_only']['only_me'] = true;
     } else if (visibleTo === 'everyone') {
       collectionData.role = ['everyone'];
