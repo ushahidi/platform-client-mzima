@@ -329,9 +329,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         }, 500);
         setTimeout(() => {
           //is inside this much delayed setTimeout to prevent pagination elements flicker on load/routing
-          this.paginationElementsAllowed =
-            data.meta.total > dataMetaPerPage && this.posts.length >= 20; // show pagination-related elements
-        }, 800);
+          this.paginationElementsAllowed = data.meta.total > dataMetaPerPage; // show pagination-related elements
+        }, 2100);
       },
     });
   }
