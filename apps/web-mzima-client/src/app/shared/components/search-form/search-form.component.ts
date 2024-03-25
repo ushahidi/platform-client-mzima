@@ -176,6 +176,29 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     this.getTotalPosts();
   }
 
+  public selectAllSurveys(): void {
+    const anyChecked = this.surveyList.some((survey) => survey.checked);
+    if (anyChecked) {
+      this.surveyList.forEach((survey) => {
+        if (survey.checked) {
+          survey.checked = false;
+          const selectedSurveys = this.form.controls['form'].value as number[];
+          const index = selectedSurveys.indexOf(survey.id);
+          if (index !== -1) {
+            selectedSurveys.splice(index, 1);
+            this.form.controls['form'].setValue(selectedSurveys);
+          }
+        }
+      });
+    } else {
+      this.surveyList.forEach((survey) => {
+        survey.checked = true;
+      });
+      const allSurveyIds = this.surveyList.map((survey) => survey.id);
+      this.form.controls['form'].setValue(allSurveyIds);
+    }
+  }
+
   loadData(): void {
     this.getSavedFilters();
     this.getPostsStatistic();
