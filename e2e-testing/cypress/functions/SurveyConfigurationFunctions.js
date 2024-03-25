@@ -42,7 +42,7 @@ class SurveyConfigurationFunctions {
   }
 
   login_as_different_user() {
-    cy.get(SurveyConfigurationLocators.authBtn).click();
+    cy.get(LoginLocators.loginModal).click();
     cy.type(Cypress.env('ush_user_email'));
     cy.type(Cypress.env('ush_user_pwd'));
     cy.get(LoginLocators.loginButton).click();
