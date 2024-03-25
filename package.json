@@ -19,7 +19,10 @@
     "run:android": "nx run mobile-mzima-client:cap:run-android",
     "postinstall": "ngcc --properties es2020 browser module main",
     "prepare": "husky install",
-    "nx": "nx"
+    "nx": "nx",
+    "perf": "lighthouse http://localhost:4200 --view",
+    "a11y": "lighthouse http://localhost:4200 --only-categories=accessibility --view",
+    "ci-report": "lighthouse http://localhost:4200 --quiet --output json --output-path ./lighthouse-report.json"
   },
   "private": true,
   "dependencies": {
@@ -114,6 +117,7 @@
     "jest": "29.4.3",
     "jest-environment-jsdom": "29.4.3",
     "jest-preset-angular": "13.0.0",
+    "lighthouse": "^11.6.0",
     "lint-staged": "^13.1.2",
     "nx": "16.0.2",
     "nx-cloud": "16.0.5",

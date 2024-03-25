@@ -179,6 +179,25 @@ Once the `cap sync` script command is successful, change directory back into the
 
 #
 
+### Lighthouse Testing Script Commands
+> In the root of this repository, run the script commands in the code blocks below to test for accessibility and performance
+
+Runs a performance audit on the localhost and provides a visual report.
+ ````
+ npm run perf
+ ````
+  
+ Conducts an accessibility audit on the localhost and provides a visual report.
+ ````
+ npm run a11y
+ ````
+  
+Performs a continuous integration audit on the localhost, saving the results in a JSON file without opening a browser window.
+ ````
+ npm run ci-report
+ ````
+  
+
 ### Platform Client (Mzima) workspace: Script commands and help
 
 Understand this workspace: Run `nx graph` to see a diagram of the dependencies of the projects
