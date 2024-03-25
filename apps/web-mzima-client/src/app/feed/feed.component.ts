@@ -346,8 +346,17 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.getPostsSubject.next({ params: this.params });
   }
 
+  public setIsLoadingOnCardClick() {
+    // With this skeleton loader's css is properly displayed (when navigating to POST mode) through post card click,
+    // and the post card is able to detect to not load the skeleton UI loader after posts have successfully shown up
+    this.posts.length && this.mode === FeedMode.Tiles
+      ? (this.isLoading = true)
+      : this.isLoading === !this.posts.length;
+  }
+
   public showPostDetails(post: any): void {
     if (this.isDesktop) {
+      this.setIsLoadingOnCardClick();
       if (this.collectionId) {
         this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'view'], {
           queryParams: {
@@ -635,6 +644,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public editPost(post: any): void {
     if (this.isDesktop) {
+      this.setIsLoadingOnCardClick();
       if (this.collectionId) {
         this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'edit'], {
           queryParams: {
