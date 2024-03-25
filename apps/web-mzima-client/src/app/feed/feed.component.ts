@@ -156,7 +156,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
-        console.log(this.mode);
         this.isLoading = true; // "There are no posts yet!" flicker is fixed here and for (most) places where isLoading is set to true
         if (this.initialLoad) {
           this.initialLoad = false;
