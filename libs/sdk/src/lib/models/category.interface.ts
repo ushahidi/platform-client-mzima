@@ -1,4 +1,5 @@
 export interface CategoryInterface {
+  displayChildren: boolean;
   children: CategoryInterface[];
   color: string;
   description: string;
