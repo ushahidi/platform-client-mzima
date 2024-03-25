@@ -181,7 +181,6 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
         });
         this.collectionList = this.collectionList.filter((collection) => collection.visible);
         this.isLoading = false;
-        console.log(this);
       },
     });
   }
