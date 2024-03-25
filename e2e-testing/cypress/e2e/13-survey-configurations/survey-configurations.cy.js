@@ -18,7 +18,7 @@ describe("Automated Tests for Survey Configurations", () => {
     surveyConfigurationFunctions.toggle_hide_author_information();
     loginFunctions.logout();
     surveyConfigurationFunctions.login_as_different_user();
-    surveyConfigurationFunctions.add_new_post();
+    surveyConfigurationFunctions.add_post();
     surveyConfigurationFunctions.check_for_accurate_author_name();
     loginFunctions.logout();
     surveyConfigurationFunctions.check_for_anonymous_author_name();
