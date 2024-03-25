@@ -1,4 +1,8 @@
 import SurveyConfigurationLocators from '../locators/SurveyConfigurationLocators';
+import LoginFunctions from '../functions/LoginFunctions';
+import LoginLocators from '../locators/LoginLocators';
+
+const loginFunctions = new LoginFunctions();
 
 class SurveyConfigurationFunctions {
   open_settings() {
@@ -19,6 +23,10 @@ class SurveyConfigurationFunctions {
 
   toggle_survey_review_required() {
     cy.get('#mat-slide-toggle-1-input').click({ force: true });
+  }
+
+  toggle_hide_exact_location_information() {
+    cy.get('#mat-slide-toggle-3-input').click({ force: true });
   }
 
   save_survey_configurations() {
@@ -76,6 +84,20 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.postStatus).contains('Published');
   }
 
+  check_for_hidden_exact_location() {
+    cy.get(SurveyConfigurationLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveySelectionList)
+      .children(SurveyConfigurationLocators.surveySelectItem)
+      .eq(0)
+      .click({ force: true });
+    cy.wait(3000);
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .contains('New Post Title');
+    cy.visit(`Cypress.env('baseUrl')/map`);
+    cy.compareSnapshot('home-page');
+  }
+
   require_posts_reviewed_before_published() {
     this.open_settings();
     this.open_surveys();
@@ -88,6 +110,19 @@ class SurveyConfigurationFunctions {
     this.verify_button_toggled();
     this.add_post();
     this.check_for_added_post_being_published();
+  }
+
+  hide_exact_location_information_and_verify() {
+    this.open_settings();
+    this.open_surveys();
+    this.open_particular_survey();
+    this.open_survey_configurations();
+    this.toggle_survey_review_required();
+    this.toggle_hide_exact_location_information();
+    this.save_survey_configurations();
+    loginFunctions.logout();
+    this.add_post();
+    this.check_for_hidden_exact_location();
   }
 }
 

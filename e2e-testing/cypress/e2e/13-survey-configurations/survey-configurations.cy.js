@@ -13,4 +13,8 @@ describe("Automated Tests for Survey Configurations", () => {
   it("Verify posts go into Published state as configured", () => {
     surveyConfigurationFunctions.require_posts_reviewed_before_published()
   });
+
+  it("Verify post exact location information is hidden", () => {
+    surveyConfigurationFunctions.require_exact_location_hidden();
+  });
 });
