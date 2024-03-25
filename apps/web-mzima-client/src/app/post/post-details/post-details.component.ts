@@ -35,9 +35,6 @@ import { BreakpointService, EventBusService, EventType, SessionService } from '@
 })
 export class PostDetailsComponent extends BaseComponent implements OnChanges, OnDestroy {
   @Input() post: PostResult;
-  @Input() posts: PostResult[];
-  // @Input() isLoading: boolean = true;
-  // @Input() noPostsYet: boolean = false;
   @Input() feedView: boolean = true;
   @Input() userId?: number | string;
   @Input() color?: string;
