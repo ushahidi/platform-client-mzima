@@ -28,8 +28,13 @@
         color="secondary"
         [iconOnly]="true"
         (buttonClick)="togglePasswordVisible()"
+        [attr.aria-label]="isPasswordVisible ? 'Hide Password' : 'Show Password'"
       >
-        <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
+        <mat-icon
+          icon
+          [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"
+          aria-label="Toggle Password"
+        ></mat-icon>
       </mzima-client-button>
       <input
         matInput
@@ -60,6 +65,7 @@
       type="submit"
       [disabled]="form.invalid || form.disabled || submitted"
       [data-qa]="'btn-register'"
+      [attr.aria-label]="'Register'"
     >
       {{ 'nav.register' | translate }}
     </mzima-client-button>

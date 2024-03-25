@@ -8,7 +8,7 @@
   [mat-dialog-close]="false"
   ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon icon svgIcon="close"></mat-icon>
+  <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
 </mzima-client-button>
 
 <strong mat-dialog-title [data-qa]="'task-modal-title'">{{ 'survey.add_task' | translate }}</strong>
@@ -51,6 +51,7 @@
     color="secondary"
     (buttonClick)="cancel()"
     [data-qa]="'survey-task-cancel'"
+    aria-label="Cancel adding this task"
   >
     {{ 'app.cancel' | translate }}
   </mzima-client-button>
@@ -59,6 +60,7 @@
     (buttonClick)="addNewTask()"
     [disabled]="newTask.label.trim().length === 0"
     [data-qa]="'survey-task-add'"
+    aria-label="Add this task"
   >
     {{ 'app.add' | translate }}
   </mzima-client-button>

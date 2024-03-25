@@ -14,10 +14,14 @@
       fill="outline"
       color="secondary"
       [routerLink]="['/feed/collection', collectionId]"
+      ariaLabel="{{ 'data_import.see_imported_posts' | translate }}"
     >
       {{ 'data_import.see_imported_posts' | translate }}
     </mzima-client-button>
-    <mzima-client-button [routerLink]="['/settings/data-import']">
+    <mzima-client-button
+      [routerLink]="['/settings/data-import']"
+      ariaLabel="{{ 'data_import.import_another' | translate }}"
+    >
       {{ 'data_import.import_another' | translate }}
     </mzima-client-button>
   </div>
@@ -36,10 +40,14 @@
       color="secondary"
       *ngIf="document.magic"
       (buttonClick)="getPollingInfo()"
+      aria-label="Get the latest polling information"
     >
       {{ 'data_import.get_polling_info' | translate }}
     </mzima-client-button>
-    <mzima-client-button [routerLink]="['/settings/data-import']">
+    <mzima-client-button
+      [routerLink]="['/settings/data-import']"
+      aria-label="Go to data import settings to import another data source"
+    >
       {{ 'data_import.import_another' | translate }}
     </mzima-client-button>
   </div>

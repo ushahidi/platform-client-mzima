@@ -116,8 +116,9 @@
         [iconOnly]="true"
         [disabled]="copySuccess"
         (buttonClick)="copyToClipboard(apiKey.api_key)"
+        aria-label="Copy API key to clipboard"
       >
-        <mat-icon icon svgIcon="copy"></mat-icon>
+        <mat-icon icon svgIcon="copy" aria-label="Copy API Key"></mat-icon>
       </mzima-client-button>
 
       <mat-hint>{{ 'settings.api_key_desc' | translate }}</mat-hint>
@@ -130,9 +131,10 @@
     color="secondary"
     (click)="generateApiKey()"
     [data-qa]="'generate-api-key'"
+    aria-label="Generate API Key"
   >
     <span>{{ 'settings.general_settings.generate_api_key' | translate }}</span>
-    <mat-icon icon svgIcon="key"></mat-icon>
+    <mat-icon icon svgIcon="key" aria-label="Generate API Key"></mat-icon>
   </mzima-client-button>
 </div>
 
@@ -151,6 +153,7 @@
     routerLink="/settings"
     [data-qa]="'btn-cancel'"
     *ngIf="!(isDesktop$ | async)!"
+    aria-label="Cancel settings changes"
   >
     {{ 'app.cancel' | translate }}
   </mzima-client-button>
@@ -164,6 +167,7 @@
       submitted ||
       !isIntegerAndZeroToNine(mapSettings.mapConfig.location_precision)
     "
+    aria-label="Save settings changes. The form is currently invalid or disabled, or a location precision value is not between 0 and 9."
   >
     {{ 'app.save' | translate }}
   </mzima-client-button>

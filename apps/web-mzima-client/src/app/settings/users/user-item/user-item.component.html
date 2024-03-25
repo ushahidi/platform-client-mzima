@@ -79,9 +79,10 @@
         [data-qa]="'btn-user-delete-user'"
         (buttonClick)="deleteUser()"
         [disabled]="form.disabled"
+        aria-label="Delete this user. This action cannot be undone."
       >
         <ng-container *ngIf="isDesktop">{{ 'user.delete_user' | translate }}</ng-container>
-        <mat-icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
+        <mat-icon *ngIf="!isDesktop" svgIcon="delete" aria-label="Delete this user"></mat-icon>
       </mzima-client-button>
     </div>
     <div>
@@ -91,6 +92,7 @@
         [disabled]="form.disabled"
         [data-qa]="'btn-user-cancel'"
         (buttonClick)="navigateToUsers()"
+        aria-label="Cancel editing this user"
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
@@ -98,6 +100,7 @@
         [data-qa]="'btn-user-save'"
         [disabled]="form.invalid || form.disabled || submitted"
         type="submit"
+        aria-label="Save changes to this user"
       >
         {{ 'app.save' | translate }}
       </mzima-client-button>

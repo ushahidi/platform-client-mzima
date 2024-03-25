@@ -9,6 +9,8 @@
           color="danger"
           [data-qa]="'btn-update-logo'"
           (buttonClick)="deleteImage(i)"
+          tabindex="0"
+          aria-label="Delete Image"
         >
           {{ 'app.delete' | translate }}
         </mzima-client-button>
@@ -29,7 +31,14 @@
         />
       </div>
       <div class="buttons">
-        <mzima-client-button fill="outline" color="secondary" (buttonClick)="chooseFile()">
+        <mzima-client-button
+          fill="outline"
+          color="secondary"
+          (buttonClick)="chooseFile()"
+          tabindex="0"
+          data-qa="app.choose_photo"
+          ariaLabel="{{ 'app.choose_photo' | translate }}"
+        >
           {{ 'app.choose_photo' | translate }}
         </mzima-client-button>
       </div>
@@ -56,7 +65,12 @@
       />
     </div>
     <div class="buttons">
-      <mzima-client-button fill="outline" color="secondary" (buttonClick)="chooseFile()">
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
+        (buttonClick)="chooseFile()"
+        aria-label="Choose Image"
+      >
         {{ 'app.choose_photo' | translate }}
       </mzima-client-button>
       <mzima-client-button
@@ -64,6 +78,7 @@
         *ngIf="imageSrc?.length"
         [data-qa]="'btn-update-logo'"
         (buttonClick)="deleteImage()"
+        aria-label="Delete Image"
       >
         {{ 'app.delete' | translate }}
       </mzima-client-button>

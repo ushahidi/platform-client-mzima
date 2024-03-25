@@ -9,7 +9,12 @@
       [innerHTML]="'404.description' | translate"
       [data-qa]="'page-not-found-description'"
     ></p>
-    <mzima-client-button [expand]="false" (buttonClick)="goToMap()" [data-qa]="'button-go-to-map'">
+    <mzima-client-button
+      [expand]="false"
+      (buttonClick)="goToMap()"
+      [data-qa]="'button-go-to-map'"
+      aria-label="View the location on a map"
+    >
       {{ '404.button' | translate }}
     </mzima-client-button>
   </div>

@@ -6,6 +6,7 @@
       color="gray"
       [matMenuTriggerFor]="menu"
       class="filter-control__button"
+      [attr.aria-label]="buttonContent?.elementRef || ''"
     >
       <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
     </mzima-client-button>
@@ -63,8 +64,9 @@
             fill="clear"
             color="secondary"
             (buttonClick)="editOption.emit(option)"
+            aria-label="Edit this option"
           >
-            <mat-icon icon svgIcon="pencil"></mat-icon>
+            <mat-icon icon svgIcon="pencil" aria-label="Edit Option"></mat-icon>
           </mzima-client-button>
         </div>
       </mat-radio-group>
@@ -99,6 +101,7 @@
           size="small"
           class="filter-group__head__button"
           (buttonClick)="clearTags()"
+          aria-label="Clear all applied filters"
         >
           {{ 'nav.clear' | translate }}
         </mzima-client-button>
@@ -147,7 +150,7 @@
                 'multilevelselect-filter__option__arrow--open': treeControl.isExpanded(node)
               }"
             >
-              <mat-icon icon svgIcon="arrow-down"></mat-icon>
+              <mat-icon icon svgIcon="arrow-down" aria-label="Toggle"></mat-icon>
             </mzima-client-button>
           </mat-tree-node>
         </mat-selection-list>
@@ -194,6 +197,7 @@
     color="secondary"
     class="filter-control__button"
     (buttonClick)="toggleModal(true)"
+    [attr.aria-label]="buttonContent?.elementRef || ''"
   >
     <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
   </mzima-client-button>
@@ -206,8 +210,9 @@
         color="secondary"
         class="filter-modal__back"
         (buttonClick)="toggleModal(false)"
+        aria-label="Close filter modal"
       >
-        <mat-icon icon svgIcon="back"></mat-icon>
+        <mat-icon icon svgIcon="back" aria-label="Go back"></mat-icon>
       </mzima-client-button>
       <h1>{{ title }}</h1>
     </div>
@@ -222,10 +227,15 @@
         color="secondary"
         (buttonClick)="clearFilter()"
         class="filter-modal__control"
+        aria-label="Clear all applied filters"
       >
         {{ 'nav.clear' | translate }}
       </mzima-client-button>
-      <mzima-client-button (buttonClick)="apply()" class="filter-modal__control">
+      <mzima-client-button
+        (buttonClick)="apply()"
+        class="filter-modal__control"
+        aria-label="Apply the selected filters"
+      >
         {{ 'app.apply_filters' | translate }}
       </mzima-client-button>
     </div>

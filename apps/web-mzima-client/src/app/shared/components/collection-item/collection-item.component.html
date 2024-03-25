@@ -16,8 +16,9 @@
       color="secondary"
       class="collection-item__control"
       (buttonClick)="editCollection($event)"
+      aria-label="Edit this collection"
     >
-      <mat-icon icon svgIcon="collection-edit"></mat-icon>
+      <mat-icon icon svgIcon="collection-edit" aria-label="Edit Collection"></mat-icon>
     </mzima-client-button>
     <mzima-client-button
       fill="clear"
@@ -26,8 +27,9 @@
       color="secondary"
       class="collection-item__control"
       (buttonClick)="deleteCollection($event)"
+      aria-label="Delete this collection"
     >
-      <mat-icon icon svgIcon="delete"></mat-icon>
+      <mat-icon icon svgIcon="delete" aria-label="Delete collection"></mat-icon>
     </mzima-client-button>
   </div>
 

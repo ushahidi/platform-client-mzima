@@ -2,18 +2,25 @@
   <mzima-client-button
     (buttonClick)="showDonation()"
     *ngIf="!donationService.isMonetizationStarted"
+    aria-label="Make a donation"
   >
     <span>{{ 'app.donate' | translate }}</span>
-    <mat-icon icon svgIcon="heart"></mat-icon>
+    <mat-icon icon svgIcon="heart" aria-label="Donate"></mat-icon>
   </mzima-client-button>
 
   <mzima-client-button
     class="donation-amount"
     (buttonClick)="showDonation()"
     *ngIf="donationService.isMonetizationStarted"
+    aria-label="View current donation amount (information icon available)"
   >
-    <mat-icon prefix class="donation-amount__icon" svgIcon="coins"></mat-icon>
+    <mat-icon prefix class="donation-amount__icon" svgIcon="coins" aria-label="Donation"></mat-icon>
     <span>{{ donationInfo.formattedAmount }}</span>
-    <mat-icon icon class="donation-amount__icon" svgIcon="info-circle"></mat-icon>
+    <mat-icon
+      icon
+      class="donation-amount__icon"
+      svgIcon="info-circle"
+      aria-label="More info about donation"
+    ></mat-icon>
   </mzima-client-button>
 </ng-container>

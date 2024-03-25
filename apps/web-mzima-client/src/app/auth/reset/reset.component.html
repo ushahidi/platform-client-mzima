@@ -14,7 +14,12 @@
     </app-lottie-animation>
     <strong mat-dialog-title>Your password was successfully changed</strong>
     <p>Now you can login with new credentials</p>
-    <mzima-client-button type="button" (buttonClick)="openLoginModal()" [expand]="false">
+    <mzima-client-button
+      type="button"
+      (buttonClick)="openLoginModal()"
+      [expand]="false"
+      [attr.aria-label]="'nav.login' | translate"
+    >
       {{ 'nav.login' | translate }}
     </mzima-client-button>
   </div>

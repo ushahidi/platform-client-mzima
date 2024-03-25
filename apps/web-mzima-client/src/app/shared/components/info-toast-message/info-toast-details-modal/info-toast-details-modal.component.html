@@ -7,7 +7,7 @@
   [mat-dialog-close]="false"
   ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon icon svgIcon="close"></mat-icon>
+  <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
 </mzima-client-button>
 
 <div class="dialog-content">
@@ -35,10 +35,15 @@
     [mat-dialog-close]="true"
     (buttonClick)="openIntercom()"
     class="intercom_custom_launcher"
+    aria-label="Open chat with support"
   >
     {{ 'app.open_chat' | translate }}
   </mzima-client-button>
-  <mzima-client-button *ngIf="!data.isAdmin" [mat-dialog-close]="true">
+  <mzima-client-button
+    *ngIf="!data.isAdmin"
+    [mat-dialog-close]="true"
+    aria-label="Perform default action (replace with specific description)"
+  >
     {{ 'message.button.default' | translate }}
   </mzima-client-button>
 </mat-dialog-actions>

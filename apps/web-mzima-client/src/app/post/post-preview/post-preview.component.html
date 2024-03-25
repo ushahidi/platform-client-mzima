@@ -39,7 +39,14 @@
     </div>
   </div>
   <div class="post__more" *ngIf="!feedView">
-    <mzima-client-button size="small" fill="clear" [expand]="false" (buttonClick)="showDetails()">
+    <mzima-client-button
+      size="small"
+      fill="clear"
+      [expand]="false"
+      (buttonClick)="showDetails()"
+      tabindex="0"
+      aria-label="Read more about the post"
+    >
       {{ 'post.read_more' | translate }}
     </mzima-client-button>
   </div>

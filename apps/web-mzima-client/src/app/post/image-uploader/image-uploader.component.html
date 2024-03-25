@@ -10,6 +10,7 @@
         class="image-loader__control"
         (buttonClick)="fileInput.click()"
         [data-qa]="'btn-post-item-upload'"
+        [attr.aria-label]="!preview ? ('Add photo' | translate) : ('Replace image' | translate)"
       >
         <ng-container *ngIf="!preview; else changeButton">
           {{ 'post.media.add_photo' | translate }}
@@ -17,7 +18,11 @@
         <ng-template #changeButton>
           {{ 'post.media.replace_image' | translate }}
         </ng-template>
-        <mat-icon icon [svgIcon]="!preview ? 'plus' : 'edit'"></mat-icon>
+        <mat-icon
+          icon
+          [svgIcon]="!preview ? 'plus' : 'edit'"
+          [attr.aria-label]="!preview ? 'Add' : 'Edit'"
+        ></mat-icon>
       </mzima-client-button>
       <input
         hidden
@@ -34,8 +39,9 @@
         (buttonClick)="deletePhoto()"
         [data-qa]="'btn-post-item-delete-photo'"
         class="image-loader__control image-loader__control--delete"
+        [attr.aria-label]="'Delete photo'"
       >
-        <mat-icon icon svgIcon="delete"></mat-icon>
+        <mat-icon icon svgIcon="delete" aria-label="Delete"></mat-icon>
       </mzima-client-button>
     </div>
 

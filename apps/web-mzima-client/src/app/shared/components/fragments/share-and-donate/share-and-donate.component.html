@@ -6,9 +6,10 @@
     color="secondary"
     class="toolbar__button"
     [data-qa]="'share'"
+    aria-label="Open share options"
   >
     <span>{{ 'app.share' | translate }}</span>
-    <mat-icon icon svgIcon="share"></mat-icon>
+    <mat-icon icon svgIcon="share" aria-label="Share"></mat-icon>
   </mzima-client-button>
 </div>
 
@@ -25,9 +26,10 @@
         color="transparent-style-1"
         (buttonClick)="openShare()"
         class="menu__footer__button"
+        aria-label="Share this content"
       >
         {{ 'app.share' | translate }}
-        <mat-icon icon svgIcon="share"></mat-icon>
+        <mat-icon icon svgIcon="share" aria-label="Share"></mat-icon>
       </mzima-client-button>
     </div>
   </div>

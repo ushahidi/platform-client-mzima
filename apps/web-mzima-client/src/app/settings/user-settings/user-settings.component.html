@@ -66,6 +66,7 @@
       *ngIf="!(isDesktop$ | async)!"
       [data-qa]="'btn-cancel'"
       routerLink="/settings"
+      aria-label="Cancel and go to settings"
     >
       {{ 'app.cancel' | translate }}
     </mzima-client-button>
@@ -73,6 +74,7 @@
       type="submit"
       (buttonClick)="saveInformation()"
       [disabled]="form.invalid || submitted"
+      ariaLabel="{{ submitted ? 'Save information again' : 'Save information' }}"
     >
       {{ 'app.save' | translate }}
     </mzima-client-button>

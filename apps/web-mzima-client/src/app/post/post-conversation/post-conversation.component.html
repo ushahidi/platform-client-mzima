@@ -23,6 +23,7 @@
       type="button"
       (buttonClick)="previousPage()"
       [disabled]="currentPage === 1"
+      [attr.aria-label]="'Go to previous page'"
     >
       {{ 'post.messages.previous_page' | translate }}
     </mzima-client-button>
@@ -30,6 +31,7 @@
       type="button"
       (buttonClick)="nextPage()"
       [disabled]="currentPage * messageLimit >= messagesTotal"
+      [attr.aria-label]="'Go to next page'"
     >
       {{ 'post.messages.next_page' | translate }}
     </mzima-client-button>
@@ -59,7 +61,7 @@
           'post.messages.empty_message_error' | translate
         }}</mat-error>
       </mat-form-field>
-      <mzima-client-button (click)="addMessage()">{{
+      <mzima-client-button (click)="addMessage()" [attr.aria-label]="'Add message'">{{
         'post.messages.simple_send' | translate
       }}</mzima-client-button>
     </form>

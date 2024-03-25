@@ -11,8 +11,14 @@
         [data-qa]="'query-location'"
       />
 
-      <mzima-client-button [iconOnly]="true" fill="clear" matSuffix color="secondary">
-        <mat-icon icon svgIcon="search-small"></mat-icon>
+      <mzima-client-button
+        [iconOnly]="true"
+        fill="clear"
+        matSuffix
+        color="secondary"
+        aria-label="Search"
+      >
+        <mat-icon icon svgIcon="search-small" aria-label="Search"></mat-icon>
       </mzima-client-button>
     </mat-form-field>
     <ul

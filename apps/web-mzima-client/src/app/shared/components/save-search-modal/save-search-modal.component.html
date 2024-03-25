@@ -8,7 +8,7 @@
   [mat-dialog-close]="false"
   ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon icon svgIcon="close"></mat-icon>
+  <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
 </mzima-client-button>
 
 <strong mat-dialog-title>
@@ -79,17 +79,28 @@
   </div>
 
   <div mat-dialog-actions align="end">
-    <mzima-client-button *ngIf="!!data.search" color="danger" (buttonClick)="deleteSavedfilter()">
+    <mzima-client-button
+      *ngIf="!!data.search"
+      color="danger"
+      (buttonClick)="deleteSavedfilter()"
+      aria-label="Delete this saved filter"
+    >
       {{ 'app.delete' | translate }}
     </mzima-client-button>
     <div class="button-group">
-      <mzima-client-button fill="outline" color="secondary" (buttonClick)="cancel()">
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
+        (buttonClick)="cancel()"
+        aria-label="Cancel saving the current filters"
+      >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
       <mzima-client-button
         [disabled]="form.invalid || form.disabled"
         id="apply-saved-filters"
         type="submit"
+        aria-label="Apply the current filters"
       >
         {{ 'app.apply_filters' | translate }}
       </mzima-client-button>

@@ -29,8 +29,13 @@
         [iconOnly]="true"
         (buttonClick)="togglePasswordVisible()"
         [data-qa]="'toggle-password'"
+        [attr.aria-label]="'Toggle Password'"
       >
-        <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
+        <mat-icon
+          icon
+          [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"
+          aria-label="Toggle Password"
+        ></mat-icon>
       </mzima-client-button>
     </mat-form-field>
     <mat-error [data-qa]="'invalid-credential-error'">{{ loginError }}</mat-error>
@@ -41,6 +46,7 @@
       (buttonClick)="restorePassword()"
       fill="clear"
       [data-qa]="'restorePassword'"
+      [attr.aria-label]="'Forgot Password'"
     >
       {{ 'nav.forgotyourpassword' | translate }}
     </mzima-client-button>
@@ -54,6 +60,7 @@
       [disabled]="form.invalid || form.disabled || submitted"
       [data-qa]="'btn-login'"
       id="btn-login"
+      [attr.aria-label]="'Login'"
     >
       {{ 'nav.login' | translate }}
     </mzima-client-button>

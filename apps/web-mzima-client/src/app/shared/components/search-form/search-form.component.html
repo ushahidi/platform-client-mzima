@@ -9,8 +9,14 @@
   }"
 >
   <mat-form-field appearance="outline" class="search-form__control">
-    <mzima-client-button matPrefix [iconOnly]="true" fill="clear" color="secondary">
-      <mat-icon icon svgIcon="search-small"></mat-icon>
+    <mzima-client-button
+      matPrefix
+      [iconOnly]="true"
+      fill="clear"
+      color="secondary"
+      [attr.aria-label]="'Search'"
+    >
+      <mat-icon icon svgIcon="search-small" aria-label="Search"></mat-icon>
     </mzima-client-button>
     <input
       matInput
@@ -19,6 +25,7 @@
       class="search-form__form-control"
       [ngModelOptions]="{ standalone: true }"
       [placeholder]="'global_filter.search' | translate"
+      aria-label="Search Input"
     />
     <mzima-client-button
       matSuffix
@@ -27,8 +34,9 @@
       color="secondary"
       *ngIf="searchQuery?.length"
       (buttonClick)="clearPostsResults()"
+      aria-label="Clear Search"
     >
-      <mat-icon icon svgIcon="close"></mat-icon>
+      <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
     </mzima-client-button>
   </mat-form-field>
 
@@ -39,9 +47,10 @@
     *ngIf="isDesktop || isMapView"
     (buttonClick)="toggleFilters(!isFiltersVisible)"
     [data-qa]="'search-form__filters'"
+    [attr.aria-label]="'app.filters' | translate"
   >
     <span>{{ 'app.filters' | translate }}</span>
-    <mat-icon iconPrefix svgIcon="filters"></mat-icon>
+    <mat-icon iconPrefix svgIcon="filters" aria-label="Filter"></mat-icon>
   </mzima-client-button>
 
   <div
@@ -53,6 +62,7 @@
       type="button"
       (click)="toggleMainFilters()"
       class="search-form__main-filters__toggle-btn"
+      aria-label="Toggle Main Filters"
     >
       <mat-icon svgIcon="angle-right"></mat-icon>
     </button>
@@ -77,6 +87,7 @@
             size="small"
             (buttonClick)="clearCollection()"
             class="filter-group__head__button"
+            [attr.aria-label]="'nav.clear' | translate"
           >
             {{ 'nav.clear' | translate }}
           </mzima-client-button>
@@ -109,6 +120,7 @@
             size="small"
             (buttonClick)="clearSavedFilter()"
             class="filter-group__head__button"
+            aria-label="Clear all applied saved filters"
           >
             {{ 'nav.clear' | translate }}
           </mzima-client-button>
@@ -147,6 +159,9 @@
                 (buttonClick)="clearFilter('form')"
                 [data-qa]="'clear'"
                 (buttonClick)="toggleSidebarFilters('form')"
+                [attr.aria-label]="
+                  (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate
+                "
               >
                 {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>
@@ -199,6 +214,9 @@
                 size="small"
                 class="filter-group__head__button"
                 (buttonClick)="toggleSidebarFilters('source')"
+                [attr.aria-label]="
+                  (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate
+                "
               >
                 {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>
@@ -241,7 +259,7 @@
         (buttonClick)="toggleFilters(false)"
         ariaLabel="{{ 'modal.button.close' | translate }}"
       >
-        <mat-icon icon svgIcon="close"></mat-icon>
+        <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
       </mzima-client-button>
     </div>
 
@@ -263,6 +281,9 @@
               size="small"
               class="filter-group__head__button"
               (buttonClick)="toggleSidebarFilters('form')"
+              [attr.aria-label]="
+                showAllButton('form') ? 'Select all filters' : 'Clear all selected filters'
+              "
             >
               {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
@@ -285,6 +306,7 @@
               size="small"
               class="filter-group__head__button"
               (buttonClick)="toggleSidebarFilters('source')"
+              aria-labelledby="source-filter-button-label"
             >
               {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
@@ -311,8 +333,9 @@
           fill="clear"
           class="save-filter-button"
           (buttonClick)="saveSearch()"
+          aria-label="Save the current filters as a new search"
         >
-          <mat-icon iconPrefix svgIcon="plus"></mat-icon>
+          <mat-icon iconPrefix svgIcon="plus" aria-label="Add"></mat-icon>
           {{ 'global_filter.save_new_filter' | translate }}
         </mzima-client-button>
         <span class="no-saved-filters" postfix *ngIf="savedSearches?.length === 0"
@@ -337,6 +360,7 @@
             size="small"
             class="filter-group__head__button"
             (buttonClick)="clearFilter('status')"
+            aria-label="Clear the status filter"
           >
             {{ 'nav.clear' | translate }}
           </mzima-client-button>
@@ -370,6 +394,7 @@
             size="small"
             class="filter-group__head__button"
             (buttonClick)="clearFilter('date')"
+            aria-label="Clear the date filter"
           >
             {{ 'nav.clear' | translate }}
           </mzima-client-button>
@@ -390,6 +415,7 @@
             size="small"
             class="filter-group__head__button"
             (buttonClick)="clearFilter('center_point')"
+            aria-label="Clear the center point filter"
           >
             {{ 'nav.clear' | translate }}
           </mzima-client-button>
@@ -404,6 +430,7 @@
           class="search-form__button"
           (buttonClick)="resetSavedFilter()"
           [data-qa]="'search-form__button'"
+          [attr.aria-label]="'global_filter.clear_all_filters' | translate"
         >
           {{ 'global_filter.clear_all_filters' | translate }}
         </mzima-client-button>
@@ -412,6 +439,7 @@
           (buttonClick)="applyAndClose()"
           [disabled]="form.disabled"
           class="search-form__button"
+          aria-label="Apply Filters and Close"
         >
           Apply filters
         </mzima-client-button>

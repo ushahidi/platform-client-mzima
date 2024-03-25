@@ -11,8 +11,9 @@
         (buttonClick)="deleteEmit()"
         [data-qa]="'btn-settings-delete'"
         [disabled]="!selectedItem.length"
+        aria-label="Delete selected items"
       >
-        <mat-icon icon svgIcon="delete" class="button-icon"></mat-icon>
+        <mat-icon icon svgIcon="delete" class="button-icon" aria-label="Delete"></mat-icon>
         <span class="button-name">{{ 'app.delete' | translate }}</span>
       </mzima-client-button>
       <ng-content></ng-content>
@@ -30,12 +31,17 @@
       *ngIf="isShowActionsButton"
       (buttonClick)="showActions()"
       [data-qa]="'btn-settings-action'"
+      aria-label="Show or hide bulk actions options"
     >
       {{ 'settings.bulk_actions' | translate }}
     </mzima-client-button>
-    <mzima-client-button [routerLink]="['create']" [data-qa]="'btn-settings-create'">
+    <mzima-client-button
+      [routerLink]="['create']"
+      [data-qa]="'btn-settings-create'"
+      ariaLabel="{{ newButtonTitle | translate }} (create new item)"
+    >
       <span>{{ newButtonTitle | translate }}</span>
-      <mat-icon icon svgIcon="plus"></mat-icon>
+      <mat-icon icon svgIcon="plus" aria-label="Create"></mat-icon>
     </mzima-client-button>
   </div>
 
@@ -64,7 +70,7 @@
 
     <mzima-client-button [data-qa]="'btn-settings-translation'" (buttonClick)="showLanguagesEmit()">
       {{ newButtonTitle | translate }}
-      <mat-icon icon svgIcon="plus"></mat-icon>
+      <mat-icon icon svgIcon="plus" aria-label="Add new"></mat-icon>
     </mzima-client-button>
   </div>
   <!-- END isShowTranslation -->

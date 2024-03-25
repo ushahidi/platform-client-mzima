@@ -24,8 +24,10 @@
         *ngIf="searchQuery"
         (buttonClick)="clear()"
         class="location-control__clear"
+        aria-label="Clear search query"
+        data-qa="clear-search-button"
       >
-        <mat-icon icon svgIcon="close"></mat-icon>
+        <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
       </mzima-client-button>
       <mat-autocomplete
         autoActiveFirstOption

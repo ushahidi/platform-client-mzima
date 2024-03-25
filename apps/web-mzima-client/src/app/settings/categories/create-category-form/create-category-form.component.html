@@ -136,6 +136,8 @@
         [iconOnly]="!isDesktop"
         [data-qa]="'btn-cetegory-delete'"
         (buttonClick)="deleteCategoryEmit()"
+        tabindex="0"
+        aria-label="Delete category"
       >
         <ng-container *ngIf="isDesktop">{{ 'category.delete_category' | translate }}</ng-container>
         <mat-icon *ngIf="!isDesktop" icon svgIcon="delete"></mat-icon>
@@ -147,6 +149,8 @@
         color="secondary"
         (buttonClick)="back()"
         [data-qa]="'btn-category-cancel'"
+        tabindex="0"
+        aria-label="Cancel"
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
@@ -154,6 +158,8 @@
         type="submit"
         [data-qa]="'btn-category-save'"
         [disabled]="form.disabled || form.invalid || loading"
+        tabindex="0"
+        aria-label="Save"
       >
         {{ 'app.save' | translate }}
       </mzima-client-button>

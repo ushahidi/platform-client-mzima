@@ -16,10 +16,15 @@
       color="secondary"
       (buttonClick)="decline()"
       [data-qa]="'button-decline-cookies'"
+      aria-label="Decline the use of cookies on this website"
     >
       {{ 'cookies.decline' | translate }}
     </mzima-client-button>
-    <mzima-client-button (buttonClick)="accept()" [data-qa]="'button-accept-cookies'">
+    <mzima-client-button
+      (buttonClick)="accept()"
+      [data-qa]="'button-accept-cookies'"
+      aria-label="Accept the use of cookies on this website"
+    >
       {{ 'cookies.accept_cookies' | translate }}
     </mzima-client-button>
   </div>

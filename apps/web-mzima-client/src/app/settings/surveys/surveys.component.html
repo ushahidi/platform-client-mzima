@@ -12,8 +12,9 @@
     [data-qa]="'btn-settings-duplicate'"
     [disabled]="selectedSurveys.length !== 1"
     (buttonClick)="duplicateSurvey()"
+    aria-label="Duplicate selected survey"
   >
-    <mat-icon icon svgIcon="copy" class="button-icon"></mat-icon>
+    <mat-icon icon svgIcon="copy" class="button-icon" aria-label="Duplicate survey"></mat-icon>
     <span class="button-name">{{ 'app.duplicate' | translate }}</span>
   </mzima-client-button>
 </app-settings-header>

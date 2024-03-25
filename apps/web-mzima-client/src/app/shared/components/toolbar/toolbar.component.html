@@ -6,8 +6,9 @@
     (buttonClick)="back()"
     class="toolbar__back"
     *ngIf="!isDesktop && isInnerPage"
+    aria-label="Go Back"
   >
-    <mat-icon icon svgIcon="back"></mat-icon>
+    <mat-icon icon svgIcon="back" aria-label="Go Back"></mat-icon>
   </mzima-client-button>
   <h1 class="toolbar__page-title" [data-qa]="'page-title'" *ngIf="isDesktop || !showSearchForm">
     {{ pageTitle | translate }}
@@ -31,7 +32,7 @@
     (buttonClick)="toggleBurgerMenu()"
     [ariaLabel]="'nav.open_menu' | translate"
   >
-    <mat-icon icon svgIcon="hamburger"></mat-icon>
+    <mat-icon icon svgIcon="hamburger" aria-label="Open Menu Options"></mat-icon>
   </mzima-client-button>
 </mat-toolbar>
 

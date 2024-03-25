@@ -1,6 +1,18 @@
 <div class="head">
   <h1 *ngIf="isDesktop">{{ 'app.import' | translate }}</h1>
-  <mzima-client-button class="upload-button" [data-qa]="'btn-upload'">
+  <mzima-client-button
+    class="upload-button"
+    [data-qa]="'btn-upload'"
+    [attr.aria-label]="
+      (selectedFile ? 'data_import.change_csv_file' : 'data_import.upload_csv_file')
+        | translate
+          : {
+              selectedfile: selectedFile
+                ? selectedFile.name.slice(0, selectedFile.name.length - 4)
+                : null
+            }
+    "
+  >
     <span>
       {{
         (selectedFile ? 'data_import.change_csv_file' : 'data_import.upload_csv_file')
@@ -12,7 +24,7 @@
               }
       }}
     </span>
-    <mat-icon icon svgIcon="plus"></mat-icon>
+    <mat-icon icon svgIcon="plus" aria-label="Add File"></mat-icon>
     <input name="file" type="file" accept=".csv" (change)="uploadFile($event)" />
   </mzima-client-button>
 </div>
@@ -184,10 +196,15 @@
         color="secondary"
         (buttonClick)="cancelImport()"
         [data-qa]="'btn-cancel-import'"
+        aria-label="Cancel Import"
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
-      <mzima-client-button (buttonClick)="finish()" [data-qa]="'btn-finish'">
+      <mzima-client-button
+        (buttonClick)="finish()"
+        [data-qa]="'btn-finish'"
+        [attr.aria-label]="'app.import' | translate"
+      >
         {{ 'app.import' | translate }}
       </mzima-client-button>
     </div>

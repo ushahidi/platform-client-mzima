@@ -39,8 +39,9 @@
         [iconOnly]="true"
         (buttonClick)="clearLocationField()"
         *ngIf="location.lat"
+        [attr.aria-label]="'Clear location field'"
       >
-        <mat-icon icon svgIcon="close"></mat-icon>
+        <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
       </mzima-client-button>
     </mat-form-field>
     <p *ngIf="emptyFieldLat" class="location-error">
@@ -72,8 +73,9 @@
         [iconOnly]="true"
         (buttonClick)="clearLocationField()"
         *ngIf="location.lng"
+        [attr.aria-label]="'Clear location field'"
       >
-        <mat-icon icon svgIcon="close"></mat-icon>
+        <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
       </mzima-client-button>
     </mat-form-field>
     <p *ngIf="emptyFieldLng" class="location-error">

@@ -17,6 +17,7 @@
         *ngFor="let button of data.buttons"
         [color]="button.color ?? 'primary'"
         (buttonClick)="closeSnackbar(button.handler)"
+        [attr.aria-label]="button.text! | translate"
       >
         {{ button.text! | translate }}
       </mzima-client-button>

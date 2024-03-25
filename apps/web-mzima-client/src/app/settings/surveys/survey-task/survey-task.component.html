@@ -70,9 +70,10 @@
           (buttonClick)="addField()"
           [data-qa]="'btn-survey-add-field'"
           *ngIf="isDefaultLanguageSelected"
+          aria-label="Add a new field"
         >
           <span>{{ 'form.add_field' | translate }}</span>
-          <mat-icon icon svgIcon="plus"></mat-icon>
+          <mat-icon icon svgIcon="plus" aria-label="Add new task"></mat-icon>
         </mzima-client-button>
       </div>
 
@@ -103,8 +104,9 @@
               class="field-item__control"
               (buttonClick)="editField(field, i)"
               [data-qa]="'btn-field-edit-' + field.label"
+              aria-label="Edit current field"
             >
-              <mat-icon icon svgIcon="pencil"></mat-icon>
+              <mat-icon icon svgIcon="pencil" aria-label="Edit current field"></mat-icon>
             </mzima-client-button>
           </div>
         </div>
@@ -144,8 +146,9 @@
               class="field-item__control"
               (buttonClick)="editField(field, i)"
               [data-qa]="'btn-field-edit-' + field.label"
+              aria-label="Edit this field"
             >
-              <mat-icon icon svgIcon="pencil"></mat-icon>
+              <mat-icon icon svgIcon="pencil" aria-label="Edit field"></mat-icon>
             </mzima-client-button>
             <mzima-client-button
               fill="clear"
@@ -155,8 +158,9 @@
               *ngIf="isDefaultLanguageSelected"
               (buttonClick)="deleteField(i)"
               [data-qa]="'btn-field-delete-' + field.label"
+              aria-label="Delete this field"
             >
-              <mat-icon icon svgIcon="delete"></mat-icon>
+              <mat-icon icon svgIcon="delete" aria-label="Delete field"></mat-icon>
             </mzima-client-button>
           </div>
         </div>
@@ -166,10 +170,19 @@
       </ng-template>
 
       <div class="form-controls-panel" *ngIf="!isPost && isDefaultLanguageSelected">
-        <mzima-client-button color="danger" (buttonClick)="deleteTask(task)">
+        <mzima-client-button
+          color="danger"
+          (buttonClick)="deleteTask(task)"
+          aria-label="Delete this task. This action cannot be undone."
+        >
           {{ 'survey.delete_task' | translate }}
         </mzima-client-button>
-        <mzima-client-button fill="outline" color="secondary" (buttonClick)="duplicateTask(task)">
+        <mzima-client-button
+          fill="outline"
+          color="secondary"
+          (buttonClick)="duplicateTask(task)"
+          aria-label="Duplicate this task"
+        >
           {{ 'survey.duplicate_task' | translate }}
         </mzima-client-button>
       </div>

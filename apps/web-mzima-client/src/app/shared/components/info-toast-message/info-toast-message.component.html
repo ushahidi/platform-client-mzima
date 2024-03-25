@@ -12,6 +12,7 @@
       [expand]="false"
       class="toast-message__button toast-message__button--more"
       (buttonClick)="openApiInstructionsModal()"
+      aria-label="Open detailed API instructions"
     >
       Read more
     </mzima-client-button>
@@ -22,7 +23,9 @@
     [iconOnly]="true"
     (buttonClick)="closeToastMessage()"
     class="toast-message__button toast-message__button--close"
+    aria-label="Close toast message"
+    data-qa="close-toast"
   >
-    <mat-icon icon svgIcon="close"></mat-icon>
+    <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
   </mzima-client-button>
 </div>

@@ -9,7 +9,7 @@
     [mat-dialog-close]="false"
     ariaLabel="{{ 'modal.button.close' | translate }}"
   >
-    <mat-icon icon svgIcon="close"></mat-icon>
+    <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
   </mzima-client-button>
 
   <strong mat-dialog-title>{{ label }}</strong>
@@ -59,9 +59,15 @@
         shareButton="twitter"
         [url]="address"
         [data-qa]="'share-twitter'"
+        aria-label="Share on Twitter"
       >
         {{ 'share.share_on_twitter' | translate }}
-        <mat-icon icon class="fab-button__icon twitter-icon" svgIcon="twitter-fill"></mat-icon>
+        <mat-icon
+          icon
+          class="fab-button__icon twitter-icon"
+          svgIcon="twitter-fill"
+          aria-label="Share on Twitter"
+        ></mat-icon>
       </mzima-client-button>
       <mzima-client-button
         fill="outline"
@@ -72,9 +78,15 @@
         shareButton="facebook"
         [url]="address"
         [data-qa]="'share-facebook'"
+        aria-label="Share on Facebook"
       >
         {{ 'share.share_on_facebook' | translate }}
-        <mat-icon icon class="fab-button__icon facebook-icon" svgIcon="facebook-fill"></mat-icon>
+        <mat-icon
+          icon
+          class="fab-button__icon facebook-icon"
+          svgIcon="facebook-fill"
+          aria-label="Share on Facebook"
+        ></mat-icon>
       </mzima-client-button>
     </div>
   </div>

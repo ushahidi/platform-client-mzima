@@ -115,9 +115,10 @@
     (click)="addTask()"
     [data-qa]="'btn-add-task'"
     *ngIf="isDefaultLanguageSelected"
+    aria-label="Add a new task"
   >
     <span>{{ 'survey.add_task' | translate }}</span>
-    <mat-icon icon svgIcon="plus"></mat-icon>
+    <mat-icon icon svgIcon="plus" aria-label="Add new task"></mat-icon>
   </mzima-client-button>
 </div>
 
@@ -145,6 +146,7 @@
     color="secondary"
     (buttonClick)="cancel()"
     [data-qa]="'btn-cancel-survey-item'"
+    aria-label="Cancel editing this survey item"
   >
     {{ 'app.cancel' | translate }}
   </mzima-client-button>
@@ -152,6 +154,9 @@
     (buttonClick)="save()"
     [disabled]="form.invalid || form.disabled || errorTaskField || submitted"
     [data-qa]="'btn-save-survey-item'"
+    ariaLabel="{{
+      (isEdit ? 'Save changes to this survey item' : 'Add this new survey item') | translate
+    }}"
   >
     {{ (isEdit ? 'app.save' : 'app.add_survey') | translate }}
   </mzima-client-button>

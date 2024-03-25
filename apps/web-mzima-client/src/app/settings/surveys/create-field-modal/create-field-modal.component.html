@@ -8,7 +8,7 @@
   [mat-dialog-close]="false"
   ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon icon svgIcon="close"></mat-icon>
+  <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
 </mzima-client-button>
 
 <strong mat-dialog-title>{{
@@ -51,9 +51,10 @@
             color="secondary"
             (buttonClick)="addOption()"
             [data-qa]="'btn-add-option'"
+            aria-label="Add a new option"
           >
             {{ 'form.field_add_option' | translate }}
-            <mat-icon icon svgIcon="plus"></mat-icon>
+            <mat-icon icon svgIcon="plus" aria-label="Add new option"></mat-icon>
           </mzima-client-button>
         </div>
 
@@ -76,8 +77,9 @@
               (buttonClick)="removeOption(i)"
               *ngIf="selectedFieldType.options.length > 1"
               [data-qa]="'btn-remove-option-' + i"
+              aria-label="Remove Option"
             >
-              <mat-icon icon svgIcon="delete"></mat-icon>
+              <mat-icon icon svgIcon="delete" aria-label="Delete Option"></mat-icon>
             </mzima-client-button>
           </mat-form-field>
           <mat-error role="alert" *ngIf="option.error">
@@ -190,6 +192,7 @@
     color="secondary"
     [mat-dialog-close]="false"
     [data-qa]="'btn-cancel-field'"
+    aria-label="Cancel creating this field"
   >
     {{ 'app.cancel' | translate }}
   </mzima-client-button>
@@ -202,6 +205,7 @@
       checkForSpecialOptions()
     "
     [data-qa]="'btn-add-field'"
+    ariaLabel="{{ (editMode ? 'Update this field' : 'Save this field') | translate }}."
   >
     {{ (editMode ? 'app.update' : 'app.save') | translate }}
   </mzima-client-button>

@@ -28,6 +28,8 @@
           (buttonClick)="selectFields()"
           [disabled]="showProgress"
           [data-qa]="'btn-select-fields'"
+          tabindex="0"
+          [attr.aria-label]="'data_export.select_fields' | translate"
         >
           {{ 'data_export.select_fields' | translate }}
         </mzima-client-button>
@@ -35,6 +37,8 @@
           (buttonClick)="exportAll()"
           [disabled]="showProgress"
           [data-qa]="'btn-export-all'"
+          tabIndex="0"
+          [attr.aria-label]="'data_export.all' | translate"
         >
           {{ 'data_export.all' | translate }}
         </mzima-client-button>
@@ -83,8 +87,9 @@
                 [iconOnly]="true"
                 class="download-btn"
                 [download]="'data_export.job' | translate : { jobId: job.id }"
+                [attr.aria-label]="'data_export.job_download' | translate : { jobId: job.id }"
               >
-                <mat-icon icon svgIcon="download"></mat-icon>
+                <mat-icon icon svgIcon="download" aria-label="Download"></mat-icon>
               </mzima-client-button>
             </td>
           </ng-container>
@@ -132,10 +137,15 @@
       color="secondary"
       [data-qa]="'btn-cancel'"
       (buttonClick)="selectFields()"
+      aria-label="Cancel data export"
     >
       {{ 'data_export.cancel' | translate }}
     </mzima-client-button>
-    <mzima-client-button (buttonClick)="exportSelected()" [data-qa]="'btn-export-selected'">
+    <mzima-client-button
+      (buttonClick)="exportSelected()"
+      [data-qa]="'btn-export-selected'"
+      [attr.aria-label]="'data_export.export_selected' | translate"
+    >
       {{ 'data_export.export_selected' | translate }}
     </mzima-client-button>
   </div>

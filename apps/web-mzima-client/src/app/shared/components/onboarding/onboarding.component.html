@@ -27,7 +27,7 @@
         class="onboarding-step__close-btn"
         ariaLabel="{{ 'modal.button.close' | translate }}"
       >
-        <mat-icon icon svgIcon="close"></mat-icon>
+        <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
       </mzima-client-button>
     </div>
     <div class="onboarding-step__content">
@@ -42,14 +42,21 @@
         color="secondary"
         (buttonClick)="prevStep()"
         *ngIf="i > 0 && i !== onboardingSteps.length - 1"
+        aria-label="Go to the previous onboarding step"
       >
         {{ 'app.previous' | translate }}
       </mzima-client-button>
       <mzima-client-button (buttonClick)="nextStep()" [id]="'onboarding-button-' + step.icon">
         <ng-container *ngIf="i === 0 || i === onboardingSteps.length - 1; else nextStepText">
-          {{ 'app.ok_sounds_good' | translate }}
+          <span aria-label="Complete the onboarding process">
+            {{ 'app.ok_sounds_good' | translate }}
+          </span>
         </ng-container>
-        <ng-template #nextStepText>{{ 'app.next_step' | translate }}</ng-template>
+        <ng-template #nextStepText
+          ><span aria-label="Proceed to the next onboarding step">{{
+            'app.next_step' | translate
+          }}</span></ng-template
+        >
       </mzima-client-button>
     </div>
   </tour-step>

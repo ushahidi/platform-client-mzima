@@ -28,6 +28,12 @@
     (colorPickerChange)="colorChange()"
   />
   <div class="colorpicker-menu__buttons">
-    <mzima-client-button>Ok</mzima-client-button>
+    <mzima-client-button
+      type="button"
+      [color]="'primary'"
+      [fill]="'solid'"
+      aria-label="Close color picker"
+      >Ok</mzima-client-button
+    >
   </div>
 </mat-menu>

@@ -5,7 +5,8 @@
   [rounded]="isRound"
   [iconOnly]="hasIconOnly"
   [data-qa]="'submit-post-button'"
+  aria-label="Add New Post"
 >
   <span *ngIf="hasText">{{ 'app.add_new_post' | translate }}</span>
-  <mat-icon icon svgIcon="plus"></mat-icon>
+  <mat-icon icon svgIcon="plus" aria-label="Add New Post"></mat-icon>
 </mzima-client-button>

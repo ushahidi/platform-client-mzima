@@ -4,9 +4,10 @@
     [routerLink]="['create']"
     *ngIf="!isAllProvidersAdded"
     [data-qa]="'btn-add-provider'"
+    aria-label="Click to add a new data source"
   >
     <span>{{ 'settings.data_sources.add_source' | translate }}</span>
-    <mat-icon icon svgIcon="plus"></mat-icon>
+    <mat-icon icon svgIcon="plus" aria-label="Add new data source"></mat-icon>
   </mzima-client-button>
 </div>
 <ng-container *ngIf="providersData?.length; else showLoader">

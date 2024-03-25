@@ -20,8 +20,11 @@
           [isActive]="mode === FeedMode.Tiles"
           (buttonClick)="switchMode(FeedMode.Tiles)"
           class="feed-page__mode-switcher__button"
+          [attr.aria-label]="
+            mode === FeedMode.Tiles ? 'Switch to Tiles View' : 'Switch to another view'
+          "
         >
-          <mat-icon icon svgIcon="tiles"></mat-icon>
+          <mat-icon icon svgIcon="tiles" aria-label="Switch to Tiles View"></mat-icon>
         </mzima-client-button>
         <mzima-client-button
           [fill]="mode === FeedMode.Post ? 'outline' : 'solid'"
@@ -31,8 +34,11 @@
           [isActive]="mode === FeedMode.Post"
           (buttonClick)="switchMode(FeedMode.Post)"
           class="feed-page__mode-switcher__button"
+          [attr.aria-label]="
+            mode === FeedMode.Post ? 'Switch to Post Mode' : 'Switch to another mode'
+          "
         >
-          <mat-icon icon svgIcon="sidebar"></mat-icon>
+          <mat-icon icon svgIcon="sidebar" aria-label="Open Sidebar"></mat-icon>
         </mzima-client-button>
       </div>
     </div>
@@ -51,9 +57,10 @@
             class="feed-page__control"
             [disabled]="!selectedPosts.length"
             (buttonClick)="deleteSelectedPosts()"
+            [attr.aria-label]="isDesktop ? ('app.delete' | translate) : 'Delete'"
           >
             <span *ngIf="isDesktop">{{ 'app.delete' | translate }}</span>
-            <mat-icon icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
+            <mat-icon icon *ngIf="!isDesktop" svgIcon="delete" aria-label="Delete"></mat-icon>
           </mzima-client-button>
           <ng-container *ngIf="!isDesktop">
             <span class="feed-page__controls__info">
@@ -66,8 +73,11 @@
                 class="feed-page__control"
                 [disabled]="!selectedPosts.length"
                 [matMenuTriggerFor]="selectedPosts.length ? statusesMenu : null"
+                [attr.aria-label]="
+                  selectedPosts.length ? 'Open status menu' : 'No action available'
+                "
               >
-                <mat-icon icon svgIcon="dots"></mat-icon>
+                <mat-icon icon svgIcon="dots" aria-label="Open Options Menu"></mat-icon>
               </mzima-client-button>
 
               <mat-menu
@@ -110,6 +120,7 @@
               color="gray"
               class="feed-page__control"
               (buttonClick)="selectAllPosts()"
+              [attr.aria-label]="'Select all posts'"
             >
               {{ 'post.select_all' | translate }}
             </mzima-client-button>
@@ -119,6 +130,11 @@
               class="feed-page__control"
               (buttonClick)="deselectAllPosts()"
               [disabled]="!selectedPosts.length"
+              [attr.aria-label]="
+                selectedPosts.length
+                  ? ('nav.deselect' | translate) + ' ' + ('nav.all' | translate)
+                  : 'Disabled: No posts selected'
+              "
             >
               {{ 'nav.deselect' | translate }}
               {{ 'nav.all' | translate }}
@@ -134,6 +150,7 @@
           class="feed-page__control feed-page__control--bulk"
           *ngIf="user?.allowed_privileges?.includes('update')"
           (buttonClick)="toggleBulkOptions(!isBulkOptionsVisible)"
+          [attr.aria-label]="'Toggle bulk actions ' + (isBulkOptionsVisible ? 'off' : 'on')"
         >
           {{ 'post.modify.bulk_actions' | translate }}
         </mzima-client-button>
@@ -144,9 +161,12 @@
             [iconOnly]="!isDesktop"
             [matMenuTriggerFor]="sortingMenu"
             class="feed-page__control feed-page__control--sorting"
+            [attr.aria-label]="
+              isDesktop ? ('global_filter.sorting' | translate) : 'Open sorting options'
+            "
           >
             <span *ngIf="isDesktop">{{ 'global_filter.sorting' | translate }}</span>
-            <mat-icon icon svgIcon="sorting"></mat-icon>
+            <mat-icon icon svgIcon="sorting" aria-label="Sort"></mat-icon>
           </mzima-client-button>
 
           <mat-menu #sortingMenu="matMenu" xPosition="before">
@@ -174,8 +194,9 @@
             *ngIf="!isDesktop"
             class="feed-page__control"
             (buttonClick)="toggleFilters(!isFiltersVisible)"
+            [attr.aria-label]="'Toggle filters ' + (isFiltersVisible ? 'off' : 'on')"
           >
-            <mat-icon icon svgIcon="filters"></mat-icon>
+            <mat-icon icon svgIcon="filters" aria-label="Filter"></mat-icon>
           </mzima-client-button>
         </div>
       </div>
@@ -241,8 +262,9 @@
                 (buttonClick)="loadMore()"
                 class="feed__load-more"
                 *ngIf="!loadingMorePosts && postCurrentLength < total"
+                [attr.aria-label]="'Load more posts'"
               >
-                <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
+                <mat-icon iconPrefix svgIcon="refresh" aria-label="Refresh"></mat-icon>
                 <span>{{ 'app.load_more' | translate }}</span>
               </mzima-client-button>
               <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>

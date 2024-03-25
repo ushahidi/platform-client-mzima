@@ -25,10 +25,16 @@
     color="secondary"
     (buttonClick)="cancel()"
     [data-qa]="'survey-task-cancel'"
+    aria-label="Cancel deleting this contact"
   >
     {{ 'user_profile.nav.delete_contact.button.cancel' | translate }}
   </mzima-client-button>
-  <mzima-client-button type="submit" (buttonClick)="submit()" [data-qa]="'survey-task-add'">
+  <mzima-client-button
+    type="submit"
+    (buttonClick)="submit()"
+    [data-qa]="'survey-task-add'"
+    aria-label="Delete this contact"
+  >
     {{ 'user_profile.nav.delete_contact.button.delete' | translate }}
   </mzima-client-button>
 </div>

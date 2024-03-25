@@ -18,8 +18,9 @@
       class="copy-button"
       [disabled]="copySuccess"
       (buttonClick)="copyToClipboard(embed)"
+      ariaLabel="{{ copySuccess ? 'Copied' : 'Copy code snippet' }}"
     >
-      <mat-icon icon svgIcon="copy"></mat-icon>
+      <mat-icon icon svgIcon="copy" aria-label="Copy code snippet"></mat-icon>
     </mzima-client-button>
   </mat-form-field>
 </div>
@@ -31,8 +32,9 @@
     target="_blank"
     class="share-item"
     [href]="'https://twitter.com/intent/tweet?url=' + shareUrlEncoded"
+    aria-label="Share this on Twitter. Opens in a new tab."
   >
-    <mat-icon iconPrefix svgIcon="twitter"></mat-icon>
+    <mat-icon iconPrefix svgIcon="twitter" aria-label="Share on Twitter"></mat-icon>
     Twitter
   </mzima-client-button>
 </div>
@@ -46,8 +48,9 @@
     [href]="
       'https://www.facebook.com/sharer/sharer.php?u=' + shareUrlEncoded + '&amp;src=sdkpreparse'
     "
+    aria-label="Share this on Facebook. Opens in a new tab."
   >
-    <mat-icon iconPrefix svgIcon="facebook"></mat-icon>
+    <mat-icon iconPrefix svgIcon="facebook" aria-label="Share on Facebook"></mat-icon>
     Facebook
   </mzima-client-button>
 </div>

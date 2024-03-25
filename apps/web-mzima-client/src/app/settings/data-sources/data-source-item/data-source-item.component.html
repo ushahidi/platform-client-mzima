@@ -200,9 +200,15 @@
         [iconOnly]="!isDesktop"
         [data-qa]="'btn-provider-delete'"
         (buttonClick)="turnOffDataSource($event)"
+        aria-label="Delete this data source"
       >
         <ng-container *ngIf="isDesktop">{{ 'app.delete' | translate }}</ng-container>
-        <mat-icon icon *ngIf="!isDesktop" svgIcon="delete"></mat-icon>
+        <mat-icon
+          icon
+          *ngIf="!isDesktop"
+          svgIcon="delete"
+          aria-label="Delete data source"
+        ></mat-icon>
       </mzima-client-button>
     </div>
     <div>
@@ -211,6 +217,7 @@
         color="secondary"
         (buttonClick)="back()"
         [data-qa]="'btn-provider-cancel'"
+        aria-label="Cancel data source changes"
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
@@ -218,6 +225,7 @@
         [disabled]="form.invalid || submitted"
         [data-qa]="'btn-provider-save'"
         type="submit"
+        aria-label="Save data source changes"
       >
         {{ 'app.save' | translate }}
       </mzima-client-button>

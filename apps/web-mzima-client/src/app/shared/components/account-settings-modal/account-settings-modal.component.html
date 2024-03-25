@@ -9,7 +9,7 @@
     [mat-dialog-close]="false"
     ariaLabel="{{ 'modal.button.close' | translate }}"
   >
-    <mat-icon icon svgIcon="close"></mat-icon>
+    <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
   </mzima-client-button>
 
   <div class="content">
@@ -145,6 +145,7 @@
                       color="danger"
                       (buttonClick)="deleteContact(contact.id)"
                       [expand]="false"
+                      ariaLabel="Delete {{ contact.user }}. This action cannot be undone."
                     >
                       {{ 'contact.button.delete' | translate }}
                     </mzima-client-button>
@@ -200,6 +201,7 @@
                       [disabled]="
                         addAccountForm.invalid || addAccountForm.pristine || addAccountForm.disabled
                       "
+                      aria-label="Add a new contact"
                     >
                       {{ 'contact.button.add' | translate }}
                     </mzima-client-button>
@@ -236,7 +238,7 @@
                       (buttonClick)="deleteNotification(notification.id.toString())"
                       [ariaLabel]="'notification.button.delete' | translate"
                     >
-                      <mat-icon icon svgIcon="delete"></mat-icon>
+                      <mat-icon icon svgIcon="delete" aria-label="Delete"></mat-icon>
                     </mzima-client-button>
                   </div>
                 </div>
@@ -262,7 +264,7 @@
                       [ariaLabel]="'notification.button.delete' | translate"
                       (buttonClick)="deleteNotification(notification.id.toString())"
                     >
-                      <mat-icon icon svgIcon="delete"></mat-icon>
+                      <mat-icon icon svgIcon="delete" aria-label="Delete"></mat-icon>
                     </mzima-client-button>
                   </div>
                 </div>
@@ -275,10 +277,19 @@
   </div>
 
   <mat-dialog-actions align="end">
-    <mzima-client-button fill="outline" color="secondary" [mat-dialog-close]="false">
+    <mzima-client-button
+      fill="outline"
+      color="secondary"
+      [mat-dialog-close]="false"
+      aria-label="Cancel editing this form"
+    >
       {{ 'app.cancel' | translate }}
     </mzima-client-button>
-    <mzima-client-button (buttonClick)="applyChanges()" [disabled]="isButtonDisabled()">
+    <mzima-client-button
+      (buttonClick)="applyChanges()"
+      [disabled]="isButtonDisabled()"
+      aria-label="Save changes and close this dialog"
+    >
       {{ 'form.save_and_close' | translate }}
     </mzima-client-button>
   </mat-dialog-actions>

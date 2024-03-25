@@ -8,7 +8,7 @@
   [mat-dialog-close]="false"
   ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon icon svgIcon="close"></mat-icon>
+  <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
 </mzima-client-button>
 
 <strong mat-dialog-title [data-qa]="'lang-modal-title'">{{
@@ -22,8 +22,14 @@
         placeholder="{{ 'global_filter.search' | translate }}"
         (input)="searchLanguage($event)"
       />
-      <mzima-client-button matPrefix fill="clear" color="secondary" [iconOnly]="true">
-        <mat-icon icon svgIcon="search-small"></mat-icon>
+      <mzima-client-button
+        matPrefix
+        fill="clear"
+        color="secondary"
+        [iconOnly]="true"
+        aria-label="Search"
+      >
+        <mat-icon icon svgIcon="search-small" aria-label="Search"></mat-icon>
       </mzima-client-button>
     </mat-form-field>
   </div>
@@ -50,6 +56,7 @@
     color="secondary"
     [mat-dialog-close]="false"
     [data-qa]="'btn-lang-cancel'"
+    aria-label="Close language selection dialog"
   >
     {{ 'app.cancel' | translate }}
   </mzima-client-button>
@@ -57,6 +64,7 @@
     [mat-dialog-close]="data.activeLanguages"
     [disabled]="!data.activeLanguages.length"
     [data-qa]="'btn-lang-add'"
+    aria-label="Add languages (currently no languages selected)"
   >
     {{ 'app.add' | translate }}
   </mzima-client-button>

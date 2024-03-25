@@ -81,10 +81,11 @@
     color="secondary"
     (buttonClick)="cancel()"
     [data-qa]="'btn-cancel'"
+    aria-label="Cancel action"
   >
     {{ 'app.cancel' | translate }}
   </mzima-client-button>
-  <mzima-client-button (buttonClick)="save()" [data-qa]="'btn-save'">
+  <mzima-client-button (buttonClick)="save()" [data-qa]="'btn-save'" aria-label="Save changes">
     {{ 'app.save' | translate }}
   </mzima-client-button>
 </div>

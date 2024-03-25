@@ -189,6 +189,7 @@
         [disabled]="!form.get('id')?.value"
         [iconOnly]="!isDesktop"
         class="delete-btn"
+        aria-label="Delete this webhook. Opens confirmation dialog"
       >
         <ng-container *ngIf="isDesktop">{{ 'app.delete' | translate }}</ng-container>
         <mat-icon *ngIf="!isDesktop" icon svgIcon="delete"></mat-icon>
@@ -201,6 +202,7 @@
         color="secondary"
         (buttonClick)="cancel()"
         [data-qa]="'btn-webhook-cancel'"
+        aria-label="Cancel editing this webhook"
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
@@ -208,6 +210,7 @@
         type="submit"
         [disabled]="form.invalid || submitted"
         [data-qa]="'btn-webhook-save'"
+        ariaLabel="{{ isCreateWebhook ? 'Save this new webhook' : 'Save changes to this webhook' }}"
       >
         {{ (isCreateWebhook ? 'app.save' : 'app.edit') | translate }}
       </mzima-client-button>

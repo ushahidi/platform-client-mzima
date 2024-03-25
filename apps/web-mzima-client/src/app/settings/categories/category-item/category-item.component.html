@@ -17,6 +17,8 @@
     [data-qa]="'toggle-children'"
     (buttonClick)="toggleChildren(category.id)"
     (click)="$event.stopPropagation()"
+    tabindex="0"
+    aria-label="Toggle category children"
   >
     <mat-icon
       class="category-item__arrow"

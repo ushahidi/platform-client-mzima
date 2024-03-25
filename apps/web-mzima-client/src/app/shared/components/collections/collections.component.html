@@ -8,7 +8,7 @@
   (buttonClick)="closeModal()"
   ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon icon svgIcon="close"></mat-icon>
+  <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
 </mzima-client-button>
 
 <ng-container *ngIf="currentView === CollectionView.List; else createForm">
@@ -25,8 +25,9 @@
         matTooltip='
           A "Collection" is a manually-curated group of posts. You may find it useful in grouping posts that you would like to share with external partners. It is not dynamic, meaning the posts within it do not change unless you manually update them.
         '
+        aria-label="Learn more about Collections"
       >
-        <mat-icon icon svgIcon="tooltip"></mat-icon>
+        <mat-icon icon svgIcon="tooltip" aria-label="Tooltip"></mat-icon>
       </mzima-client-button>
     </strong>
     <mzima-client-button
@@ -34,9 +35,10 @@
       (buttonClick)="addNewCollection()"
       tabindex="-1"
       [data-qa]="'add-collection'"
+      aria-label="Add new collection"
     >
       <span>{{ 'app.add_collection' | translate }}</span>
-      <mat-icon icon svgIcon="plus"></mat-icon>
+      <mat-icon icon svgIcon="plus" aria-label="Add new collection"></mat-icon>
     </mzima-client-button>
   </div>
 
@@ -59,8 +61,9 @@
           color="secondary"
           [iconOnly]="true"
           type="submit"
+          aria-label="Search"
         >
-          <mat-icon icon svgIcon="search-small"></mat-icon>
+          <mat-icon icon svgIcon="search-small" aria-label="Search"></mat-icon>
         </mzima-client-button>
       </mat-form-field>
     </div>
@@ -68,9 +71,10 @@
       *ngIf="isLoggedIn && !post && !isDesktop"
       (buttonClick)="addNewCollection()"
       tabindex="-1"
+      aria-label="Add new collection"
     >
       <span>{{ 'app.add' | translate }}</span>
-      <mat-icon icon svgIcon="plus"></mat-icon>
+      <mat-icon icon svgIcon="plus" aria-label="Add new collection"></mat-icon>
     </mzima-client-button>
   </form>
 
@@ -186,7 +190,12 @@
   </div>
 
   <mat-dialog-actions align="end">
-    <mzima-client-button fill="outline" color="secondary" (buttonClick)="closeModal()">
+    <mzima-client-button
+      fill="outline"
+      color="secondary"
+      (buttonClick)="closeModal()"
+      aria-label="Close this dialog without saving changes"
+    >
       {{ 'app.cancel' | translate }}
     </mzima-client-button>
     <mzima-client-button
@@ -194,6 +203,7 @@
       [disabled]="collectionForm.invalid"
       id="save-collection-btn"
       [attr.data-qa]="'save-collection-btn'"
+      aria-label="Save changes to this collection"
     >
       {{ 'app.save' | translate }}
     </mzima-client-button>

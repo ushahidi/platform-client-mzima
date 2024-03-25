@@ -35,8 +35,9 @@
           tabindex="-1"
           matTooltipPosition="above"
           matTooltip="View and add to this survey in another language"
+          aria-label="View and add to this survey in another language"
         >
-          <mat-icon icon svgIcon="tooltip"></mat-icon>
+          <mat-icon icon svgIcon="tooltip" aria-label="Tooltip"></mat-icon>
         </mzima-client-button>
         <mat-form-field appearance="outline" class="feed-page__control">
           <mat-select
@@ -218,8 +219,9 @@
                   [iconOnly]="true"
                   (buttonClick)="clearField($event, field.key)"
                   *ngIf="form.get(field.key)?.value"
+                  ariaLabel="Clear {{ field.key }} field"
                 >
-                  <mat-icon icon svgIcon="close"></mat-icon>
+                  <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
                 </mzima-client-button>
                 <mat-datepicker-toggle
                   matSuffix
@@ -250,8 +252,9 @@
                   [iconOnly]="true"
                   (buttonClick)="clearField($event, field.key)"
                   *ngIf="form.get(field.key)?.value"
+                  ariaLabel="Clear {{ field.key }} field"
                 >
-                  <mat-icon icon svgIcon="close"></mat-icon>
+                  <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
                 </mzima-client-button>
                 <mat-datepicker-toggle
                   matSuffix
@@ -428,6 +431,7 @@
                   class="relation-button-search"
                   (buttonClick)="relationSearchPosts()"
                   [data-qa]="field.label.replaceAll(' ', '-') + '-search' | lowercase"
+                  ariaLabel="{{ 'post.relation.search' | translate }}"
                 >
                   {{ 'post.relation.search' | translate }}
                 </mzima-client-button>
@@ -481,6 +485,7 @@
           [data-qa]="'btn-post-item-previous'"
           (buttonClick)="previousPage()"
           [disabled]="form.disabled"
+          ariaLabel="{{ 'app.cancel' | translate }}"
         >
           {{ 'app.cancel' | translate }}
         </mzima-client-button>
@@ -494,6 +499,7 @@
             submitted ||
             (!requireApproval || post?.status === 'published' ? taskForm.invalid : false)
           "
+          ariaLabel="{{ 'app.submit' | translate }}"
         >
           {{ 'app.submit' | translate }}
         </mzima-client-button>

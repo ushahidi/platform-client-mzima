@@ -8,7 +8,7 @@
   [mat-dialog-close]="false"
   ariaLabel="{{ 'modal.button.close' | translate }}"
 >
-  <mat-icon icon svgIcon="close"></mat-icon>
+  <mat-icon icon svgIcon="close" aria-label="Close"></mat-icon>
 </mzima-client-button>
 
 <div [ngClass]="{ confirm: data.buttonSuccess }">
@@ -33,6 +33,7 @@
       *ngIf="data.buttonSuccess"
       mat-dialog-close="true"
       [data-qa]="'btn-confirm-success'"
+      aria-label="{{ data.buttonSuccess }}"
     >
       <span>{{ data.buttonSuccess }}</span>
     </mzima-client-button>
@@ -42,10 +43,15 @@
         color="secondary"
         [mat-dialog-close]="false"
         [data-qa]="'btn-confirm-cancel'"
+        aria-label="{{ data.cancelButtonText || ('Cancel this action' | translate) }}"
       >
         {{ data.cancelButtonText || ('app.cancel' | translate) }}
       </mzima-client-button>
-      <mzima-client-button [mat-dialog-close]="true" [data-qa]="'btn-confirm-delete'">
+      <mzima-client-button
+        [mat-dialog-close]="true"
+        [data-qa]="'btn-confirm-delete'"
+        aria-label="{{ data.confirmButtonText || ('Confirm deletion' | translate) }}"
+      >
         {{ data.confirmButtonText || ('app.delete' | translate) }}
       </mzima-client-button>
     </ng-container>

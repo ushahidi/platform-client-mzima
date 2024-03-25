@@ -45,7 +45,7 @@
           matTreeNodeToggle
           [ariaLabel]="'Toggle ' + node.name"
         >
-          <mat-icon icon class="mat-icon-rtl-mirror">
+          <mat-icon icon class="mat-icon-rtl-mirror" aria-label="Toggle">
             {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
           </mat-icon>
         </mzima-client-button>

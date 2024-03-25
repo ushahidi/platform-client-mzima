@@ -7,8 +7,9 @@
     [iconOnly]="true"
     (buttonClick)="editPost($event)"
     class="post-head__control"
+    ariaLabel="{{ 'post.edit' | translate }}"
   >
-    <mat-icon icon svgIcon="edit-post" [data-qa]="'edit-post'"></mat-icon>
+    <mat-icon icon svgIcon="edit-post" [data-qa]="'edit-post'" aria-label="Edit Post"></mat-icon>
   </mzima-client-button>
 
   <mzima-client-button
@@ -18,8 +19,15 @@
     [iconOnly]="true"
     (buttonClick)="sharePost()"
     class="post-head__control post-head__control--share"
+    aria-label="Share this post"
   >
-    <mat-icon icon svgIcon="share" [data-qa]="'share-post'" [attr.post]="post.id"></mat-icon>
+    <mat-icon
+      icon
+      svgIcon="share"
+      [data-qa]="'share-post'"
+      [attr.post]="post.id"
+      aria-label="Share Post"
+    ></mat-icon>
   </mzima-client-button>
   <mzima-client-button
     *ngIf="!!user?.userId"
@@ -30,6 +38,7 @@
     (click)="$event.stopPropagation()"
     class="post-head__control post-head__control--dots"
     [matMenuTriggerFor]="actions"
+    aria-label="Options"
   >
     <mat-icon icon svgIcon="dots"></mat-icon>
   </mzima-client-button>

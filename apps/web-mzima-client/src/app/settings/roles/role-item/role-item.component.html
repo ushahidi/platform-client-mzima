@@ -68,6 +68,7 @@
         (buttonClick)="deleteRole()"
         [data-qa]="'btn-delete-role'"
         *ngIf="isUpdate && !role?.protected"
+        aria-label="Delete this role"
       >
         <ng-container *ngIf="isDesktop">{{ 'role.delete' | translate }}</ng-container>
         <mat-icon *ngIf="!isDesktop" icon svgIcon="delete"></mat-icon>
@@ -79,6 +80,7 @@
         color="secondary"
         [data-qa]="'btn-cancel-role'"
         (buttonClick)="navigateToRoles()"
+        aria-label="Cancel role changes"
       >
         {{ 'app.cancel' | translate }}
       </mzima-client-button>
@@ -86,6 +88,7 @@
         type="submit"
         [disabled]="form.invalid || isFormOnSubmit"
         [data-qa]="'btn-save-role'"
+        ariaLabel="{{ (isUpdate ? 'Update role' : 'Save role') | translate }}"
       >
         <ng-container *ngIf="isDesktop">{{
           (isUpdate ? 'app.update_and_close' : 'app.save_and_close') | translate
