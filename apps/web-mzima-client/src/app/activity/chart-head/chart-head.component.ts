@@ -16,7 +16,7 @@ export class ChartHeadComponent {
   @Output() public dateChanged = new EventEmitter();
 
   public ranges = [
-    { displayNane: 'All time', value: '' },
+    { displayNane: 'All time', value: 'a' },
     { displayNane: 'Last week', value: 'w' },
     { displayNane: 'Last month', value: 'm' },
     { displayNane: 'Last year', value: 'y' },
