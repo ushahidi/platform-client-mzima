@@ -112,6 +112,7 @@
       <mzima-client-button
         matSuffix
         fill="clear"
+        ariaLabel="Copy API Key to clipboard"
         color="secondary"
         [iconOnly]="true"
         [disabled]="copySuccess"
@@ -127,6 +128,7 @@
   <mzima-client-button
     fill="outline"
     [expand]="false"
+    ariaLabel="Generate a new API key"
     color="secondary"
     (click)="generateApiKey()"
     [data-qa]="'generate-api-key'"
@@ -148,6 +150,7 @@
     type="button"
     fill="outline"
     color="secondary"
+    ariaLabel="Cancel changes and close settings panel"
     routerLink="/settings"
     [data-qa]="'btn-cancel'"
     *ngIf="!(isDesktop$ | async)!"
@@ -157,6 +160,7 @@
   <mzima-client-button
     type="submit"
     data-qa="btn-save"
+    ariaLabel="Save changes to your account"
     (buttonClick)="save()"
     [disabled]="
       generalForm.invalid ||
