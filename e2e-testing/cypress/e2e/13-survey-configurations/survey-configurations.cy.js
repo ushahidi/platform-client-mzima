@@ -14,13 +14,7 @@ describe("Automated Tests for Survey Configurations", () => {
     surveyConfigurationFunctions.require_posts_reviewed_before_published()
   });
 
-  it("Steps to hide author information", () => {
-    surveyConfigurationFunctions.toggle_hide_author_information();
-    loginFunctions.logout();
-    surveyConfigurationFunctions.login_as_different_user();
-    surveyConfigurationFunctions.add_post();
-    surveyConfigurationFunctions.check_for_accurate_author_name();
-    loginFunctions.logout();
-    surveyConfigurationFunctions.check_for_anonymous_author_name();
+  it("Verifies author information stays hidden", () => {
+    surveyConfigurationFunctions.hide_author_information_and_verify()
   });
 });

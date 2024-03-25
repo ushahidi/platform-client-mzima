@@ -130,6 +130,20 @@ class SurveyConfigurationFunctions {
     this.add_post();
     this.check_for_added_post_being_published();
   }
+
+  hide_author_information_and_verify() {
+    this.open_settings();
+    this.open_surveys();
+    this.open_particular_survey();
+    this.open_survey_configurations();
+    this.toggle_hide_author_information();
+    loginFunctions.logout();
+    this.login_as_different_user();
+    this.add_post();
+    this.check_for_accurate_author_name();
+    loginFunctions.logout();
+    this.check_for_anonymous_author_name();
+  }
 }
 
 export default SurveyConfigurationFunctions;
