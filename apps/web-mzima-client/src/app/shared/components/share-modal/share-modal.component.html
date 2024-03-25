@@ -15,7 +15,7 @@
   <strong mat-dialog-title>{{ label }}</strong>
 
   <div mat-dialog-content>
-    <div class="form-row">
+    <label class="form-row">
       <mat-label>{{ 'share.web_address' | translate }}</mat-label>
       <mat-form-field appearance="outline">
         <input
@@ -25,8 +25,8 @@
           [data-qa]="'survey-web-address'"
         />
       </mat-form-field>
-    </div>
-    <div class="form-row">
+    </label>
+    <label class="form-row">
       <mat-label>{{ 'share.embed_on_websites' | translate }}</mat-label>
       <div class="copy-success" *ngIf="copySuccess">{{ 'share.copied' | translate }}</div>
       <div [ngClass]="{ success: copySuccess }">
@@ -48,7 +48,7 @@
           ></mat-icon>
         </mat-form-field>
       </div>
-    </div>
+    </label>
     <div class="buttons">
       <mzima-client-button
         fill="outline"
