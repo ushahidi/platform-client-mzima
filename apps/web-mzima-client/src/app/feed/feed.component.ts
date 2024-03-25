@@ -299,8 +299,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // if (this.mode === FeedMode.Post) {
     //   this.currentPage = 1;
     // }
+
+    //---------------------------------
     this.isLoading = !this.posts.length; // With this skeleton loader shows up only on mode switch, and the loadmore button is able to detect to not load the skeleton UI loader on click
-    this.paginationElementsAllowed = this.loadingMorePosts; // this check prevents the load more button & area from temporarily disappearing (on click)
+    this.paginationElementsAllowed = this.loadingMorePosts; // this check prevents the load more button & area from temporarily disappearing (on click) [also prevents pagination element flicker in TILES mode]
+    //----------------------------------
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
@@ -312,13 +315,13 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           payload: true,
         });
         setTimeout(() => {
-          this.isLoading = false;
           //---------------------------------
+          // These are needed to achieve clean display of posts or message on the UI
+          this.isLoading = false;
           this.atLeastOnePostExists = this.posts.length > 0;
           this.noPostsYet = !this.atLeastOnePostExists; // && this.mode === FeedMode.Tiles;
-          //---------------------------------
-          this.paginationElementsAllowed = data.meta.total > dataMetaPerPage; // show pagination-related elements
           this.loadingMorePosts = false; // for load more button's loader/spinner
+          //---------------------------------
           this.updateMasonry();
           setTimeout(() => {
             if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
@@ -326,6 +329,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
             }
           }, 250);
         }, 500);
+        setTimeout(() => {
+          //is inside this much delayed setTimeout to prevent pagination elements flicker on load/routing
+          this.paginationElementsAllowed =
+            data.meta.total > dataMetaPerPage && this.posts.length >= 20; // show pagination-related elements
+        }, 800);
       },
     });
   }
@@ -550,7 +558,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     const localStorageFeedMode = this.currentFeedViewMode().get;
     const sameSwitchButtonClicked = localStorageFeedMode === mode;
     if (this.atLeastOnePostExists && !sameSwitchButtonClicked) {
+      //-------------------------------------
+      // Show loader & prevent pagination elements flicker on use of switch mode buttons
       this.isLoading = true;
+      this.paginationElementsAllowed = false;
+      //-------------------------------------
       this.mode = mode;
       if (this.collectionId) {
         this.switchCollectionMode();
@@ -600,6 +612,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public changePage(page: number): void {
+    // --------------------------------
+    // Show loader & prevent pagination elements flicker on use of pagination element's buttons
+    this.isLoading = true;
+    this.paginationElementsAllowed = false;
+    //------------------------------------
     this.toggleBulkOptions(false);
     this.currentPage = page;
     this.router.navigate([], {
