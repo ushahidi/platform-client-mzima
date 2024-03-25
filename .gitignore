@@ -8,7 +8,8 @@
 
 .env
 .env.docker
-
+.package-lock.json
+.package.json
 # Node
 /node_modules
 apps/mobile-mzima-client/node_modules
