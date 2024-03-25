@@ -46,6 +46,11 @@
       }
     }
 
+    &.cdk-keyboard-focused {
+      background: var(--color-primary-60) !important;
+      color: var(--color-black);
+    }
+
     &.mat-tab-disabled {
       color: var(--color-neutral-50);
     }
