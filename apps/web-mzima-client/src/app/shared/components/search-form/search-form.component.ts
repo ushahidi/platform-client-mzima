@@ -125,6 +125,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
         this.isMapView = params.url.includes('/map');
+        this.applyFilters(false);
       },
     });
 
@@ -492,7 +493,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   public getPostsStatistic(): Observable<any> {
-    return this.postsService.getPostStatistics(null, this.isMapView).pipe(
+    return this.postsService.getPostStatistics(this.activeFilters, this.isMapView).pipe(
       map((res) => {
         this.notMappedPostsCount = res.result.unmapped;
         const values = res.result.group_by_total_posts;
