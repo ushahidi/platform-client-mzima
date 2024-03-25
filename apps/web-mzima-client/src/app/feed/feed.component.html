@@ -316,7 +316,7 @@
       <ng-container *ngIf="isLoading">
         <app-spinner class="spinner"></app-spinner>
       </ng-container>
-      <router-outlet *ngIf="!isLoading" (activate)="onOutletLoaded($event)"></router-outlet>
+      <router-outlet *ngIf="!isLoading"></router-outlet>
     </div>
   </div>
 </div>
