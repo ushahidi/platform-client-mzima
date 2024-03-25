@@ -15,25 +15,6 @@
   -webkit-overflow-scrolling: touch;
   padding: 24px var(--side-offset) 20px;
 
-  .visibly-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-
-    &:focus {
-      position: static;
-      width: auto;
-      height: auto;
-      margin: 0;
-    }
-  }
-
   &__add-post-btn {
     display: block;
     border-width: 1px 0;
