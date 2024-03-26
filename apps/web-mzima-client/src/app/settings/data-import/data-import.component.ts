@@ -167,7 +167,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
           },
           error: (err) => {
             this.uploadErrors = err.error.errors;
-            this.notification.showError(err);
+            this.notification.showError('Failed to import the data!');
             this.loader.hide();
           },
         });
