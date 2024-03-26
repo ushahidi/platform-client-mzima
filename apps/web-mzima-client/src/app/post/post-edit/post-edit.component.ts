@@ -183,6 +183,14 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     });
   }
 
+  getParentsWithChildren(options: any[]) {
+    const parents = options.filter((opt: any) => !opt.parent_id);
+    parents.forEach((parent) => {
+      parent.children = [...options.filter((opt: any) => opt.parent_id === parent.id)];
+    });
+    return parents;
+  }
+
   private loadSurveyData(formId: number | null, updateContent?: any[]) {
     if (!formId) return;
     this.surveysService.getSurveyById(formId).subscribe({
@@ -217,6 +225,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   this.description = field.default;
                   break;
                 case 'tags':
+                  field.options = this.getParentsWithChildren(field.options);
                   this.description = field.default;
                   break;
                 case 'media': // Max image size addition hack
