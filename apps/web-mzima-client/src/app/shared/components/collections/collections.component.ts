@@ -60,7 +60,6 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     private router: Router,
     private rolesService: RolesService,
     private notificationsService: NotificationsService,
-
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -302,4 +301,3 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     }
   }
 }
-
