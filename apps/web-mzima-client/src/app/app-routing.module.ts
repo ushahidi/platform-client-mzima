@@ -25,6 +25,7 @@ const routes: Routes = [
       breadcrumb: 'nav.map',
       ogTitle: 'nav.map',
     },
+    title: 'nav.map',
   },
   {
     path: 'feed',
@@ -34,6 +35,7 @@ const routes: Routes = [
       breadcrumb: 'nav.feed',
       ogTitle: 'nav.feed',
     },
+    title: 'nav.feed',
   },
   {
     path: 'activity',
@@ -43,6 +45,7 @@ const routes: Routes = [
       breadcrumb: 'nav.activity',
       ogTitle: 'nav.activity',
     },
+    title: 'nav.activity',
   },
   {
     path: 'settings',
@@ -52,10 +55,11 @@ const routes: Routes = [
       breadcrumb: 'nav.settings',
       ogTitle: 'nav.settings',
     },
+    title: 'nav.settings',
   },
   {
     path: 'reset',
-    title: 'reset',
+    title: 'nav.resetpassword',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
     data: {
       breadcrumb: 'nav.resetpassword',
@@ -66,6 +70,7 @@ const routes: Routes = [
     path: 'forgotpassword/confirm/:token',
     canActivate: [ResetTokenGuard],
     component: PageNotFoundComponent,
+    title: 'nav.forgotyourpassword',
   },
   {
     path: 'forbidden',
@@ -75,6 +80,7 @@ const routes: Routes = [
       breadcrumb: 'nav.forbidden',
       ogTitle: 'nav.forbidden',
     },
+    title: 'nav.forbidden',
   },
   {
     path: 'views',
@@ -97,6 +103,7 @@ const routes: Routes = [
       breadcrumb: 'nav.posts',
       ogTitle: 'nav.posts',
     },
+    title: 'nav.posts',
   },
   {
     path: 'posts', // For support legacy URL routes
@@ -106,6 +113,7 @@ const routes: Routes = [
       breadcrumb: 'nav.posts',
       ogTitle: 'nav.posts',
     },
+    title: 'nav.posts',
   },
   {
     path: 'posts/:id',
@@ -119,6 +127,7 @@ const routes: Routes = [
       breadcrumb: 'app.page-not-found',
       ogTitle: 'app.page-not-found',
     },
+    title: 'app.page-not-found',
   },
   {
     path: '**',
@@ -129,6 +138,7 @@ const routes: Routes = [
       breadcrumb: 'app.page-not-found',
       ogTitle: 'app.page-not-found',
     },
+    title: 'app.page-not-found',
   },
 ];
 
