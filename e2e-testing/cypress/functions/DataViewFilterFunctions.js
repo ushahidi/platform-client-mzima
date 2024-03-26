@@ -23,19 +23,19 @@ class DataViewFilterFunctions {
 
     //select second survey
     cy.get('[data-qa="survey-select-item3"]').click();
-    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 358');
+    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 360');
 
     //select third survey
     cy.get('[data-qa="survey-select-item4"]').click();
-    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 368');
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 368');
+    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 370');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 370');
 
     //reveal filters button
     cy.get(DataViewLocators.revealFiltersBtn).click();
     //click clear all filters button
     cy.get(DataViewLocators.clearFiltersBtn).click();
-    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 165');
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 165');
+    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 513');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 513');
   }
 
   check_post_filter_by_status() {
