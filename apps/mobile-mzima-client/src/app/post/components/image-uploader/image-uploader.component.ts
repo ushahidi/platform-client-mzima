@@ -13,6 +13,7 @@ interface LocalFile {
   name: string;
   path: string;
   data: string;
+  altText?: string;
 }
 
 @Component({
@@ -37,6 +38,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
   id?: number;
   photo: LocalFile | null;
   preview: string | SafeUrl | null;
+  altText?: string;
   isDisabled = false;
   upload = false;
   onChange: any = () => {};
