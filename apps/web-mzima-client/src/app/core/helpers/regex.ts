@@ -9,7 +9,7 @@ export const decimalPattern = (value: string) => {
 };
 
 export const alphaNumeric = (value: string) => {
-  const pattern = XRegExp('^[\\p{L}\\p{N}\\s\\-".?!;:,#+_=*&№<>@\'()“”«»\\\\/|]*$', 'gu');
+  const pattern = XRegExp('^[\\p{L}\\p{N}\\s\\-".?!;:,#_=*&№<>@\'()“”«»\\\\/|]*$', 'gu');
   return pattern.test(value);
 };
 

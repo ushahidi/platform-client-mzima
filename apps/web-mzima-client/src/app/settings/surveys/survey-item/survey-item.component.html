@@ -2,7 +2,7 @@
   novalidate
   [formGroup]="form"
   class="main-form"
-  (ngSubmit)="save()"
+  (ngSubmit)="form.valid && save()"
   [ngStyle]="{
     '--color': this.form.get('color')?.value
   }"
