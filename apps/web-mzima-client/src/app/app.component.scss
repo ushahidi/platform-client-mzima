@@ -113,3 +113,28 @@
     }
   }
 }
+
+// Styles for the print webpage layout
+
+@media print {
+  .sidebar,
+  .mobile-page-nav,
+  app-toolbar {
+    display: none;
+  }
+  .main {
+    height: unset;
+    overflow: scroll;
+  }
+
+  .content-wrapper {
+    width: 100%;
+    border: 1px solid var(--color-black);
+  }
+
+  .mat-drawer-container {
+    .mat-drawer-content {
+      margin: 0px !important;
+    }
+  }
+}
