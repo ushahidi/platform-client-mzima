@@ -8,7 +8,7 @@ import { LanguageInterface } from '@models';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService, SessionService } from '@services';
 import { BaseComponent } from '../../../base.component';
-import { noWhitespaceValidator } from '../../../core/validators';
+import { AlphanumericValidatorValidator, noWhitespaceValidator } from '../../../core/validators';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
@@ -68,7 +68,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     this.checkDesktop();
 
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, noWhitespaceValidator]],
+      name: ['', [Validators.required, noWhitespaceValidator, AlphanumericValidatorValidator()]],
       description: [''],
       color: [null],
       enabled_languages: this.formBuilder.group({
@@ -290,7 +290,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
           this.submitted = false;
           if (error.errors.status === 422) {
             this.form.controls['name'].setErrors({ invalidCharacters: true });
-            this.notification.showError('Please remove invalid characters (e.g. +, $)');
+            this.notification.showError('Please remove invalid characters (e.g. +, $, ^, =)');
           } else {
             this.notification.showError(JSON.stringify(error.name[0]));
           }
