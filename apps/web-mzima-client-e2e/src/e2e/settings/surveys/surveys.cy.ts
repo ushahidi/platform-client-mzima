@@ -1,4 +1,5 @@
 import { Base, Login, Settings, Surveys } from '../../actions';
+import 'cypress-axe'
 
 describe('Initialize surveys page', () => {
   before(() => {
@@ -12,5 +13,8 @@ describe('Initialize surveys page', () => {
 
   it('Surveys page exists', () => {
     Surveys.checkSurveyPage();
+    // Perform accessibility checks
+    cy.injectAxe();
+    cy.checkA11y();
   });
 });

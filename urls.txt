@@ -1,0 +1,14 @@
+http://localhost:4200/
+http://localhost:4200/map
+http://localhost:4200/data
+http://localhost:4200/activity
+http://localhost:4200/settings/general
+http://localhost:4200/settings/surveys
+http://localhost:4200/settings/data-sources
+http://localhost:4200/settings/data-import
+http://localhost:4200/settings/user-settings
+http://localhost:4200/settings/data-export
+http://localhost:4200/settings/users
+http://localhost:4200/settings/roles
+http://localhost:4200/settings/categories
+http://localhost:4200/settings/webhooks

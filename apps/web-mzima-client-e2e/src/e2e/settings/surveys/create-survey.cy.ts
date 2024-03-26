@@ -1,4 +1,5 @@
 import { Login, Settings, Surveys, Translations } from '../../actions';
+import 'cypress-axe'
 
 /** Add RadioButton (Field) */
 function addRadioButton() {
@@ -9,11 +10,11 @@ function addRadioButton() {
   const options = new Array(5);
   for (const index of options.keys()) {
     cy.get(`[data-qa="btn-add-option"]`).should('exist').click();
-    cy.get(`[data-qa="option-${ index }"]`).clear().type(`Option ${ index }`).should('exist');
-    if (index > 0) cy.get(`[data-qa="btn-remove-option-${ index }"]`).should('exist');
+    cy.get(`[data-qa="option-${index}"]`).clear().type(`Option ${index}`).should('exist');
+    if (index > 0) cy.get(`[data-qa="btn-remove-option-${index}"]`).should('exist');
     if (index === options.length - 1)
       cy.get(
-        `[data-qa="btn-remove-option-${ Math.floor(Math.random() * (options.length - 1 + 1) + 1) }"]`
+        `[data-qa="btn-remove-option-${Math.floor(Math.random() * (options.length - 1 + 1) + 1)}"]`
       )
         .click()
         .should('not.exist');
@@ -49,7 +50,7 @@ function addFields(field: string, value: string) {
     case 'long_text':
     case 'number_decimal':
     case 'number_integer':
-      cy.get(`[data-qa="select-survey.${ field }"]`).should('exist').click();
+      cy.get(`[data-qa="select-survey.${field}"]`).should('exist').click();
       break;
     case 'radio_button':
       addRadioButton();
@@ -125,13 +126,13 @@ function selectTranslation(languages: string[], { lang, short }: { lang: string;
 
   // if select language (ex. 'es'), then set survey name && description for this language
   if (short !== 'en') {
-    cy.get(`[data-qa="survey-name-${ short }"]`)
+    cy.get(`[data-qa="survey-name-${short}"]`)
       .clear()
-      .type(`Test survey name ${ lang }`)
+      .type(`Test survey name ${lang}`)
       .should('exist');
-    cy.get(`[data-qa="survey-description-${ short }"]`)
+    cy.get(`[data-qa="survey-description-${short}"]`)
       .clear()
-      .type(`Test survey description ${ lang }`)
+      .type(`Test survey description ${lang}`)
       .should('exist');
   }
 }
@@ -200,7 +201,7 @@ describe('Initialize surveys page', () => {
     cy.get(`[data-qa="field-name"]`).contains(valueName || fieldName);
 
     /** check edit field button and cancel edit */
-    cy.get(`[data-qa="btn-field-edit-${ valueName || fieldName }"]`)
+    cy.get(`[data-qa="btn-field-edit-${valueName || fieldName}"]`)
       .should('exist')
       .click();
     cy.wait(2000);
@@ -209,7 +210,7 @@ describe('Initialize surveys page', () => {
     cy.get(`[data-qa="btn-cancel-field"]`).click();
 
     /** check delete field button */
-    cy.get(`[data-qa="btn-field-delete-${ valueName || fieldName }"]`).should('exist');
+    cy.get(`[data-qa="btn-field-delete-${valueName || fieldName}"]`).should('exist');
 
     /** add task */
     /** check add task button */
@@ -234,5 +235,9 @@ describe('Initialize surveys page', () => {
 
     /** save survey */
     cy.get(`[data-qa="btn-save-survey-item"]`).click();
+
+    // Perform accessibility checks
+    cy.injectAxe();
+    cy.checkA11y();
   });
 });

@@ -1,0 +1,581 @@
+Accessibility test for http://localhost:4200/
+	5 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/",
+  "issues": [
+    {
+      "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Heading tag found with no content. Text that is not intended as a heading should not be marked up with heading tags.",
+      "context": "<h1 _ngcontent-vtt-c97=\"\" class=\"toolbar__page-title ng-star-inserted\" ng-reflect-data-qa=\"page-title\" data-qa=\"page-title\"> Map </h1>",
+      "selector": "html > body > app-root > mat-sidenav-container > mat-sidenav-content > app-toolbar > mat-toolbar > h1",
+      "runner": "htmlcs",
+      "runnerExtras": {}
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<span _ngcontent-vtt-c98=\"\" class=\"mzima-button__text\"> OK, sounds good <!--ng-contain...</span>",
+      "selector": "#onboarding-button-greeting > div > span:nth-child(3)",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<h2 _ngcontent-vtt-c236=\"\">Hello!</h2>",
+      "selector": "html > body > app-root > app-onboarding > tour-step:nth-child(1) > div:nth-child(1) > div > div:nth-child(1) > h2",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p>You’ve successfully created you...</p>",
+      "selector": "html > body > app-root > app-onboarding > tour-step:nth-child(1) > div:nth-child(1) > div > div:nth-child(2) > div > p",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p _ngcontent-vtt-c99=\"\"> Contact email address: <a _ngc...</p>",
+      "selector": "#cdk-accordion-child-0 > div > div > p:nth-child(1)",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    }
+  ]
+}
+
+
+Accessibility test for http://localhost:4200/map
+	4 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/map",
+  "issues": [
+    {
+      "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Heading tag found with no content. Text that is not intended as a heading should not be marked up with heading tags.",
+      "context": "<h1 _ngcontent-vkg-c97=\"\" class=\"toolbar__page-title ng-star-inserted\" ng-reflect-data-qa=\"page-title\" data-qa=\"page-title\"> Map </h1>",
+      "selector": "html > body > app-root > mat-sidenav-container > mat-sidenav-content > app-toolbar > mat-toolbar > h1",
+      "runner": "htmlcs",
+      "runnerExtras": {}
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<h2 _ngcontent-vkg-c236=\"\">Hello!</h2>",
+      "selector": "html > body > app-root > app-onboarding > tour-step:nth-child(1) > div:nth-child(1) > div > div:nth-child(1) > h2",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p>You’ve successfully created you...</p>",
+      "selector": "html > body > app-root > app-onboarding > tour-step:nth-child(1) > div:nth-child(1) > div > div:nth-child(2) > div > p",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p _ngcontent-vkg-c99=\"\"> Contact email address: <a _ngc...</p>",
+      "selector": "#cdk-accordion-child-0 > div > div > p:nth-child(1)",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    }
+  ]
+}
+
+
+Accessibility test for http://localhost:4200/data
+	0 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/data",
+  "issues": []
+}
+
+
+Accessibility test for http://localhost:4200/activity
+	3 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/activity",
+  "issues": [
+    {
+      "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Heading tag found with no content. Text that is not intended as a heading should not be marked up with heading tags.",
+      "context": "<h1 _ngcontent-ide-c97=\"\" class=\"toolbar__page-title ng-star-inserted\" ng-reflect-data-qa=\"page-title\" data-qa=\"page-title\"> Activity </h1>",
+      "selector": "html > body > app-root > mat-sidenav-container > mat-sidenav-content > app-toolbar > mat-toolbar > h1",
+      "runner": "htmlcs",
+      "runnerExtras": {}
+    },
+    {
+      "code": "bypass",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Page must have means to bypass repeated blocks (https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI)",
+      "context": "<html lang=\"en\"><head>\n  <meta charset=\"utf-8\">...</html>",
+      "selector": "html",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
+        "impact": "serious",
+        "help": "Page must have means to bypass repeated blocks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p _ngcontent-ide-c99=\"\"> Contact email address: <a _ngc...</p>",
+      "selector": "#cdk-accordion-child-0 > div > div > p:nth-child(1)",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    }
+  ]
+}
+
+
+Accessibility test for http://localhost:4200/settings/general
+	3 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/settings/general",
+  "issues": [
+    {
+      "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Heading tag found with no content. Text that is not intended as a heading should not be marked up with heading tags.",
+      "context": "<h1 _ngcontent-snq-c97=\"\" class=\"toolbar__page-title ng-star-inserted\" ng-reflect-data-qa=\"page-title\" data-qa=\"page-title\">  </h1>",
+      "selector": "html > body > app-root > mat-sidenav-container > mat-sidenav-content > app-toolbar > mat-toolbar > h1",
+      "runner": "htmlcs",
+      "runnerExtras": {}
+    },
+    {
+      "code": "bypass",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Page must have means to bypass repeated blocks (https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI)",
+      "context": "<html lang=\"en\"><head>\n  <meta charset=\"utf-8\">...</html>",
+      "selector": "html",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
+        "impact": "serious",
+        "help": "Page must have means to bypass repeated blocks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p _ngcontent-snq-c99=\"\"> Contact email address: <a _ngc...</p>",
+      "selector": "#cdk-accordion-child-0 > div > div > p:nth-child(1)",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    }
+  ]
+}
+
+
+Accessibility test for http://localhost:4200/settings/surveys
+	3 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/settings/surveys",
+  "issues": [
+    {
+      "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Heading tag found with no content. Text that is not intended as a heading should not be marked up with heading tags.",
+      "context": "<h1 _ngcontent-kgn-c97=\"\" class=\"toolbar__page-title ng-star-inserted\" ng-reflect-data-qa=\"page-title\" data-qa=\"page-title\">  </h1>",
+      "selector": "html > body > app-root > mat-sidenav-container > mat-sidenav-content > app-toolbar > mat-toolbar > h1",
+      "runner": "htmlcs",
+      "runnerExtras": {}
+    },
+    {
+      "code": "bypass",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Page must have means to bypass repeated blocks (https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI)",
+      "context": "<html lang=\"en\"><head>\n  <meta charset=\"utf-8\">...</html>",
+      "selector": "html",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
+        "impact": "serious",
+        "help": "Page must have means to bypass repeated blocks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p _ngcontent-kgn-c99=\"\"> Contact email address: <a _ngc...</p>",
+      "selector": "#cdk-accordion-child-0 > div > div > p:nth-child(1)",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    }
+  ]
+}
+
+
+Accessibility test for http://localhost:4200/settings/data-sources
+	3 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/settings/data-sources",
+  "issues": [
+    {
+      "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Heading tag found with no content. Text that is not intended as a heading should not be marked up with heading tags.",
+      "context": "<h1 _ngcontent-wnb-c97=\"\" class=\"toolbar__page-title ng-star-inserted\" ng-reflect-data-qa=\"page-title\" data-qa=\"page-title\">  </h1>",
+      "selector": "html > body > app-root > mat-sidenav-container > mat-sidenav-content > app-toolbar > mat-toolbar > h1",
+      "runner": "htmlcs",
+      "runnerExtras": {}
+    },
+    {
+      "code": "bypass",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Page must have means to bypass repeated blocks (https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI)",
+      "context": "<html lang=\"en\"><head>\n  <meta charset=\"utf-8\">...</html>",
+      "selector": "html",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
+        "impact": "serious",
+        "help": "Page must have means to bypass repeated blocks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p _ngcontent-wnb-c99=\"\"> Contact email address: <a _ngc...</p>",
+      "selector": "#cdk-accordion-child-0 > div > div > p:nth-child(1)",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    }
+  ]
+}
+
+
+Accessibility test for http://localhost:4200/settings/data-import
+	3 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/settings/data-import",
+  "issues": [
+    {
+      "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Heading tag found with no content. Text that is not intended as a heading should not be marked up with heading tags.",
+      "context": "<h1 _ngcontent-xpl-c97=\"\" class=\"toolbar__page-title ng-star-inserted\" ng-reflect-data-qa=\"page-title\" data-qa=\"page-title\">  </h1>",
+      "selector": "html > body > app-root > mat-sidenav-container > mat-sidenav-content > app-toolbar > mat-toolbar > h1",
+      "runner": "htmlcs",
+      "runnerExtras": {}
+    },
+    {
+      "code": "bypass",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Page must have means to bypass repeated blocks (https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI)",
+      "context": "<html lang=\"en\"><head>\n  <meta charset=\"utf-8\">...</html>",
+      "selector": "html",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
+        "impact": "serious",
+        "help": "Page must have means to bypass repeated blocks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p _ngcontent-xpl-c99=\"\"> Contact email address: <a _ngc...</p>",
+      "selector": "#cdk-accordion-child-0 > div > div > p:nth-child(1)",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    }
+  ]
+}
+
+
+Accessibility test for http://localhost:4200/settings/user-settings
+	3 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/settings/user-settings",
+  "issues": [
+    {
+      "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Heading tag found with no content. Text that is not intended as a heading should not be marked up with heading tags.",
+      "context": "<h1 _ngcontent-seu-c97=\"\" class=\"toolbar__page-title ng-star-inserted\" ng-reflect-data-qa=\"page-title\" data-qa=\"page-title\">  </h1>",
+      "selector": "html > body > app-root > mat-sidenav-container > mat-sidenav-content > app-toolbar > mat-toolbar > h1",
+      "runner": "htmlcs",
+      "runnerExtras": {}
+    },
+    {
+      "code": "bypass",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Page must have means to bypass repeated blocks (https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI)",
+      "context": "<html lang=\"en\"><head>\n  <meta charset=\"utf-8\">...</html>",
+      "selector": "html",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
+        "impact": "serious",
+        "help": "Page must have means to bypass repeated blocks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p _ngcontent-seu-c99=\"\"> Contact email address: <a _ngc...</p>",
+      "selector": "#cdk-accordion-child-0 > div > div > p:nth-child(1)",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    }
+  ]
+}
+
+
+Accessibility test for http://localhost:4200/settings/data-export
+	0 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/settings/data-export",
+  "issues": []
+}
+
+
+Accessibility test for http://localhost:4200/settings/users
+	3 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/settings/users",
+  "issues": [
+    {
+      "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Heading tag found with no content. Text that is not intended as a heading should not be marked up with heading tags.",
+      "context": "<h1 _ngcontent-wqj-c97=\"\" class=\"toolbar__page-title ng-star-inserted\" ng-reflect-data-qa=\"page-title\" data-qa=\"page-title\">  </h1>",
+      "selector": "html > body > app-root > mat-sidenav-container > mat-sidenav-content > app-toolbar > mat-toolbar > h1",
+      "runner": "htmlcs",
+      "runnerExtras": {}
+    },
+    {
+      "code": "bypass",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Page must have means to bypass repeated blocks (https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI)",
+      "context": "<html lang=\"en\"><head>\n  <meta charset=\"utf-8\">...</html>",
+      "selector": "html",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
+        "impact": "serious",
+        "help": "Page must have means to bypass repeated blocks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p _ngcontent-wqj-c99=\"\"> Contact email address: <a _ngc...</p>",
+      "selector": "#cdk-accordion-child-0 > div > div > p:nth-child(1)",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    }
+  ]
+}
+
+
+Accessibility test for http://localhost:4200/settings/roles
+	0 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/settings/roles",
+  "issues": []
+}
+
+
+Accessibility test for http://localhost:4200/settings/categories
+	0 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/settings/categories",
+  "issues": []
+}
+
+
+Accessibility test for http://localhost:4200/settings/webhooks
+	3 accessibility issues were found
+	The result is {
+  "documentTitle": "PlatformClient",
+  "pageUrl": "http://localhost:4200/settings/webhooks",
+  "issues": [
+    {
+      "code": "WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Heading tag found with no content. Text that is not intended as a heading should not be marked up with heading tags.",
+      "context": "<h1 _ngcontent-lix-c97=\"\" class=\"toolbar__page-title ng-star-inserted\" ng-reflect-data-qa=\"page-title\" data-qa=\"page-title\">  </h1>",
+      "selector": "html > body > app-root > mat-sidenav-container > mat-sidenav-content > app-toolbar > mat-toolbar > h1",
+      "runner": "htmlcs",
+      "runnerExtras": {}
+    },
+    {
+      "code": "bypass",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Page must have means to bypass repeated blocks (https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI)",
+      "context": "<html lang=\"en\"><head>\n  <meta charset=\"utf-8\">...</html>",
+      "selector": "html",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
+        "impact": "serious",
+        "help": "Page must have means to bypass repeated blocks",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/bypass?application=axeAPI"
+      }
+    },
+    {
+      "code": "color-contrast",
+      "type": "error",
+      "typeCode": 1,
+      "message": "Elements must meet minimum color contrast ratio thresholds (https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI)",
+      "context": "<p _ngcontent-lix-c99=\"\"> Contact email address: <a _ngc...</p>",
+      "selector": "#cdk-accordion-child-0 > div > div > p:nth-child(1)",
+      "runner": "axe",
+      "runnerExtras": {
+        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI"
+      }
+    }
+  ]
+}
+
+

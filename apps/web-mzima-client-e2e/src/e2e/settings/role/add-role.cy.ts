@@ -1,5 +1,6 @@
 import testData from '../../../fixtures/test-data.fixture';
 import { Base, Login, Settings } from '../../actions';
+import 'cypress-axe'
 
 describe('Initialize role page', () => {
   before(() => {
@@ -15,6 +16,10 @@ describe('Initialize role page', () => {
     Base.checkExistSelector('[data-qa="btn-roles"]');
     Base.clickElement('btn-roles');
     Base.checkExistSelector('app-roles');
+
+    // Perform accessibility checks
+    cy.injectAxe();
+    cy.checkA11y();
   });
 
   it('Create role', () => {
@@ -29,5 +34,9 @@ describe('Initialize role page', () => {
       Base.checkContainElement('btn-save-role', 'Save & close');
       Base.submitButton();
     });
+
+    // Perform accessibility checks
+    cy.injectAxe();
+    cy.checkA11y();
   });
 });
