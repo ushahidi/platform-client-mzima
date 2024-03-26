@@ -18,19 +18,28 @@
     <div class="form-row">
       <mat-label>{{ 'share.web_address' | translate }}</mat-label>
       <mat-form-field appearance="outline">
+        <div class="copy-success" *ngIf="copyAddressSuccess">{{ 'share.copied' | translate }}</div>
         <input
           matInput
           [(ngModel)]="address"
           (input)="changeAddress($event)"
           [data-qa]="'survey-web-address'"
+          [ngClass]="{ success: copyAddressSuccess }"
         />
+        <mat-icon
+          (click)="copyToClipboard('address')"
+          class="fab-button__icon copy"
+          svgIcon="copy"
+        ></mat-icon>
       </mat-form-field>
     </div>
     <div class="form-row">
       <mat-label>{{ 'share.embed_on_websites' | translate }}</mat-label>
-      <div class="copy-success" *ngIf="copySuccess">{{ 'share.copied' | translate }}</div>
-      <div [ngClass]="{ success: copySuccess }">
+      <div>
         <mat-form-field appearance="outline">
+          <div class="copy-success" *ngIf="copyHtmlEmbedSuccess">
+            {{ 'share.copied' | translate }}
+          </div>
           <textarea
             class="html-embed"
             matInput
@@ -39,10 +48,11 @@
             cdkAutosizeMinRows="3"
             cdkAutosizeMaxRows="6"
             [(ngModel)]="htmlEmbed"
+            [ngClass]="{ success: copyHtmlEmbedSuccess }"
           >
           </textarea>
           <mat-icon
-            (click)="copyToClipboard()"
+            (click)="copyToClipboard('htmlEmbed')"
             class="fab-button__icon copy"
             svgIcon="copy"
           ></mat-icon>

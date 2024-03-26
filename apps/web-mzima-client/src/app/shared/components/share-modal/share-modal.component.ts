@@ -18,7 +18,8 @@ interface DataShareModal {
 export class ShareModalComponent implements OnInit {
   public address: string;
   public htmlEmbed: string;
-  public copySuccess = false;
+  public copyHtmlEmbedSuccess = false;
+  public copyAddressSuccess = false;
   public width = 560;
   public height = 315;
   public title: string;
@@ -46,9 +47,14 @@ export class ShareModalComponent implements OnInit {
     this.htmlEmbed = `<iframe width="${this.width}" height="${this.height}" src="${value}" frameborder="0" allowfullscreen></iframe>`;
   }
 
-  public copyToClipboard() {
-    this.copySuccess = this.clipboard.copy(this.htmlEmbed);
-    setTimeout(() => (this.copySuccess = !this.copySuccess), 2000);
+  public copyToClipboard(ngModel: string) {
+    if (ngModel === 'address') {
+      this.copyAddressSuccess = this.clipboard.copy(this.address);
+      setTimeout(() => (this.copyAddressSuccess = !this.copyAddressSuccess), 2000);
+    } else {
+      this.copyHtmlEmbedSuccess = this.clipboard.copy(this.htmlEmbed);
+      setTimeout(() => (this.copyHtmlEmbedSuccess = !this.copyHtmlEmbedSuccess), 2000);
+    }
   }
 
   private trimText(text: string, length: number) {
