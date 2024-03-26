@@ -5,6 +5,7 @@ import { BreadcrumbService, BreakpointService, SessionService } from '@services'
 import { ShareModalComponent } from '../../share-modal/share-modal.component';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '../../../../base.component';
+import { NavToolbarService } from '../../../helpers/navtoolbar.service';
 
 @UntilDestroy()
 @Component({
@@ -22,6 +23,7 @@ export class ShareAndDonateComponent extends BaseComponent {
     private dialog: MatDialog,
     private translate: TranslateService,
     private breadcrumbService: BreadcrumbService,
+    public navToolbarService: NavToolbarService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();

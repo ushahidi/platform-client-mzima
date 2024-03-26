@@ -13,7 +13,7 @@
 </div>
 
 <!-- Smaller screens -->
-<ng-container *ngIf="!isDesktop">
+<ng-container *ngIf="!isDesktop && navToolbarService.isBurgerMenuOpen">
   <div class="menu__footer-container">
     <div class="menu__footer">
       <app-donation-button
