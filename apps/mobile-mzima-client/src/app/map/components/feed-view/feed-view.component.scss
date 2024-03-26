@@ -27,6 +27,27 @@
   }
 }
 
+.collection {
+  .feed-header {
+    justify-content: space-between;
+    font-weight: 700;
+    height: 56px;
+    display: flex;
+    &--title {
+      font-weight: 700;
+    }
+    &--button {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      color: var(--color-primary-50);
+      app-icon {
+        color: var(--color-primary-50);
+        font-size: 40px;
+      }
+    }
+  }
+}
 .total-posts {
   height: 56px;
   display: flex;
