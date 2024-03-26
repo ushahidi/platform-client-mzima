@@ -11,7 +11,7 @@
           (selectionChange)="rangeChange($event)"
         >
           <mat-option [value]="filter.value" *ngFor="let filter of ranges">
-            {{ filter.displayNane }}
+            {{ filter.displayName }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -27,7 +27,7 @@
           (selectionChange)="change($event)"
         >
           <mat-option [value]="filter.value" *ngFor="let filter of filters">
-            {{ filter.displayNane }}
+            {{ filter.displayName }}
           </mat-option>
         </mat-select>
       </mat-form-field>
