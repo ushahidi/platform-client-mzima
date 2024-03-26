@@ -67,14 +67,14 @@ class GeneralSettingsFunctions {
   }
 
   verify_the_map_coordinates() {
-    cy.get(GeneralSettingsLocator.queryLocationField).type('Nairobi');
+    cy.get(GeneralSettingsLocator.queryLocationField).type('Nairobi County');
     cy.get(GeneralSettingsLocator.geocoderList)
       .find(GeneralSettingsLocator.geocoderListItem)
       .eq(0)
       .click();
     cy.wait(1000);
-    cy.get(GeneralSettingsLocator.defaultLatitudeField).should('have.value', '-1.2832533');
-    cy.get(GeneralSettingsLocator.defaultLongitudeField).should('have.value', '36.8172449');
+    cy.get(GeneralSettingsLocator.defaultLatitudeField).should('have.value', '-1.3026148499999999');
+    cy.get(GeneralSettingsLocator.defaultLongitudeField).should('have.value', '36.82884201813725');
   }
 
   steps_to_generate_new_api_key() {
