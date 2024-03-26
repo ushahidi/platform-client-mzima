@@ -10,7 +10,7 @@
 >
   <div class="post__head">
     <ng-container *ngIf="selectable">
-      <mat-checkbox [(ngModel)]="isChecked"></mat-checkbox>
+      <mat-checkbox [(ngModel)]="isChecked" (keydown.enter)="postClicked($event)"></mat-checkbox>
     </ng-container>
     <app-post-head
       [post]="post"

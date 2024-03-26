@@ -2,10 +2,11 @@
   <mzima-client-button
     fill="clear"
     color="gray"
-    tabindex="-1"
+    ariaLabel="Edit this post"
     *ngIf="editable"
     [iconOnly]="true"
     (buttonClick)="editPost($event)"
+    (keydown.enter)="editPost($event)"
     class="post-head__control"
   >
     <mat-icon icon svgIcon="edit-post" [data-qa]="'edit-post'"></mat-icon>
@@ -14,9 +15,10 @@
   <mzima-client-button
     fill="clear"
     color="gray"
-    tabindex="-1"
     [iconOnly]="true"
-    (buttonClick)="sharePost()"
+    ariaLabel="Share this post"
+    (buttonClick)="sharePost($event)"
+    (keydown.enter)="sharePost($event)"
     class="post-head__control post-head__control--share"
   >
     <mat-icon icon svgIcon="share" [data-qa]="'share-post'" [attr.post]="post.id"></mat-icon>
@@ -25,9 +27,10 @@
     *ngIf="!!user?.userId"
     fill="clear"
     color="gray"
-    tabindex="-1"
+    ariaLabel="More options"
     [iconOnly]="true"
     (click)="$event.stopPropagation()"
+    (keydown.enter)="$event.stopPropagation()"
     class="post-head__control post-head__control--dots"
     [matMenuTriggerFor]="actions"
   >
