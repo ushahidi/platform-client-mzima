@@ -60,6 +60,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     private router: Router,
     private rolesService: RolesService,
     private notificationsService: NotificationsService,
+
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -234,10 +235,17 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  saveCollection() {
+  async saveCollection() {
+    await this.confirm.open({
+      title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
+      description: `<p>${this.translate.instant(
+        'notify.confirm_modal.add_post_success.success_description',
+      )}</p>`,
+      buttonSuccess: this.translate.instant('notify.confirm_modal.add_post_success.success_button'),
+    });
+
     if (!this.isManageCollections) this.withoutManageCollectionsPrivilege();
     const collectionData = this.collectionForm.value;
-
     const visibleTo = collectionData.visible_to.value;
     if (visibleTo === 'only_me') {
       collectionData.role = ['me'];
@@ -273,14 +281,12 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
         },
       });
     }
-
     if (!this.notification && collectionData.is_notifications_enabled) {
       this.notificationsService.post({ set_id: String(this.tmpCollectionToEditId) }).subscribe();
     } else if (this.notification && !collectionData.is_notifications_enabled) {
       this.notificationsService.delete(this.notification.id).subscribe();
     }
   }
-
   addNewCollection() {
     this.currentView = CollectionView.Create;
     this.initializeForm();
@@ -296,3 +302,4 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     }
   }
 }
+
