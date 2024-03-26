@@ -57,6 +57,7 @@ export class GeneralComponent implements OnInit {
 
   ngOnInit(): void {
     this.siteConfig = this.sessionService.getSiteConfigurations();
+    console.log(this.siteConfig);
 
     this.generalForm.patchValue({
       name: this.siteConfig.name,
@@ -151,7 +152,7 @@ export class GeneralComponent implements OnInit {
 
     return this.configService.update('site', siteConfig).pipe(
       mergeMap((updatedSite) => {
-        this.sessionService.setConfigurations('site', updatedSite);
+        this.sessionService.setConfigurations('site', (updatedSite as any).result);
         return this.configService.update('map', this.mapSettings.mapConfig);
       }),
     );
