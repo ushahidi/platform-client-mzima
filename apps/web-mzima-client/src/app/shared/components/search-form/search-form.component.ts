@@ -661,6 +661,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   public applyFilters(updated = true): void {
+    if (!this.searchQuery || !this.searchQuery.trim()) return;
     this.postsService.applyFilters(this.activeFilters, updated);
   }
 

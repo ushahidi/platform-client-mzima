@@ -133,6 +133,8 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   }
 
   loadData(query = '') {
+    if (!query.trim()) return;
+
     this.isLoading = true;
     let params: any = new Map();
     params = {
