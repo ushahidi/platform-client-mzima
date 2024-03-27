@@ -1,4 +1,4 @@
-<div class="cookies-notification" *ngIf="showCookies">
+<aside class="cookies-notification" *ngIf="showCookies" role="complementary">
   <div class="cookies-notification__body">
     <div class="cookies-notification__body-icon">
       <mat-icon class="sidebar-menu-button__icon" [svgIcon]="'cookies'"></mat-icon>
@@ -23,4 +23,4 @@
       {{ 'cookies.accept_cookies' | translate }}
     </mzima-client-button>
   </div>
-</div>
+</aside>

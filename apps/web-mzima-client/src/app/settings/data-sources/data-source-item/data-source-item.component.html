@@ -18,6 +18,7 @@
         [(ngModel)]="currentProviderId"
         (selectionChange)="setCurrentProvider($event.value)"
         [data-qa]="'select-provider'"
+        aria-label="Select provider"
       >
         <ng-container *ngFor="let provider of providersData">
           <mat-option
@@ -71,6 +72,7 @@
           formControlName="form_id"
           (selectionChange)="getSurveyAttributes($event.value)"
           [data-qa]="'survey-select'"
+          aria-label="Select Survey"
         >
           <mat-option *ngFor="let survey of surveyList" [value]="survey" [data-qa]="survey.name">
             {{ survey.name }}
@@ -104,6 +106,7 @@
                   disableOptionCentering
                   [placeholder]="'data_import.leave_empty' | translate"
                   [data-qa]="element.label"
+                  aria-label="element label"
                 >
                   <mat-option [value]="null">
                     {{ 'data_import.leave_empty' | translate }}

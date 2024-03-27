@@ -51,6 +51,7 @@
         disableOptionCentering
         [(ngModel)]="location_distance"
         (ngModelChange)="changeDistance()"
+        aria-label="Select Distance"
       >
         <mat-option [value]="option.value" *ngFor="let option of distanceOptions">
           {{ option.label | translate }}

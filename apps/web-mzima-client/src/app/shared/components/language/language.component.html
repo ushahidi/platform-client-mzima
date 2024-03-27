@@ -4,6 +4,7 @@
       disableOptionCentering
       [(value)]="selectedLanguage"
       (selectionChange)="changeLanguage($event)"
+      aria-label="Select Language"
     >
       <mat-select-trigger class="language__selected">
         {{ selectedLanguage }}

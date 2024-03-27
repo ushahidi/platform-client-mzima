@@ -62,7 +62,12 @@
   <div class="form-row">
     <mat-label>{{ 'user.role' | translate }} *</mat-label>
     <mat-form-field appearance="outline" *ngIf="roles?.length">
-      <mat-select formControlName="role" disableOptionCentering [data-qa]="'user-role-select'">
+      <mat-select
+        formControlName="role"
+        disableOptionCentering
+        [data-qa]="'user-role-select'"
+        aria-label="Select Role"
+      >
         <mat-option *ngFor="let role of roles" [value]="role.name" [data-qa]="role.name">
           {{ role.display_name }}
         </mat-option>

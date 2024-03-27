@@ -96,6 +96,7 @@
         [data-qa]="'select-parent-category'"
         (selectionChange)="parentChanged($event)"
         disableOptionCentering
+        aria-label="Select Category"
       >
         <mat-option value="">{{
           'category.placeholder.choose_parent_category' | translate

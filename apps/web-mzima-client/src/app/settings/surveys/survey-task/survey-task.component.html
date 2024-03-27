@@ -272,6 +272,7 @@
               panelClass="language-field"
               [(value)]="selectedLanguage"
               (selectionChange)="changeLanguage($event)"
+              aria-label="Select Language"
             >
               <mat-option *ngFor="let lang of languagesToSelect" [value]="lang.code">
                 <span class="language-title">{{ lang.name }}</span>

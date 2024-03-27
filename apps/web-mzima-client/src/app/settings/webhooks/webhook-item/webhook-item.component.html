@@ -67,6 +67,7 @@
         formControlName="event_type"
         disableOptionCentering
         [data-qa]="'webhook-event-select'"
+        aria-label="Select event_type"
       >
         <mat-option *ngFor="let event of eventList" [value]="event.value" [data-qa]="event.value">
           {{ event.name }}
@@ -87,6 +88,7 @@
         formControlName="entity_type"
         disableOptionCentering
         [data-qa]="'webhook-entity-select'"
+        aria-label="Select entity_type"
       >
         <mat-option
           *ngFor="let entity of entityList"
@@ -124,7 +126,12 @@
         </span>
       </mat-label>
       <mat-form-field appearance="outline">
-        <mat-select formControlName="form_id" disableOptionCentering [data-qa]="'survey-select'">
+        <mat-select
+          formControlName="form_id"
+          disableOptionCentering
+          [data-qa]="'survey-select'"
+          aria-label="Select Survey"
+        >
           <mat-option *ngFor="let survey of surveyList" [value]="survey.id" [data-qa]="survey.name">
             {{ survey.name }}
           </mat-option>
@@ -158,6 +165,7 @@
                   [formControlName]="element.control"
                   disableOptionCentering
                   [data-qa]="'source-select'"
+                  aria-label="Select Source"
                 >
                   <mat-option
                     *ngFor="let attribute of surveyAttributesList"

@@ -13,6 +13,7 @@
           [(value)]="selectedSurvey"
           placeholder="{{ 'survey.choose_survey' | translate }}"
           (selectionChange)="formSelected()"
+          aria-label="Select Survey"
         >
           <mat-option *ngFor="let survey of surveys | async" [value]="survey">
             {{ survey.name }}
@@ -46,6 +47,7 @@
             [placeholder]="'select_language' | translate"
             (selectionChange)="selectLanguageEmit($event)"
             [data-qa]="'select_language'"
+            aria-label="Select Language"
           >
             <mat-option *ngFor="let language of postLanguages" [value]="language">
               {{ language?.name }}
@@ -321,6 +323,7 @@
                   [formControlName]="field.key"
                   disableOptionCentering
                   [data-qa]="'post-item-post-select' + field.key"
+                  aria-label="Select Post"
                 >
                   <mat-option
                     *ngFor="let option of field.options"

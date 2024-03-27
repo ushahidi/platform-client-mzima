@@ -29,6 +29,7 @@
       [(value)]="selectedForm"
       placeholder="{{ 'survey.choose_survey' | translate }}"
       (selectionChange)="formChanged()"
+      aria-label="Select Survey"
     >
       <mat-option *ngFor="let option of surveys | async" [value]="option">
         {{ option.name }}
@@ -103,6 +104,7 @@
                     [(ngModel)]="selectedStatus"
                     disableOptionCentering
                     placeholder="{{ 'app.choose' | translate }}"
+                    aria-label="Selected Status"
                   >
                     <mat-option
                       *ngFor="let column of uploadedCSV.columns; let i = index"
@@ -165,6 +167,7 @@
                 disableOptionCentering
                 [(ngModel)]="maps_to[getFieldKey(field)]"
                 [placeholder]="'data_import.leave_empty' | translate"
+                aria-label="Select Columns"
               >
                 <mat-option selected="selected" value="">
                   {{ 'data_import.leave_empty' | translate }} {{ field.key }}

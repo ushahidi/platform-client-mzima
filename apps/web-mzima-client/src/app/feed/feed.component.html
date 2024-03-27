@@ -90,6 +90,7 @@
           <ng-container *ngIf="isDesktop">
             <mat-form-field *ngIf="isManagePosts" appearance="outline" class="feed-page__control">
               <mat-select
+                aria-label="Select Status"
                 disableOptionCentering
                 [formControl]="statusControl"
                 [disabled]="!selectedPosts.length"

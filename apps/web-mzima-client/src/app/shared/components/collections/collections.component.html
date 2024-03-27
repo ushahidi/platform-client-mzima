@@ -166,7 +166,7 @@
       <div class="form-row">
         <mat-label> {{ 'set.default_viewing_mode' | translate }}</mat-label>
         <mat-form-field appearance="outline">
-          <mat-select formControlName="view" disableOptionCentering>
+          <mat-select formControlName="view" disableOptionCentering aria-label="View Name">
             <ng-container *ngFor="let view of views">
               <mat-option [value]="view.name">
                 {{ view.display_name | translate }}

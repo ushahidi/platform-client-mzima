@@ -1,24 +1,27 @@
-<div
-  class="map-holder"
-  [ngClass]="{
-    'map-holder--filters-visible': isFiltersVisible,
-    'map-holder--no-offset': !isMainFiltersOpen
-  }"
->
-  <mat-progress-bar
-    class="progress-bar"
-    mode="determinate"
-    [value]="progress"
-    *ngIf="progress < 100"
-  ></mat-progress-bar>
+<section role="region">
+  <h1 class="visually-hidden">Map</h1>
   <div
-    class="map"
-    *ngIf="mapReady"
-    leaflet
-    [leafletOptions]="leafletOptions"
-    [leafletLayers]="mapLayers"
-    [leafletFitBounds]="mapFitToBounds"
-    [leafletFitBoundsOptions]="fitBoundsOptions"
-    (leafletMapReady)="onMapReady($event)"
-  ></div>
-</div>
+    class="map-holder"
+    [ngClass]="{
+      'map-holder--filters-visible': isFiltersVisible,
+      'map-holder--no-offset': !isMainFiltersOpen
+    }"
+  >
+    <mat-progress-bar
+      class="progress-bar"
+      mode="determinate"
+      [value]="progress"
+      *ngIf="progress < 100"
+    ></mat-progress-bar>
+    <div
+      class="map"
+      *ngIf="mapReady"
+      leaflet
+      [leafletOptions]="leafletOptions"
+      [leafletLayers]="mapLayers"
+      [leafletFitBounds]="mapFitToBounds"
+      [leafletFitBoundsOptions]="fitBoundsOptions"
+      (leafletMapReady)="onMapReady($event)"
+    ></div>
+  </div>
+</section>

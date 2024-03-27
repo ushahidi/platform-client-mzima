@@ -9,6 +9,7 @@
           placeholder="Select range"
           [(ngModel)]="selectedRange"
           (selectionChange)="rangeChange($event)"
+          aria-label="Select range"
         >
           <mat-option [value]="filter.value" *ngFor="let filter of ranges">
             {{ filter.displayNane }}
@@ -25,6 +26,7 @@
           placeholder="Select filter"
           [(ngModel)]="selectedFilter"
           (selectionChange)="change($event)"
+          aria-label="Select filter"
         >
           <mat-option [value]="filter.value" *ngFor="let filter of filters">
             {{ filter.displayNane }}

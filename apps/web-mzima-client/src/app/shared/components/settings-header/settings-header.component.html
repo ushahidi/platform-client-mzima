@@ -50,6 +50,7 @@
           [placeholder]="'select_language' | translate"
           (selectionChange)="selectLanguageEmit($event)"
           [data-qa]="'select_language'"
+          aria-label="Select Language"
         >
           <mat-option
             *ngFor="let language of languages"

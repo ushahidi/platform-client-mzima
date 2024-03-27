@@ -5,7 +5,7 @@
   (opened)="descriptionToggleHandle(true)"
   (closed)="descriptionToggleHandle(false)"
 >
-  <mat-expansion-panel-header>
+  <mat-expansion-panel-header aria-label="Company Information">
     <mat-panel-title class="company-info__header" [data-qa]="'panel-title'">
       <img [src]="logo" [alt]="title" class="company-info__logo" *ngIf="logo" />
       <span class="company-info__title">{{ title }}</span>
@@ -15,9 +15,13 @@
   <div>
     <p>
       {{ 'app.contact_email_address' | translate }}
-      <a class="company-info__email" href="mailto:{{ email }}" [data-qa]="'contact-email'">{{
-        email
-      }}</a>
+      <a
+        class="company-info__email"
+        href="mailto:{{ email }}"
+        [data-qa]="'contact-email'"
+        [attr.aria-label]="'Email: ' + email"
+        >{{ email }}</a
+      >
     </p>
     <p [innerHTML]="description | safeUrl"></p>
   </div>
