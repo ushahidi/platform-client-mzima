@@ -111,6 +111,7 @@
         <div class="toggle">
           <mat-slide-toggle
             *ngIf="onlyOptional"
+            (keydown.enter)="selectedFieldType.required = !selectedFieldType.required"
             [(ngModel)]="selectedFieldType.required"
             [data-qa]="'toggle-required'"
           >
@@ -121,6 +122,9 @@
         <div class="toggle">
           <mat-slide-toggle
             *ngIf="canDisableCaption"
+            (keydown.enter)="
+              selectedFieldType.config.hasCaption = !selectedFieldType.config.hasCaption
+            "
             [(ngModel)]="selectedFieldType.config.hasCaption"
           >
             {{ 'survey.collect_image_caption' | translate }}
@@ -133,6 +137,9 @@
         <div class="toggle">
           <mat-slide-toggle
             *ngIf="canMakePrivate"
+            (keydown.enter)="
+              selectedFieldType.response_private = !selectedFieldType.response_private
+            "
             [(ngModel)]="selectedFieldType.response_private"
             [data-qa]="'toggle-private'"
           >
@@ -213,6 +220,10 @@
       matRipple
       class="list-item"
       *ngFor="let field of fields"
+      tabindex="0"
+      (keydown.enter)="
+        (field.input !== 'tags' || availableCategories?.length) && selectField(field)
+      "
       (click)="(field.input !== 'tags' || availableCategories?.length) && selectField(field)"
       [ngClass]="{ 'list-item--disabled': field.input === 'tags' && !availableCategories?.length }"
       [data-qa]="'select-' + field.label"

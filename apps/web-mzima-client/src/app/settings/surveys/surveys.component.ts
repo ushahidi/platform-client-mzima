@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService } from '@services';
 import { forkJoin, Observable, take } from 'rxjs';
 import { SurveysService, SurveyItem } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -34,6 +34,7 @@ export class SurveysComponent implements OnInit {
     private readonly translate: TranslateService,
     private readonly confirmModalService: ConfirmModalService,
     private readonly breakpointService: BreakpointService,
+    private router: Router,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
   }
@@ -120,15 +121,21 @@ export class SurveysComponent implements OnInit {
       });
   }
 
-  public selectSurveys({ checked }: MatCheckboxChange, survey: SurveyItem) {
-    if (checked) {
-      this.selectedSurveys.push(survey);
+  public isSurveySelected(survey: SurveyItem) {
+    const idx = this.selectedSurveys.findIndex((svy) => svy.id === survey.id);
+    return idx >= 0;
+  }
+
+  public selectSurveys(survey: SurveyItem) {
+    if (!this.isSurveySelected(survey)) {
+      this.selectedSurveys = [...this.selectedSurveys, survey];
     } else {
       this.selectedSurveys = this.selectedSurveys.filter((s) => s.id !== survey.id);
     }
   }
 
   public showActions(event: boolean) {
+    this.selectedSurveys = [];
     this.isShowActions = event;
   }
 
@@ -137,6 +144,10 @@ export class SurveysComponent implements OnInit {
       this.params.page += 1;
       this.getSurveys(true);
     }
+  }
+
+  public gotoSurvey(id: number) {
+    this.router.navigate(['/settings/surveys/update', id]);
   }
 
   public generateDataQa(name: string): string {

@@ -27,14 +27,17 @@
     class="type-item"
     *ngFor="let survey of surveys"
     [routerLink]="['update', survey.id]"
+    (keydown.enter)="gotoSurvey(survey.id)"
     [ngStyle]="{ '--color': survey.color }"
     [data-qa]="generateDataQa(survey.name)"
   >
     <mat-checkbox
       *ngIf="isShowActions"
       class="type-item__checkbox"
-      (click)="$event.stopPropagation()"
-      (change)="selectSurveys($event, survey)"
+      [checked]="isSurveySelected(survey)"
+      (click)="$event.stopPropagation(); $event.preventDefault(); selectSurveys(survey)"
+      (keydown.space)="$event.stopPropagation(); $event.preventDefault(); selectSurveys(survey)"
+      (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); selectSurveys(survey)"
     ></mat-checkbox>
     {{ survey.name }}
   </li>

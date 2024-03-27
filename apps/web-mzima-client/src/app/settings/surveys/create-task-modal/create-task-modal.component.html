@@ -39,7 +39,11 @@
     </mat-form-field>
   </div>
   <div class="toggle">
-    <mat-slide-toggle [(ngModel)]="newTask.required" [data-qa]="'task-toggle-required'">
+    <mat-slide-toggle
+      [(ngModel)]="newTask.required"
+      (keydown.enter)="newTask.required = !newTask.required"
+      [data-qa]="'task-toggle-required'"
+    >
       {{ 'survey.require_section' | translate }}
     </mat-slide-toggle>
   </div>
