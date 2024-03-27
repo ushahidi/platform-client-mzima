@@ -164,11 +164,13 @@ $laptop: 1439px;
 
     &:not(:disabled) {
       &:hover {
-        color: var(--hover-background-color);
+        background-color: var(--color-neutral-10);
+        color: var(--color-accent-tint);
       }
 
       &:active {
-        color: var(--active-background-color);
+        background-color: var(--color-neutral-10);
+        color: var(--color-accent-tint);
       }
     }
 
