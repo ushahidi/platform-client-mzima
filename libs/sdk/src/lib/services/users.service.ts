@@ -58,7 +58,7 @@ export class UsersService extends ResourceService<any> {
     );
   }
 
-  public getUserSettings(id: string) {
+  public getUserSettings(id: string | number) {
     const url = `${id}/settings`;
     return super.get(url);
   }
