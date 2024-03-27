@@ -5,6 +5,7 @@
   [isSearch]="showSearch"
   [header]="isProfile"
   (back)="backHandle()"
+  [placeholderText]="'Search for site or Enter URL'"
   (search)="searchDeployments($event)"
   (searchFocus)="isSearchView = true"
   (searchBlur)="isSearchView = false"
