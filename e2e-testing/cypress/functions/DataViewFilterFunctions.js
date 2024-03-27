@@ -40,7 +40,7 @@ class DataViewFilterFunctions {
 
   check_post_filter_by_status() {
     //click search form filter button
-    cy.reload();
+    cy.wait(1000);
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 513');
     //click status filter button
