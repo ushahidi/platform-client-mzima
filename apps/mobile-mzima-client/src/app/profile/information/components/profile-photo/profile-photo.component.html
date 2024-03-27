@@ -1,8 +1,11 @@
-<ion-avatar class="avatar">
-  <ion-img [src]="photo"></ion-img>
-</ion-avatar>
+<div class="container">
+  <ion-avatar class="avatar">
+    <ion-img [src]="photo"></ion-img>
+  </ion-avatar>
+  <app-spinner *ngIf="uploading" class="spinner--positioned"></app-spinner>
+</div>
 <ion-buttons class="controls">
-  <app-button class="controls-button" fill="clear">
+  <app-button class="controls-button" fill="clear" [disabled]="uploading">
     <div class="controls-button__inner">
       <app-icon class="controls-button__icon" name="edit"></app-icon>
       <label for="fileInput" class="file-input-label"> Set new photo </label>
@@ -10,6 +13,7 @@
     </div>
   </app-button>
   <app-button
+    *ngIf="hasUploadedPhoto"
     class="controls-button"
     fill="clear"
     color="danger"

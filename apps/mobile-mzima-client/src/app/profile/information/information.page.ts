@@ -95,7 +95,7 @@ export class InformationPage {
   public userEmail?: string[];
   public isChangeEmailModalOpen = false;
   public isChangePasswordModalOpen = false;
-  public isSaveButtonEnabled: boolean = false;
+  // public isPhotoChanged: boolean = false;
 
   constructor(
     private sessionService: SessionService,
@@ -135,10 +135,9 @@ export class InformationPage {
       });
   }
 
-  public childData($event: any): void {
-    console.log($event);
-    this.isSaveButtonEnabled = $event;
-  }
+  // public handlePhotoChange(event: boolean): void {
+  //   this.isPhotoChanged = event;
+  // }
 
   ionViewWillEnter(): void {
     this.getRoles();

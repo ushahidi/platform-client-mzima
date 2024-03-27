@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { AlertService, SessionService } from '@services';
+import { AlertService, SessionService, ToastService } from '@services';
 import { map } from 'rxjs';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { MediaService } from 'libs/sdk/src/lib/services';
@@ -18,19 +18,50 @@ export class ProfilePhotoComponent {
   @Input() photo: string;
   userId: string;
   @Output() photoChanged = new EventEmitter<boolean>();
+  uploading: boolean = false;
+  hasUploadedPhoto: boolean = false;
+
+  // handlePhotoChange(event: boolean): void {
+  //   this.photoChanged.emit(event);
+  // }
 
   public currentUser: UserInterface;
   constructor(
     private alertService: AlertService,
     private sessionService: SessionService,
+    private toastService: ToastService,
     private mediaService: MediaService,
     private usersService: UsersService,
   ) {}
+
+  //Enabling/disabling delete button by checking if photo was uploaded initially
+  ngOnInit(): void {
+    this.sessionService
+      .getCurrentUserData()
+      .pipe(untilDestroyed(this))
+      .subscribe((userData) => {
+        if (userData && userData.userId) {
+          const userId = userData.userId as string;
+          this.usersService.getUserSettings(userId).subscribe((response: any) => {
+            const settings = response.results.find(
+              (setting: any) => setting.config_key === 'profile_photo',
+            );
+
+            //Check to see if user setting/config value/photo url exists so as to enable/disable delete button
+            if (settings && settings.config_value && settings.config_value.photo_url) {
+              this.hasUploadedPhoto = true;
+            }
+          });
+        }
+      });
+  }
 
   selectPhoto(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input?.files?.[0];
     if (file) {
+      //showing the loading icon
+      this.uploading = true;
       this.changePhoto(file);
     }
   }
@@ -40,19 +71,22 @@ export class ProfilePhotoComponent {
     reader.onload = () => {
       this.photo = reader.result as string;
 
-      this.sessionService.getCurrentUserData().subscribe((userData) => {
-        const caption = userData.realname;
+      this.sessionService
+        .getCurrentUserData()
+        .pipe(untilDestroyed(this))
+        .subscribe((userData) => {
+          const caption = userData.realname;
 
-        this.mediaService.uploadFile(file, caption).subscribe((response: any) => {
-          const mediaId = response?.result?.id;
-          const photoUrl = response?.result?.original_file_url;
-          if (mediaId && photoUrl) {
-            this.saveUserProfilePhoto(mediaId, photoUrl);
-          } else {
-            console.error('Failed to extract mediaId or photoUrl from the response');
-          }
+          this.mediaService.uploadFile(file, caption).subscribe((response: any) => {
+            const mediaId = response?.result?.id;
+            const photoUrl = response?.result?.original_file_url;
+            if (mediaId && photoUrl) {
+              this.saveUserProfilePhoto(mediaId, photoUrl);
+            } else {
+              console.error('Failed to extract mediaId or photoUrl from the response');
+            }
+          });
         });
-      });
     };
 
     reader.readAsDataURL(file);
@@ -72,6 +106,9 @@ export class ProfilePhotoComponent {
       .getCurrentUserData()
       .pipe(untilDestroyed(this))
       .subscribe((userData) => {
+        this.uploading = false;
+        //activating delete button if the upload is successful
+        this.hasUploadedPhoto = true;
         if (userData && userData.userId) {
           const userId = userData.userId as string;
 
@@ -160,6 +197,7 @@ export class ProfilePhotoComponent {
                       userData.gravatar || '00000000000000000000000000000000'
                     }?d=retro&s=256`;
                     this.photoChanged.emit(true);
+                    this.hasUploadedPhoto = false;
                   },
                   (error) => {
                     console.error('Failed to delete profile photo', error);
@@ -173,6 +211,18 @@ export class ProfilePhotoComponent {
             console.error('User data or user ID is missing');
           }
         });
+      this.toastService.presentToast({
+        header: 'Successfully Deleting',
+        message: 'You successfully deleted the profile photo',
+        buttons: [
+          {
+            text: 'OK',
+            role: 'cancel',
+          },
+        ],
+        duration: 3000,
+        position: 'bottom',
+      });
     }
   }
 }
