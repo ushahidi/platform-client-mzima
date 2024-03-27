@@ -20,7 +20,7 @@
   }
 
   &:not(.menu--open) {
-    opacity: 0;
+    // opacity: 0;
     top: -9999px;
     left: -9999px;
     right: 9999px;

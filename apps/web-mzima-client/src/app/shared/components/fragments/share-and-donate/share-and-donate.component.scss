@@ -17,19 +17,26 @@
 .menu {
   &__footer-container {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    min-width: 180px;
+    right: -170px;
+    bottom: 120px;
+    transition: all 0.5s linear;
+    opacity: 0.81;
+    &:hover {
+      right: 0;
+    }
   }
 
   &__footer {
     display: flex;
     flex-shrink: 0;
-    padding: 16px 12px;
+    padding: 2px;
+    padding-right: 0;
     background: var(--color-neutral-100);
+    border-radius: inherit;
 
     &__button {
-      margin: 0 4px;
+      margin: 0;
       flex: 1 1 calc(50% - 8px);
     }
 
