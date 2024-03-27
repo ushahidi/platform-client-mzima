@@ -46,6 +46,28 @@
   </div>
 
   <div class="form-row">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'user.confirm_password' | translate }}</mat-label>
+      <mzima-client-button
+        matSuffix
+        fill="clear"
+        color="secondary"
+        [iconOnly]="true"
+        (buttonClick)="togglePasswordVisible()"
+      >
+        <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
+      </mzima-client-button>
+      <input
+        matInput
+        formControlName="confirmPassword"
+        required
+        [type]="isPasswordVisible ? 'text' : 'password'"
+      />
+      <mat-hint>{{ 'Match your password in both fields for security. Thanks!' }}.</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
     <div class="checkbox">
       <mat-checkbox [data-qa]="'i-agree'" formControlName="agreement" required>
         <span [innerHTML]="'terms_of_service.i_agree' | translate"></span>

@@ -28,6 +28,7 @@ export class RegistrationFormComponent {
           Validators.maxLength(generalHelpers.CONST.MAX_PASSWORD_LENGTH),
         ],
       ],
+      confirmPassword: ['', Validators.required],
       agreement: [false, [Validators.required]],
     });
   }
