@@ -46,6 +46,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   private userRole: string;
   public isManageCollections: boolean;
   public formErrors: any[] = [];
+  NumberOfcollectionsAdded = 0
 
   constructor(
     protected override sessionService: SessionService,
@@ -165,11 +166,15 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   isPostInCollection(collection: CollectionResult) {
     return this.post?.sets?.some((set) => set === collection.id);
   }
-
+  getCountAbsoluteValue(){
+    return Math.abs(this.NumberOfcollectionsAdded)
+  }
   onCheckChange(isChecked: boolean, item: CollectionResult) {
     if (isChecked) {
+      this.NumberOfcollectionsAdded < 0? this.NumberOfcollectionsAdded =1: this.NumberOfcollectionsAdded++
       this.collectionsService.addToCollection(item.id, this.post.id).subscribe();
     } else {
+      this.NumberOfcollectionsAdded > 0? this.NumberOfcollectionsAdded =-1: this.NumberOfcollectionsAdded--
       this.collectionsService.removeFromCollection(item.id, this.post.id).subscribe();
     }
   }
