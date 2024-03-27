@@ -47,11 +47,13 @@
   >
     <div class="form-row">
       <mat-form-field appearance="outline">
+        <label for="search-input" class="visually-hidden">Search</label>
         <input
           matInput
           placeholder="{{ 'location.search' | translate }}"
           name="query"
           formControlName="query"
+          id="search-input"
         />
         <mzima-client-button
           matPrefix
