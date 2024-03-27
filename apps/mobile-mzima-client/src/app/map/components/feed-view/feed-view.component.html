@@ -2,7 +2,8 @@
   class="page-content ion-padding-horizontal"
   [ngClass]="{
     'at-bottom': atBottom,
-    'at-top': atTop
+    'at-top': atTop,
+    collection: isCollection
   }"
 >
   <app-select
@@ -18,9 +19,28 @@
       <app-icon name="sorting"></app-icon>
     </ng-container>
   </app-select>
-  <div class="total-posts" *ngIf="!isPostsLoading">
+
+  <div *ngIf="isCollection" class="feed-header">
+    <div class="feed-header--button">
+      <app-button
+        fill="clear"
+        [color]="'primary'"
+        *ngIf="isCollection"
+        (buttonClick)="removeCollection()"
+      >
+        <app-icon name="arrow-back"></app-icon>
+      </app-button>
+      <span>Back</span>
+    </div>
+    <p class="feed-header--title" *ngIf="!isPostsLoading">
+      {{ totalPosts }} {{ totalPosts > 1 ? 'posts' : 'post' }} {{ ' - ' + collectionName }}
+    </p>
+  </div>
+
+  <div class="total-posts" *ngIf="!isPostsLoading && !isCollection">
     {{ totalPosts }} {{ totalPosts > 1 ? 'posts' : 'post' }}
   </div>
+
   <ng-container *ngIf="posts.length; else emptyBox">
     <app-post-item
       *ngFor="let post of posts"
