@@ -44,6 +44,9 @@
               <mat-label>{{ 'user.email' | translate }}</mat-label>
               <mat-form-field appearance="outline">
                 <input matInput type="email" formControlName="email" />
+                <mat-error *ngIf="profileForm.controls['email'].errors">
+                  <p>Email must be a valid email address</p>
+                </mat-error>
               </mat-form-field>
             </div>
 
