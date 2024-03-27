@@ -194,6 +194,25 @@
                             ) | translate
                           "
                         />
+                        <mat-error *ngIf="addAccountForm.controls['name'].hasError('required')">
+                          <p>
+                            Please enter
+                            {{
+                              addAccountForm.controls['type'].value === 'email'
+                                ? 'an email address'
+                                : 'a phone number'
+                            }}
+                          </p>
+                        </mat-error>
+                        <mat-error *ngIf="addAccountForm.controls['name'].hasError('pattern')">
+                          <p>
+                            {{
+                              addAccountForm.controls['type'].value === 'email'
+                                ? 'Invalid email address format'
+                                : 'Invalid phone number format'
+                            }}
+                          </p>
+                        </mat-error>
                       </mat-form-field>
                     </div>
 
