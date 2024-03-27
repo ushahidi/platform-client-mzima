@@ -49,12 +49,12 @@
 
   &__head {
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
     position: relative;
     margin: 0 -4px 24px;
-    align-items: flex-start;
     padding-inline-end: 64px;
-    justify-content: flex-start;
 
     &__icon {
       width: 1em;
