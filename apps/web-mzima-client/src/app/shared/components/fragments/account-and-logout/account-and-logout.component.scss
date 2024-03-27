@@ -80,6 +80,11 @@
     flex-shrink: 0;
     font-size: 24px;
     margin-inline-start: 12px;
+    transition: transform 0.3s ease;
+  }
+
+  .rotated {
+    transform: rotate(180deg);
   }
 }
 

@@ -7,21 +7,27 @@
     *ngIf="isLoggedIn"
     [matMenuTriggerFor]="accountMenu"
   >
-    <div class="account-info__main">
+    <div class="account-info__main" (click)="toggleMenu()">
       <span class="account-info__name" [data-qa]="'user-name'">{{ user.realname }}</span>
       <span class="account-info__email" [data-qa]="'user-email'">{{ user.email }}</span>
     </div>
     <img
       [alt]="user.realname"
       class="account-info__avatar"
+      (click)="toggleMenu()"
       src="//www.gravatar.com/avatar/{{
         user.gravatar || '00000000000000000000000000000000'
       }}?d=retro&s=64"
     />
-    <mat-icon class="account-info__arrow" svgIcon="arrow-down"></mat-icon>
+    <mat-icon
+      class="account-info__arrow"
+      svgIcon="arrow-down"
+      [class.rotated]="isMenuOpen"
+      (click)="toggleMenu()"
+    ></mat-icon>
   </mzima-client-button>
 
-  <mat-menu #accountMenu="matMenu" class="account-menu">
+  <mat-menu #accountMenu="matMenu" class="account-menu" (closed)="menuClosed()">
     <div *ngIf="isLoggedIn" class="account-info__mobile">
       <span class="account-info__name" [data-qa]="'user-name'">{{ user.realname }}</span>
       <span class="account-info__email" [data-qa]="'user-email'">{{ user.email }}</span>
