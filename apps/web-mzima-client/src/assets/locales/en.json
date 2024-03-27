@@ -1763,7 +1763,7 @@
     "category": {
       "save_success": "Saved category {{name}}",
       "destroy_confirm": "Are you sure you want to delete this category?",
-      "destroy_confirm_desc": "Deleting this category will remove it from all existing posts. This action cannot be undone.",
+      "destroy_confirm_desc": "Deleting this survey will remove it and all collected data from the database. This action cannot be undone.",
       "destroy_success": "Category deleted",
       "destroy_error": "Unable to delete category, please try again",
       "bulk_destroy_confirm": "Are you sure you want to delete {{count}} categories?",
