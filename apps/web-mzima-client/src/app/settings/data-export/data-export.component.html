@@ -146,8 +146,10 @@
   <p *ngIf="hxlEnabled">
     {{ 'data_export.description_hxl' | translate }}
     <a href="https://hxlstandard.org/standard/1-1final/tagging/" class="link-blue" target="_blank">
-      <mat-icon svgIcon="external-link"></mat-icon>
-      {{ 'data_export.hxl_tags' | translate }} </a
+      <strong>
+        <mat-icon svgIcon="external-link"></mat-icon>
+        {{ 'data_export.hxl_tags' | translate }}
+      </strong> </a
     >,
     <a
       href="https://hxlstandard.org/standard/1-1final/dictionary/"
