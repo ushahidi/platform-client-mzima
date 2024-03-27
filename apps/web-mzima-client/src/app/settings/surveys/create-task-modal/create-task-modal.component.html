@@ -49,6 +49,7 @@
   <mzima-client-button
     fill="outline"
     color="secondary"
+    ariaLabel="Cancel adding task"
     (buttonClick)="cancel()"
     [data-qa]="'survey-task-cancel'"
   >
@@ -56,6 +57,7 @@
   </mzima-client-button>
   <mzima-client-button
     type="submit"
+    ariaLabel="Add new task to survey"
     (buttonClick)="addNewTask()"
     [disabled]="newTask.label.trim().length === 0"
     [data-qa]="'survey-task-add'"

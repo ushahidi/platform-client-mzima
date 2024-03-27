@@ -38,6 +38,7 @@
           (buttonClick)="switchMode(FeedMode.Tiles)"
           [disabled]="isLoading || !posts.length"
           class="feed-page__mode-switcher__button"
+          ariaLabel="Switch to tiles view"
         >
           <mat-icon icon svgIcon="tiles"></mat-icon>
         </mzima-client-button>
@@ -50,6 +51,7 @@
           (buttonClick)="switchMode(FeedMode.Post)"
           [disabled]="isLoading || !posts.length"
           class="feed-page__mode-switcher__button"
+          ariaLabel="Switch to posts view"
         >
           <mat-icon icon svgIcon="sidebar"></mat-icon>
         </mzima-client-button>

@@ -6,6 +6,7 @@
       color="gray"
       [matMenuTriggerFor]="menu"
       class="filter-control__button"
+      ariaLabel="Share Icon"
     >
       <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
     </mzima-client-button>
@@ -59,6 +60,7 @@
           <mzima-client-button
             *ngIf="canEdit && isEditable(option)"
             class="edit-btn"
+            ariaLabel="Edit field"
             [iconOnly]="true"
             fill="clear"
             color="secondary"
