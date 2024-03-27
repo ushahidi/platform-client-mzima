@@ -17,7 +17,7 @@ export class NetworkService {
 
   async listenToNetworkStatus() {
     Network.addListener('networkStatusChange', async (status: any) => {
-      console.log('Network status changed', status);
+      console.log('Network ', status);
       const { connected, connectionType } = status;
       this._networkStatus.next(connected && CONNECTION_TYPES.includes(connectionType));
     });
