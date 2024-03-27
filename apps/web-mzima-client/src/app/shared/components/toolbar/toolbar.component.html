@@ -13,6 +13,9 @@
     {{ pageTitle | translate }}
   </h1>
   <div class="toolbar__controls">
+    <mzima-client-button fill="clear" class="burger" color="secondary" [iconOnly]="true">
+      <mat-icon icon svgIcon="dark-mode"></mat-icon>
+    </mzima-client-button>
     <app-search-form class="search-form" *ngIf="showSearchForm"></app-search-form>
     <app-share-and-donate *ngIf="isDesktop"></app-share-and-donate>
     <app-language
