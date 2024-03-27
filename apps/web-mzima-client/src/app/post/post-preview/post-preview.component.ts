@@ -63,10 +63,8 @@ export class PostPreviewComponent implements OnInit, OnChanges {
     this.details.next(true);
   }
 
-  public postClicked(event: any): void {
-    console.log(this.isChecked);
+  public postClicked(): void {
     if (this.selectable) {
-      event.stopPropagation();
       this.isChecked = !this.isChecked;
       this.selected.emit(this.isChecked);
     }
