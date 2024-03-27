@@ -53,6 +53,16 @@
   }
 }
 
+.notification{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #14A44D;
+  font: 14px Lato, Arial, sans-serif;
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+
 .spinner {
   display: block;
   margin-top: 200px;
