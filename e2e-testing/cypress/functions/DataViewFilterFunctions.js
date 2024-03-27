@@ -45,7 +45,7 @@ class DataViewFilterFunctions {
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 513');
     //click status filter button
     // cy.get(DataViewLocators.statusBtn).click();
-    cy.get('button:contains("Status")');
+    cy.get('button:contains("Status")').click();
     //check that published option is checked
     cy.get(DataViewLocators.filterSelectionList)
       .find('.mat-list-item-content')
