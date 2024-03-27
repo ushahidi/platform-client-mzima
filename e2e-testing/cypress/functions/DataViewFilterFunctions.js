@@ -2,6 +2,7 @@ import DataViewLocators from '../locators/DataViewLocators';
 class DataViewFilterFunctions {
   click_data_view_btn() {
     cy.get(DataViewLocators.dataViewBtn).click();
+    cy.url().should('include', '/feed');
   }
 
   check_post_filter_by_survey() {
@@ -40,7 +41,6 @@ class DataViewFilterFunctions {
 
   check_post_filter_by_status() {
     //click search form filter button
-    cy.wait(1000);
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 513');
     //click status filter button
