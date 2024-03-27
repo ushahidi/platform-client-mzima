@@ -1,3 +1,5 @@
+@import 'helpers';
+
 $leftSidePanelWidth: 64px;
 
 ::ng-deep {
@@ -25,7 +27,7 @@ $leftSidePanelWidth: 64px;
     height: 2em;
     display: flex;
     flex-shrink: 0;
-    font-size: 24px;
+    font-size: $font-2xl;
     border-radius: 50%;
     margin-inline-end: 16px;
     align-items: center;

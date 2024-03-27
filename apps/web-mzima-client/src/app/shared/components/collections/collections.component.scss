@@ -19,7 +19,7 @@
     margin-bottom: 0 !important;
 
     @include breakpoint-max($tablet) {
-      font-size: 20px;
+      font-size: $font-xl;
       font-weight: 700;
       line-height: 1.28;
     }

@@ -17,7 +17,7 @@
   .mat-tab-label {
     opacity: 1;
     height: 40px;
-    font-size: 20px;
+    font-size: $font-xl;
     line-height: 1.2;
     min-width: 140px;
     font-weight: 500;
@@ -27,7 +27,7 @@
 
     @include breakpoint-max($laptop-small) {
       @include breakpoint-min($tablet) {
-        font-size: 18px;
+        font-size: $font-lg;
         min-width: 128px;
       }
     }

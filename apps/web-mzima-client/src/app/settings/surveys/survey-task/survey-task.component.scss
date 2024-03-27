@@ -55,7 +55,7 @@
 
   &__title {
     display: block;
-    font-size: 16px;
+    font-size: $font-base;
     line-height: 1.5;
   }
 
@@ -91,7 +91,7 @@
     height: 1em;
     cursor: move;
     flex-shrink: 0;
-    font-size: 24px;
+    font-size: $font-2xl;
     margin-inline-end: 12px;
 
     @include breakpoint-max($tablet) {
@@ -133,7 +133,7 @@
 
 .form-head-panel {
   h2 {
-    font-size: 16px;
+    font-size: $font-base;
     margin-bottom: 0;
     line-height: 1.5;
     color: var(--color-black);
@@ -142,7 +142,7 @@
 
 .empty {
   display: flex;
-  font-size: 20px;
+  font-size: $font-xl;
   padding: 16px 0;
   line-height: 1.5;
   min-height: 100px;

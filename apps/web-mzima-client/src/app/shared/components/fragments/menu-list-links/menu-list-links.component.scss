@@ -16,7 +16,7 @@
   display: flex;
   color: inherit;
   cursor: pointer;
-  font-size: 16px;
+  font-size: $font-base;
   border-radius: 0;
   line-height: 1.6;
   text-align: start;
@@ -44,7 +44,7 @@
   @include breakpoint-max($tablet) {
     flex: 1 1 100%;
     border-width: 0;
-    font-size: 12px;
+    font-size: $font-xs;
     line-height: 18px;
     padding: 13px 8px;
     flex-direction: column;
@@ -98,7 +98,7 @@
     width: 1em;
     height: 1em;
     display: block;
-    font-size: 30px;
+    font-size: $font-3xl;
     margin-inline-end: 12px;
     margin-right: 12px !important;
 
@@ -108,7 +108,7 @@
     }
 
     @include breakpoint-max($tablet) {
-      font-size: 32px;
+      font-size: $font-4xl;
       margin-bottom: 4px;
       margin-right: 0 !important;
       margin-inline-end: 0 !important;

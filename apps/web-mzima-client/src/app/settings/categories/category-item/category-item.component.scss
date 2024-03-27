@@ -1,3 +1,5 @@
+@import 'helpers';
+
 .category-item {
   z-index: 1;
   padding: 13.5px 16px;
@@ -15,7 +17,7 @@
   }
 
   &__checkbox {
-    font-size: 14px;
+    font-size: $font-sm;
   }
 
   &__content {
@@ -24,7 +26,7 @@
 
   &__title {
     margin-bottom: 0;
-    font-size: 14px;
+    font-size: $font-sm;
     line-height: 28px;
     font-weight: 700;
 

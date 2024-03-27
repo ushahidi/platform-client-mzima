@@ -1,3 +1,5 @@
+@import 'helpers';
+
 .onboarding-step {
   top: 0;
   left: 0;
@@ -61,12 +63,12 @@
       height: 1em;
       margin: 0 4px;
       line-height: 1;
-      font-size: 36px;
+      font-size: $font-5xl;
     }
 
     h2 {
       margin: 0 4px;
-      font-size: 24px;
+      font-size: $font-2xl;
       font-weight: 700;
       line-height: calc(40 / 24 * 1);
     }
@@ -84,7 +86,7 @@
   &__content {
     margin: 0 -8px;
     padding: 0 8px;
-    font-size: 16px;
+    font-size: $font-base;
     overflow-y: auto;
     font-weight: 400;
     line-height: 1.5;

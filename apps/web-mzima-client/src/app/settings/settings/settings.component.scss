@@ -3,7 +3,7 @@
 .single-menu {
   padding: 16px;
   display: block;
-  font-size: 12px;
+  font-size: $font-xs;
   cursor: pointer;
   line-height: 1.3;
   border-radius: 8px;
@@ -12,7 +12,7 @@
   box-shadow: inset 0 0 0 1px var(--color-neutral-20);
 
   @include breakpoint-max($tablet) {
-    font-size: 14px;
+    font-size: $font-sm;
     line-height: 1.3;
     padding: 16px 16px 20px;
     color: var(--color-neutral-80);
@@ -44,7 +44,7 @@
       width: 1em;
       height: 1em;
       flex-shrink: 0;
-      font-size: 24px;
+      font-size: $font-2xl;
       margin-inline-end: 8px;
     }
   }
@@ -53,11 +53,11 @@
     margin: 0 !important;
 
     @include breakpoint-max($laptop-small) {
-      font-size: 18px !important;
+      font-size: $font-xl !important;
     }
 
     @include breakpoint-max($tablet) {
-      font-size: 16px !important;
+      font-size: $font-base !important;
     }
   }
 

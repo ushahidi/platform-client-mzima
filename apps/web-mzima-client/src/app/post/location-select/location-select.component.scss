@@ -1,3 +1,5 @@
+@import 'helpers';
+
 .map-holder {
   min-height: 240px;
   position: relative;
@@ -39,7 +41,7 @@
   cursor: pointer;
 
   &_icon {
-    font-size: 24px;
+    font-size: $font-2xl;
   }
 }
 

@@ -1,7 +1,9 @@
+@import 'helpers';
+
 .location-select {
   &__title {
     margin: 0 0 4px;
-    font-size: 12px;
+    font-size: $font-xs;
     line-height: 1.6;
     font-weight: normal;
   }
@@ -12,7 +14,7 @@
     top: 4px;
     width: 1em;
     height: 1em;
-    font-size: 20px;
+    font-size: $font-xl;
     margin-inline-end: 8px;
     position: relative;
   }

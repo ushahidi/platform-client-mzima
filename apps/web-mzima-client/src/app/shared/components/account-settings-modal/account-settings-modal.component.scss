@@ -1,4 +1,4 @@
-@import '/src/styles/helpers';
+@import 'helpers';
 
 ::ng-deep {
   app-account-settings-modal {
@@ -46,7 +46,7 @@
 
     .mat-tab-label {
       height: auto;
-      font-size: 24px;
+      font-size: $font-2xl;
       padding: 4px 8px;
       font-weight: 700;
       line-height: 1.2;
@@ -93,7 +93,7 @@
   border: 1px solid var(--color-neutral-20);
 
   &__title {
-    font-size: 16px;
+    font-size: $font-base;
     line-height: 1.5;
     padding: 8px 16px;
     margin-bottom: 0;
@@ -108,7 +108,7 @@
 .update-password {
   .mat-expansion-panel-header {
     height: 36px;
-    font-size: 16px;
+    font-size: $font-base;
     line-height: 1.5;
     padding-left: 0;
     padding-right: 0;
@@ -122,13 +122,13 @@
         width: 1em;
         height: 1em;
         display: flex;
-        font-size: 20px;
+        font-size: $font-xl;
         align-items: center;
         flex-direction: column;
         justify-content: center;
 
         @include breakpoint-max($tablet) {
-          font-size: 24px;
+          font-size: $font-2xl;
           margin-inline-start: -8px;
         }
       }
@@ -170,7 +170,7 @@
       padding-right: 16px;
 
       h4 {
-        font-size: 20px;
+        font-size: $font-xl;
         line-height: 1.2;
         font-weight: 700;
       }
@@ -229,7 +229,7 @@
 
   &__title {
     display: block;
-    font-size: 16px;
+    font-size: $font-base;
     font-weight: 700;
     line-height: 1.25;
     margin-bottom: 16px;
@@ -241,7 +241,7 @@
   }
 
   &__option {
-    font-size: 16px;
+    font-size: $font-base;
     font-weight: 500;
 
     &-icon {
@@ -261,7 +261,7 @@
 
   &__title {
     display: block;
-    font-size: 16px;
+    font-size: $font-base;
     font-weight: 500;
     line-height: 1.25;
   }

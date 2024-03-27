@@ -1,3 +1,5 @@
+@import 'helpers';
+
 .share-item {
   vertical-align: top;
   display: inline-block;
@@ -18,7 +20,7 @@
     transform: translate(-50%, -50%);
     padding: 7px;
     height: 64px;
-    font-size: 16px;
+    font-size: $font-base;
     font-weight: 500;
   }
 }

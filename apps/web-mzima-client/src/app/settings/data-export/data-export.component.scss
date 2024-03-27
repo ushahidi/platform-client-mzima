@@ -10,7 +10,7 @@
       height: 1em;
       line-height: 1;
       margin: -3px 0;
-      font-size: 24px;
+      font-size: $font-2xl;
       vertical-align: top;
     }
   }
@@ -34,7 +34,7 @@
   justify-content: center;
 
   .mat-icon {
-    font-size: 24px;
+    font-size: $font-2xl;
   }
 }
 

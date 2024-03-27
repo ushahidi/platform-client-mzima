@@ -3,7 +3,7 @@
 .sidebar {
   height: 100%;
   display: flex;
-  font-size: 12px;
+  font-size: $font-xs;
   overflow-y: auto;
   overflow-x: hidden;
   line-height: 14px;
@@ -19,6 +19,7 @@
     display: block;
     border-width: 1px 0;
     border-style: solid;
+    font-size: $font-base;
     padding: 12px var(--side-offset);
     border-color: var(--color-neutral-90);
     margin: 0 calc(var(--side-offset) * -1) 8px;

@@ -232,7 +232,7 @@
   &__results-info {
     display: block;
     font-weight: 600;
-    font-size: 14px;
+    font-size: $font-sm;
     line-height: 17px;
     color: var(--color-neutral-100);
 
@@ -275,7 +275,7 @@
 
 .endofPosts {
   padding: 20px 0;
-  font-size: 16px;
+  font-size: $font-base;
   text-align: center;
 }
 
@@ -288,7 +288,7 @@
   width: 100%;
   display: block;
   margin: 20vh 0;
-  font-size: 16px;
+  font-size: $font-base;
   line-height: 1.5;
   text-align: center;
 }
@@ -383,7 +383,7 @@
   &__load-more {
     display: block;
     min-width: 132px;
-    font-size: 14px;
+    font-size: $font-sm;
     line-height: 1.6;
     font-weight: 500;
     margin: 24px auto 0;
@@ -452,7 +452,7 @@
 }
 
 .menu-title {
-  font-size: 16px;
+  font-size: $font-base;
   font-weight: 500;
   margin: 0 0 18px;
   line-height: 1.25;

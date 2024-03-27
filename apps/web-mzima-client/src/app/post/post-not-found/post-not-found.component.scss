@@ -1,5 +1,7 @@
+@import 'helpers';
+
 .cant-see-post {
-  font-size: 24px;
+  font-size: $font-2xl;
   font-weight: 500; // this font-size & font weight is from new design
   text-align: center;
   word-wrap: break-word;

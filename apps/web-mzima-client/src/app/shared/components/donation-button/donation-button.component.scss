@@ -1,15 +1,17 @@
+@import 'helpers';
+
 .donation-amount {
   &__icon {
     width: 1em;
     height: 1em;
     line-height: 1;
-    font-size: 24px;
+    font-size: $font-2xl;
     vertical-align: top;
   }
 
   &::ng-deep {
     .mat-icon {
-      font-size: 24px;
+      font-size: $font-2xl;
     }
   }
 }

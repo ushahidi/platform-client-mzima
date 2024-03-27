@@ -1,5 +1,7 @@
+@import 'helpers';
+
 .language {
-  font-size: 16px;
+  font-size: $font-base;
   font-weight: 700;
   line-height: 1.2;
 
@@ -31,13 +33,13 @@
     }
 
     .language-title {
-      font-size: 16px;
+      font-size: $font-base;
     }
   }
 
   &__selected {
     display: flex;
-    font-size: 14px;
+    font-size: $font-sm;
     font-weight: 700;
     line-height: 1.2;
     position: relative;
@@ -49,7 +51,7 @@
     &__arrow {
       flex-shrink: 0;
       line-height: 1;
-      font-size: 24px;
+      font-size: $font-2xl;
       margin-inline-start: 8px;
       transition: transform 0.35s ease;
     }

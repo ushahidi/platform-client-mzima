@@ -1,3 +1,5 @@
+@import 'helpers';
+
 .images {
   .image {
     margin-bottom: 16px;
@@ -17,7 +19,7 @@ hr {
 }
 
 .soft-text {
-  font-size: 16px;
+  font-size: $font-base;
   line-height: 20px;
   color: var(--color-neutral-70);
 

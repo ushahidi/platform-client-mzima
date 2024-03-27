@@ -1,9 +1,11 @@
+@import 'helpers';
+
 .multilevelselect {
   display: flex;
   align-items: center;
 
   &__control {
-    font-size: 14px;
+    font-size: $font-sm;
     font-weight: 400;
     line-height: 17px;
     color: var(--color-neutral-100);
@@ -12,7 +14,7 @@
   &__arrow {
     flex-shrink: 0;
     line-height: 1;
-    font-size: 24px;
+    font-size: $font-2xl;
     margin-inline-start: 8px;
     transition: transform 0.35s ease;
   }

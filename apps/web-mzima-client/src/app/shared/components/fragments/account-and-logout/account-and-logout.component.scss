@@ -5,7 +5,7 @@
   height: 100%;
   --min-height: 100%;
   flex-shrink: 0;
-  --font-size: 14px;
+  --font-size: $font-sm;
   --min-width: 236px;
   --font-weight: 400;
   --max-width: 250px;
@@ -72,13 +72,13 @@
   &__email {
     display: block;
     margin-top: 4px;
-    font-size: 12px;
+    font-size: $font-xs;
     line-height: 14px;
   }
 
   &__arrow {
     flex-shrink: 0;
-    font-size: 24px;
+    font-size: $font-2xl;
     margin-inline-start: 12px;
   }
 }

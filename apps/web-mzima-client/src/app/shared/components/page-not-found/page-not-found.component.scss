@@ -15,17 +15,17 @@
   }
 
   &__title {
-    font-size: 100px;
+    font-size: 6.25rem;
     font-weight: 800;
     margin-bottom: 0;
 
     @include breakpoint-max($mobile) {
-      font-size: 60px;
+      font-size: 3.75rem;
       margin-bottom: 20px;
     }
 
     &-404 {
-      font-size: 200px;
+      font-size: 12.5rem;
       margin-inline-end: 30px;
 
       @include breakpoint-max($mobile) {
@@ -36,7 +36,7 @@
   }
 
   &__description {
-    font-size: 16px;
+    font-size: $font-base;
     font-weight: 400;
     margin-bottom: 32px;
     text-align: center;

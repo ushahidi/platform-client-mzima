@@ -1,3 +1,5 @@
+@import 'helpers';
+
 .cdk-overlay-container {
   .mat-menu-panel {
     margin-top: 4px;
@@ -15,7 +17,7 @@
 
   .mat-menu-item {
     height: auto;
-    font-size: 16px;
+    font-size: $font-base;
     min-height: 48px;
     line-height: 1.5;
     padding: 8px 16px;
@@ -27,7 +29,7 @@
     .mat-icon {
       width: 1em;
       height: 1em;
-      font-size: 24px;
+      font-size: $font-2xl;
       margin-inline-end: 8px !important;
       margin-inline-start: -8px !important;
     }

@@ -5,11 +5,11 @@
     width: 1em;
     height: 1em;
     line-height: 1;
-    font-size: 32px;
+    font-size: $font-4xl;
   }
 
   .icon-medium {
-    font-size: 18px;
+    font-size: $font-lg;
   }
 
   .mat-button-wrapper {
@@ -22,12 +22,12 @@
   }
 
   &.small {
-    font-size: 12px;
+    font-size: $font-xs;
     font-weight: 700;
     line-height: 36px;
 
     .mat-icon {
-      font-size: 16px;
+      font-size: $font-base;
     }
   }
 }
@@ -41,7 +41,7 @@
   border-style: solid;
 
   @include breakpoint-max($tablet) {
-    font-size: 18px;
+    font-size: $font-lg;
   }
 
   .mat-icon {
@@ -68,7 +68,7 @@
 }
 
 .mat-mini-fab {
-  font-size: 18px;
+  font-size: $font-lg;
 }
 
 .mat-icon-button {
@@ -201,7 +201,7 @@
 }
 
 .mat-fab {
-  font-size: 16px;
+  font-size: $font-base;
 
   .mat-button-wrapper {
     padding: 0 !important;
