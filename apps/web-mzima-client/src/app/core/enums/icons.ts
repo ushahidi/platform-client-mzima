@@ -47,6 +47,7 @@ export enum Icons {
   documentCsv = 'document-csv',
   survey = 'survey',
   dragHandle = 'drag-handle',
+  xfill = 'x-fill',
   twitter = 'twitter',
   facebook = 'facebook',
   twitterFill = 'twitter-fill',
