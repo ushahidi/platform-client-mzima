@@ -25,15 +25,14 @@
       <app-button
         fill="clear"
         [color]="'primary'"
-        class="back-button"
         *ngIf="isCollection"
         (buttonClick)="removeCollection()"
       >
         <app-icon name="arrow-back"></app-icon>
       </app-button>
-      <span class="feed-header--title">Back</span>
+      <span>Back</span>
     </div>
-    <p *ngIf="!isPostsLoading">
+    <p class="feed-header--title" *ngIf="!isPostsLoading">
       {{ totalPosts }} {{ totalPosts > 1 ? 'posts' : 'post' }} {{ ' - ' + collectionName }}
     </p>
   </div>
