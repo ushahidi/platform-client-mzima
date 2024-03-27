@@ -11,7 +11,7 @@ export const pointIcon = (color: string, type: string = 'default') => {
   return divIcon({
     className: 'custom-map-marker',
     html: `
-    <svg class="iconic" style="height: 100%; width: 100%; fill:${color};">
+    <svg class="iconic" style="height: 100%; width: 100%; fill:${color};" aria-label="Map leaflet icon">
       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/markers.svg#${type}"></use>
     </svg>
     <span class="iconic-bg" style="background-color:${color};"></span>
