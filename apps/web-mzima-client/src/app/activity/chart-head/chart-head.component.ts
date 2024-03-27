@@ -16,10 +16,10 @@ export class ChartHeadComponent {
   @Output() public dateChanged = new EventEmitter();
 
   public ranges = [
-    { displayNane: 'All time', value: null },
-    { displayNane: 'Last week', value: 'w' },
-    { displayNane: 'Last month', value: 'm' },
-    { displayNane: 'Last year', value: 'y' },
+    { displayName: 'All time', value: '' },
+    { displayName: 'Last week', value: 'w' },
+    { displayName: 'Last month', value: 'm' },
+    { displayName: 'Last year', value: 'y' },
   ];
 
   public rangeChange(event: MatSelectChange): void {

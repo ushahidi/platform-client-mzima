@@ -34,10 +34,10 @@ export class ActivityTimelineComponent implements OnInit {
   public cumulativeTotal = true;
   public dateRange: ManipulateType;
   public filters = [
-    { displayNane: 'Show all posts', value: '' },
-    { displayNane: 'Categories', value: 'tags' },
-    { displayNane: 'Survey', value: 'form' },
-    { displayNane: 'Status', value: 'status' },
+    { displayName: 'Show all posts', value: '' },
+    { displayName: 'Categories', value: 'tags' },
+    { displayName: 'Survey', value: 'form' },
+    { displayName: 'Status', value: 'status' },
   ];
 
   constructor(private postsService: PostsService) {}

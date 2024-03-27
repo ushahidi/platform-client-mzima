@@ -20,9 +20,9 @@ export class BarChartComponent implements OnInit {
   };
   public dateRange: ManipulateType;
   public filters = [
-    { displayNane: 'Categories', value: 'tags' },
-    { displayNane: 'Survey', value: 'form' },
-    { displayNane: 'Status', value: 'status' },
+    { displayName: 'Categories', value: 'tags' },
+    { displayName: 'Survey', value: 'form' },
+    { displayName: 'Status', value: 'status' },
   ];
 
   constructor(private postsService: PostsService) {}
