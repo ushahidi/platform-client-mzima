@@ -104,6 +104,10 @@ a {
   }
 }
 
+.hidden {
+  display: none;
+}
+
 .mat-progress-spinner circle,
 .mat-spinner circle {
   stroke: var(--color-primary-60);
