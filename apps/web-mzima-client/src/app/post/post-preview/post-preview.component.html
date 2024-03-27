@@ -1,7 +1,7 @@
 <div
   class="post"
   *ngIf="post"
-  (click)="postClicked($event)"
+  (click)="$event.stopPropagation(); postClicked()"
   [ngStyle]="{ '--color': post.color || 'var(--color-neutral-100)' }"
   [ngClass]="{
     'post--feed': feedView,
@@ -10,7 +10,11 @@
 >
   <div class="post__head">
     <ng-container *ngIf="selectable">
-      <mat-checkbox [(ngModel)]="isChecked"></mat-checkbox>
+      <mat-checkbox
+        [checked]="isChecked"
+        (keydown.enter)="$event.preventDefault(); postClicked()"
+        (keydown.Space)="$event.preventDefault(); postClicked()"
+      ></mat-checkbox>
     </ng-container>
     <app-post-head
       [post]="post"
