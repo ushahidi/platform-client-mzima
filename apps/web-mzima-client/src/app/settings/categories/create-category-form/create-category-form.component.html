@@ -26,7 +26,7 @@
           placeholder="{{ 'category.placeholder.name' | translate }}"
         />
       </mat-form-field>
-      <mat-error *ngIf="form.get('name')?.hasError('required')">
+      <mat-error *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched">
         {{ 'category.validation.required.name' | translate }}
       </mat-error>
       <ng-container *ngFor="let err of formErrors">
