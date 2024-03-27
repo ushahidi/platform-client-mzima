@@ -1,4 +1,8 @@
 import SurveyConfigurationLocators from '../locators/SurveyConfigurationLocators';
+import LoginFunctions from '../functions/LoginFunctions';
+import LoginLocators from '../locators/LoginLocators';
+
+const loginFunctions = new LoginFunctions();
 
 class SurveyConfigurationFunctions {
   open_settings() {
@@ -21,6 +25,10 @@ class SurveyConfigurationFunctions {
     cy.get('#mat-slide-toggle-1-input').click({ force: true });
   }
 
+  toggle_hide_author_information() {
+    cy.get('#mat-slide-toggle-2-input').click({ force: true });
+  }
+
   save_survey_configurations() {
     cy.get(SurveyConfigurationLocators.saveSurveyBtn).click();
   }
@@ -31,6 +39,17 @@ class SurveyConfigurationFunctions {
 
   verify_button_toggled() {
     cy.get('#mat-slide-toggle-20-input').should('not.be.checked');
+  }
+
+  login_as_different_user() {
+    // //change language to english
+    // cy.get('.language__selected').click();
+    // cy.get('#mat-option-7 > .mat-option-text').click();
+    // //proceed to login
+    // cy.get(LoginLocators.loginModal).click();
+    // cy.type(Cypress.env('ush_user_email'));
+    // cy.type(Cypress.env('ush_user_pwd'));
+    // cy.get(LoginLocators.loginButton).click();
   }
 
   click_add_post_btn() {
@@ -76,6 +95,32 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.postStatus).contains('Published');
   }
 
+  check_for_accurate_author_name() {
+    cy.get(SurveyConfigurationLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveySelectionList)
+      .children(SurveyConfigurationLocators.surveySelectItem)
+      .eq(0)
+      .click({ force: true });
+    cy.wait(3000);
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .contains('New Post Title');
+    cy.get(SurveyConfigurationLocators.postAuthor).contains(Cypress.env('ush_user_name'));
+  }
+
+  check_for_anonymous_author_name() {
+    cy.get(SurveyConfigurationLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveySelectionList)
+      .children(SurveyConfigurationLocators.surveySelectItem)
+      .eq(0)
+      .click({ force: true });
+    cy.wait(3000);
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .contains('New Post Title');
+    cy.get(SurveyConfigurationLocators.postAuthor).contains('Anonymous');
+  }
+
   require_posts_reviewed_before_published() {
     this.open_settings();
     this.open_surveys();
@@ -88,6 +133,20 @@ class SurveyConfigurationFunctions {
     this.verify_button_toggled();
     this.add_post();
     this.check_for_added_post_being_published();
+  }
+
+  hide_author_information_and_verify() {
+    this.open_settings();
+    this.open_surveys();
+    this.open_particular_survey();
+    this.open_survey_configurations();
+    this.toggle_hide_author_information();
+    loginFunctions.logout();
+    loginFunctions.login_member_user();
+    this.add_post();
+    this.check_for_accurate_author_name();
+    loginFunctions.logout();
+    this.check_for_anonymous_author_name();
   }
 }
 

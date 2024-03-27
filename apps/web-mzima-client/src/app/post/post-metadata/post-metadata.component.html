@@ -10,7 +10,7 @@
     />
   </div>
   <div class="post-info__content">
-    <span *ngIf="author" class="post-info__username">
+    <span *ngIf="author" class="post-info__username" [data-qa]="'author'">
       {{ author }}
     </span>
 
