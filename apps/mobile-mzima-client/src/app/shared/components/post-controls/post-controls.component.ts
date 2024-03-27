@@ -106,6 +106,7 @@ export class PostControlsComponent {
       component: CollectionsModalComponent,
       componentProps: {
         postIds: this.posts[0].id,
+        selectedCollections: new Set(this.posts[0].sets ?? []),
       },
     });
     modal.onWillDismiss().then(({ data }) => {
