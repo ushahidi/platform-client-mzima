@@ -3,6 +3,7 @@
 .submit-post-button {
   &::ng-deep {
     .mzima-button {
+      @include focusVisible($outline-offset: 3px);
       @include breakpoint-max($laptop) {
         @include breakpoint-min($tablet) {
           padding-left: 12px;

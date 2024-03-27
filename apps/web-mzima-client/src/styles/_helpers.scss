@@ -48,3 +48,13 @@ $laptop: 1439px;
     @content;
   }
 }
+
+@mixin focusVisible($outline-offset: -5px, $border-radius: 5px) {
+  @supports selector(:focus-visible) {
+    &:focus-visible {
+      outline: 2px solid var(--color-primary-60);
+      outline-offset: $outline-offset;
+      border-radius: $border-radius;
+    }
+  }
+}
