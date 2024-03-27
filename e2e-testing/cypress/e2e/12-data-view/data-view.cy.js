@@ -1,7 +1,7 @@
 import LoginFunctions from "../../functions/LoginFunctions";
 import DataViewFilterFunctions from "../../functions/DataViewFilterFunctions";
 
-describe("Automated Tests for Filter by Surveys", () => {
+describe("Automated Tests for Post Filters in Data View", () => {
   const loginFunctions = new LoginFunctions();
   const dataViewFilterFunctions = new DataViewFilterFunctions();
 
@@ -14,16 +14,6 @@ describe("Automated Tests for Filter by Surveys", () => {
     dataViewFilterFunctions.click_data_view_btn();
     dataViewFilterFunctions.check_post_filter_by_survey();
     dataViewFilterFunctions.verify_count_on_results();
-  });
-});
-
-describe("Automated Tests for Filter by Status", () => {
-  const loginFunctions = new LoginFunctions();
-  const dataViewFilterFunctions = new DataViewFilterFunctions();
-
-  beforeEach(() => {
-    loginFunctions.login_as_admin();
-    cy.visit(Cypress.env('baseUrl'));
   });
 
   it("Filter posts by status", () => {
