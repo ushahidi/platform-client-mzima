@@ -11,6 +11,7 @@ import { PollingService } from '../../../core/services/polling.service';
 })
 export class ImportResultsComponent implements OnInit {
   importFinished = false;
+  importSuccess = false;
   filename: string;
   collectionId: any;
   importJobs: any;
@@ -37,6 +38,7 @@ export class ImportResultsComponent implements OnInit {
   private pollingImportFinished() {
     this.pollingService.importFinished$.pipe(untilDestroyed(this)).subscribe((job: any) => {
       this.importFinished = true;
+      this.importSuccess = job.status === 'SUCCESS';
       this.collectionId = job.collection_id;
       this.filename = job.filename;
     });
