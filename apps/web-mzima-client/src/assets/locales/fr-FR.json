@@ -32,6 +32,48 @@
       "intercom": "Intercom",
       "description": "Contacter l'assistance Ushahidi via le chat"
     },
+    "onboarding_modal": {
+      "start": {
+        "title": "Bonjour !",
+        "content": "Vous avez créé votre déploiement avec succès. Maintenant, pendant que nous le peaufinons, familiarisez-vous avec les fonctionnalités d'Ushahidi. Le processus d'intégration prendra quelques minutes."
+      },
+      "data_collection": {
+        "title": "Collecte de données",
+        "content": "Vous pouvez voir toutes les données collectées en naviguant dans la vue Carte ou dans la vue Données."
+      },
+      "filtering": {
+        "title": "Filtrage",
+        "content": {
+          "description": "Vous pouvez filtrer vos résultats par statut, catégories, plage de dates et emplacement. Vous pouvez également enregistrer vos filtres pour y revenir rapidement.",
+          "tip": "Pour réduire la quantité de données de manière rapide et efficace, utilisez la barre latérale gauche pour choisir des enquêtes spécifiques et des sources de données."
+        }
+      },
+      "sorting": {
+        "title": "Tri",
+        "content": "Vous pouvez trier les résultats par date de publication, dernières mises à jour et date de création - du plus récent au plus ancien."
+      },
+      "activity": {
+        "title": "Activité",
+        "content": "Consultez l'activité de votre déploiement au fil du temps et en fonction du volume. Survolez chaque ligne ou barre pour la mettre en surbrillance et voir les détails."
+      },
+      "collections": {
+        "title": "Collections",
+        "content": "Pour organiser vos publications en groupes, vous pouvez créer des collections. Il vous suffit de choisir un nom, d'écrire une description et de choisir un mode d'affichage - c'est aussi simple que cela !"
+      },
+      "settings": {
+        "title": "Paramètres",
+        "content": {
+          "description": "Modifiez votre déploiement dans les paramètres. Vous pouvez gérer les détails de votre déploiement en ce qui concerne les enquêtes, les sources de données, l'importation et les dons.",
+          "tip": "De plus, cela vous permet d'exporter des données, de créer des catégories, de gérer les autorisations des utilisateurs, et bien plus encore !"
+        }
+      },
+      "end": "Vous êtes prêt !",
+      "onboarding_done": {
+        "description": "Quelle excitation ! Maintenant, vous connaissez les fonctionnalités les plus importantes et vous êtes prêt à commencer à utiliser la plateforme Ushahidi.",
+        "tip": "N'oubliez pas, en cas de question, n'hésitez pas à contacter notre équipe via",
+        "help": "Aide et support"
+      }
+    },
     "report_a_bug": {
       "title": "Signaler un bug",
       "description": "Informez-nous quand quelque chose ne fonctionne pas comme prévu."
@@ -121,7 +163,7 @@
     "language": "Langue",
     "select_language": "Séléctionner la langue",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Précédent",
     "choose_survey": "Choose survey",
     "contact_email_address": "Adresse e-mail de contact :",
     "add_collection": "Ajouter une collection",

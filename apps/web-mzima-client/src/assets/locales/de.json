@@ -32,6 +32,48 @@
       "intercom": "Intercom",
       "description": "Contact Ushahidi staff for chat support"
     },
+    "onboarding_modal": {
+      "start": {
+        "title": "Hallo!",
+        "content": "Sie haben Ihr Deployment erfolgreich erstellt. Während wir es weiter optimieren, machen Sie sich bitte mit den Funktionen von Ushahidi vertraut. Der Onboarding-Prozess wird einige Minuten dauern."
+      },
+      "data_collection": {
+        "title": "Datensammlung",
+        "content": "Sie können alle gesammelten Daten anzeigen, während Sie durch die Kartenansicht oder die Datenansicht navigieren."
+      },
+      "filtering": {
+        "title": "Filterung",
+        "content": {
+          "description": "Sie können Ihre Ergebnisse nach Status, Kategorien, Datumsbereich und Standort filtern. Sie können auch Ihre Filter speichern, um schnell darauf zurückzugreifen.",
+          "tip": "Um die Datenmenge schnell und effizient zu reduzieren, verwenden Sie die linke Seitenleiste, um spezifische Umfragen und Datenquellen auszuwählen."
+        }
+      },
+      "sorting": {
+        "title": "Sortierung",
+        "content": "Sie können die Ergebnisse nach Veröffentlichungsdatum, neuesten Updates und Erstellungsdatum sortieren - vom neuesten zum ältesten."
+      },
+      "activity": {
+        "title": "Aktivität",
+        "content": "Überprüfen Sie die Aktivität Ihres Deployments im Laufe der Zeit und nach Volumen. Fahren Sie mit der Maus über jede Linie oder Balken, um sie hervorzuheben, und sehen Sie sich die Details an."
+      },
+      "collections": {
+        "title": "Sammlungen",
+        "content": "Um Ihre Beiträge in Gruppen zu organisieren, können Sie Sammlungen erstellen. Wählen Sie einfach einen Namen, schreiben Sie eine Beschreibung und wählen Sie einen Anzeigemodus - so einfach ist das!"
+      },
+      "settings": {
+        "title": "Einstellungen",
+        "content": {
+          "description": "Ändern Sie Ihr Deployment in den Einstellungen. Sie können die Details Ihres Deployments verwalten, wenn es um Umfragen, Datenquellen, Importieren und Spenden geht.",
+          "tip": "Außerdem können Sie Daten exportieren, Kategorien erstellen, Benutzerberechtigungen verwalten und vieles mehr!"
+        }
+      },
+      "end": "Sie sind bereit!",
+      "onboarding_done": {
+        "description": "Wie aufregend! Jetzt kennen Sie die wichtigsten Funktionen und sind bereit, die Ushahidi-Plattform zu nutzen.",
+        "tip": "Denken Sie daran, bei Fragen können Sie sich jederzeit an unser Team wenden über",
+        "help": "Hilfe und Support"
+      }
+    },
     "report_a_bug": {
       "title": "Einen Fehler melden",
       "description": "Teilen Sie es uns mit, wenn etwas nicht so funktioniert, wie Sie dies erwarten."

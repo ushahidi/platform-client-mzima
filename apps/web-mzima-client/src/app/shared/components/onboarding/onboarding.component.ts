@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { EventBusService, EventType, SessionService } from '@services';
 import { NgxCustomTourService } from 'ngx-custom-tour';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-
+import { TranslateService } from '@ngx-translate/core';
 interface OnboardingStep {
   title?: string;
   icon?: string;
   content?: string;
+  tip?: string;
   selector?: string | string[];
   position?: string;
   hidden?: boolean;
@@ -33,6 +34,7 @@ export class OnboardingComponent implements AfterViewInit {
     private customTourService: NgxCustomTourService,
     private sessionService: SessionService,
     private eventBusService: EventBusService,
+    private translate: TranslateService,
   ) {
     this.customTourService.showingStep$.pipe(untilDestroyed(this)).subscribe({
       next: (data) => {
@@ -129,62 +131,58 @@ export class OnboardingComponent implements AfterViewInit {
   private initOnboardingSteps(): void {
     this.onboardingSteps = [
       {
-        title: `Hello${this.username ? ' ' + this.username : ''}!`,
+        // title: `app.onboarding_modal.start.title${this.username ? ' ' + this.username : ''}!`,
+        title: 'app.onboarding_modal.start.title',
         icon: 'greeting',
-        content:
-          '<p>You’ve successfully created your deployment. Now, while we polish it up, please, get along with Ushahidi features. The onboarding process will take couple of minutes.</p>',
+        content: 'app.onboarding_modal.start.content',
       },
       {
-        title: 'Data collection',
+        title: 'app.onboarding_modal.data_collection.title',
         icon: 'marker',
-        content:
-          '<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>',
+        content: 'app.onboarding_modal.data_collection.content',
         selector: ['[data-onboard-id="sidebar-btn-data"]', '[data-onboard-id="sidebar-btn-map"]'],
         position: 'right',
       },
       {
-        title: 'Filtering',
+        title: 'app.onboarding_modal.filtering.title',
         icon: 'filters',
-        content:
-          '<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>',
+        content: 'app.onboarding_modal.filtering.content.description',
+        tip: 'app.onboarding_modal.filtering.content.tip',
         selector: ['.search-form__filters', '[data-filter-highlight]'],
       },
       {
-        title: 'Sorting',
+        title: 'app.onboarding_modal.sorting.title',
         icon: 'sorting',
-        content:
-          '<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>',
+        content: 'app.onboarding_modal.sorting.content',
         selector: '.feed-page__control--sorting',
         position: 'left',
         dynamic: true,
       },
       {
-        title: 'Activity',
+        title: 'app.onboarding_modal.activity.title',
         icon: 'activity',
-        content:
-          '<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>',
+        content: 'app.onboarding_modal.activity.title',
         selector: '[data-onboard-id="sidebar-btn-activity"]',
         position: 'right',
       },
       {
-        title: 'Collections',
+        title: 'app.onboarding_modal.collections.title',
         icon: 'collections',
-        content:
-          '<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>',
+        content: 'app.onboarding_modal.collections.content',
         selector: '[data-onboard-id="sidebar-btn-collections"]',
         position: 'right',
       },
       {
-        title: 'Settings',
+        title: 'app.onboarding_modal.settings.title',
         icon: 'settings',
-        content:
-          '<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>',
+        content: 'app.onboarding_modal.settings.content.description',
+        tip: 'app.onboarding_modal.settings.content.tip',
         selector: '[data-onboard-id="sidebar-btn-settings"]',
         position: 'right',
         hidden: !this.isLoggedIn,
       },
       {
-        title: 'You’re ready!',
+        title: 'app.onboarding_modal.end',
         icon: 'clapper',
       },
     ];

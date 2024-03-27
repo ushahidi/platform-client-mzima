@@ -42,6 +42,48 @@
       "title": "Onboarding",
       "description": "Take a look at the Ushahidi onboarding again."
     },
+    "onboarding_modal": {
+      "start":{
+          "title": "Hello!",
+          "content": "You’ve successfully created your deployment. Now, while we polish it up, please, get along with Ushahidi features. The onboarding process will take couple of minutes."
+      },
+      "data_collection": {
+          "title": "Data collection",
+          "content": "You can see all of the collected data while moving through the Map view or on the Data view."
+      },
+      "filtering": {
+          "title": "Filtering",
+          "content": {
+              "description": "You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.",
+              "tip": "To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources."
+          }
+      },
+      "sorting": {
+          "title": "Sorting",
+          "content": "You can sort the results by post date, latest updates and date creation - from newest to oldest."
+      },
+      "activity": {
+          "title": "Activity",
+          "content": "Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details."
+      },
+      "collections": {
+          "title": "Collections",
+          "content": "To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!"
+      },
+      "settings": {
+          "title": "Settings",
+          "content": {
+              "description": "Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. ",
+              "tip": "Also, it allows your to export data, create categories, manage users permissions and much more!"
+          }
+      },
+      "end": "You’re ready!",
+      "onboarding_done": {
+        "description": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
+        "tip": "Remember, in case of any question, don’t hesitate to reach out to our team by",
+        "help": "Help&Support"
+      }
+    },
     "report_a_bug": {
       "title": "Report a bug",
       "description": "Tell us when something doesn't work the way you expected."

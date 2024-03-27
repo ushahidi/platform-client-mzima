@@ -32,6 +32,48 @@
       "intercom": "Intercom",
       "description": "Kontaktovat pracovníky Ushahidi pro podporu chatu"
     },
+    "onboarding_modal": {
+      "start": {
+        "title": "Ahoj!",
+        "content": "Vaše nasazení bylo úspěšně vytvořeno. Nyní, když ho dotváříme, se prosím seznamte s funkcemi Ushahidi. Proces zahájení potrvá několik minut."
+      },
+      "data_collection": {
+        "title": "Sběr dat",
+        "content": "Můžete vidět všechna nasbíraná data, když se pohybujete v pohledu na mapu nebo v pohledu na data."
+      },
+      "filtering": {
+        "title": "Filtrování",
+        "content": {
+          "description": "Můžete filtrovat své výsledky podle jejich stavu, kategorií, datace a polohy. Filtry si také můžete uložit, abyste se k nim mohli rychle vrátit.",
+          "tip": "Pro snížení množství dat rychlým a efektivním způsobem použijte levý panel k výběru konkrétních průzkumů a zdrojů dat."
+        }
+      },
+      "sorting": {
+        "title": "Řazení",
+        "content": "Výsledky můžete řadit podle data publikace, nejnovějších aktualizací a datace vytvoření - od nejnovějšího po nejstarší."
+      },
+      "activity": {
+        "title": "Aktivita",
+        "content": "Zkontrolujte aktivitu vašeho nasazení v čase a podle objemu. Přejeďte myší přes každou linku nebo sloupec, abyste je zvýraznili a viděli podrobnosti."
+      },
+      "collections": {
+        "title": "Kolekce",
+        "content": "Pro organizaci vašich příspěvků do skupin můžete vytvářet kolekce. Stačí vybrat název, napsat popis a vybrat zobrazovací režim - je to tak jednoduché!"
+      },
+      "settings": {
+        "title": "Nastavení",
+        "content": {
+          "description": "Změňte své nasazení v nastaveních. Když jde o průzkumy, zdroje dat, importování a dary, můžete spravovat detaily vašeho nasazení.",
+          "tip": "Také vám umožňuje exportovat data, vytvářet kategorie, spravovat oprávnění uživatelů a mnohem více!"
+        }
+      },
+      "end": "Jste připraveni!",
+      "onboarding_done": {
+        "description": "Jak vzrušující! Nyní znáte nejdůležitější funkce a jste připraveni začít používat platformu Ushahidi.",
+        "tip": "Nezapomeňte, že v případě jakýchkoli otázek se neváhejte obrátit na náš tým pomocí",
+        "help": "Pomoc a podpora"
+      }
+    },
     "report_a_bug": {
       "title": "Nahlásit chybu",
       "description": "Řekněte nám, když něco nefunguje tak, jak jste očekávali."
@@ -121,7 +163,7 @@
     "language": "Jazyk",
     "select_language": "Zvolit jazyk",
     "add_new_post": "Add new post",
-    "previous": "Previous",
+    "previous": "Předchozí",
     "choose_survey": "Choose survey",
     "contact_email_address": "Kontaktní e-mailová adresa:",
     "add_collection": "Přidat kolekci",

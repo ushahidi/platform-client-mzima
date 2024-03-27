@@ -32,6 +32,48 @@
       "intercom": "Intercom",
       "description": "Neem contact op met een Ushahidi medewerker voor ondersteuning"
     },
+    "onboarding_modal": {
+      "start": {
+        "title": "Hallo!",
+        "content": "U heeft uw implementatie succesvol gemaakt. Nu we deze verder perfectioneren, maak kennis met de functies van Ushahidi. Het inwerkproces zal een paar minuten duren."
+      },
+      "data_collection": {
+        "title": "Gegevensverzameling",
+        "content": "U kunt alle verzamelde gegevens bekijken terwijl u door de kaartweergave of de gegevensweergave bladert."
+      },
+      "filtering": {
+        "title": "Filteren",
+        "content": {
+          "description": "U kunt uw resultaten filteren op status, categorieën, datumbereik en locatie. U kunt ook uw filters opslaan, zodat u snel naar ze kunt terugkeren.",
+          "tip": "Om de hoeveelheid gegevens op een snelle en efficiënte manier te verminderen, gebruikt u de linker zijbalk om specifieke enquêtes en gegevensbronnen te kiezen."
+        }
+      },
+      "sorting": {
+        "title": "Sorteren",
+        "content": "U kunt de resultaten sorteren op publicatiedatum, laatste updates en datum van creatie - van nieuwste naar oudste."
+      },
+      "activity": {
+        "title": "Activiteit",
+        "content": "Controleer uw implementatieactiviteit in de loop van de tijd en op basis van volume. Beweeg over elke lijn of staaf om deze te markeren en bekijk de details."
+      },
+      "collections": {
+        "title": "Verzamelingen",
+        "content": "Om uw berichten in groepen te organiseren, kunt u verzamelingen maken. Kies gewoon een naam, schrijf een beschrijving en kies een weergavemodus - zo eenvoudig is het!"
+      },
+      "settings": {
+        "title": "Instellingen",
+        "content": {
+          "description": "Verander uw implementatie in Instellingen. U kunt de details van uw implementatie beheren als het gaat om enquêtes, gegevensbronnen, importeren en donaties.",
+          "tip": "Het staat u ook toe om gegevens te exporteren, categorieën aan te maken, gebruikersrechten te beheren en nog veel meer!"
+        }
+      },
+      "end": "U bent klaar!",
+      "onboarding_done": {
+        "description": "Hoe opwindend! U kent nu de belangrijkste functies en bent klaar om het Ushahidi-platform te gaan gebruiken.",
+        "tip": "Onthoud, als u vragen heeft, aarzel dan niet om contact op te nemen met ons team via",
+        "help": "Hulp en ondersteuning"
+      }
+    },
     "report_a_bug": {
       "title": "Meld een probleem",
       "description": "Vertel ons wanneer iets niet werkt zoals je het verwacht."
