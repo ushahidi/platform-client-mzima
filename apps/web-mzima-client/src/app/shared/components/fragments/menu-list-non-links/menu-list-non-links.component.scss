@@ -78,10 +78,7 @@
     color: var(--color-primary-60);
   }
 
-  &:focus {
-    color: var(--color-primary-60);
-    border-color: var(--color-primary-60);
-  }
+  @include focusVisible();
 
   &--active {
     color: var(--color-primary-60);

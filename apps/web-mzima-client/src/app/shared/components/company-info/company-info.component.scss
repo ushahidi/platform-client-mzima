@@ -13,9 +13,16 @@
     margin: 0;
     padding: 11px 16px;
     border-bottom: 1px solid var(--color-neutral-90);
+    @include focusVisible();
   }
 
   &::ng-deep {
+    .mzima-button {
+      @include focusVisible($outline-offset: 1px, $border-radius: 2px);
+      &--icon-only {
+        font-size: 30px;
+      }
+    }
     a {
       text-decoration: underline;
       color: var(--color-primary-60);
@@ -74,16 +81,23 @@
 
     &__arrow {
       top: 50%;
-      width: 1em;
+      width: 1.2em;
       height: 1em;
       font-size: 30px;
       margin-top: -0.5em;
       position: absolute;
       inset-inline-end: 0;
-      transition: transform 0.35s ease;
 
-      .company-info.mat-expanded & {
-        transform: rotate(180deg);
+      .mat-icon {
+        transition: transform 0.35s ease;
+        width: 30px;
+        height: 30px;
+        .company-info.mat-expanded & {
+          transform: rotate(180deg);
+        }
+      }
+      @include breakpoint-max($tablet) {
+        top: 30%;
       }
     }
   }
@@ -110,6 +124,7 @@
     display: block;
     margin-bottom: 10px;
     word-wrap: break-word;
+    @include focusVisible($outline-offset: 1px, $border-radius: 2px);
   }
 }
 
