@@ -8,7 +8,6 @@
   background: none;
   line-height: 1.3;
   margin: 0 -10px 12px;
-
   @include breakpoint-max($tablet) {
     margin: 0;
     padding: 11px 16px;
@@ -17,12 +16,6 @@
   }
 
   &::ng-deep {
-    .mzima-button {
-      @include focusVisible($outline-offset: 1px, $border-radius: 2px);
-      &--icon-only {
-        font-size: 30px;
-      }
-    }
     a {
       text-decoration: underline;
       color: var(--color-primary-60);
@@ -54,6 +47,7 @@
 
   .mat-expansion-panel {
     &-header {
+      @include focusVisible($outline-offset: -1px, $border-radius: 4px);
       height: 40px;
       font-size: 16px;
       padding-left: 0;
@@ -81,21 +75,17 @@
 
     &__arrow {
       top: 50%;
-      width: 1.2em;
+      width: 1em;
       height: 1em;
       font-size: 30px;
       margin-top: -0.5em;
       position: absolute;
       inset-inline-end: 0;
-
-      .mat-icon {
-        transition: transform 0.35s ease;
-        width: 30px;
-        height: 30px;
-        .company-info.mat-expanded & {
-          transform: rotate(180deg);
-        }
+      transition: transform 0.35s ease;
+      .company-info.mat-expanded & {
+        transform: rotate(180deg);
       }
+
       @include breakpoint-max($tablet) {
         top: 30%;
       }

@@ -5,19 +5,12 @@
   (opened)="descriptionToggleHandle(true)"
   (closed)="descriptionToggleHandle(false)"
 >
-  <mat-expansion-panel-header>
+  <mat-expansion-panel-header aria-label="Company Information Details Header">
     <mat-panel-title class="company-info__header" [data-qa]="'panel-title'">
       <img [src]="logo" [alt]="title" class="company-info__logo" *ngIf="logo" />
       <span class="company-info__title">{{ title }}</span>
-      <mzima-client-button
-        fill="clear"
-        color="transparent-style-1"
-        [iconOnly]="true"
-        class="company-info__header__arrow"
-        [ariaLabel]="'Toggle company details' | translate"
-      >
-        <mat-icon svgIcon="arrow-down"></mat-icon>
-      </mzima-client-button>
+
+      <mat-icon svgIcon="arrow-down" class="company-info__header__arrow"></mat-icon>
     </mat-panel-title>
   </mat-expansion-panel-header>
   <div>
