@@ -39,7 +39,6 @@ export class SupportModalComponent extends BaseComponent {
         description: this.translate.instant('app.documentation.description'),
         action: () => {
           this.openUrl('https://docs.ushahidi.com/platform-user-manual');
-          this.closeModal();
         },
       },
       {
@@ -47,7 +46,6 @@ export class SupportModalComponent extends BaseComponent {
         description: this.translate.instant('app.report_a_bug.description'),
         action: () => {
           this.openUrl('https://github.com/ushahidi/platform/issues/new');
-          this.closeModal();
         },
       },
       {
@@ -55,7 +53,6 @@ export class SupportModalComponent extends BaseComponent {
         description: this.translate.instant('app.features.description'),
         action: () => {
           this.openUrl('https://www.ushahidi.com/features/');
-          this.closeModal();
         },
       },
       {
@@ -66,7 +63,6 @@ export class SupportModalComponent extends BaseComponent {
             type: EventType.ShowOnboarding,
             payload: true,
           });
-          this.closeModal();
         },
       },
       // {
