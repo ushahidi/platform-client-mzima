@@ -7,7 +7,6 @@
     >
       <mat-select-trigger class="language__selected">
         {{ selectedLanguage }}
-        <mat-icon svgIcon="arrow-down" class="language__selected__arrow"></mat-icon>
       </mat-select-trigger>
       <mat-option *ngFor="let lang of languages" [value]="lang.code" class="language__option">
         <img
