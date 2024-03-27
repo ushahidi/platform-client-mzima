@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CategoryInterface } from '@mzima-client/sdk';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category-item',
@@ -7,6 +8,8 @@ import { CategoryInterface } from '@mzima-client/sdk';
   styleUrls: ['./category-item.component.scss'],
 })
 export class CategoryItemComponent {
+  isChecked = false;
+  constructor(private router: Router) {}
   @Input() public category: CategoryInterface;
   @Input() public customClass: string;
   @Input() public isCheckbox: boolean;
@@ -16,6 +19,10 @@ export class CategoryItemComponent {
 
   selectCategory(cat: CategoryInterface) {
     this.selected.emit(cat);
+  }
+
+  public gotoCategory(id: number) {
+    this.router.navigate(['/settings/categories', id]);
   }
 
   public toggleChildren(id: number) {

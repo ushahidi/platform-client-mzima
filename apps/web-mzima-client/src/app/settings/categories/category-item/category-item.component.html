@@ -1,11 +1,23 @@
-<div class="category-item" [routerLink]="['/settings/categories', category.id]">
+<div
+  class="category-item"
+  role="link"
+  [routerLink]="['/settings/categories', category.id]"
+  (keydown.enter)="gotoCategory(category.id)"
+>
   <mat-checkbox
     *ngIf="isCheckbox"
+    [checked]="isChecked"
     class="category-item__checkbox"
-    (click)="$event.stopPropagation()"
+    (click)="$event.stopPropagation(); $event.stopPropagation()"
+    (keydown.enter)="
+      $event.stopPropagation();
+      $event.preventDefault();
+      isChecked = !isChecked;
+      selectCategory(category)
+    "
     (change)="selectCategory(category)"
   ></mat-checkbox>
-  <h4 class="category-item__title" [routerLink]="category.id.toString()" [ngClass]="customClass">
+  <h4 class="category-item__title" [ngClass]="customClass">
     {{ category.tag }}
   </h4>
   <mzima-client-button
@@ -14,9 +26,11 @@
     fill="clear"
     color="secondary"
     [iconOnly]="true"
+    ariaLabel="toggle children"
+    ariaExpanded="displayChildren ? 'true' : 'false'"
     [data-qa]="'toggle-children'"
-    (buttonClick)="toggleChildren(category.id)"
-    (click)="$event.stopPropagation()"
+    (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); toggleChildren(category.id)"
+    (click)="$event.stopPropagation(); $event.preventDefault(); toggleChildren(category.id)"
   >
     <mat-icon
       class="category-item__arrow"

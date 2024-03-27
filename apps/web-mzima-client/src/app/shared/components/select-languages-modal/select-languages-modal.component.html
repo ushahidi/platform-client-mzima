@@ -35,8 +35,12 @@
         [data-qa]="'lang-' + language.code"
         [checked]="data.activeLanguages.includes(language)"
         class="type-item__checkbox"
-        (click)="$event.stopPropagation()"
-        (change)="selectLanguage($event, language)"
+        (click)="
+          $event.stopPropagation(); $event.preventDefault(); selectLanguage($event, language)
+        "
+        (keydown.enter)="
+          $event.stopPropagation(); $event.preventDefault(); selectLanguage($event, language)
+        "
         [disabled]="data.defaultLanguage?.name === language.name"
       >
         {{ language.name }}
