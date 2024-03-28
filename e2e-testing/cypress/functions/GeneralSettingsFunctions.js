@@ -39,8 +39,8 @@ class GeneralSettingsFunctions {
   }
 
   generate_new_api_key() {
-    cy.get(GeneralSettingsLocator.generateAPIKeyBtn).click()
-    cy.get(GeneralSettingsLocator.acceptGenerateAPIKeyBtn).click()
+    cy.get(GeneralSettingsLocator.generateAPIKeyBtn).click();
+    cy.get(GeneralSettingsLocator.acceptGenerateAPIKeyBtn).click();
   }
 
   // verify signup is disabled
@@ -62,20 +62,22 @@ class GeneralSettingsFunctions {
     this.verify_signup_is_disabled();
   }
 
-  verify_deployment_changes_reflect(deploymentName){
-    cy.get(GeneralSettingsLocator.panelTitle).contains(deploymentName)
+  verify_deployment_changes_reflect(deploymentName) {
+    cy.get(GeneralSettingsLocator.panelTitle).contains(deploymentName);
   }
 
-  verify_the_map_coordinates(){
-    cy.get(GeneralSettingsLocator.queryLocationField).type('Nairobi')
+  verify_the_map_coordinates() {
+    cy.get(GeneralSettingsLocator.queryLocationField).type('Nairobi County');
     cy.get(GeneralSettingsLocator.geocoderList)
       .find(GeneralSettingsLocator.geocoderListItem)
-      .eq(0).click()
-    cy.get(GeneralSettingsLocator.defaultLatitudeField).should('have.value', '-1.2832533')
-    cy.get(GeneralSettingsLocator.defaultLongitudeField).should('have.value','36.8172449')
+      .eq(0)
+      .click();
+    cy.wait(1000);
+    cy.get(GeneralSettingsLocator.defaultLatitudeField).should('have.value', '-1.3026148499999999');
+    cy.get(GeneralSettingsLocator.defaultLongitudeField).should('have.value', '36.82884201813725');
   }
 
-  steps_to_generate_new_api_key(){
+  steps_to_generate_new_api_key() {
     this.generate_new_api_key();
     cy.reload();
     this.verify_api_field_should_have_value();
@@ -90,7 +92,6 @@ class GeneralSettingsFunctions {
     cy.reload();
     this.verify_deployment_changes_reflect('-Automated');
   }
-
 }
 
 export default GeneralSettingsFunctions;

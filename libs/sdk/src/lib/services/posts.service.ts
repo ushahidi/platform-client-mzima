@@ -278,4 +278,22 @@ export class PostsService extends ResourceService<any> {
       ...sorting,
     });
   }
+
+  public normalizeFilter(values: any) {
+    if (!values) return {};
+
+    const filters = {
+      ...values,
+      'form[]': values.form,
+      'source[]': values.source,
+      'status[]': values.status,
+      'tags[]': values.tags,
+    };
+
+    delete filters.form;
+    delete filters.source;
+    delete filters.status;
+    delete filters.tags;
+    return filters;
+  }
 }
