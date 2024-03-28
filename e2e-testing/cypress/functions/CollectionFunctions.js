@@ -67,8 +67,6 @@ class CollectionFunctions {
   }
 
   add_post_to_collection() {
-    this.open_collections();
-    this.select_collections();
     this.post_to_collection();
     this.verify_post_added_to_collection();
   }
