@@ -73,12 +73,28 @@ export class MapViewComponent implements AfterViewInit {
     this.sessionService.mapConfig$.subscribe({
       next: (mapConfig) => {
         if (mapConfig) {
+          console.log('LOGGY - In the Map Config Listener');
           this.mapConfig = mapConfig;
+          console.log('LOGGY - Map Config: ' + JSON.stringify(this.mapConfig));
+          console.log('LOGGY - BaseLayer: ' + this.baseLayer);
+          console.log('LOGGY - Online Layer: ' + this.onlineLayer);
+          console.log('LOGGY - Offline Layer: ' + this.offlineLayer);
+          if (this.baseLayer !== this.mapConfig.default_view!.baselayer) {
+            const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
+            console.log('LOGGY - Current Layer: ' + JSON.stringify(currentLayer));
 
-          this.baseLayer = this.mapConfig.default_view!.baselayer;
-          const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
-          this.offlineLayer = tileLayerOffline(currentLayer.url, currentLayer.layerOptions);
-          this.onlineLayer = tileLayer(currentLayer.url, currentLayer.layerOptions);
+            this.baseLayer = this.mapConfig.default_view!.baselayer;
+            const newLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
+            console.log('LOGGY - New Layer: ' + JSON.stringify(newLayer));
+
+            this.offlineLayer = tileLayerOffline(newLayer.url, newLayer.layerOptions);
+            this.onlineLayer = tileLayer(newLayer.url, newLayer.layerOptions);
+
+            this.map.eachLayer(function (layer) {
+              if (layer) console.log('LOGGY - Map Layers: ' + layer.getAttribution);
+              else console.log('LOGGY - Map Layers: null');
+            });
+          }
 
           this.leafletOptions = {
             minZoom: 4,
@@ -89,6 +105,7 @@ export class MapViewComponent implements AfterViewInit {
             center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
             zoom: this.mapConfig.default_view!.zoom,
           };
+
           this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
         }
       },
