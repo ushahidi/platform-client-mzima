@@ -16,13 +16,14 @@
 <div mat-dialog-content>
   <app-spinner class="spinner" *ngIf="!types"></app-spinner>
   <ul role="list" class="types-list" *ngIf="!!types" [data-qa]="'add-post-modal-surveys'">
-    <li *ngFor="let type of types">
+    <li *ngFor="let type of types" [attr.aria-label]="type.name">
       <div
         matRipple
         *ngIf="type.visible"
-        role="listitem"
         [ngStyle]="{ '--color': type.color }"
-        [mat-dialog-close]="{ type: type.id }"
+        [routerLink]="['/post/create/', type.id]"
+        (keydown.enter)="gotoForm(type.id)"
+        mat-dialog-close
         class="type-item"
         [data-qa]="'add-post-modal-surveys-item' + type.id"
       >

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { SurveysService, SurveyItem, generalHelpers } from '@mzima-client/sdk';
 
 @Component({
@@ -9,7 +11,11 @@ import { SurveysService, SurveyItem, generalHelpers } from '@mzima-client/sdk';
 export class AddPostModalComponent {
   public types: SurveyItem[];
 
-  constructor(private surveysService: SurveysService) {
+  constructor(
+    private surveysService: SurveysService,
+    private dialog: MatDialog,
+    private router: Router,
+  ) {
     this.getPostAllowedTypes();
   }
 
@@ -26,5 +32,10 @@ export class AddPostModalComponent {
         });
       },
     });
+  }
+
+  public gotoForm(id: number) {
+    this.dialog.closeAll();
+    this.router.navigate(['/post/create/', id]);
   }
 }
