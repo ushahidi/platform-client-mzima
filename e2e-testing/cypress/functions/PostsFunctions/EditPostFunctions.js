@@ -30,31 +30,31 @@ class EditPostFunctions {
     cy.get(EditPostLocators.successBtn).click();
   }
 
-  check_for_added_post_in_survey() {
-    cy.get(EditPostLocators.surveySelectionList)
-        .children(EditPostLocators.surveySelectItem)
-        .eq(0)
-        .click({force: true})
-    cy.get(EditPostLocators.postPreview).children(EditPostLocators.postItem).contains('New Post Title');
-    cy.get(EditPostLocators.editPostBtn)
-      .eq(0)
-      .click({ force: true });
+  verify_added_post_exists() {
+    cy.wait(1000);
+    cy.get(EditPostLocators.postPreview)
+      .children(EditPostLocators.postItem)
+      .contains('New Post Title');
   }
 
   edit_post() {
+    cy.get(EditPostLocators.editPostBtn).eq(0).click({ force: true });
     cy.get(EditPostLocators.postTitleField).eq(0).type(' 2');
     this.save_post();
   }
 
-  check_edit_post() {
-    cy.get(EditPostLocators.postPreview).children(EditPostLocators.postItem).contains('New Post Title 2');
+  verify_edits_persist() {
+    cy.wait(1000);
+    cy.get(EditPostLocators.postPreview)
+      .children(EditPostLocators.postItem)
+      .contains('New Post Title 2');
   }
 
   edit_post_steps() {
     this.add_post();
-    this.check_for_added_post_in_survey({ force: true });
+    this.verify_added_post_exists({ force: true });
     this.edit_post();
-    this.check_edit_post();
+    this.verify_edits_persist();
   }
 }
 
