@@ -85,10 +85,6 @@
       .company-info.mat-expanded & {
         transform: rotate(180deg);
       }
-
-      @include breakpoint-max($tablet) {
-        top: 30%;
-      }
     }
   }
 
