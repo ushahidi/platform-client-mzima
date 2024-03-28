@@ -394,6 +394,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.isBulkOptionsVisible = state;
     if (!this.isBulkOptionsVisible) {
       this.deselectAllPosts();
+    } else {
+      // Programmatically set focus to posts
+      const postsContainer = document.querySelector<HTMLDivElement>('#posts-container');
+      postsContainer?.setAttribute('tabindex', '-1');
+      postsContainer?.focus();
     }
   }
 

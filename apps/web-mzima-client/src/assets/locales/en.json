@@ -888,6 +888,7 @@
       "tags": "Categories",
       "post_actions": {
         "post_actions": "Post Actions",
+        "select_post": "Select post: ",
         "select": "select",
         "edit": "edit",
         "set": "set",
@@ -914,7 +915,7 @@
       "previous_page": "<< Previous page",
       "next_page": "Next page >>",
       "empty_message_error": "You must add a message",
-      "no_messages":"There are no messages yet. Start a conversation with the author by sending a message below."
+      "no_messages": "There are no messages yet. Start a conversation with the author by sending a message below."
     },
     "valid": {
       "no_changes": "You haven’t made any changes",
@@ -1205,8 +1206,8 @@
       "HDX": "Humanitarian Data Exchange",
       "please_enter_maintainer_id": "Please enter maintainer id",
       "please_enter_api_key": "Please enter API key",
-      "hdx_maintainer_id_min_length" : "HDX Maintainer Id is too short",
-      "api_key_min_length" : "API key is too short"
+      "hdx_maintainer_id_min_length": "HDX Maintainer Id is too short",
+      "api_key_min_length": "API key is too short"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
@@ -1645,17 +1646,17 @@
     "nav": {
       "account_settings": "Account settings",
       "notifications_settings": "Notifications settings",
-      "delete_contact" : {
-        "title" : "Delete your",
-        "title_subject" : {
-          "email" : "Email",
-          "phone" : "Phone"
+      "delete_contact": {
+        "title": "Delete your",
+        "title_subject": {
+          "email": "Email",
+          "phone": "Phone"
         },
-        "instructions" : "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
-        "button" : {
-          "delete" : "Delete",
-          "cancel" : "Cancel"
-        }  
+        "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
+        "button": {
+          "delete": "Delete",
+          "cancel": "Cancel"
+        }
       }
     }
   },
@@ -2721,4 +2722,3 @@
     "adminUserLimitReached": "limit:{{:admin}}"
   }
 }
-

@@ -134,6 +134,7 @@
           class="feed-page__control feed-page__control--bulk"
           *ngIf="user?.allowed_privileges?.includes('update')"
           (buttonClick)="toggleBulkOptions(!isBulkOptionsVisible)"
+          [ariaLabel]="isBulkOptionsVisible ? 'Disable bulk actions' : 'Enable bulk actions'"
         >
           {{ 'post.modify.bulk_actions' | translate }}
         </mzima-client-button>
@@ -186,7 +187,11 @@
     <!-- (scroll)="onScroll($event)" -->
     <div #feed class="feed" [ngClass]="{ 'feed--post-view': mode === FeedMode.Post }">
       <ng-container *ngIf="!postsCheck().stillLoading; else loader">
-        <div class="feed__posts" *ngIf="postsCheck().atLeastOneExists; else postsEmpty">
+        <div
+          class="feed__posts"
+          id="posts-container"
+          *ngIf="postsCheck().atLeastOneExists; else postsEmpty"
+        >
           <ngx-masonry
             #masonry
             [ordered]="true"

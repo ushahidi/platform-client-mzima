@@ -26,6 +26,7 @@ export class PostHeadComponent extends BaseComponent {
   @Input() public editable: boolean;
   @Input() public feedView: boolean;
   @Input() public deleteable: boolean;
+  @Input() public selectable: boolean;
   @Output() edit = new EventEmitter();
   @Output() refresh = new EventEmitter();
   @Output() deleted = new EventEmitter();

@@ -7,6 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MediaService, PostResult, UserInterface } from '@mzima-client/sdk';
 import { Subject } from 'rxjs';
 
@@ -69,6 +70,11 @@ export class PostPreviewComponent implements OnInit, OnChanges {
       this.isChecked = !this.isChecked;
       this.selected.emit(this.isChecked);
     }
+  }
+
+  public onCheckboxChange(event: MatCheckboxChange) {
+    this.isChecked = event.checked;
+    this.selected.emit(this.isChecked);
   }
 
   public deletedHandle(): void {

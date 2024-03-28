@@ -10,7 +10,13 @@
 >
   <div class="post__head">
     <ng-container *ngIf="selectable">
-      <mat-checkbox [(ngModel)]="isChecked"></mat-checkbox>
+      <mat-checkbox
+        [aria-label]="
+          ('post.preview.post_actions.select_post' | translate) + (post.title || post.content)
+        "
+        [(ngModel)]="isChecked"
+        (change)="onCheckboxChange($event)"
+      ></mat-checkbox>
     </ng-container>
     <app-post-head
       [post]="post"
@@ -21,6 +27,7 @@
       [deleteable]="post.allowed_privileges.includes('delete')"
       (deleted)="deletedHandle()"
       (statusChanged)="statusChangedHandle()"
+      [selectable]="!!selectable"
     >
     </app-post-head>
   </div>
