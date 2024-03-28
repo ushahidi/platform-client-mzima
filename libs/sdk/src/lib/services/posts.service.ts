@@ -127,7 +127,10 @@ export class PostsService extends ResourceService<any> {
   public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
     // const tmpParams = { ...this.postsFilters.value, has_location: 'all', ...filter };
     const tmpParams = { ...filter, ...this.postsFilters.value, has_location: 'all' };
-    tmpParams.include_unstructured_posts = tmpParams['form[]'].includes(0);
+    if (filter?.allSurveys && filter?.currentView === 'feed')
+      tmpParams.include_unstructured_posts = true;
+    else tmpParams.include_unstructured_posts = false;
+
     return super.get(url, this.postParamsMapper(tmpParams)).pipe(
       map((response) => {
         response.results.map((post: PostResult) => {
@@ -229,26 +232,28 @@ export class PostsService extends ResourceService<any> {
     return params;
   }
 
-  public getPostStatistics(
-    queryParams?: any,
-    isMapView: boolean = false,
-  ): Observable<PostStatsResponse> {
-    const filters = { ...this.postsFilters.value };
+  public getPostStatistics(queryParams?: any): Observable<PostStatsResponse> {
+    const filters = this.postParamsMapper(this.postsFilters.value);
 
-    delete filters.form;
-    delete filters['form[]'];
-    delete filters.source;
-    delete filters['source[]'];
+    if (filters.currentView === 'map') {
+      filters.has_location = 'mapped';
+      filters.include_unstructured_posts = false;
+    } else if (filters.currentView === 'feed') {
+      delete filters.has_location;
+      filters.include_unmapped = true;
+      if (filters.allSurveys) {
+        filters.include_unstructured_posts = true;
+        delete filters.form;
+        delete filters['form[]'];
+      }
+    }
 
     return super.get(
       'stats',
       queryParams ?? {
-        ...this.postParamsMapper(filters),
+        ...filters,
         group_by: 'form',
         enable_group_by_source: true,
-        has_location: isMapView ? 'mapped' : 'all',
-        include_unmapped: true,
-        // include_unstructured_posts: false,
       },
     );
   }

@@ -333,6 +333,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       'status[]': values.status,
       'form[]': values.form,
       'tags[]': values.tags,
+      currentView: this.isMapView ? 'map' : 'feed',
       include_unstructured_posts: fetchPostsWithoutFormId,
       set: values.set,
       date_after: values.date.start ? dayjs(values.date.start).toISOString() : undefined,
@@ -428,7 +429,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
 
     forkJoin([
       this.surveysService.get('', { show_unknown_form: true }),
-      this.postsService.getPostStatistics(null, this.isMapView),
+      this.postsService.getPostStatistics(null),
     ]).subscribe({
       next: (responses) => {
         const values = responses[1].result.group_by_total_posts;
@@ -493,7 +494,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   public getPostsStatistic(): Observable<any> {
-    return this.postsService.getPostStatistics(this.activeFilters, this.isMapView).pipe(
+    return this.postsService.getPostStatistics(this.activeFilters).pipe(
       map((res) => {
         this.notMappedPostsCount = res.result.unmapped;
         const values = res.result.group_by_total_posts;

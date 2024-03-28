@@ -148,6 +148,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
   private reInitParams() {
     this.params.page = 1;
+    this.params.currentView = 'map';
     this.mapLayers.map((layer) => {
       this.map.removeLayer(layer);
       this.markerClusterData.removeLayer(layer);

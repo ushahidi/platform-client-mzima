@@ -41,7 +41,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public override params: GeoJsonFilter = {
     limit: 20,
     page: 1,
-    include_unstructured_posts: false,
+    currentView: 'feed',
     // created_before_by_id: '',
   };
   private readonly getPostsSubject = new Subject<{
