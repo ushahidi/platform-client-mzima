@@ -32,7 +32,9 @@ export class CollectionsService extends ResourceService<any> {
   getCollections(queryParams?: any): Observable<Collection> {
     return super.get('', queryParams);
   }
-
+  getCollection(collectionId: string): Observable<Collection> {
+    return super.get(collectionId);
+  }
   addToCollection(collectionId: string | number, postId: string | number) {
     return super.post({ post_id: postId } as any, `${collectionId}/posts`);
   }
