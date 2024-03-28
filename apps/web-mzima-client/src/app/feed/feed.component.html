@@ -134,7 +134,11 @@
           class="feed-page__control feed-page__control--bulk"
           *ngIf="user?.allowed_privileges?.includes('update')"
           (buttonClick)="toggleBulkOptions(!isBulkOptionsVisible)"
-          [ariaLabel]="isBulkOptionsVisible ? 'Disable bulk actions' : 'Enable bulk actions'"
+          [ariaLabel]="
+            isBulkOptionsVisible
+              ? ('post.modify.disable_bulk_actions' | translate)
+              : ('post.modify.enable_bulk_actions' | translate)
+          "
         >
           {{ 'post.modify.bulk_actions' | translate }}
         </mzima-client-button>

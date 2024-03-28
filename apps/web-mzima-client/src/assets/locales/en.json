@@ -869,6 +869,8 @@
       "author_realname": "Name",
       "author_email": "Email",
       "bulk_actions": "Bulk Actions",
+      "enable_bulk_actions": "Enable bulk actions",
+      "disable_bulk_actions": "Disable bulk actions",
       "form": {
         "categories": "Categories",
         "description": "Description",
