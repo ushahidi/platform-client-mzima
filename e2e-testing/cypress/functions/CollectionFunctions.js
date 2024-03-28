@@ -52,10 +52,8 @@ class CollectionFunctions {
   }
 
   verify_post_added_to_collection() {
-    cy.get(CollectionLocators.surveySelectionList)
-      .children(CollectionLocators.selectedSurveyItem)
-      .eq(0)
-      .click({ force: true });
+    this.open_collections();
+    this.select_collections();
     cy.contains('Post Title').should('exist');
   }
 
