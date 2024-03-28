@@ -9,7 +9,13 @@
   }"
 >
   <mat-form-field appearance="outline" class="search-form__control">
-    <mzima-client-button matPrefix [iconOnly]="true" fill="clear" color="secondary">
+    <mzima-client-button
+      matPrefix
+      [iconOnly]="true"
+      fill="clear"
+      color="secondary"
+      ariaLabel="Search bar"
+    >
       <mat-icon icon svgIcon="search-small"></mat-icon>
     </mzima-client-button>
     <input
@@ -53,7 +59,6 @@
       type="button"
       (click)="toggleMainFilters()"
       class="search-form__main-filters__toggle-btn"
-      aria-label="Toggle Filters"
     >
       <mat-icon svgIcon="angle-right"></mat-icon>
     </button>
@@ -331,6 +336,7 @@
         (clear)="clearFilter('status')"
         [title]="'global_filter.status' | translate"
         [badge]="form.controls['status'].value?.length || null"
+        [data-qa]="'status'"
       >
         <div class="clear-button" suffix>
           <mzima-client-button

@@ -20,6 +20,7 @@
           [isActive]="mode === FeedMode.Tiles"
           (buttonClick)="switchMode(FeedMode.Tiles)"
           class="feed-page__mode-switcher__button"
+          ariaLabel="Switch to tiles view"
         >
           <mat-icon icon svgIcon="tiles"></mat-icon>
         </mzima-client-button>
@@ -31,6 +32,7 @@
           [isActive]="mode === FeedMode.Post"
           (buttonClick)="switchMode(FeedMode.Post)"
           class="feed-page__mode-switcher__button"
+          ariaLabel="Switch to posts view"
         >
           <mat-icon icon svgIcon="sidebar"></mat-icon>
         </mzima-client-button>

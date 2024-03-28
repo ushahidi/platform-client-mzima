@@ -15,6 +15,7 @@
     color="secondary"
     [iconOnly]="true"
     [data-qa]="'toggle-children'"
+    ariaLabel="Toggle children categories"
     (buttonClick)="toggleChildren(category.id)"
     (click)="$event.stopPropagation()"
   >
