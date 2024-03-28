@@ -1432,6 +1432,7 @@
     "see_imported_posts": "See imported posts",
     "import_another_csv": "Import another CSV file",
     "import_complete": "Your import is complete",
+    "import_error": "An error has occurred importing your CSV file.",
     "complete_info": "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
     "get_polling_info": "Get Polling Info",
     "import_another": "Import another CSV file",
@@ -1703,7 +1704,8 @@
       "no_mappings": "No fields have been assigned mappings - at least one field must be mapped to continue",
       "csv_import_cancel": "CSV import cancelled",
       "csv_import_cancel_confirm": "Are you sure you want to cancel importing?",
-      "csv_import_error": "Some of the data in your CSV file does not match the format of the mapped survey field. Please review the data and try again."
+      "csv_import_error": "Some of the data in your CSV file does not match the format of the mapped survey field. Please review the data and try again.",
+      "csv_import_success" : "The data from your CSV file was successfully imported!"
     },
     "general_settings": {
       "save_success": "General settings saved"
