@@ -69,14 +69,6 @@ export class SupportModalComponent extends BaseComponent {
           this.closeModal();
         },
       },
-      // {
-      //   title: this.translate.instant('app.intercom.intercom'),
-      //   description: this.translate.instant('app.intercom.description'),
-      //   action: () => {
-      //     window.open('mailto:hl5rfiga@intercom-mail.com');
-      //     this.closeModal();
-      //   },
-      // },
     ];
   }
 
