@@ -153,6 +153,7 @@
             </div>
             <mat-selection-list
               name="surveys"
+              aria-label="Surveys selection list"
               class="selection-list"
               formControlName="form"
               [data-qa]="'survey-selection-list'"
@@ -330,6 +331,7 @@
         (clear)="clearFilter('status')"
         [title]="'global_filter.status' | translate"
         [badge]="form.controls['status'].value?.length || null"
+        [data-qa]="'status'"
       >
         <div class="clear-button" suffix>
           <mzima-client-button
