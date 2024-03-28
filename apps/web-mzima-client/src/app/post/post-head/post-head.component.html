@@ -5,6 +5,7 @@
     tabindex="-1"
     *ngIf="editable"
     [iconOnly]="true"
+    [ariaLabel]="'post.post_actions.edit' | translate"
     (buttonClick)="editPost($event)"
     class="post-head__control"
   >
@@ -16,6 +17,7 @@
     color="gray"
     tabindex="-1"
     [iconOnly]="true"
+    [ariaLabel]="'post.post_actions.share' | translate"
     (buttonClick)="sharePost()"
     class="post-head__control post-head__control--share"
   >
@@ -28,6 +30,7 @@
     tabindex="-1"
     [iconOnly]="true"
     (click)="$event.stopPropagation()"
+    [ariaLabel]="'post.post_actions.open' | translate"
     class="post-head__control post-head__control--dots"
     [matMenuTriggerFor]="actions"
   >
