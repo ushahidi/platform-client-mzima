@@ -37,6 +37,8 @@
       (change)="selectSurveys($event, survey)"
     ></mat-checkbox>
     {{ survey.name }}
+    <!-- Added Font Awesome Delete Icon -->
+    <i class="fas fa-trash con" (click)="deleteSurvey()"></i>
   </li>
 </ul>
 <button

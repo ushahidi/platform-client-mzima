@@ -142,4 +142,14 @@ export class SurveysComponent implements OnInit {
   public generateDataQa(name: string): string {
     return name.replace(/ /g, '-').toLowerCase();
   }
+
+  // Added Method to delete the Survey
+  survey: string[] = ['Survey 1', 'Survey 2', 'Survey 3'];
+
+  deleteItem(item: string) {
+    const index = this.survey.indexOf(item);
+    if (index !== -1) {
+      this.survey.splice(index, 1);
+    }
+  }
 }

@@ -124,5 +124,16 @@
   },
   "overrides": {
     "autoprefixer": "10.4.5"
-  }
+  },
+  "description": "> This Platform Client (Mzima) workspace is generated using [Nx, a Smart, fast and extensible build system.](https://nx.dev)",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cecil-o/platform-client-mzima.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/Cecil-o/platform-client-mzima/issues"
+  },
+  "homepage": "https://github.com/Cecil-o/platform-client-mzima#readme"
 }
