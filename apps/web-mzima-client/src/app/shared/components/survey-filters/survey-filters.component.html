@@ -2,7 +2,7 @@
   novalidate
   [formGroup]="form"
   class="search-form"
-  (submit)="applyFilters()"
+  (submit)="applyFilters.emit()"
   [ngClass]="{
     'search-form--filters-open': isFiltersVisible,
     'search-form--main-filters-open': isMainFiltersOpen
@@ -15,7 +15,7 @@
   >
     <button
       type="button"
-      (click)="toggleMainFilters()"
+      (click)="toggleMainFilters.emit()"
       class="search-form__main-filters__toggle-btn"
     >
       <mat-icon svgIcon="angle-right"></mat-icon>
@@ -39,7 +39,7 @@
           <mzima-client-button
             fill="clear"
             size="small"
-            (buttonClick)="clearCollection()"
+            (buttonClick)="clearCollection.emit()"
             class="filter-group__head__button"
           >
             {{ 'nav.clear' | translate }}
@@ -52,11 +52,10 @@
           [(ngModel)]="isNotificationsOn"
           [disabled]="isNotificationLoading"
           [ngModelOptions]="{ standalone: true }"
-          (change)="changeNorificationStatus($event, collectionInfo.id.toString())"
+          (change)="changeNorificationStatus.emit($event)"
         >
           {{ 'nav.notifications' | translate }}
         </mat-slide-toggle>
-
         <div class="collection-info__description" *ngIf="collectionInfo.description?.length">
           {{ collectionInfo.description }}
         </div>
@@ -71,7 +70,7 @@
           <mzima-client-button
             fill="clear"
             size="small"
-            (buttonClick)="clearSavedFilter()"
+            (buttonClick)="clearSavedFilter.emit()"
             class="filter-group__head__button"
           >
             {{ 'nav.clear' | translate }}
@@ -84,7 +83,7 @@
           [disabled]="isNotificationLoading"
           [ngModelOptions]="{ standalone: true }"
           *ngIf="isLoggedIn && activeSavedSearch.id"
-          (change)="changeNorificationStatus($event, activeSavedSearch.id.toString())"
+          (change)="changeNorificationStatus.emit($event)"
         >
           {{ 'nav.notifications' | translate }}
         </mat-slide-toggle>
@@ -108,9 +107,9 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
-                (buttonClick)="clearFilter('form')"
+                (buttonClick)="clearFilter.emit('form')"
                 [data-qa]="'clear'"
-                (buttonClick)="toggleSidebarFilters('form')"
+                (buttonClick)="toggleSidebarFilters.emit('form')"
               >
                 {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>
@@ -162,7 +161,7 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
-                (buttonClick)="toggleSidebarFilters('source')"
+                (buttonClick)="toggleSidebarFilters.emit('source')"
               >
                 {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>

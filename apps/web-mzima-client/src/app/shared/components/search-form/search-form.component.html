@@ -2,7 +2,7 @@
   novalidate
   [formGroup]="form"
   class="search-form"
-  (submit)="applyFilters()"
+  (submit)="applyFilters.emit()"
   [ngClass]="{
     'search-form--filters-open': isFiltersVisible,
     'search-form--main-filters-open': isMainFiltersOpen
@@ -15,7 +15,7 @@
     <input
       matInput
       [(ngModel)]="searchQuery"
-      (ngModelChange)="searchPosts()"
+      (ngModelChange)="onSearchChange()"
       class="search-form__form-control"
       [ngModelOptions]="{ standalone: true }"
       [placeholder]="'global_filter.search' | translate"
@@ -26,7 +26,7 @@
       [iconOnly]="true"
       color="secondary"
       *ngIf="searchQuery?.length"
-      (buttonClick)="clearPostsResults()"
+      (buttonClick)="clearSearchResult()"
     >
       <mat-icon icon svgIcon="close"></mat-icon>
     </mzima-client-button>

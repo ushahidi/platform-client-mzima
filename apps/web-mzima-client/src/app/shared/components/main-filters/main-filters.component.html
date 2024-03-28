@@ -2,7 +2,7 @@
   novalidate
   [formGroup]="form"
   class="search-form"
-  (submit)="applyFilters()"
+  (submit)="applyFilters.emit()"
   [ngClass]="{
     'search-form--filters-open': isFiltersVisible,
     'search-form--main-filters-open': isMainFiltersOpen
@@ -11,10 +11,10 @@
   <div
     data-filter-highlight
     class="search-form__filters-panel"
-    *ngIf="isDesktop || isFiltersVisible"
+    *ngIf="(isDesktop$ | async)! || isFiltersVisible"
     [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
   >
-    <div class="search-form__filters-panel__head" *ngIf="!isDesktop">
+    <div class="search-form__filters-panel__head" *ngIf="!(isDesktop$ | async)!">
       <h3>Filters and sorting</h3>
       <mzima-client-button
         tabindex="-1"
@@ -23,7 +23,7 @@
         color="light-gray"
         [data-qa]="'btn-close'"
         class="modal__close-btn"
-        (buttonClick)="toggleFilters(false)"
+        (buttonClick)="toggleFilters.emit(false)"
         ariaLabel="{{ 'modal.button.close' | translate }}"
       >
         <mat-icon icon svgIcon="close"></mat-icon>
@@ -31,13 +31,13 @@
     </div>
 
     <div class="search-form__filters-panel__inner">
-      <ng-container *ngIf="!isDesktop">
+      <ng-container *ngIf="!(isDesktop$ | async)!">
         <app-filter-control
           class="search-form__filters-panel__item"
           formControlName="form"
           [options]="surveyList"
           [fields]="['id', 'name']"
-          (clear)="clearFilter('form')"
+          (clear)="clearFilter.emit('form')"
           [type]="filterType.Multiselect"
           [title]="'app.surveys' | translate"
           [badge]="form.controls['form'].value?.length || null"
@@ -47,7 +47,7 @@
               fill="clear"
               size="small"
               class="filter-group__head__button"
-              (buttonClick)="toggleSidebarFilters('form')"
+              (buttonClick)="toggleSidebarFilters.emit('form')"
             >
               {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
@@ -60,7 +60,7 @@
           [options]="sources"
           [fields]="['value', 'name']"
           [type]="filterType.Multiselect"
-          (clear)="clearFilter('source')"
+          (clear)="clearFilter.emit('source')"
           [title]="'global_filter.source' | translate"
           [badge]="form.controls['source'].value?.length || null"
         >
@@ -69,7 +69,7 @@
               fill="clear"
               size="small"
               class="filter-group__head__button"
-              (buttonClick)="toggleSidebarFilters('source')"
+              (buttonClick)="toggleSidebarFilters.emit('source')"
             >
               {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
@@ -86,16 +86,16 @@
         [badge]="activeSavedSearchValue ? 1 : null"
         [options]="savedSearches"
         [canEdit]="isEditAvailable"
-        (clear)="applySavedFilter(null)"
-        (editOption)="saveSearch($event)"
-        (filterChange)="applySavedFilter($event)"
+        (clear)="applySavedFilter.emit(null)"
+        (editOption)="saveSearch.emit($event)"
+        (filterChange)="applySavedFilter.emit($event)"
       >
         <mzima-client-button
           *ngIf="canCreateSearch"
           suffix
           fill="clear"
           class="save-filter-button"
-          (buttonClick)="saveSearch()"
+          (buttonClick)="saveSearch.emit()"
         >
           <mat-icon iconPrefix svgIcon="plus"></mat-icon>
           {{ 'global_filter.save_new_filter' | translate }}
@@ -112,7 +112,7 @@
         [options]="statuses"
         [fields]="['value', 'name']"
         [type]="filterType.Multiselect"
-        (clear)="clearFilter('status')"
+        (clear)="clearFilter.emit('status')"
         [title]="'global_filter.status' | translate"
         [badge]="form.controls['status'].value?.length || null"
         [data-qa]="'status'"
@@ -122,7 +122,7 @@
             fill="clear"
             size="small"
             class="filter-group__head__button"
-            (buttonClick)="clearFilter('status')"
+            (buttonClick)="clearFilter.emit('status')"
           >
             {{ 'nav.clear' | translate }}
           </mzima-client-button>
@@ -134,7 +134,7 @@
         *ngIf="categoriesData?.length"
         formControlName="tags"
         [options]="categoriesData"
-        (clear)="clearFilter('tags')"
+        (clear)="clearFilter.emit('tags')"
         [type]="filterType.Multilevelselect"
         [title]="'app.categories' | translate"
         [badge]="form.controls['tags'].value?.length || null"
@@ -146,7 +146,7 @@
         class="search-form__filters-panel__item"
         formControlName="date"
         [type]="filterType.Daterange"
-        (clear)="clearFilter('date')"
+        (clear)="clearFilter.emit('date')"
         [title]="'global_filter.date_range' | translate"
         [badge]="form.controls['date'].value?.start || form.controls['date'].value?.end ? 1 : null"
       >
@@ -155,7 +155,7 @@
             fill="clear"
             size="small"
             class="filter-group__head__button"
-            (buttonClick)="clearFilter('date')"
+            (buttonClick)="clearFilter.emit('date')"
           >
             {{ 'nav.clear' | translate }}
           </mzima-client-button>
@@ -166,7 +166,7 @@
         class="search-form__filters-panel__item"
         formControlName="center_point"
         [type]="filterType.Location"
-        (clear)="clearFilter('center_point')"
+        (clear)="clearFilter.emit('center_point')"
         [title]="'global_filter.location' | translate"
         [badge]="form.controls['center_point'].value.location?.lat ? 1 : null"
       >
@@ -175,7 +175,7 @@
             fill="clear"
             size="small"
             class="filter-group__head__button"
-            (buttonClick)="clearFilter('center_point')"
+            (buttonClick)="clearFilter.emit('center_point')"
           >
             {{ 'nav.clear' | translate }}
           </mzima-client-button>
@@ -188,14 +188,14 @@
           color="secondary"
           [disabled]="form.disabled"
           class="search-form__button"
-          (buttonClick)="resetSavedFilter()"
+          (buttonClick)="resetSavedFilter.emit()"
           [data-qa]="'search-form__button'"
         >
           {{ 'global_filter.clear_all_filters' | translate }}
         </mzima-client-button>
         <mzima-client-button
-          *ngIf="!isDesktop"
-          (buttonClick)="applyAndClose()"
+          *ngIf="!(isDesktop$ | async)!"
+          (buttonClick)="applyAndClose.emit()"
           [disabled]="form.disabled"
           class="search-form__button"
         >
@@ -205,7 +205,3 @@
     </div>
   </div>
 </form>
-
-<ng-template #loader>
-  <app-spinner class="spinner"></app-spinner>
-</ng-template>
