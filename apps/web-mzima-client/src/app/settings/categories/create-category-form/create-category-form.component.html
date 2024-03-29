@@ -25,17 +25,17 @@
           formControlName="name"
           placeholder="{{ 'category.placeholder.name' | translate }}"
         />
-      </mat-form-field>
-      <mat-error *ngIf="form.get('name')?.hasError('required')">
-        {{ 'category.validation.required.name' | translate }}
-      </mat-error>
-      <ng-container *ngFor="let err of formErrors">
-        <ng-container *ngIf="err?.field === 'tag'">
-          <mat-error *ngFor="let msg of err?.error_messages">
-            {{ msg | translate }}
-          </mat-error>
+        <mat-error *ngIf="form.get('name')?.hasError('required')">
+          {{ 'category.validation.required.name' | translate }}
+        </mat-error>
+        <ng-container *ngFor="let err of formErrors">
+          <ng-container *ngIf="err?.field === 'tag'">
+            <mat-error *ngFor="let msg of err?.error_messages">
+              {{ msg | translate }}
+            </mat-error>
+          </ng-container>
         </ng-container>
-      </ng-container>
+      </mat-form-field>
     </div>
 
     <div class="form-row">
