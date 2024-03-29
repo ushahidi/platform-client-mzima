@@ -11,6 +11,21 @@
   fill: var(--color-neutral-100);
 }
 
+.mat-form-field-label {
+  transform: none !important;
+  transition: none !important;
+  top: -2px !important;
+  color: var(--color-neutral-100) !important;
+}
+
+.mat-form-field-required-marker {
+  color: var(--color-neutral-100) !important;
+}
+
+// .form-row {
+//   margin-top: 34px;
+// }
+
 .mat-pseudo-checkbox {
   margin-top: 3.5px;
   margin-inline-start: 3.5px;
