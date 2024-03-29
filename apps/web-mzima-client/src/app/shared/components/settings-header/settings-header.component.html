@@ -33,7 +33,7 @@
     >
       {{ 'settings.bulk_actions' | translate }}
     </mzima-client-button>
-    <mzima-client-button [routerLink]="['create']" [data-qa]="'btn-settings-create'">
+    <mzima-client-button tabindex="-1" [routerLink]="['create']" [data-qa]="'btn-settings-create'">
       <span>{{ newButtonTitle | translate }}</span>
       <mat-icon icon svgIcon="plus"></mat-icon>
     </mzima-client-button>

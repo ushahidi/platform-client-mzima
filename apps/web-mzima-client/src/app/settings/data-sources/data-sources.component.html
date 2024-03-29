@@ -2,6 +2,7 @@
   <h1 *ngIf="isDesktop$ | async">{{ 'settings.data_sources.data_sources' | translate }}</h1>
   <mzima-client-button
     [routerLink]="['create']"
+    tabindex="-1"
     *ngIf="!isAllProvidersAdded"
     [data-qa]="'btn-add-provider'"
   >
