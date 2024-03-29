@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { omit, clone, invert, keys, includes } from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,6 +32,7 @@ enum PostStatus {
   styleUrls: ['./data-import.component.scss'],
 })
 export class DataImportComponent extends BaseComponent implements OnInit {
+  @ViewChild('fileInput') fileInput: ElementRef;
   PostStatus = PostStatus;
   selectedFile: File;
   selectedForm: SurveyItem;
@@ -77,6 +78,10 @@ export class DataImportComponent extends BaseComponent implements OnInit {
     });
   }
   loadData(): void {}
+
+  openFileSelector(): void {
+    this.fileInput.nativeElement.click();
+  }
 
   uploadFile($event: any) {
     this.fileChanged = true;

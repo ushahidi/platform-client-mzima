@@ -1,6 +1,6 @@
 <div class="head">
   <h1 *ngIf="isDesktop">{{ 'app.import' | translate }}</h1>
-  <mzima-client-button class="upload-button" [data-qa]="'btn-upload'">
+  <mzima-client-button class="upload-button" [data-qa]="'btn-upload'" (click)="openFileSelector()">
     <span>
       {{
         (selectedFile ? 'data_import.change_csv_file' : 'data_import.upload_csv_file')
@@ -13,7 +13,15 @@
       }}
     </span>
     <mat-icon icon svgIcon="plus"></mat-icon>
-    <input name="file" type="file" accept=".csv" (change)="uploadFile($event)" />
+    <input
+      tabindex="-1"
+      class="hidden-input"
+      #fileInput
+      name="file"
+      type="file"
+      accept=".csv"
+      (change)="uploadFile($event)"
+    />
   </mzima-client-button>
 </div>
 
