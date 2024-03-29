@@ -42,10 +42,14 @@ class SurveyConfigurationFunctions {
   }
 
   login_as_different_user() {
-    cy.get(SurveyConfigurationLocators.authBtn).click();
-    cy.type(Cypress.env('ush_user_email'));
-    cy.type(Cypress.env('ush_user_pwd'));
-    cy.get(LoginLocators.loginButton).click();
+    // //change language to english
+    // cy.get('.language__selected').click();
+    // cy.get('#mat-option-7 > .mat-option-text').click();
+    // //proceed to login
+    // cy.get(LoginLocators.loginModal).click();
+    // cy.type(Cypress.env('ush_user_email'));
+    // cy.type(Cypress.env('ush_user_pwd'));
+    // cy.get(LoginLocators.loginButton).click();
   }
 
   click_add_post_btn() {
@@ -129,6 +133,20 @@ class SurveyConfigurationFunctions {
     this.verify_button_toggled();
     this.add_post();
     this.check_for_added_post_being_published();
+  }
+
+  hide_author_information_and_verify() {
+    this.open_settings();
+    this.open_surveys();
+    this.open_particular_survey();
+    this.open_survey_configurations();
+    this.toggle_hide_author_information();
+    loginFunctions.logout();
+    loginFunctions.login_member_user();
+    this.add_post();
+    this.check_for_accurate_author_name();
+    loginFunctions.logout();
+    this.check_for_anonymous_author_name();
   }
 }
 

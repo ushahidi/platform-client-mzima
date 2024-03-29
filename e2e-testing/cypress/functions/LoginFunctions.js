@@ -10,13 +10,13 @@ class LoginFunctions {
 
   type_email(email) {
     cy.wait(1000);
-    cy.get(LoginLocators.emailField).type(email, {force: true}).should('have.value', email);
+    cy.get(LoginLocators.emailField).type(email, { force: true }).should('have.value', email);
   }
 
   type_password(password) {
     cy.get(LoginLocators.passwordField)
-      .clear({force: true})
-      .type(password, {force: true})
+      .clear({ force: true })
+      .type(password, { force: true })
       .invoke('val')
       .should('have.length.gte', 12);
   }
@@ -90,6 +90,20 @@ class LoginFunctions {
         this.click_login_button();
         this.verify_login();
         this.check_user_details_correct();
+      },
+      { cacheAcrossSpecs: true },
+    );
+  }
+
+  login_member_user() {
+    cy.session(
+      [Cypress.env('ush_user_email'), Cypress.env('ush_user_pwd')],
+      () => {
+        this.launch_login_modal(Cypress.env('baseUrl'));
+        this.type_email(Cypress.env('ush_user_email'));
+        this.type_password(Cypress.env('ush_user_pwd'));
+        this.click_login_button();
+        this.verify_login();
       },
       { cacheAcrossSpecs: true },
     );
