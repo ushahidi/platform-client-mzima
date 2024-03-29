@@ -1,5 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+  ValidationErrors,
+} from '@angular/forms';
 import { AuthService } from '@services';
 import { regexHelper } from '@helpers';
 import { emailExistsValidator } from '../../../core/validators';
@@ -13,25 +20,42 @@ import { generalHelpers } from '@mzima-client/sdk';
 export class RegistrationFormComponent {
   @Output() registered = new EventEmitter();
   public isPasswordVisible = false;
+  public isConfirmasswordVisible = false;
   public form: FormGroup;
   public submitted = false;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder) {
-    this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(generalHelpers.CONST.MIN_PASSWORD_LENGTH),
-          Validators.maxLength(generalHelpers.CONST.MAX_PASSWORD_LENGTH),
+    this.form = this.formBuilder.group(
+      {
+        name: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.pattern(regexHelper.emailValidate())]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(generalHelpers.CONST.MIN_PASSWORD_LENGTH),
+            Validators.maxLength(generalHelpers.CONST.MAX_PASSWORD_LENGTH),
+          ],
         ],
-      ],
-      confirmPassword: ['', Validators.required],
-      agreement: [false, [Validators.required]],
-    });
+        confirmPassword: ['', [Validators.required]],
+        agreement: [false, [Validators.required]],
+      },
+      {
+        validators: this.passwordMatchValidator,
+      },
+    );
   }
+
+  private passwordMatchValidator: ValidatorFn = (
+    control: AbstractControl,
+  ): ValidationErrors | null => {
+    if (!control) return null;
+    console.log(this.form);
+
+    return control.get('password')?.value === control.get('confirmPassword')?.value
+      ? null
+      : { mismatch: true };
+  };
 
   getErrorMessage(field: string) {
     switch (field) {
@@ -55,6 +79,9 @@ export class RegistrationFormComponent {
 
   togglePasswordVisible() {
     this.isPasswordVisible = !this.isPasswordVisible;
+  }
+  toggleConfirmPasswordVisible() {
+    this.isConfirmasswordVisible = !this.isConfirmasswordVisible;
   }
 
   signup() {

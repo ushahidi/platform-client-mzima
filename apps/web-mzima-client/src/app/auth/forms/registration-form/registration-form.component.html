@@ -40,6 +40,9 @@
       <mat-error [data-qa]="'invalid-password'" *ngIf="form.get('password')?.invalid">{{
         getErrorMessage('password')
       }}</mat-error>
+      <mat-error [data-qa]="'invalid-confirmPassword'" *ngIf="form.hasError('mismatch')">{{
+        'user.password_match' | translate
+      }}</mat-error>
       <mat-hint>{{ 'user.password_hint' | translate }}.</mat-hint>
     </mat-form-field>
     <app-password-strength [passwordToCheck]="form.value.password"></app-password-strength>
@@ -53,16 +56,19 @@
         fill="clear"
         color="secondary"
         [iconOnly]="true"
-        (buttonClick)="togglePasswordVisible()"
+        (buttonClick)="toggleConfirmPasswordVisible()"
       >
-        <mat-icon icon [svgIcon]="isPasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
+        <mat-icon icon [svgIcon]="isConfirmasswordVisible ? 'eye-open' : 'eye'"></mat-icon>
       </mzima-client-button>
       <input
         matInput
         formControlName="confirmPassword"
         required
-        [type]="isPasswordVisible ? 'text' : 'password'"
+        [type]="isConfirmasswordVisible ? 'text' : 'password'"
       />
+      <mat-error [data-qa]="'invalid-confirmPassword'" *ngIf="form.hasError('mismatch')">{{
+        'user.password_match' | translate
+      }}</mat-error>
       <mat-hint>{{ 'Match your password in both fields for security. Thanks!' }}.</mat-hint>
     </mat-form-field>
   </div>
