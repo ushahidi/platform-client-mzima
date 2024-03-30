@@ -46,9 +46,10 @@
             color="transparent-style-1"
             [iconOnly]="true"
             class="fab-button__icon copy"
-            [ariaLabel]="'Toggle company details' | translate"
+            [ariaLabel]="'Copy HTML' | translate"
+            (click)="copyToClipboard()"
           >
-            <mat-icon (click)="copyToClipboard()" svgIcon="copy"></mat-icon>
+            <mat-icon svgIcon="copy"></mat-icon>
           </mzima-client-button>
         </mat-form-field>
       </div>
