@@ -3,10 +3,16 @@
     <mat-tab [label]="'survey.main_info' | translate" [data-qa]="'survey-main-info'">
       <ng-container *ngIf="!isPost">
         <div class="form-row">
-          <mat-label>{{ 'survey.task_name' | translate }} *</mat-label>
+          <label
+            [for]="task.label"
+            class="form-label"
+            [attr.aria-label]="'survey.task_name' | translate"
+            >{{ 'survey.task_name' | translate }} *</label
+          >
           <mat-form-field appearance="outline">
             <input
               matInput
+              [id]="task.label"
               [(ngModel)]="task.label"
               [placeholder]="'survey.untitled_task' | translate"
               [readonly]="!isDefaultLanguageSelected"
@@ -16,10 +22,16 @@
           </mat-form-field>
         </div>
         <div class="form-row" *ngIf="!isDefaultLanguageSelected">
-          <mat-label>{{ 'survey.task_name' | translate }} ({{ selectLanguageCode }})</mat-label>
+          <label
+            [for]="task.label + selectLanguageCode"
+            class="form-label"
+            [attr.aria-label]="'survey.task_name' | translate"
+            >{{ 'survey.task_name' | translate }} ({{ selectLanguageCode }})</label
+          >
           <mat-form-field appearance="outline">
             <input
               matInput
+              [id]="task.label + selectLanguageCode"
               [(ngModel)]="task.translations[selectLanguageCode].label"
               [placeholder]="'survey.untitled_task' | translate"
               (ngModelChange)="changeLabel($event)"
@@ -27,10 +39,16 @@
           </mat-form-field>
         </div>
         <div class="form-row">
-          <mat-label>{{ 'app.description' | translate }}</mat-label>
+          <label
+            class="form-label"
+            for="description"
+            [attr.aria-label]="'app.description' | translate"
+            >{{ 'app.description' | translate }}</label
+          >
           <mat-form-field appearance="outline">
             <textarea
               matInput
+              id="description"
               cdkTextareaAutosize
               [readonly]="!isDefaultLanguageSelected"
               [(ngModel)]="task.description"
@@ -41,11 +59,17 @@
         </div>
 
         <div class="form-row" *ngIf="!isDefaultLanguageSelected">
-          <mat-label>{{ 'app.description' | translate }} ({{ selectLanguageCode }})</mat-label>
+          <label
+            class="form-label"
+            [for]="'description-' + selectLanguageCode"
+            [attr.aria-label]="'app.description' | translate"
+            >{{ 'app.description' | translate }} ({{ selectLanguageCode }})</label
+          >
           <mat-form-field appearance="outline">
             <textarea
               matInput
               cdkTextareaAutosize
+              [id]="'description-' + selectLanguageCode"
               [(ngModel)]="task.translations[selectLanguageCode].description"
               [placeholder]="'survey.describe_this_task' | translate"
             >
@@ -265,9 +289,16 @@
         ></app-color-picker>
 
         <div class="form-row">
-          <mat-label>{{ 'translations.survey_select_default' | translate }}</mat-label>
+          <label
+            for="select-language"
+            class="form-label"
+            [attr.aria-label]="'translations.survey_select_default' | translate"
+            >{{ 'translations.survey_select_default' | translate }}</label
+          >
           <mat-form-field appearance="outline">
             <mat-select
+              id="select-language"
+              [aria-label]="'translations.survey_select_default' | translate"
               disableOptionCentering
               panelClass="language-field"
               [(value)]="selectedLanguage"

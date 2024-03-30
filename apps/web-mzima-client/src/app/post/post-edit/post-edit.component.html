@@ -100,7 +100,13 @@
             class="form-row"
             *ngFor="let field of task.fields | sortByField : 'priority' : 'asc'; let i = index"
           >
-            <mat-label>
+            <label
+              class="form-label"
+              [attr.aria-label]="
+                'Enter' + (field?.translations[activeLanguage]?.label || field?.label)
+              "
+              [for]="field.key"
+            >
               <mat-icon
                 aria-label="Field responses will be private"
                 *ngIf="field.response_private"
@@ -110,7 +116,7 @@
               ></mat-icon>
               {{ field?.translations[activeLanguage]?.label || field?.label }}
               <span class="color-accent" *ngIf="field?.required">*</span>
-            </mat-label>
+            </label>
             <span
               class="form-row__instruction"
               *ngIf="field?.instructions"
@@ -123,6 +129,7 @@
             >
               <mat-form-field appearance="outline">
                 <input
+                  [id]="field.key"
                   matInput
                   [formControlName]="field.key"
                   [data-qa]="field.label.replace(' ', '-') | lowercase"
@@ -134,6 +141,7 @@
               <mat-form-field appearance="outline">
                 <textarea
                   matInput
+                  [id]="field.key"
                   cdkTextareaAutosize
                   cdkAutosizeMinRows="2"
                   cdkAutosizeMaxRows="5"
@@ -148,6 +156,7 @@
               <mat-form-field appearance="outline">
                 <textarea
                   matInput
+                  [id]="field.key"
                   cdkTextareaAutosize
                   cdkAutosizeMinRows="2"
                   cdkAutosizeMaxRows="5"
@@ -300,6 +309,11 @@
             <ng-container *ngIf="field.input === 'checkbox'">
               <mat-selection-list
                 [formControlName]="field.key"
+                [attr.aria-label]="
+                  field?.instructions
+                    ? field?.translations[activeLanguage]?.instructions || field?.instructions
+                    : 'please select'
+                "
                 *ngIf="field.options?.length; else noOptions"
                 [data-qa]="
                   field.label.replaceAll(' ', '-').replace('(', '').replace(')', '') | lowercase

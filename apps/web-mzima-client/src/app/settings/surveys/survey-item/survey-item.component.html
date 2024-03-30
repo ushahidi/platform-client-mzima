@@ -37,10 +37,16 @@
   >
     <ng-container survey-info>
       <div class="form-row">
-        <mat-label>{{ 'survey.survey_name' | translate }} *</mat-label>
+        <label
+          for="survey-name"
+          class="form-label"
+          [attr.aria-label]="'enter ' + 'survey.survey_name' | translate"
+          >{{ 'survey.survey_name' | translate }} *</label
+        >
         <mat-form-field appearance="outline">
           <input
             matInput
+            id="survey-name"
             formControlName="name"
             [placeholder]="'survey.survey_name' | translate"
             [readonly]="!isDefaultLanguageSelected"
@@ -58,23 +64,36 @@
       </div>
 
       <div class="form-row" *ngIf="!isDefaultLanguageSelected">
-        <mat-label> {{ 'survey.survey_name' | translate }} ({{ selectLanguageCode }})</mat-label>
+        <label
+          [for]="'survey-name-' + selectLanguageCode"
+          class="form-label"
+          [attr.aria-label]="'enter ' + 'survey.survey_name' | translate"
+        >
+          {{ 'survey.survey_name' | translate }} ({{ selectLanguageCode }})</label
+        >
         <mat-form-field appearance="outline">
           <input
             matInput
             [placeholder]="'survey.survey_name' | translate"
             [value]="form.get('translations')?.value[selectLanguageCode]?.name"
             (change)="setTranslates(selectLanguageCode, 'name', $event)"
+            [id]="'survey-name-' + selectLanguageCode"
             [data-qa]="'survey-name-' + selectLanguageCode"
           />
         </mat-form-field>
       </div>
 
       <div class="form-row">
-        <mat-label>{{ 'survey.description' | translate }}</mat-label>
+        <label
+          for="description"
+          class="form-label"
+          [attr.aria-label]="'enter ' + 'survey.description' | translate"
+          >{{ 'survey.description' | translate }}</label
+        >
         <mat-form-field appearance="outline">
           <textarea
             matInput
+            id="description"
             cdkTextareaAutosize
             cdkAutosizeMinRows="2"
             cdkAutosizeMaxRows="5"
@@ -88,10 +107,17 @@
       </div>
 
       <div class="form-row" *ngIf="!isDefaultLanguageSelected">
-        <mat-label> {{ 'survey.description' | translate }} ({{ selectLanguageCode }})</mat-label>
+        <label
+          [for]="'survey-description-' + selectLanguageCode"
+          class="form-label"
+          [attr.aria-label]="'enter ' + 'survey.description' | translate"
+        >
+          {{ 'survey.description' | translate }} ({{ selectLanguageCode }})</label
+        >
         <mat-form-field appearance="outline">
           <textarea
             matInput
+            [id]="'survey-description-' + selectLanguageCode"
             cdkTextareaAutosize
             cdkAutosizeMinRows="2"
             cdkAutosizeMaxRows="5"

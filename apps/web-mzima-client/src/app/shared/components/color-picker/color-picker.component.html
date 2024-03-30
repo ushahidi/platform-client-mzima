@@ -1,10 +1,13 @@
 <div class="form-row">
-  <mat-label *ngIf="label">{{ label }}</mat-label>
+  <label class="form-label" for="color-picker" aria-label="select color" *ngIf="label">{{
+    label
+  }}</label>
   <mat-form-field appearance="outline">
     <span matPrefix class="selected-color" [ngStyle]="{ backgroundColor: value || '#eee' }"></span>
     <input
       matInput
       readonly
+      id="color-picker"
       [(ngModel)]="value"
       [matMenuTriggerFor]="menu"
       [placeholder]="placeholder"

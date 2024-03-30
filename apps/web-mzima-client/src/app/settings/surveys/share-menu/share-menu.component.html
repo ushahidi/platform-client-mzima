@@ -1,22 +1,26 @@
 <div class="form-row">
-  <mat-label>{{ 'app.survey_web_address' | translate }}</mat-label>
+  <label for="url" [attr.aria-label]="'app.survey_web_address' | translate" class="form-label">{{
+    'app.survey_web_address' | translate
+  }}</label>
   <mat-form-field appearance="outline">
-    <input type="url" matInput [value]="shareUrl" readonly="true" />
+    <input id="url" type="url" matInput [value]="shareUrl" readonly="true" />
   </mat-form-field>
 </div>
 
 <div class="form-row">
-  <mat-label>HTML</mat-label>
   <div class="copy-success" *ngIf="copySuccess">{{ 'share.copied' | translate }}</div>
+  <label class="form-label" for="iframe" [attr.aria-label]="'HTML iframe'">HTML</label>
   <mat-form-field appearance="outline" class="copy" [ngClass]="{ success: copySuccess }">
     <textarea matInput readonly cdkTextareaAutosize cdkAutosizeMaxRows="10">{{ embed }}</textarea>
     <mzima-client-button
       matSuffix
+      id="iframe"
       fill="clear"
       color="secondary"
       [iconOnly]="true"
       class="copy-button"
       [disabled]="copySuccess"
+      [ariaLabel]="'copy html iframe to clipboard'"
       (buttonClick)="copyToClipboard(embed)"
     >
       <mat-icon icon svgIcon="copy"></mat-icon>
