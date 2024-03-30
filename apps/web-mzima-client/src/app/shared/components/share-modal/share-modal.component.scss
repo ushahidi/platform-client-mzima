@@ -14,11 +14,26 @@
 
   .copy {
     position: absolute;
-    inset-inline-end: 16px;
+    inset-inline-end: 4px;
     top: 50%;
     transform: translate(0, -50%);
     cursor: pointer;
 
+    ::ng-deep {
+      .mzima-button {
+        &--outline {
+          --background-color: var(--color-neutral-70);
+          --hover-background-color: var(--color-neutral-10);
+          --active-background-color: var(--color-neutral-20);
+        }
+
+        &--icon-only {
+          width: var(--size, 36px);
+          height: var(--size, 36px);
+          font-size: var(--icon-size, 24px);
+        }
+      }
+    }
     &-success {
       position: absolute;
       width: 100%;
@@ -52,7 +67,7 @@
     justify-content: space-between;
 
     mzima-client-button {
-      margin: 0 8px 8px;
+      margin: 0 8px 12px;
       width: calc(50% - 16px);
     }
   }

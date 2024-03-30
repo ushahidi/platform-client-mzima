@@ -41,11 +41,15 @@
             [(ngModel)]="htmlEmbed"
           >
           </textarea>
-          <mat-icon
-            (click)="copyToClipboard()"
+          <mzima-client-button
+            fill="outline"
+            color="transparent-style-1"
+            [iconOnly]="true"
             class="fab-button__icon copy"
-            svgIcon="copy"
-          ></mat-icon>
+            [ariaLabel]="'Toggle company details' | translate"
+          >
+            <mat-icon (click)="copyToClipboard()" svgIcon="copy"></mat-icon>
+          </mzima-client-button>
         </mat-form-field>
       </div>
     </div>
