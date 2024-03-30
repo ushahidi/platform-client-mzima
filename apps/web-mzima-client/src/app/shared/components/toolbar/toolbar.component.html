@@ -54,6 +54,7 @@
   </mzima-client-button>
   <app-main-filters
     *ngIf="showSearchForm"
+    [hidden]="!isFiltersVisible"
     [form]="form"
     [isFiltersVisible]="isFiltersVisible"
     [canCreateSearch]="canCreateSearch"

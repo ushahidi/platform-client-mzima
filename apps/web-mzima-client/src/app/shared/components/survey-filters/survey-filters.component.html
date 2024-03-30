@@ -21,7 +21,7 @@
       <mat-icon svgIcon="angle-right"></mat-icon>
     </button>
 
-    <div class="search-form__main-filters__inner">
+    <div class="search-form__main-filters__inner" [hidden]="!isMainFiltersOpen">
       <span
         class="search-form__main-filters__total"
         *ngIf="total !== undefined"
