@@ -31,6 +31,10 @@
     &__button {
       margin: 0 4px;
       flex: 1 1 calc(50% - 8px);
+
+      ::ng-deep {
+        @include focusVisible($outline-offset: 3px);
+      }
     }
 
     @include breakpoint-min($tablet) {

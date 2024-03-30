@@ -112,6 +112,10 @@
   justify-content: center;
   margin-inline-end: -8px;
   margin-inline-start: 0;
+
+  ::ng-deep {
+    @include focusVisible($border-radius: 6px);
+  }
 }
 
 .menu {

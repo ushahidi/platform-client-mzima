@@ -160,6 +160,7 @@
 .mobile-menu-button {
   display: flex;
   margin: 4px 0;
+  border: none;
   padding: 0 16px;
   font-size: 16px;
   cursor: pointer;
@@ -172,6 +173,7 @@
   justify-content: flex-start;
   color: var(--color-neutral-50);
   background: var(--color-neutral-100);
+  @include focusVisible($border-radius: 6px);
 
   &__icon {
     width: 1em;

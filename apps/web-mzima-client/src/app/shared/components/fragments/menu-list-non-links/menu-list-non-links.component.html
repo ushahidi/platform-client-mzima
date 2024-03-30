@@ -13,7 +13,9 @@
         [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
       >
         <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
-        <span [attr.data-qa]="'auth-btn-label'" class="sidebar-menu-button__title">{{ item.label | translate }}</span>
+        <span [attr.data-qa]="'auth-btn-label'" class="sidebar-menu-button__title">{{
+          item.label | translate
+        }}</span>
       </button>
       <ng-template #menuLink>
         <a
@@ -39,7 +41,7 @@
   <div class="mobile-menu">
     <ng-container *ngFor="let item of menu">
       <hr *ngIf="item.separator" />
-      <a
+      <button
         *ngIf="item.visible"
         class="mobile-menu-button"
         [data-qa]="'btn-' + item.icon"
@@ -49,7 +51,7 @@
         <span class="mobile-menu-button__title">
           {{ item.label | translate }}
         </span>
-      </a>
+      </button>
     </ng-container>
     <hr *ngIf="isLoggedIn || canRegister" />
     <a class="mobile-menu-button" href="https://www.ushahidi.com/privacy-policy" target="_blank">
