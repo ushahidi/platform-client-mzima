@@ -42,7 +42,10 @@
       }}</mat-error>
       <mat-hint>{{ 'user.password_hint' | translate }}.</mat-hint>
     </mat-form-field>
-    <app-password-strength [passwordToCheck]="form.value.password"></app-password-strength>
+    <app-password-strength
+      [passwordToCheck]="form.value.password"
+      (passwordStrength)="onPasswordStrength($event)"
+    ></app-password-strength>
   </div>
 
   <div class="form-row">
@@ -58,7 +61,7 @@
 
     <mzima-client-button
       type="submit"
-      [disabled]="form.invalid || form.disabled || submitted"
+      [disabled]="form.invalid || form.disabled || submitted || !passwordStrong"
       [data-qa]="'btn-register'"
     >
       {{ 'nav.register' | translate }}

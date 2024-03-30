@@ -15,6 +15,7 @@ export class RegistrationFormComponent {
   public isPasswordVisible = false;
   public form: FormGroup;
   public submitted = false;
+  public passwordStrong: boolean = false;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
@@ -91,5 +92,9 @@ export class RegistrationFormComponent {
       control.setValidators(validators);
       control.updateValueAndValidity();
     });
+  }
+
+  onPasswordStrength(isStrong: boolean) {
+    this.passwordStrong = isStrong;
   }
 }
