@@ -17,12 +17,12 @@ export class UshahidiPageTitleStrategy extends TitleStrategy {
   }
 
   override updateTitle(routerState: RouterStateSnapshot) {
-    const title = this.buildTitle(routerState);
+    const route = routerState.url.split('/')[1];
+    const currentRoute = route.charAt(0).toUpperCase() + route.slice(1); // To capitalize first letter
 
-    if (title) {
-      this.title.setTitle(
-        `${this.translateService.instant(title)} | ${this.session.getSiteConfigurations().name}`,
-      );
+    if (currentRoute) {
+      const translatedRoute = this.translateService.instant(currentRoute);
+      this.title.setTitle(`${translatedRoute} | ${this.session.getSiteConfigurations().name}`);
     } else {
       this.title.setTitle(`${this.session.getSiteConfigurations().name}`);
     }
