@@ -1,0 +1,13 @@
+{
+  "defaults": {
+    "timeout": 10000,
+    "wait": 1000,
+    "runners": [
+        "axe",
+        "htmlcs"
+    ]
+  },
+  "urls": [
+    "http://localhost:4200"
+  ]
+}
