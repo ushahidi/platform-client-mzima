@@ -24,6 +24,7 @@ import { RouterModule } from '@angular/router';
 import * as Sentry from '@sentry/angular-ivy';
 import { BrowserTracing } from '@sentry/tracing';
 import { ToolbarModule } from './shared/components/toolbar/toolbar.module';
+import { A11yModule } from '@angular/cdk/a11y';
 
 export function loadSentryFactory(envService: EnvService) {
   return () =>
@@ -101,6 +102,7 @@ export function playerFactory(): any {
     AuthModule,
     SharedModule,
     HttpClientModule,
+    A11yModule,
     IntercomModule.forRoot({
       updateOnRouterChange: true, // will automatically run `update` on router event changes. Default: `false`
     }),

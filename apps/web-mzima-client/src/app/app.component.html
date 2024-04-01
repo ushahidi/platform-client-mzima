@@ -1,5 +1,6 @@
 <app-onboarding
   *ngIf="!isOnboardingDone && isDesktop && checkAllowedAccessToSite() && showOnboarding"
+  cdkTrapFocus
 ></app-onboarding>
 
 <mat-sidenav-container

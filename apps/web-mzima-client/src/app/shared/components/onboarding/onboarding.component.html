@@ -62,6 +62,8 @@
   </p>
   <p>
     Remember, in case of any question, don’t hesitate to reach out to our team by
-    <a (click)="openSupportModal()">Help&Support</a>.
+    <mzima-client-button (buttonClick)="openSupportModal()" fill="clear" class="support-button">
+      {{ 'nav.help_support' | translate }}.</mzima-client-button
+    >
   </p>
 </ng-template>

@@ -101,6 +101,31 @@
         &:not(:last-of-type) {
           margin-bottom: 1em;
         }
+
+        mzima-client-button {
+          &::ng-deep {
+            .mzima-button {
+              text-decoration: underline;
+              display: inline;
+
+              &--primary {
+                --hover-background-color: var(--color-primary-20);
+              }
+
+              &--block {
+                width: auto;
+              }
+              &--clear {
+                color: var(--color-primary-40);
+              }
+              &--medium {
+                padding: 0;
+                padding-inline: 0;
+                min-height: 0;
+              }
+            }
+          }
+        }
       }
     }
   }
