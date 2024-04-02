@@ -80,6 +80,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.reInitParams();
     this.route.params.subscribe(() => {
       this.initCollection();
     });
@@ -130,7 +131,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   }
 
   loadData(): void {
-    this.reInitParams();
+    // this.reInitParams();
     this.getPostsGeoJson();
   }
 
@@ -140,7 +141,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
         if (this.route.snapshot.data['view'] === 'search' && !this.searchId) return;
         if (this.route.snapshot.data['view'] === 'collection' && !this.collectionId) return;
 
-        this.reInitParams();
+        // this.reInitParams();
         this.getPostsGeoJson();
       },
     });

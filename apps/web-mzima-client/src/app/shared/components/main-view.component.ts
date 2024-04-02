@@ -18,11 +18,9 @@ export abstract class MainViewComponent {
   searchId = '';
   collectionId = '';
   params: GeoJsonFilter = {
-    include_unstructured_posts: false,
     limit: 500,
     offset: 0,
   };
-  filters;
   public user: UserInterface;
   public isDesktop: boolean = false;
 
@@ -35,7 +33,7 @@ export abstract class MainViewComponent {
     protected sessionService: SessionService,
     protected breakpointService: BreakpointService,
   ) {
-    this.filters = JSON.parse(
+    this.params = JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
     );
   }
@@ -47,7 +45,7 @@ export abstract class MainViewComponent {
       this.collectionId = this.route.snapshot.paramMap.get('id')!;
       this.params.set = this.collectionId;
       this.postsService.applyFilters({
-        ...this.normalizeFilter(this.filters),
+        ...this.normalizeFilter(this.params),
         set: this.collectionId,
       });
       this.searchId = '';
@@ -66,28 +64,24 @@ export abstract class MainViewComponent {
       } else {
         this.searchId = '';
         this.postsService.applyFilters({
-          ...this.normalizeFilter(this.filters),
+          ...this.normalizeFilter(this.params),
           set: [],
         });
       }
     }
   }
 
-  private normalizeFilter(values: any) {
+  private normalizeFilter(values: GeoJsonFilter) {
     if (!values) return {};
 
     const filters = {
       ...values,
-      'form[]': values.form,
-      'source[]': values.source,
-      'status[]': values.status,
-      'tags[]': values.tags,
+      'form[]': values['form[]'],
+      'source[]': values['source[]'],
+      'status[]': values['status[]'],
+      'tags[]': values['tags[]'],
     };
 
-    delete filters.form;
-    delete filters.source;
-    delete filters.status;
-    delete filters.tags;
     return filters;
   }
 

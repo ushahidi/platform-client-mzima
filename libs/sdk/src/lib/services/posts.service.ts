@@ -127,9 +127,6 @@ export class PostsService extends ResourceService<any> {
   public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
     // const tmpParams = { ...this.postsFilters.value, has_location: 'all', ...filter };
     const tmpParams = { ...filter, ...this.postsFilters.value, has_location: 'all' };
-    if (filter?.allSurveys && filter?.currentView === 'feed')
-      tmpParams.include_unstructured_posts = true;
-    else tmpParams.include_unstructured_posts = false;
 
     return super.get(url, this.postParamsMapper(tmpParams)).pipe(
       map((response) => {
@@ -177,7 +174,6 @@ export class PostsService extends ResourceService<any> {
   }
 
   private postParamsMapper(params: any) {
-    // TODO: REWORK THIS!! Created to make current API work as expected
     if (params.date?.start) {
       params.date_after = params.date.start;
       if (params.date.end) {
@@ -209,44 +205,51 @@ export class PostsService extends ResourceService<any> {
     }
 
     if (params['form[]']?.length === 0) {
-      params['form[]'].push('none');
+      delete params['form[]'];
+      // params['form[]'].push('none');
     }
 
     if (params['source[]']?.length === 0) {
-      params['source[]'].push('none');
+      delete params['source[]'];
     }
 
     if (params.status?.length) {
       params['status[]'] = params.status;
-      delete params.status;
     }
     if (params.source?.length) {
       params['source[]'] = params.source;
-      delete params.source;
     }
 
     if (params.tags?.length) {
       params['tags[]'] = params.tags;
-      delete params.tags;
     }
+
+    if (params.currentView === 'map') {
+      params.has_location = 'mapped';
+      params.include_unstructured_posts = false;
+      params['form[]'] = params['form[]'].filter((formId: any) => formId !== 0);
+    } else if (params.currentView === 'feed') {
+      delete params.has_location;
+      delete params.within_km;
+      params.include_unmapped = true;
+      if (params['form[]'].includes(0)) {
+        params.include_unstructured_posts = true;
+      } else {
+        params.include_unstructured_posts = false;
+      }
+    }
+
+    delete params.currentView;
+    delete params.source;
+    delete params.tags;
+    delete params.status;
+    delete params.form;
+
     return params;
   }
 
   public getPostStatistics(queryParams?: any): Observable<PostStatsResponse> {
     const filters = this.postParamsMapper(this.postsFilters.value);
-
-    if (filters.currentView === 'map') {
-      filters.has_location = 'mapped';
-      filters.include_unstructured_posts = false;
-    } else if (filters.currentView === 'feed') {
-      delete filters.has_location;
-      filters.include_unmapped = true;
-      if (filters.allSurveys) {
-        filters.include_unstructured_posts = true;
-        delete filters.form;
-        delete filters['form[]'];
-      }
-    }
 
     return super.get(
       'stats',

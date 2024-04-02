@@ -106,12 +106,13 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserData();
+    this.isMapView = this.router.url.includes('/map');
     this.eventBusInit();
     this.getSavedFilters();
+    this.initFilters();
     this.getSurveys();
     this.getCategories();
-    this.initFilters();
+    this.getUserData();
 
     if (this.activeSaved) {
       this.activeSavedSearch = JSON.parse(this.activeSaved!);
@@ -120,8 +121,6 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       this.checkSavedSearchNotifications();
     }
 
-    // TODO: There should be a better way to check if the context is a map view
-    this.isMapView = this.router.url.includes('/map');
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
         this.isMapView = params.url.includes('/map');
@@ -429,7 +428,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
 
     forkJoin([
       this.surveysService.get('', { show_unknown_form: true }),
-      this.postsService.getPostStatistics(null),
+      this.getPostsStatistic(),
     ]).subscribe({
       next: (responses) => {
         const values = responses[1].result.group_by_total_posts;

@@ -23,7 +23,7 @@ export interface GeoJsonItem {
 export interface GeoJsonFilter {
   has_location?: string;
   currentView?: 'map' | 'feed';
-  allSurveys?: boolean;
+  // allSurveys?: boolean;
   limit?: number;
   offset?: number;
   order?: 'desc' | 'asc';

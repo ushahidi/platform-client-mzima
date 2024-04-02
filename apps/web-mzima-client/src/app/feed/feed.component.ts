@@ -38,19 +38,13 @@ enum FeedMode {
 export class FeedComponent extends MainViewComponent implements OnInit {
   @ViewChild('feed') public feed: ElementRef;
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
-  public override params: GeoJsonFilter = {
-    limit: 20,
-    page: 1,
-    currentView: 'feed',
-    // created_before_by_id: '',
-  };
   private readonly getPostsSubject = new Subject<{
     params: GeoJsonFilter;
     add?: boolean;
   }>();
   public pagination = {
-    page: 1,
-    size: this.params.limit,
+    page: 0,
+    limit: 20,
   };
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
@@ -114,7 +108,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       sessionService,
       breakpointService,
     );
+
     this.checkDesktop();
+    this.setupFeedDefaultFilters();
     this.initGetPostsListener();
 
     if (!this.isDesktop) {
@@ -216,6 +212,17 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.getUserData();
     this.checkPermission();
     this.eventBusListeners();
+  }
+
+  private setupFeedDefaultFilters() {
+    if (this.params.include_unstructured_posts) this.params['form[]']?.push('0');
+    this.params.currentView = 'feed';
+    (this.params.limit = 20),
+      (this.params.page = 1),
+      (this.pagination = {
+        limit: this.params.limit,
+        page: this.params.page,
+      });
   }
 
   private eventBusListeners() {
