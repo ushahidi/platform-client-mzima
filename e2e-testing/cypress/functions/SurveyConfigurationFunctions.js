@@ -94,7 +94,7 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
-    cy.visit(`Cypress.env('baseUrl')/maps`);
+    cy.visit(`Cypress.env('baseUrl')/map`);
     cy.compareSnapshot('home-page');
   }
 
