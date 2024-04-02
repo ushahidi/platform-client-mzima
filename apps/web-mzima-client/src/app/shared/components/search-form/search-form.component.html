@@ -144,7 +144,6 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
-                (buttonClick)="clearFilter('form')"
                 [data-qa]="'clear'"
                 (buttonClick)="toggleSidebarFilters('form')"
               >
@@ -165,7 +164,7 @@
                 checkboxPosition="before"
                 class="selection-list__option"
                 [ngStyle]="{ '--color': survey.color }"
-                [data-qa]="'survey-select-item'"
+                [data-qa]="'survey-select-item' + survey.id"
               >
                 <span class="selection-list__option__border"></span>
                 {{ survey.name }}

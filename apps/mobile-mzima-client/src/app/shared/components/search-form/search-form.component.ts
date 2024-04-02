@@ -22,6 +22,7 @@ export class SearchFormComponent implements ControlValueAccessor {
   @Output() public back = new EventEmitter();
 
   @Input() public value?: string;
+  @Input() public placeholder: string;
   @ViewChild('searchControl') public searchControl: FormControlComponent;
 
   public isSearchView = false;
