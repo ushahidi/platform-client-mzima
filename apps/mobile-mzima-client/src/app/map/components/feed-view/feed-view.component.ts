@@ -9,6 +9,7 @@ import {
   PostResult,
   PostsService,
   SavedsearchesService,
+  CollectionsService,
 } from '@mzima-client/sdk';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { DatabaseService, EnvService, SessionService } from '@services';
@@ -35,6 +36,8 @@ export class FeedViewComponent extends MainViewComponent {
   public destroy$ = new Subject();
   public isConnection = true;
   public sorting = 'created?desc';
+  public isCollection = false;
+  public collectionName: string;
   public sortingOptions = [
     {
       label: 'Date created (Newest first)',
@@ -71,6 +74,7 @@ export class FeedViewComponent extends MainViewComponent {
     private databaseService: DatabaseService,
     private mediaService: MediaService,
     private envService: EnvService,
+    private collectionService: CollectionsService,
   ) {
     super(router, route, postsService, savedSearchesService, sessionService);
     this.envService.deployment$.subscribe({
@@ -78,6 +82,26 @@ export class FeedViewComponent extends MainViewComponent {
         this.posts = [];
       },
     });
+    if (this.route.snapshot.data['view'] === 'collection') {
+      this.openCollection();
+    }
+  }
+
+  openCollection() {
+    const collectionId: any = this.route.snapshot.paramMap.get('id');
+    this.collectionService.getCollection(collectionId).subscribe((result: any) => {
+      this.isCollection = true;
+      this.collectionName = result.result.name;
+    });
+  }
+
+  removeCollection() {
+    this.postsService.applyFilters({
+      ...this.postsService.normalizeFilter(this.filters),
+    });
+    this.router.navigate(['/']);
+    this.isCollection = false;
+    this.collectionName = '';
   }
 
   ionViewDidLeave(): void {

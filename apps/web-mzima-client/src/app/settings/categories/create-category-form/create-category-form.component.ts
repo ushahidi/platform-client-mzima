@@ -19,6 +19,7 @@ import {
   generalHelpers,
 } from '@mzima-client/sdk';
 import { BreakpointService, SessionService, LanguageService, ConfirmModalService } from '@services';
+import { noWhitespaceValidator } from '../../../core/validators';
 
 @UntilDestroy()
 @Component({
@@ -62,6 +63,25 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
     this.languages = this.languageService.getLanguages();
     this.defaultLanguage = this.languages.find((lang) => lang.code === 'en'); // FIXME
 
+    this.form = this.fb.group({
+      id: [''],
+      name: ['', [Validators.required, noWhitespaceValidator]],
+      description: [''],
+      is_child_to: [''],
+      language: ['en'],
+      visible_to: [
+        {
+          value: 'everyone',
+          options: [],
+          disabled: false,
+        },
+      ],
+      translations: this.fb.array<TranslationInterface>([]),
+      translate_name: [''],
+      translate_description: [''],
+      parent: [],
+    });
+
     this.categoriesService.categoryErrors$.pipe(untilDestroyed(this)).subscribe((value) => {
       this.formErrors = value;
     });
@@ -69,7 +89,6 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
 
   ngOnInit(): void {
     this.getUserData();
-    this.initializeForm();
     this.formSubscribe();
     this.getCategories();
     this.getRoles();
@@ -109,27 +128,6 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
 
   ngOnDestroy() {
     this.categoriesService.categoryErrors.next(null);
-  }
-
-  private initializeForm() {
-    this.form = this.fb.group({
-      id: [''],
-      name: ['', [Validators.required]],
-      description: [''],
-      is_child_to: [''],
-      language: ['en'],
-      visible_to: [
-        {
-          value: 'everyone',
-          options: [],
-          disabled: false,
-        },
-      ],
-      translations: this.fb.array<TranslationInterface>([]),
-      translate_name: [''],
-      translate_description: [''],
-      parent: [],
-    });
   }
 
   private formSubscribe() {
