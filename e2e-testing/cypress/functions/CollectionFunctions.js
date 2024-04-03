@@ -49,7 +49,7 @@ class CollectionFunctions {
     cy.get(CollectionLocators.postCheckBox).click({ force: true });
     this.save_post();
     cy.get(CollectionLocators.successBtn).click();
-    cy.get(CollectionLocators.postItem).find(CollectionLocators.morePostActionsBtn).click();
+    cy.get(CollectionLocators.postItem).eq(0).find(CollectionLocators.morePostActionsBtn).click();
     cy.get(CollectionLocators.addCollectionToPostCheckbox).click();
     cy.get('#mat-dialog-0')
       .find(CollectionLocators.selectCollection)
