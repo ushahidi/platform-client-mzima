@@ -1,12 +1,18 @@
-<app-main-layout title="My posts" (back)="back()" [isSearch]="true" (search)="searchPosts($event)">
+<app-main-layout
+  title="My posts"
+  (back)="back()"
+  [isSearch]="true"
+  [placeholderText]="'Search for Posts'"
+  (search)="searchPosts($event)"
+>
   <app-button
     header-end
     fill="clear"
     class="edit-button"
     (buttonClick)="editPosts()"
-    [color]="!isEditMode ? 'custom' : 'primary'"
+    color="custom"
   >
-    <app-icon *ngIf="!isEditMode" name="edit" slot="icon-only"></app-icon>
+    <ng-container *ngIf="!isEditMode">Bulk Actions</ng-container>
     <ng-container *ngIf="isEditMode">Done</ng-container>
   </app-button>
   <ng-container *ngIf="posts.length; else emptyBox">
