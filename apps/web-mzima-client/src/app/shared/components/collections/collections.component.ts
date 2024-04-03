@@ -277,6 +277,13 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     if (this.currentView === CollectionView.Create) {
       this.collectionsService.post(collectionData).subscribe({
         next: () => {
+          this.confirm.open({
+            title: this.translate.instant('set.collection_saved'),
+            description: `<p>${this.translate.instant('set.collection_description')}</p>`,
+            buttonSuccess: this.translate.instant(
+              'notify.confirm_modal.add_post_success.success_button',
+            ),
+          });
           this.matDialogRef.close();
         },
         error: ({ error }) => {
@@ -290,6 +297,13 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
             type: EventType.UpdateCollection,
             payload: this.tmpCollectionToEditId,
           });
+          this.confirm.open({
+            title: this.translate.instant('set.collection_updated'),
+            description: `<p>${this.translate.instant('set.collection_description')}</p>`,
+            buttonSuccess: this.translate.instant(
+              'notify.confirm_modal.add_post_success.success_button',
+            ),
+          });
           this.matDialogRef.close();
         },
         error: ({ error }) => {
@@ -297,14 +311,12 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
         },
       });
     }
-
     if (!this.notification && collectionData.is_notifications_enabled) {
       this.notificationsService.post({ set_id: String(this.tmpCollectionToEditId) }).subscribe();
     } else if (this.notification && !collectionData.is_notifications_enabled) {
       this.notificationsService.delete(this.notification.id).subscribe();
     }
   }
-
   addNewCollection() {
     this.currentView = CollectionView.Create;
     this.initializeForm();
