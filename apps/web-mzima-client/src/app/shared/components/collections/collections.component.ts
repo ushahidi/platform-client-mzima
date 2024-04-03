@@ -257,9 +257,10 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  async saveCollection() {
+  saveCollection() {
     if (!this.isManageCollections) this.withoutManageCollectionsPrivilege();
     const collectionData = this.collectionForm.value;
+
     const visibleTo = collectionData.visible_to.value;
     if (visibleTo === 'only_me') {
       collectionData.role = ['me'];
