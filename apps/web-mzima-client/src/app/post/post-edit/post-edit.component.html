@@ -176,6 +176,7 @@
                   </li>
                   <li *ngFor="let option of field.options; trackBy: trackById">
                     <mat-checkbox
+                      *ngIf="!option.parent_id"
                       [checked]="form.get(field.key)?.value.includes(option.id)"
                       (change)="
                         onCheckChange(
