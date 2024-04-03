@@ -1,4 +1,8 @@
-<div *ngIf="!formId" class="post-item-page">
+<div
+  *ngIf="!formId"
+  class="post-item-page"
+  [ngClass]="{ 'page-content page-content__isLoading': !surveys }"
+>
   <div class="page-content" *ngIf="surveys; else spinner">
     <h1 class="survey-name">{{ 'post.unstructured.add_survey.title' | translate }}</h1>
     <span class="info-message">
@@ -23,7 +27,10 @@
   </div>
 </div>
 <div *ngIf="formId" class="post-item-page">
-  <div class="page-content">
+  <div
+    class="page-content"
+    [ngClass]="{ 'page-content__isLoading': !formId || !(form && tasks.length) }"
+  >
     <div class="translate-container">
       <h1 class="survey-name">{{ surveyName }}</h1>
       <div class="form-row" *ngIf="postLanguages.length">

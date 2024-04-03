@@ -25,6 +25,7 @@ export class PostsService extends ResourceService<any> {
     set: '',
     order_unlocked_on_top: true,
     reactToFilters: true,
+    include_unstructured_posts: true,
     'source[]': [],
     'tags[]': [],
     'form[]': [],
@@ -276,5 +277,23 @@ export class PostsService extends ResourceService<any> {
       ...this.postsFilters.value,
       ...sorting,
     });
+  }
+
+  public normalizeFilter(values: any) {
+    if (!values) return {};
+
+    const filters = {
+      ...values,
+      'form[]': values.form,
+      'source[]': values.source,
+      'status[]': values.status,
+      'tags[]': values.tags,
+    };
+
+    delete filters.form;
+    delete filters.source;
+    delete filters.status;
+    delete filters.tags;
+    return filters;
   }
 }

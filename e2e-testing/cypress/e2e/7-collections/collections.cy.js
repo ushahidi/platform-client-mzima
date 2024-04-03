@@ -10,7 +10,11 @@ describe("Automated Tests for Collections", () => {
     cy.visit(Cypress.env('baseUrl'));
   });
 
-  it("Opens Collections Modals", () => {
-    collectionFunctions.add_collections();
+  it("Creates Collection", () => {
+    collectionFunctions.create_collection();
   });
+
+  it.skip("Add post to collection", ()=>{
+    collectionFunctions.add_post_to_collection();
+  })
 });
