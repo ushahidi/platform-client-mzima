@@ -71,7 +71,7 @@ export abstract class MainViewComponent {
     }
   }
 
-  private normalizeFilter(values: GeoJsonFilter) {
+  private normalizeFilter(values: GeoJsonFilter): GeoJsonFilter {
     if (!values) return {};
 
     const filters = {

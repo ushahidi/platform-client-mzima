@@ -159,7 +159,7 @@
             >
               <ng-container *ngFor="let survey of surveyList">
                 <mat-list-option
-                  *ngIf="!(survey.id === 0 && isMapView)"
+                  [hidden]="isMapView && survey.id === 0"
                   [selected]="survey.checked"
                   color="primary"
                   [value]="survey.id"
