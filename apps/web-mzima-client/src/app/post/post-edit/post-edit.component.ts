@@ -186,7 +186,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   getParentsWithChildren(options: any[]) {
     const parents = options.filter((opt: any) => !opt.parent_id);
     parents.forEach((parent) => {
-      parent.children = [...options.filter((opt: any) => opt.parent_id === parent.id)];
+      parent.children = options.filter((opt: any) => opt.parent_id === parent.id);
     });
     return parents;
   }
@@ -463,10 +463,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     return new FormControl(value, validators);
   }
 
-  public getOptionsByParentId(field: any, parent_id: number): any[] {
-    return field.options.filter((option: any) => option.parent_id === parent_id);
-  }
-
   async preparationData(): Promise<any> {
     for (const task of this.tasks) {
       task.fields = await Promise.all(
@@ -738,7 +734,13 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       this.router.navigate(['map']);
     }
   }
-
+  public getTotalCategoryCount(options: any[]) {
+    let length = options.length;
+    options.forEach((parent) => {
+      length = length + parent.children.length;
+    });
+    return length;
+  }
   public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {
     fields.map((field: any) => {
       if (field.key === fieldKey) {
@@ -774,8 +776,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       }
 
       if (!parentId && options) {
-        const children = options.filter((option) => option.parent_id === id);
-        children.forEach((child) => {
+        const parent = options.find((option) => option.id === id);
+        parent.children.forEach((child: any) => {
           const hasChildId = formArray.controls.some((control: any) => control.value === child.id);
           if (!hasChildId) formArray.push(new FormControl(child.id));
         });
@@ -785,8 +787,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       if (index > -1) formArray.removeAt(index);
 
       if (parentId && options) {
-        const children = options.filter((option: any) => option.parent_id === parentId);
-        const isParentHasCheckedChild = children.some((child) =>
+        const parent = options.find((option) => option.id === parentId);
+        const isParentHasCheckedChild = parent.children.some((child: any) =>
           formArray.controls.some((control: any) => control.value === child.id),
         );
         if (!isParentHasCheckedChild) {
@@ -796,8 +798,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       }
 
       if (!parentId && options) {
-        const children = options.filter((option) => option.parent_id === id);
-        children.forEach((child) => {
+        const parent = options.find((option) => option.id === id);
+        parent.children.forEach((child: any) => {
           const i = formArray.controls.findIndex((ctrl: any) => ctrl.value === child.id);
           if (i > -1) formArray.removeAt(i);
         });
