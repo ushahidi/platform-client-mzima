@@ -14,7 +14,7 @@ describe("Automated Tests for Collections", () => {
     collectionFunctions.create_collection();
   });
 
-  it.skip("Add post to collection", ()=>{
+  it("Add post to collection", ()=>{
     collectionFunctions.add_post_to_collection();
   })
 });

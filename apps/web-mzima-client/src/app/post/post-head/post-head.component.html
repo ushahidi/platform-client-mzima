@@ -31,11 +31,11 @@
     class="post-head__control post-head__control--dots"
     [matMenuTriggerFor]="actions"
   >
-    <mat-icon icon svgIcon="dots"></mat-icon>
+    <mat-icon icon svgIcon="dots" [data-qa]="'more-post-actions'"></mat-icon>
   </mzima-client-button>
 
   <mat-menu #actions="matMenu" xPosition="before">
-    <button mat-menu-item (click)="addToCollection()">
+    <button mat-menu-item (click)="addToCollection()" [data-qa]="'add-collection-to-post'">
       <mat-icon svgIcon="collections"></mat-icon>
       {{ 'set.add_to_collection' | translate }}
     </button>

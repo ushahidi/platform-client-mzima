@@ -49,6 +49,18 @@ class CollectionFunctions {
     cy.get(CollectionLocators.postCheckBox).click({ force: true });
     this.save_post();
     cy.get(CollectionLocators.successBtn).click();
+    cy.get(CollectionLocators.postItem).find(CollectionLocators.morePostActionsBtn).click();
+    cy.get(CollectionLocators.addCollectionToPostCheckbox).click();
+    cy.get('#mat-dialog-0')
+      .find(CollectionLocators.selectCollection)
+      .eq(0)
+      .find('#mat-checkbox-1-input')
+      .click();
+    cy.get(CollectionLocators.closeCollectionModalBtn).click();
+    cy.get(CollectionLocators.collectionBtn).click();
+    cy.get(CollectionLocators.collectionItem).eq(0).click();
+    cy.get(CollectionLocators.dataViewBtn);
+    cy.get(CollectionLocators.posts).children(CollectionLocators.postItem).contains('Post Title');
   }
 
   verify_post_added_to_collection() {
