@@ -1078,7 +1078,11 @@
     "add_notification": "Add Notification",
     "remove": "remove",
     "update_saved_filter": "Update Saved Filter",
-    "create_saved_filter": "Create Saved Filter"
+    "create_saved_filter": "Create Saved Filter",
+    "collection_saved": "Collection saved.",
+    "collection_updated": "Collection updated.",
+    "collection_description": "You can add posts to your collection from the data-view"
+    
   },
   "category": {
     "add_tag": "Add Category",

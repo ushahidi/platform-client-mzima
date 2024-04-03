@@ -258,14 +258,6 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   }
 
   async saveCollection() {
-    await this.confirm.open({
-      title: this.translate.instant('notify.confirm_modal.add_post_success.success'),
-      description: `<p>${this.translate.instant(
-        'notify.confirm_modal.add_post_success.success_description',
-      )}</p>`,
-      buttonSuccess: this.translate.instant('notify.confirm_modal.add_post_success.success_button'),
-    });
-
     if (!this.isManageCollections) this.withoutManageCollectionsPrivilege();
     const collectionData = this.collectionForm.value;
     const visibleTo = collectionData.visible_to.value;
@@ -284,6 +276,13 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     if (this.currentView === CollectionView.Create) {
       this.collectionsService.post(collectionData).subscribe({
         next: () => {
+          this.confirm.open({
+            title: this.translate.instant('set.collection_saved'),
+            description: `<p>${this.translate.instant('set.collection_description')}</p>`,
+            buttonSuccess: this.translate.instant(
+              'notify.confirm_modal.add_post_success.success_button',
+            ),
+          });
           this.matDialogRef.close();
         },
         error: ({ error }) => {
@@ -296,6 +295,13 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
           this.eventBus.next({
             type: EventType.UpdateCollection,
             payload: this.tmpCollectionToEditId,
+          });
+          this.confirm.open({
+            title: this.translate.instant('set.collection_updated'),
+            description: `<p>${this.translate.instant('set.collection_description')}</p>`,
+            buttonSuccess: this.translate.instant(
+              'notify.confirm_modal.add_post_success.success_button',
+            ),
           });
           this.matDialogRef.close();
         },
