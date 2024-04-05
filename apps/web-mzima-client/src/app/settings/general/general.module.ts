@@ -6,6 +6,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MzimaUiModule } from '@mzima-client/mzima-ui';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,6 +32,7 @@ import { SettingsMapComponent } from './settings-map/settings-map.component';
     MatButtonModule,
     MatIconModule,
     DirectiveModule,
+    MatAutocompleteModule,
     FormsModule,
     MzimaUiModule,
     FilterVisibleLayersModule,

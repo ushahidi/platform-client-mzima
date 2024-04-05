@@ -15,7 +15,7 @@ import {
   tileLayer,
 } from 'leaflet';
 import Geocoder from 'leaflet-control-geocoder';
-import { debounceTime, Subject } from 'rxjs';
+import { BehaviorSubject, debounceTime, Subject } from 'rxjs';
 import { pointIcon } from '../../../core/helpers/map';
 
 @UntilDestroy()
@@ -41,6 +41,7 @@ export class SettingsMapComponent implements OnInit {
   public queryLocation: string = '';
   private searchSubject = new Subject<string>();
   public geocodingResults: any[] = [];
+  public citiesOptions: BehaviorSubject<any[]>;
   public isShowGeocodingResults = false;
   locationPrecisionEnabled: any;
   currentPrecision = 9;
@@ -51,6 +52,7 @@ export class SettingsMapComponent implements OnInit {
     this.searchSubject.pipe(debounceTime(600), untilDestroyed(this)).subscribe((query) => {
       this.performSearch(query);
     });
+    this.citiesOptions = new BehaviorSubject<any[]>([]);
 
     this.mapConfig = this.sessionService.getMapConfigurations();
     this.currentPrecision = this.getPrecision();
@@ -116,6 +118,7 @@ export class SettingsMapComponent implements OnInit {
     });
 
     this.geocoderControl.on('finishgeocode', (e: any) => {
+      this.citiesOptions.next(e.results);
       this.geocodingResults = e.results;
     });
   }
@@ -160,7 +163,14 @@ export class SettingsMapComponent implements OnInit {
     this.map.fitBounds(item.bbox);
     this.setCoordinates(coordinates.lat, coordinates.lng);
     this.geocodingResults = [];
+    this.citiesOptions.next([]);
     this.searchSubject.next('');
+  }
+
+  public clearSearch() {
+    this.queryLocation = '';
+    this.geocodingResults = [];
+    this.citiesOptions.next([]);
   }
 
   private setCoordinates(lat: number, lon: number) {

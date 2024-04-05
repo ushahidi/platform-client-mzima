@@ -1,34 +1,47 @@
 <ng-container *ngIf="mapConfig">
-  <div class="form-row">
+  <div cdkScrollable class="form-row">
     <mat-label>{{ 'survey.location' | translate }}</mat-label>
     <mat-form-field appearance="outline">
       <input
         matInput
         [(ngModel)]="queryLocation"
         (ngModelChange)="searchLocation()"
-        (focusout)="searchLocation()"
         placeholder="{{ 'settings.general_settings.placeholder.pick_location' | translate }}"
         [data-qa]="'query-location'"
+        [matAutocomplete]="cities"
       />
 
-      <mzima-client-button [iconOnly]="true" fill="clear" matSuffix color="secondary">
+      <mzima-client-button
+        [iconOnly]="true"
+        fill="clear"
+        matSuffix
+        color="secondary"
+        *ngIf="!queryLocation"
+      >
         <mat-icon icon svgIcon="search-small"></mat-icon>
       </mzima-client-button>
-    </mat-form-field>
-    <ul
-      class="geocoder-list"
-      *ngIf="isShowGeocodingResults && geocodingResults.length"
-      [data-qa]="'geocoder-list'"
-    >
-      <li
-        class="geocoder-list__item"
-        *ngFor="let result of geocodingResults"
-        (click)="selectLocation(result)"
-        [data-qa]="'geocoder-list-item'"
+      <mzima-client-button
+        matSuffix
+        fill="clear"
+        [iconOnly]="true"
+        color="secondary"
+        *ngIf="queryLocation"
+        (buttonClick)="clearSearch()"
       >
-        {{ result.name }}
-      </li>
-    </ul>
+        <mat-icon icon svgIcon="close"></mat-icon>
+      </mzima-client-button>
+      <mat-autocomplete autoActiveFirstOption #cities="matAutocomplete" [data-qa]="'geocoder-list'">
+        <mat-option
+          *ngFor="let result of citiesOptions | async"
+          [value]="result"
+          (click)="selectLocation(result)"
+          (onSelectionChange)="selectLocation(result)"
+          [data-qa]="'geocoder-list-item'"
+        >
+          {{ result.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
   </div>
 
   <div class="form-row map-holder">
