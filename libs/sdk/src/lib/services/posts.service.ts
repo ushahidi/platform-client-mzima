@@ -30,7 +30,7 @@ export class PostsService extends ResourceService<any> {
     'form[]': [],
     'status[]': [],
   };
-  private postsFilters = new BehaviorSubject<any>(this.defaultPostsFilters);
+  private postsFilters = new BehaviorSubject<GeoJsonFilter>(this.defaultPostsFilters);
   public postsFilters$ = this.postsFilters.asObservable();
   private totalPosts = new Subject<number>();
   public totalPosts$ = this.totalPosts.asObservable();
@@ -113,58 +113,6 @@ export class PostsService extends ResourceService<any> {
     return super.delete(id);
   }
 
-  getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
-    const tmpParams = { ...this.postsFilters.value, has_location: 'mapped', ...filter };
-    delete tmpParams.order;
-    delete tmpParams.orderby;
-    return super.get('geojson', this.postParamsMapper(tmpParams)).pipe(
-      tap((res) => {
-        this.totalGeoPosts.next(res.meta.total);
-      }),
-    );
-  }
-
-  public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
-    // const tmpParams = { ...this.postsFilters.value, has_location: 'all', ...filter };
-    const tmpParams = { ...filter, ...this.postsFilters.value, has_location: 'all' };
-
-    return super.get(url, this.postParamsMapper(tmpParams)).pipe(
-      map((response) => {
-        response.results.map((post: PostResult) => {
-          post.source =
-            post.source === 'sms'
-              ? 'SMS'
-              : post.source
-              ? post.source.charAt(0).toUpperCase() + post.source.slice(1)
-              : 'Web';
-        });
-
-        return response;
-      }),
-      tap((response) => {
-        this.totalPosts.next(response.meta.total);
-      }),
-    );
-  }
-
-  public getMyPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
-    const tmpParams = { has_location: 'all', user: 'me', ...filter };
-    return super.get(url, this.postParamsMapper(tmpParams)).pipe(
-      map((response) => {
-        response.results.map((post: PostResult) => {
-          post.source =
-            post.source === 'sms'
-              ? 'SMS'
-              : post.source
-              ? post.source.charAt(0).toUpperCase() + post.source.slice(1)
-              : 'Web';
-        });
-
-        return response;
-      }),
-    );
-  }
-
   public searchPosts(url: string, query?: string, params?: any): Observable<PostApiResponse> {
     return super.get(url, { has_location: 'all', q: query, ...params }).pipe(
       tap((response) => {
@@ -173,92 +121,154 @@ export class PostsService extends ResourceService<any> {
     );
   }
 
-  private postParamsMapper(params: any) {
-    if (params.date?.start) {
-      params.date_after = params.date.start;
-      if (params.date.end) {
-        params.date_before = params.date.end;
-      }
-      delete params.date;
-    } else {
-      delete params.date;
-    }
+  getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
+    return super.get('geojson', this.postParamsMapper({ ...this.postsFilters.value }, filter)).pipe(
+      tap((res) => {
+        this.totalGeoPosts.next(res.meta.total);
+      }),
+    );
+  }
 
-    if (params.center_point?.location?.lat) {
-      params.within_km = params.center_point.distance;
-      params.center_point = `${params.center_point.location.lat},${params.center_point.location.lng}`;
-    } else if (!params.center_point?.length) {
-      delete params.center_point;
-    }
+  public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
+    return super
+      .get(url, this.postParamsMapper({ ...this.postsFilters.value, has_location: 'all' }, filter))
+      .pipe(
+        map((response) => {
+          response.results.map((post: PostResult) => {
+            post.source =
+              post.source === 'sms'
+                ? 'SMS'
+                : post.source
+                ? post.source.charAt(0).toUpperCase() + post.source.slice(1)
+                : 'Web';
+          });
 
-    if (!params.set) {
-      delete params.set;
-    }
+          return response;
+        }),
+        tap((response) => {
+          this.totalPosts.next(response.meta.total);
+        }),
+      );
+  }
 
-    if (params.form && params.form.length === 0) {
-      params.form.push('none');
-    }
+  public getMyPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
+    return super.get(url, this.postParamsMapper({ has_location: 'all', user: 'me' }, filter)).pipe(
+      map((response) => {
+        response.results.map((post: PostResult) => {
+          post.source =
+            post.source === 'sms'
+              ? 'SMS'
+              : post.source
+              ? post.source.charAt(0).toUpperCase() + post.source.slice(1)
+              : 'Web';
+        });
 
-    if (params.form?.length) {
-      params['form[]'] = params.form;
-      delete params.form;
-    }
-
-    if (params['form[]']?.length === 0) {
-      delete params['form[]'];
-      // params['form[]'].push('none');
-    }
-
-    if (params['source[]']?.length === 0) {
-      delete params['source[]'];
-    }
-
-    if (params.status?.length) {
-      params['status[]'] = params.status;
-    }
-    if (params.source?.length) {
-      params['source[]'] = params.source;
-    }
-
-    if (params.tags?.length) {
-      params['tags[]'] = params.tags;
-    }
-
-    if (params.currentView === 'map') {
-      params.has_location = 'mapped';
-      params.include_unstructured_posts = false;
-      params['form[]'] = params['form[]'].filter((formId: any) => formId !== 0);
-    } else if (params.currentView === 'feed') {
-      delete params.has_location;
-      delete params.within_km;
-      params.include_unmapped = true;
-      if (params['form[]'].includes(0)) {
-        params.include_unstructured_posts = true;
-      } else {
-        params.include_unstructured_posts = false;
-      }
-    }
-
-    delete params.currentView;
-    delete params.source;
-    delete params.tags;
-    delete params.status;
-    delete params.form;
-
-    return params;
+        return response;
+      }),
+    );
   }
 
   public getPostStatistics(queryParams?: any): Observable<PostStatsResponse> {
-    const filters = this.postParamsMapper(this.postsFilters.value);
+    const params = { ...queryParams, group_by: 'form', enable_group_by_source: true };
+    const filters = this.postParamsMapper(params, this.postsFilters.value);
 
-    return super.get(
-      'stats',
-      queryParams ?? {
-        ...filters,
-        group_by: 'form',
-        enable_group_by_source: true,
-      },
-    );
+    return super.get('stats', filters);
+  }
+
+  private postParamsMapper(params: any, filter?: GeoJsonFilter) {
+    // Combine new parameters with existing filter
+    const postParams: any = { ...filter, ...params };
+    postParams.currentView = filter?.currentView;
+
+    // Allocate start and end dates, and remove originals
+    if (postParams.date?.start) {
+      postParams.date_after = postParams.date.start;
+      if (postParams.date.end) {
+        postParams.date_before = postParams.date.end;
+      }
+      delete postParams.date;
+    } else {
+      delete postParams.date;
+    }
+
+    // Re-allocate location information
+    if (postParams.center_point?.location?.lat) {
+      postParams.within_km = postParams.center_point.distance;
+      postParams.center_point = `${postParams.center_point.location.lat},${postParams.center_point.location.lng}`;
+    } else if (!postParams.center_point?.length) {
+      delete postParams.center_point;
+    }
+
+    // Override existing filter arrays with param arrays if they exist.
+    // (Dereference the form array so we can remove 0 later)
+    if (postParams.form?.length) {
+      postParams['form[]'] = [...postParams.form];
+    } else {
+      postParams['form[]'] = [...postParams['form[]']];
+    }
+
+    if (postParams.status?.length) {
+      postParams['status[]'] = postParams.status;
+    }
+    if (postParams.source?.length) {
+      postParams['source[]'] = postParams.source;
+    }
+    if (postParams.tags?.length) {
+      postParams['tags[]'] = postParams.tags;
+    }
+
+    // Clean up new params based on which view is currently active
+    if (postParams.currentView === 'map') {
+      postParams.has_location = 'mapped';
+      postParams.include_unstructured_posts = false;
+      delete postParams.order;
+      delete postParams.orderby;
+    } else if (postParams.currentView === 'feed') {
+      postParams.include_unmapped = true;
+      if (postParams['form[]'].includes(0)) {
+        postParams.include_unstructured_posts = true;
+      } else {
+        postParams.include_unstructured_posts = false;
+      }
+      delete postParams.has_location;
+      delete postParams.within_km;
+      delete postParams.place;
+    }
+
+    // Clean up whatevers left, removing empty arrays and values
+    postParams['form[]'] = postParams['form[]'].filter((formId: any) => formId !== 0);
+    if (postParams['form[]']?.length === 0) {
+      delete postParams['form[]'];
+    }
+
+    if (postParams['source[]']?.length === 0) {
+      delete postParams['source[]'];
+    }
+
+    if (postParams['status[]']?.length === 0) {
+      delete postParams['status[]'];
+    }
+
+    if (postParams['tags[]']?.length === 0) {
+      delete postParams['tags[]'];
+    }
+    if (postParams.set?.length === 0) {
+      delete postParams.set;
+    }
+    if (postParams.query?.length === 0) {
+      delete postParams.query;
+    }
+    if (postParams.place?.length === 0) {
+      delete postParams.place;
+    }
+
+    delete postParams.currentView;
+    delete postParams.source;
+    delete postParams.tags;
+    delete postParams.status;
+    delete postParams.form;
+
+    return postParams;
   }
 
   public lockPost(id: string | number) {
@@ -272,8 +282,9 @@ export class PostsService extends ResourceService<any> {
   public applyFilters(filters: any, updated = true): void {
     const newFilters: any = {};
     for (const key in filters) {
-      if (filters[key] !== undefined || this.postsFilters.value[key]) {
-        newFilters[key] = filters[key] !== undefined ? filters[key] : this.postsFilters.value[key];
+      const postsFilterValue = this.postsFilters.value[key as keyof typeof this.postsFilters.value];
+      if (filters[key] !== undefined || postsFilterValue) {
+        newFilters[key] = filters[key] !== undefined ? filters[key] : postsFilterValue;
       }
     }
     if (updated) {
