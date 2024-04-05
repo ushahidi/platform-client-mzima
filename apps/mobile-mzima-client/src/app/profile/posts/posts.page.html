@@ -1,4 +1,10 @@
-<app-main-layout title="My posts" (back)="back()" [isSearch]="true" (search)="searchPosts($event)">
+<app-main-layout
+  title="My posts"
+  (back)="back()"
+  [isSearch]="true"
+  [placeholderText]="'Search for Posts'"
+  (search)="searchPosts($event)"
+>
   <app-button
     header-end
     fill="clear"
