@@ -24,6 +24,7 @@ class LoginFunctions {
 
   click_login_button() {
     cy.get(LoginLocators.loginButton).click();
+    cy.wait(5000);
   }
 
   check_user_details_correct() {
