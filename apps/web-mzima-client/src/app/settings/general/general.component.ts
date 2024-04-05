@@ -150,8 +150,8 @@ export class GeneralComponent implements OnInit {
     this.langService.changeLanguage(siteConfig.language);
 
     return this.configService.update('site', siteConfig).pipe(
-      mergeMap((updatedSite) => {
-        this.sessionService.setConfigurations('site', updatedSite);
+      mergeMap((updatedSite: any) => {
+        this.sessionService.setConfigurations('site', updatedSite.result);
         return this.configService.update('map', this.mapSettings.mapConfig);
       }),
     );

@@ -10,7 +10,7 @@
         postPreview: '[data-qa="post-preview"]',
         postItem: '[data-qa="post-item"]',
         surveySelectionList: '[data-qa="survey-selection-list"]',
-        surveySelectItem: '[data-qa="survey-select-item"]',
+        surveySelectItem: '[data-qa="survey-select-item2"]',
         editPostBtn: '[data-qa="edit-post"]',
       };
     

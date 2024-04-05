@@ -35,7 +35,7 @@
     </app-checkbox>
   </ion-card-header>
   <ng-container *ngIf="isConnection && mediaId && post.source !== 'Twitter'">
-    <ion-img class="post__media" [src]="mediaUrl"></ion-img>
+    <ion-img class="post__media" [src]="mediaUrl | prependUrl : backendUrl"></ion-img>
   </ng-container>
   <app-twitter-widget
     *ngIf="post.source === 'Twitter' && post.data_source_message_id"
