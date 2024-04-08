@@ -18,8 +18,8 @@ export class ProfilePhotoComponent {
   @Input() photo: string;
   userId: string;
   @Output() photoChanged = new EventEmitter<boolean>();
-  uploading: boolean = false;
-  hasUploadedPhoto: boolean = false;
+  uploadingSpinner = false;
+  hasUploadedPhoto = false;
 
   // handlePhotoChange(event: boolean): void {
   //   this.photoChanged.emit(event);
@@ -61,7 +61,7 @@ export class ProfilePhotoComponent {
     const file = input?.files?.[0];
     if (file) {
       //showing the loading icon
-      this.uploading = true;
+      this.uploadingSpinner = true;
       this.changePhoto(file);
     }
   }
@@ -69,7 +69,7 @@ export class ProfilePhotoComponent {
   changePhoto(file: File): void {
     const reader = new FileReader();
     reader.onload = () => {
-      this.photo = reader.result as string;
+      // this.photo = reader.result as string;
 
       this.sessionService
         .getCurrentUserData()
@@ -106,9 +106,6 @@ export class ProfilePhotoComponent {
       .getCurrentUserData()
       .pipe(untilDestroyed(this))
       .subscribe((userData) => {
-        this.uploading = false;
-        //activating delete button if the upload is successful
-        this.hasUploadedPhoto = true;
         if (userData && userData.userId) {
           const userId = userData.userId as string;
 
@@ -133,6 +130,9 @@ export class ProfilePhotoComponent {
                   console.log('Profile photo updated successfully');
                   this.photo = photoUrl;
                   this.photoChanged.emit(true);
+                  this.uploadingSpinner = false;
+                  //activating delete button if the upload is successful
+                  this.hasUploadedPhoto = true;
                 },
                 (error) => {
                   console.error('Failed to update profile photo', error);
@@ -146,6 +146,10 @@ export class ProfilePhotoComponent {
               this.usersService.postUserSettings(userId, payload).subscribe(
                 () => {
                   this.photo = photoUrl;
+                  this.photoChanged.emit(true);
+                  this.uploadingSpinner = false;
+                  //activating delete button if the upload is successful
+                  this.hasUploadedPhoto = true;
                 },
                 (error) => {
                   console.error('Failed to add profile photo', error);

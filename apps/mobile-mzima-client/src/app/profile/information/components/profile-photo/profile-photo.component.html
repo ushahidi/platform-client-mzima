@@ -2,10 +2,10 @@
   <ion-avatar class="avatar">
     <ion-img [src]="photo"></ion-img>
   </ion-avatar>
-  <app-spinner *ngIf="uploading" class="spinner--positioned"></app-spinner>
+  <ion-spinner name="circles" *ngIf="uploadingSpinner" class="spinner--positioned"></ion-spinner>
 </div>
 <ion-buttons class="controls">
-  <app-button class="controls-button" fill="clear" [disabled]="uploading">
+  <app-button class="controls-button" fill="clear" [disabled]="uploadingSpinner">
     <div class="controls-button__inner">
       <app-icon class="controls-button__icon" name="edit"></app-icon>
       <label for="fileInput" class="file-input-label"> Set new photo </label>
