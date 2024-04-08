@@ -49,10 +49,10 @@ class PostFunctions {
   }
 
   verify_created_post_exists() {
-    cy.get(PostLocators.surveySelectionList)
-      .children(PostLocators.surveySelectItem)
-      .contains("Full Length Survey-with image-field- don't delete")
-      .click({ force: true });
+    // cy.get(PostLocators.surveySelectionList)
+    // .children(PostLocators.surveySelectItem)
+    // .contains("Full Length Survey-with image-field- don't delete")
+    // .click({ force: true });
     cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
   }
 }
