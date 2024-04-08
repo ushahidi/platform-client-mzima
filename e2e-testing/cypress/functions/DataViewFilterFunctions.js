@@ -2,6 +2,7 @@ import DataViewLocators from '../locators/DataViewLocators';
 class DataViewFilterFunctions {
   click_data_view_btn() {
     cy.get(DataViewLocators.dataViewBtn).click();
+    cy.url().should('include', '/feed');
   }
 
   check_post_filter_by_survey() {
@@ -17,34 +18,25 @@ class DataViewFilterFunctions {
     cy.get(DataViewLocators.clearBtn).click();
     cy.get(DataViewLocators.mainResultsTotal).contains('Results: 0');
     //select only first survey
-    cy.get(DataViewLocators.surveySelectionList)
-      .children(DataViewLocators.surveySelectItem)
-      .eq(0)
-      .click();
+    cy.get('[data-qa="survey-select-item2"]').click();
     //verify count
-    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 9');
+    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 357');
 
     //select second survey
-    cy.get(DataViewLocators.surveySelectionList)
-      .children(DataViewLocators.surveySelectItem)
-      .eq(1)
-      .click();
-    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 12');
+    cy.get('[data-qa="survey-select-item3"]').click();
+    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 360');
 
     //select third survey
-    cy.get(DataViewLocators.surveySelectionList)
-      .children(DataViewLocators.surveySelectItem)
-      .eq(2)
-      .click();
-    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 22');
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 22');
+    cy.get('[data-qa="survey-select-item4"]').click();
+    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 370');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 370');
 
     //reveal filters button
     cy.get(DataViewLocators.revealFiltersBtn).click();
     //click clear all filters button
     cy.get(DataViewLocators.clearFiltersBtn).click();
-    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 165');
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 165');
+    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 513');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 513');
   }
 
   check_post_filter_by_status() {
@@ -52,7 +44,8 @@ class DataViewFilterFunctions {
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 513');
     //click status filter button
-    cy.get(DataViewLocators.statusBtn).click();
+    // cy.get(DataViewLocators.statusBtn).click();
+    cy.get('button:contains("Status")').click();
     //check that published option is checked
     cy.get(DataViewLocators.filterSelectionList)
       .find('.mat-list-item-content')
