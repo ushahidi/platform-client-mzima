@@ -122,7 +122,7 @@ export class PostsService extends ResourceService<any> {
   }
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
-    return super.get('geojson', this.postParamsMapper({ ...this.postsFilters.value }, filter)).pipe(
+    return super.get('geojson', this.postParamsMapper(filter, { ...this.postsFilters.value })).pipe(
       tap((res) => {
         this.totalGeoPosts.next(res.meta.total);
       }),
@@ -197,14 +197,6 @@ export class PostsService extends ResourceService<any> {
       postParams.center_point = `${postParams.center_point.location.lat},${postParams.center_point.location.lng}`;
     } else if (!postParams.center_point?.length) {
       delete postParams.center_point;
-    }
-
-    // Override existing filter arrays with param arrays if they exist.
-    // (Dereference the form array so we can remove 0 later)
-    if (postParams.form?.length) {
-      postParams['form[]'] = [...postParams.form];
-    } else {
-      postParams['form[]'] = [...postParams['form[]']];
     }
 
     if (postParams.status?.length) {
