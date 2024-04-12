@@ -35,7 +35,14 @@
   </mzima-client-button>
 
   <mat-menu #actions="matMenu" xPosition="before">
-    <button mat-menu-item (click)="addToCollection()" [data-qa]="'add-collection-to-post'">
+    <button
+      *ngIf="
+        user?.permissions?.includes('Manage Posts') ||
+        user?.permissions?.includes('Manage Collections and Saved Searches')
+      "
+      mat-menu-item
+      (click)="addToCollection()"
+    >
       <mat-icon svgIcon="collections"></mat-icon>
       {{ 'set.add_to_collection' | translate }}
     </button>
