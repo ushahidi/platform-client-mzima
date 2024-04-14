@@ -20,7 +20,8 @@ const CollectionLocators = {
     addPostButton: '[data-qa="submit-post-button"]',
     saveCollectionButton: '[data-qa="save-collection-btn"]',
     collectionItem: '[data-qa="collection-item"]',
-    visibilityOption: '[data-qa="option"]'
+    visibilityOption: '[data-qa="option"]',
+    searchCollectionField: '[data-qa="query"]'
   };
   
 export default CollectionLocators;
