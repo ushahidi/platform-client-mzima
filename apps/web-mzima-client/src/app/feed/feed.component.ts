@@ -38,22 +38,22 @@ enum FeedMode {
 export class FeedComponent extends MainViewComponent implements OnInit {
   @ViewChild('feed') public feed: ElementRef;
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
-  public override params: GeoJsonFilter = {
-    limit: 20,
-    page: 1,
-    // created_before_by_id: '',
-  };
   private readonly getPostsSubject = new Subject<{
     params: GeoJsonFilter;
     add?: boolean;
   }>();
   public pagination = {
-    page: 1,
-    size: this.params.limit,
+    page: 0,
+    limit: 20,
   };
+  public postsSkeleton = new Array(20).fill(''); // used for Post mode's skeleton loader
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
-  public isLoading = false;
+  public isLoading: boolean = true;
+  public atLeastOnePostExists: boolean;
+  public noPostsYet: boolean = false;
+  public loadingMorePosts: boolean;
+  public paginationElementsAllowed: boolean = false;
   public mode: FeedMode = FeedMode.Tiles;
   public activePostId: number;
   public total: number;
@@ -111,7 +111,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       sessionService,
       breakpointService,
     );
+
     this.checkDesktop();
+    this.setupFeedDefaultFilters();
     this.initGetPostsListener();
 
     if (!this.isDesktop) {
@@ -149,6 +151,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
+        this.isLoading = true; // "There are no posts yet!" flicker is fixed here and for (most) places where isLoading is set to true
         if (this.initialLoad) {
           this.initialLoad = false;
           return;
@@ -212,6 +215,17 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.getUserData();
     this.checkPermission();
     this.eventBusListeners();
+  }
+
+  private setupFeedDefaultFilters() {
+    if (this.params.include_unstructured_posts) this.params['form[]']?.push('0');
+    this.params.currentView = 'feed';
+    (this.params.limit = 20),
+      (this.params.page = 1),
+      (this.pagination = {
+        limit: this.params.limit,
+        page: this.params.page,
+      });
   }
 
   private eventBusListeners() {
@@ -282,6 +296,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   private getPosts(params: any, add = true): void {
+    this.currentFeedViewMode().set;
     const isPostsAlreadyExist = !!this.posts.length;
     if (!add) {
       this.posts = [];
@@ -289,20 +304,29 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // if (this.mode === FeedMode.Post) {
     //   this.currentPage = 1;
     // }
-    this.isLoading = true;
+
+    //---------------------------------
+    this.isLoading = !this.posts.length; // With this skeleton loader shows up only on mode switch, and the loadmore button is able to detect to not load the skeleton UI loader on click
+    this.paginationElementsAllowed = this.loadingMorePosts; // this check prevents the load more button & area from temporarily disappearing (on click) [also prevents pagination element flicker in TILES mode]
+    //----------------------------------
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
         this.posts = add ? [...this.posts, ...data.results] : data.results;
+        const dataMetaPerPage = Number(data.meta.per_page);
         this.postCurrentLength =
-          data.count < Number(data.meta.per_page)
-            ? data.meta.total
-            : data.meta.current_page * data.count;
+          data.count < dataMetaPerPage ? data.meta.total : data.meta.current_page * data.count;
         this.eventBusService.next({
           type: EventType.FeedPostsLoaded,
           payload: true,
         });
         setTimeout(() => {
+          //---------------------------------
+          // These are needed to achieve clean display of posts or message on the UI
           this.isLoading = false;
+          this.atLeastOnePostExists = this.posts.length > 0;
+          this.noPostsYet = !this.atLeastOnePostExists; // && this.mode === FeedMode.Tiles;
+          this.loadingMorePosts = false; // for load more button's loader/spinner
+          //---------------------------------
           this.updateMasonry();
           setTimeout(() => {
             if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
@@ -310,6 +334,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
             }
           }, 250);
         }, 500);
+        setTimeout(() => {
+          //is inside this much delayed setTimeout to prevent pagination elements flicker on load/routing
+          this.paginationElementsAllowed = data.meta.total > dataMetaPerPage; // show pagination-related elements
+        }, 2100);
       },
     });
   }
@@ -324,8 +352,17 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.getPostsSubject.next({ params: this.params });
   }
 
+  public setIsLoadingOnCardClick() {
+    // With this skeleton loader's css is properly displayed (when navigating to POST mode) through post card click,
+    // and the post card is able to detect to not load the skeleton UI loader after posts have successfully shown up
+    this.posts.length && this.mode === FeedMode.Tiles
+      ? (this.isLoading = true)
+      : this.isLoading === !this.posts.length;
+  }
+
   public showPostDetails(post: any): void {
     if (this.isDesktop) {
+      this.setIsLoadingOnCardClick();
       if (this.collectionId) {
         this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'view'], {
           queryParams: {
@@ -493,13 +530,14 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public refreshMasonry(): void {
+    this.isLoading = true;
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 
   public loadMore(): void {
     if (this.params.limit !== undefined && this.params.limit * this.params.page! < this.total) {
-      this.currentPage++;
-      this.params.page!++;
+      this.loadingMorePosts = true;
+      this.params.page! += 1;
       this.getPostsSubject.next({ params: this.params });
     }
   }
@@ -510,26 +548,47 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.sessionService.toggleFiltersVisibility(value);
   }
 
+  public currentFeedViewMode() {
+    return {
+      get: localStorage.getItem('ui_feed_mode'),
+      set: localStorage.setItem('ui_feed_mode', this.mode),
+    };
+  }
+
   public switchMode(mode: FeedMode): void {
-    this.mode = mode;
-    if (this.collectionId) {
-      this.switchCollectionMode();
-      return;
-    }
-    if (this.mode === FeedMode.Post) {
-      this.router.navigate(['/feed', this.posts[0].id, 'view'], {
-        queryParams: {
-          mode: this.mode,
-        },
-        queryParamsHandling: 'merge',
-      });
-    } else {
-      this.router.navigate(['/feed'], {
-        queryParams: {
-          mode: this.mode,
-        },
-        queryParamsHandling: 'merge',
-      });
+    // 1. If there are no posts "The switch buttons shouldn't 'try to work'"
+    // Reason is because the switch buttons alongside all other elements disabled when the page is still loading, shouldn't even show up in the first place) [when there are no posts].
+    // So the check is a defense for or "validation" against errors that may occur from clicking it - if the button shows up by mistake when it's not supposed to [when there are no posts].
+
+    // 2. The switch mode button of the mode you are on should also not work if you click on it while in that mode
+    const localStorageFeedMode = this.currentFeedViewMode().get;
+    const sameSwitchButtonClicked = localStorageFeedMode === mode;
+    if (this.atLeastOnePostExists && !sameSwitchButtonClicked) {
+      //-------------------------------------
+      // Show loader & prevent pagination elements flicker on use of switch mode buttons
+      this.isLoading = true;
+      this.paginationElementsAllowed = false;
+      //-------------------------------------
+      this.mode = mode;
+      if (this.collectionId) {
+        this.switchCollectionMode();
+        return;
+      }
+      if (this.mode === FeedMode.Post) {
+        this.router.navigate(['/feed', this.posts[0].id, 'view'], {
+          queryParams: {
+            mode: this.mode,
+          },
+          queryParamsHandling: 'merge',
+        });
+      } else {
+        this.router.navigate(['/feed'], {
+          queryParams: {
+            mode: this.mode,
+          },
+          queryParamsHandling: 'merge',
+        });
+      }
     }
   }
 
@@ -559,6 +618,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public changePage(page: number): void {
+    // --------------------------------
+    // Show loader & prevent pagination elements flicker on use of pagination element's buttons
+    this.isLoading = true;
+    this.paginationElementsAllowed = false;
+    //------------------------------------
     this.toggleBulkOptions(false);
     this.currentPage = page;
     this.router.navigate([], {
@@ -586,6 +650,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public editPost(post: any): void {
     if (this.isDesktop) {
+      this.setIsLoadingOnCardClick();
       if (this.collectionId) {
         this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'edit'], {
           queryParams: {

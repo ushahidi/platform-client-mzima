@@ -13,13 +13,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Permissions } from '@enums';
 import {
   CategoryInterface,
-  FormsService,
   MediaService,
   PostContent,
   PostContentField,
   postHelpers,
   PostResult,
   PostsService,
+  SurveysService,
 } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
@@ -58,7 +58,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     private metaService: Meta,
     private route: ActivatedRoute,
     private postsService: PostsService,
-    private formsService: FormsService,
+    private surveyService: SurveysService,
     private sanitizer: DomSanitizer,
     private eventBusService: EventBusService,
   ) {
@@ -110,15 +110,12 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     if (!this.postId) return;
     this.post = await this.getPostInformation(id);
     if (this.post) {
-      this.formsService.getById(this.post.form_id!).subscribe((form) => {
-        this.post!.form = form;
+      this.surveyService.getById(this.post.form_id!).subscribe((form) => {
+        this.post!.form = form.result;
       });
       this.isPostLoading = false;
       this.getData(this.post);
       this.preparePostForView();
-
-      // TODO: remove me after testing on dev
-      // console.log('💬 post task modify:', this.post);
     }
   }
 

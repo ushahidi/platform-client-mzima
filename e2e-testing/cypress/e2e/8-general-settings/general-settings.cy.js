@@ -40,6 +40,11 @@ describe("Automated Tests for General Settings", () => {
     generalSettingsFunctions.steps_to_generate_new_api_key();
   });
 
+  it("Tests General Settings Map", () => {
+    generalSettingsFunctions.open_general_settings_page();
+    generalSettingsFunctions.verify_the_map_coordinates();
+  });
+
   it("Test Change Deployment Image", () => {
     generalSettingsFunctions.open_general_settings_page();
     generalSettingsFunctions.change_deployment_image();

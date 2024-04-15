@@ -22,7 +22,7 @@
     #searchForm
     *ngIf="isSearch"
     class="search-form"
-    (back)="back.emit()"
+    [placeholder]="placeholderText"
     (formFocus)="searchFocusHandle()"
     (formBlur)="searchBlurHandle()"
     [(ngModel)]="searchFormValue"

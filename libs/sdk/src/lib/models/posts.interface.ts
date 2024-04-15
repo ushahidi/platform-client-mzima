@@ -22,10 +22,12 @@ export interface GeoJsonItem {
 
 export interface GeoJsonFilter {
   has_location?: string;
+  currentView?: 'map' | 'feed';
   limit?: number;
   offset?: number;
   order?: 'desc' | 'asc';
   order_unlocked_on_top?: boolean;
+  include_unstructured_posts?: boolean;
   orderby?: string;
   set?: string;
   reactToFilters?: boolean;
@@ -36,6 +38,8 @@ export interface GeoJsonFilter {
   'status[]'?: string[];
   'form[]'?: string[];
   created_before_by_id?: string;
+  center_point?: string;
+  within_km?: string;
   q?: string;
   page?: number;
 }

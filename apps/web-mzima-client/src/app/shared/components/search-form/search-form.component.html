@@ -58,7 +58,11 @@
     </button>
 
     <div class="search-form__main-filters__inner">
-      <span class="search-form__main-filters__total" *ngIf="total !== undefined">
+      <span
+        class="search-form__main-filters__total"
+        *ngIf="total !== undefined"
+        [data-qa]="'search-form-main-filters-total'"
+      >
         {{ 'post.search_results' | translate }} {{ total }}
       </span>
 
@@ -140,9 +144,10 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
-                (buttonClick)="clearFilter('form')"
+                [data-qa]="'clear'"
+                (buttonClick)="toggleSidebarFilters('form')"
               >
-                {{ 'nav.clear' | translate }}
+                {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>
             </div>
             <mat-selection-list
@@ -151,20 +156,22 @@
               formControlName="form"
               [data-qa]="'survey-selection-list'"
             >
-              <mat-list-option
-                *ngFor="let survey of surveyList"
-                [selected]="survey.checked"
-                color="primary"
-                [value]="survey.id"
-                checkboxPosition="before"
-                class="selection-list__option"
-                [ngStyle]="{ '--color': survey.color }"
-                [data-qa]="'survey-select-item'"
-              >
-                <span class="selection-list__option__border"></span>
-                {{ survey.name }}
-                <span class="selection-list__option__total">{{ survey.total }}</span>
-              </mat-list-option>
+              <ng-container *ngFor="let survey of surveyList">
+                <mat-list-option
+                  [hidden]="isMapView && survey.id === 0"
+                  [selected]="survey.checked"
+                  color="primary"
+                  [value]="survey.id"
+                  checkboxPosition="before"
+                  class="selection-list__option"
+                  [ngStyle]="{ '--color': survey.color }"
+                  [data-qa]="'survey-select-item' + survey.id"
+                >
+                  <span class="selection-list__option__border"></span>
+                  {{ survey.name }}
+                  <span class="selection-list__option__total">{{ survey.total }}</span>
+                </mat-list-option>
+              </ng-container>
             </mat-selection-list>
 
             <div class="filter-group__info" *ngIf="isMapView">
@@ -192,9 +199,9 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
-                (buttonClick)="clearFilter('source')"
+                (buttonClick)="toggleSidebarFilters('source')"
               >
-                {{ 'nav.clear' | translate }}
+                {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
               </mzima-client-button>
             </div>
             <mat-selection-list name="source" class="selection-list" formControlName="source">
@@ -256,9 +263,9 @@
               fill="clear"
               size="small"
               class="filter-group__head__button"
-              (buttonClick)="clearFilter('form')"
+              (buttonClick)="toggleSidebarFilters('form')"
             >
-              {{ 'nav.clear' | translate }}
+              {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
           </div>
         </app-filter-control>
@@ -278,9 +285,9 @@
               fill="clear"
               size="small"
               class="filter-group__head__button"
-              (buttonClick)="clearFilter('source')"
+              (buttonClick)="toggleSidebarFilters('source')"
             >
-              {{ 'nav.clear' | translate }}
+              {{ (showAllButton('source') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
           </div>
         </app-filter-control>
@@ -324,6 +331,7 @@
         (clear)="clearFilter('status')"
         [title]="'global_filter.status' | translate"
         [badge]="form.controls['status'].value?.length || null"
+        [data-qa]="'status'"
       >
         <div class="clear-button" suffix>
           <mzima-client-button

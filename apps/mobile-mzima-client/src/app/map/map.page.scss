@@ -23,15 +23,25 @@
   bottom: 0;
   position: fixed;
 }
-
-.add-post-button {
+.button-group {
   bottom: 100%;
-  --size: 56px;
-  --icon-size: 24px;
   position: absolute;
   right: var(--ion-padding);
-  --button-border-radius: 16px;
-  margin-bottom: var(--ion-padding);
+  .add-post-button {
+    --size: 56px;
+    --icon-size: 24px;
+    position: relative;
+    --button-border-radius: 16px;
+    margin-bottom: var(--ion-padding);
+  }
+
+  .refresh-map-data-button {
+    --size: 56px;
+    --icon-size: 24px;
+    position: relative;
+    --button-border-radius: 16px;
+    margin-bottom: var(--ion-padding);
+  }
 }
 
 .clear-storage-button {
