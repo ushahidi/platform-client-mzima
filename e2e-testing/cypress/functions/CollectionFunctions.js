@@ -22,8 +22,27 @@ class CollectionFunctions {
     cy.get(CollectionLocators.saveCollectionBtn).click();
   }
 
-  open_collections() {
+  open_all_collections_modal() {
     cy.get(CollectionLocators.collectionBtn).click();
+  }
+
+  open_everyone_collection() {
+    cy.contains('Public Collections').should('be.visible').click();
+  }
+
+  verify_everyone_collection_opened() {
+    cy.url().should('include', '/feed/collection');
+    cy.get('[data-qa="search-form-main-filters-total"]').should('have.value', 'Results: 1');
+  }
+
+  search_collection() {
+    cy.get(CollectionLocators.searchCollectionField).click().type('collection{enter}');
+    //verify result count
+    //use twice the number of actual elements since this selector appears twice for each element
+    cy.get(CollectionLocators.selectCollection).should('have.length', 14);
+    //clear search and verify results
+    cy.get(CollectionLocators.searchCollectionField).clear().type('{enter}');
+    cy.get(CollectionLocators.selectCollection).should('have.length', 24);
   }
 
   select_collections() {
@@ -52,7 +71,7 @@ class CollectionFunctions {
   }
 
   verify_post_added_to_collection() {
-    this.open_collections();
+    this.open_all_collections_modal();
     this.select_collections();
     cy.contains('Post Title').should('exist');
   }
