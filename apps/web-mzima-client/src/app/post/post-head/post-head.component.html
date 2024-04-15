@@ -42,8 +42,9 @@
       "
       mat-menu-item
       (click)="addToCollection()"
+      [data-qa]="'add-collection-to-post'"
     >
-      <mat-icon svgIcon="collections"></mat-icon>
+      <mat-icon svgIcon="collections" [data-qa]="'add-collection-to-post'"></mat-icon>
       {{ 'set.add_to_collection' | translate }}
     </button>
     <ng-container *ngIf="post.allowed_privileges?.includes('change_status')">
