@@ -20,6 +20,7 @@ class CollectionFunctions {
 
   save_collection() {
     cy.get(CollectionLocators.saveCollectionBtn).click();
+    cy.get(CollectionLocators.successBtn).click();
   }
 
   open_collections() {
@@ -54,7 +55,7 @@ class CollectionFunctions {
 
     cy.get(CollectionLocators.selectCollection)
       .eq(0)
-      .find('#mat-checkbox-139-input')
+      .find('#mat-checkbox-93-input')
       .click({ force: true });
     cy.get(CollectionLocators.closeCollectionModalBtn).click();
     cy.get(CollectionLocators.collectionBtn).click();
