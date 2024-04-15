@@ -228,8 +228,8 @@ export class PostsService extends ResourceService<any> {
     }
 
     // Clean up whatevers left, removing empty arrays and values
-    postParams['form[]'] = postParams['form[]'].filter((formId: any) => formId !== 0);
-    if (postParams['form[]']?.length === 0 || postParams['form[]'][0] === 'none') {
+    postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
+    if (postParams['form[]']?.length === 0 || postParams['form[]']?.[0] === 'none') {
       delete postParams['form[]'];
     }
 
