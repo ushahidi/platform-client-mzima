@@ -49,10 +49,7 @@ class CollectionFunctions {
     cy.get(CollectionLocators.postCheckBox).click({ force: true });
     this.save_post();
     cy.get(CollectionLocators.successBtn).click();
-    cy.get(CollectionLocators.postItem)
-      .eq(0)
-      .find(CollectionLocators.morePostActionsBtn)
-      .click({ force: true });
+    cy.get(CollectionLocators.postItem).eq(0).find(CollectionLocators.morePostActionsBtn).click();
     cy.get(CollectionLocators.addCollectionToPostCheckbox).click();
     cy.get(CollectionLocators.selectCollection)
       .eq(0)
@@ -62,7 +59,7 @@ class CollectionFunctions {
     cy.get(CollectionLocators.collectionBtn).click();
     cy.get(CollectionLocators.collectionItem).eq(0).click();
     cy.get(CollectionLocators.dataViewBtn);
-    cy.get(CollectionLocators.posts).contains('Post Title');
+    cy.get(CollectionLocators.posts).children(CollectionLocators.postItem).contains('Post Title');
   }
 
   create_collection() {
