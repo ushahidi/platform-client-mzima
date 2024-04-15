@@ -73,22 +73,37 @@ export class MapViewComponent implements AfterViewInit {
     this.sessionService.mapConfig$.subscribe({
       next: (mapConfig) => {
         if (mapConfig) {
-          this.mapConfig = mapConfig;
-
-          this.baseLayer = this.mapConfig.default_view!.baselayer;
-          const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
-          this.offlineLayer = tileLayerOffline(currentLayer.url, currentLayer.layerOptions);
-          this.onlineLayer = tileLayer(currentLayer.url, currentLayer.layerOptions);
-
-          this.leafletOptions = {
-            minZoom: 4,
-            maxZoom: 17,
-            scrollWheelZoom: true,
-            zoomControl: false,
-            layers: [this.offlineLayer, this.onlineLayer],
-            center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
-            zoom: this.mapConfig.default_view!.zoom,
-          };
+          // The map can only be configured using leafletOptions on creation...
+          if (!this.mapConfig && this.mapLayers.length === 0) {
+            this.mapConfig = mapConfig;
+            this.baseLayer = this.mapConfig.default_view!.baselayer;
+            const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
+            this.offlineLayer = tileLayerOffline(currentLayer.url, currentLayer.layerOptions);
+            this.onlineLayer = tileLayer(currentLayer.url, currentLayer.layerOptions);
+            this.leafletOptions = {
+              minZoom: 4,
+              maxZoom: 17,
+              scrollWheelZoom: true,
+              zoomControl: false,
+              layers: [this.offlineLayer, this.onlineLayer],
+              center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
+              zoom: this.mapConfig.default_view!.zoom,
+            };
+          } else {
+            // So if the baseLayer has changed and its an already created map, we need to manipulate the layers manually
+            if (this.mapConfig.default_view!.baselayer !== mapConfig.default_view.baselayer) {
+              this.map.eachLayer((layer) => {
+                if (layer instanceof TileLayer) this.map.removeLayer(layer);
+              });
+              this.mapConfig = mapConfig;
+              this.baseLayer = this.mapConfig.default_view!.baselayer;
+              const currentLayer = mapHelper.getMapLayer(this.baseLayer, this.isDarkMode);
+              this.offlineLayer = tileLayerOffline(currentLayer.url, currentLayer.layerOptions);
+              this.onlineLayer = tileLayer(currentLayer.url, currentLayer.layerOptions);
+              this.map.addLayer(this.offlineLayer);
+              this.map.addLayer(this.onlineLayer);
+            }
+          }
           this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
         }
       },

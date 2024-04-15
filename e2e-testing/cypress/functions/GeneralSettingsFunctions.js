@@ -79,7 +79,6 @@ class GeneralSettingsFunctions {
 
   steps_to_generate_new_api_key() {
     this.generate_new_api_key();
-    cy.reload();
     this.verify_api_field_should_have_value();
     this.click_save_button();
   }
@@ -89,7 +88,6 @@ class GeneralSettingsFunctions {
     this.type_deployment_name('-Automated');
     this.type_site_description('Fixtures are a great way to mock data for responses to routes');
     this.click_save_button();
-    cy.reload();
     this.verify_deployment_changes_reflect('-Automated');
   }
 }
