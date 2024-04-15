@@ -4,7 +4,7 @@ class LoginFunctions {
   launch_login_modal(launchURL) {
     cy.visit(launchURL);
     this.click_through_onboarding();
-    this.change_laguage();
+    this.change_language();
     cy.get(LoginLocators.loginModal).click();
   }
 
@@ -34,7 +34,7 @@ class LoginFunctions {
   }
 
   //quick-fix, change language to english after logging in
-  change_laguage() {
+  change_language() {
     cy.get('.language__selected').click();
     cy.get('#mat-option-7 > .mat-option-text').click();
   }
