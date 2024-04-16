@@ -61,6 +61,7 @@ class CollectionFunctions {
     cy.get(CollectionLocators.collectionItem).click({ force: true });
     cy.wait(1000);
     cy.get(CollectionLocators.dataViewBtn).click({ force: true });
+    cy.response();
     cy.wait(1000);
     cy.get(CollectionLocators.posts).children(CollectionLocators.postItem).contains('Post Title');
   }
