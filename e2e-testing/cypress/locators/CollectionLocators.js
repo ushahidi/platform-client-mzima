@@ -6,6 +6,7 @@ const CollectionLocators = {
   onlyMeRadio: '[data-qa="only-me"]',
   saveCollectionBtn: '[data-qa="save-collection-btn"]',
   selectCollection: '[data-qa="collection-item270"]',
+  collectionCheckbox: '[data-qa="collection-item-checkbox"]',
   surveyItem: '[data-qa="add-post-modal-surveys-item2"]',
   submitPostButton: '[data-qa="submit-post-button"]',
   surveySelectionList: '[data-qa="survey-selection-list"]',

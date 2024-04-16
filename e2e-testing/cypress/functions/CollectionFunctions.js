@@ -53,8 +53,8 @@ class CollectionFunctions {
     cy.get(CollectionLocators.postItem).eq(0).find(CollectionLocators.morePostActionsBtn).click();
     cy.get(CollectionLocators.addCollectionToPostCheckbox).click();
     cy.get(CollectionLocators.selectCollection)
-      .find('#mat-checkbox-93-input')
-      .click({ force: true });
+      .children(CollectionLocators.collectionCheckbox)
+      .click();
     cy.get(CollectionLocators.closeCollectionModalBtn).click();
     cy.wait(1000);
     cy.get(CollectionLocators.collectionBtn).click();
