@@ -56,6 +56,7 @@ class CollectionFunctions {
       .find('#mat-checkbox-146-input')
       .click({ force: true });
     cy.get(CollectionLocators.closeCollectionModalBtn).click();
+    cy.wait(1000);
     cy.get(CollectionLocators.collectionBtn).click();
     cy.get(CollectionLocators.collectionItem).click({ force: true });
     cy.wait(1000);
