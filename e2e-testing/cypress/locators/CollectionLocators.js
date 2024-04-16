@@ -27,7 +27,7 @@ const CollectionLocators = {
   addCollectionToPostCheckbox: '[data-qa="add-collection-to-post"]',
   closeCollectionModalBtn: '[data-qa="btn-close"]',
   dataViewBtn: '[data-qa="btn-data"]',
-  posts: '[data-qa="posts"]',
+  postPreview: '[data-qa="post-preview"]',
   postItem: '[data-qa="post-item"]',
 };
 

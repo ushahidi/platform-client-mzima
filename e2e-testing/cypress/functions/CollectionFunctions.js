@@ -63,7 +63,9 @@ class CollectionFunctions {
     cy.get(CollectionLocators.dataViewBtn).click({ force: true });
     cy.reload();
     cy.wait(1000);
-    cy.get(CollectionLocators.posts).children(CollectionLocators.postItem).contains('Post Title');
+    cy.get(CollectionLocators.postPreview)
+      .children(CollectionLocators.postItem)
+      .contains('Post Title');
   }
 
   create_collection() {
