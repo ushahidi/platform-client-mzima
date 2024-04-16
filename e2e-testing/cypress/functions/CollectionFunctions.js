@@ -56,13 +56,9 @@ class CollectionFunctions {
       .children(CollectionLocators.collectionCheckbox)
       .click();
     cy.get(CollectionLocators.closeCollectionModalBtn).click();
-    cy.wait(1000);
     cy.get(CollectionLocators.collectionBtn).click();
     cy.get(CollectionLocators.collectionItem).click({ force: true });
-    cy.wait(1000);
     cy.get(CollectionLocators.dataViewBtn).click({ force: true });
-    cy.reload();
-    cy.wait(1000);
     cy.get(CollectionLocators.postPreview)
       .children(CollectionLocators.postItem)
       .contains('Post Title');
