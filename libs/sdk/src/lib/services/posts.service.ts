@@ -170,14 +170,16 @@ export class PostsService extends ResourceService<any> {
 
   public getPostStatistics(queryParams?: any): Observable<PostStatsResponse> {
     const params = { ...queryParams, group_by: 'form', enable_group_by_source: true };
-    const filters = this.postParamsMapper(params, this.postsFilters.value);
+    const filters = this.postParamsMapper(params, this.postsFilters.value, true);
 
     return super.get('stats', filters);
   }
 
-  private postParamsMapper(params: any, filter?: GeoJsonFilter) {
+  private postParamsMapper(params: any, filter?: GeoJsonFilter, isStats: boolean = false) {
     // Combine new parameters with existing filter
     const postParams: any = { ...filter, ...params };
+
+    postParams.page = filter?.page;
     postParams.currentView = filter?.currentView;
 
     // Allocate start and end dates, and remove originals
@@ -229,24 +231,8 @@ export class PostsService extends ResourceService<any> {
 
     // Clean up whatevers left, removing empty arrays and values
     postParams['form[]'] = postParams['form[]'].filter((formId: any) => formId !== 0);
-    if (postParams['form[]']?.length === 0 || postParams['form[]'][0] === 'none') {
-      delete postParams['form[]'];
-    }
+    if (isStats) delete postParams['form[]'];
 
-    if (postParams['source[]']?.length === 0) {
-      delete postParams['source[]'];
-    }
-
-    if (postParams['status[]']?.length === 0) {
-      delete postParams['status[]'];
-    }
-
-    if (postParams['tags[]']?.length === 0) {
-      delete postParams['tags[]'];
-    }
-    if (postParams.set?.length === 0) {
-      delete postParams.set;
-    }
     if (postParams.query?.length === 0) {
       delete postParams.query;
     }
