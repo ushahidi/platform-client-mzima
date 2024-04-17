@@ -1,6 +1,5 @@
 import SurveyConfigurationLocators from '../locators/SurveyConfigurationLocators';
 import LoginFunctions from '../functions/LoginFunctions';
-import LoginLocators from '../locators/LoginLocators';
 
 const loginFunctions = new LoginFunctions();
 
@@ -14,7 +13,7 @@ class SurveyConfigurationFunctions {
   }
 
   open_particular_survey() {
-    cy.get(SurveyConfigurationLocators.survey).click();
+    cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
   }
 
   open_survey_configurations() {
@@ -22,11 +21,11 @@ class SurveyConfigurationFunctions {
   }
 
   toggle_survey_review_required() {
-    cy.get('#mat-slide-toggle-1-input').click({ force: true });
+    cy.get(SurveyConfigurationLocators.reviewRqrdTgl).click();
   }
 
   toggle_hide_author_information() {
-    cy.get('#mat-slide-toggle-2-input').click({ force: true });
+    cy.get(SurveyConfigurationLocators.hideAuthorTgl).click();
   }
 
   save_survey_configurations() {
@@ -41,17 +40,6 @@ class SurveyConfigurationFunctions {
     cy.get('#mat-slide-toggle-20-input').should('not.be.checked');
   }
 
-  login_as_different_user() {
-    // //change language to english
-    // cy.get('.language__selected').click();
-    // cy.get('#mat-option-7 > .mat-option-text').click();
-    // //proceed to login
-    // cy.get(LoginLocators.loginModal).click();
-    // cy.type(Cypress.env('ush_user_email'));
-    // cy.type(Cypress.env('ush_user_pwd'));
-    // cy.get(LoginLocators.loginButton).click();
-  }
-
   click_add_post_btn() {
     cy.get(SurveyConfigurationLocators.addPostBtn).click();
   }
@@ -59,6 +47,9 @@ class SurveyConfigurationFunctions {
   select_survey() {
     cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
     cy.wait(1000);
+  }
+  select_configuration_test_survey() {
+    cy.get(SurveyConfigurationLocators.configurationTestSurvey).click();
   }
 
   type_post_title(title) {
@@ -74,10 +65,10 @@ class SurveyConfigurationFunctions {
   }
   add_post() {
     this.click_add_post_btn();
-    this.select_survey();
+    this.select_configuration_test_survey();
     this.type_post_title('New Post Title');
+    // cy.get('[data-qa="null"]').type('New Title');
     this.type_post_description('New Post Description');
-    cy.get(SurveyConfigurationLocators.postCheckBox).click({ force: true });
     this.save_post();
     cy.get(SurveyConfigurationLocators.successBtn).click();
   }
@@ -97,28 +88,24 @@ class SurveyConfigurationFunctions {
 
   check_for_accurate_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
-    cy.get(SurveyConfigurationLocators.surveySelectionList)
-      .children(SurveyConfigurationLocators.surveySelectItem)
-      .eq(0)
-      .click({ force: true });
-    cy.wait(3000);
+    // cy.get('[data-qa="survey-select-item718"]').click();
+    this.select_configuration_test_survey();
+    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
-    cy.get(SurveyConfigurationLocators.postAuthor).contains(Cypress.env('ush_user_name'));
+    cy.get('.post-info__username').contains('Ghost User').should('be.visible');
   }
 
   check_for_anonymous_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
-    cy.get(SurveyConfigurationLocators.surveySelectionList)
-      .children(SurveyConfigurationLocators.surveySelectItem)
-      .eq(0)
-      .click({ force: true });
-    cy.wait(3000);
+    cy.get('[data-qa="btn-data"]').click();
+    this.select_configuration_test_survey();
+    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
-    cy.get(SurveyConfigurationLocators.postAuthor).contains('Anonymous');
+    cy.get('.post-info__username').contains('Anonymous').should('be.visible');
   }
 
   require_posts_reviewed_before_published() {
@@ -136,16 +123,24 @@ class SurveyConfigurationFunctions {
   }
 
   hide_author_information_and_verify() {
+    //change configuration survey
     this.open_settings();
     this.open_surveys();
     this.open_particular_survey();
     this.open_survey_configurations();
     this.toggle_hide_author_information();
+    this.save_survey_configurations();
     loginFunctions.logout();
+    //login as a member
     loginFunctions.login_member_user();
+
+    cy.visit(Cypress.env('baseUrl'));
     this.add_post();
     this.check_for_accurate_author_name();
+
     loginFunctions.logout();
+
+    cy.visit(Cypress.env('baseUrl'));
     this.check_for_anonymous_author_name();
   }
 }

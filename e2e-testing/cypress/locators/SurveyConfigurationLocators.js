@@ -1,5 +1,6 @@
 const SurveyConfigurationLocators = {
   surveyList: '[data-qa="survey-list"]',
+  configurationTestSurvey: '[data-qa="automation-survey---to-test-survey-configuration"]',
   survey: '[data-qa="counting-and-results"]',
   saveSurveyBtn: '[data-qa="btn-save-survey-item"]',
   settingsBtn: '[data-qa="btn-settings"]',
@@ -13,10 +14,12 @@ const SurveyConfigurationLocators = {
   postPreview: '[data-qa="post-preview"]',
   postItem: '[data-qa="post-item"]',
   clearBtn: '[data-qa="clear"]',
-  surveyItemBtn: '[data-qa="add-post-modal-surveys-item2"]',
+  surveyItemBtn: '[data-qa="test-submission-survey"]',
   surveySelectionList: '[data-qa="survey-selection-list"]',
   surveySelectItem: '[data-qa="survey-select-item2"]',
   postStatus: '[data-qa="status"]',
+  reviewRqrdTgl: '[data-qa="toggle-posts-require-review"]',
+  hideAuthorTgl: '[data-qa="toggle-hide-author"]',
 };
 
 export default SurveyConfigurationLocators;
