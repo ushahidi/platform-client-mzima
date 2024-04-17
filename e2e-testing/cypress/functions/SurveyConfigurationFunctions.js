@@ -12,7 +12,7 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.surveyBtn).click();
   }
 
-  open_particular_survey() {
+  open_survey_to_configure() {
     cy.get(SurveyConfigurationLocators.configurationTestSurvey).click();
   }
 
@@ -48,8 +48,8 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
     cy.wait(1000);
   }
-  select_configuration_test_survey() {
-    cy.get(SurveyConfigurationLocators.configurationTestSurvey).click();
+  open_survey_to_submit() {
+    cy.get(SurveyConfigurationLocators.surveyToSubmit).click();
   }
 
   type_post_title(title) {
@@ -65,7 +65,7 @@ class SurveyConfigurationFunctions {
   }
   add_post() {
     this.click_add_post_btn();
-    this.select_configuration_test_survey();
+    this.open_survey_to_submit();
     this.type_post_title('New Post Title');
     // cy.get('[data-qa="null"]').type('New Title');
     this.type_post_description('New Post Description');
@@ -88,7 +88,7 @@ class SurveyConfigurationFunctions {
 
   check_for_accurate_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
-    this.select_configuration_test_survey();
+    this.open_survey_to_submit();
     // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
@@ -99,7 +99,7 @@ class SurveyConfigurationFunctions {
   check_for_anonymous_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get('[data-qa="btn-data"]').click();
-    this.select_configuration_test_survey();
+    this.open_survey_to_submit();
     // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
@@ -110,11 +110,11 @@ class SurveyConfigurationFunctions {
   require_posts_reviewed_before_published() {
     this.open_settings();
     this.open_surveys();
-    this.open_particular_survey();
+    this.open_survey_to_configure();
     this.open_survey_configurations();
     this.toggle_survey_review_required();
     this.save_survey_configurations();
-    this.open_particular_survey();
+    this.open_survey_to_configure();
     this.reopen_survey_configure_tab();
     this.verify_button_toggled();
     this.add_post();
@@ -125,7 +125,7 @@ class SurveyConfigurationFunctions {
     //change configuration survey
     this.open_settings();
     this.open_surveys();
-    this.open_particular_survey();
+    this.open_survey_to_configure();
     this.open_survey_configurations();
     this.toggle_hide_author_information();
     this.save_survey_configurations();
