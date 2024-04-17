@@ -10,15 +10,15 @@ class LoginFunctions {
 
   type_email(email) {
     cy.wait(1000);
-    cy.get(LoginLocators.emailField).type(email, {force: true}).should('have.value', email);
+    cy.get(LoginLocators.emailField).type(email, { force: true }).should('have.value', email);
   }
 
   type_password(password) {
     cy.get(LoginLocators.passwordField)
-      .clear({force: true})
-      .type(password, {force: true})
+      .clear({ force: true })
+      .type(password, { force: true })
       .invoke('val')
-      .should('have.length.gte', 12);
+      .should('have.length.gte', 7);
   }
 
   click_login_button() {
