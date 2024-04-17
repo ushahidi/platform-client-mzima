@@ -49,7 +49,7 @@ class SurveyConfigurationFunctions {
     cy.wait(1000);
   }
   select_configuration_test_survey() {
-    cy.get(SurveyConfigurationLocators.surveySelectItem).click({ force: true });
+    cy.get(SurveyConfigurationLocators.surveySelectItem).click();
   }
 
   type_post_title(title) {
