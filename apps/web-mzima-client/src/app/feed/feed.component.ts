@@ -481,7 +481,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     }
     this.selectedPosts = [];
     if (count) {
-      const postWord = count === 1 ? `post` : `posts`;
+      const postWord = count === 1 ? 'post' : 'posts';
       this.confirmModalService.open({
         title: this.translate.instant('notify.confirm_modal.deleted.success'),
         description: `<p>${this.translate.instant(
