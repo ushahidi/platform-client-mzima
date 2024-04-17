@@ -355,60 +355,67 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public setIsLoadingOnCardClick() {
     // With this skeleton loader's css is properly displayed (when navigating to POST mode) through post card click,
     // and the post card is able to detect to not load the skeleton UI loader after posts have successfully shown up
-    this.posts.length && this.mode === FeedMode.Tiles
-      ? (this.isLoading = true)
-      : this.isLoading === !this.posts.length;
+    if (this.isDesktop) {
+      this.posts.length && this.mode === FeedMode.Tiles
+        ? (this.isLoading = true)
+        : this.isLoading === !this.posts.length;
+    } else {
+      this.isLoading = false;
+    }
   }
 
   public showPostDetails(post: any): void {
-    if (this.isDesktop) {
-      this.setIsLoadingOnCardClick();
-      if (this.collectionId) {
-        this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'view'], {
-          queryParams: {
-            mode: FeedMode.Post,
-          },
-          queryParamsHandling: 'merge',
-        });
-      } else {
-        this.router.navigate(['feed', post.id, 'view'], {
-          queryParams: {
-            mode: FeedMode.Post,
-          },
-          queryParamsHandling: 'merge',
-        });
-      }
-    } else {
-      this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-        width: '100%',
-        maxWidth: 576,
-        data: { post: post, color: post.color, twitterId: post.data_source_message_id },
-        height: 'auto',
-        maxHeight: '90vh',
-        panelClass: ['modal', 'post-modal'],
-      });
+    this.setIsLoadingOnCardClick();
+    const modeBasedOnScreen = this.isDesktop ? FeedMode.Post : FeedMode.Tiles;
 
-      this.postDetailsModal.afterClosed().subscribe((data) => {
-        if (data?.update) {
-          this.getPostsSubject.next({ params: this.params });
-        }
-        if (this.collectionId) {
-          this.router.navigate(['/feed', 'collection', this.collectionId], {
-            queryParams: {
-              page: this.currentPage,
-            },
-            queryParamsHandling: 'merge',
-          });
-        } else {
-          this.router.navigate(['feed'], {
-            queryParams: {
-              page: this.currentPage,
-            },
-            queryParamsHandling: 'merge',
-          });
-        }
-      });
-    }
+    // Check for whether in collections (mode) or not
+    const { lgScreenUrl, smScreenUrl } = {
+      lgScreenUrl: this.collectionId
+        ? ['/feed', 'collection', this.collectionId, post.id, 'view']
+        : ['/feed', post.id, 'view'],
+      smScreenUrl: this.collectionId ? ['/feed', 'collection', this.collectionId] : ['feed'],
+    };
+
+    // Check screens size
+    const pageUrl = this.isDesktop ? lgScreenUrl : smScreenUrl;
+
+    // route to post details
+    this.router.navigate(pageUrl, {
+      queryParams: {
+        mode: modeBasedOnScreen,
+      },
+      queryParamsHandling: 'merge',
+    });
+
+    // this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+    //   width: '100%',
+    //   maxWidth: 576,
+    //   data: { post: post, color: post.color, twitterId: post.data_source_message_id },
+    //   height: 'auto',
+    //   maxHeight: '90vh',
+    //   panelClass: ['modal', 'post-modal'],
+    // });
+
+    // this.postDetailsModal.afterClosed().subscribe((data) => {
+    //   if (data?.update) {
+    //     this.getPostsSubject.next({ params: this.params });
+    //   }
+    //   if (this.collectionId) {
+    //     this.router.navigate(['/feed', 'collection', this.collectionId], {
+    //       queryParams: {
+    //         page: this.currentPage,
+    //       },
+    //       queryParamsHandling: 'merge',
+    //     });
+    //   } else {
+    //     this.router.navigate(['feed'], {
+    //       queryParams: {
+    //         page: this.currentPage,
+    //       },
+    //       queryParamsHandling: 'merge',
+    //     });
+    //   }
+    // });
   }
 
   // rearrange and comment out just for comparison and so that I'm not confused
