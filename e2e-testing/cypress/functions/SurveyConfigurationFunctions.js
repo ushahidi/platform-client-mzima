@@ -13,7 +13,7 @@ class SurveyConfigurationFunctions {
   }
 
   open_particular_survey() {
-    cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
+    cy.get(SurveyConfigurationLocators.configurationTestSurvey).click();
   }
 
   open_survey_configurations() {
@@ -49,7 +49,7 @@ class SurveyConfigurationFunctions {
     cy.wait(1000);
   }
   select_configuration_test_survey() {
-    cy.get(SurveyConfigurationLocators.configurationTestSurvey).click();
+    cy.get(SurveyConfigurationLocators.surveySelectItem).click();
   }
 
   type_post_title(title) {
@@ -88,13 +88,12 @@ class SurveyConfigurationFunctions {
 
   check_for_accurate_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
-    // cy.get('[data-qa="survey-select-item718"]').click();
     this.select_configuration_test_survey();
     // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
-    cy.get('.post-info__username').contains('Ghost User').should('be.visible');
+    cy.get('.post-info__username').contains('Automation User Member Role').should('be.visible');
   }
 
   check_for_anonymous_author_name() {
