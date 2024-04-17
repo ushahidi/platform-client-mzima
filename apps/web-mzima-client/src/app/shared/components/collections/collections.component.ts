@@ -6,6 +6,7 @@ import { surveyHelper, formHelper } from '@helpers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
+import { debounceTime } from 'rxjs';
 import {
   CollectionsService,
   NotificationsService,
@@ -75,6 +76,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     this.initializeForm();
     this.formSubscribe();
     this.checkPermission();
+    this.loadSearchCollections();
 
     const permissions = localStorage.getItem('USH_permissions')!;
     this.featuredEnabled = permissions ? permissions.split(',').includes('Manage Posts') : false;
@@ -88,6 +90,15 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     if (this.isLoggedIn) {
       this.initRoles();
     }
+  }
+
+  private loadSearchCollections() {
+    this.searchForm
+      .get('query')
+      ?.valueChanges.pipe(debounceTime(500), untilDestroyed(this))
+      .subscribe((query: string) => {
+        this.loadData(query);
+      });
   }
 
   private initializeForm() {
