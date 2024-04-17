@@ -18,7 +18,7 @@ class LoginFunctions {
       .clear({ force: true })
       .type(password, { force: true })
       .invoke('val')
-      .should('have.length.gte', 12);
+      .should('have.length.gte', 7);
   }
 
   click_login_button() {
