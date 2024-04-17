@@ -379,13 +379,37 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // Check screens size
     const pageUrl = this.isDesktop ? lgScreenUrl : smScreenUrl;
 
-    // route to post details
-    this.router.navigate(pageUrl, {
-      queryParams: {
-        mode: modeBasedOnScreen,
-      },
-      queryParamsHandling: 'merge',
-    });
+    if (this.isDesktop) {
+      // route to post details and open on the right
+      this.router.navigate(pageUrl, {
+        queryParams: {
+          mode: modeBasedOnScreen,
+        },
+        queryParamsHandling: 'merge',
+      });
+    } else {
+      // Open post details as a modal
+      this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+        width: '100%',
+        maxWidth: 576,
+        data: { post: post, color: post.color, twitterId: post.data_source_message_id },
+        height: 'auto',
+        maxHeight: '90vh',
+        panelClass: ['modal', 'post-modal'],
+      });
+      this.postDetailsModal.afterClosed().subscribe((data) => {
+        if (data?.update) {
+          this.getPostsSubject.next({ params: this.params });
+        }
+        this.router.navigate(pageUrl, {
+          queryParams: {
+            mode: modeBasedOnScreen,
+            page: this.currentPage,
+          },
+          queryParamsHandling: 'merge',
+        });
+      });
+    }
 
     // this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
     //   width: '100%',
