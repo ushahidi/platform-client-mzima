@@ -1,6 +1,6 @@
 const SurveyConfigurationLocators = {
   surveyList: '[data-qa="survey-list"]',
-  configurationTestSurvey: '[data-qa="add-post-modal-surveys-item125"]',
+  configurationTestSurvey: '[data-qa="full-length-survey-with-image-field--don\'t-delete"]',
   survey: '[data-qa="counting-and-results"]',
   saveSurveyBtn: '[data-qa="btn-save-survey-item"]',
   settingsBtn: '[data-qa="btn-settings"]',
