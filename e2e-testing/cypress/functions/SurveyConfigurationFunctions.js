@@ -88,7 +88,7 @@ class SurveyConfigurationFunctions {
 
   check_for_accurate_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
-    this.open_survey_to_submit();
+    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
     // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
@@ -99,7 +99,7 @@ class SurveyConfigurationFunctions {
   check_for_anonymous_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get('[data-qa="btn-data"]').click();
-    this.open_survey_to_submit();
+    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
     // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
