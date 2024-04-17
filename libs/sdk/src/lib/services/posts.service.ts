@@ -251,6 +251,10 @@ export class PostsService extends ResourceService<any> {
       delete postParams['tags[]'];
     }
 
+    if (postParams.set?.length === 0) {
+      delete postParams.set;
+    }
+
     if (postParams.query?.length === 0) {
       delete postParams.query;
     }
