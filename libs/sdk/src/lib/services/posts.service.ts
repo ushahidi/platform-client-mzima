@@ -179,8 +179,10 @@ export class PostsService extends ResourceService<any> {
     // Combine new parameters with existing filter
     const postParams: any = { ...filter, ...params };
 
+    // Some parameters should always come from the filter (if they exist)
     postParams.page = filter?.page;
     postParams.currentView = filter?.currentView;
+    postParams.limit = filter?.limit;
 
     // Allocate start and end dates, and remove originals
     if (postParams.date?.start) {
@@ -229,9 +231,25 @@ export class PostsService extends ResourceService<any> {
       delete postParams.place;
     }
 
-    // Clean up whatevers left, removing empty arrays and values
+    // Remove the 'Unknown Form' form
     postParams['form[]'] = postParams['form[]'].filter((formId: any) => formId !== 0);
-    if (isStats) delete postParams['form[]'];
+
+    // Clean up whatevers left, removing empty arrays and values
+    if (postParams['form[]']?.length === 0 || isStats) {
+      delete postParams['form[]'];
+    }
+
+    if (postParams['source[]']?.length === 0) {
+      delete postParams['source[]'];
+    }
+
+    if (postParams['status[]']?.length === 0) {
+      delete postParams['status[]'];
+    }
+
+    if (postParams['tags[]']?.length === 0) {
+      delete postParams['tags[]'];
+    }
 
     if (postParams.query?.length === 0) {
       delete postParams.query;
