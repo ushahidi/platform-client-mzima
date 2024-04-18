@@ -65,11 +65,32 @@
 }
 
 .form-controls-panel {
+  display: flex;
+  flex: 1 1;
+  flex-direction: row;
   gap: 8px;
-
   app-button {
     --button-padding-start: 24px;
     --button-padding-end: 24px;
+    width: 100%;
+    ::ng-deep ion-button {
+      width: 100%;
+    }
+
+    &.submit-button {
+      ::ng-deep ion-button span {
+        display: flex;
+        flex-direction: row;
+        app-spinner {
+          display: block;
+          margin-inline: 4px;
+          --spinner-size: 16px;
+          ::ng-deep ion-spinner {
+            color: #fff;
+          }
+        }
+      }
+    }
   }
 }
 
