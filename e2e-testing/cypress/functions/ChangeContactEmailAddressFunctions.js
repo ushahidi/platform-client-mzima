@@ -16,10 +16,6 @@ class ChangeContactEmailAddressFunctions {
   check_new_contact_email_address_shows() {
     cy.get(GeneralSettingsLocator.contactEmail).contains('testnew@gmail.com');
   }
-
-  reload_page() {
-    cy.reload();
-  }
 }
 
 export default ChangeContactEmailAddressFunctions;
