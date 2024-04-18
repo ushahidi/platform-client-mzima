@@ -231,11 +231,13 @@ export class PostsService extends ResourceService<any> {
       delete postParams.place;
     }
 
-    // Remove the 'Unknown Form' form
-    postParams['form[]'] = postParams['form[]'].filter((formId: any) => formId !== 0);
-
     // Clean up whatevers left, removing empty arrays and values
-    if (postParams['form[]']?.length === 0 || isStats) {
+    postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
+    if (
+      postParams['form[]']?.length === 0 ||
+      postParams['form[]'] === undefined ||
+      isStats
+    ) {
       delete postParams['form[]'];
     }
 
