@@ -170,15 +170,19 @@ export class PostsService extends ResourceService<any> {
 
   public getPostStatistics(queryParams?: any): Observable<PostStatsResponse> {
     const params = { ...queryParams, group_by: 'form', enable_group_by_source: true };
-    const filters = this.postParamsMapper(params, this.postsFilters.value);
+    const filters = this.postParamsMapper(params, this.postsFilters.value, true);
 
     return super.get('stats', filters);
   }
 
-  private postParamsMapper(params: any, filter?: GeoJsonFilter) {
+  private postParamsMapper(params: any, filter?: GeoJsonFilter, isStats: boolean = false) {
     // Combine new parameters with existing filter
     const postParams: any = { ...filter, ...params };
+
+    // Some parameters should always come from the filter (if they exist)
+    postParams.page = filter?.page;
     postParams.currentView = filter?.currentView;
+    postParams.limit = filter?.limit;
 
     // Allocate start and end dates, and remove originals
     if (postParams.date?.start) {
@@ -232,7 +236,7 @@ export class PostsService extends ResourceService<any> {
     if (
       postParams['form[]']?.length === 0 ||
       postParams['form[]'] === undefined ||
-      postParams['form[]']?.[0] === 'none'
+      isStats
     ) {
       delete postParams['form[]'];
     }
@@ -248,9 +252,11 @@ export class PostsService extends ResourceService<any> {
     if (postParams['tags[]']?.length === 0) {
       delete postParams['tags[]'];
     }
+
     if (postParams.set?.length === 0) {
       delete postParams.set;
     }
+
     if (postParams.query?.length === 0) {
       delete postParams.query;
     }
