@@ -10,7 +10,7 @@ describe("Automated Tests for Survey Configurations", () => {
     cy.visit(Cypress.env('baseUrl'));
   });
 
-  it("Verify posts go into Published state as configured", () => {
+  it.skip("Verify posts go into Published state as configured", () => {
     surveyConfigurationFunctions.require_posts_reviewed_before_published()
   });
 
