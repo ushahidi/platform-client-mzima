@@ -24,6 +24,9 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.reviewRqrdTgl).click();
   }
 
+  toggle_require_posts_review() {
+    cy.get(SurveyConfigurationLocators.requirePostsReviewTgl).click();
+  }
   toggle_hide_author_information() {
     cy.get(SurveyConfigurationLocators.hideAuthorTgl).click();
   }
@@ -127,6 +130,7 @@ class SurveyConfigurationFunctions {
     this.open_surveys();
     this.open_survey_to_configure();
     this.open_survey_configurations();
+    this.toggle_survey_review_required();
     this.toggle_hide_author_information();
     this.save_survey_configurations();
     loginFunctions.logout();
