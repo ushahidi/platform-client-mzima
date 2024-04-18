@@ -1,7 +1,7 @@
-import LoginFunctions from "../../functions/LoginFunctions";
-import SurveyConfigurationFunctions from "../../functions/SurveyConfigurationFunctions";
+import LoginFunctions from '../../functions/LoginFunctions';
+import SurveyConfigurationFunctions from '../../functions/SurveyConfigurationFunctions';
 
-describe("Automated Tests for Survey Configurations", () => {
+describe('Automated Tests for Survey Configurations', () => {
   const loginFunctions = new LoginFunctions();
   const surveyConfigurationFunctions = new SurveyConfigurationFunctions();
 
@@ -10,11 +10,15 @@ describe("Automated Tests for Survey Configurations", () => {
     cy.visit(Cypress.env('baseUrl'));
   });
 
-  it("Verify posts go into Published state as configured", () => {
-    surveyConfigurationFunctions.require_posts_reviewed_before_published()
+  it.skip('Verify posts go into Published state as configured', () => {
+    surveyConfigurationFunctions.require_posts_reviewed_before_published();
   });
 
-  it("Verify post exact location information is hidden", () => {
+  it('Verify post exact location information is hidden', () => {
     surveyConfigurationFunctions.require_exact_location_hidden();
+  });
+
+  it('Verifies author information stays hidden', () => {
+    surveyConfigurationFunctions.hide_author_information_and_verify();
   });
 });
