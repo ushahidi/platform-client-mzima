@@ -1,5 +1,6 @@
 const SurveyConfigurationLocators = {
   surveyList: '[data-qa="survey-list"]',
+  configurationTestSurvey: '[data-qa="full-length-survey-with-image-field--don\'t-delete"]',
   survey: '[data-qa="counting-and-results"]',
   saveSurveyBtn: '[data-qa="btn-save-survey-item"]',
   settingsBtn: '[data-qa="btn-settings"]',
@@ -13,11 +14,14 @@ const SurveyConfigurationLocators = {
   postPreview: '[data-qa="post-preview"]',
   postItem: '[data-qa="post-item"]',
   clearBtn: '[data-qa="clear"]',
-  surveyItemBtn: '[data-qa="add-post-modal-surveys-item2"]',
-  surveySelectionList: '[data-qa="survey-selection-list"]',
-  surveySelectItem: '[data-qa="survey-select-item2"]',
-  postStatus: '[data-qa="status"]',
   postDate: '[data-qa="date"]',
+  surveyItemBtn: '[data-qa="automation-survey---to-test-survey-configuration"]',
+  surveySelectionList: '[data-qa="survey-selection-list"]',
+  surveyToSubmit: '[data-qa="add-post-modal-surveys-item125"]',
+  surveyToVerify: '[data-qa="survey-select-item125"]',
+  postStatus: '[data-qa="status"]',
+  reviewRqrdTgl: '[data-qa="toggle-posts-require-review"]',
+  hideAuthorTgl: '[data-qa="toggle-hide-author"]',
 };
 
 export default SurveyConfigurationLocators;
