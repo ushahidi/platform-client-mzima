@@ -111,6 +111,19 @@ class SurveyConfigurationFunctions {
     cy.get('.post-info__username').contains('Anonymous').should('be.visible');
   }
 
+  check_for_time_post_was_added() {
+    cy.get(SurveyConfigurationLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveySelectionList)
+      .children(SurveyConfigurationLocators.surveyToVerify)
+      .eq(0)
+      .click({ force: true });
+    cy.wait(3000);
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .contains('New Post Title');
+    cy.get(SurveyConfigurationLocators.postDate);
+  }
+
   require_posts_reviewed_before_published() {
     this.open_settings();
     this.open_surveys();
@@ -147,19 +160,6 @@ class SurveyConfigurationFunctions {
 
     cy.visit(Cypress.env('baseUrl'));
     this.check_for_anonymous_author_name();
-  }
-
-  check_for_time_post_was_added() {
-    cy.get(SurveyConfigurationLocators.clearBtn).click();
-    cy.get(SurveyConfigurationLocators.surveySelectionList)
-      .children(SurveyConfigurationLocators.surveySelectItem)
-      .eq(0)
-      .click({ force: true });
-    cy.wait(3000);
-    cy.get(SurveyConfigurationLocators.postPreview)
-      .children(SurveyConfigurationLocators.postItem)
-      .contains('New Post Title');
-    cy.get(SurveyConfigurationLocators.postDate);
   }
 
   hide_exact_time_information_and_verify() {
