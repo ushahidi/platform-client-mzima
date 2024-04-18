@@ -162,14 +162,17 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.postDate);
   }
 
-  hide_exact_time_information() {
+  hide_exact_time_information_and_verify() {
     this.open_settings();
     this.open_surveys();
-    this.open_particular_survey();
+    this.open_survey_to_configure();
     this.open_survey_configurations();
     this.toggle_survey_review_required();
     this.toggle_hide_exact_time_information();
     this.save_survey_configurations();
+    loginFunctions.logout();
+    this.add_post();
+    this.check_for_time_post_was_added();
   }
 }
 

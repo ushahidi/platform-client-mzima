@@ -11,10 +11,7 @@ describe('Automated Tests for Survey Configurations', () => {
   });
 
   it('Steps to require posts to hide exact time information', () => {
-    surveyConfigurationFunctions.hide_exact_time_information();
-    loginFunctions.logout();
-    surveyConfigurationFunctions.add_post();
-    surveyConfigurationFunctions.check_for_time_post_was_added();
+    surveyConfigurationFunctions.hide_exact_time_information_and_verify();
   });
 
   it.skip('Verify posts go into Published state as configured', () => {
