@@ -180,9 +180,9 @@ export class PostsService extends ResourceService<any> {
     const postParams: any = { ...filter, ...params };
 
     // Some parameters should always come from the filter (if they exist)
-    postParams.page = filter?.page;
-    postParams.currentView = filter?.currentView;
-    postParams.limit = filter?.limit;
+    postParams.page = filter?.page ?? postParams.page;
+    postParams.currentView = filter?.currentView ?? postParams.currentView;
+    postParams.limit = filter?.limit ?? postParams.limit;
 
     // Allocate start and end dates, and remove originals
     if (postParams.date?.start) {
@@ -231,8 +231,10 @@ export class PostsService extends ResourceService<any> {
       delete postParams.place;
     }
 
-    // Clean up whatevers left, removing empty arrays and values
+    // Remove 'unknown form' from the form list if it exists.
     postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
+
+    // Clean up whatevers left, removing empty arrays and values
     if (postParams['form[]']?.length === 0 || postParams['form[]'] === undefined || isStats) {
       delete postParams['form[]'];
     }
