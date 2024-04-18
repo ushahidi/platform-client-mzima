@@ -94,6 +94,20 @@ class LoginFunctions {
       { cacheAcrossSpecs: true },
     );
   }
+
+  login_member_user() {
+    cy.session(
+      [Cypress.env('ush_user_email'), Cypress.env('ush_user_pwd')],
+      () => {
+        this.launch_login_modal(Cypress.env('baseUrl'));
+        this.type_email(Cypress.env('ush_user_email'));
+        this.type_password(Cypress.env('ush_user_pwd'));
+        this.click_login_button();
+        this.verify_login();
+      },
+      { cacheAcrossSpecs: true },
+    );
+  }
 }
 
 export default LoginFunctions;
