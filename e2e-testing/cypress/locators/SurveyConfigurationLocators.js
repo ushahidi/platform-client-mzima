@@ -16,7 +16,6 @@ const SurveyConfigurationLocators = {
   clearBtn: '[data-qa="clear"]',
   surveyItemBtn: '[data-qa="automation-survey---to-test-survey-configuration"]',
   surveySelectionList: '[data-qa="survey-selection-list"]',
-  surveySelectItem: '[data-qa="survey-select-item125"]',
   surveyToSubmit: '[data-qa="add-post-modal-surveys-item125"]',
   surveyToVerify: '[data-qa="survey-select-item125"]',
   postStatus: '[data-qa="status"]',
