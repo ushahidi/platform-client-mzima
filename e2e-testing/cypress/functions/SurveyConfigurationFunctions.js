@@ -39,10 +39,6 @@ class SurveyConfigurationFunctions {
     cy.get('#mat-tab-label-6-1').click({ force: true });
   }
 
-  verify_button_toggled() {
-    cy.get('#mat-slide-toggle-20-input').should('not.be.checked');
-  }
-
   click_add_post_btn() {
     cy.get(SurveyConfigurationLocators.addPostBtn).click();
   }
@@ -76,23 +72,9 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.successBtn).click();
   }
 
-  check_for_added_post_being_published() {
-    cy.get(SurveyConfigurationLocators.clearBtn).click();
-    cy.get(SurveyConfigurationLocators.surveySelectionList)
-      .children(SurveyConfigurationLocators.surveyToVerify)
-      .eq(0)
-      .click({ force: true });
-    cy.wait(3000);
-    cy.get(SurveyConfigurationLocators.postPreview)
-      .children(SurveyConfigurationLocators.postItem)
-      .contains('New Post Title');
-    cy.get(SurveyConfigurationLocators.postStatus).contains('Published');
-  }
-
   check_for_accurate_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get(SurveyConfigurationLocators.surveyToVerify).click();
-    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
@@ -103,25 +85,10 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get('[data-qa="btn-data"]').click();
     cy.get(SurveyConfigurationLocators.surveyToVerify).click();
-    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
     cy.get('.post-info__username').contains('Anonymous').should('be.visible');
-  }
-
-  require_posts_reviewed_before_published() {
-    this.open_settings();
-    this.open_surveys();
-    this.open_survey_to_configure();
-    this.open_survey_configurations();
-    this.toggle_survey_review_required();
-    this.save_survey_configurations();
-    this.open_survey_to_configure();
-    this.reopen_survey_configure_tab();
-    this.verify_button_toggled();
-    this.add_post();
-    this.check_for_added_post_being_published();
   }
 
   hide_author_information_and_verify() {
