@@ -49,6 +49,7 @@ export class PostEditPage {
   private relationConfigSource: any;
   private relationConfigKey: string;
   private isSearching = false;
+  public isSubmitting: 'no' | 'yes' | 'complete' = 'no';
   public relatedPosts: PostResult[];
   public relationSearch: string;
   public selectedRelatedPost: any;
@@ -513,12 +514,28 @@ export class PostEditPage {
     }
   }
 
+  public backNavigation(): void {
+    this.clearData();
+    this.router.navigate([
+      this.queryParams['profile']
+        ? 'profile/posts'
+        : this.isConnection && this.postId
+        ? this.postId
+        : '/',
+    ]);
+  }
+
+  public cancelPost(): void {
+    this.backNavigation();
+  }
+
   /**
    * Checking post information and preparing data
    */
   public async submitPost(): Promise<void> {
     if (this.form.disabled) return;
 
+    this.isSubmitting = 'yes';
     try {
       await this.preparationData();
     } catch (error: any) {
@@ -559,8 +576,10 @@ export class PostEditPage {
       await this.postComplete(
         'Thank you for your report. A message will be sent when the connection is restored.',
       );
+      this.isSubmitting = 'complete';
       this.backNavigation();
     }
+    this.isSubmitting = 'complete';
   }
 
   /**
@@ -688,17 +707,6 @@ export class PostEditPage {
     } else {
       this.cancel.emit();
     }
-  }
-
-  public backNavigation(): void {
-    this.clearData();
-    this.router.navigate([
-      this.queryParams['profile']
-        ? 'profile/posts'
-        : this.isConnection && this.postId
-        ? this.postId
-        : '/',
-    ]);
   }
 
   public preventSubmitIncaseTheresNoBackendValidation() {
