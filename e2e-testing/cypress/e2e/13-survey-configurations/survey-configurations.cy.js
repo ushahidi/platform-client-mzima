@@ -15,7 +15,7 @@ describe('Automated Tests for Survey Configurations', () => {
   });
 
   it('Verify post exact location information is hidden', () => {
-    surveyConfigurationFunctions.require_exact_location_hidden();
+    surveyConfigurationFunctions.hide_exact_location_information_and_verify();
   });
 
   it('Verifies author information stays hidden', () => {

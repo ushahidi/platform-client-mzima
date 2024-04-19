@@ -28,12 +28,13 @@ class SurveyConfigurationFunctions {
   toggle_require_posts_review() {
     cy.get(SurveyConfigurationLocators.requirePostsReviewTgl).click();
   }
+
   toggle_hide_author_information() {
     cy.get(SurveyConfigurationLocators.hideAuthorTgl).click();
   }
 
   toggle_hide_exact_location_information() {
-    cy.get('#mat-slide-toggle-3-input').click({ force: true });
+    cy.get(SurveyConfigurationLocators.hideLocationTgl).click();
   }
 
   save_survey_configurations() {
@@ -56,6 +57,7 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
     cy.wait(1000);
   }
+
   open_survey_to_submit() {
     cy.get(SurveyConfigurationLocators.surveyToSubmit).click();
   }
@@ -71,6 +73,7 @@ class SurveyConfigurationFunctions {
   save_post() {
     cy.get(SurveyConfigurationLocators.savePostBtn).click();
   }
+
   add_post() {
     this.click_add_post_btn();
     this.open_survey_to_submit();
@@ -144,7 +147,7 @@ class SurveyConfigurationFunctions {
   hide_exact_location_information_and_verify() {
     this.open_settings();
     this.open_surveys();
-    this.open_particular_survey();
+    this.open_survey_to_configure();
     this.open_survey_configurations();
     this.toggle_survey_review_required();
     this.toggle_hide_exact_location_information();

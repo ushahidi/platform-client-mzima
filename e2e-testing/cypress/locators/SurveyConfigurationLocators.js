@@ -21,6 +21,7 @@ const SurveyConfigurationLocators = {
   postStatus: '[data-qa="status"]',
   reviewRqrdTgl: '[data-qa="toggle-posts-require-review"]',
   hideAuthorTgl: '[data-qa="toggle-hide-author"]',
+  hideLocationTgl: '[data-qa="toggle-hide-location"]',
 };
 
 export default SurveyConfigurationLocators;
