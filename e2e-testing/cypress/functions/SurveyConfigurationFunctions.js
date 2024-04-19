@@ -75,7 +75,6 @@ class SurveyConfigurationFunctions {
   check_for_accurate_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get(SurveyConfigurationLocators.surveyToVerify).click();
-    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
@@ -86,7 +85,6 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get('[data-qa="btn-data"]').click();
     cy.get(SurveyConfigurationLocators.surveyToVerify).click();
-    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
