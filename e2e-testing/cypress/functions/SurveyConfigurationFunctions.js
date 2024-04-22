@@ -31,6 +31,10 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.hideAuthorTgl).click();
   }
 
+  toggle_hide_exact_time_information() {
+    cy.get('#mat-slide-toggle-4-input').click({ force: true });
+  }
+
   save_survey_configurations() {
     cy.get(SurveyConfigurationLocators.saveSurveyBtn).click();
   }
@@ -52,7 +56,9 @@ class SurveyConfigurationFunctions {
   }
 
   type_post_title(title) {
-    cy.get(SurveyConfigurationLocators.postTitleField).type(title, { force: true });
+    cy.get(SurveyConfigurationLocators.postTitleField)
+      .should('be.visible')
+      .type(title, { force: true });
   }
 
   type_post_description(description) {
@@ -65,8 +71,8 @@ class SurveyConfigurationFunctions {
   add_post() {
     this.click_add_post_btn();
     this.open_survey_to_submit();
+    cy.wait(1000);
     this.type_post_title('New Post Title');
-    // cy.get('[data-qa="null"]').type('New Title');
     this.type_post_description('New Post Description');
     this.save_post();
     cy.get(SurveyConfigurationLocators.successBtn).click();
@@ -91,6 +97,29 @@ class SurveyConfigurationFunctions {
     cy.get('.post-info__username').contains('Anonymous').should('be.visible');
   }
 
+  check_for_time_post_was_added() {
+    //to verify, while logged in(as admin) verify time is displayed correctly
+    cy.get(SurveyConfigurationLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveySelectionList)
+      .children(SurveyConfigurationLocators.surveyToVerify)
+      .eq(0)
+      .click({ force: true });
+    // cy.wait(3000);
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .contains('New Post Title');
+    cy.get(SurveyConfigurationLocators.postDate).contains('just now');
+    //logout and verify as non-logged in user, time is shown not the same as shown for admin user
+    loginFunctions.logout();
+    cy.get('[data-qa="btn-data"]').click();
+    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .contains('New Post Title');
+    //we'll check time doesn't say "just now" as it says when a privileged user is viewing
+    cy.get(SurveyConfigurationLocators.postDate).should('not.contain', 'just now');
+  }
+
   hide_author_information_and_verify() {
     //change configuration survey
     this.open_settings();
@@ -113,6 +142,17 @@ class SurveyConfigurationFunctions {
 
     cy.visit(Cypress.env('baseUrl'));
     this.check_for_anonymous_author_name();
+  }
+
+  hide_exact_time_information_and_verify() {
+    this.open_settings();
+    this.open_surveys();
+    this.open_survey_to_configure();
+    this.open_survey_configurations();
+    this.toggle_hide_exact_time_information();
+    this.save_survey_configurations();
+    this.add_post();
+    this.check_for_time_post_was_added();
   }
 }
 
