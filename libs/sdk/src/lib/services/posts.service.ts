@@ -268,6 +268,12 @@ export class PostsService extends ResourceService<any> {
     delete postParams.status;
     delete postParams.form;
 
+    for (const key in postParams) {
+      if (postParams[key] === undefined) {
+        delete postParams[key];
+      }
+    }
+
     return postParams;
   }
 
