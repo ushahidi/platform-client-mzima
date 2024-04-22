@@ -355,13 +355,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public setIsLoadingOnCardClick() {
     // With this skeleton loader's css is properly displayed (when navigating to POST mode) through post card click,
     // and the post card is able to detect to not load the skeleton UI loader after posts have successfully shown up
-    if (this.isDesktop) {
-      this.posts.length && this.mode === FeedMode.Tiles
-        ? (this.isLoading = true)
-        : this.isLoading === !this.posts.length;
-    } else {
-      this.isLoading = false;
-    }
+    this.posts.length && this.mode === FeedMode.Tiles
+      ? (this.isLoading = true)
+      : this.isLoading === !this.posts.length;
   }
 
   public showPostDetails(post: any): void {
@@ -410,99 +406,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         });
       });
     }
-
-    // this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-    //   width: '100%',
-    //   maxWidth: 576,
-    //   data: { post: post, color: post.color, twitterId: post.data_source_message_id },
-    //   height: 'auto',
-    //   maxHeight: '90vh',
-    //   panelClass: ['modal', 'post-modal'],
-    // });
-
-    // this.postDetailsModal.afterClosed().subscribe((data) => {
-    //   if (data?.update) {
-    //     this.getPostsSubject.next({ params: this.params });
-    //   }
-    //   if (this.collectionId) {
-    //     this.router.navigate(['/feed', 'collection', this.collectionId], {
-    //       queryParams: {
-    //         page: this.currentPage,
-    //       },
-    //       queryParamsHandling: 'merge',
-    //     });
-    //   } else {
-    //     this.router.navigate(['feed'], {
-    //       queryParams: {
-    //         page: this.currentPage,
-    //       },
-    //       queryParamsHandling: 'merge',
-    //     });
-    //   }
-    // });
   }
-
-  // rearrange and comment out just for comparison and so that I'm not confused
-
-  // public largerDevicesOnlyNavigate(post: any) {
-  //   if (this.isDesktop) {
-  //     this.setIsLoadingOnCardClick();
-  //     if (this.collectionId) {
-  //       this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'view'], {
-  //         queryParams: {
-  //           mode: FeedMode.Post,
-  //         },
-  //         queryParamsHandling: 'merge',
-  //       });
-  //     } else {
-  //       this.router.navigate(['feed', post.id, 'view'], {
-  //         queryParams: {
-  //           mode: FeedMode.Post,
-  //         },
-  //         queryParamsHandling: 'merge',
-  //       });
-  //     }
-  //   }
-  // }
-
-  // public smallerDevicesOnlyPopUpModal(post: any) {
-  //   if (!this.isDesktop) {
-  //     this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-  //       width: '100%',
-  //       maxWidth: 576,
-  //       data: { post: post, color: post.color, twitterId: post.data_source_message_id },
-  //       height: 'auto',
-  //       maxHeight: '90vh',
-  //       panelClass: ['modal', 'post-modal'],
-  //     });
-  //     this.postDetailsModal.afterClosed().subscribe((data) => {
-  //       if (data?.update) {
-  //         this.getPostsSubject.next({ params: this.params });
-  //       }
-  //       if (this.collectionId) {
-  //         this.router.navigate(['/feed', 'collection', this.collectionId], {
-  //           queryParams: {
-  //             page: this.currentPage,
-  //           },
-  //           queryParamsHandling: 'merge',
-  //         });
-  //       } else {
-  //         this.router.navigate(['feed'], {
-  //           queryParams: {
-  //             page: this.currentPage,
-  //           },
-  //           queryParamsHandling: 'merge',
-  //         });
-  //       }
-  //     });
-  //   }
-  // }
-
-  // public showPostDetails(post: any): void {
-  //   // WIP note: Grouped it in this manner so that I don't get confused
-  //   this.largerDevicesOnlyNavigate(post);
-  //   this.smallerDevicesOnlyPopUpModal(post);
-  // }
 
   public toggleBulkOptions(state: boolean): void {
     this.isBulkOptionsVisible = state;
