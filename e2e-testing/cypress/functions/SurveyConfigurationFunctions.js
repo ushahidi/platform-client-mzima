@@ -146,7 +146,6 @@ class SurveyConfigurationFunctions {
     this.open_surveys();
     this.open_survey_to_configure();
     this.open_survey_configurations();
-    this.toggle_survey_review_required();
     this.toggle_hide_exact_time_information();
     this.save_survey_configurations();
     this.add_post();

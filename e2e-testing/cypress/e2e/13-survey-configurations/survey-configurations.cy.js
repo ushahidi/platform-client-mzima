@@ -9,12 +9,11 @@ describe('Automated Tests for Survey Configurations', () => {
     loginFunctions.login_as_admin();
     cy.visit(Cypress.env('baseUrl'));
   });
-  
-  it('Steps to require posts to hide exact time information', () => {
-    surveyConfigurationFunctions.hide_exact_time_information_and_verify();
-  });
 
   it('Verifies author information stays hidden', () => {
     surveyConfigurationFunctions.hide_author_information_and_verify();
+  });
+  it('Steps to require posts to hide exact time information', () => {
+    surveyConfigurationFunctions.hide_exact_time_information_and_verify();
   });
 });
