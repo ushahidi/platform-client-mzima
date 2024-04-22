@@ -7,7 +7,7 @@
   class="feed-page"
   [ngClass]="{
     'feed-page--filters-visible': isFiltersVisible,
-    'feed-page--post-view': mode === FeedMode.Post && (isLoading || posts.length),
+    'feed-page--post-view': lgDevicesPostMode && (isLoading || posts.length),
     'feed-page--no-offset': !isMainFiltersOpen
   }"
 >
@@ -42,11 +42,11 @@
           <mat-icon icon svgIcon="tiles"></mat-icon>
         </mzima-client-button>
         <mzima-client-button
-          [fill]="mode === FeedMode.Post ? 'outline' : 'solid'"
+          [fill]="lgDevicesPostMode ? 'outline' : 'solid'"
           [iconOnly]="true"
           id="switcher-button-post"
-          [color]="mode === FeedMode.Post ? 'primary' : 'light'"
-          [isActive]="mode === FeedMode.Post"
+          [color]="lgDevicesPostMode ? 'primary' : 'light'"
+          [isActive]="lgDevicesPostMode"
           (buttonClick)="switchMode(FeedMode.Post)"
           [disabled]="isLoading || !posts.length"
           class="feed-page__mode-switcher__button"
@@ -210,16 +210,16 @@
       class="feed"
       [ngClass]="{
         'feed__posts-scroll': !isLoading,
-        'feed--post-view': mode === FeedMode.Post && (isLoading || posts.length),
-        'feed--post-view-loaded': mode === FeedMode.Post && !isLoading && posts.length,
-        'feed--post-view-skeleton': mode === FeedMode.Post && isLoading
+        'feed--post-view': lgDevicesPostMode && (isLoading || posts.length),
+        'feed--post-view-loaded': lgDevicesPostMode && !isLoading && posts.length,
+        'feed--post-view-skeleton': lgDevicesPostMode && isLoading
       }"
     >
       <ng-container>
         <div class="feed__posts">
           <ng-container *ngIf="isLoading || (!posts.length && !noPostsYet)">
             <app-spinner *ngIf="mode === FeedMode.Tiles" class="spinner"></app-spinner>
-            <ng-container *ngIf="mode === FeedMode.Post">
+            <ng-container *ngIf="lgDevicesPostMode">
               <div *ngFor="let single of postsSkeleton" class="post post--feed-skeleton"></div>
             </ng-container>
           </ng-container>
@@ -256,14 +256,13 @@
                   (mediaLoaded)="updateMasonry()"
                   [ngClass]="{
                     'post--selected':
-                      post.id === postDetails?.id ||
-                      (mode === FeedMode.Post && post.id === activePostId)
+                      post.id === postDetails?.id || (lgDevicesPostMode && post.id === activePostId)
                   }"
                   *ngFor="
                     let post of posts
                       | paginate
                         : {
-                            itemsPerPage: mode === FeedMode.Post ? 0 : itemsPerPage,
+                            itemsPerPage: lgDevicesPostMode ? 0 : itemsPerPage,
                             currentPage: currentPage,
                             totalItems: total
                           }
@@ -281,7 +280,7 @@
               <!-- Load more posts -->
               <ng-container
                 *ngIf="
-                  mode === FeedMode.Post &&
+                  lgDevicesPostMode &&
                   paginationElementsAllowed &&
                   params.page !== undefined &&
                   params.limit !== undefined
@@ -310,7 +309,7 @@
     <div
       class="feed-page__post"
       [ngClass]="{ 'feed--post-view-skeleton': isLoading }"
-      *ngIf="mode === FeedMode.Post"
+      *ngIf="lgDevicesPostMode"
       [attr.data-qa]="'post-details'"
     >
       <ng-container *ngIf="isLoading">
