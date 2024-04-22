@@ -192,6 +192,17 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     });
 
     window.addEventListener('resize', () => {
+      console.log('top: ', this.mode);
+      // const localStorageFeedMode: string | null | undefined = this.currentFeedViewMode()?.get;
+
+      // !this.isDesktop
+      //   ? (this.mode = FeedMode.Tiles)
+      //   : (this.mode = localStorageFeedMode as FeedMode);
+
+      // const feedMode: string | null | undefined = this.isDesktop
+      //   ? this.currentFeedViewMode()?.get
+      //   : FeedMode.Tiles;
+
       this.masonryOptions.columnWidth =
         this.mode === FeedMode.Tiles
           ? window.innerWidth > 1640
@@ -200,6 +211,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
             ? 1
             : 2
           : 1;
+
+      console.log('bottom: ', this.feedMode() as string);
     });
 
     this.sessionService.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
@@ -296,7 +309,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   private getPosts(params: any, add = true): void {
-    this.currentFeedViewMode().set;
+    this.currentFeedViewMode()?.set;
     const isPostsAlreadyExist = !!this.posts.length;
     if (!add) {
       this.posts = [];
@@ -355,6 +368,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public setIsLoadingOnCardClick() {
     // With this skeleton loader's css is properly displayed (when navigating to POST mode) through post card click,
     // and the post card is able to detect to not load the skeleton UI loader after posts have successfully shown up
+
+    // this.posts.length && this.mode === FeedMode.Tiles
+    //   ? (this.isLoading = true)
+    //   : this.isLoading === !this.posts.length;
+
     if (this.isDesktop) {
       this.posts.length && this.mode === FeedMode.Tiles
         ? (this.isLoading = true)
@@ -641,12 +659,43 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.sessionService.toggleFiltersVisibility(value);
   }
 
+  // public currentFeedViewMode() {
+  //   return {
+  //     get: localStorage.getItem('ui_feed_mode'),
+  //     set: localStorage.setItem('ui_feed_mode', this.mode),
+  //   };
+  // }
+
+  public feedMode(): string | null | undefined {
+    const modeIsTilesOnSMscreensAnyonLGscreens: string | null | undefined = this.isDesktop
+      ? this.currentFeedViewMode()?.get
+      : FeedMode.Tiles;
+    return modeIsTilesOnSMscreensAnyonLGscreens;
+  }
+
+  // Current conslusion: Modal popup should be recognised as the mobile version of "Post Mode"
   public currentFeedViewMode() {
+    // set: this.isDesktop ? localStorage.setItem('ui_feed_mode', this.mode) : null,
     return {
       get: localStorage.getItem('ui_feed_mode'),
       set: localStorage.setItem('ui_feed_mode', this.mode),
     };
   }
+
+  // public currentFeedViewMode() {
+  //   if (this.isDesktop) {
+  //     const localStorageFeedMode = localStorage.getItem('ui_feed_mode');
+  //     // const mode =
+  //     //   localStorageFeedMode !== null ? (this.mode = localStorageFeedMode as FeedMode) : this.mode;
+  //     // if (localStorageFeedMode !== null) {
+  //     return {
+  //       get: localStorageFeedMode,
+  //       set: localStorage.setItem('ui_feed_mode', this.mode),
+  //     };
+  //     // }
+  //   }
+  //   return;
+  // }
 
   public switchMode(mode: FeedMode): void {
     // 1. If there are no posts "The switch buttons shouldn't 'try to work'"
@@ -654,7 +703,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // So the check is a defense for or "validation" against errors that may occur from clicking it - if the button shows up by mistake when it's not supposed to [when there are no posts].
 
     // 2. The switch mode button of the mode you are on should also not work if you click on it while in that mode
-    const localStorageFeedMode = this.currentFeedViewMode().get;
+    const localStorageFeedMode = this.currentFeedViewMode()?.get;
     const sameSwitchButtonClicked = localStorageFeedMode === mode;
     if (this.atLeastOnePostExists && !sameSwitchButtonClicked) {
       //-------------------------------------
