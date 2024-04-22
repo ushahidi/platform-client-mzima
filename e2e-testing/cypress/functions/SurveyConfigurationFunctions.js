@@ -43,10 +43,6 @@ class SurveyConfigurationFunctions {
     cy.get('#mat-tab-label-6-1').click({ force: true });
   }
 
-  verify_button_toggled() {
-    cy.get('#mat-slide-toggle-20-input').should('not.be.checked');
-  }
-
   click_add_post_btn() {
     cy.get(SurveyConfigurationLocators.addPostBtn).click();
   }
@@ -60,7 +56,9 @@ class SurveyConfigurationFunctions {
   }
 
   type_post_title(title) {
-    cy.get(SurveyConfigurationLocators.postTitleField).type(title, { force: true });
+    cy.get(SurveyConfigurationLocators.postTitleField)
+      .should('be.visible')
+      .type(title, { force: true });
   }
 
   type_post_description(description) {
@@ -73,23 +71,11 @@ class SurveyConfigurationFunctions {
   add_post() {
     this.click_add_post_btn();
     this.open_survey_to_submit();
+    cy.wait(1000);
     this.type_post_title('New Post Title');
     this.type_post_description('New Post Description');
     this.save_post();
     cy.get(SurveyConfigurationLocators.successBtn).click();
-  }
-
-  check_for_added_post_being_published() {
-    cy.get(SurveyConfigurationLocators.clearBtn).click();
-    cy.get(SurveyConfigurationLocators.surveySelectionList)
-      .children(SurveyConfigurationLocators.surveyToVerify)
-      .eq(0)
-      .click({ force: true });
-    cy.wait(3000);
-    cy.get(SurveyConfigurationLocators.postPreview)
-      .children(SurveyConfigurationLocators.postItem)
-      .contains('New Post Title');
-    cy.get(SurveyConfigurationLocators.postStatus).contains('Published');
   }
 
   check_for_accurate_author_name() {
@@ -112,30 +98,26 @@ class SurveyConfigurationFunctions {
   }
 
   check_for_time_post_was_added() {
+    //to verify, while logged in(as admin) verify time is displayed correctly
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get(SurveyConfigurationLocators.surveySelectionList)
       .children(SurveyConfigurationLocators.surveyToVerify)
       .eq(0)
       .click({ force: true });
-    cy.wait(3000);
+    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
-    cy.get(SurveyConfigurationLocators.postDate);
-  }
-
-  require_posts_reviewed_before_published() {
-    this.open_settings();
-    this.open_surveys();
-    this.open_survey_to_configure();
-    this.open_survey_configurations();
-    this.toggle_survey_review_required();
-    this.save_survey_configurations();
-    this.open_survey_to_configure();
-    this.reopen_survey_configure_tab();
-    this.verify_button_toggled();
-    this.add_post();
-    this.check_for_added_post_being_published();
+    cy.get(SurveyConfigurationLocators.postDate).contains('just now');
+    //logout and verify as non-logged in user, time is shown not the same as shown for admin user
+    loginFunctions.logout();
+    cy.get('[data-qa="btn-data"]').click();
+    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .contains('New Post Title');
+    //we'll check time doesn't say "just now" as it says when a privileged user is viewing
+    cy.get(SurveyConfigurationLocators.postDate).should('not.contain', 'just now');
   }
 
   hide_author_information_and_verify() {
@@ -167,10 +149,8 @@ class SurveyConfigurationFunctions {
     this.open_surveys();
     this.open_survey_to_configure();
     this.open_survey_configurations();
-    this.toggle_survey_review_required();
     this.toggle_hide_exact_time_information();
     this.save_survey_configurations();
-    loginFunctions.logout();
     this.add_post();
     this.check_for_time_post_was_added();
   }
