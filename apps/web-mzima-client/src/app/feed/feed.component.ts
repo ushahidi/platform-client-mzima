@@ -55,6 +55,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public loadingMorePosts: boolean;
   public paginationElementsAllowed: boolean = false;
   public mode: FeedMode = FeedMode.Tiles;
+  public lgDevicesPostMode = false;
   public activePostId: number;
   public total: number;
   public postDetails?: PostResult;
@@ -329,8 +330,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           //---------------------------------
           this.updateMasonry();
           setTimeout(() => {
-            const lgDevicesInPostMode = this.mode === FeedMode.Post && this.isDesktop;
-            if (lgDevicesInPostMode && !isPostsAlreadyExist) {
+            this.lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
+            if (this.lgDevicesPostMode && !isPostsAlreadyExist) {
               document.querySelector('.post--selected')?.scrollIntoView();
             }
           }, 250);
@@ -365,6 +366,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public showPostDetails(post: any): void {
     this.setIsLoadingOnCardClick();
     this.mode = FeedMode.Post;
+    this.lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
 
     // Check for whether in collections (mode) or not
     const { lgScreenUrl, smScreenUrl } = {
@@ -377,7 +379,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // Check screens size
     const pageUrl = this.isDesktop ? lgScreenUrl : smScreenUrl;
 
-    if (this.isDesktop) {
+    if (this.lgDevicesPostMode) {
       // route to post details and open on the right
       this.router.navigate(pageUrl, {
         queryParams: {
@@ -574,8 +576,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         this.switchCollectionMode();
         return;
       }
-      const lgDevicesInPostMode = this.mode === FeedMode.Post && this.isDesktop;
-      if (lgDevicesInPostMode) {
+      this.lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
+      if (this.lgDevicesPostMode) {
         this.router.navigate(['/feed', this.posts[0].id, 'view'], {
           queryParams: {
             mode: this.mode,
@@ -594,8 +596,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   switchCollectionMode() {
-    const lgDevicesInPostMode = this.mode === FeedMode.Post && this.isDesktop;
-    if (lgDevicesInPostMode) {
+    this.lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
+    if (this.lgDevicesPostMode) {
       this.router.navigate(['/feed', 'collection', this.collectionId, this.posts[0].id, 'view'], {
         queryParams: {
           mode: this.mode,
