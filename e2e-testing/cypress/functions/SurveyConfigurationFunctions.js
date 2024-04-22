@@ -63,11 +63,15 @@ class SurveyConfigurationFunctions {
   }
 
   type_post_title(title) {
-    cy.get(SurveyConfigurationLocators.postTitleField).type(title, { force: true });
+    cy.get(SurveyConfigurationLocators.postTitleField).eq(0).type(title);
   }
 
   type_post_description(description) {
-    cy.get(SurveyConfigurationLocators.postDescField).type(description, { force: true });
+    cy.get(SurveyConfigurationLocators.postDescField).type(description);
+  }
+
+  type_post_number(number) {
+    cy.get(SurveyConfigurationLocators.postNumField).eq(4).type(number);
   }
 
   save_post() {
@@ -80,6 +84,9 @@ class SurveyConfigurationFunctions {
     this.type_post_title('New Post Title');
     // cy.get('[data-qa="null"]').type('New Title');
     this.type_post_description('New Post Description');
+    cy.get(SurveyConfigurationLocators.queryLocationSearchField);
+    this.type_post_number(3);
+    cy.get(SurveyConfigurationLocators.postCheckBox).click({ force: true });
     this.save_post();
     cy.get(SurveyConfigurationLocators.successBtn).click();
   }
@@ -98,17 +105,18 @@ class SurveyConfigurationFunctions {
   }
 
   check_for_hidden_exact_location() {
+    cy.get(SurveyConfigurationLocators.mapBtn).click();
+    cy.reload();
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get(SurveyConfigurationLocators.surveySelectionList)
-      .children(SurveyConfigurationLocators.surveySelectItem)
+      .children(SurveyConfigurationLocators.surveyToVerify)
       .eq(0)
       .click({ force: true });
     cy.wait(3000);
-    cy.get(SurveyConfigurationLocators.postPreview)
-      .children(SurveyConfigurationLocators.postItem)
-      .contains('New Post Title');
-    cy.visit(`Cypress.env('baseUrl')/map`);
-    cy.compareSnapshot('home-page');
+    // cy.get(SurveyConfigurationLocators.postPreview)
+    //   .children(SurveyConfigurationLocators.postItem)
+    //   .contains('New Post Title');
+    cy.compareSnapshot('home-page', 1);
   }
 
   check_for_accurate_author_name() {

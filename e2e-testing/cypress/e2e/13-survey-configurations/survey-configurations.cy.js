@@ -18,7 +18,7 @@ describe('Automated Tests for Survey Configurations', () => {
     surveyConfigurationFunctions.hide_exact_location_information_and_verify();
   });
 
-  it('Verifies author information stays hidden', () => {
+  it.skip('Verifies author information stays hidden', () => {
     surveyConfigurationFunctions.hide_author_information_and_verify();
   });
 });

@@ -6,12 +6,14 @@
   "scripts": {
     "cy:open": "cypress open",
     "start": "cypress run",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run-test": "node ./node_modules/cypress/bin/cypress open --browser chrome"
   },
   "author": "walter",
   "license": "ISC",
   "devDependencies": {
     "cypress": "^13.7.0",
-    "cypress-data-session": "^2.7.0"
+    "cypress-data-session": "^2.7.0",
+    "cypress-image-diff-js": "^2.1.4"
   }
 }
