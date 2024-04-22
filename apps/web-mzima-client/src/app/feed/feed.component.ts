@@ -329,7 +329,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           //---------------------------------
           this.updateMasonry();
           setTimeout(() => {
-            if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
+            const lgDevicesInPostMode = this.mode === FeedMode.Post && this.isDesktop;
+            if (lgDevicesInPostMode && !isPostsAlreadyExist) {
               document.querySelector('.post--selected')?.scrollIntoView();
             }
           }, 250);
@@ -355,14 +356,15 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public setIsLoadingOnCardClick() {
     // With this skeleton loader's css is properly displayed (when navigating to POST mode) through post card click,
     // and the post card is able to detect to not load the skeleton UI loader after posts have successfully shown up
-    this.posts.length && this.mode === FeedMode.Tiles
+    const lgDevicesInTilesMode = this.mode === FeedMode.Tiles && this.isDesktop;
+    this.posts.length && lgDevicesInTilesMode
       ? (this.isLoading = true)
       : this.isLoading === !this.posts.length;
   }
 
   public showPostDetails(post: any): void {
     this.setIsLoadingOnCardClick();
-    const modeBasedOnScreen = this.isDesktop ? FeedMode.Post : FeedMode.Tiles;
+    this.mode = FeedMode.Post;
 
     // Check for whether in collections (mode) or not
     const { lgScreenUrl, smScreenUrl } = {
@@ -379,7 +381,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       // route to post details and open on the right
       this.router.navigate(pageUrl, {
         queryParams: {
-          mode: modeBasedOnScreen,
+          mode: this.mode,
         },
         queryParamsHandling: 'merge',
       });
@@ -394,12 +396,13 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         panelClass: ['modal', 'post-modal'],
       });
       this.postDetailsModal.afterClosed().subscribe((data) => {
+        this.mode = FeedMode.Tiles;
         if (data?.update) {
           this.getPostsSubject.next({ params: this.params });
         }
         this.router.navigate(pageUrl, {
           queryParams: {
-            mode: modeBasedOnScreen,
+            mode: this.mode,
             page: this.currentPage,
           },
           queryParamsHandling: 'merge',
@@ -571,7 +574,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         this.switchCollectionMode();
         return;
       }
-      if (this.mode === FeedMode.Post) {
+      const lgDevicesInPostMode = this.mode === FeedMode.Post && this.isDesktop;
+      if (lgDevicesInPostMode) {
         this.router.navigate(['/feed', this.posts[0].id, 'view'], {
           queryParams: {
             mode: this.mode,
@@ -590,7 +594,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   switchCollectionMode() {
-    if (this.mode === FeedMode.Post) {
+    const lgDevicesInPostMode = this.mode === FeedMode.Post && this.isDesktop;
+    if (lgDevicesInPostMode) {
       this.router.navigate(['/feed', 'collection', this.collectionId, this.posts[0].id, 'view'], {
         queryParams: {
           mode: this.mode,
@@ -646,6 +651,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public editPost(post: any): void {
+    // Need to refactor edit like post details before I can touch anything in here
     if (this.isDesktop) {
       this.setIsLoadingOnCardClick();
       if (this.collectionId) {
