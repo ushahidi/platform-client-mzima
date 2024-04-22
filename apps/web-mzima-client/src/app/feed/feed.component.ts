@@ -152,6 +152,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
+        this.lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
         this.isLoading = true; // "There are no posts yet!" flicker is fixed here and for (most) places where isLoading is set to true
         if (this.initialLoad) {
           this.initialLoad = false;
@@ -298,6 +299,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   private getPosts(params: any, add = true): void {
     this.currentFeedViewMode().set;
+    this.lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
     const isPostsAlreadyExist = !!this.posts.length;
     if (!add) {
       this.posts = [];
