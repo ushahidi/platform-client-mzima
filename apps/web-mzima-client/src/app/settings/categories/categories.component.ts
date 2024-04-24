@@ -35,7 +35,11 @@ export class CategoriesComponent {
   }
 
   public displayChildren(id: number) {
-    return this.openedParents.includes(id);
+    if (this.isShowActions) {
+      return true;
+    } else {
+      return this.openedParents.includes(id);
+    }
   }
 
   public toggleChildren(id: number) {
