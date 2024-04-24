@@ -92,14 +92,15 @@
 }
 
 .content-wrapper {
-  &:not(.content-wrapper--no-offset) {
-    height: 100%;
+  height: 100%;
+  // &:not(.content-wrapper--no-offset) {
+  //   height: 100%;
 
-    @include breakpoint-max($tablet) {
-      height: auto;
-      min-height: 100%;
-    }
-  }
+  //   @include breakpoint-max($tablet) {
+  //     height: auto;
+  //     min-height: 100%;
+  //   }
+  // }
 }
 
 ::ng-deep {

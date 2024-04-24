@@ -1,22 +1,19 @@
 @import 'helpers';
 
-::ng-deep {
-  app-feed-item {
-    display: block;
-    min-height: 100%;
-  }
-}
-
-.feed-page {
+.feed-page-NEW {
+  min-height: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  background: green;
 
   @include breakpoint-min($tablet) {
+    margin-inline-start: 10px; // where posts margin starts from when survey & sources filter area is collapsed
     transition: margin-inline-start 0.35s ease;
   }
 
-  &:not(.feed-page--no-offset) {
+  &:not(.feed-page-NEW--no-offset) {
+    // where posts margin starts from when survey & sources filter area is expanded
     @include breakpoint-min($tablet) {
       margin-inline-start: 220px;
 
@@ -31,67 +28,47 @@
   }
 
   &__main {
-    @include breakpoint-min($tablet) {
-      flex: 1 1 100%;
-      overflow: hidden;
+    background: yellow;
+    overflow: auto;
+
+    // &-inner {
+    //   overflow: scroll;
+    // }
+    // @include breakpoint-min($tablet) {
+    //   flex: 1 1 100%;
+    //   overflow: auto;
+    // }
+
+    // .feed-page--post-view & {
+    //   display: flex;
+    //   padding: 0 16px;
+    //   align-items: flex-start;
+    //   justify-content: flex-start;
+
+    //   @include breakpoint-max($laptop-small) {
+    //     padding: 0 8px;
+    //   }
+    // }
+  }
+
+  &__posts {
+    background: red;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+
+    @media screen and (max-width: 1640px) {
+      grid-template-columns: 1fr 1fr;
     }
 
-    .feed-page--post-view & {
-      display: flex;
-      padding: 0 16px;
-      align-items: flex-start;
-      justify-content: flex-start;
-
-      @include breakpoint-max($laptop-small) {
-        padding: 0 8px;
-      }
+    @include breakpoint-max($mobile) {
+      grid-template-columns: 1fr;
     }
   }
 
   &__post {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    margin-left: 8px;
-    overflow-x: hidden;
-    border-radius: 4px;
-    padding-bottom: 24px;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-
-    @include breakpoint-max($laptop-small) {
-      padding-bottom: 16px;
-    }
-
-    &::ng-deep {
-      .post {
-        padding: 24px;
-        min-height: 100%;
-        background: var(--color-light);
-
-        @include breakpoint-max($laptop-small) {
-          padding: 16px;
-        }
-
-        &__head {
-          position: static;
-          padding-inline-end: 0;
-        }
-      }
-
-      .post-head {
-        margin-left: -8px;
-        margin-right: -8px;
-      }
-
-      .post-item-page {
-        padding: 0;
-
-        .form-controls-panel {
-          bottom: 0;
-        }
-      }
-    }
+    background: navy;
+    color: yellow;
   }
 
   &__controls-panel {
@@ -261,228 +238,620 @@
   }
 }
 
-.counter {
-  display: block;
-  text-align: right;
-  margin-bottom: 16px;
-}
-
-.spinner {
-  display: block;
-  margin-top: 20vh;
-  margin-bottom: 20vh;
-}
-
-.endofPosts {
+.pagi {
   padding: 20px 0;
-  font-size: 16px;
-  text-align: center;
 }
 
-.post-details {
-  display: block;
-  min-height: 100%;
-}
+// .feed-NEW {
+//   height: 100%;
+//   flex-shrink: 0;
+//   padding-bottom: 32px;
+//   padding-inline-end: 8px;
+//   padding-inline-start: 24px;
 
-.posts-empty {
-  width: 100%;
-  display: block;
-  margin: 20vh 0;
-  font-size: 16px;
-  line-height: 1.5;
-  text-align: center;
-}
+//   @include breakpoint-max($laptop-small) {
+//     padding-inline-end: 0;
+//     padding-inline-start: 16px;
+//   }
 
-.feed {
-  height: 100%;
-  flex-shrink: 0;
-  padding-bottom: 32px;
-  padding-inline-end: 8px;
-  padding-inline-start: 24px;
+//   @include breakpoint-max($tablet) {
+//     padding-inline-start: 8px;
+//     padding-inline-end: 8px;
+//     padding-bottom: 64px;
+//     height: calc(100vh - 240px);
+//   }
 
-  @include breakpoint-max($laptop-small) {
-    padding-inline-end: 0;
-    padding-inline-start: 16px;
-  }
+//   @include breakpoint-max($mobile) {
+//     padding-inline-start: 16px;
+//     padding-inline-end: 16px;
+//   }
 
-  @include breakpoint-max($tablet) {
-    padding-inline-start: 8px;
-    padding-inline-end: 8px;
-    padding-bottom: 64px;
-    height: calc(100vh - 240px);
-  }
+//   &__posts-scroll {
+//     --scrollbar-background: var(--color-light);
+//     overflow-y: auto;
+//     overflow-x: hidden;
+//     scroll-behavior: smooth;
+//     -webkit-overflow-scrolling: touch;
+//   }
 
-  @include breakpoint-max($mobile) {
-    padding-inline-start: 16px;
-    padding-inline-end: 16px;
-  }
+//   //-- CSS, please only allow split view for POST mode on larger devices
+//   @include breakpoint-min($tablet) {
+//     &--post-view {
+//       padding: 0;
+//       width: 337px; //
+//       border-radius: 4px;
+//       padding-bottom: 24px;
+//       border: 1px solid var(--color-neutral-20);
 
-  &__posts-scroll {
-    --scrollbar-background: var(--color-light);
-    overflow-y: auto;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-  }
+//       @include breakpoint-max($laptop-small) {
+//         width: 280px;
+//         padding-bottom: 16px;
+//       }
 
-  &--post-view {
-    padding: 0;
-    width: 337px;
-    border-radius: 4px;
-    padding-bottom: 24px;
-    border: 1px solid var(--color-neutral-20);
+//       &-loaded {
+//         background: red; // var(--color-light);
+//         --scrollbar-background: var(--color-light);
+//         overflow-y: auto;
+//         overflow-x: hidden;
+//         scroll-behavior: smooth;
+//         -webkit-overflow-scrolling: touch;
+//       }
 
-    @include breakpoint-max($laptop-small) {
-      width: 280px;
-      padding-bottom: 16px;
-    }
+//       &-skeleton {
+//         background: red;
+//         border: 1px solid var(--color-neutral-20);
+//       }
+//     }
+//   }
+//   //--------------------------------
 
-    &-loaded {
-      background: var(--color-light);
-      --scrollbar-background: var(--color-light);
-      overflow-y: auto;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-    }
+//   &__posts {
+//     .feed--post-view-loaded & {
+//       padding: 16px 32px 24px 16px;
 
-    &-skeleton {
-      border: 1px solid var(--color-neutral-20);
-    }
-  }
+//       @include breakpoint-max($laptop-small) {
+//         padding: 8px 16px 16px 8px;
+//       }
+//     }
 
-  &__posts {
-    .feed--post-view-loaded & {
-      padding: 16px 32px 24px 16px;
+//     .feed--post-view-skeleton & {
+//       padding: 16px;
 
-      @include breakpoint-max($laptop-small) {
-        padding: 8px 16px 16px 8px;
-      }
-    }
+//       @include breakpoint-max($laptop-small) {
+//         padding: 8px;
+//       }
+//     }
+//   }
 
-    .feed--post-view-skeleton & {
-      padding: 16px;
+//   &__loading {
+//     --size: 48px;
+//     display: block;
+//     margin-top: 24px;
 
-      @include breakpoint-max($laptop-small) {
-        padding: 8px;
-      }
-    }
-  }
+//     @include breakpoint-max($tablet) {
+//       margin-top: 16px;
+//       margin-bottom: 32px;
+//     }
+//   }
 
-  &__loading {
-    --size: 48px;
-    display: block;
-    margin-top: 24px;
+//   &__load-more {
+//     display: block;
+//     min-width: 132px;
+//     font-size: 14px;
+//     line-height: 1.6;
+//     font-weight: 500;
+//     margin: 24px auto 0;
+//     letter-spacing: -0.005em;
 
-    @include breakpoint-max($tablet) {
-      margin-top: 16px;
-      margin-bottom: 32px;
-    }
-  }
+//     .feed--post-view & {
+//       margin-top: 16px;
 
-  &__load-more {
-    display: block;
-    min-width: 132px;
-    font-size: 14px;
-    line-height: 1.6;
-    font-weight: 500;
-    margin: 24px auto 0;
-    letter-spacing: -0.005em;
+//       @include breakpoint-max($laptop-small) {
+//         margin-top: 8px;
+//       }
+//     }
 
-    .feed--post-view & {
-      margin-top: 16px;
+//     @include breakpoint-max($tablet) {
+//       margin-top: 8px;
+//       margin-bottom: 32px;
+//     }
+//   }
+// }
 
-      @include breakpoint-max($laptop-small) {
-        margin-top: 8px;
-      }
-    }
+// ::ng-deep {
+//   app-feed-item {
+//     display: block;
+//     min-height: 100%;
+//   }
+// }
 
-    @include breakpoint-max($tablet) {
-      margin-top: 8px;
-      margin-bottom: 32px;
-    }
-  }
-}
+// .feed-page {
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
 
-.post {
-  display: block;
-  position: relative;
-  margin: 0 8px 16px;
-  scroll-margin-top: 8px;
-  width: calc(33.3333% - 18px);
+//   @include breakpoint-min($tablet) {
+//     transition: margin-inline-start 0.35s ease;
+//   }
 
-  @media screen and (max-width: 1640px) {
-    width: calc(50% - 18px);
-  }
+//   &:not(.feed-page--no-offset) {
+//     @include breakpoint-min($tablet) {
+//       margin-inline-start: 220px;
 
-  @include breakpoint-max($mobile) {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-  }
+//       @include breakpoint-max($laptop-small) {
+//         margin-inline-start: 200px;
+//       }
+//     }
+//   }
 
-  &--feed-skeleton {
-    padding: 32px 24px;
-    cursor: default;
-    min-height: 135px;
-    border-radius: 4px;
-    box-shadow: inset 0 0 0 1px var(--color-neutral-30);
-    background: var(--color-neutral-20);
-  }
+//   &--filters-visible {
+//     padding-top: 56px;
+//   }
 
-  &--selected {
-    left: 16px !important;
-    box-shadow: 0 8px 10px 0 rgba(var(--color-light-contrast-rgb), 0.05);
+//   &__main {
+//     @include breakpoint-min($tablet) {
+//       flex: 1 1 100%;
+//       overflow: scroll;
+//     }
 
-    @include breakpoint-max($laptop-small) {
-      left: 8px !important;
-    }
-  }
+//     // .feed-page--post-view & {
+//     //   display: flex;
+//     //   padding: 0 16px;
+//     //   align-items: flex-start;
+//     //   justify-content: flex-start;
 
-  .feed--post-view & {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    transition-duration: 0.35s;
-    transition-timing-function: ease;
-    transition-property: left, box-shadow;
-    position: relative !important;
-    top: auto !important;
-  }
-}
+//     //   @include breakpoint-max($laptop-small) {
+//     //     padding: 0 8px;
+//     //   }
+//     // }
+//   }
 
-.menu-title {
-  font-size: 16px;
-  font-weight: 500;
-  margin: 0 0 18px;
-  line-height: 1.25;
-}
+//   &__post {
+//     width: 100%;
+//     height: 100%;
+//     overflow-y: auto;
+//     margin-left: 8px;
+//     overflow-x: hidden;
+//     border-radius: 4px;
+//     padding-bottom: 24px;
+//     scroll-behavior: smooth;
+//     -webkit-overflow-scrolling: touch;
 
-::ng-deep {
-  .statuses-menu {
-    min-width: 187px;
-    max-width: 187px;
+//     //-- CSS, please prevent larger post details/edit area on the right from showing up on smaller devices
+//     @include breakpoint-max($tablet) {
+//       display: none;
+//     }
+//     //--------------------------------
 
-    &__backdrop {
-      background: rgba(var(--color-black-rgb), 0.15);
-    }
+//     @include breakpoint-max($laptop-small) {
+//       padding-bottom: 16px;
+//     }
 
-    .mat-menu-content {
-      padding: 26px 32px 16px;
-    }
+//     &::ng-deep {
+//       .post {
+//         padding: 24px;
+//         min-height: 100%;
+//         background: var(--color-light);
 
-    .mat-menu-item {
-      min-height: 40px;
-      max-width: none;
-      padding-left: 32px;
-      padding-right: 32px;
-      margin-left: -32px;
-      margin-right: -32px;
-      width: calc(100% + 64px);
+//         @include breakpoint-max($laptop-small) {
+//           padding: 16px;
+//         }
 
-      &:not(:first-of-type) {
-        margin-top: 8px;
-      }
-    }
-  }
-}
+//         &__head {
+//           position: static;
+//           padding-inline-end: 0;
+//         }
+//       }
+
+//       .post-head {
+//         margin-left: -8px;
+//         margin-right: -8px;
+//       }
+
+//       .post-item-page {
+//         padding: 0;
+
+//         .form-controls-panel {
+//           bottom: 0;
+//         }
+//       }
+//     }
+//   }
+
+//   &__controls-panel {
+//     display: flex;
+//     align-items: center;
+//     padding: 16px 24px 16px;
+//     justify-content: space-between;
+//     background: var(--color-neutral-10);
+
+//     @include breakpoint-max($laptop-small) {
+//       padding-left: 16px;
+//       padding-right: 16px;
+//     }
+
+//     @include breakpoint-max($tablet) {
+//       display: block;
+//       padding-top: 16px;
+//       padding-bottom: 16px;
+//     }
+//   }
+
+//   &__controls {
+//     display: flex;
+//     margin: 0 -8px;
+//     align-items: center;
+//     justify-content: flex-end;
+
+//     @include breakpoint-max($laptop-small) {
+//       margin-left: -4px;
+//       margin-right: -4px;
+//     }
+
+//     @include breakpoint-max($tablet) {
+//       justify-content: space-between;
+//     }
+
+//     &--actions {
+//       @include breakpoint-max($tablet) {
+//         left: 0;
+//         right: 0;
+//         bottom: 0;
+//         margin: 0;
+//         z-index: 500;
+//         position: fixed;
+//         min-height: 88px;
+//         padding: 8px 16px;
+//         background: var(--color-neutral-10);
+//         border-top: 1px solid var(--color-neutral-40);
+//       }
+//     }
+
+//     &__inner {
+//       display: flex;
+//       align-items: center;
+//       justify-content: flex-start;
+//     }
+
+//     .mat-form-field {
+//       width: 146px;
+
+//       @include breakpoint-max($laptop-small) {
+//         width: 132px;
+//       }
+
+//       &::ng-deep {
+//         .mat-form-field-wrapper {
+//           padding-bottom: 0;
+//         }
+
+//         .mat-select-value {
+//           padding-inline-end: 0;
+//           padding-inline-start: 24px;
+
+//           @include breakpoint-max($laptop-small) {
+//             padding-inline-start: 16px;
+//           }
+//         }
+
+//         .mat-select-arrow-wrapper {
+//           width: 32px;
+//           height: 32px;
+//           margin-inline-start: 8px;
+//           margin-inline-end: 24px;
+
+//           @include breakpoint-max($laptop-small) {
+//             margin-inline-end: 8px;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   &__control {
+//     margin: 0 8px;
+
+//     @include breakpoint-max($laptop-small) {
+//       margin-left: 4px;
+//       margin-right: 4px;
+//     }
+
+//     @include breakpoint-max($tablet) {
+//       display: flex;
+//       --min-width: 64px;
+//       min-height: 48px;
+//       align-items: center;
+//       justify-content: center;
+
+//       &--bulk {
+//         flex: 1 1 100%;
+//         --max-width: 320px;
+//       }
+//     }
+
+//     &--sorting {
+//       .feed-page__controls-panel--bulk-visible & {
+//         @include breakpoint-max($laptop-small) {
+//           @include breakpoint-min($tablet) {
+//             display: none;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   &__info-panel {
+//     display: flex;
+//     padding-top: 20px;
+//     padding-inline-start: 60px;
+//     padding-inline-end: 24px;
+//     align-items: flex-start;
+//     justify-content: space-between;
+
+//     @include breakpoint-max($laptop-small) {
+//       padding-inline-end: 16px;
+//     }
+//   }
+
+//   &__results-info {
+//     display: block;
+//     font-weight: 600;
+//     font-size: 14px;
+//     line-height: 17px;
+//     color: var(--color-neutral-100);
+
+//     &__dim {
+//       color: var(--color-neutral-70);
+//     }
+//   }
+
+//   &__mode-switcher {
+//     display: flex;
+//     align-items: center;
+//     margin-inline-start: 20px;
+//     margin-inline-end: -4px;
+//     justify-content: flex-start;
+
+//     &__button {
+//       --size: 40px;
+//       margin: 0 4px;
+
+//       &::ng-deep {
+//         .mzima-button--primary.mzima-button--outline {
+//           --hover-background-color: var(--color-primary-100);
+//         }
+//       }
+//     }
+//   }
+// }
+
+// .counter {
+//   display: block;
+//   text-align: right;
+//   margin-bottom: 16px;
+// }
+
+// .spinner {
+//   display: block;
+//   margin-top: 20vh;
+//   margin-bottom: 20vh;
+// }
+
+// .endofPosts {
+//   padding: 20px 0;
+//   font-size: 16px;
+//   text-align: center;
+// }
+
+// .post-details {
+//   display: block;
+//   min-height: 100%;
+// }
+
+// .posts-empty {
+//   width: 100%;
+//   display: block;
+//   margin: 20vh 0;
+//   font-size: 16px;
+//   line-height: 1.5;
+//   text-align: center;
+// }
+
+// .feed {
+//   height: 100%;
+//   flex-shrink: 0;
+//   padding-bottom: 32px;
+//   padding-inline-end: 8px;
+//   padding-inline-start: 24px;
+
+//   @include breakpoint-max($laptop-small) {
+//     padding-inline-end: 0;
+//     padding-inline-start: 16px;
+//   }
+
+//   @include breakpoint-max($tablet) {
+//     padding-inline-start: 8px;
+//     padding-inline-end: 8px;
+//     padding-bottom: 64px;
+//     height: calc(100vh - 240px);
+//   }
+
+//   @include breakpoint-max($mobile) {
+//     padding-inline-start: 16px;
+//     padding-inline-end: 16px;
+//   }
+
+//   &__posts-scroll {
+//     --scrollbar-background: var(--color-light);
+//     overflow-y: auto;
+//     overflow-x: hidden;
+//     scroll-behavior: smooth;
+//     -webkit-overflow-scrolling: touch;
+//   }
+
+//   //-- CSS, please only allow split view for POST mode on larger devices
+//   @include breakpoint-min($tablet) {
+//     &--post-view {
+//       padding: 0;
+//       width: 337px; //
+//       border-radius: 4px;
+//       padding-bottom: 24px;
+//       border: 1px solid var(--color-neutral-20);
+
+//       @include breakpoint-max($laptop-small) {
+//         width: 280px;
+//         padding-bottom: 16px;
+//       }
+
+//       &-loaded {
+//         background: red; // var(--color-light);
+//         --scrollbar-background: var(--color-light);
+//         overflow-y: auto;
+//         overflow-x: hidden;
+//         scroll-behavior: smooth;
+//         -webkit-overflow-scrolling: touch;
+//       }
+
+//       &-skeleton {
+//         background: red;
+//         border: 1px solid var(--color-neutral-20);
+//       }
+//     }
+//   }
+//   //--------------------------------
+
+//   &__posts {
+//     .feed--post-view-loaded & {
+//       padding: 16px 32px 24px 16px;
+
+//       @include breakpoint-max($laptop-small) {
+//         padding: 8px 16px 16px 8px;
+//       }
+//     }
+
+//     .feed--post-view-skeleton & {
+//       padding: 16px;
+
+//       @include breakpoint-max($laptop-small) {
+//         padding: 8px;
+//       }
+//     }
+//   }
+
+//   &__loading {
+//     --size: 48px;
+//     display: block;
+//     margin-top: 24px;
+
+//     @include breakpoint-max($tablet) {
+//       margin-top: 16px;
+//       margin-bottom: 32px;
+//     }
+//   }
+
+//   &__load-more {
+//     display: block;
+//     min-width: 132px;
+//     font-size: 14px;
+//     line-height: 1.6;
+//     font-weight: 500;
+//     margin: 24px auto 0;
+//     letter-spacing: -0.005em;
+
+//     .feed--post-view & {
+//       margin-top: 16px;
+
+//       @include breakpoint-max($laptop-small) {
+//         margin-top: 8px;
+//       }
+//     }
+
+//     @include breakpoint-max($tablet) {
+//       margin-top: 8px;
+//       margin-bottom: 32px;
+//     }
+//   }
+// }
+
+// .post {
+//   display: block;
+//   position: relative;
+//   margin: 0 8px 16px;
+//   scroll-margin-top: 8px;
+//   width: calc(33.3333% - 18px); //
+
+//   @media screen and (max-width: 1640px) {
+//     width: calc(50% - 18px);
+//   }
+
+//   @include breakpoint-max($mobile) {
+//     width: 100%;
+//     margin-left: 0;
+//     margin-right: 0;
+//   }
+
+//   &--feed-skeleton {
+//     padding: 32px 24px;
+//     cursor: default;
+//     min-height: 135px;
+//     border-radius: 4px;
+//     box-shadow: inset 0 0 0 1px var(--color-neutral-30);
+//     background: var(--color-neutral-20);
+//   }
+
+//   &--selected {
+//     left: 16px !important;
+//     box-shadow: 0 8px 10px 0 rgba(var(--color-light-contrast-rgb), 0.05);
+
+//     @include breakpoint-max($laptop-small) {
+//       left: 8px !important;
+//     }
+//   }
+
+//   .feed--post-view & {
+//     width: 100%;
+//     margin-left: 0;
+//     margin-right: 0;
+//     transition-duration: 0.35s;
+//     transition-timing-function: ease;
+//     transition-property: left, box-shadow;
+//     position: relative !important;
+//     top: auto !important;
+//   }
+// }
+
+// .menu-title {
+//   font-size: 16px;
+//   font-weight: 500;
+//   margin: 0 0 18px;
+//   line-height: 1.25;
+// }
+
+// ::ng-deep {
+//   .statuses-menu {
+//     min-width: 187px;
+//     max-width: 187px;
+
+//     &__backdrop {
+//       background: rgba(var(--color-black-rgb), 0.15);
+//     }
+
+//     .mat-menu-content {
+//       padding: 26px 32px 16px;
+//     }
+
+//     .mat-menu-item {
+//       min-height: 40px;
+//       max-width: none;
+//       padding-left: 32px;
+//       padding-right: 32px;
+//       margin-left: -32px;
+//       margin-right: -32px;
+//       width: calc(100% + 64px);
+
+//       &:not(:first-of-type) {
+//         margin-top: 8px;
+//       }
+//     }
+//   }
+// }
