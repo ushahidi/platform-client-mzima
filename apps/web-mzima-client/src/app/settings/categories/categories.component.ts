@@ -86,5 +86,17 @@ export class CategoriesComponent {
     } else {
       this.selectedCategories = this.selectedCategories.filter((sC) => sC.id !== cat.id);
     }
+    if (cat.children.length) {
+      cat.children.forEach((child) => {
+        if (i < 0) {
+          const c = this.selectedCategories.findIndex((sC) => sC.id === child.id);
+          if (c < 0) {
+            this.selectedCategories.push(child);
+          }
+        } else {
+          this.selectedCategories = this.selectedCategories.filter((sC) => sC.id !== child.id);
+        }
+      });
+    }
   }
 }

@@ -3,8 +3,10 @@
     <mat-checkbox
       *ngIf="isCheckbox"
       class="category-item__checkbox"
+      [checked]="isChecked(category.id)"
       (click)="$event.stopPropagation()"
       (change)="selectCategory(category)"
+      [disabled]="isDisabled(category)"
     ></mat-checkbox>
     <h4 [routerLink]="category.id.toString()" [ngClass]="customClass">
       {{ category.tag }}
