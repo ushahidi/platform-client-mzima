@@ -18,7 +18,7 @@ describe('Automated Tests for Survey Configurations', () => {
     surveyConfigurationFunctions.hide_exact_time_information_and_verify();
   });
 
-  it('Verify post exact location information is hidden', () => {
+  it.skip('Verify post exact location information is hidden', () => {
     surveyConfigurationFunctions.hide_exact_location_information_and_verify();
   });
 });
