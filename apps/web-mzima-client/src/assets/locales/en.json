@@ -1885,8 +1885,8 @@
       },
       "deleted": {
         "success": "Success!",
-        "success_description": "You've permanently deleted {{count}} posts.",
-        "success_button": "OK, sounds good"
+        "success_description": "You've permanently deleted {{count}}.",
+        "success_button": "OK"
       }
     },
     "language": {
