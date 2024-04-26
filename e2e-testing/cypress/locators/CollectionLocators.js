@@ -25,6 +25,7 @@ const CollectionLocators = {
   postMenuDots: '[data-qa="post-menu"]',
   addToCollectionBtn: '[data-qa="add-to-collection"]',
   closeModalBtn: '[data-qa="btn-close"]',
+  post: '[data-qa="post-item"]',
 };
 
 export default CollectionLocators;
