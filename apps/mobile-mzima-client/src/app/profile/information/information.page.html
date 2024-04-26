@@ -74,7 +74,7 @@
         [required]="true"
         formControlName="currentEmail"
         placeholder="Enter your current email"
-        [errors]="changeEmailForm.hasError('notSameAsCurrent') ? ['The entered email does not match the current email. Please make sure to enter the correct email address.'] : undefined"
+        [errors]="changeEmailForm.get('currentEmail')?.touched && changeEmailForm.hasError('notSameAsCurrent') ? ['The entered email does not match the current email. Please make sure to enter the correct email address.'] : undefined"
       >
       </app-form-control>
       <app-form-control
