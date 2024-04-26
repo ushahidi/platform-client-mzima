@@ -144,7 +144,6 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
-                (buttonClick)="clearFilter('form')"
                 [data-qa]="'clear'"
                 (buttonClick)="toggleSidebarFilters('form')"
               >
@@ -157,20 +156,22 @@
               formControlName="form"
               [data-qa]="'survey-selection-list'"
             >
-              <mat-list-option
-                *ngFor="let survey of surveyList"
-                [selected]="survey.checked"
-                color="primary"
-                [value]="survey.id"
-                checkboxPosition="before"
-                class="selection-list__option"
-                [ngStyle]="{ '--color': survey.color }"
-                [data-qa]="'survey-select-item' + survey.id"
-              >
-                <span class="selection-list__option__border"></span>
-                {{ survey.name }}
-                <span class="selection-list__option__total">{{ survey.total }}</span>
-              </mat-list-option>
+              <ng-container *ngFor="let survey of surveyList">
+                <mat-list-option
+                  [hidden]="isMapView && survey.id === 0"
+                  [selected]="survey.checked"
+                  color="primary"
+                  [value]="survey.id"
+                  checkboxPosition="before"
+                  class="selection-list__option"
+                  [ngStyle]="{ '--color': survey.color }"
+                  [data-qa]="'survey-select-item' + survey.id"
+                >
+                  <span class="selection-list__option__border"></span>
+                  {{ survey.name }}
+                  <span class="selection-list__option__total">{{ survey.total }}</span>
+                </mat-list-option>
+              </ng-container>
             </mat-selection-list>
 
             <div class="filter-group__info" *ngIf="isMapView">
