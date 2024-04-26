@@ -232,7 +232,7 @@ export class PostsService extends ResourceService<any> {
       delete postParams.within_km;
       delete postParams.place;
     }
-
+    postParams['form[]'] = [...new Set([...postParams['form[]'], ...postParams['form']])];
     // Remove 'unknown form' from the form list if it exists.
     postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
 

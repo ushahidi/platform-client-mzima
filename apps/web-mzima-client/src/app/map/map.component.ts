@@ -48,6 +48,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   fitBoundsOptions: FitBoundsOptions = {
     animate: true,
   };
+  cachedFilter: string;
   filtersSubscription$: Observable<any>;
   public leafletOptions: MapOptions;
   public progress = 0;
@@ -180,9 +181,9 @@ export class MapComponent extends MainViewComponent implements OnInit {
     control.zoom({ position: 'bottomleft' }).addTo(map);
   }
 
-  getPostsGeoJson() {
+  getPostsGeoJson(pageNumber: number = 1) {
     this.postsService
-      .getGeojson(this.params)
+      .getGeojson({ ...this.params, page: pageNumber })
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (posts) => {
@@ -284,15 +285,24 @@ export class MapComponent extends MainViewComponent implements OnInit {
               });
             },
           });
-
+          const currentFilter: string = JSON.stringify(this.params);
           const isFirstLayerEmpty = this.mapLayers.length === 0;
+          // const hasTheFilterChanged = !isFirstLayerEmpty && pageNumber === 1 && this.mapLayers[0].getLayers().length !== posts.meta.total;
+          const hasTheFilterChanged = currentFilter !== this.cachedFilter;
+          this.cachedFilter = currentFilter;
           const isLayerCountMismatch =
+            pageNumber > 1 &&
             !isFirstLayerEmpty &&
             this.mapLayers[0].getLayers().length !== geoPosts.getLayers().length;
           const isThisInProgress =
-            this.params.page !== 1 && posts.meta.total > geoPosts.getLayers().length;
+            pageNumber > 1 && posts.meta.total !== geoPosts.getLayers().length;
 
-          if (isFirstLayerEmpty || isLayerCountMismatch || isThisInProgress) {
+          if (
+            isFirstLayerEmpty ||
+            hasTheFilterChanged ||
+            isThisInProgress ||
+            isLayerCountMismatch
+          ) {
             if (!isFirstLayerEmpty && !isThisInProgress) {
               this.resetMapLayers();
             }
@@ -303,29 +313,30 @@ export class MapComponent extends MainViewComponent implements OnInit {
             } else {
               this.mapLayers.push(geoPosts);
             }
-          }
 
-          if (
-            this.params.limit &&
-            this.params.page &&
-            posts.meta.total > this.params.limit * this.params.page
-          ) {
-            this.progress = ((this.params.limit * this.params.page) / posts.count) * 100;
+            // this.params.page = pageNumber;
 
-            this.params.page++;
-            this.getPostsGeoJson();
-          } else {
-            this.progress = 100;
-            if (posts.results.length) {
-              this.mapFitToBounds = geoPosts.getBounds();
+            if (
+              this.params.limit &&
+              pageNumber &&
+              posts.meta.total > this.params.limit * pageNumber
+            ) {
+              this.progress = ((this.params.limit * pageNumber) / posts.count) * 100;
+              pageNumber++;
+              this.getPostsGeoJson(pageNumber);
+            } else {
+              this.progress = 100;
+              if (posts.results.length) {
+                this.mapFitToBounds = geoPosts.getBounds();
 
-              // Save bounds to localstorage to fix flicker when map is ready
-              const bounds = {
-                fit: this.mapFitToBounds,
-                zoom: this.map.getBoundsZoom(this.mapFitToBounds),
-                center: this.map.getCenter(),
-              };
-              localStorage.setItem('bounds', JSON.stringify(bounds));
+                // Save bounds to localstorage to fix flicker when map is ready
+                const bounds = {
+                  fit: this.mapFitToBounds,
+                  zoom: this.map.getBoundsZoom(this.mapFitToBounds),
+                  center: this.map.getCenter(),
+                };
+                localStorage.setItem('bounds', JSON.stringify(bounds));
+              }
             }
           }
 
