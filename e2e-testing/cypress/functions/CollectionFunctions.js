@@ -46,8 +46,9 @@ class CollectionFunctions {
   post_to_collection() {
     //navigate to data view
     cy.get(CollectionLocators.dataBtn).click();
-    //click on three dots of first post
-    cy.get(CollectionLocators.postMenuDots).eq(0).click();
+    //open post and click on three dots of first post
+    cy.get(CollectionLocators.post).contains('One').click();
+    cy.get(CollectionLocators.postMenuDots).eq(1).click();
     cy.get(CollectionLocators.addToCollectionBtn).click();
     this.select_collections();
     //dismiss collection modal
