@@ -289,9 +289,11 @@ export class MapComponent extends MainViewComponent implements OnInit {
           const isLayerCountMismatch =
             !isFirstLayerEmpty &&
             this.mapLayers[0].getLayers().length !== geoPosts.getLayers().length;
+          const isThisInProgress =
+            this.params.page !== 1 && posts.meta.total > geoPosts.getLayers().length;
 
-          if (isFirstLayerEmpty || isLayerCountMismatch) {
-            if (!isFirstLayerEmpty) {
+          if (isFirstLayerEmpty || isLayerCountMismatch || isThisInProgress) {
+            if (!isFirstLayerEmpty && !isThisInProgress) {
               this.resetMapLayers();
             }
 
