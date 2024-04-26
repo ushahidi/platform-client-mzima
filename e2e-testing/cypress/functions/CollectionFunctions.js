@@ -27,7 +27,9 @@ class CollectionFunctions {
   }
 
   select_collections() {
-    cy.get(CollectionLocators.selectCollection).eq(0).click();
+    cy.get(CollectionLocators.selectCollection)
+      .contains('Automation Collection - Everyone')
+      .click();
   }
 
   type_post_title(title) {
@@ -42,19 +44,20 @@ class CollectionFunctions {
     cy.get(CollectionLocators.savePostBtn).click();
   }
   post_to_collection() {
-    cy.get(CollectionLocators.submitPostButton).click();
-    cy.get(CollectionLocators.surveyItem).click();
-    this.type_post_title('Post Title');
-    this.type_post_description('Post Description');
-    cy.get(CollectionLocators.postCheckBox).click({ force: true });
-    this.save_post();
-    cy.get(CollectionLocators.successBtn).click();
+    //navigate to data view
+    cy.get(CollectionLocators.dataBtn).click();
+    //click on three dots of first post
+    cy.get(CollectionLocators.postMenuDots).eq(0).click();
+    cy.get(CollectionLocators.addToCollectionBtn).click();
+    this.select_collections();
+    //dismiss collection modal
+    cy.get(CollectionLocators.closeModalBtn).click();
   }
 
   verify_post_added_to_collection() {
     this.open_collections();
     this.select_collections();
-    cy.contains('Post Title').should('exist');
+    cy.contains('One').should('exist');
   }
 
   create_collection() {

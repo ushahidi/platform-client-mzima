@@ -1,4 +1,5 @@
 const CollectionLocators = {
+  dataBtn: '[data-qa="btn-data"]',
   collectionBtn: '[data-qa="btn-collections"]',
   addcollectionBtn: '[data-qa="add-collection"]',
   collectionNameField: '[data-qa="name"]',
@@ -21,6 +22,9 @@ const CollectionLocators = {
   saveCollectionButton: '[data-qa="save-collection-btn"]',
   collectionItem: '[data-qa="collection-item"]',
   visibilityOption: '[data-qa="option"]',
+  postMenuDots: '[data-qa="post-menu"]',
+  addToCollectionBtn: '[data-qa="add-to-collection"]',
+  closeModalBtn: '[data-qa="btn-close"]',
 };
 
 export default CollectionLocators;
