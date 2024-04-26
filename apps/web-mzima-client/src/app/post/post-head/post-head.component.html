@@ -31,7 +31,7 @@
     class="post-head__control post-head__control--dots"
     [matMenuTriggerFor]="actions"
   >
-    <mat-icon icon svgIcon="dots"></mat-icon>
+    <mat-icon icon svgIcon="dots" [data-qa]="'post-menu'"></mat-icon>
   </mzima-client-button>
 
   <mat-menu #actions="matMenu" xPosition="before">
@@ -42,24 +42,40 @@
       "
       mat-menu-item
       (click)="addToCollection()"
+      [data-qa]="'add-to-collection'"
     >
       <mat-icon svgIcon="collections"></mat-icon>
       {{ 'set.add_to_collection' | translate }}
     </button>
     <ng-container *ngIf="post.allowed_privileges?.includes('change_status')">
       <hr />
-      <button mat-menu-item (click)="publish()" *ngIf="post.status !== PostStatus.Published">
+      <button
+        mat-menu-item
+        (click)="publish()"
+        *ngIf="post.status !== PostStatus.Published"
+        [data-qa]="'btn-publish-post'"
+      >
         <mat-icon svgIcon="sort-up"></mat-icon>
         {{ 'post.post_actions.publish' | translate }}
       </button>
-      <button mat-menu-item (click)="underReview()" *ngIf="post.status !== PostStatus.Draft">
+      <button
+        mat-menu-item
+        (click)="underReview()"
+        *ngIf="post.status !== PostStatus.Draft"
+        [data-qa]="'btn-underReview-post'"
+      >
         {{ 'post.post_actions.put_under_review' | translate }}
       </button>
-      <button mat-menu-item (click)="archive()" *ngIf="post.status !== PostStatus.Archived">
+      <button
+        mat-menu-item
+        (click)="archive()"
+        *ngIf="post.status !== PostStatus.Archived"
+        [data-qa]="'btn-archive-post'"
+      >
         {{ 'post.post_actions.archive' | translate }}
       </button>
     </ng-container>
-    <button mat-menu-item *ngIf="deleteable" (click)="deletePost()">
+    <button mat-menu-item *ngIf="deleteable" (click)="deletePost()" [data-qa]="'btn-delete-post'">
       {{ 'post.post_actions.delete' | translate }}
     </button>
   </mat-menu>
