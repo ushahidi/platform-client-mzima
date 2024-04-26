@@ -10,7 +10,7 @@ describe('Automated Tests for Collections', () => {
     cy.visit(Cypress.env('baseUrl'));
   });
 
-  it.skip('Creates Collection', () => {
+  it('Creates Collection', () => {
     collectionFunctions.create_collection();
   });
 
