@@ -109,7 +109,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
       visible_to: [
         {
           value: 'everyone',
-          options: ['everyone'],
+          options: [],
           disabled: false,
         },
       ],
@@ -167,7 +167,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
 
           function checkReadPrivilege() {
             // If the collection's role allows everyone to view or the specific role of the current user to view it.
-            if (item.role?.includes('everyone') || item.role?.includes(userRole)) {
+            if (item.role?.includes('everyone') || item.role?.includes(userRole) || !item.role) {
               return true;
             }
 

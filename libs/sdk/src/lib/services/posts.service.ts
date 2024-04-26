@@ -170,15 +170,19 @@ export class PostsService extends ResourceService<any> {
 
   public getPostStatistics(queryParams?: any): Observable<PostStatsResponse> {
     const params = { ...queryParams, group_by: 'form', enable_group_by_source: true };
-    const filters = this.postParamsMapper(params, this.postsFilters.value);
+    const filters = this.postParamsMapper(params, this.postsFilters.value, true);
 
     return super.get('stats', filters);
   }
 
-  private postParamsMapper(params: any, filter?: GeoJsonFilter) {
+  private postParamsMapper(params: any, filter?: GeoJsonFilter, isStats: boolean = false) {
     // Combine new parameters with existing filter
     const postParams: any = { ...filter, ...params };
-    postParams.currentView = filter?.currentView;
+
+    // Some parameters should always come from the filter (if they exist)
+    postParams.page = filter?.page ?? postParams.page;
+    postParams.currentView = filter?.currentView ?? postParams.currentView;
+    postParams.limit = filter?.limit ?? postParams.limit;
 
     // Allocate start and end dates, and remove originals
     if (postParams.date?.start) {
@@ -227,9 +231,11 @@ export class PostsService extends ResourceService<any> {
       delete postParams.place;
     }
 
+    // Remove 'unknown form' from the form list if it exists.
+    postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
+
     // Clean up whatevers left, removing empty arrays and values
-    postParams['form[]'] = postParams['form[]'].filter((formId: any) => formId !== 0);
-    if (postParams['form[]']?.length === 0 || postParams['form[]'][0] === 'none') {
+    if (postParams['form[]']?.length === 0 || postParams['form[]'] === undefined || isStats) {
       delete postParams['form[]'];
     }
 
@@ -244,9 +250,11 @@ export class PostsService extends ResourceService<any> {
     if (postParams['tags[]']?.length === 0) {
       delete postParams['tags[]'];
     }
+
     if (postParams.set?.length === 0) {
       delete postParams.set;
     }
+
     if (postParams.query?.length === 0) {
       delete postParams.query;
     }
@@ -259,6 +267,12 @@ export class PostsService extends ResourceService<any> {
     delete postParams.tags;
     delete postParams.status;
     delete postParams.form;
+
+    for (const key in postParams) {
+      if (postParams[key] === undefined) {
+        delete postParams[key];
+      }
+    }
 
     return postParams;
   }

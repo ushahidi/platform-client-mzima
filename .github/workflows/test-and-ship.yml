@@ -137,7 +137,7 @@ jobs:
         run: |
           set -ex;
 
-          SNAPSHOT_URL="https://ushahidi-static-web-assets.s3.eu-west-1.amazonaws.com/ushahidi-e2e-data-2023.07.05.sql.gz"
+          SNAPSHOT_URL="https://ushahidi-static-web-assets.s3.eu-west-1.amazonaws.com/ushahidi-e2e-data.sql.gz"
           wget -O sql-snapshot.sql.gz ${SNAPSHOT_URL} 2>/dev/null || { echo "Failed downloading snapshot!" && exit 1; }
 
           tmp_defaults=`mktemp`
