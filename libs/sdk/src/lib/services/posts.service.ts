@@ -180,7 +180,9 @@ export class PostsService extends ResourceService<any> {
     const postParams: any = { ...filter, ...params };
 
     // Some parameters should always come from the filter (if they exist)
-    postParams.page = filter?.page ?? postParams.page;
+    if (filter?.page && filter.page > postParams.page) {
+      postParams.page = filter.page;
+    }
     postParams.currentView = filter?.currentView ?? postParams.currentView;
     postParams.limit = filter?.limit ?? postParams.limit;
 
