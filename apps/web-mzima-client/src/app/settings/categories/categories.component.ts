@@ -67,7 +67,7 @@ export class CategoriesComponent {
           this.getCategories();
           this.selectedCategories = [];
           this.notificationService.showError(
-            this.translate.instant('bulk_destroy_success_countless'),
+            this.translate.instant('notify.category.bulk_destroy_success_countless'),
           );
         },
       },
