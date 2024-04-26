@@ -1,5 +1,11 @@
 <app-main-layout class="main" title="Profile Information" (back)="back()">
-  <app-profile-photo class="avatar" [photo]="userPhoto"></app-profile-photo>
+  <app-profile-photo
+    class="avatar"
+    [photo]="userPhoto"
+    (uploadStarted)="onUploadStarted()"
+    (uploadCompleted)="onUploadCompleted()"
+    (photoChanged)="handlePhotoChange($event)"
+  ></app-profile-photo>
   <!-- (photoChanged)="handlePhotoChange($event)" -->
 
   <ion-title class="title">Profile name</ion-title>

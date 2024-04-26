@@ -95,7 +95,8 @@ export class InformationPage {
   public userEmail?: string[];
   public isChangeEmailModalOpen = false;
   public isChangePasswordModalOpen = false;
-  // public isPhotoChanged: boolean = false;
+  public isUploadInProgress = false;
+  public isPhotoChanged: boolean = false;
 
   constructor(
     private sessionService: SessionService,
@@ -135,16 +136,32 @@ export class InformationPage {
       });
   }
 
-  // public handlePhotoChange(event: boolean): void {
-  //   this.isPhotoChanged = event;
-  // }
+  public handlePhotoChange(event: boolean): void {
+    this.isPhotoChanged = event;
+  }
 
   ionViewWillEnter(): void {
     this.getRoles();
   }
 
+  onUploadStarted(): void {
+    this.isUploadInProgress = true;
+  }
+
+  onUploadCompleted(): void {
+    this.isUploadInProgress = false;
+  }
+
   public back(): void {
-    this.router.navigate(['profile']);
+    if (!this.isUploadInProgress) {
+      this.router.navigate(['profile']);
+    } else {
+      this.toastService.presentToast({
+        message: 'Profile photo is still uploading. Please wait...',
+        duration: 3000,
+      });
+      console.log('Upload in progress. Cannot navigate back.');
+    }
   }
 
   private getRoles() {

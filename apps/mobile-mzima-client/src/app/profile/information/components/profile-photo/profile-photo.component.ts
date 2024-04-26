@@ -17,13 +17,12 @@ import { UserInterface } from '@mzima-client/sdk';
 export class ProfilePhotoComponent {
   @Input() photo: string;
   userId: string;
+  @Output() uploadStarted = new EventEmitter<void>();
+  @Output() uploadCompleted = new EventEmitter<void>();
   @Output() photoChanged = new EventEmitter<boolean>();
+  uploadingInProgress = false;
   uploadingSpinner = false;
   hasUploadedPhoto = false;
-
-  // handlePhotoChange(event: boolean): void {
-  //   this.photoChanged.emit(event);
-  // }
 
   public currentUser: UserInterface;
   constructor(
@@ -61,6 +60,8 @@ export class ProfilePhotoComponent {
     const file = input?.files?.[0];
     if (file) {
       //showing the loading icon
+      this.uploadingInProgress = true;
+      this.uploadStarted.emit();
       this.uploadingSpinner = true;
       this.changePhoto(file);
     }
@@ -84,6 +85,8 @@ export class ProfilePhotoComponent {
               this.saveUserProfilePhoto(mediaId, photoUrl);
             } else {
               console.error('Failed to extract mediaId or photoUrl from the response');
+              this.uploadingInProgress = false;
+              this.uploadCompleted.emit();
             }
           });
         });
@@ -133,9 +136,13 @@ export class ProfilePhotoComponent {
                   this.uploadingSpinner = false;
                   //activating delete button if the upload is successful
                   this.hasUploadedPhoto = true;
+                  this.uploadingInProgress = false;
+                  this.uploadCompleted.emit();
                 },
                 (error) => {
                   console.error('Failed to update profile photo', error);
+                  this.uploadingInProgress = false;
+                  this.uploadCompleted.emit();
                 },
               );
             } else {
@@ -150,15 +157,21 @@ export class ProfilePhotoComponent {
                   this.uploadingSpinner = false;
                   //activating delete button if the upload is successful
                   this.hasUploadedPhoto = true;
+                  this.uploadingInProgress = false;
+                  this.uploadCompleted.emit();
                 },
                 (error) => {
                   console.error('Failed to add profile photo', error);
+                  this.uploadingInProgress = false;
+                  this.uploadCompleted.emit();
                 },
               );
             }
           });
         } else {
           console.error('User data or user ID is missing');
+          this.uploadingInProgress = false;
+          this.uploadCompleted.emit();
         }
       });
   }
@@ -218,12 +231,6 @@ export class ProfilePhotoComponent {
       this.toastService.presentToast({
         header: 'Successfully Deleting',
         message: 'You successfully deleted the profile photo',
-        buttons: [
-          {
-            text: 'OK',
-            role: 'cancel',
-          },
-        ],
         duration: 3000,
         position: 'bottom',
       });

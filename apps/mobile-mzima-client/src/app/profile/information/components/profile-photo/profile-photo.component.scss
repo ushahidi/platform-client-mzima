@@ -15,8 +15,10 @@
   stroke-width: 2px;
   top: 50%;
   left: 50%;
-  width: 40px;
-  height: 40px;
+  right: 50%;
+  bottom: 50%;
+  width: 40px !important;
+  height: 40px !important;
   transform: translate(-50%, -50%);
   // box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
   // border-radius: 50%;
