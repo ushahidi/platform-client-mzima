@@ -245,7 +245,7 @@ export class MapViewComponent implements AfterViewInit {
 
   public getPostsGeoJson() {
     this.postsService
-      .getGeojson({ limit: 100000, offset: 0, page: 1 })
+      .getGeojson({ limit: 500, offset: 0, page: 1, currentView: 'map' })
       .pipe(untilDestroyed(this))
       .subscribe({
         next: async (postsResponse) => {
