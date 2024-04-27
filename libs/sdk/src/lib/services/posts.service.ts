@@ -232,8 +232,12 @@ export class PostsService extends ResourceService<any> {
       delete postParams.within_km;
       delete postParams.place;
     }
-    postParams['form[]'] = [...new Set([...postParams['form[]'], ...postParams['form']])];
+
+    // Squash the form arrays together removing duplicates
+    // postParams['form[]'] = [...new Set([...postParams['form[]'], ...postParams['form']])];
+
     // Remove 'unknown form' from the form list if it exists.
+    // postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
     postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
 
     // Clean up whatevers left, removing empty arrays and values

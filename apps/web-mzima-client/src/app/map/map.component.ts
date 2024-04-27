@@ -137,11 +137,11 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
   private initFilterListener() {
     this.filtersSubscription$.pipe(debounceTime(1000)).subscribe({
-      next: () => {
+      next: (filter) => {
         if (this.route.snapshot.data['view'] === 'search' && !this.searchId) return;
         if (this.route.snapshot.data['view'] === 'collection' && !this.collectionId) return;
 
-        this.getPostsGeoJson();
+        this.getPostsGeoJson(1, filter);
       },
     });
   }
@@ -181,7 +181,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
     control.zoom({ position: 'bottomleft' }).addTo(map);
   }
 
-  getPostsGeoJson(pageNumber: number = 1) {
+  getPostsGeoJson(pageNumber: number = 1, filter?: any) {
     this.postsService
       .getGeojson({ ...this.params, page: pageNumber })
       .pipe(untilDestroyed(this))
@@ -285,17 +285,21 @@ export class MapComponent extends MainViewComponent implements OnInit {
               });
             },
           });
-          const currentFilter: string = JSON.stringify(this.params);
+          // Do we have any posts at all?
           const isFirstLayerEmpty = this.mapLayers.length === 0;
-          // const hasTheFilterChanged = !isFirstLayerEmpty && pageNumber === 1 && this.mapLayers[0].getLayers().length !== posts.meta.total;
-          const hasTheFilterChanged = currentFilter !== this.cachedFilter;
-          this.cachedFilter = currentFilter;
+
           const isLayerCountMismatch =
             pageNumber > 1 &&
             !isFirstLayerEmpty &&
             this.mapLayers[0].getLayers().length !== geoPosts.getLayers().length;
           const isThisInProgress =
             pageNumber > 1 && posts.meta.total !== geoPosts.getLayers().length;
+
+          const currentFilter: string | undefined = filter
+            ? JSON.stringify(filter)
+            : this.cachedFilter;
+          const hasTheFilterChanged = this.cachedFilter && currentFilter !== this.cachedFilter;
+          this.cachedFilter = currentFilter;
 
           if (
             isFirstLayerEmpty ||
@@ -314,8 +318,6 @@ export class MapComponent extends MainViewComponent implements OnInit {
               this.mapLayers.push(geoPosts);
             }
 
-            // this.params.page = pageNumber;
-
             if (
               this.params.limit &&
               pageNumber &&
@@ -323,7 +325,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
             ) {
               this.progress = ((this.params.limit * pageNumber) / posts.count) * 100;
               pageNumber++;
-              this.getPostsGeoJson(pageNumber);
+              this.getPostsGeoJson(pageNumber, filter);
             } else {
               this.progress = 100;
               if (posts.results.length) {
