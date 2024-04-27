@@ -240,11 +240,17 @@ export class PostsService extends ResourceService<any> {
     // postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
     postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
 
-    // Clean up whatevers left, removing empty arrays and values
-    if (postParams['form[]']?.length === 0 || postParams['form[]'] === undefined || isStats) {
+    // The API deals with an empty form array the same as 'all' forms, so we need to send it 'none.
+    if (postParams['form[]']?.length === 0 || postParams['form[]'] === undefined) {
+      postParams['form[]'] = ['none'];
+    }
+
+    // Stats calls should always return the details of every form, so send an empty array
+    if (isStats) {
       delete postParams['form[]'];
     }
 
+    // Clean up whatevers left, removing empty arrays and values
     if (postParams['source[]']?.length === 0) {
       delete postParams['source[]'];
     }
