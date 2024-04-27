@@ -285,16 +285,21 @@ export class MapComponent extends MainViewComponent implements OnInit {
               });
             },
           });
-          // Do we have any posts at all?
+
+          // Do we have any markers (layers) at all?
           const isFirstLayerEmpty = this.mapLayers.length === 0;
 
+          // Do the number of markers equal what we expect?
           const isLayerCountMismatch =
             pageNumber > 1 &&
             !isFirstLayerEmpty &&
             this.mapLayers[0].getLayers().length !== geoPosts.getLayers().length;
+
+          // Is the client in the middle of retrieving multiple pages of markers?
           const isThisInProgress =
             pageNumber > 1 && posts.meta.total !== geoPosts.getLayers().length;
 
+          // Has the filter changed from when we last saw it?
           const currentFilter: string | undefined = filter
             ? JSON.stringify(filter)
             : this.cachedFilter;
