@@ -180,11 +180,10 @@ export class PostsService extends ResourceService<any> {
     const postParams: any = { ...filter, ...params };
 
     // Some parameters should always come from the filter (if they exist)
-    if (filter?.page && filter.page > postParams.page) {
-      postParams.page = filter.page;
-    }
+    postParams.page = filter?.page ?? postParams.page;
     postParams.currentView = filter?.currentView ?? postParams.currentView;
     postParams.limit = filter?.limit ?? postParams.limit;
+    postParams['status[]'] = filter?.['status[]'] ?? postParams['status[]'];
 
     // Allocate start and end dates, and remove originals
     if (postParams.date?.start) {
@@ -205,12 +204,12 @@ export class PostsService extends ResourceService<any> {
       delete postParams.center_point;
     }
 
-    if (postParams.status?.length) {
-      postParams['status[]'] = postParams.status;
-    }
-    if (postParams.source?.length) {
-      postParams['source[]'] = postParams.source;
-    }
+    // if (postParams.status?.length) {
+    //   postParams['status[]'] = postParams.status;
+    // }
+    // if (postParams.source?.length) {
+    //   postParams['source[]'] = postParams.source;
+    // }
     if (postParams.tags?.length) {
       postParams['tags[]'] = postParams.tags;
     }
@@ -233,30 +232,20 @@ export class PostsService extends ResourceService<any> {
       delete postParams.place;
     }
 
-    // Squash the form arrays together removing duplicates
-    // postParams['form[]'] = [...new Set([...postParams['form[]'], ...postParams['form']])];
-
     // Remove 'unknown form' from the form list if it exists.
-    // postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
     postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
 
-    // The API deals with an empty form array the same as 'all' forms, so we need to send it 'none.
-    if (postParams['form[]']?.length === 0 || postParams['form[]'] === undefined) {
-      postParams['form[]'] = ['none'];
-    }
-
-    // Stats calls should always return the details of every form, so send an empty array
-    if (isStats) {
+    // Clean up whatevers left, removing empty arrays and values
+    if (postParams['form[]']?.length === 0 || postParams['form[]'] === undefined || isStats) {
       delete postParams['form[]'];
     }
 
-    // Clean up whatevers left, removing empty arrays and values
     if (postParams['source[]']?.length === 0) {
-      delete postParams['source[]'];
+      postParams['source[]'] = ['none'];
     }
 
     if (postParams['status[]']?.length === 0) {
-      delete postParams['status[]'];
+      postParams['status[]'] = ['none'];
     }
 
     if (postParams['tags[]']?.length === 0) {
@@ -279,6 +268,8 @@ export class PostsService extends ResourceService<any> {
     delete postParams.tags;
     delete postParams.status;
     delete postParams.form;
+    delete postParams.reactToFilter;
+    delete postParams.order_unlocked;
 
     for (const key in postParams) {
       if (postParams[key] === undefined) {

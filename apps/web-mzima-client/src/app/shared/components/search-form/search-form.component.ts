@@ -55,7 +55,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   public activeFilters: any;
   public savedSearches: Savedsearch[];
   public surveyList: SurveyItem[] = [];
-  public statuses = searchFormHelper.statuses;
+  public statuses = searchFormHelper.loggedOutStatuses;
   public sources = searchFormHelper.sources;
   public categoriesData: MultilevelSelectOption[];
   public activeSavedSearch?: Savedsearch;
@@ -180,8 +180,13 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   loadData(): void {
     this.getSavedFilters();
     this.getPostsStatistic();
-    if (this.isLoggedIn && this.collectionInfo) {
-      this.getNotification(String(this.collectionInfo.id));
+    if (this.isLoggedIn) {
+      this.statuses = searchFormHelper.statuses;
+      if (this.collectionInfo) {
+        this.getNotification(String(this.collectionInfo.id));
+      }
+    } else {
+      this.statuses = searchFormHelper.loggedOutStatuses;
     }
   }
 

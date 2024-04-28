@@ -18,6 +18,8 @@ export const statuses = [
   },
 ];
 
+export const loggedOutStatuses = [statuses[0]];
+
 export const sources = [
   {
     name: 'Web',
@@ -116,7 +118,7 @@ export const sortingOptions = [
 
 export const DEFAULT_FILTERS = {
   query: [''],
-  status: [['published', 'draft']],
+  status: [['published']],
   tags: [[]],
   source: [[]],
   form: [[]],
