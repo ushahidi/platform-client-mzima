@@ -291,7 +291,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
           // Do the number of markers equal what we expect?
           const isLayerCountMismatch =
-            pageNumber > 1 &&
+            // pageNumber > 1 &&
             !isFirstLayerEmpty &&
             this.mapLayers[0].getLayers().length !== geoPosts.getLayers().length;
 
@@ -300,11 +300,16 @@ export class MapComponent extends MainViewComponent implements OnInit {
             pageNumber > 1 && posts.meta.total !== geoPosts.getLayers().length;
 
           // Has the filter changed from when we last saw it?
-          const currentFilter: string | undefined = filter
-            ? JSON.stringify(filter)
-            : this.cachedFilter;
-          const hasTheFilterChanged = this.cachedFilter && currentFilter !== this.cachedFilter;
-          this.cachedFilter = currentFilter;
+          let hasTheFilterChanged = false;
+          if (filter === undefined) {
+            hasTheFilterChanged = true;
+          } else {
+            const currentFilter = JSON.stringify(filter);
+            if (this.cachedFilter && currentFilter !== this.cachedFilter) {
+              hasTheFilterChanged = true;
+              this.cachedFilter = currentFilter;
+            }
+          }
 
           if (
             isFirstLayerEmpty ||

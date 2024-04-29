@@ -118,7 +118,7 @@ export const sortingOptions = [
 
 export const DEFAULT_FILTERS = {
   query: [''],
-  status: [['published']],
+  status: [['published', 'draft']],
   tags: [[]],
   source: [[]],
   form: [[]],
