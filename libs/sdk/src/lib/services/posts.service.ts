@@ -220,6 +220,8 @@ export class PostsService extends ResourceService<any> {
       postParams.include_unstructured_posts = false;
       delete postParams.order;
       delete postParams.orderby;
+      // Remove 'unknown form' from the form list if it exists.
+      postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
     } else if (postParams.currentView === 'feed') {
       postParams.include_unmapped = true;
       if (postParams['form[]'].includes(0)) {
@@ -231,9 +233,6 @@ export class PostsService extends ResourceService<any> {
       delete postParams.within_km;
       delete postParams.place;
     }
-
-    // Remove 'unknown form' from the form list if it exists.
-    postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
 
     // Clean up whatevers left, removing empty arrays and values
     if (postParams['form[]']?.length === 0 || postParams['form[]'] === undefined) {
