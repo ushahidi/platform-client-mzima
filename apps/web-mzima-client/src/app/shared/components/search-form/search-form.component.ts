@@ -685,9 +685,12 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       fetchPostsWithoutFormId = index !== -1;
     }
 
+    const defaultStatus = ['published'];
+    if (this.isLoggedIn) defaultStatus.push('draft');
+
     this.form.patchValue({
       query: '',
-      status: ['published', 'draft'],
+      status: defaultStatus,
       tags: [],
       source: this.sources.map((s) => s.value),
       form: this.surveyList.map((s) => s.id),
