@@ -183,6 +183,13 @@ export class PostsService extends ResourceService<any> {
     postParams.page = filter?.page ?? postParams.page;
     postParams.currentView = filter?.currentView ?? postParams.currentView;
     postParams.limit = filter?.limit ?? postParams.limit;
+    postParams['status[]'] = filter?.['status[]'] ?? postParams['status[]'];
+    if (postParams['form[]'] !== undefined && postParams['form[]'].length === 0)
+      postParams['form[]'] = postParams['form'];
+    if (postParams['status[]'] !== undefined && postParams['status[]'].length === 0)
+      postParams['status[]'] = postParams['status'];
+    if (postParams['source[]'] !== undefined && postParams['source[]'].length === 0)
+      postParams['source[]'] = postParams['source'];
 
     // Allocate start and end dates, and remove originals
     if (postParams.date?.start) {
@@ -203,12 +210,6 @@ export class PostsService extends ResourceService<any> {
       delete postParams.center_point;
     }
 
-    if (postParams.status?.length) {
-      postParams['status[]'] = postParams.status;
-    }
-    if (postParams.source?.length) {
-      postParams['source[]'] = postParams.source;
-    }
     if (postParams.tags?.length) {
       postParams['tags[]'] = postParams.tags;
     }
@@ -235,16 +236,20 @@ export class PostsService extends ResourceService<any> {
     postParams['form[]'] = postParams['form[]']?.filter((formId: any) => formId !== 0);
 
     // Clean up whatevers left, removing empty arrays and values
-    if (postParams['form[]']?.length === 0 || postParams['form[]'] === undefined || isStats) {
+    if (postParams['form[]']?.length === 0 || postParams['form[]'] === undefined) {
+      postParams['form[]'] = ['none'];
+    }
+
+    if (isStats) {
       delete postParams['form[]'];
     }
 
     if (postParams['source[]']?.length === 0) {
-      delete postParams['source[]'];
+      postParams['source[]'] = ['none'];
     }
 
     if (postParams['status[]']?.length === 0) {
-      delete postParams['status[]'];
+      postParams['status[]'] = ['none'];
     }
 
     if (postParams['tags[]']?.length === 0) {
