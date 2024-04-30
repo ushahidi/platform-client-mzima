@@ -11,8 +11,8 @@ class DataViewFilterFunctions {
 
   verify_count_on_results() {
     //verify results on landing on Data view
-    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 164');
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 164');
+    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 512');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 512');
 
     //clear all selected surveys
     cy.get(DataViewLocators.clearBtn).click();
