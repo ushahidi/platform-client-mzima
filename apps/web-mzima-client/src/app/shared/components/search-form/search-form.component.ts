@@ -40,6 +40,7 @@ import {
 import dayjs from 'dayjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { DEFAULT_FILTERS } from '../../../core/helpers/search-form';
 
 @UntilDestroy()
 @Component({
@@ -684,6 +685,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       const index = this.surveyList.findIndex((s) => s.id === 0);
       fetchPostsWithoutFormId = index !== -1;
     }
+
+    this.activeFilters = this.isLoggedIn ? DEFAULT_FILTERS : DEFAULT_FILTERS;
 
     this.form.patchValue({
       query: '',

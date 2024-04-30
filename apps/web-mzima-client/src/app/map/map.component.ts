@@ -305,8 +305,10 @@ export class MapComponent extends MainViewComponent implements OnInit {
             const currentFilter = JSON.stringify(filter);
             if (this.cachedFilter && currentFilter !== this.cachedFilter) {
               hasTheFilterChanged = true;
-              this.cachedFilter = currentFilter;
             }
+            this.cachedFilter = currentFilter;
+          } else {
+            hasTheFilterChanged = this.cachedFilter === undefined;
           }
 
           if (
