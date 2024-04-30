@@ -290,20 +290,18 @@ export class MapComponent extends MainViewComponent implements OnInit {
           const isFirstLayerEmpty = this.mapLayers.length === 0;
 
           // Do the number of markers equal what we expect?
-          const isLayerCountMismatch =
-            // pageNumber > 1 &&
-            !isFirstLayerEmpty &&
-            this.mapLayers[0].getLayers().length !== geoPosts.getLayers().length;
+          // const isLayerCountMismatch =
+          //   pageNumber > 1 &&
+          //   !isFirstLayerEmpty &&
+          //   this.mapLayers[0].getLayers().length !== geoPosts.getLayers().length;
 
           // Is the client in the middle of retrieving multiple pages of markers?
           const isThisInProgress =
-            pageNumber > 1 && posts.meta.total !== geoPosts.getLayers().length;
+            pageNumber > 1 && posts.meta.total !== this.mapLayers[0].getLayers().length;
 
           // Has the filter changed from when we last saw it?
           let hasTheFilterChanged = false;
-          if (filter === undefined) {
-            hasTheFilterChanged = true;
-          } else {
+          if (filter !== undefined) {
             const currentFilter = JSON.stringify(filter);
             if (this.cachedFilter && currentFilter !== this.cachedFilter) {
               hasTheFilterChanged = true;
@@ -314,8 +312,8 @@ export class MapComponent extends MainViewComponent implements OnInit {
           if (
             isFirstLayerEmpty ||
             hasTheFilterChanged ||
-            isThisInProgress ||
-            isLayerCountMismatch
+            isThisInProgress // ||
+            // isLayerCountMismatch
           ) {
             if (!isFirstLayerEmpty && !isThisInProgress) {
               this.resetMapLayers();
@@ -335,6 +333,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
             ) {
               this.progress = ((this.params.limit * pageNumber) / posts.count) * 100;
               pageNumber++;
+              this.params.page = pageNumber;
               this.getPostsGeoJson(pageNumber, filter);
             } else {
               this.progress = 100;

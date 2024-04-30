@@ -122,7 +122,7 @@ export class PostsService extends ResourceService<any> {
   }
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
-    return super.get('geojson', this.postParamsMapper(filter, { ...this.postsFilters.value })).pipe(
+    return super.get('geojson', this.postParamsMapper({ ...this.postsFilters.value }, filter)).pipe(
       tap((res) => {
         this.totalGeoPosts.next(res.meta.total);
       }),
