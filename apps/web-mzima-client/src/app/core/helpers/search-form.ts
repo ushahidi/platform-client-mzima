@@ -129,6 +129,8 @@ export const DEFAULT_FILTERS = {
       end: '',
     },
   ],
+  date_before: '',
+  date_after: '',
   center_point: [
     {
       location: {

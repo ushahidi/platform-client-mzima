@@ -705,6 +705,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
         start: '',
         end: '',
       },
+      date_before: '',
+      date_after: '',
       place: '',
       center_point: {
         location: {

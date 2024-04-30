@@ -200,11 +200,19 @@ export class PostsService extends ResourceService<any> {
       delete postParams.date;
     } else {
       delete postParams.date;
-      // Were the filters reset?
-      if (!params.date_before && !params.date_after) {
+      if (!params.date_before) {
         delete postParams.date_before;
+      }
+
+      if (!params.date_after) {
         delete postParams.date_after;
       }
+    }
+
+    // Filter was reset
+    if (!params.date && !params.date_before && !params.date_after) {
+      delete postParams.date_before;
+      delete postParams.date_after;
     }
 
     // Re-allocate location information
