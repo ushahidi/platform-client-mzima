@@ -20,16 +20,16 @@ class DataViewFilterFunctions {
     //select only first survey
     cy.get('[data-qa="survey-select-item2"]').click();
     //verify count
-    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 356');
+    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 8');
 
     //select second survey
     cy.get('[data-qa="survey-select-item3"]').click();
-    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 359');
+    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 11');
 
     //select third survey
     cy.get('[data-qa="survey-select-item4"]').click();
-    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 369');
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 369');
+    cy.get(DataViewLocators.mainResultsTotal).contains('Results: 21');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 21');
 
     //reveal filters button
     cy.get(DataViewLocators.revealFiltersBtn).click();

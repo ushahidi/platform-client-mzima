@@ -18,6 +18,8 @@ export const statuses = [
   },
 ];
 
+export const loggedOutStatuses = [statuses[0]];
+
 export const sources = [
   {
     name: 'Web',
