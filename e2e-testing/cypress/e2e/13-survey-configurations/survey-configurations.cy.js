@@ -14,11 +14,11 @@ describe('Automated Tests for Survey Configurations', () => {
     surveyConfigurationFunctions.hide_author_information_and_verify();
   });
 
-  it('Steps to require posts to hide exact time information', () => {
+  it('Verifies exact time information is hidden', () => {
     surveyConfigurationFunctions.hide_exact_time_information_and_verify();
   });
 
-  it.skip('Verify post exact location information is hidden', () => {
+  it('Verify post exact location information is hidden', () => {
     surveyConfigurationFunctions.hide_exact_location_information_and_verify();
   });
 });

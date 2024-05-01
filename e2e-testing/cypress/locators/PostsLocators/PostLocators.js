@@ -8,6 +8,7 @@ const PostLocators = {
   surveySelectionList: '[data-qa="survey-selection-list"]',
   surveySelectItem: '[data-qa="survey-select-item125"]',
   confirmContent: '[data-qa="confirm-content"]',
+  locationValues: '[data-qa="postLocationValues"]',
 
   /* Input fields */
   titleField: '[ng-reflect-data-qa="title"]',
