@@ -55,11 +55,10 @@ class SurveyConfigurationFunctions {
 
   select_survey() {
     cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
-    cy.wait(1000);
   }
 
   open_survey_to_submit() {
-    cy.get(SurveyConfigurationLocators.surveyToSubmit).click();
+    cy.get(SurveyConfigurationLocators.surveyForConfigurationTests).click();
   }
 
   type_post_title(title) {
@@ -72,10 +71,6 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.postDescField).type(description);
   }
 
-  type_post_number(number) {
-    cy.get(SurveyConfigurationLocators.postNumField).eq(4).type(number);
-  }
-
   save_post() {
     cy.get(SurveyConfigurationLocators.savePostBtn).click();
   }
@@ -83,12 +78,8 @@ class SurveyConfigurationFunctions {
   add_post() {
     this.click_add_post_btn();
     this.open_survey_to_submit();
-    cy.wait(1000);
     this.type_post_title('New Post Title');
     this.type_post_description('New Post Description');
-    cy.get(SurveyConfigurationLocators.queryLocationSearchField);
-    this.type_post_number(3);
-    cy.get(SurveyConfigurationLocators.postCheckBox).click({ force: true });
     this.save_post();
     cy.get(SurveyConfigurationLocators.successBtn).click();
   }
@@ -96,8 +87,8 @@ class SurveyConfigurationFunctions {
   add_post_with_location() {
     this.click_add_post_btn();
     //open a specific survey with location field to test hiding location
-    cy.get('data-qa="add-post-modal-surveys-item458"').click();
-    this.type_post_title('New Post Title');
+    this.open_survey_to_submit();
+    this.type_post_title('New Post Title for Location');
     this.type_post_description('New Post Description');
     cy.get(PostLocators.locationSearchField).type('nairobi county');
     this.save_post();
