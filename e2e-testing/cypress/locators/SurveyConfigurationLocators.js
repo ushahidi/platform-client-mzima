@@ -6,7 +6,7 @@ const SurveyConfigurationLocators = {
   settingsBtn: '[data-qa="btn-settings"]',
   surveyBtn: '[data-qa="btn-surveys"]',
   addPostBtn: '[data-qa="submit-post-button"]',
-  postTitleField: '[data-qa="null"]',
+  postTitleField: '[ng-reflect-data-qa="title"]',
   postDescField: '[data-qa="description"]',
   postNumField: '[data-qa="null"]',
   postCheckBox: '[data-qa="checkboxes-field-f1"]',
@@ -24,6 +24,7 @@ const SurveyConfigurationLocators = {
   reviewRqrdTgl: '[data-qa="toggle-posts-require-review"]',
   hideAuthorTgl: '[data-qa="toggle-hide-author"]',
   hideLocationTgl: '[data-qa="toggle-hide-location"]',
+  hideTimeTgl: '[data-qa="toggle-hide-time"]',
   mapBtn: '[data-qa="btn-map"]',
   queryLocationSearchField: '[data-qa="location-search"]',
 };

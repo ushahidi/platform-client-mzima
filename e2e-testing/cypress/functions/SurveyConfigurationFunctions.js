@@ -34,7 +34,11 @@ class SurveyConfigurationFunctions {
   }
 
   toggle_hide_exact_time_information() {
-    cy.get('#mat-slide-toggle-4-input').click({ force: true });
+    cy.get(SurveyConfigurationLocators.hideTimeTgl).click({ force: true });
+  }
+
+  toggle_hide_exact_location_information() {
+    cy.get(SurveyConfigurationLocators.hideLocationTgl).click();
   }
 
   save_survey_configurations() {
