@@ -18,6 +18,6 @@ import './commands.js';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-after(() => {
-  cy.task('generateReport');
-});
+// after(() => {
+//   cy.task('generateReport');
+// });
