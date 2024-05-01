@@ -14,7 +14,7 @@ class SurveyConfigurationFunctions {
   }
 
   open_survey_to_configure() {
-    cy.get(SurveyConfigurationLocators.configurationTestSurvey).click();
+    cy.get(SurveyConfigurationLocators.surveyForConfigurationTests).click();
   }
 
   open_survey_configurations() {
