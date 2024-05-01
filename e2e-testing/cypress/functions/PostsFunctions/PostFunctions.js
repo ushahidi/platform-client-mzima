@@ -31,8 +31,8 @@ class PostFunctions {
     //type in nairobi county in full. this gets one result and picks it automatically, populating lat and long fields
     cy.get(PostLocators.locationSearchField).type('nairobi county');
     //verify values in lat and long fields
-    cy.get(PostLocators.locationLatField).should('contain', '-1.3026148499999999');
-    cy.get(PostLocators.locationLongField).should('contain', '36.82884201813725');
+    cy.get(PostLocators.locationLatField).should('have.value', '-1.3026148499999999');
+    cy.get(PostLocators.locationLongField).should('have.value', '36.82884201813725');
 
     // click on date field to open pop up
     // cy.get(PostLocators.dateField).click(); //the first click opens the date picker
