@@ -108,7 +108,7 @@ class SurveyConfigurationFunctions {
   check_for_anonymous_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get('[data-qa="btn-data"]').click();
-    // cy.get(SurveyConfigurationLocators.surveyToVerify).click();
+    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
@@ -144,7 +144,7 @@ class SurveyConfigurationFunctions {
     this.open_surveys();
     this.open_survey_to_configure();
     this.open_survey_configurations();
-    this.toggle_survey_review_required();
+    // this.toggle_survey_review_required();
     this.toggle_hide_author_information();
     this.save_survey_configurations();
     loginFunctions.logout();
