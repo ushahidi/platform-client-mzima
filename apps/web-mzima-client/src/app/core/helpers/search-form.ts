@@ -129,6 +129,8 @@ export const DEFAULT_FILTERS = {
       end: '',
     },
   ],
+  date_before: '',
+  date_after: '',
   center_point: [
     {
       location: {
@@ -138,6 +140,11 @@ export const DEFAULT_FILTERS = {
       distance: 1,
     },
   ],
+};
+
+export const DEFAULT_FILTERS_LOGGED_OUT = {
+  ...DEFAULT_FILTERS,
+  status: [['published']],
 };
 
 export const compareForms = (form1: any, form2: any) => {

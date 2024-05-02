@@ -122,7 +122,7 @@ export class PostsService extends ResourceService<any> {
   }
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
-    return super.get('geojson', this.postParamsMapper(filter, { ...this.postsFilters.value })).pipe(
+    return super.get('geojson', this.postParamsMapper({ ...this.postsFilters.value }, filter)).pipe(
       tap((res) => {
         this.totalGeoPosts.next(res.meta.total);
       }),
@@ -200,6 +200,19 @@ export class PostsService extends ResourceService<any> {
       delete postParams.date;
     } else {
       delete postParams.date;
+      if (!params.date_before) {
+        delete postParams.date_before;
+      }
+
+      if (!params.date_after) {
+        delete postParams.date_after;
+      }
+    }
+
+    // Filter was reset
+    if (!params.date && !params.date_before && !params.date_after) {
+      delete postParams.date_before;
+      delete postParams.date_after;
     }
 
     // Re-allocate location information
