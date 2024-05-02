@@ -92,7 +92,7 @@ class SurveyConfigurationFunctions {
   check_for_hidden_exact_location() {
     //the check that hidden exact location works is check that unprivileged user sees rounded up lat and long values
     cy.get(SurveyConfigurationLocators.postItem).contains('New Post Title').click();
-    cy.get(PostLocators.locationValues).should('be.visible').should('have.value', '-1.28 36.82');
+    cy.get(PostLocators.locationValues).should('be.visible').should('contain', '-1.28 36.82');
     // cy.compareSnapshot('home-page', 1);
   }
 
