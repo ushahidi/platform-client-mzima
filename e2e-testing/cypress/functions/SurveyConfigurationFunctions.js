@@ -63,6 +63,7 @@ class SurveyConfigurationFunctions {
   }
 
   type_post_description(description) {
+    cy.get(SurveyConfigurationLocators.postDescField).should('be.visible');
     cy.get(SurveyConfigurationLocators.postDescField).type(description);
   }
 
