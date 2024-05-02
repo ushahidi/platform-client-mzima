@@ -58,7 +58,8 @@ class SurveyConfigurationFunctions {
   }
 
   type_post_title(title) {
-    cy.get(SurveyConfigurationLocators.postTitleField).should('be.visible').type(title);
+    cy.get(SurveyConfigurationLocators.postTitleField).should('be.visible');
+    cy.get(SurveyConfigurationLocators.postTitleField).type(title);
   }
 
   type_post_description(description) {
