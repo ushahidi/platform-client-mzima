@@ -14,7 +14,7 @@ class SurveyConfigurationFunctions {
   }
 
   open_survey_to_configure() {
-    cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
+    cy.get(SurveyConfigurationLocators.surveyToConfigure).click();
   }
 
   open_survey_configurations() {
@@ -53,12 +53,8 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.addPostBtn).click();
   }
 
-  select_survey() {
-    cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
-  }
-
   open_survey_to_submit() {
-    cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
+    cy.get(SurveyConfigurationLocators.surveyToSubmitPost).click();
   }
 
   type_post_title(title) {
