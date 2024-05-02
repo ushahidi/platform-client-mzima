@@ -108,7 +108,7 @@ class SurveyConfigurationFunctions {
   check_for_anonymous_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get('[data-qa="btn-data"]').click();
-    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
+    // cy.get(SurveyConfigurationLocators.surveyToVerify).click();
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
