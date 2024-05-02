@@ -366,53 +366,64 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public showPostDetails(post: any): void {
-    this.setIsLoadingOnCardClick();
     this.mode = FeedMode.Post;
-    this.lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
+    this.isLoading = false;
+    console.log(post);
 
-    // Check for whether in collections (mode) or not
-    const { lgScreenUrl, smScreenUrl } = {
-      lgScreenUrl: this.collectionId
-        ? ['/feed', 'collection', this.collectionId, post.id, 'view']
-        : ['/feed', post.id, 'view'],
-      smScreenUrl: this.collectionId ? ['/feed', 'collection', this.collectionId] : ['feed'],
-    };
+    this.router.navigate(['/feed', post.id, 'view'], {
+      queryParams: {
+        mode: this.mode,
+      },
+      queryParamsHandling: 'merge',
+    });
 
-    // Check screens size
-    const pageUrl = this.isDesktop ? lgScreenUrl : smScreenUrl;
+    // this.setIsLoadingOnCardClick();
+    // this.mode = FeedMode.Post;
+    // this.lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
 
-    if (this.lgDevicesPostMode) {
-      // route to post details and open on the right
-      this.router.navigate(pageUrl, {
-        queryParams: {
-          mode: this.mode,
-        },
-        queryParamsHandling: 'merge',
-      });
-    } else {
-      // Open post details as a modal
-      this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-        width: '100%',
-        maxWidth: 576,
-        data: { post: post, color: post.color, twitterId: post.data_source_message_id },
-        height: 'auto',
-        maxHeight: '90vh',
-        panelClass: ['modal', 'post-modal'],
-      });
-      this.postDetailsModal.afterClosed().subscribe((data) => {
-        this.mode = FeedMode.Tiles;
-        if (data?.update) {
-          this.getPostsSubject.next({ params: this.params });
-        }
-        this.router.navigate(pageUrl, {
-          queryParams: {
-            mode: this.mode,
-            page: this.currentPage,
-          },
-          queryParamsHandling: 'merge',
-        });
-      });
-    }
+    // // Check for whether in collections (mode) or not
+    // const { lgScreenUrl, smScreenUrl } = {
+    //   lgScreenUrl: this.collectionId
+    //     ? ['/feed', 'collection', this.collectionId, post.id, 'view']
+    //     : ['/feed', post.id, 'view'],
+    //   smScreenUrl: this.collectionId ? ['/feed', 'collection', this.collectionId] : ['feed'],
+    // };
+
+    // // Check screens size
+    // const pageUrl = this.isDesktop ? lgScreenUrl : smScreenUrl;
+
+    // if (this.lgDevicesPostMode) {
+    //   // route to post details and open on the right
+    //   this.router.navigate(pageUrl, {
+    //     queryParams: {
+    //       mode: this.mode,
+    //     },
+    //     queryParamsHandling: 'merge',
+    //   });
+    // } else {
+    //   // Open post details as a modal
+    //   this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+    //     width: '100%',
+    //     maxWidth: 576,
+    //     data: { post: post, color: post.color, twitterId: post.data_source_message_id },
+    //     height: 'auto',
+    //     maxHeight: '90vh',
+    //     panelClass: ['modal', 'post-modal'],
+    //   });
+    //   this.postDetailsModal.afterClosed().subscribe((data) => {
+    //     this.mode = FeedMode.Tiles;
+    //     if (data?.update) {
+    //       this.getPostsSubject.next({ params: this.params });
+    //     }
+    //     this.router.navigate(pageUrl, {
+    //       queryParams: {
+    //         mode: this.mode,
+    //         page: this.currentPage,
+    //       },
+    //       queryParamsHandling: 'merge',
+    //     });
+    //   });
+    // }
   }
 
   public toggleBulkOptions(state: boolean): void {

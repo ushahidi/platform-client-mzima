@@ -1,5 +1,81 @@
 @import 'helpers';
 
+// .post-cards {
+//   // &__container {
+//   //   width: 100%;
+
+//   //   @include breakpoint-min($tablet) {
+//   //     width: 337px; //
+
+//   //     @include breakpoint-max($laptop-small) {
+//   //       width: 280px;
+//   //     }
+//   //   }
+//   // }
+
+//   .details-or-edit {
+
+//   }
+
+//   @include breakpoint-min($tablet) {
+//     &--post-view {
+//       padding: 0;
+//       width: 337px; //
+//       border-radius: 4px;
+//       padding-bottom: 24px;
+//       border: 1px solid var(--color-neutral-20);
+
+//       @include breakpoint-max($laptop-small) {
+//         width: 280px;
+//         padding-bottom: 16px;
+//       }
+// }
+
+// .view-edit {
+
+// }
+
+// .posts {
+// &__container {
+//   width: 100%;
+
+//   @include breakpoint-min($tablet) {
+//     width: 337px; //
+
+//     @include breakpoint-max($laptop-small) {
+//       width: 280px;
+//     }
+//   }
+// }
+
+.main {
+  overflow-y: auto;
+  overflow-x: hidden; // hidden x overflow prevents pagination scrollbar at page bottom
+  padding-bottom: 32px;
+
+  @include breakpoint-max($tablet) {
+    padding-bottom: 64px;
+  }
+
+  &__tiles {
+    display: block;
+  }
+
+  // Larger devices - Post details and/or edit styles
+  @include breakpoint-min($tablet) {
+    &__details-or-edit {
+      display: grid;
+      grid-template-rows: 1fr;
+      grid-template-columns: 337px 1fr;
+
+      @include breakpoint-max($laptop-small) {
+        grid-template-columns: 280px 1fr;
+      }
+    }
+  }
+}
+
+// ngx-masonry element which is wrapper for the list of post cards
 .posts {
   display: block;
   width: 100%;
@@ -12,22 +88,31 @@
   @include breakpoint-max($mobile) {
     width: calc(100% - 32px);
   }
+
+  &__container {
+  }
 }
 
+// app-post-preview element i.e. single post card item
 .post {
-  &__tiles {
-    display: block;
-    margin: 0 8px 16px;
-    width: calc(33.3333% - 18px); //
+  // smaller devices maintains 100% regardless of whether user is in TILES mode or not
+  display: block;
+  width: 100%;
+  margin: 0 0 16px 0;
 
-    @media screen and (max-width: 1640px) {
-      width: calc(50% - 18px);
+  // larger devices get a change TILES mode & "POST" mode
+  @include breakpoint-min($mobile) {
+    &__tiles {
+      margin: 0 8px 16px;
+      width: calc(33.3333% - 18px); //
+
+      @media screen and (max-width: 1640px) {
+        width: calc(50% - 18px);
+      }
     }
 
-    @include breakpoint-max($mobile) {
+    &__details-or-edit {
       width: 100%;
-      margin-left: 0;
-      margin-right: 0;
     }
   }
 }
@@ -58,34 +143,34 @@
     padding-top: 56px;
   }
 
-  &__main {
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-bottom: 32px;
+  // &__main {
+  //   overflow-y: auto;
+  //   overflow-x: hidden;
+  //   padding-bottom: 32px;
 
-    @include breakpoint-max($tablet) {
-      padding-bottom: 64px;
-    }
+  //   @include breakpoint-max($tablet) {
+  //     padding-bottom: 64px;
+  //   }
 
-    // &-inner {
-    //   overflow: scroll;
-    // }
-    // @include breakpoint-min($tablet) {
-    //   flex: 1 1 100%;
-    //   overflow: auto;
-    // }
+  // &-inner {
+  //   overflow: scroll;
+  // }
+  // @include breakpoint-min($tablet) {
+  //   flex: 1 1 100%;
+  //   overflow: auto;
+  // }
 
-    // .feed-page--post-view & {
-    //   display: flex;
-    //   padding: 0 16px;
-    //   align-items: flex-start;
-    //   justify-content: flex-start;
+  // .feed-page--post-view & {
+  //   display: flex;
+  //   padding: 0 16px;
+  //   align-items: flex-start;
+  //   justify-content: flex-start;
 
-    //   @include breakpoint-max($laptop-small) {
-    //     padding: 0 8px;
-    //   }
-    // }
-  }
+  //   @include breakpoint-max($laptop-small) {
+  //     padding: 0 8px;
+  //   }
+  // }
+  // }
 
   &__controls-panel {
     display: flex;
@@ -257,6 +342,264 @@
 .pagi {
   padding: 20px 0;
 }
+
+// .posts {
+//   display: block;
+//   width: 100%;
+//   margin: 0 auto;
+
+//   @include breakpoint-max($tablet) {
+//     width: calc(100% - 16px);
+//   }
+
+//   @include breakpoint-max($mobile) {
+//     width: calc(100% - 32px);
+//   }
+// }
+
+// .post {
+//   &__tiles {
+//     display: block;
+//     margin: 0 8px 16px;
+//     width: calc(33.3333% - 18px); //
+
+//     @media screen and (max-width: 1640px) {
+//       width: calc(50% - 18px);
+//     }
+
+//     @include breakpoint-max($mobile) {
+//       width: 100%;
+//       margin-left: 0;
+//       margin-right: 0;
+//     }
+//   }
+// }
+
+// .feed-page-NEW {
+//   min-height: 100%;
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+
+//   @include breakpoint-min($tablet) {
+//     margin-inline-start: 10px; // where posts margin starts from when survey & sources filter area is collapsed
+//     transition: margin-inline-start 0.35s ease;
+//   }
+
+//   &:not(.feed-page-NEW--no-offset) {
+//     // where posts margin starts from when survey & sources filter area is expanded
+//     @include breakpoint-min($tablet) {
+//       margin-inline-start: 220px;
+
+//       @include breakpoint-max($laptop-small) {
+//         margin-inline-start: 200px;
+//       }
+//     }
+//   }
+
+//   &--filters-visible {
+//     padding-top: 56px;
+//   }
+
+//   &__main {
+//     overflow-y: auto;
+//     overflow-x: hidden;
+//     padding-bottom: 32px;
+
+//     @include breakpoint-max($tablet) {
+//       padding-bottom: 64px;
+//     }
+
+//     // &-inner {
+//     //   overflow: scroll;
+//     // }
+//     // @include breakpoint-min($tablet) {
+//     //   flex: 1 1 100%;
+//     //   overflow: auto;
+//     // }
+
+//     // .feed-page--post-view & {
+//     //   display: flex;
+//     //   padding: 0 16px;
+//     //   align-items: flex-start;
+//     //   justify-content: flex-start;
+
+//     //   @include breakpoint-max($laptop-small) {
+//     //     padding: 0 8px;
+//     //   }
+//     // }
+//   }
+
+//   &__controls-panel {
+//     display: flex;
+//     align-items: center;
+//     padding: 16px 24px 16px;
+//     justify-content: space-between;
+//     background: var(--color-neutral-10);
+
+//     @include breakpoint-max($laptop-small) {
+//       padding-left: 16px;
+//       padding-right: 16px;
+//     }
+
+//     @include breakpoint-max($tablet) {
+//       display: block;
+//       padding-top: 16px;
+//       padding-bottom: 16px;
+//     }
+//   }
+
+//   &__controls {
+//     display: flex;
+//     margin: 0 -8px;
+//     align-items: center;
+//     justify-content: flex-end;
+
+//     @include breakpoint-max($laptop-small) {
+//       margin-left: -4px;
+//       margin-right: -4px;
+//     }
+
+//     @include breakpoint-max($tablet) {
+//       justify-content: space-between;
+//     }
+
+//     &--actions {
+//       @include breakpoint-max($tablet) {
+//         left: 0;
+//         right: 0;
+//         bottom: 0;
+//         margin: 0;
+//         z-index: 500;
+//         position: fixed;
+//         min-height: 88px;
+//         padding: 8px 16px;
+//         background: var(--color-neutral-10);
+//         border-top: 1px solid var(--color-neutral-40);
+//       }
+//     }
+
+//     &__inner {
+//       display: flex;
+//       align-items: center;
+//       justify-content: flex-start;
+//     }
+
+//     .mat-form-field {
+//       width: 146px;
+
+//       @include breakpoint-max($laptop-small) {
+//         width: 132px;
+//       }
+
+//       &::ng-deep {
+//         .mat-form-field-wrapper {
+//           padding-bottom: 0;
+//         }
+
+//         .mat-select-value {
+//           padding-inline-end: 0;
+//           padding-inline-start: 24px;
+
+//           @include breakpoint-max($laptop-small) {
+//             padding-inline-start: 16px;
+//           }
+//         }
+
+//         .mat-select-arrow-wrapper {
+//           width: 32px;
+//           height: 32px;
+//           margin-inline-start: 8px;
+//           margin-inline-end: 24px;
+
+//           @include breakpoint-max($laptop-small) {
+//             margin-inline-end: 8px;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   &__control {
+//     margin: 0 8px;
+
+//     @include breakpoint-max($laptop-small) {
+//       margin-left: 4px;
+//       margin-right: 4px;
+//     }
+
+//     @include breakpoint-max($tablet) {
+//       display: flex;
+//       --min-width: 64px;
+//       min-height: 48px;
+//       align-items: center;
+//       justify-content: center;
+
+//       &--bulk {
+//         flex: 1 1 100%;
+//         --max-width: 320px;
+//       }
+//     }
+
+//     &--sorting {
+//       .feed-page__controls-panel--bulk-visible & {
+//         @include breakpoint-max($laptop-small) {
+//           @include breakpoint-min($tablet) {
+//             display: none;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   &__info-panel {
+//     display: flex;
+//     padding-top: 20px;
+//     padding-inline-start: 60px;
+//     padding-inline-end: 24px;
+//     align-items: flex-start;
+//     justify-content: space-between;
+
+//     @include breakpoint-max($laptop-small) {
+//       padding-inline-end: 16px;
+//     }
+//   }
+
+//   &__results-info {
+//     display: block;
+//     font-weight: 600;
+//     font-size: 14px;
+//     line-height: 17px;
+//     color: var(--color-neutral-100);
+
+//     &__dim {
+//       color: var(--color-neutral-70);
+//     }
+//   }
+
+//   &__mode-switcher {
+//     display: flex;
+//     align-items: center;
+//     margin-inline-start: 20px;
+//     margin-inline-end: -4px;
+//     justify-content: flex-start;
+
+//     &__button {
+//       --size: 40px;
+//       margin: 0 4px;
+
+//       &::ng-deep {
+//         .mzima-button--primary.mzima-button--outline {
+//           --hover-background-color: var(--color-primary-100);
+//         }
+//       }
+//     }
+//   }
+// }
+
+// .pagi {
+//   padding: 20px 0;
+// }
 
 // .feed-NEW {
 //   height: 100%;
