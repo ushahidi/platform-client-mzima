@@ -34,7 +34,7 @@ class SurveyConfigurationFunctions {
   }
 
   toggle_hide_exact_time_information() {
-    cy.get(SurveyConfigurationLocators.hideTimeTgl).click({ force: true });
+    cy.get(SurveyConfigurationLocators.hideTimeTgl).click();
   }
 
   toggle_hide_exact_location_information() {
