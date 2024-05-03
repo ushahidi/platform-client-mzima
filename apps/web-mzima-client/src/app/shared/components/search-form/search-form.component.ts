@@ -40,6 +40,7 @@ import {
 import dayjs from 'dayjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { DEFAULT_FILTERS, DEFAULT_FILTERS_LOGGED_OUT } from '../../../core/helpers/search-form';
 
 @UntilDestroy()
 @Component({
@@ -685,9 +686,17 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       fetchPostsWithoutFormId = index !== -1;
     }
 
+    const statuses = ['published'];
+    if (this.isLoggedIn) {
+      this.activeFilters = DEFAULT_FILTERS;
+      statuses.push('draft');
+    } else {
+      this.activeFilters = DEFAULT_FILTERS_LOGGED_OUT;
+    }
+
     this.form.patchValue({
       query: '',
-      status: ['published', 'draft'],
+      status: statuses,
       tags: [],
       source: this.sources.map((s) => s.value),
       form: this.surveyList.map((s) => s.id),
@@ -696,6 +705,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
         start: '',
         end: '',
       },
+      date_before: '',
+      date_after: '',
       place: '',
       center_point: {
         location: {
