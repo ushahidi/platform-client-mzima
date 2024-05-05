@@ -580,12 +580,27 @@ export class PostEditPage {
     const pendingPosts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
     console.log('uploadPosts > pendingPosts', pendingPosts);
     for (let postData of pendingPosts) {
-      if (postData?.file?.upload) {
-        postData = await new UploadFileHelper(this.mediaService).uploadFile(
-          postData,
-          postData.file,
-        );
+      console.log(postData);
+
+      for (const task of postData.post_content) {
+        console.log(postData.post_content);
+        for (const field of task.fields) {
+          if (field.file?.upload) {
+            field.id = await new UploadFileHelper(this.mediaService).uploadFileField(
+              field,
+              field.file,
+            );
+          }
+          console.log(field);
+        }
       }
+
+      // if (postData?.file?.upload) {
+      //   postData = await new UploadFileHelper(this.mediaService).uploadFile(
+      //     postData,
+      //     postData.file,
+      //   );
+      // }
 
       if (postData?.file?.delete) {
         postData = await this.deleteFile(postData, postData.file);

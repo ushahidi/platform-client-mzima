@@ -36,4 +36,28 @@ export class UploadFileHelper {
       throw new Error(`Error uploading file: ${error.message}`);
     }
   }
+
+  async uploadFileField(field: any, { data, name, caption, path }: any) {
+    console.log('uploadFile > photo', data, name, caption, path);
+    const fetchPhoto = await fetch(data);
+    const blob = await fetchPhoto.blob();
+    console.log('uploadFile > blob', blob);
+    const file = new File([blob], name);
+    console.log('uploadFile > file ', file);
+    try {
+      const uploadObservable = this.mediaService.uploadFile(file, caption);
+      const response: any = await lastValueFrom(uploadObservable);
+      console.log(response);
+      if (field.input === 'upload') {
+        field.value.value = response.result.id;
+      }
+
+      await Filesystem.deleteFile({
+        directory: Directory.Data,
+        path: path,
+      });
+    } catch (error: any) {
+      throw new Error(`Error uploading file: ${error.message}`);
+    }
+  }
 }
