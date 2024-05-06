@@ -88,7 +88,7 @@ class CategoryFunctions {
   }
 
   save_post() {
-    cy.get(SurveyConfigurationLocators.savePostBtn).click();
+    cy.get(CategoryLocators.savePostBtn).click();
   }
 
   create_survey_with_category() {
