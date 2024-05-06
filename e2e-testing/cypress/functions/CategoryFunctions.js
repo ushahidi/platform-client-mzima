@@ -59,6 +59,57 @@ class CategoryFunctions {
     ).click();
   }
 
+  click_add_post_btn() {
+    cy.get(CategoryLocators.addPostBtn).click();
+  }
+
+  open_survey_with_categories() {
+    cy.get(CategoryLocators.categoryTestSurvey).click();
+  }
+
+  open_settings() {
+    cy.get(CategoryLocators.stngsBtn).click();
+  }
+
+  open_surveys() {
+    cy.get(CategoryLocators.surveyBtn).click();
+  }
+
+  add_survey() {
+    cy.get(CategoryLocators.addSurveyBtn).click();
+  }
+
+  type_post_title(title) {
+    cy.get(CategoryLocators.postTitleField).should('be.visible').type(title, { force: true });
+  }
+
+  type_post_description(description) {
+    cy.get(CategoryLocators.postDescField).type(description, { force: true });
+  }
+
+  create_survey_with_category() {
+    this.open_settings();
+    this.open_surveys();
+    this.add_survey();
+    cy.get(CategoryLocators.surveyNameField).type('Survey title with categories');
+    cy.get(CategoryLocators.surveyDescriptionField).type('Survey description with categories');
+    cy.get(CategoryLocators.addNewFieldBtn).click();
+    cy.get(CategoryLocators.selectCategoryField).click();
+    cy.get(CategoryLocators.selectCategory).children('mat-checkbox-157-input').click();
+    cy.get(CategoryLocators.saveFieldBtn).click();
+  }
+
+  add_post_to_category() {
+    this.click_add_post_btn();
+    this.open_survey_with_categories();
+    cy.wait(1000);
+    this.type_post_title('New Post Title');
+    this.type_post_description('New Post Description');
+    cy.get('mat-checkbox-214-input').click();
+    this.save_post();
+    cy.get(SurveyConfigurationLocators.successBtn).click();
+  }
+
   verify_visibility_matches_parent() {
     cy.wait(1000);
     cy.get(CategoryLocators.selectParentCtgry).click();
