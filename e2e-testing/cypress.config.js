@@ -8,8 +8,6 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
-      // const getCompareSnapshotsPlugin = require('cypress-image-diff-js/dist/plugin.js');
-      // getCompareSnapshotsPlugin(on, config);
     },
   },
   video: true,
