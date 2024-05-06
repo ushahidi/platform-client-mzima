@@ -87,6 +87,10 @@ class CategoryFunctions {
     cy.get(CategoryLocators.postDescField).type(description, { force: true });
   }
 
+  save_post() {
+    cy.get(SurveyConfigurationLocators.savePostBtn).click();
+  }
+
   create_survey_with_category() {
     this.open_settings();
     this.open_surveys();
