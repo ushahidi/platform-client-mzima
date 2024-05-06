@@ -111,7 +111,7 @@ class CategoryFunctions {
     this.type_post_description('New Post Description');
     cy.get('mat-checkbox-214-input').click();
     this.save_post();
-    cy.get(SurveyConfigurationLocators.successBtn).click();
+    cy.get(CategoryLocators.successBtn).click();
   }
 
   verify_visibility_matches_parent() {
