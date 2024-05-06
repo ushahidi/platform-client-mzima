@@ -209,11 +209,17 @@
   <div
     class="main"
     [ngClass]="{
+      main__tiles: mode === FeedMode.Tiles,
       'main__details-or-edit': mode === FeedMode.Post
     }"
     [attr.data-qa]="'posts'"
   >
-    <div class="posts__container">
+    <div
+      [ngClass]="{
+        'posts__lg-POST-mode-container-scroll posts__lg-POST-mode-container-color':
+          mode === FeedMode.Post
+      }"
+    >
       <ngx-masonry
         #masonry
         class="posts"
@@ -269,7 +275,11 @@
       >
       </pagination-controls>
     </div>
-    <div>
+    <div
+      [ngClass]="{
+        'posts__lg-POST-mode-container-scroll': mode === FeedMode.Post
+      }"
+    >
       <router-outlet></router-outlet>
     </div>
   </div>

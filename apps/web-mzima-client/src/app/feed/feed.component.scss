@@ -51,14 +51,14 @@
 .main {
   overflow-y: auto;
   overflow-x: hidden; // hidden x overflow prevents pagination scrollbar at page bottom
-  padding-bottom: 32px;
-
-  @include breakpoint-max($tablet) {
-    padding-bottom: 64px;
-  }
 
   &__tiles {
     display: block;
+    padding-bottom: 32px;
+
+    @include breakpoint-max($tablet) {
+      padding-bottom: 64px;
+    }
   }
 
   // Larger devices - Post details and/or edit styles
@@ -89,7 +89,20 @@
     width: calc(100% - 32px);
   }
 
-  &__container {
+  // POST mode usage only
+  @include breakpoint-min($tablet) {
+    &__lg-POST-mode-container {
+      &-scroll {
+        overflow-y: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      &-color {
+        background: var(--color-light);
+        --scrollbar-background: var(--color-light);
+      }
+    }
   }
 }
 
@@ -339,9 +352,9 @@
   }
 }
 
-.pagi {
-  padding: 20px 0;
-}
+// .pagi {
+//   padding: 20px 0;
+// }
 
 // .posts {
 //   display: block;
