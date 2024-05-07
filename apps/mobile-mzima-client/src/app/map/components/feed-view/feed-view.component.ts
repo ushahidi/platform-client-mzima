@@ -113,7 +113,9 @@ export class FeedViewComponent extends MainViewComponent {
   private async getPosts(params: any, add = false): Promise<void> {
     this.isPostsLoading = true;
     try {
-      const response = await lastValueFrom(this.postsService.getPosts('', { ...params }));
+      const response = await lastValueFrom(
+        this.postsService.getPosts('', { currentView: 'feed', ...params }),
+      );
       await this.updateObjectsWithUploadInput(response);
 
       const currentPosts = await this.databaseService.get(STORAGE_KEYS.POSTS);

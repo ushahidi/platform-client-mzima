@@ -48,6 +48,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   fitBoundsOptions: FitBoundsOptions = {
     animate: true,
   };
+  cachedFilter: string;
   filtersSubscription$: Observable<any>;
   public leafletOptions: MapOptions;
   public progress = 0;
@@ -136,11 +137,11 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
   private initFilterListener() {
     this.filtersSubscription$.pipe(debounceTime(1000)).subscribe({
-      next: () => {
+      next: (filter) => {
         if (this.route.snapshot.data['view'] === 'search' && !this.searchId) return;
         if (this.route.snapshot.data['view'] === 'collection' && !this.collectionId) return;
 
-        this.getPostsGeoJson();
+        this.getPostsGeoJson(1, filter);
       },
     });
   }
@@ -149,11 +150,15 @@ export class MapComponent extends MainViewComponent implements OnInit {
     this.params.page = 1;
     this.params.limit = 500;
     this.params.currentView = 'map';
+    this.resetMapLayers();
+    this.mapLayers = [];
+  }
+
+  private resetMapLayers() {
     this.mapLayers.map((layer) => {
       this.map.removeLayer(layer);
       this.markerClusterData.removeLayer(layer);
     });
-    this.mapLayers = [];
   }
 
   onMapReady(map: Map) {
@@ -176,9 +181,9 @@ export class MapComponent extends MainViewComponent implements OnInit {
     control.zoom({ position: 'bottomleft' }).addTo(map);
   }
 
-  getPostsGeoJson() {
+  getPostsGeoJson(pageNumber: number = 1, filter?: any) {
     this.postsService
-      .getGeojson(this.params)
+      .getGeojson({ ...this.params, page: pageNumber })
       .pipe(untilDestroyed(this))
       .subscribe({
         next: (posts) => {
@@ -281,34 +286,70 @@ export class MapComponent extends MainViewComponent implements OnInit {
             },
           });
 
-          if (this.mapConfig.clustering) {
-            this.markerClusterData.addLayer(geoPosts);
-            this.mapLayers.push(this.markerClusterData);
+          // Do we have any markers (layers) at all?
+          const isFirstLayerEmpty = this.mapLayers.length === 0;
+
+          // Do the number of markers equal what we expect?
+          // const isLayerCountMismatch =
+          //   pageNumber > 1 &&
+          //   !isFirstLayerEmpty &&
+          //   this.mapLayers[0].getLayers().length !== geoPosts.getLayers().length;
+
+          // Is the client in the middle of retrieving multiple pages of markers?
+          const isThisInProgress =
+            pageNumber > 1 && posts.meta.total !== this.mapLayers[0].getLayers().length;
+
+          // Has the filter changed from when we last saw it?
+          let hasTheFilterChanged = false;
+          if (filter !== undefined) {
+            const currentFilter = JSON.stringify(filter);
+            if (this.cachedFilter && currentFilter !== this.cachedFilter) {
+              hasTheFilterChanged = true;
+            }
+            this.cachedFilter = currentFilter;
           } else {
-            this.mapLayers.push(geoPosts);
+            hasTheFilterChanged = this.cachedFilter === undefined;
           }
 
           if (
-            this.params.limit &&
-            this.params.page &&
-            posts.meta.total > this.params.limit * this.params.page
+            isFirstLayerEmpty ||
+            hasTheFilterChanged ||
+            isThisInProgress // ||
+            // isLayerCountMismatch
           ) {
-            this.progress = ((this.params.limit * this.params.page) / posts.count) * 100;
+            if (!isFirstLayerEmpty && !isThisInProgress) {
+              this.resetMapLayers();
+            }
 
-            this.params.page++;
-            this.getPostsGeoJson();
-          } else {
-            this.progress = 100;
-            if (posts.results.length) {
-              this.mapFitToBounds = geoPosts.getBounds();
+            if (this.mapConfig.clustering) {
+              this.markerClusterData.addLayer(geoPosts);
+              this.mapLayers.push(this.markerClusterData);
+            } else {
+              this.mapLayers.push(geoPosts);
+            }
 
-              // Save bounds to localstorage to fix flicker when map is ready
-              const bounds = {
-                fit: this.mapFitToBounds,
-                zoom: this.map.getBoundsZoom(this.mapFitToBounds),
-                center: this.map.getCenter(),
-              };
-              localStorage.setItem('bounds', JSON.stringify(bounds));
+            if (
+              this.params.limit &&
+              pageNumber &&
+              posts.meta.total > this.params.limit * pageNumber
+            ) {
+              this.progress = ((this.params.limit * pageNumber) / posts.count) * 100;
+              pageNumber++;
+              this.params.page = pageNumber;
+              this.getPostsGeoJson(pageNumber, filter);
+            } else {
+              this.progress = 100;
+              if (posts.results.length) {
+                this.mapFitToBounds = geoPosts.getBounds();
+
+                // Save bounds to localstorage to fix flicker when map is ready
+                const bounds = {
+                  fit: this.mapFitToBounds,
+                  zoom: this.map.getBoundsZoom(this.mapFitToBounds),
+                  center: this.map.getCenter(),
+                };
+                localStorage.setItem('bounds', JSON.stringify(bounds));
+              }
             }
           }
 

@@ -40,6 +40,7 @@ import {
 import dayjs from 'dayjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { DEFAULT_FILTERS, DEFAULT_FILTERS_LOGGED_OUT } from '../../../core/helpers/search-form';
 
 @UntilDestroy()
 @Component({
@@ -55,7 +56,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   public activeFilters: any;
   public savedSearches: Savedsearch[];
   public surveyList: SurveyItem[] = [];
-  public statuses = searchFormHelper.statuses;
+  public statuses = searchFormHelper.loggedOutStatuses;
   public sources = searchFormHelper.sources;
   public categoriesData: MultilevelSelectOption[];
   public activeSavedSearch?: Savedsearch;
@@ -180,8 +181,13 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   loadData(): void {
     this.getSavedFilters();
     this.getPostsStatistic();
-    if (this.isLoggedIn && this.collectionInfo) {
-      this.getNotification(String(this.collectionInfo.id));
+    if (this.isLoggedIn) {
+      this.statuses = searchFormHelper.statuses;
+      if (this.collectionInfo) {
+        this.getNotification(String(this.collectionInfo.id));
+      }
+    } else {
+      this.statuses = searchFormHelper.loggedOutStatuses;
     }
   }
 
@@ -680,9 +686,17 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       fetchPostsWithoutFormId = index !== -1;
     }
 
+    const statuses = ['published'];
+    if (this.isLoggedIn) {
+      this.activeFilters = DEFAULT_FILTERS;
+      statuses.push('draft');
+    } else {
+      this.activeFilters = DEFAULT_FILTERS_LOGGED_OUT;
+    }
+
     this.form.patchValue({
       query: '',
-      status: ['published', 'draft'],
+      status: statuses,
       tags: [],
       source: this.sources.map((s) => s.value),
       form: this.surveyList.map((s) => s.id),
@@ -691,6 +705,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
         start: '',
         end: '',
       },
+      date_before: '',
+      date_after: '',
       place: '',
       center_point: {
         location: {
