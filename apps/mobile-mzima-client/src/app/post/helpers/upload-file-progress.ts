@@ -1,39 +1,58 @@
+import { HttpEvent, HttpEventType, HttpProgressEvent } from '@angular/common/http';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { MediaService } from '@mzima-client/sdk';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable, tap } from 'rxjs';
 
 export class UploadFileProgressHelper {
   constructor(private mediaService: MediaService) {}
 
-  async uploadFile(postData: any, { data, name, caption, path }: any) {
-    console.log('uploadFile > photo', data, name, caption, path);
-    const fetchPhoto = await fetch(data);
-    const blob = await fetchPhoto.blob();
-    console.log('uploadFile > blob', blob);
-    const file = new File([blob], name);
-    console.log('uploadFile > file ', file);
+  async uploadFile(
+    postData: any,
+    fieldId: number,
+    { data, name, caption, path }: any,
+    progressCallback: (progress: number) => void,
+  ) {
     try {
-      const uploadObservable = this.mediaService.uploadFileProgress(file, caption);
-      const response: any = await lastValueFrom(uploadObservable);
-      console.log(response);
-      for (const content of postData.post_content) {
-        for (const field of content.fields) {
-          if (field.input === 'upload') {
-            field.value.value = response.result.id;
+      const fetchPhoto = await fetch(data);
+      const blob = await fetchPhoto.blob();
+      const file = new File([blob], name);
+      const uploadProgress: Observable<HttpEvent<any>> = this.mediaService
+        .uploadFileProgress(file, caption)
+        .pipe(
+          tap((event) => {
+            const progressEvent: HttpProgressEvent = event as HttpProgressEvent;
+            const percentDone = progressEvent.total
+              ? Math.round((100 * progressEvent.loaded) / progressEvent.total)
+              : 0;
+            console.log(`File "${file.name}" is ${percentDone}% uploaded.`);
+            progressCallback(percentDone);
+          }),
+        );
+      const event: HttpEvent<any> = await lastValueFrom(uploadProgress);
+      switch (event.type) {
+        case HttpEventType.Response:
+          console.log(`File was completely uploaded!`);
+          for (const content of postData.post_content) {
+            for (const field of content.fields) {
+              if (field.input === 'upload') {
+                field.value.value = event.body.result.id;
+              }
+            }
           }
-        }
+          break;
       }
 
-      await Filesystem.deleteFile({
+      Filesystem.deleteFile({
         directory: Directory.Data,
         path: path,
       });
 
       delete postData.file;
-
-      return postData;
+      console.log('Postdata - ' + postData);
     } catch (error: any) {
       throw new Error(`Error uploading file: ${error.message}`);
     }
+
+    return postData;
   }
 }
