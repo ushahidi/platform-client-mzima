@@ -97,16 +97,18 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     this.fileName = new Date().getTime() + '.jpeg';
     const filePath = `${IMAGE_DIR}/${this.fileName}`;
     try {
-      const savedFile = await Filesystem.writeFile({
-        directory: Directory.Data,
-        path: filePath,
-        data: base64Data,
-      });
       // const file = await this.loadFile();
 
-      if (Capacitor.getPlatform() === 'hybrid') {
+      if (['hybrid', 'web'].includes(Capacitor.getPlatform())) {
         // Display the new image by rewriting the 'file://' path to HTTP
         // Details: https://ionicframework.com/docs/building/webview#file-protocol
+
+        const savedFile = await Filesystem.writeFile({
+          directory: Directory.Data,
+          path: filePath,
+          data: base64Data,
+        });
+
         this.photo = {
           name: this.fileName,
           path: savedFile.uri,
@@ -124,7 +126,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
       }
 
       this.upload = true;
-      this.preview = null;
+      // this.preview = this.photo;
     } catch (e) {
       console.log(e);
     }

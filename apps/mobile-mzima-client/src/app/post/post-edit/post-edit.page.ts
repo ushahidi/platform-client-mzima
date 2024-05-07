@@ -22,7 +22,7 @@ import {
   ToastService,
 } from '@services';
 import { FormValidator, preparingVideoUrl } from '@validators';
-import { PostEditForm, prepareRelationConfig, UploadFileHelper } from '../helpers';
+import { PostEditForm, prepareRelationConfig, UploadFileProgressHelper } from '../helpers';
 
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
@@ -72,6 +72,7 @@ export class PostEditPage {
   public selectedSurveyId: number | null;
   public selectedSurvey: any;
   private fileToUpload: any;
+  public uploadProgress: number = 0;
   private checkedList: any[] = [];
   public isConnection = true;
   public connectionInfo = '';
@@ -599,11 +600,22 @@ export class PostEditPage {
     const pendingPosts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
     console.log('uploadPosts > pendingPosts', pendingPosts);
     for (let postData of pendingPosts) {
-      if (postData?.file?.upload) {
-        postData = await new UploadFileHelper(this.mediaService).uploadFile(
-          postData,
-          postData.file,
-        );
+      for (const field of postData.post_content.fields) {
+        if (postData?.file?.upload) {
+          postData = await new UploadFileProgressHelper(this.mediaService).uploadFile(
+            postData,
+            field.id,
+            postData.file,
+            (progress) => {
+              console.log('Progress - ' + progress);
+              this.uploadProgress = progress;
+            },
+          );
+        }
+
+        if (field?.file?.delete) {
+          postData = await this.deleteFile(postData, postData.file);
+        }
       }
 
       if (postData?.file?.delete) {
