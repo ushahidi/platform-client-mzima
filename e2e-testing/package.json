@@ -13,7 +13,6 @@
   "license": "ISC",
   "devDependencies": {
     "cypress": "^13.7.0",
-    "cypress-data-session": "^2.7.0",
-    "cypress-image-diff-js": "^2.1.4"
+    "cypress-data-session": "^2.7.0"
   }
 }

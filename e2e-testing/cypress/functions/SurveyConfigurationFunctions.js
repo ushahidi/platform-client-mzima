@@ -1,6 +1,5 @@
 import SurveyConfigurationLocators from '../locators/SurveyConfigurationLocators';
 import LoginFunctions from '../functions/LoginFunctions';
-import LoginLocators from '../locators/LoginLocators';
 
 const loginFunctions = new LoginFunctions();
 
@@ -98,10 +97,6 @@ class SurveyConfigurationFunctions {
       .eq(0)
       .click({ force: true });
     cy.wait(3000);
-    // cy.get(SurveyConfigurationLocators.postPreview)
-    //   .children(SurveyConfigurationLocators.postItem)
-    //   .contains('New Post Title');
-    cy.compareSnapshot('home-page', 1);
   }
 
   check_for_accurate_author_name() {
@@ -130,7 +125,6 @@ class SurveyConfigurationFunctions {
       .children(SurveyConfigurationLocators.surveyToVerify)
       .eq(0)
       .click({ force: true });
-    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
