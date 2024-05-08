@@ -361,54 +361,60 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public showPostDetails(post: any): void {
-    if (this.isDesktop) {
-      this.setIsLoadingOnCardClick();
-      if (this.collectionId) {
-        this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'view'], {
-          queryParams: {
-            mode: FeedMode.Post,
-          },
-          queryParamsHandling: 'merge',
-        });
-      } else {
-        this.router.navigate(['feed', post.id, 'view'], {
-          queryParams: {
-            mode: FeedMode.Post,
-          },
-          queryParamsHandling: 'merge',
-        });
-      }
-    } else {
-      this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-        width: '100%',
-        maxWidth: 576,
-        data: { post: post, color: post.color, twitterId: post.data_source_message_id },
-        height: 'auto',
-        maxHeight: '90vh',
-        panelClass: ['modal', 'post-modal'],
-      });
+    this.mode = FeedMode.Post;
+    console.log(this.mode);
+    console.log(this.posts.length);
+    console.log(this.posts);
+    console.log(post);
 
-      this.postDetailsModal.afterClosed().subscribe((data) => {
-        if (data?.update) {
-          this.getPostsSubject.next({ params: this.params });
-        }
-        if (this.collectionId) {
-          this.router.navigate(['/feed', 'collection', this.collectionId], {
-            queryParams: {
-              page: this.currentPage,
-            },
-            queryParamsHandling: 'merge',
-          });
-        } else {
-          this.router.navigate(['feed'], {
-            queryParams: {
-              page: this.currentPage,
-            },
-            queryParamsHandling: 'merge',
-          });
-        }
-      });
-    }
+    // if (this.isDesktop) {
+    //   this.setIsLoadingOnCardClick();
+    //   if (this.collectionId) {
+    //     this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'view'], {
+    //       queryParams: {
+    //         mode: FeedMode.Post,
+    //       },
+    //       queryParamsHandling: 'merge',
+    //     });
+    //   } else {
+    //     this.router.navigate(['feed', post.id, 'view'], {
+    //       queryParams: {
+    //         mode: FeedMode.Post,
+    //       },
+    //       queryParamsHandling: 'merge',
+    //     });
+    //   }
+    // } else {
+    //   this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+    //     width: '100%',
+    //     maxWidth: 576,
+    //     data: { post: post, color: post.color, twitterId: post.data_source_message_id },
+    //     height: 'auto',
+    //     maxHeight: '90vh',
+    //     panelClass: ['modal', 'post-modal'],
+    //   });
+
+    //   this.postDetailsModal.afterClosed().subscribe((data) => {
+    //     if (data?.update) {
+    //       this.getPostsSubject.next({ params: this.params });
+    //     }
+    //     if (this.collectionId) {
+    //       this.router.navigate(['/feed', 'collection', this.collectionId], {
+    //         queryParams: {
+    //           page: this.currentPage,
+    //         },
+    //         queryParamsHandling: 'merge',
+    //       });
+    //     } else {
+    //       this.router.navigate(['feed'], {
+    //         queryParams: {
+    //           page: this.currentPage,
+    //         },
+    //         queryParamsHandling: 'merge',
+    //       });
+    //     }
+    //   });
+    // }
   }
 
   public toggleBulkOptions(state: boolean): void {
