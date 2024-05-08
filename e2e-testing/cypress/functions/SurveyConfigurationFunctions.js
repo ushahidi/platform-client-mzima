@@ -68,7 +68,7 @@ class SurveyConfigurationFunctions {
   }
 
   type_post_number(number) {
-    cy.get(SurveyConfigurationLocators.postNumField).eq(4).type(number);
+    cy.get(SurveyConfigurationLocators.postNumField).type(number);
   }
 
   save_post() {

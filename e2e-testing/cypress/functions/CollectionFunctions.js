@@ -33,7 +33,7 @@ class CollectionFunctions {
   }
 
   type_post_title(title) {
-    cy.get(CollectionLocators.postTitleField).eq(0).type(title).should('have.value', title);
+    cy.get(CollectionLocators.postTitleField).type(title).should('have.value', title);
   }
 
   type_post_description(description) {
