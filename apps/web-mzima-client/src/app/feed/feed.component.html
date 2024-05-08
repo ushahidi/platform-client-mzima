@@ -7,7 +7,6 @@
   class="feed-page"
   [ngClass]="{
     'feed-page--filters-visible': isFiltersVisible,
-    'feed-page--post-view': mode === FeedMode.Post && (isLoading || posts.length),
     'feed-page--no-offset': !isMainFiltersOpen
   }"
 >
@@ -203,120 +202,104 @@
     </div>
   </ng-container>
 
-  <div class="feed-page__main" [attr.data-qa]="'posts'">
+  <div
+    class="main"
+    [ngClass]="{
+      main__tiles: mode === FeedMode.Tiles,
+      'main__details-or-edit': mode === FeedMode.Post
+    }"
+    [attr.data-qa]="'posts'"
+  >
     <!-- (scroll)="onScroll($event)" -->
     <div
       #feed
-      class="feed"
       [ngClass]="{
-        'feed__posts-scroll': !isLoading,
-        'feed--post-view': mode === FeedMode.Post && (isLoading || posts.length),
-        'feed--post-view-loaded': mode === FeedMode.Post && !isLoading && posts.length,
-        'feed--post-view-skeleton': mode === FeedMode.Post && isLoading
+        'posts__lg-POST-mode-container-scroll posts__lg-POST-mode-container-color':
+          mode === FeedMode.Post
       }"
     >
-      <ng-container>
-        <div class="feed__posts">
-          <ng-container *ngIf="isLoading || (!posts.length && !noPostsYet)">
-            <app-spinner *ngIf="mode === FeedMode.Tiles" class="spinner"></app-spinner>
-            <ng-container *ngIf="mode === FeedMode.Post">
-              <div *ngFor="let single of postsSkeleton" class="post post--feed-skeleton"></div>
-            </ng-container>
-          </ng-container>
-          <ng-container *ngIf="!isLoading">
-            <!-- No posts yet -->
-            <ng-container *ngIf="noPostsYet">
-              <span class="posts-empty">{{ 'post.no_posts_yet' | translate }}</span>
-            </ng-container>
-            <!-- Posts -->
-            <ng-container *ngIf="posts.length">
-              <ngx-masonry
-                #masonry
-                [ordered]="true"
-                [options]="masonryOptions"
-                [updateLayout]="updateMasonryLayout"
-                [attr.data-qa]="'post-preview'"
-              >
-                <app-post-preview
-                  [attr.data-qa]="'post-item'"
-                  class="post"
-                  [post]="post"
-                  [attr.postId]="post.id"
-                  [user]="user"
-                  ngxMasonryItem
-                  [feedView]="true"
-                  (edit)="editPost(post)"
-                  (refresh)="refreshPost(post)"
-                  (deleted)="postDeleted([post])"
-                  (click)="showPostDetails(post)"
-                  [selectable]="isBulkOptionsVisible"
-                  [isChecked]="isPostChecked(post)"
-                  (statusChanged)="postStatusChanged()"
-                  (selected)="isPostSelected($event, post)"
-                  (mediaLoaded)="updateMasonry()"
-                  [ngClass]="{
-                    'post--selected':
-                      post.id === postDetails?.id ||
-                      (mode === FeedMode.Post && post.id === activePostId)
-                  }"
-                  *ngFor="
-                    let post of posts
-                      | paginate
-                        : {
-                            itemsPerPage: mode === FeedMode.Post ? 0 : itemsPerPage,
-                            currentPage: currentPage,
-                            totalItems: total
-                          }
-                  "
-                >
-                </app-post-preview>
-              </ngx-masonry>
-              <!-- pagination -->
-              <pagination-controls
-                class="pagination"
-                (pageChange)="changePage($event)"
-                *ngIf="mode === FeedMode.Tiles && paginationElementsAllowed"
-              >
-              </pagination-controls>
-              <!-- Load more posts -->
-              <ng-container
-                *ngIf="
-                  mode === FeedMode.Post &&
-                  paginationElementsAllowed &&
-                  params.page !== undefined &&
-                  params.limit !== undefined
-                "
-              >
-                <mzima-client-button
-                  fill="clear"
-                  color="secondary"
-                  (buttonClick)="loadMore()"
-                  class="feed__load-more"
-                  *ngIf="!loadingMorePosts && postCurrentLength < total"
-                >
-                  <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
-                  <span>{{ 'app.load_more' | translate }}</span>
-                </mzima-client-button>
-                <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>
-                <div class="endofPosts" *ngIf="!loadingMorePosts && postCurrentLength >= total">
-                  End of Posts
-                </div>
-              </ng-container>
-            </ng-container>
-          </ng-container>
-        </div>
-      </ng-container>
+      <ngx-masonry
+        #masonry
+        class="posts"
+        [ordered]="true"
+        [options]="masonryOptions"
+        [updateLayout]="updateMasonryLayout"
+        [attr.data-qa]="'post-preview'"
+      >
+        <app-post-preview
+          [attr.data-qa]="'post-item'"
+          class="post"
+          [ngClass]="{
+            post__tiles: mode === FeedMode.Tiles,
+            'post__details-or-edit': mode === FeedMode.Post,
+            'post--selected':
+              post.id === postDetails?.id || (mode === FeedMode.Post && post.id === activePostId)
+          }"
+          [post]="post"
+          [attr.postId]="post.id"
+          [user]="user"
+          ngxMasonryItem
+          [feedView]="true"
+          (edit)="editPost(post)"
+          (refresh)="refreshPost(post)"
+          (deleted)="postDeleted([post])"
+          (click)="showPostDetails(post)"
+          [selectable]="isBulkOptionsVisible"
+          [isChecked]="isPostChecked(post)"
+          (statusChanged)="postStatusChanged()"
+          (selected)="isPostSelected($event, post)"
+          (mediaLoaded)="updateMasonry()"
+          *ngFor="
+            let post of posts
+              | paginate
+                : {
+                    itemsPerPage: mode === FeedMode.Post ? 0 : itemsPerPage,
+                    currentPage: currentPage,
+                    totalItems: total
+                  }
+          "
+        >
+        </app-post-preview>
+      </ngx-masonry>
+      <!-- pagination -->
+      <pagination-controls
+        class="pagination"
+        (pageChange)="changePage($event)"
+        *ngIf="mode === FeedMode.Tiles && paginationElementsAllowed"
+      >
+      </pagination-controls>
+      <!-- Load more posts -->
+      <!-- <ng-container
+    *ngIf="
+      mode === FeedMode.Post &&
+      paginationElementsAllowed &&
+      params.page !== undefined &&
+      params.limit !== undefined
+    "
+  >
+    <mzima-client-button
+      fill="clear"
+      color="secondary"
+      (buttonClick)="loadMore()"
+      class="feed__load-more"
+      *ngIf="!loadingMorePosts && postCurrentLength < total"
+    >
+      <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
+      <span>{{ 'app.load_more' | translate }}</span>
+    </mzima-client-button>
+    <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>
+    <div class="endofPosts" *ngIf="!loadingMorePosts && postCurrentLength >= total">
+      End of Posts
+    </div>
+  </ng-container> -->
+      <!-- </ng-container> -->
     </div>
     <div
-      class="feed-page__post"
-      [ngClass]="{ 'feed--post-view-skeleton': isLoading }"
-      *ngIf="mode === FeedMode.Post"
-      [attr.data-qa]="'post-details'"
+      [ngClass]="{
+        'posts__lg-POST-mode-container-scroll': mode === FeedMode.Post
+      }"
     >
-      <ng-container *ngIf="isLoading">
-        <app-spinner class="spinner"></app-spinner>
-      </ng-container>
-      <router-outlet *ngIf="!isLoading"></router-outlet>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
