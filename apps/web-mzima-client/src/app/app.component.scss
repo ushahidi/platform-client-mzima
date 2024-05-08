@@ -92,14 +92,18 @@
 }
 
 .content-wrapper {
-  &:not(.content-wrapper--no-offset) {
-    height: 100%;
+  height: 100%;
 
-    @include breakpoint-max($tablet) {
-      height: auto;
-      min-height: 100%;
-    }
-  }
+  // check later on that this change does not break any other thing/page
+
+  // &:not(.content-wrapper--no-offset) {
+  //   height: 100%;
+
+  //   @include breakpoint-max($tablet) {
+  //     height: auto;
+  //     min-height: 100%;
+  //   }
+  // }
 }
 
 ::ng-deep {
