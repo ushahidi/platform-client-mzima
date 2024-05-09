@@ -184,7 +184,7 @@ export class PostsService extends ResourceService<any> {
     postParams.currentView = filter?.currentView ?? postParams.currentView;
     postParams.limit = filter?.limit ?? postParams.limit;
     postParams['status[]'] = filter?.['status[]'] ?? postParams['status[]'];
-    if (postParams['form[]'] !== undefined && postParams['form[]'].length === 0)
+    if (postParams['form[]'] === undefined && postParams['form'])
       postParams['form[]'] = postParams['form'];
     if (postParams['status[]'] !== undefined && postParams['status[]'].length === 0)
       postParams['status[]'] = postParams['status'];
@@ -235,7 +235,7 @@ export class PostsService extends ResourceService<any> {
       delete postParams.orderby;
     } else if (postParams.currentView === 'feed') {
       postParams.include_unmapped = true;
-      if (postParams['form[]'].includes(0)) {
+      if (postParams['form[]']?.includes(0)) {
         postParams.include_unstructured_posts = true;
       } else {
         postParams.include_unstructured_posts = false;
