@@ -632,7 +632,8 @@
   },
   "modal": {
     "button": {
-      "close": "Close"
+      "close": "Close",
+      "done": "Done"
     },
     "donation": {
       "thank_you_for_your_donation_start": "Web monetization is enabled on this website. Thank you for your donation. You have donated",
@@ -1841,7 +1842,8 @@
       "updated_collection": "Collection {{collection}} saved",
       "add_to_collection": "Post has been added to {{collection}}",
       "removed_from_collection": "Post has been removed from {{collection}}",
-      "bulk_add_to_collection": "{{count}} posts have been added to {{collection}}"
+      "bulk_add_to_collection": "{{count}} posts have been added to {{collection}}",
+      "done": "Done"
     },
     "savedsearch": {
       "delete_savedsearch_success": "Saved search deleted successfully.",
