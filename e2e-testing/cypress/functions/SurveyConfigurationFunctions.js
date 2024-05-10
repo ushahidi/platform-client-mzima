@@ -27,6 +27,7 @@ class SurveyConfigurationFunctions {
   toggle_require_posts_review() {
     cy.get(SurveyConfigurationLocators.requirePostsReviewTgl).click();
   }
+
   toggle_hide_author_information() {
     cy.get(SurveyConfigurationLocators.hideAuthorTgl).click();
   }
@@ -51,6 +52,7 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
     cy.wait(1000);
   }
+
   open_survey_to_submit() {
     cy.get(SurveyConfigurationLocators.surveyToSubmit).click();
   }
@@ -62,20 +64,39 @@ class SurveyConfigurationFunctions {
   }
 
   type_post_description(description) {
-    cy.get(SurveyConfigurationLocators.postDescField).type(description, { force: true });
+    cy.get(SurveyConfigurationLocators.postDescField).type(description);
+  }
+
+  type_post_number(number) {
+    cy.get(SurveyConfigurationLocators.postNumField).type(number);
   }
 
   save_post() {
     cy.get(SurveyConfigurationLocators.savePostBtn).click();
   }
+
   add_post() {
     this.click_add_post_btn();
     this.open_survey_to_submit();
     cy.wait(1000);
     this.type_post_title('New Post Title');
     this.type_post_description('New Post Description');
+    cy.get(SurveyConfigurationLocators.queryLocationSearchField);
+    this.type_post_number(3);
+    cy.get(SurveyConfigurationLocators.postCheckBox).click({ force: true });
     this.save_post();
     cy.get(SurveyConfigurationLocators.successBtn).click();
+  }
+
+  check_for_hidden_exact_location() {
+    cy.get(SurveyConfigurationLocators.mapBtn).click();
+    cy.reload();
+    cy.get(SurveyConfigurationLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveySelectionList)
+      .children(SurveyConfigurationLocators.surveyToVerify)
+      .eq(0)
+      .click({ force: true });
+    cy.wait(3000);
   }
 
   check_for_accurate_author_name() {
@@ -104,7 +125,6 @@ class SurveyConfigurationFunctions {
       .children(SurveyConfigurationLocators.surveyToVerify)
       .eq(0)
       .click({ force: true });
-    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
@@ -118,6 +138,19 @@ class SurveyConfigurationFunctions {
       .contains('New Post Title');
     //we'll check time doesn't say "just now" as it says when a privileged user is viewing
     cy.get(SurveyConfigurationLocators.postDate).should('not.contain', 'just now');
+  }
+
+  hide_exact_location_information_and_verify() {
+    this.open_settings();
+    this.open_surveys();
+    this.open_survey_to_configure();
+    this.open_survey_configurations();
+    this.toggle_survey_review_required();
+    this.toggle_hide_exact_location_information();
+    this.save_survey_configurations();
+    loginFunctions.logout();
+    this.add_post();
+    this.check_for_hidden_exact_location();
   }
 
   hide_author_information_and_verify() {

@@ -10,7 +10,7 @@ class EditPostFunctions {
   }
 
   type_post_title(title) {
-    cy.get(EditPostLocators.postTitleField).eq(0).type(title).should('have.value', title);
+    cy.get(EditPostLocators.postTitleField).type(title).should('have.value', title);
   }
 
   type_post_description(description) {
