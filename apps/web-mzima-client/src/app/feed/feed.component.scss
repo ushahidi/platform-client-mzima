@@ -27,8 +27,25 @@
   }
 }
 
+.post-list {
+  // POST mode usage only (larger devices)
+  @include breakpoint-min($tablet) {
+    &__scroll {
+      overflow-y: auto;
+      overflow-x: hidden; // interesting...
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    &__color {
+      background: var(--color-light);
+      --scrollbar-background: var(--color-light);
+    }
+  }
+}
+
 // ngx-masonry element which is wrapper for the list of post cards
-.posts {
+.masonry-wrapper {
   display: block;
   width: 100%;
   margin: 0 auto;
@@ -39,23 +56,6 @@
 
   @include breakpoint-max($mobile) {
     width: calc(100% - 32px);
-  }
-
-  // POST mode usage only
-  @include breakpoint-min($tablet) {
-    &__lg-POST-mode-container {
-      &-scroll {
-        overflow-y: auto;
-        overflow-x: hidden; // interesting...
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      &-color {
-        background: var(--color-light);
-        --scrollbar-background: var(--color-light);
-      }
-    }
   }
 }
 
@@ -79,6 +79,10 @@
 
     &__details-or-edit {
       width: 100%;
+
+      // @include breakpoint-max($tablet) {
+      //   width: calc(50% - 18px);
+      // }
     }
   }
 }

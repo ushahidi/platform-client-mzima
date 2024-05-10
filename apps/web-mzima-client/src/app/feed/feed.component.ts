@@ -191,16 +191,16 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       },
     });
 
-    window.addEventListener('resize', () => {
-      this.masonryOptions.columnWidth =
-        this.mode === FeedMode.Tiles
-          ? window.innerWidth > 1640
-            ? 3
-            : window.innerWidth <= 768
-            ? 1
-            : 2
-          : 1;
-    });
+    // window.addEventListener('resize', () => {
+    //   this.masonryOptions.columnWidth =
+    //     this.mode === FeedMode.Tiles
+    //       ? window.innerWidth > 1640
+    //         ? 3
+    //         : window.innerWidth <= 768
+    //         ? 1
+    //         : 2
+    //       : 1;
+    // });
 
     this.sessionService.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
       next: (isMainFiltersHidden: boolean) => {
