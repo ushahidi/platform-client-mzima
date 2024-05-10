@@ -52,7 +52,7 @@ class SurveyConfigurationFunctions {
   click_add_post_btn() {
     cy.get(SurveyConfigurationLocators.addPostBtn).click();
   }
-
+  
   open_survey_to_submit() {
     cy.get(SurveyConfigurationLocators.surveyToSubmitPost).click();
   }
@@ -65,10 +65,6 @@ class SurveyConfigurationFunctions {
   type_post_description(description) {
     cy.get(SurveyConfigurationLocators.postDescField).should('be.visible');
     cy.get(SurveyConfigurationLocators.postDescField).type(description);
-  }
-
-  type_post_number(number) {
-    cy.get(SurveyConfigurationLocators.postNumField).eq(4).type(number);
   }
 
   save_post() {
@@ -142,6 +138,19 @@ class SurveyConfigurationFunctions {
       .contains('New Post Title');
     //we'll check time doesn't say "just now" as it says when a privileged user is viewing
     cy.get(SurveyConfigurationLocators.postDate).should('not.contain', 'just now');
+  }
+
+  hide_exact_location_information_and_verify() {
+    this.open_settings();
+    this.open_surveys();
+    this.open_survey_to_configure();
+    this.open_survey_configurations();
+    this.toggle_survey_review_required();
+    this.toggle_hide_exact_location_information();
+    this.save_survey_configurations();
+    loginFunctions.logout();
+    this.add_post();
+    this.check_for_hidden_exact_location();
   }
 
   hide_author_information_and_verify() {
