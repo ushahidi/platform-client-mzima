@@ -133,6 +133,7 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.surveyToVerify).click();
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
+      .should('be.visible')
       .contains('New Post Title');
     //we'll check time doesn't say "just now" as it says when a privileged user is viewing
     cy.get(SurveyConfigurationLocators.postDate).should('not.contain', 'just now');
