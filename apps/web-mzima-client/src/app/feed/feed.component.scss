@@ -46,6 +46,7 @@
     &__lg-POST-mode-container {
       &-scroll {
         overflow-y: auto;
+        overflow-x: hidden; // interesting...
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
       }
