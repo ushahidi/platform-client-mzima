@@ -6,9 +6,10 @@ const SurveyConfigurationLocators = {
   settingsBtn: '[data-qa="btn-settings"]',
   surveyBtn: '[data-qa="btn-surveys"]',
   addPostBtn: '[data-qa="submit-post-button"]',
-  postTitleField: '[ng-reflect-data-qa="title"]',
+  postTitleField: '[data-qa="title"]',
   postDescField: '[data-qa="description"]',
-  postCheckBox: '[data-qa="nature-of-this-incident-failure-to-announce-results-by-iebc-officials"]',
+  postNumField: '[data-qa="number-decimal field"]',
+  postCheckBox: '[data-qa="checkboxes-field-f1"]',
   savePostBtn: '[data-qa="btn-post-item-submit"]',
   successBtn: '[data-qa="btn-confirm-success"]',
   postPreview: '[data-qa="post-preview"]',
@@ -22,6 +23,9 @@ const SurveyConfigurationLocators = {
   postStatus: '[data-qa="status"]',
   reviewRqrdTgl: '[data-qa="toggle-posts-require-review"]',
   hideAuthorTgl: '[data-qa="toggle-hide-author"]',
+  hideLocationTgl: '[data-qa="toggle-hide-location"]',
+  mapBtn: '[data-qa="btn-map"]',
+  queryLocationSearchField: '[data-qa="location-search"]',
 };
 
 export default SurveyConfigurationLocators;
