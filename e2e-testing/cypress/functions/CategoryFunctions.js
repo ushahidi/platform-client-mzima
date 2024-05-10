@@ -98,8 +98,8 @@ class CategoryFunctions {
     cy.get(CategoryLocators.surveyNameField).type('Survey title with categories');
     cy.get(CategoryLocators.surveyDescriptionField).type('Survey description with categories');
     cy.get(CategoryLocators.addNewFieldBtn).click();
-    cy.get(CategoryLocators.selectCategoryField).click({ force: true });
-    cy.get(CategoryLocators.selectCategory).children('mat-checkbox-157-input').click();
+    // cy.get(CategoryLocators.selectCategoryField).click({ force: true });
+    cy.get(CategoryLocators.addNewFieldModal).find(CategoryLocators.selectCategoryField).click();
     cy.get(CategoryLocators.saveFieldBtn).click();
   }
 
