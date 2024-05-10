@@ -52,7 +52,7 @@ class SurveyConfigurationFunctions {
   click_add_post_btn() {
     cy.get(SurveyConfigurationLocators.addPostBtn).click();
   }
-  
+
   open_survey_to_submit() {
     cy.get(SurveyConfigurationLocators.surveyToSubmitPost).click();
   }
@@ -121,10 +121,7 @@ class SurveyConfigurationFunctions {
   check_for_time_post_was_added() {
     //to verify, while logged in(as admin) verify time is displayed correctly
     cy.get(SurveyConfigurationLocators.clearBtn).click();
-    cy.get(SurveyConfigurationLocators.surveySelectionList)
-      .children(SurveyConfigurationLocators.surveyToVerify)
-      .eq(0)
-      .click({ force: true });
+    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
