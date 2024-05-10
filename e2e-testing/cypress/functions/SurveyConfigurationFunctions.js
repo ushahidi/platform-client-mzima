@@ -67,6 +67,10 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.postDescField).type(description);
   }
 
+  type_post_number(number) {
+    cy.get(SurveyConfigurationLocators.postNumField).eq(4).type(number);
+  }
+
   save_post() {
     cy.get(SurveyConfigurationLocators.savePostBtn).click();
   }
@@ -125,7 +129,6 @@ class SurveyConfigurationFunctions {
       .children(SurveyConfigurationLocators.surveyToVerify)
       .eq(0)
       .click({ force: true });
-    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
