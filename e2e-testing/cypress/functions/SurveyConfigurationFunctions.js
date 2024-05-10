@@ -139,19 +139,6 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.postDate).should('not.contain', 'just now');
   }
 
-  hide_exact_location_information_and_verify() {
-    this.open_settings();
-    this.open_surveys();
-    this.open_survey_to_configure();
-    this.open_survey_configurations();
-    this.toggle_survey_review_required();
-    this.toggle_hide_exact_location_information();
-    this.save_survey_configurations();
-    loginFunctions.logout();
-    this.add_post();
-    this.check_for_hidden_exact_location();
-  }
-
   hide_author_information_and_verify() {
     //change configuration survey
     this.open_settings();
