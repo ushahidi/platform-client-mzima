@@ -124,6 +124,7 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.surveyToVerify).click();
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
+      .should('be.visible')
       .contains('New Post Title');
     cy.get(SurveyConfigurationLocators.postDate).contains('just now');
     //logout and verify as non-logged in user, time is shown not the same as shown for admin user
