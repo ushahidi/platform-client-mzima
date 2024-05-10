@@ -214,13 +214,12 @@
     <div
       #feed
       [ngClass]="{
-        'posts__lg-POST-mode-container-scroll posts__lg-POST-mode-container-color':
-          mode === FeedMode.Post
+        'post-list__scroll post-list__color': mode === FeedMode.Post
       }"
     >
       <ngx-masonry
         #masonry
-        class="posts"
+        class="masonry-wrapper"
         [ordered]="true"
         [options]="masonryOptions"
         [updateLayout]="updateMasonryLayout"
