@@ -130,7 +130,7 @@ class SurveyConfigurationFunctions {
     //logout and verify as non-logged in user, time is shown not the same as shown for admin user
     loginFunctions.logout();
     cy.get('[data-qa="btn-data"]').click();
-    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
+   
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .should('be.visible')
