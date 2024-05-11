@@ -600,7 +600,7 @@ export class PostEditPage {
     const pendingPosts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
     console.log('uploadPosts > pendingPosts', pendingPosts);
     for (let postData of pendingPosts) {
-      for (const field of postData.post_content.fields) {
+      for (const field of postData.post_content[0].fields) {
         if (postData?.file?.upload) {
           postData = await new UploadFileProgressHelper(this.mediaService).uploadFile(
             postData,

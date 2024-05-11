@@ -1,4 +1,4 @@
-import { HttpClient, HttpEvent } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
@@ -39,7 +39,7 @@ export class MediaService extends ResourceService<any> {
     return this.httpClient.post(apiUrl, formData);
   }
 
-  uploadFileProgress(file: File, caption?: string): Observable<HttpEvent<any>> {
+  uploadFileProgress(file: File, caption?: string): Observable<any> {
     const apiUrl = this.backendUrl + this.getApiVersions() + this.getResourceUrl();
 
     const formData = new FormData();
@@ -48,7 +48,7 @@ export class MediaService extends ResourceService<any> {
       formData.append('caption', caption);
     }
 
-    return this.httpClient.post(apiUrl, formData, { reportProgress: true, observe: 'events' });
+    return this.httpClient.post(apiUrl, formData, { reportProgress: true });
   }
 
   updateCaption(id: string | number, caption: string) {
