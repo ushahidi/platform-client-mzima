@@ -362,6 +362,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public showPostDetails(post: any): void {
     this.mode = FeedMode.Post;
+    this.updateMasonry(); // never forget this guy when you need styles to adjust for masonry library
+
     console.log(this.mode);
     console.log(this.posts.length);
     console.log(this.posts);
