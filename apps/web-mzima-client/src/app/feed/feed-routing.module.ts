@@ -8,6 +8,13 @@ const routes: Routes = [
     path: '',
     component: FeedComponent,
     children: [
+      //--- Prevents reload of children components where/when necessary
+      {
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+      //----------------------------
       {
         path: ':id/view',
         component: PostDetailsComponent,

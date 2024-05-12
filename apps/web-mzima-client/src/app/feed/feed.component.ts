@@ -143,9 +143,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       next: (params: Params) => {
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
-        this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedMode.Tiles;
-        this.posts = [];
-        this.getPostsSubject.next({ params: this.params });
+        // this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedMode.Tiles;
+        if (!this.posts) this.getPostsSubject.next({ params: this.params });
       },
     });
 
@@ -368,6 +367,14 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     console.log(this.posts.length);
     console.log(this.posts);
     console.log(post);
+
+    this.router.navigate([post.id, 'view'], {
+      relativeTo: this.route,
+      queryParams: {
+        mode: FeedMode.Post,
+      },
+      queryParamsHandling: 'merge',
+    });
 
     // if (this.isDesktop) {
     //   this.setIsLoadingOnCardClick();
