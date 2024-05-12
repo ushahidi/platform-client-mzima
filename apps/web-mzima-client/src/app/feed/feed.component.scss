@@ -32,7 +32,7 @@
   @include breakpoint-min($tablet) {
     &__scroll {
       overflow-y: auto;
-      overflow-x: hidden; // interesting...
+      // overflow-x: hidden; // interesting... [commented out for clarity later when dealing with post cards when on the left in the details/edit view]
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
     }
