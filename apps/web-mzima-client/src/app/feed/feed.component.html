@@ -298,7 +298,8 @@
         'posts__lg-POST-mode-container-scroll': mode === FeedMode.Post
       }"
     >
-      <router-outlet *ngIf="isDesktop"></router-outlet>
+      <!-- Router outlet here is only for Desktop, the modal popup for small devices is in .ts file -->
+      <router-outlet *ngIf="isDesktop && mode === FeedMode.Post"></router-outlet>
     </div>
   </div>
 </div>
