@@ -124,9 +124,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         },
         queryParamsHandling: 'merge',
       });
-    } else {
-      this.postDetailsModal?.close();
     }
+    // else {
+    //   this.postDetailsModal?.close();
+    // }
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
@@ -141,6 +142,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.route.queryParams.subscribe({
       next: (params: Params) => {
+        // this.updateMasonry();
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
         // this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedMode.Tiles;
@@ -189,6 +191,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         }
       },
     });
+
+    // window.addEventListener('resize', () => {
+    //   this.updateMasonry();
+    // });
 
     // window.addEventListener('resize', () => {
     //   this.masonryOptions.columnWidth =
