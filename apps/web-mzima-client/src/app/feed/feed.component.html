@@ -298,8 +298,7 @@
         'posts__lg-POST-mode-container-scroll': mode === FeedMode.Post
       }"
     >
-      <!-- Temporary measure: See comment on isDesktop style in scss file -->
-      <router-outlet class="isDesktop"></router-outlet>
+      <router-outlet *ngIf="isDesktop"></router-outlet>
     </div>
   </div>
 </div>

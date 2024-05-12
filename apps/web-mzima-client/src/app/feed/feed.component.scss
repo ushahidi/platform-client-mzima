@@ -103,15 +103,6 @@
   text-align: center;
 }
 
-//---Temporary fix to prevent child route from loading/reloading on resize
-//---Pretty certain we may not be relying on this when migrating to the new UI design
-.isDesktop {
-  @include breakpoint-max($tablet) {
-    display: none;
-  }
-}
-//---------------------------
-
 .feed-page {
   min-height: 100%;
   height: 100%;
