@@ -72,7 +72,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   private isRTL?: boolean;
   public masonryOptions: NgxMasonryOptions = {
     originLeft: false,
-    percentPosition: false, // setting this to false helps our written CSS cooperate as it should (on click)
+    percentPosition: true,
     resize: true,
     gutter: 0,
     columnWidth: 3,
