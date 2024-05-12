@@ -376,6 +376,16 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
 
+    // Smaller devices only [NOTE: see CSS inside the PostDetailsModalComponent for CSS reize related fix]
+    this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+      width: '100%',
+      maxWidth: 576,
+      data: { post: post, color: post.color, twitterId: post.data_source_message_id },
+      height: 'auto',
+      maxHeight: '90vh',
+      panelClass: ['modal', 'post-modal'],
+    });
+
     // if (this.isDesktop) {
     //   this.setIsLoadingOnCardClick();
     //   if (this.collectionId) {

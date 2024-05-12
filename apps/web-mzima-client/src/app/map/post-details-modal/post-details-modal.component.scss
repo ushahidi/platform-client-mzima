@@ -1,7 +1,25 @@
 @import 'helpers';
 
 ::ng-deep {
+  //-- CSS, please prevent overlay for (post modal) from showing up on larger devices
+  .cdk-overlay-container {
+    display: none;
+    @include breakpoint-max($tablet) {
+      display: block;
+    }
+  }
+  //----------------------------------
+
   .post-modal {
+    //-- CSS, please prevent post modal from showing up on larger devices
+    .mat-dialog-container {
+      display: none; // CSS, hide modal on larger devices
+      @include breakpoint-max($tablet) {
+        display: block; // CSS, show modal on smaller devices
+      }
+    }
+    //----------------------------------
+
     .mat-dialog-container {
       padding-inline-start: 34px;
       border-radius: 8px !important;

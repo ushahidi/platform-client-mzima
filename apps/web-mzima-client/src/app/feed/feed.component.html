@@ -298,7 +298,8 @@
         'posts__lg-POST-mode-container-scroll': mode === FeedMode.Post
       }"
     >
-      <router-outlet></router-outlet>
+      <!-- Temporary measure: See comment on isDesktop style in scss file -->
+      <router-outlet class="isDesktop"></router-outlet>
     </div>
   </div>
 </div>
