@@ -394,6 +394,18 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       panelClass: ['modal', 'post-modal'],
     });
 
+    // Smaller devices only
+    this.postDetailsModal.afterClosed().subscribe((data) => {
+      if (!data) {
+        this.router.navigate(['/feed'], {
+          queryParams: {
+            mode: FeedMode.Tiles,
+          },
+          queryParamsHandling: 'merge',
+        });
+      }
+    });
+
     // if (this.isDesktop) {
     //   this.setIsLoadingOnCardClick();
     //   if (this.collectionId) {
