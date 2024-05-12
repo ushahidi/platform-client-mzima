@@ -72,7 +72,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   private isRTL?: boolean;
   public masonryOptions: NgxMasonryOptions = {
     originLeft: false,
-    percentPosition: true,
+    percentPosition: false, // setting this to false makes mode-related UI transition cleaner, whether on post card/mode switch button or on Data view sidebar Nav button click
     resize: true,
     gutter: 0,
     columnWidth: 3,
