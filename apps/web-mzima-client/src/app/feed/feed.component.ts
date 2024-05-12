@@ -682,8 +682,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public showPostModal(id: number): void {
     this.postsService.getById(id).subscribe({
-      next: (post: any) => {
-        this.showPostDetails(post);
+      next: (/*post: any*/) => {
+        // this.showPostDetails(post);
       },
       error: (err) => {
         // console.log(err.status);
