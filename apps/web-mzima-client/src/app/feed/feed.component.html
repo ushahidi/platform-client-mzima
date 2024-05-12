@@ -264,34 +264,34 @@
       <pagination-controls
         class="pagination"
         (pageChange)="changePage($event)"
-        *ngIf="mode === FeedMode.Tiles && paginationElementsAllowed"
+        *ngIf="!(mode === FeedMode.Post && isDesktop) && paginationElementsAllowed"
       >
       </pagination-controls>
       <!-- Load more posts -->
-      <!-- <ng-container
-    *ngIf="
-      mode === FeedMode.Post &&
-      paginationElementsAllowed &&
-      params.page !== undefined &&
-      params.limit !== undefined
-    "
-  >
-    <mzima-client-button
-      fill="clear"
-      color="secondary"
-      (buttonClick)="loadMore()"
-      class="feed__load-more"
-      *ngIf="!loadingMorePosts && postCurrentLength < total"
-    >
-      <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
-      <span>{{ 'app.load_more' | translate }}</span>
-    </mzima-client-button>
-    <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>
-    <div class="endofPosts" *ngIf="!loadingMorePosts && postCurrentLength >= total">
-      End of Posts
-    </div>
-  </ng-container> -->
-      <!-- </ng-container> -->
+      <ng-container
+        *ngIf="
+          mode === FeedMode.Post &&
+          isDesktop &&
+          paginationElementsAllowed &&
+          params.page !== undefined &&
+          params.limit !== undefined
+        "
+      >
+        <mzima-client-button
+          fill="clear"
+          color="secondary"
+          (buttonClick)="loadMore()"
+          class="load-more"
+          *ngIf="!loadingMorePosts && postCurrentLength < total"
+        >
+          <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
+          <span>{{ 'app.load_more' | translate }}</span>
+        </mzima-client-button>
+        <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>
+        <div class="endofPosts" *ngIf="!loadingMorePosts && postCurrentLength >= total">
+          End of Posts
+        </div>
+      </ng-container>
     </div>
     <div
       [ngClass]="{
