@@ -142,10 +142,12 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.route.queryParams.subscribe({
       next: (params: Params) => {
-        // this.updateMasonry();
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
-        // this.mode = params['mode'] && this.isDesktop ? params['mode'] : FeedMode.Tiles;
+        this.mode = params['mode'] ? params['mode'] : FeedMode.Tiles;
+        this.updateMasonry();
+        // NOTE on params[mode] and TILES mode (just to avoid confusion):
+        // console.log('mode: ', params['mode']); // will always return undefined when in TILES mode, if browser url (query params) does not include "mode=TILES" e.g. when browser url is at "/feed"
         if (!this.posts) this.getPostsSubject.next({ params: this.params });
       },
     });
@@ -377,7 +379,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.router.navigate([post.id, 'view'], {
       relativeTo: this.route,
       queryParams: {
-        mode: FeedMode.Post,
+        mode: this.mode,
       },
       queryParamsHandling: 'merge',
     });
