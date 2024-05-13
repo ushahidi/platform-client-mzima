@@ -147,6 +147,9 @@ export const DEFAULT_FILTERS_LOGGED_OUT = {
   status: [['published']],
 };
 
+export const DEFAULT_STATUSES_LOGGED_IN = ['published', 'draft'];
+export const DEFAULT_STATUSES_LOGGED_OUT = ['published'];
+
 export const compareForms = (form1: any, form2: any) => {
   return !_.isEqual(form1, form2);
 };

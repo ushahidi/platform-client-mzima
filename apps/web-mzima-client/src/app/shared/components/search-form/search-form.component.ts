@@ -40,7 +40,13 @@ import {
 import dayjs from 'dayjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { DEFAULT_FILTERS, DEFAULT_FILTERS_LOGGED_OUT } from '../../../core/helpers/search-form';
+import {
+  DEFAULT_FILTERS,
+  DEFAULT_FILTERS_LOGGED_OUT,
+  DEFAULT_STATUSES_LOGGED_IN,
+  DEFAULT_STATUSES_LOGGED_OUT,
+  loggedOutStatuses,
+} from '../../../core/helpers/search-form';
 
 @UntilDestroy()
 @Component({
@@ -56,7 +62,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   public activeFilters: any;
   public savedSearches: Savedsearch[];
   public surveyList: SurveyItem[] = [];
-  public statuses = searchFormHelper.loggedOutStatuses;
+  public statuses = loggedOutStatuses;
   public sources = searchFormHelper.sources;
   public categoriesData: MultilevelSelectOption[];
   public activeSavedSearch?: Savedsearch;
@@ -98,8 +104,13 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     super(sessionService, breakpointService);
     this.checkDesktop();
 
-    this.form = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS);
-    this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
+    let defaultFilters = searchFormHelper.DEFAULT_FILTERS_LOGGED_OUT;
+    if (this.isLoggedIn) {
+      defaultFilters = searchFormHelper.DEFAULT_FILTERS;
+    }
+
+    this.form = this.formBuilder.group(defaultFilters);
+    this.defaultFormValue = this.formBuilder.group(defaultFilters).value;
     this.filters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'))!;
     this.activeSaved = localStorage.getItem(
       this.session.getLocalStorageNameMapper('activeSavedSearch'),
@@ -172,6 +183,27 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
         }, 1);
       },
       error: (err) => console.log('isMainFiltersHidden:', err),
+    });
+
+    this.session.currentUserData$.pipe(untilDestroyed(this)).subscribe({
+      next: (currentUser) => {
+        if (this.activeFilters && this.activeFilters['status[]']) {
+          const existingStatuses = this.activeFilters['status[]'];
+          const newStatuses = currentUser.role
+            ? DEFAULT_STATUSES_LOGGED_IN
+            : DEFAULT_STATUSES_LOGGED_OUT;
+          if (
+            existingStatuses.length !== newStatuses.length ||
+            existingStatuses.every(
+              (element: string, index: number) => element !== newStatuses[index],
+            )
+          ) {
+            this.activeFilters['status[]'] = newStatuses;
+            this.form.get('status')?.enable();
+            this.form.patchValue({ status: newStatuses }, { onlySelf: false, emitEvent: true });
+          }
+        }
+      },
     });
 
     this.getPostsFilters();
@@ -686,17 +718,10 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       fetchPostsWithoutFormId = index !== -1;
     }
 
-    const statuses = ['published'];
-    if (this.isLoggedIn) {
-      this.activeFilters = DEFAULT_FILTERS;
-      statuses.push('draft');
-    } else {
-      this.activeFilters = DEFAULT_FILTERS_LOGGED_OUT;
-    }
-
+    this.activeFilters = this.isLoggedIn ? DEFAULT_FILTERS : DEFAULT_FILTERS_LOGGED_OUT;
     this.form.patchValue({
       query: '',
-      status: statuses,
+      status: this.isLoggedIn ? DEFAULT_STATUSES_LOGGED_IN : DEFAULT_STATUSES_LOGGED_OUT,
       tags: [],
       source: this.sources.map((s) => s.value),
       form: this.surveyList.map((s) => s.id),

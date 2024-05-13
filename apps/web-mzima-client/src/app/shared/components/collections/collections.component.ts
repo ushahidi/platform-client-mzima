@@ -203,8 +203,10 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   onCheckChange(isChecked: boolean, item: CollectionResult) {
     if (isChecked) {
       this.collectionsService.addToCollection(item.id, this.post.id).subscribe();
+      this.post.sets.push(item.id);
     } else {
       this.collectionsService.removeFromCollection(item.id, this.post.id).subscribe();
+      this.post.sets = this.post.sets.filter((set: number) => set !== item.id);
     }
   }
 
@@ -339,7 +341,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     if (this.currentView !== CollectionView.List) {
       this.currentView = CollectionView.List;
     } else {
-      this.matDialogRef.close();
+      this.matDialogRef.close(this.post);
     }
   }
 }
