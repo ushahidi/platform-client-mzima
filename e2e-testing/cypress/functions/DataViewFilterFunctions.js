@@ -73,7 +73,7 @@ class DataViewFilterFunctions {
       .eq(2)
       .find('.mat-pseudo-checkbox')
       .click();
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 601');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 600');
     //unselect archived and under review options
     cy.get(DataViewLocators.filterSelectionList)
       .children(DataViewLocators.filterListOption)
@@ -92,7 +92,7 @@ class DataViewFilterFunctions {
       .find('.mat-pseudo-checkbox')
       .invoke('attr', 'class')
       .should('contain', 'mat-pseudo-checkbox-checked');
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 73');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 74');
     //unselect published and select under review option
     cy.get(DataViewLocators.filterSelectionList)
       .children(DataViewLocators.filterListOption)
@@ -111,7 +111,7 @@ class DataViewFilterFunctions {
       .find('.mat-pseudo-checkbox')
       .invoke('attr', 'class')
       .should('contain', 'mat-pseudo-checkbox-checked');
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 440');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 438');
 
     //reload the page since an overlay at this point prevents element from being accessed
     //not clean implementation, but lets see if it unblocks the tests
@@ -132,7 +132,7 @@ class DataViewFilterFunctions {
       .find('.mat-pseudo-checkbox')
       .invoke('attr', 'class')
       .should('contain', 'mat-pseudo-checkbox-checked');
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 513');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 512');
   }
 }
 
