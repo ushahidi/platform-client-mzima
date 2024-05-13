@@ -41,7 +41,6 @@ export class PostItemComponent implements OnInit {
   public isMediaLoading: boolean;
   public actionSheetButtons?: ActionSheetButton[] = getPostItemActions();
   public isConnection = true;
-  public isLoggedIn = false;
 
   constructor(
     private networkService: NetworkService,
@@ -87,7 +86,6 @@ export class PostItemComponent implements OnInit {
       },
     });
 
-    this.isLoggedIn = this.sessionService.isLogged();
     if (this.isConnection) {
       this.getMedia();
     }
@@ -226,5 +224,9 @@ export class PostItemComponent implements OnInit {
 
   public preventClick(ev: Event): void {
     ev.stopPropagation();
+  }
+
+  public getLoggedInStatus() {
+    return this.sessionService.isLogged();
   }
 }
