@@ -74,7 +74,6 @@ class SurveyConfigurationFunctions {
   add_post() {
     this.click_add_post_btn();
     this.open_survey_to_submit();
-    cy.wait(3000);
     this.type_post_title('New Post Title');
     this.type_post_description('New Post Description');
     this.save_post();
@@ -96,7 +95,6 @@ class SurveyConfigurationFunctions {
     //the check that hidden exact location works is check that unprivileged user sees rounded up lat and long values
     cy.get(SurveyConfigurationLocators.postItem).contains('New Post Title').click();
     cy.get(PostLocators.locationValues).should('be.visible').should('contain', '-1.28 36.82');
-    // cy.compareSnapshot('home-page', 1);
   }
 
   check_for_accurate_author_name() {
@@ -130,7 +128,8 @@ class SurveyConfigurationFunctions {
     //logout and verify as non-logged in user, time is shown not the same as shown for admin user
     loginFunctions.logout();
     cy.get('[data-qa="btn-data"]').click();
-   
+    cy.url().should('include', '/feed');
+
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .should('be.visible')
@@ -140,6 +139,7 @@ class SurveyConfigurationFunctions {
   }
 
   hide_author_information_and_verify() {
+    //this test expects the require-posts-reviewed toggle is toggled off
     //change configuration survey
     this.open_settings();
     this.open_surveys();
