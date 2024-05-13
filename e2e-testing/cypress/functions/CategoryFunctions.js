@@ -99,7 +99,9 @@ class CategoryFunctions {
     cy.get(CategoryLocators.surveyDescriptionField).type('Survey description with categories');
     cy.get(CategoryLocators.addNewFieldBtn).click();
     // cy.get(CategoryLocators.selectCategoryField).click({ force: true });
-    cy.get(CategoryLocators.addNewFieldModal).find(CategoryLocators.selectCategoryField).click();
+    cy.get(CategoryLocators.addNewFieldModal)
+      .find(CategoryLocators.selectCategoryField)
+      .click({ force: true });
     cy.get(CategoryLocators.saveFieldBtn).click();
   }
 
