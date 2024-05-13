@@ -394,9 +394,19 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       panelClass: ['modal', 'post-modal'],
     });
 
+    // On smaller devices, close all other open modals except current post details modal
+    this.dialog.openDialogs
+      .filter(
+        (modal) =>
+          modal.componentInstance.data.post.id !==
+          this.postDetailsModal.componentInstance.data.post.id,
+      )
+      .forEach((modal) => modal.close());
+
     // Smaller devices only
     this.postDetailsModal.afterClosed().subscribe((data) => {
-      if (!data) {
+      if (!data && !this.isDesktop) {
+        // adding !isDesktop to the check prevents misbehaving and makes sure routing only takes place if current modal is closed when on smaller devices
         this.router.navigate(['/feed'], {
           queryParams: {
             mode: FeedMode.Tiles,
