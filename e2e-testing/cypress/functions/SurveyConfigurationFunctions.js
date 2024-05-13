@@ -95,6 +95,12 @@ class SurveyConfigurationFunctions {
 
   check_for_hidden_exact_location() {
     //the check that hidden exact location works is check that unprivileged user sees rounded up lat and long values
+    //clear filters then select survey and see if the posts come up
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+    cy.get(DataViewLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
+
     cy.get(SurveyConfigurationLocators.postItem).contains('New Post Title').click();
     cy.get(PostLocators.locationValues).should('be.visible').should('contain', '-1.28 36.82');
   }
