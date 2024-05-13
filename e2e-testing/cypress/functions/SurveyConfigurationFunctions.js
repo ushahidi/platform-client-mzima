@@ -1,6 +1,7 @@
 import SurveyConfigurationLocators from '../locators/SurveyConfigurationLocators';
 import LoginFunctions from '../functions/LoginFunctions';
 import PostLocators from '../locators/PostsLocators/PostLocators';
+import DataViewLocators from '../locators/DataViewLocators';
 
 const loginFunctions = new LoginFunctions();
 
@@ -130,7 +131,12 @@ class SurveyConfigurationFunctions {
     loginFunctions.logout();
     cy.get('[data-qa="btn-data"]').click();
     cy.url().should('include', '/feed');
-    cy.reload();
+
+    //clear filters then select survey and see if the posts come up
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+    cy.get(DataViewLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
 
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
