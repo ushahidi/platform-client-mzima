@@ -3,7 +3,7 @@ import ShareButtonContentsLocators from '../locators/ShareButtonContentsLocators
 class ShareButtonContentsFunctions {
   click_share_btn() {
     cy.get(ShareButtonContentsLocators.shareBtn).click();
-    cy.get('#mat-dialog-0').should('be.visible');
+    cy.get('[data-qa="share-modal"]').should('be.visible');
   }
 
   verify_survey_web_map_view_address() {
