@@ -30,9 +30,10 @@ class ShareButtonContentsFunctions {
   }
 
   verify_survey_web_data_view_address() {
+    //the share url seems to be +'feed'. it becomes 'feed?page=1' if user navigates to page 2, then back
     cy.get(ShareButtonContentsLocators.surveyWebAddress).should(
       'have.value',
-      Cypress.env().baseUrl + 'feed?page=1',
+      Cypress.env().baseUrl + 'feed',
     );
   }
 
