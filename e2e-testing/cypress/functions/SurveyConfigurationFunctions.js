@@ -74,6 +74,7 @@ class SurveyConfigurationFunctions {
   add_post() {
     this.click_add_post_btn();
     this.open_survey_to_submit();
+    cy.wait(1000);
     this.type_post_title('New Post Title');
     this.type_post_description('New Post Description');
     this.save_post();
