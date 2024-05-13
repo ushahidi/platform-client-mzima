@@ -130,6 +130,7 @@ class SurveyConfigurationFunctions {
     loginFunctions.logout();
     cy.get('[data-qa="btn-data"]').click();
     cy.url().should('include', '/feed');
+    cy.reload();
 
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
