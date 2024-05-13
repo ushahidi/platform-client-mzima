@@ -184,7 +184,10 @@ export class PostsService extends ResourceService<any> {
     postParams.currentView = filter?.currentView ?? postParams.currentView;
     postParams.limit = filter?.limit ?? postParams.limit;
     postParams['status[]'] = filter?.['status[]'] ?? postParams['status[]'];
-    if (postParams['form[]'] === undefined && postParams['form'])
+    if (
+      postParams['form[]'] === undefined ||
+      (postParams['form[]'].length === 0 && postParams['form'])
+    )
       postParams['form[]'] = postParams['form'];
     if (postParams['status[]'] !== undefined && postParams['status[]'].length === 0)
       postParams['status[]'] = postParams['status'];

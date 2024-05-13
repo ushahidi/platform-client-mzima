@@ -335,7 +335,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
           return {
             id: category.id,
             name: category.tag,
-            children: category?.children.map((cat: CategoryInterface) => {
+            children: category?.children?.map((cat: CategoryInterface) => {
               return {
                 id: cat.id,
                 name: cat.tag,

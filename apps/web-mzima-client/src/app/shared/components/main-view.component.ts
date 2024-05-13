@@ -33,9 +33,10 @@ export abstract class MainViewComponent {
     protected sessionService: SessionService,
     protected breakpointService: BreakpointService,
   ) {
-    this.params = JSON.parse(
-      localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
+    const cachedFilter = localStorage.getItem(
+      this.sessionService.getLocalStorageNameMapper('filters'),
     );
+    this.params = cachedFilter ? JSON.parse(cachedFilter) : this.params;
   }
 
   abstract loadData(): void;
