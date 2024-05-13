@@ -1,12 +1,9 @@
 import ShareButtonContentsLocators from '../locators/ShareButtonContentsLocators';
 
 class ShareButtonContentsFunctions {
-  click_map_view_btn() {
-    cy.get(ShareButtonContentsLocators.mapViewBtn).click();
-  }
-
   click_share_btn() {
     cy.get(ShareButtonContentsLocators.shareBtn).click();
+    cy.get('#mat-dialog-0').should('be.visible');
   }
 
   verify_survey_web_map_view_address() {
@@ -40,7 +37,7 @@ class ShareButtonContentsFunctions {
   }
 
   verify_share_button_contents_map_view() {
-    this.click_map_view_btn();
+    cy.wait(2000);
     this.click_share_btn();
     this.verify_survey_web_map_view_address();
     this.verify_twitter_link();
