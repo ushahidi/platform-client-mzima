@@ -1,4 +1,5 @@
 import ShareButtonContentsLocators from '../locators/ShareButtonContentsLocators';
+import DataViewLocators from '../locators/DataViewLocators';
 
 class ShareButtonContentsFunctions {
   click_map_view_btn() {
@@ -34,6 +35,8 @@ class ShareButtonContentsFunctions {
   }
 
   verify_survey_web_data_view_address() {
+    //add step to wait for result count to show up. without this, the step to open  share button is called before the page content loads up and that fails the test
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 517');
     cy.get(ShareButtonContentsLocators.surveyWebAddress).should(
       'have.value',
       Cypress.env().baseUrl + 'feed?page=1',
