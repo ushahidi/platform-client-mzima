@@ -1,13 +1,9 @@
 import ShareButtonContentsLocators from '../locators/ShareButtonContentsLocators';
 
 class ShareButtonContentsFunctions {
-  click_map_view_btn() {
-    cy.get(ShareButtonContentsLocators.mapViewBtn).click();
-  }
-
   click_share_btn() {
-    cy.wait(1000);
     cy.get(ShareButtonContentsLocators.shareBtn).click();
+    cy.get('[data-qa="share-modal"]').should('be.visible');
   }
 
   verify_survey_web_map_view_address() {
@@ -34,14 +30,15 @@ class ShareButtonContentsFunctions {
   }
 
   verify_survey_web_data_view_address() {
+    //the share url seems to be +'feed'. it becomes 'feed?page=1' if user navigates to page 2, then back
     cy.get(ShareButtonContentsLocators.surveyWebAddress).should(
       'have.value',
-      Cypress.env().baseUrl + 'feed?page=1',
+      Cypress.env().baseUrl + 'feed',
     );
   }
 
   verify_share_button_contents_map_view() {
-    this.click_map_view_btn();
+    cy.wait(2000);
     this.click_share_btn();
     this.verify_survey_web_map_view_address();
     this.verify_twitter_link();
@@ -51,6 +48,8 @@ class ShareButtonContentsFunctions {
 
   verify_share_button_contents_data_view() {
     this.click_data_view_btn();
+    //this will wait for the posts to be visible, and then click on share button
+    cy.get('[postid="102630"] > .post').should('be.visible');
     this.click_share_btn();
     this.verify_survey_web_data_view_address();
   }
