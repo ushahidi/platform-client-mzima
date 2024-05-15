@@ -46,6 +46,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     page: 0,
     limit: 20,
   };
+  public isCurrentEvent: boolean = false;
   public postsSkeleton = new Array(20).fill(''); // used for Post mode's skeleton loader
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
@@ -116,24 +117,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.setupFeedDefaultFilters();
     this.initGetPostsListener();
 
-    if (!this.isDesktop) {
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: {
-          mode: FeedMode.Tiles,
-        },
-        queryParamsHandling: 'merge',
-      });
-    }
-    // else {
-    //   this.postDetailsModal?.close();
-    // }
-
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-      this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
-      if (this.activePostId && !this.isDesktop) {
-        this.showPostModal(this.activePostId);
-      }
+    // e.g. for when sidebar nav btn/link is used to navigate to feed view
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParamsHandling: 'merge',
     });
 
     this.route.params.subscribe(() => {
@@ -144,13 +131,27 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       next: (params: Params) => {
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
-        this.mode = params['mode'] ? params['mode'] : FeedMode.Tiles;
+        this.mode = params['mode'] === FeedMode.Post ? FeedMode.Post : FeedMode.Tiles;
         this.updateMasonry();
         // NOTE on params[mode] and TILES mode (just to avoid confusion):
         // console.log('mode: ', params['mode']); // will always return undefined when in TILES mode, if browser url (query params) does not include "mode=TILES" e.g. when browser url is at "/feed"
         if (!this.posts) this.getPostsSubject.next({ params: this.params });
       },
     });
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
+          const postModeHint = this.activePostId;
+          this.mode = postModeHint ? FeedMode.Post : FeedMode.Tiles;
+          if (this.mode === FeedMode.Post) {
+            const pageLoad = !this.isCurrentEvent;
+            this.modal({ pageLoad }).popup({ id: postModeHint });
+          }
+        }
+      });
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
@@ -367,8 +368,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       : this.isLoading === !this.posts.length;
   }
 
-  public showPostDetails(post: any): void {
-    this.mode = FeedMode.Post;
+  public showPostDetails(post: PostResult): void {
     this.updateMasonry(); // never forget this guy when you need styles to adjust for masonry library
 
     console.log(this.mode);
@@ -379,91 +379,64 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.router.navigate([post.id, 'view'], {
       relativeTo: this.route,
       queryParams: {
-        mode: this.mode,
+        mode: FeedMode.Post,
       },
       queryParamsHandling: 'merge',
     });
 
-    // Smaller devices only [NOTE: see CSS inside the PostDetailsModalComponent for CSS reize related fix]
-    this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-      width: '100%',
-      maxWidth: 576,
-      data: { post: post, color: post.color, twitterId: post.data_source_message_id },
-      height: 'auto',
-      maxHeight: '90vh',
-      panelClass: ['modal', 'post-modal'],
-    });
+    this.isCurrentEvent = true;
+    this.modal({ elementClick: this.isCurrentEvent }).popup({ post });
+  }
 
-    // On smaller devices, close all other open modals except current post details modal
-    this.dialog.openDialogs
-      .filter(
-        (modal) =>
-          modal.componentInstance.data.post.id !==
-          this.postDetailsModal.componentInstance.data.post.id,
-      )
-      .forEach((modal) => modal.close());
-
-    // Smaller devices only
-    this.postDetailsModal.afterClosed().subscribe((data) => {
-      if (!data && !this.isDesktop) {
-        // adding !isDesktop to the check prevents misbehaving and makes sure routing only takes place if current modal is closed when on smaller devices
-        this.router.navigate(['/feed'], {
-          queryParams: {
-            mode: FeedMode.Tiles,
-          },
-          queryParamsHandling: 'merge',
+  public modal({ elementClick, pageLoad }: { elementClick?: boolean; pageLoad?: boolean }) {
+    const openModal = (post: PostResult) => {
+      if (!this.isDesktop) {
+        // Smaller devices only [NOTE: see CSS inside the PostDetailsModalComponent for CSS reize related fix]
+        this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+          width: '100%',
+          maxWidth: 576,
+          data: { post: post, color: post.color, twitterId: post.data_source_message_id },
+          height: 'auto',
+          maxHeight: '90vh',
+          panelClass: ['modal', 'post-modal'],
         });
       }
-    });
 
-    // if (this.isDesktop) {
-    //   this.setIsLoadingOnCardClick();
-    //   if (this.collectionId) {
-    //     this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'view'], {
-    //       queryParams: {
-    //         mode: FeedMode.Post,
-    //       },
-    //       queryParamsHandling: 'merge',
-    //     });
-    //   } else {
-    //     this.router.navigate(['feed', post.id, 'view'], {
-    //       queryParams: {
-    //         mode: FeedMode.Post,
-    //       },
-    //       queryParamsHandling: 'merge',
-    //     });
-    //   }
-    // } else {
-    //   this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-    //     width: '100%',
-    //     maxWidth: 576,
-    //     data: { post: post, color: post.color, twitterId: post.data_source_message_id },
-    //     height: 'auto',
-    //     maxHeight: '90vh',
-    //     panelClass: ['modal', 'post-modal'],
-    //   });
+      // Smaller devices only
+      this.postDetailsModal.afterClosed().subscribe((data) => {
+        if (!data && !this.isDesktop) {
+          // adding !isDesktop to the check prevents misbehaving and makes sure routing only takes place if current modal is closed when on smaller devices
+          this.router.navigate(['/feed'], {
+            queryParams: {
+              mode: FeedMode.Tiles,
+            },
+            queryParamsHandling: 'merge',
+          });
+        }
+      });
+    };
 
-    //   this.postDetailsModal.afterClosed().subscribe((data) => {
-    //     if (data?.update) {
-    //       this.getPostsSubject.next({ params: this.params });
-    //     }
-    //     if (this.collectionId) {
-    //       this.router.navigate(['/feed', 'collection', this.collectionId], {
-    //         queryParams: {
-    //           page: this.currentPage,
-    //         },
-    //         queryParamsHandling: 'merge',
-    //       });
-    //     } else {
-    //       this.router.navigate(['feed'], {
-    //         queryParams: {
-    //           page: this.currentPage,
-    //         },
-    //         queryParamsHandling: 'merge',
-    //       });
-    //     }
-    //   });
-    // }
+    return {
+      popup: ({ post, id }: { post?: PostResult; id?: number }) => {
+        // Note: The elementClick and pageLoad checks prevent modal from opening more than once - on post card click
+        if (elementClick) {
+          openModal(post as PostResult);
+        }
+        if (pageLoad) {
+          this.postsService.getById(id as number).subscribe({
+            next: (fetchedPost: PostResult) => {
+              openModal(fetchedPost);
+            },
+            // error: (err) => {
+            //   // console.log(err.status);
+            //   if (err.status === 404) {
+            //     this.router.navigate(['/not-found']);
+            //   }
+            // },
+          });
+        }
+      },
+    };
   }
 
   public toggleBulkOptions(state: boolean): void {
@@ -687,20 +660,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         page: this.currentPage,
       },
       queryParamsHandling: 'merge',
-    });
-  }
-
-  public showPostModal(id: number): void {
-    this.postsService.getById(id).subscribe({
-      next: (/*post: any*/) => {
-        // this.showPostDetails(post);
-      },
-      error: (err) => {
-        // console.log(err.status);
-        if (err.status === 404) {
-          this.router.navigate(['/not-found']);
-        }
-      },
     });
   }
 
