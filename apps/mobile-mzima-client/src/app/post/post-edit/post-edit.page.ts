@@ -328,8 +328,23 @@ export class PostEditPage {
     this.updateFormControl(key, dateHelper.setDate(event.detail.value, type));
   }
 
-  private async loadSurveyFormLocalDB() {
-    return this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
+  private async loadSurveyFormLocalDB(): Promise<any[]> {
+    try {
+      const surveysFromDB: any[] = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
+      const filteredSurveys = surveysFromDB.filter((survey) => {
+        return (
+          survey.everyone_can_create ||
+          survey.can_create.includes(
+            localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}role`),
+          )
+        );
+      });
+
+      return filteredSurveys;
+    } catch (error) {
+      console.error('Error loading surveys from local database: ', error);
+      return this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
+    }
   }
 
   private updateForm(updateValues: any[]) {
