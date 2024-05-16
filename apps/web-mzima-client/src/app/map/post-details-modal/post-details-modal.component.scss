@@ -1,6 +1,15 @@
 @import 'helpers';
 
 ::ng-deep {
+  //-- resize-css-handler class is only applied to the post modal popup in Feed View
+  //-- CSS, please ensure clean transiton after modal is removed from the DOM with javscript on RESIZE in Feed View
+  .resize-css-handler {
+    display: block;
+    @include breakpoint-min($tablet) {
+      display: none;
+    }
+  }
+  //----------------------------------
   .post-modal {
     .mat-dialog-container {
       padding-inline-start: 34px;
