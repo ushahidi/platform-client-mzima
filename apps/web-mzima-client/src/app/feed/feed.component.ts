@@ -195,9 +195,29 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       },
     });
 
-    // window.addEventListener('resize', () => {
-    //   this.updateMasonry();
-    // });
+    window.addEventListener('resize', () => {
+      // Simulate card click on RESIZE
+      if (this.mode === FeedMode.Post) {
+        if (window.innerWidth >= 1024) {
+          this.postDetailsModal.close();
+          // console.log(this.dialog.openDialogs);
+        } else {
+          if (this.dialog.openDialogs.length) {
+            for (let i = 0; i <= this.dialog.openDialogs.length; i += 1) {
+              if (i === 0 && this.dialog.openDialogs.length === 1) {
+                const post = this.dialog.openDialogs[0].componentInstance.data.post;
+                this.modal({ elementClick: true }).popup({ post });
+                break;
+              }
+            }
+          } else {
+            const post = JSON.parse(localStorage.getItem('feedview_postObj') as string);
+            this.modal({ elementClick: true }).popup({ post });
+          }
+          // console.log(this.dialog.openDialogs);
+        }
+      }
+    });
 
     // window.addEventListener('resize', () => {
     //   this.masonryOptions.columnWidth =
@@ -389,36 +409,49 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public modal({ elementClick, pageLoad }: { elementClick?: boolean; pageLoad?: boolean }) {
+    const savePostToLocalStorage = (post: PostResult) => {
+      localStorage.setItem('feedview_postObj', JSON.stringify(post));
+    };
+
     const openModal = (post: PostResult) => {
+      // Smaller devices only [NOTE: see CSS inside the PostDetailsModalComponent for CSS reize related fix]
       if (!this.isDesktop) {
-        // Smaller devices only [NOTE: see CSS inside the PostDetailsModalComponent for CSS reize related fix]
-        this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-          width: '100%',
-          maxWidth: 576,
-          data: { post: post, color: post.color, twitterId: post.data_source_message_id },
-          height: 'auto',
-          maxHeight: '90vh',
-          panelClass: ['modal', 'post-modal'],
-        });
+        if (!this.dialog.openDialogs.length) {
+          // !this.dialog.openDialogs.length check needed to prevent more than one modals from showing up RESIZE
+          this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
+            width: '100%',
+            maxWidth: 576,
+            data: { post: post, color: post.color, twitterId: post.data_source_message_id },
+            height: 'auto',
+            maxHeight: '90vh',
+            panelClass: ['modal', 'post-modal', 'resize-css-handler'],
+          });
+        }
       }
+
+      // Regardless of device size, save post result from card click
+      savePostToLocalStorage(post as PostResult);
 
       // Smaller devices only
       this.postDetailsModal.afterClosed().subscribe((data) => {
         if (!data && !this.isDesktop) {
           // adding !isDesktop to the check prevents misbehaving and makes sure routing only takes place if current modal is closed when on smaller devices
-          this.router.navigate(['/feed'], {
-            queryParams: {
-              mode: FeedMode.Tiles,
-            },
-            queryParamsHandling: 'merge',
-          });
+          if (!this.dialog.openDialogs.length) {
+            // !this.dialog.openDialogs.length check needed to allow routing to TILES MODE on RESIZE
+            this.router.navigate(['/feed'], {
+              queryParams: {
+                mode: FeedMode.Tiles,
+              },
+              queryParamsHandling: 'merge',
+            });
+          }
         }
       });
     };
 
     return {
       popup: ({ post, id }: { post?: PostResult; id?: number }) => {
-        // Note: The elementClick and pageLoad checks prevent modal from opening more than once - on post card click
+        // Note: The elementClick and pageLoad checks prevent modal from opening more than once - on post card click due to calling the one for pageLoad
         if (elementClick) {
           openModal(post as PostResult);
         }
