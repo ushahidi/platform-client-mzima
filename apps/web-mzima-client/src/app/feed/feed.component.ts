@@ -147,8 +147,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           const postModeHint = this.activePostId;
           this.mode = postModeHint ? FeedMode.Post : FeedMode.Tiles;
           if (this.mode === FeedMode.Post) {
-            const pageLoad = !this.isCurrentEvent;
-            this.modal({ pageLoad }).popup({ id: postModeHint });
+            const value = !this.isCurrentEvent;
+            this.modal({ pageLoad: value }).popup({ id: postModeHint });
           }
         }
       });
@@ -384,7 +384,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     });
 
     this.isCurrentEvent = true;
-    this.modal({ elementClick: this.isCurrentEvent }).popup({ post });
+    const value = this.isCurrentEvent;
+    this.modal({ elementClick: value }).popup({ post });
   }
 
   public modal({ elementClick, pageLoad }: { elementClick?: boolean; pageLoad?: boolean }) {
