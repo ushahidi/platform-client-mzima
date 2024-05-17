@@ -405,7 +405,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
       // Smaller devices only - what happens after modal is closed
       // Note: [mat-dialog-close]="false" in the html of the modal takes care of closing the modal
-      this.postDetailsModal.afterClosed().subscribe((data) => {
+      this.postDetailsModal?.afterClosed().subscribe((data) => {
         if (!data && !this.isDesktop) {
           // adding !isDesktop to the check prevents misbehaving and makes sure routing only takes place if current modal is closed when on smaller devices
           if (!this.dialog.openDialogs.length) {
