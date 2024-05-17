@@ -371,7 +371,20 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public showPostDetails(post: PostResult): void {
     this.updateMasonry(); // never forget this guy when you need styles to adjust for masonry library
 
-    // If we ever decide to remove the modal totally, we can "navigateTo" directly here if we still need to route to any of the "ID Modes" on card click
+    /* Remainder comment: 
+       Naturally, the "navigateTo" function should have been directly placed here
+       This is because routing is triggered by it regardless of the size of the 
+       screen.
+       -------------------------------
+       But, we don't want to allow routing yet, if the event supplied to 
+       this.modal does not match the method (see modal code and comments to 
+       understand better). Therefore, the "navigateTo" function is called 
+       in the modal code after the check.
+       -------------------------------
+       That said, If we ever decide to remove the modal totally, we can then call
+       "navigateTo" directly here if we still need to route to any of the "ID Modes" 
+       on card click - as shown in the comment below.
+    */
     // this.navigateTo().idMode.view({ post });
 
     this.eventToTriggerModal = 'click';
@@ -380,10 +393,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public modal({ event }: { event: 'none' | 'click' | 'load' | 'resize' }) {
-    const savePostToLocalStorage = (post: PostResult) => {
-      localStorage.setItem('feedview_postObj', JSON.stringify(post));
-    };
-
     const openModal = (post: PostResult) => {
       // Smaller devices only [NOTE: see CSS inside the PostDetailsModalComponent for CSS reize related fix]
       if (!this.isDesktop) {
@@ -400,8 +409,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         }
       }
 
-      // Regardless of device size, save post result from card click
-      savePostToLocalStorage(post as PostResult);
+      // Regardless of device size, save post result from/on card click
+      // Saving it will be useful for when we need to be able to trigger modal open/close on resize
+      localStorage.setItem('feedview_postObj', JSON.stringify(post));
 
       // Smaller devices only - what happens after modal is closed
       // Note: [mat-dialog-close]="false" in the html of the modal takes care of closing the modal
