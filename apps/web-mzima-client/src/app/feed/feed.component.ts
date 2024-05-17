@@ -141,16 +141,14 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
-          const postModeHint = this.activePostId;
-          this.mode = postModeHint ? FeedMode.Post : FeedMode.Tiles;
-          if (this.mode === FeedMode.Post) {
-            // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
-            if (this.eventToTriggerModal === 'none')
-              this.modal({ event: 'load' }).popup.onLoad({ id: postModeHint });
-          }
+      .subscribe((/*event*/) => {
+        this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
+        const postModeHint = this.activePostId;
+        this.mode = postModeHint ? FeedMode.Post : FeedMode.Tiles;
+        if (this.mode === FeedMode.Post) {
+          // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
+          if (this.eventToTriggerModal === 'none')
+            this.modal({ event: 'load' }).popup.onLoad({ id: postModeHint });
         }
       });
 
