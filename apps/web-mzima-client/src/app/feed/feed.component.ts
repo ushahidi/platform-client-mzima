@@ -371,11 +371,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public showPostDetails(post: PostResult): void {
     this.updateMasonry(); // never forget this guy when you need styles to adjust for masonry library
 
-    // console.log(this.mode);
-    // console.log(this.posts.length);
-    // console.log(this.posts);
-    // console.log(post);
-
     // If we ever decide to remove the modal totally, we can "navigateTo" directly here if we still need to route to any of the "ID Modes" on card click
     // this.navigateTo().idMode.view({ post });
 
@@ -408,7 +403,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       // Regardless of device size, save post result from card click
       savePostToLocalStorage(post as PostResult);
 
-      // Smaller devices only
+      // Smaller devices only - what happens after modal is closed
+      // Note: [mat-dialog-close]="false" in the html of the modal takes care of closing the modal
       this.postDetailsModal.afterClosed().subscribe((data) => {
         if (!data && !this.isDesktop) {
           // adding !isDesktop to the check prevents misbehaving and makes sure routing only takes place if current modal is closed when on smaller devices
@@ -456,7 +452,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         onClick: ({ post }: { post: PostResult }) => {
           const allowedEvent = 'click';
           runCode(allowedEvent, () => {
-            // We only want to navigate and open modal this.modal is used as it should be used
             this.navigateTo().idMode.view({ id: post.id });
             openModal(post as PostResult);
           });
@@ -464,7 +459,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         onLoad: ({ id }: { id: number }) => {
           const allowedEvent = 'load';
           runCode(allowedEvent, () => {
-            // We only want to navigate and open modal this.modal is used as it should be used
             this.navigateTo().idMode.view({ id: id as number });
             this.postsService.getById(id as number).subscribe({
               next: (fetchedPost: PostResult) => {
