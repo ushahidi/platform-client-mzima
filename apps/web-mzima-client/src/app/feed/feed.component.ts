@@ -22,7 +22,7 @@ import {
   PostStatus,
   postHelpers,
 } from '@mzima-client/sdk';
-import _ from 'lodash';
+import _, { capitalize } from 'lodash';
 
 enum FeedMode {
   Tiles = 'TILES',
@@ -46,7 +46,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     page: 0,
     limit: 20,
   };
-  public isCurrentEvent: boolean = false;
+  public eventToTriggerModal: string = 'none'; // will help the app keep track of if click has happened later on
   public postsSkeleton = new Array(20).fill(''); // used for Post mode's skeleton loader
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
@@ -147,8 +147,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           const postModeHint = this.activePostId;
           this.mode = postModeHint ? FeedMode.Post : FeedMode.Tiles;
           if (this.mode === FeedMode.Post) {
-            const value = !this.isCurrentEvent;
-            this.modal({ pageLoad: value }).popup({ id: postModeHint });
+            // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
+            if (this.eventToTriggerModal === 'none')
+              this.modal({ event: 'load' }).popup.onLoad({ id: postModeHint });
           }
         }
       });
@@ -196,7 +197,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     });
 
     window.addEventListener('resize', () => {
-      this.modal({ windowResize: true }).popup({});
+      this.modal({ event: 'resize' }).popup.onResize({});
     });
 
     // window.addEventListener('resize', () => {
@@ -375,28 +376,15 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // console.log(this.posts);
     // console.log(post);
 
-    this.router.navigate([post.id, 'view'], {
-      relativeTo: this.route,
-      queryParams: {
-        mode: FeedMode.Post,
-      },
-      queryParamsHandling: 'merge',
-    });
+    // If we ever decide to remove the modal totally, we can "navigateTo" directly here if we still need to route to any of the "ID Modes" on card click
+    // this.navigateTo().idMode.view({ post });
 
-    this.isCurrentEvent = true;
-    const value = this.isCurrentEvent;
-    this.modal({ elementClick: value }).popup({ post });
+    this.eventToTriggerModal = 'click';
+    const value = this.eventToTriggerModal as 'click';
+    this.modal({ event: value }).popup.onClick({ post });
   }
 
-  public modal({
-    elementClick,
-    pageLoad,
-    windowResize,
-  }: {
-    elementClick?: boolean;
-    pageLoad?: boolean;
-    windowResize?: boolean;
-  }) {
+  public modal({ event }: { event: 'none' | 'click' | 'load' | 'resize' }) {
     const savePostToLocalStorage = (post: PostResult) => {
       localStorage.setItem('feedview_postObj', JSON.stringify(post));
     };
@@ -437,54 +425,120 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       });
     };
 
+    //----------------------------------------------
+    // We always want event used by engineer to match the method to use, otherwise throw error in console
+    const error = (usedEvent: string, allowedEvent: string) => {
+      return `Contradiction Error: Cannot use '${usedEvent}' event with .on${capitalize(
+        allowedEvent,
+      )}({}) method. 
+      
+      The correct usage in this case is: 
+      this.modal({ event: ${allowedEvent} }).on${capitalize(allowedEvent)}({});
+
+      If you intend to use the '${usedEvent}', ensure to use the matching this.modal method for the '${usedEvent}' event which is the .on${capitalize(
+        usedEvent,
+      )}({}) method
+      `;
+    };
+
+    // Code abstraction to hide similar but not so relevant details, prevent repetition and code looking bulky in the methods returned
+    const runCode = (allowedEvent: string, performAction: () => void) => {
+      if (event !== allowedEvent) {
+        throw new Error(error(event, allowedEvent));
+      } else {
+        performAction();
+      }
+    };
+    //----------------------------------------------
+
     return {
-      popup: ({ post, id }: { post?: PostResult; id?: number }) => {
-        // Note: The elementClick and pageLoad checks prevent modal from opening more than once - on post card click due to calling the one for pageLoad
-        if (elementClick) {
-          openModal(post as PostResult);
-        }
-        if (pageLoad) {
-          this.postsService.getById(id as number).subscribe({
-            next: (fetchedPost: PostResult) => {
-              openModal(fetchedPost);
-            },
-            // error: (err) => {
-            //   // console.log(err.status);
-            //   if (err.status === 404) {
-            //     this.router.navigate(['/not-found']);
-            //   }
-            // },
+      popup: {
+        onClick: ({ post }: { post: PostResult }) => {
+          const allowedEvent = 'click';
+          runCode(allowedEvent, () => {
+            // We only want to navigate and open modal this.modal is used as it should be used
+            this.navigateTo().idMode.view({ id: post.id });
+            openModal(post as PostResult);
           });
-        }
-        if (windowResize) {
-          // Simulate card click on RESIZE
-          if (this.mode === FeedMode.Post) {
-            if (window.innerWidth >= 1024) {
-              this.postDetailsModal.close();
-              // console.log(this.dialog.openDialogs);
-            } else {
-              if (this.dialog.openDialogs.length) {
-                for (let i = 0; i <= this.dialog.openDialogs.length; i += 1) {
-                  if (i === 0 && this.dialog.openDialogs.length === 1) {
-                    const firstPostFromOpenModalDialog =
-                      this.dialog.openDialogs[0].componentInstance.data.post;
-                    openModal(firstPostFromOpenModalDialog);
-                    break;
-                  }
-                }
+        },
+        onLoad: ({ id }: { id: number }) => {
+          const allowedEvent = 'load';
+          runCode(allowedEvent, () => {
+            // We only want to navigate and open modal this.modal is used as it should be used
+            this.navigateTo().idMode.view({ id: id as number });
+            this.postsService.getById(id as number).subscribe({
+              next: (fetchedPost: PostResult) => {
+                openModal(fetchedPost);
+              },
+              // error: (err) => {
+              //   // console.log(err.status);
+              //   if (err.status === 404) {
+              //     this.router.navigate(['/not-found']);
+              //   }
+              // },
+            });
+          });
+        },
+        // To be used inside of a window resize event listener
+        // eslint-disable-next-line no-empty-pattern
+        onResize: ({}) => {
+          const allowedEvent = 'resize';
+          runCode(allowedEvent, () => {
+            // Simulate card click on RESIZE
+            if (this.mode === FeedMode.Post) {
+              if (window.innerWidth >= 1024) {
+                this.postDetailsModal.close();
+                // console.log(this.dialog.openDialogs);
               } else {
-                const postFromStorage = JSON.parse(
-                  localStorage.getItem('feedview_postObj') as string,
-                );
-                openModal(postFromStorage);
+                if (this.dialog.openDialogs.length) {
+                  for (let i = 0; i <= this.dialog.openDialogs.length; i += 1) {
+                    if (i === 0 && this.dialog.openDialogs.length === 1) {
+                      const firstPostFromOpenModalDialog =
+                        this.dialog.openDialogs[0].componentInstance.data.post;
+                      openModal(firstPostFromOpenModalDialog);
+                      break;
+                    }
+                  }
+                } else {
+                  const postFromStorage = JSON.parse(
+                    localStorage.getItem('feedview_postObj') as string,
+                  );
+                  openModal(postFromStorage);
+                }
+                // console.log(this.dialog.openDialogs);
               }
-              // console.log(this.dialog.openDialogs);
             }
-          }
-        }
+          });
+        },
       },
     };
   }
+
+  public navigateTo = () => {
+    return {
+      // [Remove comment later] Note: PREVIEW mode is formally called TILES mode... Still refactoring
+      // eslint-disable-next-line no-empty-pattern
+      // previewMode: ({}) => {
+      //   // router code for "TILES mode" (now preview mode) goes here
+      // },
+      // [Remove comment later] Note: ID mode is formally called POST mode... Still refactoring
+      idMode: {
+        view: ({ id }: { id: number }) => {
+          this.router.navigate([id, 'view'], {
+            relativeTo: this.route,
+            queryParams: {
+              mode: FeedMode.Post,
+            },
+            queryParamsHandling: 'merge',
+          });
+        },
+        // TODO: add edit prop later, when refactoring gets there
+        // edit: ({ post }: { post: PostResult }) => {
+        //   // router code for edit-related pages go here
+        // },
+      },
+    };
+  };
 
   public toggleBulkOptions(state: boolean): void {
     this.isBulkOptionsVisible = state;
