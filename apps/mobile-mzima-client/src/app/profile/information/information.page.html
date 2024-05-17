@@ -1,5 +1,13 @@
 <app-main-layout class="main" title="Profile Information" (back)="back()">
-  <app-profile-photo class="avatar" [photo]="userPhoto"></app-profile-photo>
+  <app-profile-photo
+    class="avatar"
+    [photo]="userPhoto"
+    (uploadStarted)="onUploadStarted()"
+    (uploadCompleted)="onUploadCompleted()"
+    (photoChanged)="handlePhotoChange($event)"
+  ></app-profile-photo>
+  <!-- (photoChanged)="handlePhotoChange($event)" -->
+
   <ion-title class="title">Profile name</ion-title>
   <form class="information-form" novalidate [formGroup]="form" (ngSubmit)="updateUserInformation()">
     <app-form-control
@@ -48,9 +56,11 @@
           expand="inline"
           type="button"
           *ngIf="form"
-          [disabled]="form.disabled || form.invalid || form.pristine"
+          [disabled]="form.disabled || form.invalid || form.pristine "
           (buttonClick)="updateUserInformation()"
         >
+          <!-- [disabled]="!isPhotoChanged" -->
+
           Save changes
         </app-button>
         <app-button color="medium" fill="outline" expand="inline" (buttonClick)="back()">
@@ -74,7 +84,7 @@
         [required]="true"
         formControlName="currentEmail"
         placeholder="Enter your current email"
-        [errors]="changeEmailForm.hasError('notSameAsCurrent') ? ['The entered email does not match the current email. Please make sure to enter the correct email address.'] : undefined"
+        [errors]="changeEmailForm.get('currentEmail')?.touched && changeEmailForm.hasError('notSameAsCurrent') ? ['The entered email does not match the current email. Please make sure to enter the correct email address.'] : undefined"
       >
       </app-form-control>
       <app-form-control

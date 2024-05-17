@@ -161,11 +161,16 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'tags'">
-              <span class="related-post-list" *ngIf="field.options?.length; else noOptions">
+              <span
+                class="related-post-list"
+                *ngIf="getTotalCategoryCount(field.options); else noOptions"
+              >
                 <ul>
                   <li>
                     <mat-checkbox
-                      [checked]="form.get(field.key)?.value.length === field.options.length"
+                      [checked]="
+                        form.get(field.key)?.value.length === getTotalCategoryCount(field.options)
+                      "
                       (change)="toggleAllSelection($event, task.fields, field.key)"
                     >
                       {{ 'nav.select_all' | translate }}
@@ -173,6 +178,7 @@
                   </li>
                   <li *ngFor="let option of field.options; trackBy: trackById">
                     <mat-checkbox
+                      *ngIf="!option.parent_id"
                       [checked]="form.get(field.key)?.value.includes(option.id)"
                       (change)="
                         onCheckChange(

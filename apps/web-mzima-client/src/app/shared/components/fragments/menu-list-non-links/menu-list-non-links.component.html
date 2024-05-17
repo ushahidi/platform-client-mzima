@@ -6,10 +6,9 @@
     <ng-container *ngIf="item.forDesktop && (!item.adminGuard || isHost)">
       <button
         [id]="item.ref"
-        (click)="item.action()"
+        (click)="item.action && item.action()"
         class="sidebar-menu-button"
         [data-qa]="'btn-' + item.icon"
-        *ngIf="item.action; else menuLink"
         [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
       >
         <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
@@ -17,21 +16,6 @@
           item.label | translate
         }}</span>
       </button>
-      <ng-template #menuLink>
-        <a
-          [id]="item.ref"
-          class="sidebar-menu-button"
-          [data-qa]="'btn-' + item.icon"
-          (click)="item.action && item.action()"
-          [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
-          routerLinkActive="sidebar-menu-button--active"
-        >
-          <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
-          <span [attr.data-qa]="'auth-btn-label'" class="sidebar-menu-button__title">
-            {{ item.label | translate }}
-          </span>
-        </a>
-      </ng-template>
     </ng-container>
   </ng-container>
 </div>

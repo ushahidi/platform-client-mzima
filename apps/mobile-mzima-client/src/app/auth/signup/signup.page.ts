@@ -92,7 +92,7 @@ export class SignupPage {
   public openLink(event: Event, link: string): void {
     event.preventDefault();
     event.stopPropagation();
-    console.log('open: ', link);
+    window.open(link);
   }
 
   public chooseDeployment(): void {

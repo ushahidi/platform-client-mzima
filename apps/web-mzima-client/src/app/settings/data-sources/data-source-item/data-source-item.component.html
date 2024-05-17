@@ -138,58 +138,66 @@
   <br />
 
   <div *ngFor="let control of provider?.options" [data-qa]="'provider-options'">
-    <ng-container *ngIf="control.input === 'read-only-text'">
-      <h2 *ngIf="control.label?.length">{{ control.label }}</h2>
-      <p *ngIf="control.description?.length" [innerHTML]="control.description"></p>
-    </ng-container>
-
-    <ng-container *ngIf="control.input !== 'read-only-text'">
-      <div class="form-row">
-        <mat-label>
-          {{ control.label }}
-          <span class="color-accent" *ngIf="control.rules?.indexOf('required') > -1">*</span>
-        </mat-label>
-        <mat-form-field
-          *ngIf="control.input === 'text'"
-          appearance="outline"
-          [data-qa]="'control-type-text'"
-        >
-          <input
-            matInput
-            [placeholder]="control.description"
-            [formControlName]="control.id"
-            [type]="control.input"
-            [data-qa]="'control-text' + control.id"
-          />
-          <mat-hint
-            *ngIf="control.description?.length"
-            [innerHTML]="control.description"
-          ></mat-hint>
-          <mat-error
-            *ngIf="
-              (form.get(control.id)?.touched || form.get(control.id)?.dirty) &&
-              form.get(control.id)?.hasError('required')
-            "
-          >
-            {{ 'form.field_required' | translate }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-radio-group
-          *ngIf="control.input === 'radio'"
-          aria-label="Select an option"
+    <ng-container [ngSwitch]="control.input">
+      <ng-container *ngSwitchCase="'read-only-text'">
+        <h2 *ngIf="control.label?.length">{{ control.label }}</h2>
+        <p *ngIf="control.description?.length" [innerHTML]="control.description"></p>
+      </ng-container>
+      <ng-container *ngSwitchCase="'hidden'">
+        <input
           [formControlName]="control.id"
-          [data-qa]="'control-type-radio'"
-        >
-          <mat-radio-button
-            *ngFor="let item of control.options"
-            [value]="item"
-            [data-qa]="'control-text' + item"
+          type="hidden"
+          [data-qa]="'control-text' + control.id"
+        />
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <div class="form-row">
+          <mat-label>
+            {{ control.label }}
+            <span class="color-accent" *ngIf="control.rules?.indexOf('required') > -1">*</span>
+          </mat-label>
+          <mat-form-field
+            *ngIf="control.input === 'text'"
+            appearance="outline"
+            [data-qa]="'control-type-text'"
           >
-            {{ item }}
-          </mat-radio-button>
-        </mat-radio-group>
-      </div>
+            <input
+              matInput
+              [placeholder]="control.description"
+              [formControlName]="control.id"
+              [type]="control.input"
+              [data-qa]="'control-text' + control.id"
+            />
+            <mat-hint
+              *ngIf="control.description?.length"
+              [innerHTML]="control.description"
+            ></mat-hint>
+            <mat-error
+              *ngIf="
+                (form.get(control.id)?.touched || form.get(control.id)?.dirty) &&
+                form.get(control.id)?.hasError('required')
+              "
+            >
+              {{ 'form.field_required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-radio-group
+            *ngIf="control.input === 'radio'"
+            aria-label="Select an option"
+            [formControlName]="control.id"
+            [data-qa]="'control-type-radio'"
+          >
+            <mat-radio-button
+              *ngFor="let item of control.options"
+              [value]="item"
+              [data-qa]="'control-text' + item"
+            >
+              {{ item }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </ng-container>
     </ng-container>
   </div>
 

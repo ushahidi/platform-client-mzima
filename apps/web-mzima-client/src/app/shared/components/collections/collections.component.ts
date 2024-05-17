@@ -6,6 +6,7 @@ import { surveyHelper, formHelper } from '@helpers';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
+import { debounceTime } from 'rxjs';
 import {
   CollectionsService,
   NotificationsService,
@@ -45,6 +46,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   private notification: AccountNotificationsInterface;
   private userRole: string;
   public isManageCollections: boolean;
+  public isManagePosts: boolean;
   public formErrors: any[] = [];
 
   constructor(
@@ -74,6 +76,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     this.initializeForm();
     this.formSubscribe();
     this.checkPermission();
+    this.loadSearchCollections();
 
     const permissions = localStorage.getItem('USH_permissions')!;
     this.featuredEnabled = permissions ? permissions.split(',').includes('Manage Posts') : false;
@@ -82,10 +85,20 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   checkPermission() {
     this.isManageCollections =
       this.user.permissions?.includes(Permissions.ManageCollections) ?? false;
+    this.isManagePosts = Boolean(this.user.permissions?.includes(Permissions.ManagePosts));
     this.userRole = this.user.role!;
     if (this.isLoggedIn) {
       this.initRoles();
     }
+  }
+
+  private loadSearchCollections() {
+    this.searchForm
+      .get('query')
+      ?.valueChanges.pipe(debounceTime(500), untilDestroyed(this))
+      .subscribe((query: string) => {
+        this.loadData(query);
+      });
   }
 
   private initializeForm() {
@@ -96,7 +109,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
       visible_to: [
         {
           value: 'everyone',
-          options: ['everyone'],
+          options: [],
           disabled: false,
         },
       ],
@@ -149,11 +162,32 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
       next: (response) => {
         this.collectionList = response.results.map((item) => {
           const isOwner = item.user_id === Number(this.user.userId);
+          const canViewCollections = this.isManageCollections || this.isManagePosts;
+          const userRole = this.userRole;
+
+          function checkReadPrivilege() {
+            // If the collection's role allows everyone to view or the specific role of the current user to view it.
+            if (item.role?.includes('everyone') || item.role?.includes(userRole) || !item.role) {
+              return true;
+            }
+
+            // If the current user has manage collections or manage posts permissions and the collection's visibility has not been set to a single person
+            if (canViewCollections && !item.role?.includes('me')) {
+              return true;
+            }
+
+            // If the current user is the owner of the collection
+            if (isOwner) {
+              return true;
+            }
+
+            return false;
+          }
 
           return {
             ...item,
             my_collection: isOwner,
-            visible: this.isManageCollections || !(item.featured && !isOwner),
+            visible: checkReadPrivilege(),
           };
         });
         this.collectionList = this.collectionList.filter((collection) => collection.visible);
@@ -169,8 +203,10 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
   onCheckChange(isChecked: boolean, item: CollectionResult) {
     if (isChecked) {
       this.collectionsService.addToCollection(item.id, this.post.id).subscribe();
+      this.post.sets.push(item.id);
     } else {
       this.collectionsService.removeFromCollection(item.id, this.post.id).subscribe();
+      this.post.sets = this.post.sets.filter((set: number) => set !== item.id);
     }
   }
 
@@ -254,6 +290,13 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     if (this.currentView === CollectionView.Create) {
       this.collectionsService.post(collectionData).subscribe({
         next: () => {
+          this.confirm.open({
+            title: this.translate.instant('set.collection_saved'),
+            description: `<p>${this.translate.instant('set.collection_description')}</p>`,
+            buttonSuccess: this.translate.instant(
+              'notify.confirm_modal.add_post_success.success_button',
+            ),
+          });
           this.matDialogRef.close();
         },
         error: ({ error }) => {
@@ -267,6 +310,13 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
             type: EventType.UpdateCollection,
             payload: this.tmpCollectionToEditId,
           });
+          this.confirm.open({
+            title: this.translate.instant('set.collection_updated'),
+            description: `<p>${this.translate.instant('set.collection_description')}</p>`,
+            buttonSuccess: this.translate.instant(
+              'notify.confirm_modal.add_post_success.success_button',
+            ),
+          });
           this.matDialogRef.close();
         },
         error: ({ error }) => {
@@ -274,14 +324,12 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
         },
       });
     }
-
     if (!this.notification && collectionData.is_notifications_enabled) {
       this.notificationsService.post({ set_id: String(this.tmpCollectionToEditId) }).subscribe();
     } else if (this.notification && !collectionData.is_notifications_enabled) {
       this.notificationsService.delete(this.notification.id).subscribe();
     }
   }
-
   addNewCollection() {
     this.currentView = CollectionView.Create;
     this.initializeForm();
@@ -293,7 +341,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     if (this.currentView !== CollectionView.List) {
       this.currentView = CollectionView.List;
     } else {
-      this.matDialogRef.close();
+      this.matDialogRef.close(this.post);
     }
   }
 }

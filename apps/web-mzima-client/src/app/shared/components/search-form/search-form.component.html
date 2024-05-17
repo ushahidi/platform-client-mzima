@@ -271,6 +271,48 @@
               </mzima-client-button>
             </div>
           </app-filter-control>
+            <mat-selection-list
+              name="surveys"
+              class="selection-list"
+              formControlName="form"
+              [data-qa]="'survey-selection-list'"
+            >
+              <ng-container *ngFor="let survey of surveyList">
+                <mat-list-option
+                  [hidden]="isMapView && survey.id === 0"
+                  [selected]="survey.checked"
+                  color="primary"
+                  [value]="survey.id"
+                  checkboxPosition="before"
+                  class="selection-list__option"
+                  [ngStyle]="{ '--color': survey.color }"
+                  [data-qa]="'survey-select-item' + survey.id"
+                >
+                  <span class="selection-list__option__border"></span>
+                  {{ survey.name }}
+                  <span class="selection-list__option__total">{{ survey.total }}</span>
+                </mat-list-option>
+              </ng-container>
+            </mat-selection-list>
+
+            <div class="filter-group__info" *ngIf="isMapView">
+              <span *ngIf="notMappedPostsCount <= 0">{{
+                'global_filter.unmapped_none' | translate
+              }}</span>
+              <span *ngIf="notMappedPostsCount === 1">{{
+                'global_filter.unmapped_start_one' | translate
+              }}</span>
+              <span *ngIf="notMappedPostsCount >= 2">{{
+                'global_filter.unmapped_start_many' | translate
+              }}</span>
+              <a [routerLink]="['feed']" *ngIf="notMappedPostsCount >= 1">
+                {{ notMappedPostsCount }} post{{ notMappedPostsCount >= 2 ? 's' : '' }}
+              </a>
+              <span *ngIf="notMappedPostsCount >= 1">{{
+                'global_filter.unmapped_end' | translate
+              }}</span>
+            </div>
+          </mat-tab>
 
           <app-filter-control
             class="search-form__filters-panel__item"
@@ -334,6 +376,13 @@
           [title]="'global_filter.status' | translate"
           [badge]="form.controls['status'].value?.length || null"
           [data-qa]="'status'"
+          formControlName="form[]"
+          [options]="surveyList"
+          [fields]="['id', 'name']"
+          (clear)="clearFilter('form[]')"
+          [type]="filterType.Multiselect"
+          [title]="'app.surveys' | translate"
+          [badge]="form.controls['form[]'].value?.length || null"
         >
           <div class="clear-button" suffix>
             <mzima-client-button
@@ -341,6 +390,7 @@
               size="small"
               class="filter-group__head__button"
               (buttonClick)="clearFilter('status')"
+              (buttonClick)="toggleSidebarFilters('form[]')"
             >
               {{ 'nav.clear' | translate }}
             </mzima-client-button>

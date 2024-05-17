@@ -8,6 +8,8 @@ const PostLocators = {
   surveySelectionList: '[data-qa="survey-selection-list"]',
   surveySelectItem: '[data-qa="survey-select-item125"]',
   confirmContent: '[data-qa="confirm-content"]',
+  locationSearchField: '[data-qa="location-search"]',
+  locationValues: '[data-qa="postLocationValues"]',
 
   /* Input fields */
   titleField: '[ng-reflect-data-qa="title"]',
@@ -17,6 +19,9 @@ const PostLocators = {
   decimalField: '[ng-reflect-data-qa="number-decimal field"]',
   intField: '[ng-reflect-data-qa="number-integer field"]',
   dateField: '[ng-reflect-data-qa="date-field"]',
+  locationSearchField: '[data-qa="location-search"]',
+  locationLatField: '[data-qa="location-lat"]',
+  locationLongField: '[data-qa="location-lng"]',
   selectFieldBtn: '[data-qa="post-item-post-selectc5394e60-350d-4948-af81-6e8bf0502761"]',
   selectFieldOption1: '[data-qa="post-item-post-select-optionS1"]',
   radioFieldOption2: '[data-qa="radio-buttons-field-r2"]',
