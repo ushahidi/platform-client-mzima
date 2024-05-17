@@ -196,27 +196,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     });
 
     window.addEventListener('resize', () => {
-      // Simulate card click on RESIZE
-      if (this.mode === FeedMode.Post) {
-        if (window.innerWidth >= 1024) {
-          this.postDetailsModal.close();
-          // console.log(this.dialog.openDialogs);
-        } else {
-          if (this.dialog.openDialogs.length) {
-            for (let i = 0; i <= this.dialog.openDialogs.length; i += 1) {
-              if (i === 0 && this.dialog.openDialogs.length === 1) {
-                const post = this.dialog.openDialogs[0].componentInstance.data.post;
-                this.modal({ elementClick: true }).popup({ post });
-                break;
-              }
-            }
-          } else {
-            const post = JSON.parse(localStorage.getItem('feedview_postObj') as string);
-            this.modal({ elementClick: true }).popup({ post });
-          }
-          // console.log(this.dialog.openDialogs);
-        }
-      }
+      this.modal({ windowResize: true }).popup({});
     });
 
     // window.addEventListener('resize', () => {
@@ -408,7 +388,15 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.modal({ elementClick: value }).popup({ post });
   }
 
-  public modal({ elementClick, pageLoad }: { elementClick?: boolean; pageLoad?: boolean }) {
+  public modal({
+    elementClick,
+    pageLoad,
+    windowResize,
+  }: {
+    elementClick?: boolean;
+    pageLoad?: boolean;
+    windowResize?: boolean;
+  }) {
     const savePostToLocalStorage = (post: PostResult) => {
       localStorage.setItem('feedview_postObj', JSON.stringify(post));
     };
@@ -467,6 +455,32 @@ export class FeedComponent extends MainViewComponent implements OnInit {
             //   }
             // },
           });
+        }
+        if (windowResize) {
+          // Simulate card click on RESIZE
+          if (this.mode === FeedMode.Post) {
+            if (window.innerWidth >= 1024) {
+              this.postDetailsModal.close();
+              // console.log(this.dialog.openDialogs);
+            } else {
+              if (this.dialog.openDialogs.length) {
+                for (let i = 0; i <= this.dialog.openDialogs.length; i += 1) {
+                  if (i === 0 && this.dialog.openDialogs.length === 1) {
+                    const firstPostFromOpenModalDialog =
+                      this.dialog.openDialogs[0].componentInstance.data.post;
+                    openModal(firstPostFromOpenModalDialog);
+                    break;
+                  }
+                }
+              } else {
+                const postFromStorage = JSON.parse(
+                  localStorage.getItem('feedview_postObj') as string,
+                );
+                openModal(postFromStorage);
+              }
+              // console.log(this.dialog.openDialogs);
+            }
+          }
         }
       },
     };
