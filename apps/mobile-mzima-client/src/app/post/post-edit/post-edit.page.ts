@@ -341,9 +341,8 @@ export class PostEditPage {
       });
 
       return filteredSurveys;
-    } catch (error) {
-      console.error('Error loading surveys from local database: ', error);
-      return this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
+    } catch (error: any) {
+      throw new Error(`Error loading surveys from local database: ${error.message}`);
     }
   }
 
