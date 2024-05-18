@@ -46,7 +46,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     page: 0,
     limit: 20,
   };
-  public userEvent: string = 'load'; // will help the app keep track of if click has happened later on
+  public userEvent: 'load' | 'click' | 'resize' = 'load'; // will help the app keep track of if click has happened later on
+  public postAction: 'load' | 'click' | 'filter' = 'load';
+  public onlyModeUIChanged = false;
   public postsSkeleton = new Array(20).fill(''); // used for Post mode's skeleton loader
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
@@ -114,8 +116,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     );
 
     this.checkDesktop();
-    this.setupFeedDefaultFilters();
-    this.initGetPostsListener();
+    // this.setupFeedDefaultFilters();
+    // this.initGetPostsListener();
 
     // e.g. for when sidebar nav btn/link is used to navigate to feed view
     // this.router.navigate([], {
@@ -131,20 +133,38 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       next: (params: Params) => {
         // // Don't have access to "NavigationStart" event (can't tell why)
         // // Therefore setting initial variables here
-        this.isLoading = true;
+
+        //-- ID check to determine mode (more reliable than previous method of getting mode from queryParams)
+        // console.log(this.router.url);
+        this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
+        const postModeHint = this.activePostId;
+        this.mode = postModeHint ? FeedMode.Post : FeedMode.Tiles;
+        // console.log('id: : ', postModeHint);
+        // console.log('mode monitoring id: : ', this.mode);
+        //----------------------------------------------
+
+        this.postAction = this.onlyModeUIChanged ? 'click' : 'load';
+        this.isLoading = !this.onlyModeUIChanged;
+        this.paginationElementsAllowed = this.onlyModeUIChanged
+          ? this.posts.length >= 20
+          : !this.posts;
+
+        if (this.isLoading) {
+          this.setupFeedDefaultFilters();
+          this.initGetPostsListener();
+        }
 
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
-        this.mode = params['mode'] === FeedMode.Post ? FeedMode.Post : FeedMode.Tiles;
+
         this.updateMasonry();
-        // NOTE on params[mode] and TILES mode (just to avoid confusion):
-        // console.log('mode: ', params['mode']); // will always return undefined when in TILES mode, if browser url (query params) does not include "mode=TILES" e.g. when browser url is at "/feed"
 
-        console.log(this.userEvent);
-
-        if (/*this.mode === FeedMode.Tiles ||*/ this.userEvent === 'load') this.posts = [];
-
-        this.getPostsSubject.next({ params: this.params });
+        // i.e will not empty posts for Post Card and SwitchMode button clicks
+        if (this.isLoading) {
+          this.posts = [];
+          this.getPostsSubject.next({ params: this.params });
+          // this.onlyModeUIChanged = false;
+        }
       },
     });
 
@@ -157,34 +177,36 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((/*event*/) => {
-        console.log(this.isLoading);
-        this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
-        const postModeHint = this.activePostId;
-        this.mode = postModeHint ? FeedMode.Post : FeedMode.Tiles;
+        console.log('postAction: ', this.postAction);
+        console.log('isLoading: ', this.isLoading);
+        console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
         if (this.mode === FeedMode.Post) {
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
           if (this.userEvent === 'load') {
-            this.modal({ event: 'load' }).popup.onLoad({ id: postModeHint });
+            this.modal({ event: 'load' }).popup.onLoad({ id: this.activePostId });
           }
         }
+        this.onlyModeUIChanged = false;
       });
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
-        this.isLoading = true; // Also set is loading to true before filter-related operation
-        if (this.initialLoad) {
-          this.initialLoad = false;
-          return;
-        }
-        this.router.navigate([], {
-          relativeTo: this.route,
-          queryParams: {
-            page: 1,
-          },
-          queryParamsHandling: 'merge',
-        });
-        this.posts = [];
-        this.getPostsSubject.next({ params: this.params });
+        // this.isLoading = true; // Also set is loading to true before filter-related operation
+        // if (this.isLoading) {
+        //   if (this.initialLoad) {
+        //     this.initialLoad = false;
+        //     return;
+        //   }
+        //   this.router.navigate([], {
+        //     relativeTo: this.route,
+        //     queryParams: {
+        //       page: 1,
+        //     },
+        //     queryParamsHandling: 'merge',
+        //   });
+        //   this.posts = [];
+        //   this.getPostsSubject.next({ params: this.params });
+        // }
       },
     });
 
@@ -193,7 +215,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       next: (isLoading: boolean) => {
         // Get end of post load directly from the posts API, use it to set is loading state to false
         this.isLoading = isLoading;
-        console.log(this.isLoading);
+        console.log('isLoading... after API loaded: ', this.isLoading);
 
         // this.paginationElementsAllowed = true;
 
@@ -226,37 +248,37 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // Centralized awaited response from API, loads after posts as needed
     this.postsService.awaitedResponse$.pipe(untilDestroyed(this)).subscribe({
       next: (response: any) => {
-        if (!this.isLoading) {
-          // const isPostsAlreadyExist = !!this.posts.length;
-          const dataMetaPerPage = Number(response.meta.per_page);
-          this.postCurrentLength =
-            response.count < dataMetaPerPage
-              ? response.meta.total
-              : response.meta.current_page * response.count;
+        // if (!this.isLoading) {
+        // const isPostsAlreadyExist = !!this.posts.length;
+        const dataMetaPerPage = Number(response.meta.per_page);
+        this.postCurrentLength =
+          response.count < dataMetaPerPage
+            ? response.meta.total
+            : response.meta.current_page * response.count;
 
-          this.loadingMorePosts = false;
+        this.loadingMorePosts = false;
 
-          this.updateMasonry();
-          // Delay pagination by a "split second" to prevent slight flicker
+        this.updateMasonry();
+        // Delay pagination by a "split second" to prevent slight flicker
+        setTimeout(() => {
+          // && !this.isLoading
+          this.paginationElementsAllowed = response.meta.total > dataMetaPerPage; // show pagination-related elements
+        }, 100);
+
+        // TODO: Fix later (scroll not smooth)
+        // ADD ALSO: Scroll to view first time clicking a card from tiles mode
+        // TODO: Load more button - Prevent scroll after click.
+        // It seems .post--selected class is not updated? - chak please...
+        const lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
+        if (lgDevicesPostMode /*&& !this.loadingMorePosts*/) {
           setTimeout(() => {
-            this.paginationElementsAllowed = response.meta.total > dataMetaPerPage; // show pagination-related elements
-            // console.log(this.paginationElementsAllowed);
-          }, 100);
-
-          // TODO: Fix later (scroll not smooth)
-          // ADD ALSO: Scroll to view first time clicking a card from tiles mode
-          // TODO: Load more button - Prevent scroll after click.
-          // It seems .post--selected class is not updated? - chak please...
-          const lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
-          if (lgDevicesPostMode /*&& !this.loadingMorePosts*/) {
-            setTimeout(() => {
-              if (lgDevicesPostMode) {
-                document.querySelector('.post--selected')?.scrollIntoView();
-                console.log('.post--selected');
-              }
-            }, 250);
-          }
+            if (lgDevicesPostMode) {
+              document.querySelector('.post--selected')?.scrollIntoView();
+              console.log('.post--selected');
+            }
+          }, 250);
         }
+        // }
 
         // console.log(response);
       },
@@ -474,9 +496,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
        on card click - as shown in the comment below.
     */
     // this.navigateTo().idMode.view({ post });
-
+    this.onlyModeUIChanged = true;
     this.userEvent = 'click';
-    const value = this.userEvent as 'click';
+    const value = this.userEvent;
     this.modal({ event: value }).popup.onClick({ post });
   }
 
@@ -607,17 +629,28 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public navigateTo = () => {
+    // this.updateMasonry();
     return {
       // [Remove comment later] Note: PREVIEW mode is formally called TILES mode... Still refactoring
       // eslint-disable-next-line no-empty-pattern
-      // previewMode: ({}) => {
-      //   // router code for "TILES mode" (now preview mode) goes here
-      // },
+      previewMode: ({}) => {
+        this.router.navigate(['/feed'], {
+          queryParams: {
+            // page: this.currentPage,
+            mode: FeedMode.Tiles,
+          },
+          queryParamsHandling: 'merge',
+        });
+      },
       // [Remove comment later] Note: ID mode is formally called POST mode... Still refactoring
       idMode: {
         view: ({ id }: { id: number }) => {
-          this.router.navigate([id, 'view'], {
-            relativeTo: this.route,
+          this.router.navigate(['/feed', id, 'view'], {
+            // [Remove comment later]
+            // relativeTo: this.route, (with this.router.navigate([id, 'view'])
+            // is not great for having mode query params, if you will be able to work with it
+            // you will have to discard using mode in your query params
+            // Particularly because of the nature of the switchMode() code
             queryParams: {
               mode: FeedMode.Post,
             },
@@ -777,8 +810,13 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   //   };
   // }
 
-  public switchMode(mode: FeedMode): void {
-    console.log(mode);
+  public switchMode(mode: string): void {
+    this.onlyModeUIChanged = true;
+    // Just navigateTo... this.activePostId check in the constructor will do the rest...
+    mode === FeedMode.Post
+      ? this.navigateTo().idMode.view({ id: this.posts[0].id })
+      : this.navigateTo().previewMode({});
+
     // 1. If there are no posts "The switch buttons shouldn't 'try to work'"
     // Reason is because the switch buttons alongside all other elements disabled when the page is still loading, shouldn't even show up in the first place) [when there are no posts].
     // So the check is a defense for or "validation" against errors that may occur from clicking it - if the button shows up by mistake when it's not supposed to [when there are no posts].
