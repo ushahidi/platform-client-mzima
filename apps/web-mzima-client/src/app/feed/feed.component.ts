@@ -46,11 +46,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     page: 0,
     limit: 20,
   };
-  public eventToTriggerModal: string = 'none'; // will help the app keep track of if click has happened later on
+  public userEvent: string = 'load'; // will help the app keep track of if click has happened later on
   public postsSkeleton = new Array(20).fill(''); // used for Post mode's skeleton loader
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
-  public isLoading: boolean = true;
+  public isLoading: boolean;
   public atLeastOnePostExists: boolean;
   public noPostsYet: boolean = false;
   public loadingMorePosts: boolean;
@@ -129,32 +129,49 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     this.route.queryParams.subscribe({
       next: (params: Params) => {
+        // // Don't have access to "NavigationStart" event (can't tell why)
+        // // Therefore setting initial variables here
+        this.isLoading = true;
+
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
         this.mode = params['mode'] === FeedMode.Post ? FeedMode.Post : FeedMode.Tiles;
         this.updateMasonry();
         // NOTE on params[mode] and TILES mode (just to avoid confusion):
         // console.log('mode: ', params['mode']); // will always return undefined when in TILES mode, if browser url (query params) does not include "mode=TILES" e.g. when browser url is at "/feed"
-        if (!this.posts) this.getPostsSubject.next({ params: this.params });
+
+        console.log(this.userEvent);
+
+        if (/*this.mode === FeedMode.Tiles ||*/ this.userEvent === 'load') this.posts = [];
+
+        this.getPostsSubject.next({ params: this.params });
       },
     });
+
+    // this.router.events
+    //   .pipe(filter((event) => event instanceof NavigationStart))
+    //   .subscribe((/*event*/) => {
+    //     this.isLoading = false;
+    //   });
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((/*event*/) => {
+        console.log(this.isLoading);
         this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
         const postModeHint = this.activePostId;
         this.mode = postModeHint ? FeedMode.Post : FeedMode.Tiles;
         if (this.mode === FeedMode.Post) {
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
-          if (this.eventToTriggerModal === 'none')
+          if (this.userEvent === 'load') {
             this.modal({ event: 'load' }).popup.onLoad({ id: postModeHint });
+          }
         }
       });
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
-        this.isLoading = true; // "There are no posts yet!" flicker is fixed here and for (most) places where isLoading is set to true
+        this.isLoading = true; // Also set is loading to true before filter-related operation
         if (this.initialLoad) {
           this.initialLoad = false;
           return;
@@ -171,9 +188,77 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       },
     });
 
+    // Set isLoading to false directly from posts service from within
+    this.postsService.isLoadingPosts$.pipe(untilDestroyed(this)).subscribe({
+      next: (isLoading: boolean) => {
+        // Get end of post load directly from the posts API, use it to set is loading state to false
+        this.isLoading = isLoading;
+        console.log(this.isLoading);
+
+        // this.paginationElementsAllowed = true;
+
+        //---------------------------------
+        // These are needed to achieve clean display of posts or message on the UI
+        // this.atLeastOnePostExists = this.posts.length > 0;
+        // this.noPostsYet = !this.atLeastOnePostExists; // && this.mode === FeedMode.Tiles;
+        // this.loadingMorePosts = false; // for load more button's loader/spinner
+        //---------------------------------
+        //   this.updateMasonry();
+        //   setTimeout(() => {
+        //     if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
+        //       document.querySelector('.post--selected')?.scrollIntoView();
+        //     }
+        //   }, 250);
+        // }, 500);
+        // setTimeout(() => {
+        //   //is inside this much delayed setTimeout to prevent pagination elements flicker on load/routing
+        //   this.paginationElementsAllowed = data.meta.total > dataMetaPerPage; // show pagination-related elements
+        // }, 2100);
+      },
+    });
+
     this.postsService.totalPosts$.pipe(untilDestroyed(this)).subscribe({
       next: (total) => {
         this.total = total;
+      },
+    });
+
+    // Centralized awaited response from API, loads after posts as needed
+    this.postsService.awaitedResponse$.pipe(untilDestroyed(this)).subscribe({
+      next: (response: any) => {
+        if (!this.isLoading) {
+          // const isPostsAlreadyExist = !!this.posts.length;
+          const dataMetaPerPage = Number(response.meta.per_page);
+          this.postCurrentLength =
+            response.count < dataMetaPerPage
+              ? response.meta.total
+              : response.meta.current_page * response.count;
+
+          this.loadingMorePosts = false;
+
+          this.updateMasonry();
+          // Delay pagination by a "split second" to prevent slight flicker
+          setTimeout(() => {
+            this.paginationElementsAllowed = response.meta.total > dataMetaPerPage; // show pagination-related elements
+            // console.log(this.paginationElementsAllowed);
+          }, 100);
+
+          // TODO: Fix later (scroll not smooth)
+          // ADD ALSO: Scroll to view first time clicking a card from tiles mode
+          // TODO: Load more button - Prevent scroll after click.
+          // It seems .post--selected class is not updated? - chak please...
+          const lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
+          if (lgDevicesPostMode /*&& !this.loadingMorePosts*/) {
+            setTimeout(() => {
+              if (lgDevicesPostMode) {
+                document.querySelector('.post--selected')?.scrollIntoView();
+                console.log('.post--selected');
+              }
+            }, 250);
+          }
+        }
+
+        // console.log(response);
       },
     });
 
@@ -303,7 +388,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   private getPosts(params: any, add = true): void {
-    const isPostsAlreadyExist = !!this.posts.length;
+    // const isPostsAlreadyExist = !!this.posts.length;
     if (!add) {
       this.posts = [];
     }
@@ -312,39 +397,44 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // }
 
     //---------------------------------
-    this.isLoading = !this.posts.length; // With this skeleton loader shows up only on mode switch, and the loadmore button is able to detect to not load the skeleton UI loader on click
-    this.paginationElementsAllowed = this.loadingMorePosts; // this check prevents the load more button & area from temporarily disappearing (on click) [also prevents pagination element flicker in TILES mode]
+    // this.paginationElementsAllowed = this.loadingMorePosts; // this check prevents the load more button & area from temporarily disappearing (on click) [also prevents pagination element flicker in TILES mode]
     //----------------------------------
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
+        // console.log(data);
         this.posts = add ? [...this.posts, ...data.results] : data.results;
-        const dataMetaPerPage = Number(data.meta.per_page);
-        this.postCurrentLength =
-          data.count < dataMetaPerPage ? data.meta.total : data.meta.current_page * data.count;
-        this.eventBusService.next({
-          type: EventType.FeedPostsLoaded,
-          payload: true,
-        });
-        setTimeout(() => {
-          //---------------------------------
-          // These are needed to achieve clean display of posts or message on the UI
-          this.isLoading = false;
-          this.atLeastOnePostExists = this.posts.length > 0;
-          this.noPostsYet = !this.atLeastOnePostExists; // && this.mode === FeedMode.Tiles;
-          this.loadingMorePosts = false; // for load more button's loader/spinner
-          //---------------------------------
-          this.updateMasonry();
-          setTimeout(() => {
-            if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
-              document.querySelector('.post--selected')?.scrollIntoView();
-            }
-          }, 250);
-        }, 500);
-        setTimeout(() => {
-          //is inside this much delayed setTimeout to prevent pagination elements flicker on load/routing
-          this.paginationElementsAllowed = data.meta.total > dataMetaPerPage; // show pagination-related elements
-        }, 2100);
+
+        // conso
+        // const dataMetaPerPage = Number(data.meta.per_page);
+        // this.postCurrentLength =
+        //   data.count < dataMetaPerPage ? data.meta.total : data.meta.current_page * data.count;
+        // this.eventBusService.next({
+        //   type: EventType.FeedPostsLoaded,
+        //   payload: true,
+        // });
+        // setTimeout(() => {
+        //   //---------------------------------
+        //   // These are needed to achieve clean display of posts or message on the UI
+        //   this.isLoading = false;
+        //   this.atLeastOnePostExists = this.posts.length > 0;
+        //   this.noPostsYet = !this.atLeastOnePostExists; // && this.mode === FeedMode.Tiles;
+        //   this.loadingMorePosts = false; // for load more button's loader/spinner
+        //   //---------------------------------
+        //   this.updateMasonry();
+        //   setTimeout(() => {
+        //     if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
+        //       document.querySelector('.post--selected')?.scrollIntoView();
+        //     }
+        //   }, 250);
+        // }, 500);
+        // setTimeout(() => {
+        //   //is inside this much delayed setTimeout to prevent pagination elements flicker on load/routing
+        //   this.paginationElementsAllowed = data.meta.total > dataMetaPerPage; // show pagination-related elements
+        // }, 2100);
       },
+      // complete: () => {
+      //   // console.log('complete?');
+      // },
     });
   }
 
@@ -358,13 +448,13 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.getPostsSubject.next({ params: this.params });
   }
 
-  public setIsLoadingOnCardClick() {
-    // With this skeleton loader's css is properly displayed (when navigating to POST mode) through post card click,
-    // and the post card is able to detect to not load the skeleton UI loader after posts have successfully shown up
-    this.posts.length && this.mode === FeedMode.Tiles
-      ? (this.isLoading = true)
-      : this.isLoading === !this.posts.length;
-  }
+  // public setIsLoadingOnCardClick() {
+  //   // With this skeleton loader's css is properly displayed (when navigating to POST mode) through post card click,
+  //   // and the post card is able to detect to not load the skeleton UI loader after posts have successfully shown up
+  //   this.posts.length && this.mode === FeedMode.Tiles
+  //     ? (this.isLoading = true)
+  //     : this.isLoading === !this.posts.length;
+  // }
 
   public showPostDetails(post: PostResult): void {
     this.updateMasonry(); // never forget this guy when you need styles to adjust for masonry library
@@ -385,8 +475,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     */
     // this.navigateTo().idMode.view({ post });
 
-    this.eventToTriggerModal = 'click';
-    const value = this.eventToTriggerModal as 'click';
+    this.userEvent = 'click';
+    const value = this.userEvent as 'click';
     this.modal({ event: value }).popup.onClick({ post });
   }
 
@@ -662,7 +752,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public refreshMasonry(): void {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 
@@ -753,8 +843,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public changePage(page: number): void {
     // --------------------------------
     // Show loader & prevent pagination elements flicker on use of pagination element's buttons
-    this.isLoading = true;
-    this.paginationElementsAllowed = false;
+    // this.isLoading = true;
+    // this.paginationElementsAllowed = false;
     //------------------------------------
     this.toggleBulkOptions(false);
     this.currentPage = page;
@@ -769,7 +859,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public editPost(post: any): void {
     if (this.isDesktop) {
-      this.setIsLoadingOnCardClick();
+      // this.setIsLoadingOnCardClick();
       if (this.collectionId) {
         this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'edit'], {
           queryParams: {
