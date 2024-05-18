@@ -34,7 +34,7 @@
           id="switcher-button-tiles"
           [color]="mode === FeedMode.Tiles ? 'primary' : 'light'"
           [isActive]="mode === FeedMode.Tiles"
-          (buttonClick)="switchMode(FeedMode.Tiles)"
+          (buttonClick)="switchMode('TILES')"
           [disabled]="isLoading || !posts.length"
           class="feed-page__mode-switcher__button"
         >
@@ -46,7 +46,7 @@
           id="switcher-button-post"
           [color]="mode === FeedMode.Post ? 'primary' : 'light'"
           [isActive]="mode === FeedMode.Post"
-          (buttonClick)="switchMode(FeedMode.Post)"
+          (buttonClick)="switchMode('POST')"
           [disabled]="isLoading || !posts.length"
           class="feed-page__mode-switcher__button"
         >
