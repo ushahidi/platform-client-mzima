@@ -78,12 +78,45 @@
     }
 
     &__details-or-edit {
-      width: 100%;
+      width: calc(100% - 32px);
+
+      @include breakpoint-max($laptop-small) {
+        width: calc(100% - 16px);
+      }
+
+      //- Almost same style as &--selected for smooth transition back
+      @include breakpoint-min($tablet) {
+        position: absolute;
+        left: 0 !important;
+        transition: left 0.35s ease;
+        //-----------------------
+      }
 
       // @include breakpoint-max($tablet) {
       //   width: calc(50% - 18px);
       // }
     }
+  }
+
+  &--selected {
+    @include breakpoint-min($tablet) {
+      position: absolute;
+      left: 16px !important;
+      box-shadow: 0 8px 10px 0 rgba(var(--color-light-contrast-rgb), 0.05);
+      transition: left 0.35s ease; // add transition for smooth slide to left
+
+      @include breakpoint-max($laptop-small) {
+        left: 8px !important;
+      }
+    }
+  }
+}
+
+.left-margin {
+  margin-inline-start: 16px; // where posts margin starts from when survey & sources filter area is collapsed
+
+  @include breakpoint-max($laptop-small) {
+    margin-inline-start: 8px;
   }
 }
 
