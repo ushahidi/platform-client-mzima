@@ -532,7 +532,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public scrollSelectedCardToView() {
     console.log(this.scrollingID);
     setTimeout(() => {
-      document.querySelector('.scroll--selected')?.scrollIntoView();
+      document.querySelector('.scroll--active--postcard--to--top')?.scrollIntoView();
     }, 150);
   }
 

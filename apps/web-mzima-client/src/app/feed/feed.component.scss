@@ -97,17 +97,17 @@
       // }
     }
   }
+}
 
-  &--selected {
-    @include breakpoint-min($tablet) {
-      position: absolute;
-      left: 16px !important;
-      box-shadow: 0 8px 10px 0 rgba(var(--color-light-contrast-rgb), 0.05);
-      transition: left 0.35s ease; // add transition for smooth slide to left
+.active--postcard {
+  @include breakpoint-min($tablet) {
+    position: absolute;
+    left: 16px !important;
+    box-shadow: 0 8px 10px 0 rgba(var(--color-light-contrast-rgb), 0.05);
+    transition: left 0.35s ease; // add transition for smooth slide to left
 
-      @include breakpoint-max($laptop-small) {
-        left: 8px !important;
-      }
+    @include breakpoint-max($laptop-small) {
+      left: 8px !important;
     }
   }
 }
