@@ -146,7 +146,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         this.postAction = this.onlyModeUIChanged ? 'click' : 'load';
         this.isLoading = !this.onlyModeUIChanged;
         this.paginationElementsAllowed = this.onlyModeUIChanged
-          ? this.posts.length >= 20
+          ? this.posts.length >= 20 || this.currentPage > 1
           : !this.posts;
 
         if (this.isLoading) {
