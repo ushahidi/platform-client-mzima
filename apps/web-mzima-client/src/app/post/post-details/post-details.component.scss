@@ -46,7 +46,6 @@
   }
 
   &__head {
-    top: 0;
     z-index: 50;
     display: flex;
     position: sticky;
@@ -59,6 +58,7 @@
     background: var(--color-light);
 
     @include breakpoint-max($tablet) {
+      top: 0;
       padding-inline-end: 60px;
     }
   }
