@@ -232,8 +232,7 @@
             [ngClass]="{
               post__tiles: mode === FeedMode.Tiles,
               'post__details-or-edit': mode === FeedMode.Post,
-              'post--selected':
-                post.id === postDetails?.id || (mode === FeedMode.Post && post.id === activePostId)
+              'post--selected': mode === FeedMode.Post && post.id === postDetails?.id
             }"
             [post]="post"
             [attr.postId]="post.id"
