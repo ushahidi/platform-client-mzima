@@ -232,7 +232,8 @@
             [ngClass]="{
               post__tiles: mode === FeedMode.Tiles,
               'post__details-or-edit': mode === FeedMode.Post,
-              'post--selected': mode === FeedMode.Post && post.id === postDetails?.id
+              'post--selected': mode === FeedMode.Post && post.id === postDetails?.id,
+              'scroll--selected': scrollingID && mode === FeedMode.Post && post.id === scrollingID
             }"
             [post]="post"
             [attr.postId]="post.id"
