@@ -164,6 +164,14 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           // console.log(this.params, params);
           this.getPosts(this.params); // DECIDE LATER: use params? or this.params?
         }
+
+        // On using the "switch mode" button to navigate to PREVIEW MODE:
+        // this restores PREVIEW MODE posts to what it was before,
+        // if the "load more" button has been used to add more posts in the ID MODE
+        if (this.mode === FeedMode.Tiles && this.onlyModeUIChanged && this.posts.length > 20) {
+          this.posts = this.posts.slice(0, 20);
+          this.postCurrentLength = this.posts.length * this.currentPage;
+        }
       },
     });
 
@@ -409,7 +417,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   //   });
   // }
 
-  private getPosts(params: any): void {
+  private getPosts(params: any, loadMore?: boolean): void {
     // const isPostsAlreadyExist = !!this.posts.length;
     // if (!add) {
     //   this.posts = [];
@@ -423,7 +431,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     //----------------------------------
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
-        this.posts = data.results;
+        this.posts = loadMore ? [...this.posts, ...data.results] : data.results;
         // console.log(data);
         // this.posts = add ? [...this.posts, ...data.results] : data.results;
         // conso
@@ -787,10 +795,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public loadMore(): void {
-    if (this.params.limit !== undefined && this.params.limit * this.params.page! < this.total) {
+    // If you fix pagnation allowed issue for last page on load, check that it doesnt scatter anything here
+    if (/* ID mode && */ this.paginationElementsAllowed) {
       this.loadingMorePosts = true;
       this.params.page! += 1;
-      this.getPostsSubject.next({ params: this.params });
+      this.getPosts(this.params, true);
     }
   }
 
