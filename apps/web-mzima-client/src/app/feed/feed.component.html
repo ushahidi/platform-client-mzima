@@ -269,15 +269,7 @@
         >
         </pagination-controls>
         <!-- Load more posts -->
-        <ng-container
-          *ngIf="
-            mode === FeedMode.Post &&
-            isDesktop &&
-            paginationElementsAllowed &&
-            params.page !== undefined &&
-            params.limit !== undefined
-          "
-        >
+        <ng-container *ngIf="mode === FeedMode.Post && isDesktop && paginationElementsAllowed">
           <mzima-client-button
             fill="clear"
             color="secondary"
