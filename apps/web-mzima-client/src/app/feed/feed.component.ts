@@ -61,6 +61,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public activePostId: number;
   public total: number;
   public postDetails?: PostResult;
+  public scrollingID?: number | null;
   public isPostLoading: boolean;
   public isFiltersVisible: boolean;
   public isBulkOptionsVisible: boolean;
@@ -187,8 +188,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         console.log('postAction: ', this.postAction);
         console.log('isLoading: ', this.isLoading);
         console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
+
+        this.savePostIDforScroll(this.activePostId);
         if (this.mode === FeedMode.Post) {
           this.setPostIDForCardStyle();
+          this.scrollSelectedCardToView();
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
           if (this.userEvent === 'load') {
             this.modal({ event: 'load' }).popup.onLoad({ id: this.activePostId });
@@ -273,20 +277,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           this.paginationElementsAllowed = response.meta.total > dataMetaPerPage; // show pagination-related elements
         }, 100);
 
-        // TODO: Fix later (scroll not smooth)
-        // ADD ALSO: Scroll to view first time clicking a card from tiles mode
-        // TODO: Load more button - Prevent scroll after click.
-        // It seems .post--selected class is not updated? - chak please...
-        const lgDevicesPostMode = this.mode === FeedMode.Post && this.isDesktop;
-        if (lgDevicesPostMode /*&& !this.loadingMorePosts*/) {
-          setTimeout(() => {
-            if (lgDevicesPostMode) {
-              document.querySelector('.post--selected')?.scrollIntoView();
-              console.log('.post--selected');
-            }
-          }, 250);
-        }
-        // }
+        this.scrollSelectedCardToView();
 
         // console.log(response);
       },
@@ -509,6 +500,40 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.userEvent = 'click';
     const value = this.userEvent;
     this.modal({ event: value }).popup.onClick({ post });
+  }
+
+  public async savePostIDforScroll(id: number) {
+    //-----------------------------------
+    const setScrollID = (set: boolean) => {
+      const item = set ? `${id}` : 'scroll ID now disbled!';
+      localStorage.setItem('feedview_post-id-to-scroll', item);
+      this.scrollingID = set
+        ? parseInt(localStorage.getItem('feedview_post-id-to-scroll') as string)
+        : null;
+    };
+    //-----------------------------------
+    if (this.mode === FeedMode.Post) {
+      const idOfPostToScrollOnceToTop = localStorage.getItem('feedview_post-id-to-scroll');
+      if (!idOfPostToScrollOnceToTop || this.userEvent === 'load') setScrollID(true);
+      if (!idOfPostToScrollOnceToTop || this.userEvent !== 'load') setScrollID(true);
+      if (
+        (idOfPostToScrollOnceToTop && this.userEvent !== 'load') ||
+        (idOfPostToScrollOnceToTop && this.loadingMorePosts)
+      ) {
+        setScrollID(false);
+      }
+    }
+    if (this.mode === FeedMode.Tiles) {
+      localStorage.removeItem('feedview_post-id-to-scroll');
+      this.scrollingID = null;
+    }
+  }
+
+  public scrollSelectedCardToView() {
+    console.log(this.scrollingID);
+    setTimeout(() => {
+      document.querySelector('.scroll--selected')?.scrollIntoView();
+    }, 150);
   }
 
   public modal({ event }: { event: 'none' | 'click' | 'load' | 'resize' }) {
@@ -804,6 +829,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public loadMore(): void {
     if (this.paginationElementsAllowed) {
       this.loadingMorePosts = true;
+      this.savePostIDforScroll(this.activePostId);
       this.params.page! += 1;
       this.getPosts(this.params, true);
     }
