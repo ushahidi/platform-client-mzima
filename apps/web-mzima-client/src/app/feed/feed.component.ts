@@ -795,8 +795,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public loadMore(): void {
-    // If you fix pagnation allowed issue for last page on load, check that it doesnt scatter anything here
-    if (/* ID mode && */ this.paginationElementsAllowed) {
+    if (this.paginationElementsAllowed) {
       this.loadingMorePosts = true;
       this.params.page! += 1;
       this.getPosts(this.params, true);
