@@ -405,7 +405,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   loadData(): void {
     // this.params.page = 1;
-    this.getPostsSubject.next({ params: this.params });
+    // this.getPostsSubject.next({ params: this.params });
   }
 
   // private initGetPostsListener() {
