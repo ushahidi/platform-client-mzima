@@ -8,7 +8,7 @@ import { searchFormHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
-import { filter, forkJoin, Subject, debounceTime } from 'rxjs';
+import { filter, forkJoin, Subject /*, debounceTime*/ } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 import { MainViewComponent } from '@shared';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
@@ -150,8 +150,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           : !this.posts;
 
         if (this.isLoading) {
-          this.setupFeedDefaultFilters();
-          this.initGetPostsListener();
+          // this.setupFeedDefaultFilters();
         }
 
         this.currentPage = params['page'] ? Number(params['page']) : 1;
@@ -162,8 +161,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         // i.e will not empty posts for Post Card and SwitchMode button clicks
         if (this.isLoading) {
           this.posts = [];
-          this.getPostsSubject.next({ params: this.params });
-          // this.onlyModeUIChanged = false;
+          // console.log(this.params, params);
+          this.getPosts(this.params); // DECIDE LATER: use params? or this.params?
         }
       },
     });
@@ -401,19 +400,20 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.getPostsSubject.next({ params: this.params });
   }
 
-  private initGetPostsListener() {
-    this.getPostsSubject.pipe(untilDestroyed(this), debounceTime(700)).subscribe({
-      next: ({ params, add }) => {
-        this.getPosts(params, add);
-      },
-    });
-  }
+  // private initGetPostsListener() {
+  //   this.getPostsSubject.pipe(untilDestroyed(this), debounceTime(700)).subscribe({
+  //     next: ({ params }) => {
+  //       console.log(params);
+  //       this.getPosts(params);
+  //     },
+  //   });
+  // }
 
-  private getPosts(params: any, add = true): void {
+  private getPosts(params: any): void {
     // const isPostsAlreadyExist = !!this.posts.length;
-    if (!add) {
-      this.posts = [];
-    }
+    // if (!add) {
+    //   this.posts = [];
+    // }
     // if (this.mode === FeedMode.Post) {
     //   this.currentPage = 1;
     // }
@@ -423,9 +423,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     //----------------------------------
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
+        this.posts = data.results;
         // console.log(data);
-        this.posts = add ? [...this.posts, ...data.results] : data.results;
-
+        // this.posts = add ? [...this.posts, ...data.results] : data.results;
         // conso
         // const dataMetaPerPage = Number(data.meta.per_page);
         // this.postCurrentLength =
@@ -462,12 +462,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
   public updateMasonry(): void {
     this.masonry?.layout();
-  }
-
-  public pageChanged(page: any): void {
-    this.pagination.page = page;
-    this.params.page = page;
-    this.getPostsSubject.next({ params: this.params });
   }
 
   // public setIsLoadingOnCardClick() {
@@ -530,6 +524,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           // adding !isDesktop to the check prevents misbehaving and makes sure routing only takes place if current modal is closed when on smaller devices
           if (!this.dialog.openDialogs.length) {
             // !this.dialog.openDialogs.length check needed to allow routing to TILES MODE on RESIZE
+            //----------------------------
+            this.onlyModeUIChanged = true;
+            //----------------------------
             this.router.navigate(['/feed'], {
               queryParams: {
                 mode: FeedMode.Tiles,
@@ -879,13 +876,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public changePage(page: number): void {
-    // --------------------------------
-    // Show loader & prevent pagination elements flicker on use of pagination element's buttons
-    // this.isLoading = true;
-    // this.paginationElementsAllowed = false;
-    //------------------------------------
     this.toggleBulkOptions(false);
     this.currentPage = page;
+    // TODO: Let's see how to this routing/navigation to come from the navigateTo func
+    // Interesting how relativeTo works well here
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
