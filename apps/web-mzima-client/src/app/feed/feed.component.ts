@@ -188,6 +188,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         console.log('isLoading: ', this.isLoading);
         console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
         if (this.mode === FeedMode.Post) {
+          this.setPostIDForCardStyle();
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
           if (this.userEvent === 'load') {
             this.modal({ event: 'load' }).popup.onLoad({ id: this.activePostId });
@@ -479,6 +480,12 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   //     ? (this.isLoading = true)
   //     : this.isLoading === !this.posts.length;
   // }
+
+  public setPostIDForCardStyle(post?: PostResult) {
+    const postFromStorage = JSON.parse(localStorage.getItem('feedview_postObj') as string);
+    post = post ? post : postFromStorage;
+    this.postDetails = post;
+  }
 
   public showPostDetails(post: PostResult): void {
     this.updateMasonry(); // never forget this guy when you need styles to adjust for masonry library
