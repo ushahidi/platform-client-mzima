@@ -234,7 +234,7 @@
               'post__details-or-edit': mode === FeedMode.Post,
               'active--postcard': mode === FeedMode.Post && post.id === postDetails?.id,
               'scroll--active--postcard--to--top':
-                scrollingID && mode === FeedMode.Post && post.id === scrollingID
+                isDesktop && scrollingID && mode === FeedMode.Post && post.id === scrollingID
             }"
             [post]="post"
             [attr.postId]="post.id"
