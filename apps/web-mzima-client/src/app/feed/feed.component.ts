@@ -303,6 +303,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     window.addEventListener('resize', () => {
       this.modal({ event: 'resize' }).popup.onResize({});
+      this.scrollSelectedCardToView();
     });
 
     // window.addEventListener('resize', () => {
@@ -530,7 +531,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public scrollSelectedCardToView() {
-    console.log(this.scrollingID);
     setTimeout(() => {
       document.querySelector('.scroll--active--postcard--to--top')?.scrollIntoView();
     }, 150);
