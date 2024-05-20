@@ -22,7 +22,7 @@ import {
   PostStatus,
   postHelpers,
 } from '@mzima-client/sdk';
-import _, { capitalize } from 'lodash';
+import _ from 'lodash';
 
 enum FeedMode {
   Tiles = 'TILES',
@@ -196,7 +196,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           this.scrollSelectedCardToView();
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
           if (this.userEvent === 'load') {
-            this.modal({ event: 'load' }).popup.onLoad({ id: this.activePostId });
+            if (this.router.url.includes('/view'))
+              this.idMode({ page: 'view' }).modalPopup.onLoad({ id: this.activePostId });
+            if (this.router.url.includes('/edit'))
+              this.idMode({ page: 'edit' }).modalPopup.onLoad({ id: this.activePostId });
           }
         }
         this.onlyModeUIChanged = false;
@@ -302,7 +305,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     });
 
     window.addEventListener('resize', () => {
-      this.modal({ event: 'resize' }).popup.onResize({});
+      if (this.router.url.includes('/view')) this.idMode({ page: 'view' }).modalPopup.onResize({});
+      if (this.router.url.includes('/edit')) this.idMode({ page: 'edit' }).modalPopup.onResize({});
       // this.scrollSelectedCardToView();
     });
 
@@ -499,8 +503,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // this.navigateTo().idMode.view({ post });
     this.onlyModeUIChanged = true;
     this.userEvent = 'click';
-    const value = this.userEvent;
-    this.modal({ event: value }).popup.onClick({ post });
+    this.idMode({ page: 'view' }).modalPopup.onClick({ post });
   }
 
   public async savePostIDforScroll(id: number) {
@@ -536,135 +539,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     }, 150);
   }
 
-  public modal({ event }: { event: 'none' | 'click' | 'load' | 'resize' }) {
-    const openModal = (post: PostResult) => {
-      // Smaller devices only [NOTE: see CSS inside the PostDetailsModalComponent for CSS reize related fix]
-      if (!this.isDesktop) {
-        if (!this.dialog.openDialogs.length) {
-          // !this.dialog.openDialogs.length check needed to prevent more than one modals from showing up RESIZE
-          this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-            width: '100%',
-            maxWidth: 576,
-            data: { post: post, color: post.color, twitterId: post.data_source_message_id },
-            height: 'auto',
-            maxHeight: '90vh',
-            panelClass: ['modal', 'post-modal', 'resize-css-handler'],
-          });
-        }
-      }
-
-      // Regardless of device size, save post result from/on card click
-      // Saving it will be useful for when we need to be able to trigger modal open/close on resize
-      localStorage.setItem('feedview_postObj', JSON.stringify(post));
-
-      // Smaller devices only - what happens after modal is closed
-      // Note: [mat-dialog-close]="false" in the html of the modal takes care of closing the modal
-      this.postDetailsModal?.afterClosed().subscribe((data) => {
-        if (!data && !this.isDesktop) {
-          // adding !isDesktop to the check prevents misbehaving and makes sure routing only takes place if current modal is closed when on smaller devices
-          if (!this.dialog.openDialogs.length) {
-            // !this.dialog.openDialogs.length check needed to allow routing to TILES MODE on RESIZE
-            //----------------------------
-            this.onlyModeUIChanged = true;
-            //----------------------------
-            this.router.navigate(['/feed'], {
-              queryParams: {
-                mode: FeedMode.Tiles,
-              },
-              queryParamsHandling: 'merge',
-            });
-          }
-        }
-      });
-    };
-
-    //----------------------------------------------
-    // We always want event used by engineer to match the method to use, otherwise throw error in console
-    const error = (usedEvent: string, allowedEvent: string) => {
-      return `Contradiction Error: Cannot use '${usedEvent}' event with .on${capitalize(
-        allowedEvent,
-      )}({}) method. 
-      
-      The correct usage in this case is: 
-      this.modal({ event: ${allowedEvent} }).on${capitalize(allowedEvent)}({});
-
-      If you intend to use the '${usedEvent}', ensure to use the matching this.modal method for the '${usedEvent}' event which is the .on${capitalize(
-        usedEvent,
-      )}({}) method
-      `;
-    };
-
-    // Code abstraction to hide similar but not so relevant details, prevent repetition and code looking bulky in the methods returned
-    const runCode = (allowedEvent: string, performAction: () => void) => {
-      if (event !== allowedEvent) {
-        throw new Error(error(event, allowedEvent));
-      } else {
-        performAction();
-      }
-    };
-    //----------------------------------------------
-
-    return {
-      popup: {
-        onClick: ({ post }: { post: PostResult }) => {
-          const allowedEvent = 'click';
-          runCode(allowedEvent, () => {
-            this.navigateTo().idMode.view({ id: post.id });
-            openModal(post as PostResult);
-          });
-        },
-        onLoad: ({ id }: { id: number }) => {
-          const allowedEvent = 'load';
-          runCode(allowedEvent, () => {
-            this.navigateTo().idMode.view({ id: id as number });
-            this.postsService.getById(id as number).subscribe({
-              next: (fetchedPost: PostResult) => {
-                openModal(fetchedPost);
-              },
-              // error: (err) => {
-              //   // console.log(err.status);
-              //   if (err.status === 404) {
-              //     this.router.navigate(['/not-found']);
-              //   }
-              // },
-            });
-          });
-        },
-        // To be used inside of a window resize event listener
-        // eslint-disable-next-line no-empty-pattern
-        onResize: ({}) => {
-          const allowedEvent = 'resize';
-          runCode(allowedEvent, () => {
-            // Simulate card click on RESIZE
-            if (this.mode === FeedMode.Post) {
-              if (window.innerWidth >= 1024) {
-                this.postDetailsModal.close();
-                // console.log(this.dialog.openDialogs);
-              } else {
-                if (this.dialog.openDialogs.length) {
-                  for (let i = 0; i <= this.dialog.openDialogs.length; i += 1) {
-                    if (i === 0 && this.dialog.openDialogs.length === 1) {
-                      const firstPostFromOpenModalDialog =
-                        this.dialog.openDialogs[0].componentInstance.data.post;
-                      openModal(firstPostFromOpenModalDialog);
-                      break;
-                    }
-                  }
-                } else {
-                  const postFromStorage = JSON.parse(
-                    localStorage.getItem('feedview_postObj') as string,
-                  );
-                  openModal(postFromStorage);
-                }
-                // console.log(this.dialog.openDialogs);
-              }
-            }
-          });
-        },
-      },
-    };
-  }
-
   public navigateTo = () => {
     // this.updateMasonry();
     return {
@@ -695,9 +569,14 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           });
         },
         // TODO: add edit prop later, when refactoring gets there
-        // edit: ({ post }: { post: PostResult }) => {
-        //   // router code for edit-related pages go here
-        // },
+        edit: ({ id }: { id: number }) => {
+          this.router.navigate(['/feed', id, 'edit'], {
+            queryParams: {
+              mode: FeedMode.Post,
+            },
+            queryParamsHandling: 'merge',
+          });
+        },
       },
     };
   };
@@ -947,50 +826,150 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   }
 
   public editPost(post: any): void {
-    if (this.isDesktop) {
-      // this.setIsLoadingOnCardClick();
-      if (this.collectionId) {
-        this.router.navigate(['/feed', 'collection', this.collectionId, post.id, 'edit'], {
-          queryParams: {
-            mode: FeedMode.Post,
-          },
-          queryParamsHandling: 'merge',
-        });
-      } else {
-        this.router.navigate(['feed', post.id, 'edit'], {
-          queryParams: {
-            mode: FeedMode.Post,
-          },
-          queryParamsHandling: 'merge',
-        });
-      }
-      return;
-    }
+    this.onlyModeUIChanged = true;
+    this.userEvent = 'click';
+    this.idMode({ page: 'edit' }).modalPopup.onClick({ post });
+  }
 
-    this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, {
-      width: '100%',
-      maxWidth: 576,
-      data: {
-        editable: true,
-        color: post.color,
-        twitterId: post.data_source_message_id,
+  public idMode({ page }: { page: 'view' | 'edit' }) {
+    return {
+      modalPopup: {
+        onClick: ({ post }: { post: PostResult }) => {
+          if (page === 'view') {
+            this.navigateTo().idMode.view({ id: post.id });
+            this.openModal({ post }).forView();
+          }
+          if (page === 'edit') {
+            this.navigateTo().idMode.edit({ id: post.id });
+            this.openModal({ post }).forEdit();
+          }
+        },
+        onLoad: ({ id }: { id: number }) => {
+          if (page === 'view') this.navigateTo().idMode.view({ id });
+          if (page === 'edit') this.navigateTo().idMode.edit({ id });
+          this.postsService.getById(id).subscribe({
+            next: (fetchedPost: PostResult) => {
+              if (page === 'view') this.openModal({ post: fetchedPost }).forView();
+              if (page === 'edit') this.openModal({ post: fetchedPost }).forEdit();
+            },
+            // error: (err) => {
+            //   // console.log(err.status);
+            //   if (err.status === 404) {
+            //     this.router.navigate(['/not-found']);
+            //   }
+            // },
+          });
+        },
+        // To be used inside of a window resize event listener
+        // eslint-disable-next-line no-empty-pattern
+        onResize: ({}) => {
+          // Simulate card click on RESIZE
+          if (this.mode === FeedMode.Post) {
+            if (window.innerWidth >= 1024) {
+              this.postDetailsModal.close();
+              // console.log(this.dialog.openDialogs);
+            } else {
+              if (this.dialog.openDialogs.length) {
+                for (let i = 0; i <= this.dialog.openDialogs.length; i += 1) {
+                  if (i === 0 && this.dialog.openDialogs.length === 1) {
+                    const firstPostFromOpenModalDialog =
+                      this.dialog.openDialogs[0].componentInstance.data.post;
+                    if (page === 'view')
+                      this.openModal({ post: firstPostFromOpenModalDialog }).forView();
+                    if (page === 'edit')
+                      this.openModal({ post: firstPostFromOpenModalDialog }).forEdit();
+                    break;
+                  }
+                }
+              } else {
+                const postFromStorage = JSON.parse(
+                  localStorage.getItem('feedview_postObj') as string,
+                );
+                if (page === 'view') this.openModal({ post: postFromStorage }).forView();
+                if (page === 'edit') this.openModal({ post: postFromStorage }).forEdit();
+              }
+              // console.log(this.dialog.openDialogs);
+            }
+          }
+        },
       },
-      height: 'auto',
-      maxHeight: '90vh',
-      panelClass: ['modal', 'post-modal'],
-    });
+    };
+  }
 
-    this.postsService.getById(post.id).subscribe({
-      next: (postV5: PostResult) => {
-        this.postDetailsModal.componentInstance.post = postV5;
-      },
-    });
+  public openModal({ post }: { post: PostResult }) {
+    const customModalDialog = ({
+      page,
+      configRemainder,
+    }: {
+      page: 'view' | 'edit';
+      configRemainder: Record<string, any>;
+    }) => {
+      let config = {
+        width: '100%',
+        maxWidth: 576,
+        height: 'auto',
+        maxHeight: '90vh',
+        panelClass: ['modal', 'post-modal'],
+      };
 
-    this.postDetailsModal.afterClosed().subscribe((data) => {
-      if (data?.update) {
-        this.getPostsSubject.next({ params: this.params, add: false });
+      config.panelClass.push('resize-css-handler');
+
+      config = { ...config, ...configRemainder };
+
+      // Smaller devices only [NOTE: see CSS inside the PostDetailsModalComponent for CSS reize related fix]
+      if (!this.isDesktop) {
+        if (!this.dialog.openDialogs.length) {
+          // !this.dialog.openDialogs.length check needed to prevent more than one modals from showing up RESIZE
+          //-----------------------------------------
+          this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, config);
+          //-----------------------------------------
+          if (page === 'edit') this.postDetailsModal.componentInstance.post = post;
+        }
       }
-    });
+
+      // Regardless of device size, save post result from/on card click
+      // Saving it will be useful for when we need to be able to trigger modal open/close on resize
+      localStorage.setItem('feedview_postObj', JSON.stringify(post));
+
+      // Smaller devices only - what happens after modal is closed
+      // Note: [mat-dialog-close]="false" in the html of the modal takes care of closing the modal
+      this.postDetailsModal?.afterClosed().subscribe((data) => {
+        if (!data && !this.isDesktop) {
+          // adding !isDesktop to the check prevents misbehaving and makes sure routing only takes place if current modal is closed when on smaller devices
+          if (!this.dialog.openDialogs.length) {
+            // !this.dialog.openDialogs.length check needed to allow routing to TILES MODE on RESIZE
+            //----------------------------
+            this.onlyModeUIChanged = true;
+            //----------------------------
+            this.router.navigate(['/feed'], {
+              queryParams: {
+                mode: FeedMode.Tiles,
+              },
+              queryParamsHandling: 'merge',
+            });
+          }
+        }
+      });
+    };
+
+    return {
+      forView: () => {
+        const configRemainder = {
+          data: { post: post, color: post.color, twitterId: post.data_source_message_id },
+        };
+        customModalDialog({ page: 'view', configRemainder });
+      },
+      forEdit: () => {
+        const configRemainder = {
+          data: {
+            editable: true,
+            color: post.color,
+            twitterId: post.data_source_message_id,
+          },
+        };
+        customModalDialog({ page: 'edit', configRemainder });
+      },
+    };
   }
 
   private showMessage(message: string, type: string, duration = 3000) {
