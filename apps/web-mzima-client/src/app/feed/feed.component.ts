@@ -848,22 +848,28 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   //   };
   // }
 
-  public switchMode(mode: string): void {
-    this.onlyModeUIChanged = true;
+  public switchMode(switchButtonValue: string): void {
+    // If the button is active, it shouldn't work just yet
+    const modeValueBeforeRouting = this.mode;
+    const inactiveSwitchModeButtonClicked = switchButtonValue !== modeValueBeforeRouting;
 
-    const firstPostOnCurrentPage = this.posts[0];
-    // Just navigateTo... this.activePostId check in the constructor will do the rest...
-    mode === FeedMode.Post
-      ? this.navigateTo().idMode.view({ id: firstPostOnCurrentPage.id })
-      : this.navigateTo().previewMode({});
+    if (inactiveSwitchModeButtonClicked) {
+      this.onlyModeUIChanged = true;
+      const firstPostOnCurrentPage = this.posts[0];
 
-    /* --------------------------------------------------------
-      Update postObj in localStorage so that "Scroll to top" style is updated
-      Modal will also be able to access the updated/correct post on resize
-    --------------------------------------------------------------*/
-    const localStorageScrollID = localStorage.getItem('feedview_post-id-to-scroll') as string;
-    if (isNaN(parseInt(localStorageScrollID)))
-      localStorage.setItem('feedview_postObj', JSON.stringify(firstPostOnCurrentPage));
+      // Just navigateTo... this.activePostId check in the constructor will do the rest...
+      switchButtonValue === FeedMode.Post
+        ? this.navigateTo().idMode.view({ id: firstPostOnCurrentPage.id })
+        : this.navigateTo().previewMode({});
+
+      /* --------------------------------------------------------
+        Update postObj in localStorage so that "Scroll to top" style is updated
+        Modal will also be able to access the updated/correct post on resize
+      --------------------------------------------------------------*/
+      const localStorageScrollID = localStorage.getItem('feedview_post-id-to-scroll') as string;
+      if (isNaN(parseInt(localStorageScrollID)))
+        localStorage.setItem('feedview_postObj', JSON.stringify(firstPostOnCurrentPage));
+    }
 
     // 1. If there are no posts "The switch buttons shouldn't 'try to work'"
     // Reason is because the switch buttons alongside all other elements disabled when the page is still loading, shouldn't even show up in the first place) [when there are no posts].
