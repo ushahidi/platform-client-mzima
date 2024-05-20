@@ -307,7 +307,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     window.addEventListener('resize', () => {
       if (this.router.url.includes('/view')) this.idMode({ page: 'view' }).modalPopup.onResize({});
       if (this.router.url.includes('/edit')) this.idMode({ page: 'edit' }).modalPopup.onResize({});
-      // this.scrollSelectedCardToView();
+      this.scrollSelectedCardToView();
     });
 
     // window.addEventListener('resize', () => {
