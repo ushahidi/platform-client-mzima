@@ -867,7 +867,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         Modal will also be able to access the updated/correct post on resize
       --------------------------------------------------------------*/
       const localStorageScrollID = localStorage.getItem('feedview_post-id-to-scroll') as string;
-      if (isNaN(parseInt(localStorageScrollID)))
+      if (!localStorageScrollID || isNaN(parseInt(localStorageScrollID)))
         localStorage.setItem('feedview_postObj', JSON.stringify(firstPostOnCurrentPage));
     }
 
