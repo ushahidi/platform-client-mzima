@@ -503,6 +503,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     // this.navigateTo().idMode.view({ post });
     this.onlyModeUIChanged = true;
     this.userEvent = 'click';
+    this.navigateTo().idMode.view({ id: post.id });
     this.idMode({ page: 'view' }).modalPopup.onClick({ post });
   }
 
@@ -828,6 +829,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public editPost(post: any): void {
     this.onlyModeUIChanged = true;
     this.userEvent = 'click';
+    this.navigateTo().idMode.edit({ id: post.id });
     this.idMode({ page: 'edit' }).modalPopup.onClick({ post });
   }
 
@@ -835,18 +837,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     return {
       modalPopup: {
         onClick: ({ post }: { post: PostResult }) => {
-          if (page === 'view') {
-            this.navigateTo().idMode.view({ id: post.id });
-            this.openModal({ post }).forView();
-          }
-          if (page === 'edit') {
-            this.navigateTo().idMode.edit({ id: post.id });
-            this.openModal({ post }).forEdit();
-          }
+          if (page === 'view') this.openModal({ post }).forView();
+          if (page === 'edit') this.openModal({ post }).forEdit();
         },
         onLoad: ({ id }: { id: number }) => {
-          if (page === 'view') this.navigateTo().idMode.view({ id });
-          if (page === 'edit') this.navigateTo().idMode.edit({ id });
           this.postsService.getById(id).subscribe({
             next: (fetchedPost: PostResult) => {
               if (page === 'view') this.openModal({ post: fetchedPost }).forView();
