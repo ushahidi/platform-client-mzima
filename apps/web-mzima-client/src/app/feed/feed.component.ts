@@ -303,7 +303,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     window.addEventListener('resize', () => {
       this.modal({ event: 'resize' }).popup.onResize({});
-      this.scrollSelectedCardToView();
+      // this.scrollSelectedCardToView();
     });
 
     // window.addEventListener('resize', () => {
