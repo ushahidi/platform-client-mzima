@@ -197,9 +197,13 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
           if (this.userEvent === 'load') {
             if (this.router.url.includes('/view'))
-              this.idMode({ page: 'view' }).modalPopup.onLoad({ id: this.activePostId });
+              this.modal({ showOn: 'TabletAndBelow' })
+                .idMode({ page: 'view' })
+                .onLoad({ id: this.activePostId });
             if (this.router.url.includes('/edit'))
-              this.idMode({ page: 'edit' }).modalPopup.onLoad({ id: this.activePostId });
+              this.modal({ showOn: 'TabletAndBelow' })
+                .idMode({ page: 'edit' })
+                .onLoad({ id: this.activePostId });
           }
         }
         this.onlyModeUIChanged = false;
@@ -305,8 +309,10 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     });
 
     window.addEventListener('resize', () => {
-      if (this.router.url.includes('/view')) this.idMode({ page: 'view' }).modalPopup.onResize({});
-      if (this.router.url.includes('/edit')) this.idMode({ page: 'edit' }).modalPopup.onResize({});
+      if (this.router.url.includes('/view'))
+        this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).onResize({});
+      if (this.router.url.includes('/edit'))
+        this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).onResize({});
       this.scrollSelectedCardToView();
     });
 
@@ -504,7 +510,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.onlyModeUIChanged = true;
     this.userEvent = 'click';
     this.navigateTo().idMode.view({ id: post.id });
-    this.idMode({ page: 'view' }).modalPopup.onClick({ post });
+    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).onClick({ post });
   }
 
   public async savePostIDforScroll(id: number) {
@@ -830,62 +836,71 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.onlyModeUIChanged = true;
     this.userEvent = 'click';
     this.navigateTo().idMode.edit({ id: post.id });
-    this.idMode({ page: 'edit' }).modalPopup.onClick({ post });
+    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).onClick({ post });
   }
 
-  public idMode({ page }: { page: 'view' | 'edit' }) {
+  public modal({ showOn }: { showOn: 'TabletAndBelow' }) {
     return {
-      modalPopup: {
-        onClick: ({ post }: { post: PostResult }) => {
-          if (page === 'view') this.openModal({ post }).forView();
-          if (page === 'edit') this.openModal({ post }).forEdit();
-        },
-        onLoad: ({ id }: { id: number }) => {
-          this.postsService.getById(id).subscribe({
-            next: (fetchedPost: PostResult) => {
-              if (page === 'view') this.openModal({ post: fetchedPost }).forView();
-              if (page === 'edit') this.openModal({ post: fetchedPost }).forEdit();
-            },
-            // error: (err) => {
-            //   // console.log(err.status);
-            //   if (err.status === 404) {
-            //     this.router.navigate(['/not-found']);
-            //   }
-            // },
-          });
-        },
-        // To be used inside of a window resize event listener
-        // eslint-disable-next-line no-empty-pattern
-        onResize: ({}) => {
-          // Simulate card click on RESIZE
-          if (this.mode === FeedMode.Post) {
-            if (window.innerWidth >= 1024) {
-              this.postDetailsModal.close();
-              // console.log(this.dialog.openDialogs);
-            } else {
-              if (this.dialog.openDialogs.length) {
-                for (let i = 0; i <= this.dialog.openDialogs.length; i += 1) {
-                  if (i === 0 && this.dialog.openDialogs.length === 1) {
-                    const firstPostFromOpenModalDialog =
-                      this.dialog.openDialogs[0].componentInstance.data.post;
-                    if (page === 'view')
-                      this.openModal({ post: firstPostFromOpenModalDialog }).forView();
-                    if (page === 'edit')
-                      this.openModal({ post: firstPostFromOpenModalDialog }).forEdit();
-                    break;
-                  }
-                }
-              } else {
-                const postFromStorage = JSON.parse(
-                  localStorage.getItem('feedview_postObj') as string,
-                );
-                if (page === 'view') this.openModal({ post: postFromStorage }).forView();
-                if (page === 'edit') this.openModal({ post: postFromStorage }).forEdit();
-              }
-              // console.log(this.dialog.openDialogs);
+      // Note: SM_Screen means what we say is "tablet and below"
+      idMode: ({ page }: { page: 'view' | 'edit' }) => {
+        return {
+          onClick: ({ post }: { post: PostResult }) => {
+            if (showOn === 'TabletAndBelow') {
+              if (page === 'view') this.openModal({ post }).forView();
+              if (page === 'edit') this.openModal({ post }).forEdit();
             }
-          }
-        },
+          },
+          onLoad: ({ id }: { id: number }) => {
+            if (showOn === 'TabletAndBelow') {
+              this.postsService.getById(id).subscribe({
+                next: (fetchedPost: PostResult) => {
+                  if (page === 'view') this.openModal({ post: fetchedPost }).forView();
+                  if (page === 'edit') this.openModal({ post: fetchedPost }).forEdit();
+                },
+                // error: (err) => {
+                //   // console.log(err.status);
+                //   if (err.status === 404) {
+                //     this.router.navigate(['/not-found']);
+                //   }
+                // },
+              });
+            }
+          },
+          // To be used inside of a window resize event listener
+          // eslint-disable-next-line no-empty-pattern
+          onResize: ({}) => {
+            // Simulate card click on RESIZE
+            if (showOn === 'TabletAndBelow') {
+              if (this.mode === FeedMode.Post) {
+                if (window.innerWidth >= 1024) {
+                  this.postDetailsModal.close();
+                  // console.log(this.dialog.openDialogs);
+                } else {
+                  if (this.dialog.openDialogs.length) {
+                    for (let i = 0; i <= this.dialog.openDialogs.length; i += 1) {
+                      if (i === 0 && this.dialog.openDialogs.length === 1) {
+                        const firstPostFromOpenModalDialog =
+                          this.dialog.openDialogs[0].componentInstance.data.post;
+                        if (page === 'view')
+                          this.openModal({ post: firstPostFromOpenModalDialog }).forView();
+                        if (page === 'edit')
+                          this.openModal({ post: firstPostFromOpenModalDialog }).forEdit();
+                        break;
+                      }
+                    }
+                  } else {
+                    const postFromStorage = JSON.parse(
+                      localStorage.getItem('feedview_postObj') as string,
+                    );
+                    if (page === 'view') this.openModal({ post: postFromStorage }).forView();
+                    if (page === 'edit') this.openModal({ post: postFromStorage }).forEdit();
+                  }
+                  // console.log(this.dialog.openDialogs);
+                }
+              }
+            }
+          },
+        };
       },
     };
   }
