@@ -29,6 +29,7 @@ enum FeedMode {
   Post = 'POST',
 }
 
+type UserEvent = 'load' | 'click' | 'resize';
 type IdModePage = 'view' | 'edit';
 
 @UntilDestroy()
@@ -48,7 +49,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     page: 0,
     limit: 20,
   };
-  public userEvent: 'load' | 'click' | 'resize' = 'load'; // will help the app keep track of if click has happened later on
+  public userEvent: UserEvent = 'load'; // will help the app keep track of if click has happened later on
   public idModePageFromRouter: IdModePage; // will help app keep track of id mode page for use later on resize, after setting on page load
   public postAction: 'load' | 'click' | 'filter' = 'load';
   public onlyModeUIChanged = false;
