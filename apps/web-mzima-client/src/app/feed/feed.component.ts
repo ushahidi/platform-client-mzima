@@ -50,7 +50,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     limit: 20,
   };
   public userEvent: UserEvent = 'load'; // will help the app keep track of if click has happened later on
-  public idModePageFromRouter: IdModePage; // will help app keep track of id mode page for use later on resize, after setting on page load
+  public idModePages: ['view', 'edit'] = ['view', 'edit'];
+  public idModePageFromRouter = (routerUrl: string) =>
+    this.idModePages.filter((string) => routerUrl.includes(`/${string}`))[0] as IdModePage; // will help app keep track of id mode page for use later on resize, after setting on page load
   public onlyModeUIChanged = false;
   public postsSkeleton = new Array(20).fill(''); // used for Post mode's skeleton loader
   public posts: PostResult[] = [];
@@ -197,14 +199,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           this.scrollSelectedCardToView();
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
           if (this.userEvent === 'load') {
-            //-----------------------------------
-            const idModePages = ['view', 'edit'];
-            this.idModePageFromRouter = idModePages.filter((string) =>
-              this.router.url.includes(`/${string}`),
-            )[0] as IdModePage;
-            //-----------------------------------
+            const valueFromPageURL = this.idModePageFromRouter(this.router.url);
             this.modal({ showOn: 'TabletAndBelow' })
-              .idMode({ page: this.idModePageFromRouter })
+              .idMode({ page: valueFromPageURL })
               .loadHandler({ id: this.activePostId });
           }
         }
@@ -312,9 +309,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     window.addEventListener('resize', () => {
       //-----------------------------------
-      this.modal({ showOn: 'TabletAndBelow' })
-        .idMode({ page: this.idModePageFromRouter })
-        .resizeHandler({});
+      const valueFromPageURL = this.idModePageFromRouter(this.router.url);
+      this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: valueFromPageURL }).resizeHandler({});
       //-----------------------------------
       this.scrollSelectedCardToView();
     });
@@ -876,7 +872,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
             if (showOn === 'TabletAndBelow') {
               if (this.mode === FeedMode.Post) {
                 if (window.innerWidth >= 1024) {
-                  this.postDetailsModal.close();
+                  this.postDetailsModal?.close();
                   // console.log(this.dialog.openDialogs);
                 } else {
                   if (this.dialog.openDialogs.length) {
