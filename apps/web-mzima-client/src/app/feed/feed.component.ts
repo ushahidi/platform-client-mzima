@@ -199,11 +199,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
             if (this.router.url.includes('/view'))
               this.modal({ showOn: 'TabletAndBelow' })
                 .idMode({ page: 'view' })
-                .onLoad({ id: this.activePostId });
+                .loadHandler({ id: this.activePostId });
             if (this.router.url.includes('/edit'))
               this.modal({ showOn: 'TabletAndBelow' })
                 .idMode({ page: 'edit' })
-                .onLoad({ id: this.activePostId });
+                .loadHandler({ id: this.activePostId });
           }
         }
         this.onlyModeUIChanged = false;
@@ -310,9 +310,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
 
     window.addEventListener('resize', () => {
       if (this.router.url.includes('/view'))
-        this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).onResize({});
+        this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).resizeHandler({});
       if (this.router.url.includes('/edit'))
-        this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).onResize({});
+        this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).resizeHandler({});
       this.scrollSelectedCardToView();
     });
 
@@ -510,7 +510,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.onlyModeUIChanged = true;
     this.userEvent = 'click';
     this.navigateTo().idMode.view({ id: post.id });
-    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).onClick({ post });
+    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).clickHandler({ post });
   }
 
   public async savePostIDforScroll(id: number) {
@@ -836,7 +836,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.onlyModeUIChanged = true;
     this.userEvent = 'click';
     this.navigateTo().idMode.edit({ id: post.id });
-    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).onClick({ post });
+    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).clickHandler({ post });
   }
 
   public modal({ showOn }: { showOn: 'TabletAndBelow' }) {
@@ -844,13 +844,13 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       // Note: SM_Screen means what we say is "tablet and below"
       idMode: ({ page }: { page: 'view' | 'edit' }) => {
         return {
-          onClick: ({ post }: { post: PostResult }) => {
+          clickHandler: ({ post }: { post: PostResult }) => {
             if (showOn === 'TabletAndBelow') {
               if (page === 'view') this.openModal({ post }).forView();
               if (page === 'edit') this.openModal({ post }).forEdit();
             }
           },
-          onLoad: ({ id }: { id: number }) => {
+          loadHandler: ({ id }: { id: number }) => {
             if (showOn === 'TabletAndBelow') {
               this.postsService.getById(id).subscribe({
                 next: (fetchedPost: PostResult) => {
@@ -868,7 +868,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           },
           // To be used inside of a window resize event listener
           // eslint-disable-next-line no-empty-pattern
-          onResize: ({}) => {
+          resizeHandler: ({}) => {
             // Simulate card click on RESIZE
             if (showOn === 'TabletAndBelow') {
               if (this.mode === FeedMode.Post) {
