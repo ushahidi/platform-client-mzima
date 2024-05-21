@@ -29,6 +29,8 @@ enum FeedMode {
   Post = 'POST',
 }
 
+type IdModePage = 'view' | 'edit';
+
 @UntilDestroy()
 @Component({
   selector: 'app-feed',
@@ -47,6 +49,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     limit: 20,
   };
   public userEvent: 'load' | 'click' | 'resize' = 'load'; // will help the app keep track of if click has happened later on
+  public idModePageFromRouter: IdModePage; // will help app keep track of id mode page for use later on resize, after setting on page load
   public postAction: 'load' | 'click' | 'filter' = 'load';
   public onlyModeUIChanged = false;
   public postsSkeleton = new Array(20).fill(''); // used for Post mode's skeleton loader
@@ -196,14 +199,15 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           this.scrollSelectedCardToView();
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
           if (this.userEvent === 'load') {
-            if (this.router.url.includes('/view'))
-              this.modal({ showOn: 'TabletAndBelow' })
-                .idMode({ page: 'view' })
-                .loadHandler({ id: this.activePostId });
-            if (this.router.url.includes('/edit'))
-              this.modal({ showOn: 'TabletAndBelow' })
-                .idMode({ page: 'edit' })
-                .loadHandler({ id: this.activePostId });
+            //-----------------------------------
+            const idModePages = ['view', 'edit'];
+            this.idModePageFromRouter = idModePages.filter((string) =>
+              this.router.url.includes(`/${string}`),
+            )[0] as IdModePage;
+            //-----------------------------------
+            this.modal({ showOn: 'TabletAndBelow' })
+              .idMode({ page: this.idModePageFromRouter })
+              .loadHandler({ id: this.activePostId });
           }
         }
         this.onlyModeUIChanged = false;
@@ -309,10 +313,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     });
 
     window.addEventListener('resize', () => {
-      if (this.router.url.includes('/view'))
-        this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).resizeHandler({});
-      if (this.router.url.includes('/edit'))
-        this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).resizeHandler({});
+      //-----------------------------------
+      this.modal({ showOn: 'TabletAndBelow' })
+        .idMode({ page: this.idModePageFromRouter })
+        .resizeHandler({});
+      //-----------------------------------
       this.scrollSelectedCardToView();
     });
 
@@ -842,7 +847,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public modal({ showOn }: { showOn: 'TabletAndBelow' }) {
     return {
       // Note: SM_Screen means what we say is "tablet and below"
-      idMode: ({ page }: { page: 'view' | 'edit' }) => {
+      idMode: ({ page }: { page: IdModePage }) => {
         return {
           clickHandler: ({ post }: { post: PostResult }) => {
             if (showOn === 'TabletAndBelow') {
@@ -910,7 +915,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       page,
       configRemainder,
     }: {
-      page: 'view' | 'edit';
+      page: IdModePage;
       configRemainder: Record<string, any>;
     }) => {
       let config = {
