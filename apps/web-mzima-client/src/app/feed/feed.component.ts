@@ -51,7 +51,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   };
   public userEvent: UserEvent = 'load'; // will help the app keep track of if click has happened later on
   public idModePageFromRouter: IdModePage; // will help app keep track of id mode page for use later on resize, after setting on page load
-  public postAction: 'load' | 'click' | 'filter' = 'load';
   public onlyModeUIChanged = false;
   public postsSkeleton = new Array(20).fill(''); // used for Post mode's skeleton loader
   public posts: PostResult[] = [];
@@ -148,7 +147,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         // console.log('mode monitoring id: : ', this.mode);
         //----------------------------------------------
 
-        this.postAction = this.onlyModeUIChanged ? 'click' : 'load';
         this.isLoading = !this.onlyModeUIChanged;
         this.paginationElementsAllowed = this.onlyModeUIChanged
           ? this.posts.length >= 20 || this.currentPage > 1
@@ -189,7 +187,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((/*event*/) => {
-        console.log('postAction: ', this.postAction);
         console.log('isLoading: ', this.isLoading);
         console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
 
