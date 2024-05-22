@@ -165,8 +165,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
 
-        this.updateMasonry();
-
         // i.e will not empty posts for Post Card and SwitchMode button clicks
         if (this.isLoading) {
           this.posts = [];
@@ -281,7 +279,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
         this.loadingMorePosts = false;
 
-        this.updateMasonry();
         // Delay pagination by a "split second" to prevent slight flicker
         setTimeout(() => {
           // && !this.isLoading
@@ -512,8 +509,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public showPostDetails(post: PostResult): void {
-    this.updateMasonry(); // never forget this guy when you need styles to adjust for masonry library
-
     /* Remainder comment: 
        Naturally, the "navigateTo" function should have been directly placed here
        This is because routing is triggered by it regardless of the size of the 
@@ -529,7 +524,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
        on card click - as shown in the comment below.
     */
     // this.navigateTo().idMode.view({ post });
+
+    //---------------------------
+    this.updateMasonry(); // never forget this guy when you need styles to adjust for masonry library
     this.onlyModeUIChanged = true;
+    //---------------------------
     this.userEvent = 'click';
     this.navigateTo().idMode.view({ id: post.id });
     this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).clickHandler({ post });
@@ -704,6 +703,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public loadMore(): void {
     if (this.paginationElementsAllowed) {
       this.loadingMorePosts = true;
+      this.activeCard().scrollCountHandler({ task: 'increment' });
       this.params.page! += 1;
       this.getPosts(this.params, true);
     }
@@ -728,7 +728,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     const inactiveSwitchModeButtonClicked = switchButtonValue !== modeValueBeforeRouting;
 
     if (inactiveSwitchModeButtonClicked) {
+      //---------------------------
+      this.updateMasonry();
       this.onlyModeUIChanged = true;
+      //---------------------------
       const firstPostOnCurrentPage = this.posts[0];
 
       // Just navigateTo... this.activePostId check in the constructor will do the rest...
@@ -821,7 +824,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public editPost(post: any): void {
+    //---------------------------
+    this.updateMasonry();
     this.onlyModeUIChanged = true;
+    //---------------------------
     this.userEvent = 'click';
     this.navigateTo().idMode.edit({ id: post.id });
     this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).clickHandler({ post });
