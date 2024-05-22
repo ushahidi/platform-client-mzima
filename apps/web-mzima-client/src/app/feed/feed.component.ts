@@ -194,7 +194,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         console.log('isLoading: ', this.isLoading);
         console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
 
-        this.activeCard().styleHandler();
+        this.activeCard().slideOutHandler();
         this.activeCard().scrollCountHandler({ task: 'increment' });
         this.activeCard().scrollToView();
 
@@ -481,7 +481,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
   public activeCard() {
     return {
-      styleHandler: () => {
+      slideOutHandler: () => {
         const postFromStorage = JSON.parse(localStorage.getItem('feedview_postObj') as string);
         this.postDetails = postFromStorage;
       },
