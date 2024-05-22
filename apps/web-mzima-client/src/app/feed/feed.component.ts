@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,7 +8,7 @@ import { searchFormHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
-import { filter, forkJoin, Subject /*, debounceTime*/ } from 'rxjs';
+import { filter, forkJoin, Subject, Subscription } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 import { MainViewComponent } from '@shared';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
@@ -38,7 +38,8 @@ type IdModePage = 'view' | 'edit';
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss'],
 })
-export class FeedComponent extends MainViewComponent implements OnInit {
+export class FeedComponent extends MainViewComponent implements OnInit, OnDestroy {
+  private _routerEvent = Subscription.EMPTY;
   @ViewChild('feed') public feed: ElementRef;
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
   private readonly getPostsSubject = new Subject<{
@@ -189,7 +190,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     //     this.isLoading = false;
     //   });
 
-    this.router.events
+    this._routerEvent = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((/*event*/) => {
         console.log('isLoading: ', this.isLoading);
@@ -336,6 +337,9 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         }, 1);
       },
     });
+  }
+  ngOnDestroy(): void {
+    this._routerEvent.unsubscribe();
   }
 
   ngOnInit() {
