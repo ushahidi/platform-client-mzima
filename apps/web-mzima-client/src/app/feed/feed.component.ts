@@ -150,7 +150,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         // console.log('mode monitoring id: : ', this.mode);
         //----------------------------------------------
 
-        this.activeCard().scrollHandler({ task: 'reset' });
+        this.activeCard().scrollCountHandler({ task: 'reset' });
 
         this.isLoading = !this.onlyModeUIChanged;
         this.paginationElementsAllowed = this.onlyModeUIChanged
@@ -196,7 +196,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
 
         this.activeCard().styleHandler();
-        this.activeCard().scrollHandler({ task: 'execute' });
+        this.activeCard().scrollCountHandler({ task: 'increment' });
         this.activeCard().scrollToView();
 
         if (this.mode === FeedMode.Post) {
@@ -484,7 +484,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         const postFromStorage = JSON.parse(localStorage.getItem('feedview_postObj') as string);
         this.postDetails = postFromStorage;
       },
-      scrollHandler: ({ task }: { task: 'reset' | 'execute' }) => {
+      scrollCountHandler: ({ task }: { task: 'reset' | 'increment' }) => {
         const countPropExists = localStorage.hasOwnProperty('scroll_count');
         const localStorageCount = parseInt(localStorage.getItem('scroll_count') as string);
         const startCount = this.mode === FeedMode.Post ? 1 : 0;
@@ -492,7 +492,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           localStorage.setItem('scroll_count', `${startCount}`);
         } else {
           if (task === 'reset') localStorage.removeItem('scroll_count');
-          if (task === 'execute') {
+          if (task === 'increment') {
             localStorage.setItem('scroll_count', `${localStorageCount + 1}`);
           }
         }
