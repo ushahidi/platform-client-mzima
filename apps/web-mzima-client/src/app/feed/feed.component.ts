@@ -66,6 +66,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public activePostId: number;
   public total: number;
   public postDetails?: PostResult;
+  public scrollToView: boolean;
   public scrollingID?: number | null;
   public isPostLoading: boolean;
   public isFiltersVisible: boolean;
@@ -149,6 +150,8 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         // console.log('mode monitoring id: : ', this.mode);
         //----------------------------------------------
 
+        this.activeCard().scrollHandler({ task: 'reset' });
+
         this.isLoading = !this.onlyModeUIChanged;
         this.paginationElementsAllowed = this.onlyModeUIChanged
           ? this.posts.length >= 20 || this.currentPage > 1
@@ -192,11 +195,11 @@ export class FeedComponent extends MainViewComponent implements OnInit {
         console.log('isLoading: ', this.isLoading);
         console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
 
-        this.savePostIDforScroll(this.activePostId);
-        this.setPostIDForCardStyle();
+        this.activeCard().styleHandler();
+        this.activeCard().scrollHandler({ task: 'execute' });
+        this.activeCard().scrollToView();
 
         if (this.mode === FeedMode.Post) {
-          this.scrollSelectedCardToView();
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
           if (this.userEvent === 'load') {
             const valueFromPageURL = this.idModePageFromRouter(this.router.url);
@@ -284,7 +287,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
           this.paginationElementsAllowed = response.meta.total > dataMetaPerPage; // show pagination-related elements
         }, 100);
 
-        this.scrollSelectedCardToView();
+        this.activeCard().scrollToView();
 
         // console.log(response);
       },
@@ -312,7 +315,7 @@ export class FeedComponent extends MainViewComponent implements OnInit {
       const valueFromPageURL = this.idModePageFromRouter(this.router.url);
       this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: valueFromPageURL }).resizeHandler({});
       //-----------------------------------
-      this.scrollSelectedCardToView();
+      this.activeCard().scrollToView();
     });
 
     // window.addEventListener('resize', () => {
@@ -475,17 +478,33 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.masonry?.layout();
   }
 
-  // public setIsLoadingOnCardClick() {
-  //   // With this skeleton loader's css is properly displayed (when navigating to POST mode) through post card click,
-  //   // and the post card is able to detect to not load the skeleton UI loader after posts have successfully shown up
-  //   this.posts.length && this.mode === FeedMode.Tiles
-  //     ? (this.isLoading = true)
-  //     : this.isLoading === !this.posts.length;
-  // }
-
-  public setPostIDForCardStyle() {
-    const postFromStorage = JSON.parse(localStorage.getItem('feedview_postObj') as string);
-    this.postDetails = postFromStorage;
+  public activeCard() {
+    return {
+      styleHandler: () => {
+        const postFromStorage = JSON.parse(localStorage.getItem('feedview_postObj') as string);
+        this.postDetails = postFromStorage;
+      },
+      scrollHandler: ({ task }: { task: 'reset' | 'execute' }) => {
+        const countPropExists = localStorage.hasOwnProperty('scroll_count');
+        const localStorageCount = parseInt(localStorage.getItem('scroll_count') as string);
+        const startCount = this.mode === FeedMode.Post ? 1 : 0;
+        if (!countPropExists) {
+          localStorage.setItem('scroll_count', `${startCount}`);
+        } else {
+          if (task === 'reset') localStorage.removeItem('scroll_count');
+          if (task === 'execute') {
+            localStorage.setItem('scroll_count', `${localStorageCount + 1}`);
+          }
+        }
+      },
+      scrollToView: () => {
+        this.scrollToView = parseInt(localStorage.getItem('scroll_count') as string) === 1;
+        console.log({ scrollToView: this.scrollToView });
+        setTimeout(() => {
+          document.querySelector('.scroll--active--postcard--to--top')?.scrollIntoView();
+        }, 150);
+      },
+    };
   }
 
   public showPostDetails(post: PostResult): void {
@@ -510,39 +529,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
     this.userEvent = 'click';
     this.navigateTo().idMode.view({ id: post.id });
     this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).clickHandler({ post });
-  }
-
-  public async savePostIDforScroll(id: number) {
-    //-----------------------------------
-    const setScrollID = (set: boolean) => {
-      const item = set ? `${id}` : 'scroll ID now disbled!';
-      localStorage.setItem('feedview_post-id-to-scroll', item);
-      this.scrollingID = set
-        ? parseInt(localStorage.getItem('feedview_post-id-to-scroll') as string)
-        : null;
-    };
-    //-----------------------------------
-    if (this.mode === FeedMode.Post) {
-      const idOfPostToScrollOnceToTop = localStorage.getItem('feedview_post-id-to-scroll');
-      if (!idOfPostToScrollOnceToTop || this.userEvent === 'load') setScrollID(true);
-      if (!idOfPostToScrollOnceToTop || this.userEvent !== 'load') setScrollID(true);
-      if (
-        (idOfPostToScrollOnceToTop && this.userEvent !== 'load') ||
-        (idOfPostToScrollOnceToTop && this.loadingMorePosts)
-      ) {
-        setScrollID(false);
-      }
-    }
-    if (this.mode === FeedMode.Tiles) {
-      localStorage.removeItem('feedview_post-id-to-scroll');
-      this.scrollingID = null;
-    }
-  }
-
-  public scrollSelectedCardToView() {
-    setTimeout(() => {
-      document.querySelector('.scroll--active--postcard--to--top')?.scrollIntoView();
-    }, 150);
   }
 
   public navigateTo = () => {
@@ -714,7 +700,6 @@ export class FeedComponent extends MainViewComponent implements OnInit {
   public loadMore(): void {
     if (this.paginationElementsAllowed) {
       this.loadingMorePosts = true;
-      this.savePostIDforScroll(this.activePostId);
       this.params.page! += 1;
       this.getPosts(this.params, true);
     }
