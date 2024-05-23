@@ -131,14 +131,14 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
     this.route.queryParams.subscribe({
       next: (params: Params) => {
-        /* ----------------------------------------------
-          Don't have access to "NavigationStart" event within
-          FeedComponentTherefore setting initial variables here 
-          ----------------------------------------------*/
-        /* ----------------------------------------------
+        /* ------------------------------------------------------
+          Don't have access to the "NavigationStart" event within
+          FeedComponent, therefore setting initial variables here 
+          -----------------------------------------------------*/
+        /* ------------------------------------------------------
           ID check to determine mode (more reliable than previous 
           method of setting & getting mode from queryParams)
-         ---------------------------------------------- */
+         ------------------------------------------------------*/
         this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
         const postModeHint = this.activePostId;
         this.mode = postModeHint ? FeedMode.Post : FeedMode.Tiles;
@@ -227,32 +227,15 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       },
     });
 
-    // Set isLoading to false directly from posts service from within
+    /* ---------------------------------------------
+      Set isLoading to false at the end of API call,
+      monitored directly from posts service
+    ----------------------------------------------*/
     this.postsService.isLoadingPosts$.pipe(untilDestroyed(this)).subscribe({
       next: (isLoading: boolean) => {
         // Get end of post load directly from the posts API, use it to set is loading state to false
         this.isLoading = isLoading;
         console.log('isLoading... after API loaded: ', this.isLoading);
-
-        // this.paginationElementsAllowed = true;
-
-        //---------------------------------
-        // These are needed to achieve clean display of posts or message on the UI
-        // this.atLeastOnePostExists = this.posts.length > 0;
-        // this.noPostsYet = !this.atLeastOnePostExists; // && this.mode === FeedMode.Tiles;
-        // this.loadingMorePosts = false; // for load more button's loader/spinner
-        //---------------------------------
-        //   this.updateMasonry();
-        //   setTimeout(() => {
-        //     if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
-        //       document.querySelector('.post--selected')?.scrollIntoView();
-        //     }
-        //   }, 250);
-        // }, 500);
-        // setTimeout(() => {
-        //   //is inside this much delayed setTimeout to prevent pagination elements flicker on load/routing
-        //   this.paginationElementsAllowed = data.meta.total > dataMetaPerPage; // show pagination-related elements
-        // }, 2100);
       },
     });
 
@@ -262,11 +245,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       },
     });
 
-    // Centralized awaited response from API, loads after posts as needed
+    /* -----------------------------------------------------------------
+      Centralized awaited response from API, loads after posts as needed
+    ------------------------------------------------------------------*/
     this.postsService.awaitedResponse$.pipe(untilDestroyed(this)).subscribe({
       next: (response: any) => {
-        // if (!this.isLoading) {
-        // const isPostsAlreadyExist = !!this.posts.length;
         const dataMetaPerPage = Number(response.meta.per_page);
         this.postCurrentLength =
           response.count < dataMetaPerPage
@@ -275,9 +258,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
         this.loadingMorePosts = false;
 
-        // Delay pagination by a "split second" to prevent slight flicker
+        /* -------------------------------------------------------------
+          Delay pagination by a "split second" to prevent slight flicker
+        ---------------------------------------------------------------*/
         setTimeout(() => {
-          // && !this.isLoading
           this.paginationElementsAllowed = response.meta.total > dataMetaPerPage; // show pagination-related elements
         }, 100);
 
