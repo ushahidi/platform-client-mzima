@@ -81,7 +81,7 @@ export class PostItemComponent implements OnInit {
             this.post.status,
           );
         } else {
-          this.actionSheetButtons = getPostItemActions();
+          this.actionSheetButtons = [];
         }
       },
     });
@@ -224,5 +224,9 @@ export class PostItemComponent implements OnInit {
 
   public preventClick(ev: Event): void {
     ev.stopPropagation();
+  }
+
+  public getLoggedInStatus() {
+    return this.sessionService.isLogged();
   }
 }

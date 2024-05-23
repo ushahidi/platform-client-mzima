@@ -1,5 +1,7 @@
 import SurveyConfigurationLocators from '../locators/SurveyConfigurationLocators';
 import LoginFunctions from '../functions/LoginFunctions';
+import PostLocators from '../locators/PostsLocators/PostLocators';
+import DataViewLocators from '../locators/DataViewLocators';
 
 const loginFunctions = new LoginFunctions();
 
@@ -13,7 +15,7 @@ class SurveyConfigurationFunctions {
   }
 
   open_survey_to_configure() {
-    cy.get(SurveyConfigurationLocators.configurationTestSurvey).click();
+    cy.get(SurveyConfigurationLocators.surveyToConfigure).click();
   }
 
   open_survey_configurations() {
@@ -27,8 +29,17 @@ class SurveyConfigurationFunctions {
   toggle_require_posts_review() {
     cy.get(SurveyConfigurationLocators.requirePostsReviewTgl).click();
   }
+
   toggle_hide_author_information() {
     cy.get(SurveyConfigurationLocators.hideAuthorTgl).click();
+  }
+
+  toggle_hide_exact_time_information() {
+    cy.get(SurveyConfigurationLocators.hideTimeTgl).click();
+  }
+
+  toggle_hide_exact_location_information() {
+    cy.get(SurveyConfigurationLocators.hideLocationTgl).click();
   }
 
   save_survey_configurations() {
@@ -39,60 +50,64 @@ class SurveyConfigurationFunctions {
     cy.get('#mat-tab-label-6-1').click({ force: true });
   }
 
-  verify_button_toggled() {
-    cy.get('#mat-slide-toggle-20-input').should('not.be.checked');
-  }
-
   click_add_post_btn() {
     cy.get(SurveyConfigurationLocators.addPostBtn).click();
   }
 
-  select_survey() {
-    cy.get(SurveyConfigurationLocators.surveyItemBtn).click();
-    cy.wait(1000);
-  }
   open_survey_to_submit() {
-    cy.get(SurveyConfigurationLocators.surveyToSubmit).click();
+    cy.get(SurveyConfigurationLocators.surveyToSubmitPost).click();
   }
 
   type_post_title(title) {
-    cy.get(SurveyConfigurationLocators.postTitleField).type(title, { force: true });
+    cy.get(SurveyConfigurationLocators.postTitleField).should('be.visible');
+    cy.get(SurveyConfigurationLocators.postTitleField).type(title);
   }
 
   type_post_description(description) {
-    cy.get(SurveyConfigurationLocators.postDescField).type(description, { force: true });
+    cy.get(SurveyConfigurationLocators.postDescField).should('be.visible');
+    cy.get(SurveyConfigurationLocators.postDescField).type(description);
   }
 
   save_post() {
     cy.get(SurveyConfigurationLocators.savePostBtn).click();
   }
+
   add_post() {
     this.click_add_post_btn();
     this.open_survey_to_submit();
+    cy.wait(1000);
     this.type_post_title('New Post Title');
-    // cy.get('[data-qa="null"]').type('New Title');
     this.type_post_description('New Post Description');
     this.save_post();
     cy.get(SurveyConfigurationLocators.successBtn).click();
   }
 
-  check_for_added_post_being_published() {
-    cy.get(SurveyConfigurationLocators.clearBtn).click();
-    cy.get(SurveyConfigurationLocators.surveySelectionList)
-      .children(SurveyConfigurationLocators.surveyToVerify)
-      .eq(0)
-      .click({ force: true });
-    cy.wait(3000);
-    cy.get(SurveyConfigurationLocators.postPreview)
-      .children(SurveyConfigurationLocators.postItem)
-      .contains('New Post Title');
-    cy.get(SurveyConfigurationLocators.postStatus).contains('Published');
+  add_post_with_location() {
+    this.click_add_post_btn();
+    //open a specific survey with location field to test hiding location
+    this.open_survey_to_submit();
+    this.type_post_title('New Post Title for Location');
+    this.type_post_description('New Post Description');
+    cy.get(PostLocators.locationSearchField).type('nairobi county');
+    this.save_post();
+    cy.get(SurveyConfigurationLocators.successBtn).click();
+  }
+
+  check_for_hidden_exact_location() {
+    //the check that hidden exact location works is check that unprivileged user sees rounded up lat and long values
+    //clear filters then select survey and see if the posts come up
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+    cy.get(DataViewLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
+
+    cy.get(SurveyConfigurationLocators.postItem).contains('New Post Title').click();
+    cy.get(PostLocators.locationValues).should('be.visible').should('contain', '-1.28 36.82');
   }
 
   check_for_accurate_author_name() {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get(SurveyConfigurationLocators.surveyToVerify).click();
-    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
@@ -103,34 +118,48 @@ class SurveyConfigurationFunctions {
     cy.get(SurveyConfigurationLocators.clearBtn).click();
     cy.get('[data-qa="btn-data"]').click();
     cy.get(SurveyConfigurationLocators.surveyToVerify).click();
-    // cy.wait(3000);
     cy.get(SurveyConfigurationLocators.postPreview)
       .children(SurveyConfigurationLocators.postItem)
       .contains('New Post Title');
     cy.get('.post-info__username').contains('Anonymous').should('be.visible');
   }
 
-  require_posts_reviewed_before_published() {
-    this.open_settings();
-    this.open_surveys();
-    this.open_survey_to_configure();
-    this.open_survey_configurations();
-    this.toggle_survey_review_required();
-    this.save_survey_configurations();
-    this.open_survey_to_configure();
-    this.reopen_survey_configure_tab();
-    this.verify_button_toggled();
-    this.add_post();
-    this.check_for_added_post_being_published();
+  check_for_time_post_was_added() {
+    //to verify, while logged in(as admin) verify time is displayed correctly
+    cy.get(SurveyConfigurationLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .should('be.visible')
+      .contains('New Post Title');
+    cy.get(SurveyConfigurationLocators.postDate).contains('just now');
+    //logout and verify as non-logged in user, time is shown not the same as shown for admin user
+    loginFunctions.logout();
+    cy.get('[data-qa="btn-data"]').click();
+    cy.url().should('include', '/feed');
+
+    //clear filters then select survey and see if the posts come up
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+    cy.get(DataViewLocators.clearBtn).click();
+    cy.get(SurveyConfigurationLocators.surveyToVerify).click();
+
+    cy.get(SurveyConfigurationLocators.postPreview)
+      .children(SurveyConfigurationLocators.postItem)
+      .should('be.visible')
+      .contains('New Post Title');
+    //we'll check time doesn't say "just now" as it says when a privileged user is viewing
+    cy.get(SurveyConfigurationLocators.postDate).should('not.contain', 'just now');
   }
 
   hide_author_information_and_verify() {
+    //this test expects the require-posts-reviewed toggle is toggled off
     //change configuration survey
     this.open_settings();
     this.open_surveys();
     this.open_survey_to_configure();
     this.open_survey_configurations();
-    this.toggle_survey_review_required();
+    // this.toggle_survey_review_required();
     this.toggle_hide_author_information();
     this.save_survey_configurations();
     loginFunctions.logout();
@@ -146,6 +175,30 @@ class SurveyConfigurationFunctions {
 
     cy.visit(Cypress.env('baseUrl'));
     this.check_for_anonymous_author_name();
+  }
+
+  hide_exact_time_information_and_verify() {
+    this.open_settings();
+    this.open_surveys();
+    this.open_survey_to_configure();
+    this.open_survey_configurations();
+    this.toggle_hide_exact_time_information();
+    this.save_survey_configurations();
+    this.add_post();
+    this.check_for_time_post_was_added();
+  }
+
+  hide_exact_location_information_and_verify() {
+    this.open_settings();
+    this.open_surveys();
+    this.open_survey_to_configure();
+    this.open_survey_configurations();
+    this.toggle_survey_review_required();
+    this.toggle_hide_exact_location_information();
+    this.save_survey_configurations();
+    loginFunctions.logout();
+    this.add_post_with_location();
+    this.check_for_hidden_exact_location();
   }
 }
 

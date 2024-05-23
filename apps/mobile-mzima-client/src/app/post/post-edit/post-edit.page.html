@@ -1,12 +1,33 @@
 <app-header (back)="backNavigation()" title="{{!postId ? 'Create' : 'Edit'}} post"></app-header>
 
 <ion-content class="ion-padding-horizontal ion-padding-top page">
+  <ng-container *ngIf="!surveyList.length">
+    <p>Getting data...</p>
+  </ng-container>
+
+  <ng-container *ngIf="surveyList.length && !form">
+    <ion-title class="list-title">Select a survey</ion-title>
+    <ion-list class="list">
+      <ion-item
+        class="list-item"
+        button
+        lines="none"
+        *ngFor="let survey of surveyList"
+        (click)="loadForm(survey.id)"
+      >
+        <span class="list-item__title">{{ survey.name}}</span>
+        <app-icon slot="end" class="list-item__detail-icon" name="arrow-right"></app-icon>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
   <app-select
     [label]="surveyList.length ? 'Survey name' : 'Getting data...'"
     [options]="surveyListOptions"
     [disabled]="!!postId"
     [(ngModel)]="selectedSurveyId"
     (ngModelChange)="loadForm()"
+    *ngIf="form"
   >
   </app-select>
   <form

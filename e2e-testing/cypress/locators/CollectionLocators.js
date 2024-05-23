@@ -1,4 +1,5 @@
 const CollectionLocators = {
+  dataBtn: '[data-qa="btn-data"]',
   collectionBtn: '[data-qa="btn-collections"]',
   addcollectionBtn: '[data-qa="add-collection"]',
   collectionNameField: '[data-qa="name"]',
@@ -10,7 +11,7 @@ const CollectionLocators = {
   submitPostButton: '[data-qa="submit-post-button"]',
   surveySelectionList: '[data-qa="survey-selection-list"]',
   selectedSurveyItem: '[data-qa="survey-select-item2"]',
-  postTitleField: '[data-qa="null"]',
+  postTitleField: '[data-qa="title"]',
   postDescField: '[data-qa="description"]',
   postCheckBox: '[data-qa="nature-of-this-incident-failure-to-announce-results-by-iebc-officials"]',
   savePostBtn: '[data-qa="btn-post-item-submit"]',
@@ -21,6 +22,10 @@ const CollectionLocators = {
   saveCollectionButton: '[data-qa="save-collection-btn"]',
   collectionItem: '[data-qa="collection-item"]',
   visibilityOption: '[data-qa="option"]',
+  postMenuDots: '[data-qa="post-menu"]',
+  addToCollectionBtn: '[data-qa="add-to-collection"]',
+  closeModalBtn: '[data-qa="btn-close"]',
+  post: '[data-qa="post-item"]',
 };
 
 export default CollectionLocators;

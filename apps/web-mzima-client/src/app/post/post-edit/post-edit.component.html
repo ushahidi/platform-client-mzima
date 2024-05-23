@@ -361,6 +361,9 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'upload'">
+              <span class="form-row__instruction" *ngIf="maxImageSize">
+                Max size: {{ (maxImageSize / 1000 / 1000).toFixed(2) }} MB
+              </span>
               <app-image-uploader
                 [formControlName]="field.key"
                 [hasCaption]="field.config.hasCaption"

@@ -1,17 +1,27 @@
-<ion-avatar class="avatar">
-  <ion-img [src]="photo"></ion-img>
-</ion-avatar>
-<!-- <ion-buttons class="controls">
-  <app-button class="controls-button" fill="clear" (buttonClick)="uploadNewPhoto()">
+<div class="container">
+  <ion-avatar class="avatar">
+    <ion-img [src]="photo"></ion-img>
+  </ion-avatar>
+  <ion-spinner name="circles" *ngIf="uploadingSpinner" class="spinner--positioned"></ion-spinner>
+</div>
+<ion-buttons class="controls">
+  <app-button class="controls-button" fill="clear" [disabled]="uploadingSpinner">
     <div class="controls-button__inner">
       <app-icon class="controls-button__icon" name="edit"></app-icon>
-      Set new photo
+      <label for="fileInput" class="file-input-label"> Set new photo </label>
+      <input type="file" id="fileInput" (change)="selectPhoto($event)" accept="image/*" hidden />
     </div>
   </app-button>
-  <app-button class="controls-button" fill="clear" color="danger" (buttonClick)="deletePhotoHandle()">
+  <app-button
+    *ngIf="hasUploadedPhoto"
+    class="controls-button"
+    fill="clear"
+    color="danger"
+    (buttonClick)="deletePhotoHandle()"
+  >
     <div class="controls-button__inner">
       <app-icon class="controls-button__icon" name="delete-filled"></app-icon>
       Delete photo
     </div>
   </app-button>
-</ion-buttons> -->
+</ion-buttons>
