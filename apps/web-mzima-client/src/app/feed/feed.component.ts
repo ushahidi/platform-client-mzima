@@ -124,14 +124,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     );
 
     this.checkDesktop();
-    // this.setupFeedDefaultFilters();
-    // this.initGetPostsListener();
-
-    // e.g. for when sidebar nav btn/link is used to navigate to feed view
-    // this.router.navigate([], {
-    //   relativeTo: this.route,
-    //   queryParamsHandling: 'merge',
-    // });
 
     this.route.params.subscribe(() => {
       this.initCollection();
@@ -139,16 +131,17 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
     this.route.queryParams.subscribe({
       next: (params: Params) => {
-        // // Don't have access to "NavigationStart" event (can't tell why)
-        // // Therefore setting initial variables here
-
-        //-- ID check to determine mode (more reliable than previous method of getting mode from queryParams)
-        // console.log(this.router.url);
+        /* ----------------------------------------------
+          Don't have access to "NavigationStart" event within
+          FeedComponentTherefore setting initial variables here 
+          ----------------------------------------------*/
+        /* ----------------------------------------------
+          ID check to determine mode (more reliable than previous 
+          method of setting & getting mode from queryParams)
+         ---------------------------------------------- */
         this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
         const postModeHint = this.activePostId;
         this.mode = postModeHint ? FeedMode.Post : FeedMode.Tiles;
-        // console.log('id: : ', postModeHint);
-        // console.log('mode monitoring id: : ', this.mode);
         //----------------------------------------------
 
         this.activeCard().scrollCountHandler({ task: 'reset' });
@@ -165,16 +158,19 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
 
-        // i.e will not empty posts for Post Card and SwitchMode button clicks
+        /* -------------------------------------------------------------------
+          i.e will not empty posts for Post Card and SwitchMode button clicks
+        ---------------------------------------------------------------------*/
         if (this.isLoading) {
           this.posts = [];
-          // console.log(this.params, params);
-          this.getPosts(this.params); // DECIDE LATER: use params? or this.params?
+          this.getPosts(this.params);
         }
 
-        // On using the "switch mode" button to navigate to PREVIEW MODE:
-        // this restores PREVIEW MODE posts to what it was before,
-        // if the "load more" button has been used to add more posts in the ID MODE
+        /* -------------------------------------------------------------------
+          On using the "switch mode" button to navigate to PREVIEW MODE:
+          this restores PREVIEW MODE posts to what it was before,
+          if the "load more" button has been used to add more posts in the ID MODE
+        ------------------------------------------------------------------- */
         if (this.mode === FeedMode.Tiles && this.onlyModeUIChanged && this.posts.length > 20) {
           this.posts = this.posts.slice(0, 20);
           this.postCurrentLength = this.posts.length * this.currentPage;
