@@ -462,11 +462,32 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public navigateTo = () => {
+    const feed: string = '/feed';
+    const collection: string = 'collection';
+
+    const usePageUrl = () => {
+      return {
+        // eslint-disable-next-line no-empty-pattern
+        previewMode: ({}) => {
+          return this.collectionId ? [feed, collection, this.collectionId] : [feed];
+        },
+        idMode: ({ id, page }: { id: number; page: string }) => {
+          const idModeUrl = this.collectionId
+            ? [feed, collection, this.collectionId, id, page]
+            : [feed, id, page];
+          return idModeUrl;
+        },
+      };
+    };
+
     return {
       // [Remove comment later] Note: PREVIEW mode is formally called TILES mode... Still refactoring
       // eslint-disable-next-line no-empty-pattern
       previewMode: ({}) => {
-        this.router.navigate(['/feed'], {
+        //---------------------------------
+        const pageURL = usePageUrl().previewMode({});
+        //---------------------------------
+        this.router.navigate(pageURL, {
           queryParams: {
             // page: this.currentPage,
             mode: FeedMode.Tiles,
@@ -477,7 +498,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       // [Remove comment later] Note: ID mode is formally called POST mode... Still refactoring
       idMode: {
         view: ({ id }: { id: number }) => {
-          this.router.navigate(['/feed', id, 'view'], {
+          //---------------------------------
+          const pageURL = usePageUrl().idMode({ id, page: 'view' });
+          //---------------------------------
+          this.router.navigate(pageURL, {
             // [Remove comment later]
             // relativeTo: this.route, (with this.router.navigate([id, 'view'])
             // is not great for having mode query params, if you will be able to work with it
@@ -490,7 +514,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           });
         },
         edit: ({ id }: { id: number }) => {
-          this.router.navigate(['/feed', id, 'edit'], {
+          //---------------------------------
+          const pageURL = usePageUrl().idMode({ id, page: 'edit' });
+          //---------------------------------
+          this.router.navigate(pageURL, {
             queryParams: {
               mode: FeedMode.Post,
             },
@@ -870,12 +897,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             //----------------------------
             this.onlyModeUIChanged = true;
             //----------------------------
-            this.router.navigate(['/feed'], {
-              queryParams: {
-                mode: FeedMode.Tiles,
-              },
-              queryParamsHandling: 'merge',
-            });
+            this.navigateTo().previewMode({});
           }
         }
       });
