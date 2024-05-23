@@ -443,7 +443,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       },
       scrollToView: () => {
         this.scrollToView = parseInt(localStorage.getItem('scroll_count') as string) === 1;
-        console.log({ scrollToView: this.scrollToView });
         setTimeout(() => {
           document.querySelector('.scroll--active--postcard--to--top')?.scrollIntoView();
         }, 150);
@@ -708,59 +707,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       const localStorageScrollID = localStorage.getItem('feedview_post-id-to-scroll') as string;
       if (!localStorageScrollID || isNaN(parseInt(localStorageScrollID)))
         localStorage.setItem('feedview_postObj', JSON.stringify(firstPostOnCurrentPage));
-    }
-
-    // 1. If there are no posts "The switch buttons shouldn't 'try to work'"
-    // Reason is because the switch buttons alongside all other elements disabled when the page is still loading, shouldn't even show up in the first place) [when there are no posts].
-    // So the check is a defense for or "validation" against errors that may occur from clicking it - if the button shows up by mistake when it's not supposed to [when there are no posts].
-
-    // 2. The switch mode button of the mode you are on should also not work if you click on it while in that mode
-    // const localStorageFeedMode = this.currentFeedViewMode().get;
-    // const sameSwitchButtonClicked = localStorageFeedMode === mode;
-    // if (this.atLeastOnePostExists && !sameSwitchButtonClicked) {
-    //   //-------------------------------------
-    //   // Show loader & prevent pagination elements flicker on use of switch mode buttons
-    //   this.isLoading = true;
-    //   this.paginationElementsAllowed = false;
-    //   //-------------------------------------
-    //   this.mode = mode;
-    //   if (this.collectionId) {
-    //     this.switchCollectionMode();
-    //     return;
-    //   }
-    //   if (this.mode === FeedMode.Post) {
-    //     this.router.navigate(['/feed', this.posts[0].id, 'view'], {
-    //       queryParams: {
-    //         mode: this.mode,
-    //       },
-    //       queryParamsHandling: 'merge',
-    //     });
-    //   } else {
-    //     this.router.navigate(['/feed'], {
-    //       queryParams: {
-    //         mode: this.mode,
-    //       },
-    //       queryParamsHandling: 'merge',
-    //     });
-    //   }
-    // }
-  }
-
-  switchCollectionMode() {
-    if (this.mode === FeedMode.Post) {
-      this.router.navigate(['/feed', 'collection', this.collectionId, this.posts[0].id, 'view'], {
-        queryParams: {
-          mode: this.mode,
-        },
-        queryParamsHandling: 'merge',
-      });
-    } else {
-      this.router.navigate(['/feed', 'collection', this.collectionId], {
-        queryParams: {
-          mode: this.mode,
-        },
-        queryParamsHandling: 'merge',
-      });
     }
   }
 
