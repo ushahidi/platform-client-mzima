@@ -462,7 +462,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public navigateTo = () => {
-    // this.updateMasonry();
     return {
       // [Remove comment later] Note: PREVIEW mode is formally called TILES mode... Still refactoring
       // eslint-disable-next-line no-empty-pattern
@@ -490,7 +489,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             queryParamsHandling: 'merge',
           });
         },
-        // TODO: add edit prop later, when refactoring gets there
         edit: ({ id }: { id: number }) => {
           this.router.navigate(['/feed', id, 'edit'], {
             queryParams: {
@@ -623,7 +621,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public refreshMasonry(): void {
-    // this.isLoading = true;
     this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 
@@ -642,15 +639,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     this.sessionService.toggleFiltersVisibility(value);
   }
 
-  // public currentFeedViewMode() {
-  //   return {
-  //     get: localStorage.getItem('ui_feed_mode'),
-  //     set: localStorage.setItem('ui_feed_mode', this.mode),
-  //   };
-  // }
-
   public switchMode(switchButtonValue: string): void {
-    // If the button is active, it shouldn't work just yet
+    /* --------------------------------------------------
+      If the button is active, it shouldn't work just yet
+    ----------------------------------------------------*/
     const modeValueBeforeRouting = this.mode;
     const inactiveSwitchModeButtonClicked = switchButtonValue !== modeValueBeforeRouting;
 
@@ -661,7 +653,9 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       //---------------------------
       const firstPostOnCurrentPage = this.posts[0];
 
-      // Just navigateTo... this.activePostId check in the constructor will do the rest...
+      /* --------------------------------------------------------------------------------
+        Just navigateTo... this.activePostId check in the constructor will do the rest...
+      ----------------------------------------------------------------------------------*/
       switchButtonValue === FeedMode.Post
         ? this.navigateTo().idMode.view({ id: firstPostOnCurrentPage.id })
         : this.navigateTo().previewMode({});
