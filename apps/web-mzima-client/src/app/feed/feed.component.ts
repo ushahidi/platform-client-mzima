@@ -159,7 +159,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         this.params.page = this.currentPage;
 
         /* -------------------------------------------------------------------
-          i.e will not empty posts for Post Card and SwitchMode button clicks
+          i.e will NOT empty posts for Post Card and SwitchMode button clicks
         ---------------------------------------------------------------------*/
         if (this.isLoading) {
           this.posts = [];
@@ -405,49 +405,12 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   // }
 
   private getPosts(params: any, loadMore?: boolean): void {
-    // const isPostsAlreadyExist = !!this.posts.length;
-    // if (!add) {
-    //   this.posts = [];
-    // }
-    // if (this.mode === FeedMode.Post) {
-    //   this.currentPage = 1;
-    // }
-
-    //---------------------------------
-    // this.paginationElementsAllowed = this.loadingMorePosts; // this check prevents the load more button & area from temporarily disappearing (on click) [also prevents pagination element flicker in TILES mode]
-    //----------------------------------
+    /* --------------------------------------------
+      Work with Posts Service to get posts from API
+    ----------------------------------------------*/
     this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
       next: (data) => {
         this.posts = loadMore ? [...this.posts, ...data.results] : data.results;
-        // console.log(data);
-        // this.posts = add ? [...this.posts, ...data.results] : data.results;
-        // conso
-        // const dataMetaPerPage = Number(data.meta.per_page);
-        // this.postCurrentLength =
-        //   data.count < dataMetaPerPage ? data.meta.total : data.meta.current_page * data.count;
-        // this.eventBusService.next({
-        //   type: EventType.FeedPostsLoaded,
-        //   payload: true,
-        // });
-        // setTimeout(() => {
-        //   //---------------------------------
-        //   // These are needed to achieve clean display of posts or message on the UI
-        //   this.isLoading = false;
-        //   this.atLeastOnePostExists = this.posts.length > 0;
-        //   this.noPostsYet = !this.atLeastOnePostExists; // && this.mode === FeedMode.Tiles;
-        //   this.loadingMorePosts = false; // for load more button's loader/spinner
-        //   //---------------------------------
-        //   this.updateMasonry();
-        //   setTimeout(() => {
-        //     if (this.mode === FeedMode.Post && !isPostsAlreadyExist) {
-        //       document.querySelector('.post--selected')?.scrollIntoView();
-        //     }
-        //   }, 250);
-        // }, 500);
-        // setTimeout(() => {
-        //   //is inside this much delayed setTimeout to prevent pagination elements flicker on load/routing
-        //   this.paginationElementsAllowed = data.meta.total > dataMetaPerPage; // show pagination-related elements
-        // }, 2100);
       },
       // complete: () => {
       //   // console.log('complete?');
@@ -489,22 +452,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public showPostDetails(post: PostResult): void {
-    /* Remainder comment: 
-       Naturally, the "navigateTo" function should have been directly placed here
-       This is because routing is triggered by it regardless of the size of the 
-       screen.
-       -------------------------------
-       But, we don't want to allow routing yet, if the event supplied to 
-       this.modal does not match the method (see modal code and comments to 
-       understand better). Therefore, the "navigateTo" function is called 
-       in the modal code after the check.
-       -------------------------------
-       That said, If we ever decide to remove the modal totally, we can then call
-       "navigateTo" directly here if we still need to route to any of the "ID Modes" 
-       on card click - as shown in the comment below.
-    */
-    // this.navigateTo().idMode.view({ post });
-
     //---------------------------
     this.updateMasonry(); // never forget this guy when you need styles to adjust for masonry library
     this.onlyModeUIChanged = true;
