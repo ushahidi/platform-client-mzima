@@ -55,6 +55,14 @@ export class ProfilePhotoComponent {
       });
   }
 
+  triggerFileInput(): void {
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    //Ressetting the value of the file input
+    fileInput.value = '';
+    //trigerring the dialog to upload the file
+    fileInput.click();
+  }
+
   selectPhoto(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input?.files?.[0];
