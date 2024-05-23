@@ -195,7 +195,10 @@ export class PostsService extends ResourceService<any> {
       postParams['source[]'] = postParams['source'];
 
     // Allocate start and end dates, and remove originals
-    if (postParams.date?.start) {
+    if (params.date_before || params.date_after) {
+      postParams.date_before = params.date_before;
+      postParams.date_after = params.date_after;
+    } else if (postParams.date?.start) {
       postParams.date_after = postParams.date.start;
       if (postParams.date.end) {
         postParams.date_before = postParams.date.end;
