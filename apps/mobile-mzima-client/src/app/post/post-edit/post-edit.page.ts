@@ -253,7 +253,8 @@ export class PostEditPage {
       : new PostEditForm(this.formBuilder).addFormControl(value, field);
   }
 
-  loadForm(updateContent?: PostContent[]) {
+  loadForm(surveyId?: any, updateContent?: PostContent[]) {
+    if (surveyId) this.selectedSurveyId = surveyId;
     if (!this.selectedSurveyId) return;
     this.clearData();
 
