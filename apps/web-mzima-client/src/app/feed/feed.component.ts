@@ -498,6 +498,20 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           });
         },
       },
+      // eslint-disable-next-line no-empty-pattern
+      pathFromCurrentRoute: ({ page }: { page: any }) => {
+        // Interesting how relativeTo works well here
+        //------------------------
+        this.currentPage = page;
+        //------------------------
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {
+            page: this.currentPage,
+          },
+          queryParamsHandling: 'merge',
+        });
+      },
     };
   };
 
@@ -732,16 +746,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
   public changePage(page: number): void {
     this.toggleBulkOptions(false);
-    this.currentPage = page;
-    // TODO: Let's see how to this routing/navigation to come from the navigateTo func
-    // Interesting how relativeTo works well here
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: {
-        page: this.currentPage,
-      },
-      queryParamsHandling: 'merge',
-    });
+    this.navigateTo().pathFromCurrentRoute({ page });
   }
 
   public editPost(post: any): void {
