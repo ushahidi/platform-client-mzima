@@ -24,6 +24,7 @@ import { PostEditRoutingModule } from './post-edit.routing.module';
     TranslateModule,
     PostComponentsModule,
     SortByFieldModule,
+    TranslateModule,
   ],
   declarations: [PostEditPage],
 })

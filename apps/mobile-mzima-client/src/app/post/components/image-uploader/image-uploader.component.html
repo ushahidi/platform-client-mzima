@@ -22,11 +22,11 @@
       >
         <ng-container *ngIf="!photo; else changeButton">
           <app-icon class="icon" name="plus"></app-icon>
-          Add photo
+          {{ 'app.add_photo' | translate }}
         </ng-container>
         <ng-template #changeButton>
           <app-icon class="icon" name="edit"></app-icon>
-          Replace image
+          {{ 'app.replace_image' | translate }}
         </ng-template>
       </app-button>
 
@@ -51,7 +51,7 @@
       [disabled]="!!id"
     ></app-form-control>
     <p *ngIf="captionControl?.hasError('specialCharacters')">
-      This field contains special characters
+      {{ 'app.special_chars' | translate }}
     </p>
   </div>
 </div>

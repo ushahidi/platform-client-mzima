@@ -6,6 +6,7 @@ import { PipeModule, SharedModule } from '@shared';
 import { PostPageRoutingModule } from './post-routing.module';
 import { TwitterWidgetModule } from '../map/components/twitter-widget/twitter-widget.module';
 import { LocationControlModule } from './components/location-control/location-control.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { LocationControlModule } from './components/location-control/location-co
     PipeModule,
     MatIconModule,
     PostComponentsModule,
+    TranslateModule,
   ],
   declarations: [PostPage],
 })

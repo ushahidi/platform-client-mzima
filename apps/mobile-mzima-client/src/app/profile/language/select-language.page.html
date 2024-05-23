@@ -1,6 +1,6 @@
 <app-main-layout class="main" title="Select Language" (back)="back()">
   <ion-radio-group [value]="selectedLanguage" (ionChange)="changeLanguage($event)" class="language">
-    <ion-text> Select language from the list </ion-text>
+    <ion-text> {{"app.select_language" | translate}}</ion-text>
 
     <app-radio
       *ngFor="let language of languages"
@@ -17,7 +17,7 @@
 
         {{ language.name }}
       </span>
-      <span *ngIf="language.code === selectedLanguage">current</span>
+      <span *ngIf="language.code === selectedLanguage">{{"app.current" | translate}}</span>
     </app-radio>
   </ion-radio-group>
 </app-main-layout>

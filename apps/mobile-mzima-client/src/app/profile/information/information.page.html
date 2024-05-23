@@ -1,6 +1,6 @@
 <app-main-layout class="main" title="Profile Information" (back)="back()">
   <app-profile-photo class="avatar" [photo]="userPhoto"></app-profile-photo>
-  <ion-title class="title">Profile name</ion-title>
+  <ion-title class="title">{{"app.profile_name" | translate }}</ion-title>
   <form class="information-form" novalidate [formGroup]="form" (ngSubmit)="updateUserInformation()">
     <app-form-control
       label="Display name"
@@ -12,7 +12,7 @@
     </app-form-control>
     <app-select label="Role" [options]="roleOptions" formControlName="role"> </app-select>
   </form>
-  <ion-title class="title">Profile settings</ion-title>
+  <ion-title class="title">{{"app.profile_settings" | translate }}</ion-title>
   <div class="profile-settings-menu">
     <ion-item
       (click)="toggleChangeEmailModal(true)"
@@ -22,7 +22,7 @@
     >
       <app-icon class="profile-settings-item__icon" name="email" slot="start"></app-icon>
       <div class="profile-settings-item__inner">
-        Change E-Mail
+        {{"app.change_email"|translate}}
         <ion-text class="profile-settings-item__value" color="primary" *ngIf="userEmail">
           <span class="ellipsis">{{ userEmail[0] }}</span>{{ userEmail[1] }}
         </ion-text>
@@ -51,10 +51,10 @@
           [disabled]="form.disabled || form.invalid || form.pristine"
           (buttonClick)="updateUserInformation()"
         >
-          Save changes
+          {{"app.save_changes" | translate}}
         </app-button>
         <app-button color="medium" fill="outline" expand="inline" (buttonClick)="back()">
-          Cancel
+          {{"app.cancel" | translate}}
         </app-button>
       </ion-buttons>
     </ion-toolbar>
@@ -105,10 +105,10 @@
             type="submit"
             [disabled]="changeEmailForm.invalid || changeEmailForm.disabled"
           >
-            Save changes
+            {{"app.save_changes" | translate}}
           </app-button>
           <app-button fill="outline" color="medium" (buttonClick)="toggleChangeEmailModal(false)">
-            Cancel
+            {{"app.cancel" | translate}}
           </app-button>
         </ion-buttons>
       </ion-toolbar>
@@ -173,14 +173,14 @@
             type="submit"
             [disabled]="changePasswordForm.invalid || changePasswordForm.disabled"
           >
-            Save changes
+            {{"app.save_changes" | translate}}
           </app-button>
           <app-button
             fill="outline"
             color="medium"
             (buttonClick)="toggleChangePasswordModal(false)"
           >
-            Cancel
+            {{"app.cancel" | translate}}
           </app-button>
         </ion-buttons>
       </ion-toolbar>

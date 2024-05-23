@@ -43,13 +43,13 @@
         </div>
         <div class="agreement">
           <app-checkbox formControlName="agreement">
-            I agree to Ushahidi
+            {{"app.i_agree" | translate}}
             <a (click)="openLink($event, 'https://www.ushahidi.com/privacy-policy')"
-              >Privacy Policy</a
+              >{{"app.privacy_policy"|translate}}</a
             >
-            the <br />
+            {{"and_the" | translate}} <br />
             <a (click)="openLink($event, 'https://www.ushahidi.com/terms-of-service')"
-              >Terms and Conditions</a
+              >{{"app.terms_and_conditions"|translate}}</a
             >.
           </app-checkbox>
         </div>
