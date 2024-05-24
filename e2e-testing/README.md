@@ -32,6 +32,8 @@ Locators folder has files that have custom element selectors. Locator files sit 
 
 Named to match the associated test file. Functions file has the core functions for the tests. The main test file calls from from the functions file located in the Functions folder.
 
+For instance the login test will have the main `login.cy.js` file, it has its associated `loginlocators.js` and the main function file is `loginfunctions.js`
+
 ## Getting Set Up
 
 ### Installation
@@ -73,12 +75,38 @@ npm run cy:open
 
 This will launch the test runner laying out available tests, and individual tests can be run on a browser on a visual interface.
 
-The site under test runs on a remote staging server - https://mzima.staging.ush.zone/
+The site under test runs headless on a remote staging server in the CI
 
-The tests would require logging into the site. User credentials are declared in the cypress.env.json file. Contact the site owners for admin credentials to run the tests.
+## Contributing to the e2e testing suite
+Before writing any automation tests, it may be a good idea to manually check out the application (or at least your target functionality) to understand the functionality and know the steps around it. 
+Before you start making changes or improvements to the e2e testing suite, ensure there's an issue on github that describes the changes.
+We currently have issues labelled `e2e-test-automation` that are for the e2e-tests. The issues describe a change that needs to be made. Pick an unassigned issue and start work on it. Most issues will have steps and a description, but where there's none, you can comment seeking more information or clarification where needed. 
+Where there's no issue on github that covers the changes you want to make, create an issue describing your changes.
 
-## Contributing
+Except where you are explicitly requested to create your branch from another branch, always create your new branch from the `development` branch:
 
-Refer to the [CONTRIBUTING.md]() guide for details.
+````
+git checkout development
+````
+
+````
+git checkout -b replace-this-part-with-the-name-of-your-new-branch
+````
+
+Make the desired changes you wish to submit to the project, add, commit and push your changes:
+
+````
+git add .
+````
+
+````
+git commit -m "replace this part with a commit message that describes your changes"
+````
+
+````
+git push origin replace-this-part-with-the-name-of-your-branch
+````
+
+Then send a pull request for your changes to be reviewed.
 
 [Code of Conduct](https://docs.ushahidi.com/platform-developer-documentation/code-of-conduct)
