@@ -187,12 +187,9 @@
 </ng-container>
 <ng-template #spinner>
   <app-spinner *ngIf="isPostLoading" class="spinner"></app-spinner>
-  <p
+  <!-- <p
     *ngIf="!isManagePosts && !isPostLoading && !postNotFound"
     class="cant-see-post"
     [innerHTML]="'notify.post.can_t_view_this_post' | translate"
-  ></p>
-  <ng-container *ngIf="postNotFound && !isPostLoading">
-    <app-post-not-found></app-post-not-found>
-  </ng-container>
+  ></p> -->
 </ng-template>

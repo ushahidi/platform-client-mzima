@@ -30,7 +30,7 @@ enum FeedMode {
 }
 
 type UserEvent = 'load' | 'click' | 'resize';
-type IdModePage = 'view' | 'edit';
+type IdModePage = 'view' | 'edit' | 'not-found';
 
 @UntilDestroy()
 @Component({
@@ -51,7 +51,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     limit: 20,
   };
   public userEvent: UserEvent = 'load'; // will help the app keep track of if click has happened later on
-  public idModePages: ['view', 'edit'] = ['view', 'edit'];
+  public idModePages: ['view', 'edit', 'not-found'] = ['view', 'edit', 'not-found'];
   public idModePageFromRouter = (routerUrl: string) =>
     this.idModePages.filter((string) => routerUrl.includes(`/${string}`))[0] as IdModePage; // will help app keep track of id mode page for use later on resize, after setting on page load
   public onlyModeUIChanged = false;
@@ -523,6 +523,25 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             queryParamsHandling: 'merge',
           });
         },
+        /* ------------------------------------------------
+          The '/not-found' and '/not-allowed' page of the
+          idMode is also done at router level, but through
+          the RedirectByPostIdGuard
+          -------------------------------------------------
+          We only added routing for them here for when we
+          need to trigger them with the modal.
+        -------------------------------------------------*/
+        postNotFound: ({ id }: { id: number }) => {
+          //---------------------------------
+          const pageURL = usePageUrl().idMode({ id, page: 'not-found' });
+          //---------------------------------
+          this.router.navigate(pageURL, {
+            queryParams: {
+              mode: FeedMode.Post,
+            },
+            queryParamsHandling: 'merge',
+          });
+        },
       },
       // eslint-disable-next-line no-empty-pattern
       pathFromCurrentRoute: ({ page }: { page: any }) => {
@@ -750,12 +769,12 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
                   if (page === 'view') this.openModal({ post: fetchedPost }).forView();
                   if (page === 'edit') this.openModal({ post: fetchedPost }).forEdit();
                 },
-                // error: (err) => {
-                //   // console.log(err.status);
-                //   if (err.status === 404) {
-                //     this.router.navigate(['/not-found']);
-                //   }
-                // },
+                error: (err) => {
+                  if (err.status === 404) {
+                    this.navigateTo().idMode.postNotFound({ id });
+                    this.openModal({ post: {} }).forPostNotFound();
+                  }
+                },
               });
             }
           },
@@ -778,6 +797,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
                           this.openModal({ post: firstPostFromOpenModalDialog }).forView();
                         if (page === 'edit')
                           this.openModal({ post: firstPostFromOpenModalDialog }).forEdit();
+                        if (page === 'not-found') this.openModal({ post: {} }).forPostNotFound();
                         break;
                       }
                     }
@@ -787,6 +807,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
                     );
                     if (page === 'view') this.openModal({ post: postFromStorage }).forView();
                     if (page === 'edit') this.openModal({ post: postFromStorage }).forEdit();
+                    if (page === 'not-found')
+                      this.openModal({ post: postFromStorage }).forPostNotFound();
                   }
                   // console.log(this.dialog.openDialogs);
                 }
@@ -798,7 +820,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     };
   }
 
-  public openModal({ post }: { post: PostResult }) {
+  public openModal({ post }: { post: PostResult | Record<string, any> }) {
     const customModalDialog = ({
       page,
       configRemainder,
@@ -826,11 +848,13 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, config);
           //-----------------------------------------
           if (page === 'edit') this.postDetailsModal.componentInstance.post = post;
+          if (page === 'not-found') this.postDetailsModal.componentInstance.post = configRemainder;
         }
       }
 
       // Regardless of device size, save post result from/on card click
       // Saving it will be useful for when we need to be able to trigger modal open/close on resize
+      post = page === 'view' || page === 'edit' ? post : configRemainder;
       localStorage.setItem('feedview_postObj', JSON.stringify(post));
 
       // Smaller devices only - what happens after modal is closed
@@ -865,6 +889,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           },
         };
         customModalDialog({ page: 'edit', configRemainder });
+      },
+      forPostNotFound: () => {
+        const configRemainder = {};
+        customModalDialog({ page: 'not-found', configRemainder });
       },
     };
   }
