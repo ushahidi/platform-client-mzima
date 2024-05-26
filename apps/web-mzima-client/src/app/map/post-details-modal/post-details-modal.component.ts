@@ -41,4 +41,11 @@ export class PostDetailsModalComponent {
       statusChanged: true,
     });
   }
+
+  public postIs = {
+    notfound: () => {
+      const postfromstorage = JSON.parse(localStorage.getItem('feedview_postObj') as string);
+      return !Object.keys(postfromstorage).length;
+    },
+  };
 }
