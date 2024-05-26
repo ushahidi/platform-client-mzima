@@ -10,6 +10,8 @@ import {
 import { PageNotFoundComponent } from './shared/components';
 import { UshahidiPageTitleStrategy } from '@services';
 import { AccessDeniedComponent } from './shared/components/access-denied/access-denied.component';
+import { PostNotFoundComponent } from './post/post-not-found/post-not-found.component';
+import { RedirectByPostIdGuard } from './core/guards/redirect.post-id.guard';
 
 const routes: Routes = [
   {
@@ -107,11 +109,17 @@ const routes: Routes = [
       ogTitle: 'nav.posts',
     },
   },
+  /* -----------------------------------------------------
+    RedirectByPostIdGuard added here to posts:id as parent
+    And also added to all child :id routes in feed-routing
+    module file
+  ------------------------------------------------------*/
   {
     path: 'posts/:id',
-    canActivate: [RedirectGuard],
-    component: PageNotFoundComponent,
+    canActivate: [RedirectGuard, RedirectByPostIdGuard],
+    component: PostNotFoundComponent,
   },
+  //-------------------------------------------
   {
     path: 'not-found',
     component: PageNotFoundComponent,
