@@ -16,8 +16,7 @@ describe('Automated Tests for Post Filters in Data View', () => {
     dataViewFilterFunctions.verify_count_on_results();
   });
 
-  //skipping this until filter by status are fixed
-  it.skip('Filter posts by status', () => {
+  it('Filter posts by status', () => {
     dataViewFilterFunctions.click_data_view_btn();
     dataViewFilterFunctions.check_post_filter_by_status();
   });

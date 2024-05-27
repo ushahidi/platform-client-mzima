@@ -20,7 +20,7 @@
       fill="clear"
       shape="normal"
       color="medium"
-      *ngIf="!checkbox"
+      *ngIf="getLoggedInStatus() && !checkbox"
       class="post__details"
       (buttonClick)="showOptions($event)"
     >

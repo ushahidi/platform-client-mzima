@@ -184,7 +184,10 @@ export class PostsService extends ResourceService<any> {
     postParams.currentView = filter?.currentView ?? postParams.currentView;
     postParams.limit = filter?.limit ?? postParams.limit;
     postParams['status[]'] = filter?.['status[]'] ?? postParams['status[]'];
-    if (postParams['form[]'] === undefined && postParams['form'])
+    if (
+      postParams['form[]'] === undefined ||
+      (postParams['form[]'].length === 0 && postParams['form'])
+    )
       postParams['form[]'] = postParams['form'];
     if (postParams['status[]'] !== undefined && postParams['status[]'].length === 0)
       postParams['status[]'] = postParams['status'];
@@ -192,7 +195,10 @@ export class PostsService extends ResourceService<any> {
       postParams['source[]'] = postParams['source'];
 
     // Allocate start and end dates, and remove originals
-    if (postParams.date?.start) {
+    if (params.date_before || params.date_after) {
+      postParams.date_before = params.date_before;
+      postParams.date_after = params.date_after;
+    } else if (postParams.date?.start) {
       postParams.date_after = postParams.date.start;
       if (postParams.date.end) {
         postParams.date_before = postParams.date.end;

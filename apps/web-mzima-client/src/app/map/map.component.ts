@@ -250,8 +250,19 @@ export class MapComponent extends MainViewComponent implements OnInit {
 
                             comp.instance.deleted$.subscribe({
                               next: () => {
-                                layer.togglePopup();
+                                comp.destroy();
+                                this.map.closePopup();
+                                this.mapLayers.forEach((outerLayer: any) => {
+                                  outerLayer.eachLayer((innerLayer: any) => {
+                                    if (innerLayer.feature.properties.id === postV5.id)
+                                      outerLayer.removeLayer(innerLayer);
+                                  });
+                                });
                                 this.loadData();
+                                this.eventBusService.next({
+                                  type: EventType.RefreshSurveysCounters,
+                                  payload: true,
+                                });
                               },
                             });
 

@@ -6,12 +6,14 @@ import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EMPTY, from, lastValueFrom, map, Observable, of, switchMap, tap } from 'rxjs';
 import {
+  generalHelpers,
   GeoJsonFilter,
   MediaService,
   PostContent,
   postHelpers,
   PostResult,
   PostsService,
+  SurveyItem,
   SurveysService,
 } from '@mzima-client/sdk';
 import {
@@ -66,7 +68,7 @@ export class PostEditPage {
   public formValidator = new FormValidator();
 
   public filters: any;
-  public surveyList: any[] = [];
+  public surveyList: SurveyItem[] = [];
   public surveyListOptions: any;
   public selectedSurveyId: number | null;
   public selectedSurvey: any;
@@ -189,8 +191,18 @@ export class PostEditPage {
             limit: 0,
           })
           .toPromise();
+
+        const filteredSurveys = response.results.filter((survey: any) => {
+          return (
+            survey.everyone_can_create ||
+            survey.can_create.includes(
+              localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}role`),
+            )
+          );
+        });
+
         await this.dataBaseService.set(STORAGE_KEYS.SURVEYS, response.results);
-        return response.results;
+        return filteredSurveys;
       } catch (err) {
         console.log(err);
         return this.loadSurveyFormLocalDB();
@@ -241,7 +253,8 @@ export class PostEditPage {
       : new PostEditForm(this.formBuilder).addFormControl(value, field);
   }
 
-  loadForm(updateContent?: PostContent[]) {
+  loadForm(surveyId?: any, updateContent?: PostContent[]) {
+    if (surveyId) this.selectedSurveyId = surveyId;
     if (!this.selectedSurveyId) return;
     this.clearData();
 
@@ -316,8 +329,22 @@ export class PostEditPage {
     this.updateFormControl(key, dateHelper.setDate(event.detail.value, type));
   }
 
-  private async loadSurveyFormLocalDB() {
-    return this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
+  private async loadSurveyFormLocalDB(): Promise<any[]> {
+    try {
+      const surveysFromDB: any[] = await this.dataBaseService.get(STORAGE_KEYS.SURVEYS);
+      const filteredSurveys = surveysFromDB.filter((survey) => {
+        return (
+          survey.everyone_can_create ||
+          survey.can_create.includes(
+            localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}role`),
+          )
+        );
+      });
+
+      return filteredSurveys;
+    } catch (error: any) {
+      throw new Error(`Error loading surveys from local database: ${error.message}`);
+    }
   }
 
   private updateForm(updateValues: any[]) {
