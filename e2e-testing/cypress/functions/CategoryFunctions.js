@@ -98,7 +98,8 @@ class CategoryFunctions {
     cy.get(CategoryLocators.surveyNameField).type('Survey title with categories');
     cy.get(CategoryLocators.surveyDescriptionField).type('Survey description with categories');
     cy.get(CategoryLocators.addNewFieldBtn).click();
-    cy.get(CategoryLocators.selectCategoryField).trigger('click');
+    cy.get(CategoryLocators.selectCategoryField).should(be.active);
+    cy.get(CategoryLocators.selectCategoryField).click();
   }
 
   add_post_to_category() {
