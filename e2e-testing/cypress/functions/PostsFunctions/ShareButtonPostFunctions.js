@@ -23,7 +23,7 @@ class ShareButtonPostFunctions {
         .find(ShareButtonPostLocators.postShare)
         .click({force: true})
         cy.get(ShareButtonPostLocators.surveyWebAddress)
-        .should('have.value', `http://localhost:4200/feed/${postId}/view?mode=POST`)
+        .should('have.value', `http://localhost:4200/feed/${postId}/view?mode=ID`)
         })
 
     }

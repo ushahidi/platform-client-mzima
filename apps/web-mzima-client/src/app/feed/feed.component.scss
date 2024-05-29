@@ -28,7 +28,7 @@
 }
 
 .post-list {
-  // POST mode usage only (larger devices)
+  // ID mode usage only (larger devices)
   @include breakpoint-min($tablet) {
     &__scroll {
       overflow-y: auto;
@@ -61,12 +61,12 @@
 
 // app-post-preview element i.e. single post card item
 .post {
-  // smaller devices maintains 100% regardless of whether user is in TILES mode or not
+  // smaller devices maintains 100% regardless of whether user is in PREVIEW mode or not
   display: block;
   width: 100%;
   margin: 0 0 16px 0;
 
-  // larger devices get a change TILES mode & "POST" mode
+  // larger devices get a change PREVIEW mode & "ID" mode
   @include breakpoint-min($mobile) {
     &__tiles {
       margin: 0 8px 16px;
