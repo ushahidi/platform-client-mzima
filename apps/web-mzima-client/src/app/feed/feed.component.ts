@@ -25,8 +25,8 @@ import {
 import _ from 'lodash';
 
 enum FeedMode {
-  Tiles = 'TILES',
-  Post = 'POST',
+  Preview = 'PREVIEW',
+  Id = 'ID',
 }
 
 type UserEvent = 'load' | 'click' | 'resize';
@@ -60,7 +60,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public idModePageFromRouter = (routerUrl: string) =>
     this.idModePages.filter((string) => routerUrl.includes(`/${string}`))[0] as IdModePage; // will help app keep track of id mode page for use later on resize, after setting on page load
   public onlyModeUIChanged = false;
-  public postsSkeleton = new Array(20).fill(''); // used for Post mode's skeleton loader
+  public postsSkeleton = new Array(20).fill(''); // used for Id mode's skeleton loader
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
   public isLoading: boolean;
@@ -68,7 +68,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public noPostsYet: boolean = false;
   public loadingMorePosts: boolean;
   public paginationElementsAllowed: boolean = false;
-  public mode: FeedMode = FeedMode.Tiles;
+  public mode: FeedMode = FeedMode.Preview;
   public activePostId: number;
   public total: number;
   public postDetails?: PostResult;
@@ -146,7 +146,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
          ------------------------------------------------------*/
         this.activePostId = Number(this.router.url.match(/\/(\d+)\/[^\/]+$/)?.[1]);
         const postModeHint = this.activePostId;
-        this.mode = postModeHint ? FeedMode.Post : FeedMode.Tiles;
+        this.mode = postModeHint ? FeedMode.Id : FeedMode.Preview;
         //----------------------------------------------
 
         this.activeCard().scrollCountHandler({ task: 'reset' });
@@ -176,7 +176,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           this restores PREVIEW MODE posts to what it was before,
           if the "load more" button has been used to add more posts in the ID MODE
         ------------------------------------------------------------------- */
-        if (this.mode === FeedMode.Tiles && this.onlyModeUIChanged && this.posts.length > 20) {
+        if (this.mode === FeedMode.Preview && this.onlyModeUIChanged && this.posts.length > 20) {
           this.posts = this.posts.slice(0, 20);
           this.postCurrentLength = this.posts.length * this.currentPage;
         }
@@ -199,7 +199,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         this.activeCard().scrollCountHandler({ task: 'increment' });
         this.activeCard().scrollToView();
 
-        if (this.mode === FeedMode.Post) {
+        if (this.mode === FeedMode.Id) {
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
           if (this.userEvent === 'load') {
             //----------------------------------
@@ -306,7 +306,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
     // window.addEventListener('resize', () => {
     //   this.masonryOptions.columnWidth =
-    //     this.mode === FeedMode.Tiles
+    //     this.mode === FeedMode.Preview
     //       ? window.innerWidth > 1640
     //         ? 3
     //         : window.innerWidth <= 768
@@ -439,7 +439,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       scrollCountHandler: ({ task }: { task: 'reset' | 'increment' | 'startCount' }) => {
         const countPropExists = localStorage.hasOwnProperty('scroll_count');
         const localStorageCount = parseInt(localStorage.getItem('scroll_count') as string);
-        const startCount = this.mode === FeedMode.Post ? 1 : 0;
+        const startCount = this.mode === FeedMode.Id ? 1 : 0;
         if (!countPropExists) {
           localStorage.setItem('scroll_count', `${startCount}`);
         } else {
@@ -488,7 +488,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     };
 
     return {
-      // [Remove comment later] Note: PREVIEW mode is formally called TILES mode... Still refactoring
       // eslint-disable-next-line no-empty-pattern
       previewMode: ({}) => {
         //---------------------------------
@@ -497,12 +496,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         this.router.navigate(pageURL, {
           queryParams: {
             // page: this.currentPage,
-            mode: FeedMode.Tiles,
+            mode: FeedMode.Preview,
           },
           queryParamsHandling: 'merge',
         });
       },
-      // [Remove comment later] Note: ID mode is formally called POST mode... Still refactoring
       idMode: {
         view: ({ id }: { id: number }) => {
           //---------------------------------
@@ -515,7 +513,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             // you will have to discard using mode in your query params
             // Particularly because of the nature of the switchMode() code
             queryParams: {
-              mode: FeedMode.Post,
+              mode: FeedMode.Id,
             },
             queryParamsHandling: 'merge',
           });
@@ -526,7 +524,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           //---------------------------------
           this.router.navigate(pageURL, {
             queryParams: {
-              mode: FeedMode.Post,
+              mode: FeedMode.Id,
             },
             queryParamsHandling: 'merge',
           });
@@ -545,7 +543,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           //---------------------------------
           this.router.navigate(pageURL, {
             queryParams: {
-              mode: FeedMode.Post,
+              mode: FeedMode.Id,
             },
             queryParamsHandling: 'merge',
           });
@@ -556,7 +554,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           //---------------------------------
           this.router.navigate(pageURL, {
             queryParams: {
-              mode: FeedMode.Post,
+              mode: FeedMode.Id,
             },
             queryParamsHandling: 'merge',
           });
@@ -734,7 +732,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       /* --------------------------------------------------------------------------------
         Just navigateTo... this.activePostId check in the constructor will do the rest...
       ----------------------------------------------------------------------------------*/
-      switchButtonValue === FeedMode.Post
+      switchButtonValue === FeedMode.Id
         ? this.navigateTo().idMode.view({ id: firstPostOnCurrentPage.id })
         : this.navigateTo().previewMode({});
 
@@ -813,7 +811,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           resizeHandler: ({}) => {
             // Simulate card click on RESIZE
             if (showOn === 'TabletAndBelow') {
-              if (this.mode === FeedMode.Post) {
+              if (this.mode === FeedMode.Id) {
                 if (window.innerWidth >= 1024) {
                   this.postDetailsModal?.close();
                   // console.log(this.dialog.openDialogs);
@@ -897,7 +895,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         if (!data && !this.isDesktop) {
           // adding !isDesktop to the check prevents misbehaving and makes sure routing only takes place if current modal is closed when on smaller devices
           if (!this.dialog.openDialogs.length) {
-            // !this.dialog.openDialogs.length check needed to allow routing to TILES MODE on RESIZE
+            // !this.dialog.openDialogs.length check needed to allow routing to PREVIEW MODE on RESIZE
             //----------------------------
             this.onlyModeUIChanged = true;
             //----------------------------
