@@ -48,7 +48,7 @@ export class MediaService extends ResourceService<any> {
       formData.append('caption', caption);
     }
 
-    return this.httpClient.post(apiUrl, formData, { reportProgress: true });
+    return this.httpClient.post(apiUrl, formData, { reportProgress: true, observe: 'events' });
   }
 
   updateCaption(id: string | number, caption: string) {

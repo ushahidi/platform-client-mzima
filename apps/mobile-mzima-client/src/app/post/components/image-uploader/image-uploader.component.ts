@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
@@ -28,6 +28,9 @@ interface LocalFile {
   ],
 })
 export class ImageUploaderComponent implements ControlValueAccessor {
+  constructor(domSanitizer: DomSanitizer) {
+    this.domSanitizer = domSanitizer;
+  }
   @Input() public hasCaption: boolean;
   @Input() public requiredError?: boolean;
   @Input() public isConnection: boolean;
@@ -41,6 +44,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
   upload = false;
   onChange: any = () => {};
   onTouched: any = () => {};
+  domSanitizer: DomSanitizer;
 
   writeValue(obj: any): void {
     if (obj) {
@@ -99,7 +103,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     try {
       // const file = await this.loadFile();
 
-      if (['hybrid', 'web'].includes(Capacitor.getPlatform())) {
+      if (['hybrid'].includes(Capacitor.getPlatform())) {
         // Display the new image by rewriting the 'file://' path to HTTP
         // Details: https://ionicframework.com/docs/building/webview#file-protocol
 
@@ -126,7 +130,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
       }
 
       this.upload = true;
-      // this.preview = this.photo;
+      // this.preview = photo;
     } catch (e) {
       console.log(e);
     }
