@@ -18,6 +18,7 @@ export class PostsPage {
     limit: 6,
     page: 1,
     q: '',
+    currentView: 'myposts',
   };
   public isPostsLoading = false;
   public posts: PostResult[] = [];
