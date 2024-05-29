@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PostDetailsComponent, PostEditComponent, PostNotFoundComponent } from '@post';
+import {
+  PostDetailsComponent,
+  PostEditComponent,
+  PostNotAllowedComponent,
+  PostNotFoundComponent,
+} from '@post';
 import { FeedComponent } from './feed.component';
 import { RedirectByPostIdGuard } from '../core/guards/redirect.post-id.guard';
 
@@ -41,6 +46,18 @@ const routes: Routes = [
       {
         path: ':id/not-found',
         component: PostNotFoundComponent,
+        canActivate: [RedirectByPostIdGuard],
+        data: {
+          ogTitle: 'nav.feed',
+        },
+      },
+      {
+        path: ':id/not-allowed',
+        component: PostNotAllowedComponent,
+        canActivate: [RedirectByPostIdGuard],
+        data: {
+          ogTitle: 'nav.feed',
+        },
       },
     ],
   },
@@ -75,6 +92,18 @@ const routes: Routes = [
           {
             path: ':id/not-found',
             component: PostNotFoundComponent,
+            canActivate: [RedirectByPostIdGuard],
+            data: {
+              ogTitle: 'nav.feed',
+            },
+          },
+          {
+            path: ':id/not-allowed',
+            component: PostNotAllowedComponent,
+            canActivate: [RedirectByPostIdGuard],
+            data: {
+              ogTitle: 'nav.feed',
+            },
           },
         ],
       },
