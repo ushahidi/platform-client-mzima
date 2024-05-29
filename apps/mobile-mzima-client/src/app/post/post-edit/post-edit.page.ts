@@ -72,7 +72,7 @@ export class PostEditPage {
   public selectedSurveyId: number | null;
   public selectedSurvey: any;
   private fileToUpload: any;
-  public uploadProgress: number = 0;
+  public uploadProgress: number[] = [];
   private checkedList: any[] = [];
   public isConnection = true;
   public connectionInfo = '';
@@ -599,37 +599,47 @@ export class PostEditPage {
   async uploadPost() {
     const pendingPosts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
     console.log('uploadPosts > pendingPosts', pendingPosts);
+    const promises: Promise<any>[] = [];
     for (let postData of pendingPosts) {
       for (const field of postData.post_content[0].fields) {
-        if (postData?.file?.upload) {
-          postData = await new UploadFileProgressHelper(this.mediaService).uploadFile(
-            postData,
-            field.id,
-            postData.file,
-            (progress) => {
-              console.log('Progress - ' + progress);
-              this.uploadProgress = progress;
-            },
-          );
-        }
-
-        if (field?.file?.delete) {
-          postData = await this.deleteFile(postData, postData.file);
+        if (field.type === 'media') {
+          if (field?.file?.delete) {
+            postData = await this.deleteFile(postData, postData.file);
+          } else {
+            const fieldUpload = new UploadFileProgressHelper(this.mediaService).uploadFileField(
+              field,
+              field.value.value.photo,
+              (progress) => {
+                this.uploadProgress[field.id] = progress;
+                console.log('Progress: ' + progress);
+              },
+            );
+            promises.push(fieldUpload);
+          }
         }
       }
 
       if (postData?.file?.delete) {
         postData = await this.deleteFile(postData, postData.file);
       }
+      delete postData.file;
 
-      if (this.postId) {
-        this.updatePost(this.postId, postData);
-      } else {
-        if (!this.atLeastOneFieldHasValidationError) {
-          this.createPost(postData);
+      await Promise.all(promises).then((results) => {
+        results.forEach((result) => {
+          for (const [index, field] of postData.post_content[0].fields.entries()) {
+            if (field.id === result.id) postData.post_content[0].fields[index] = result;
+          }
+        });
+        if (this.postId) {
+          this.updatePost(this.postId, postData);
+        } else {
+          if (!this.atLeastOneFieldHasValidationError) {
+            this.createPost(postData);
+          }
         }
-      }
+      });
     }
+
     await this.dataBaseService.set(STORAGE_KEYS.PENDING_POST_KEY, []);
   }
 
