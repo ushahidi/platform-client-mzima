@@ -117,7 +117,7 @@ export class PostHeadComponent extends BaseComponent {
         payload: this.post,
       });
     } else {
-      this.edit.emit();
+      if (this.post.allowed_privileges.includes('update')) this.edit.emit();
     }
   }
   public sharePost() {
