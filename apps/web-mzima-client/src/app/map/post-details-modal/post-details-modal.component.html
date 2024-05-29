@@ -12,17 +12,20 @@
 </mzima-client-button>
 
 <mat-dialog-content class="post">
-  <app-post-details
-    [post]="post"
-    [feedView]="false"
-    [color]="color"
-    (edit)="handleEditPost()"
-    *ngIf="!editable; else editPost"
-    (statusChanged)="statusChangedHandle()"
-  >
-  </app-post-details>
+  <ng-container *ngIf="postIs.available()">
+    <app-post-details
+      [post]="post"
+      [feedView]="false"
+      [color]="color"
+      (edit)="handleEditPost()"
+      *ngIf="!editable; else editPost"
+      (statusChanged)="statusChangedHandle()"
+    >
+    </app-post-details>
+  </ng-container>
   <!-- If modal is no longer employed in data/feed view, this can be removed -->
   <app-post-not-found *ngIf="postIs.notfound()"></app-post-not-found>
+  <app-post-not-allowed *ngIf="postIs.notAllowed()"></app-post-not-allowed>
   <!---->
 </mat-dialog-content>
 

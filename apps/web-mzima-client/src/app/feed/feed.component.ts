@@ -30,7 +30,7 @@ enum FeedMode {
 }
 
 type UserEvent = 'load' | 'click' | 'resize';
-type IdModePage = 'view' | 'edit' | 'not-found';
+type IdModePage = 'view' | 'edit' | 'not-found' | 'not-allowed';
 
 @UntilDestroy()
 @Component({
@@ -51,7 +51,12 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     limit: 20,
   };
   public userEvent: UserEvent = 'load'; // will help the app keep track of if click has happened later on
-  public idModePages: ['view', 'edit', 'not-found'] = ['view', 'edit', 'not-found'];
+  public idModePages: ['view', 'edit', 'not-found', 'not-allowed'] = [
+    'view',
+    'edit',
+    'not-found',
+    'not-allowed',
+  ];
   public idModePageFromRouter = (routerUrl: string) =>
     this.idModePages.filter((string) => routerUrl.includes(`/${string}`))[0] as IdModePage; // will help app keep track of id mode page for use later on resize, after setting on page load
   public onlyModeUIChanged = false;
@@ -197,6 +202,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         if (this.mode === FeedMode.Post) {
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
           if (this.userEvent === 'load') {
+            localStorage.setItem('feedview_postObj', JSON.stringify({}));
             const valueFromPageURL = this.idModePageFromRouter(this.router.url);
             this.modal({ showOn: 'TabletAndBelow' })
               .idMode({ page: valueFromPageURL })
@@ -542,6 +548,17 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             queryParamsHandling: 'merge',
           });
         },
+        PostNotAllowed: ({ id }: { id: number }) => {
+          //---------------------------------
+          const pageURL = usePageUrl().idMode({ id, page: 'not-allowed' });
+          //---------------------------------
+          this.router.navigate(pageURL, {
+            queryParams: {
+              mode: FeedMode.Post,
+            },
+            queryParamsHandling: 'merge',
+          });
+        },
       },
       // eslint-disable-next-line no-empty-pattern
       pathFromCurrentRoute: ({ page }: { page: any }) => {
@@ -771,8 +788,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
                 },
                 error: (err) => {
                   if (err.status === 404) {
-                    this.navigateTo().idMode.postNotFound({ id });
-                    this.openModal({ post: {} }).forPostNotFound();
+                    if (page === 'not-found') this.navigateTo().idMode.postNotFound({ id });
+                    if (page === 'not-allowed') this.navigateTo().idMode.PostNotAllowed({ id });
+                    if (page === 'not-found' || page === 'not-allowed')
+                      this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page });
                   }
                 },
               });
@@ -797,7 +816,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
                           this.openModal({ post: firstPostFromOpenModalDialog }).forView();
                         if (page === 'edit')
                           this.openModal({ post: firstPostFromOpenModalDialog }).forEdit();
-                        if (page === 'not-found') this.openModal({ post: {} }).forPostNotFound();
+                        if (page === 'not-found' || page === 'not-allowed')
+                          this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page });
                         break;
                       }
                     }
@@ -807,8 +827,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
                     );
                     if (page === 'view') this.openModal({ post: postFromStorage }).forView();
                     if (page === 'edit') this.openModal({ post: postFromStorage }).forEdit();
-                    if (page === 'not-found')
-                      this.openModal({ post: postFromStorage }).forPostNotFound();
+                    if (page === 'not-found' || page === 'not-allowed')
+                      this.openModal({ post: postFromStorage }).forPostNotFoundOrNotAllowed({
+                        page,
+                      });
                   }
                   // console.log(this.dialog.openDialogs);
                 }
@@ -848,13 +870,14 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           this.postDetailsModal = this.dialog.open(PostDetailsModalComponent, config);
           //-----------------------------------------
           if (page === 'edit') this.postDetailsModal.componentInstance.post = post;
-          if (page === 'not-found') this.postDetailsModal.componentInstance.post = configRemainder;
+          if (page === 'not-found' || page === 'not-allowed')
+            this.postDetailsModal.componentInstance.post = configRemainder;
         }
       }
 
       // Regardless of device size, save post result from/on card click
       // Saving it will be useful for when we need to be able to trigger modal open/close on resize
-      post = page === 'view' || page === 'edit' ? post : configRemainder;
+      post = page === 'view' || page === 'edit' ? post : {};
       localStorage.setItem('feedview_postObj', JSON.stringify(post));
 
       // Smaller devices only - what happens after modal is closed
@@ -890,9 +913,9 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         };
         customModalDialog({ page: 'edit', configRemainder });
       },
-      forPostNotFound: () => {
-        const configRemainder = {};
-        customModalDialog({ page: 'not-found', configRemainder });
+      forPostNotFoundOrNotAllowed: ({ page }: { page: IdModePage }) => {
+        const configRemainder = { data: { urlEnd: page } };
+        customModalDialog({ page, configRemainder });
       },
     };
   }
