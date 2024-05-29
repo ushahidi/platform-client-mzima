@@ -334,9 +334,9 @@
                 "
               >
               </app-image-uploader>
-              <ion-progress-bar
-                [value]="uploadProgress !== undefined && uploadProgress[field.id] !== undefined ? uploadProgress[field.id] : 0"
-              ></ion-progress-bar>
+              <div>
+                <ion-progress-bar [value]="uploadProgress[field.id] || 0"></ion-progress-bar>
+              </div>
             </div>
           </ng-container>
 

@@ -271,6 +271,9 @@ export class PostEditPage {
               this.relationConfigSource = relationConfigSource;
               this.relationConfigKey = relationConfigKey;
               break;
+            case 'media':
+              this.uploadProgress[field.id] = 0;
+              break;
           }
 
           if (field.key) {
