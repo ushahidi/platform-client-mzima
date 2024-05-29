@@ -27,9 +27,9 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((response: HttpErrorResponse) => {
         //----------------------------------------------
         const browserURL = window.location.pathname;
-        const isDataView = browserURL.includes('/feed');
+        const isDataViewEditRoute = browserURL.includes('/feed') && browserURL.includes('/edit');
         //----------------------------------------------
-        if (response.status === 401 && !isDataView) {
+        if (response.status === 401 && !isDataViewEditRoute) {
           this.authService.logout();
           this.router.navigate(['/']);
         }
