@@ -1,7 +1,7 @@
-<!-- POST mode notes [for when there are no posts at all or if there are no posts that match filters]: 
-    When there are no posts in POST mode,
-    Page (css) style just adopts that of TILES mode
-    Better than making extra route request to TILES mode
+<!-- ID mode notes [for when there are no posts at all or if there are no posts that match filters]: 
+    When there are no posts in ID mode,
+    Page (css) style just adopts that of PREVIEW mode
+    Better than making extra route request to PREVIEW mode
 -->
 <div
   class="feed-page"
@@ -29,24 +29,24 @@
       </span>
       <div class="feed-page__mode-switcher">
         <mzima-client-button
-          [fill]="mode === FeedMode.Tiles ? 'outline' : 'solid'"
+          [fill]="mode === FeedMode.Preview ? 'outline' : 'solid'"
           [iconOnly]="true"
           id="switcher-button-tiles"
-          [color]="mode === FeedMode.Tiles ? 'primary' : 'light'"
-          [isActive]="mode === FeedMode.Tiles"
-          (buttonClick)="switchMode('TILES')"
+          [color]="mode === FeedMode.Preview ? 'primary' : 'light'"
+          [isActive]="mode === FeedMode.Preview"
+          (buttonClick)="switchMode('PREVIEW')"
           [disabled]="isLoading || !posts.length"
           class="feed-page__mode-switcher__button"
         >
           <mat-icon icon svgIcon="tiles"></mat-icon>
         </mzima-client-button>
         <mzima-client-button
-          [fill]="mode === FeedMode.Post ? 'outline' : 'solid'"
+          [fill]="mode === FeedMode.Id ? 'outline' : 'solid'"
           [iconOnly]="true"
           id="switcher-button-post"
-          [color]="mode === FeedMode.Post ? 'primary' : 'light'"
-          [isActive]="mode === FeedMode.Post"
-          (buttonClick)="switchMode('POST')"
+          [color]="mode === FeedMode.Id ? 'primary' : 'light'"
+          [isActive]="mode === FeedMode.Id"
+          (buttonClick)="switchMode('ID')"
           [disabled]="isLoading || !posts.length"
           class="feed-page__mode-switcher__button"
         >
@@ -205,8 +205,8 @@
   <div
     class="main"
     [ngClass]="{
-      main__tiles: mode === FeedMode.Tiles,
-      'main__details-or-edit': mode === FeedMode.Post
+      main__tiles: mode === FeedMode.Preview,
+      'main__details-or-edit': mode === FeedMode.Id
     }"
     [attr.data-qa]="'posts'"
   >
@@ -214,7 +214,7 @@
     <div
       #feed
       [ngClass]="{
-        'post-list__scroll post-list__color': mode === FeedMode.Post
+        'post-list__scroll post-list__color': mode === FeedMode.Id
       }"
     >
       <div class="left-margin">
@@ -230,11 +230,11 @@
             [attr.data-qa]="'post-item'"
             class="post"
             [ngClass]="{
-              post__tiles: mode === FeedMode.Tiles,
-              'post__details-or-edit': mode === FeedMode.Post,
-              'active--postcard': mode === FeedMode.Post && post.id === postDetails?.id,
+              post__tiles: mode === FeedMode.Preview,
+              'post__details-or-edit': mode === FeedMode.Id,
+              'active--postcard': mode === FeedMode.Id && post.id === postDetails?.id,
               'scroll--active--postcard--to--top':
-                isDesktop && scrollToView && mode === FeedMode.Post && post.id === postDetails?.id
+                isDesktop && scrollToView && mode === FeedMode.Id && post.id === postDetails?.id
             }"
             [post]="post"
             [attr.postId]="post.id"
@@ -254,7 +254,7 @@
               let post of posts
                 | paginate
                   : {
-                      itemsPerPage: mode === FeedMode.Post ? 0 : itemsPerPage,
+                      itemsPerPage: mode === FeedMode.Id ? 0 : itemsPerPage,
                       currentPage: currentPage,
                       totalItems: total
                     }
@@ -266,11 +266,11 @@
         <pagination-controls
           class="pagination"
           (pageChange)="changePage($event)"
-          *ngIf="!(mode === FeedMode.Post && isDesktop) && paginationElementsAllowed"
+          *ngIf="!(mode === FeedMode.Id && isDesktop) && paginationElementsAllowed"
         >
         </pagination-controls>
         <!-- Load more posts -->
-        <ng-container *ngIf="mode === FeedMode.Post && isDesktop && paginationElementsAllowed">
+        <ng-container *ngIf="mode === FeedMode.Id && isDesktop && paginationElementsAllowed">
           <mzima-client-button
             fill="clear"
             color="secondary"
@@ -290,11 +290,11 @@
     </div>
     <div
       [ngClass]="{
-        'post-list__scroll': mode === FeedMode.Post
+        'post-list__scroll': mode === FeedMode.Id
       }"
     >
       <!-- Router outlet here is only for Desktop, the modal popup for small devices is in .ts file -->
-      <router-outlet *ngIf="isDesktop && mode === FeedMode.Post"></router-outlet>
+      <router-outlet *ngIf="isDesktop && mode === FeedMode.Id"></router-outlet>
     </div>
   </div>
 </div>
