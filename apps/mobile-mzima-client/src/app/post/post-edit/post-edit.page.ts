@@ -611,7 +611,6 @@ export class PostEditPage {
               field.value.value.photo,
               (progress) => {
                 this.uploadProgress[field.id] = progress;
-                console.log('Progress: ' + progress);
               },
             );
             promises.push(fieldUpload);
