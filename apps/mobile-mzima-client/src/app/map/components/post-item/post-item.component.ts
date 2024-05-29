@@ -117,7 +117,7 @@ export class PostItemComponent implements OnInit {
           text: this.post.title,
           url: `https://${this.deploymentService.getDeployment()!.fqdn}/feed/${
             this.post.id
-          }/view?mode=POST`,
+          }/view?mode=ID`,
           dialogTitle: 'Share Post',
         }),
       [PostItemActionType.EDIT]: () => this.editPost(),

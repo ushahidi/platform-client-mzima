@@ -135,7 +135,7 @@ export class PostPage implements OnDestroy {
         if (relativeField.value?.value) {
           const url = `https://${this.deploymentService.getDeployment()!.fqdn}/feed/${
             relativeField.value.value
-          }/view?mode=POST`;
+          }/view?mode=ID`;
           const relative = await this.getPostInformation(relativeField.value.value);
           const { title } = relative;
           relativeField.value.postTitle = title;

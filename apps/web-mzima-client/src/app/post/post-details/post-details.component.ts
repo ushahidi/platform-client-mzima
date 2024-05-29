@@ -156,7 +156,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       .filter((field: any) => field.type === 'relation')
       .map(async (relativeField) => {
         if (relativeField.value?.value) {
-          const url = `${window.location.origin}/feed/${relativeField.value.value}/view?mode=POST`;
+          const url = `${window.location.origin}/feed/${relativeField.value.value}/view?mode=ID`;
           const relative = await this.getPostInformation(relativeField.value.value);
           if (relative) {
             const { title } = relative;
