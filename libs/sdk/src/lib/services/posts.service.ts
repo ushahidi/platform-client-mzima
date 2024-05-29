@@ -259,7 +259,7 @@ export class PostsService extends ResourceService<any> {
       postParams['form[]'] = ['none'];
     }
 
-    if (isStats || postParams.currentView === 'myposts') {
+    if (isStats) {
       delete postParams['form[]'];
     }
 

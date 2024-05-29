@@ -22,7 +22,7 @@ export interface GeoJsonItem {
 
 export interface GeoJsonFilter {
   has_location?: string;
-  currentView?: 'map' | 'feed' | 'myposts';
+  currentView?: 'map' | 'feed';
   limit?: number;
   offset?: number;
   order?: 'desc' | 'asc';
