@@ -1,23 +1,41 @@
 <app-main-layout class="main" title="Select Language" (back)="back()">
-  <ion-radio-group [value]="selectedLanguage" (ionChange)="changeLanguage($event)" class="language">
-    <ion-text> {{"app.select_language" | translate}}</ion-text>
-
-    <app-radio
-      *ngFor="let language of languages"
-      [value]="language.code"
-      labelPlacement="start"
-      class="language__item"
+  <ng-container>
+    <ion-text color="medium"> Select language from the list </ion-text>
+    <ion-radio-group
+      (ionChange)="changeLanguage($event)"
+      ngModel="selectedLanguage"
+      class="search-list"
+      value="selectedLanguage"
     >
-      <span
-        ><img
-          [alt]="language.code"
-          class="language__item__flag"
-          [src]="'assets/images/flags/' + (language.code | lowercase) + '.svg'"
-        />
-
-        {{ language.name }}
-      </span>
-      <span *ngIf="language.code === selectedLanguage">{{"app.current" | translate}}</span>
-    </app-radio>
-  </ion-radio-group>
+      <div class="search-list__result">
+        <ion-item
+          class="search-list__item"
+          button
+          lines="none"
+          *ngFor="let language of languages; let i = index"
+          (click)="selectLangauge(language.code)"
+        >
+          <img
+            [src]="'assets/images/flags/' + (language.code | lowercase) + '.svg'"
+            [alt]="language.name"
+            class="search-list__image search-list__flag"
+          />
+          <ion-label class="search-list__content">
+            <span class="search-list__title"> {{language.name}} </span>
+          </ion-label>
+          <div class="search-list__end" *ngIf="language.code === selectedLanguage" slot="end">
+            <ion-text color="primary" class="search-list__current">Current</ion-text>
+          </div>
+          <ion-radio
+            [value]="language.code"
+            class="search-list__radio"
+            [ngClass]="language.code === selectedLanguage ? 'radio-checked' : ''"
+            slot="end"
+            aria-label="language.name"
+          >
+          </ion-radio>
+        </ion-item>
+      </div>
+    </ion-radio-group>
+  </ng-container>
 </app-main-layout>

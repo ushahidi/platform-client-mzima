@@ -1,15 +1,9 @@
-.language {
-  padding: 16px;
-  background-color: var(--ion-color-gray);
-  display: flex;
-  flex-direction: column;
-  border-radius: 16px;
-  &__item {
-    height: 64px;
-
-    &__flag {
-      width: 30px;
-      height: 20px;
-    }
+.search-list {
+  background: none;
+  &__result {
+    border-bottom: none;
+  }
+  &__flag {
+    width: 30px;
   }
 }

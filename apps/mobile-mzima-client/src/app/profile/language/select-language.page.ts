@@ -23,7 +23,12 @@ export class SelectLanguagePage {
     this.selectedLanguage = this.languageService.initialLanguage;
   }
 
+  public selectLangauge(language: string) {
+    this.selectedLanguage = language;
+  }
+
   public changeLanguage(event: any) {
+    this.selectedLanguage = event.detail.value;
     this.languageService.changeLanguage(event.detail.value);
   }
 
