@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
+import { Location } from '@angular/common';
 import { Permissions } from '@enums';
 import { searchFormHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
@@ -112,6 +113,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     protected override eventBusService: EventBusService,
     protected override sessionService: SessionService,
     protected override breakpointService: BreakpointService,
+    private location: Location,
     private confirmModalService: ConfirmModalService,
     private dialog: MatDialog,
     private translate: TranslateService,
@@ -162,6 +164,21 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
+
+        /* ---------------------------------------------------
+          Change mode params in browser URL if user tries some
+          other options apart from the mode options we provide,
+          and without causing page reload or double posts load
+        -----------------------------------------------------*/
+        if (params['mode'] && params['mode'] !== this.mode) {
+          const pageURL = this.router
+            .createUrlTree([], {
+              relativeTo: this.route,
+              queryParams: { ...params, mode: this.mode },
+            })
+            .toString();
+          this.location.go(pageURL);
+        }
 
         /* -------------------------------------------------------------------
           i.e will NOT empty posts for Post Card and SwitchMode button clicks
