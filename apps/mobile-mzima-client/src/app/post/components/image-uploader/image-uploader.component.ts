@@ -138,10 +138,12 @@ export class ImageUploaderComponent implements ControlValueAccessor {
 
   async deleteSelectedImage() {
     try {
-      await Filesystem.deleteFile({
-        directory: Directory.Data,
-        path: this.photo!.path,
-      });
+      if (Capacitor.getPlatform() === 'hybrid') {
+        await Filesystem.deleteFile({
+          directory: Directory.Data,
+          path: this.photo!.path,
+        });
+      }
       this.photo = null;
       this.upload = false;
       this.preview = null;

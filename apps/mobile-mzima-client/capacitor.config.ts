@@ -35,7 +35,7 @@ const config: CapacitorConfig = {
       },
     },
     CapacitorHttp: {
-      enabled: true,
+      enabled: false,
     },
     Intercom: {
       iosApiKey: 'ios_sdk-39fba04b7c5ab918fb743cc4a55ea9380221eb3c',

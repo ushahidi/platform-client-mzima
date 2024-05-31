@@ -334,9 +334,7 @@
                 "
               >
               </app-image-uploader>
-              <div>
-                <ion-progress-bar [value]="uploadProgress[field.id] || 0"></ion-progress-bar>
-              </div>
+              <ion-progress-bar [value]="uploadProgress$[field.id] | async"></ion-progress-bar>
             </div>
           </ng-container>
 

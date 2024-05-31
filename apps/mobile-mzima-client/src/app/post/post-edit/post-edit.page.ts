@@ -1,10 +1,27 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { EMPTY, from, lastValueFrom, map, Observable, of, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  EMPTY,
+  from,
+  lastValueFrom,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import {
   GeoJsonFilter,
   MediaService,
@@ -35,6 +52,7 @@ dayjs.extend(timezone);
   selector: 'app-post-edit',
   templateUrl: 'post-edit.page.html',
   styleUrls: ['post-edit.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class PostEditPage {
   @Input() public postInput: any;
@@ -72,7 +90,7 @@ export class PostEditPage {
   public selectedSurveyId: number | null;
   public selectedSurvey: any;
   private fileToUpload: any;
-  public uploadProgress: number[] = [];
+  public uploadProgress$: BehaviorSubject<number>[] = [];
   private checkedList: any[] = [];
   public isConnection = true;
   public connectionInfo = '';
@@ -272,7 +290,7 @@ export class PostEditPage {
               this.relationConfigKey = relationConfigKey;
               break;
             case 'media':
-              this.uploadProgress[field.id] = 0;
+              this.uploadProgress$[field.id] = new BehaviorSubject<number>(0);
               break;
           }
 
@@ -607,14 +625,15 @@ export class PostEditPage {
       for (const field of postData.post_content[0].fields) {
         if (field.type === 'media') {
           if (field?.file?.delete) {
-            postData = await this.deleteFile(postData, postData.file);
+            postData = await this.deleteFile(postData, field.file);
           } else {
             const fieldUpload = new UploadFileProgressHelper(this.mediaService).uploadFileField(
               field,
               field.value.value.photo,
-              (progress) => {
-                this.uploadProgress[field.id] = progress;
-              },
+              (progress) =>
+                setTimeout(() => {
+                  this.uploadProgress$[field.id].next(progress);
+                }),
             );
             promises.push(fieldUpload);
           }
