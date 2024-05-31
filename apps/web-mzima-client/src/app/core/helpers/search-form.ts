@@ -117,6 +117,7 @@ export const sortingOptions = [
 ];
 
 export const DEFAULT_FILTERS = {
+  isDefault: true,
   query: [''],
   status: [['published', 'draft']],
   tags: [[]],

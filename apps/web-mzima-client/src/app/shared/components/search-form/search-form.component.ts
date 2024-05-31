@@ -47,6 +47,7 @@ import {
   DEFAULT_STATUSES_LOGGED_OUT,
   loggedOutStatuses,
 } from '../../../core/helpers/search-form';
+import _ from 'lodash';
 
 @UntilDestroy()
 @Component({
@@ -145,6 +146,10 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
         if (this.collectionInfo?.id) {
           values.set = this.collectionInfo.id.toString();
         }
+
+        const isDefault = this.filterIsDefault({ values }); // This is the point where you get to compare individual filters with the default
+        values = { ...values, isDefault };
+
         localStorage.setItem(
           this.session.getLocalStorageNameMapper('filters'),
           JSON.stringify(values),
@@ -156,7 +161,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
           );
         }
         this.getActiveFilters(values);
-        this.applyFilters();
+        // At this point is where you want to track if its a default filter or not... But how?
+        this.applyFilters(true, isDefault);
       },
     });
 
@@ -240,6 +246,45 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       );
     }
   }
+
+  public filterIsDefault = ({ values }: { values: Record<string, any> }) => {
+    delete values['isDefault'];
+
+    // console.log({ values });
+
+    let defaultValue = {
+      center_point: {
+        distance: 1,
+        location: {
+          lat: null,
+          lng: null,
+        },
+      },
+      date: {
+        start: '',
+        end: '',
+      },
+      date_after: '',
+      date_before: '',
+      form: this.surveyList.map((s) => s.id),
+      place: '',
+      query: '',
+      source: this.sources.map((s) => s.value),
+      status: this.isLoggedIn ? DEFAULT_STATUSES_LOGGED_IN : DEFAULT_STATUSES_LOGGED_OUT,
+      tags: [],
+    };
+
+    Object.keys(values).map((key) => {
+      if (values[key] === '' || _.isEqual(values[key], ['none']))
+        defaultValue = { ...defaultValue, [key]: values[key] };
+    });
+
+    // console.log({ defaultValue });
+
+    const objectValuesAreSame = _.isEqual(values, defaultValue);
+
+    return objectValuesAreSame;
+  };
 
   getPostsFilters() {
     this.postsService.postsFilters$
@@ -366,6 +411,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     }
 
     const filters: GeoJsonFilter = {
+      isDefault: values.isDefault,
       'source[]': values.source,
       'status[]': values.status,
       'form[]': values.form,
@@ -701,8 +747,9 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
   }
 
-  public applyFilters(updated = true): void {
-    this.postsService.applyFilters(this.activeFilters, updated);
+  public applyFilters(updated = true, isDefault?: boolean): void {
+    // this.activeFilters = { ...this.activeFilters, isDefault: true };
+    this.postsService.applyFilters(this.activeFilters, isDefault, updated);
   }
 
   public applyAndClose(): void {
@@ -752,6 +799,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
 
   public clearFilter(filterName: string): void {
     this.total = 0;
+    // Hmm... maybe have a separate object that records if individual type of filter is back to default
     this.form.controls[filterName].patchValue('');
   }
 
@@ -804,6 +852,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   private updateForm(filters: any) {
     Object.keys(filters).forEach((key: string) => {
       if (this.form.controls[key]) {
+        // console.log(key, this.form.controls[key]);
         this.form.controls[key].patchValue(filters[key]);
       }
     });

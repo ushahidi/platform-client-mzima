@@ -331,15 +331,18 @@ export class PostsService extends ResourceService<any> {
     return super.delete(id, 'lock');
   }
 
-  public applyFilters(filters: any, updated = true): void {
-    const newFilters: any = {};
+  public applyFilters(filters: any, isDefault?: boolean, updated = true): void {
+    let newFilters: any = {};
     for (const key in filters) {
       const postsFilterValue = this.postsFilters.value[key as keyof typeof this.postsFilters.value];
       if (filters[key] !== undefined || postsFilterValue) {
         newFilters[key] = filters[key] !== undefined ? filters[key] : postsFilterValue;
       }
     }
+
     if (updated) {
+      console.log('UPDATED!!!');
+      newFilters = isDefault ? { ...newFilters, isDefault } : newFilters;
       this.postsFilters.next(newFilters);
     }
   }

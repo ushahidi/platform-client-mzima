@@ -61,6 +61,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public idModePageFromRouter = (routerUrl: string) =>
     this.idModePages.filter((string) => routerUrl.includes(`/${string}`))[0] as IdModePage; // will help app keep track of id mode page for use later on resize, after setting on page load
   public onlyModeUIChanged = false;
+  public defaultFilters: boolean | undefined;
   public postsSkeleton = new Array(20).fill(''); // used for Id mode's skeleton loader
   public posts: PostResult[] = [];
   public postCurrentLength = 0;
@@ -103,7 +104,9 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public isMainFiltersOpen: boolean;
   public isManagePosts: boolean;
   public statusControl = new FormControl();
-  public initialLoad = true;
+  public initialPageLoad = true;
+  filtersTriggered: boolean;
+  paginationTriggered: boolean;
 
   constructor(
     protected override router: Router,
@@ -131,6 +134,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     );
 
     this.checkDesktop();
+    this.setupFeedDefaultFilters();
 
     this.route.params.subscribe(() => {
       this.initCollection();
@@ -158,8 +162,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           ? this.posts.length >= 20 || this.currentPage > 1
           : !this.posts;
 
+        // eslint-disable-next-line no-empty
         if (this.isLoading) {
-          // this.setupFeedDefaultFilters();
         }
 
         this.currentPage = params['page'] ? Number(params['page']) : 1;
@@ -180,10 +184,19 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           this.location.go(pageURL);
         }
 
+        console.log('paginationTriggered: ', this.paginationTriggered);
+
         /* -------------------------------------------------------------------
           i.e will NOT empty posts for Post Card and SwitchMode button clicks
         ---------------------------------------------------------------------*/
-        if (this.isLoading) {
+        if (
+          this.isLoading &&
+          (this.initialPageLoad ||
+            this.paginationTriggered ||
+            (!this.paginationTriggered && this.filtersTriggered && !this.defaultFilters))
+        ) {
+          // console.log('DF on: ', this.defaultFilters);
+          console.log('filter is default - ', this.defaultFilters);
           this.posts = [];
           this.getPosts(this.params);
         }
@@ -209,8 +222,9 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     this._routerEvent = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((/*event*/) => {
+        // console.log({ userEvent: this.userEvent });
         console.log('isLoading: ', this.isLoading);
-        console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
+        // console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
 
         this.activeCard().slideOutHandler();
         this.activeCard().scrollCountHandler({ task: 'increment' });
@@ -232,23 +246,27 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       });
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
-      next: () => {
-        // this.isLoading = true; // Also set is loading to true before filter-related operation
-        // if (this.isLoading) {
-        //   if (this.initialLoad) {
-        //     this.initialLoad = false;
-        //     return;
-        //   }
-        //   this.router.navigate([], {
-        //     relativeTo: this.route,
-        //     queryParams: {
-        //       page: 1,
-        //     },
-        //     queryParamsHandling: 'merge',
-        //   });
-        //   this.posts = [];
-        //   this.getPostsSubject.next({ params: this.params });
-        // }
+      next: (filters) => {
+        this.isLoading = true;
+        this.filtersTriggered = this.isLoading;
+
+        if (this.initialPageLoad) {
+          this.initialPageLoad = false;
+          return;
+        }
+        // if (this.isLoading && !this.initialPageLoad) {
+        if (this.isLoading && !this.initialPageLoad) {
+          console.log({ filters });
+          console.log({ defaultFilters: filters.isDefault });
+
+          this.defaultFilters = filters.isDefault;
+          this.navigateTo().pathFromCurrentRoute({ page: 1 });
+
+          if (!this.paginationTriggered && this.filtersTriggered && this.defaultFilters) {
+            this.posts = [];
+            this.getPosts(this.params);
+          }
+        }
       },
     });
 
@@ -260,6 +278,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       next: (isLoading: boolean) => {
         // Get end of post load directly from the posts API, use it to set is loading state to false
         this.isLoading = isLoading;
+        this.paginationTriggered = this.isLoading;
+        this.filtersTriggered = this.isLoading;
         console.log('isLoading... after API loaded: ', this.isLoading);
       },
     });
@@ -624,7 +644,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       this.selectedPosts.map((p: PostResult) => this.postsService.update(p.id, { status })),
     ).subscribe({
       complete: () => {
-        this.getPostsSubject.next({ params: this.params, add: false });
+        this.getPosts(this.params);
         this.statusControl.reset();
         this.deselectAllPosts();
       },
@@ -661,7 +681,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public postDeleted(posts: PostResult[], count?: number): void {
-    this.getPostsSubject.next({ params: this.params, add: false });
+    this.getPosts(this.params);
     if (this.activePostId && posts.some((p: PostResult) => p.id === this.activePostId)) {
       if (this.collectionId) {
         this.router.navigate(['feed', 'collection', this.collectionId]);
@@ -688,7 +708,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public postStatusChanged(): void {
-    this.getPostsSubject.next({ params: this.params, add: false });
+    this.getPosts(this.params);
     this.selectedPosts = [];
   }
 
@@ -710,7 +730,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public sortPosts(value: any): void {
     this.activeSorting = value;
     this.postsService.setSorting(this.activeSorting);
-    this.getPostsSubject.next({ params: this.params, add: false });
+    this.getPosts(this.params);
   }
 
   public refreshMasonry(): void {
@@ -771,6 +791,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public changePage(page: number): void {
+    this.paginationTriggered = true;
     this.toggleBulkOptions(false);
     this.navigateTo().pathFromCurrentRoute({ page });
   }

@@ -21,6 +21,7 @@ export interface GeoJsonItem {
 }
 
 export interface GeoJsonFilter {
+  isDefault?: boolean;
   has_location?: string;
   currentView?: 'map' | 'feed';
   limit?: number;
