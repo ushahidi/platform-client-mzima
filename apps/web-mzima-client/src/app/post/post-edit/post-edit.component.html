@@ -34,17 +34,6 @@
     <div class="translate-container">
       <h1 class="survey-name">{{ surveyName }}</h1>
       <div class="form-row" *ngIf="postLanguages.length">
-        <mzima-client-button
-          fill="clear"
-          color="secondary"
-          [iconOnly]="true"
-          class="tooltip-btn"
-          tabindex="-1"
-          matTooltipPosition="above"
-          matTooltip="View and add to this survey in another language"
-        >
-          <mat-icon icon svgIcon="tooltip"></mat-icon>
-        </mzima-client-button>
         <mat-form-field appearance="outline" class="feed-page__control">
           <mat-select
             name="language"
@@ -59,6 +48,17 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mzima-client-button
+          fill="clear"
+          color="secondary"
+          [iconOnly]="true"
+          class="tooltip-btn"
+          tabindex="-1"
+          matTooltipPosition="above"
+          matTooltip="View and add to this survey in another language"
+        >
+          <mat-icon icon svgIcon="tooltip"></mat-icon>
+        </mzima-client-button>
       </div>
     </div>
     <form
