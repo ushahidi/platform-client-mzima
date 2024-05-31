@@ -1,19 +1,14 @@
 <app-main-layout class="main" title="Select Language" (back)="back()">
   <ng-container>
     <ion-text color="medium"> Select language from the list </ion-text>
-    <ion-radio-group
-      (ionChange)="changeLanguage($event)"
-      ngModel="selectedLanguage"
-      class="search-list"
-      value="selectedLanguage"
-    >
+    <ion-radio-group class="search-list">
       <div class="search-list__result">
         <ion-item
           class="search-list__item"
           button
           lines="none"
           *ngFor="let language of languages; let i = index"
-          (click)="selectLangauge(language.code)"
+          (click)="selectLanguage(language.code)"
         >
           <img
             [src]="'assets/images/flags/' + (language.code | lowercase) + '.svg'"
@@ -27,7 +22,6 @@
             <ion-text color="primary" class="search-list__current">Current</ion-text>
           </div>
           <ion-radio
-            [value]="language.code"
             class="search-list__radio"
             [ngClass]="language.code === selectedLanguage ? 'radio-checked' : ''"
             slot="end"
