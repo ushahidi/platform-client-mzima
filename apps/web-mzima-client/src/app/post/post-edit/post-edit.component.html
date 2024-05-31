@@ -1,4 +1,8 @@
-<div *ngIf="!formId" class="post-item-page">
+<div
+  *ngIf="!formId"
+  class="post-item-page"
+  [ngClass]="{ 'page-content page-content__isLoading': !surveys }"
+>
   <div class="page-content" *ngIf="surveys; else spinner">
     <h1 class="survey-name">{{ 'post.unstructured.add_survey.title' | translate }}</h1>
     <span class="info-message">
@@ -23,7 +27,10 @@
   </div>
 </div>
 <div *ngIf="formId" class="post-item-page">
-  <div class="page-content">
+  <div
+    class="page-content"
+    [ngClass]="{ 'page-content__isLoading': !formId || !(form && tasks.length) }"
+  >
     <div class="translate-container">
       <h1 class="survey-name">{{ surveyName }}</h1>
       <div class="form-row" *ngIf="postLanguages.length">
@@ -152,11 +159,16 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'tags'">
-              <span class="related-post-list" *ngIf="field.options?.length; else noOptions">
+              <span
+                class="related-post-list"
+                *ngIf="getTotalCategoryCount(field.options); else noOptions"
+              >
                 <ul>
                   <li>
                     <mat-checkbox
-                      [checked]="form.get(field.key)?.value.length === field.options.length"
+                      [checked]="
+                        form.get(field.key)?.value.length === getTotalCategoryCount(field.options)
+                      "
                       (change)="toggleAllSelection($event, task.fields, field.key)"
                     >
                       {{ 'nav.select_all' | translate }}
@@ -164,6 +176,7 @@
                   </li>
                   <li *ngFor="let option of field.options; trackBy: trackById">
                     <mat-checkbox
+                      *ngIf="!option.parent_id"
                       [checked]="form.get(field.key)?.value.includes(option.id)"
                       (change)="
                         onCheckChange(
@@ -348,6 +361,9 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'upload'">
+              <span class="form-row__instruction" *ngIf="maxImageSize">
+                Max size: {{ (maxImageSize / 1000 / 1000).toFixed(2) }} MB
+              </span>
               <app-image-uploader
                 [formControlName]="field.key"
                 [hasCaption]="field.config.hasCaption"
