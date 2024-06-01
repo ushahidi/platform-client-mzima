@@ -131,6 +131,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     );
 
     this.checkDesktop();
+    this.setupFeedDefaultFilters();
 
     this.route.params.subscribe(() => {
       this.initCollection();
@@ -233,22 +234,17 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
-        // this.isLoading = true; // Also set is loading to true before filter-related operation
-        // if (this.isLoading) {
-        //   if (this.initialLoad) {
-        //     this.initialLoad = false;
-        //     return;
-        //   }
-        //   this.router.navigate([], {
-        //     relativeTo: this.route,
-        //     queryParams: {
-        //       page: 1,
-        //     },
-        //     queryParamsHandling: 'merge',
-        //   });
-        //   this.posts = [];
-        //   this.getPostsSubject.next({ params: this.params });
-        // }
+        this.isLoading = true; // Also set is loading to true before filter-related operation
+        if (this.isLoading) {
+          if (this.initialLoad) {
+            this.initialLoad = false;
+            return;
+          }
+          this.currentPage = 1; // set current page to 1 every time we are accessing filters (and also use it to access posts once filters or clear filters is triggered)
+          this.navigateTo().pathFromCurrentRoute({ page: this.currentPage });
+          this.posts = [];
+          this.getPosts({ ...this.params, page: this.currentPage });
+        }
       },
     });
 
