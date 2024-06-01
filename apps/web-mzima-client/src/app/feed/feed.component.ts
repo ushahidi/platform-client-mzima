@@ -620,7 +620,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       this.selectedPosts.map((p: PostResult) => this.postsService.update(p.id, { status })),
     ).subscribe({
       complete: () => {
-        this.getPostsSubject.next({ params: this.params, add: false });
+        this.getPosts(this.params);
         this.statusControl.reset();
         this.deselectAllPosts();
       },
@@ -657,7 +657,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public postDeleted(posts: PostResult[], count?: number): void {
-    this.getPostsSubject.next({ params: this.params, add: false });
+    this.getPosts(this.params);
     if (this.activePostId && posts.some((p: PostResult) => p.id === this.activePostId)) {
       if (this.collectionId) {
         this.router.navigate(['feed', 'collection', this.collectionId]);
@@ -684,7 +684,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public postStatusChanged(): void {
-    this.getPostsSubject.next({ params: this.params, add: false });
+    this.getPosts(this.params);
     this.selectedPosts = [];
   }
 
@@ -706,7 +706,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public sortPosts(value: any): void {
     this.activeSorting = value;
     this.postsService.setSorting(this.activeSorting);
-    this.getPostsSubject.next({ params: this.params, add: false });
+    this.getPosts(this.params);
   }
 
   public refreshMasonry(): void {
