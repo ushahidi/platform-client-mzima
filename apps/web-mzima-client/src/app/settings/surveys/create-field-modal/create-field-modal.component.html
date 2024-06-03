@@ -211,7 +211,6 @@
   <div class="fields-list">
     <mzima-client-button
       color="light"
-      class="btn-field-list"
       matRipple
       class="list-item"
       *ngFor="let field of fields"
@@ -222,20 +221,6 @@
       <h3>{{ field.label | translate }}</h3>
       <p>{{ field.instructions | translate }}</p></mzima-client-button
     >
-
-    <!-- Button element rendering -->
-    <!-- <button
-      class="btn-field-list"
-      matRipple
-      class="list-item"
-      *ngFor="let field of fields"
-      (click)="(field.input !== 'tags' || availableCategories?.length) && selectField(field)"
-      [ngClass]="{ 'list-item--disabled': field.input === 'tags' && !availableCategories?.length }"
-      [data-qa]="'select-' + field.label"
-    >
-      <h3>{{ field.label | translate }}</h3>
-      <p>{{ field.instructions | translate }}</p>
-    </button> -->
   </div>
 </ng-template>
 

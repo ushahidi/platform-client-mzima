@@ -1,23 +1,5 @@
 @import 'helpers';
 
-// styling for the button element
-
-// .fields-list {
-//   display: flex;
-//   flex-wrap: wrap;
-//   margin: 0 -8px;
-//   justify-content: flex-start;
-
-//   &::ng-deep {
-//     .btn-field-list {
-//       border: none;
-//       cursor: pointer;
-//       text-align: left;
-//     }
-//   }
-// }
-
-// styling for mzima-client-button
 .fields-list {
   display: flex;
   flex-wrap: wrap;
@@ -42,7 +24,8 @@
   }
 
   h3 {
-    font-size: 16px;
+    font-size: 18px;
+    text-align: left;
     line-height: 1.5;
     margin-bottom: 4px;
     color: var(--color-black);
@@ -50,6 +33,7 @@
 
   p {
     margin-bottom: 0;
+    text-align: left;
   }
 
   &--disabled {
