@@ -2,7 +2,7 @@
 
 <ion-content class="ion-padding-horizontal ion-padding-top page">
   <ng-container *ngIf="!surveyList.length">
-    <p>Getting data...</p>
+    <p>{{'app.loading' | translate}}</p>
   </ng-container>
 
   <ng-container *ngIf="surveyList.length && !form">

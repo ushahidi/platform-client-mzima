@@ -40,7 +40,7 @@
         <app-icon slot="icon-only" name="delete"></app-icon>
       </app-button>
     </div>
-    <p class="error-msg" *ngIf="requiredError">Image is required</p>
+    <p class="error-msg" *ngIf="requiredError">{{ 'app.required_image' | translate }}</p>
   </div>
 
   <div class="form-row" *ngIf="hasCaption">
