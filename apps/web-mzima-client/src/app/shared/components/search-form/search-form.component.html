@@ -400,11 +400,12 @@
 
       <div class="search-form__filters-panel__item search-form__filters-panel__item--controls">
         <mzima-client-button
+          type="button"
           fill="outline"
           color="secondary"
           [disabled]="form.disabled"
           class="search-form__button"
-          (buttonClick)="resetSavedFilter()"
+          (buttonClick)="restoreFiltersToDefault()"
           [data-qa]="'search-form__button'"
         >
           {{ 'global_filter.clear_all_filters' | translate }}

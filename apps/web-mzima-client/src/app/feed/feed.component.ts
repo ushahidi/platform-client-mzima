@@ -233,17 +233,33 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       });
 
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
-      next: () => {
-        this.isLoading = true; // Also set is loading to true before filter-related operation
+      next: (filters) => {
+        if (this.initialLoad) {
+          this.initialLoad = false;
+          return;
+        }
+        console.log(this.total);
+
+        const { isDefault, wasPreviouslyDefault } = filters.filtersTracker!;
+
+        const isLoadingFilters = ((!wasPreviouslyDefault && isDefault) ||
+          (wasPreviouslyDefault && !isDefault) ||
+          (!wasPreviouslyDefault && !isDefault)) as boolean;
+
+        if (isLoadingFilters) console.log('Loading...');
+
+        this.isLoading = isLoadingFilters;
         if (this.isLoading) {
-          if (this.initialLoad) {
-            this.initialLoad = false;
-            return;
-          }
-          this.currentPage = 1; // set current page to 1 every time we are accessing filters (and also use it to access posts once filters or clear filters is triggered)
+          /* --------------------------------------------------
+            Very important: set current page to 1 every time
+            we are accessing filters (and also use it to access
+            posts once filters or clear filters is triggered)
+          ----------------------------------------------------*/
+          this.currentPage = 1;
           this.navigateTo().pathFromCurrentRoute({ page: this.currentPage });
-          this.posts = [];
           const params = { ...this.params, page: this.currentPage };
+          //----------------------------------------------------
+          this.posts = [];
           this.getPosts({ params });
         }
       },

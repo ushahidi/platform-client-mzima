@@ -47,6 +47,7 @@ import {
   DEFAULT_STATUSES_LOGGED_OUT,
   loggedOutStatuses,
 } from '../../../core/helpers/search-form';
+import _ from 'lodash';
 
 @UntilDestroy()
 @Component({
@@ -145,6 +146,25 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
         if (this.collectionInfo?.id) {
           values.set = this.collectionInfo.id.toString();
         }
+
+        const isDefault = this.filterIsDefault({ values }); // This is the point where you get to compare individual filters with the default
+        const wasPreviouslyDefault = JSON.parse(localStorage.getItem('USH_filters')!).filtersTracker
+          .isDefault;
+        const buttonClearsWhichFilterType = isDefault
+          ? values.filtersTracker.buttonClearsWhichFilterType
+          : '';
+
+        // At this point is where you want to track if its a default filter or not... But how?
+        const filtersTracker = {
+          isDefault,
+          wasPreviouslyDefault,
+          buttonClearsWhichFilterType,
+        };
+        values = { ...values, filtersTracker };
+
+        console.log({ ...filtersTracker });
+        // console.log({ values });
+
         localStorage.setItem(
           this.session.getLocalStorageNameMapper('filters'),
           JSON.stringify(values),
@@ -156,7 +176,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
           );
         }
         this.getActiveFilters(values);
-        this.applyFilters();
+
+        this.applyFilters(undefined, filtersTracker);
       },
     });
 
@@ -645,7 +666,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       ]);
     } else {
       localStorage.removeItem(this.session.getLocalStorageNameMapper('activeSavedSearch'));
-      this.resetSavedFilter();
+      this.restoreFiltersToDefault();
     }
   }
 
@@ -695,14 +716,16 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     }
   }
 
-  public resetSavedFilter(): void {
+  public restoreFiltersToDefault(): void {
     this.clearSavedFilter();
+    this.form.controls['filtersTracker'].patchValue({ buttonClearsWhichFilterType: 'all' });
     this.resetForm();
     this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
   }
 
-  public applyFilters(updated = true): void {
-    this.postsService.applyFilters(this.activeFilters, updated);
+  public applyFilters(updated = true, filtersTracker?: any): void {
+    // this.activeFilters = { ...this.activeFilters, isDefault: true };
+    this.postsService.applyFilters(this.activeFilters, filtersTracker, updated);
   }
 
   public applyAndClose(): void {
@@ -744,6 +767,47 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     });
   }
 
+  public filterIsDefault = ({ values }: { values: Record<string, any> }) => {
+    // We don't want to modify the real values obj, so we create and use the copy for comparison
+    const valuesCopy = { ...values };
+    delete valuesCopy['filtersTracker'];
+
+    // console.log({ values });
+
+    let defaultValue = {
+      center_point: {
+        distance: 1,
+        location: {
+          lat: null,
+          lng: null,
+        },
+      },
+      date: {
+        start: '',
+        end: '',
+      },
+      date_after: '',
+      date_before: '',
+      form: this.surveyList.map((s) => s.id),
+      place: '',
+      query: '',
+      source: this.sources.map((s) => s.value),
+      status: this.isLoggedIn ? DEFAULT_STATUSES_LOGGED_IN : DEFAULT_STATUSES_LOGGED_OUT,
+      tags: [],
+    };
+
+    Object.keys(valuesCopy).map((key) => {
+      if (valuesCopy[key] === '' || _.isEqual(valuesCopy[key], ['none']))
+        defaultValue = { ...defaultValue, [key]: valuesCopy[key] };
+    });
+
+    // console.log({ defaultValue });
+
+    const objectValuesAreSame = _.isEqual(valuesCopy, defaultValue);
+
+    return objectValuesAreSame;
+  };
+
   public toggleFilters(value: boolean): void {
     if (value === this.isFiltersVisible) return;
     this.isFiltersVisible = value;
@@ -753,6 +817,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   public clearFilter(filterName: string): void {
     this.total = 0;
     this.form.controls[filterName].patchValue('');
+    this.form.controls['filtersTracker'].patchValue({ buttonClearsWhichFilterType: 'one' });
   }
 
   public showAllButton(filterName: string) {
@@ -779,6 +844,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       newValue = ['none'];
     }
     this.form.controls[filterName].patchValue(newValue);
+    this.form.controls['filtersTracker'].patchValue({ buttonClearsWhichFilterType: 'one' });
   }
 
   public searchPosts(): void {

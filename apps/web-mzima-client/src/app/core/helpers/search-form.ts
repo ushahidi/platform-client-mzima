@@ -117,6 +117,11 @@ export const sortingOptions = [
 ];
 
 export const DEFAULT_FILTERS = {
+  filtersTracker: {
+    isDefault: true,
+    wasPreviouslyDefault: true,
+    buttonClearsWhichFilterType: '',
+  },
   query: [''],
   status: [['published', 'draft']],
   tags: [[]],

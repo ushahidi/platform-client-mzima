@@ -144,6 +144,7 @@ export class PostsService extends ResourceService<any> {
   }
 
   public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
+    // console.log('test: ', this.postsFilters.value.page, filter?.page);
     return super
       .get(url, this.postParamsMapper({ ...this.postsFilters.value, has_location: 'all' }, filter))
       .pipe(
@@ -157,17 +158,24 @@ export class PostsService extends ResourceService<any> {
                 : 'Web';
           });
 
+          // console.log({ response });
+
           return response;
         }),
         tap((response) => {
+          // console.log(response.meta.current_page, filter?.page);
+          // if (response.meta.current_page === filter?.page) {
           this.totalPosts.next(response.meta.total);
           // set response here to be used inside of finalize()
           this.responseObject = response;
+          // }
         }),
         finalize(() => {
+          // if (this.responseObject.meta.current_page === filter?.page) {
           this.isLoadingPosts.next(false);
           this.awaitedResponse.next(this.responseObject);
-        }),
+          // }
+        }), // Check tap & finalize for cause...
       );
   }
 
@@ -197,10 +205,12 @@ export class PostsService extends ResourceService<any> {
 
   private postParamsMapper(params: any, filter?: GeoJsonFilter, isStats: boolean = false) {
     // Combine new parameters with existing filter
+    // console.log(params.page, filter?.page);
     const postParams: any = { ...filter, ...params };
 
     // Some parameters should always come from the filter (if they exist)
     postParams.page = filter?.page ?? postParams.page;
+    // console.log(postParams.page);
     postParams.currentView = filter?.currentView ?? postParams.currentView;
     postParams.limit = filter?.limit ?? postParams.limit;
     postParams['status[]'] = filter?.['status[]'] ?? postParams['status[]'];
@@ -331,7 +341,7 @@ export class PostsService extends ResourceService<any> {
     return super.delete(id, 'lock');
   }
 
-  public applyFilters(filters: any, updated = true): void {
+  public applyFilters(filters: any, filtersTracker?: any, updated = true): void {
     const newFilters: any = {};
     for (const key in filters) {
       const postsFilterValue = this.postsFilters.value[key as keyof typeof this.postsFilters.value];
@@ -340,7 +350,9 @@ export class PostsService extends ResourceService<any> {
       }
     }
     if (updated) {
-      this.postsFilters.next(newFilters);
+      // console.log('UPDATED!!!', isDefault);
+      // newFilters = isDefault ? { ...newFilters, isDefault } : newFilters;
+      this.postsFilters.next({ ...newFilters, filtersTracker });
     }
   }
 

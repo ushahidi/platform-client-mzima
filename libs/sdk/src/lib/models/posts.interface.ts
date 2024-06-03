@@ -21,6 +21,13 @@ export interface GeoJsonItem {
 }
 
 export interface GeoJsonFilter {
+  //------------------------------------
+  filtersTracker?: {
+    isDefault?: boolean;
+    wasPreviouslyDefault?: boolean;
+    buttonClearsWhichFilterType?: string;
+  };
+  //------------------------------------
   has_location?: string;
   currentView?: 'map' | 'feed';
   limit?: number;
