@@ -5,6 +5,14 @@
   flex-wrap: wrap;
   margin: 0 -8px;
   justify-content: flex-start;
+
+  &::ng-deep {
+    .btn-field-list {
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+  }
 }
 
 .list-item {
