@@ -50,7 +50,9 @@
       </div>
 
       <div class="bottom-panel">
-        <app-button type="submit" [disabled]="form.invalid || form.disabled"> Log in </app-button>
+        <app-button type="submit" [disabled]="form.invalid || form.disabled">
+          {{"app.login" | translate}}
+        </app-button>
         <app-button
           fill="clear"
           color="medium"
