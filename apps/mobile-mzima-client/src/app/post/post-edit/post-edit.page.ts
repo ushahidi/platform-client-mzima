@@ -626,7 +626,7 @@ export class PostEditPage {
         if (field.type === 'media') {
           if (field?.file?.delete) {
             postData = await this.deleteFile(postData, field.file);
-          } else {
+          } else if (field.value.value) {
             const fieldUpload = new UploadFileProgressHelper(this.mediaService).uploadFileField(
               field,
               field.value.value.photo,
