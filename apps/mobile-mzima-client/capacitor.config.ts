@@ -34,6 +34,9 @@ const config: CapacitorConfig = {
         biometricSubTitle: 'Log in using your biometric',
       },
     },
+    Keyboard: {
+      resizeOnFullScreen: true,
+    },
     CapacitorHttp: {
       enabled: true,
     },
