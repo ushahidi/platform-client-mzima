@@ -209,6 +209,22 @@
 
 <ng-template #allFields>
   <div class="fields-list">
+    <div class="list-item">
+      <h3>Div Element 1 - One</h3>
+      <p>This is a long description text just to make sure we have a longer description</p>
+    </div>
+    <div class="list-item">
+      <h3>Div Element 2 - Two</h3>
+      <p>This is a short description text</p>
+    </div>
+    <button class="list-item1">
+      <h3>HTML Button 1 - One</h3>
+      <p>This is a long description text just to make sure we have a longer description</p>
+    </button>
+    <button class="list-item1">
+      <h3>HTML Button 2 - Two</h3>
+      <p>This is a short description text</p>
+    </button>
     <mzima-client-button
       color="light"
       matRipple
@@ -219,8 +235,8 @@
       [data-qa]="'select-' + field.label"
     >
       <h3>{{ field.label | translate }}</h3>
-      <p>{{ field.instructions | translate }}</p></mzima-client-button
-    >
+      <p>{{ field.instructions | translate }}</p>
+    </mzima-client-button>
   </div>
 </ng-template>
 
