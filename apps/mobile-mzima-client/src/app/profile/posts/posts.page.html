@@ -40,7 +40,7 @@
     [permissions]="permissions"
     [isProfile]="true"
     (postChanged)="getMyPosts()"
-    (postDeleted)="back()"
+    (postDeleted)="handlePostDeleted($event)"
     footer
   >
   </app-post-controls>

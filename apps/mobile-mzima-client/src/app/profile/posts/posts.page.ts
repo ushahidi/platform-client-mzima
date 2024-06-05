@@ -113,12 +113,17 @@ export class PostsPage {
     }
   }
 
-  public handlePostDeleted(data: any): void {
-    this.posts.splice(
-      this.posts.findIndex((p) => p.id === data.post.id),
-      1,
-    );
-    this.totalPosts--;
+  // public handlePostDeleted(data: any): void {
+  //   this.posts.splice(
+  //     this.posts.findIndex((p) => p.id === data.post.id),
+  //     1,
+  //   );
+  //   this.totalPosts--;
+  // }
+  public handlePostDeleted(deletedPostIds: any): void {
+    this.posts = this.posts.filter((post) => !deletedPostIds.includes(post.id));
+    this.totalPosts -= deletedPostIds.length;
+    this.isEditMode = false;
   }
 
   public showPost(id: string): void {
