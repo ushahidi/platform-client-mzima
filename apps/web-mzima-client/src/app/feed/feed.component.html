@@ -202,99 +202,129 @@
     </div>
   </ng-container>
 
-  <div
-    class="main"
-    [ngClass]="{
-      main__tiles: mode === FeedMode.Preview,
-      'main__details-or-edit': mode === FeedMode.Id
-    }"
-    [attr.data-qa]="'posts'"
-  >
-    <!-- (scroll)="onScroll($event)" -->
+  <!-- Posts content -->
+  <ng-container *ngIf="!isLoading">
     <div
-      #feed
+      class="main"
       [ngClass]="{
-        'post-list__scroll post-list__color': mode === FeedMode.Id
+        main__tiles: mode === FeedMode.Preview,
+        'main__details-or-edit': mode === FeedMode.Id
+      }"
+      [attr.data-qa]="'posts'"
+    >
+      <!-- No posts -->
+      <ng-container *ngIf="!posts.length">
+        <span class="posts-empty">{{ 'post.no_posts_yet' | translate }}</span>
+      </ng-container>
+      <!-- When there are posts -->
+      <ng-container *ngIf="posts.length">
+        <div
+          #feed
+          [ngClass]="{
+            'post-list post-list__scroll post-list__color': mode === FeedMode.Id
+          }"
+        >
+          <div [ngClass]="{ 'left-margin': mode === FeedMode.Id && isDesktop }">
+            <ngx-masonry
+              #masonry
+              class="masonry-wrapper"
+              [ordered]="true"
+              [options]="masonryOptions"
+              [updateLayout]="updateMasonryLayout"
+              [attr.data-qa]="'post-preview'"
+            >
+              <app-post-preview
+                [attr.data-qa]="'post-item'"
+                class="post"
+                [ngClass]="{
+                  post__tiles: mode === FeedMode.Preview,
+                  'post__details-or-edit': mode === FeedMode.Id,
+                  'active--postcard': mode === FeedMode.Id && post.id === postDetails?.id,
+                  'scroll--active--postcard--to--top':
+                    isDesktop && scrollToView && mode === FeedMode.Id && post.id === postDetails?.id
+                }"
+                [post]="post"
+                [attr.postId]="post.id"
+                [user]="user"
+                ngxMasonryItem
+                [feedView]="true"
+                (edit)="editPost(post)"
+                (refresh)="refreshPost(post)"
+                (deleted)="postDeleted([post])"
+                (click)="showPostDetails(post)"
+                [selectable]="isBulkOptionsVisible"
+                [isChecked]="isPostChecked(post)"
+                (statusChanged)="postStatusChanged()"
+                (selected)="isPostSelected($event, post)"
+                (mediaLoaded)="updateMasonry()"
+                *ngFor="
+                  let post of posts
+                    | paginate
+                      : {
+                          itemsPerPage: mode === FeedMode.Id ? 0 : itemsPerPage,
+                          currentPage: currentPage,
+                          totalItems: total
+                        }
+                "
+              >
+              </app-post-preview>
+            </ngx-masonry>
+            <!-- pagination -->
+            <pagination-controls
+              class="pagination"
+              (pageChange)="changePage($event)"
+              *ngIf="!(mode === FeedMode.Id && isDesktop) && paginationElementsAllowed"
+            >
+            </pagination-controls>
+            <!-- Load more posts -->
+            <ng-container *ngIf="mode === FeedMode.Id && isDesktop && paginationElementsAllowed">
+              <mzima-client-button
+                fill="clear"
+                color="secondary"
+                (buttonClick)="loadMore()"
+                class="load-more"
+                *ngIf="!loadingMorePosts && postCurrentLength < total"
+              >
+                <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
+                <span>{{ 'app.load_more' | translate }}</span>
+              </mzima-client-button>
+              <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>
+              <div class="endofPosts" *ngIf="!loadingMorePosts && postCurrentLength >= total">
+                End of Posts
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div
+          [ngClass]="{
+            'post-list__scroll': mode === FeedMode.Id
+          }"
+        >
+          <!-- Router outlet here is only for Desktop, the modal popup for small devices is in .ts file -->
+          <router-outlet *ngIf="isDesktop && mode === FeedMode.Id"></router-outlet>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <!-- Loader -->
+  <ng-container *ngIf="isLoading">
+    <div
+      class="main main--loader"
+      [ngClass]="{
+        main__tiles: mode === FeedMode.Preview,
+        'main__details-or-edit': mode === FeedMode.Id
       }"
     >
-      <div [ngClass]="{ 'left-margin': mode === FeedMode.Id && isDesktop }">
-        <ngx-masonry
-          #masonry
-          class="masonry-wrapper"
-          [ordered]="true"
-          [options]="masonryOptions"
-          [updateLayout]="updateMasonryLayout"
-          [attr.data-qa]="'post-preview'"
-        >
-          <app-post-preview
-            [attr.data-qa]="'post-item'"
-            class="post"
-            [ngClass]="{
-              post__tiles: mode === FeedMode.Preview,
-              'post__details-or-edit': mode === FeedMode.Id,
-              'active--postcard': mode === FeedMode.Id && post.id === postDetails?.id,
-              'scroll--active--postcard--to--top':
-                isDesktop && scrollToView && mode === FeedMode.Id && post.id === postDetails?.id
-            }"
-            [post]="post"
-            [attr.postId]="post.id"
-            [user]="user"
-            ngxMasonryItem
-            [feedView]="true"
-            (edit)="editPost(post)"
-            (refresh)="refreshPost(post)"
-            (deleted)="postDeleted([post])"
-            (click)="showPostDetails(post)"
-            [selectable]="isBulkOptionsVisible"
-            [isChecked]="isPostChecked(post)"
-            (statusChanged)="postStatusChanged()"
-            (selected)="isPostSelected($event, post)"
-            (mediaLoaded)="updateMasonry()"
-            *ngFor="
-              let post of posts
-                | paginate
-                  : {
-                      itemsPerPage: mode === FeedMode.Id ? 0 : itemsPerPage,
-                      currentPage: currentPage,
-                      totalItems: total
-                    }
-            "
-          >
-          </app-post-preview>
-        </ngx-masonry>
-        <!-- pagination -->
-        <pagination-controls
-          class="pagination"
-          (pageChange)="changePage($event)"
-          *ngIf="!(mode === FeedMode.Id && isDesktop) && paginationElementsAllowed"
-        >
-        </pagination-controls>
-        <!-- Load more posts -->
-        <ng-container *ngIf="mode === FeedMode.Id && isDesktop && paginationElementsAllowed">
-          <mzima-client-button
-            fill="clear"
-            color="secondary"
-            (buttonClick)="loadMore()"
-            class="load-more"
-            *ngIf="!loadingMorePosts && postCurrentLength < total"
-          >
-            <mat-icon iconPrefix svgIcon="refresh"></mat-icon>
-            <span>{{ 'app.load_more' | translate }}</span>
-          </mzima-client-button>
-          <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>
-          <div class="endofPosts" *ngIf="!loadingMorePosts && postCurrentLength >= total">
-            End of Posts
-          </div>
-        </ng-container>
+      <div
+        *ngIf="mode === FeedMode.Id && isDesktop"
+        [ngClass]="{ 'loader loader--border': mode === FeedMode.Id && isDesktop }"
+      >
+        <div *ngFor="let single of postsSkeleton" class="loader--border loader--skeleton"></div>
+      </div>
+      <div [ngClass]="{ 'loader--border': mode === FeedMode.Id && isDesktop }">
+        <app-spinner class="loader--spinner"></app-spinner>
       </div>
     </div>
-    <div
-      [ngClass]="{
-        'post-list__scroll': mode === FeedMode.Id
-      }"
-    >
-      <!-- Router outlet here is only for Desktop, the modal popup for small devices is in .ts file -->
-      <router-outlet *ngIf="isDesktop && mode === FeedMode.Id"></router-outlet>
-    </div>
-  </div>
+  </ng-container>
 </div>
