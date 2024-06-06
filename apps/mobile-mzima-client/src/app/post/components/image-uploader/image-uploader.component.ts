@@ -52,7 +52,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
       this.upload = false;
       this.captionControl.patchValue(obj.caption);
       this.id = obj.id;
-      this.photo = this.previewUrl = obj.photo;
+      this.photo = obj.photo;
       if (typeof obj.photo === 'string') this.previewUrl = obj.photo;
       else this.previewUrl = this.domSanitizer.bypassSecurityTrustUrl(obj.photo.data);
     }
