@@ -355,6 +355,7 @@
                 "
               >
               </app-image-uploader>
+              <ion-progress-bar [value]="uploadProgress$[field.id] | async"></ion-progress-bar>
             </div>
           </ng-container>
 
@@ -521,13 +522,25 @@
       <app-button
         expand="inline"
         type="button"
-        *ngIf="form"
-        [disabled]="form.disabled || form.invalid || emptyLocation || (!requireApproval || post?.status === 'published' ? taskForm.invalid : false)"
+        *ngIf="form && isSubmitting !== 'complete'"
+        [disabled]="isSubmitting==='yes' || form.disabled || form.invalid || emptyLocation || (!requireApproval || post?.status === 'published' ? taskForm.invalid : false)"
         (buttonClick)="submitPost()"
+        [ngSwitch]="isSubmitting"
+        class="submit-button"
       >
-        Submit
+        <ng-container *ngSwitchCase="'yes'">
+          <app-spinner></app-spinner>
+          Submitting
+        </ng-container>
+        <ng-container *ngSwitchCase="'no'"> Submit </ng-container>
       </app-button>
-      <app-button color="medium" fill="outline" expand="inline" (buttonClick)="backNavigation()">
+      <app-button
+        *ngIf="isSubmitting==='no'"
+        color="medium"
+        fill="outline"
+        expand="inline"
+        (buttonClick)="cancelPost()"
+      >
         Cancel
       </app-button>
     </ion-buttons>

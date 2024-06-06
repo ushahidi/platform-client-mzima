@@ -2,6 +2,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { SortByFieldModule } from '@pipes';
@@ -24,6 +25,7 @@ import { PostEditRoutingModule } from './post-edit.routing.module';
     TranslateModule,
     PostComponentsModule,
     SortByFieldModule,
+    MatProgressBarModule,
   ],
   declarations: [PostEditPage],
 })
