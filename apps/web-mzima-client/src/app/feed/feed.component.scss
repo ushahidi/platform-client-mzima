@@ -7,6 +7,7 @@
   &__tiles {
     display: block;
     padding-bottom: 32px;
+    --scrollbar-background: var(--color-light);
 
     @include breakpoint-max($tablet) {
       padding-bottom: 64px;
@@ -15,6 +16,9 @@
 
   // Larger devices - Post details and/or edit styles
   @include breakpoint-min($tablet) {
+    margin-inline-start: 24px;
+    margin-inline-end: 24px;
+
     &__details-or-edit {
       display: grid;
       grid-template-rows: 1fr;
@@ -23,6 +27,11 @@
       @include breakpoint-max($laptop-small) {
         grid-template-columns: 280px 1fr;
       }
+    }
+
+    @include breakpoint-max($laptop-small) {
+      margin-inline-start: 16px;
+      margin-inline-end: 16px;
     }
   }
 }
@@ -82,6 +91,11 @@
 
       @include breakpoint-max($laptop-small) {
         width: calc(100% - 16px);
+      }
+
+      @include breakpoint-max($tablet) {
+        margin: 0 8px 16px;
+        width: calc(50% - 18px);
       }
 
       //- Almost same style as &--selected for smooth transition back
