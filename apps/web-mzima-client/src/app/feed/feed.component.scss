@@ -33,12 +33,19 @@
       margin-inline-start: 16px;
       margin-inline-end: 16px;
     }
+
+    &--loader {
+      overflow: hidden;
+    }
   }
 }
 
 .post-list {
   // ID mode usage only (larger devices)
   @include breakpoint-min($tablet) {
+    margin-inline-end: 8px;
+    border-radius: 4px;
+
     &__scroll {
       overflow-y: auto;
       // overflow-x: hidden; // interesting... [commented out for clarity later when dealing with post cards when on the left in the details/edit view]
@@ -132,6 +139,41 @@
   @include breakpoint-max($laptop-small) {
     margin-inline-start: 8px;
   }
+}
+
+.loader {
+  padding: 12px 0;
+  margin-inline-end: 8px;
+
+  &--border {
+    border: 1px solid var(--color-neutral-20);
+    border-radius: 4px;
+  }
+
+  &--skeleton {
+    margin: 0 auto;
+    width: calc(100% - 24px);
+    margin-bottom: 12px;
+    min-height: 135px;
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 1px var(--color-neutral-30);
+    background: var(--color-neutral-20);
+  }
+
+  &--spinner {
+    display: block;
+    margin-top: 20vh;
+    margin-bottom: 20vh;
+  }
+}
+
+.posts-empty {
+  width: 100%;
+  display: block;
+  margin: 20vh 0;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .load-more {
