@@ -217,7 +217,7 @@
         'post-list__scroll post-list__color': mode === FeedMode.Id
       }"
     >
-      <div class="left-margin">
+      <div [ngClass]="{ 'left-margin': mode === FeedMode.Id && isDesktop }">
         <ngx-masonry
           #masonry
           class="masonry-wrapper"
