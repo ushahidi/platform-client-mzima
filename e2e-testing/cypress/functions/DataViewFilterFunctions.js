@@ -46,6 +46,7 @@ class DataViewFilterFunctions {
   }
 
   verify_post_appears_for_user() {
+    this.add_post();
     this.click_data_view_btn();
     //check post appears for admin user
     cy.get(DataViewLocators.postPreview)
