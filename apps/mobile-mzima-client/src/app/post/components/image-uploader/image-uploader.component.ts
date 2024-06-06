@@ -39,7 +39,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
   captionControl = new FormControl('', AlphanumericValidator());
   id?: number;
   photo: LocalFile | null;
-  preview: string | SafeUrl | null;
+  previewUrl: string | SafeUrl | null;
   isDisabled = false;
   upload = false;
   onChange: any = () => {};
@@ -52,7 +52,9 @@ export class ImageUploaderComponent implements ControlValueAccessor {
       this.upload = false;
       this.captionControl.patchValue(obj.caption);
       this.id = obj.id;
-      this.photo = this.preview = obj.photo;
+      this.photo = this.previewUrl = obj.photo;
+      if (typeof obj.photo === 'string') this.previewUrl = obj.photo;
+      else this.previewUrl = this.domSanitizer.bypassSecurityTrustUrl(obj.photo.data);
     }
   }
 
@@ -146,7 +148,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
       }
       this.photo = null;
       this.upload = false;
-      this.preview = null;
+      this.previewUrl = null;
       this.transferData({ delete: true });
     } catch (e) {
       console.log(e);

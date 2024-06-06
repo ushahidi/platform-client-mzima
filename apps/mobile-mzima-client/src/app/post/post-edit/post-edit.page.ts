@@ -133,7 +133,7 @@ export class PostEditPage {
 
     if (this.post) {
       this.selectedSurveyId = this.post.form_id!;
-      this.loadForm(this.post.post_content);
+      this.loadForm(this.selectedSurveyId, this.post.post_content);
     }
 
     this.transformSurveys();
