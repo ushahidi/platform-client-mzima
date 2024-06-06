@@ -105,11 +105,10 @@
         width: calc(50% - 18px);
       }
 
-      //- Almost same style as &--selected for smooth transition back
+      //- Almost same style as .active--postcard for smooth transition back
       @include breakpoint-min($tablet) {
-        position: absolute;
-        left: 0 !important;
-        transition: left 0.35s ease;
+        margin-inline-start: 0;
+        transition: margin-inline-start 0.35s ease;
         //-----------------------
       }
 
@@ -122,13 +121,12 @@
 
 .active--postcard {
   @include breakpoint-min($tablet) {
-    position: absolute;
-    left: 16px !important;
+    margin-inline-start: 16px;
     box-shadow: 0 8px 10px 0 rgba(var(--color-light-contrast-rgb), 0.05);
-    transition: left 0.35s ease; // add transition for smooth slide to left
+    transition: margin-inline-start 0.35s ease; // add transition for smooth slide to left
 
     @include breakpoint-max($laptop-small) {
-      left: 8px !important;
+      margin-inline-start: 8px;
     }
   }
 }
