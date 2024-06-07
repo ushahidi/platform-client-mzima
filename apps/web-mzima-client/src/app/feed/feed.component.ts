@@ -89,7 +89,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   private isRTL?: boolean;
   public masonryOptions: NgxMasonryOptions = {
     originLeft: false,
-    percentPosition: false, // setting this to false makes mode-related UI transition cleaner, whether on post card/mode switch button or on Data view sidebar Nav button click
+    percentPosition: true,
     resize: true,
     gutter: 0,
     columnWidth: 3,
@@ -213,8 +213,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         console.log('isLoading: ', this.isLoading);
         console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
 
-        this.activeCard().slideOutHandler();
         this.activeCard().scrollCountHandler({ task: 'increment' });
+
+        this.mansonryUpdateOnModeSwitch({ userEvent: this.userEvent });
+
+        this.activeCard().slideOutHandler();
         this.activeCard().scrollToView();
 
         if (this.mode === FeedMode.Id) {
@@ -311,6 +314,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     });
 
     window.addEventListener('resize', () => {
+      this.mansonryUpdateOnModeSwitch({ userEvent: 'resize' });
       //-----------------------------------
       const valueFromPageURL = this.idModePageFromRouter(this.router.url);
       this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: valueFromPageURL }).resizeHandler({});
@@ -444,6 +448,34 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     this.masonry?.layout();
   }
 
+  public mansonryUpdateOnModeSwitch({ userEvent }: { userEvent: UserEvent }): void {
+    /* -----------------------------------------------
+        Smooth transition of masonry layout from PREVIEW
+        mode to ID mode and vice versa
+      ------------------------------------------------*/
+    const idModeScrollCount =
+      userEvent === 'resize' ? 0 : parseInt(localStorage.getItem('scroll_count') as string) === 1;
+    const postVisibility = (post: Element, value: string) => {
+      (post as HTMLElement).style.setProperty('visibility', value);
+    };
+    document.querySelectorAll('.post').forEach((post) => {
+      if (idModeScrollCount && window.innerWidth >= 1024) {
+        postVisibility(post, 'hidden');
+        setTimeout(() => {
+          postVisibility(post, 'visible');
+        }, 70);
+      } else {
+        postVisibility(post, '');
+      }
+    });
+
+    /* -------------------------------------------
+        Never (ever) forget this "guy" when you need 
+        styles to adjust for masonry library
+      --------------------------------------------*/
+    this.updateMasonry();
+  }
+
   public activeCard() {
     return {
       slideOutHandler: () => {
@@ -474,7 +506,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
   public showPostDetails(post: PostResult): void {
     //---------------------------
-    this.updateMasonry(); // never forget this guy when you need styles to adjust for masonry library
     this.onlyModeUIChanged = true;
     //---------------------------
     this.userEvent = 'click';
@@ -738,7 +769,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
     if (inactiveSwitchModeButtonClicked) {
       //---------------------------
-      this.updateMasonry();
       this.onlyModeUIChanged = true;
       //---------------------------
       const firstPostOnCurrentPage = this.posts[0];
@@ -774,7 +804,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
   public editPost(post: any): void {
     //---------------------------
-    this.updateMasonry();
     this.onlyModeUIChanged = true;
     //---------------------------
     this.userEvent = 'click';
