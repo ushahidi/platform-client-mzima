@@ -47,7 +47,7 @@ import { objectHelpers, formValidators, dateHelper } from '@helpers';
 import { PhotoRequired, PointValidator } from '../../core/validators';
 import { Observable, lastValueFrom, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LanguageInterface } from '../../core/interfaces/language.interface';
+import { LanguageInterface } from '@mzima-client/sdk';
 import { MatSelectChange } from '@angular/material/select';
 
 dayjs.extend(timezone);
