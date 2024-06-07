@@ -208,6 +208,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         this.activeCard.slideOutHandler();
         this.activeCard.scrollToView();
 
+        if (this.mode === FeedMode.Preview) {
+          //----------------------------------
+          localStorage.removeItem('feedview_postObj');
+          //----------------------------------
+        }
         if (this.mode === FeedMode.Id) {
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
           if (this.userEvent === 'load') {
@@ -732,13 +737,15 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         ? this.navigateTo().idMode.view({ id: firstPostOnCurrentPage.id })
         : this.navigateTo().previewMode({});
 
-      /* --------------------------------------------------------
-        Update postObj in localStorage so that "Scroll to top" style is updated
-        Modal will also be able to access the updated/correct post on resize
-      --------------------------------------------------------------*/
-      const localStorageScrollID = localStorage.getItem('feedview_post-id-to-scroll') as string;
-      if (!localStorageScrollID || isNaN(parseInt(localStorageScrollID)))
-        localStorage.setItem('feedview_postObj', JSON.stringify(firstPostOnCurrentPage));
+      /* ------------------------------------------------------------------------------------
+        Larger devices: Updates postObj in localStorage so that "Scroll to top" style
+        Smaller devices: Modal will also be able to access the updated/correct post on resize
+      -------------------------------------------------------------------------------------*/
+      if (switchButtonValue === FeedMode.Id) {
+        this.modal({ showOn: 'TabletAndBelow' })
+          .idMode({ page: 'view' })
+          .clickHandler({ post: firstPostOnCurrentPage });
+      }
     }
   }
 
