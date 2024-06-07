@@ -74,7 +74,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public total: number;
   public postDetails?: PostResult;
   public scrollToView: boolean;
-  public scrollingID?: number | null;
   public isPostLoading: boolean;
   public isFiltersVisible: boolean;
   public isBulkOptionsVisible: boolean;
@@ -85,7 +84,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     order: 'desc',
     orderby: 'created',
   };
-  public updateMasonryLayout: boolean;
   private isRTL?: boolean;
   public masonryOptions: NgxMasonryOptions = {
     originLeft: false,
@@ -740,10 +738,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     this.activeSorting = value;
     this.postsService.setSorting(this.activeSorting);
     this.getPosts({ params: this.params });
-  }
-
-  public refreshMasonry(): void {
-    this.updateMasonryLayout = !this.updateMasonryLayout;
   }
 
   public loadMore(): void {
