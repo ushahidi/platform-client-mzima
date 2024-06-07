@@ -25,37 +25,7 @@
     </div>
     <div class="form-row__wrapper">
       <div class="form-row">
-        <app-form-control
-          [(ngModel)]="location.lat"
-          label="Latitude"
-          [required]="required"
-          [readonly]="true"
-        >
-          <ng-container end>
-            <ng-container *ngIf="location.lat">
-              <app-icon name="close" class="icon-close" (click)="clearLocationField()"></app-icon>
-            </ng-container>
-          </ng-container>
-        </app-form-control>
-        <p *ngIf="emptyFieldLat" class="location-error">Empty latitude</p>
-      </div>
-
-      <div class="form-row">
-        <app-form-control
-          [(ngModel)]="location.lng"
-          label="Longitude"
-          [required]="required"
-          [readonly]="true"
-        >
-          <ng-container end>
-            <ng-container *ngIf="location.lng">
-              <app-icon name="close" class="icon-close" (click)="clearLocationField()"></app-icon>
-            </ng-container>
-          </ng-container>
-        </app-form-control>
-        <p *ngIf="emptyFieldLng" class="location-error">Empty longitude</p>
-      </div>
-    </div>
+        <span class="latlong">{{location.lat}}, {{location.lng}}</span>   
   </div>
 </div>
 
