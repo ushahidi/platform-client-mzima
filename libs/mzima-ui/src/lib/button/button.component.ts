@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent {
-  @Input() public expand = true;
+  @Input() public expand = false;
   @Input() public rounded = false;
   @Input() public disabled = false;
   @Input() public iconOnly = false;
@@ -19,7 +19,7 @@ export class ButtonComponent {
   @Input() public ariaLabel: string;
   @Input() public dataQa: string;
   @Input() public type: 'button' | 'submit' = 'button';
-  @Input() public size: 'small' | 'medium' | 'big' = 'medium';
+  @Input() public size: 'small' | 'medium' | 'big' | 'uncertain' = 'medium';
   @Input() public fill: 'solid' | 'outline' | 'clear' = 'solid';
   @Input() public color:
     | 'primary'
@@ -28,6 +28,7 @@ export class ButtonComponent {
     | 'success'
     | 'gray'
     | 'light'
+    | 'default-color'
     | 'light-gray'
     | 'transparent-style-1'
     | 'custom' = 'primary';

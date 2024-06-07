@@ -225,10 +225,12 @@
       <h3>HTML Button 2 - Two</h3>
       <p>This is a short description text</p>
     </button>
+
     <mzima-client-button
-      color="light"
+      color="default-color"
+      size="uncertain"
       matRipple
-      class="list-item"
+      class="list-item2"
       *ngFor="let field of fields"
       (click)="(field.input !== 'tags' || availableCategories?.length) && selectField(field)"
       [ngClass]="{ 'list-item--disabled': field.input === 'tags' && !availableCategories?.length }"
