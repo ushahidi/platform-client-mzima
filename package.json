@@ -46,6 +46,7 @@
     "@capacitor/dialog": "^5.0.7",
     "@capacitor/filesystem": "^5.2.1",
     "@capacitor/geolocation": "^5.0.7",
+    "@capacitor/keyboard": "^5.0.8",
     "@capacitor/network": "^5.0.7",
     "@capacitor/share": "^5.0.7",
     "@capacitor/status-bar": "^5.0.7",

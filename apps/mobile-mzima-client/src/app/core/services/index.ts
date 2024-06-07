@@ -14,3 +14,5 @@ export * from './network.service';
 export * from './share.service';
 export * from './listener.service';
 export * from './intercom.service';
+export * from './translate-http-loader';
+export * from './language.service';

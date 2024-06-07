@@ -37,7 +37,7 @@
             </ng-container>
           </ng-container>
         </app-form-control>
-        <p *ngIf="emptyFieldLat" class="location-error">Empty latitude</p>
+        <p *ngIf="emptyFieldLat" class="location-error">{{ 'app.empty_lat' | translate }}</p>
       </div>
 
       <div class="form-row">
@@ -53,14 +53,14 @@
             </ng-container>
           </ng-container>
         </app-form-control>
-        <p *ngIf="emptyFieldLng" class="location-error">Empty longitude</p>
+        <p *ngIf="emptyFieldLng" class="location-error">{{ 'app.empty_long' | translate }}</p>
       </div>
     </div>
   </div>
 </div>
 
 <span class="instructions">
-  You can search or click the area of map where you want to place the marker.
+  {{ 'app.location_instruction' | translate }}
 </span>
 
 <div class="map-wrapper" *ngIf="mapReady">
