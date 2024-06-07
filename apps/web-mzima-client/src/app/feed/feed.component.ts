@@ -157,10 +157,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           ? this.posts.length >= 20 || this.currentPage > 1
           : !this.posts;
 
-        if (this.isLoading) {
-          // this.setupFeedDefaultFilters();
-        }
-
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
 
@@ -198,12 +194,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         }
       },
     });
-
-    // this.router.events
-    //   .pipe(filter((event) => event instanceof NavigationStart))
-    //   .subscribe((/*event*/) => {
-    //     this.isLoading = false;
-    //   });
 
     this._routerEvent = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -289,8 +279,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         }, 1200);
 
         this.activeCard().scrollToView();
-
-        // console.log(response);
       },
     });
 
@@ -321,17 +309,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       this.activeCard().scrollToView();
     });
 
-    // window.addEventListener('resize', () => {
-    //   this.masonryOptions.columnWidth =
-    //     this.mode === FeedMode.Preview
-    //       ? window.innerWidth > 1640
-    //         ? 3
-    //         : window.innerWidth <= 768
-    //         ? 1
-    //         : 2
-    //       : 1;
-    // });
-
     this.sessionService.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
       next: (isMainFiltersHidden: boolean) => {
         setTimeout(() => {
@@ -340,6 +317,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       },
     });
   }
+
   ngOnDestroy(): void {
     this._routerEvent.unsubscribe();
   }
@@ -415,19 +393,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     this.isManagePosts = this.user.permissions?.includes(Permissions.ManagePosts) ?? false;
   }
 
-  loadData(): void {
-    // this.params.page = 1;
-    // this.getPostsSubject.next({ params: this.params });
-  }
-
-  // private initGetPostsListener() {
-  //   this.getPostsSubject.pipe(untilDestroyed(this), debounceTime(700)).subscribe({
-  //     next: ({ params }) => {
-  //       console.log(params);
-  //       this.getPosts(params);
-  //     },
-  //   });
-  // }
+  loadData(): void {}
 
   private getPosts({ params, loadMore }: { params: any; loadMore?: boolean }): void {
     /* --------------------------------------------
@@ -539,7 +505,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         //---------------------------------
         this.router.navigate(pageURL, {
           queryParams: {
-            // page: this.currentPage,
             mode: FeedMode.Preview,
           },
           queryParamsHandling: 'merge',
@@ -551,11 +516,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           const pageURL = usePageUrl().idMode({ id, page: 'view' });
           //---------------------------------
           this.router.navigate(pageURL, {
-            // [Remove comment later]
-            // relativeTo: this.route, (with this.router.navigate([id, 'view'])
-            // is not great for having mode query params, if you will be able to work with it
-            // you will have to discard using mode in your query params
-            // Particularly because of the nature of the switchMode() code
             queryParams: {
               mode: FeedMode.Id,
             },
