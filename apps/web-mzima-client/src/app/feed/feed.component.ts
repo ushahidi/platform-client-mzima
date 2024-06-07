@@ -236,6 +236,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     this.postsService.postsFilters$.pipe(untilDestroyed(this)).subscribe({
       next: () => {
         this.isLoading = true; // Also set is loading to true before filter-related operation
+        this.paginationElementsAllowed = false;
         if (this.isLoading) {
           if (this.initialLoad) {
             this.initialLoad = false;
@@ -279,14 +280,13 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             ? response.meta.total
             : response.meta.current_page * response.count;
 
-        this.loadingMorePosts = false;
-
         /* -------------------------------------------------------------
           Delay pagination by a "split second" to prevent slight flicker
         ---------------------------------------------------------------*/
         setTimeout(() => {
           this.paginationElementsAllowed = response.meta.total > dataMetaPerPage; // show pagination-related elements
-        }, 100);
+          this.loadingMorePosts = false;
+        }, 1200);
 
         this.activeCard().scrollToView();
 
