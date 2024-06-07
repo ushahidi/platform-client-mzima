@@ -150,7 +150,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         this.mode = postModeHint ? FeedMode.Id : FeedMode.Preview;
         //----------------------------------------------
 
-        this.activeCard().scrollCountHandler({ task: 'reset' });
+        this.activeCard.scrollCountHandler({ task: 'reset' });
 
         this.isLoading = !this.onlyModeUIChanged;
         this.paginationElementsAllowed = this.onlyModeUIChanged
@@ -201,12 +201,12 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         console.log('isLoading: ', this.isLoading);
         console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
 
-        this.activeCard().scrollCountHandler({ task: 'increment' });
+        this.activeCard.scrollCountHandler({ task: 'increment' });
 
         this.mansonryUpdateOnModeSwitch({ userEvent: this.userEvent });
 
-        this.activeCard().slideOutHandler();
-        this.activeCard().scrollToView();
+        this.activeCard.slideOutHandler();
+        this.activeCard.scrollToView();
 
         if (this.mode === FeedMode.Id) {
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
@@ -278,7 +278,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           this.loadingMorePosts = false;
         }, 1200);
 
-        this.activeCard().scrollToView();
+        this.activeCard.scrollToView();
       },
     });
 
@@ -300,13 +300,13 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     });
 
     window.addEventListener('resize', () => {
-      this.activeCard().scrollCountHandler({ task: 'startCount' });
+      this.activeCard.scrollCountHandler({ task: 'startCount' });
       this.mansonryUpdateOnModeSwitch({ userEvent: 'resize' });
       //-----------------------------------
       const valueFromPageURL = this.idModePageFromRouter(this.router.url);
       this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: valueFromPageURL }).resizeHandler({});
       //-----------------------------------
-      this.activeCard().scrollToView();
+      this.activeCard.scrollToView();
     });
 
     this.sessionService.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
@@ -441,33 +441,30 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     this.updateMasonry();
   }
 
-  public activeCard() {
-    return {
-      slideOutHandler: () => {
-        const postFromStorage = JSON.parse(localStorage.getItem('feedview_postObj') as string);
-        this.postDetails = postFromStorage;
-      },
-      scrollCountHandler: ({ task }: { task: 'reset' | 'increment' | 'startCount' }) => {
-        const countPropExists = localStorage.hasOwnProperty('scroll_count');
-        const localStorageCount = parseInt(localStorage.getItem('scroll_count') as string);
-        const startCount = this.mode === FeedMode.Id ? 1 : 0;
-        if (!countPropExists) {
-          localStorage.setItem('scroll_count', `${startCount}`);
-        } else {
-          if (task === 'reset') localStorage.removeItem('scroll_count');
-          if (task === 'increment')
-            localStorage.setItem('scroll_count', `${localStorageCount + 1}`);
-          if (task === 'startCount') localStorage.setItem('scroll_count', `${startCount}`);
-        }
-      },
-      scrollToView: () => {
-        this.scrollToView = parseInt(localStorage.getItem('scroll_count') as string) === 1;
-        setTimeout(() => {
-          document.querySelector('.scroll--active--postcard--to--top')?.scrollIntoView();
-        }, 150);
-      },
-    };
-  }
+  public activeCard = {
+    slideOutHandler: () => {
+      const postFromStorage = JSON.parse(localStorage.getItem('feedview_postObj') as string);
+      this.postDetails = postFromStorage;
+    },
+    scrollCountHandler: ({ task }: { task: 'reset' | 'increment' | 'startCount' }) => {
+      const countPropExists = localStorage.hasOwnProperty('scroll_count');
+      const localStorageCount = parseInt(localStorage.getItem('scroll_count') as string);
+      const startCount = this.mode === FeedMode.Id ? 1 : 0;
+      if (!countPropExists) {
+        localStorage.setItem('scroll_count', `${startCount}`);
+      } else {
+        if (task === 'reset') localStorage.removeItem('scroll_count');
+        if (task === 'increment') localStorage.setItem('scroll_count', `${localStorageCount + 1}`);
+        if (task === 'startCount') localStorage.setItem('scroll_count', `${startCount}`);
+      }
+    },
+    scrollToView: () => {
+      this.scrollToView = parseInt(localStorage.getItem('scroll_count') as string) === 1;
+      setTimeout(() => {
+        document.querySelector('.scroll--active--postcard--to--top')?.scrollIntoView();
+      }, 150);
+    },
+  };
 
   public showPostDetails(post: PostResult): void {
     //---------------------------
@@ -703,7 +700,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public loadMore(): void {
     if (this.paginationElementsAllowed) {
       this.loadingMorePosts = true;
-      this.activeCard().scrollCountHandler({ task: 'increment' });
+      this.activeCard.scrollCountHandler({ task: 'increment' });
       this.params.page! += 1;
       this.getPosts({ params: this.params, loadMore: true });
     }
