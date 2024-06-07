@@ -314,6 +314,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     });
 
     window.addEventListener('resize', () => {
+      this.activeCard().scrollCountHandler({ task: 'startCount' });
       this.mansonryUpdateOnModeSwitch({ userEvent: 'resize' });
       //-----------------------------------
       const valueFromPageURL = this.idModePageFromRouter(this.router.url);
