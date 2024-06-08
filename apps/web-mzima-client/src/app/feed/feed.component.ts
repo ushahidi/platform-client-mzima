@@ -198,9 +198,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     this._routerEvent = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((/*event*/) => {
-        console.log('isLoading: ', this.isLoading);
-        console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
-
         this.activeCard.scrollCountHandler({ task: 'increment' });
 
         this.mansonryUpdateOnModeSwitch({ userEvent: this.userEvent });
@@ -254,7 +251,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       next: (isLoading: boolean) => {
         // Get end of post load directly from the posts API, use it to set is loading state to false
         this.isLoading = isLoading;
-        console.log('isLoading... after API loaded: ', this.isLoading);
       },
     });
 
