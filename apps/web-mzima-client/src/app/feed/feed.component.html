@@ -207,7 +207,7 @@
       class="main"
       [ngClass]="{
         main__tiles: mode === FeedMode.Preview,
-        'main__details-or-edit': mode === FeedMode.Id
+        'main__details-or-edit': mode === FeedMode.Id && posts.length
       }"
       [attr.data-qa]="'posts'"
     >
