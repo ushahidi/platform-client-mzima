@@ -102,6 +102,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public isManagePosts: boolean;
   public statusControl = new FormControl();
   public initialLoad = true;
+  public userHasInteractedWithFilters: boolean = false;
+  public filterInteractionCount = 0;
 
   constructor(
     protected override router: Router,
@@ -160,20 +162,28 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
 
+        console.log('interacted with filters: ', this.userHasInteractedWithFilters);
+        console.log('currentPage: ', this.currentPage, ' params.page: ', this.params.page);
+
         /* ---------------------------------------------------
           Change mode params in browser URL if user tries some
           other options apart from the mode options we provide,
           and without causing page reload or double posts load
         -----------------------------------------------------*/
-        if (params['mode'] && params['mode'] !== this.mode) {
-          const pageURL = this.router
-            .createUrlTree([], {
-              relativeTo: this.route,
-              queryParams: { ...params, mode: this.mode },
-            })
-            .toString();
-          this.location.go(pageURL);
-        }
+        // if (params['mode'] && params['mode'] !== this.mode) {
+        //   console.log('mode:', this.mode);
+        // const pageURL = this.replacePageUrl({});
+        // //   // const pageURL = this.routerUrlParamsHandler({ routerUrl: this.router.url });
+        //   this.location.go(pageURL);
+
+        //   // const pageURL = this.router
+        //   //   .createUrlTree([], {
+        //   //     relativeTo: this.route,
+        //   //     queryParams: { ...params, mode: this.mode },
+        //   //   })
+        //   //   .toString();
+        //   // this.location.go(pageURL);
+        // }
 
         /* -------------------------------------------------------------------
           i.e will NOT empty posts for Post Card and SwitchMode button clicks
@@ -200,6 +210,9 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       .subscribe((/*event*/) => {
         console.log('isLoading: ', this.isLoading);
         console.log('onlyModeUIChanged: ', this.onlyModeUIChanged);
+
+        const pageURL = this.replacePageUrl({});
+        this.location.go(pageURL);
 
         this.activeCard.scrollCountHandler({ task: 'increment' });
 
@@ -237,8 +250,19 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             this.initialLoad = false;
             return;
           }
+
+          this.userHasInteractedWithFilters = true;
+          this.filterInteractionCount += 1;
+          console.log(this.filterInteractionCount);
+          const pageFromUrl = this.currentPage; //get page url before reset
           this.currentPage = 1; // set current page to 1 every time we are accessing filters (and also use it to access posts once filters or clear filters is triggered)
-          this.navigateTo().pathFromCurrentRoute({ page: this.currentPage });
+
+          const pageURL = this.setPageURLonUserInteractionWithFilters.onStart({
+            firstPage: this.currentPage,
+            pageFromUrl,
+          });
+          this.location.go(pageURL);
+
           this.posts = [];
           const params = { ...this.params, page: this.currentPage };
           this.getPosts({ params });
@@ -281,6 +305,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         setTimeout(() => {
           this.paginationElementsAllowed = response.meta.total > dataMetaPerPage; // show pagination-related elements
           this.loadingMorePosts = false;
+
+          const pageUrl = this.setPageURLonUserInteractionWithFilters.onEnd({
+            paginationElementsAllowed: this.paginationElementsAllowed,
+          });
+          this.location.go(pageUrl);
         }, 1200);
 
         this.activeCard.scrollToView();
@@ -499,16 +528,35 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       };
     };
 
+    const useQueryParams = ({
+      queryParams,
+      currentPage,
+    }: {
+      queryParams: any;
+      currentPage: number;
+    }) => {
+      const notUsersFirstInteractionWithFilters = this.filterInteractionCount >= 1;
+      queryParams =
+        !this.router.url.includes('page=') && !notUsersFirstInteractionWithFilters
+          ? queryParams
+          : { page: currentPage, ...queryParams };
+      return queryParams;
+    };
+
     return {
       // eslint-disable-next-line no-empty-pattern
       previewMode: ({}) => {
         //---------------------------------
         const pageURL = usePageUrl().previewMode({});
         //---------------------------------
+
+        const queryParams = useQueryParams({
+          queryParams: { mode: 'HMM' },
+          currentPage: this.currentPage,
+        });
+
         this.router.navigate(pageURL, {
-          queryParams: {
-            mode: FeedMode.Preview,
-          },
+          queryParams,
           queryParamsHandling: 'merge',
         });
       },
@@ -517,10 +565,14 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           //---------------------------------
           const pageURL = usePageUrl().idMode({ id, page: 'view' });
           //---------------------------------
+
+          const queryParams = useQueryParams({
+            queryParams: { mode: FeedMode.Id },
+            currentPage: this.currentPage,
+          });
+
           this.router.navigate(pageURL, {
-            queryParams: {
-              mode: FeedMode.Id,
-            },
+            queryParams,
             queryParamsHandling: 'merge',
           });
         },
@@ -528,10 +580,14 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           //---------------------------------
           const pageURL = usePageUrl().idMode({ id, page: 'edit' });
           //---------------------------------
+
+          const queryParams = useQueryParams({
+            queryParams: { mode: FeedMode.Id },
+            currentPage: this.currentPage,
+          });
+
           this.router.navigate(pageURL, {
-            queryParams: {
-              mode: FeedMode.Id,
-            },
+            queryParams,
             queryParamsHandling: 'merge',
           });
         },
@@ -581,6 +637,178 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         });
       },
     };
+  };
+
+  public setPageURLonUserInteractionWithFilters = {
+    onStart: ({ firstPage, pageFromUrl }: { firstPage: number; pageFromUrl: number }) => {
+      const pageOne = `page=${firstPage}`;
+      const routerUrl = this.replacePageUrl({ pageToGoTo: pageOne, pageFromUrl });
+      return routerUrl;
+    },
+    onEnd: ({ paginationElementsAllowed }: { paginationElementsAllowed: boolean }) => {
+      // Works, but need factor in this.isLoading? or something with use of this.userHasInteractedWithFilters ?
+
+      let routerUrl = this.router.url;
+
+      const pageParamsShouldNotBeInBrowserUrl =
+        !paginationElementsAllowed && this.userHasInteractedWithFilters;
+
+      if (pageParamsShouldNotBeInBrowserUrl) {
+        routerUrl = this.replacePageUrl({});
+        // routerUrl = this.routerUrlParamsHandler({ routerUrl });
+      } else {
+        console.log('ROUTER URL: ', routerUrl);
+        const notUsersFirstInteractionWithFilters = this.filterInteractionCount >= 1;
+        if (notUsersFirstInteractionWithFilters && this.userHasInteractedWithFilters) {
+          routerUrl = this.replacePageUrl({});
+
+          // The added "&& this.userHasInteractedWithFilters" check prevent pagination buttons from always changing page to 1
+          // routerUrl = this.routerUrlParamsHandler({ routerUrl, goToPage: 1 });
+        }
+
+        console.log('ROUTER URL: ', routerUrl);
+      }
+      return routerUrl;
+    },
+  };
+
+  public replacePageUrl = ({
+    // Check here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    pageToGoTo,
+    pageFromUrl,
+  }: {
+    pageToGoTo?: string;
+    pageFromUrl?: number;
+  }) => {
+    console.log(pageToGoTo, pageFromUrl);
+    let routerUrl = this.router.url;
+
+    if (routerUrl.includes('mode=')) {
+      if (routerUrl.includes(`mode=${this.mode}`)) {
+        // routerUrl = this.router.createUrlTree([], routerConfig).toString();
+      } else {
+        const indexOfMode = routerUrl.indexOf('mode=');
+        // const ampersandIsCharBeforeMode = routerUrl.charAt(indexOfMode - 1) === '&';
+        // const questionMarkIsCharBeforeMode = routerUrl.charAt(indexOfMode - 1) === '?' || routerUrl.charAt(indexOfMode - 1) === '?';
+
+        const cutStringFromWhereModeStarts = routerUrl.slice(indexOfMode, routerUrl.length);
+        const indexOfAmpersand = cutStringFromWhereModeStarts.indexOf('&');
+        const ampersandSeparatorIsPresent = indexOfAmpersand !== -1;
+        const extractedModeFromURL = ampersandSeparatorIsPresent
+          ? cutStringFromWhereModeStarts.slice(0, indexOfAmpersand)
+          : cutStringFromWhereModeStarts;
+
+        routerUrl = routerUrl.replace(extractedModeFromURL, `mode=${this.mode}`);
+
+        console.log(
+          'mode Index: ',
+          indexOfMode,
+          cutStringFromWhereModeStarts,
+          ampersandSeparatorIsPresent,
+          extractedModeFromURL,
+          `mode=${this.mode}`,
+          routerUrl,
+        );
+
+        routerUrl = routerUrl.replace(extractedModeFromURL, `mode=${this.mode}`);
+      }
+    }
+    console.log(routerUrl);
+
+    // if (routerUrl.includes(`page=${pageFromUrl}`)) {
+    //   routerUrl = routerUrl.replace(`page=${pageFromUrl}`, pageToGoTo);
+    // } else {
+    //   routerUrl = this.routerUrlParamsHandler({ routerUrl }); // Here particularly!!!!!!!!!!!!!!!!
+    // }
+    return routerUrl;
+  };
+
+  public routerUrlParamsHandler = ({
+    routerUrl,
+    goToPage,
+  }: {
+    routerUrl: string;
+    goToPage?: number;
+  }) => {
+    console.log('MOOOOODE: ', this.mode, goToPage);
+
+    this.replacePageUrl({});
+    return routerUrl;
+
+    // let routerConfig: Record<string, any> = {
+    //   relativeTo: this.route,
+    // };
+
+    // let params: Record<string, any> = {};
+    // const params = { mode: this.mode };
+
+    // let queryParams: Record<string, any> = {};
+
+    // if (routerUrl.includes('mode=')) {
+    //   if (routerUrl.includes(`mode=${this.mode}`)) {
+    //     // routerUrl = this.router.createUrlTree([], routerConfig).toString();
+    //   } else {
+    //     const indexOfMode = routerUrl.indexOf('mode=');
+    //     // const ampersandIsCharBeforeMode = routerUrl.charAt(indexOfMode - 1) === '&';
+    //     // const questionMarkIsCharBeforeMode = routerUrl.charAt(indexOfMode - 1) === '?' || routerUrl.charAt(indexOfMode - 1) === '?';
+
+    //     const cutStringFromWhereModeStarts = routerUrl.slice(indexOfMode, routerUrl.length);
+    //     const indexOfAmpersand = cutStringFromWhereModeStarts.indexOf('&');
+    //     const ampersandSeparatorIsPresent = indexOfAmpersand !== -1;
+    //     const extractedModeFromURL = ampersandSeparatorIsPresent
+    //       ? cutStringFromWhereModeStarts.slice(0, indexOfAmpersand)
+    //       : cutStringFromWhereModeStarts;
+
+    //     routerUrl = routerUrl.replace(extractedModeFromURL, `mode=${this.mode}`);
+
+    //     console.log(
+    //       'mode Index: ',
+    //       indexOfMode,
+    //       cutStringFromWhereModeStarts,
+    //       ampersandSeparatorIsPresent,
+    //       extractedModeFromURL,
+    //       `mode=${this.mode}`,
+    //       routerUrl,
+    //     );
+
+    //     return routerUrl.replace(extractedModeFromURL, `mode=${this.mode}`);
+    //   }
+    // }
+
+    // if (routerUrl.includes(`mode=${this.mode}`)) {
+    //   queryParams = goToPage ? { page: goToPage, ...params } : params;
+    //   routerConfig = { ...routerConfig, queryParams };
+    // } else {
+
+    //   // routerUrl.replace('').... what exactly?
+    // }
+
+    // return routerUrl;
+
+    // const urlHasModeID = routerUrl.includes('mode=ID');
+    // const urlHasModePREVIEW = routerUrl.includes('mode=PREVIEW');
+
+    // let params: Record<string, any> = {};
+    // if (urlHasModeID) params = { mode: FeedMode.Id };
+    // if (urlHasModePREVIEW) params = { mode: FeedMode.Preview };
+
+    // const pageUrlDoesNotHaveModeParams = !urlHasModeID && !urlHasModePREVIEW;
+
+    // let routerConfig: Record<string, any> = {
+    //   relativeTo: this.route,
+    // };
+
+    // if (goToPage) {
+    //   const queryParams = { page: goToPage, ...params };
+    //   routerConfig = { ...routerConfig, queryParams };
+    // } else {
+    //   const queryParams = params;
+    //   routerConfig = pageUrlDoesNotHaveModeParams ? routerConfig : { ...routerConfig, queryParams };
+    // }
+
+    // routerUrl = this.router.createUrlTree([], routerConfig).toString();
+
+    // return routerUrl;
   };
 
   public toggleBulkOptions(state: boolean): void {
@@ -757,6 +985,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public changePage(page: number): void {
+    this.userHasInteractedWithFilters = false;
     this.toggleBulkOptions(false);
     this.navigateTo().pathFromCurrentRoute({ page });
   }
