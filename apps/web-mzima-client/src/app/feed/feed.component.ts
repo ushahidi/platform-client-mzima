@@ -216,7 +216,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
         this.activeCard.scrollCountHandler({ task: 'increment' });
 
-        this.mansonryUpdateOnModeSwitch({ userEvent: this.userEvent });
+        this.masonryUpdateOnModeSwitch({ userEvent: this.userEvent });
 
         this.activeCard.slideOutHandler();
         this.activeCard.scrollToView();
@@ -331,7 +331,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
     window.addEventListener('resize', () => {
       this.activeCard.scrollCountHandler({ task: 'startCount' });
-      this.mansonryUpdateOnModeSwitch({ userEvent: 'resize' });
+      this.masonryUpdateOnModeSwitch({ userEvent: 'resize' });
       //-----------------------------------
       const valueFromPageURL = this.idModePageFromRouter(this.router.url);
       this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: valueFromPageURL }).resizeHandler({});
@@ -443,7 +443,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     this.masonry?.layout();
   }
 
-  public mansonryUpdateOnModeSwitch({ userEvent }: { userEvent: UserEvent }): void {
+  public masonryUpdateOnModeSwitch({ userEvent }: { userEvent: UserEvent }): void {
     /* -----------------------------------------------
         Smooth transition of masonry layout from PREVIEW
         mode to ID mode and vice versa
