@@ -102,6 +102,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public isManagePosts: boolean;
   public statusControl = new FormControl();
   public initialLoad = true;
+  public urlFromRouteTrigger: string;
+  public urlAfterInteractionWithFilters: string;
 
   constructor(
     protected override router: Router,
@@ -160,6 +162,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         this.currentPage = params['page'] ? Number(params['page']) : 1;
         this.params.page = this.currentPage;
 
+        //-----------------------------------
+        this.savePageURL.onRouterTriggered({ url: this.router.url });
+        //-----------------------------------
+
         /* ---------------------------------------------------
           Change mode params in browser URL if user tries some
           other options apart from the mode options we provide,
@@ -172,6 +178,9 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
               queryParams: { ...params, mode: this.mode },
             })
             .toString();
+          //-----------------------------------
+          this.savePageURL.onRouterTriggered({ url: pageURL });
+          //-----------------------------------
           this.location.go(pageURL);
         }
 
@@ -198,6 +207,13 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     this._routerEvent = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((/*event*/) => {
+        /* ----------------------------------------------
+          Reset saved filters URL for when page loads (or 
+          page buttons that also) trigger router.navigate
+        -----------------------------------------------*/
+        this.urlAfterInteractionWithFilters = '';
+        //-----------------------------------
+
         this.activeCard.scrollCountHandler({ task: 'increment' });
 
         this.mansonryUpdateOnModeSwitch({ userEvent: this.userEvent });
@@ -234,8 +250,21 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             this.initialLoad = false;
             return;
           }
-          this.currentPage = 1; // set current page to 1 every time we are accessing filters (and also use it to access posts once filters or clear filters is triggered)
-          this.navigateTo().pathFromCurrentRoute({ page: this.currentPage });
+
+          const currentPageBeforeInteractingWithFilters = this.currentPage; // set this before the value of this.currentPage is changed
+          //-----------------------------------
+          this.currentPage = 1; // Very important! - set current page to 1 every time we are accessing filters (and also use it to access posts once filters or clear filters is triggered)
+          //-----------------------------------
+          this.urlAfterInteractionWithFilters = this.setPageURLonInteractionWithFilters({
+            routerURL: this.urlFromRouteTrigger,
+            currentPageBeforeInteractingWithFilters,
+          });
+          //-----------------------------------
+          this.savePageURL.onInteractionWithFilters({ url: this.urlAfterInteractionWithFilters });
+          //-----------------------------------
+          this.location.go(this.urlAfterInteractionWithFilters);
+          //-----------------------------------
+
           this.posts = [];
           const params = { ...this.params, page: this.currentPage };
           this.getPosts({ params });
@@ -495,16 +524,29 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       };
     };
 
+    const useQueryParams = ({ queryParams }: { queryParams: any }) => {
+      const currentPageForFilters = 1;
+      const userHasInteractedWithFilters =
+        this.urlAfterInteractionWithFilters &&
+        this.urlAfterInteractionWithFilters.includes(`page=${currentPageForFilters}`);
+      queryParams = userHasInteractedWithFilters
+        ? { page: currentPageForFilters, ...queryParams }
+        : queryParams;
+      return queryParams;
+    };
+
     return {
       // eslint-disable-next-line no-empty-pattern
       previewMode: ({}) => {
         //---------------------------------
         const pageURL = usePageUrl().previewMode({});
         //---------------------------------
+        const queryParams = useQueryParams({
+          queryParams: { mode: FeedMode.Preview },
+        });
+
         this.router.navigate(pageURL, {
-          queryParams: {
-            mode: FeedMode.Preview,
-          },
+          queryParams,
           queryParamsHandling: 'merge',
         });
       },
@@ -513,10 +555,12 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           //---------------------------------
           const pageURL = usePageUrl().idMode({ id, page: 'view' });
           //---------------------------------
+          const queryParams = useQueryParams({
+            queryParams: { mode: FeedMode.Id },
+          });
+
           this.router.navigate(pageURL, {
-            queryParams: {
-              mode: FeedMode.Id,
-            },
+            queryParams,
             queryParamsHandling: 'merge',
           });
         },
@@ -524,10 +568,12 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           //---------------------------------
           const pageURL = usePageUrl().idMode({ id, page: 'edit' });
           //---------------------------------
+          const queryParams = useQueryParams({
+            queryParams: { mode: FeedMode.Id },
+          });
+
           this.router.navigate(pageURL, {
-            queryParams: {
-              mode: FeedMode.Id,
-            },
+            queryParams,
             queryParamsHandling: 'merge',
           });
         },
@@ -577,6 +623,44 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         });
       },
     };
+  };
+
+  public savePageURL = {
+    onRouterTriggered: ({ url }: { url: string }) => {
+      this.urlFromRouteTrigger = url;
+    },
+    onInteractionWithFilters: ({ url }: { url: string }) => {
+      this.urlAfterInteractionWithFilters = url;
+    },
+  };
+
+  public setPageURLonInteractionWithFilters = ({
+    routerURL,
+    currentPageBeforeInteractingWithFilters,
+  }: {
+    routerURL: string;
+    currentPageBeforeInteractingWithFilters: number;
+  }) => {
+    if (routerURL.includes(`page=${currentPageBeforeInteractingWithFilters}`)) {
+      routerURL = routerURL.replace(
+        `page=${currentPageBeforeInteractingWithFilters}`,
+        `page=${this.currentPage}`,
+      );
+    } else {
+      const urlHasModeID = routerURL.includes(`mode=${FeedMode.Id}`);
+      const urlHasModePREVIEW = routerURL.includes(`mode=${FeedMode.Preview}`);
+
+      let params: Record<string, any> = {};
+      if (urlHasModeID || urlHasModePREVIEW) params = { mode: this.mode };
+
+      routerURL = this.router
+        .createUrlTree([], {
+          relativeTo: this.route,
+          queryParams: { ...params, page: this.currentPage },
+        })
+        .toString();
+    }
+    return routerURL;
   };
 
   public toggleBulkOptions(state: boolean): void {
