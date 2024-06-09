@@ -75,7 +75,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
    */
   async takePicture() {
     try {
-      if (Capacitor.getPlatform() != 'web') await Camera.requestPermissions();
+      if (Capacitor.getPlatform() !== 'web') await Camera.requestPermissions();
       const options = {
         quality: 100,
         allowEditing: false,
@@ -83,6 +83,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
         width: 600,
         resultType: CameraResultType.Uri,
       };
+      this.id = undefined;
       const image = await Camera.getPhoto(options);
       // Check if the storage folder exists or can be read
       const folderExist = await this.checkFolder();
@@ -130,9 +131,8 @@ export class ImageUploaderComponent implements ControlValueAccessor {
           // data: `data:image/jpeg;base64,${file.data}`,
         };
       }
-
+      this.previewUrl = this.domSanitizer.bypassSecurityTrustUrl(this.photo.data);
       this.upload = true;
-      // this.preview = photo;
     } catch (e) {
       console.log(e);
     }
