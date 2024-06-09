@@ -18,6 +18,8 @@ export const statuses = [
   },
 ];
 
+export const loggedOutStatuses = [statuses[0]];
+
 export const sources = [
   {
     name: 'Web',
@@ -120,7 +122,7 @@ interface Filter {
 
 export const DEFAULT_FILTERS: Filter = {
   query: '',
-  status: ['published', 'draft'],
+  status: statuses,
   tags: [],
   source: sources.map((s) => s.value),
   form: [],
