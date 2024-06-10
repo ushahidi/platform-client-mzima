@@ -53,9 +53,6 @@ class DataViewFilterFunctions {
       .children(DataViewLocators.postItem)
       .contains('New Post Title')
       .click();
-    //publish the post
-    cy.get(DataViewLocators.postMenuDots).eq(1).click();
-    cy.get(DataViewLocators.publishPostBtn).click();
     loginFunctions.logout();
     //check post appears for non logged in user
     cy.get(DataViewLocators.postPreview)
