@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent {
-  @Input() public expand = false;
+  @Input() public expand = true;
   @Input() public rounded = false;
   @Input() public disabled = false;
   @Input() public iconOnly = false;
