@@ -300,6 +300,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             ? response.meta.total
             : response.meta.current_page * response.count;
 
+        this.navigateToFirstPostOnPageOneWhenFilteringInIdMode();
+
         /* -------------------------------------------------------------
           Delay pagination by a "split second" to prevent slight flicker
         ---------------------------------------------------------------*/
@@ -661,6 +663,40 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         .toString();
     }
     return routerURL;
+  };
+
+  public navigateToFirstPostOnPageOneWhenFilteringInIdMode = () => {
+    const userHasInteractedWithFilters =
+      this.urlAfterInteractionWithFilters && this.urlAfterInteractionWithFilters !== '';
+    if (userHasInteractedWithFilters) {
+      /* -----------------------------------------------------------------------
+        Similar to what we did in switch mode - use first post from API response
+      ------------------------------------------------------------------------*/
+      const firstPostOnCurrentPage = this.posts[0];
+      const valueFromPageURL = this.idModePageFromRouter(this.urlAfterInteractionWithFilters);
+      if (this.mode === FeedMode.Id) {
+        const idEndInURL = this.urlAfterInteractionWithFilters.indexOf(valueFromPageURL);
+        const firstPartOfURL = this.urlAfterInteractionWithFilters.slice(0, idEndInURL - 1);
+        const idInURL = firstPartOfURL.slice(
+          firstPartOfURL.lastIndexOf('/') + 1,
+          firstPartOfURL.length,
+        );
+
+        let pageURL = this.urlAfterInteractionWithFilters.replace(
+          `/${idInURL}/`,
+          `/${firstPostOnCurrentPage.id}/`,
+        );
+
+        const view = 'view';
+        if (valueFromPageURL !== view) pageURL = pageURL.replace(valueFromPageURL, view);
+
+        this.router.navigateByUrl(pageURL); // using navigateByUrl as location.go() does not change post details
+
+        this.modal({ showOn: 'TabletAndBelow' })
+          .idMode({ page: 'view' })
+          .clickHandler({ post: firstPostOnCurrentPage });
+      }
+    }
   };
 
   public toggleBulkOptions(state: boolean): void {
