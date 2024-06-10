@@ -55,6 +55,7 @@ class DataViewFilterFunctions {
       .click();
     loginFunctions.logout();
     //check post appears for non logged in user
+    this.click_data_view_btn();
     cy.get(DataViewLocators.postPreview)
       .children(DataViewLocators.postItem)
       .contains('New Post Title');
