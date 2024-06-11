@@ -85,7 +85,7 @@ class DataViewFilterFunctions {
       .children(DataViewLocators.postItem)
       .contains('New Post Title')
       .click();
-    cy.get(DataViewLocators.postMenuDots).eq(1).click();
+    cy.get(DataViewLocators.postMenuDots).eq(0).click();
     cy.get(DataViewLocators.deletePostBtn).click();
     cy.get('#confirm-modal').click();
     cy.get(DataViewLocators.deleteConfirmBtn).click();
