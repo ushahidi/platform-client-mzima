@@ -77,7 +77,7 @@ class DataViewFilterFunctions {
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 512');
   }
 
-  delete_post() {
+  delete_post_data_view() {
     this.add_post();
     this.click_data_view_btn();
     //check post appears for admin user
