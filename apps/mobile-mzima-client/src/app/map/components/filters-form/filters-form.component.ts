@@ -9,7 +9,7 @@ import {
   SurveyItem,
   SurveysService,
 } from '@mzima-client/sdk';
-import { Subject, debounceTime, lastValueFrom, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, debounceTime, lastValueFrom, takeUntil } from 'rxjs';
 import { AlertService, EnvService, SearchService, SessionService } from '@services';
 import { FilterControl, FilterControlOption } from '@models';
 import { searchFormHelper, dateHelper } from '@helpers';
@@ -32,6 +32,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
   public totalPosts: number;
   public isResultsVisible = false;
   private readonly searchSubject = new Subject<string>();
+  private readonly loginStatus$ = new BehaviorSubject<boolean>(this.session.isLogged());
   public posts: PostResult[] = [];
   public isPostsLoading = false;
   public isTotalLoading = false;
@@ -70,7 +71,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
       icon: 'status',
       label: 'Status',
       selectedCount: searchFormHelper.statuses.length,
-      selected: '2',
+      selected: 'none',
       value: this.getFilterDefaultValue('status'),
     },
     {
@@ -154,6 +155,12 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
         this.isTotalLoading = false;
       },
     });
+
+    this.loginStatus$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (isLoggedIn) => {
+        this.updateStatusFilterCount(isLoggedIn);
+      },
+    });
   }
 
   ngOnDestroy(): void {
@@ -204,6 +211,20 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
           this.preparingSavedFilter();
         },
       });
+    }
+  }
+
+  private async updateStatusFilterCount(isLoggedIn: boolean): Promise<void> {
+    const statusFilter = this.filters.find((filter) => filter.name === 'status');
+    if (statusFilter) {
+      if (!isLoggedIn) {
+        statusFilter.selectedCount = searchFormHelper.loggedOutStatuses.length;
+        statusFilter.selected = String(searchFormHelper.loggedOutStatuses.length);
+      } else {
+        statusFilter.selectedCount = searchFormHelper.statuses.length;
+        statusFilter.selected = String(searchFormHelper.statuses.length);
+      }
+      statusFilter.value = this.getFilterDefaultValue('status');
     }
   }
 
@@ -358,6 +379,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
   }
 
   private getFilterDefaultValue(filterName: string): any {
+    const isLoggedIn = this.session.isLogged();
     if (filterName === 'source') {
       return searchFormHelper.sources.map((s) => s.value);
     }
@@ -369,7 +391,17 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
     if (filterName === 'saved-filters') {
       return this.activatedSavedFilterId;
     }
-    return searchFormHelper.DEFAULT_FILTERS[filterName] ?? null;
+    // if (filterName === 'status' && !isLoggedIn) {
+    //   return searchFormHelper.DEFAULT_FILTERS_LOGGED_OUT[filterName] ?? null;
+    // }
+    // if (filterName === 'status' && isLoggedIn) {
+    //   return searchFormHelper.DEFAULT_FILTERS[filterName] ?? null;
+    // }
+    if (filterName === 'status') {
+      return isLoggedIn
+        ? searchFormHelper.DEFAULT_FILTERS[filterName]
+        : searchFormHelper.DEFAULT_FILTERS_LOGGED_OUT[filterName];
+    }
   }
 
   public showSearchResults(): void {

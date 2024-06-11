@@ -122,7 +122,7 @@ interface Filter {
 
 export const DEFAULT_FILTERS: Filter = {
   query: '',
-  status: statuses,
+  status: ['published', 'draft'],
   tags: [],
   source: sources.map((s) => s.value),
   form: [],
@@ -138,6 +138,11 @@ export const DEFAULT_FILTERS: Filter = {
     },
     distance: 1,
   },
+};
+
+export const DEFAULT_FILTERS_LOGGED_OUT = {
+  ...DEFAULT_FILTERS,
+  status: ['published'],
 };
 
 export const compareForms = (form1: any, form2: any) => {
