@@ -1,9 +1,5 @@
 const DataViewLocators = {
   dataViewBtn: '[data-qa="btn-data"]',
-  surveyList: '[data-qa="survey-list"]',
-  saveSurveyBtn: '[data-qa="btn-save-survey-item"]',
-  settingsBtn: '[data-qa="btn-settings"]',
-  surveyBtn: '[data-qa="btn-surveys"]',
   addPostBtn: '[data-qa="submit-post-button"]',
   postTitleField: '[data-qa="title"]',
   postDescField: '[data-qa="description"]',
@@ -12,7 +8,6 @@ const DataViewLocators = {
   postPreview: '[data-qa="post-preview"]',
   postItem: '[data-qa="post-item"]',
   postMenuDots: '[data-qa="post-menu"]',
-  publishPostBtn: '[data-qa="btn-publish-post"]',
   posts: '[data-qa="posts"]',
   surveySelectionList: '[data-qa="survey-selection-list"]',
   surveySelectItem: '[data-qa="survey-select-item"]',
