@@ -13,6 +13,14 @@ const DataViewLocators = {
   statusBtn: '[data-qa="status"]',
   filterSelectionList: '[data-qa="filter-selection-list"]',
   filterListOption: '[data-qa="filter-list-option"]',
+  addPostBtn: '[data-qa="submit-post-button"]',
+  postTitleField: '[data-qa="title"]',
+  postDescField: '[data-qa="description"]',
+  savePostBtn: '[data-qa="btn-post-item-submit"]',
+  successBtn: '[data-qa="btn-confirm-success"]',
+  postPreview: '[data-qa="post-preview"]',
+  postItem: '[data-qa="post-item"]',
+  postDetails: '[data-qa="post-details"]',
 };
 
 export default DataViewLocators;
