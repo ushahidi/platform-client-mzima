@@ -19,7 +19,7 @@ export class ButtonComponent {
   @Input() public ariaLabel: string;
   @Input() public dataQa: string;
   @Input() public type: 'button' | 'submit' = 'button';
-  @Input() public size: 'small' | 'medium' | 'big' | 'uncertain' = 'medium';
+  @Input() public size: 'small' | 'medium' | 'big' | 'unspecified' = 'medium';
   @Input() public fill: 'solid' | 'outline' | 'clear' = 'solid';
   @Input() public color:
     | 'primary'

@@ -23,13 +23,14 @@ $laptop: 1439px;
     cursor: default;
   }
 
-  &--uncertain {
+  &--unspecified {
     background-color: red;
     text-align: left;
-    padding-top: var(--button-padding-top, -8px);
-    padding-bottom: var(--button-padding-bottom, -8px);
-    padding-inline-end: var(--padding-end, -16px);
-    padding-inline-start: var(--padding-start, -16px);
+    padding: 0;
+    // padding-top: var(--button-padding-top, 0px);
+    // padding-bottom: var(--button-padding-bottom, 0px);
+    // padding-inline-end: var(--padding-end, -16px);
+    // padding-inline-start: var(--padding-start, -16px);
   }
 
   &--default-color {
