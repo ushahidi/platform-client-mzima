@@ -64,10 +64,10 @@
   <div class="empty-box" [ngClass]="{ 'empty-box--loading': isPostsLoading }">
     <ng-container *ngIf="!posts.length && !isPostsLoading">
       <ion-text color="medium" class="empty ion-text-center">
-        There is no post yet. Add a post.
+        {{ 'app.no_posts_yet' | translate }}
       </ion-text>
       <app-button class="create-post-btn" (buttonClick)="createPost()" iconName="plus">
-        Add post
+        {{ 'app.add_post' | translate }}
       </app-button>
     </ng-container>
     <app-spinner *ngIf="isPostsLoading"></app-spinner>

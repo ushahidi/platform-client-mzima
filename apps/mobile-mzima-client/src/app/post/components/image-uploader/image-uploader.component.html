@@ -19,11 +19,11 @@
       >
         <ng-container *ngIf="!photo; else changeButton">
           <app-icon class="icon" name="plus"></app-icon>
-          Add photo
+          {{ 'app.add_photo' | translate }}
         </ng-container>
         <ng-template #changeButton>
           <app-icon class="icon" name="edit"></app-icon>
-          Replace image
+          {{ 'app.replace_image' | translate }}
         </ng-template>
       </app-button>
 
@@ -37,7 +37,7 @@
         <app-icon slot="icon-only" name="delete"></app-icon>
       </app-button>
     </div>
-    <p class="error-msg" *ngIf="requiredError">Image is required</p>
+    <p class="error-msg" *ngIf="requiredError">{{ 'app.required_image' | translate }}</p>
   </div>
 
   <div class="form-row" *ngIf="hasCaption">
@@ -48,7 +48,7 @@
       [disabled]="!!id"
     ></app-form-control>
     <p *ngIf="captionControl?.hasError('specialCharacters')">
-      This field contains special characters
+      {{ 'app.special_chars' | translate }}
     </p>
   </div>
 </div>
