@@ -1342,7 +1342,7 @@
       "edit_their_own_posts": "Uredi njihove vlastite postove",
       "registred_member": "Registrirani član",
       "administrator": "Administrator",
-      "roles_description": "Ove opcije kontroliraju čemu ova vrsta uloge može raditi promjene. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Posjetite naše upute podrške kako bi saznali više.",
+      "roles_description": "Ove opcije kontroliraju čemu ova vrsta uloge može raditi promjene. <a href=\"https://docs.ushahidi.com/platform-user-manual/4.-managing-people-on-your-deployment\" target=\"_blank\">Posjetite naše upute podrške kako bi saznali više.",
       "manage_collections_and_saved_searches": "Upravljanje zbirkama i spremljenim pretraživanjima",
       "delete_posts": "Izbriši objave",
       "delete_their_own_posts": "Brisanje vlastitih objava"

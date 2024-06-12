@@ -1,18 +1,23 @@
-import LoginFunctions from "../../functions/LoginFunctions";
-import SurveyFilterFunctions from "../../functions/SurveyFilterFunctions";
+import LoginFunctions from '../../functions/LoginFunctions';
+import DataViewFilterFunctions from '../../functions/DataViewFilterFunctions';
 
-describe("Automated Tests for Filter by Surveys", () => {
+describe('Automated Tests for Post Filters in Data View', () => {
   const loginFunctions = new LoginFunctions();
-  const surveyFilterFunctions = new SurveyFilterFunctions();
+  const dataViewFilterFunctions = new DataViewFilterFunctions();
 
   beforeEach(() => {
     loginFunctions.login_as_admin();
     cy.visit(Cypress.env('baseUrl'));
   });
 
-  it("Checks filters by survey", () => {
-    surveyFilterFunctions.click_data_view_btn();
-    surveyFilterFunctions.check_post_filter_by_survey();
-    surveyFilterFunctions.verify_count_on_results();
+  it('Filter posts by survey', () => {
+    dataViewFilterFunctions.click_data_view_btn();
+    dataViewFilterFunctions.check_post_filter_by_survey();
+    dataViewFilterFunctions.verify_count_on_results();
+  });
+
+  it('Filter posts by status', () => {
+    dataViewFilterFunctions.click_data_view_btn();
+    dataViewFilterFunctions.check_post_filter_by_status();
   });
 });

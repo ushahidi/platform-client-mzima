@@ -102,7 +102,7 @@ export class PostHeadComponent extends BaseComponent {
         title: this.translate.instant('notify.confirm_modal.deleted.success'),
         description: `<p>${this.translate.instant(
           'notify.confirm_modal.deleted.success_description',
-          { count: 1 },
+          { count: '1 post' },
         )}</p>`,
         buttonSuccess: this.translate.instant('notify.confirm_modal.deleted.success_button'),
       });

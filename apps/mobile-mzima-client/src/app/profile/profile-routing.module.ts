@@ -30,6 +30,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./collection/collection.module').then((m) => m.CollectionPageModule),
       },
+      {
+        path: 'select-language',
+        loadChildren: () =>
+          import('./language/select-language.module').then((m) => m.SelectLanguagePageModule),
+      },
     ],
   },
 ];
