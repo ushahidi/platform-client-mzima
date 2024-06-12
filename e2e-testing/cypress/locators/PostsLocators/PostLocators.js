@@ -28,6 +28,10 @@ const PostLocators = {
   checkboxFieldOption3: '[data-qa="checkboxes-field-f3"]',
   relatedPostField: '[data-qa="related-post-field"]',
   embedVideoField: '[data-qa="embed-video field"]',
+  postMenuDots: '[data-qa="post-menu"]',
+  deletePostBtn: '[data-qa="btn-delete-post"]',
+  successBtn: '[data-qa="btn-confirm-success"]',
+  deleteConfirmBtn: '[data-qa="btn-confirm-delete"]',
 };
 
 export default PostLocators;

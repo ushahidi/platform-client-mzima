@@ -61,6 +61,23 @@ class PostFunctions {
     // .click({ force: true });
     cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
   }
+
+  delete_post_data_view() {
+    //check post is deleted
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .click();
+    cy.get(PostLocators.postMenuDots).eq(0).click();
+    cy.get(PostLocators.deletePostBtn).click();
+    cy.get('#confirm-modal').click();
+    cy.get(PostLocators.deleteConfirmBtn).click();
+    cy.get(PostLocators.successBtn).click();
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .should('not.exist');
+  }
 }
 
 export default PostFunctions;

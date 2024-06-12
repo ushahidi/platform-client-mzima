@@ -9,38 +9,6 @@ class DataViewFilterFunctions {
     cy.get(DataViewLocators.postPreview).children(DataViewLocators.postItem).should('not.be.empty');
   }
 
-  click_add_post_btn() {
-    cy.get(DataViewLocators.addPostBtn).click();
-  }
-
-  open_survey_to_submit() {
-    cy.get(DataViewLocators.surveyToSubmitPost).click();
-  }
-
-  type_post_title(title) {
-    cy.get(DataViewLocators.postTitleField).should('be.visible');
-    cy.get(DataViewLocators.postTitleField).type(title);
-  }
-
-  type_post_description(description) {
-    cy.get(DataViewLocators.postDescField).should('be.visible');
-    cy.get(DataViewLocators.postDescField).type(description);
-  }
-
-  save_post() {
-    cy.get(DataViewLocators.savePostBtn).click();
-  }
-
-  add_post() {
-    this.click_add_post_btn();
-    this.open_survey_to_submit();
-    cy.wait(1000);
-    this.type_post_title('New Post Title');
-    this.type_post_description('New Post Description');
-    this.save_post();
-    cy.get(DataViewLocators.successBtn).click();
-  }
-
   verify_count_on_results() {
     //verify results on landing on Data view
     cy.get(DataViewLocators.mainResultsTotal).contains('Results: 512');
@@ -69,25 +37,6 @@ class DataViewFilterFunctions {
     cy.get(DataViewLocators.clearFiltersBtn).click();
     cy.get(DataViewLocators.mainResultsTotal).contains('Results: 512');
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 512');
-  }
-
-  delete_post_data_view() {
-    this.add_post();
-    this.click_data_view_btn();
-    //check post appears for admin user
-    cy.get(DataViewLocators.postPreview)
-      .children(DataViewLocators.postItem)
-      .contains('New Post Title')
-      .click();
-    cy.get(DataViewLocators.postMenuDots).eq(0).click();
-    cy.get(DataViewLocators.deletePostBtn).click();
-    cy.get('#confirm-modal').click();
-    cy.get(DataViewLocators.deleteConfirmBtn).click();
-    cy.get(DataViewLocators.successBtn).click();
-    cy.get(DataViewLocators.postPreview)
-      .children(DataViewLocators.postItem)
-      .contains('New Post Title')
-      .should('not.exist');
   }
 
   check_post_filter_by_status() {

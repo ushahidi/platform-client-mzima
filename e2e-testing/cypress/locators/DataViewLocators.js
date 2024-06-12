@@ -13,17 +13,6 @@ const DataViewLocators = {
   statusBtn: '[data-qa="status"]',
   filterSelectionList: '[data-qa="filter-selection-list"]',
   filterListOption: '[data-qa="filter-list-option"]',
-  addPostBtn: '[data-qa="submit-post-button"]',
-  postTitleField: '[data-qa="title"]',
-  postDescField: '[data-qa="description"]',
-  savePostBtn: '[data-qa="btn-post-item-submit"]',
-  successBtn: '[data-qa="btn-confirm-success"]',
-  postPreview: '[data-qa="post-preview"]',
-  postItem: '[data-qa="post-item"]',
-  postMenuDots: '[data-qa="post-menu"]',
-  deletePostBtn: '[data-qa="btn-delete-post"]',
-  surveyToSubmitPost: '[data-qa="add-post-modal-surveys-item527"]',
-  deleteConfirmBtn: '[data-qa="btn-confirm-delete"]',
 };
 
 export default DataViewLocators;

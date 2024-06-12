@@ -20,9 +20,4 @@ describe('Automated Tests for Post Filters in Data View', () => {
     dataViewFilterFunctions.click_data_view_btn();
     dataViewFilterFunctions.check_post_filter_by_status();
   });
-
-  it('Steps to delete post on data view', () => {
-    dataViewFilterFunctions.click_data_view_btn();
-    dataViewFilterFunctions.delete_post_data_view();
-  });
 });
