@@ -5,6 +5,67 @@ class DataViewFilterFunctions {
     cy.url().should('include', '/feed');
   }
 
+  click_add_post_btn() {
+    cy.get(DataViewLocators.addPostBtn).click();
+  }
+
+  open_survey_to_submit() {
+    cy.get(DataViewLocators.surveyToSubmitPost).click();
+  }
+
+  type_post_title(title) {
+    cy.get(DataViewLocators.postTitleField).should('be.visible');
+    cy.get(DataViewLocators.postTitleField).type(title);
+  }
+
+  type_post_description(description) {
+    cy.get(DataViewLocators.postDescField).should('be.visible');
+    cy.get(DataViewLocators.postDescField).type(description);
+  }
+
+  save_post() {
+    cy.get(DataViewLocators.savePostBtn).click();
+  }
+
+  add_post() {
+    this.click_add_post_btn();
+    this.open_survey_to_submit();
+    cy.wait(1000);
+    this.type_post_title('New Post Title');
+    this.type_post_description('New Post Description');
+    this.save_post();
+    cy.get(DataViewLocators.successBtn).click();
+  }
+
+  change_status_post_data_view() {
+    this.add_post();
+    this.click_data_view_btn();
+    //check post status changes to published
+    cy.get(DataViewLocators.postPreview)
+      .children(DataViewLocators.postItem)
+      .contains('New Post Title')
+      .click();
+    cy.get(DataViewLocators.postMenuDots).eq(0).click();
+    cy.get(DataViewLocators.publishPostBtn).click();
+    cy.get(DataViewLocators.postStatus).contains('Published');
+    //check post status changes to under review
+    cy.get(DataViewLocators.postPreview)
+      .children(DataViewLocators.postItem)
+      .contains('New Post Title')
+      .click();
+    cy.get(DataViewLocators.postMenuDots).eq(0).click();
+    cy.get(DataViewLocators.putUnderReviewBtn).click();
+    cy.get(DataViewLocators.postStatus).contains('Under review');
+    //check post status changes to archived
+    cy.get(DataViewLocators.postPreview)
+      .children(DataViewLocators.postItem)
+      .contains('New Post Title')
+      .click();
+    cy.get(DataViewLocators.postMenuDots).eq(0).click();
+    cy.get(DataViewLocators.archivePostBtn).click();
+    cy.get(DataViewLocators.postStatus).contains('Archived');
+  }
+
   check_post_filter_by_survey() {
     cy.get(DataViewLocators.postPreview).children(DataViewLocators.postItem).should('not.be.empty');
   }

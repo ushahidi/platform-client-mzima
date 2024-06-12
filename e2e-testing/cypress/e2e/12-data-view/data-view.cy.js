@@ -20,4 +20,9 @@ describe('Automated Tests for Post Filters in Data View', () => {
     dataViewFilterFunctions.click_data_view_btn();
     dataViewFilterFunctions.check_post_filter_by_status();
   });
+
+  it('Steps to verify change of post status', () => {
+    dataViewFilterFunctions.click_data_view_btn();
+    dataViewFilterFunctions.change_status_post_data_view();
+  });
 });
