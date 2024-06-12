@@ -46,7 +46,7 @@
         <mat-select
           name="language"
           disableOptionCentering
-          [(ngModel)]="defaultLanguage"
+          [(ngModel)]="selectedLanguage"
           [placeholder]="'select_language' | translate"
           (selectionChange)="selectLanguageEmit($event)"
           [data-qa]="'select_language'"
@@ -56,7 +56,7 @@
             [value]="language"
             [data-qa]="'lang-' + language"
           >
-            {{ language?.name }} {{ language?.code === 'en' ? '(default)' : '' }}
+            {{ language?.name }} {{ language?.code === defaultLanguage?.code ? '(default)' : '' }}
           </mat-option>
         </mat-select>
       </mat-form-field>

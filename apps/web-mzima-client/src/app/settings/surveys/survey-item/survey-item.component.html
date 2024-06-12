@@ -31,7 +31,7 @@
     (taskChange)="taskUpdate($event)"
     *ngIf="mainPost"
     (colorSelected)="setNewColor($event)"
-    (languageChange)="languageChange()"
+    (languageChange)="languageChange($event)"
     [isDefaultLanguageSelected]="isDefaultLanguageSelected"
     [selectLanguageCode]="selectLanguageCode"
   >
