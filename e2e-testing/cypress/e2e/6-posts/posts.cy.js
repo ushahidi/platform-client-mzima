@@ -18,9 +18,6 @@ describe('Automated Tests for Posts', () => {
   });
 
   it('Steps to delete post on data view', () => {
-    postFunctions.open_post_creation_form();
-    postFunctions.fill_required_form_fields();
-    postFunctions.complete_add_post_steps();
     postFunctions.delete_post_data_view();
   });
 });
