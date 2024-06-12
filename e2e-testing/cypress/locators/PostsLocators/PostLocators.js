@@ -32,6 +32,7 @@ const PostLocators = {
   deletePostBtn: '[data-qa="btn-delete-post"]',
   successBtn: '[data-qa="btn-confirm-success"]',
   deleteConfirmBtn: '[data-qa="btn-confirm-delete"]',
+  dataViewBtn: '[data-qa="btn-data"]',
 };
 
 export default PostLocators;
