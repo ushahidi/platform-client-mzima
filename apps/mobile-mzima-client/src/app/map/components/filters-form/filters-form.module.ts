@@ -9,6 +9,7 @@ import { PostItemModule } from '../post-item/post-item.module';
 import { FilterControlModule } from '../filter-control/filter-control.module';
 import { FilterModule } from '../filter/filter.module';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [FiltersFormComponent],
@@ -24,6 +25,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    TranslateModule,
   ],
   exports: [FiltersFormComponent],
 })

@@ -10,6 +10,7 @@ import { LocationControlModule } from './location-control/location-control.modul
 import { LocationSelectComponent } from './location-select/location-select.component';
 import { OfflineNotificationComponent } from './offline-notification/offline-notification.component';
 import { PostContentComponent } from './post-content/post-content.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const components = [
   ImageUploaderComponent,
@@ -30,6 +31,7 @@ const components = [
     LocationControlModule,
     SortByFieldModule,
     MatIconModule,
+    TranslateModule,
   ],
   declarations: [...components],
   exports: [...components],
