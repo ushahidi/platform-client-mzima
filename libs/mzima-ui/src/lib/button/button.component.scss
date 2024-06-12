@@ -159,7 +159,7 @@ $laptop: 1439px;
 
   &--clear {
     background-color: transparent;
-    color: var(--background-color);
+    color: var(--background-color-clear);
     border-bottom: var(--border-bottom);
 
     &:not(:disabled) {
@@ -185,6 +185,7 @@ $laptop: 1439px;
   &--primary {
     --color: var(--color-black);
     --background-color: var(--color-primary-60);
+    --background-color-clear: var(--color-primary-50);
     --hover-background-color: var(--color-primary-70);
     --active-background-color: var(--color-primary-50);
     --disabled-color: var(--color-neutral-70);
