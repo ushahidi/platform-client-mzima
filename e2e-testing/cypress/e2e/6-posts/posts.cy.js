@@ -17,7 +17,7 @@ describe('Automated Tests for Posts', () => {
     postFunctions.verify_created_post_exists();
   });
 
-  it('Steps to delete post on data view', () => {
-    postFunctions.delete_post_data_view();
+  it('Deletes a post', () => {
+    postFunctions.delete_post();
   });
 });

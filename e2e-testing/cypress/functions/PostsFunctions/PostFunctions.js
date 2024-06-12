@@ -62,7 +62,7 @@ class PostFunctions {
     cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
   }
 
-  delete_post_data_view() {
+  delete_post() {
     //check post is deleted
     cy.get(PostLocators.dataViewBtn).click();
     cy.get(PostLocators.postPreview)
