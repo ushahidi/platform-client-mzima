@@ -19,7 +19,7 @@ class DataViewFilterFunctions {
     cy.get(DataViewLocators.postPreview)
       .children(DataViewLocators.postItem)
       .contains('Automated Title Response');
-    cy.get(DataViewLocators.postMenuDots).click();
+    cy.get(DataViewLocators.postMenuDots).eq(0).click();
     cy.get(DataViewLocators.publishPostBtn).click();
     loginFunctions.logout();
     //check post appears for non logged in user
