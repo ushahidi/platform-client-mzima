@@ -14,13 +14,6 @@ const DataViewLocators = {
   filterSelectionList: '[data-qa="filter-selection-list"]',
   filterListOption: '[data-qa="filter-list-option"]',
   surveyToSubmitPost: '[data-qa="add-post-modal-surveys-item527"]',
-  addPostBtn: '[data-qa="submit-post-button"]',
-  postTitleField: '[data-qa="title"]',
-  postDescField: '[data-qa="description"]',
-  savePostBtn: '[data-qa="btn-post-item-submit"]',
-  successBtn: '[data-qa="btn-confirm-success"]',
-  postPreview: '[data-qa="post-preview"]',
-  postItem: '[data-qa="post-item"]',
   postDetails: '[data-qa="post-details"]',
 };
 
