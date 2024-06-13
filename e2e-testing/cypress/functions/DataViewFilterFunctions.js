@@ -1,7 +1,4 @@
 import DataViewLocators from '../locators/DataViewLocators';
-import PostFunctions from '../functions/PostsFunctions/PostFunctions';
-
-const postFunctions = new PostFunctions();
 
 class DataViewFilterFunctions {
   click_data_view_btn() {
@@ -17,9 +14,9 @@ class DataViewFilterFunctions {
     this.click_data_view_btn();
     cy.get(DataViewLocators.postPreview)
       .children(DataViewLocators.postItem)
-      .contains(postFunctions.postTitle)
+      .contains('Automated Title Response')
       .click();
-    cy.get(DataViewLocators.postDetails).contains(postFunctions.postTitle);
+    cy.get(DataViewLocators.postDetails).contains('Automated Title Response');
   }
 
   verify_count_on_results() {
