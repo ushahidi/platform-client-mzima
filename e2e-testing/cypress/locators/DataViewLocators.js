@@ -1,17 +1,8 @@
 const DataViewLocators = {
   dataViewBtn: '[data-qa="btn-data"]',
-  addPostBtn: '[data-qa="submit-post-button"]',
-  postTitleField: '[data-qa="title"]',
-  postDescField: '[data-qa="description"]',
-  savePostBtn: '[data-qa="btn-post-item-submit"]',
-  successBtn: '[data-qa="btn-confirm-success"]',
-  postPreview: '[data-qa="post-preview"]',
-  postItem: '[data-qa="post-item"]',
-  postMenuDots: '[data-qa="post-menu"]',
   posts: '[data-qa="posts"]',
   surveySelectionList: '[data-qa="survey-selection-list"]',
   surveySelectItem: '[data-qa="survey-select-item"]',
-  surveyToSubmitPost: '[data-qa="add-post-modal-surveys-item527"]',
   postPreview: '[data-qa="post-preview"]',
   postItem: '[data-qa="post-item"]',
   feedPageResults: '[data-qa="feed-page-results"]',
@@ -22,6 +13,8 @@ const DataViewLocators = {
   statusBtn: '[data-qa="status"]',
   filterSelectionList: '[data-qa="filter-selection-list"]',
   filterListOption: '[data-qa="filter-list-option"]',
+  postMenuDots: '[data-qa="post-menu"]',
+  publishPostBtn: '[data-qa="btn-publish-post"]',
 };
 
 export default DataViewLocators;
