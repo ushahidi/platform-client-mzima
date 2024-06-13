@@ -64,7 +64,6 @@ class PostFunctions {
 
   change_post_status() {
     //change post status to published
-    cy.get(PostLocators.dataViewBtn).click();
     cy.get(PostLocators.postPreview)
       .children(PostLocators.postItem)
       .contains(this.postTitle)
