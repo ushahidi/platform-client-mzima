@@ -72,6 +72,26 @@ class PostFunctions {
     cy.get(PostLocators.publishPostBtn).click();
     cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
     cy.get(PostLocators.postStatus).contains('Published');
+
+    //change post status to under review
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .click();
+    cy.get(PostLocators.postMenuDots).eq(0).click();
+    cy.get(PostLocators.underReviewPostBtn).click();
+    cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
+    cy.get(PostLocators.postStatus).contains('Under review');
+
+    //change post status to archived
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .click();
+    cy.get(PostLocators.postMenuDots).eq(0).click();
+    cy.get(PostLocators.archivePostBtn).click();
+    cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
+    cy.get(PostLocators.postStatus).contains('Archived');
   }
 }
 
