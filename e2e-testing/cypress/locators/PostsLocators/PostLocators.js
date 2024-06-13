@@ -28,6 +28,11 @@ const PostLocators = {
   checkboxFieldOption3: '[data-qa="checkboxes-field-f3"]',
   relatedPostField: '[data-qa="related-post-field"]',
   embedVideoField: '[data-qa="embed-video field"]',
+  publishPostBtn: '[data-qa="btn-publish-post"]',
+  postMenuDots: '[data-qa="post-menu"]',
+  postStatus: '[data-qa="status"]',
+  underReviewPostBtn: '[data-qa="btn-underReview-post"]',
+  archivePostBtn: '[data-qa="btn-archive-post"]',
 };
 
 export default PostLocators;

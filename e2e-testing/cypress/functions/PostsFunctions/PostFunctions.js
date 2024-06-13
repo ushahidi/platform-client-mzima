@@ -61,6 +61,19 @@ class PostFunctions {
     // .click({ force: true });
     cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
   }
+
+  change_post_status() {
+    //change post status to published
+    cy.get(PostLocators.dataViewBtn).click();
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .click();
+    cy.get(PostLocators.postMenuDots).eq(0).click();
+    cy.get(PostLocators.publishPostBtn).click();
+    cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
+    cy.get(PostLocators.postStatus).contains('Published');
+  }
 }
 
 export default PostFunctions;
