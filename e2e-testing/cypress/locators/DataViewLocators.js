@@ -13,7 +13,6 @@ const DataViewLocators = {
   statusBtn: '[data-qa="status"]',
   filterSelectionList: '[data-qa="filter-selection-list"]',
   filterListOption: '[data-qa="filter-list-option"]',
-  surveyToSubmitPost: '[data-qa="add-post-modal-surveys-item527"]',
   postDetails: '[data-qa="post-details"]',
 };
 
