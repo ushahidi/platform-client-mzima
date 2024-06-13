@@ -28,9 +28,23 @@ $laptop: 1439px;
     padding: 0;
   }
 
+  &--medium__padding-equal__width-100 {
+    width: 100%;
+    text-align: left;
+    padding: 8px;
+
+    .mzima-button__content {
+      .mzima-button__text {
+        width: 100%;
+      }
+    }
+  }
+
   &--default-color {
     --color: var(--color-default-contrast);
+    --background-color: var(--color-neutral-10);
   }
+
   // Size
   &--medium {
     padding-top: var(--button-padding-top, 8px);
