@@ -134,6 +134,15 @@ class DataViewFilterFunctions {
       .should('contain', 'mat-pseudo-checkbox-checked');
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 512');
   }
+
+  check_post_filter_by_categories() {
+    //click search form filter button
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    //click categories filter button
+    cy.get('button:contains("Categories")').click();
+    //check that drop-down on a parent and that children are seen
+    cy.get('.mat-tree-node').eq(0).find('.multilevelselect-filter__option__arrow').click();
+  }
 }
 
 export default DataViewFilterFunctions;

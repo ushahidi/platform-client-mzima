@@ -20,4 +20,9 @@ describe('Automated Tests for Post Filters in Data View', () => {
     dataViewFilterFunctions.click_data_view_btn();
     dataViewFilterFunctions.check_post_filter_by_status();
   });
+
+  it('Filter posts by categories', () => {
+    dataViewFilterFunctions.click_data_view_btn();
+    dataViewFilterFunctions.check_post_filter_by_categories();
+  });
 });
