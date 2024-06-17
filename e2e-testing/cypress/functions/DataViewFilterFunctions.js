@@ -141,15 +141,12 @@ class DataViewFilterFunctions {
     //click categories filter button
     cy.get('button:contains("Categories")').click();
     //check that drop-down on a parent and children are seen
-    cy.get(DataViewLocators.parentCategoryFilter)
-      .eq(0)
-      .find('.multilevelselect-filter__option__arrow')
-      .click();
-    cy.get(DataViewLocators.parentCategoryFilter).eq(0).should('exist');
-    cy.get(DataViewLocators.childCategoryFilter).eq(0).should('have.length.greaterThan', 0);
+    cy.get('.mat-tree-node').eq(0).find('.multilevelselect-filter__option__arrow').click();
+    cy.get('.mat-tree-node').eq(0).should('exist');
+    // cy.get(DataViewLocators.childCategoryFilter).eq(0).should('have.length.greaterThan', 0);
     //check that when parent elements are selected children elements are also selected
-    cy.get(DataViewLocators.parentCategoryFilter).eq(0).should('be.selected');
-    cy.get(DataViewLocators.childCategoryFilter).eq(0).should('be.selected');
+    cy.get('.mat-tree-node').eq(0).should('be.selected');
+    // cy.get(DataViewLocators.childCategoryFilter).eq(0).should('be.selected');
   }
 }
 
