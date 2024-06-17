@@ -143,12 +143,15 @@ class DataViewFilterFunctions {
     //check that drop-down on a parent and children are seen
     cy.get('.mat-tree-node').eq(0).find('.multilevelselect-filter__option__arrow').click();
 
-    cy.get('.mat-tree-node').should('exist');
-    cy.get('.mat-tree-node').within(() => {
-      cy.get('.mat-tree-node').should('have.length.greaterThan', 0);
-    });
+    cy.get('.mat-tree-node').eq(0).should('exist');
+    cy.get('.mat-tree-node')
+      .eq(0)
+      .within(() => {
+        cy.get('.mat-tree-node').eq(0).should('have.length.greaterThan', 0);
+      });
     //check that when parent elements are selected children elements are also selected
     cy.get('.mat-tree-node')
+      .eq(0)
       .children()
       .each(($child) => {
         cy.wrap($child).should('be.selected');
