@@ -140,8 +140,19 @@ class DataViewFilterFunctions {
     cy.get(DataViewLocators.revealFiltersBtn).click();
     //click categories filter button
     cy.get('button:contains("Categories")').click();
-    //check that drop-down on a parent and that children are seen
+    //check that drop-down on a parent and children are seen
     cy.get('.mat-tree-node').eq(0).find('.multilevelselect-filter__option__arrow').click();
+
+    cy.get('.mat-tree-node').should('exist');
+    cy.get('.mat-tree-node').within(() => {
+      cy.get('.mat-tree-node').should('have.length.greaterThan', 0);
+    });
+    //check that when parent elements are selected children elements are also selected
+    cy.get('.mat-tree-node')
+      .children()
+      .each(($child) => {
+        cy.wrap($child).should('be.selected');
+      });
   }
 }
 
