@@ -119,6 +119,7 @@
               class="multilevelselect-filter__option"
               (change)="categoryLeafSelectionToggle(node)"
               [checked]="checklistSelection.isSelected(node)"
+              [attr.data-qa]="'parent-category'"
             >
               {{ node.name }}
             </mat-checkbox>

@@ -11,7 +11,11 @@
   </mat-checkbox>
 
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="multilevelselection">
-    <mat-tree-node *matTreeNodeDef="let option" class="multilevelselection__option">
+    <mat-tree-node
+      *matTreeNodeDef="let option"
+      class="multilevelselection__option"
+      [attr.data-qa]="'child-category'"
+    >
       <mat-checkbox
         color="primary"
         [value]="option[fields[0]]"
