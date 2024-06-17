@@ -67,7 +67,7 @@ export class ProfilePhotoComponent {
     const input = event.target as HTMLInputElement;
     const file = input?.files?.[0];
     if (file) {
-      const validFileTypes = ['image/jpeg', 'image.webp', 'image.jpg', 'image/png', 'image/gif'];
+      const validFileTypes = ['image/jpeg', 'image/webp', 'image/jpg', 'image/png', 'image/gif'];
       if (!validFileTypes.includes(file.type)) {
         this.alertService.presentAlert({
           header: 'Invalid File Type',
