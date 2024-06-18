@@ -5,7 +5,7 @@ describe('Automated Tests for Posts', () => {
   const loginFunctions = new LoginFunctions();
   const postFunctions = new PostFunctions();
 
-  before(() => {
+  beforeEach(() => {
     loginFunctions.login_as_admin();
     cy.visit(Cypress.env('baseUrl'));
   });

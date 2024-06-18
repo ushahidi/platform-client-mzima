@@ -1,4 +1,5 @@
 const PostLocators = {
+  dataViewBtn: '[data-qa="btn-data"]',
   addPostBtn: '[data-qa="submit-post-button"]',
   srvyItemBtn: '[data-qa="add-post-modal-surveys-item125"]',
   successButton: '[data-qa="btn-confirm-success"]',
@@ -30,7 +31,7 @@ const PostLocators = {
   embedVideoField: '[data-qa="embed-video field"]',
 
   //field values
-  titleValue: '[data-qa="postTitle"]',
+  titleValue: '[data-qa="postTitleValue"]',
   descriptionValue: '[data-qa="postDescriptionValue"]',
 };
 
