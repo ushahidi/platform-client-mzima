@@ -175,7 +175,7 @@ export class ProfilePhotoComponent {
                   });
                 },
                 error: (error) => {
-                  console.error('Failed to update profile photo', error);
+                  console.error('Failed to update profile photo. Please try again', error);
                   this.uploadingInProgress = false;
                   this.uploadingSpinner = false;
                   this.uploadCompleted.emit();
@@ -212,7 +212,7 @@ export class ProfilePhotoComponent {
                   this.uploadingSpinner = false;
                   this.uploadCompleted.emit();
                   this.toastService.presentToast({
-                    message: 'Failed to add profile photo',
+                    message: 'Failed to add profile photo. Please try again',
                     duration: 3000,
                     position: 'bottom',
                   });
