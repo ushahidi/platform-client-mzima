@@ -61,6 +61,25 @@ class PostFunctions {
     // .click({ force: true });
     cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
   }
+
+  open_post_for_details() {
+    cy.get(PostLocators.postItem).eq(0).click();
+  }
+
+  verify_post_details() {
+    //verify survey name is shown
+    cy.contains('Full Length Survey').should('be.visible');
+    //verify survey fields
+    cy.get(PostLocators.titleValue).should('contain', 'Automated Title Response');
+    cy.get(PostLocators.descriptionValue).should('have.value', 'Automated Description Response');
+    cy.contains('Automated Short text').should('be.visible');
+    cy.contains('This is an automated long text response').should('be.visible');
+    cy.contains(99.9).should('be.visible');
+    cy.contains(100).should('be.visible');
+    cy.contains('S1').should('be.visible');
+    cy.contains('R2').should('be.visible');
+    cy.contains('F3').should('be.visible');
+  }
 }
 
 export default PostFunctions;
