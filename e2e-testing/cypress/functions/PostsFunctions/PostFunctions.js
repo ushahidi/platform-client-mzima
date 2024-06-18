@@ -83,8 +83,8 @@ class PostFunctions {
     cy.contains(99.9).should('be.visible');
     cy.contains(100).should('be.visible');
     cy.contains('S1').scrollIntoView().should('be.visible');
-    cy.contains('R2').should('be.visible');
-    cy.contains('F3').should('be.visible');
+    cy.contains('R2').scrollIntoView().should('be.visible');
+    cy.contains('F3').scrollIntoView().should('be.visible');
   }
 }
 
