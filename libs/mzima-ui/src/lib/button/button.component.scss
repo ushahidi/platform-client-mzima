@@ -63,6 +63,23 @@ $laptop: 1439px;
     }
   }
 
+  &--default-size {
+    text-align: left;
+    padding: 0;
+  }
+
+  &--medium__padding-equal__width-100 {
+    width: 100%;
+    text-align: left;
+    padding: 8px;
+
+    .mzima-button__content {
+      .mzima-button__text {
+        width: 100%;
+      }
+    }
+  }
+
   // Expand
   &--block {
     width: 100%;
@@ -266,6 +283,11 @@ $laptop: 1439px;
     --active-background-color: var(--button-background-active, var(--button-background-hover));
     --disabled-color: var(--button-disabled-color);
     --disabled-background-color: var(--button-disabled-background);
+  }
+
+  &--default-color {
+    --color: var(--color-default-contrast);
+    --background-color: var(--color-neutral-10);
   }
 
   &--transparent-style-1 {
