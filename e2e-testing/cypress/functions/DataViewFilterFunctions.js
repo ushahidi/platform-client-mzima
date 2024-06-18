@@ -147,8 +147,8 @@ class DataViewFilterFunctions {
     // cy.get(DataViewLocators.childCategoryFilter).eq(0).should('have.length.greaterThan', 0);
     //check that when parent elements are selected children elements are also selected
     cy.get('.mat-tree-node').eq(0).find('.mat-checkbox-input').click({ force: true });
-    cy.get('.mat-tree-node').eq(0).check().should('be.selected');
-    cy.get(`[aria-level="2"]`).eq(0).check().should('be.selected');
+    cy.get('.mat-tree-node').eq(0).should('be.selected');
+    cy.get(`[aria-level="2"]`).eq(0).should('be.selected');
     // cy.get(DataViewLocators.childCategoryFilter).eq(0).should('be.selected');
   }
 }
