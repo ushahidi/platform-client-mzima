@@ -172,8 +172,8 @@ export class PostControlsComponent {
         complete: () => {
           this.toastService.presentToast({
             message: `${
-              this.posts.length > 1 ? count + ' posts' : 'Post'
-            } has been successfully deleted`,
+              this.posts.length > 1 ? count + ' posts have' : 'Post has'
+            } been successfully deleted`,
           });
           this.postDeleted.emit(postIds);
         },
