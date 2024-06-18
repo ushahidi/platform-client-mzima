@@ -78,11 +78,11 @@ class PostFunctions {
     //verify survey fields
     cy.get(PostLocators.titleValue).should('contain', 'Automated Title Response');
     cy.get(PostLocators.descriptionValue).should('contain', 'Automated Description Response');
-    cy.contains('Automated Short text').should('be.visible');
+    cy.contains('Automated Short text').scrollIntoView().should('be.visible');
     cy.contains('This is an automated long text response').should('be.visible');
     cy.contains(99.9).should('be.visible');
     cy.contains(100).should('be.visible');
-    cy.contains('S1').should('be.visible');
+    cy.contains('S1').scrollIntoView().should('be.visible');
     cy.contains('R2').should('be.visible');
     cy.contains('F3').should('be.visible');
   }
