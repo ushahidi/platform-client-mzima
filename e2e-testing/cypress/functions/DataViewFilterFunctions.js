@@ -10,15 +10,6 @@ class DataViewFilterFunctions {
     cy.get(DataViewLocators.postPreview).children(DataViewLocators.postItem).should('not.be.empty');
   }
 
-  post_details_data_view() {
-    this.click_data_view_btn();
-    cy.get(DataViewLocators.postPreview)
-      .children(DataViewLocators.postItem)
-      .contains('Automated Title Response')
-      .click();
-    cy.get(DataViewLocators.postDetails).contains('Automated Title Response');
-  }
-
   verify_count_on_results() {
     //verify results on landing on Data view
     cy.get(DataViewLocators.mainResultsTotal).contains('Results: 512');
