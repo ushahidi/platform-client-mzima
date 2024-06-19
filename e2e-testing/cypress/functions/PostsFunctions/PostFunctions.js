@@ -86,6 +86,26 @@ class PostFunctions {
     cy.contains('R2').scrollIntoView().should('be.visible');
     cy.contains('F3').scrollIntoView().should('be.visible');
   }
+
+  delete_post() {
+    cy.get(PostLocators.dataViewBtn).click();
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .click();
+
+    //delete post
+    cy.get(PostLocators.postMenuDots).eq(0).click();
+    cy.get(PostLocators.deletePostBtn).click();
+    cy.get('#confirm-modal').click();
+    cy.get(PostLocators.deleteConfirmBtn).click();
+    cy.get(PostLocators.successBtn).click();
+    //verify post is deleted and doesn't exist
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .should('not.exist');
+  }
 }
 
 export default PostFunctions;

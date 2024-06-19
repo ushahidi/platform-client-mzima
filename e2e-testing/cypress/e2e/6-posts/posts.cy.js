@@ -21,4 +21,8 @@ describe('Automated Tests for Posts', () => {
     postFunctions.open_post_for_details();
     postFunctions.verify_post_details();
   });
+
+  it('Deletes a post', () => {
+    postFunctions.delete_post();
+  });
 });
