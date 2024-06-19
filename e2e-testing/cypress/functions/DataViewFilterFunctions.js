@@ -1,4 +1,5 @@
 import DataViewLocators from '../locators/DataViewLocators';
+
 class DataViewFilterFunctions {
   click_data_view_btn() {
     cy.get(DataViewLocators.dataViewBtn).click();

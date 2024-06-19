@@ -17,7 +17,12 @@ describe('Automated Tests for Posts', () => {
     postFunctions.verify_created_post_exists();
   });
 
-  it('Deletes a post', () => {
-    postFunctions.delete_post();
+  it('Verifies post details', () => {
+    postFunctions.open_post_for_details();
+    postFunctions.verify_post_details();
+
   });
+  
+    it('Deletes a post', () => {
+    postFunctions.delete_post();
 });
