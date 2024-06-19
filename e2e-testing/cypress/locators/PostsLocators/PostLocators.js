@@ -30,16 +30,15 @@ const PostLocators = {
   relatedPostField: '[data-qa="related-post-field"]',
   embedVideoField: '[data-qa="embed-video field"]',
 
+  //field menu items
   postMenuDots: '[data-qa="post-menu"]',
   deletePostBtn: '[data-qa="btn-delete-post"]',
   successBtn: '[data-qa="btn-confirm-success"]',
   deleteConfirmBtn: '[data-qa="btn-confirm-delete"]',
 
-
   //field values
   titleValue: '[data-qa="postTitleValue"]',
   descriptionValue: '[data-qa="postDescriptionValue"]',
-
 };
 
 export default PostLocators;
