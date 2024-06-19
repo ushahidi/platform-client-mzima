@@ -20,9 +20,9 @@ describe('Automated Tests for Posts', () => {
   it('Verifies post details', () => {
     postFunctions.open_post_for_details();
     postFunctions.verify_post_details();
-
   });
-  
-    it('Deletes a post', () => {
+
+  it('Deletes a post', () => {
     postFunctions.delete_post();
+  });
 });
