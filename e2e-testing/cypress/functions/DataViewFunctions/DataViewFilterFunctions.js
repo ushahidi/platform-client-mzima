@@ -1,8 +1,7 @@
-import DataViewLocators from '../locators/DataViewLocators';
-import LoginFunctions from '../functions/LoginFunctions';
+import DataViewLocators from '../../locators/DataViewLocators';
+import LoginFunctions from '../LoginFunctions';
 
 const loginFunctions = new LoginFunctions();
-
 
 class DataViewFilterFunctions {
   click_data_view_btn() {
@@ -12,22 +11,6 @@ class DataViewFilterFunctions {
 
   check_post_filter_by_survey() {
     cy.get(DataViewLocators.postPreview).children(DataViewLocators.postItem).should('not.be.empty');
-  }
-
-  verify_post_appears_for_user() {
-    this.click_data_view_btn();
-    //check post appears for admin user
-    cy.get(DataViewLocators.postPreview)
-      .children(DataViewLocators.postItem)
-      .contains('Automated Title Response');
-    cy.get(DataViewLocators.postMenuDots).eq(0).click();
-    cy.get(DataViewLocators.publishPostBtn).click();
-    loginFunctions.logout();
-    //check post appears for non logged in user
-    this.click_data_view_btn();
-    cy.get(DataViewLocators.postPreview)
-      .children(DataViewLocators.postItem)
-      .contains('Automated Title Response');
   }
 
   verify_count_on_results() {
