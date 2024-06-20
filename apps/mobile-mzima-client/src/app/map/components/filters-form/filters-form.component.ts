@@ -9,7 +9,7 @@ import {
   SurveyItem,
   SurveysService,
 } from '@mzima-client/sdk';
-import { BehaviorSubject, Subject, debounceTime, lastValueFrom, takeUntil } from 'rxjs';
+import { Subject, debounceTime, lastValueFrom, takeUntil } from 'rxjs';
 import { AlertService, EnvService, SearchService, SessionService } from '@services';
 import { FilterControl, FilterControlOption } from '@models';
 import { searchFormHelper, dateHelper } from '@helpers';
@@ -32,7 +32,6 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
   public totalPosts: number;
   public isResultsVisible = false;
   private readonly searchSubject = new Subject<string>();
-  private readonly loginStatus$ = new BehaviorSubject<boolean>(this.session.isLogged());
   public posts: PostResult[] = [];
   public isPostsLoading = false;
   public isTotalLoading = false;
@@ -156,9 +155,17 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
       },
     });
 
-    this.loginStatus$.pipe(takeUntil(this.destroy$)).subscribe({
-      next: (isLoggedIn) => {
-        this.updateStatusFilterCount(isLoggedIn);
+    this.session.currentUserData$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (currentUser) => {
+        const statusFilter = this.filters.find((filter) => filter.name === 'status');
+        if (statusFilter) {
+          const isValidUser = this.session.isLogged() && currentUser?.userId !== '';
+          statusFilter.selectedCount = isValidUser
+            ? searchFormHelper.statuses.length
+            : searchFormHelper.loggedOutStatuses.length;
+          statusFilter.value = this.getFilterDefaultValue('status');
+          this.updateFilterSelectedText(statusFilter);
+        }
       },
     });
   }
@@ -211,20 +218,6 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
           this.preparingSavedFilter();
         },
       });
-    }
-  }
-
-  private async updateStatusFilterCount(isLoggedIn: boolean): Promise<void> {
-    const statusFilter = this.filters.find((filter) => filter.name === 'status');
-    if (statusFilter) {
-      if (!isLoggedIn) {
-        statusFilter.selectedCount = searchFormHelper.loggedOutStatuses.length;
-        statusFilter.selected = String(searchFormHelper.loggedOutStatuses.length);
-      } else {
-        statusFilter.selectedCount = searchFormHelper.statuses.length;
-        statusFilter.selected = String(searchFormHelper.statuses.length);
-      }
-      statusFilter.value = this.getFilterDefaultValue('status');
     }
   }
 
@@ -377,6 +370,20 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
     this.updateFilterSelectedText(formFilter);
     formFilter.selected = String(formFilter?.value?.length ?? 'none');
   }
+
+  // private async updateStatusFilterCount(isLoggedIn: boolean): Promise<void> {
+  //   const statusFilter = this.filters.find((filter) => filter.name === 'status');
+  //   if (statusFilter) {
+  //     // if (!isLoggedIn) {
+  //     //   statusFilter.selectedCount = searchFormHelper.loggedOutStatuses.length;
+  //     //   statusFilter.selected = String(searchFormHelper.loggedOutStatuses.length);
+  //     // } else {
+  //     //   statusFilter.selectedCount = searchFormHelper.statuses.length;
+  //     //   statusFilter.selected = String(searchFormHelper.statuses.length);
+  //     // }
+  //     statusFilter.value = this.getFilterDefaultValue('status');
+  //   }
+  // }
 
   private getFilterDefaultValue(filterName: string): any {
     const isLoggedIn = this.session.isLogged();
