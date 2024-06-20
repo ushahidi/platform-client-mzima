@@ -1,0 +1,9 @@
+.search-list {
+  background: none;
+  &__result {
+    border-bottom: none;
+  }
+  &__flag {
+    width: 30px;
+  }
+}

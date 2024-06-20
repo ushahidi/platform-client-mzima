@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
-import { LanguageInterface } from '@models';
+import { LanguageInterface } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService, SessionService } from '@services';
 import { BaseComponent } from '../../../base.component';

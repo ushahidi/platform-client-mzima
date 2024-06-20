@@ -183,16 +183,26 @@ export class PostsService extends ResourceService<any> {
     postParams.page = filter?.page ?? postParams.page;
     postParams.currentView = filter?.currentView ?? postParams.currentView;
     postParams.limit = filter?.limit ?? postParams.limit;
+
     postParams['status[]'] = filter?.['status[]'] ?? postParams['status[]'];
     if (
       postParams['form[]'] === undefined ||
       (postParams['form[]'].length === 0 && postParams['form'])
     )
       postParams['form[]'] = postParams['form'];
-    if (postParams['status[]'] !== undefined && postParams['status[]'].length === 0)
+    if (
+      postParams['status[]'] === undefined ||
+      (postParams['status[]'].length === 0 && postParams['status'])
+    )
       postParams['status[]'] = postParams['status'];
-    if (postParams['source[]'] !== undefined && postParams['source[]'].length === 0)
+    if (
+      postParams['source[]'] === undefined ||
+      (postParams['source[]'].length === 0 && postParams['source'])
+    )
       postParams['source[]'] = postParams['source'];
+    if (postParams.tags?.length) {
+      postParams['tags[]'] = postParams.tags;
+    }
 
     // Allocate start and end dates, and remove originals
     if (params.date_before || params.date_after) {
@@ -229,10 +239,6 @@ export class PostsService extends ResourceService<any> {
       delete postParams.center_point;
     }
 
-    if (postParams.tags?.length) {
-      postParams['tags[]'] = postParams.tags;
-    }
-
     // Clean up new params based on which view is currently active
     if (postParams.currentView === 'map') {
       postParams.has_location = 'mapped';
@@ -259,7 +265,7 @@ export class PostsService extends ResourceService<any> {
       postParams['form[]'] = ['none'];
     }
 
-    if (isStats) {
+    if (isStats || postParams.currentView === 'myposts') {
       delete postParams['form[]'];
     }
 
