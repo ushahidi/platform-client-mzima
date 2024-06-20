@@ -22,7 +22,7 @@ describe('Automated Tests for Posts', () => {
     postFunctions.fill_required_form_fields();
     postFunctions.complete_add_post_steps();
     postFunctions.change_post_status();
-
+  });
   it('Verifies post details', () => {
     postFunctions.open_post_for_details();
     postFunctions.verify_post_details();
@@ -30,6 +30,5 @@ describe('Automated Tests for Posts', () => {
 
   it('Deletes a post', () => {
     postFunctions.delete_post();
-
   });
 });
