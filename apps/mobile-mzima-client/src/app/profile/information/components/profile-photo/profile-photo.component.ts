@@ -70,7 +70,7 @@ export class ProfilePhotoComponent {
       const validFileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
       if (!validFileTypes.includes(file.type)) {
         this.alertService.presentAlert({
-          header: 'Invalid File Type',
+          header: 'Wrong type of file',
           message: 'Please select a valid image file',
         });
         return;
