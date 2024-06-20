@@ -59,7 +59,52 @@ class PostFunctions {
     // .children(PostLocators.surveySelectItem)
     // .contains("Full Length Survey-with image-field- don't delete")
     // .click({ force: true });
-    cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .should('be.visible');
+  }
+
+  open_post_for_details() {
+    cy.get(PostLocators.dataViewBtn).click();
+    cy.get(PostLocators.postItem).eq(0).click();
+  }
+
+  verify_post_details() {
+    //verify survey name is shown
+    cy.contains("Full Length Survey-with image-field- don't delete")
+      .scrollIntoView()
+      .should('be.visible');
+    //verify survey fields
+    cy.get(PostLocators.titleValue).should('contain', 'Automated Title Response');
+    cy.get(PostLocators.descriptionValue).should('contain', 'Automated Description Response');
+    cy.contains('Automated Short text').scrollIntoView().should('be.visible');
+    cy.contains('This is an automated long text response').should('be.visible');
+    cy.contains(99.9).should('be.visible');
+    cy.contains(100).should('be.visible');
+    cy.contains('S1').scrollIntoView().should('be.visible');
+    cy.contains('R2').scrollIntoView().should('be.visible');
+    cy.contains('F3').scrollIntoView().should('be.visible');
+  }
+
+  delete_post() {
+    cy.get(PostLocators.dataViewBtn).click();
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .click();
+
+    //delete post
+    cy.get(PostLocators.postMenuDots).eq(0).click();
+    cy.get(PostLocators.deletePostBtn).click();
+    cy.get('#confirm-modal').click();
+    cy.get(PostLocators.deleteConfirmBtn).click();
+    cy.get(PostLocators.successBtn).click();
+    //verify post is deleted and doesn't exist
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .should('not.exist');
   }
 
   change_post_status() {

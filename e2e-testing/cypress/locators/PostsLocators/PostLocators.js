@@ -1,4 +1,5 @@
 const PostLocators = {
+  dataViewBtn: '[data-qa="btn-data"]',
   addPostBtn: '[data-qa="submit-post-button"]',
   srvyItemBtn: '[data-qa="add-post-modal-surveys-item125"]',
   successButton: '[data-qa="btn-confirm-success"]',
@@ -28,11 +29,23 @@ const PostLocators = {
   checkboxFieldOption3: '[data-qa="checkboxes-field-f3"]',
   relatedPostField: '[data-qa="related-post-field"]',
   embedVideoField: '[data-qa="embed-video field"]',
+
+  //status items
   publishPostBtn: '[data-qa="btn-publish-post"]',
-  postMenuDots: '[data-qa="post-menu"]',
   postStatus: '[data-qa="status"]',
   underReviewPostBtn: '[data-qa="btn-underReview-post"]',
   archivePostBtn: '[data-qa="btn-archive-post"]',
+
+
+  //field menu items
+  postMenuDots: '[data-qa="post-menu"]',
+  deletePostBtn: '[data-qa="btn-delete-post"]',
+  successBtn: '[data-qa="btn-confirm-success"]',
+  deleteConfirmBtn: '[data-qa="btn-confirm-delete"]',
+
+  //field values
+  titleValue: '[data-qa="postTitleValue"]',
+  descriptionValue: '[data-qa="postDescriptionValue"]',
 };
 
 export default PostLocators;
