@@ -154,6 +154,19 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
         this.isTotalLoading = false;
       },
     });
+
+    this.session.currentUserData$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (currentUser) => {
+        const statusFilter = this.filters.find((filter) => filter.name === 'status');
+        if (statusFilter) {
+          const isLoggedIn = !!currentUser.userId;
+          statusFilter.value = this.getFilterDefaultValue('status', isLoggedIn);
+          statusFilter.selectedCount = statusFilter.value.length;
+          statusFilter.selected = String(statusFilter.selectedCount);
+          this.updateFilterSelectedText(statusFilter);
+        }
+      },
+    });
   }
 
   ngOnDestroy(): void {
@@ -357,7 +370,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
     formFilter.selected = String(formFilter?.value?.length ?? 'none');
   }
 
-  private getFilterDefaultValue(filterName: string): any {
+  private getFilterDefaultValue(filterName: string, isLoggedIn: boolean = false): any {
     if (filterName === 'source') {
       return searchFormHelper.sources.map((s) => s.value);
     }
@@ -369,6 +382,13 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
     if (filterName === 'saved-filters') {
       return this.activatedSavedFilterId;
     }
+
+    if (filterName === 'status') {
+      return isLoggedIn
+        ? searchFormHelper.DEFAULT_FILTERS[filterName]
+        : searchFormHelper.DEFAULT_FILTERS_LOGGED_OUT[filterName];
+    }
+
     return searchFormHelper.DEFAULT_FILTERS[filterName] ?? null;
   }
 
@@ -573,6 +593,11 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
         } else {
           filter.selectedCount = 'All locations';
         }
+        break;
+
+      case 'status':
+        filter.selectedCount = filter.value.length;
+        filter.selected = filter.selectedCount ? String(filter.selectedCount) : 'none';
         break;
 
       case 'saved-filters':
