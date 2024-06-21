@@ -1,4 +1,8 @@
-import DataViewLocators from '../locators/DataViewLocators';
+import DataViewLocators from '../../locators/DataViewLocators';
+import LoginFunctions from '../LoginFunctions';
+
+const loginFunctions = new LoginFunctions();
+
 class DataViewFilterFunctions {
   click_data_view_btn() {
     cy.get(DataViewLocators.dataViewBtn).click();

@@ -23,7 +23,6 @@
 }
 
 .translate-container {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   .form-row {
@@ -31,7 +30,7 @@
     align-items: center;
     justify-content: flex-start;
     max-width: 200px;
-    margin-bottom: 0;
+    margin-bottom: 16px;
     .tooltip-btn {
       margin-right: 5px;
     }
