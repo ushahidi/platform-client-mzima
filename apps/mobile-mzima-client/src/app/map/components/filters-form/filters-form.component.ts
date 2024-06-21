@@ -161,7 +161,9 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
         if (statusFilter) {
           const isLoggedIn = !!currentUser.userId;
           statusFilter.value = this.getFilterDefaultValue('status', isLoggedIn);
-          statusFilter.selectedCount = statusFilter.value.length;
+          statusFilter.selectedCount = isLoggedIn
+            ? searchFormHelper.statuses.length
+            : searchFormHelper.loggedOutStatuses.length;
           statusFilter.selected = String(statusFilter.selectedCount);
           this.updateFilterSelectedText(statusFilter);
         }
@@ -596,8 +598,7 @@ export class FiltersFormComponent implements OnChanges, OnDestroy {
         break;
 
       case 'status':
-        filter.selectedCount = filter.value.length;
-        filter.selected = filter.selectedCount ? String(filter.selectedCount) : 'none';
+        filter.selected = filter.value.length ? String(filter.value.length) : 'none';
         break;
 
       case 'saved-filters':
