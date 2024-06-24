@@ -87,7 +87,9 @@
         </div>
         <div
           *ngIf="
-            selectedFieldType?.options?.length > 0 && !selectedFieldType?.options?.includes('Other')
+            selectedFieldType?.options?.length > 0 &&
+            !selectedFieldType?.options?.includes('Other') &&
+            selectedFieldType.input !== 'select'
           "
         >
           <mzima-client-button
@@ -98,6 +100,7 @@
             (buttonClick)="addOther()"
           >
             {{ 'form.field_add_other' | translate }}
+            {{ selectedFieldType.inpu }}
           </mzima-client-button>
           <p class="form-row__options__add-other">
             {{ 'form.field_add_other_desc' | translate }}
