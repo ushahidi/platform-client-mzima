@@ -94,13 +94,17 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
 
   private initLanguages(enabledLanguages: SurveyItemEnabledLanguages) {
     this.languages = this.languageService.getLanguages();
-    this.defaultLanguage = this.languages.find((lang) => lang.code === enabledLanguages.default);
+    this.defaultLanguage = this.languages.find(
+      (lang) => lang.code.split('-')[0] === enabledLanguages.default.split('-')[0],
+    );
     this.selectedLang = this.defaultLanguage;
     const availableLangs = enabledLanguages.available;
     const active = this.defaultLanguage ? [this.defaultLanguage] : [];
     if (availableLangs.length) {
       availableLangs.forEach((langCode: string) => {
-        active.push(this.languages.find((lang) => lang.code === langCode)!);
+        active.push(
+          this.languages.find((lang) => lang.code.split('-')[0] === langCode.split('-')[0])!,
+        );
       });
     }
     this.activeLanguages = active;
@@ -246,13 +250,17 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   }
 
   languageChange(event: any) {
-    this.defaultLanguage = this.languages.find((l) => l.code === event);
+    this.defaultLanguage = this.languages.find(
+      (l) => l.code.split('-')[0] === event.value.split('-'[0]),
+    );
     this.selectedLang = this.defaultLanguage;
     const availableLangs = this.form.controls['enabled_languages'].value.available;
     const active = this.defaultLanguage ? [this.defaultLanguage] : [];
     if (availableLangs.length) {
       availableLangs.forEach((langCode: string) => {
-        active.push(this.languages.find((lang) => lang.code === langCode)!);
+        active.push(
+          this.languages.find((lang) => lang.code.split('-')[0] === langCode.split('-')[0])!,
+        );
       });
     }
     this.activeLanguages = active;
