@@ -1,43 +1,43 @@
 <ion-item
   button
   lines="none"
-  class="deployment-item"
+  class="search-list__item"
   [ngStyle]="{ '--background': isBackgroundVisible, '--border-style': isBorderVisible }"
 >
   <img
     *ngIf="deployment.image; else deploymentAvatarPlaceholder"
-    class="deployment-item__image"
+    class="search-list__image"
     [src]="deployment.image"
     [alt]="deployment.name"
   />
   <ng-template #deploymentAvatarPlaceholder>
     <span
-      class="deployment-item__image deployment-item__image--placeholder"
+      class="search-list__image search-list__image--placeholder"
       [ngStyle]="{ '--color': deployment.avatar }"
     >
       {{ deployment.deployment_name[0] }}
     </span>
   </ng-template>
-  <ion-label class="deployment-item__content">
-    <span class="deployment-item__title">{{ deployment.deployment_name | truncate : 50 }}</span>
+  <ion-label class="search-list__content">
+    <span class="search-list__title">{{ deployment.deployment_name | truncate : 50 }}</span>
     <ion-text
       color="medium"
-      class="deployment-item__content-description"
+      class="search-list__content-description"
       *ngIf="deployment.description"
     >
       {{ deployment.description | truncate : 50 }}
     </ion-text>
-    <ion-text color="medium" class="deployment-item__content-server">
+    <ion-text color="medium" class="search-list__content-server">
       {{ deployment.fqdn | lowercase }}
     </ion-text>
   </ion-label>
 
-  <div class="deployment-item__end" slot="end">
-    <ion-text color="primary" class="deployment-item__current" *ngIf="isCurrent">Current</ion-text>
+  <div class="search-list__end" slot="end">
+    <ion-text color="primary" class="search-list__current" *ngIf="isCurrent">Current</ion-text>
     <ion-icon
       color="danger"
       name="warning"
-      class="deployment-item__outdated"
+      class="search-list__outdated"
       *ngIf="isOutdated"
     ></ion-icon>
     <app-button
@@ -53,7 +53,7 @@
   <app-checkbox
     *ngIf="checkboxVisible"
     slot="end"
-    class="deployment-item__checkbox"
+    class="search-list__checkbox"
     [(ngModel)]="deployment.selected"
     (ngModelChange)="selectDeployment($event, deployment)"
   >

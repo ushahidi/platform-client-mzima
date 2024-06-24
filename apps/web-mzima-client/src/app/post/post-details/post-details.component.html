@@ -28,10 +28,13 @@
       <p>{{ post.form.description }}</p>
     </div>
 
-    <h2 *ngIf="post.title?.length || post.content?.length">{{ post.title || post.content }}</h2>
+    <h2 *ngIf="post.title?.length || post.content?.length" data-qa="postTitleValue">{{ post.title || post.content }}</h2>
+    <div class="post__metadata-container">
+      <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
+    </div>
 
     <div class="post__description" *ngIf="post.title?.length && post.content?.length">
-      <p [innerHTML]="post.content"></p>
+      <p [innerHTML]="post.content" data-qa="postDescriptionValue"></p>
     </div>
 
     <ng-container *ngFor="let post_content of post.post_content; let i = index">
@@ -77,20 +80,23 @@
                 [color]="color || 'var(--color-neutral-100)'"
                 [type]="post.source?.toLowerCase() || 'default'"
                 tabindex="-1"
+                data-qa="postLocationMap"
               ></app-map-with-marker>
-              <p>{{ field.value.value.lat }} {{ field.value.value.lon }}</p>
+              <p data-qa="postLocationValues">
+                {{ field.value.value.lat }} {{ field.value.value.lon }}
+              </p>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'date'">
-              <p>{{ getDate(field.value.value, 'LL') }}</p>
+              <p data-qa="postDateValue">{{ getDate(field.value.value, 'LL') }}</p>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'datetime'">
-              <p>{{ getDate(field.value.value, 'LL LTS') }}</p>
+              <p data-qa="postDateTimeValue">{{ getDate(field.value.value, 'LL LTS') }}</p>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'time'">
-              <p>{{ getDate(field.value.value, 'LTS') }}</p>
+              <p data-qa="postTimeValue">{{ getDate(field.value.value, 'LTS') }}</p>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'radio'">
@@ -98,7 +104,7 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'number'">
-              <p>{{ field.value.value }}</p>
+              <p data-qa="postNumberValue">{{ field.value.value }}</p>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'text'">
@@ -114,7 +120,7 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'textarea'">
-              <p [innerHTML]="field.value.value"></p>
+              <p [innerHTML]="field.value.value" data-qa="longTextValue"></p>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'checkbox'">
@@ -170,8 +176,6 @@
         </ng-container>
       </ng-container>
     </ng-container>
-
-    <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
   </ng-container>
 </div>
 <ng-container *ngIf="isManagePosts">

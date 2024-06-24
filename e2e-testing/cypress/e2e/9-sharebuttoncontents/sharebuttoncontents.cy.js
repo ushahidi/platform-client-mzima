@@ -1,7 +1,7 @@
-import LoginFunctions from "../../functions/LoginFunctions";
-import ShareButtonContentsFunctions from "../../functions/ShareButtonContentsFunctions";
+import LoginFunctions from '../../functions/LoginFunctions';
+import ShareButtonContentsFunctions from '../../functions/ShareButtonContentsFunctions';
 
-describe("Automated Tests for Share Button Contents", () => {
+describe('Automated Tests for Share Button Contents', () => {
   const loginFunctions = new LoginFunctions();
   const shareButtonContentsFunctions = new ShareButtonContentsFunctions();
 
@@ -10,8 +10,8 @@ describe("Automated Tests for Share Button Contents", () => {
     cy.visit(Cypress.env('baseUrl'));
   });
 
-  it("Steps to verify Share Button Contents", () => {
-    shareButtonContentsFunctions.verify_share_button_contents_map_view()
+  it('Steps to verify Share Button Contents', () => {
+    shareButtonContentsFunctions.verify_share_button_contents_map_view();
     shareButtonContentsFunctions.verify_share_button_contents_data_view();
   });
 });
