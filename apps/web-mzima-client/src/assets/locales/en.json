@@ -245,6 +245,8 @@
     "edit_post_type": "Edit Survey: {{form}}",
     "edit_post_types": "Edit Surveys",
     "field_add_option": "Add",
+    "field_add_other": "Add other",
+    "field_add_other_desc": "Allows entering a custom option that is not listed among the provided choices.",
     "field_default": "Field Default",
     "field_key": "Field Key",
     "field_type": "Field Type",
