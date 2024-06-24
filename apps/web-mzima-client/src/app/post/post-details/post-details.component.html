@@ -28,9 +28,10 @@
       <p>{{ post.form.description }}</p>
     </div>
 
-    <h2 *ngIf="post.title?.length || post.content?.length" data-qa="postTitleValue">
-      {{ post.title || post.content }}
-    </h2>
+    <h2 *ngIf="post.title?.length || post.content?.length" data-qa="postTitleValue">{{ post.title || post.content }}</h2>
+    <div class="post__metadata-container">
+      <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
+    </div>
 
     <div class="post__description" *ngIf="post.title?.length && post.content?.length">
       <p [innerHTML]="post.content" data-qa="postDescriptionValue"></p>
@@ -57,7 +58,7 @@
 
             <ng-container *ngIf="field.input === 'tags'">
               <ng-container *ngFor="let category of field.value">
-                <div class="category">
+                <div class="category" *ngIf="category.tag">
                   <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
                   {{ category.tag }}
                 </div>
@@ -175,8 +176,6 @@
         </ng-container>
       </ng-container>
     </ng-container>
-
-    <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
   </ng-container>
 </div>
 <ng-container *ngIf="isManagePosts">
