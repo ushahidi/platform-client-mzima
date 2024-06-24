@@ -133,7 +133,7 @@ export class PostEditPage {
 
     if (this.post) {
       this.selectedSurveyId = this.post.form_id!;
-      this.loadForm(this.post.post_content);
+      this.loadForm(this.selectedSurveyId, this.post.post_content);
     }
 
     this.transformSurveys();
@@ -653,10 +653,16 @@ export class PostEditPage {
         if (field.type === 'media') {
           if (field?.file?.delete) {
             postData = await this.deleteFile(postData, field.file);
-          } else if (field.value.value) {
+          } else if (field.value.value && typeof field.value.value !== 'number') {
+            const photo = {
+              data: field.value.value.photo.data,
+              name: field.value.value.photo.name,
+              caption: field.value.value.caption,
+              path: field.value.value.photo.path,
+            };
             const fieldUpload = new UploadFileProgressHelper(this.mediaService).uploadFileField(
               field,
-              field.value.value.photo,
+              photo,
               (progress) =>
                 setTimeout(() => {
                   this.uploadProgress$[field.id].next(progress);
