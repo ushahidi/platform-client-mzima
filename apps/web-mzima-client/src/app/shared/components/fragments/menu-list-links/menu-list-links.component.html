@@ -6,30 +6,15 @@
         class="sidebar-menu-button"
         [data-qa]="'btn-' + item.icon"
         [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
-        *ngIf="item.router; else menuAction"
-        [routerLink]="createRouterLink(item.router)"
+        [routerLink]="item.router && createRouterLink(item.router)"
         routerLinkActive="sidebar-menu-button--active"
-        (click)="registerPage($event, item.router, item.label)"
+        (click)="item.router && registerPage($event, item.router, item.label)"
       >
         <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
         <span class="sidebar-menu-button__title">
           {{ item.label | translate }}
         </span>
       </a>
-      <ng-template #menuAction>
-        <button
-          [id]="item.ref"
-          class="sidebar-menu-button"
-          [data-qa]="'btn-' + item.icon"
-          [attr.data-onboard-id]="'sidebar-btn-' + item.icon"
-          (click)="item.action && item.action()"
-        >
-          <mat-icon class="sidebar-menu-button__icon" [svgIcon]="item.icon"></mat-icon>
-          <span class="sidebar-menu-button__title">
-            {{ item.label | translate }}
-          </span>
-        </button>
-      </ng-template>
     </ng-container>
   </ng-container>
 </nav>

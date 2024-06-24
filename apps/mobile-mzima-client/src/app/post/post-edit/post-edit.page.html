@@ -1,12 +1,33 @@
 <app-header (back)="backNavigation()" title="{{!postId ? 'Create' : 'Edit'}} post"></app-header>
 
 <ion-content class="ion-padding-horizontal ion-padding-top page">
+  <ng-container *ngIf="!surveyList.length">
+    <p>{{'app.loading' | translate}}</p>
+  </ng-container>
+
+  <ng-container *ngIf="surveyList.length && !form">
+    <ion-title class="list-title">Select a survey</ion-title>
+    <ion-list class="list">
+      <ion-item
+        class="list-item"
+        button
+        lines="none"
+        *ngFor="let survey of surveyList"
+        (click)="loadForm(survey.id)"
+      >
+        <span class="list-item__title">{{ survey.name}}</span>
+        <app-icon slot="end" class="list-item__detail-icon" name="arrow-right"></app-icon>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
   <app-select
     [label]="surveyList.length ? 'Survey name' : 'Getting data...'"
     [options]="surveyListOptions"
     [disabled]="!!postId"
     [(ngModel)]="selectedSurveyId"
     (ngModelChange)="loadForm()"
+    *ngIf="form"
   >
   </app-select>
   <form
@@ -22,14 +43,11 @@
           <h2 class="task-label">{{ task.label }}</h2>
 
           <div *ngIf="task.show_when_published">
-            <p>This task will be visible when post is published.</p>
+            <p>{{"app.invisible_task" | translate}}</p>
           </div>
 
           <div *ngIf="task.task_is_internal_only">
-            <p>
-              This task is marked for internal use only. It is not seen by users when they create a
-              post.
-            </p>
+            <p>{{"app.internal_task_instruction" | translate}}</p>
           </div>
 
           <!-- task complete -->
@@ -40,7 +58,7 @@
               [checked]="task.completed"
               (ionChange)="taskComplete(task, $event)"
             >
-              Task completed
+              {{"app.task_completed" | translate}}
               <span class="color-accent" *ngIf="task.required">*</span>
             </ion-toggle>
           </div>
@@ -110,7 +128,7 @@
                       [checked]="form.get(field.key)?.value.length === field.options.length"
                       (checkboxChange)="toggleAllSelection($event, field, field.key)"
                     >
-                      Select all
+                      {{"app.select_all" | translate}}
                     </app-checkbox>
                   </li>
                   <li
@@ -215,7 +233,7 @@
                       cancelText="Cancel"
                       (ionChange)="setCalendar($event, field.key, 'datetimeFormatSeconds')"
                     >
-                      <span slot="time-label">Select Time</span>
+                      <span slot="time-label">{{"app.select_time" | translate}}</span>
                     </ion-datetime>
                   </ion-content>
                 </ng-template>
@@ -334,6 +352,7 @@
                 "
               >
               </app-image-uploader>
+              <ion-progress-bar [value]="uploadProgress$[field.id] | async"></ion-progress-bar>
             </div>
           </ng-container>
 
@@ -397,10 +416,7 @@
                 {{ field?.label }}
                 <span class="color-accent" *ngIf="field?.required">*</span>
               </ion-label>
-              <p class="form-control--tip">
-                Please note, the posts to relate to needs to be published, posts that are "Under
-                review" will not appear in the search-results
-              </p>
+              <p class="form-control--tip">{{"app.related_post_hint" | translate}}</p>
               <div class="related-post-selected" *ngIf="selectedRelatedPost">
                 <div class="related-post-content">
                   <span>{{ selectedRelatedPost.id }}: {{ selectedRelatedPost.title }}</span>
@@ -488,7 +504,7 @@
 
   <ng-template #noOptions>
     <div>
-      <span class="no-options">No options</span>
+      <span class="no-options">{{'app.no_options' | translate}}</span>
     </div>
   </ng-template>
 </ion-content>
@@ -500,14 +516,26 @@
       <app-button
         expand="inline"
         type="button"
-        *ngIf="form"
-        [disabled]="form.disabled || form.invalid || emptyLocation || (!requireApproval || post?.status === 'published' ? taskForm.invalid : false)"
+        *ngIf="form && isSubmitting !== 'complete'"
+        [disabled]="isSubmitting==='yes' || form.disabled || form.invalid || emptyLocation || (!requireApproval || post?.status === 'published' ? taskForm.invalid : false)"
         (buttonClick)="submitPost()"
+        [ngSwitch]="isSubmitting"
+        class="submit-button"
       >
-        Submit
+        <ng-container *ngSwitchCase="'yes'">
+          <app-spinner></app-spinner>
+          Submitting
+        </ng-container>
+        <ng-container *ngSwitchCase="'no'"> {{"app.submit" | translate}} </ng-container>
       </app-button>
-      <app-button color="medium" fill="outline" expand="inline" (buttonClick)="backNavigation()">
-        Cancel
+      <app-button
+        *ngIf="isSubmitting==='no'"
+        color="medium"
+        fill="outline"
+        expand="inline"
+        (buttonClick)="cancelPost()"
+      >
+        {{"app.cancel" | translate}}
       </app-button>
     </ion-buttons>
   </ion-toolbar>
