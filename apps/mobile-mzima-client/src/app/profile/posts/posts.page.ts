@@ -18,6 +18,7 @@ export class PostsPage {
     limit: 6,
     page: 1,
     q: '',
+    currentView: 'myposts',
   };
   public isPostsLoading = false;
   public posts: PostResult[] = [];
@@ -118,6 +119,12 @@ export class PostsPage {
       1,
     );
     this.totalPosts--;
+  }
+
+  public handlePostsDeleted(deletedPostIds: any): void {
+    this.posts = this.posts.filter((post) => !deletedPostIds.includes(post.id));
+    this.totalPosts -= deletedPostIds.length;
+    this.isEditMode = false;
   }
 
   public showPost(id: string): void {

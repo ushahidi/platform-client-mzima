@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { LanguageInterface } from '@models';
+import { LanguageInterface } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import {
   GroupCheckboxItemInterface,

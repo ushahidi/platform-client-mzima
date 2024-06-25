@@ -81,6 +81,14 @@
   }
 }
 
+::ng-deep label.textarea-wrapper {
+  .label-text-wrapper {
+    .label-text {
+      white-space: normal;
+    }
+  }
+}
+
 .form-control {
   --background: transparent;
   --border-radius: 4px 4px 0 0;

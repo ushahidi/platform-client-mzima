@@ -1342,7 +1342,7 @@
       "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Geregistreerd lid",
       "administrator": "Beheerder",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/platform-user-manual/4.-managing-people-on-your-deployment\" target=\"_blank\">Visit our support guides to find out more.",
       "manage_collections_and_saved_searches": "Verzamelingen en opgeslagen zoekopdrachten beheren",
       "delete_posts": "Berichten verwijderen",
       "delete_their_own_posts": "Hun eigen berichten verwijderen"

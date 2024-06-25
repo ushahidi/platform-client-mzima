@@ -10,6 +10,15 @@ const DataViewLocators = {
   clearBtn: '[data-qa="clear"]',
   revealFiltersBtn: '[data-qa="search-form__filters"]',
   clearFiltersBtn: '[data-qa="search-form__button"]',
+  statusBtn: '[data-qa="status"]',
+  filterSelectionList: '[data-qa="filter-selection-list"]',
+  filterListOption: '[data-qa="filter-list-option"]',
+
+  postMenuDots: '[data-qa="post-menu"]',
+  publishPostBtn: '[data-qa="btn-publish-post"]',
+
+  postDetails: '[data-qa="post-details"]',
+
 };
 
 export default DataViewLocators;

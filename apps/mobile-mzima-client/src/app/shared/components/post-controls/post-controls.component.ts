@@ -167,14 +167,15 @@ export class PostControlsComponent {
 
     if (result.role === 'confirm') {
       const count = this.posts.length;
+      const postIds = this.posts.map((p) => p.id);
       forkJoin(this.posts.map((p) => this.postsService.delete(p.id))).subscribe({
         complete: () => {
           this.toastService.presentToast({
             message: `${
-              this.posts.length > 1 ? count + ' posts' : 'Post'
-            } has been successfully deleted`,
+              this.posts.length > 1 ? count + ' posts have' : 'Post has'
+            } been successfully deleted`,
           });
-          this.postDeleted.emit();
+          this.postDeleted.emit(postIds);
         },
       });
     }
