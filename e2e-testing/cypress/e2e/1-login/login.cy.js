@@ -1,9 +1,21 @@
-import LoginFunctions from "../../functions/LoginFunctions";
+import LoginFunctions from '../../functions/LoginFunctions';
 
-describe("Login as Admin", () => {
-  const loginFunctions = new LoginFunctions();
+const loginFunctions = new LoginFunctions();
 
-  it("Logs in as admin user", () => {
+describe('Login as Admin', () => {
+  it('Logs in as admin user', () => {
     loginFunctions.login_as_admin();
+  });
+});
+
+describe('Login as Member', () => {
+  it('Logs in as member user', () => {
+    loginFunctions.login_member_user();
+  });
+});
+
+describe('Verify Invalid Login Credentials', () => {
+  it('Attempts login with invalid credentials', () => {
+    loginFunctions.verify_negative_login();
   });
 });

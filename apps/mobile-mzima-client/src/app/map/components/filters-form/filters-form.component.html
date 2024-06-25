@@ -49,10 +49,10 @@
     <div class="search-form-results__empty" *ngIf="!posts.length; else postsList">
       <ng-container *ngIf="!isPostsLoading; else spinner">
         <ion-text color="medium" *ngIf="!form.controls['postsQuery'].value?.length">
-          Start typing to find Posts
+          {{ 'app.find_posts' | translate }}
         </ion-text>
         <ion-text color="medium" *ngIf="form.controls['postsQuery'].value?.length">
-          Sorry, no posts were found <br />based on your search criteria.
+          {{ 'app.no_posts_found' | translate }}
         </ion-text>
       </ng-container>
     </div>
@@ -88,7 +88,7 @@
 >
   <div class="filters-modal__header" header-end>
     <ion-text color="medium" class="filters-modal__total-posts">
-      Found posts:
+      {{ 'app.found_posts' | translate }}
       <strong class="filters-modal__total-posts__count" *ngIf="!isTotalLoading; else spinner">
         {{ totalPosts }}
       </strong>
@@ -109,7 +109,7 @@
   <div class="filters-modal__footer" footer>
     <ng-container *ngIf="!isAddSavedFiltersMode; else SavedFiltersModeButtons">
       <app-button (buttonClick)="modalCloseHandle()" class="filters-modal__button" expand="inline">
-        Apply
+        {{ 'app.apply' | translate }}
       </app-button>
       <app-button
         fill="outline"
@@ -118,12 +118,12 @@
         class="filters-modal__button"
         (buttonClick)="handleClearFilters()"
       >
-        Clear
+        {{ 'app.clear' | translate }}
       </app-button>
     </ng-container>
     <ng-template #SavedFiltersModeButtons>
       <app-button (buttonClick)="saveSavedFilters()" class="filters-modal__button" expand="inline">
-        Save as
+        {{ 'app.save_as' | translate }}
       </app-button>
       <app-button
         fill="outline"
@@ -132,7 +132,7 @@
         class="filters-modal__button"
         (buttonClick)="cancelAddSavedFiltersMode()"
       >
-        Cancel
+        {{ 'app.cancel' | translate }}
       </app-button>
     </ng-template>
   </div>
