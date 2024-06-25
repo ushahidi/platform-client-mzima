@@ -35,10 +35,18 @@ import {
   Savedsearch,
   SurveyItem,
   AccountNotificationsInterface,
+  GeoJsonFilter,
 } from '@mzima-client/sdk';
 import dayjs from 'dayjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import {
+  DEFAULT_FILTERS,
+  DEFAULT_FILTERS_LOGGED_OUT,
+  DEFAULT_STATUSES_LOGGED_IN,
+  DEFAULT_STATUSES_LOGGED_OUT,
+  loggedOutStatuses,
+} from '../../../core/helpers/search-form';
 
 @UntilDestroy()
 @Component({
@@ -54,7 +62,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   public activeFilters: any;
   public savedSearches: Savedsearch[];
   public surveyList: SurveyItem[] = [];
-  public statuses = searchFormHelper.statuses;
+  public statuses = loggedOutStatuses;
   public sources = searchFormHelper.sources;
   public categoriesData: MultilevelSelectOption[];
   public activeSavedSearch?: Savedsearch;
@@ -96,8 +104,13 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     super(sessionService, breakpointService);
     this.checkDesktop();
 
-    this.form = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS);
-    this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
+    let defaultFilters = searchFormHelper.DEFAULT_FILTERS_LOGGED_OUT;
+    if (this.isLoggedIn) {
+      defaultFilters = searchFormHelper.DEFAULT_FILTERS;
+    }
+
+    this.form = this.formBuilder.group(defaultFilters);
+    this.defaultFormValue = this.formBuilder.group(defaultFilters).value;
     this.filters = localStorage.getItem(this.session.getLocalStorageNameMapper('filters'))!;
     this.activeSaved = localStorage.getItem(
       this.session.getLocalStorageNameMapper('activeSavedSearch'),
@@ -105,12 +118,13 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserData();
+    this.isMapView = this.router.url.includes('/map');
     this.eventBusInit();
     this.getSavedFilters();
+    this.initFilters();
     this.getSurveys();
     this.getCategories();
-    this.initFilters();
+    this.getUserData();
 
     if (this.activeSaved) {
       this.activeSavedSearch = JSON.parse(this.activeSaved!);
@@ -119,11 +133,10 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       this.checkSavedSearchNotifications();
     }
 
-    // TODO: There should be a better way to check if the context is a map view
-    this.isMapView = this.router.url.includes('/map');
     this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
       next: (params: any) => {
         this.isMapView = params.url.includes('/map');
+        this.applyFilters(false);
       },
     });
 
@@ -172,6 +185,27 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       error: (err) => console.log('isMainFiltersHidden:', err),
     });
 
+    this.session.currentUserData$.pipe(untilDestroyed(this)).subscribe({
+      next: (currentUser) => {
+        if (this.activeFilters && this.activeFilters['status[]']) {
+          const existingStatuses = this.activeFilters['status[]'];
+          const newStatuses = currentUser.role
+            ? DEFAULT_STATUSES_LOGGED_IN
+            : DEFAULT_STATUSES_LOGGED_OUT;
+          if (
+            existingStatuses.length !== newStatuses.length ||
+            existingStatuses.every(
+              (element: string, index: number) => element !== newStatuses[index],
+            )
+          ) {
+            this.activeFilters['status[]'] = newStatuses;
+            this.form.get('status')?.enable();
+            this.form.patchValue({ status: newStatuses }, { onlySelf: false, emitEvent: true });
+          }
+        }
+      },
+    });
+
     this.getPostsFilters();
     this.getTotalPosts();
   }
@@ -179,8 +213,13 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   loadData(): void {
     this.getSavedFilters();
     this.getPostsStatistic();
-    if (this.isLoggedIn && this.collectionInfo) {
-      this.getNotification(String(this.collectionInfo.id));
+    if (this.isLoggedIn) {
+      this.statuses = searchFormHelper.statuses;
+      if (this.collectionInfo) {
+        this.getNotification(String(this.collectionInfo.id));
+      }
+    } else {
+      this.statuses = searchFormHelper.loggedOutStatuses;
     }
   }
 
@@ -296,7 +335,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
           return {
             id: category.id,
             name: category.tag,
-            children: category?.children.map((cat: CategoryInterface) => {
+            children: category?.children?.map((cat: CategoryInterface) => {
               return {
                 id: cat.id,
                 name: cat.tag,
@@ -321,37 +360,39 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   private getActiveFilters(values: any): void {
     // Check if values.form contains an item with id 0
     let fetchPostsWithoutFormId = false;
-    if (Array.isArray(values.form)) {
+    if (!this.isMapView && Array.isArray(values.form)) {
       const index = values.form.findIndex((id: any) => id === 0);
       fetchPostsWithoutFormId = index !== -1;
     }
 
-    const filters: any = {
+    const filters: GeoJsonFilter = {
       'source[]': values.source,
       'status[]': values.status,
       'form[]': values.form,
       'tags[]': values.tags,
+      currentView: this.isMapView ? 'map' : 'feed',
       include_unstructured_posts: fetchPostsWithoutFormId,
       set: values.set,
-      date_after: values.date.start ? dayjs(values.date.start).toISOString() : null,
+      date_after: values.date.start ? dayjs(values.date.start).toISOString() : undefined,
       date_before: values.date.end
         ? dayjs(values.date.end)
             .endOf('day')
             .add(dayjs(values.date.end).utcOffset(), 'minute')
             .toISOString()
-        : null,
+        : undefined,
       q: this.searchQuery,
       center_point:
         values.center_point?.location?.lat && values.center_point?.location?.lng
           ? [values.center_point.location.lat, values.center_point.location.lng].join(',')
-          : null,
+          : undefined,
       within_km: values.center_point.distance,
     };
 
     this.activeFilters = {};
     for (const key in filters) {
-      if (!filters[key] && !filters[key]?.length) continue;
-      this.activeFilters[key] = filters[key];
+      const val = filters[key as keyof typeof filters];
+      if (val === undefined) continue;
+      this.activeFilters[key] = val;
     }
   }
 
@@ -425,7 +466,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
 
     forkJoin([
       this.surveysService.get('', { show_unknown_form: true }),
-      this.postsService.getPostStatistics(null, this.isMapView),
+      this.getPostsStatistic(),
     ]).subscribe({
       next: (responses) => {
         const values = responses[1].result.group_by_total_posts;
@@ -490,7 +531,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   public getPostsStatistic(): Observable<any> {
-    return this.postsService.getPostStatistics(null, this.isMapView).pipe(
+    return this.postsService.getPostStatistics(this.activeFilters).pipe(
       map((res) => {
         this.notMappedPostsCount = res.result.unmapped;
         const values = res.result.group_by_total_posts;
@@ -670,13 +711,17 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   public resetForm(filters: any = {}): void {
+    let fetchPostsWithoutFormId = false;
     // Check if this.surveyList contains an item with id 0
-    const index = this.surveyList.findIndex((s) => s.id === 0);
-    const fetchPostsWithoutFormId = index !== -1;
+    if (!this.isMapView) {
+      const index = this.surveyList.findIndex((s) => s.id === 0);
+      fetchPostsWithoutFormId = index !== -1;
+    }
 
+    this.activeFilters = this.isLoggedIn ? DEFAULT_FILTERS : DEFAULT_FILTERS_LOGGED_OUT;
     this.form.patchValue({
       query: '',
-      status: ['published', 'draft'],
+      status: this.isLoggedIn ? DEFAULT_STATUSES_LOGGED_IN : DEFAULT_STATUSES_LOGGED_OUT,
       tags: [],
       source: this.sources.map((s) => s.value),
       form: this.surveyList.map((s) => s.id),
@@ -685,6 +730,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
         start: '',
         end: '',
       },
+      date_before: '',
+      date_after: '',
       place: '',
       center_point: {
         location: {

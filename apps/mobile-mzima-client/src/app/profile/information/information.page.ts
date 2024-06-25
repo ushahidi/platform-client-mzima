@@ -95,6 +95,8 @@ export class InformationPage {
   public userEmail?: string[];
   public isChangeEmailModalOpen = false;
   public isChangePasswordModalOpen = false;
+  public isUploadInProgress = false;
+  public isPhotoChanged: boolean = false;
 
   constructor(
     private sessionService: SessionService,
@@ -112,6 +114,15 @@ export class InformationPage {
         this.userPhoto = `https://www.gravatar.com/avatar/${
           userData.gravatar || '00000000000000000000000000000000'
         }?d=retro&s=256`;
+        const userId = userData.userId as string;
+        this.usersService.getUserSettings(userId).subscribe((response: any) => {
+          const settings = response.results.find(
+            (setting: any) => setting.config_key === 'profile_photo',
+          );
+          if (settings?.config_value?.photo_url) {
+            this.userPhoto = settings?.config_value.photo_url;
+          }
+        });
 
         this.form.patchValue({
           realname: userData.realname,
@@ -125,11 +136,32 @@ export class InformationPage {
       });
   }
 
+  public handlePhotoChange(event: boolean): void {
+    this.isPhotoChanged = event;
+  }
+
   ionViewWillEnter(): void {
     this.getRoles();
   }
 
+  onUploadStarted(): void {
+    this.isUploadInProgress = true;
+  }
+
+  onUploadCompleted(): void {
+    this.isUploadInProgress = false;
+  }
+
   public back(): void {
+    // if (!this.isUploadInProgress) {
+    //   this.router.navigate(['profile']);
+    // } else {
+    //   this.toastService.presentToast({
+    //     message: 'Profile photo is still uploading. Please wait...',
+    //     duration: 3000,
+    //   });
+    //   console.log('Upload in progress. Cannot navigate back.');
+    // }
     this.router.navigate(['profile']);
   }
 

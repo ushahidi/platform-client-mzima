@@ -209,7 +209,10 @@
 
 <ng-template #allFields>
   <div class="fields-list">
-    <div
+    <mzima-client-button
+      color="default-color"
+      size="medium__padding-equal__width-100"
+      [expand]="false"
       matRipple
       class="list-item"
       *ngFor="let field of fields"
@@ -219,7 +222,7 @@
     >
       <h3>{{ field.label | translate }}</h3>
       <p>{{ field.instructions | translate }}</p>
-    </div>
+    </mzima-client-button>
   </div>
 </ng-template>
 

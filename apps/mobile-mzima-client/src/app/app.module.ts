@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, FactoryProvider, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,11 +10,11 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { ApiUrlLoader, EnvLoader, SdkModule } from '@mzima-client/sdk';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ConfigService } from './core/services/config.service';
-import { EnvService } from '@services';
+import { ConfigService, CustomTranslateHttpLoader, EnvService } from '@services';
 
 function loadConfigFactory(envService: EnvService, configService: ConfigService) {
   return () =>
@@ -29,6 +29,10 @@ export const loadConfigProvider: FactoryProvider = {
   deps: [EnvService, ConfigService],
   multi: true,
 };
+
+export function HttpLoaderFactory(http: HttpClient): any {
+  return new CustomTranslateHttpLoader(http, './assets/locales/', '.json');
+}
 
 export function EnvLoaderFactory(env: EnvService): any {
   return new ApiUrlLoader(env);
@@ -55,6 +59,14 @@ export function EnvLoaderFactory(env: EnvService): any {
     IonicStorageModule.forRoot({
       name: '__ushdb',
       driverOrder: [Drivers.IndexedDB],
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+      useDefaultLang: true,
     }),
     LeafletModule,
     LeafletMarkerClusterModule,
