@@ -51,6 +51,15 @@
   }
 }
 
+::ng-deep {
+  .create-post {
+    .radio-item {
+      --border-width: 0;
+      --min-height: 40px;
+    }
+  }
+}
+
 .radio {
   --color: var(--ion-color-medium);
   --color-checked: var(--color-primary-50);
