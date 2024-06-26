@@ -3,7 +3,7 @@
 .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
 .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
-.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-background {
   background-color: var(--color-primary-60);
 }
 
