@@ -105,18 +105,17 @@ export class PostControlsComponent {
     const modal = await this.modalController.create({
       component: CollectionsModalComponent,
       componentProps: {
-        postIds: this.posts[0].id,
+        postId: this.posts[0].id,
+        selectedCollections: new Set(this.posts[0].sets ?? []),
       },
     });
     modal.onWillDismiss().then(({ data }) => {
       const { collections, changed } = data ?? {};
-      if (changed && this.posts?.length) {
-        this.posts.forEach((post) => {
-          post.sets = collections;
-        });
+      if (changed) {
+        this.posts[0].sets = collections;
         this.toastService.presentToast({
           header: 'Success',
-          message: `Post was ${
+          message: `The post “${this.posts[0].title}” was ${
             collections?.length
               ? `added in ${collections.length} collections`
               : 'removed from all collections'
