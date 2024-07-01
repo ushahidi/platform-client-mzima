@@ -106,6 +106,40 @@ class PostFunctions {
       .contains(this.postTitle)
       .should('not.exist');
   }
+
+  change_post_status() {
+    //change post status to published
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .click();
+    cy.get(PostLocators.postMenuDots).eq(0).click();
+    cy.get(PostLocators.publishPostBtn).click();
+    cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
+    cy.get(PostLocators.postStatus).contains('Published').should('be.visible');
+
+    //change post status to under review
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .click();
+    cy.get(PostLocators.postMenuDots).eq(0).click();
+    cy.get(PostLocators.underReviewPostBtn).click();
+    cy.get(PostLocators.postPreview).children(PostLocators.postItem).contains(this.postTitle);
+    cy.get(PostLocators.postStatus).contains('Under review').should('be.visible');
+
+    //change post status to archived
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .click();
+    cy.get(PostLocators.postMenuDots).eq(0).click();
+    cy.get(PostLocators.archivePostBtn).click();
+    cy.get(PostLocators.postPreview)
+      .children(PostLocators.postItem)
+      .contains(this.postTitle)
+      .should('not.be.visible');
+  }
 }
 
 export default PostFunctions;
