@@ -74,6 +74,8 @@ class PostFunctions {
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.clearFiltersBtn).click();
 
+    cy.reload();
+
     //select first post in list which has just been submitted
     cy.get(PostLocators.postItem).eq(0).click();
   }
