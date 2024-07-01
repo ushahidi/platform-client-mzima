@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SessionService } from '../../../core/services/session.service';
 
@@ -15,6 +15,7 @@ export class CompanyInfoComponent {
   public email: string;
 
   public isDescriptionOpen = true;
+  public isUsingKeyboard: boolean = false;
 
   constructor(private sessionService: SessionService) {
     const isDescriptionOpen = localStorage.getItem('is_description_open');
@@ -32,5 +33,15 @@ export class CompanyInfoComponent {
 
   public descriptionToggleHandle(state: boolean) {
     localStorage.setItem('is_description_open', JSON.stringify(state));
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onKeydownHandler(event: KeyboardEvent) {
+    this.isUsingKeyboard = event.key === 'Tab' || event.key === 'Shift';
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  onKeyupHandler(event: KeyboardEvent) {
+    this.isUsingKeyboard = event.key === 'Tab' || event.key === 'Shift';
   }
 }
