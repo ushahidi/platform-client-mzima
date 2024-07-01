@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 
+import DataViewLocators from '../../locators/DataViewLocators';
 import PostLocators from '../../locators/PostsLocators/PostLocators';
 
 class PostFunctions {
@@ -66,7 +67,14 @@ class PostFunctions {
   }
 
   open_post_for_details() {
+    //open data view
     cy.get(PostLocators.dataViewBtn).click();
+
+    //clear filters to view posts with default filters
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+
+    //select first post in list which has just been submitted
     cy.get(PostLocators.postItem).eq(0).click();
   }
 
