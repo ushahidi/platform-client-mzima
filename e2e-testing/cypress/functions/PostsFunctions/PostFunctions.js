@@ -99,6 +99,12 @@ class PostFunctions {
 
   delete_post() {
     cy.get(PostLocators.dataViewBtn).click();
+
+    //clear filters to view posts with default filters
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+
+    cy.reload();
     cy.get(PostLocators.postPreview)
       .children(PostLocators.postItem)
       .contains(this.postTitle)
