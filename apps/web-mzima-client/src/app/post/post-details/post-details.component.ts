@@ -47,7 +47,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public videoUrls: any[] = [];
   public isPostLoading: boolean = true;
   public isManagePosts: boolean = false;
-  public postNotFound: boolean = false;
 
   constructor(
     protected override sessionService: SessionService,
@@ -157,7 +156,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       .filter((field: any) => field.type === 'relation')
       .map(async (relativeField) => {
         if (relativeField.value?.value) {
-          const url = `${window.location.origin}/feed/${relativeField.value.value}/view?mode=POST`;
+          const url = `${window.location.origin}/feed/${relativeField.value.value}/view?mode=ID`;
           const relative = await this.getPostInformation(relativeField.value.value);
           if (relative) {
             const { title } = relative;
@@ -199,8 +198,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       return await lastValueFrom(this.postsService.getById(postId));
     } catch (err: any) {
       this.isPostLoading = false;
-      console.log(err);
-      if (err.status === 404) this.postNotFound = true;
       return;
     }
   }
