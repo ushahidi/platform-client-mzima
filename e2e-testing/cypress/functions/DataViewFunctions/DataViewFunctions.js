@@ -8,14 +8,14 @@ class DataViewFunctions {
     cy.get(DataViewLocators.dataViewBtn).click();
     cy.url().should('include', '/feed');
   }
-  
+
   verify_post_appears_for_user() {
     this.click_data_view_btn();
     //check post appears for admin user
     cy.get(DataViewLocators.postPreview)
       .children(DataViewLocators.postItem)
       .contains('Automated Title Response');
-    cy.get(DataViewLocators.postMenuDots).eq(0).click();
+    cy.get(DataViewLocators.postMenuDots).eq(0).scrollIntoView().click();
     cy.get(DataViewLocators.publishPostBtn).click();
     loginFunctions.logout();
     //check post appears for non logged in user
