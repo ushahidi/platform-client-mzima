@@ -113,22 +113,17 @@
   }
 }
 
-.no-outline:focus,
-.no-outline:hover {
-  outline: 1px solid rgb(255, 255, 255);
-}
-
-.has-outline:focus,
-.has-outline:hover {
-  outline: 1px solid rgb(255, 255, 255);
-}
-
 .mat-expansion-panel {
   &:not(.mat-expanded):not([aria-disabled='true']) {
     .mat-expansion-panel-header {
+      &:focus {
+        outline: 1px solid #fdfdfd;
+        width: 140%;
+      }
       &:hover {
         background-color: transparent;
       }
     }
   }
+  overflow: visible;
 }
