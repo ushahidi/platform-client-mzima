@@ -5,10 +5,7 @@
   (opened)="descriptionToggleHandle(true)"
   (closed)="descriptionToggleHandle(false)"
 >
-  <mat-expansion-panel-header
-    [class.no-outline]="!isUsingKeyboard"
-    [class.has-outline]="isUsingKeyboard"
-  >
+  <mat-expansion-panel-header>
     <mat-panel-title class="company-info__header" [data-qa]="'panel-title'">
       <img [src]="logo" [alt]="title" class="company-info__logo" *ngIf="logo" />
       <span class="company-info__title">{{ title }}</span>
