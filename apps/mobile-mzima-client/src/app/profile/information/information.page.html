@@ -2,9 +2,7 @@
   <app-profile-photo
     class="avatar"
     [photo]="userPhoto"
-    (uploadStarted)="onUploadStarted()"
-    (uploadCompleted)="onUploadCompleted()"
-    (photoChanged)="handlePhotoChange($event)"
+    (photoUploaded)="handlePhotoUploaded($event)"
   ></app-profile-photo>
   <!-- (photoChanged)="handlePhotoChange($event)" -->
 
@@ -56,7 +54,7 @@
           expand="inline"
           type="button"
           *ngIf="form"
-          [disabled]="form.disabled || form.invalid || form.pristine "
+          [disabled]="form.disabled || (form.invalid && !isPhotoChanged) || (!form.dirty && !isPhotoChanged)"
           (buttonClick)="updateUserInformation()"
         >
           {{"app.save_changes" | translate}}
