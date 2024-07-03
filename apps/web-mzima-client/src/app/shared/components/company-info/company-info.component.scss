@@ -118,7 +118,7 @@
 
   .mat-expansion-panel-header {
     &:focus {
-      outline: auto !important;
+      outline: revert !important;
     }
   }
 
