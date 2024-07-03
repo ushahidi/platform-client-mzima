@@ -126,7 +126,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
       }
 
       const descendants = this.treeControl.dataNodes;
-      descendants.map((dataNode) => {
+      descendants?.map((dataNode) => {
         if (changes['selectedFields'].currentValue.indexOf(dataNode.id) > -1) {
           this.checklistSelection.select(dataNode);
         } else {

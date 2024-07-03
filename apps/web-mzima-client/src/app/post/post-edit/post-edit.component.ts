@@ -47,7 +47,7 @@ import { objectHelpers, formValidators, dateHelper } from '@helpers';
 import { PhotoRequired, PointValidator } from '../../core/validators';
 import { Observable, lastValueFrom, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LanguageInterface } from '../../core/interfaces/language.interface';
+import { LanguageInterface } from '@mzima-client/sdk';
 import { MatSelectChange } from '@angular/material/select';
 
 dayjs.extend(timezone);
@@ -183,6 +183,14 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     });
   }
 
+  getParentsWithChildren(options: any[]) {
+    const parents = options.filter((opt: any) => !opt.parent_id);
+    parents.forEach((parent) => {
+      parent.children = options.filter((opt: any) => opt.parent_id === parent.id);
+    });
+    return parents;
+  }
+
   private loadSurveyData(formId: number | null, updateContent?: any[]) {
     if (!formId) return;
     this.surveysService.getSurveyById(formId).subscribe({
@@ -199,7 +207,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         if (availableLanguages.length) {
           availableLanguages.unshift(result.enabled_languages.default);
           availableLanguages.forEach((langCode: string) => {
-            this.postLanguages.push(languages.find((lang) => lang.code === langCode)!);
+            this.postLanguages.push(
+              languages.find((lang) => lang.code.split('-')[0] === langCode.split('-')[0])!,
+            );
           });
           this.selectedLanguage = this.postLanguages[0];
         }
@@ -217,14 +227,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   this.description = field.default;
                   break;
                 case 'tags':
+                  field.options = this.getParentsWithChildren(field.options);
                   this.description = field.default;
-                  break;
-                case 'media': // Max image size addition hack
-                  field.instructions = `${field.instructions}. Max size: ${(
-                    this.maxImageSize /
-                    1000 /
-                    1000
-                  ).toFixed(2)} MB`;
                   break;
                 case 'relation':
                   const fieldForm: [] = field.config?.input?.form;
@@ -452,10 +456,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         break;
     }
     return new FormControl(value, validators);
-  }
-
-  public getOptionsByParentId(field: any, parent_id: number): any[] {
-    return field.options.filter((option: any) => option.parent_id === parent_id);
   }
 
   async preparationData(): Promise<any> {
@@ -729,7 +729,13 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       this.router.navigate(['map']);
     }
   }
-
+  public getTotalCategoryCount(options: any[]) {
+    let length = options.length;
+    options.forEach((parent) => {
+      length = length + parent.children.length;
+    });
+    return length;
+  }
   public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {
     fields.map((field: any) => {
       if (field.key === fieldKey) {
@@ -765,8 +771,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       }
 
       if (!parentId && options) {
-        const children = options.filter((option) => option.parent_id === id);
-        children.forEach((child) => {
+        const parent = options.find((option) => option.id === id);
+        parent.children.forEach((child: any) => {
           const hasChildId = formArray.controls.some((control: any) => control.value === child.id);
           if (!hasChildId) formArray.push(new FormControl(child.id));
         });
@@ -776,8 +782,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       if (index > -1) formArray.removeAt(index);
 
       if (parentId && options) {
-        const children = options.filter((option: any) => option.parent_id === parentId);
-        const isParentHasCheckedChild = children.some((child) =>
+        const parent = options.find((option) => option.id === parentId);
+        const isParentHasCheckedChild = parent.children.some((child: any) =>
           formArray.controls.some((control: any) => control.value === child.id),
         );
         if (!isParentHasCheckedChild) {
@@ -787,8 +793,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       }
 
       if (!parentId && options) {
-        const children = options.filter((option) => option.parent_id === id);
-        children.forEach((child) => {
+        const parent = options.find((option) => option.id === id);
+        parent.children.forEach((child: any) => {
           const i = formArray.controls.findIndex((ctrl: any) => ctrl.value === child.id);
           if (i > -1) formArray.removeAt(i);
         });

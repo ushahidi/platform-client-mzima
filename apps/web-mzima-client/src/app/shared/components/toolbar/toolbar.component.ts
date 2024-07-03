@@ -87,6 +87,15 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
 
   public toggleBurgerMenu(): void {
     this.navToolbarService.toggleBurgerMenu(); //toggles true & false for hamburger button
+
+    // Since the mobile-menu element is removed from the DOM initially and every other time that this.isBurgerMenuOpen is false,
+    // We are therefore not able to access the @Output EventEmitter on it
+    // Calling this method here helps to restore the mobile-menu element back through the toggle button click, so that we can have access to the mobile-menu element and the @Output EventEmitter on it
+    this.getIsBurgerMenuOpen(!this.isBurgerMenuOpen);
+  }
+
+  public getIsBurgerMenuOpen(value: boolean) {
+    this.isBurgerMenuOpen = value;
   }
 
   public back(): void {

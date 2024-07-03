@@ -1342,7 +1342,7 @@
       "edit_their_own_posts": "Modifier leurs propres messages",
       "registred_member": "Membre inscrit",
       "administrator": "Administrateur",
-      "roles_description": "Ces options contrôlent les modifications que ce type de rôle peut apporter. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\"> Consultez nos guides d'assistance pour en savoir plus.",
+      "roles_description": "Ces options contrôlent les modifications que ce type de rôle peut apporter. <a href=\"https://docs.ushahidi.com/platform-user-manual/4.-managing-people-on-your-deployment\" target=\"_blank\"> Consultez nos guides d'assistance pour en savoir plus.",
       "manage_collections_and_saved_searches": "Gérer les collections et les recherches enregistrées",
       "delete_posts": "Supprimer les articles",
       "delete_their_own_posts": "Supprimer leurs propres messages"

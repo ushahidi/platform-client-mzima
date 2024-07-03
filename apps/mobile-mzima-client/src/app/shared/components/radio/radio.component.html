@@ -8,7 +8,7 @@
       (click)="deleteHandle()"
     >
       <app-icon class="radio-item__control__icon" slot="top" name="delete"></app-icon>
-      Delete
+      {{ 'app.delete' | translate }}
     </ion-item-option>
     <ion-item-option
       *ngIf="editable"
@@ -17,7 +17,7 @@
       (click)="editHandle()"
     >
       <app-icon class="radio-item__control__icon" slot="top" name="edit"></app-icon>
-      Edit
+      {{ 'app.edit' | translate }}
     </ion-item-option>
   </ion-item-options>
 </ion-item-sliding>

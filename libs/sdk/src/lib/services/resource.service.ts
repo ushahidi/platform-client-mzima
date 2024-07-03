@@ -9,7 +9,7 @@ import { SwitchApiService } from './switch-api.service';
 })
 export abstract class ResourceService<T> {
   private apiUrl = '';
-  protected backendUrl: string;
+  public backendUrl: string;
   private readonly options = {};
   private switchApiService = inject(SwitchApiService);
 

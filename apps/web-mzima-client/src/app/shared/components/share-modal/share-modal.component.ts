@@ -36,7 +36,7 @@ export class ShareModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.address = this.postId
-      ? `${window.location.origin}/feed/${this.postId}/view?mode=POST`
+      ? `${window.location.origin}/feed/${this.postId}/view?mode=ID`
       : window.location.href;
     this.htmlEmbed = `<iframe width="${this.width}" height="${this.height}" src="${this.address}" frameborder="0" allowfullscreen></iframe>`;
   }

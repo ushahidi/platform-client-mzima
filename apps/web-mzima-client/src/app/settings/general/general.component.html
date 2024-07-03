@@ -147,10 +147,10 @@
   <mzima-client-button
     type="button"
     fill="outline"
+    class="cancel-button"
     color="secondary"
-    routerLink="/settings"
-    [data-qa]="'btn-cancel'"
-    *ngIf="!(isDesktop$ | async)!"
+    (click)="openConfirmModal()"
+    data-qa="'btn-cancel'"
   >
     {{ 'app.cancel' | translate }}
   </mzima-client-button>

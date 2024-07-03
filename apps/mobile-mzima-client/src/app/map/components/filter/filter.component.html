@@ -10,16 +10,18 @@
           (click)="addClickHandle()"
         >
           <app-icon class="button-add__icon" name="add" slot="start"></app-icon>
-          Add new filters setting
-        </ion-item>
+          {{ 'app.add_new_filters' | translate }}</ion-item
+        >
         <ion-radio-group
           *ngIf="options?.length; else emptyBox"
           [value]="value"
           (ionChange)="radioChangeHandle($event)"
         >
           <app-radio [value]="null">
-            All filters
-            <ion-text class="info" color="medium">Applied filters: all</ion-text>
+            {{ 'app.all_filters' | translate }}
+            <ion-text class="info" color="medium">{{
+              'app.applied_all_filters' | translate
+            }}</ion-text>
           </app-radio>
           <app-radio
             *ngFor="let option of options"
@@ -104,7 +106,7 @@
   <ion-toolbar class="footer__toolbar">
     <div class="btn-panel">
       <app-button expand="inline" [disabled]="isPristine" (buttonClick)="applyFilter()">
-        Apply
+        {{ 'app.apply' | translate }}
       </app-button>
       <app-button
         clear-btn
@@ -115,7 +117,7 @@
         (buttonClick)="clearFilter()"
         *ngIf="filter.name !== 'saved-filters'"
       >
-        Clear
+        {{ 'app.clear' | translate }}
       </app-button>
     </div>
   </ion-toolbar>
@@ -149,7 +151,7 @@
   [title]="selectedCategory?.label?.toString() ?? ''"
 >
   <ion-text color="medium" class="subcategories-modal__total-posts" header-end>
-    Found posts:
+    {{ 'app.found_posts' | translate }}
     <strong class="subcategories-modal__total-posts__count">{{ totalPosts }}</strong>
   </ion-text>
   <div class="subcategories-modal__filters">
@@ -169,7 +171,7 @@
       [disabled]="isSubcategoriesPristine"
       (buttonClick)="applySelectedSubcategories()"
     >
-      Apply
+      {{ 'app.apply' | translate }}
     </app-button>
     <app-button
       fill="outline"
@@ -178,7 +180,7 @@
       class="subcategories-modal__button"
       (buttonClick)="clearSelectedSubcategories()"
     >
-      Clear
+      {{ 'app.clear' | translate }}
     </app-button>
   </div>
 </app-modal>

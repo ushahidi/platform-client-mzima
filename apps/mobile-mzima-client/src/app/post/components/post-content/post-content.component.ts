@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CategoryInterface, PostContent } from '@mzima-client/sdk';
+import { CategoryInterface, PostContent, MediaService } from '@mzima-client/sdk';
 import { dateHelper } from '@helpers';
 
 @Component({
@@ -17,6 +17,12 @@ export class PostContentComponent {
   @Input() videoUrls: any[] = [];
   @Input() isMediaLoading: boolean;
   @Input() isManagePosts: boolean;
+
+  public backendUrl: string;
+
+  constructor(private mediaService: MediaService) {
+    this.backendUrl = this.mediaService.backendUrl;
+  }
 
   public isParentCategory(
     categories: CategoryInterface[] | undefined,

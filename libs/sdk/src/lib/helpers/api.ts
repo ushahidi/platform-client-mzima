@@ -1,5 +1,8 @@
 export const getApiUrlByDomain = (deploymentInfo: { domain: string; api_domain?: string }) => {
-  if (!deploymentInfo.api_domain) deploymentInfo.api_domain = `api.${deploymentInfo.domain}`;
+  console.log('deploymentInfo', deploymentInfo);
+  if (deploymentInfo?.api_domain == undefined) {
+    deploymentInfo['api_domain'] = `api.${deploymentInfo?.domain}`;
+  }
   return `${location.protocol}//${location.hostname.replace(
     deploymentInfo.domain,
     deploymentInfo.api_domain,

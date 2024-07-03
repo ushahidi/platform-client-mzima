@@ -9,7 +9,7 @@
 
 <ion-tabs class="auth-tabs">
   <ion-tab-bar slot="top" *ngIf="isSignupActive" selectedTab="login">
-    <ion-tab-button tab="login">Log In</ion-tab-button>
-    <ion-tab-button tab="signup">Sign Up</ion-tab-button>
+    <ion-tab-button tab="login">{{ "app.login" | translate }}</ion-tab-button>
+    <ion-tab-button tab="signup">{{"app.signup" | translate }}</ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

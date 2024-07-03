@@ -4,6 +4,7 @@ import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
 // import { MediaResponse } from '../models';
 import { ResourceService } from './resource.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,8 @@ export class MediaService extends ResourceService<any> {
   ) {
     super(httpClient, currentLoader);
   }
+
+  // type progressFunction
 
   getApiVersions(): string {
     return apiHelpers.API_V_5;
@@ -34,6 +37,18 @@ export class MediaService extends ResourceService<any> {
     }
 
     return this.httpClient.post(apiUrl, formData);
+  }
+
+  uploadFileProgress(file: File, caption?: string): Observable<any> {
+    const apiUrl = this.backendUrl + this.getApiVersions() + this.getResourceUrl();
+
+    const formData = new FormData();
+    formData.append('file', file);
+    if (caption) {
+      formData.append('caption', caption);
+    }
+
+    return this.httpClient.post(apiUrl, formData, { reportProgress: true, observe: 'events' });
   }
 
   updateCaption(id: string | number, caption: string) {

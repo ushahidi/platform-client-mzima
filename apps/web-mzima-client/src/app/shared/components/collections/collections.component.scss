@@ -37,7 +37,7 @@
   margin: 0 -8px -24px;
   justify-content: flex-start;
 
-  @include breakpoint-max($mobile) {
+  @include breakpoint-max($tablet) {
     margin: 0;
     display: block;
   }

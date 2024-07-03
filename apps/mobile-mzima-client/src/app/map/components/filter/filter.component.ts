@@ -178,10 +178,20 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   }
 
   private getStatuses(): void {
-    this.options = searchFormHelper.statuses.map((status) => ({
-      value: status.value,
-      label: status.name,
-    }));
+    const isLoggedIn = this.sessionService.isLogged();
+
+    if (isLoggedIn) {
+      this.options = searchFormHelper.statuses.map((status) => ({
+        value: status.value,
+        label: status.name,
+      }));
+    } else {
+      this.options = searchFormHelper.loggedOutStatuses.map((status) => ({
+        value: status.value,
+        label: status.name,
+      }));
+    }
+
     this.isOptionsLoading = false;
   }
 

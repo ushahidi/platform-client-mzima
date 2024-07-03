@@ -486,6 +486,10 @@
       line-height: 14px;
     }
 
+    &[hidden] {
+      display: none;
+    }
+
     &:not(:first-child) {
       margin-top: 8px;
     }

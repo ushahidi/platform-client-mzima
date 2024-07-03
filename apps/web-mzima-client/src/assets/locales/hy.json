@@ -1342,7 +1342,7 @@
       "edit_their_own_posts": "Edit their own posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more.",
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/platform-user-manual/4.-managing-people-on-your-deployment\" target=\"_blank\">Visit our support guides to find out more.",
       "manage_collections_and_saved_searches": "Կառավարել հավաքածուները եւ խնայված որոնումները",
       "delete_posts": "Ջնջել posts",
       "delete_their_own_posts": "Ջնջեք իրենց սեփական պոստերը"
@@ -1739,7 +1739,7 @@
       "destroy_confirm_desc": "Deleting this category will remove it from all existing posts. This action cannot be undone.",
       "destroy_success": "Category deleted",
       "destroy_error": "Unable to delete category, please try again",
-      "bulk_destroy_confirm": "Are you sure you want to delete {{count}} categories?",
+      "bulk_destroy_confirm": "Are you sure you want to delete these {{count}} categories?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
       "bulk_destroy_success": "{{count}} categories deleted",
       "bulk_destroy_success_countless": "Կատեգորիաներ ջնջված"

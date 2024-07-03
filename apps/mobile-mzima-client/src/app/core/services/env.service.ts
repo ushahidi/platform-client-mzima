@@ -21,6 +21,7 @@ export class EnvService {
 
   async initEnv(): Promise<EnvConfigInterface> {
     const envy: EnvConfigInterface = await fetch('./env.json').then((res) => res.json());
+    envy['backend_url'] = null;
     if (this.deploymentUrl) {
       envy.backend_url = this.deploymentUrl;
     }

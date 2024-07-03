@@ -94,6 +94,11 @@
       </div>
     </div>
   </ng-container>
+  <mat-dialog-actions align="end">
+    <mzima-client-button (buttonClick)="closeModal()">
+      {{ 'modal.button.done' | translate }}
+    </mzima-client-button>
+  </mat-dialog-actions>
 </ng-container>
 
 <ng-template #createForm>

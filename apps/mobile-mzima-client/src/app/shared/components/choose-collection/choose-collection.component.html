@@ -6,11 +6,11 @@
 >
   <ion-item button lines="none" class="button-add" (click)="addNewCollection()">
     <app-icon class="button-add__icon" name="add" slot="start"></app-icon>
-    Create new collection
+    {{ 'app.create_new_collection' | translate }}
   </ion-item>
 
   <ion-title class="title">
-    <ng-container>Collections</ng-container>
+    <ng-container>{{ 'app.collections' | translate }}</ng-container>
   </ion-title>
   <app-spinner
     class="loader"
@@ -35,7 +35,7 @@
     </ng-container>
     <ng-template #emptyMessage>
       <ion-text color="medium" class="empty-box ion-text-center ion-padding">
-        There are no collections yet!
+        {{ 'app.no_collections' | translate }}
       </ion-text>
     </ng-template>
   </ng-template>
@@ -47,10 +47,10 @@
         (buttonClick)="updateCollections()"
         [disabled]="isPristine"
       >
-        Add
+        {{ 'app.add' | translate }}
       </app-button>
       <app-button class="footer__button" fill="outline" color="medium" (buttonClick)="back.emit()">
-        Cancel
+        {{ 'app.cancel' | translate }}
       </app-button>
     </ion-buttons>
   </ion-footer>
@@ -90,12 +90,12 @@
       >
       </app-form-control>
     </div>
-    <div class="create-collection-form__group">
+    <!-- <div class="create-collection-form__group">
       <ion-title class="create-collection-form__title">Displaying</ion-title>
       <app-toggle type="item" formControlName="featured" (toggleChange)="featuredChange($event)"
         >Featured</app-toggle
       >
-    </div>
+    </div> -->
     <div class="create-collection-form__group" *ngIf="roleOptions">
       <ion-title class="create-collection-form__title">Who can see this?</ion-title>
       <app-group-checkbox-select [data]="roleOptions" formControlName="visible_to">

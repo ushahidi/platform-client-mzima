@@ -4,11 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
-import { LanguageInterface } from '@models';
+import { LanguageInterface } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService, SessionService } from '@services';
 import { BaseComponent } from '../../../base.component';
-import { noWhitespaceValidator } from '../../../core/validators';
+import { AlphanumericValidatorValidator, noWhitespaceValidator } from '../../../core/validators';
 import { SelectLanguagesModalComponent } from '../../../shared/components';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { SurveyTaskComponent } from '../survey-task/survey-task.component';
@@ -68,7 +68,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     this.checkDesktop();
 
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, noWhitespaceValidator]],
+      name: ['', [Validators.required, noWhitespaceValidator, AlphanumericValidatorValidator()]],
       description: [''],
       color: [null],
       enabled_languages: this.formBuilder.group({
@@ -94,13 +94,17 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
 
   private initLanguages(enabledLanguages: SurveyItemEnabledLanguages) {
     this.languages = this.languageService.getLanguages();
-    this.defaultLanguage = this.languages.find((lang) => lang.code === enabledLanguages.default);
+    this.defaultLanguage = this.languages.find(
+      (lang) => lang.code.split('-')[0] === enabledLanguages.default.split('-')[0],
+    );
     this.selectedLang = this.defaultLanguage;
     const availableLangs = enabledLanguages.available;
     const active = this.defaultLanguage ? [this.defaultLanguage] : [];
     if (availableLangs.length) {
       availableLangs.forEach((langCode: string) => {
-        active.push(this.languages.find((lang) => lang.code === langCode)!);
+        active.push(
+          this.languages.find((lang) => lang.code.split('-')[0] === langCode.split('-')[0])!,
+        );
       });
     }
     this.activeLanguages = active;
@@ -246,13 +250,17 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   }
 
   languageChange(event: any) {
-    this.defaultLanguage = this.languages.find((l) => l.code === event);
+    this.defaultLanguage = this.languages.find(
+      (l) => l.code.split('-')[0] === event.value.split('-'[0]),
+    );
     this.selectedLang = this.defaultLanguage;
     const availableLangs = this.form.controls['enabled_languages'].value.available;
     const active = this.defaultLanguage ? [this.defaultLanguage] : [];
     if (availableLangs.length) {
       availableLangs.forEach((langCode: string) => {
-        active.push(this.languages.find((lang) => lang.code === langCode)!);
+        active.push(
+          this.languages.find((lang) => lang.code.split('-')[0] === langCode.split('-')[0])!,
+        );
       });
     }
     this.activeLanguages = active;
@@ -289,7 +297,8 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
         error: ({ error }) => {
           this.submitted = false;
           if (error.errors.status === 422) {
-            this.notification.showError(JSON.stringify(error.errors.message));
+            this.form.controls['name'].setErrors({ invalidCharacters: true });
+            this.notification.showError('Please remove invalid characters (e.g. +, $, ^, =)');
           } else {
             this.notification.showError(JSON.stringify(error.name[0]));
           }

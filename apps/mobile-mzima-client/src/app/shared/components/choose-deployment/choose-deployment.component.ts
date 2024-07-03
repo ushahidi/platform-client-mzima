@@ -1,17 +1,11 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { App } from '@capacitor/app';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
 import { Deployment } from '@mzima-client/sdk';
 import { Subject, debounceTime } from 'rxjs';
-import {
-  AlertService,
-  AuthService,
-  ConfigService,
-  DeploymentService,
-  EnvService,
-  // IntercomService,
-} from '@services';
+import { AlertService, AuthService, ConfigService, DeploymentService, EnvService } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ToastService } from '@services';
 
@@ -40,11 +34,12 @@ export class ChooseDeploymentComponent {
   tap = 0;
 
   constructor(
+    private router: Router,
     private envService: EnvService,
     private configService: ConfigService,
     private deploymentService: DeploymentService,
     private alertService: AlertService,
-    private authService: AuthService, // private intercomService: IntercomService,
+    private authService: AuthService,
     protected toastService: ToastService,
     protected platform: Platform,
   ) {
@@ -119,9 +114,19 @@ export class ChooseDeploymentComponent {
   }
 
   public removeDeployment(deploymentId: number) {
-    const index = this.deploymentList.findIndex((i: any) => i.id === deploymentId);
-    if (index !== -1) this.deploymentList.splice(index, 1);
+    this.deploymentList = this.deploymentList.filter(
+      (deployment) => deployment.id !== deploymentId,
+    );
     this.deploymentService.setDeployments(this.deploymentList);
+    if (this.deploymentList.length === 0) {
+      this.currentDeploymentId = undefined;
+      this.authService.logout();
+      this.deploymentService.setDeployment(null);
+      if (this.isProfile) this.router.navigate(['deployment']);
+    } else if (this.currentDeploymentId === deploymentId) {
+      this.currentDeploymentId = this.deploymentList[0].id;
+      this.chooseDeployment(this.deploymentList[0]);
+    }
   }
 
   public async chooseDeployment(deployment: Deployment) {

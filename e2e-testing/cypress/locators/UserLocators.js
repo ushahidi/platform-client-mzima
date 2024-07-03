@@ -16,6 +16,8 @@ const UserLocators = {
   deleteUsersBtn: '[data-qa="btn-settings-delete"]',
   deleteUserCancelBtn: '[data-qa="btn-confirm-cancel"]',
   deleteUserConfirmBtn: '[data-qa="btn-confirm-delete"]',
+  userData: '[data-qa="user-row"]',
+  userEmail: '[data-qa="user-email"]'
 };
 
 export default UserLocators;

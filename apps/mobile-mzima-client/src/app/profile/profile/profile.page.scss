@@ -25,41 +25,6 @@
   margin-bottom: 24px;
 }
 
-.support-item {
-  --min-height: 40px;
-  --padding-top: 6px;
-  --padding-bottom: 6px;
-  --padding-start: 16px;
-  --padding-end: 16px;
-  --inner-padding-start: 0;
-  --inner-padding-end: 0;
-  --ripple-color: var(--ion-color-primary);
-
-  &__title {
-    display: block;
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: 0.5px;
-  }
-
-  &__description {
-    display: block;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.25px;
-  }
-
-  &__details {
-    line-height: 1;
-    font-size: 24px;
-    margin-left: 28px;
-
-    @media (prefers-color-scheme: dark) {
-      color: var(--ion-color-step-400);
-    }
-  }
-}
-
 .empty {
   display: flex;
   min-height: 100%;

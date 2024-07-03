@@ -1,6 +1,6 @@
 <div class="select-holder ion-padding-horizontal">
   <app-select
-    label="Select Dates"
+    label="{{ 'app.select_dates' | translate }}"
     [(ngModel)]="dateOption"
     [options]="selectOptions"
     (ngModelChange)="setCalendar()"
