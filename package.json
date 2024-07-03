@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "license": "AGPL-3.0-only",
   "scripts": {
+    "test:map": "pa11y --config pa11y.config.js 'http://localhost:4200/map'",
+    "test:feed": "pa11y --config pa11y.config.js 'http://localhost:4200/feed'",
+    "test:activity": "pa11y --config pa11y.config.js 'http://localhost:4200/activity'",
+    "test:general": "pa11y --config pa11y.config.js 'http://localhost:4200/settings/general'",
     "web:serve": "nx serve web-mzima-client",
     "web:build": "nx run web-mzima-client:build:production",
     "web:devbuild": "nx run web-mzima-client:build:development",
@@ -117,6 +121,7 @@
     "lint-staged": "^13.1.2",
     "nx": "16.0.2",
     "nx-cloud": "16.0.5",
+    "pa11y": "^8.0.0",
     "prettier": "^2.6.2",
     "ts-jest": "29.1.0",
     "ts-node": "10.9.1",
