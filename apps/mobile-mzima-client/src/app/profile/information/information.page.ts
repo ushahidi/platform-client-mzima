@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -17,9 +17,14 @@ import {
   RolesService,
   UserDataInterface,
   UserInterfaceResponse,
-  UsersService,
 } from '@mzima-client/sdk';
 import { SelectOptionInterface } from '@models';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { MediaService } from 'libs/sdk/src/lib/services';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { UsersService } from 'libs/sdk/src/lib/services';
+import { ProfilePhotoComponent } from './components';
+import { map } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -28,6 +33,7 @@ import { SelectOptionInterface } from '@models';
   styleUrls: ['information.page.scss'],
 })
 export class InformationPage {
+  @ViewChild(ProfilePhotoComponent) profilePhotoComponent: ProfilePhotoComponent;
   public profileMenu: profileMenu.ProfileMenuItem[] = profileMenu.profileMenu;
   public profileInformationMenu = profileMenu.profileInformationMenu;
   public userPhoto: string;
@@ -97,6 +103,8 @@ export class InformationPage {
   public isChangePasswordModalOpen = false;
   public isUploadInProgress = false;
   public isPhotoChanged: boolean = false;
+  public selectedFile: File | null = null;
+  public selectedCaption: string | null = null;
 
   constructor(
     private sessionService: SessionService,
@@ -106,6 +114,7 @@ export class InformationPage {
     private usersService: UsersService,
     private toastService: ToastService,
     private authService: AuthService,
+    private mediaService: MediaService,
   ) {
     this.sessionService
       .getCurrentUserData()
@@ -136,8 +145,12 @@ export class InformationPage {
       });
   }
 
-  public handlePhotoChange(event: boolean): void {
-    this.isPhotoChanged = event;
+  public handlePhotoSelected(event: { file: File; caption: string }): void {
+    if (this.selectedFile !== event.file || this.selectedCaption !== event.caption) {
+      this.selectedFile = event.file;
+      this.selectedCaption = event.caption;
+      this.isPhotoChanged = true;
+    }
   }
 
   ionViewWillEnter(): void {
@@ -179,8 +192,151 @@ export class InformationPage {
       });
   }
 
+  uploadPhoto(file: File, caption: string): void {
+    this.mediaService.uploadFile(file, caption).subscribe({
+      next: (response: any) => {
+        const mediaId = response?.result?.id;
+        const photoUrl = response?.result?.original_file_url;
+        if (mediaId && photoUrl) {
+          this.saveUserProfilePhoto(mediaId, photoUrl);
+        } else {
+          console.error('Failed to extract mediaId or photoUrl from the response');
+          this.isUploadInProgress = false;
+        }
+      },
+      error: (error) => {
+        console.error('Failed to upload file', error);
+        this.isUploadInProgress = false;
+        this.toastService.presentToast({
+          message: 'Failed to upload image. Please try again',
+          duration: 3000,
+          position: 'bottom',
+        });
+      },
+    });
+  }
+
+  getCurrentUserSettings(userId: string | number) {
+    return this.usersService.getUserSettings(userId).pipe(
+      map((response: any) => {
+        return response;
+      }),
+    );
+  }
+
+  saveUserProfilePhoto(mediaId: number, photoUrl: string): void {
+    this.sessionService
+      .getCurrentUserData()
+      .pipe(untilDestroyed(this))
+      .subscribe((userData) => {
+        if (userData && userData.userId) {
+          const userId = userData.userId as string;
+          this.usersService.getUserSettings(userId).subscribe((response: any) => {
+            const configKey = 'profile_photo';
+            const configValue = {
+              media_id: mediaId,
+              photo_url: photoUrl,
+            };
+
+            const settings = response.results.find(
+              (setting: any) => setting.config_key === configKey,
+            );
+
+            // If profile_photo config exists
+            if (settings && settings.id) {
+              const payload = {
+                config_value: configValue,
+              };
+              this.usersService.update(userId, payload, 'settings/' + settings.id).subscribe({
+                next: () => {
+                  console.log('Profile photo updated successfully');
+                  this.profilePhotoComponent.uploadingSpinner = false;
+                  this.userPhoto = photoUrl;
+                  this.isUploadInProgress = false;
+                  //activating delete button if the upload is successful
+                  this.profilePhotoComponent.hasUploadedPhoto = true;
+                  this.toastService.presentToast({
+                    message: 'Profile photo updated successfully',
+                    duration: 3000,
+                    position: 'bottom',
+                  });
+                },
+                error: (error) => {
+                  console.error('Failed to update profile photo. Please try again', error);
+                  this.isUploadInProgress = false;
+                  this.profilePhotoComponent.uploadingSpinner = false;
+                  this.toastService.presentToast({
+                    message: 'Failed to add profile photo',
+                    duration: 3000,
+                    position: 'bottom',
+                  });
+                },
+              });
+            } else {
+              const payload: any = {
+                config_key: configKey,
+                config_value: configValue,
+              };
+              this.usersService.postUserSettings(userId, payload).subscribe(
+                () => {
+                  this.profilePhotoComponent.uploadingSpinner = false;
+                  this.profilePhotoComponent.hasUploadedPhoto = true;
+                  this.userPhoto = photoUrl;
+                  this.isUploadInProgress = false;
+                  this.toastService.presentToast({
+                    message: 'Profile photo updated successfully',
+                    duration: 3000,
+                    position: 'bottom',
+                  });
+                },
+                (error) => {
+                  console.error('Failed to add profile photo', error);
+                  this.isUploadInProgress = false;
+                  this.profilePhotoComponent.uploadingSpinner = false;
+                  this.toastService.presentToast({
+                    message: 'Failed to add profile photo. Please try again',
+                    duration: 3000,
+                    position: 'bottom',
+                  });
+                },
+              );
+            }
+          });
+        } else {
+          console.error('User data or user ID is missing');
+          this.isUploadInProgress = false;
+          this.profilePhotoComponent.uploadingSpinner = false;
+        }
+      });
+  }
+
   public async updateUserInformation(): Promise<void> {
-    await this.updateFormAsync(this.form, { realname: this.form.value.realname! });
+    this.form.disable();
+    console.log('Starting update process');
+
+    try {
+      if (this.isPhotoChanged) {
+        if (this.selectedFile && this.selectedCaption) {
+          this.uploadPhoto(this.selectedFile, this.selectedCaption);
+          this.isPhotoChanged = false;
+          this.selectedFile = null;
+          this.selectedCaption = null;
+          this.profilePhotoComponent.uploadingSpinner = true;
+        }
+      }
+
+      if (this.form.dirty) {
+        console.log('Updating form data');
+        const formData = { realname: this.form.value.realname! };
+        await this.updateFormAsync(this.form, formData);
+      }
+      console.log('Information updated');
+    } catch (error) {
+      console.log('Error updating information');
+    } finally {
+      this.form.enable();
+      this.form.markAsPristine();
+    }
     this.form.controls['role'].disable();
   }
 

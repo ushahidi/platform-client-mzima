@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AlertService, SessionService, ToastService } from '@services';
-import { map } from 'rxjs';
+// import { map } from 'rxjs';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { MediaService } from 'libs/sdk/src/lib/services';
 // eslint-disable-next-line @nx/enforce-module-boundaries
@@ -20,6 +20,7 @@ export class ProfilePhotoComponent {
   @Output() uploadStarted = new EventEmitter<void>();
   @Output() uploadCompleted = new EventEmitter<void>();
   @Output() photoChanged = new EventEmitter<boolean>();
+  @Output() photoSelected = new EventEmitter<{ file: File; caption: string }>();
   uploadingInProgress = false;
   uploadingSpinner = false;
   hasUploadedPhoto = false;
@@ -86,147 +87,19 @@ export class ProfilePhotoComponent {
   changePhoto(file: File): void {
     const reader = new FileReader();
     reader.onload = () => {
-      // this.photo = reader.result as string;
+      this.photo = reader.result as string;
 
       this.sessionService
         .getCurrentUserData()
         .pipe(untilDestroyed(this))
         .subscribe((userData) => {
-          const caption = userData.realname;
-
-          this.mediaService.uploadFile(file, caption).subscribe({
-            next: (response: any) => {
-              const mediaId = response?.result?.id;
-              const photoUrl = response?.result?.original_file_url;
-              if (mediaId && photoUrl) {
-                this.saveUserProfilePhoto(mediaId, photoUrl);
-              } else {
-                console.error('Failed to extract mediaId or photoUrl from the response');
-                this.uploadingInProgress = false;
-                this.uploadingSpinner = false;
-                this.uploadCompleted.emit();
-              }
-            },
-            error: (error) => {
-              console.error('Failed to upload file', error);
-              this.uploadingInProgress = false;
-              this.uploadingSpinner = false;
-              this.uploadCompleted.emit();
-              this.toastService.presentToast({
-                message: 'Failed to upload image. Please try again',
-                duration: 3000,
-                position: 'bottom',
-              });
-            },
-          });
+          const caption = userData.realname || 'image upload';
+          this.photoSelected.emit({ file, caption });
+          this.uploadingSpinner = false;
+          console.log(this.photoSelected);
         });
     };
-
     reader.readAsDataURL(file);
-  }
-
-  getCurrentUserSettings(userId: string | number) {
-    return this.usersService.getUserSettings(userId).pipe(
-      map((response: any) => {
-        return response;
-      }),
-    );
-  }
-
-  saveUserProfilePhoto(mediaId: number, photoUrl: string): void {
-    //getting current user data
-    this.sessionService
-      .getCurrentUserData()
-      .pipe(untilDestroyed(this))
-      .subscribe((userData) => {
-        if (userData && userData.userId) {
-          const userId = userData.userId as string;
-
-          this.usersService.getUserSettings(userId).subscribe((response: any) => {
-            const configKey = 'profile_photo';
-            const configValue = {
-              media_id: mediaId,
-              photo_url: photoUrl,
-            };
-
-            const settings = response.results.find(
-              (setting: any) => setting.config_key === configKey,
-            );
-
-            // If profile_photo config exists
-            if (settings && settings.id) {
-              const payload = {
-                config_value: configValue,
-              };
-              this.usersService.update(userId, payload, 'settings/' + settings.id).subscribe({
-                next: () => {
-                  console.log('Profile photo updated successfully');
-                  this.photo = photoUrl;
-                  this.photoChanged.emit(true);
-                  this.uploadingSpinner = false;
-                  //activating delete button if the upload is successful
-                  this.hasUploadedPhoto = true;
-                  this.uploadingInProgress = false;
-                  this.uploadCompleted.emit();
-                  this.toastService.presentToast({
-                    message: 'Profile photo updated successfully',
-                    duration: 3000,
-                    position: 'bottom',
-                  });
-                },
-                error: (error) => {
-                  console.error('Failed to update profile photo. Please try again', error);
-                  this.uploadingInProgress = false;
-                  this.uploadingSpinner = false;
-                  this.uploadCompleted.emit();
-                  this.toastService.presentToast({
-                    message: 'Failed to add profile photo',
-                    duration: 3000,
-                    position: 'bottom',
-                  });
-                },
-              });
-            } else {
-              const payload: any = {
-                config_key: configKey,
-                config_value: configValue,
-              };
-              this.usersService.postUserSettings(userId, payload).subscribe(
-                () => {
-                  this.photo = photoUrl;
-                  this.photoChanged.emit(true);
-                  this.uploadingSpinner = false;
-                  //activating delete button if the upload is successful
-                  this.hasUploadedPhoto = true;
-                  this.uploadingInProgress = false;
-                  this.uploadCompleted.emit();
-                  this.toastService.presentToast({
-                    message: 'Profile photo updated successfully',
-                    duration: 3000,
-                    position: 'bottom',
-                  });
-                },
-                (error) => {
-                  console.error('Failed to add profile photo', error);
-                  this.uploadingInProgress = false;
-                  this.uploadingSpinner = false;
-                  this.uploadCompleted.emit();
-                  this.toastService.presentToast({
-                    message: 'Failed to add profile photo. Please try again',
-                    duration: 3000,
-                    position: 'bottom',
-                  });
-                },
-              );
-            }
-          });
-        } else {
-          console.error('User data or user ID is missing');
-          this.uploadingInProgress = false;
-          this.uploadingSpinner = false;
-          this.uploadCompleted.emit();
-        }
-      });
   }
 
   public async deletePhotoHandle(): Promise<void> {
