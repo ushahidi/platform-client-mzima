@@ -1,7 +1,7 @@
-import LoginFunctions from "../../functions/LoginFunctions";
-import SurveyFunctions from "../../functions/SurveyFunctions";
+import LoginFunctions from '../../functions/LoginFunctions';
+import SurveyFunctions from '../../functions/SurveyFunctions';
 
-describe("Automated Tests for Surveys", () => {
+describe('Automated Tests for Surveys', () => {
   const loginFunctions = new LoginFunctions();
   const surveyFunctions = new SurveyFunctions();
 
@@ -10,7 +10,7 @@ describe("Automated Tests for Surveys", () => {
     cy.visit(Cypress.env('baseUrl'));
   });
 
-  it("Opens Survey Page", () => {
+  it('Creates and Verifies Survey created', () => {
     surveyFunctions.open_survey_creation_page_steps();
     surveyFunctions.add_survey_details_steps();
     surveyFunctions.add_survey_fields_steps();
