@@ -4,7 +4,7 @@ class LoginFunctions {
   launch_login_modal(launchURL) {
     cy.visit(launchURL);
     this.click_through_onboarding();
-    this.change_language();
+    // this.change_language();
     cy.get(LoginLocators.loginModal).click();
   }
 
