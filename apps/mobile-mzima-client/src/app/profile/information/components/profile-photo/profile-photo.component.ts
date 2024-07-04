@@ -17,7 +17,7 @@ import { UserInterface } from '@mzima-client/sdk';
 export class ProfilePhotoComponent {
   @Input() photo: string;
   userId: string;
-  @Output() uploadStarted = new EventEmitter<void>();
+  // @Output() uploadStarted = new EventEmitter<void>();
   @Output() uploadCompleted = new EventEmitter<void>();
   @Output() photoChanged = new EventEmitter<boolean>();
   @Output() photoSelected = new EventEmitter<{ file: File; caption: string }>();
@@ -53,6 +53,13 @@ export class ProfilePhotoComponent {
             }
           });
         }
+
+        const savedPhoto = localStorage.getItem('profilePhoto');
+        if (savedPhoto) {
+          this.photo = savedPhoto;
+          const photoFile = this.dataURLtoFile(savedPhoto, 'profilePhoto.png');
+          this.emitStoredPhoto(photoFile);
+        }
       });
   }
 
@@ -78,7 +85,7 @@ export class ProfilePhotoComponent {
       }
       //showing the loading icon
       this.uploadingInProgress = true;
-      this.uploadStarted.emit();
+      // this.uploadStarted.emit();
       this.uploadingSpinner = true;
       this.changePhoto(file);
     }
@@ -88,6 +95,9 @@ export class ProfilePhotoComponent {
     const reader = new FileReader();
     reader.onload = () => {
       this.photo = reader.result as string;
+
+      localStorage.setItem('profilePhoto', this.photo);
+      console.log(localStorage.setItem);
 
       this.sessionService
         .getCurrentUserData()
@@ -141,6 +151,7 @@ export class ProfilePhotoComponent {
                     }?d=retro&s=256`;
                     this.photoChanged.emit(true);
                     this.hasUploadedPhoto = false;
+                    localStorage.removeItem('profilePhoto');
                   },
                   (error) => {
                     console.error('Failed to delete profile photo', error);
@@ -161,5 +172,36 @@ export class ProfilePhotoComponent {
         position: 'bottom',
       });
     }
+  }
+
+  private emitStoredPhoto(file: File): void {
+    this.uploadingInProgress = true;
+    // this.uploadStarted.emit();
+
+    this.sessionService
+      .getCurrentUserData()
+      .pipe(untilDestroyed(this))
+      .subscribe((userData) => {
+        const caption = userData.realname || 'image upload';
+        this.photoSelected.emit({ file, caption });
+        console.log(this.photoSelected);
+        this.uploadingInProgress = false;
+      });
+  }
+
+  private dataURLtoFile(dataurl: string, filename: string): File {
+    const arr = dataurl.split(',');
+    const mimeMatch = arr[0].match(/:(.*?);/);
+    if (!mimeMatch) {
+      throw new Error('Invalid data URL');
+    }
+    const mime = mimeMatch[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
   }
 }

@@ -131,6 +131,11 @@ export class InformationPage {
           if (settings?.config_value?.photo_url) {
             this.userPhoto = settings?.config_value.photo_url;
           }
+
+          const savedPhoto = localStorage.getItem('profilePhoto');
+          if (savedPhoto) {
+            this.userPhoto = savedPhoto;
+          }
         });
 
         this.form.patchValue({
@@ -255,6 +260,7 @@ export class InformationPage {
                   this.isUploadInProgress = false;
                   //activating delete button if the upload is successful
                   this.profilePhotoComponent.hasUploadedPhoto = true;
+                  localStorage.removeItem('profilePhoto');
                   this.toastService.presentToast({
                     message: 'Profile photo updated successfully',
                     duration: 3000,
@@ -265,6 +271,7 @@ export class InformationPage {
                   console.error('Failed to update profile photo. Please try again', error);
                   this.isUploadInProgress = false;
                   this.profilePhotoComponent.uploadingSpinner = false;
+                  localStorage.removeItem('profilePhoto');
                   this.toastService.presentToast({
                     message: 'Failed to add profile photo',
                     duration: 3000,
@@ -288,6 +295,7 @@ export class InformationPage {
                     duration: 3000,
                     position: 'bottom',
                   });
+                  localStorage.removeItem('profilePhoto');
                 },
                 (error) => {
                   console.error('Failed to add profile photo', error);
@@ -298,6 +306,7 @@ export class InformationPage {
                     duration: 3000,
                     position: 'bottom',
                   });
+                  localStorage.removeItem('profilePhoto');
                 },
               );
             }
