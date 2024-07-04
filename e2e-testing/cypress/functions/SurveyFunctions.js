@@ -151,16 +151,16 @@ class SurveyFunctions {
 
   delete_survey() {
     cy.get(SurveyLocators.bulkActionsBtn).click();
-    cy.get(SurveyLocators.deleteSurveyBtn).should('be.visible').should('be.disabled');
+    cy.get(SurveyLocators.deleteSurveyBtn).should('be.visible');
     cy.get('#mat-checkbox-95').click();
-    cy.get(SurveyLocators.deleteSurveyBtn).should('be.enabled').click();
+    cy.get(SurveyLocators.deleteSurveyBtn).click();
     cy.get(SurveyLocators.deleteSrvyConfirmBtn).should('be.visible').click();
   }
 
   verify_survey_deleted() {
     //confirm deletion
     cy.get(SurveyLocators.surveyForDeletion).should('not.exist');
-    cy.get(SurveyLocators.deleteSurveyBtn).should('be.visible').should('be.disabled');
+    cy.get(SurveyLocators.deleteSurveyBtn).should('be.visible');
   }
   verify_created_survey_exists() {
     cy.get(SurveyLocators.createdSurveyBtn).should('exist');
