@@ -83,6 +83,11 @@ const SurveyLocators = {
 
   completeSurveyBtn: '[data-qa="btn-save-survey-item"]',
   createdSurveyBtn: '[data-qa="automated-survey"]',
+  surveyForDeletion: '[data-qa="a-survey-intended-to-be-deleted"]',
+  deleteSurveyBtn: '[data-qa="btn-settings-delete"]',
+  duplicateSrvyBtn: '[data-qa="btn-settings-duplicate"]',
+  deleteSrvyConfirmBtn: '[data-qa="btn-confirm-delete"]',
+  
 };
 
 export default SurveyLocators;

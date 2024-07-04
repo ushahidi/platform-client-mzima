@@ -3,13 +3,15 @@
 import SurveyLocators from '../locators/SurveyLocators';
 
 class SurveyFunctions {
-  open_survey_creation_page_steps() {
+  open_surveys_page() {
     cy.get(SurveyLocators.stngsBtn).click();
     cy.url().should('include', 'settings/general');
     cy.get(SurveyLocators.surveysBtn).click();
     cy.url().should('include', 'settings/surveys');
     //verify number of available surveys
     cy.get(SurveyLocators.surveysList + ' li').should('have.length', 27);
+  }
+  open_survey_creation_page_steps() {
     cy.get(SurveyLocators.addSurveyBtn).click();
     cy.url().should('include', '/surveys/create');
   }
@@ -147,6 +149,19 @@ class SurveyFunctions {
     cy.get(SurveyLocators.completeSurveyBtn).click();
   }
 
+  delete_survey() {
+    cy.get(SurveyLocators.bulkActionsBtn).click();
+    cy.get(SurveyLocators.deleteSurveyBtn).should('be.visible').should('be.disabled');
+    cy.get('#mat-checkbox-95').click();
+    cy.get(SurveyLocators.deleteSurveyBtn).should('be.enabled').click();
+    cy.get(SurveyLocators.deleteSrvyConfirmBtn).should('be.visible').click();
+  }
+
+  verify_survey_deleted() {
+    //confirm deletion
+    cy.get(SurveyLocators.surveyForDeletion).should('not.exist');
+    cy.get(SurveyLocators.deleteSurveyBtn).should('be.visible').should('be.disabled');
+  }
   verify_created_survey_exists() {
     cy.get(SurveyLocators.createdSurveyBtn).should('exist');
   }
