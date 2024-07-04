@@ -1,6 +1,7 @@
 const SurveyLocators = {
   stngsBtn: '[data-qa="btn-settings"]',
   surveysBtn: '[data-qa="btn-surveys"]',
+  surveysList: '[data-qa="survey-list"]',
   addSurveyBtn: '[data-qa="btn-settings-create"]',
   bulkActionsBtn: '[data-qa="btn-settings-action"]',
   addTranslationBtn: '[data-qa="btn-settings-create"]',
@@ -82,6 +83,11 @@ const SurveyLocators = {
 
   completeSurveyBtn: '[data-qa="btn-save-survey-item"]',
   createdSurveyBtn: '[data-qa="automated-survey"]',
+  surveyForDeletion: '[data-qa="a-survey-intended-to-be-deleted"]',
+  deleteSurveyBtn: '[data-qa="btn-settings-delete"]',
+  duplicateSrvyBtn: '[data-qa="btn-settings-duplicate"]',
+  deleteSrvyConfirmBtn: '[data-qa="btn-confirm-delete"]',
+  
 };
 
 export default SurveyLocators;
