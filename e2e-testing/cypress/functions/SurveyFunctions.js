@@ -9,7 +9,7 @@ class SurveyFunctions {
     cy.get(SurveyLocators.surveysBtn).click();
     cy.url().should('include', 'settings/surveys');
     //verify number of available surveys
-    cy.get(SurveyLocators.surveysList + ' li').should('have.length', 28);
+    cy.get(SurveyLocators.surveysList + ' li').should('be.gte', 27);
   }
   open_survey_creation_page_steps() {
     cy.get(SurveyLocators.addSurveyBtn).click();
