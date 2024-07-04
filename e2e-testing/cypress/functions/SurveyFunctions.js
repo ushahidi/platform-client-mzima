@@ -152,7 +152,7 @@ class SurveyFunctions {
   delete_survey() {
     cy.get(SurveyLocators.bulkActionsBtn).click();
     cy.get(SurveyLocators.deleteSurveyBtn).should('be.visible');
-    cy.get('#mat-checkbox-95').click();
+    cy.get('#mat-checkbox-27').click();
     cy.get(SurveyLocators.deleteSurveyBtn).click();
     cy.get(SurveyLocators.deleteSrvyConfirmBtn).should('be.visible').click();
   }
