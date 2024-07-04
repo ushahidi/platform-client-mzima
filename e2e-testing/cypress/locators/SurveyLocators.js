@@ -1,6 +1,7 @@
 const SurveyLocators = {
   stngsBtn: '[data-qa="btn-settings"]',
   surveysBtn: '[data-qa="btn-surveys"]',
+  surveysList: '[data-qa="survey-list"]',
   addSurveyBtn: '[data-qa="btn-settings-create"]',
   bulkActionsBtn: '[data-qa="btn-settings-action"]',
   addTranslationBtn: '[data-qa="btn-settings-create"]',

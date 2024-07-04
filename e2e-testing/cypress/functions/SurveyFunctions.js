@@ -5,8 +5,13 @@ import SurveyLocators from '../locators/SurveyLocators';
 class SurveyFunctions {
   open_survey_creation_page_steps() {
     cy.get(SurveyLocators.stngsBtn).click();
+    cy.url().should('include', 'settings/general');
     cy.get(SurveyLocators.surveysBtn).click();
+    cy.url().should('include', 'settings/surveys');
+    //verify number of available surveys
+    cy.get(SurveyLocators.surveysList + ' li').should('have.length', 47);
     cy.get(SurveyLocators.addSurveyBtn).click();
+    cy.url().should('include', '/surveys/create');
   }
 
   add_survey_details_steps() {
