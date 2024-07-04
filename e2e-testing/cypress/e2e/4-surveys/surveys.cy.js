@@ -5,7 +5,7 @@ describe('Automated Tests for Surveys', () => {
   const loginFunctions = new LoginFunctions();
   const surveyFunctions = new SurveyFunctions();
 
-  before(() => {
+  beforeEach(() => {
     loginFunctions.login_as_admin();
     cy.visit(Cypress.env('baseUrl'));
   });
