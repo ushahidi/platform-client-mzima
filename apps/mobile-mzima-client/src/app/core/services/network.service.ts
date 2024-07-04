@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Network } from '@capacitor/network';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 const CONNECTION_TYPES = ['wifi', 'cellular'];
 
@@ -8,7 +8,7 @@ const CONNECTION_TYPES = ['wifi', 'cellular'];
   providedIn: 'root',
 })
 export class NetworkService {
-  private readonly _networkStatus = new Subject<boolean>();
+  private readonly _networkStatus = new BehaviorSubject<boolean>(false);
   readonly networkStatus$ = this._networkStatus.asObservable();
 
   constructor() {
@@ -26,5 +26,9 @@ export class NetworkService {
   async checkNetworkStatus(): Promise<boolean> {
     const { connected, connectionType } = await Network.getStatus();
     return connected && CONNECTION_TYPES.includes(connectionType);
+  }
+
+  getCurrentNetworkStatus(): boolean {
+    return this._networkStatus.getValue();
   }
 }
