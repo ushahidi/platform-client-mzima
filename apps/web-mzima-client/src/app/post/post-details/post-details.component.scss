@@ -46,7 +46,6 @@
   }
 
   &__head {
-    top: 0;
     z-index: 50;
     display: flex;
     position: sticky;
@@ -59,6 +58,7 @@
     background: var(--color-light);
 
     @include breakpoint-max($tablet) {
+      top: 0;
       padding-inline-end: 60px;
     }
   }
@@ -205,16 +205,4 @@
   display: block;
   margin-top: 20vh;
   margin-bottom: 20vh;
-}
-
-.cant-see-post {
-  font-size: 18px;
-  font-weight: 600;
-  text-align: center;
-  word-wrap: break-word;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
 }

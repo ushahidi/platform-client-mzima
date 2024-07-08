@@ -28,7 +28,9 @@
       <p>{{ post.form.description }}</p>
     </div>
 
-    <h2 *ngIf="post.title?.length || post.content?.length" data-qa="postTitleValue">{{ post.title || post.content }}</h2>
+    <h2 *ngIf="post.title?.length || post.content?.length" data-qa="postTitleValue">
+      {{ post.title || post.content }}
+    </h2>
     <div class="post__metadata-container">
       <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
     </div>
@@ -186,12 +188,4 @@
 </ng-container>
 <ng-template #spinner>
   <app-spinner *ngIf="isPostLoading" class="spinner"></app-spinner>
-  <p
-    *ngIf="!isManagePosts && !isPostLoading && !postNotFound"
-    class="cant-see-post"
-    [innerHTML]="'notify.post.can_t_view_this_post' | translate"
-  ></p>
-  <ng-container *ngIf="postNotFound && !isPostLoading">
-    <app-post-not-found></app-post-not-found>
-  </ng-container>
 </ng-template>

@@ -1,6 +1,6 @@
 @import 'helpers';
 
-.not-found {
+.not-allowed {
   &--container {
     width: 100%;
     height: 100%;
@@ -18,8 +18,8 @@
   }
 
   &--content {
-    font-size: 24px;
-    font-weight: 500; // this font-size & font weight is from new design
+    font-size: 18px;
+    font-weight: 600; // this font-size & font weight is from new design
     text-align: center;
     word-wrap: break-word;
 
@@ -29,17 +29,7 @@
     }
 
     @include breakpoint-min($tablet) {
-      width: 300px;
-    }
-
-    @include breakpoint-min($laptop-small) {
-      width: 400px;
-    }
-
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
+      width: 85%;
     }
   }
 }

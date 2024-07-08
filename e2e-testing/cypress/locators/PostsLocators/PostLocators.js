@@ -30,6 +30,13 @@ const PostLocators = {
   relatedPostField: '[data-qa="related-post-field"]',
   embedVideoField: '[data-qa="embed-video field"]',
 
+  //status items
+  publishPostBtn: '[data-qa="btn-publish-post"]',
+  postStatus: '[data-qa="status"]',
+  underReviewPostBtn: '[data-qa="btn-underReview-post"]',
+  archivePostBtn: '[data-qa="btn-archive-post"]',
+
+
   //field menu items
   postMenuDots: '[data-qa="post-menu"]',
   deletePostBtn: '[data-qa="btn-delete-post"]',

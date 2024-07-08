@@ -25,30 +25,32 @@
     </div>
     <div class="form-row__wrapper">
       <div class="form-row">
-        <span class="latlong">{{location.lat}}, {{location.lng}}</span>   
+        <span class="latlong">{{ location.lat }}, {{ location.lng }}</span>
+      </div>
+    </div>
+
+    <span class="instructions">
+      {{ 'app.location_instruction' | translate }}
+    </span>
+
+    <div class="map-wrapper" *ngIf="mapReady">
+      <div
+        leaflet
+        class="map"
+        [leafletLayers]="mapLayers"
+        [leafletOptions]="leafletOptions"
+        [leafletFitBounds]="mapFitToBounds"
+        (leafletMapReady)="onMapReady($event)"
+        [leafletFitBoundsOptions]="fitBoundsOptions"
+      ></div>
+      <button
+        *ngIf="nativeApp"
+        type="button"
+        class="btn-current-location"
+        (click)="getCurrentLocation()"
+      >
+        <app-icon class="btn-current-location_icon" name="current-location"></app-icon>
+      </button>
+    </div>
   </div>
-</div>
-
-<span class="instructions">
-  {{ 'app.location_instruction' | translate }}
-</span>
-
-<div class="map-wrapper" *ngIf="mapReady">
-  <div
-    leaflet
-    class="map"
-    [leafletLayers]="mapLayers"
-    [leafletOptions]="leafletOptions"
-    [leafletFitBounds]="mapFitToBounds"
-    (leafletMapReady)="onMapReady($event)"
-    [leafletFitBoundsOptions]="fitBoundsOptions"
-  ></div>
-  <button
-    *ngIf="nativeApp"
-    type="button"
-    class="btn-current-location"
-    (click)="getCurrentLocation()"
-  >
-    <app-icon class="btn-current-location_icon" name="current-location"></app-icon>
-  </button>
 </div>
