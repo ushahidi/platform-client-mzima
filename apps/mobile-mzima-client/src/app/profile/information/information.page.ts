@@ -10,7 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { profileMenu } from '@constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { AuthService, SessionService, ToastService } from '@services';
+import { AuthService, SessionService, ToastService, DatabaseService } from '@services';
 import { fieldErrorMessages, regexHelper } from '@helpers';
 import {
   generalHelpers,
@@ -24,6 +24,7 @@ import { MediaService } from 'libs/sdk/src/lib/services';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { UsersService } from 'libs/sdk/src/lib/services';
 import { ProfilePhotoComponent } from './components';
+import { STORAGE_KEYS } from '@constants';
 import { map } from 'rxjs';
 
 @UntilDestroy()
@@ -115,6 +116,7 @@ export class InformationPage {
     private toastService: ToastService,
     private authService: AuthService,
     private mediaService: MediaService,
+    private databaseService: DatabaseService,
   ) {
     this.sessionService
       .getCurrentUserData()
@@ -124,7 +126,7 @@ export class InformationPage {
           userData.gravatar || '00000000000000000000000000000000'
         }?d=retro&s=256`;
         const userId = userData.userId as string;
-        this.usersService.getUserSettings(userId).subscribe((response: any) => {
+        this.usersService.getUserSettings(userId).subscribe(async (response: any) => {
           const settings = response.results.find(
             (setting: any) => setting.config_key === 'profile_photo',
           );
@@ -132,9 +134,10 @@ export class InformationPage {
             this.userPhoto = settings?.config_value.photo_url;
           }
 
-          const savedPhoto = localStorage.getItem('profilePhoto');
+          const savedPhoto = await this.databaseService.get(STORAGE_KEYS.PROFILE_PHOTO);
           if (savedPhoto) {
-            this.userPhoto = savedPhoto;
+            this.userPhoto = savedPhoto.dataURL;
+            console.log(savedPhoto.dataURL);
           }
         });
 
@@ -151,6 +154,7 @@ export class InformationPage {
   }
 
   public handlePhotoSelected(event: { file: File; caption: string }): void {
+    console.log('Photo selected:', event.file.name, event.file.type, event.file.size);
     if (this.selectedFile !== event.file || this.selectedCaption !== event.caption) {
       this.selectedFile = event.file;
       this.selectedCaption = event.caption;
@@ -198,6 +202,7 @@ export class InformationPage {
   }
 
   uploadPhoto(file: File, caption: string): void {
+    console.log('Uploading file:', file.name, file.type, file.size);
     this.mediaService.uploadFile(file, caption).subscribe({
       next: (response: any) => {
         const mediaId = response?.result?.id;
@@ -253,25 +258,25 @@ export class InformationPage {
                 config_value: configValue,
               };
               this.usersService.update(userId, payload, 'settings/' + settings.id).subscribe({
-                next: () => {
+                next: async () => {
                   console.log('Profile photo updated successfully');
                   this.profilePhotoComponent.uploadingSpinner = false;
                   this.userPhoto = photoUrl;
                   this.isUploadInProgress = false;
                   //activating delete button if the upload is successful
                   this.profilePhotoComponent.hasUploadedPhoto = true;
-                  localStorage.removeItem('profilePhoto');
+                  await this.databaseService.remove(STORAGE_KEYS.PROFILE_PHOTO);
                   this.toastService.presentToast({
                     message: 'Profile photo updated successfully',
                     duration: 3000,
                     position: 'bottom',
                   });
                 },
-                error: (error) => {
+                error: async (error) => {
                   console.error('Failed to update profile photo. Please try again', error);
                   this.isUploadInProgress = false;
                   this.profilePhotoComponent.uploadingSpinner = false;
-                  localStorage.removeItem('profilePhoto');
+                  await this.databaseService.remove(STORAGE_KEYS.PROFILE_PHOTO);
                   this.toastService.presentToast({
                     message: 'Failed to add profile photo',
                     duration: 3000,
@@ -285,7 +290,7 @@ export class InformationPage {
                 config_value: configValue,
               };
               this.usersService.postUserSettings(userId, payload).subscribe(
-                () => {
+                async () => {
                   this.profilePhotoComponent.uploadingSpinner = false;
                   this.profilePhotoComponent.hasUploadedPhoto = true;
                   this.userPhoto = photoUrl;
@@ -295,9 +300,9 @@ export class InformationPage {
                     duration: 3000,
                     position: 'bottom',
                   });
-                  localStorage.removeItem('profilePhoto');
+                  await this.databaseService.remove(STORAGE_KEYS.PROFILE_PHOTO);
                 },
-                (error) => {
+                async (error) => {
                   console.error('Failed to add profile photo', error);
                   this.isUploadInProgress = false;
                   this.profilePhotoComponent.uploadingSpinner = false;
@@ -306,7 +311,7 @@ export class InformationPage {
                     duration: 3000,
                     position: 'bottom',
                   });
-                  localStorage.removeItem('profilePhoto');
+                  await this.databaseService.remove(STORAGE_KEYS.PROFILE_PHOTO);
                 },
               );
             }

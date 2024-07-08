@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { AlertService, SessionService, ToastService } from '@services';
+import { AlertService, SessionService, ToastService, DatabaseService } from '@services';
 // import { map } from 'rxjs';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { MediaService } from 'libs/sdk/src/lib/services';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { UsersService } from 'libs/sdk/src/lib/services';
 import { UserInterface } from '@mzima-client/sdk';
+import { STORAGE_KEYS } from '@constants';
 
 @UntilDestroy()
 @Component({
@@ -32,6 +33,7 @@ export class ProfilePhotoComponent {
     private toastService: ToastService,
     private mediaService: MediaService,
     private usersService: UsersService,
+    private databaseService: DatabaseService,
   ) {}
 
   //Enabling/disabling delete button by checking if photo was uploaded initially
@@ -54,13 +56,18 @@ export class ProfilePhotoComponent {
           });
         }
 
-        const savedPhoto = localStorage.getItem('profilePhoto');
-        if (savedPhoto) {
-          this.photo = savedPhoto;
-          const photoFile = this.dataURLtoFile(savedPhoto, 'profilePhoto.png');
-          this.emitStoredPhoto(photoFile);
-        }
+        this.loadStoredPhoto();
       });
+  }
+
+  async loadStoredPhoto(): Promise<void> {
+    const storedPhoto = await this.databaseService.get(STORAGE_KEYS.PROFILE_PHOTO);
+    if (storedPhoto) {
+      this.photo = storedPhoto.dataURL;
+      console.log(this.photo);
+      const photoFile = this.dataURLtoFile(storedPhoto.dataURL, storedPhoto.filename);
+      this.emitStoredPhoto(photoFile);
+    }
   }
 
   triggerFileInput(): void {
@@ -93,11 +100,14 @@ export class ProfilePhotoComponent {
 
   changePhoto(file: File): void {
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onload = async () => {
       this.photo = reader.result as string;
 
-      localStorage.setItem('profilePhoto', this.photo);
-      console.log(localStorage.setItem);
+      await this.databaseService.set(STORAGE_KEYS.PROFILE_PHOTO, {
+        dataURL: this.photo,
+        filename: file.name,
+      });
+      console.log(STORAGE_KEYS.PROFILE_PHOTO, this.photo, file.name);
 
       this.sessionService
         .getCurrentUserData()
@@ -144,14 +154,14 @@ export class ProfilePhotoComponent {
               if (settings && settings.id) {
                 // Call the delete method of the service
                 this.usersService.delete(userId, 'settings/' + settings.id).subscribe(
-                  () => {
+                  async () => {
                     console.log('Profile photo deleted successfully');
                     this.photo = `https://www.gravatar.com/avatar/${
                       userData.gravatar || '00000000000000000000000000000000'
                     }?d=retro&s=256`;
                     this.photoChanged.emit(true);
                     this.hasUploadedPhoto = false;
-                    localStorage.removeItem('profilePhoto');
+                    await this.databaseService.remove(STORAGE_KEYS.PROFILE_PHOTO);
                   },
                   (error) => {
                     console.error('Failed to delete profile photo', error);
@@ -184,6 +194,7 @@ export class ProfilePhotoComponent {
       .subscribe((userData) => {
         const caption = userData.realname || 'image upload';
         this.photoSelected.emit({ file, caption });
+        console.log(file);
         console.log(this.photoSelected);
         this.uploadingInProgress = false;
       });
