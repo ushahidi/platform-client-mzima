@@ -150,6 +150,7 @@ class DataViewFilterFunctions {
     cy.get(`[aria-level="2"]`).should('exist');
     //check that when parent elements are selected children elements are also selected
     cy.get('.mat-tree-node').eq(0).find('.mat-checkbox-input').click({ force: true });
+    cy.wait(2000);
     cy.get('.mat-tree-node')
       .eq(0)
       .find('.mat-checkbox-input')
