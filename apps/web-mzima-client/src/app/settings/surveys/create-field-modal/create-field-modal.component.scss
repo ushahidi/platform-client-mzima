@@ -81,6 +81,35 @@ quill-editor {
   &__item {
     margin-bottom: 8px;
   }
+  &__options {
+    background-color: var(--color-neutral-10);
+    padding: 16px;
+    border-radius: 4px;
+    .form-label {
+      font-weight: 700;
+    }
+    &__button {
+      &::ng-deep {
+        .mzima-button {
+          background-color: transparent;
+          font-size: 14px;
+          min-height: 22px;
+          width: unset;
+        }
+      }
+    }
+    .form-row__item {
+      background-color: var(--color-light);
+      .mat-input-element {
+        padding: 12px;
+      }
+    }
+    &__add-other {
+      padding: 6px;
+      font-size: 12px;
+      color: var(--color-neutral-70);
+    }
+  }
 
   .form-head-panel {
     margin-bottom: 8px;
