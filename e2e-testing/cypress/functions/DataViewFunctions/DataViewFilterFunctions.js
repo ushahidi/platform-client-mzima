@@ -149,12 +149,9 @@ class DataViewFilterFunctions {
     cy.get('.mat-tree-node').eq(0).should('exist');
     cy.get(`[aria-level="2"]`).should('exist');
     //check that when parent elements are selected children elements are also selected
-    cy.get('.mat-tree-node')
-      .eq(0)
-      .find('.mat-checkbox-input')
-      .check({ force: true })
-      .should('be.selected');
-    cy.get(`[aria-level="2"]`).should('be.selected');
+    cy.get('.mat-tree-node').eq(0).find('.mat-checkbox-input').check({ force: true });
+    cy.get('.mat-tree-node').eq(0).find('.mat-checkbox-input').should('be.selected');
+    cy.get(`[aria-level="2"]`).eq(0).find('.mat-checkbox-input').should('be.selected');
     //verify count shows how many categories are selected
     cy.get(DataViewLocators.selectedFilterCount).contains('3');
     //verify count of posts is updated correctly
