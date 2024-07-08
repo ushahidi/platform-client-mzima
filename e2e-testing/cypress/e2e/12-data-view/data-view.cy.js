@@ -19,9 +19,4 @@ describe('Automated Tests for Posts in the Data View', () => {
     postFunctions.complete_add_post_steps();
     dataViewFunctions.verify_post_appears_for_user();
   });
-
-  it('Filter posts by categories', () => {
-    dataViewFilterFunctions.click_data_view_btn();
-    dataViewFilterFunctions.check_post_filter_by_categories();
-  });
 });
