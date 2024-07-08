@@ -148,12 +148,14 @@ class DataViewFilterFunctions {
     cy.get('.mat-tree-node').eq(0).find('.multilevelselect-filter__option__arrow').click();
     cy.get('.mat-tree-node').eq(0).should('exist');
     cy.get(`[aria-level="2"]`).eq(0).should('exist');
-    // cy.get(DataViewLocators.childCategoryFilter).eq(0).should('have.length.greaterThan', 0);
     //check that when parent elements are selected children elements are also selected
     cy.get('.mat-tree-node').eq(0).find('.mat-checkbox-input').click({ force: true });
     cy.get('.mat-tree-node').eq(0).should('be.selected');
     cy.get(`[aria-level="2"]`).eq(0).should('be.selected');
-    // cy.get(DataViewLocators.childCategoryFilter).eq(0).should('be.selected');
+    //verify count shows how many categories are selected
+    cy.get(DataViewLocators.selectedFilterCount).contains('3');
+    //verify count of posts is updated correctly
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 3 / 512');
   }
 }
 
