@@ -44,7 +44,7 @@
         (change)="filterChange.emit($event.value)"
       >
         <div class="radio-button">
-          <mat-radio-button>
+          <mat-radio-button (click)="preventClose($event)">
             {{ 'graph.none' | translate }}
           </mat-radio-button>
         </div>
@@ -53,6 +53,7 @@
             [value]="option[fields[0]]"
             [checked]="option.checked"
             [disabled]="option.disabled"
+            (click)="preventClose($event)"
           >
             {{ option[fields[1]] | translate }}
           </mat-radio-button>

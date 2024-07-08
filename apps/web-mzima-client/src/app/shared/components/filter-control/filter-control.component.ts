@@ -376,4 +376,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
       this.checklistSelection.select(option);
     }
   }
+  preventClose(event: Event) {
+    event.stopPropagation();
+  }
 }
