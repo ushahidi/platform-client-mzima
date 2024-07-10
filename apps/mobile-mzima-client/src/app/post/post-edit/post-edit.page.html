@@ -261,9 +261,34 @@
                 *ngIf="field.options?.length; else noOptions"
               >
                 <div class="radio-button" *ngFor="let option of field.options">
-                  <app-radio class="create-post" [value]="option" type="default" justify="start">
+                  <app-radio
+                    class="create-post"
+                    [value]="option"
+                    type="default"
+                    justify="start"
+                    *ngIf="option !== 'Other'"
+                  >
                     {{ option }}
                   </app-radio>
+
+                  <div class="other" *ngIf="option === 'Other'">
+                    <app-radio
+                      class="create-post"
+                      type="default"
+                      justify="start"
+                      [value]="option"
+                      (click)="otherRadio.focus()"
+                    >
+                    </app-radio>
+                    <input
+                      class="other__input other__input__radio"
+                      placeholder="Add other"
+                      aria-label="Add other"
+                      #otherRadio
+                      [formControlName]="'other'+field.key"
+                      (focus)="changeOtherOptions(field.key, field.input)"
+                    />
+                  </div>
                 </div>
               </ion-radio-group>
             </div>
@@ -291,9 +316,28 @@
                     [required]="field?.required"
                     [checked]="form.get(field.key)?.value?.includes(option)"
                     (checkboxChange)="changeSelectionFields($event, field.key, option)"
+                    *ngIf="option !== 'Other'"
                   >
                     {{ option }}
                   </app-checkbox>
+
+                  <div class="other" *ngIf="option === 'Other'">
+                    <app-checkbox
+                      type="default"
+                      [required]="field?.required"
+                      [checked]="form.get(field.key)?.value?.includes(option)"
+                      (checkboxChange)="[!form.get(field.key)?.value?.includes(option) ? otherCheckbox.focus() : '', changeSelectionFields($event, field.key, option)]"
+                    >
+                    </app-checkbox>
+                    <input
+                      class="other__input other__input__checkbox"
+                      placeholder="Add other"
+                      aria-label="Add other"
+                      #otherCheckbox
+                      [formControlName]="'other'+field.key"
+                      (focus)="changeOtherOptions(field.key, field.input)"
+                    />
+                  </div>
                 </ng-container>
               </ng-container>
             </div>
