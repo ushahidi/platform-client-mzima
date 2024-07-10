@@ -7,6 +7,13 @@ class CategoryFunctions {
     this.uniqueParentCtgry = `Automated Parent Category-${Math.floor(Math.random() * 900) + 100}`;
     this.uniqueChildCtgry = `Automated Child Category-${Math.floor(Math.random() * 900) + 100}`;
   }
+
+  open_category_list_page() {
+    cy.get(CategoryLocators.stngsBtn).click();
+    cy.get(CategoryLocators.ctgryBtn).click();
+    cy.url().should('include', '/settings/categories');
+  }
+
   open_category_creation_page_steps() {
     cy.get(CategoryLocators.stngsBtn).click();
     cy.get(CategoryLocators.ctgryBtn).click();
@@ -39,6 +46,60 @@ class CategoryFunctions {
     cy.get(CategoryLocators.selectParentCtgry).click();
     cy.get(`[data-qa="${getUniqueSelector(this.uniqueParentCtgry)}"]`).click();
     this.complete_add_category_steps();
+  }
+
+  delete_category_bulk_actions(category_id) {
+    //click bulk actions
+    cy.get(CategoryLocators.blkActionsBtn).click();
+    cy.get(CategoryLocators.deleteBtn).should('be.visible');
+    //click on checkbox
+    cy.get(category_id).scrollIntoView().should('be.visible').click();
+    //click delete
+    cy.wait(3000);
+    cy.get(CategoryLocators.deleteBtn).click();
+    //confirm delete
+    cy.get(CategoryLocators.confirmdeleteBtn).click();
+
+    cy.get('.mat-snack-bar-container').should('be.visible');
+    cy.contains('Category deleted').should('be.visible');
+  }
+
+  verify_child_category_deleted() {
+    //verify category no longer exists
+    cy.contains('No need for translation').should('not.exist');
+
+    //navigate to data view and verify deleted category does not exist under filters
+    cy.get(CategoryLocators.dataViewBtn).click();
+    cy.get('[data-qa="search-form__filters"]').click();
+
+    cy.get(CategoryLocators.categoryFilterBtn).should('be.visible').click();
+    cy.contains('No need for translation').should('not.exist');
+  }
+
+  verify_parent_category_deleted() {
+    cy.contains('Translation').should('not.exist');
+    //verify child also does not exist
+    cy.contains('Needs Translation').should('not.exist');
+    cy.contains('Translated').should('not.exist');
+
+    //navigate to data view and verify deleted category does not exist under filters
+    cy.get(CategoryLocators.dataViewBtn).click();
+    cy.get('[data-qa="search-form__filters"]').click();
+
+    cy.get(CategoryLocators.categoryFilterBtn).click();
+    cy.contains('Translation').should('not.exist');
+    //verify child also does not exist
+    cy.contains('Needs Translation').should('not.exist');
+    cy.contains('Translated').should('not.exist');
+  }
+
+  delete_category_details_page() {
+    //click category to open details page
+    cy.get('category name').click();
+    //click delete to delete category
+    cy.get(CategoryLocators.categoryDeleteBtn).click();
+    //confirm deletion
+    cy.get(CategoryLocators.categoryDeleteBtn).click();
   }
 
   verify_child_category_exists_under_parent() {
