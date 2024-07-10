@@ -21,7 +21,7 @@ export class ProfilePhotoComponent {
   // @Output() uploadStarted = new EventEmitter<void>();
   @Output() uploadCompleted = new EventEmitter<void>();
   @Output() photoChanged = new EventEmitter<boolean>();
-  @Output() photoSelected = new EventEmitter<{ file: File; caption: string }>();
+  @Output() photoSelected = new EventEmitter<{ key: string; caption: string }>();
   uploadingInProgress = false;
   uploadingSpinner = false;
   hasUploadedPhoto = false;
@@ -114,7 +114,8 @@ export class ProfilePhotoComponent {
         .pipe(untilDestroyed(this))
         .subscribe((userData) => {
           const caption = userData.realname || 'image upload';
-          this.photoSelected.emit({ file, caption });
+          const key = STORAGE_KEYS.PROFILE_PHOTO;
+          this.photoSelected.emit({ key, caption });
           this.uploadingSpinner = false;
           console.log(this.photoSelected);
         });
@@ -193,7 +194,8 @@ export class ProfilePhotoComponent {
       .pipe(untilDestroyed(this))
       .subscribe((userData) => {
         const caption = userData.realname || 'image upload';
-        this.photoSelected.emit({ file, caption });
+        const key = STORAGE_KEYS.PROFILE_PHOTO;
+        this.photoSelected.emit({ key, caption });
         console.log(file);
         console.log(this.photoSelected);
         this.uploadingInProgress = false;

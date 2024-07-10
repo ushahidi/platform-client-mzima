@@ -104,7 +104,7 @@ export class InformationPage {
   public isChangePasswordModalOpen = false;
   public isUploadInProgress = false;
   public isPhotoChanged: boolean = false;
-  public selectedFile: File | null = null;
+  public selectedFileKey: string | null = null;
   public selectedCaption: string | null = null;
 
   constructor(
@@ -153,10 +153,9 @@ export class InformationPage {
       });
   }
 
-  public handlePhotoSelected(event: { file: File; caption: string }): void {
-    console.log('Photo selected:', event.file.name, event.file.type, event.file.size);
-    if (this.selectedFile !== event.file || this.selectedCaption !== event.caption) {
-      this.selectedFile = event.file;
+  public handlePhotoSelected(event: { key: string; caption: string }): void {
+    if (this.selectedFileKey !== event.key || this.selectedCaption !== event.caption) {
+      this.selectedFileKey = event.key;
       this.selectedCaption = event.caption;
       this.isPhotoChanged = true;
     }
@@ -201,29 +200,52 @@ export class InformationPage {
       });
   }
 
-  uploadPhoto(file: File, caption: string): void {
-    console.log('Uploading file:', file.name, file.type, file.size);
-    this.mediaService.uploadFile(file, caption).subscribe({
-      next: (response: any) => {
-        const mediaId = response?.result?.id;
-        const photoUrl = response?.result?.original_file_url;
-        if (mediaId && photoUrl) {
-          this.saveUserProfilePhoto(mediaId, photoUrl);
-        } else {
-          console.error('Failed to extract mediaId or photoUrl from the response');
+  private dataURLtoFile(dataurl: string, filename: string): File {
+    const arr = dataurl.split(',');
+    const mimeMatch = arr[0].match(/:(.*?);/);
+    if (!mimeMatch) {
+      throw new Error('Invalid data URL');
+    }
+    const mime = mimeMatch[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+
+  async uploadPhoto(key: string, caption: string): Promise<void> {
+    const storedPhoto = await this.databaseService.get(key);
+    if (storedPhoto) {
+      const file = this.dataURLtoFile(storedPhoto.dataURL, storedPhoto.filename);
+      console.log('Uploading file:', file.name, file.type, file.size);
+      this.mediaService.uploadFile(file, caption).subscribe({
+        next: (response: any) => {
+          const mediaId = response?.result?.id;
+          const photoUrl = response?.result?.original_file_url;
+          if (mediaId && photoUrl) {
+            this.saveUserProfilePhoto(mediaId, photoUrl);
+          } else {
+            console.error('Failed to extract mediaId or photoUrl from the response');
+            this.isUploadInProgress = false;
+          }
+        },
+        error: (error) => {
+          console.error('Failed to upload file', error);
           this.isUploadInProgress = false;
-        }
-      },
-      error: (error) => {
-        console.error('Failed to upload file', error);
-        this.isUploadInProgress = false;
-        this.toastService.presentToast({
-          message: 'Failed to upload image. Please try again',
-          duration: 3000,
-          position: 'bottom',
-        });
-      },
-    });
+          this.toastService.presentToast({
+            message: 'Failed to upload image. Please try again',
+            duration: 3000,
+            position: 'bottom',
+          });
+        },
+      });
+    } else {
+      console.error('Failed to retrive stored phot form IndexedDB');
+      this.isUploadInProgress = false;
+    }
   }
 
   getCurrentUserSettings(userId: string | number) {
@@ -330,10 +352,10 @@ export class InformationPage {
 
     try {
       if (this.isPhotoChanged) {
-        if (this.selectedFile && this.selectedCaption) {
-          this.uploadPhoto(this.selectedFile, this.selectedCaption);
+        if (this.selectedFileKey && this.selectedCaption) {
+          this.uploadPhoto(this.selectedFileKey, this.selectedCaption);
           this.isPhotoChanged = false;
-          this.selectedFile = null;
+          this.selectedFileKey = null;
           this.selectedCaption = null;
           this.profilePhotoComponent.uploadingSpinner = true;
         }
