@@ -20,11 +20,11 @@ describe('Automated Tests for Categories', () => {
   it('Deletes a Category - Bulk Actions', () => {
     categoryFunctions.open_category_list_page();
     //delete child category
-    categoryFunctions.delete_category_bulk_actions('#mat-checkbox-50');
+    categoryFunctions.delete_category_bulk_actions('#mat-checkbox-37');
     categoryFunctions.verify_child_category_deleted();
 
     //delete parent category
-    categoryFunctions.delete_category_bulk_actions('#mat-checkbox-51');
+    categoryFunctions.delete_category_bulk_actions('#mat-checkbox-38');
     categoryFunctions.verify_parent_category_deleted();
   });
 

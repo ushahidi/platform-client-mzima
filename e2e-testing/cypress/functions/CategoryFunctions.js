@@ -66,31 +66,29 @@ class CategoryFunctions {
 
   verify_child_category_deleted() {
     //verify category no longer exists
-    cy.contains('No need for translation').should('not.exist');
+    cy.contains('Children B').should('not.exist');
 
     //navigate to data view and verify deleted category does not exist under filters
     cy.get(CategoryLocators.dataViewBtn).click();
     cy.get('[data-qa="search-form__filters"]').click();
 
     cy.get(CategoryLocators.categoryFilterBtn).should('be.visible').click();
-    cy.contains('No need for translation').should('not.exist');
+    cy.contains('Children B').should('not.exist');
   }
 
   verify_parent_category_deleted() {
-    cy.contains('Translation').should('not.exist');
+    cy.contains('New Parent A').should('not.exist');
     //verify child also does not exist
-    cy.contains('Needs Translation').should('not.exist');
-    cy.contains('Translated').should('not.exist');
+    cy.contains('Children A').should('not.exist');
 
     //navigate to data view and verify deleted category does not exist under filters
     cy.get(CategoryLocators.dataViewBtn).click();
     cy.get('[data-qa="search-form__filters"]').click();
 
     cy.get(CategoryLocators.categoryFilterBtn).click();
-    cy.contains('Translation').should('not.exist');
+    cy.contains('New Parent A').should('not.exist');
     //verify child also does not exist
-    cy.contains('Needs Translation').should('not.exist');
-    cy.contains('Translated').should('not.exist');
+    cy.contains('Children A').should('not.exist');
   }
 
   delete_category_details_page() {
