@@ -350,16 +350,14 @@ export class PostEditPage {
     }
   }
 
-  public isInvalid(key: string) {
-    const hasError =
+  public hasEmptyOther(key: string) {
+    const emptyOther =
       this.form.get(key)?.value?.includes('Other') &&
       !this.form.get('other' + key)?.value &&
-      this.form.get('other' + key)?.touched
-        ? true
-        : null;
-    this.form.controls[key].setErrors({ emptyOther: hasError });
-    if (!hasError) this.form.controls[key].updateValueAndValidity();
-    return hasError;
+      this.form.get('other' + key)?.touched;
+    this.form.controls[key].setErrors({ emptyOther });
+    if (!emptyOther) this.form.controls[key].updateValueAndValidity();
+    return emptyOther;
   }
 
   public changeOtherOptions(key: string, type: string) {
@@ -367,7 +365,7 @@ export class PostEditPage {
       const values = this.form.controls[key].value || [];
       if (!values.includes('Other')) {
         values.push('Other');
-        // this.form.patchValue({ [key]: values });
+        this.form.patchValue({ [key]: values });
       }
     } else {
       this.updateFormControl(key, 'Other');
@@ -509,8 +507,8 @@ export class PostEditPage {
 
   private handleRadio(key: string, value: any, options: any) {
     if (options.indexOf(value?.value) < 0 && options.includes('Other')) {
-      this.updateFormControl(`other${key}`, value?.value);
       this.updateFormControl(key, 'Other');
+      this.updateFormControl(`other${key}`, value?.value);
     } else {
       this.updateFormControl(key, value?.value);
       this.updateFormControl(`other${key}`, '');
@@ -626,6 +624,7 @@ export class PostEditPage {
                 this.form.value[field.key].includes('Other')
               ) {
                 // Removing "Other"
+
                 value.value = value.value.filter((opt: any) => opt !== 'Other');
                 // Adding input-value
                 value.value.push(this.form.value[`other${field.key}`]);
