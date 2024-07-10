@@ -55,7 +55,6 @@ class CategoryFunctions {
     //click on checkbox
     cy.get(category_id).scrollIntoView().should('be.visible').click();
     //click delete
-    cy.wait(3000);
     cy.get(CategoryLocators.deleteBtn).click();
     //confirm delete
     cy.get(CategoryLocators.confirmdeleteBtn).click();
