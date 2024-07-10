@@ -1013,7 +1013,8 @@ export class PostEditPage {
       const index = this.checkedList.indexOf(item);
       if (index >= 0) {
         this.checkedList.splice(index, 1);
-        this.form.patchValue({ [fieldKey]: this.checkedList });
+        const newValue = this.checkedList.length ? this.checkedList : null;
+        this.form.patchValue({ [fieldKey]: newValue });
       }
     }
   }
