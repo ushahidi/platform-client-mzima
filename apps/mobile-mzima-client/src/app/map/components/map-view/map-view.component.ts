@@ -244,28 +244,30 @@ export class MapViewComponent implements AfterViewInit {
   // }
 
   public getPostsGeoJson() {
-    this.postsService
-      .getGeojson({ limit: 500, offset: 0, page: 1, currentView: 'map' })
-      .pipe(untilDestroyed(this))
-      .subscribe({
-        next: async (postsResponse) => {
-          await this.databaseService.set(STORAGE_KEYS.GEOJSONPOSTS, postsResponse);
-          this.geoJsonDataProcessor(postsResponse);
-        },
-        error: async ({ message }) => {
-          this.toastService.presentToast({
-            message,
-            layout: 'stacked',
-            duration: 3000,
-          });
-          if (message.match(/Http failure response for/)) {
-            const posts = await this.databaseService.get(STORAGE_KEYS.GEOJSONPOSTS);
-            if (posts) {
-              this.geoJsonDataProcessor(posts);
+    if (this.isConnection) {
+      this.postsService
+        .getGeojson({ limit: 500, offset: 0, page: 1, currentView: 'map' })
+        .pipe(untilDestroyed(this))
+        .subscribe({
+          next: async (postsResponse) => {
+            await this.databaseService.set(STORAGE_KEYS.GEOJSONPOSTS, postsResponse);
+            this.geoJsonDataProcessor(postsResponse);
+          },
+          error: async ({ message }) => {
+            this.toastService.presentToast({
+              message: 'GeoJson: ' + message,
+              layout: 'stacked',
+              duration: 3000,
+            });
+            if (message.match(/Http failure response for/)) {
+              const posts = await this.databaseService.get(STORAGE_KEYS.GEOJSONPOSTS);
+              if (posts) {
+                this.geoJsonDataProcessor(posts);
+              }
             }
-          }
-        },
-      });
+          },
+        });
+    }
   }
 
   private geoJsonDataProcessor(posts: GeoJsonPostsResponse) {

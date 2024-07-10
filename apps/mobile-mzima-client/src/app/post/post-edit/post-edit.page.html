@@ -22,7 +22,7 @@
   </ng-container>
 
   <app-select
-    [label]="surveyList.length ? 'Survey name' : 'Getting data...'"
+    [label]="surveyList.length ? 'Survey name' : 'Fetching surveys...'"
     [options]="surveyListOptions"
     [disabled]="!!postId"
     [(ngModel)]="selectedSurveyId"

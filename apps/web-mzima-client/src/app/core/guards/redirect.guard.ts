@@ -12,7 +12,7 @@ export class RedirectGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
     const id = route.paramMap.get('id');
     this.router.navigate([`/feed/${id}/${route.data['edit'] ? 'edit' : 'view'}`], {
-      queryParams: { mode: 'POST', page: 1 },
+      queryParams: { mode: 'ID', page: 1 },
     });
     return false;
   }

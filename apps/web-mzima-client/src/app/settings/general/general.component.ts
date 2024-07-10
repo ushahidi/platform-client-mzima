@@ -11,6 +11,8 @@ import { LoaderService } from '../../core/services/loader.service';
 import { LanguageService } from '../../core/services/language.service';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { EventEmitter, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @UntilDestroy()
 @Component({
@@ -19,11 +21,14 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./general.component.scss'],
 })
 export class GeneralComponent implements OnInit {
+  @Output() cancel = new EventEmitter();
   @ViewChild('mapSettings') mapSettings: SettingsMapComponent;
   public isDesktop$: Observable<boolean>;
   public generalForm: FormGroup;
   public copySuccess = false;
   public submitted = false;
+  initialFormValue: any;
+  changesMade = false;
   siteConfig: any;
   apiKey: ApiKeysResultInterface;
   uploadedFile?: File;
@@ -43,6 +48,7 @@ export class GeneralComponent implements OnInit {
     private clipboard: Clipboard,
     private breakpointService: BreakpointService,
     private notificationService: NotificationService,
+    private snackBar: MatSnackBar,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.generalForm = this.formBuilder.group({
@@ -72,6 +78,10 @@ export class GeneralComponent implements OnInit {
     this.translate.onLangChange.subscribe((newLang) => {
       this.generalForm.controls['language'].setValue(newLang.lang);
     });
+    this.generalForm.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
+      this.changesMade = true;
+    });
+    this.initialFormValue = this.generalForm.value;
   }
 
   fileUploaded(event: any) {
@@ -132,6 +142,7 @@ export class GeneralComponent implements OnInit {
         complete: () => {
           this.submitted = false;
           this.loader.hide();
+          this.changesMade = false;
         },
         error: (error) => {
           this.submitted = false;
@@ -163,7 +174,36 @@ export class GeneralComponent implements OnInit {
   }
 
   isIntegerAndZeroToNine(value: any): boolean {
-    value === '0' ? (value = parseFloat(value)) : value; // Better fix could be to fix zero being returned as string from the backend
+    value === '0' ? (value = parseFloat(value)) : value;
     return Number.isInteger(value) && value >= this.minObfuscation && value <= this.maxObfuscation;
+  }
+  public async openConfirmModal() {
+    if (this.changesMade) {
+      const confirmed = await this.confirmModalService.open({
+        title: this.translate.instant('notify.default.data_has_not_been_saved'),
+        description: this.translate.instant('notify.default.proceed_warning'),
+        confirmButtonText: 'OK',
+      });
+      if (confirmed) {
+        const currentFormValue = this.generalForm.value;
+        if (JSON.stringify(currentFormValue) !== JSON.stringify(this.initialFormValue)) {
+          this.generalForm.patchValue(this.initialFormValue);
+          this.cancel.emit();
+          this.showSnackbar('Changes discarded successfully');
+          this.changesMade = false;
+        }
+      } else {
+        // nothing will happen, will remain in the current state
+      }
+    } else {
+      this.showSnackbar('No changes made yet');
+    }
+  }
+  public showSnackbar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+    });
   }
 }
