@@ -11,7 +11,7 @@
     ></app-profile-menu-item>
   </ion-list>
 
-  <ion-title class="title">Support and Information</ion-title>
+  <ion-title class="title">{{"app.support_info" | translate}}</ion-title>
   <ion-list class="profile-menu">
     <app-profile-menu-item
       (action)="callAction($event)"
@@ -45,6 +45,8 @@
     </ion-item>
   </ng-container>
   <ng-template #emptySupportItems>
-    <ion-text color="medium" class="empty ion-text-center"> Nothing found! </ion-text>
+    <ion-text color="medium" class="empty ion-text-center">
+      {{"app.nothing_found" | translate}}
+    </ion-text>
   </ng-template>
 </app-modal>

@@ -40,7 +40,7 @@
       </div>
 
       <!-- Has options -->
-      <div class="form-row" *ngIf="hasOptions">
+      <div class="form-row form-row__options" *ngIf="hasOptions">
         <div class="form-head-panel">
           <mat-label class="form-label" [data-qa]="'field-options'"
             >{{ 'form.field_options' | translate }}
@@ -48,7 +48,9 @@
 
           <mzima-client-button
             fill="outline"
-            color="secondary"
+            color="gray"
+            size="medium"
+            class="form-row__options__button"
             (buttonClick)="addOption()"
             [data-qa]="'btn-add-option'"
           >
@@ -65,8 +67,8 @@
               (input)="onChange(i)"
               placeholder="{{ 'form.field_name_placeholder' | translate }}"
               [data-qa]="'option-' + i"
+              [disabled]="option.value === 'Other'"
             />
-
             <mzima-client-button
               matSuffix
               fill="clear"
@@ -74,7 +76,6 @@
               [iconOnly]="true"
               class="button-flat button-beta"
               (buttonClick)="removeOption(i)"
-              *ngIf="selectedFieldType.options.length > 1"
               [data-qa]="'btn-remove-option-' + i"
             >
               <mat-icon icon svgIcon="delete"></mat-icon>
@@ -83,6 +84,26 @@
           <mat-error role="alert" *ngIf="option.error">
             {{ option.error | translate }}
           </mat-error>
+        </div>
+        <div
+          *ngIf="
+            selectedFieldType?.options?.length > 0 &&
+            !selectedFieldType?.options?.includes('Other') &&
+            selectedFieldType.input !== 'select'
+          "
+        >
+          <mzima-client-button
+            fill="outline"
+            color="gray"
+            size="medium"
+            class="form-row__options__button"
+            (buttonClick)="addOther()"
+          >
+            {{ 'form.field_add_other' | translate }}
+          </mzima-client-button>
+          <p class="form-row__options__add-other">
+            {{ 'form.field_add_other_desc' | translate }}
+          </p>
         </div>
       </div>
 
@@ -209,7 +230,10 @@
 
 <ng-template #allFields>
   <div class="fields-list">
-    <div
+    <mzima-client-button
+      color="default-color"
+      size="medium__padding-equal__width-100"
+      [expand]="false"
       matRipple
       class="list-item"
       *ngFor="let field of fields"
@@ -219,7 +243,7 @@
     >
       <h3>{{ field.label | translate }}</h3>
       <p>{{ field.instructions | translate }}</p>
-    </div>
+    </mzima-client-button>
   </div>
 </ng-template>
 

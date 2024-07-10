@@ -1,21 +1,27 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { EMPTY, from, lastValueFrom, map, Observable, of, switchMap, tap } from 'rxjs';
 import {
-  generalHelpers,
   GeoJsonFilter,
   MediaService,
   PostContent,
-  postHelpers,
   PostResult,
   PostsService,
   SurveyItem,
   SurveysService,
+  generalHelpers,
+  postHelpers,
 } from '@mzima-client/sdk';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   AlertService,
   DatabaseService,
@@ -24,11 +30,23 @@ import {
   ToastService,
 } from '@services';
 import { FormValidator, preparingVideoUrl } from '@validators';
-import { PostEditForm, prepareRelationConfig, UploadFileHelper } from '../helpers';
+import {
+  BehaviorSubject,
+  EMPTY,
+  Observable,
+  from,
+  lastValueFrom,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
+import { PostEditForm, UploadFileProgressHelper, prepareRelationConfig } from '../helpers';
 
+import { dateHelper, objectHelpers } from '@helpers';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
-import { objectHelpers, dateHelper } from '@helpers';
+import { TranslateService } from '@ngx-translate/core';
 
 dayjs.extend(timezone);
 
@@ -37,6 +55,7 @@ dayjs.extend(timezone);
   selector: 'app-post-edit',
   templateUrl: 'post-edit.page.html',
   styleUrls: ['post-edit.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class PostEditPage {
   @Input() public postInput: any;
@@ -51,6 +70,7 @@ export class PostEditPage {
   private relationConfigSource: any;
   private relationConfigKey: string;
   private isSearching = false;
+  public isSubmitting: 'no' | 'yes' | 'complete' = 'no';
   public relatedPosts: PostResult[];
   public relationSearch: string;
   public selectedRelatedPost: any;
@@ -73,6 +93,7 @@ export class PostEditPage {
   public selectedSurveyId: number | null;
   public selectedSurvey: any;
   private fileToUpload: any;
+  public uploadProgress$: BehaviorSubject<number>[] = [];
   private checkedList: any[] = [];
   public isConnection = true;
   public connectionInfo = '';
@@ -95,6 +116,7 @@ export class PostEditPage {
     private dataBaseService: DatabaseService,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
+    private translateService: TranslateService,
   ) {
     this.route.queryParams.subscribe({
       next: (queryParams) => {
@@ -113,7 +135,7 @@ export class PostEditPage {
 
     if (this.post) {
       this.selectedSurveyId = this.post.form_id!;
-      this.loadForm(this.post.post_content);
+      this.loadForm(this.selectedSurveyId, this.post.post_content);
     }
 
     this.transformSurveys();
@@ -281,6 +303,9 @@ export class PostEditPage {
               this.relationConfigForm = relationConfigForm;
               this.relationConfigSource = relationConfigSource;
               this.relationConfigKey = relationConfigKey;
+              break;
+            case 'media':
+              this.uploadProgress$[field.id] = new BehaviorSubject<number>(0);
               break;
           }
 
@@ -540,12 +565,28 @@ export class PostEditPage {
     }
   }
 
+  public backNavigation(): void {
+    this.clearData();
+    this.router.navigate([
+      this.queryParams['profile']
+        ? 'profile/posts'
+        : this.isConnection && this.postId
+        ? this.postId
+        : '/',
+    ]);
+  }
+
+  public cancelPost(): void {
+    this.backNavigation();
+  }
+
   /**
    * Checking post information and preparing data
    */
   public async submitPost(): Promise<void> {
     if (this.form.disabled) return;
 
+    this.isSubmitting = 'yes';
     try {
       await this.preparationData();
     } catch (error: any) {
@@ -583,11 +624,11 @@ export class PostEditPage {
     if (this.isConnection) {
       await this.uploadPost();
     } else {
-      await this.postComplete(
-        'Thank you for your report. A message will be sent when the connection is restored.',
-      );
+      await this.postComplete(this.translateService.instant('app.info.post_submitted_offline'));
+      this.isSubmitting = 'complete';
       this.backNavigation();
     }
+    this.isSubmitting = 'complete';
   }
 
   /**
@@ -606,26 +647,53 @@ export class PostEditPage {
   async uploadPost() {
     const pendingPosts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
     console.log('uploadPosts > pendingPosts', pendingPosts);
+    const promises: Promise<any>[] = [];
     for (let postData of pendingPosts) {
-      if (postData?.file?.upload) {
-        postData = await new UploadFileHelper(this.mediaService).uploadFile(
-          postData,
-          postData.file,
-        );
+      for (const field of postData.post_content[0].fields) {
+        if (field.type === 'media') {
+          if (field?.file?.delete) {
+            postData = await this.deleteFile(postData, field.file);
+          } else if (field.value.value && typeof field.value.value !== 'number') {
+            const photo = {
+              data: field.value.value.photo.data,
+              name: field.value.value.photo.name,
+              caption: field.value.value.caption,
+              path: field.value.value.photo.path,
+            };
+            const fieldUpload = new UploadFileProgressHelper(this.mediaService).uploadFileField(
+              field,
+              photo,
+              (progress) =>
+                setTimeout(() => {
+                  this.uploadProgress$[field.id].next(progress);
+                }),
+            );
+            promises.push(fieldUpload);
+          }
+        }
       }
 
       if (postData?.file?.delete) {
         postData = await this.deleteFile(postData, postData.file);
       }
+      delete postData.file;
 
-      if (this.postId) {
-        this.updatePost(this.postId, postData);
-      } else {
-        if (!this.atLeastOneFieldHasValidationError) {
-          this.createPost(postData);
+      await Promise.all(promises).then((results) => {
+        results.forEach((result) => {
+          for (const [index, field] of postData.post_content[0].fields.entries()) {
+            if (field.id === result.id) postData.post_content[0].fields[index] = result;
+          }
+        });
+        if (this.postId) {
+          this.updatePost(this.postId, postData);
+        } else {
+          if (!this.atLeastOneFieldHasValidationError) {
+            this.createPost(postData);
+          }
         }
-      }
+      });
     }
+
     await this.dataBaseService.set(STORAGE_KEYS.PENDING_POST_KEY, []);
   }
 
@@ -672,9 +740,7 @@ export class PostEditPage {
         }
       },
       complete: async () => {
-        await this.postComplete(
-          'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
-        );
+        await this.postComplete(this.translateService.instant('app.info.post_submitted_online'));
         this.backNavigation();
       },
     });
@@ -715,17 +781,6 @@ export class PostEditPage {
     } else {
       this.cancel.emit();
     }
-  }
-
-  public backNavigation(): void {
-    this.clearData();
-    this.router.navigate([
-      this.queryParams['profile']
-        ? 'profile/posts'
-        : this.isConnection && this.postId
-        ? this.postId
-        : '/',
-    ]);
   }
 
   public preventSubmitIncaseTheresNoBackendValidation() {

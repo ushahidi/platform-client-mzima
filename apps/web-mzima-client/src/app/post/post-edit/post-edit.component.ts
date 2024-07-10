@@ -47,7 +47,7 @@ import { objectHelpers, formValidators, dateHelper } from '@helpers';
 import { PhotoRequired, PointValidator } from '../../core/validators';
 import { Observable, lastValueFrom, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LanguageInterface } from '../../core/interfaces/language.interface';
+import { LanguageInterface } from '@mzima-client/sdk';
 import { MatSelectChange } from '@angular/material/select';
 
 dayjs.extend(timezone);
@@ -207,7 +207,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         if (availableLanguages.length) {
           availableLanguages.unshift(result.enabled_languages.default);
           availableLanguages.forEach((langCode: string) => {
-            this.postLanguages.push(languages.find((lang) => lang.code === langCode)!);
+            this.postLanguages.push(
+              languages.find((lang) => lang.code.split('-')[0] === langCode.split('-')[0])!,
+            );
           });
           this.selectedLanguage = this.postLanguages[0];
         }

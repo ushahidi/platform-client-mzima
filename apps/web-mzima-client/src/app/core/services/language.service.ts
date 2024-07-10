@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { generalHelpers } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
-import { LanguageInterface } from '@models';
+import { LanguageInterface } from '@mzima-client/sdk';
 import LangJSON from '../../../assets/locales/languages.json';
 import { SessionService } from './session.service';
 

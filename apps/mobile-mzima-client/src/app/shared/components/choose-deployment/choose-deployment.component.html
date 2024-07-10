@@ -20,7 +20,7 @@
 
   <ng-container *ngIf="deploymentList.length && !isSearchView">
     <ion-text color="medium" class="title ion-padding-horizontal">
-      Choose one Deployment from list
+      {{ 'app.choose_deployment' | translate }}
     </ion-text>
     <ion-list class="deployment-list">
       <app-deployment-item
@@ -55,7 +55,7 @@
       </ng-container>
       <ng-template #emptyList>
         <ion-text class="empty" color="medium">
-          Locate a deployment: Search by keyword or enter a URL
+          {{ 'app.locate_deployment' | translate }}
         </ion-text>
       </ng-template>
     </ng-container>

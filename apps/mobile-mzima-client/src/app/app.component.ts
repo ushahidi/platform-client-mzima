@@ -4,7 +4,13 @@ import { STORAGE_KEYS } from '@constants';
 import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
 import { CollectionsService, MediaService, PostsService, SurveysService } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DatabaseService, NetworkService, ListenerService, ToastService } from '@services';
+import {
+  DatabaseService,
+  NetworkService,
+  ListenerService,
+  ToastService,
+  LanguageService,
+} from '@services';
 import {
   Subject,
   concatMap,
@@ -19,6 +25,8 @@ import {
 import { BaseComponent } from './base.component';
 import { UploadFileHelper } from './post/helpers';
 import { Location } from '@angular/common';
+import { LanguageInterface } from '@mzima-client/sdk';
+import { TranslateService } from '@ngx-translate/core';
 
 @UntilDestroy()
 @Component({
@@ -28,6 +36,8 @@ import { Location } from '@angular/common';
 })
 export class AppComponent extends BaseComponent {
   private toastMessage$ = new Subject<string>();
+  public languages: LanguageInterface[];
+  public selectedLanguage$: any;
 
   constructor(
     override router: Router,
@@ -42,6 +52,9 @@ export class AppComponent extends BaseComponent {
     private collectionsService: CollectionsService,
     private surveysService: SurveysService,
     private listenerService: ListenerService,
+    private languageService: LanguageService,
+    private translateService: TranslateService,
+
     @Optional() override routerOutlet?: IonRouterOutlet,
   ) {
     super(router, platform, toastService, alertCtrl, networkService, location, routerOutlet);
@@ -60,8 +73,20 @@ export class AppComponent extends BaseComponent {
   private loadInitialData() {
     this.getSurveys(false).subscribe();
     this.getCollections(false).subscribe();
+    this.loadLanguageInformation();
   }
 
+  public loadLanguageInformation() {
+    this.selectedLanguage$ = this.languageService.selectedLanguage$.pipe(untilDestroyed(this));
+    this.languageService.languages$
+      .pipe(untilDestroyed(this))
+      .subscribe((langs: LanguageInterface[]) => {
+        const initialLanguage = this.languageService.initialLanguage;
+        this.languages = langs.sort((lang: LanguageInterface) => {
+          return lang.code == initialLanguage ? -1 : 0;
+        });
+      });
+  }
   private initNetworkListener() {
     this.networkService.networkStatus$
       .pipe(
@@ -126,12 +151,19 @@ export class AppComponent extends BaseComponent {
 
   async uploadPendingPosts() {
     const posts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
-    for (let post of posts) {
-      if (post?.file?.upload)
-        post = await new UploadFileHelper(this.mediaService).uploadFile(post, post.file);
-      await firstValueFrom(this.postsService.post(post));
+    if (posts) {
+      this.toastMessage$.next(
+        this.translateService.instant('app.info.posts_uploading', { num_posts: posts.length }),
+      );
+      for (let post of posts) {
+        if (post?.file?.upload)
+          post = await new UploadFileHelper(this.mediaService).uploadFile(post, post.file);
+        await firstValueFrom(this.postsService.post(post));
+      }
+      this.toastMessage$.next(
+        this.translateService.instant('app.info.posts_uploaded', { num_posts: posts.length }),
+      );
     }
-    this.toastMessage$.next('All pending posts uploaded to the server');
     await this.dataBaseService.set(STORAGE_KEYS.PENDING_POST_KEY, []);
   }
 

@@ -259,6 +259,13 @@ export class CreateFieldModalComponent implements OnInit {
     this.fieldOptions.push({ value: '', error: '' });
   }
 
+  public addOther() {
+    if (!this.selectedFieldType.options) this.selectedFieldType.options = [];
+    if (this.selectedFieldType.options.includes('Other')) return;
+    this.selectedFieldType.options.push('Other');
+    this.fieldOptions.push({ value: 'Other', error: '' });
+  }
+
   private setTempSelectedFieldType() {
     this.fieldOptions = this.selectedFieldType.options.map((opt: string) => ({
       value: opt,

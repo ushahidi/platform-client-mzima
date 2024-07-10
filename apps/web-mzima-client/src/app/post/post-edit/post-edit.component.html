@@ -34,6 +34,20 @@
     <div class="translate-container">
       <h1 class="survey-name">{{ surveyName }}</h1>
       <div class="form-row" *ngIf="postLanguages.length">
+        <mat-form-field appearance="outline" class="feed-page__control">
+          <mat-select
+            name="language"
+            disableOptionCentering
+            [(ngModel)]="selectedLanguage"
+            [placeholder]="'app.select_language' | translate"
+            (selectionChange)="selectLanguageEmit($event)"
+            [data-qa]="'app.select_language'"
+          >
+            <mat-option *ngFor="let language of postLanguages" [value]="language">
+              {{ language?.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <mzima-client-button
           fill="clear"
           color="secondary"
@@ -45,20 +59,6 @@
         >
           <mat-icon icon svgIcon="tooltip"></mat-icon>
         </mzima-client-button>
-        <mat-form-field appearance="outline" class="feed-page__control">
-          <mat-select
-            name="language"
-            disableOptionCentering
-            [(ngModel)]="selectedLanguage"
-            [placeholder]="'select_language' | translate"
-            (selectionChange)="selectLanguageEmit($event)"
-            [data-qa]="'select_language'"
-          >
-            <mat-option *ngFor="let language of postLanguages" [value]="language">
-              {{ language?.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
       </div>
     </div>
     <form

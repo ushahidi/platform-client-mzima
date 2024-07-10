@@ -9,8 +9,8 @@
             label="Name"
             [required]="true"
             formControlName="name"
-            placeholder="Enter name"
-            hint="The name you enter will be a display name"
+            placeholder="{{'app.enter_name' | translate}}"
+            hint="{{'app.display_name_hint' | translate}}"
             [errors]="fieldErrorMessages(form.controls['name'], 'name')"
           >
           </app-form-control>
@@ -19,7 +19,7 @@
             label="Email"
             [required]="true"
             formControlName="email"
-            placeholder="Enter your email"
+            placeholder="{{'app.enter_email' | translate}}"
             [errors]="fieldErrorMessages(form.controls['email'], 'email')"
           >
           </app-form-control>
@@ -29,7 +29,7 @@
             [required]="true"
             [togglePassword]="true"
             formControlName="password"
-            placeholder="Enter password"
+            placeholder="{{'app.enter_password' | translate}}"
             [errors]="fieldErrorMessages(form.controls['password'], 'password')"
             [hint]="!form.controls['password'].value?.length ? 'Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol.' : undefined"
           >
@@ -43,13 +43,13 @@
         </div>
         <div class="agreement">
           <app-checkbox formControlName="agreement">
-            I agree to Ushahidi
+            {{"app.i_agree" | translate}}
             <a (click)="openLink($event, 'https://www.ushahidi.com/privacy-policy')"
-              >Privacy Policy</a
+              >{{"app.privacy_policy"|translate}}</a
             >
-            and <br />
+            {{"and_the" | translate}} <br />
             <a (click)="openLink($event, 'https://www.ushahidi.com/terms-of-service')"
-              >Terms and Conditions</a
+              >{{"app.terms_and_conditions"|translate}}</a
             >.
           </app-checkbox>
         </div>

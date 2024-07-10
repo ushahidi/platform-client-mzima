@@ -245,6 +245,8 @@
     "edit_post_type": "Edit Survey: {{form}}",
     "edit_post_types": "Edit Surveys",
     "field_add_option": "Add",
+    "field_add_other": "Add other",
+    "field_add_other_desc": "Allows entering a custom option that is not listed among the provided choices.",
     "field_default": "Field Default",
     "field_key": "Field Key",
     "field_type": "Field Type",
@@ -1772,7 +1774,7 @@
       "destroy_confirm_desc": "Deleting this category will remove it from all existing posts. This action cannot be undone.",
       "destroy_success": "Category deleted",
       "destroy_error": "Unable to delete category, please try again",
-      "bulk_destroy_confirm": "Are you sure you want to delete {{count}} categories?",
+      "bulk_destroy_confirm": "Are you sure you want to delete these {{count}} categories?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
       "bulk_destroy_success": "{{count}} categories deleted",
       "bulk_destroy_success_countless": "Categories deleted"

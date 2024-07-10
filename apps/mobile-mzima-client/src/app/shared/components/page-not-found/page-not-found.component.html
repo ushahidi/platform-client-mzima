@@ -1,9 +1,8 @@
 <ion-content class="page-not-found ion-padding">
   <ion-text class="page-not-found__code">404</ion-text>
-  <ion-text class="page-not-found__title" color="primary"> That URL doesn't exist </ion-text>
+  <ion-text class="page-not-found__title" color="primary"> {{ 'app.no_url' | translate }}</ion-text>
   <p class="page-not-found__description">
-    Oops... Sorry, we can’t find the page that you’re looking for. <br />
-    Please search by another phrase or go back to the Map View.
+    {{ 'app.404' | translate }}
   </p>
-  <app-button routerLink="/">Go to the Map</app-button>
+  <app-button routerLink="/">{{ 'app.go_to_map' | translate }}</app-button>
 </ion-content>

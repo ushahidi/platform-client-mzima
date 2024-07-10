@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
@@ -28,6 +28,9 @@ interface LocalFile {
   ],
 })
 export class ImageUploaderComponent implements ControlValueAccessor {
+  constructor(domSanitizer: DomSanitizer) {
+    this.domSanitizer = domSanitizer;
+  }
   @Input() public hasCaption: boolean;
   @Input() public requiredError?: boolean;
   @Input() public isConnection: boolean;
@@ -36,11 +39,12 @@ export class ImageUploaderComponent implements ControlValueAccessor {
   captionControl = new FormControl('', AlphanumericValidator());
   id?: number;
   photo: LocalFile | null;
-  preview: string | SafeUrl | null;
+  previewUrl: string | SafeUrl | null;
   isDisabled = false;
   upload = false;
   onChange: any = () => {};
   onTouched: any = () => {};
+  domSanitizer: DomSanitizer;
 
   writeValue(obj: any): void {
     if (obj) {
@@ -48,7 +52,9 @@ export class ImageUploaderComponent implements ControlValueAccessor {
       this.upload = false;
       this.captionControl.patchValue(obj.caption);
       this.id = obj.id;
-      this.photo = this.preview = obj.photo;
+      this.photo = obj.photo;
+      if (typeof obj.photo === 'string') this.previewUrl = obj.photo;
+      else this.previewUrl = this.domSanitizer.bypassSecurityTrustUrl(obj.photo.data);
     }
   }
 
@@ -69,7 +75,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
    */
   async takePicture() {
     try {
-      if (Capacitor.getPlatform() != 'web') await Camera.requestPermissions();
+      if (Capacitor.getPlatform() !== 'web') await Camera.requestPermissions();
       const options = {
         quality: 100,
         allowEditing: false,
@@ -77,6 +83,7 @@ export class ImageUploaderComponent implements ControlValueAccessor {
         width: 600,
         resultType: CameraResultType.Uri,
       };
+      this.id = undefined;
       const image = await Camera.getPhoto(options);
       // Check if the storage folder exists or can be read
       const folderExist = await this.checkFolder();
@@ -97,16 +104,18 @@ export class ImageUploaderComponent implements ControlValueAccessor {
     this.fileName = new Date().getTime() + '.jpeg';
     const filePath = `${IMAGE_DIR}/${this.fileName}`;
     try {
-      const savedFile = await Filesystem.writeFile({
-        directory: Directory.Data,
-        path: filePath,
-        data: base64Data,
-      });
       // const file = await this.loadFile();
 
-      if (Capacitor.getPlatform() === 'hybrid') {
+      if (['hybrid'].includes(Capacitor.getPlatform())) {
         // Display the new image by rewriting the 'file://' path to HTTP
         // Details: https://ionicframework.com/docs/building/webview#file-protocol
+
+        const savedFile = await Filesystem.writeFile({
+          directory: Directory.Data,
+          path: filePath,
+          data: base64Data,
+        });
+
         this.photo = {
           name: this.fileName,
           path: savedFile.uri,
@@ -122,9 +131,8 @@ export class ImageUploaderComponent implements ControlValueAccessor {
           // data: `data:image/jpeg;base64,${file.data}`,
         };
       }
-
+      this.previewUrl = this.domSanitizer.bypassSecurityTrustUrl(this.photo.data);
       this.upload = true;
-      this.preview = null;
     } catch (e) {
       console.log(e);
     }
@@ -132,13 +140,15 @@ export class ImageUploaderComponent implements ControlValueAccessor {
 
   async deleteSelectedImage() {
     try {
-      await Filesystem.deleteFile({
-        directory: Directory.Data,
-        path: this.photo!.path,
-      });
+      if (Capacitor.getPlatform() === 'hybrid') {
+        await Filesystem.deleteFile({
+          directory: Directory.Data,
+          path: this.photo!.path,
+        });
+      }
       this.photo = null;
       this.upload = false;
-      this.preview = null;
+      this.previewUrl = null;
       this.transferData({ delete: true });
     } catch (e) {
       console.log(e);

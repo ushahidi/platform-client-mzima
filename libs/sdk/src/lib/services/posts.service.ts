@@ -1,6 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, lastValueFrom, map, mergeMap, Observable, Subject, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  finalize,
+  lastValueFrom,
+  map,
+  mergeMap,
+  Observable,
+  Subject,
+  tap,
+} from 'rxjs';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
 import {
@@ -36,6 +45,11 @@ export class PostsService extends ResourceService<any> {
   public totalPosts$ = this.totalPosts.asObservable();
   private totalGeoPosts = new Subject<number>();
   public totalGeoPosts$ = this.totalGeoPosts.asObservable();
+  private isLoadingPosts = new Subject<boolean>();
+  public isLoadingPosts$ = this.isLoadingPosts.asObservable();
+  private responseObject: any;
+  private awaitedResponse = new Subject<any>();
+  public awaitedResponse$ = this.awaitedResponse.asObservable();
 
   constructor(
     protected override httpClient: HttpClient,
@@ -147,6 +161,12 @@ export class PostsService extends ResourceService<any> {
         }),
         tap((response) => {
           this.totalPosts.next(response.meta.total);
+          // set response here to be used inside of finalize()
+          this.responseObject = response;
+        }),
+        finalize(() => {
+          this.isLoadingPosts.next(false);
+          this.awaitedResponse.next(this.responseObject);
         }),
       );
   }
@@ -183,16 +203,26 @@ export class PostsService extends ResourceService<any> {
     postParams.page = filter?.page ?? postParams.page;
     postParams.currentView = filter?.currentView ?? postParams.currentView;
     postParams.limit = filter?.limit ?? postParams.limit;
+
     postParams['status[]'] = filter?.['status[]'] ?? postParams['status[]'];
     if (
       postParams['form[]'] === undefined ||
       (postParams['form[]'].length === 0 && postParams['form'])
     )
       postParams['form[]'] = postParams['form'];
-    if (postParams['status[]'] !== undefined && postParams['status[]'].length === 0)
+    if (
+      postParams['status[]'] === undefined ||
+      (postParams['status[]'].length === 0 && postParams['status'])
+    )
       postParams['status[]'] = postParams['status'];
-    if (postParams['source[]'] !== undefined && postParams['source[]'].length === 0)
+    if (
+      postParams['source[]'] === undefined ||
+      (postParams['source[]'].length === 0 && postParams['source'])
+    )
       postParams['source[]'] = postParams['source'];
+    if (postParams.tags?.length) {
+      postParams['tags[]'] = postParams.tags;
+    }
 
     // Allocate start and end dates, and remove originals
     if (params.date_before || params.date_after) {
@@ -229,10 +259,6 @@ export class PostsService extends ResourceService<any> {
       delete postParams.center_point;
     }
 
-    if (postParams.tags?.length) {
-      postParams['tags[]'] = postParams.tags;
-    }
-
     // Clean up new params based on which view is currently active
     if (postParams.currentView === 'map') {
       postParams.has_location = 'mapped';
@@ -259,7 +285,7 @@ export class PostsService extends ResourceService<any> {
       postParams['form[]'] = ['none'];
     }
 
-    if (isStats) {
+    if (isStats || postParams.currentView === 'myposts') {
       delete postParams['form[]'];
     }
 

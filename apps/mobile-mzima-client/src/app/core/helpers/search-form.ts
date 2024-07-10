@@ -18,6 +18,8 @@ export const statuses = [
   },
 ];
 
+export const loggedOutStatuses = [statuses[0]];
+
 export const sources = [
   {
     name: 'Web',
@@ -136,6 +138,11 @@ export const DEFAULT_FILTERS: Filter = {
     },
     distance: 1,
   },
+};
+
+export const DEFAULT_FILTERS_LOGGED_OUT = {
+  ...DEFAULT_FILTERS,
+  status: ['published'],
 };
 
 export const compareForms = (form1: any, form2: any) => {
