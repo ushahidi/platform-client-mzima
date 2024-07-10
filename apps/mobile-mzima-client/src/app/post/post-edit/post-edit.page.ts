@@ -350,12 +350,24 @@ export class PostEditPage {
     }
   }
 
+  public isInvalid(key: string) {
+    const hasError =
+      this.form.get(key)?.value?.includes('Other') &&
+      !this.form.get('other' + key)?.value &&
+      this.form.get('other' + key)?.touched
+        ? true
+        : null;
+    this.form.controls[key].setErrors({ emptyOther: hasError });
+    if (!hasError) this.form.controls[key].updateValueAndValidity();
+    return hasError;
+  }
+
   public changeOtherOptions(key: string, type: string) {
     if (type === 'checkbox') {
       const values = this.form.controls[key].value || [];
       if (!values.includes('Other')) {
         values.push('Other');
-        this.form.patchValue({ [key]: values });
+        // this.form.patchValue({ [key]: values });
       }
     } else {
       this.updateFormControl(key, 'Other');

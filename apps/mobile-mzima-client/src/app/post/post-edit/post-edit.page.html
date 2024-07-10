@@ -289,10 +289,7 @@
                       (focus)="changeOtherOptions(field.key, field.input)"
                     />
                   </div>
-                  <div
-                    class="field-error"
-                    *ngIf="option === 'Other' &&form.get(field.key)?.value === 'Other' && !form.get('other' + field.key)?.value && form.get('other'+field.key)?.touched"
-                  >
+                  <div class="field-error" *ngIf="option === 'Other' && isInvalid(field.key)">
                     <ion-text color="danger"> {{'app.emtpy_field_error' | translate}} </ion-text>
                   </div>
                 </div>
@@ -343,10 +340,7 @@
                       (focus)="changeOtherOptions(field.key, field.input)"
                     />
                   </div>
-                  <div
-                    class="field-error"
-                    *ngIf="option === 'Other' && form.get(field.key)?.value?.includes('Other') && !form.get('other' + field.key)?.value && form.get('other'+field.key)?.touched"
-                  >
+                  <div class="field-error" *ngIf="option === 'Other' && isInvalid(field.key)">
                     <ion-text color="danger"> {{'app.emtpy_field_error' | translate}} </ion-text>
                   </div>
                 </ng-container>
