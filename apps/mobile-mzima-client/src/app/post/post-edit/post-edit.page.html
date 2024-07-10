@@ -289,11 +289,16 @@
                       (focus)="changeOtherOptions(field.key, field.input)"
                     />
                   </div>
+                  <div
+                    class="field-error"
+                    *ngIf="option === 'Other' &&form.get(field.key)?.value === 'Other' && !form.get('other' + field.key)?.value && form.get('other'+field.key)?.touched"
+                  >
+                    <ion-text color="danger"> {{'app.emtpy_field_error' | translate}} </ion-text>
+                  </div>
                 </div>
               </ion-radio-group>
             </div>
           </ng-container>
-
           <!-- checkbox -->
           <ng-container *ngIf="field.input === 'checkbox'">
             <div class="form-control--section">
@@ -337,6 +342,12 @@
                       [formControlName]="'other'+field.key"
                       (focus)="changeOtherOptions(field.key, field.input)"
                     />
+                  </div>
+                  <div
+                    class="field-error"
+                    *ngIf="option === 'Other' && form.get(field.key)?.value?.includes('Other') && !form.get('other' + field.key)?.value && form.get('other'+field.key)?.touched"
+                  >
+                    <ion-text color="danger"> {{'app.emtpy_field_error' | translate}} </ion-text>
                   </div>
                 </ng-container>
               </ng-container>
@@ -523,7 +534,6 @@
               ></app-textarea-control>
             </div>
           </ng-container>
-
           <div
             class="field-error"
             *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched"
