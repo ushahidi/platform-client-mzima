@@ -11,7 +11,7 @@
     "
   >
     <ng-container *ngFor="let field of post_content.fields | sortByField : 'priority' : 'asc'">
-      <div class="post__group" *ngIf="field.value?.id">
+      <div class="post__group" *ngIf="field.value">
         <ng-container *ngIf="field.type !== 'title' && field.type !== 'description'">
           <h4>{{ field.label }}</h4>
         </ng-container>
@@ -29,7 +29,6 @@
         </ng-container>
 
         <ng-container *ngIf="field.input === 'tags'">
-          <!--        {{ field | json }}-->
           <ng-container *ngFor="let field of post_content.fields">
             <ng-container>
               <ul class="category__item">
@@ -37,17 +36,11 @@
                   *ngFor="let value of field.value"
                   [ngClass]="{ 'category__margin-item': value.parent_id }"
                 >
+                  <app-icon class="category__item__icon" slot="icon-only" name="tag"></app-icon>
                   {{ value.tag }}
                 </li>
               </ul>
             </ng-container>
-          </ng-container>
-
-          <ng-container *ngFor="let category of categories">
-            <div class="category" *ngIf="!isParentCategory(categories, category.id)">
-              <mat-icon svgIcon="tag" class="category__icon"></mat-icon>
-              {{ category.tag }}
-            </div>
           </ng-container>
         </ng-container>
 
