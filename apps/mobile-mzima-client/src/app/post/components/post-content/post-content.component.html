@@ -11,7 +11,7 @@
     "
   >
     <ng-container *ngFor="let field of post_content.fields | sortByField : 'priority' : 'asc'">
-      <div class="post__group" *ngIf="field.value">
+      <div class="post__group" *ngIf="field.value?.id">
         <ng-container *ngIf="field.type !== 'title' && field.type !== 'description'">
           <h4>{{ field.label }}</h4>
         </ng-container>
@@ -27,23 +27,6 @@
         <ng-container *ngIf="field.input === 'textarea'">
           <p [innerHTML]="field.value.value"></p>
         </ng-container>
-
-        <ng-container *ngIf="field.input === 'tags'">
-          <ng-container *ngFor="let field of post_content.fields">
-            <ng-container>
-              <ul class="category__item">
-                <li
-                  *ngFor="let value of field.value"
-                  [ngClass]="{ 'category__margin-item': value.parent_id }"
-                >
-                  <app-icon class="category__item__icon" slot="icon-only" name="tag"></app-icon>
-                  {{ value.tag }}
-                </li>
-              </ul>
-            </ng-container>
-          </ng-container>
-        </ng-container>
-
         <ng-container *ngIf="field.input === 'date'">
           <p>{{ getDate(field.value.value, 'LL') }}</p>
         </ng-container>
@@ -136,6 +119,21 @@
             <code>{{ field.value.value }}</code>
           </span>
         </ng-container>
+      </div>
+
+      <div class="post__group" *ngIf="field.value && field.input === 'tags'">
+        <h4>{{ field.label }}</h4>
+        <ul class="category__item">
+          <li
+            *ngFor="let value of field.value"
+            [ngClass]="{ 'category__margin-item': value.parent_id }"
+          >
+            <p>
+              <app-icon class="category__item__icon" slot="icon-only" name="tag"></app-icon>
+              {{ value.tag }}
+            </p>
+          </li>
+        </ul>
       </div>
     </ng-container>
   </ng-container>
