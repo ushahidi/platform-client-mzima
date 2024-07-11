@@ -9,7 +9,7 @@ class CategoryFunctions {
   }
 
   open_category_list_page() {
-    cy.get(CategoryLocators.stngsBtn).click();
+    cy.get(CategoryLocators.stngsBtn).scrollIntoView().click();
     cy.get(CategoryLocators.ctgryBtn).click();
     cy.url().should('include', '/settings/categories');
   }
