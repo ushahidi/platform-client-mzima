@@ -59,8 +59,10 @@ class CategoryFunctions {
     //confirm delete
     cy.get(CategoryLocators.confirmdeleteBtn).click();
 
+    //dismiss confirmation toast
     cy.get('.mat-snack-bar-container').should('be.visible');
     cy.contains('Category deleted').should('be.visible');
+    cy.contains('Close').click();
   }
 
   verify_child_category_deleted() {
