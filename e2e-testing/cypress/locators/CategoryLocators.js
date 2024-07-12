@@ -25,6 +25,7 @@ const CategoryLocators = {
   postDescField: '[data-qa="description"]',
   savePostBtn: '[data-qa="btn-post-item-submit"]',
   addNewFieldModal: '[data-qa="new-field-modal"]',
+  selectAllCategories: '[data-qa="select_all"]',
 };
 
 export const getUniqueSelector = (name) => name.split(' ').join('-').toLowerCase();
