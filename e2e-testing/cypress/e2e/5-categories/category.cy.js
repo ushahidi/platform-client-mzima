@@ -39,10 +39,10 @@ describe('Automated Tests for Categories', () => {
     categoryFunctions.verify_child_category_deleted('Translated');
   });
 
-  //deletes category called Translation
+  //deletes category called Only me parent
   it('Deletes a Parent Category - Details Page', () => {
     categoryFunctions.open_category_list_page();
-    categoryFunctions.delete_category_from_details_page('Translation');
-    categoryFunctions.verify_child_category_deleted('Translation');
+    categoryFunctions.delete_category_from_details_page('Only me parent');
+    categoryFunctions.verify_child_category_deleted('Only me parent');
   });
 });
