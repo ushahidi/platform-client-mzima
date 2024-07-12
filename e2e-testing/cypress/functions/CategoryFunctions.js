@@ -104,7 +104,7 @@ class CategoryFunctions {
 
   verify_child_category_exists_under_parent() {
     //click dropdown to reveal child
-    cy.get('[data-qa="toggle-children"]').eq(9).click();
+    cy.get('[data-qa="toggle-children"]').eq(8).click();
     cy.get(
       `[data-qa="${getUniqueSelector(this.uniqueChildCtgry)}-(${getUniqueSelector(
         this.uniqueParentCtgry,
