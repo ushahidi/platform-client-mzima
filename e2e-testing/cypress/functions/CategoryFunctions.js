@@ -93,13 +93,17 @@ class CategoryFunctions {
     cy.contains('Children A').should('not.exist');
   }
 
-  delete_category_details_page() {
+  delete_category_from_details_page(category_name) {
     //click category to open details page
-    cy.get('category name').click();
+    //target Translation Categories
+    cy.get(CategoryLocators.toggleChildrenBtn).eq(3).click();
+    cy.get(category_name).click();
     //click delete to delete category
     cy.get(CategoryLocators.categoryDeleteBtn).click();
     //confirm deletion
-    cy.get(CategoryLocators.categoryDeleteBtn).click();
+    cy.get(CategoryLocators.confirmdeleteBtn).click();
+    //verify site navigates to categories page on successful deletion
+    cy.url().should('eq', Cypress.config().baseUrl + '/settings/categories');
   }
 
   verify_child_category_exists_under_parent() {
