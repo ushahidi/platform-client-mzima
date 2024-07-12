@@ -98,7 +98,7 @@ class CategoryFunctions {
     cy.get(CategoryLocators.surveyNameField).type('Survey title with categories');
     cy.get(CategoryLocators.surveyDescriptionField).type('Survey description with categories');
     cy.get(CategoryLocators.addNewFieldBtn).click();
-    cy.get(`[data-qa="select-survey.categories"]`).find('.mzima-button').should('exist').click();
+    cy.get('.mzima-button').eq(14).click();
     cy.get(CategoryLocators.selectAllCategories).click();
     cy.get(CategoryLocators.saveFieldBtn).click();
   }
