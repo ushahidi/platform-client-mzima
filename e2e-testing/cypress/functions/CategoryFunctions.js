@@ -66,16 +66,16 @@ class CategoryFunctions {
     cy.contains('Close').click();
   }
 
-  verify_child_category_deleted() {
+  verify_child_category_deleted(child_category_deleted) {
     //verify category no longer exists
-    cy.contains('Only me children').should('not.exist');
+    cy.contains(child_category_deleted).should('not.exist');
 
     //navigate to data view and verify deleted category does not exist under filters
     cy.get(CategoryLocators.dataViewBtn).click();
     cy.get('[data-qa="search-form__filters"]').click();
 
     cy.get(CategoryLocators.categoryFilterBtn).should('be.visible').click();
-    cy.contains('Children B').should('not.exist');
+    cy.contains(child_category_deleted).should('not.exist');
   }
 
   verify_parent_category_deleted() {
