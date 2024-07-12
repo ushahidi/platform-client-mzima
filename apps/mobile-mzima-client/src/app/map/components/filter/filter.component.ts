@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { FilterControl, FilterControlOption } from '@models';
 import { CategoriesService, CategoryInterface, SavedsearchesService } from '@mzima-client/sdk';
-import { AlertService, SessionService, ToastService } from '@services';
+import { AlertService, NetworkService, SessionService, ToastService } from '@services';
 import { searchFormHelper } from '@helpers';
 import _ from 'lodash';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -53,6 +53,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
     private categoriesService: CategoriesService,
     private sessionService: SessionService,
     private toastService: ToastService,
+    private networkService: NetworkService,
   ) {
     this.sessionService.currentUserData$.subscribe({
       next: () => {
@@ -144,28 +145,30 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
 
   private getSavedFilters(): void {
     this.isOptionsLoading = true;
-    this.savedsearchesService.get().subscribe({
-      next: (response) => {
-        this.options = response.results.map((filter) => ({
-          value: filter.id,
-          label: filter.name,
-          checked: filter.id === this.filter.value,
-          info: `Applied filters: ${this.getObjectKeysCount(filter.filter)} of 24`,
-        }));
-        this.isOptionsLoading = false;
-      },
-      error: ({ message, status }) => {
-        this.isOptionsLoading = false;
-        this.toastService.presentToast({
-          message,
-          layout: 'stacked',
-          duration: 3000,
-        });
-        if (message.match(/Http failure response for/) && status !== 404) {
-          setTimeout(() => this.getSavedFilters(), 5000);
-        }
-      },
-    });
+    if (this.networkService.getCurrentNetworkStatus()) {
+      this.savedsearchesService.get().subscribe({
+        next: (response) => {
+          this.options = response.results.map((filter) => ({
+            value: filter.id,
+            label: filter.name,
+            checked: filter.id === this.filter.value,
+            info: `Applied filters: ${this.getObjectKeysCount(filter.filter)} of 24`,
+          }));
+          this.isOptionsLoading = false;
+        },
+        error: ({ message, status }) => {
+          this.isOptionsLoading = false;
+          this.toastService.presentToast({
+            message: 'Saved Filters: ' + message,
+            layout: 'stacked',
+            duration: 3000,
+          });
+          if (message.match(/Http failure response for/) && status !== 404) {
+            setTimeout(() => this.getSavedFilters(), 5000);
+          }
+        },
+      });
+    }
   }
 
   private getDataSources(): void {
