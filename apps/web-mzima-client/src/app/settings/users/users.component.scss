@@ -38,6 +38,18 @@
         }
       }
     }
+    //     .p-datatable .p-sortable-column.p-highlight{
+    // color: var(--color-light-contrast);
+    //     }
+    // .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon{
+    //   color: var(--color-light-contrast);
+    // }
+    .p-datatable .p-datatable-thead > tr > th {
+      color: var(--color-light-contrast);
+    }
+    .p-datatable .p-sortable-column .p-sortable-column-icon {
+      color: var(--color-light-contrast);
+    }
 
     .p-datatable-tbody {
       @include breakpoint-max($tablet) {
