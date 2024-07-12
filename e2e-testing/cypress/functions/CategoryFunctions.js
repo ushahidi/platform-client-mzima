@@ -103,7 +103,7 @@ class CategoryFunctions {
     //confirm deletion
     cy.get(CategoryLocators.confirmdeleteBtn).click();
     //verify site navigates to categories page on successful deletion
-    cy.url().should('eq', Cypress.config().baseUrl + '/settings/categories');
+    cy.url().should('eq', Cypress.env('baseUrl') + 'settings/categories');
   }
 
   verify_child_category_exists_under_parent() {
