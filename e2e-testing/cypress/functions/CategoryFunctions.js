@@ -75,7 +75,7 @@ class CategoryFunctions {
     cy.get('[data-qa="search-form__filters"]').click();
 
     cy.get(CategoryLocators.categoryFilterBtn).should('be.visible').click();
-    cy.contains('Only me children').should('not.exist');
+    cy.contains('Children B').should('not.exist');
   }
 
   verify_parent_category_deleted() {
