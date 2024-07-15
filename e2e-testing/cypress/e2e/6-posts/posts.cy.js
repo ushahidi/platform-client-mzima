@@ -15,9 +15,7 @@ describe('Automated Tests for Posts', () => {
     postFunctions.fill_required_form_fields();
     postFunctions.complete_add_post_steps();
     postFunctions.verify_created_post_exists();
-  });
 
-  it('Verifies post details', () => {
     postFunctions.open_post_for_details();
     postFunctions.verify_post_details();
   });
