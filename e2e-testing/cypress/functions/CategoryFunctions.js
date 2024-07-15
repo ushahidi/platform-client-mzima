@@ -7,6 +7,13 @@ class CategoryFunctions {
     this.uniqueParentCtgry = `Automated Parent Category-${Math.floor(Math.random() * 900) + 100}`;
     this.uniqueChildCtgry = `Automated Child Category-${Math.floor(Math.random() * 900) + 100}`;
   }
+
+  open_category_list_page() {
+    cy.get(CategoryLocators.stngsBtn).scrollIntoView().click();
+    cy.get(CategoryLocators.ctgryBtn).click();
+    cy.url().should('include', '/settings/categories');
+  }
+
   open_category_creation_page_steps() {
     cy.get(CategoryLocators.stngsBtn).click();
     cy.get(CategoryLocators.ctgryBtn).click();
@@ -41,9 +48,67 @@ class CategoryFunctions {
     this.complete_add_category_steps();
   }
 
+  delete_category_bulk_actions(category_id) {
+    //click bulk actions
+    cy.get(CategoryLocators.blkActionsBtn).click();
+    cy.get(CategoryLocators.deleteBtn).should('be.visible');
+    //click on checkbox
+    cy.get(category_id).scrollIntoView().should('be.visible').click();
+    //click delete
+    cy.get(CategoryLocators.deleteBtn).click();
+    //confirm delete
+    cy.get(CategoryLocators.confirmdeleteBtn).click();
+
+    //dismiss confirmation toast
+    cy.get('.mat-snack-bar-container').should('be.visible');
+    //modify this check to accomodate both single category and multiple categories deleted
+    // cy.contains('deleted').should('be.visible');
+    cy.contains('Close').click();
+  }
+
+  verify_child_category_deleted(child_category_deleted) {
+    //verify category no longer exists
+    cy.contains(child_category_deleted).should('not.exist');
+
+    //navigate to data view and verify deleted category does not exist under filters
+    cy.get(CategoryLocators.dataViewBtn).click();
+    cy.get('[data-qa="search-form__filters"]').click();
+
+    cy.get(CategoryLocators.categoryFilterBtn).should('be.visible').click();
+    cy.contains(child_category_deleted).should('not.exist');
+  }
+
+  verify_parent_category_deleted() {
+    cy.contains('New Parent A').should('not.exist');
+    //verify child also does not exist
+    cy.contains('Children A').should('not.exist');
+
+    //navigate to data view and verify deleted category does not exist under filters
+    cy.get(CategoryLocators.dataViewBtn).click();
+    cy.get('[data-qa="search-form__filters"]').click();
+
+    cy.get(CategoryLocators.categoryFilterBtn).click();
+    cy.contains('New Parent A').should('not.exist');
+    //verify child also does not exist
+    cy.contains('Children A').should('not.exist');
+  }
+
+  delete_category_from_details_page(category_name) {
+    //click category to open details page
+    //target Translation Categories
+    cy.get(CategoryLocators.toggleChildrenBtn).eq(3).click();
+    cy.contains(category_name).click();
+    //click delete to delete category
+    cy.get(CategoryLocators.categoryDeleteBtn).click();
+    //confirm deletion
+    cy.get(CategoryLocators.confirmdeleteBtn).click();
+    //verify site navigates to categories page on successful deletion
+    cy.url().should('eq', Cypress.env('baseUrl') + 'settings/categories');
+  }
+
   verify_child_category_exists_under_parent() {
     //click dropdown to reveal child
-    cy.get('[data-qa="toggle-children"]').eq(9).click();
+    cy.get('[data-qa="toggle-children"]').eq(7).click();
     cy.get(
       `[data-qa="${getUniqueSelector(this.uniqueChildCtgry)}-(${getUniqueSelector(
         this.uniqueParentCtgry,
