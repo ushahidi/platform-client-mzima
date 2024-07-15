@@ -89,6 +89,7 @@ class PostFunctions {
 
   delete_post() {
     cy.get(PostLocators.dataViewBtn).click();
+    cy.get('data-qa="feed-page-results"').contains('Current results: 20 / 518');
     cy.get(PostLocators.postPreview)
       .children(PostLocators.postItem)
       .contains(this.postTitle)
