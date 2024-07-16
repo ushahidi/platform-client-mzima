@@ -8,7 +8,7 @@ const CONNECTION_TYPES = ['wifi', 'cellular'];
   providedIn: 'root',
 })
 export class NetworkService {
-  private readonly _networkStatus = new BehaviorSubject<boolean>(false);
+  private readonly _networkStatus = new BehaviorSubject<boolean>(true);
   readonly networkStatus$ = this._networkStatus.asObservable();
 
   constructor() {
