@@ -67,18 +67,6 @@ class CategoryFunctions {
     cy.get(CategoryLocators.categoryTestSurvey).click();
   }
 
-  open_settings() {
-    cy.get(CategoryLocators.stngsBtn).click();
-  }
-
-  open_surveys() {
-    cy.get(CategoryLocators.surveyBtn).click();
-  }
-
-  add_survey() {
-    cy.get(CategoryLocators.addSurveyBtn).click();
-  }
-
   type_post_title(title) {
     cy.get(CategoryLocators.postTitleField).should('be.visible').type(title, { force: true });
   }
