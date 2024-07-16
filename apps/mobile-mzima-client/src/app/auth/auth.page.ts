@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { SessionService } from '@services';
+import { TranslateService } from '@ngx-translate/core';
+import { SessionService, NetworkService, ToastService } from '@services';
 
 @UntilDestroy()
 @Component({
@@ -13,7 +14,13 @@ export class AuthPage {
   public isKeyboardOpen = false;
   public isSignupActive = false;
 
-  constructor(private platform: Platform, private sessionService: SessionService) {
+  constructor(
+    private platform: Platform,
+    private sessionService: SessionService,
+    private networkService: NetworkService,
+    private toastService: ToastService,
+    private translateService: TranslateService,
+  ) {
     this.platform.keyboardDidShow.subscribe(() => {
       this.isKeyboardOpen = true;
     });
@@ -30,6 +37,13 @@ export class AuthPage {
         this.isSignupActive = !config.private && !config.disable_registration;
       },
     });
+  }
+
+  ionViewDidEnter() {
+    if (!this.networkService.getCurrentNetworkStatus())
+      this.toastService.presentToast({
+        message: this.translateService.instant('app.info.auth_not_online'),
+      });
   }
 
   ionViewDidLeave() {

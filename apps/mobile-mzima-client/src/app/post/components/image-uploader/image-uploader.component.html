@@ -1,7 +1,7 @@
 <div class="image-loader">
   <div class="image-loader__wrap">
-    <div class="post-images" *ngIf="photo?.data">
-      <img class="post-image" [src]="this.domSanitizer.bypassSecurityTrustUrl(photo!.data)" />
+    <div class="post-images" *ngIf="previewUrl">
+      <img class="post-image" [src]="previewUrl" />
     </div>
     <ng-container *ngIf="!isConnection">
       <app-offline-notification></app-offline-notification>

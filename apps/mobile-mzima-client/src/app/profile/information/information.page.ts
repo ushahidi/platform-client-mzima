@@ -153,15 +153,16 @@ export class InformationPage {
   }
 
   public back(): void {
-    if (!this.isUploadInProgress) {
-      this.router.navigate(['profile']);
-    } else {
-      this.toastService.presentToast({
-        message: 'Profile photo is still uploading. Please wait...',
-        duration: 3000,
-      });
-      console.log('Upload in progress. Cannot navigate back.');
-    }
+    // if (!this.isUploadInProgress) {
+    //   this.router.navigate(['profile']);
+    // } else {
+    //   this.toastService.presentToast({
+    //     message: 'Profile photo is still uploading. Please wait...',
+    //     duration: 3000,
+    //   });
+    //   console.log('Upload in progress. Cannot navigate back.');
+    // }
+    this.router.navigate(['profile']);
   }
 
   private getRoles() {

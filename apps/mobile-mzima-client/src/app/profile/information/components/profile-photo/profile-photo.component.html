@@ -5,12 +5,7 @@
   <ion-spinner name="circles" *ngIf="uploadingSpinner" class="spinner--positioned"></ion-spinner>
 </div>
 <ion-buttons class="controls">
-  <app-button
-    class="controls-button"
-    fill="clear"
-    [disabled]="uploadingSpinner"
-    (buttonClick)="triggerFileInput()"
-  >
+  <app-button class="controls-button" fill="clear" (buttonClick)="triggerFileInput()">
     <div class="controls-button__inner">
       <app-icon class="controls-button__icon" name="edit"></app-icon>
       <!-- <label for="fileInput" class="file-input-label"> Set new photo </label> -->

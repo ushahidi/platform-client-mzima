@@ -67,6 +67,14 @@ export class ProfilePhotoComponent {
     const input = event.target as HTMLInputElement;
     const file = input?.files?.[0];
     if (file) {
+      const validFileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+      if (!validFileTypes.includes(file.type)) {
+        this.alertService.presentAlert({
+          header: 'Wrong type of file',
+          message: 'Please select a valid image file',
+        });
+        return;
+      }
       //showing the loading icon
       this.uploadingInProgress = true;
       this.uploadStarted.emit();
@@ -86,16 +94,30 @@ export class ProfilePhotoComponent {
         .subscribe((userData) => {
           const caption = userData.realname;
 
-          this.mediaService.uploadFile(file, caption).subscribe((response: any) => {
-            const mediaId = response?.result?.id;
-            const photoUrl = response?.result?.original_file_url;
-            if (mediaId && photoUrl) {
-              this.saveUserProfilePhoto(mediaId, photoUrl);
-            } else {
-              console.error('Failed to extract mediaId or photoUrl from the response');
+          this.mediaService.uploadFile(file, caption).subscribe({
+            next: (response: any) => {
+              const mediaId = response?.result?.id;
+              const photoUrl = response?.result?.original_file_url;
+              if (mediaId && photoUrl) {
+                this.saveUserProfilePhoto(mediaId, photoUrl);
+              } else {
+                console.error('Failed to extract mediaId or photoUrl from the response');
+                this.uploadingInProgress = false;
+                this.uploadingSpinner = false;
+                this.uploadCompleted.emit();
+              }
+            },
+            error: (error) => {
+              console.error('Failed to upload file', error);
               this.uploadingInProgress = false;
+              this.uploadingSpinner = false;
               this.uploadCompleted.emit();
-            }
+              this.toastService.presentToast({
+                message: 'Failed to upload image. Please try again',
+                duration: 3000,
+                position: 'bottom',
+              });
+            },
           });
         });
     };
@@ -136,8 +158,8 @@ export class ProfilePhotoComponent {
               const payload = {
                 config_value: configValue,
               };
-              this.usersService.update(userId, payload, 'settings/' + settings.id).subscribe(
-                () => {
+              this.usersService.update(userId, payload, 'settings/' + settings.id).subscribe({
+                next: () => {
                   console.log('Profile photo updated successfully');
                   this.photo = photoUrl;
                   this.photoChanged.emit(true);
@@ -146,13 +168,24 @@ export class ProfilePhotoComponent {
                   this.hasUploadedPhoto = true;
                   this.uploadingInProgress = false;
                   this.uploadCompleted.emit();
+                  this.toastService.presentToast({
+                    message: 'Profile photo updated successfully',
+                    duration: 3000,
+                    position: 'bottom',
+                  });
                 },
-                (error) => {
-                  console.error('Failed to update profile photo', error);
+                error: (error) => {
+                  console.error('Failed to update profile photo. Please try again', error);
                   this.uploadingInProgress = false;
+                  this.uploadingSpinner = false;
                   this.uploadCompleted.emit();
+                  this.toastService.presentToast({
+                    message: 'Failed to add profile photo',
+                    duration: 3000,
+                    position: 'bottom',
+                  });
                 },
-              );
+              });
             } else {
               const payload: any = {
                 config_key: configKey,
@@ -167,11 +200,22 @@ export class ProfilePhotoComponent {
                   this.hasUploadedPhoto = true;
                   this.uploadingInProgress = false;
                   this.uploadCompleted.emit();
+                  this.toastService.presentToast({
+                    message: 'Profile photo updated successfully',
+                    duration: 3000,
+                    position: 'bottom',
+                  });
                 },
                 (error) => {
                   console.error('Failed to add profile photo', error);
                   this.uploadingInProgress = false;
+                  this.uploadingSpinner = false;
                   this.uploadCompleted.emit();
+                  this.toastService.presentToast({
+                    message: 'Failed to add profile photo. Please try again',
+                    duration: 3000,
+                    position: 'bottom',
+                  });
                 },
               );
             }
@@ -179,6 +223,7 @@ export class ProfilePhotoComponent {
         } else {
           console.error('User data or user ID is missing');
           this.uploadingInProgress = false;
+          this.uploadingSpinner = false;
           this.uploadCompleted.emit();
         }
       });

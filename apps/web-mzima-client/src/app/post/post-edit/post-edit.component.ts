@@ -207,7 +207,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         if (availableLanguages.length) {
           availableLanguages.unshift(result.enabled_languages.default);
           availableLanguages.forEach((langCode: string) => {
-            this.postLanguages.push(languages.find((lang) => lang.code === langCode)!);
+            this.postLanguages.push(
+              languages.find((lang) => lang.code.split('-')[0] === langCode.split('-')[0])!,
+            );
           });
           this.selectedLanguage = this.postLanguages[0];
         }

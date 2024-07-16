@@ -1,6 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, lastValueFrom, map, mergeMap, Observable, Subject, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  finalize,
+  lastValueFrom,
+  map,
+  mergeMap,
+  Observable,
+  Subject,
+  tap,
+} from 'rxjs';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
 import {
@@ -36,6 +45,11 @@ export class PostsService extends ResourceService<any> {
   public totalPosts$ = this.totalPosts.asObservable();
   private totalGeoPosts = new Subject<number>();
   public totalGeoPosts$ = this.totalGeoPosts.asObservable();
+  private isLoadingPosts = new Subject<boolean>();
+  public isLoadingPosts$ = this.isLoadingPosts.asObservable();
+  private responseObject: any;
+  private awaitedResponse = new Subject<any>();
+  public awaitedResponse$ = this.awaitedResponse.asObservable();
 
   constructor(
     protected override httpClient: HttpClient,
@@ -147,6 +161,12 @@ export class PostsService extends ResourceService<any> {
         }),
         tap((response) => {
           this.totalPosts.next(response.meta.total);
+          // set response here to be used inside of finalize()
+          this.responseObject = response;
+        }),
+        finalize(() => {
+          this.isLoadingPosts.next(false);
+          this.awaitedResponse.next(this.responseObject);
         }),
       );
   }
