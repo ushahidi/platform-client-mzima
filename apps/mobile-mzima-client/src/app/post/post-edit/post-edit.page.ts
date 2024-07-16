@@ -10,29 +10,18 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
-  BehaviorSubject,
-  EMPTY,
-  from,
-  lastValueFrom,
-  map,
-  Observable,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
-import {
-  generalHelpers,
   GeoJsonFilter,
   MediaService,
   PostContent,
-  postHelpers,
   PostResult,
   PostsService,
   SurveyItem,
   SurveysService,
+  generalHelpers,
+  postHelpers,
 } from '@mzima-client/sdk';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   AlertService,
   DatabaseService,
@@ -41,11 +30,23 @@ import {
   ToastService,
 } from '@services';
 import { FormValidator, preparingVideoUrl } from '@validators';
-import { PostEditForm, prepareRelationConfig, UploadFileProgressHelper } from '../helpers';
+import {
+  BehaviorSubject,
+  EMPTY,
+  Observable,
+  from,
+  lastValueFrom,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
+import { PostEditForm, UploadFileProgressHelper, prepareRelationConfig } from '../helpers';
 
+import { dateHelper, objectHelpers } from '@helpers';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
-import { objectHelpers, dateHelper } from '@helpers';
+import { TranslateService } from '@ngx-translate/core';
 
 dayjs.extend(timezone);
 
@@ -115,6 +116,7 @@ export class PostEditPage {
     private dataBaseService: DatabaseService,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
+    private translateService: TranslateService,
   ) {
     this.route.queryParams.subscribe({
       next: (queryParams) => {
@@ -622,9 +624,7 @@ export class PostEditPage {
     if (this.isConnection) {
       await this.uploadPost();
     } else {
-      await this.postComplete(
-        'Thank you for your report. A message will be sent when the connection is restored.',
-      );
+      await this.postComplete(this.translateService.instant('app.info.post_submitted_offline'));
       this.isSubmitting = 'complete';
       this.backNavigation();
     }
@@ -740,9 +740,7 @@ export class PostEditPage {
         }
       },
       complete: async () => {
-        await this.postComplete(
-          'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
-        );
+        await this.postComplete(this.translateService.instant('app.info.post_submitted_online'));
         this.backNavigation();
       },
     });
