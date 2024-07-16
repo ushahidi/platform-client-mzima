@@ -5,7 +5,7 @@ describe('Automated Tests for Categories', () => {
   const loginFunctions = new LoginFunctions();
   const categoryFunctions = new CategoryFunctions();
 
-  before(() => {
+  beforeEach(() => {
     loginFunctions.login_as_admin();
     cy.visit(Cypress.env('baseUrl'));
   });
