@@ -91,25 +91,18 @@ class CategoryFunctions {
     cy.get(CategoryLocators.savePostBtn).click();
   }
 
-  create_survey_with_category() {
-    this.open_settings();
-    this.open_surveys();
-    this.add_survey();
-    cy.get(CategoryLocators.surveyNameField).type('Survey title with categories');
-    cy.get(CategoryLocators.surveyDescriptionField).type('Survey description with categories');
-    cy.get(CategoryLocators.addNewFieldBtn).click();
-    cy.get('.mzima-button').eq(20).click();
-    cy.get(CategoryLocators.selectAllCategories).click();
-    cy.get(CategoryLocators.saveFieldBtn).click();
-  }
-
   add_post_to_category() {
     this.click_add_post_btn();
+    //open a survey form to fill in a response
     this.open_survey_with_categories();
     cy.wait(1000);
+    //verify categories are seen as expected
+    cy.get('mat-label').contains('Categories');
+    cy.get('.related-post-list').should('exist');
+    //filling in fields and select category
     this.type_post_title('New Post Title');
     this.type_post_description('New Post Description');
-    cy.get('mat-checkbox-214-input').click();
+    cy.get('.mat-checkbox-14-input').click();
     this.save_post();
     cy.get(CategoryLocators.successBtn).click();
   }

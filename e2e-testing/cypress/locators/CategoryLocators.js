@@ -13,19 +13,11 @@ const CategoryLocators = {
   technologyCheckbox: '[data-qa="technology"]',
   adminCheckbox: '[data-qa="admin"]',
   addPostBtn: '[data-qa="submit-post-button"]',
-  categoryTestSurvey: '[data-qa="add-post-modal-surveys-item701"]',
+  categoryTestSurvey: '[data-qa="add-post-modal-surveys-item188"]',
   addSurveyBtn: '[data-qa="btn-settings-create"]',
-  surveyNameField: '[data-qa="name"]',
-  surveyDescriptionField: '[data-qa="description"]',
-  addNewFieldBtn: '[data-qa="btn-survey-add-field"]',
-  selectCategoryField: '[data-qa="select-survey.categories"]',
-  selectCategory: '[data-qa="tag-Automated Parent-Category...."]',
-  saveFieldBtn: '[data-qa="btn-add-field"]',
   postTitleField: '[data-qa="null"]',
   postDescField: '[data-qa="description"]',
   savePostBtn: '[data-qa="btn-post-item-submit"]',
-  addNewFieldModal: '[data-qa="new-field-modal"]',
-  selectAllCategories: '[data-qa="select_all"]',
 };
 
 export const getUniqueSelector = (name) => name.split(' ').join('-').toLowerCase();
