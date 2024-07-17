@@ -301,10 +301,22 @@
                     {{ option }}
                   </mat-radio-button>
                   <div class="other" *ngIf="option === 'Other'">
-                    <mat-radio-button class="other__input__radio" [value]="option">
+                    <mat-radio-button
+                      class="other__input__radio"
+                      [value]="option"
+                      click="otherRadio.focus()"
+                    >
                     </mat-radio-button>
                     <mat-form-field appearance="outline">
-                      <input class="other__input" matInput placeholder="Add other" />
+                      <input
+                        class="other__input"
+                        #otherRadio
+                        matInput
+                        type="text"
+                        placeholder="Add other"
+                        [formControlName]="'other' + field.key"
+                        (focus)="selectOther(field)"
+                      />
                     </mat-form-field>
                   </div>
                 </div>
@@ -340,10 +352,18 @@
                       [value]="option"
                       class="list-option other__input__checkbox"
                       checkboxPosition="before"
+                      (selected)="otherCheckbox.focus()"
                     >
                     </mat-list-option>
                     <mat-form-field appearance="outline">
-                      <input class="other__input" matInput />
+                      <input
+                        class="other__input"
+                        matInput
+                        #otherCheckbox
+                        type="text"
+                        [formControlName]="'other' + field.key"
+                        (focus)="selectOther(field)"
+                      />
                     </mat-form-field>
                   </div>
                 </ng-container>

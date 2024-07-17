@@ -99,7 +99,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   postLanguages: LanguageInterface[] = [];
   selectedSurvey: SurveyItem;
   public surveys: Observable<any>;
-
   constructor(
     protected override sessionService: SessionService,
     protected override breakpointService: BreakpointService,
@@ -272,7 +271,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
 
         this.form = new FormGroup(fields);
         this.initialFormData = this.form.value;
-
+        this.handleOtherOptions();
         if (updateContent) {
           this.isEditPost = true;
           this.tasks = postHelpers.markCompletedTasks(this.tasks, this.post);
@@ -292,6 +291,31 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         }
       },
     });
+  }
+
+  private handleOtherOptions() {
+    for (const task of this.tasks) {
+      task.fields.map((field: any) => {
+        if (
+          (field.input === 'radio' || field.input === 'checkbox') &&
+          field.options.includes('Other')
+        ) {
+          this.form.addControl(`other${field.key}`, new FormControl());
+        }
+      });
+    }
+  }
+
+  public selectOther(field: any) {
+    if (field.input === 'radio') {
+      this.form.patchValue({ [field.key]: 'Other' });
+    } else {
+      if (!this.form.controls[field.key].value?.includes('Other')) {
+        const newValue = this.form.controls[field.key].value || [];
+        newValue.push('Other');
+        this.form.patchValue({ [field.key]: newValue });
+      }
+    }
   }
 
   public changeLocation(data: any, formKey: string) {
@@ -332,8 +356,27 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     this.form.patchValue({ [key]: value?.value });
   }
 
-  private handleCheckbox(key: string, value: any) {
-    const data = value?.value;
+  private handleRadio(key: string, value: any, options: any) {
+    if (options.indexOf(value?.value) < 0 && options.includes('Other')) {
+      this.form.patchValue({ [key]: 'Other' });
+      this.form.patchValue({ [`other${key}`]: value?.value });
+    } else {
+      this.form.patchValue({ [key]: value?.value });
+      this.form.patchValue({ [`other${key}`]: '' });
+    }
+  }
+
+  private handleCheckbox(key: string, value: any, options: any) {
+    let data = value?.value;
+    if (data?.length && options.includes('Other')) {
+      for (const val of data) {
+        if (options.indexOf(val) < 0) {
+          this.form.patchValue({ [`other${key}`]: val });
+          data = data.filter((oldVal: any) => oldVal !== val);
+          data.push('Other');
+        }
+      }
+    }
     this.form.patchValue({ [key]: data });
   }
 
@@ -385,12 +428,20 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     const inputHandlers: Partial<{ [key in InputHandlerType]: (key: string, value: any) => void }> =
       {
         tags: this.handleTags.bind(this),
-        checkbox: this.handleCheckbox.bind(this),
         location: this.handleLocation.bind(this),
         date: this.handleDate.bind(this),
         datetime: this.handleDateTime.bind(this),
         upload: this.handleUpload.bind(this),
       };
+
+    type InputHandlersOptionsType = 'radio' | 'checkbox';
+
+    const inputHandlersOptions: {
+      [key in InputHandlersOptionsType]: (key: string, value: any, options: any) => void;
+    } = {
+      radio: this.handleRadio.bind(this),
+      checkbox: this.handleCheckbox.bind(this),
+    };
 
     const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
       title: this.handleTitle.bind(this),
@@ -398,10 +449,12 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     };
 
     for (const { fields } of updateValues) {
-      for (const { type, input, key, value } of fields) {
+      for (const { type, input, key, value, options } of fields) {
         this.form.patchValue({ [key]: value });
         if (inputHandlers[input as InputHandlerType]) {
           inputHandlers[input as InputHandlerType]!(key, value);
+        } else if (inputHandlersOptions[input as InputHandlersOptionsType]) {
+          inputHandlersOptions[input as InputHandlersOptionsType](key, value, options);
         } else {
           this.handleDefault.bind(this)(key, value);
         }
@@ -461,111 +514,130 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   async preparationData(): Promise<any> {
     for (const task of this.tasks) {
       task.fields = await Promise.all(
-        task.fields.map(async (field: { key: string | number; input: string; type: string }) => {
-          let value: any = {
-            value: this.form.value[field.key],
-          };
+        task.fields.map(
+          async (field: { key: string | number; input: string; type: string; options: any }) => {
+            let value: any = {
+              value: this.form.value[field.key],
+            };
 
-          if (field.type === 'title') this.title = this.form.value[field.key];
-          if (field.type === 'description') this.description = this.form.value[field.key];
+            if (field.type === 'title') this.title = this.form.value[field.key];
+            if (field.type === 'description') this.description = this.form.value[field.key];
 
-          switch (field.input) {
-            case 'date':
-              value = this.form.value[field.key]
-                ? {
-                    value: dateHelper.setDate(this.form.value[field.key], 'date'),
-                    value_meta: {
-                      from_tz: dayjs.tz.guess(),
-                    },
+            switch (field.input) {
+              case 'date':
+                value = this.form.value[field.key]
+                  ? {
+                      value: dateHelper.setDate(this.form.value[field.key], 'date'),
+                      value_meta: {
+                        from_tz: dayjs.tz.guess(),
+                      },
+                    }
+                  : { value: null };
+                break;
+              case 'datetime':
+                value = this.form.value[field.key]
+                  ? {
+                      value: dateHelper.setDate(this.form.value[field.key], 'datetime'),
+                      value_meta: {
+                        from_tz: dayjs.tz.guess(),
+                      },
+                    }
+                  : { value: null };
+                break;
+              case 'location':
+                value = this.form.value[field.key].lat
+                  ? {
+                      value: {
+                        lat: this.form.value[field.key].lat,
+                        lon: this.form.value[field.key].lng,
+                      },
+                    }
+                  : { value: null };
+                break;
+              case 'tags':
+              case 'checkbox':
+                value.value = this.form.value[field.key] || null;
+                if (value.value?.includes('Other')) {
+                  value.value = value.value.filter((opt: any) => opt !== 'Other');
+                  value.value.push(this.form.value[`other${field.key}`]);
+                }
+                break;
+              case 'radio':
+                if (field.options.includes('Other')) {
+                  value.value =
+                    this.form.value[field.key] === 'Other'
+                      ? this.form.value[`other${field.key}`]
+                      : this.form.value[field.key];
+                } else {
+                  value.value = this.form.value[field.key] || null;
+                }
+                break;
+              case 'video':
+                value = this.form.value[field.key]
+                  ? {
+                      value: preparingVideoUrl(this.form.value[field.key]),
+                    }
+                  : {};
+                break;
+
+              case 'relation':
+                value.value = this.form.value[field.key] || null;
+                break;
+              case 'upload':
+                const originalValue = this.post?.post_content[0]?.fields.filter(
+                  (fieldValue: { key: string | number }) => fieldValue.key === field.key,
+                )[0];
+                if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
+                  try {
+                    this.maxSizeError = false;
+                    if (this.maxImageSize > this.form.value[field.key].photo.size) {
+                      const uploadObservable = this.mediaService.uploadFile(
+                        this.form.value[field.key]?.photo,
+                        this.form.value[field.key]?.caption,
+                      );
+                      const response: any = await lastValueFrom(uploadObservable);
+                      value.value = response.result.id;
+                    } else {
+                      this.maxSizeError = true;
+                      throw new Error(`Error uploading file: max size exceed`);
+                    }
+                  } catch (error: any) {
+                    throw new Error(`Error uploading file: ${error.message}`);
                   }
-                : { value: null };
-              break;
-            case 'datetime':
-              value = this.form.value[field.key]
-                ? {
-                    value: dateHelper.setDate(this.form.value[field.key], 'datetime'),
-                    value_meta: {
-                      from_tz: dayjs.tz.guess(),
-                    },
-                  }
-                : { value: null };
-              break;
-            case 'location':
-              value = this.form.value[field.key].lat
-                ? {
-                    value: {
-                      lat: this.form.value[field.key].lat,
-                      lon: this.form.value[field.key].lng,
-                    },
-                  }
-                : { value: null };
-              break;
-            case 'tags':
-            case 'checkbox':
-              value.value = this.form.value[field.key] || null;
-              break;
-            case 'video':
-              value = this.form.value[field.key]
-                ? {
-                    value: preparingVideoUrl(this.form.value[field.key]),
-                  }
-                : {};
-              break;
-            case 'relation':
-              value.value = this.form.value[field.key] || null;
-              break;
-            case 'upload':
-              const originalValue = this.post?.post_content[0]?.fields.filter(
-                (fieldValue: { key: string | number }) => fieldValue.key === field.key,
-              )[0];
-              if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
-                try {
-                  this.maxSizeError = false;
-                  if (this.maxImageSize > this.form.value[field.key].photo.size) {
-                    const uploadObservable = this.mediaService.uploadFile(
-                      this.form.value[field.key]?.photo,
-                      this.form.value[field.key]?.caption,
+                } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
+                  try {
+                    const deleteObservable = this.mediaService.delete(
+                      this.form.value[field.key]?.id,
                     );
-                    const response: any = await lastValueFrom(uploadObservable);
-                    value.value = response.result.id;
-                  } else {
-                    this.maxSizeError = true;
-                    throw new Error(`Error uploading file: max size exceed`);
+                    await lastValueFrom(deleteObservable);
+                    value.value = null;
+                  } catch (error: any) {
+                    throw new Error(`Error deleting file: ${error.message}`);
                   }
-                } catch (error: any) {
-                  throw new Error(`Error uploading file: ${error.message}`);
+                } else if (originalValue?.value?.mediaCaption !== value.value?.caption) {
+                  try {
+                    const captionObservable = await this.mediaService.updateCaption(
+                      originalValue.value.id,
+                      value.value.caption,
+                    );
+                    await lastValueFrom(captionObservable);
+                    value.value = originalValue.value.id;
+                  } catch (error: any) {
+                    throw new Error(`Error updating caption: ${error.message}`);
+                  }
+                } else {
+                  value.value = this.form.value[field.key]?.id || null;
                 }
-              } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
-                try {
-                  const deleteObservable = this.mediaService.delete(this.form.value[field.key]?.id);
-                  await lastValueFrom(deleteObservable);
-                  value.value = null;
-                } catch (error: any) {
-                  throw new Error(`Error deleting file: ${error.message}`);
-                }
-              } else if (originalValue?.value?.mediaCaption !== value.value?.caption) {
-                try {
-                  const captionObservable = await this.mediaService.updateCaption(
-                    originalValue.value.id,
-                    value.value.caption,
-                  );
-                  await lastValueFrom(captionObservable);
-                  value.value = originalValue.value.id;
-                } catch (error: any) {
-                  throw new Error(`Error updating caption: ${error.message}`);
-                }
-              } else {
-                value.value = this.form.value[field.key]?.id || null;
-              }
-              break;
-            default:
-              value.value = this.form.value[field.key] || null;
-          }
-          return {
-            ...field,
-            value,
-          };
-        }),
+                break;
+              default:
+                value.value = this.form.value[field.key] || null;
+            }
+            return {
+              ...field,
+              value,
+            };
+          },
+        ),
       );
     }
   }
