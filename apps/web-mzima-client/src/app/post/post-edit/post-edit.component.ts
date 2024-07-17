@@ -305,8 +305,18 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       });
     }
   }
+  public hasEmptyOther(key: string) {
+    const emptyOther =
+      this.form.get(key)?.value?.includes('Other') &&
+      !this.form.get('other' + key)?.value &&
+      this.form.get('other' + key)?.touched;
+    this.form.controls[key].setErrors({ emptyOther });
+    if (!emptyOther) this.form.controls[key].updateValueAndValidity();
+    return emptyOther;
+  }
 
-  public selectOther(field: any) {
+  public selectOther(event: any, field: any) {
+    event.stopPropagation();
     if (field.input === 'radio') {
       this.form.patchValue({ [field.key]: 'Other' });
     } else {
@@ -316,6 +326,11 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         this.form.patchValue({ [field.key]: newValue });
       }
     }
+  }
+
+  public toggleFocus(event: any, field: any) {
+    console.log(field);
+    event.stopPropagation();
   }
 
   public changeLocation(data: any, formKey: string) {

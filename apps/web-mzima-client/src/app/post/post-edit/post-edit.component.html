@@ -304,21 +304,24 @@
                     <mat-radio-button
                       class="other__input__radio"
                       [value]="option"
-                      click="otherRadio.focus()"
+                      (change)="otherRadio.focus()"
                     >
                     </mat-radio-button>
                     <mat-form-field appearance="outline">
                       <input
                         class="other__input"
-                        #otherRadio
+                        #otherRadio="matInput"
                         matInput
                         type="text"
                         placeholder="Add other"
                         [formControlName]="'other' + field.key"
-                        (focus)="selectOther(field)"
+                        (focus)="selectOther($event, field)"
                       />
                     </mat-form-field>
                   </div>
+                  <mat-error *ngIf="option === 'Other' && hasEmptyOther(field.key)">
+                    Input cannot be empty
+                  </mat-error>
                 </div>
               </mat-radio-group>
             </ng-container>
@@ -352,20 +355,24 @@
                       [value]="option"
                       class="list-option other__input__checkbox"
                       checkboxPosition="before"
-                      (selected)="otherCheckbox.focus()"
+                      (click)="otherCheckbox.focus()"
                     >
                     </mat-list-option>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="outline" #formfield>
                       <input
+                        (keydown)="$event.stopPropagation()"
                         class="other__input"
                         matInput
-                        #otherCheckbox
+                        #otherCheckbox="matInput"
                         type="text"
                         [formControlName]="'other' + field.key"
-                        (focus)="selectOther(field)"
+                        (focus)="selectOther($event, field)"
                       />
                     </mat-form-field>
                   </div>
+                  <mat-error *ngIf="option === 'Other' && hasEmptyOther(field.key)">
+                    Input cannot be empty
+                  </mat-error>
                 </ng-container>
               </mat-selection-list>
             </ng-container>
