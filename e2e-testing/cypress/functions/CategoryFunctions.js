@@ -60,11 +60,11 @@ class CategoryFunctions {
   }
 
   click_add_post_btn() {
-    cy.get(CategoryLocators.addPostBtn).click({ force: true });
+    cy.get(CategoryLocators.addPostBtn).click();
   }
 
   open_survey_with_categories() {
-    cy.get(CategoryLocators.postSurveys).contains('Automated Parent Category').click();
+    cy.get(CategoryLocators.surveySelectItem).click();
   }
 
   type_post_title(title) {
