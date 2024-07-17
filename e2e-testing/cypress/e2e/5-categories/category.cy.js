@@ -18,9 +18,6 @@ describe('Automated Tests for Categories', () => {
   });
 
   it('Add Post to Categories', () => {
-    categoryFunctions.open_category_creation_page_steps();
-    categoryFunctions.add_category_details_steps();
-    categoryFunctions.complete_add_category_steps();
     categoryFunctions.add_post_to_category();
   });
 });
