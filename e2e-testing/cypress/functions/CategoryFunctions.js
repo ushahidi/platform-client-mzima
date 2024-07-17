@@ -64,7 +64,7 @@ class CategoryFunctions {
   }
 
   open_survey_with_categories() {
-    cy.get(CategoryLocators.categoryTestSurvey).click();
+    cy.get(CategoryLocators.postSurveys).contains('Automated Parent Category').click();
   }
 
   type_post_title(title) {
