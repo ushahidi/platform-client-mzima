@@ -8,6 +8,7 @@ import { MediaService } from 'libs/sdk/src/lib/services';
 import { UsersService } from 'libs/sdk/src/lib/services';
 import { UserInterface } from '@mzima-client/sdk';
 import { STORAGE_KEYS } from '@constants';
+import { filter } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
@@ -19,7 +20,7 @@ export class ProfilePhotoComponent {
   @Input() photo: string;
   userId: string;
   // @Output() uploadStarted = new EventEmitter<void>();
-  @Output() uploadCompleted = new EventEmitter<void>();
+  // @Output() uploadCompleted = new EventEmitter<void>();
   @Output() photoChanged = new EventEmitter<boolean>();
   @Output() photoSelected = new EventEmitter<{ key: string; caption: string }>();
   uploadingInProgress = false;
@@ -40,7 +41,10 @@ export class ProfilePhotoComponent {
   ngOnInit(): void {
     this.sessionService
       .getCurrentUserData()
-      .pipe(untilDestroyed(this))
+      .pipe(
+        untilDestroyed(this),
+        filter((userData): userData is UserInterface => !!userData && !!userData.userId),
+      )
       .subscribe((userData) => {
         if (userData && userData.userId) {
           const userId = userData.userId as string;
@@ -64,7 +68,7 @@ export class ProfilePhotoComponent {
     const storedPhoto = await this.databaseService.get(STORAGE_KEYS.PROFILE_PHOTO);
     if (storedPhoto) {
       this.photo = storedPhoto.dataURL;
-      console.log(this.photo);
+      // console.log(this.photo);
       const photoFile = this.dataURLtoFile(storedPhoto.dataURL, storedPhoto.filename);
       this.emitStoredPhoto(photoFile);
     }
@@ -107,12 +111,16 @@ export class ProfilePhotoComponent {
         dataURL: this.photo,
         filename: file.name,
       });
-      console.log(STORAGE_KEYS.PROFILE_PHOTO, this.photo, file.name);
+      console.log(STORAGE_KEYS.PROFILE_PHOTO, file.name);
 
       this.sessionService
         .getCurrentUserData()
-        .pipe(untilDestroyed(this))
+        .pipe(
+          untilDestroyed(this),
+          filter((userData): userData is UserInterface => !!userData && !!userData.userId),
+        )
         .subscribe((userData) => {
+          console.log(userData);
           const caption = userData.realname || 'image upload';
           const key = STORAGE_KEYS.PROFILE_PHOTO;
           this.photoSelected.emit({ key, caption });
@@ -143,7 +151,10 @@ export class ProfilePhotoComponent {
     if (result.role === 'confirm') {
       this.sessionService
         .getCurrentUserData()
-        .pipe(untilDestroyed(this))
+        .pipe(
+          untilDestroyed(this),
+          filter((userData): userData is UserInterface => !!userData && !!userData.userId),
+        )
         .subscribe((userData) => {
           if (userData && userData.userId) {
             const userId = userData.userId as string;
@@ -191,7 +202,10 @@ export class ProfilePhotoComponent {
 
     this.sessionService
       .getCurrentUserData()
-      .pipe(untilDestroyed(this))
+      .pipe(
+        untilDestroyed(this),
+        filter((userData): userData is UserInterface => !!userData && !!userData.userId),
+      )
       .subscribe((userData) => {
         const caption = userData.realname || 'image upload';
         const key = STORAGE_KEYS.PROFILE_PHOTO;

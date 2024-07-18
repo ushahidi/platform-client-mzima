@@ -23,9 +23,10 @@ import { SelectOptionInterface } from '@models';
 import { MediaService } from 'libs/sdk/src/lib/services';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { UsersService } from 'libs/sdk/src/lib/services';
+import { UserInterface } from '@mzima-client/sdk';
 import { ProfilePhotoComponent } from './components';
 import { STORAGE_KEYS } from '@constants';
-import { map } from 'rxjs';
+import { filter, map } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -119,8 +120,17 @@ export class InformationPage {
     private databaseService: DatabaseService,
   ) {
     this.sessionService
+
+      // .getCurrentUserData()
+      // .pipe(
+      //   untilDestroyed(this),
+      //   filter((userData) => !!userData),
+      // )
       .getCurrentUserData()
-      .pipe(untilDestroyed(this))
+      .pipe(
+        untilDestroyed(this),
+        filter((userData): userData is UserInterface => !!userData && !!userData.userId),
+      )
       .subscribe((userData) => {
         this.userPhoto = `https://www.gravatar.com/avatar/${
           userData.gravatar || '00000000000000000000000000000000'
@@ -137,7 +147,7 @@ export class InformationPage {
           const savedPhoto = await this.databaseService.get(STORAGE_KEYS.PROFILE_PHOTO);
           if (savedPhoto) {
             this.userPhoto = savedPhoto.dataURL;
-            console.log(savedPhoto.dataURL);
+            console.log('Saved photo retrieved');
           }
         });
 
@@ -158,6 +168,8 @@ export class InformationPage {
       this.selectedFileKey = event.key;
       this.selectedCaption = event.caption;
       this.isPhotoChanged = true;
+    } else {
+      this.isPhotoChanged = false;
     }
   }
 
@@ -230,6 +242,7 @@ export class InformationPage {
           } else {
             console.error('Failed to extract mediaId or photoUrl from the response');
             this.isUploadInProgress = false;
+            this.profilePhotoComponent.uploadingSpinner = false;
           }
         },
         error: (error) => {
@@ -245,6 +258,7 @@ export class InformationPage {
     } else {
       console.error('Failed to retrive stored phot form IndexedDB');
       this.isUploadInProgress = false;
+      this.profilePhotoComponent.uploadingSpinner = false;
     }
   }
 
@@ -259,7 +273,10 @@ export class InformationPage {
   saveUserProfilePhoto(mediaId: number, photoUrl: string): void {
     this.sessionService
       .getCurrentUserData()
-      .pipe(untilDestroyed(this))
+      .pipe(
+        untilDestroyed(this),
+        filter((userData): userData is UserInterface => !!userData && !!userData.userId),
+      )
       .subscribe((userData) => {
         if (userData && userData.userId) {
           const userId = userData.userId as string;
@@ -351,13 +368,19 @@ export class InformationPage {
     console.log('Starting update process');
 
     try {
+      let photoUpdated = false;
+      let formUpdated = false;
+
       if (this.isPhotoChanged) {
         if (this.selectedFileKey && this.selectedCaption) {
-          this.uploadPhoto(this.selectedFileKey, this.selectedCaption);
+          await this.uploadPhoto(this.selectedFileKey, this.selectedCaption);
+          photoUpdated = true;
           this.isPhotoChanged = false;
           this.selectedFileKey = null;
           this.selectedCaption = null;
           this.profilePhotoComponent.uploadingSpinner = true;
+        } else {
+          console.error('Photo is missing');
         }
       }
 
@@ -365,15 +388,21 @@ export class InformationPage {
         console.log('Updating form data');
         const formData = { realname: this.form.value.realname! };
         await this.updateFormAsync(this.form, formData);
+        formUpdated = true;
       }
-      console.log('Information updated');
+
+      if (photoUpdated || formUpdated) {
+        console.log('Information updated');
+      } else {
+        console.log('No changes to update');
+      }
     } catch (error) {
       console.log('Error updating information');
     } finally {
       this.form.enable();
       this.form.markAsPristine();
+      this.form.controls['role'].disable();
     }
-    this.form.controls['role'].disable();
   }
 
   public async updateUserEmail(): Promise<void> {
@@ -400,6 +429,7 @@ export class InformationPage {
     try {
       await this.updateProfileAsync(props);
       form.enable();
+      form.markAsPristine();
     } catch (error) {
       console.error(error);
       form.enable();
