@@ -18,6 +18,7 @@ const CategoryLocators = {
   postDescField: '[data-qa="description"]',
   savePostBtn: '[data-qa="btn-post-item-submit"]',
   addPostBtn: '[data-qa="submit-post-button"]',
+  successBtn: '[data-qa="btn-confirm-success"]',
 };
 
 export const getUniqueSelector = (name) => name.split(' ').join('-').toLowerCase();
