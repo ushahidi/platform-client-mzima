@@ -19,5 +19,6 @@ describe('Automated Tests for Categories', () => {
 
   it('Add Post to Categories', () => {
     categoryFunctions.add_post_to_category();
+    categoryFunctions.verify_post_with_categories_exists();
   });
 });
