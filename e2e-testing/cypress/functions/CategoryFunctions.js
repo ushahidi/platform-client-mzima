@@ -105,6 +105,13 @@ class CategoryFunctions {
     );
   }
 
+  verify_post_with_categories_exists() {
+    cy.get(CategoryLocators.postPreview)
+      .children(CategoryLocators.postItem)
+      .contains('New Post Title')
+      .should('be.visible');
+  }
+
   verify_created_category_exists() {
     cy.contains(this.uniqueParentCtgry).should('exist');
   }
