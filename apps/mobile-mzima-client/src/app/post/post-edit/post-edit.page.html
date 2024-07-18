@@ -72,7 +72,10 @@
             *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
           >
             <div class="form-control--section">
-              <ion-label class="field-label">{{field?.label}}</ion-label>
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-form-control
                 color="light"
                 [clearable]="true"
@@ -86,7 +89,10 @@
           <!-- description -->
           <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
             <div class="form-control--section">
-              <ion-label class="field-label">{{field?.label}}</ion-label>
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-textarea-control
                 color="light"
                 [clearable]="true"
@@ -100,7 +106,10 @@
 
           <ng-container *ngIf="field.input === 'textarea'">
             <div class="form-control--section">
-              <ion-label class="field-label">{{field?.label}}</ion-label>
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-textarea-control
                 color="light"
                 [rounded]="false"
@@ -160,7 +169,10 @@
           <!-- date -->
           <ng-container *ngIf="field.input === 'date'">
             <div class="form-control--section">
-              <ion-label class="field-label">{{field?.label}}</ion-label>
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-form-control
                 [id]="'open-date'+i"
                 color="light"
@@ -202,7 +214,10 @@
           <!-- datetime -->
           <ng-container *ngIf="field.input === 'datetime'">
             <div class="form-control--section">
-              <ion-label class="field-label">{{field?.label}}</ion-label>
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-form-control
                 [id]="'open-datetime'+i"
                 color="light"
@@ -303,7 +318,10 @@
           <!-- select -->
           <ng-container *ngIf="field.input === 'select'">
             <div class="form-control--section">
-              <ion-label class="field-label">{{field?.label}}</ion-label>
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-select
                 [hintHTML]="field?.instructions"
                 [formControlName]="field.key"
@@ -317,7 +335,10 @@
           <!-- number -->
           <ng-container *ngIf="field.input === 'number'">
             <div class="form-control--section">
-              <ion-label class="field-label">{{field?.label}}</ion-label>
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-form-control
                 color="light"
                 [clearable]="true"
@@ -360,7 +381,10 @@
           <!-- video -->
           <ng-container *ngIf="field.input === 'video'">
             <div class="form-control--section">
-              <ion-label class="field-label">{{field?.label}}</ion-label>
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-form-control
                 #videoInput
                 color="light"
@@ -468,7 +492,10 @@
           <!-- markdown -->
           <ng-container *ngIf="field.input === 'markdown'">
             <div class="form-control--section">
-              <ion-label class="field-label">{{field?.label}}</ion-label>
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-textarea-control
                 color="light"
                 [clearable]="true"
