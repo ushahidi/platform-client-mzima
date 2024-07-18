@@ -90,7 +90,7 @@ class CategoryFunctions {
     //filling in fields and select category
     this.type_post_title('New Post Title');
     this.type_post_description('New Post Description');
-    cy.get('.mat-checkbox-14-input').click();
+    cy.get('.mat-checkbox-16-input').click();
     this.save_post();
     cy.get(CategoryLocators.successBtn).click();
   }
