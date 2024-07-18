@@ -88,8 +88,8 @@ class CategoryFunctions {
     cy.get('mat-label').contains('Categories');
     cy.get('.related-post-list').should('exist');
     //filling in fields and select category
-    this.type_post_title('New Post Title');
-    this.type_post_description('New Post Description');
+    this.type_post_title('New Post Title With Categories');
+    this.type_post_description('New Post Description With Categories');
     cy.get('#mat-checkbox-16-input').click({ force: true });
     this.save_post();
     cy.get(CategoryLocators.successBtn).click();
@@ -108,8 +108,10 @@ class CategoryFunctions {
   verify_post_with_categories_exists() {
     cy.get(CategoryLocators.postPreview)
       .children(CategoryLocators.postItem)
-      .contains('New Post Title')
-      .should('be.visible');
+      .contains('New Post Title With Categories')
+      .should('be.visible')
+      .click();
+    cy.get('.post__group').find('.category').exists();
   }
 
   verify_created_category_exists() {
