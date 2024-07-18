@@ -20,6 +20,22 @@
       }
     }
   }
+
+  .other {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    &__input {
+      width: 100%;
+      padding: 8px 12px;
+      &__radio {
+        width: 45px;
+      }
+      &__checkbox {
+        max-width: 55px;
+      }
+    }
+  }
 }
 
 .translate-container {
