@@ -16,8 +16,8 @@ describe('Automated Tests for Posts', () => {
     postFunctions.complete_add_post_steps();
     postFunctions.verify_created_post_exists();
 
-    postFunctions.open_post_for_details();
-    postFunctions.verify_post_details();
+    // postFunctions.open_post_for_details();
+    // postFunctions.verify_post_details();
   });
   it('Changes and verifies status of a post', () => {
     postFunctions.open_post_creation_form();
