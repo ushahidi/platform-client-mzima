@@ -9,20 +9,18 @@
 .field-label {
   font-weight: bold;
 }
-
 :host {
-  ion-item {
-    border-color: #e2e2e3;
-    @media (prefers-color-scheme: light) {
-      --border-color: #e2e2e3;
-    }
+  .form-row {
+    border-color: #e2e2e3 !important;
+    // @media (prefers-color-scheme: light) {
+    //   --border-color: #e2e2e3;
+    // }
 
-    @media (prefers-color-scheme: dark) {
-      --border-color: var(--ion-border-color);
-    }
+    // @media (prefers-color-scheme: dark) {
+    //   --border-color: var(--ion-border-color);
+    // }
   }
 }
-
 .checkbox {
   &-list {
     list-style: none;
@@ -31,6 +29,20 @@
     &__item {
       .lvl-2 {
         margin-left: 16px;
+      }
+    }
+  }
+}
+:host {
+  ::ng-deep {
+    .form-post-create {
+      ion-item.form-row {
+        @media (prefers-color-scheme: light) {
+          border-color: #e2e2e3;
+          border-width: 1px;
+          border-style: solid;
+          border-radius: 4px;
+        }
       }
     }
   }
