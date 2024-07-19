@@ -106,7 +106,6 @@ export class InformationPage {
   public isUploadInProgress = false;
   public isPhotoChanged: boolean = false;
   public selectedFileKey: string | null = null;
-  public selectedCaption: string | null = null;
 
   constructor(
     private sessionService: SessionService,
@@ -163,9 +162,8 @@ export class InformationPage {
       });
   }
 
-  public handlePhotoSelected(event: { key: string; caption: string }): void {
+  public handlePhotoSelected(event: { key: string }): void {
     this.selectedFileKey = event.key;
-    this.selectedCaption = event.caption;
     this.isPhotoChanged = true;
   }
 
@@ -224,11 +222,14 @@ export class InformationPage {
     return new File([u8arr], filename, { type: mime });
   }
 
-  async uploadPhoto(key: string, caption: string): Promise<void> {
+  async uploadPhoto(key: string): Promise<void> {
     const storedPhoto = await this.databaseService.get(key);
+
     if (storedPhoto) {
       const file = this.dataURLtoFile(storedPhoto.dataURL, storedPhoto.filename);
       console.log('Uploading file:', file.name, file.type, file.size);
+      const caption = 'profilePhoto';
+
       this.mediaService.uploadFile(file, caption).subscribe({
         next: (response: any) => {
           const mediaId = response?.result?.id;
@@ -368,12 +369,11 @@ export class InformationPage {
       let formUpdated = false;
 
       if (this.isPhotoChanged) {
-        if (this.selectedFileKey && this.selectedCaption) {
-          await this.uploadPhoto(this.selectedFileKey, this.selectedCaption);
+        if (this.selectedFileKey) {
+          await this.uploadPhoto(this.selectedFileKey);
           photoUpdated = true;
           this.isPhotoChanged = false;
           this.selectedFileKey = null;
-          this.selectedCaption = null;
           this.profilePhotoComponent.uploadingSpinner = true;
         } else {
           console.error('Photo is missing');

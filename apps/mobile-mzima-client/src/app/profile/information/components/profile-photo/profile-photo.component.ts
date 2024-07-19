@@ -22,7 +22,7 @@ export class ProfilePhotoComponent {
   // @Output() uploadStarted = new EventEmitter<void>();
   // @Output() uploadCompleted = new EventEmitter<void>();
   @Output() photoChanged = new EventEmitter<boolean>();
-  @Output() photoSelected = new EventEmitter<{ key: string; caption: string }>();
+  @Output() photoSelected = new EventEmitter<{ key: string }>();
   uploadingInProgress = false;
   uploadingSpinner = false;
   hasUploadedPhoto = false;
@@ -113,20 +113,10 @@ export class ProfilePhotoComponent {
       });
       console.log(STORAGE_KEYS.PROFILE_PHOTO, file.name);
 
-      this.sessionService
-        .getCurrentUserData()
-        .pipe(
-          untilDestroyed(this),
-          filter((userData): userData is UserInterface => !!userData && !!userData.userId),
-        )
-        .subscribe((userData) => {
-          console.log(userData);
-          const caption = userData.realname || 'image upload';
-          const key = STORAGE_KEYS.PROFILE_PHOTO;
-          this.photoSelected.emit({ key, caption });
-          this.uploadingSpinner = false;
-          console.log(this.photoSelected);
-        });
+      const key = STORAGE_KEYS.PROFILE_PHOTO;
+      this.photoSelected.emit({ key });
+      this.uploadingSpinner = false;
+      console.log(this.photoSelected);
     };
     reader.readAsDataURL(file);
   }
@@ -200,20 +190,11 @@ export class ProfilePhotoComponent {
     this.uploadingInProgress = true;
     // this.uploadStarted.emit();
 
-    this.sessionService
-      .getCurrentUserData()
-      .pipe(
-        untilDestroyed(this),
-        filter((userData): userData is UserInterface => !!userData && !!userData.userId),
-      )
-      .subscribe((userData) => {
-        const caption = userData.realname || 'image upload';
-        const key = STORAGE_KEYS.PROFILE_PHOTO;
-        this.photoSelected.emit({ key, caption });
-        console.log(file);
-        console.log(this.photoSelected);
-        this.uploadingInProgress = false;
-      });
+    const key = STORAGE_KEYS.PROFILE_PHOTO;
+    this.photoSelected.emit({ key });
+    console.log(file);
+    console.log(this.photoSelected);
+    this.uploadingInProgress = false;
   }
 
   private dataURLtoFile(dataurl: string, filename: string): File {
