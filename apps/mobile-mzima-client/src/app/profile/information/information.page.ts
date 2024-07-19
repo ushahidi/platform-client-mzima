@@ -23,10 +23,10 @@ import { SelectOptionInterface } from '@models';
 import { MediaService } from 'libs/sdk/src/lib/services';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { UsersService } from 'libs/sdk/src/lib/services';
-import { UserInterface } from '@mzima-client/sdk';
+// import { UserInterface } from '@mzima-client/sdk';
 import { ProfilePhotoComponent } from './components';
 import { STORAGE_KEYS } from '@constants';
-import { filter, map } from 'rxjs';
+import { map } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -120,16 +120,8 @@ export class InformationPage {
   ) {
     this.sessionService
 
-      // .getCurrentUserData()
-      // .pipe(
-      //   untilDestroyed(this),
-      //   filter((userData) => !!userData),
-      // )
       .getCurrentUserData()
-      .pipe(
-        untilDestroyed(this),
-        filter((userData): userData is UserInterface => !!userData && !!userData.userId),
-      )
+      .pipe(untilDestroyed(this))
       .subscribe((userData) => {
         this.userPhoto = `https://www.gravatar.com/avatar/${
           userData.gravatar || '00000000000000000000000000000000'
@@ -270,10 +262,7 @@ export class InformationPage {
   saveUserProfilePhoto(mediaId: number, photoUrl: string): void {
     this.sessionService
       .getCurrentUserData()
-      .pipe(
-        untilDestroyed(this),
-        filter((userData): userData is UserInterface => !!userData && !!userData.userId),
-      )
+      .pipe(untilDestroyed(this))
       .subscribe((userData) => {
         if (userData && userData.userId) {
           const userId = userData.userId as string;
