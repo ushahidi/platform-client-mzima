@@ -164,13 +164,9 @@ export class InformationPage {
   }
 
   public handlePhotoSelected(event: { key: string; caption: string }): void {
-    if (this.selectedFileKey !== event.key || this.selectedCaption !== event.caption) {
-      this.selectedFileKey = event.key;
-      this.selectedCaption = event.caption;
-      this.isPhotoChanged = true;
-    } else {
-      this.isPhotoChanged = false;
-    }
+    this.selectedFileKey = event.key;
+    this.selectedCaption = event.caption;
+    this.isPhotoChanged = true;
   }
 
   ionViewWillEnter(): void {
