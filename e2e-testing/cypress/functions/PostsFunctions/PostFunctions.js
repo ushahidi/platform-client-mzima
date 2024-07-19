@@ -99,7 +99,8 @@ class PostFunctions {
     cy.get(PostLocators.postPreview)
       .children(PostLocators.postItem)
       .contains(this.postTitle)
-      .scrollIntoView.click();
+      .scrollIntoView()
+      .click();
 
     //delete post
     cy.get(PostLocators.postMenuDots).eq(0).click();
