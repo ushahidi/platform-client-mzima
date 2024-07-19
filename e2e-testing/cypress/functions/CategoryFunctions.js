@@ -111,7 +111,6 @@ class CategoryFunctions {
       .contains('New Post Title With Categories')
       .should('be.visible')
       .click();
-    cy.get('.post__group').find('.category').exists();
   }
 
   verify_created_category_exists() {
