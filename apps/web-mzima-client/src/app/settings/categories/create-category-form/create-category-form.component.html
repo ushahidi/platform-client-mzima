@@ -134,7 +134,7 @@
         *ngIf="isUpdate"
         class="delete-btn"
         [iconOnly]="!isDesktop"
-        [data-qa]="'btn-cetegory-delete'"
+        [data-qa]="'btn-category-delete'"
         (buttonClick)="deleteCategoryEmit()"
       >
         <ng-container *ngIf="isDesktop">{{ 'category.delete_category' | translate }}</ng-container>

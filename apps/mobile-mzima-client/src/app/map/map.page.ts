@@ -47,18 +47,8 @@ export class MapPage extends MainViewComponent implements OnDestroy {
       },
     });
 
-    this.initFilterListener();
-    this.initNetworkListener();
-
     this.getUserData();
 
-    this.getPost$.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe({
-      next: () => {
-        this.feed.updatePosts();
-        this.map.reInitParams();
-        this.map.getPostsGeoJson();
-      },
-    });
     if (this.user) this.intercomService.registerUser(this.user);
   }
 
@@ -73,6 +63,18 @@ export class MapPage extends MainViewComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  ngAfterViewInit(): void {
+    this.initNetworkListener();
+    this.initFilterListener();
+    this.getPost$.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        this.feed.updatePosts();
+        this.map.reInitParams();
+        this.map.getPostsGeoJson();
+      },
+    });
   }
 
   private initNetworkListener() {
