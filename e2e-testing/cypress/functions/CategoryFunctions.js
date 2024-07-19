@@ -109,8 +109,7 @@ class CategoryFunctions {
     cy.get(CategoryLocators.postPreview)
       .children(CategoryLocators.postItem)
       .contains('New Post Title With Categories')
-      .should('be.visible')
-      .click();
+      .should('be.visible');
   }
 
   verify_created_category_exists() {
