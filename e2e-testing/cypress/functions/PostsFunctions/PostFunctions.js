@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />
 
 import PostLocators from '../../locators/PostsLocators/PostLocators';
+import DataViewLocators from '../../locators/DataViewLocators';
 
 class PostFunctions {
   constructor() {
@@ -89,6 +90,11 @@ class PostFunctions {
 
   delete_post() {
     cy.get(PostLocators.dataViewBtn).click();
+
+    //restore filters
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+
     cy.get('[data-qa="feed-page-results"]').contains('Current results: 20 / 518');
     cy.get(PostLocators.postPreview)
       .children(PostLocators.postItem)
