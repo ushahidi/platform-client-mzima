@@ -96,7 +96,7 @@ class PostFunctions {
     cy.get(DataViewLocators.clearFiltersBtn).click();
 
     cy.get('[data-qa="feed-page-results"]').contains('Current results: 20 / 518');
-    cy.contains('One').scrollIntoView();
+    cy.contains(this.postTitle).scrollIntoView();
     cy.contains('One').click();
 
     //delete post
