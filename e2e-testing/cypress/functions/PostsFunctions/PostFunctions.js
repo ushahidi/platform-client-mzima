@@ -72,6 +72,10 @@ class PostFunctions {
   }
 
   verify_post_details() {
+    //reset filters
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+
     //verify survey name is shown
     cy.contains("Full Length Survey-with image-field- don't delete")
       .scrollIntoView()
@@ -97,7 +101,7 @@ class PostFunctions {
 
     //select post
     cy.get('[data-qa="feed-page-results"]').contains('Current results: 20 / 518');
-    cy.contains(this.postTitle).scrollIntoView().click();
+    cy.contains(this.postTitle).scrollIntoView();
     cy.contains(this.postTitle).click();
 
     //delete post
