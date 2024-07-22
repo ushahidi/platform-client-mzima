@@ -8,6 +8,8 @@ import { MediaService } from 'libs/sdk/src/lib/services';
 import { UsersService } from 'libs/sdk/src/lib/services';
 import { UserInterface } from '@mzima-client/sdk';
 
+//Coments
+
 @UntilDestroy()
 @Component({
   selector: 'app-profile-photo',
