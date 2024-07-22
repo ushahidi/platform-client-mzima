@@ -26,6 +26,7 @@ import { BaseComponent } from './base.component';
 import { UploadFileHelper } from './post/helpers';
 import { Location } from '@angular/common';
 import { LanguageInterface } from '@mzima-client/sdk';
+import { TranslateService } from '@ngx-translate/core';
 
 @UntilDestroy()
 @Component({
@@ -52,6 +53,7 @@ export class AppComponent extends BaseComponent {
     private surveysService: SurveysService,
     private listenerService: ListenerService,
     private languageService: LanguageService,
+    private translateService: TranslateService,
 
     @Optional() override routerOutlet?: IonRouterOutlet,
   ) {
@@ -149,12 +151,23 @@ export class AppComponent extends BaseComponent {
 
   async uploadPendingPosts() {
     const posts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
-    for (let post of posts) {
-      if (post?.file?.upload)
-        post = await new UploadFileHelper(this.mediaService).uploadFile(post, post.file);
-      await firstValueFrom(this.postsService.post(post));
+    if (posts) {
+      this.toastMessage$.next(
+        this.translateService.instant('app.info.posts_uploading', {
+          num_posts: posts.length.toString(),
+        }),
+      );
+      for (let post of posts) {
+        if (post?.file?.upload)
+          post = await new UploadFileHelper(this.mediaService).uploadFile(post, post.file);
+        await firstValueFrom(this.postsService.post(post));
+      }
+      this.toastMessage$.next(
+        this.translateService.instant('app.info.posts_uploaded', {
+          num_posts: posts.length.toString(),
+        }),
+      );
     }
-    this.toastMessage$.next('All pending posts uploaded to the server');
     await this.dataBaseService.set(STORAGE_KEYS.PENDING_POST_KEY, []);
   }
 
