@@ -68,14 +68,14 @@ class PostFunctions {
 
   open_post_for_details() {
     cy.get(PostLocators.dataViewBtn).click();
-    cy.get(PostLocators.postItem).eq(0).click();
-  }
-
-  verify_post_details() {
     //reset filters
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.clearFiltersBtn).click();
 
+    cy.get(PostLocators.postItem).eq(0).click();
+  }
+
+  verify_post_details() {
     //verify survey name is shown
     cy.contains("Full Length Survey-with image-field- don't delete")
       .scrollIntoView()
