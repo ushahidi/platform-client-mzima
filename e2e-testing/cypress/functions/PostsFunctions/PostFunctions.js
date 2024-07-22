@@ -91,13 +91,13 @@ class PostFunctions {
   delete_post() {
     cy.get(PostLocators.dataViewBtn).click();
 
-    //restore filters
+    //reset filters
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.clearFiltersBtn).click();
 
+    //select post
     cy.get('[data-qa="feed-page-results"]').contains('Current results: 20 / 518');
-    cy.contains(this.postTitle).scrollIntoView();
-    cy.contains('One').click();
+    cy.contains(this.postTitle).scrollIntoView().click();
 
     //delete post
     cy.get(PostLocators.postMenuDots).eq(0).click();
