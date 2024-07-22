@@ -24,9 +24,10 @@
   position: fixed;
 }
 .button-group {
-  bottom: 100%;
-  position: absolute;
+  bottom: 90px;
+  position: fixed;
   right: var(--ion-padding);
+  z-index: 1000;
   .add-post-button {
     --size: 56px;
     --icon-size: 24px;
