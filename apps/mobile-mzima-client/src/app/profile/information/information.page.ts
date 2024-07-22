@@ -139,6 +139,7 @@ export class InformationPage {
           if (savedPhoto) {
             this.userPhoto = savedPhoto.dataURL;
             console.log('Saved photo retrieved');
+            this.handlePhotoSelected();
           }
         });
 
@@ -154,7 +155,7 @@ export class InformationPage {
       });
   }
 
-  public handlePhotoSelected(event: { key: string }): void {
+  public handlePhotoSelected(event: { key: string } = { key: STORAGE_KEYS.PROFILE_PHOTO }): void {
     this.selectedFileKey = event.key;
     this.isPhotoChanged = true;
   }
@@ -291,6 +292,7 @@ export class InformationPage {
                   //activating delete button if the upload is successful
                   this.profilePhotoComponent.hasUploadedPhoto = true;
                   await this.databaseService.remove(STORAGE_KEYS.PROFILE_PHOTO);
+                  this.isPhotoChanged = false;
                   this.toastService.presentToast({
                     message: 'Profile photo updated successfully',
                     duration: 3000,
@@ -302,6 +304,7 @@ export class InformationPage {
                   this.isUploadInProgress = false;
                   this.profilePhotoComponent.uploadingSpinner = false;
                   await this.databaseService.remove(STORAGE_KEYS.PROFILE_PHOTO);
+                  this.isPhotoChanged = false;
                   this.toastService.presentToast({
                     message: 'Failed to add profile photo',
                     duration: 3000,
@@ -326,6 +329,7 @@ export class InformationPage {
                     position: 'bottom',
                   });
                   await this.databaseService.remove(STORAGE_KEYS.PROFILE_PHOTO);
+                  this.isPhotoChanged = false;
                 },
                 async (error) => {
                   console.error('Failed to add profile photo', error);
@@ -337,6 +341,7 @@ export class InformationPage {
                     position: 'bottom',
                   });
                   await this.databaseService.remove(STORAGE_KEYS.PROFILE_PHOTO);
+                  this.isPhotoChanged = false;
                 },
               );
             }
