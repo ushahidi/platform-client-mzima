@@ -45,7 +45,8 @@ export class ConfigService {
             });
             return data.result;
           },
-          error: () => {
+          error: (error) => {
+            console.log(error);
             setTimeout(() => this.getConfig(), 5000);
           },
         }),
