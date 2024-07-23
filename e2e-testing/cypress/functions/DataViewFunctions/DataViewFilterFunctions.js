@@ -144,25 +144,34 @@ class DataViewFilterFunctions {
     cy.get(DataViewLocators.revealFiltersBtn).click();
     //click categories filter button
     cy.get('button:contains("Categories")').click();
-    //check that drop-down on a parent and children are seen
-    cy.get('.mat-tree-node').eq(0).find('.multilevelselect-filter__option__arrow').click();
-    cy.get('.mat-tree-node').eq(0).should('exist');
-    cy.get(`[aria-level="2"]`).should('exist');
-    //check that when parent elements are selected children elements are also selected
-    cy.get('.mat-tree-node').eq(0).find('.mat-checkbox-input').click({ force: true });
-    cy.wait(2000);
-    cy.get('.mat-tree-node')
-      .eq(0)
-      .find('.mat-checkbox-input')
-      .should('have.attr', 'aria-checked', true);
-    cy.get(`[aria-level="2"]`)
-      .eq(0)
-      .find('.mat-checkbox-input')
-      .should('have.attr', 'aria-checked', true);
+    //verify a child is not visible before revealing it
+    cy.contains('Needs Escalation').should('not.exist');
+    //drop down to reveal children categories
+    cy.get(':nth-child(6) > .multilevelselect-filter__option__arrow > .mzima-button').click();
+    //verify child now visible
+    cy.contains('Needs Escalation').should('be.visible');
+    //click parent check mark
+    cy.contains('Escalation').click();
+
     //verify count shows how many categories are selected
-    cy.get(DataViewLocators.selectedFilterCount).contains('3');
+    cy.get(DataViewLocators.selectedFilterCount).contains('4');
+
+    cy.contains('Categories').click({ force: true });
     //verify count of posts is updated correctly
-    cy.get(DataViewLocators.feedPageResults).contains('Current results: 3 / 512');
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 2/2');
+
+    //select another category
+    cy.get('button:contains("Categories")').click();
+    cy.contains('Geolocation').click();
+    //verify count shows how many categories are selected
+    cy.get(DataViewLocators.selectedFilterCount).contains('11');
+    cy.contains('Categories').click({ force: true });
+    //verify count of posts is updated correctly
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20/55');
+
+    //clear all filters
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20/512');
   }
 }
 
