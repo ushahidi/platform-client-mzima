@@ -138,6 +138,23 @@ class DataViewFilterFunctions {
       .should('contain', 'mat-pseudo-checkbox-checked');
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 512');
   }
+
+  check_post_filter_by_date() {
+    //click date filter button
+    cy.get('button:contains("Date range")').click();
+    //Select Date 1
+    cy.get('.mat-calendar-body-cell').find('.mat-calendar-body-cell-content').contains('1').click();
+    //Select Date 2
+    cy.get('.mat-calendar-body-cell').find('.mat-calendar-body-cell-content').contains('8').click();
+    //Verify Selected dates are shown on top left
+    cy.get('.datarange-display').contains('2024/07/01 - 2024/07/08');
+    //Verify posts count matches selected dates
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 0');
+    //Clear all filters dismisses date filters
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+    //Verify posts count matches selected dates ( as default)
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 54');
+  }
 }
 
 export default DataViewFilterFunctions;

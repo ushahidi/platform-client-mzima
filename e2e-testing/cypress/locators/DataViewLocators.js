@@ -18,7 +18,6 @@ const DataViewLocators = {
   publishPostBtn: '[data-qa="btn-publish-post"]',
 
   postDetails: '[data-qa="post-details"]',
-
 };
 
 export default DataViewLocators;
