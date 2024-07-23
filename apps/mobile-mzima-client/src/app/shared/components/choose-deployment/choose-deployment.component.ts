@@ -148,11 +148,11 @@ export class ChooseDeploymentComponent {
           'Switching deployments will log out out of your current deployment, and you may need to log in again.',
         buttons: [
           {
-            text: "No. Don't switch",
+            text: 'Cancel',
             role: 'cancel',
           },
           {
-            text: 'Yes. Switch',
+            text: 'Confirm',
             role: 'confirm',
             cssClass: 'danger',
           },
