@@ -33,6 +33,7 @@
       color="secondary"
       *ngIf="searchQuery?.length"
       (buttonClick)="clearPostsResults()"
+      [ariaLabel]="'Search icon' | translate"
     >
       <mat-icon icon svgIcon="close"></mat-icon>
     </mzima-client-button>
