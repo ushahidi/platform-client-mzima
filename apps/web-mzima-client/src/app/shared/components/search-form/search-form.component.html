@@ -14,7 +14,7 @@
       [iconOnly]="true"
       fill="clear"
       color="secondary"
-      aria-label="Search icon"
+      [ariaLabel]="'Search icon' | translate"
     >
       <mat-icon icon svgIcon="search-small"></mat-icon>
     </mzima-client-button>
@@ -33,7 +33,6 @@
       color="secondary"
       *ngIf="searchQuery?.length"
       (buttonClick)="clearPostsResults()"
-      [ariaLabel]="'Search icon' | translate"
     >
       <mat-icon icon svgIcon="close"></mat-icon>
     </mzima-client-button>
