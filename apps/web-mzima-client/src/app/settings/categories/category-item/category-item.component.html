@@ -18,7 +18,7 @@
     fill="clear"
     color="secondary"
     [iconOnly]="true"
-    aria-label="Expand or collapse category"
+    [ariaLabel]="'Expand or collapse ' + category.tag | translate"
     [data-qa]="'toggle-children'"
     (buttonClick)="toggleChildren(category.id)"
     (click)="$event.stopPropagation()"
