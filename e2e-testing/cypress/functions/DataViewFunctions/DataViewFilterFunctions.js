@@ -147,7 +147,7 @@ class DataViewFilterFunctions {
     //verify a child is not visible before revealing it
     cy.contains('Needs Escalation').should('not.exist');
     //drop down to reveal children categories
-    cy.get(':nth-child(6) > .multilevelselect-filter__option__arrow > .mzima-button').click();
+    cy.get(':nth-child(2) > .multilevelselect-filter__option__arrow > .mzima-button').click();
     //verify child now visible
     cy.contains('Needs Escalation').should('be.visible');
     //click parent check mark
