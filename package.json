@@ -3,10 +3,7 @@
   "version": "0.0.0",
   "license": "AGPL-3.0-only",
   "scripts": {
-    "test:map": "pa11y --config pa11y.config.js 'http://localhost:4200/map'",
-    "test:feed": "pa11y --config pa11y.config.js 'http://localhost:4200/feed'",
-    "test:activity": "pa11y --config pa11y.config.js 'http://localhost:4200/activity'",
-    "test:general": "pa11y --config pa11y.config.js 'http://localhost:4200/settings/general'",
+    "test:pa11y": "node apps/web-mzima-client/pa11y-cli.js",
     "web:serve": "nx serve web-mzima-client",
     "web:build": "nx run web-mzima-client:build:production",
     "web:devbuild": "nx run web-mzima-client:build:development",
