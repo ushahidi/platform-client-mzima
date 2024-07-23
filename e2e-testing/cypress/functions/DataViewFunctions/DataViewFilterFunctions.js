@@ -140,6 +140,8 @@ class DataViewFilterFunctions {
   }
 
   check_post_filter_by_date() {
+    //click search form filter button
+    cy.get(DataViewLocators.revealFiltersBtn).click();
     //click date filter button
     cy.get('button:contains("Date range")').click();
     //Select Date 1
