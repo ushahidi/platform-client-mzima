@@ -149,7 +149,7 @@ class DataViewFilterFunctions {
     //Select Date 2
     cy.get('.mat-calendar-body-cell').find('.mat-calendar-body-cell-content').contains('8').click();
     //Verify Selected dates are shown on top left
-    cy.get('.datarange').find('.datarange-display__sm').contains('2024/07/01 - 2024/07/08');
+    cy.get('.menu-content').find('.datarange-display__sm').contains('2024/07/01 - 2024/07/08');
     //Verify posts count matches selected dates
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 0');
     //Clear all filters dismisses date filters
