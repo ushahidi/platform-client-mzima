@@ -5,8 +5,11 @@ const loginFunctions = new LoginFunctions();
 
 class DataViewFilterFunctions {
   click_data_view_btn() {
+    cy.intercept('/api/v5/posts/*').as('posts');
     cy.get(DataViewLocators.dataViewBtn).click();
+
     cy.url().should('include', '/feed');
+    cy.wait('@posts').its('response.statusCode').should('eq', 200);
   }
 
   check_post_filter_by_survey() {
@@ -150,6 +153,9 @@ class DataViewFilterFunctions {
     cy.get(':nth-child(2) > .multilevelselect-filter__option__arrow > .mzima-button').click();
     //verify child now visible
     cy.contains('Needs Escalation').should('be.visible');
+
+    //add alias to check response from API
+    cy.intercept('/api/v5/posts/*').as('posts');
     //click parent check mark
     cy.contains('Escalation').click();
 
@@ -157,6 +163,9 @@ class DataViewFilterFunctions {
     cy.get(DataViewLocators.selectedFilterCount).contains('4');
 
     cy.contains('Categories').click({ force: true });
+
+    //wait for response from API before next step
+    cy.wait('@posts').its('response.statusCode').should('eq', 200);
     //verify count of posts is updated correctly
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 2/2');
 
