@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "AGPL-3.0-only",
   "scripts": {
-    "test:pa11y": "node apps/web-mzima-client/pa11y-cli.js",
+    "test:custom": "node custom-test.js",
     "web:serve": "nx serve web-mzima-client",
     "web:build": "nx run web-mzima-client:build:production",
     "web:devbuild": "nx run web-mzima-client:build:development",
