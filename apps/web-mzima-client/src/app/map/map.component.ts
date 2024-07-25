@@ -77,58 +77,62 @@ export class MapComponent extends MainViewComponent implements OnInit {
       sessionService,
       breakpointService,
     );
-    this.filtersSubscription$ = this.postsService.postsFilters$.pipe(takeUntilDestroy$());
+    if (this.sessionService.hasSiteConfiguration()) {
+      this.filtersSubscription$ = this.postsService.postsFilters$.pipe(takeUntilDestroy$());
+    }
   }
 
   ngOnInit() {
-    this.reInitParams();
-    this.route.params.subscribe(() => {
-      this.initCollection();
-    });
-    this.initFilterListener();
-    this.mapConfig = this.sessionService.getMapConfigurations();
+    if (this.sessionService.hasSiteConfiguration()) {
+      this.reInitParams();
+      this.route.params.subscribe(() => {
+        this.initCollection();
+      });
+      this.initFilterListener();
+      this.mapConfig = this.sessionService.getMapConfigurations();
 
-    const currentLayer =
-      mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
+      const currentLayer =
+        mapHelper.getMapLayers().baselayers[this.mapConfig.default_view!.baselayer];
 
-    this.leafletOptions = {
-      minZoom: 1,
-      maxZoom: 22,
-      scrollWheelZoom: true,
-      zoomControl: false,
-      layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
-      center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
-      zoom: this.mapConfig.default_view!.zoom,
-    };
-    this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
+      this.leafletOptions = {
+        minZoom: 1,
+        maxZoom: 22,
+        scrollWheelZoom: true,
+        zoomControl: false,
+        layers: [tileLayer(currentLayer.url, currentLayer.layerOptions)],
+        center: [this.mapConfig.default_view!.lat, this.mapConfig.default_view!.lon],
+        zoom: this.mapConfig.default_view!.zoom,
+      };
+      this.markerClusterOptions.maxClusterRadius = this.mapConfig.cluster_radius;
 
-    this.mapReady = true;
+      this.mapReady = true;
 
-    this.eventBusService.on(EventType.SearchOptionSelected).subscribe({
-      next: (option) => {
-        this.map.setZoom(12);
-        this.map.panTo({ lat: option.lat, lng: option.lon });
-      },
-    });
+      this.eventBusService.on(EventType.SearchOptionSelected).subscribe({
+        next: (option) => {
+          this.map.setZoom(12);
+          this.map.panTo({ lat: option.lat, lng: option.lon });
+        },
+      });
 
-    this.sessionService.isFiltersVisible$.pipe(untilDestroyed(this)).subscribe({
-      next: (isFiltersVisible) => {
-        setTimeout(() => {
-          this.isFiltersVisible = isFiltersVisible;
-        }, 1);
-      },
-    });
+      this.sessionService.isFiltersVisible$.pipe(untilDestroyed(this)).subscribe({
+        next: (isFiltersVisible) => {
+          setTimeout(() => {
+            this.isFiltersVisible = isFiltersVisible;
+          }, 1);
+        },
+      });
 
-    this.sessionService.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
-      next: (isMainFiltersHidden: boolean) => {
-        setTimeout(() => {
-          this.isMainFiltersOpen = !isMainFiltersHidden;
-        }, 1);
-      },
-    });
+      this.sessionService.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
+        next: (isMainFiltersHidden: boolean) => {
+          setTimeout(() => {
+            this.isMainFiltersOpen = !isMainFiltersHidden;
+          }, 1);
+        },
+      });
 
-    this.initCollectionRemoveListener();
-    this.getUserData();
+      this.initCollectionRemoveListener();
+      this.getUserData();
+    }
   }
 
   loadData(): void {

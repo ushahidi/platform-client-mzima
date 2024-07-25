@@ -118,96 +118,98 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isMapView = this.router.url.includes('/map');
-    this.eventBusInit();
-    this.getSavedFilters();
-    this.initFilters();
-    this.getSurveys();
-    this.getCategories();
-    this.getUserData();
+    if (this.sessionService.hasSiteConfiguration()) {
+      this.isMapView = this.router.url.includes('/map');
+      this.eventBusInit();
+      this.getSavedFilters();
+      this.initFilters();
+      this.getSurveys();
+      this.getCategories();
+      this.getUserData();
 
-    if (this.activeSaved) {
-      this.activeSavedSearch = JSON.parse(this.activeSaved!);
-      this.activeSavedSearchValue = this.activeSavedSearch!.id || null;
-      this.preparingSavedFilter();
-      this.checkSavedSearchNotifications();
-    }
+      if (this.activeSaved) {
+        this.activeSavedSearch = JSON.parse(this.activeSaved!);
+        this.activeSavedSearchValue = this.activeSavedSearch!.id || null;
+        this.preparingSavedFilter();
+        this.checkSavedSearchNotifications();
+      }
 
-    this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
-      next: (params: any) => {
-        this.isMapView = params.url.includes('/map');
-        this.applyFilters(false);
-      },
-    });
+      this.router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe({
+        next: (params: any) => {
+          this.isMapView = params.url.includes('/map');
+          this.applyFilters(false);
+        },
+      });
 
-    this.form.valueChanges.pipe(debounceTime(500), untilDestroyed(this)).subscribe({
-      next: (values) => {
-        if (this.collectionInfo?.id) {
-          values.set = this.collectionInfo.id.toString();
-        }
-        localStorage.setItem(
-          this.session.getLocalStorageNameMapper('filters'),
-          JSON.stringify(values),
-        );
-        if (values?.form) {
+      this.form.valueChanges.pipe(debounceTime(500), untilDestroyed(this)).subscribe({
+        next: (values) => {
+          if (this.collectionInfo?.id) {
+            values.set = this.collectionInfo.id.toString();
+          }
           localStorage.setItem(
-            this.session.getLocalStorageNameMapper('allSurveysChecked'),
-            JSON.stringify(values.form.length === this.surveyList.length),
+            this.session.getLocalStorageNameMapper('filters'),
+            JSON.stringify(values),
           );
-        }
-        this.getActiveFilters(values);
-        this.applyFilters();
-      },
-    });
-
-    this.searchSubject.pipe(debounceTime(700)).subscribe({
-      next: () => {
-        this.getActiveFilters(this.form.value);
-        this.applyFilters();
-      },
-    });
-
-    this.session.isFiltersVisible$
-      .pipe(untilDestroyed(this))
-      .subscribe((isVisible) => (this.isFiltersVisible = isVisible));
-
-    this.session.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
-      next: (isMainFiltersHidden: boolean) => {
-        setTimeout(() => {
-          this.isMainFiltersOpen = !isMainFiltersHidden;
-          if (this.isMainFiltersOpen) {
-            document.body.classList.remove('main-filters-closed');
-          } else {
-            document.body.classList.add('main-filters-closed');
+          if (values?.form) {
+            localStorage.setItem(
+              this.session.getLocalStorageNameMapper('allSurveysChecked'),
+              JSON.stringify(values.form.length === this.surveyList.length),
+            );
           }
-        }, 1);
-      },
-      error: (err) => console.log('isMainFiltersHidden:', err),
-    });
+          this.getActiveFilters(values);
+          this.applyFilters();
+        },
+      });
 
-    this.session.currentUserData$.pipe(untilDestroyed(this)).subscribe({
-      next: (currentUser) => {
-        if (this.activeFilters && this.activeFilters['status[]']) {
-          const existingStatuses = this.activeFilters['status[]'];
-          const newStatuses = currentUser.role
-            ? DEFAULT_STATUSES_LOGGED_IN
-            : DEFAULT_STATUSES_LOGGED_OUT;
-          if (
-            existingStatuses.length !== newStatuses.length ||
-            existingStatuses.every(
-              (element: string, index: number) => element !== newStatuses[index],
-            )
-          ) {
-            this.activeFilters['status[]'] = newStatuses;
-            this.form.get('status')?.enable();
-            this.form.patchValue({ status: newStatuses }, { onlySelf: false, emitEvent: true });
+      this.searchSubject.pipe(debounceTime(700)).subscribe({
+        next: () => {
+          this.getActiveFilters(this.form.value);
+          this.applyFilters();
+        },
+      });
+
+      this.session.isFiltersVisible$
+        .pipe(untilDestroyed(this))
+        .subscribe((isVisible) => (this.isFiltersVisible = isVisible));
+
+      this.session.isMainFiltersHidden$.pipe(untilDestroyed(this)).subscribe({
+        next: (isMainFiltersHidden: boolean) => {
+          setTimeout(() => {
+            this.isMainFiltersOpen = !isMainFiltersHidden;
+            if (this.isMainFiltersOpen) {
+              document.body.classList.remove('main-filters-closed');
+            } else {
+              document.body.classList.add('main-filters-closed');
+            }
+          }, 1);
+        },
+        error: (err) => console.log('isMainFiltersHidden:', err),
+      });
+
+      this.session.currentUserData$.pipe(untilDestroyed(this)).subscribe({
+        next: (currentUser) => {
+          if (this.activeFilters && this.activeFilters['status[]']) {
+            const existingStatuses = this.activeFilters['status[]'];
+            const newStatuses = currentUser.role
+              ? DEFAULT_STATUSES_LOGGED_IN
+              : DEFAULT_STATUSES_LOGGED_OUT;
+            if (
+              existingStatuses.length !== newStatuses.length ||
+              existingStatuses.every(
+                (element: string, index: number) => element !== newStatuses[index],
+              )
+            ) {
+              this.activeFilters['status[]'] = newStatuses;
+              this.form.get('status')?.enable();
+              this.form.patchValue({ status: newStatuses }, { onlySelf: false, emitEvent: true });
+            }
           }
-        }
-      },
-    });
+        },
+      });
 
-    this.getPostsFilters();
-    this.getTotalPosts();
+      this.getPostsFilters();
+      this.getTotalPosts();
+    }
   }
 
   loadData(): void {

@@ -45,9 +45,16 @@ export class ConfigService {
             });
             return data.result;
           },
-          error: (error) => {
-            console.log(error);
-            setTimeout(() => this.getConfig(), 5000);
+          error: (response) => {
+            const error = response?.error?.errors[0];
+            if (!error || !(error.message === 'Deployment not found')) {
+              setTimeout(() => this.getConfig(), 5000);
+            }
+            // if (error && error.status === 404 && error.message === 'Deployment not found') {
+            //   console.log(error.status + ' --- ' + error.message);
+            // }
+            // else {
+            // }
           },
         }),
       );

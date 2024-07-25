@@ -78,6 +78,10 @@ export class SessionService {
     this.currentConfig.site.donation = donation;
   }
 
+  hasSiteConfiguration(): boolean {
+    return this.currentConfig.site && Object.keys(this.currentConfig.site).length > 0;
+  }
+
   getFeatureConfigurations() {
     return this.currentConfig.features;
   }

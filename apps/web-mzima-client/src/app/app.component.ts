@@ -7,6 +7,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import {
   BreakpointService,
+  ConfirmModalService,
   EnvService,
   EventBusService,
   EventType,
@@ -50,10 +51,17 @@ export class AppComponent extends BaseComponent implements OnInit {
     private env: EnvService,
     private gtm: GtmTrackingService,
     private intercom: Intercom,
+    private confirmModalService: ConfirmModalService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
 
+    if (!this.sessionService.hasSiteConfiguration()) {
+      this.confirmModalService.open({
+        title: 'No Deployment Found',
+        description: 'No Deployment Found',
+      });
+    }
     this.selectedLanguage$ = this.languageService.selectedLanguage$.pipe(untilDestroyed(this));
 
     this.loaderService.isActive$.pipe(untilDestroyed(this)).subscribe({
