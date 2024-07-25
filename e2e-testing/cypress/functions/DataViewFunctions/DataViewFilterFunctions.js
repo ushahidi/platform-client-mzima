@@ -5,11 +5,11 @@ const loginFunctions = new LoginFunctions();
 
 class DataViewFilterFunctions {
   click_data_view_btn() {
-    cy.intercept('/api/v5/posts/*').as('posts');
+    cy.intercept('/api/v5/posts?page=19').as('dataViewPage19');
     cy.get(DataViewLocators.dataViewBtn).click();
 
     cy.url().should('include', '/feed');
-    cy.wait('@posts').its('response.statusCode').should('eq', 200);
+    cy.wait('@dataViewPage19').its('response.statusCode').should('eq', 200);
   }
 
   check_post_filter_by_survey() {
@@ -155,7 +155,7 @@ class DataViewFilterFunctions {
     cy.contains('Needs Escalation').should('be.visible');
 
     //add alias to check response from API
-    cy.intercept('/api/v5/posts/*').as('posts');
+    cy.intercept('/api/v5/posts?page=1').as('posts');
     //click parent check mark
     cy.contains('Escalation').click();
 
