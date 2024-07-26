@@ -102,7 +102,7 @@ class PostFunctions {
     //select post
     cy.get('[data-qa="feed-page-results"]').contains('Current results: 20 / 518');
     cy.contains(this.postTitle).scrollIntoView();
-    cy.contains(this.postTitle).click();
+    cy.contains(this.postTitle).click({ force: true });
 
     //delete post
     cy.get(PostLocators.postMenuDots).eq(0).click();
