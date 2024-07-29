@@ -226,6 +226,12 @@ export class ChooseDeploymentComponent {
     this.foundDeploymentList = [];
     this.addButtonVisible = false;
     this.loadDeployments();
+
+    this.toastService.presentToast({
+      header: 'Deployment Added Successfully!',
+      message: 'You can now view this deployment and add posts to it',
+      buttons: [],
+    });
   }
 
   public backHandle(): void {
