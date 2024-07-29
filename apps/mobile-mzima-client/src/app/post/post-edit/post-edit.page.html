@@ -276,14 +276,41 @@
                 *ngIf="field.options?.length; else noOptions"
               >
                 <div class="radio-button" *ngFor="let option of field.options">
-                  <app-radio [value]="option" type="item" justify="space-between">
+                  <app-radio
+                    class="create-post"
+                    [value]="option"
+                    type="default"
+                    justify="start"
+                    *ngIf="option !== 'Other'"
+                  >
                     {{ option }}
                   </app-radio>
+
+                  <div class="other" *ngIf="option === 'Other'">
+                    <app-radio
+                      class="create-post"
+                      type="default"
+                      justify="start"
+                      [value]="option"
+                      (click)="otherRadio.focus()"
+                    >
+                    </app-radio>
+                    <input
+                      class="other__input other__input__radio"
+                      placeholder="Add other"
+                      aria-label="Add other"
+                      #otherRadio
+                      [formControlName]="'other'+field.key"
+                      (focus)="changeOtherOptions(field.key, field.input)"
+                    />
+                  </div>
+                  <div class="field-error" *ngIf="option === 'Other' && hasEmptyOther(field.key)">
+                    <ion-text color="danger"> {{'app.emtpy_field_error' | translate}} </ion-text>
+                  </div>
                 </div>
               </ion-radio-group>
             </div>
           </ng-container>
-
           <!-- checkbox -->
           <ng-container *ngIf="field.input === 'checkbox'">
             <div class="form-control--section">
@@ -302,13 +329,35 @@
               <ng-container *ngIf="field.options?.length; else noOptions">
                 <ng-container *ngFor="let option of field.options">
                   <app-checkbox
-                    type="item"
+                    type="default"
                     [required]="field?.required"
                     [checked]="form.get(field.key)?.value?.includes(option)"
                     (checkboxChange)="changeSelectionFields($event, field.key, option)"
+                    *ngIf="option !== 'Other'"
                   >
                     {{ option }}
                   </app-checkbox>
+
+                  <div class="other" *ngIf="option === 'Other'">
+                    <app-checkbox
+                      type="default"
+                      [required]="field?.required"
+                      [checked]="form.get(field.key)?.value?.includes(option)"
+                      (checkboxChange)="[!form.get(field.key)?.value?.includes(option) ? otherCheckbox.focus() : '', changeSelectionFields($event, field.key, option)]"
+                    >
+                    </app-checkbox>
+                    <input
+                      class="other__input other__input__checkbox"
+                      placeholder="Add other"
+                      aria-label="Add other"
+                      #otherCheckbox
+                      [formControlName]="'other'+field.key"
+                      (focus)="changeOtherOptions(field.key, field.input)"
+                    />
+                  </div>
+                  <div class="field-error" *ngIf="option === 'Other' && hasEmptyOther(field.key)">
+                    <ion-text color="danger"> {{'app.emtpy_field_error' | translate}} </ion-text>
+                  </div>
                 </ng-container>
               </ng-container>
             </div>
@@ -505,7 +554,6 @@
               ></app-textarea-control>
             </div>
           </ng-container>
-
           <div
             class="field-error"
             *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched"
