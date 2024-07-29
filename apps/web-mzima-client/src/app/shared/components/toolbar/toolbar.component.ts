@@ -54,8 +54,9 @@ export class ToolbarComponent extends BaseComponent implements OnInit {
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       const url = router.routerState.snapshot.url;
-      this.showSearchForm = url.indexOf('/map') > -1 || url.indexOf('/feed') > -1;
       this.isSettingsPage = url.indexOf('/settings') > -1;
+      if (!this.sessionService.hasSiteConfiguration()) this.showSearchForm = false;
+      else this.showSearchForm = url.indexOf('/map') > -1 || url.indexOf('/feed') > -1;
     });
 
     this.breadcrumbService.breadcrumbs$.pipe(untilDestroyed(this)).subscribe({

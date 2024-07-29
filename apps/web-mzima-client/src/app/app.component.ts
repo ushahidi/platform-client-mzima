@@ -57,10 +57,22 @@ export class AppComponent extends BaseComponent implements OnInit {
     this.checkDesktop();
 
     if (!this.sessionService.hasSiteConfiguration()) {
-      this.confirmModalService.open({
-        title: 'No Deployment Found',
-        description: 'No Deployment Found',
-      });
+      this.loaderService.hide();
+      this.confirmModalService
+        .open({
+          title: 'Deployment does not exist.',
+          description:
+            'Sorry. That deployment does not exist. Would you like to create a new deployment?',
+          confirmButtonText: 'Create New Deployment',
+          cancelButtonText: 'Exit',
+        })
+        .then((confirm) => {
+          if (confirm) {
+            window.location.href = 'https://ushahidi.io/create';
+          } else {
+            window.location.href = 'https://www.ushahidi.com/';
+          }
+        });
     }
     this.selectedLanguage$ = this.languageService.selectedLanguage$.pipe(untilDestroyed(this));
 
