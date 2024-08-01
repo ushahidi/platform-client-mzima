@@ -70,7 +70,7 @@ export class AppComponent extends BaseComponent implements OnInit {
           if (confirm) {
             window.location.href = 'https://ushahidi.io/create';
           } else {
-            window.location.href = 'https://www.ushahidi.com/';
+            window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
           }
         });
     }
