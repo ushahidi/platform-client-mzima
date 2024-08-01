@@ -153,7 +153,9 @@ export class AppComponent extends BaseComponent {
     const posts: any[] = await this.dataBaseService.get(STORAGE_KEYS.PENDING_POST_KEY);
     if (posts) {
       this.toastMessage$.next(
-        this.translateService.instant('app.info.posts_uploading', { num_posts: posts.length }),
+        this.translateService.instant('app.info.posts_uploading', {
+          num_posts: posts.length.toString(),
+        }),
       );
       for (let post of posts) {
         if (post?.file?.upload)
@@ -161,7 +163,9 @@ export class AppComponent extends BaseComponent {
         await firstValueFrom(this.postsService.post(post));
       }
       this.toastMessage$.next(
-        this.translateService.instant('app.info.posts_uploaded', { num_posts: posts.length }),
+        this.translateService.instant('app.info.posts_uploaded', {
+          num_posts: posts.length.toString(),
+        }),
       );
     }
     await this.dataBaseService.set(STORAGE_KEYS.PENDING_POST_KEY, []);

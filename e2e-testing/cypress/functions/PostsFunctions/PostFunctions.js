@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />
 
 import PostLocators from '../../locators/PostsLocators/PostLocators';
+import DataViewLocators from '../../locators/DataViewLocators';
 
 class PostFunctions {
   constructor() {
@@ -67,6 +68,10 @@ class PostFunctions {
 
   open_post_for_details() {
     cy.get(PostLocators.dataViewBtn).click();
+    //reset filters
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+
     cy.get(PostLocators.postItem).eq(0).click();
   }
 
@@ -89,10 +94,15 @@ class PostFunctions {
 
   delete_post() {
     cy.get(PostLocators.dataViewBtn).click();
-    cy.get(PostLocators.postPreview)
-      .children(PostLocators.postItem)
-      .contains(this.postTitle)
-      .click();
+
+    //reset filters
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+
+    //select post
+    cy.get('[data-qa="feed-page-results"]').contains('Current results: 20 / 518');
+    cy.contains(this.postTitle).scrollIntoView();
+    cy.contains(this.postTitle).click();
 
     //delete post
     cy.get(PostLocators.postMenuDots).eq(0).click();

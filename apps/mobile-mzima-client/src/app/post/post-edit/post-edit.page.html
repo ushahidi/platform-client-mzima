@@ -72,10 +72,13 @@
             *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
           >
             <div class="form-control--section">
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-form-control
                 color="light"
                 [clearable]="true"
-                [label]="field?.label"
                 [required]="field?.required"
                 [formControlName]="field.key"
                 [hintHTML]="field?.instructions"
@@ -86,10 +89,13 @@
           <!-- description -->
           <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
             <div class="form-control--section">
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-textarea-control
                 color="light"
                 [clearable]="true"
-                [label]="field?.label"
                 [required]="field?.required"
                 [formControlName]="field.key"
                 [hintHTML]="field?.instructions"
@@ -100,11 +106,14 @@
 
           <ng-container *ngIf="field.input === 'textarea'">
             <div class="form-control--section">
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-textarea-control
                 color="light"
                 [rounded]="false"
                 [clearable]="true"
-                [label]="field?.label"
                 [required]="field?.required"
                 [formControlName]="field.key"
                 [hintHTML]="field?.instructions"
@@ -116,7 +125,7 @@
           <!-- tags -->
           <ng-container *ngIf="field.input === 'tags'">
             <div class="form-control--section">
-              <ion-label>
+              <ion-label class="field-label">
                 {{ field?.label }}
                 <span class="color-accent" *ngIf="field?.required">*</span>
               </ion-label>
@@ -160,10 +169,13 @@
           <!-- date -->
           <ng-container *ngIf="field.input === 'date'">
             <div class="form-control--section">
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-form-control
                 [id]="'open-date'+i"
                 color="light"
-                [label]="field?.label"
                 [required]="field?.required"
                 [clearable]="true"
                 [formControlName]="field.key"
@@ -202,10 +214,13 @@
           <!-- datetime -->
           <ng-container *ngIf="field.input === 'datetime'">
             <div class="form-control--section">
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-form-control
                 [id]="'open-datetime'+i"
                 color="light"
-                [label]="field?.label"
                 [required]="field?.required"
                 [clearable]="true"
                 [formControlName]="field.key"
@@ -245,7 +260,7 @@
           <ng-container *ngIf="field.input === 'radio'">
             <div class="form-control--section">
               <div>
-                <ion-label>
+                <ion-label class="field-label">
                   {{ field?.label }}
                   <span class="color-accent" *ngIf="field?.required">*</span>
                 </ion-label>
@@ -261,19 +276,46 @@
                 *ngIf="field.options?.length; else noOptions"
               >
                 <div class="radio-button" *ngFor="let option of field.options">
-                  <app-radio [value]="option" type="item" justify="space-between">
+                  <app-radio
+                    class="create-post"
+                    [value]="option"
+                    type="default"
+                    justify="start"
+                    *ngIf="option !== 'Other'"
+                  >
                     {{ option }}
                   </app-radio>
+
+                  <div class="other" *ngIf="option === 'Other'">
+                    <app-radio
+                      class="create-post"
+                      type="default"
+                      justify="start"
+                      [value]="option"
+                      (click)="otherRadio.focus()"
+                    >
+                    </app-radio>
+                    <input
+                      class="other__input other__input__radio"
+                      placeholder="Add other"
+                      aria-label="Add other"
+                      #otherRadio
+                      [formControlName]="'other'+field.key"
+                      (focus)="changeOtherOptions(field.key, field.input)"
+                    />
+                  </div>
+                  <div class="field-error" *ngIf="option === 'Other' && hasEmptyOther(field.key)">
+                    <ion-text color="danger"> {{'app.emtpy_field_error' | translate}} </ion-text>
+                  </div>
                 </div>
               </ion-radio-group>
             </div>
           </ng-container>
-
           <!-- checkbox -->
           <ng-container *ngIf="field.input === 'checkbox'">
             <div class="form-control--section">
               <div>
-                <ion-label>
+                <ion-label class="field-label">
                   {{ field?.label }}
                   <span class="color-accent" *ngIf="field?.required">*</span>
                 </ion-label>
@@ -287,13 +329,35 @@
               <ng-container *ngIf="field.options?.length; else noOptions">
                 <ng-container *ngFor="let option of field.options">
                   <app-checkbox
-                    type="item"
+                    type="default"
                     [required]="field?.required"
                     [checked]="form.get(field.key)?.value?.includes(option)"
                     (checkboxChange)="changeSelectionFields($event, field.key, option)"
+                    *ngIf="option !== 'Other'"
                   >
                     {{ option }}
                   </app-checkbox>
+
+                  <div class="other" *ngIf="option === 'Other'">
+                    <app-checkbox
+                      type="default"
+                      [required]="field?.required"
+                      [checked]="form.get(field.key)?.value?.includes(option)"
+                      (checkboxChange)="[!form.get(field.key)?.value?.includes(option) ? otherCheckbox.focus() : '', changeSelectionFields($event, field.key, option)]"
+                    >
+                    </app-checkbox>
+                    <input
+                      class="other__input other__input__checkbox"
+                      placeholder="Add other"
+                      aria-label="Add other"
+                      #otherCheckbox
+                      [formControlName]="'other'+field.key"
+                      (focus)="changeOtherOptions(field.key, field.input)"
+                    />
+                  </div>
+                  <div class="field-error" *ngIf="option === 'Other' && hasEmptyOther(field.key)">
+                    <ion-text color="danger"> {{'app.emtpy_field_error' | translate}} </ion-text>
+                  </div>
                 </ng-container>
               </ng-container>
             </div>
@@ -302,9 +366,12 @@
           <!-- select -->
           <ng-container *ngIf="field.input === 'select'">
             <div class="form-control--section">
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-select
                 [hintHTML]="field?.instructions"
-                [label]="field?.label"
                 [formControlName]="field.key"
                 *ngIf="field.options?.length; else noOptions"
                 [options]="field.options"
@@ -316,10 +383,13 @@
           <!-- number -->
           <ng-container *ngIf="field.input === 'number'">
             <div class="form-control--section">
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-form-control
                 color="light"
                 [clearable]="true"
-                [label]="field?.label"
                 [required]="field?.required"
                 [formControlName]="field.key"
                 [type]="'number'"
@@ -333,7 +403,7 @@
           <ng-container *ngIf="field.input === 'upload'">
             <div class="form-control--section">
               <div>
-                <ion-label>
+                <ion-label class="field-label">
                   {{ field?.label }}
                   <span class="color-accent" *ngIf="field?.required">*</span>
                 </ion-label>
@@ -359,11 +429,14 @@
           <!-- video -->
           <ng-container *ngIf="field.input === 'video'">
             <div class="form-control--section">
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-form-control
                 #videoInput
                 color="light"
                 [clearable]="true"
-                [label]="field?.label"
                 [required]="field?.required"
                 [formControlName]="field.key"
                 [hintHTML]="field?.instructions"
@@ -387,7 +460,7 @@
           <!-- location -->
           <ng-container *ngIf="field.input === 'location'">
             <div class="form-row__label-instruction">
-              <ion-label>
+              <ion-label class="field-label">
                 {{ field?.label }}
                 <span class="color-accent" *ngIf="field?.required">*</span>
               </ion-label>
@@ -412,7 +485,7 @@
           <!-- relation -->
           <ng-container *ngIf="field.input === 'relation'">
             <div class="form-control--section">
-              <ion-label>
+              <ion-label class="field-label">
                 {{ field?.label }}
                 <span class="color-accent" *ngIf="field?.required">*</span>
               </ion-label>
@@ -433,7 +506,6 @@
                 <app-form-control
                   color="light"
                   [clearable]="true"
-                  [label]="field?.label"
                   [required]="field?.required"
                   [(ngModel)]="relationSearch"
                   [ngModelOptions]="{ standalone: true }"
@@ -468,10 +540,13 @@
           <!-- markdown -->
           <ng-container *ngIf="field.input === 'markdown'">
             <div class="form-control--section">
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
               <app-textarea-control
                 color="light"
                 [clearable]="true"
-                [label]="field?.label"
                 [required]="field?.required"
                 [formControlName]="field.key"
                 [placeholder]="field.default"
@@ -479,7 +554,6 @@
               ></app-textarea-control>
             </div>
           </ng-container>
-
           <div
             class="field-error"
             *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched"
