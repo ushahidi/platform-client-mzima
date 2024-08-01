@@ -1,0 +1,17 @@
+<ion-item lines="none" class="phone-field">
+  <span slot="start">
+    <ng-content select="[start]"></ng-content>
+  </span>
+
+  <ngx-mat-intl-tel-input
+    [preferredCountries]="['us', 'gb']"
+    [enablePlaceholder]="true"
+    [enableSearch]="true"
+    name="phone"
+    describedBy="phoneInput"
+  ></ngx-mat-intl-tel-input>
+
+  <span slot="end">
+    <ng-content select="[end]"></ng-content>
+  </span>
+</ion-item>
