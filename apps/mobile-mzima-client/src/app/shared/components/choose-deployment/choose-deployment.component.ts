@@ -259,6 +259,24 @@ export class ChooseDeploymentComponent {
     this.foundDeploymentList = [];
     this.addButtonVisible = false;
     this.loadDeployments();
+
+    const deploymentCount = this.selectedDeployments.length;
+    const header =
+      deploymentCount > 1
+        ? deploymentCount + ' Deployments Added Successfully!'
+        : '1 Deployment Added Successfully!';
+    const message =
+      deploymentCount > 1
+        ? 'You can now view these deployments and add posts to them'
+        : 'You can now view this deployment and add posts to it';
+
+    this.toastService.presentToast({
+      header: header,
+      message: message,
+      buttons: [],
+    });
+
+    this.selectedDeployments = [];
   }
 
   public backHandle(): void {
