@@ -230,8 +230,8 @@ export class ChooseDeploymentComponent {
     const deploymentCount = this.selectedDeployments.length;
     const header =
       deploymentCount > 1
-        ? `${deploymentCount} Deployments Added Successfully!`
-        : `1 Deployment Added Successfully!`;
+        ? deploymentCount + ' Deployments Added Successfully!'
+        : '1 Deployment Added Successfully!';
     const message =
       deploymentCount > 1
         ? 'You can now view these deployments and add posts to them'
