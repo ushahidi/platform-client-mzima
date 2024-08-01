@@ -5,7 +5,14 @@ import { App } from '@capacitor/app';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
 import { Deployment } from '@mzima-client/sdk';
 import { Subject, debounceTime } from 'rxjs';
-import { AlertService, AuthService, ConfigService, DeploymentService, EnvService } from '@services';
+import {
+  AlertService,
+  AuthService,
+  ConfigService,
+  DeploymentService,
+  EnvService,
+  SessionService,
+} from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ToastService } from '@services';
 
@@ -40,6 +47,7 @@ export class ChooseDeploymentComponent {
     private deploymentService: DeploymentService,
     private alertService: AlertService,
     private authService: AuthService,
+    private sessionService: SessionService,
     protected toastService: ToastService,
     protected platform: Platform,
   ) {
@@ -131,6 +139,31 @@ export class ChooseDeploymentComponent {
 
   public async chooseDeployment(deployment: Deployment) {
     const currentDeployment = this.deploymentService.getDeployment() ?? null;
+
+    const isLoggedIn = this.sessionService.isLogged();
+    if (isLoggedIn) {
+      const result = await this.alertService.presentAlert({
+        header: 'Log out of current deployment?',
+        message:
+          'Switching deployments will log out out of your current deployment, and you may need to log in again.',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+          },
+          {
+            text: 'Confirm',
+            role: 'confirm',
+            cssClass: 'danger',
+          },
+        ],
+      });
+
+      if (result.role !== 'confirm') {
+        return;
+      }
+    }
+
     this.authService.logout();
     this.deploymentService.setDeployment(deployment);
     this.envService.setDynamicBackendUrl();
@@ -226,6 +259,24 @@ export class ChooseDeploymentComponent {
     this.foundDeploymentList = [];
     this.addButtonVisible = false;
     this.loadDeployments();
+
+    const deploymentCount = this.selectedDeployments.length;
+    const header =
+      deploymentCount > 1
+        ? deploymentCount + ' Deployments Added Successfully!'
+        : '1 Deployment Added Successfully!';
+    const message =
+      deploymentCount > 1
+        ? 'You can now view these deployments and add posts to them'
+        : 'You can now view this deployment and add posts to it';
+
+    this.toastService.presentToast({
+      header: header,
+      message: message,
+      buttons: [],
+    });
+
+    this.selectedDeployments = [];
   }
 
   public backHandle(): void {

@@ -4,9 +4,11 @@
     [photo]="userPhoto"
     (uploadStarted)="onUploadStarted()"
     (uploadCompleted)="onUploadCompleted()"
-    (photoChanged)="handlePhotoChange($event)"
+    (photoSelected)="handlePhotoSelected($event)"
   ></app-profile-photo>
+
   <!-- (photoChanged)="handlePhotoChange($event)" -->
+  <!-- Sample" -->
 
   <ion-title class="title">Profile name</ion-title>
   <form class="information-form" novalidate [formGroup]="form" (ngSubmit)="updateUserInformation()">
@@ -56,7 +58,7 @@
           expand="inline"
           type="button"
           *ngIf="form"
-          [disabled]="form.disabled || form.invalid || form.pristine "
+          [disabled]="form.disabled || (form.invalid && !isPhotoChanged) || (!form.dirty && !isPhotoChanged)"
           (buttonClick)="updateUserInformation()"
         >
           {{"app.save_changes" | translate}}
