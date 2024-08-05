@@ -22,6 +22,7 @@
         *ngFor="let collection of collections"
         [collection]="collection"
         [editable]="editable"
+        [userRole]="userRole"
         (collectionChanged)="collectionChanged($event, collection)"
         (editCollection)="editCollectionHandle(collection)"
         (click)="editable && showCollection(collection.id)"

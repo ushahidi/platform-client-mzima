@@ -74,7 +74,7 @@ export class ChooseCollectionComponent {
     editableBy: 'me',
   };
   public roleOptions: any;
-  private userRole: string;
+  public userRole: string;
   private userData$: Observable<UserInterface>;
   public isLoading = false;
   public isSearchView = false;
