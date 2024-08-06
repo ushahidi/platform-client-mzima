@@ -9,7 +9,6 @@ import { CollectionItem } from '@mzima-client/sdk';
 export class CollectionItemComponent {
   @Input() public collection: CollectionItem;
   @Input() public editable?: boolean;
-  @Input() public userRole: string;
   @Output() collectionChanged = new EventEmitter<boolean>();
   @Output() editCollection = new EventEmitter();
 
