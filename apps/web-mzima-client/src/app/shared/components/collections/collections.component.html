@@ -77,22 +77,24 @@
   <ng-container *ngIf="!isLoading; else loader">
     <div mat-dialog-content>
       <div class="collection-list">
-        <app-collection-item
-          [collection]="item"
-          [actions]="item.my_collection || isManageCollections"
-          class="collection-list__item"
-          (edit)="editCollection(item)"
-          (click)="goToCollection(item)"
-          [selectable]="post && !!post.id"
-          (delete)="deleteCollection(item)"
+        <a
           *ngFor="let item of collectionList"
-          [checked]="isPostInCollection(item)"
-          (checkedChange)="onCheckChange($event, item)"
+          [routerLink]="['/collections', item.id]"
+          class="collection-list__item"
+          [class.checked]="isPostInCollection(item)"
+          (click)="goToCollection(item)"
           [data-qa]="'collection-item'"
-          tabindex="0"
-          (keydown)="onKeydown($event, item)"
         >
-        </app-collection-item>
+          <app-collection-item
+            [collection]="item"
+            [actions]="item.my_collection || isManageCollections"
+            (edit)="editCollection(item, $event)"
+            (delete)="deleteCollection(item, $event)"
+            [selectable]="post && !!post.id"
+            [checked]="isPostInCollection(item)"
+          >
+          </app-collection-item>
+        </a>
       </div>
     </div>
   </ng-container>

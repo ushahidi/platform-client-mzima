@@ -41,7 +41,9 @@
     margin: 0;
     display: block;
   }
-
+  & a {
+    text-decoration: none;
+  }
   &__item {
     margin: 0 8px 16px;
     width: calc(50% - 16px);

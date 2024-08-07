@@ -1,4 +1,4 @@
-import { Component, HostListener, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -80,17 +80,6 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
 
     const permissions = localStorage.getItem('USH_permissions')!;
     this.featuredEnabled = permissions ? permissions.split(',').includes('Manage Posts') : false;
-  }
-
-  @HostListener('keydown', ['$event'])
-  onKeydown(event: KeyboardEvent, collection: CollectionResult) {
-    if (event.key === 'Enter' && event.target instanceof HTMLElement) {
-      if (event.target.classList.contains('collection-list__item')) {
-        this.goToCollection(collection);
-      } else if (event.target.classList.contains('edit-btn')) {
-        this.editCollection(collection);
-      }
-    }
   }
 
   checkPermission() {
@@ -221,7 +210,8 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     }
   }
 
-  async deleteCollection(collection: CollectionResult) {
+  async deleteCollection(collection: CollectionResult, event: Event) {
+    event.preventDefault();
     const confirmed = await this.confirm.open({
       title: collection.name,
       description: this.translate.instant('notify.collection.delete_collection_confirm'),
@@ -235,7 +225,8 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  editCollection(collection: CollectionResult) {
+  editCollection(collection: CollectionResult, event: Event) {
+    event.preventDefault();
     this.collectionForm.patchValue({
       name: collection.name,
       description: collection.description,
