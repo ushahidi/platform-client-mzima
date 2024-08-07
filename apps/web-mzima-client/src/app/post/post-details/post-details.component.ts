@@ -47,6 +47,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public videoUrls: any[] = [];
   public isPostLoading: boolean = true;
   public isManagePosts: boolean = false;
+  public twitter_samePostWithPreviewCard = false;
 
   constructor(
     protected override sessionService: SessionService,
@@ -91,9 +92,19 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         if (this.post) {
           this.setMetaData(this.post!);
           this.preparePostForView();
+          // this.getPost(this.post.id);
         }
       }
     }
+
+    // if (changes['post']) {}
+  }
+
+  public getIfSameTwitterIdWithPreviewCard(idFromTwitterWidgetComponent: string) {
+    console.log('collected: ', this.post.data_source_message_id);
+    console.log('output: ', idFromTwitterWidgetComponent);
+    this.twitter_samePostWithPreviewCard =
+      this.post.data_source_message_id === idFromTwitterWidgetComponent;
   }
 
   private preparePostForView() {
