@@ -1,5 +1,6 @@
 import { Component, OnInit, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import intlTelInput from 'intl-tel-input';
 
 @Component({
   selector: 'app-phone-field',
@@ -14,8 +15,17 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
   ],
 })
 export class PhoneFieldComponent implements ControlValueAccessor, OnInit {
-  writeValue(obj: any): void {
-    throw new Error('Method not implemented.' + obj);
+  private value: string;
+
+  ngOnInit() {
+    const input = <Element>document.querySelector('.phone-field-input');
+    intlTelInput(input, {
+      utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.0/build/js/utils.js',
+    });
+  }
+
+  writeValue(value: string): void {
+    this.value = value;
   }
 
   registerOnChange(fn: any): void {

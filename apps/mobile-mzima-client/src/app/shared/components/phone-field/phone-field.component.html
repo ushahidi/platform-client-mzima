@@ -3,13 +3,7 @@
     <ng-content select="[start]"></ng-content>
   </span>
 
-  <ngx-mat-intl-tel-input
-    [preferredCountries]="['us', 'gb']"
-    [enablePlaceholder]="true"
-    [enableSearch]="true"
-    name="phone"
-    describedBy="phoneInput"
-  ></ngx-mat-intl-tel-input>
+  <input type="phone" class="phone-field-input" />
 
   <span slot="end">
     <ng-content select="[end]"></ng-content>
