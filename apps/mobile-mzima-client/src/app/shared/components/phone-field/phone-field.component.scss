@@ -1,0 +1,25 @@
+::ng-deep {
+  @import '~intl-tel-input/build/css/intlTelInput';
+  .iti {
+    width: 100%;
+  }
+  // .phone-field {
+  //     button.country-selector {
+  //         margin-right: 0.5rem;
+  //         border-radius: 4px;
+  //         border: 1px solid #e2e2e3;
+  //         background-color: #fff;
+  //     }
+  //     .mat-input-element:not(.country-search) {
+  //         margin-left: 0.5rem;
+  //         border-radius: 4px;
+  //         border: 1px solid #e2e2e3;
+  //         background-color: #fff;
+  //         color: #333
+  //     }
+  // @media (prefers-color-scheme: light) {
+  // }
+  // @media (prefers-color-scheme: dark) {
+  // }
+  // }
+}
