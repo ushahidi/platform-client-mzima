@@ -16,10 +16,13 @@ import intlTelInput from 'intl-tel-input';
 })
 export class PhoneFieldComponent implements ControlValueAccessor, OnInit {
   private value: string;
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
   ngOnInit() {
     const input = <Element>document.querySelector('.phone-field-input');
     intlTelInput(input, {
+      separateDialCode: true,
       utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.0/build/js/utils.js',
     });
   }
@@ -29,11 +32,11 @@ export class PhoneFieldComponent implements ControlValueAccessor, OnInit {
   }
 
   registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.' + fn);
+    this.onChange = fn;
   }
 
   registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.' + fn);
+    this.onTouched = fn;
   }
 
   setDisabledState?(isDisabled: boolean): void {
