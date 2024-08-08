@@ -1,25 +1,54 @@
 ::ng-deep {
   @import '~intl-tel-input/build/css/intlTelInput';
-  .iti {
-    width: 100%;
+  .phone-field {
+    .item-native {
+      padding: 0 !important;
+    }
+    .iti {
+      &.iti--allow-dropdown {
+        width: 100%;
+        color: black;
+        .iti__selected-dial-code {
+          position: absolute;
+          left: 70px;
+        }
+        .iti__country-container {
+          margin-left: 10px;
+          border-radius: 6px;
+          border: 1px solid #e2e2e3;
+          background-color: #fff;
+          height: 40px;
+        }
+        input.iti__tel-input,
+        input.iti__tel-input[type='text'],
+        input.iti__tel-input[type='tel'] {
+          padding-right: var(--iti-input-padding);
+          left: var(--iti-selected-country-arrow-padding);
+          padding-left: 10px;
+          padding-bottom: 2px;
+          margin-left: 20px;
+          width: calc(100% - var(--iti-selected-country-arrow-padding) - 20px);
+          height: 40px;
+          border: 1px solid #efefee;
+          border-radius: 6px;
+          outline: none;
+        }
+        &[dir='rtl'] {
+          input.iti__tel-input,
+          input.iti__tel-input[type='text'],
+          input.iti__tel-input[type='tel'] {
+            right: var(--iti-selected-country-arrow-padding);
+            padding-right: 20px;
+            padding-left: var(--iti-input-padding);
+            padding-bottom: 2px;
+            margin-right: 10px;
+            width: calc(100% - var(--iti-selected-country-arrow-padding));
+            height: 40px;
+            border: none;
+            border-radius: 4px;
+          }
+        }
+      }
+    }
   }
-  // .phone-field {
-  //     button.country-selector {
-  //         margin-right: 0.5rem;
-  //         border-radius: 4px;
-  //         border: 1px solid #e2e2e3;
-  //         background-color: #fff;
-  //     }
-  //     .mat-input-element:not(.country-search) {
-  //         margin-left: 0.5rem;
-  //         border-radius: 4px;
-  //         border: 1px solid #e2e2e3;
-  //         background-color: #fff;
-  //         color: #333
-  //     }
-  // @media (prefers-color-scheme: light) {
-  // }
-  // @media (prefers-color-scheme: dark) {
-  // }
-  // }
 }
