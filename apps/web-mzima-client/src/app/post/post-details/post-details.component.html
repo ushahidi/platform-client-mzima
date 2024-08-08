@@ -20,10 +20,7 @@
     </div>
 
     <div class="post__twitter" *ngIf="post.source === 'Twitter' && post.data_source_message_id">
-      <app-twitter-widget
-        [id]="post.data_source_message_id"
-        (twitter_postDetailsId)="getIfSameTwitterIdWithPreviewCard($event)"
-      ></app-twitter-widget>
+      <app-twitter-widget [id]="post.data_source_message_id"></app-twitter-widget>
     </div>
 
     <div class="post__survey" *ngIf="post.form">

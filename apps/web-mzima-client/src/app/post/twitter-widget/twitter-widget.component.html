@@ -1,12 +1,10 @@
-<ng-container *ngIf="id === postDetailsId">
-  <ng-content *ngIf="!isTwitterScriptLoading"></ng-content>
-  <ng-container *ngIf="isTwitterFailed">
-    <img
-      class="tweet_failed"
-      src="/assets/images/tweet.svg"
-      [alt]="'app.tweet_is_unavailable' | translate"
-    />
-  </ng-container>
+<ng-content *ngIf="!isTwitterScriptLoading"></ng-content>
+<ng-container *ngIf="isTwitterFailed">
+  <img
+    class="tweet_failed"
+    src="/assets/images/tweet.svg"
+    [alt]="'app.tweet_is_unavailable' | translate"
+  />
 </ng-container>
 
 <app-spinner class="spinner" *ngIf="isTwitterScriptLoading"></app-spinner>

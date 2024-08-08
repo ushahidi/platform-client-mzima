@@ -48,16 +48,19 @@ export class TwitterWidgetComponent implements OnInit, OnChanges {
     console.log('testing...');
     if (changes['id']) {
       console.log('onChanges: ', this.id);
-      this.twitter_postDetailsId.emit(this.id);
-      this.postDetailsId = this.id;
+      // document.querySelectorAll('.twitter-tweet').forEach((prevTweet) => {
+      //   prevTweet.remove();
+      // });
       this._loadTwitterScript();
+      // document.querySelectorAll('.twitter-tweet').forEach((twi) => {
+      //   prevTweet.remove();
+      // });
     }
   }
 
   private _loadTwitterScript(): void {
     this.twitterService.loadScript().subscribe((twitterData: any) => {
       this._updateTwitterScriptLoadingState();
-
       twitterData.widgets.createTweet(this.id, this._elementRef.nativeElement, {}).then(
         (tweet: any) => {
           this.tweet = tweet;
