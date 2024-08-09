@@ -31,30 +31,30 @@ export class TwitterWidgetComponent implements OnInit, OnChanges {
     private readonly _elementRef: ElementRef,
     private readonly twitterService: TwitterService,
     private readonly _changeDetectorRef: ChangeDetectorRef,
-  ) {
-    // console.log('constuctor: ', this.id);
-    // this._loadTwitterScript();
-    // this.isTwitterScriptLoading = true;
-    // this._updateTwitterScriptLoadingState();
-    // this.isTwitterScriptLoading = true;
-  }
+  ) {}
 
   public ngOnInit(): void {
-    console.log('Husky pre-commit hook - Let my people go...');
-    // this._loadTwitterScript();
+    this._loadTwitterScript();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('testing...');
     if (changes['id']) {
-      console.log('onChanges: ', this.id);
-      // document.querySelectorAll('.twitter-tweet').forEach((prevTweet) => {
-      //   prevTweet.remove();
-      // });
-      this._loadTwitterScript();
-      // document.querySelectorAll('.twitter-tweet').forEach((twi) => {
-      //   prevTweet.remove();
-      // });
+      /* --------------------------------------------------------------------------
+        Tweet embeds: Left-side preview cards tweet embeds are initially created,
+        the tweet embed for the postDetails on the right is the last to be created.
+        ---------------------------------------------------------------------------
+        Anytime route to ID MODE happens (i.e. anytime app detects change in the id
+        of a unique post), remove existing tweet embed for postDetails on the right
+        of data view and recreate the tweet embed.
+      ---------------------------------------------------------------------------*/
+      const twitterTweetEmbeds = Array.from(document.querySelectorAll('.twitter-tweet'));
+      const postDetailsTweetEmbed = twitterTweetEmbeds.length - 1;
+      twitterTweetEmbeds.map((tweet, index) => {
+        if (index === postDetailsTweetEmbed) {
+          tweet.remove();
+          this._loadTwitterScript();
+        }
+      });
     }
   }
 
@@ -64,7 +64,6 @@ export class TwitterWidgetComponent implements OnInit, OnChanges {
       twitterData.widgets.createTweet(this.id, this._elementRef.nativeElement, {}).then(
         (tweet: any) => {
           this.tweet = tweet;
-          console.log(this.tweet);
           this.isTwitterScriptLoading = false;
         },
         () => {
