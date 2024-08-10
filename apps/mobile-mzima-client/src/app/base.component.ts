@@ -15,6 +15,7 @@ import { Location } from '@angular/common';
 
 export class BaseComponent {
   tap = 0;
+  private isNetworkInitialized = false;
 
   constructor(
     protected router: Router,
@@ -31,6 +32,7 @@ export class BaseComponent {
         this.exitAppOnDoubleTap();
       }
       this.logDeviceInfo();
+      this.isNetworkInitialized = true;
     });
 
     if (this.platform.is('capacitor')) {
@@ -77,9 +79,11 @@ export class BaseComponent {
       .pipe(distinctUntilChanged(), untilDestroyed(this))
       .subscribe({
         next: async (value) => {
-          await this.showConnectionInfo(
-            value ? 'The connection was restored' : 'The connection is lost',
-          );
+          if (this.isNetworkInitialized) {
+            await this.showConnectionInfo(
+              value ? 'The connection was restored' : 'The connection is lost',
+            );
+          }
         },
       });
   }
