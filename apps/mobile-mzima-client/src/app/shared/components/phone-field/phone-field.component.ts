@@ -1,6 +1,7 @@
-import { Component, OnInit, forwardRef } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import intlTelInput from 'intl-tel-input';
+import { Iti } from 'intl-tel-input';
+import intlTelInput from 'intl-tel-input/intlTelInputWithUtils';
 
 @Component({
   selector: 'app-phone-field',
@@ -14,21 +15,25 @@ import intlTelInput from 'intl-tel-input';
     },
   ],
 })
-export class PhoneFieldComponent implements ControlValueAccessor, OnInit {
-  private value: string;
+export class PhoneFieldComponent implements ControlValueAccessor, OnInit, OnDestroy {
   onChange: any = () => {};
   onTouched: any = () => {};
+  phoneInput: Iti;
+  value: string;
+  input: HTMLInputElement;
 
   ngOnInit() {
-    const input = <Element>document.querySelector('.phone-field-input');
-    intlTelInput(input, {
+    console.log('Init Phone Field');
+    this.input = <HTMLInputElement>document.querySelector('.phone-field-input');
+    this.phoneInput = intlTelInput(this.input, {
+      strictMode: true,
       separateDialCode: true,
-      utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.0/build/js/utils.js',
     });
   }
 
   writeValue(value: string): void {
     this.value = value;
+    this.phoneInput.setNumber(value);
   }
 
   registerOnChange(fn: any): void {
@@ -40,6 +45,15 @@ export class PhoneFieldComponent implements ControlValueAccessor, OnInit {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.' + isDisabled);
+    this.phoneInput.setDisabled(isDisabled);
+  }
+
+  public handleInputChange(): void {
+    this.onChange(this.phoneInput.getNumber());
+  }
+
+  @HostListener('unloaded')
+  ngOnDestroy() {
+    this.input.remove();
   }
 }
