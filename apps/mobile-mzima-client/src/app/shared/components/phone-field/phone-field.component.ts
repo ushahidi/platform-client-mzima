@@ -29,6 +29,9 @@ export class PhoneFieldComponent implements ControlValueAccessor, OnInit, OnDest
       strictMode: true,
       separateDialCode: true,
     });
+    this.input.addEventListener('countrychange', () => {
+      this.onChange(this.phoneInput.getNumber());
+    });
   }
 
   writeValue(value: string): void {
