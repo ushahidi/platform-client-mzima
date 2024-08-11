@@ -23,7 +23,6 @@ export class PhoneFieldComponent implements ControlValueAccessor, OnInit, OnDest
   input: HTMLInputElement;
 
   ngOnInit() {
-    console.log('Init Phone Field');
     this.input = <HTMLInputElement>document.querySelector('.phone-field-input');
     this.phoneInput = intlTelInput(this.input, {
       strictMode: true,
