@@ -1,3 +1,9 @@
 <ion-item lines="none" class="phone-field ion-no-padding" color="default">
-  <input type="phone" class="phone-field-input" />
+  <input
+    [(ngModel)]="value"
+    type="phone"
+    class="phone-field-input"
+    (ionChange)="handleInputChange($event)"
+    (keyup)="handleInputChange($event)"
+  />
 </ion-item>

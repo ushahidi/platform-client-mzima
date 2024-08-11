@@ -147,6 +147,7 @@ export class PostEditPage {
   }
 
   async checkPost(): Promise<any> {
+    this.isSubmitting = 'no';
     return new Promise<number>((resolve, reject) => {
       this.route.paramMap
         .pipe(
@@ -704,6 +705,7 @@ export class PostEditPage {
     if (this.form.disabled) return;
 
     this.isSubmitting = 'yes';
+
     try {
       await this.preparationData();
     } catch (error: any) {
@@ -713,6 +715,7 @@ export class PostEditPage {
         duration: 3000,
       });
       console.log(error);
+      this.isSubmitting = 'no';
       return;
     }
 
