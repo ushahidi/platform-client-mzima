@@ -18,7 +18,8 @@ const DataViewLocators = {
   publishPostBtn: '[data-qa="btn-publish-post"]',
 
   postDetails: '[data-qa="post-details"]',
-
+  bulkActionsBtn: '[data-qa="bulk-actions"]',
+  controlActionsBtn: '[data-qa="feed-page-controls-actions"]',
 };
 
 export default DataViewLocators;

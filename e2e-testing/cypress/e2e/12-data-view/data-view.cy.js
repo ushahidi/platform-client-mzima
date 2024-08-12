@@ -18,5 +18,6 @@ describe('Automated Tests for Posts in the Data View', () => {
     postFunctions.fill_required_form_fields();
     postFunctions.complete_add_post_steps();
     dataViewFunctions.verify_post_appears_for_user();
+    dataViewFunctions.verify_bulk_actions_select_all_posts();
   });
 });
