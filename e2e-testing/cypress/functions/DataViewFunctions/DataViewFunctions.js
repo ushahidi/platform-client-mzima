@@ -29,7 +29,7 @@ class DataViewFunctions {
   verify_bulk_actions_select_all_posts() {
     this.click_data_view_btn();
     //check select all posts in the page
-    cy.get(DataViewLocators.bulkActionsBtn).click();
+    cy.get('button:contains("Bulk Actions")').click();
     cy.get(DataViewLocators.controlActionsBtn).eq(2).click();
     //verify all posts are selected
     cy.get(DataViewLocators.postItem)
