@@ -34,7 +34,7 @@
 .collection-list {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -8px -24px;
+  margin: 2px -8px -24px;
   justify-content: flex-start;
 
   @include breakpoint-max($tablet) {
