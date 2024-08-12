@@ -1,0 +1,9 @@
+{
+    "i18n-ally.localesPaths": [
+        "apps/web-mzima-client/src/assets/locales",
+        "apps/mobile-mzima-client/src/assets/locales",
+        "apps/mobile-mzima-client/src/app/profile/language",
+        "apps/web-mzima-client/src/app/shared/components/language"
+    ],
+    "i18n-ally.keystyle": "nested"
+}
