@@ -31,7 +31,7 @@ class DataViewFunctions {
     cy.wait(1000);
     //check select all posts in the page
     cy.get('button:contains("Bulk Actions")').click();
-    cy.get('button:contains("Select All")').click();
+    cy.get('button:contains("Select All")').click({ force: true });
     //verify all posts are selected
     cy.get(DataViewLocators.postItem)
       .find('.mat-checkbox-input')
