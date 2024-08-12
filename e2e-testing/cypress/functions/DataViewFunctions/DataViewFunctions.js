@@ -35,7 +35,7 @@ class DataViewFunctions {
     //verify all posts are selected
     cy.get(DataViewLocators.postItem)
       .find('.mat-checkbox-input')
-      .should('have.attr', 'aria-checked', true);
+      .should('have.attr', 'aria-checked', 'true');
     //change status of posts
 
     //verify all posts have changed status
