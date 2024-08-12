@@ -20,7 +20,7 @@ describe('Automated Tests for Posts in the Data View', () => {
     dataViewFunctions.verify_post_appears_for_user();
   });
 
-  it('Verify posts appear as expected on Data View', () => {
+  it('Verify bulk actions select all posts', () => {
     dataViewFunctions.verify_bulk_actions_select_all_posts();
   });
 });
