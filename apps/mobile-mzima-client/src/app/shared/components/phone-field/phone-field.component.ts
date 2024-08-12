@@ -26,7 +26,7 @@ export class PhoneFieldComponent implements ControlValueAccessor, OnInit, OnDest
     this.input = <HTMLInputElement>document.querySelector('.phone-field-input');
     this.phoneInput = intlTelInput(this.input, {
       strictMode: true,
-      separateDialCode: true,
+      separateDialCode: false,
     });
     this.input.addEventListener('countrychange', () => {
       this.onChange(this.phoneInput.getNumber());
