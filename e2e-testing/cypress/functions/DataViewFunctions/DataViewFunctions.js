@@ -38,7 +38,9 @@ class DataViewFunctions {
       .find('.mat-checkbox-input')
       .should('have.attr', 'aria-checked', 'true');
     //change status of posts
-    cy.get(DataViewLocators.controlActionsBtn).find(DataViewLocators.markAsDropdown).click();
+    cy.get(DataViewLocators.controlActionsBtn)
+      .find(DataViewLocators.markAsDropdown)
+      .click({ force: true });
     cy.get('.mat-select-panel').find('#select-option-published').click();
     //verify all posts have changed status
     cy.get(DataViewLocators.postPreview)
