@@ -34,7 +34,12 @@ export class TwitterWidgetComponent implements OnInit, OnChanges {
   ) {}
 
   public ngOnInit(): void {
-    this._loadTwitterScript();
+    /* ------------------------------------------------------------------------------------
+      For onInit: Ensure to only create/load tweet embeds if there are no tweet embeds yet
+    ------------------------------------------------------------------------------------*/
+    const twitterTweetEmbeds = Array.from(document.querySelectorAll('.twitter-tweet'));
+    const postDetailsTweetEmbed = twitterTweetEmbeds.length - 1;
+    if (!twitterTweetEmbeds.length && postDetailsTweetEmbed === -1) this._loadTwitterScript();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
