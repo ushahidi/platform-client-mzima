@@ -318,9 +318,9 @@ export class PostEditPage {
     }
 
     this.taskForm = this.formBuilder.group(postHelpers.createTaskFormControls(this.tasks));
-
     this.form = new FormGroup(fields);
     this.initialFormData = this.form.value;
+    this.handleOtherOptions();
 
     if (updateContent) {
       this.tasks = postHelpers.markCompletedTasks(this.tasks, this.post);
@@ -337,6 +337,40 @@ export class PostEditPage {
       });
 
       this.updateForm(updateContent);
+    }
+  }
+  private handleOtherOptions() {
+    for (const task of this.selectedSurvey?.tasks ?? []) {
+      task.fields.map((field: any) => {
+        if (
+          (field.input === 'radio' || field.input === 'checkbox') &&
+          field.options.includes('Other')
+        ) {
+          this.form.addControl(`other${field.key}`, new FormControl());
+        }
+      });
+    }
+  }
+
+  public hasEmptyOther(key: string) {
+    const emptyOther =
+      this.form.get(key)?.value?.includes('Other') &&
+      !this.form.get('other' + key)?.value &&
+      this.form.get('other' + key)?.touched;
+    this.form.controls[key].setErrors({ emptyOther });
+    if (!emptyOther) this.form.controls[key].updateValueAndValidity();
+    return emptyOther;
+  }
+
+  public changeOtherOptions(key: string, type: string) {
+    if (type === 'checkbox') {
+      const values = this.form.controls[key].value || [];
+      if (!values.includes('Other')) {
+        values.push('Other');
+        this.form.patchValue({ [key]: values });
+      }
+    } else {
+      this.updateFormControl(key, 'Other');
     }
   }
 
@@ -375,7 +409,6 @@ export class PostEditPage {
   private updateForm(updateValues: any[]) {
     type InputHandlerType =
       | 'tags'
-      | 'checkbox'
       | 'location'
       | 'date'
       | 'datetime'
@@ -386,12 +419,14 @@ export class PostEditPage {
       | 'textarea'
       | 'relation'
       | 'number';
+
+    type InputHandlersOptionsType = 'radio' | 'checkbox';
+
     type TypeHandlerType = 'title' | 'description';
 
     const inputHandlers: Partial<{ [key in InputHandlerType]: (key: string, value: any) => void }> =
       {
         tags: this.handleTags.bind(this),
-        checkbox: this.handleCheckbox.bind(this),
         location: this.handleLocation.bind(this),
         date: this.handleDate.bind(this),
         datetime: this.handleDateTime.bind(this),
@@ -399,20 +434,28 @@ export class PostEditPage {
         relation: this.handleRelation.bind(this),
       };
 
+    const inputHandlersOptions: {
+      [key in InputHandlersOptionsType]: (key: string, value: any, options: any) => void;
+    } = {
+      radio: this.handleRadio.bind(this),
+      checkbox: this.handleCheckbox.bind(this),
+    };
+
     const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
       title: this.handleTitle.bind(this),
       description: this.handleDescription.bind(this),
     };
 
     for (const { fields } of updateValues) {
-      for (const { type, input, key, value } of fields) {
+      for (const { type, input, key, value, options } of fields) {
         this.updateFormControl(key, value);
         if (inputHandlers[input as InputHandlerType]) {
           inputHandlers[input as InputHandlerType]!(key, value);
+        } else if (inputHandlersOptions[input as InputHandlersOptionsType]) {
+          inputHandlersOptions[input as InputHandlersOptionsType](key, value, options);
         } else {
           this.handleDefault.bind(this)(key, value);
         }
-
         if (typeHandlers[type as TypeHandlerType]) {
           typeHandlers[type as TypeHandlerType](key);
         }
@@ -464,8 +507,27 @@ export class PostEditPage {
     });
   }
 
-  private handleCheckbox(key: string, value: any) {
-    const data = value?.value;
+  private handleRadio(key: string, value: any, options: any) {
+    if (options.indexOf(value?.value) < 0 && options.includes('Other')) {
+      this.updateFormControl(key, 'Other');
+      this.updateFormControl(`other${key}`, value?.value);
+    } else {
+      this.updateFormControl(key, value?.value);
+      this.updateFormControl(`other${key}`, '');
+    }
+  }
+
+  private handleCheckbox(key: string, value: any, options: any) {
+    let data = value?.value;
+    if (data?.length && options.includes('Other')) {
+      for (const val of data) {
+        if (options.indexOf(val) < 0) {
+          this.updateFormControl(`other${key}`, val);
+          data = data.filter((oldVal: any) => oldVal !== val);
+          data.push('Other');
+        }
+      }
+    }
     this.updateFormControl(key, data);
   }
 
@@ -528,39 +590,68 @@ export class PostEditPage {
 
     for (const task of this.tasks) {
       task.fields = await Promise.all(
-        task.fields.map(async (field: { key: string | number; input: string; type: string }) => {
-          const fieldValue: any = this.form.value[field.key];
-          let value: any = { value: fieldValue };
+        task.fields.map(
+          async (field: {
+            key: string | number;
+            input: string;
+            type: string;
+            options: Array<string>;
+          }) => {
+            const fieldValue: any = this.form.value[field.key];
+            let value: any = { value: fieldValue };
+            if (field.type === 'title') this.title = fieldValue;
+            if (field.type === 'description') this.description = fieldValue;
 
-          if (field.type === 'title') this.title = fieldValue;
-          if (field.type === 'description') this.description = fieldValue;
+            if (fieldHandlers.hasOwnProperty(field.input)) {
+              value = fieldHandlers[field.input as keyof typeof fieldHandlers](fieldValue);
+            } else if (field.input === 'upload') {
+              if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
+                this.fileToUpload = {
+                  ...this.form.value[field.key]?.photo,
+                  caption: this.form.value[field.key]?.caption,
+                  upload: this.form.value[field.key]?.upload,
+                };
+              } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
+                this.fileToUpload = {
+                  fileId: this.form.value[field.key]?.id,
+                  delete: this.form.value[field.key]?.delete,
+                };
+              } else {
+                value.value = this.form.value[field.key]?.id || null;
+              }
+            } else if (field.input === 'checkbox') {
+              if (
+                fieldValue &&
+                field.options.includes('Other') &&
+                this.form.value[field.key].includes('Other')
+              ) {
+                // Removing "Other"
 
-          if (fieldHandlers.hasOwnProperty(field.input)) {
-            value = fieldHandlers[field.input as keyof typeof fieldHandlers](fieldValue);
-          } else if (field.input === 'upload') {
-            if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
-              this.fileToUpload = {
-                ...this.form.value[field.key]?.photo,
-                caption: this.form.value[field.key]?.caption,
-                upload: this.form.value[field.key]?.upload,
-              };
-            } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
-              this.fileToUpload = {
-                fileId: this.form.value[field.key]?.id,
-                delete: this.form.value[field.key]?.delete,
-              };
+                value.value = value.value.filter((opt: any) => opt !== 'Other');
+                // Adding input-value
+                value.value.push(this.form.value[`other${field.key}`]);
+              } else {
+                value.value = this.form.value[field.key] || null;
+              }
+            } else if (field.input === 'radio') {
+              if (field.options.includes('Other')) {
+                value.value =
+                  this.form.value[field.key] === 'Other'
+                    ? this.form.value[`other${field.key}`]
+                    : this.form.value[field.key];
+              } else {
+                value.value = this.form.value[field.key] || null;
+              }
             } else {
-              value.value = this.form.value[field.key]?.id || null;
+              value.value = this.form.value[field.key] || null;
             }
-          } else {
-            value.value = this.form.value[field.key] || null;
-          }
 
-          return {
-            ...field,
-            value,
-          };
-        }),
+            return {
+              ...field,
+              value,
+            };
+          },
+        ),
       );
     }
   }
@@ -920,7 +1011,8 @@ export class PostEditPage {
       const index = this.checkedList.indexOf(item);
       if (index >= 0) {
         this.checkedList.splice(index, 1);
-        this.form.patchValue({ [fieldKey]: this.checkedList });
+        const newValue = this.checkedList.length ? this.checkedList : null;
+        this.form.patchValue({ [fieldKey]: newValue });
       }
     }
   }
