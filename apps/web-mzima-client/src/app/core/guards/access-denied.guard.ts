@@ -14,7 +14,7 @@ export class AccessDeniedGuard implements CanActivate {
     if (access) {
       return true;
     } else {
-      this.router.navigate([`/forbidden`]);
+      this.router.navigate(['/forbidden']);
     }
     return false;
   }

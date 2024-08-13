@@ -137,7 +137,11 @@ export class SessionService {
   }
 
   get siteFound(): boolean {
-    return this.currentConfig !== undefined;
+    return (
+      this.currentConfig &&
+      this.currentConfig.site &&
+      Object.keys(this.currentConfig.site).length > 0
+    );
   }
 
   get currentAuthTokenType() {
