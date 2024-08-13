@@ -113,6 +113,7 @@
                 [disabled]="!selectedPosts.length"
                 [placeholder]="'app.mark_as' | translate"
                 (selectionChange)="changePostsStatus($event.value)"
+                [attr.data-qa]="'mark-as'"
               >
                 <mat-option
                   *ngFor="let status of statuses"

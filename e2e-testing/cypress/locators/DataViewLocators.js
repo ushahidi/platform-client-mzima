@@ -5,6 +5,7 @@ const DataViewLocators = {
   surveySelectItem: '[data-qa="survey-select-item"]',
   postPreview: '[data-qa="post-preview"]',
   postItem: '[data-qa="post-item"]',
+  postStatus: '[data-qa="status"]',
   feedPageResults: '[data-qa="feed-page-results"]',
   mainResultsTotal: '[data-qa="search-form-main-filters-total"]',
   clearBtn: '[data-qa="clear"]',
@@ -20,6 +21,7 @@ const DataViewLocators = {
   postDetails: '[data-qa="post-details"]',
   bulkActionsBtn: '[data-qa="bulk-actions"]',
   controlActionsBtn: '[data-qa="feed-page-controls-actions"]',
+  markAsDropdown: '[data-qa="mark-as"]',
 };
 
 export default DataViewLocators;

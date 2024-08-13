@@ -38,8 +38,14 @@ class DataViewFunctions {
       .find('.mat-checkbox-input')
       .should('have.attr', 'aria-checked', 'true');
     //change status of posts
-
+    cy.get(DataViewLocators.controlActionsBtn).find(DataViewLocators.markAsDropdown).click();
+    cy.get('.mat-select-panel').find('#select-option-published').click();
     //verify all posts have changed status
+    cy.get(DataViewLocators.postPreview)
+      .children(DataViewLocators.postItem)
+      .find(DataViewLocators.postStatus)
+      .contains('Published')
+      .should('be.visible');
   }
 }
 
