@@ -18,11 +18,9 @@ import { TwitterService } from '../../core/services/twitter.service';
 })
 export class TwitterWidgetComponent implements OnInit, OnChanges {
   @Input() public id: string;
-  public postDetailsId = '';
   public tweet: object;
 
   @Output() loadingFailed = new EventEmitter();
-  @Output() twitter_postDetailsId = new EventEmitter<string>();
 
   isTwitterScriptLoading = true;
   isTwitterFailed = false;
