@@ -21,7 +21,6 @@ export class TwitterWidgetComponent implements OnInit, OnChanges {
   public tweet: object;
 
   @Output() loadingFailed = new EventEmitter();
-
   isTwitterScriptLoading = true;
   isTwitterFailed = false;
 
