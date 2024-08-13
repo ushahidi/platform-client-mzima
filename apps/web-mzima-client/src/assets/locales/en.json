@@ -24,6 +24,11 @@
     "choose": "Choose...",
     "add_all_fields": "Add all fields",
     "insert_text_here": "Insert text here...",
+    "deployment_not_found" : {
+      "text" : "There is no deployment by that name. Would you like to create one?",
+      "button_exit" : "Exit",
+      "button_create_deployment" : "Create Deployment"
+    },
     "documentation": {
       "title": "Documentation",
       "description": "Learn how to set up, configure, and manage your Ushahidi deployment."
@@ -664,6 +669,7 @@
     "comments": "Comments",
     "data_sources": "Data Sources",
     "data_import": "Data Import",
+    "deployment_not_found": "Deployment Not Found",
     "deselect": "Deselect",
     "edit_profile": "Edit Profile",
     "edit_post_type": "Edit Survey",

@@ -136,6 +136,10 @@ export class SessionService {
     return !this.currentConfig.site.private || !!this.currentAuthToken;
   }
 
+  get siteFound(): boolean {
+    return this.currentConfig !== undefined;
+  }
+
   get currentAuthTokenType() {
     return this.currentSessionData.tokenType;
   }

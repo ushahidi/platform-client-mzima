@@ -3,6 +3,7 @@ import { RouterModule, Routes, TitleStrategy } from '@angular/router';
 import {
   HostGuard,
   AccessDeniedGuard,
+  DeploymentFoundGuard,
   ResetTokenGuard,
   AccessAllowGuard,
   RedirectGuard,
@@ -13,6 +14,7 @@ import { AccessDeniedComponent } from './shared/components/access-denied/access-
 import { PostNotFoundComponent } from './post/post-not-found/post-not-found.component';
 import { PostNotAllowedComponent } from './post/post-not-allowed/post-not-allowed.component';
 import { RedirectByPostIdGuard } from './core/guards/redirect.post-id.guard';
+import { DeploymentNotFoundComponent } from './shared/components/deployment-not-found/deployment-not-found.component';
 
 const routes: Routes = [
   {
@@ -23,7 +25,7 @@ const routes: Routes = [
   {
     path: 'map',
     loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
-    canActivate: [AccessDeniedGuard],
+    canActivate: [AccessDeniedGuard, DeploymentFoundGuard],
     data: {
       breadcrumb: 'nav.map',
       ogTitle: 'nav.map',
@@ -32,7 +34,7 @@ const routes: Routes = [
   {
     path: 'feed',
     loadChildren: () => import('./feed/feed.module').then((m) => m.FeedModule),
-    canActivate: [AccessDeniedGuard],
+    canActivate: [AccessDeniedGuard, DeploymentFoundGuard],
     data: {
       breadcrumb: 'nav.feed',
       ogTitle: 'nav.feed',
@@ -41,7 +43,7 @@ const routes: Routes = [
   {
     path: 'activity',
     loadChildren: () => import('./activity/activity.module').then((m) => m.ActivityModule),
-    canActivate: [AccessDeniedGuard],
+    canActivate: [AccessDeniedGuard, DeploymentFoundGuard],
     data: {
       breadcrumb: 'nav.activity',
       ogTitle: 'nav.activity',
@@ -50,7 +52,7 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
-    canActivate: [HostGuard, AccessDeniedGuard],
+    canActivate: [HostGuard, AccessDeniedGuard, DeploymentFoundGuard],
     data: {
       breadcrumb: 'nav.settings',
       ogTitle: 'nav.settings',
@@ -80,6 +82,15 @@ const routes: Routes = [
     },
   },
   {
+    path: 'notfound',
+    component: DeploymentNotFoundComponent,
+    canActivate: [DeploymentFoundGuard],
+    data: {
+      breadcrumb: 'nav.deployment_not_found',
+      ogTitle: 'nav.deployment_not_found',
+    },
+  },
+  {
     path: 'views',
     children: [
       {
@@ -95,7 +106,7 @@ const routes: Routes = [
   {
     path: 'post',
     loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
-    canActivate: [AccessDeniedGuard],
+    canActivate: [AccessDeniedGuard, DeploymentFoundGuard],
     data: {
       breadcrumb: 'nav.posts',
       ogTitle: 'nav.posts',
@@ -104,7 +115,7 @@ const routes: Routes = [
   {
     path: 'posts', // For support legacy URL routes
     loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
-    canActivate: [AccessDeniedGuard],
+    canActivate: [AccessDeniedGuard, DeploymentFoundGuard],
     data: {
       breadcrumb: 'nav.posts',
       ogTitle: 'nav.posts',
