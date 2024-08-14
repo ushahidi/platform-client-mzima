@@ -116,6 +116,7 @@ export class ChooseCollectionComponent {
         this.getCollections();
       },
     });
+    //
 
     this.userData$ = this.sessionService.currentUserData$.pipe(untilDestroyed(this));
 
