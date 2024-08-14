@@ -75,7 +75,6 @@ export class ImageUploaderComponent implements ControlValueAccessor {
    */
   async takePicture() {
     try {
-      if (Capacitor.getPlatform() !== 'web') await Camera.requestPermissions();
       const options = {
         quality: 100,
         allowEditing: false,
