@@ -8,14 +8,11 @@ import { SessionService } from '@services';
 export class DeploymentFoundGuard implements CanActivate {
   constructor(private router: Router, private service: SessionService) {}
 
-  canActivate(): boolean {
+  canActivate() {
     const siteFound: boolean = this.service.siteFound;
-
     if (siteFound) {
       return true;
-    } else {
-      this.router.navigate([`/notfound`]);
     }
-    return false;
+    return this.router.parseUrl('/notfound');
   }
 }

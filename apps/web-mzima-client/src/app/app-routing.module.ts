@@ -84,7 +84,7 @@ const routes: Routes = [
   {
     path: 'notfound',
     component: DeploymentNotFoundComponent,
-    canActivate: [AccessAllowGuard],
+    // canActivate: [AccessAllowGuard],
     data: {
       breadcrumb: 'nav.deployment_not_found',
       ogTitle: 'nav.deployment_not_found',
