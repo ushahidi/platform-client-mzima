@@ -2,9 +2,13 @@
   <div class="deployment-not-found__container">
     <h2 class="deployment-not-found__title">{{ 'nav.deployment_not_found' | translate }}</h2>
     <p>{{ 'app.deployment_not_found.text' | translate }}</p>
-    <a href="ushahidi.io/create">{{
-      'app.deployment_not_found.button_create_deployment' | translate
-    }}</a>
-    <a href="www.ushahidi.com">{{ 'app.deployment_not_found.button_exit' | translate }}</a>
+    <div class="deployment-not-found__buttons">
+      <mzima-client-button matSuffix href="http://www.ushahidi.com/">
+        {{ 'app.deployment_not_found.button_exit' | translate }}
+      </mzima-client-button>
+      <mzima-client-button matSuffix href="http://www.ushahidi.io/create">
+        {{ 'app.deployment_not_found.button_create_deployment' | translate }}
+      </mzima-client-button>
+    </div>
   </div>
 </div>

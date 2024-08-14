@@ -25,7 +25,7 @@
     "add_all_fields": "Add all fields",
     "insert_text_here": "Insert text here...",
     "deployment_not_found" : {
-      "text" : "There is no deployment by that name. Would you like to create one?",
+      "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
       "button_exit" : "Exit",
       "button_create_deployment" : "Create Deployment"
     },
