@@ -48,6 +48,7 @@ export class ChooseCollectionComponent {
   @Input() public selectedCollections: Set<number> = new Set();
   @Output() back = new EventEmitter();
   public isAddCollectionModalOpen = false;
+  public canManageCollections: boolean;
   collectionToEdit: string | number;
   public createCollectionForm = this.formBuilder.group({
     name: ['', [Validators.required]],
@@ -74,7 +75,9 @@ export class ChooseCollectionComponent {
     editableBy: 'me',
   };
   public roleOptions: any;
-  private userRole: string;
+  public userRole: string;
+  public currentUserId: any;
+  public userPermissions: string;
   private userData$: Observable<UserInterface>;
   public isLoading = false;
   public isSearchView = false;
@@ -118,8 +121,24 @@ export class ChooseCollectionComponent {
 
     this.userData$.subscribe((userData) => {
       this.userRole = userData.role!;
+      this.currentUserId = userData.userId;
+      this.userPermissions = Array.isArray(userData.permissions)
+        ? userData.permissions.join(',')
+        : userData.permissions!;
+
+      this.canManageCollections = this.checkManageCollections(userData);
       this.initRoles();
     });
+  }
+
+  private checkManageCollections(userData: UserInterface): boolean {
+    if (Array.isArray(userData.permissions!)) {
+      const hasPermission = userData.permissions!.includes('Manage Collections and Saved Searches');
+      return hasPermission;
+    } else {
+      console.log('User doesnt have the collection management rights');
+      return false;
+    }
   }
 
   async ionViewWillEnter() {

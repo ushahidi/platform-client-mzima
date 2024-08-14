@@ -11,6 +11,7 @@
 <ion-item class="collection-item collection-item--item" *ngIf="editable" lines="none" button>
   <ng-container *ngTemplateOutlet="collectionItem"></ng-container>
   <app-button
+    *ngIf="canManageCollections && canEditCollection"
     slot="end"
     fill="clear"
     color="custom"
