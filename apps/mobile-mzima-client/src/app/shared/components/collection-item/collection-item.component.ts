@@ -9,8 +9,18 @@ import { CollectionItem } from '@mzima-client/sdk';
 export class CollectionItemComponent {
   @Input() public collection: CollectionItem;
   @Input() public editable?: boolean;
+  @Input() public userRole: string;
+  @Input() public currentUserId: string;
+  @Input() public canManageCollections: boolean;
   @Output() collectionChanged = new EventEmitter<boolean>();
   @Output() editCollection = new EventEmitter();
+
+  get canEditCollection(): boolean {
+    if (this.userRole === 'admin') {
+      return true;
+    }
+    return this.canManageCollections && this.collection.user_id === this.currentUserId;
+  }
 
   public editClickHandle(event: Event): void {
     event.stopPropagation();
