@@ -254,9 +254,14 @@ export class CreateFieldModalComponent implements OnInit {
 
   public addOption() {
     if (!this.selectedFieldType.options) this.selectedFieldType.options = [];
-    this.selectedFieldType.options.push('');
     this.checkForEmptyOptions();
-    this.fieldOptions.push({ value: '', error: '' });
+    if (this.selectedFieldType.options.includes('Other')) {
+      this.selectedFieldType.options.splice(this.selectedFieldType.options.length - 1, 0, '');
+      this.fieldOptions.splice(this.fieldOptions.length - 1, 0, { value: '', error: '' });
+    } else {
+      this.selectedFieldType.options.push('');
+      this.fieldOptions.push({ value: '', error: '' });
+    }
   }
 
   public addOther() {
