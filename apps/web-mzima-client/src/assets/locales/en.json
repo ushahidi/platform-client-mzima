@@ -216,7 +216,8 @@
     "all_crowdsourced": "All Crowdsourced Surveys",
     "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
     "targeted_activity": "Tageted Survey Activity",
-    "crowdsourced_activity": "Crowdsourced Survey Activity"
+    "crowdsourced_activity": "Crowdsourced Survey Activity",
+    "tooltip_template": "This is the single point tooltip template"
   },
   "form": {
     "add_field": "Add Field",
