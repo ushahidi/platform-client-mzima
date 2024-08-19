@@ -24,6 +24,11 @@
     "choose": "Choose...",
     "add_all_fields": "Add all fields",
     "insert_text_here": "Insert text here...",
+    "deployment_not_found" : {
+      "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
+      "button_exit" : "Exit",
+      "button_create_deployment" : "Create Deployment"
+    },
     "documentation": {
       "title": "Documentation",
       "description": "Learn how to set up, configure, and manage your Ushahidi deployment."
@@ -158,7 +163,8 @@
     "your_deployment_is_outdated": "Your Deployment is outdated",
     "we_ve_updated_deployments_to_version_5": "We’ve updated Deployments to version 5. Users may not have access to your deployment soon. ",
     "for_more_details_on_deployment_update": "For more details on deployment update, go to Help & Support (this should be a link) or send an email to:",
-    "open_chat": "Open Chat"
+    "open_chat": "Open Chat",
+    "end_post": "End of Posts"
   },
   "cookies": {
     "we_use_cookies": "Howdy! We use cookies to make your experience better.",
@@ -216,7 +222,8 @@
     "all_crowdsourced": "All Crowdsourced Surveys",
     "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
     "targeted_activity": "Tageted Survey Activity",
-    "crowdsourced_activity": "Crowdsourced Survey Activity"
+    "crowdsourced_activity": "Crowdsourced Survey Activity",
+    "tooltip_template": "This is the single point tooltip template"
   },
   "form": {
     "add_field": "Add Field",
@@ -664,6 +671,7 @@
     "comments": "Comments",
     "data_sources": "Data Sources",
     "data_import": "Data Import",
+    "deployment_not_found": "Deployment Not Found",
     "deselect": "Deselect",
     "edit_profile": "Edit Profile",
     "edit_post_type": "Edit Survey",

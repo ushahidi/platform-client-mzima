@@ -5,16 +5,14 @@ import { SessionService } from '@services';
 @Injectable({
   providedIn: 'root',
 })
-export class AccessAllowGuard implements CanActivate {
+export class DeploymentFoundGuard implements CanActivate {
   constructor(private router: Router, private service: SessionService) {}
 
   canActivate() {
-    const access: boolean = this.service.accessToSite;
-
-    if (!access) {
+    const siteFound: boolean = this.service.siteFound;
+    if (siteFound) {
       return true;
     }
-
-    return this.router.parseUrl(`/map`);
+    return this.router.parseUrl('/notfound');
   }
 }
