@@ -27,7 +27,7 @@
     "deployment_not_found" : {
       "text" : "عذرًا، هذا النشر غير موجود. هل ترغب في إنشاء عملية نشر جديدة؟",
       "button_exit" : "خروج",
-      "button_create_deployment" : "Create Deployment"
+      "button_create_deployment" : "أنشئ عملية نشر جديدة"
     },
     "documentation": {
       "title": "الوثائق",
