@@ -19,10 +19,10 @@
     "create_new_survey": "قم بتأليف استطلاع جديد",
     "created_by": "تم الإنشاء بواسطة {{المؤلف}}",
     "date_created": "تاريخ الإنشاء",
-    "date_updated": "تأريخ التحديث",
+    "date_updated": "تاريخ التحديث",
     "choose_photo": "اختر صورة",
     "choose": "اختر...",
-    "add_all_fields": "إضافة جميع الحقول",
+    "add_all_fields": "أضف جميع الحقول",
     "insert_text_here": "أدخل النص هنا...",
     "deployment_not_found" : {
       "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
