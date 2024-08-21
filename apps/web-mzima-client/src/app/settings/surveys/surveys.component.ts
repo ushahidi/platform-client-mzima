@@ -90,9 +90,10 @@ export class SurveysComponent implements OnInit {
       description: `
         <p>${
           this.selectedSurveys.length > 1
-            ? 'Deleting these surveys will remove it from database. This action cannot be undone.'
+            ? 'Deleting these selected surveys will also delete all collected posts and all associated data. This step cannot be reversed.'
             : this.translate.instant('notify.survey.destroy_confirm_desc')
         }</p>
+        <p>${this.translate.instant('notify.survey.destroy_confirm_desc_end')}</p>
       `,
 
       confirmButtonText: this.translate.instant('app.yes_delete'),
