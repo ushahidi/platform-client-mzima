@@ -1,5 +1,6 @@
 {
   "app": {
+    "contact_email_address": "Địa chỉ email liên hệ:",
     "powered_by_ushahidi": "Cung cấp bởi Ushahidi",
     "support": "Hổ trợ bởi Ushahidi",
     "by": "bởi",
@@ -12,19 +13,39 @@
     "collection": "Collection",
     "collections": "Bộ sưu tập",
     "create_collection": "Tạo ra bộ sưu tập",
+    "add_collection": "Thêm bộ sưu tập",
     "export_to_csv": "Export filtered data",
     "create_new": "Tạo ra cái mới",
     "create_new_survey": "Create new survey",
     "created_by": "Tạo ra bởi {{tác giả}}",
     "date_created": "Date created",
     "date_updated": "Date updated",
+    "choose_photo": "Chọn ảnh",
+    "choose": "Chọn...",
+    "add_all_fields": "Thêm tất cả các trường",
+    "insert_text_here": "Chèn văn bản vào đây...",
+    "deployment_not_found" : {
+      "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
+      "button_exit" : "Exit",
+      "button_create_deployment" : "Create Deployment"
+    },
     "documentation": {
       "title": "Tài liệu",
       "description": "Học hỏi cách để thiết lập, cấu hình và quản trị triển khai Ushahidi của bạn"
     },
+    "donate": "Ủng hộ",
+    "donation": "Khoản ủng hộ",
+    "disable_monetization": "Tắt tính năng kiếm tiền",
+    "enable_monetization": "Bật tính năng kiếm tiền",
+    "enable_monetization_error": "Điền vào các trường bắt buộc ở trên trước khi bật tính năng kiếm tiền.",
+    "enable_monetization_info": "Tính năng kiếm tiền hiện đang bị tắt.",
     "intercom": {
       "intercom": "Intercom",
       "description": "Contact Ushahidi staff for chat support"
+    },
+    "onboarding": {
+      "title": "Tuyển dụng KTV",
+      "description": "Hãy xem Ushahidi trên tàu một lần nữa."
     },
     "report_a_bug": {
       "title": "Báo cáo một lỗi",
@@ -36,7 +57,10 @@
       "description": "Xem những gì Ushahidi có thể làm và làm sao hoạt động."
     },
     "forbidden": "Xin lỗi, bạn không có quyền làm việc này",
+    "forbidden-login": "Vui lòng nhập chi tiết đăng nhập của bạn để truy cập triển khai.",
+    "contact_with_admin": "Hoặc liên hệ với Quản trị viên ",
     "404": "That URL doesn't exist",
+    "page-not-found": "Không tìm thấy trang",
     "get_notifications": "Nhận thông báo",
     "turn_off_notifications": "Tắt nhận thông báo",
     "load_more": "Load more",
@@ -46,8 +70,9 @@
     "cancel": "Hủy bỏ",
     "save": "Lưu lại",
     "save_and_close": "Lưu &amp; đóng lại",
-    "add_and_close": "Thêm &amp; đóng lại",
+    "update": "Cập nhật",
     "update_and_close": "Cập nhật &amp đóng lại",
+    "add_and_close": "Thêm &amp; đóng lại",
     "updating": "Updating",
     "saving": "Lưu lại",
     "settings": "Thiết lập",
@@ -82,9 +107,11 @@
     "show_hide": "Show/Hide",
     "fields": "Ô",
     "no_results": "No results found.",
+    "current_results": "Kết quả hiện tại:",
     "filter_by": "Filter by...",
     "sort_filter": "Sort & filter",
     "apply_filters": "Apply",
+    "close_and_view": "Đóng và xem kết quả",
     "show_more_less": "Hiển thị nhiều/ít hơn",
     "filters": "Lọc",
     "filter_by_survey": "Lọc theo thăm dò",
@@ -115,29 +142,6 @@
     "select_language": "Select language",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey",
-    "contact_email_address": "Địa chỉ email liên hệ:",
-    "add_collection": "Thêm bộ sưu tập",
-    "choose_photo": "Chọn ảnh",
-    "choose": "Chọn...",
-    "add_all_fields": "Thêm tất cả các trường",
-    "insert_text_here": "Chèn văn bản vào đây...",
-    "donate": "Ủng hộ",
-    "donation": "Khoản ủng hộ",
-    "disable_monetization": "Tắt tính năng kiếm tiền",
-    "enable_monetization": "Bật tính năng kiếm tiền",
-    "enable_monetization_error": "Điền vào các trường bắt buộc ở trên trước khi bật tính năng kiếm tiền.",
-    "enable_monetization_info": "Tính năng kiếm tiền hiện đang bị tắt.",
-    "onboarding": {
-      "title": "Tuyển dụng KTV",
-      "description": "Hãy xem Ushahidi trên tàu một lần nữa."
-    },
-    "forbidden-login": "Vui lòng nhập chi tiết đăng nhập của bạn để truy cập triển khai.",
-    "contact_with_admin": "Hoặc liên hệ với Quản trị viên ",
-    "page-not-found": "Không tìm thấy trang",
-    "update": "Cập nhật",
-    "current_results": "Kết quả hiện tại:",
-    "close_and_view": "Đóng và xem kết quả",
     "duplicate": "Nhân bản",
     "yes_delete": "Vâng, vui lòng xóa bỏ",
     "no_go_back": "Không, quay lại",
@@ -159,24 +163,25 @@
     "your_deployment_is_outdated": "Triển khai của bạn đã lỗi thời",
     "we_ve_updated_deployments_to_version_5": "Chúng tôi đã cập nhật Triển khai lên phiên bản 5. Người dùng có thể không có quyền truy cập vào triển khai của bạn sớm. ",
     "for_more_details_on_deployment_update": "Để biết thêm chi tiết về bản cập nhật triển khai, hãy truy cập Trợ giúp &; Hỗ trợ (đây phải là liên kết) hoặc gửi email đến:",
-    "open_chat": "Mở ứng dụng Chat"
+    "open_chat": "Mở ứng dụng Chat",
+    "end_post": "End of Posts"
+  },
+  "cookies": {
+    "we_use_cookies": "Howdy! Chúng tôi sử dụng cookie để làm cho trải nghiệm của bạn tốt hơn.",
+    "cookies_privacy": "Nếu bạn muốn biết thêm hoặc rút lại sự đồng ý của mình, vui lòng truy cập <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Chính sách bảo mật</a> của chúng tôi.",
+    "decline": "Từ chối",
+    "accept_cookies": "Chấp nhận cookie"
+  },
+  "404": {
+    "404": "Lỗi 404",
+    "error": "lỗi",
+    "description": "Rất tiếc... Rất tiếc, chúng tôi không thể tìm thấy trang bạn đang tìm kiếm. <br> Vui lòng tìm kiếm theo cụm từ khác hoặc quay lại Chế độ xem bản đồ.",
+    "button": "Đi tới Chế độ xem bản đồ"
   },
   "toolbar": {
     "searchbar": {
       "search_entity": "Kiếm {{thực thể}}",
       "search_all_entities_for": "Kiếm tất cả {{thực thể}} cho"
-    }
-  },
-  "demo_warnings": {
-    "close": "Close",
-    "visitor": {
-      "not_expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts for the next {{days}} days.",
-      "expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
-    },
-    "user": {
-      "expired": "Your 30 day trial is over. Upgrade now to make the most of Ushahidi.",
-      "not_expired": "You have {{days}} days left in your free trial. Upgrade now for unlimited posts and full access to Ushahidi.",
-      "limit_reached": "Nice work! You have more than 25 posts. Upgrade now to see the rest of your posts or reach out to our team about a full-service enterprise partnership for your project."
     }
   },
   "color_picker": {
@@ -217,7 +222,8 @@
     "all_crowdsourced": "All Crowdsourced Surveys",
     "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
     "targeted_activity": "Tageted Survey Activity",
-    "crowdsourced_activity": "Crowdsourced Survey Activity"
+    "crowdsourced_activity": "Crowdsourced Survey Activity",
+    "tooltip_template": "This is the single point tooltip template"
   },
   "form": {
     "add_field": "Thêm ô",
@@ -226,6 +232,7 @@
     "add_field_instructions_placeholder": "Explain this field...",
     "add_post_type": "Thêm thăm dò",
     "add_step": "Thêm công việc",
+    "add_language": "Thêm ngôn ngữ",
     "added_form_stage_attribute": "Ô lưu",
     "field_allowed_relation_post_type": "Thăm dò được cho phép",
     "choose_order_message": "Xin chọn và sắp xếp những ô mà bạn cần cho vào thăm dò này",
@@ -233,6 +240,7 @@
     "currently_disabled": "Thăm dò này hiện nay không chạy",
     "custom_structure": "Cấu trúc thường lệ",
     "default_date_placeholder": "Ngày mặc định",
+    "default_date_hint": "If no date is added, the current time of posting would be added by default. The user can still update the {{ field_name }} after post submission.",
     "default_default_placeholder": "Giá trị mặc định",
     "default_location_placeholder": "Nairobi, Kenya",
     "delete_post_type": "Xòa bỏ thăm dò này",
@@ -244,6 +252,8 @@
     "edit_post_type": "Chỉnh sửa thăm dò: {{phiếu}}",
     "edit_post_types": "Chỉnh sửa thăm dò",
     "field_add_option": "Thêm",
+    "field_add_other": "Add other",
+    "field_add_other_desc": "Allows entering a custom option that is not listed among the provided choices.",
     "field_default": "Ô mặc định",
     "field_key": "Từ khóa của ô",
     "field_type": "Mẫu ô",
@@ -267,6 +277,7 @@
     "save_post_type": "Lưu thăm dò",
     "save_post_step": "Lưu công việc",
     "saved_form": "Lưu thăm dò",
+    "select_language": "Chọn ngôn ngữ",
     "step_delete": "Xóa bỏ",
     "step_name": "Tên công việc",
     "step_rename": "Đổi tên",
@@ -274,18 +285,25 @@
     "post_step": "Đăng",
     "type": "Đánh vào",
     "visible_to": "Hiển thị cho",
-    "add_language": "Thêm ngôn ngữ",
-    "select_language": "Chọn ngôn ngữ",
     "choose_language": "Chọn ngôn ngữ để dịch",
     "error_input_number": "Vui lòng nhập số loại {{type}}"
   },
   "survey": {
+    "no_tasks": "Không hoạt động",
+    "select_categories": "Chọn danh mục",
+    "select_related_post": "Chọn bài viết liên quan",
+    "no_fields": "Không có trường",
+    "select_color": "Chọn màu sắc",
+    "choose_survey": "Chọn khảo sát",
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "Delete task",
     "duplicate_survey": "Duplicate",
+    "main_info": "Thông tin chính",
     "internal_use_task": "Task is only for internal use",
     "internal_use_task_desc": "This task will only be visible to User who have Manage Post permission.",
     "duplicate_task": "Duplicate task",
+    "duplicate_option": "Tùy chọn trùng lặp có mặt",
+    "special_characters_option": "Tùy chọn này chứa các ký tự đặc biệt",
     "show_this_task_to": "Show this task to everyone when published",
     "show_this_task_to_desc": "When a survey response is published, data from this task will be displayed.",
     "survey_name": "Survey name",
@@ -315,6 +333,7 @@
     "radio_button": "Radio Button(s)",
     "checkbox": "Checkbox(es)",
     "related_post": "Related Post",
+    "related_post_info": "Xin lưu ý, các bài đăng liên quan đến cần phải được xuất bản, các bài đăng \"Đang được xem xét\" sẽ không xuất hiện trong kết quả tìm kiếm",
     "upload_image": "Image",
     "embed_video": "Embed video",
     "markdown": "Markdown",
@@ -360,12 +379,15 @@
     "response_private_desc": "Only people with permission to edit responses can see responses to this field",
     "require_task_desc": "Require this task be completed before a post can be visible to the public",
     "survey_permissions": "Sự cho phép thăm dò",
+    "only_edit": "Chỉ những người có quyền chỉnh sửa câu trả lời mới có thể xem câu trả lời cho trường này.",
     "who_can_add": "Ai có thể thêm vào thăm dò này",
     "survey_field": "Survey field",
     "choose_survey_field": "Choose what should be assigned to each survey field",
     "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "Who can contribute to fields in this task",
     "view_detail": "Detail",
+    "no_options_for_this_field": "Không có tùy chọn cho trường này",
+    "add_options_first": "Thêm tùy chọn trước tiên",
     "delete": {
       "desc": "<strong>Nếu bạn xóa bỏ thăm dò này</strong>, tất cả các bài đăng liên hệ đến thể loại cũng sẽ bị xóa bỏ. Xin cẩn thận khi tiến hành.",
       "delete": "Xòa bỏ thăm dò",
@@ -389,6 +411,13 @@
         "desc": "<strong>Nếu bạn xóa bỏ công việc này</strong>, tất cả các dữ kiện thu thập được cũng sẽ bị xóa bỏ. Xin cẩn thận khi tiến hành.",
         "delete": "Xóa bỏ công việc",
         "delete_this": "Xóa bỏ công việc này"
+      }
+    },
+    "fields": {
+      "fields_title": "Các trường",
+      "validation": {
+        "required": "Các trường bắt buộc bị thiếu, các trường này được đánh dấu *.",
+        "special_characters": "Trường {{name}} chứa các ký tự đặc biệt"
       }
     },
     "targeted_survey": {
@@ -452,26 +481,6 @@
       "pending_messages": "We are processing {{totalPending}} messages.",
       "pending_message": "We are processing {{totalPending}} message.",
       "cancel": "Cancel"
-    },
-    "no_tasks": "Không hoạt động",
-    "select_categories": "Chọn danh mục",
-    "select_related_post": "Chọn bài viết liên quan",
-    "no_fields": "Không có trường",
-    "select_color": "Chọn màu sắc",
-    "choose_survey": "Chọn khảo sát",
-    "main_info": "Thông tin chính",
-    "duplicate_option": "Tùy chọn trùng lặp có mặt",
-    "special_characters_option": "Tùy chọn này chứa các ký tự đặc biệt",
-    "related_post_info": "Xin lưu ý, các bài đăng liên quan đến cần phải được xuất bản, các bài đăng \"Đang được xem xét\" sẽ không xuất hiện trong kết quả tìm kiếm",
-    "only_edit": "Chỉ những người có quyền chỉnh sửa câu trả lời mới có thể xem câu trả lời cho trường này.",
-    "no_options_for_this_field": "Không có tùy chọn cho trường này",
-    "add_options_first": "Thêm tùy chọn trước tiên",
-    "fields": {
-      "fields_title": "Các trường",
-      "validation": {
-        "required": "Các trường bắt buộc bị thiếu, các trường này được đánh dấu *.",
-        "special_characters": "Trường {{name}} chứa các ký tự đặc biệt"
-      }
     }
   },
   "global_filter": {
@@ -546,6 +555,8 @@
       "current_stage": "Công việc hiện nay",
       "set": "Bộ sưu tập",
       "status": "Trạng thái",
+      "expires": "Hết hạn",
+      "download": "Tải xuống",
       "location_value": "Trong vòng {{km}} km của {{giá trị}}",
       "visible_to": "Hiển thị cho",
       "user": "Người sử dụng",
@@ -553,9 +564,7 @@
       "all_posts": "Show all posts",
       "unmapped": "Show unmapped posts",
       "mapped": "Show posts with a location",
-      "source": "Source",
-      "expires": "Hết hạn",
-      "download": "Tải xuống"
+      "source": "Source"
     },
     "unmapped_start_one": "There is",
     "unmapped_start_many": "There are",
@@ -571,6 +580,8 @@
     "end_date_placeholder": "25 Tháng 4, 2014",
     "location": "Vị trí",
     "location_placeholder": "Cho vào thành phố hay địa chỉ",
+    "city_or_address": "Thành phố hoặc địa chỉ",
+    "viewing_mode": "Chế độ xem",
     "within_km": "Trong vòng",
     "km": "Km",
     "within_km_placeholder": "Khoảng cách",
@@ -590,11 +601,9 @@
     "status": "Trạng thái",
     "source": "Source",
     "saved_filters": "Saved filters",
+    "saved_filter": "Bộ lọc đã lưu",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
-    "city_or_address": "Thành phố hoặc địa chỉ",
-    "viewing_mode": "Chế độ xem",
-    "saved_filter": "Bộ lọc đã lưu",
     "delete_this_saved_filter": "Bạn có chắc chắn muốn xóa bộ lọc đã lưu này không?"
   },
   "graph": {
@@ -632,7 +641,8 @@
   },
   "modal": {
     "button": {
-      "close": "Đóng"
+      "close": "Đóng",
+      "done": "Done"
     },
     "donation": {
       "thank_you_for_your_donation_start": "Kiếm tiền từ web được bật trên trang web này. Cảm ơn sự đóng góp của bạn. Bạn đã quyên góp",
@@ -642,6 +652,8 @@
     }
   },
   "nav": {
+    "open_menu": "Mở menu",
+    "my_account": "Tài khoản",
     "404": "Whoops",
     "about": "Về",
     "activity": "Hoạt động",
@@ -659,6 +671,7 @@
     "comments": "Bình luận",
     "data_sources": "Nguồn dữ kiện",
     "data_import": "Dữ kiện nhập vào",
+    "deployment_not_found": "Deployment Not Found",
     "deselect": "Bỏ chọn",
     "edit_profile": "Chỉnh sửa trắc diện",
     "edit_post_type": "Chỉnh sửa thăm dò",
@@ -677,11 +690,14 @@
     "home": "Trang nhà ",
     "login": "Đăng nhập",
     "logout": "Đăng xuất",
+    "login_register": "Đăng nhập | Đăng ký",
+    "help_support": "Trợ giúp & Hỗ trợ",
     "registration": "Đăng ký",
     "register": "Đăng ký",
     "map_settings": "Thiết lập bản đồ",
     "more": "Thêm",
     "notifications": "Thông báo",
+    "receive_notifications": "Nhận thông báo",
     "only_author": "Chỉ một mình tác giả",
     "only_you": "Chỉ một mình Bạn",
     "people": "Dân chúng",
@@ -712,11 +728,6 @@
     "users": "Người sử dụng",
     "views": "Lượt xem",
     "yesterday": "Hôm qua",
-    "open_menu": "Mở menu",
-    "my_account": "Tài khoản",
-    "login_register": "Đăng nhập | Đăng ký",
-    "help_support": "Trợ giúp & Hỗ trợ",
-    "receive_notifications": "Nhận thông báo",
     "map": "Bản đồ",
     "data": "Dữ liệu",
     "feed": "Chế độ xem dữ liệu"
@@ -727,15 +738,30 @@
     "activity": "Hoạt động",
     "data": "Data"
   },
+  "share": {
+    "share_deployment": "Chia sẻ triển khai",
+    "share_post": "Chia sẻ bài viết",
+    "web_address": "Địa chỉ web của bạn khảo sát",
+    "embed_on_websites": "Nhúng HTML trên trang web",
+    "copied": "Đã sao chép!",
+    "share_on_twitter": "Chia sẻ trên Twitter",
+    "share_on_facebook": "Chia sẻ trên Facebook"
+  },
   "post": {
+    "post_count": "Bài viết {{count}}",
     "see_more_plural": "See {{newPostsCount}} new posts",
     "see_more_singular": "See {{newPostsCount}} new post",
     "add_to_form": "Thêm vào {{phiếu}}",
     "posts": "Những bài đăng",
+    "post_title": "Tiêu đề bài",
+    "post_desc": "Mô tả bài viết",
     "there_are_no_posts": "Không có bài đăng nào",
     "in_this_deployment": "Trong triển khai này, đến nay.",
     "posts_total": "{{posts}} of {{total_nb}} posts",
+    "posts_total_map": "Hiển thị {{posts}} bài viết của {{total_nb}} với thông tin vị trí trên bản đồ.",
+    "search_results": "Kết quả:",
     "by": "bởi",
+    "duplicate_option": "Đã xảy ra sự cố với cấu hình của trường này do trùng lặp, vui lòng chuyển đến cài đặt khảo sát và khắc phục.",
     "task_completed": "Công việc được hoàn tất",
     "everyone": "Tất cả mọi người",
     "just_you": "Chỉ mình bạn",
@@ -743,28 +769,14 @@
     "can_see_this": "Có thể thấy cái này",
     "add_post_type": "Thêm {{tên phiếu}}",
     "edit_post_type": "Chỉnh sửa {{tên phiếu}}",
-    "messages": {
-      "by_sms": "bởi SMS",
-      "by_email": "Bằng điện thư",
-      "by_twitter": "Bởi Twitter",
-      "reply": "Trả lời cho chuỗi nhăn tin",
-      "send": "Gởi tin nhắn mới",
-      "save": "Lưu lại",
-      "simple_send": "Send",
-      "title": "Trò chuyện với tác giả",
-      "associated_messages": "Xem các nhắn tin liên hệ đến bài đăng này",
-      "show_only_incoming": "Show only {{provider}} not assigned to a survey yet",
-      "imported_by": "{{messages}} imported by this deployment",
-      "Twitter": "Twitter",
-      "Email": "Email",
-      "SMS": "SMS"
-    },
     "post": "Đăng",
     "message": "Tin nhắn",
     "message_thread": "Chuỗi nhăn tin",
     "all_posts": "All posts",
     "no_search_results": "Tìm kiếm của bạn không tìm ra một bài đăng nào",
+    "no_search_results_location": "Tìm kiếm của bạn không khớp với bất kỳ bài đăng nào có thông tin vị trí",
     "no_posts_yet": "Không có bài đăng nào cho đến nay!",
+    "no_posts_yet_location": "Chưa có bài đăng nào có thông tin vị trí!",
     "add_first_post": "Thêm bài đăng đầu tiên",
     "create_post": "Tạo ra bài đăng",
     "create": "Tạo ra cái mới",
@@ -793,18 +805,6 @@
     "unpublished": "Không xuất bản",
     "published_by": "Xuất bản bởi",
     "can_see_this_post": "Có thể thấy bài đăng này",
-    "location": {
-      "location": "Vị trí",
-      "you_can_search_or_click": "Bạn có thể tìm kiếm hoặc nhấp vào khu vực bản đồ nơi bạn muốn đặt điểm đánh dấu.",
-      "search_address": "Tìm kiếm địa chỉ, tên địa điểm hoặc tọa độ...",
-      "nothing_found": "Không kết quả",
-      "errors": {
-        "empty_lat": "Latitude là trường trống",
-        "empty_lng": "Kinh độ là trường trống",
-        "decimal_lat": "Vĩ độ chỉ số thập phân",
-        "decimal_lng": "Kinh độ chỉ số thập phân"
-      }
-    },
     "categories": "Thể loại",
     "status": "Trạng thái",
     "type": "Mẫu",
@@ -824,6 +824,7 @@
     "delete_post": "Xóa bỏ bài đăng",
     "delete_this_post": "Xóa bỏ bài đăng này",
     "delete_post_desc": "<strong>Nếu bạn xóa bỏ bài đăng này</strong>, tất cả các bình luận liên hệ cũng sẽ bị xóa bỏ. Xin cẩn thận khi tiến hành.",
+    "read_more": "Xem thêm",
     "post_actions": {
       "edit": "Chỉnh sửa",
       "delete": "Xóa bỏ",
@@ -849,6 +850,8 @@
     "unstructured_posts_desc": "Unstructured posts",
     "my_posts_desc": "Your posts",
     "unknown_posts_desc": "Posts with no assigned survey",
+    "image_is_required": "Hình ảnh là bắt buộc",
+    "image_max_size": "Hình ảnh vượt quá kích thước tệp tối đa",
     "locking": {
       "unlocked": "Post successfully unlocked",
       "unlock": "Unlock",
@@ -903,10 +906,31 @@
         "delete": "Xóa bỏ"
       }
     },
+    "messages": {
+      "by_sms": "bởi SMS",
+      "by_email": "Bằng điện thư",
+      "by_twitter": "Bởi Twitter",
+      "reply": "Trả lời cho chuỗi nhăn tin",
+      "send": "Gởi tin nhắn mới",
+      "save": "Lưu lại",
+      "simple_send": "Send",
+      "title": "Trò chuyện với tác giả",
+      "associated_messages": "Xem các nhắn tin liên hệ đến bài đăng này",
+      "show_only_incoming": "Show only {{provider}} not assigned to a survey yet",
+      "imported_by": "{{messages}} imported by this deployment",
+      "Twitter": "Twitter",
+      "Email": "Email",
+      "SMS": "SMS",
+      "previous_page": "<< Previous page",
+      "next_page": "Next page >>",
+      "empty_message_error": "You must add a message",
+      "no_messages": "There are no messages yet. Start a conversation with the author by sending a message below."
+    },
     "valid": {
       "no_changes": "You haven’t made any changes",
       "invalid_state": "Bài đăng này đang trong trạng thái không hợp lệ. Bạn cần hoàn tất mọi công việc bắt buộc trước khi bạn có thể tái đăng tải bài đăng này. Bạn có thể hoàn tất mọi công việc bắt buộc hay cho bài đăng của bạn một trạng thái khác, như \"đang duyệt\"",
       "validation_fail": "Hiện thiếu những ô bắt buộc, những ô này được đánh dấu với * dưới đây.",
+      "validation_fail_other": "Đã xảy ra lỗi khi xác thực dữ liệu. Các trường không xác thực được sẽ hiển thị lỗi.",
       "title": {
         "required": "Cần một tựa",
         "minlength": "Tựa quá ngăn",
@@ -933,8 +957,7 @@
       },
       "author_email": {
         "email": "Điện thư không hợp lệ"
-      },
-      "validation_fail_other": "Đã xảy ra lỗi khi xác thực dữ liệu. Các trường không xác thực được sẽ hiển thị lỗi."
+      }
     },
     "media": {
       "enter_a": "Enter a",
@@ -959,26 +982,32 @@
       },
       "survey_title": "Thăm dò không rõ"
     },
-    "post_count": "Bài viết {{count}}",
-    "post_title": "Tiêu đề bài",
-    "post_desc": "Mô tả bài viết",
-    "posts_total_map": "Hiển thị {{posts}} bài viết của {{total_nb}} với thông tin vị trí trên bản đồ.",
-    "search_results": "Kết quả:",
-    "duplicate_option": "Đã xảy ra sự cố với cấu hình của trường này do trùng lặp, vui lòng chuyển đến cài đặt khảo sát và khắc phục.",
-    "no_search_results_location": "Tìm kiếm của bạn không khớp với bất kỳ bài đăng nào có thông tin vị trí",
-    "no_posts_yet_location": "Chưa có bài đăng nào có thông tin vị trí!",
-    "read_more": "Xem thêm",
-    "image_is_required": "Hình ảnh là bắt buộc",
-    "image_max_size": "Hình ảnh vượt quá kích thước tệp tối đa",
     "relation": {
       "search": "Tìm kiếm"
+    },
+    "location": {
+      "location": "Vị trí",
+      "you_can_search_or_click": "Bạn có thể tìm kiếm hoặc nhấp vào khu vực bản đồ nơi bạn muốn đặt điểm đánh dấu.",
+      "search_address": "Tìm kiếm địa chỉ, tên địa điểm hoặc tọa độ...",
+      "nothing_found": "Không kết quả",
+      "errors": {
+        "empty_lat": "Latitude là trường trống",
+        "empty_lng": "Kinh độ là trường trống",
+        "decimal_lat": "Vĩ độ chỉ số thập phân",
+        "decimal_lng": "Kinh độ chỉ số thập phân"
+      }
     }
   },
   "role": {
+    "are_you_sure_you_want_to_delete_role": "Bạn có chắc chắn muốn xóa vai trò {{roleName}} không?",
     "add_role": "Thêm vai trò",
     "edit_role": "Chỉnh sửa vai trò",
     "name": "Tên",
     "description": "Mô tả",
+    "placeholder": {
+      "name": "Nhập tên vai trò",
+      "description": "Nhập mô tả vai trò"
+    },
     "save": "Lưu vai trò",
     "save_add_another": "Lưu & thêm cai khác",
     "permissions": "Sự cho phép",
@@ -987,11 +1016,6 @@
     "delete_role_desc": "<strong>Nếu bạn xóa bỏ vai trò này</strong>, tất cả nhưng người sử dụng chỉ định cho vai trò này sẽ hưởng sự cho phép mặc định. Xin cẩn thận khi tiến hành.",
     "everyone": "Tất cả mọi người",
     "just_you": "Chỉ mình bạn",
-    "are_you_sure_you_want_to_delete_role": "Bạn có chắc chắn muốn xóa vai trò {{roleName}} không?",
-    "placeholder": {
-      "name": "Nhập tên vai trò",
-      "description": "Nhập mô tả vai trò"
-    },
     "only_me": "Chỉ mình tôi"
   },
   "webhook": {
@@ -1064,7 +1088,10 @@
     "add_notification": "Thêm thông báo",
     "remove": "lấy ra",
     "update_saved_filter": "Cập nhật bộ lọc đã lưu",
-    "create_saved_filter": "Tạo bộ lọc đã lưu"
+    "create_saved_filter": "Tạo bộ lọc đã lưu",
+    "collection_saved": "Collection saved.",
+    "collection_updated": "Collection updated.",
+    "collection_description": "You can add posts to your collection from the Data view"
   },
   "category": {
     "add_tag": "Thêm thể loại",
@@ -1074,6 +1101,7 @@
     "delete_category_desc": "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
     "show_categories": "Show available categories",
     "child_permissions": "Permissions for this category are managed by the parent category.",
+    "which_categories": "Những danh mục nào sẽ có sẵn",
     "select_all": "Lựa chọn tất cả",
     "choose_roles": "Chọn Vai Trò",
     "create_tag": "Tạo ra thể loại",
@@ -1081,6 +1109,11 @@
     "deleted_tags": "Thể loại bị xoá bỏ",
     "manage_tags": "Quản Trị Thể Loại",
     "edit_tag": "Chỉnh sửa thể loại",
+    "validation": {
+      "required": {
+        "name": "Tên danh mục là cần thiết"
+      }
+    },
     "editor": {
       "name": "Tên Thể Loại",
       "slug": "Đường dẫn thể loại",
@@ -1091,22 +1124,16 @@
       "icon": "Tên biểu tượng",
       "roles_help": "Chỉ chọn vai trò nào cho phép bạn xem thể loại này."
     },
-    "types": {
-      "category": "Thể loại",
-      "status": "Trạng thái"
-    },
-    "delete": "Xóa bỏ",
-    "which_categories": "Những danh mục nào sẽ có sẵn",
-    "validation": {
-      "required": {
-        "name": "Tên danh mục là cần thiết"
-      }
-    },
     "placeholder": {
       "name": "Nhập tên",
       "descriptions": "Nhập mô tả...",
       "choose_parent_category": "Chọn danh mục mẹ..."
     },
+    "types": {
+      "category": "Thể loại",
+      "status": "Trạng thái"
+    },
+    "delete": "Xóa bỏ",
     "parent_category": "Danh mục cha"
   },
   "tool": {
@@ -1168,6 +1195,14 @@
       "donation": "Khoản ủng hộ",
       "donation_desc": "Tạo và quản lý các khoản quyên góp mà mọi người có thể quyên góp cho tổ chức của bạn."
     },
+    "general_settings": {
+      "generate_api_key": "Tạo khóa API",
+      "private_settings": "Cài đặt riêng tư:",
+      "api_key": "API Key",
+      "placeholder": {
+        "pick_location": "Chọn vị trí..."
+      }
+    },
     "user_settings": {
       "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
       "user_settings_desc_2": "Once set up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
@@ -1210,6 +1245,11 @@
       }
     },
     "data_sources": {
+      "choose_data_source": "Chọn nguồn dữ liệu...",
+      "type_of_data_source": "Loại nguồn dữ liệu",
+      "provider_name": "Nguồn dữ liệu {{providerName}}?",
+      "do_you_really_want_to_disconnect": "Bạn có thực sự muốn ngắt kết nối nhà cung cấp của mình không?",
+      "add_source": "Thêm nguồn",
       "associate_with_form": "Import to survey",
       "associate_with_form_desc": "All incoming data from {{provider}} will be used to create responses to the survey you choose",
       "data_sources": "Nguồn dữ kiện",
@@ -1222,7 +1262,6 @@
       "saving_changes": "Lưu lại",
       "unavailable": "Nguồn dữ kiện {{giá trị}} không dùng được, <a href=\"/settings/plan\">Cập nhật kế hoạch của bạn</a>để có nguồn này!",
       "email": {
-        "email_desc": "This will be used to send outgoing emails",
         "incoming_server_type": "Incoming Server Type",
         "incoming_server_type_pop": "POP",
         "incoming_server_type_imap": "IMAP",
@@ -1299,80 +1338,6 @@
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
         "search_terms": "Twitter search terms",
         "search_terms_desc": "Add search terms separated with commas"
-      },
-      "choose_data_source": "Chọn nguồn dữ liệu...",
-      "type_of_data_source": "Loại nguồn dữ liệu",
-      "provider_name": "Nguồn dữ liệu {{providerName}}?",
-      "do_you_really_want_to_disconnect": "Bạn có thực sự muốn ngắt kết nối nhà cung cấp của mình không?",
-      "add_source": "Thêm nguồn"
-    },
-    "roles": {
-      "member": "Member",
-      "admin": "Admin",
-      "manage_users": "Manage Users",
-      "manage_posts": "Manage Posts",
-      "manage_settings": "Mangage Settings",
-      "bulk_data_import_and_export": "Bulk Data Import and Export",
-      "edit_their_own_posts": "Edit their own posts",
-      "registred_member": "Registered member",
-      "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/platform-user-manual/4.-managing-people-on-your-deployment\" target=\"_blank\">Visit our support guides to find out more.",
-      "manage_collections_and_saved_searches": "Quản lý bộ sưu tập và tìm kiếm đã lưu",
-      "delete_posts": "Xóa bài đăng",
-      "delete_their_own_posts": "Xóa bài đăng của chính họ"
-    },
-    "deployment_delete_this": "Xóa bỏ triển khai này",
-    "deployment_delete": "Xóa bỏ triển khai",
-    "deployment_delete_info": "<strong>Nếu bạn xóa bỏ triển khai này</strong>, tất cả các dữ kiện liên hệ cũng sẽ bị xóa bỏ. Xin cẩn thận khi tiến hành.",
-    "deployment_name": "Tên triển khai",
-    "deployment_logo": "Logo của triển khai",
-    "delete_logo": "Delete logo",
-    "map_default_baselayer": "Lớp nền mặc định",
-    "map_location_precision": "Map Precision Level",
-    "map_precise_to": "When hide location is enabled for a survey, locations will be precise to:",
-    "map_clustering": "Gom các bài đăng gần bên",
-    "map_default_latitude": "Vĩ tuyến mặc định",
-    "map_default_longitude": "Kinh tuyến mặc định",
-    "map_default_zoom_level": "Mức thu phóng mặc định",
-    "map_default_location": "Vị trí mặc định",
-    "new_survey": "New Survey",
-    "send_targeted": "Send a targeted survey via SMS",
-    "send_crowdsourced": "Go back to crowd-sourced survey",
-    "site": "Thiết lập trang mạng",
-    "site_email": "Địa chỉ điện thư liên lạc",
-    "site_email_note": "Cẩn thận khi sử dụng, vì mọi người trên trang mạng có thể nhìn thấy",
-    "site_description": "Mô tả trang mạng của Bạn",
-    "site_description_placeholder": "Mo tả một câu không bắt buộc",
-    "site_timezone": "Múi giờ của trang mạng",
-    "site_language": "Ngôn ngữ của trang mạng",
-    "site_private": "Làm triển khai này tư",
-    "site_private_desc": "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
-    "select_image": "Chọn hình ảnh",
-    "saved_settings": "Lưu thiết lập triển khai!",
-    "saved_map_settings": "Lưu thiết lập bản đồ",
-    "features": {
-      "features": "Đặc điểm",
-      "please_select_features": "Xin chọn đặc điểm Bạn muốn cho phép sử dụng"
-    },
-    "generic_field_error": "Nguồn vào không hợp lệ, Xin làm lại",
-    "skip": "Nhảy công việc này",
-    "add_first_post": "Thêm bài đăng đầu tiên của bạn",
-    "add_first_post_subtitle": "Triển khai không có giá trị cho đến khi có một số nội dung được cho vào.",
-    "invite_people": "Hay mời người khác để giúp bạn tạo ra các bài đăng",
-    "add_new_users": "Thêm người sử dụng mới",
-    "valid": {
-      "name": {
-        "required": "Bắt buộc phải có tên trang mạng",
-        "pattern": "Định dạng không hợp lệ",
-        "minlength": "Tên trang web quá ngắn"
-      }
-    },
-    "general_settings": {
-      "generate_api_key": "Tạo khóa API",
-      "private_settings": "Cài đặt riêng tư:",
-      "api_key": "API Key",
-      "placeholder": {
-        "pick_location": "Chọn vị trí..."
       }
     },
     "donation": {
@@ -1401,8 +1366,69 @@
         "end": "để tạo một tài khoản."
       }
     },
+    "roles": {
+      "member": "Member",
+      "admin": "Admin",
+      "manage_users": "Manage Users",
+      "manage_posts": "Manage Posts",
+      "manage_settings": "Mangage Settings",
+      "bulk_data_import_and_export": "Bulk Data Import and Export",
+      "edit_their_own_posts": "Edit their own posts",
+      "manage_collections_and_saved_searches": "Quản lý bộ sưu tập và tìm kiếm đã lưu",
+      "delete_posts": "Xóa bài đăng",
+      "delete_their_own_posts": "Xóa bài đăng của chính họ",
+      "registred_member": "Registered member",
+      "administrator": "Administrator",
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/platform-user-manual/4.-managing-people-on-your-deployment\" target=\"_blank\">Visit our support guides to find out more."
+    },
+    "deployment_delete_this": "Xóa bỏ triển khai này",
+    "deployment_delete": "Xóa bỏ triển khai",
+    "deployment_delete_info": "<strong>Nếu bạn xóa bỏ triển khai này</strong>, tất cả các dữ kiện liên hệ cũng sẽ bị xóa bỏ. Xin cẩn thận khi tiến hành.",
+    "deployment_name": "Tên triển khai",
+    "deployment_logo": "Logo của triển khai",
+    "delete_logo": "Delete logo",
+    "map_default_baselayer": "Lớp nền mặc định",
+    "map_location_precision": "Map Precision Level",
+    "map_precise_to": "When hide location is enabled for a survey, locations will be precise to:",
+    "map_clustering": "Gom các bài đăng gần bên",
+    "map_default_latitude": "Vĩ tuyến mặc định",
+    "map_default_longitude": "Kinh tuyến mặc định",
+    "map_default_zoom_level": "Mức thu phóng mặc định",
+    "map_default_location": "Vị trí mặc định",
+    "new_survey": "New Survey",
+    "send_targeted": "Send a targeted survey via SMS",
+    "send_crowdsourced": "Go back to crowd-sourced survey",
+    "site": "Thiết lập trang mạng",
+    "site_email": "Địa chỉ điện thư liên lạc",
+    "site_email_note": "Cẩn thận khi sử dụng, vì mọi người trên trang mạng có thể nhìn thấy",
+    "site_description": "Mô tả trang mạng của Bạn",
+    "site_description_placeholder": "Mo tả một câu không bắt buộc",
+    "site_timezone": "Múi giờ của trang mạng",
+    "site_language": "Ngôn ngữ của trang mạng",
+    "site_private": "Làm triển khai này tư",
+    "site_private_desc": "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
     "site_disable_registration": "Vô hiệu hóa đăng ký người dùng?",
     "site_disable_registration_desc": "Kiểm tra điều này sẽ vô hiệu hóa tính năng đăng ký. Quản trị viên sẽ phải thêm người dùng theo cách thủ công.",
+    "select_image": "Chọn hình ảnh",
+    "saved_settings": "Lưu thiết lập triển khai!",
+    "saved_map_settings": "Lưu thiết lập bản đồ",
+    "features": {
+      "features": "Đặc điểm",
+      "please_select_features": "Xin chọn đặc điểm Bạn muốn cho phép sử dụng"
+    },
+    "generic_field_error": "Nguồn vào không hợp lệ, Xin làm lại",
+    "skip": "Nhảy công việc này",
+    "add_first_post": "Thêm bài đăng đầu tiên của bạn",
+    "add_first_post_subtitle": "Triển khai không có giá trị cho đến khi có một số nội dung được cho vào.",
+    "invite_people": "Hay mời người khác để giúp bạn tạo ra các bài đăng",
+    "add_new_users": "Thêm người sử dụng mới",
+    "valid": {
+      "name": {
+        "required": "Bắt buộc phải có tên trang mạng",
+        "pattern": "Định dạng không hợp lệ",
+        "minlength": "Tên trang web quá ngắn"
+      }
+    },
     "bulk_actions": "Hành động hàng loạt"
   },
   "data_import": {
@@ -1417,7 +1443,9 @@
     "see_imported_posts": "Xem các bằi đăng nhập vào",
     "import_another_csv": "Nhập vào một hồ sơ CV khác",
     "import_complete": "Hoàn tất nhập vào",
+    "import_error": "An error has occurred importing your CSV file.",
     "complete_info": "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
+    "get_polling_info": "Nhận thông tin thăm dò ý kiến",
     "import_another": "Nhập vào một hồ sơ CV khác",
     "nearly_complete": "Gần hoàn tất phần nhập vào",
     "finish_info": "Những dữ kiện đến từ bảng tính CSV của bạn vẫn đang tiếp tục được xử lý. Bạn dược mời rời khỏi trang này hay đợi để hoàn tất việc xử lý. Dù sao đi nữa, chúng tôi sẽ thông báo cho bạn khi những dữ kiện của bạn đã sẵn sàng.",
@@ -1435,6 +1463,11 @@
     "file_csv": "Hồ sơ CV",
     "import_csv": "Nhập vào bảng CSV",
     "import_to": "Nhập vào",
+    "change_csv_file": "Thay đổi tệp CSV {{selectedfile}}",
+    "upload_csv_file": "Tải lên tệp CSV",
+    "choose_status_to_imported_posts": "Chọn trạng thái cho bài đăng đã nhập:",
+    "has_tasks_required_start": "Khảo sát của bạn",
+    "has_tasks_required_end": ", bao gồm các nhiệm vụ thường phải hoàn thành cho mỗi bài đăng trước khi chúng có thể được đánh dấu là \"đã xuất bản\". Trong quá trình nhập này, tất cả các bài đăng đã nhập của bạn sẽ có nhiệm vụ được đánh dấu là 'chưa hoàn thành', trong khi vẫn cho phép trạng thái của chúng được đánh dấu là 'đã xuất bản'. Tuy nhiên, nếu bạn chỉnh sửa bất kỳ bài đăng nào trong số này sau khi nhập, bạn sẽ được yêu cầu hoàn thành các tác vụ đó trước khi xuất bản lại.",
     "choose_csv_file": "Chọn hồ sơ CSV",
     "organize_data": "Tổ chức dữ kiện",
     "organize_your_imported_data": "Chỉ định cột CV cho các ô đăng",
@@ -1446,13 +1479,7 @@
     "leave_empty": "Rời để trống",
     "cancel_import": "Hủy bỏ nhập vào",
     "finish_import": "Nhập vào xong",
-    "which_survey": "thăm dò nào?",
-    "get_polling_info": "Nhận thông tin thăm dò ý kiến",
-    "change_csv_file": "Thay đổi tệp CSV {{selectedfile}}",
-    "upload_csv_file": "Tải lên tệp CSV",
-    "choose_status_to_imported_posts": "Chọn trạng thái cho bài đăng đã nhập:",
-    "has_tasks_required_start": "Khảo sát của bạn",
-    "has_tasks_required_end": ", bao gồm các nhiệm vụ thường phải hoàn thành cho mỗi bài đăng trước khi chúng có thể được đánh dấu là \"đã xuất bản\". Trong quá trình nhập này, tất cả các bài đăng đã nhập của bạn sẽ có nhiệm vụ được đánh dấu là 'chưa hoàn thành', trong khi vẫn cho phép trạng thái của chúng được đánh dấu là 'đã xuất bản'. Tuy nhiên, nếu bạn chỉnh sửa bất kỳ bài đăng nào trong số này sau khi nhập, bạn sẽ được yêu cầu hoàn thành các tác vụ đó trước khi xuất bản lại."
+    "which_survey": "thăm dò nào?"
   },
   "data_export": {
     "title": "Export data",
@@ -1542,6 +1569,7 @@
     }
   },
   "user": {
+    "are_you_sure_you_want_to_delete_this_account": "Bạn có chắc chắn muốn xóa tài khoản này không?",
     "role_display": "Role: {{role}}",
     "contact": "{{type}}: {{contact}}",
     "add_user": "Thêm người sử dụng",
@@ -1560,7 +1588,6 @@
     "edit_profile": "Chỉnh sửa trắc diện",
     "save_profile": "Lưu trắc diện",
     "cancel": "Hủy bỏ",
-    "email": "Địa chỉ điện Thư",
     "failed_attempts": "Lần thừ thất bại",
     "full_name": "Hiển thị tên",
     "never": "Không bao giờ",
@@ -1577,17 +1604,25 @@
     "search_and_filter": "Tìm kiếm & Lọc người sử dụng",
     "passwordreset_instructions": "Đánh vào điện thư của bạn để yêu cầu thiết lập lại mật khẩu",
     "passwordreset_confirm_instructions": "Nếu điện thư của bạn có trong ngân hàng dữ kiện của chúng tôi, bạn sẽ nhận được lập tức một điện thư để thiết lập lại mật khâu",
+    "forgot_instructions": "No worries! Submit your email and check your inbox for a reset link.",
     "token": "Thẻ dùng để thiết lập lại mật khẩu",
+    "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
+    "password_length": "Password must be at least 8 characters long",
+    "password_match": "Passwords do not match",
+    "check_email": "Check your email",
+    "name_will_be_a_display_name": "Tên bạn nhập sẽ là tên hiển thị.",
     "valid": {
-      "full_name": {
-        "required": "Bắt buộc phải có tên hiển thị",
+      "fields": {
+        "email must be unique": "Người dùng có email này đã tồn tại"
+      },
+      "name": {
+        "required": "Tên hiển thị là bắt buộc",
         "maxlength": "Tên hiển thị quá dài"
       },
       "email": {
         "required": "Cần có địa chỉ điện thư",
-        "email": "Địa chỉ điện thư này không hợp lệ",
-        "maxlength": "Địa chỉ điện thư này quá dài",
         "pattern": "Địa chỉ email này không hợp lệ",
+        "maxlength": "Địa chỉ điện thư này quá dài",
         "emailExists": "Email đã được sử dụng"
       },
       "password": {
@@ -1596,19 +1631,10 @@
         "maxlength": "Mật khẩu này quá dài",
         "weak": "Mật khẩu này rất yếu"
       },
-      "fields": {
-        "email must be unique": "Người dùng có email này đã tồn tại"
-      },
-      "name": {
-        "required": "Tên hiển thị là bắt buộc",
-        "maxlength": "Tên hiển thị quá dài"
-      },
       "token": {
         "required": "Mã thông báo là bắt buộc"
       }
     },
-    "are_you_sure_you_want_to_delete_this_account": "Bạn có chắc chắn muốn xóa tài khoản này không?",
-    "name_will_be_a_display_name": "Tên bạn nhập sẽ là tên hiển thị.",
     "placeholder": {
       "realname": "Nhập tên của bạn....",
       "email": "Nhập địa chỉ email của bạn..",
@@ -1617,6 +1643,7 @@
     "password_notify": "Nếu bạn để trống trường, mật khẩu của bạn sẽ không thay đổi",
     "avatar": "Ảnh đại diện",
     "name": "Tên",
+    "email": "Địa chỉ điện Thư",
     "search_by_name": "Tìm kiếm theo tên"
   },
   "user_profile": {
@@ -1628,10 +1655,20 @@
       "cancel": "Hủy bỏ"
     },
     "nav": {
-      "general": "Tổng quát",
-      "notifications": "Thông báo",
       "account_settings": "Cài đặt tài khoản",
-      "notifications_settings": "Cài đặt thông báo"
+      "notifications_settings": "Cài đặt thông báo",
+      "delete_contact": {
+        "title": "Delete your",
+        "title_subject": {
+          "email": "Email",
+          "phone": "Phone"
+        },
+        "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
+        "button": {
+          "delete": "Delete",
+          "cancel": "Cancel"
+        }
+      }
     }
   },
   "user_create": {
@@ -1677,10 +1714,16 @@
       "empty_mapping_empty": "The CSV file does not contain column names. Please check your CSV file and try again",
       "no_mappings": "Không có ô nào đã được chỉ định cho ánh xạ - ít nhất một ô cần phải được ánh xạ dể tiếp tục.",
       "csv_import_cancel": "Hủy bỏ CSV nhập vào",
-      "csv_import_cancel_confirm": "Are you sure you want to cancel importing?"
+      "csv_import_cancel_confirm": "Are you sure you want to cancel importing?",
+      "csv_import_error": "Some of the data in your CSV file does not match the format of the mapped survey field. Please review the data and try again.",
+      "csv_import_success": "The data from your CSV file was successfully imported!"
     },
     "general_settings": {
       "save_success": "Lưu thiết lập tổng quát"
+    },
+    "donation_settings": {
+      "save_success": "Đã lưu cài đặt quyên góp",
+      "delete_question": "Bạn có chắc chắn muốn xóa {{name}} này không."
     },
     "map_settings": {
       "save_success": "Lưu thiết lập bản đồ"
@@ -1699,6 +1742,8 @@
       "success": "Đăng ký hoàn tất. Bây giờ Bạn có thể đăng nhập."
     },
     "post": {
+      "can_t_view_this_post": "Bạn không có quyền xem bài đăng này.<br> Nó vẫn đang được quản trị viên xem xét.<br> Nó sẽ có sẵn cho bạn sau khi nó được xuất bản.",
+      "contact_for_details": "Liên hệ với quản trị viên để biết thêm chi tiết:",
       "delete_image_confirm": "Bạn có chắc muốn xóa bỏ hình ành này?",
       "save_success": "Bài đăng {{tên}} được lưu",
       "save_success_review": "Bài đăng {{tên}} được lưu. Bài đăng của bạn cần được duyệt bởi một điều hòa viên trước khi đăng tải.",
@@ -1723,8 +1768,6 @@
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
       "leave_confirm": "Continue without saving",
-      "can_t_view_this_post": "Bạn không có quyền xem bài đăng này.<br> Nó vẫn đang được quản trị viên xem xét.<br> Nó sẽ có sẵn cho bạn sau khi nó được xuất bản.",
-      "contact_for_details": "Liên hệ với quản trị viên để biết thêm chi tiết:",
       "unfinished_post_task": "Bạn không thể xuất bản bài đăng này, bài viết có nhiệm vụ chưa hoàn thành",
       "posts_can_t_be_published": "Không thể đăng các bài đăng sau: {{titles}}",
       "post_not_found": "Không tìm thấy bài viết"
@@ -1787,6 +1830,7 @@
       "delete_attribute_confirm": "Bạn có chắc muốn xóa bỏ ô này?",
       "delete_attribute_confirm_desc": "This action cannot be undone. Deleting this field will remove its data from all existing posts.",
       "destroy_attribute_success": "Ô {{tên}} bị xóa bỏ",
+      "survey_name_required": "Tên khảo sát là bắt buộc",
       "validation": {
         "name": {
           "required": "A survey-name is needed",
@@ -1796,8 +1840,7 @@
         "description": {
           "required": "Description cannot be empty"
         }
-      },
-      "survey_name_required": "Tên khảo sát là bắt buộc"
+      }
     },
     "collection": {
       "delete_collection_confirm": "Bạn có chắc muốn xóa bỏ bộ sưu tập này?",
@@ -1805,7 +1848,8 @@
       "updated_collection": "Collection {{collection}} saved",
       "add_to_collection": "Bài đăng đã được thêm vào {{bộ sưu tập}}",
       "removed_from_collection": "Bài đăng đã được hủy bỏ trong {{bộ sưu tập}}",
-      "bulk_add_to_collection": "{{số}} bài đăng đã được thêm vào {{bộ sưu tập}}"
+      "bulk_add_to_collection": "{{số}} bài đăng đã được thêm vào {{bộ sưu tập}}",
+      "done": "Done"
     },
     "savedsearch": {
       "delete_savedsearch_success": "Saved search deleted successfully.",
@@ -1836,13 +1880,9 @@
       "upload_complete": "Upload complete. You should now see your tagged data in your HDX account."
     },
     "survey": {
+      "bulk_destroy_confirm": "Bạn có chắc chắn muốn xóa {{count}} khảo sát không?",
       "destroy_confirm": "Are you sure you want to delete this survey?",
-      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone.",
-      "bulk_destroy_confirm": "Bạn có chắc chắn muốn xóa {{count}} khảo sát không?"
-    },
-    "donation_settings": {
-      "save_success": "Đã lưu cài đặt quyên góp",
-      "delete_question": "Bạn có chắc chắn muốn xóa {{name}} này không."
+      "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
     },
     "confirm_modal": {
       "add_post_success": {
@@ -1935,6 +1975,30 @@
     "agree": "I agree to Ushahidi's Terms of Service.",
     "accept_and_continue": "Accept and Continue",
     "i_agree": "Tôi đồng ý với <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Chính sách bảo mật</a> của Ushahidi\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Điều khoản và Điều kiện</a>."
+  },
+  "translations": {
+    "languages": "Ngôn ngữ",
+    "language": "Ngôn ngữ",
+    "default": "mặc định",
+    "translate_field": "Trường Dịch",
+    "survey_select_default": "Chọn ngôn ngữ mặc định cho khảo sát này",
+    "category_select_default": "Chọn ngôn ngữ mặc định cho danh mục này",
+    "error_translation_exists": "Bạn không thể chọn ngôn ngữ này vì đã có bản dịch cho nó.",
+    "edit_default_text": "Văn bản bằng ngôn ngữ mặc định",
+    "edit_placeholder": "Viết bản dịch của bạn ở đây",
+    "add_translation": "Thêm bản dịch của bạn bên dưới:",
+    "survey_name_required": "Cần có bản dịch cho tên khảo sát",
+    "field_add_translation": "Các trường (nhấp để thêm bản dịch):",
+    "add_translation_lang": "Thêm bản dịch",
+    "translate_field_name": "Dịch tên trường",
+    "translate_field_desc": "Dịch mô tả trường",
+    "category_translations_link": "Xin lưu ý, để thêm bản dịch vào tên danh mục, hãy chuyển đến <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Cài đặt danh mục</a>",
+    "parent_child_lang": "Xin lưu ý rằng ngôn ngữ mặc định đã chọn cho danh mục con này khác với ngôn ngữ mẹ",
+    "post_title_required": "Bản dịch cho tiêu đề sau là bắt buộc",
+    "add_a_language": "Thêm ngôn ngữ",
+    "error_no_default": "Bạn cần chỉ định ngôn ngữ mặc định trước khi thêm bản dịch mới.",
+    "select_language": "Chọn ngôn ngữ để thêm bản dịch",
+    "default_lang_info": "Đây là ngôn ngữ sẽ được sử dụng nếu không có bản dịch nào có sẵn cho ngôn ngữ mà người dùng đã đặt để triển khai."
   },
   "languages": {
     "ach": "Acoli",
@@ -2062,6 +2126,7 @@
     "en-CH": "Anh (Thụy Sĩ)",
     "en-GB": "Anh (Vương Quốc Anh)",
     "en-US": "Anh (Hoa Kỳ)",
+    "en-EN": "Tiếng Anh",
     "myv": "Erzya",
     "eo": "Esperanto",
     "et": "Estonian",
@@ -2341,8 +2406,7 @@
     "yi": "Yiddish",
     "yo": "Yoruba",
     "zu": "Zulu",
-    "zu-ZA": "Zulu (Nam Phi)",
-    "en-EN": "Tiếng Anh"
+    "zu-ZA": "Zulu (Nam Phi)"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -2631,7 +2695,6 @@
     "notAnArray": "Post values for {{param1}} must be an array",
     "scalar": "Post values for {{param1}} must be scalar",
     "doesTranslationExist": "Translation {{value}} for post {{param2}} already exists",
-    "isSlugAvailable": "field: {{value}} is already in use",
     "published_to": {
       "exists": "The role you are publishing to {{value}} does not exist"
     },
@@ -2667,57 +2730,5 @@
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "You cannot change your own role",
     "adminUserLimitReached": "limit:{{:admin}}"
-  },
-  "404": {
-    "404": "Lỗi 404",
-    "error": "lỗi",
-    "description": "Rất tiếc... Rất tiếc, chúng tôi không thể tìm thấy trang bạn đang tìm kiếm. <br> Vui lòng tìm kiếm theo cụm từ khác hoặc quay lại Chế độ xem bản đồ.",
-    "button": "Đi tới Chế độ xem bản đồ"
-  },
-  "cookies": {
-    "we_use_cookies": "Howdy! Chúng tôi sử dụng cookie để làm cho trải nghiệm của bạn tốt hơn.",
-    "cookies_privacy": "Nếu bạn muốn biết thêm hoặc rút lại sự đồng ý của mình, vui lòng truy cập <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Chính sách bảo mật</a> của chúng tôi.",
-    "decline": "Từ chối",
-    "accept_cookies": "Chấp nhận cookie"
-  },
-  "share": {
-    "share_deployment": "Chia sẻ triển khai",
-    "share_post": "Chia sẻ bài viết",
-    "web_address": "Địa chỉ web của bạn khảo sát",
-    "embed_on_websites": "Nhúng HTML trên trang web",
-    "copied": "Đã sao chép!",
-    "share_on_twitter": "Chia sẻ trên Twitter",
-    "share_on_facebook": "Chia sẻ trên Facebook"
-  },
-  "<a href=\"https://www": {
-    "ushahidi": {
-      "com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>": {
-        "": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Điều khoản và Điều kiện</a>."
-      }
-    }
-  },
-  "translations": {
-    "languages": "Ngôn ngữ",
-    "language": "Ngôn ngữ",
-    "default": "mặc định",
-    "translate_field": "Trường Dịch",
-    "survey_select_default": "Chọn ngôn ngữ mặc định cho khảo sát này",
-    "category_select_default": "Chọn ngôn ngữ mặc định cho danh mục này",
-    "error_translation_exists": "Bạn không thể chọn ngôn ngữ này vì đã có bản dịch cho nó.",
-    "edit_default_text": "Văn bản bằng ngôn ngữ mặc định",
-    "edit_placeholder": "Viết bản dịch của bạn ở đây",
-    "add_translation": "Thêm bản dịch của bạn bên dưới:",
-    "survey_name_required": "Cần có bản dịch cho tên khảo sát",
-    "field_add_translation": "Các trường (nhấp để thêm bản dịch):",
-    "add_translation_lang": "Thêm bản dịch",
-    "translate_field_name": "Dịch tên trường",
-    "translate_field_desc": "Dịch mô tả trường",
-    "category_translations_link": "Xin lưu ý, để thêm bản dịch vào tên danh mục, hãy chuyển đến <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Cài đặt danh mục</a>",
-    "parent_child_lang": "Xin lưu ý rằng ngôn ngữ mặc định đã chọn cho danh mục con này khác với ngôn ngữ mẹ",
-    "post_title_required": "Bản dịch cho tiêu đề sau là bắt buộc",
-    "add_a_language": "Thêm ngôn ngữ",
-    "error_no_default": "Bạn cần chỉ định ngôn ngữ mặc định trước khi thêm bản dịch mới.",
-    "select_language": "Chọn ngôn ngữ để thêm bản dịch",
-    "default_lang_info": "Đây là ngôn ngữ sẽ được sử dụng nếu không có bản dịch nào có sẵn cho ngôn ngữ mà người dùng đã đặt để triển khai."
   }
 }
