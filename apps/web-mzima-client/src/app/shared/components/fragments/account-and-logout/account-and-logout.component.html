@@ -4,7 +4,7 @@
     color="secondary"
     class="account-info"
     [data-qa]="'account-info'"
-    *ngIf="isLoggedIn && isDesktop"
+    *ngIf="isLoggedIn"
     [matMenuTriggerFor]="accountMenu"
   >
     <div class="account-info__main">
@@ -22,6 +22,10 @@
   </mzima-client-button>
 
   <mat-menu #accountMenu="matMenu" class="account-menu">
+    <div *ngIf="isLoggedIn" class="account-info__mobile">
+      <span class="account-info__name" [data-qa]="'user-name'">{{ user.realname }}</span>
+      <span class="account-info__email" [data-qa]="'user-email'">{{ user.email }}</span>
+    </div>
     <button [data-qa]="'account-settings'" mat-menu-item (click)="openAccountSettings()">
       {{ 'nav.account_settings' | translate }}
     </button>

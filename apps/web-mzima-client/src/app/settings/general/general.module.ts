@@ -15,6 +15,7 @@ import { SettingsModule } from '../settings.module';
 import { GeneralRoutingModule } from './general-routing.module';
 import { GeneralComponent } from './general.component';
 import { SettingsMapComponent } from './settings-map/settings-map.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [GeneralComponent, SettingsMapComponent],
@@ -34,6 +35,7 @@ import { SettingsMapComponent } from './settings-map/settings-map.component';
     FormsModule,
     MzimaUiModule,
     FilterVisibleLayersModule,
+    MatDialogModule,
   ],
 })
 export class GeneralModule {}

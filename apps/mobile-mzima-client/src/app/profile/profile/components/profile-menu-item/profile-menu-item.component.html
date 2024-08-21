@@ -1,21 +1,21 @@
 <ion-item
-  class="profile-menu-item"
+  class="list-item"
   button
   lines="none"
   (click)="handleClick()"
   [disabled]="menuItem.disabled"
 >
-  <app-icon class="profile-menu-item__icon" slot="start" [name]="menuItem.icon"></app-icon>
+  <app-icon class="list-item__icon" slot="start" [name]="menuItem.icon"></app-icon>
   <div>
-    <strong class="profile-menu-item__title">{{ menuItem.label }}</strong>
-    <ion-text color="medium" class="profile-menu-item__info">
+    <strong class="list-item__title">{{ menuItem.label }}</strong>
+    <ion-text color="medium" class="list-item__info">
       {{ menuItem.description }}
     </ion-text>
   </div>
   <app-icon
     *ngIf="!menuItem.hideDetails"
     slot="end"
-    class="profile-menu-item__detail-icon"
+    class="list-item__detail-icon"
     name="arrow-right"
   ></app-icon>
 </ion-item>

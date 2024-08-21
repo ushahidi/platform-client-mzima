@@ -11,7 +11,7 @@
     ></app-profile-menu-item>
   </ion-list>
 
-  <ion-title class="title">Support and Information</ion-title>
+  <ion-title class="title">{{"app.support_info" | translate}}</ion-title>
   <ion-list class="profile-menu">
     <app-profile-menu-item
       (action)="callAction($event)"
@@ -30,21 +30,23 @@
 >
   <ng-container *ngIf="filteredSupportItems.length; else emptySupportItems">
     <ion-item
-      class="support-item"
+      class="list-item"
       button
       lines="none"
       *ngFor="let supportItem of filteredSupportItems"
     >
       <div (click)="supportItem.action()">
-        <span class="support-item__title">{{ supportItem.title }}</span>
-        <ion-text class="support-item__description" color="medium"
+        <span class="list-item__title">{{ supportItem.title }}</span>
+        <ion-text class="list-item__description" color="medium"
           >{{ supportItem.description }}</ion-text
         >
       </div>
-      <app-icon class="support-item__details" slot="end" name="arrow-right"></app-icon>
+      <app-icon class="list-item__details" slot="end" name="arrow-right"></app-icon>
     </ion-item>
   </ng-container>
   <ng-template #emptySupportItems>
-    <ion-text color="medium" class="empty ion-text-center"> Nothing found! </ion-text>
+    <ion-text color="medium" class="empty ion-text-center">
+      {{"app.nothing_found" | translate}}
+    </ion-text>
   </ng-template>
 </app-modal>

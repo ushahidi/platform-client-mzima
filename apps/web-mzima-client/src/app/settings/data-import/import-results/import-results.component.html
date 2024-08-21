@@ -1,26 +1,35 @@
 <div class="completed" *ngIf="importFinished; else notFinished">
-  <app-lottie-animation
-    class="visual"
-    [path]="'/assets/lottie/success-animation.json'"
-  ></app-lottie-animation>
+  <ng-container *ngIf="importSuccess; else importFailed">
+    <app-lottie-animation
+      class="visual"
+      [path]="'/assets/lottie/success-animation.json'"
+    ></app-lottie-animation>
 
-  <h1>{{ 'data_import.import_complete' | translate }}</h1>
-  <div class="description">
-    <p [innerHTML]="'data_import.complete_info' | translate : { filename: filename }"></p>
-  </div>
+    <h1>{{ 'data_import.import_complete' | translate }}</h1>
+    <div class="description">
+      <p [innerHTML]="'data_import.complete_info' | translate : { filename: filename }"></p>
+    </div>
 
-  <div class="form-controls-panel">
-    <mzima-client-button
-      fill="outline"
-      color="secondary"
-      [routerLink]="['/feed/collection', collectionId]"
-    >
-      {{ 'data_import.see_imported_posts' | translate }}
-    </mzima-client-button>
-    <mzima-client-button [routerLink]="['/settings/data-import']">
-      {{ 'data_import.import_another' | translate }}
-    </mzima-client-button>
-  </div>
+    <div class="form-controls-panel">
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
+        [routerLink]="['/feed/collection', collectionId]"
+      >
+        {{ 'data_import.see_imported_posts' | translate }}
+      </mzima-client-button>
+      <mzima-client-button [routerLink]="['/settings/data-import']">
+        {{ 'data_import.import_another' | translate }}
+      </mzima-client-button>
+    </div>
+  </ng-container>
+  <ng-template #importFailed>
+    <app-lottie-animation
+      class="visual"
+      [path]="'/assets/lottie/error-animation.json'"
+    ></app-lottie-animation>
+    <h1>{{ 'data_import.import_error' | translate }}</h1>
+  </ng-template>
 </div>
 
 <ng-template #notFinished>

@@ -2,6 +2,55 @@
   font-size: 36px;
 }
 
+.list-title {
+  margin-top: 24px;
+}
+
+.other {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+  ::ng-deep {
+    .checkbox {
+      padding-top: 0;
+    }
+  }
+
+  &__input {
+    height: 42px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid var(--Neutral-Neutral-40, #dadbdc);
+    background: var(--Neutral-White, #fff);
+    padding: 8px 12px;
+
+    &__radio {
+      margin-left: -5px;
+      z-index: 1000;
+    }
+    &__checkbox {
+      margin: 20px 12px;
+    }
+  }
+}
+
+.field-label {
+  font-weight: bold;
+}
+:host {
+  .form-row {
+    border-color: #e2e2e3 !important;
+    // @media (prefers-color-scheme: light) {
+    //   --border-color: #e2e2e3;
+    // }
+
+    // @media (prefers-color-scheme: dark) {
+    //   --border-color: var(--ion-border-color);
+    // }
+  }
+}
+
 .checkbox {
   &-list {
     list-style: none;
@@ -10,6 +59,20 @@
     &__item {
       .lvl-2 {
         margin-left: 16px;
+      }
+    }
+  }
+}
+:host {
+  ::ng-deep {
+    .form-post-create {
+      ion-item.form-row {
+        @media (prefers-color-scheme: light) {
+          border-color: #e2e2e3;
+          border-width: 1px;
+          border-style: solid;
+          border-radius: 4px;
+        }
       }
     }
   }
@@ -65,11 +128,32 @@
 }
 
 .form-controls-panel {
+  display: flex;
+  flex: 1 1;
+  flex-direction: row;
   gap: 8px;
-
   app-button {
     --button-padding-start: 24px;
     --button-padding-end: 24px;
+    width: 100%;
+    ::ng-deep ion-button {
+      width: 100%;
+    }
+
+    &.submit-button {
+      ::ng-deep ion-button span {
+        display: flex;
+        flex-direction: row;
+        app-spinner {
+          display: block;
+          margin-inline: 4px;
+          --spinner-size: 16px;
+          ::ng-deep ion-spinner {
+            color: #fff;
+          }
+        }
+      }
+    }
   }
 }
 

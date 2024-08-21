@@ -9,7 +9,13 @@
   }"
 >
   <mat-form-field appearance="outline" class="search-form__control">
-    <mzima-client-button matPrefix [iconOnly]="true" fill="clear" color="secondary">
+    <mzima-client-button
+      matPrefix
+      [iconOnly]="true"
+      fill="clear"
+      color="secondary"
+      [ariaLabel]="'Search icon' | translate"
+    >
       <mat-icon icon svgIcon="search-small"></mat-icon>
     </mzima-client-button>
     <input
@@ -144,7 +150,6 @@
                 fill="clear"
                 size="small"
                 class="filter-group__head__button"
-                (buttonClick)="clearFilter('form')"
                 [data-qa]="'clear'"
                 (buttonClick)="toggleSidebarFilters('form')"
               >
@@ -157,20 +162,22 @@
               formControlName="form"
               [data-qa]="'survey-selection-list'"
             >
-              <mat-list-option
-                *ngFor="let survey of surveyList"
-                [selected]="survey.checked"
-                color="primary"
-                [value]="survey.id"
-                checkboxPosition="before"
-                class="selection-list__option"
-                [ngStyle]="{ '--color': survey.color }"
-                [data-qa]="'survey-select-item'"
-              >
-                <span class="selection-list__option__border"></span>
-                {{ survey.name }}
-                <span class="selection-list__option__total">{{ survey.total }}</span>
-              </mat-list-option>
+              <ng-container *ngFor="let survey of surveyList">
+                <mat-list-option
+                  [hidden]="isMapView && survey.id === 0"
+                  [selected]="survey.checked"
+                  color="primary"
+                  [value]="survey.id"
+                  checkboxPosition="before"
+                  class="selection-list__option"
+                  [ngStyle]="{ '--color': survey.color }"
+                  [data-qa]="'survey-select-item' + survey.id"
+                >
+                  <span class="selection-list__option__border"></span>
+                  {{ survey.name }}
+                  <span class="selection-list__option__total">{{ survey.total }}</span>
+                </mat-list-option>
+              </ng-container>
             </mat-selection-list>
 
             <div class="filter-group__info" *ngIf="isMapView">
@@ -249,20 +256,20 @@
       <ng-container *ngIf="!isDesktop">
         <app-filter-control
           class="search-form__filters-panel__item"
-          formControlName="form"
+          formControlName="form[]"
           [options]="surveyList"
           [fields]="['id', 'name']"
-          (clear)="clearFilter('form')"
+          (clear)="clearFilter('form[]')"
           [type]="filterType.Multiselect"
           [title]="'app.surveys' | translate"
-          [badge]="form.controls['form'].value?.length || null"
+          [badge]="form.controls['form[]'].value?.length || null"
         >
           <div class="clear-button" suffix>
             <mzima-client-button
               fill="clear"
               size="small"
               class="filter-group__head__button"
-              (buttonClick)="toggleSidebarFilters('form')"
+              (buttonClick)="toggleSidebarFilters('form[]')"
             >
               {{ (showAllButton('form') ? 'nav.select_all' : 'nav.clear') | translate }}
             </mzima-client-button>
@@ -354,6 +361,7 @@
         [title]="'app.categories' | translate"
         [badge]="form.controls['tags'].value?.length || null"
         [selectedFields]="form.controls['tags'].value"
+        [data-qa]="'categories-filter'"
       >
       </app-filter-control>
 

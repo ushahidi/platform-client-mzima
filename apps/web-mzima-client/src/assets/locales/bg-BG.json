@@ -1342,7 +1342,7 @@
       "edit_their_own_posts": "Променят своите публикации",
       "registred_member": "Регистриран член",
       "administrator": "Администратор",
-      "roles_description": "Тези опции контролират какъв тип роли може да променят. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Посетете нашите ръководства, за да научите повече.",
+      "roles_description": "Тези опции контролират какъв тип роли може да променят. <a href=\"https://docs.ushahidi.com/platform-user-manual/4.-managing-people-on-your-deployment\" target=\"_blank\">Посетете нашите ръководства, за да научите повече.",
       "manage_collections_and_saved_searches": "Управление на колекции и запазени търсения",
       "delete_posts": "Изтриване на публикации",
       "delete_their_own_posts": "Изтриване на собствените си публикации"

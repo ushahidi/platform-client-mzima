@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subject, debounceTime, forkJoin, lastValueFrom } from 'rxjs';
 import { fieldErrorMessages, formHelper } from '@helpers';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -103,6 +104,7 @@ export class ChooseCollectionComponent {
     private toastService: ToastService,
     private notificationsService: NotificationsService,
     private databaseService: DatabaseService,
+    private router: Router,
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe({
       next: (query: string) => {
@@ -437,7 +439,6 @@ export class ChooseCollectionComponent {
   }
 
   public showCollection(collectionId: number): void {
-    // TODO: Open collection page
-    console.log('showCollection: ', collectionId);
+    this.router.navigate([`/collection/${collectionId}`]);
   }
 }

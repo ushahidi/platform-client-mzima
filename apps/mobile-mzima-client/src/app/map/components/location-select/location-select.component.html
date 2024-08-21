@@ -8,7 +8,7 @@
     (ionFocus)="isInputOnFocus = true"
     (ionBlur)="handleInputBlur()"
     (inputClear)="handleInputClear()"
-    placeholder="Enter city or address"
+    placeholder="{{ 'app.map_search' | translate }}"
     [ngClass]="{ 'search-input--has-results': results.length && isInputOnFocus }"
   >
     <ng-container start>

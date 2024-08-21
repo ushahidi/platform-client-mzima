@@ -24,6 +24,11 @@
     "choose": "Choose...",
     "add_all_fields": "Add all fields",
     "insert_text_here": "Insert text here...",
+    "deployment_not_found" : {
+      "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
+      "button_exit" : "Exit",
+      "button_create_deployment" : "Create Deployment"
+    },
     "documentation": {
       "title": "Documentation",
       "description": "Learn how to set up, configure, and manage your Ushahidi deployment."
@@ -158,7 +163,8 @@
     "your_deployment_is_outdated": "Your Deployment is outdated",
     "we_ve_updated_deployments_to_version_5": "We’ve updated Deployments to version 5. Users may not have access to your deployment soon. ",
     "for_more_details_on_deployment_update": "For more details on deployment update, go to Help & Support (this should be a link) or send an email to:",
-    "open_chat": "Open Chat"
+    "open_chat": "Open Chat",
+    "end_post": "End of Posts"
   },
   "cookies": {
     "we_use_cookies": "Howdy! We use cookies to make your experience better.",
@@ -216,7 +222,8 @@
     "all_crowdsourced": "All Crowdsourced Surveys",
     "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
     "targeted_activity": "Tageted Survey Activity",
-    "crowdsourced_activity": "Crowdsourced Survey Activity"
+    "crowdsourced_activity": "Crowdsourced Survey Activity",
+    "tooltip_template": "This is the single point tooltip template"
   },
   "form": {
     "add_field": "Add Field",
@@ -245,6 +252,8 @@
     "edit_post_type": "Edit Survey: {{form}}",
     "edit_post_types": "Edit Surveys",
     "field_add_option": "Add",
+    "field_add_other": "Add other",
+    "field_add_other_desc": "Allows entering a custom option that is not listed among the provided choices.",
     "field_default": "Field Default",
     "field_key": "Field Key",
     "field_type": "Field Type",
@@ -632,7 +641,8 @@
   },
   "modal": {
     "button": {
-      "close": "Close"
+      "close": "Close",
+      "done": "Done"
     },
     "donation": {
       "thank_you_for_your_donation_start": "Web monetization is enabled on this website. Thank you for your donation. You have donated",
@@ -661,6 +671,7 @@
     "comments": "Comments",
     "data_sources": "Data Sources",
     "data_import": "Data Import",
+    "deployment_not_found": "Deployment Not Found",
     "deselect": "Deselect",
     "edit_profile": "Edit Profile",
     "edit_post_type": "Edit Survey",
@@ -914,7 +925,7 @@
       "previous_page": "<< Previous page",
       "next_page": "Next page >>",
       "empty_message_error": "You must add a message",
-      "no_messages":"There are no messages yet. Start a conversation with the author by sending a message below."
+      "no_messages": "There are no messages yet. Start a conversation with the author by sending a message below."
     },
     "valid": {
       "no_changes": "You haven’t made any changes",
@@ -1078,7 +1089,10 @@
     "add_notification": "Add Notification",
     "remove": "remove",
     "update_saved_filter": "Update Saved Filter",
-    "create_saved_filter": "Create Saved Filter"
+    "create_saved_filter": "Create Saved Filter",
+    "collection_saved": "Collection saved.",
+    "collection_updated": "Collection updated.",
+    "collection_description": "You can add posts to your collection from the Data view"
   },
   "category": {
     "add_tag": "Add Category",
@@ -1205,8 +1219,8 @@
       "HDX": "Humanitarian Data Exchange",
       "please_enter_maintainer_id": "Please enter maintainer id",
       "please_enter_api_key": "Please enter API key",
-      "hdx_maintainer_id_min_length" : "HDX Maintainer Id is too short",
-      "api_key_min_length" : "API key is too short"
+      "hdx_maintainer_id_min_length": "HDX Maintainer Id is too short",
+      "api_key_min_length": "API key is too short"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
@@ -1368,7 +1382,7 @@
       "delete_their_own_posts": "Delete Their Own Posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/ushahidi-platform-user-manual/4.-managing-people-on-your-deployment/4.1-roles#4.1.1-add-role\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/platform-user-manual/4.-managing-people-on-your-deployment\" target=\"_blank\">Visit our support guides to find out more."
     },
     "deployment_delete_this": "Delete this deployment",
     "deployment_delete": "Delete deployment",
@@ -1432,6 +1446,7 @@
     "see_imported_posts": "See imported posts",
     "import_another_csv": "Import another CSV file",
     "import_complete": "Your import is complete",
+    "import_error": "An error has occurred importing your CSV file.",
     "complete_info": "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
     "get_polling_info": "Get Polling Info",
     "import_another": "Import another CSV file",
@@ -1645,17 +1660,17 @@
     "nav": {
       "account_settings": "Account settings",
       "notifications_settings": "Notifications settings",
-      "delete_contact" : {
-        "title" : "Delete your",
-        "title_subject" : {
-          "email" : "Email",
-          "phone" : "Phone"
+      "delete_contact": {
+        "title": "Delete your",
+        "title_subject": {
+          "email": "Email",
+          "phone": "Phone"
         },
-        "instructions" : "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
-        "button" : {
-          "delete" : "Delete",
-          "cancel" : "Cancel"
-        }  
+        "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
+        "button": {
+          "delete": "Delete",
+          "cancel": "Cancel"
+        }
       }
     }
   },
@@ -1703,7 +1718,8 @@
       "no_mappings": "No fields have been assigned mappings - at least one field must be mapped to continue",
       "csv_import_cancel": "CSV import cancelled",
       "csv_import_cancel_confirm": "Are you sure you want to cancel importing?",
-      "csv_import_error": "Some of the data in your CSV file does not match the format of the mapped survey field. Please review the data and try again."
+      "csv_import_error": "Some of the data in your CSV file does not match the format of the mapped survey field. Please review the data and try again.",
+      "csv_import_success": "The data from your CSV file was successfully imported!"
     },
     "general_settings": {
       "save_success": "General settings saved"
@@ -1766,7 +1782,7 @@
       "destroy_confirm_desc": "Deleting this category will remove it from all existing posts. This action cannot be undone.",
       "destroy_success": "Category deleted",
       "destroy_error": "Unable to delete category, please try again",
-      "bulk_destroy_confirm": "Are you sure you want to delete {{count}} categories?",
+      "bulk_destroy_confirm": "Are you sure you want to delete these {{count}} categories?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
       "bulk_destroy_success": "{{count}} categories deleted",
       "bulk_destroy_success_countless": "Categories deleted"
@@ -1836,7 +1852,8 @@
       "updated_collection": "Collection {{collection}} saved",
       "add_to_collection": "Post has been added to {{collection}}",
       "removed_from_collection": "Post has been removed from {{collection}}",
-      "bulk_add_to_collection": "{{count}} posts have been added to {{collection}}"
+      "bulk_add_to_collection": "{{count}} posts have been added to {{collection}}",
+      "done": "Done"
     },
     "savedsearch": {
       "delete_savedsearch_success": "Saved search deleted successfully.",
@@ -1879,8 +1896,8 @@
       },
       "deleted": {
         "success": "Success!",
-        "success_description": "You've permanently deleted {{count}} posts.",
-        "success_button": "OK, sounds good"
+        "success_description": "You've permanently deleted {{count}}.",
+        "success_button": "OK"
       }
     },
     "language": {
@@ -1961,7 +1978,7 @@
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
     "agree": "I agree to Ushahidi's Terms of Service.",
     "accept_and_continue": "Accept and Continue",
-    "i_agree": "I agree to Ushahidi <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a> the\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>."
+    "i_agree": "I agree to Ushahidi's <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a> and\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>."
   },
   "translations": {
     "languages": "Languages",
@@ -2721,4 +2738,3 @@
     "adminUserLimitReached": "limit:{{:admin}}"
   }
 }
-

@@ -105,18 +105,17 @@ export class PostControlsComponent {
     const modal = await this.modalController.create({
       component: CollectionsModalComponent,
       componentProps: {
-        postIds: this.posts[0].id,
+        postId: this.posts[0].id,
+        selectedCollections: new Set(this.posts[0].sets ?? []),
       },
     });
     modal.onWillDismiss().then(({ data }) => {
       const { collections, changed } = data ?? {};
-      if (changed && this.posts?.length) {
-        this.posts.forEach((post) => {
-          post.sets = collections;
-        });
+      if (changed) {
+        this.posts[0].sets = collections;
         this.toastService.presentToast({
           header: 'Success',
-          message: `Post was ${
+          message: `The post “${this.posts[0].title}” was ${
             collections?.length
               ? `added in ${collections.length} collections`
               : 'removed from all collections'
@@ -136,7 +135,7 @@ export class PostControlsComponent {
     const text = this.posts
       .map(
         (post) =>
-          `https://${this.deploymentService.getDeployment()!.fqdn}/feed/${post.id}/view?mode=POST`,
+          `https://${this.deploymentService.getDeployment()!.fqdn}/feed/${post.id}/view?mode=ID`,
       )
       .join(', ');
     this.shareService.share({
@@ -167,14 +166,15 @@ export class PostControlsComponent {
 
     if (result.role === 'confirm') {
       const count = this.posts.length;
+      const postIds = this.posts.map((p) => p.id);
       forkJoin(this.posts.map((p) => this.postsService.delete(p.id))).subscribe({
         complete: () => {
           this.toastService.presentToast({
             message: `${
-              this.posts.length > 1 ? count + ' posts' : 'Post'
-            } has been successfully deleted`,
+              this.posts.length > 1 ? count + ' posts have' : 'Post has'
+            } been successfully deleted`,
           });
-          this.postDeleted.emit();
+          this.postDeleted.emit(postIds);
         },
       });
     }

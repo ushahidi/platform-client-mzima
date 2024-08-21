@@ -18,6 +18,7 @@
           [isCheckbox]="isShowActions"
           (toggle)="toggleChildren($event)"
           [displayChildren]="displayChildren(category.id)"
+          [selectedCategories]="selectedCategories"
         >
         </app-category-item>
 
@@ -36,6 +37,7 @@
                   | lowercase
               "
               [customClass]="'category-item__title--lvl2'"
+              [selectedCategories]="selectedCategories"
             >
             </app-category-item>
           </li>

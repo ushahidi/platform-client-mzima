@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Observable, fromEvent } from 'rxjs';
 import { NavToolbarService } from '../../../helpers/navtoolbar.service';
 import { BaseComponent } from '../../../../base.component';
@@ -10,6 +10,7 @@ import { BreakpointService, SessionService } from '@services';
   styleUrls: ['./mobile-menu.component.scss'],
 })
 export class MobileMenuComponent extends BaseComponent {
+  @Output() isBurgerMenuOpenEvent = new EventEmitter<boolean>();
   public isBurgerMenuOpen: boolean;
   public clickObservable: Observable<Event> = fromEvent(document, 'click');
 
@@ -31,6 +32,12 @@ export class MobileMenuComponent extends BaseComponent {
       this.isBurgerMenuOpen
         ? document.body.classList.add('burger-menu-open')
         : document.body.classList.remove('burger-menu-open');
+      // Get isBurgerMenuOpen for use in parent component to hide (the whole of) mobile-menu
+      this.getIsBurgerMenuOpen(this.isBurgerMenuOpen);
     });
+  }
+
+  public getIsBurgerMenuOpen(value: boolean) {
+    this.isBurgerMenuOpenEvent.emit(value);
   }
 }

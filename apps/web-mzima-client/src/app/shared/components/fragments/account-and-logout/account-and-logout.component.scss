@@ -54,6 +54,17 @@
     }
   }
 
+  &__mobile {
+    display: none;
+
+    @include breakpoint-max($laptop-small) {
+      display: flex;
+      cursor: default;
+      flex-direction: column;
+      padding: 10px;
+    }
+  }
+
   &__name {
     display: block;
   }

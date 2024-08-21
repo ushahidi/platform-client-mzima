@@ -47,7 +47,7 @@ import { objectHelpers, formValidators, dateHelper } from '@helpers';
 import { PhotoRequired, PointValidator } from '../../core/validators';
 import { Observable, lastValueFrom, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LanguageInterface } from '../../core/interfaces/language.interface';
+import { LanguageInterface } from '@mzima-client/sdk';
 import { MatSelectChange } from '@angular/material/select';
 
 dayjs.extend(timezone);
@@ -99,7 +99,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   postLanguages: LanguageInterface[] = [];
   selectedSurvey: SurveyItem;
   public surveys: Observable<any>;
-
   constructor(
     protected override sessionService: SessionService,
     protected override breakpointService: BreakpointService,
@@ -183,6 +182,14 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     });
   }
 
+  getParentsWithChildren(options: any[]) {
+    const parents = options.filter((opt: any) => !opt.parent_id);
+    parents.forEach((parent) => {
+      parent.children = options.filter((opt: any) => opt.parent_id === parent.id);
+    });
+    return parents;
+  }
+
   private loadSurveyData(formId: number | null, updateContent?: any[]) {
     if (!formId) return;
     this.surveysService.getSurveyById(formId).subscribe({
@@ -199,7 +206,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         if (availableLanguages.length) {
           availableLanguages.unshift(result.enabled_languages.default);
           availableLanguages.forEach((langCode: string) => {
-            this.postLanguages.push(languages.find((lang) => lang.code === langCode)!);
+            this.postLanguages.push(
+              languages.find((lang) => lang.code.split('-')[0] === langCode.split('-')[0])!,
+            );
           });
           this.selectedLanguage = this.postLanguages[0];
         }
@@ -217,14 +226,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   this.description = field.default;
                   break;
                 case 'tags':
+                  field.options = this.getParentsWithChildren(field.options);
                   this.description = field.default;
-                  break;
-                case 'media': // Max image size addition hack
-                  field.instructions = `${field.instructions}. Max size: ${(
-                    this.maxImageSize /
-                    1000 /
-                    1000
-                  ).toFixed(2)} MB`;
                   break;
                 case 'relation':
                   const fieldForm: [] = field.config?.input?.form;
@@ -268,7 +271,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
 
         this.form = new FormGroup(fields);
         this.initialFormData = this.form.value;
-
+        this.handleOtherOptions();
         if (updateContent) {
           this.isEditPost = true;
           this.tasks = postHelpers.markCompletedTasks(this.tasks, this.post);
@@ -288,6 +291,46 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         }
       },
     });
+  }
+
+  private handleOtherOptions() {
+    for (const task of this.tasks) {
+      task.fields.map((field: any) => {
+        if (
+          (field.input === 'radio' || field.input === 'checkbox') &&
+          field.options.includes('Other')
+        ) {
+          this.form.addControl(`other${field.key}`, new FormControl());
+        }
+      });
+    }
+  }
+  public hasEmptyOther(key: string) {
+    const emptyOther =
+      this.form.get(key)?.value?.includes('Other') &&
+      !this.form.get('other' + key)?.value &&
+      this.form.get('other' + key)?.touched;
+    this.form.controls[key].setErrors({ emptyOther });
+    if (!emptyOther) this.form.controls[key].updateValueAndValidity();
+    return emptyOther;
+  }
+
+  public selectOther(event: any, field: any) {
+    event.stopPropagation();
+    if (field.input === 'radio') {
+      this.form.patchValue({ [field.key]: 'Other' });
+    } else {
+      if (!this.form.controls[field.key].value?.includes('Other')) {
+        const newValue = this.form.controls[field.key].value || [];
+        newValue.push('Other');
+        this.form.patchValue({ [field.key]: newValue });
+      }
+    }
+  }
+
+  public toggleFocus(event: any, field: any) {
+    console.log(field);
+    event.stopPropagation();
   }
 
   public changeLocation(data: any, formKey: string) {
@@ -328,8 +371,27 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     this.form.patchValue({ [key]: value?.value });
   }
 
-  private handleCheckbox(key: string, value: any) {
-    const data = value?.value;
+  private handleRadio(key: string, value: any, options: any) {
+    if (options.indexOf(value?.value) < 0 && options.includes('Other')) {
+      this.form.patchValue({ [key]: 'Other' });
+      this.form.patchValue({ [`other${key}`]: value?.value });
+    } else {
+      this.form.patchValue({ [key]: value?.value });
+      this.form.patchValue({ [`other${key}`]: '' });
+    }
+  }
+
+  private handleCheckbox(key: string, value: any, options: any) {
+    let data = value?.value;
+    if (data?.length && options.includes('Other')) {
+      for (const val of data) {
+        if (options.indexOf(val) < 0) {
+          this.form.patchValue({ [`other${key}`]: val });
+          data = data.filter((oldVal: any) => oldVal !== val);
+          data.push('Other');
+        }
+      }
+    }
     this.form.patchValue({ [key]: data });
   }
 
@@ -381,12 +443,20 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     const inputHandlers: Partial<{ [key in InputHandlerType]: (key: string, value: any) => void }> =
       {
         tags: this.handleTags.bind(this),
-        checkbox: this.handleCheckbox.bind(this),
         location: this.handleLocation.bind(this),
         date: this.handleDate.bind(this),
         datetime: this.handleDateTime.bind(this),
         upload: this.handleUpload.bind(this),
       };
+
+    type InputHandlersOptionsType = 'radio' | 'checkbox';
+
+    const inputHandlersOptions: {
+      [key in InputHandlersOptionsType]: (key: string, value: any, options: any) => void;
+    } = {
+      radio: this.handleRadio.bind(this),
+      checkbox: this.handleCheckbox.bind(this),
+    };
 
     const typeHandlers: { [key in TypeHandlerType]: (key: string) => void } = {
       title: this.handleTitle.bind(this),
@@ -394,10 +464,12 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     };
 
     for (const { fields } of updateValues) {
-      for (const { type, input, key, value } of fields) {
+      for (const { type, input, key, value, options } of fields) {
         this.form.patchValue({ [key]: value });
         if (inputHandlers[input as InputHandlerType]) {
           inputHandlers[input as InputHandlerType]!(key, value);
+        } else if (inputHandlersOptions[input as InputHandlersOptionsType]) {
+          inputHandlersOptions[input as InputHandlersOptionsType](key, value, options);
         } else {
           this.handleDefault.bind(this)(key, value);
         }
@@ -454,118 +526,133 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     return new FormControl(value, validators);
   }
 
-  public getOptionsByParentId(field: any, parent_id: number): any[] {
-    return field.options.filter((option: any) => option.parent_id === parent_id);
-  }
-
   async preparationData(): Promise<any> {
     for (const task of this.tasks) {
       task.fields = await Promise.all(
-        task.fields.map(async (field: { key: string | number; input: string; type: string }) => {
-          let value: any = {
-            value: this.form.value[field.key],
-          };
+        task.fields.map(
+          async (field: { key: string | number; input: string; type: string; options: any }) => {
+            let value: any = {
+              value: this.form.value[field.key],
+            };
 
-          if (field.type === 'title') this.title = this.form.value[field.key];
-          if (field.type === 'description') this.description = this.form.value[field.key];
+            if (field.type === 'title') this.title = this.form.value[field.key];
+            if (field.type === 'description') this.description = this.form.value[field.key];
 
-          switch (field.input) {
-            case 'date':
-              value = this.form.value[field.key]
-                ? {
-                    value: dateHelper.setDate(this.form.value[field.key], 'date'),
-                    value_meta: {
-                      from_tz: dayjs.tz.guess(),
-                    },
+            switch (field.input) {
+              case 'date':
+                value = this.form.value[field.key]
+                  ? {
+                      value: dateHelper.setDate(this.form.value[field.key], 'date'),
+                      value_meta: {
+                        from_tz: dayjs.tz.guess(),
+                      },
+                    }
+                  : { value: null };
+                break;
+              case 'datetime':
+                value = this.form.value[field.key]
+                  ? {
+                      value: dateHelper.setDate(this.form.value[field.key], 'datetime'),
+                      value_meta: {
+                        from_tz: dayjs.tz.guess(),
+                      },
+                    }
+                  : { value: null };
+                break;
+              case 'location':
+                value = this.form.value[field.key].lat
+                  ? {
+                      value: {
+                        lat: this.form.value[field.key].lat,
+                        lon: this.form.value[field.key].lng,
+                      },
+                    }
+                  : { value: null };
+                break;
+              case 'tags':
+              case 'checkbox':
+                value.value = this.form.value[field.key] || null;
+                if (value.value?.includes('Other')) {
+                  value.value = value.value.filter((opt: any) => opt !== 'Other');
+                  value.value.push(this.form.value[`other${field.key}`]);
+                }
+                break;
+              case 'radio':
+                if (field.options.includes('Other')) {
+                  value.value =
+                    this.form.value[field.key] === 'Other'
+                      ? this.form.value[`other${field.key}`]
+                      : this.form.value[field.key];
+                } else {
+                  value.value = this.form.value[field.key] || null;
+                }
+                break;
+              case 'video':
+                value = this.form.value[field.key]
+                  ? {
+                      value: preparingVideoUrl(this.form.value[field.key]),
+                    }
+                  : {};
+                break;
+
+              case 'relation':
+                value.value = this.form.value[field.key] || null;
+                break;
+              case 'upload':
+                const originalValue = this.post?.post_content[0]?.fields.filter(
+                  (fieldValue: { key: string | number }) => fieldValue.key === field.key,
+                )[0];
+                if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
+                  try {
+                    this.maxSizeError = false;
+                    if (this.maxImageSize > this.form.value[field.key].photo.size) {
+                      const uploadObservable = this.mediaService.uploadFile(
+                        this.form.value[field.key]?.photo,
+                        this.form.value[field.key]?.caption,
+                      );
+                      const response: any = await lastValueFrom(uploadObservable);
+                      value.value = response.result.id;
+                    } else {
+                      this.maxSizeError = true;
+                      throw new Error(`Error uploading file: max size exceed`);
+                    }
+                  } catch (error: any) {
+                    throw new Error(`Error uploading file: ${error.message}`);
                   }
-                : { value: null };
-              break;
-            case 'datetime':
-              value = this.form.value[field.key]
-                ? {
-                    value: dateHelper.setDate(this.form.value[field.key], 'datetime'),
-                    value_meta: {
-                      from_tz: dayjs.tz.guess(),
-                    },
-                  }
-                : { value: null };
-              break;
-            case 'location':
-              value = this.form.value[field.key].lat
-                ? {
-                    value: {
-                      lat: this.form.value[field.key].lat,
-                      lon: this.form.value[field.key].lng,
-                    },
-                  }
-                : { value: null };
-              break;
-            case 'tags':
-            case 'checkbox':
-              value.value = this.form.value[field.key] || null;
-              break;
-            case 'video':
-              value = this.form.value[field.key]
-                ? {
-                    value: preparingVideoUrl(this.form.value[field.key]),
-                  }
-                : {};
-              break;
-            case 'relation':
-              value.value = this.form.value[field.key] || null;
-              break;
-            case 'upload':
-              const originalValue = this.post?.post_content[0]?.fields.filter(
-                (fieldValue: { key: string | number }) => fieldValue.key === field.key,
-              )[0];
-              if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
-                try {
-                  this.maxSizeError = false;
-                  if (this.maxImageSize > this.form.value[field.key].photo.size) {
-                    const uploadObservable = this.mediaService.uploadFile(
-                      this.form.value[field.key]?.photo,
-                      this.form.value[field.key]?.caption,
+                } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
+                  try {
+                    const deleteObservable = this.mediaService.delete(
+                      this.form.value[field.key]?.id,
                     );
-                    const response: any = await lastValueFrom(uploadObservable);
-                    value.value = response.result.id;
-                  } else {
-                    this.maxSizeError = true;
-                    throw new Error(`Error uploading file: max size exceed`);
+                    await lastValueFrom(deleteObservable);
+                    value.value = null;
+                  } catch (error: any) {
+                    throw new Error(`Error deleting file: ${error.message}`);
                   }
-                } catch (error: any) {
-                  throw new Error(`Error uploading file: ${error.message}`);
+                } else if (originalValue?.value?.mediaCaption !== value.value?.caption) {
+                  try {
+                    const captionObservable = await this.mediaService.updateCaption(
+                      originalValue.value.id,
+                      value.value.caption,
+                    );
+                    await lastValueFrom(captionObservable);
+                    value.value = originalValue.value.id;
+                  } catch (error: any) {
+                    throw new Error(`Error updating caption: ${error.message}`);
+                  }
+                } else {
+                  value.value = this.form.value[field.key]?.id || null;
                 }
-              } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
-                try {
-                  const deleteObservable = this.mediaService.delete(this.form.value[field.key]?.id);
-                  await lastValueFrom(deleteObservable);
-                  value.value = null;
-                } catch (error: any) {
-                  throw new Error(`Error deleting file: ${error.message}`);
-                }
-              } else if (originalValue?.value?.mediaCaption !== value.value?.caption) {
-                try {
-                  const captionObservable = await this.mediaService.updateCaption(
-                    originalValue.value.id,
-                    value.value.caption,
-                  );
-                  await lastValueFrom(captionObservable);
-                  value.value = originalValue.value.id;
-                } catch (error: any) {
-                  throw new Error(`Error updating caption: ${error.message}`);
-                }
-              } else {
-                value.value = this.form.value[field.key]?.id || null;
-              }
-              break;
-            default:
-              value.value = this.form.value[field.key] || null;
-          }
-          return {
-            ...field,
-            value,
-          };
-        }),
+                break;
+              default:
+                value.value = this.form.value[field.key] || null;
+            }
+            return {
+              ...field,
+              value,
+            };
+          },
+        ),
       );
     }
   }
@@ -729,7 +816,13 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       this.router.navigate(['map']);
     }
   }
-
+  public getTotalCategoryCount(options: any[]) {
+    let length = options.length;
+    options.forEach((parent) => {
+      length = length + parent.children.length;
+    });
+    return length;
+  }
   public toggleAllSelection(event: MatCheckboxChange, fields: any, fieldKey: string) {
     fields.map((field: any) => {
       if (field.key === fieldKey) {
@@ -765,8 +858,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       }
 
       if (!parentId && options) {
-        const children = options.filter((option) => option.parent_id === id);
-        children.forEach((child) => {
+        const parent = options.find((option) => option.id === id);
+        parent.children.forEach((child: any) => {
           const hasChildId = formArray.controls.some((control: any) => control.value === child.id);
           if (!hasChildId) formArray.push(new FormControl(child.id));
         });
@@ -776,8 +869,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       if (index > -1) formArray.removeAt(index);
 
       if (parentId && options) {
-        const children = options.filter((option: any) => option.parent_id === parentId);
-        const isParentHasCheckedChild = children.some((child) =>
+        const parent = options.find((option) => option.id === parentId);
+        const isParentHasCheckedChild = parent.children.some((child: any) =>
           formArray.controls.some((control: any) => control.value === child.id),
         );
         if (!isParentHasCheckedChild) {
@@ -787,8 +880,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       }
 
       if (!parentId && options) {
-        const children = options.filter((option) => option.parent_id === id);
-        children.forEach((child) => {
+        const parent = options.find((option) => option.id === id);
+        parent.children.forEach((child: any) => {
           const i = formArray.controls.findIndex((ctrl: any) => ctrl.value === child.id);
           if (i > -1) formArray.removeAt(i);
         });

@@ -56,9 +56,15 @@
 
             <ion-text color="medium" class="post__info-item">
               <ng-container [ngSwitch]="post.status">
-                <ng-container *ngSwitchCase="'published'">Published</ng-container>
-                <ng-container *ngSwitchCase="'draft'">Under review</ng-container>
-                <ng-container *ngSwitchCase="'archived'">Archived</ng-container>
+                <ng-container *ngSwitchCase="'published'"
+                  >{{"app.published" | translate }}</ng-container
+                >
+                <ng-container *ngSwitchCase="'draft'"
+                  >{{"app.under_review" | translate}}</ng-container
+                >
+                <ng-container *ngSwitchCase="'archived'"
+                  >{{"app.archived" | translate}}</ng-container
+                >
               </ng-container>
             </ion-text>
 
@@ -69,7 +75,7 @@
     </ng-container>
     <ng-template #errorMessage>
       <ion-text color="medium" class="error-msg ion-text-center ion-margin-vertical">
-        Failed to load post #{{ postId }}
+        {{"app.failed_load_post" | translate}}{{ postId }}
       </ion-text>
     </ng-template>
   </ng-template>

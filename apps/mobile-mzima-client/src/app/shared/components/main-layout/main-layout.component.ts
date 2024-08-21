@@ -11,6 +11,7 @@ export class MainLayoutComponent {
   @Input() public title?: string;
   @Input() public header = true;
   @Input() public isSearch = false;
+  @Input() public placeholderText: string;
   @Output() back = new EventEmitter();
   @Output() search = new EventEmitter<string>();
   @Output() searchFocus = new EventEmitter();

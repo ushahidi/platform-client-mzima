@@ -62,6 +62,7 @@ import { DirectiveModule } from './directive.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddPostModalComponent } from '@post';
 import { MzimaUiModule } from '@mzima-client/mzima-ui';
+import { DeploymentNotFoundComponent } from './components/deployment-not-found/deployment-not-found.component';
 
 const components = [
   SidebarComponent,
@@ -93,6 +94,7 @@ const components = [
   AccessDeniedComponent,
   SafePipe,
   DeleteContactModalComponent,
+  DeploymentNotFoundComponent,
 ];
 
 const modules = [

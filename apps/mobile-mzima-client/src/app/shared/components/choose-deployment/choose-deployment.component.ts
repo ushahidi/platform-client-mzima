@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { App } from '@capacitor/app';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
@@ -10,7 +11,7 @@ import {
   ConfigService,
   DeploymentService,
   EnvService,
-  // IntercomService,
+  SessionService,
 } from '@services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ToastService } from '@services';
@@ -40,11 +41,13 @@ export class ChooseDeploymentComponent {
   tap = 0;
 
   constructor(
+    private router: Router,
     private envService: EnvService,
     private configService: ConfigService,
     private deploymentService: DeploymentService,
     private alertService: AlertService,
-    private authService: AuthService, // private intercomService: IntercomService,
+    private authService: AuthService,
+    private sessionService: SessionService,
     protected toastService: ToastService,
     protected platform: Platform,
   ) {
@@ -119,13 +122,48 @@ export class ChooseDeploymentComponent {
   }
 
   public removeDeployment(deploymentId: number) {
-    const index = this.deploymentList.findIndex((i: any) => i.id === deploymentId);
-    if (index !== -1) this.deploymentList.splice(index, 1);
+    this.deploymentList = this.deploymentList.filter(
+      (deployment) => deployment.id !== deploymentId,
+    );
     this.deploymentService.setDeployments(this.deploymentList);
+    if (this.deploymentList.length === 0) {
+      this.currentDeploymentId = undefined;
+      this.authService.logout();
+      this.deploymentService.setDeployment(null);
+      if (this.isProfile) this.router.navigate(['deployment']);
+    } else if (this.currentDeploymentId === deploymentId) {
+      this.currentDeploymentId = this.deploymentList[0].id;
+      this.chooseDeployment(this.deploymentList[0]);
+    }
   }
 
   public async chooseDeployment(deployment: Deployment) {
     const currentDeployment = this.deploymentService.getDeployment() ?? null;
+
+    const isLoggedIn = this.sessionService.isLogged();
+    if (isLoggedIn) {
+      const result = await this.alertService.presentAlert({
+        header: 'Log out of current deployment?',
+        message:
+          'Switching deployments will log out out of your current deployment, and you may need to log in again.',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+          },
+          {
+            text: 'Confirm',
+            role: 'confirm',
+            cssClass: 'danger',
+          },
+        ],
+      });
+
+      if (result.role !== 'confirm') {
+        return;
+      }
+    }
+
     this.authService.logout();
     this.deploymentService.setDeployment(deployment);
     this.envService.setDynamicBackendUrl();
@@ -221,6 +259,24 @@ export class ChooseDeploymentComponent {
     this.foundDeploymentList = [];
     this.addButtonVisible = false;
     this.loadDeployments();
+
+    const deploymentCount = this.selectedDeployments.length;
+    const header =
+      deploymentCount > 1
+        ? deploymentCount + ' Deployments Added Successfully!'
+        : '1 Deployment Added Successfully!';
+    const message =
+      deploymentCount > 1
+        ? 'You can now view these deployments and add posts to them'
+        : 'You can now view this deployment and add posts to it';
+
+    this.toastService.presentToast({
+      header: header,
+      message: message,
+      buttons: [],
+    });
+
+    this.selectedDeployments = [];
   }
 
   public backHandle(): void {

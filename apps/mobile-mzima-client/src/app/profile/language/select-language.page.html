@@ -1,0 +1,35 @@
+<app-main-layout class="main" title="Select Language" (back)="back()">
+  <ng-container>
+    <ion-text color="medium"> Select language from the list </ion-text>
+    <ion-radio-group class="search-list">
+      <div class="search-list__result">
+        <ion-item
+          class="search-list__item"
+          button
+          lines="none"
+          *ngFor="let language of languages; let i = index"
+          (click)="selectLanguage(language.code)"
+        >
+          <img
+            [src]="'assets/images/flags/' + (language.code | lowercase) + '.svg'"
+            [alt]="language.name"
+            class="search-list__image search-list__flag"
+          />
+          <ion-label class="search-list__content">
+            <span class="search-list__title"> {{language.name}} </span>
+          </ion-label>
+          <div class="search-list__end" *ngIf="language.code === selectedLanguage" slot="end">
+            <ion-text color="primary" class="search-list__current">Current</ion-text>
+          </div>
+          <ion-radio
+            class="search-list__radio"
+            [ngClass]="language.code === selectedLanguage ? 'radio-checked' : ''"
+            slot="end"
+            aria-label="language.name"
+          >
+          </ion-radio>
+        </ion-item>
+      </div>
+    </ion-radio-group>
+  </ng-container>
+</app-main-layout>

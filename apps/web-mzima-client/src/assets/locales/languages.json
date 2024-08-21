@@ -15,5 +15,11 @@
   {"name":"Persian (Iran)","code":"fa-IR","nplurals":2,"pluralequation":"language.pluralequation","rtl":true},
   {"name":"Portuguese (Brazil)","code":"pt-BR","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Russian","code":"ru","nplurals":4,"pluralequation":"language.pluralequation","rtl":false},
-  {"name":"Spanish","code":"es","nplurals":2,"pluralequation":"language.pluralequation","rtl":false}
+  {"name":"Spanish","code":"es","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Italian","code":"it","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Albanian","code":"sq","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Haitian","code":"ht","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Indonesian","code":"id","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Swahili","code":"sw","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Vietnamese","code":"vi","nplurals":2,"pluralequation":"language.pluralequation","rtl":false}
 ]}
