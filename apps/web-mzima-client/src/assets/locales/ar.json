@@ -14,7 +14,7 @@
     "collections": "مجموعات",
     "create_collection": "إنشاء مجموعة",
     "add_collection": "إضافة مجموعة",
-    "export_to_csv": "تصدير بیانات غير مصنفة",
+    "export_to_csv": "قم بتصدير بیانات غير مصنفة",
     "create_new": "إضافة جديد",
     "create_new_survey": "قم بتأليف استطلاع جديد",
     "created_by": "تم الإنشاء بواسطة {{المؤلف}}",
