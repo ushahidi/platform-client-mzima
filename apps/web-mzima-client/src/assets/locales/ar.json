@@ -35,7 +35,7 @@
     },
     "donate": "تبرع",
     "donation": "تبرع",
-    "disable_monetization": "Disable Monetization",
+    "disable_monetization": "تعطيل عملية التحويل إلى نقود",
     "enable_monetization": "Enable Monetization",
     "enable_monetization_error": "Fill in required fields above before enabling monetization.",
     "enable_monetization_info": "Monetization is currently disabled.",
