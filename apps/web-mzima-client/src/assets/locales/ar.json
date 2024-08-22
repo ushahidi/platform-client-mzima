@@ -14,31 +14,31 @@
     "collections": "مجموعات",
     "create_collection": "إنشاء مجموعة",
     "add_collection": "إضافة مجموعة",
-    "export_to_csv": "قم بتصدير بیانات غير مصنفة",
-    "create_new": "أضف جديد",
+    "export_to_csv": "تصدير بیانات غير مصنفة",
+    "create_new": "إضافة جديد",
     "create_new_survey": "قم بتأليف استطلاع جديد",
-    "created_by": "تم الإنشاء بواسطة {{المؤلف}}",
-    "date_created": "تاريخ الإنشاء",
-    "date_updated": "تاريخ التحديث",
+    "created_by": "تم الإنشاء بواسطة {{author}}",
+    "date_created": "تأريخ الإنشاء",
+    "date_updated": "تأريخ التحديث",
     "choose_photo": "اختر صورة",
     "choose": "اختر...",
-    "add_all_fields": "أضف جميع الحقول",
+    "add_all_fields": "إضافة جميع الحقول",
     "insert_text_here": "أدخل النص هنا...",
     "deployment_not_found" : {
-      "text" : "عذرًا، هذا النشر غير موجود. هل ترغب في إنشاء عملية نشر جديدة؟",
-      "button_exit" : "خروج",
-      "button_create_deployment" : "أنشئ عملية نشر جديدة"
+      "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
+      "button_exit" : "Exit",
+      "button_create_deployment" : "Create Deployment"
     },
     "documentation": {
-      "title": "توثيق",
+      "title": "الوثائق",
       "description": "تعلم كيفية تنصيب و اعداد وادارة عملية نشر برنامج أوشاهيدي و جعله متاح للاستخدام."
     },
     "donate": "تبرع",
-    "donation": "تبرع",
-    "disable_monetization": "تعطيل عملية التحويل إلى نقود",
-    "enable_monetization": "تمكين عملية التحويل إلى نقود",
-    "enable_monetization_error": "املأ الحقول المطلوبة أعلاه قبل تمكين التحويل إلى نقود.",
-    "enable_monetization_info": "عملية التحويل إلى نقود معطلة حاليًا.",
+    "donation": "Donation",
+    "disable_monetization": "Disable Monetization",
+    "enable_monetization": "Enable Monetization",
+    "enable_monetization_error": "Fill in required fields above before enabling monetization.",
+    "enable_monetization_info": "Monetization is currently disabled.",
     "intercom": {
       "intercom": "نظام الإتصال الداخلي",
       "description": "قم بتواصل مع موظفين اوشاهيدي لدردشة الدعم"
@@ -48,7 +48,7 @@
       "description": "ألق نظرة على إعداد أوشاهيدي مرة أخرى."
     },
     "report_a_bug": {
-      "title": "أبلغ عن خطأ",
+      "title": "الإبلاغ عن خطأ",
       "description": "أخبرنا عندما لا يعمل شيء ما بالطريقة التي توقعتها."
     },
     "edit_collection": "تعديل المجموعة",
@@ -56,10 +56,10 @@
       "title": "الميزات",
       "description": "تعرف على ما يمكن أن ينجزه أوشاهيدي وطريقة عمله."
     },
-    "forbidden": "عفوًا، لا يُسمح لك بالقيام بذلك.",
-    "forbidden-login": "الرجاء إدخال تفاصيل تسجيل دخولك للوصول إلى النشر.",
+    "forbidden": "عفوا، غير مسموح لك القيام بذلك.",
+    "forbidden-login": "الرجاء إدخال تفاصيل تسجيل الدخول الخاصة بك للوصول إلى النشر.",
     "contact_with_admin": "أو اتصل بالمسؤول ",
-    "404": "هذا الـURL غير موجود",
+    "404": "لا يوجد هذا الـ URL ",
     "page-not-found": "الصفحة غير موجودة",
     "get_notifications": "الحصول على الإشعارات",
     "turn_off_notifications": "إيقاف تشغيل الإشعارات",
@@ -87,7 +87,7 @@
     "users": "المستخدمون",
     "edit_user": "نشر المستخدم",
     "add_user": "إضافة مستخدم",
-    "edit": "تعديل",
+    "edit": "تحرير",
     "roles": "الأدوار",
     "edit_role": "تعديل الدور",
     "add_role": "إضافة دور.",
