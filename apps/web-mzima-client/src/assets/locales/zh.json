@@ -1934,7 +1934,7 @@
     },
     "what_you_get_notification_about": "What you get notification about",
     "removed": "Notification was removed",
-    "are_you_sure_you_want_to_remove_this_notification": "Are you sure you want to remove this notification?"
+    "are_you_sure_you_want_to_remove_this_notification": "您确认想要移除这一通知吗？"
   },
   "contact": {
     "edit": "编辑",
