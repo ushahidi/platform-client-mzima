@@ -983,10 +983,10 @@
       "survey_title": "未知调查"
     },
     "relation": {
-      "search": "Search"
+      "search": "搜索"
     },
     "location": {
-      "location": "Location",
+      "location": "位置",
       "you_can_search_or_click": "You can search or click the area of map where you want to place the marker.",
       "search_address": "Search for addresses, place names, or coordinates...",
       "nothing_found": "Nothing found",
@@ -1661,11 +1661,11 @@
         "title": "Delete your",
         "title_subject": {
           "email": "Email",
-          "phone": "Phone"
+          "phone": "电话"
         },
         "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
         "button": {
-          "delete": "Delete",
+          "delete": "删除",
           "cancel": "Cancel"
         }
       }
