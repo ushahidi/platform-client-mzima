@@ -1661,12 +1661,12 @@
         "title": "Delete your",
         "title_subject": {
           "email": "Email",
-          "phone": "Phone"
+          "phone": "Telefon"
         },
         "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
         "button": {
-          "delete": "Delete",
-          "cancel": "Cancel"
+          "delete": "Törlés",
+          "cancel": "Elvetés"
         }
       }
     }
