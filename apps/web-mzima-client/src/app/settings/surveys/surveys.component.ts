@@ -85,12 +85,12 @@ export class SurveysComponent implements OnInit {
     const confirmed = await this.confirmModalService.open({
       title:
         this.selectedSurveys.length > 1
-          ? 'Are you sure you want to delete selected surveys?'
+          ? this.translate.instant('notify.survey.bulk_destroy_confirm')
           : this.translate.instant('notify.survey.destroy_confirm'),
       description: `
         <p>${
           this.selectedSurveys.length > 1
-            ? 'Deleting these selected surveys will also delete all collected posts and all associated data. This step cannot be reversed.'
+            ? this.translate.instant('notify.survey.bulk_destroy_confirm_desc')
             : this.translate.instant('notify.survey.destroy_confirm_desc')
         }</p>
         <p>${this.translate.instant('notify.survey.destroy_confirm_desc_end')}</p>
