@@ -416,7 +416,7 @@
     "fields": {
       "fields_title": "字段",
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *.",
+        "required": "必填字段缺失，这些字段在下面用*标记。",
         "special_characters": "{{name}} field contains special characters"
       }
     },
@@ -730,7 +730,7 @@
     "yesterday": "昨天",
     "map": "Map",
     "data": "Data",
-    "feed": "Data view"
+    "feed": "Data"
   },
   "views": {
     "map": "地图",
@@ -748,7 +748,7 @@
     "share_on_facebook": "Share on Facebook"
   },
   "post": {
-    "post_count": "{{count}} posts",
+    "post_count": "{{count}}个帖子",
     "see_more_plural": "See {{newPostsCount}} new posts",
     "see_more_singular": "See {{newPostsCount}} new post",
     "add_to_form": "添加到{{form}}",
@@ -1621,7 +1621,7 @@
       },
       "email": {
         "required": "电子邮件地址必填",
-        "pattern": "This email address is invalid",
+        "pattern": "此电子邮件地址无效",
         "maxlength": "此电子邮件地址太长",
         "emailExists": "Email is already in use"
       },
@@ -1642,7 +1642,7 @@
     },
     "password_notify": "If you leave the field blank your password will not change",
     "avatar": "Avatar",
-    "name": "Name",
+    "name": "名称",
     "email": "电子邮件",
     "search_by_name": "Search by name"
   },
