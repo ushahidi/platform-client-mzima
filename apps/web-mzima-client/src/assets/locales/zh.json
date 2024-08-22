@@ -414,7 +414,7 @@
       }
     },
     "fields": {
-      "fields_title": "Fields",
+      "fields_title": "字段",
       "validation": {
         "required": "Required fields are missing, these fields are marked with an *.",
         "special_characters": "{{name}} field contains special characters"
@@ -2126,7 +2126,7 @@
     "en-CH": "英语(瑞士)",
     "en-GB": "英语(英国)",
     "en-US": "英语(美国)",
-    "en-EN": "English",
+    "en-EN": "英语",
     "myv": "埃尔齐亚语",
     "eo": "世界语",
     "et": "爱沙尼亚语",
