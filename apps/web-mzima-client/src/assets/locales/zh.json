@@ -1,5 +1,6 @@
 {
   "app": {
+    "contact_email_address": "Contact email address:",
     "powered_by_ushahidi": "由Ushahidi 提供技术支持。",
     "support": "Ushahidi 支持",
     "by": "\b由",
@@ -12,19 +13,39 @@
     "collection": "Collection",
     "collections": "集合",
     "create_collection": "创建集合",
+    "add_collection": "Add collection",
     "export_to_csv": "Export filtered data",
     "create_new": "创建新帖",
     "create_new_survey": "创造新的调查",
     "created_by": "作者为{{author}}",
     "date_created": "Date created",
     "date_updated": "Date updated",
+    "choose_photo": "Choose photo",
+    "choose": "Choose...",
+    "add_all_fields": "Add all fields",
+    "insert_text_here": "Insert text here...",
+    "deployment_not_found" : {
+      "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
+      "button_exit" : "Exit",
+      "button_create_deployment" : "Create Deployment"
+    },
     "documentation": {
       "title": "文档",
       "description": "了解如何设置、配置和管理您的Ushahidi部署。"
     },
+    "donate": "Donate",
+    "donation": "Donation",
+    "disable_monetization": "Disable Monetization",
+    "enable_monetization": "Enable Monetization",
+    "enable_monetization_error": "Fill in required fields above before enabling monetization.",
+    "enable_monetization_info": "Monetization is currently disabled.",
     "intercom": {
       "intercom": "Intercom",
       "description": "Contact Ushahidi staff for chat support"
+    },
+    "onboarding": {
+      "title": "Onboarding",
+      "description": "Take a look at the Ushahidi onboarding again."
     },
     "report_a_bug": {
       "title": "报告错误",
@@ -36,7 +57,10 @@
       "description": "看看Ushahidi可以做什么以及它如何工作。"
     },
     "forbidden": "对不起，不允许您那么做。",
+    "forbidden-login": "Please enter your login details to access the deployment.",
+    "contact_with_admin": "Or contact the Admin ",
     "404": "That URL doesn't exist",
+    "page-not-found": "Page not found",
     "get_notifications": "\b收到通知",
     "turn_off_notifications": "关闭通知",
     "load_more": "装载更多",
@@ -46,8 +70,9 @@
     "cancel": "取消",
     "save": "保存",
     "save_and_close": "保存&amp; 关闭",
-    "add_and_close": "添加&amp; 关闭",
+    "update": "Update",
     "update_and_close": "更新&amp;关闭",
+    "add_and_close": "添加&amp; 关闭",
     "updating": "Updating",
     "saving": "保存中",
     "settings": "设定",
@@ -82,6 +107,7 @@
     "show_hide": "Show/Hide",
     "fields": "字段",
     "no_results": "No results found.",
+    "current_results": "Current results:",
     "filter_by": "Filter by...",
     "sort_filter": "Sort & filter",
     "apply_filters": "Apply",
@@ -116,24 +142,46 @@
     "select_language": "Select language",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "choose_survey": "Choose survey"
+    "duplicate": "Duplicate",
+    "yes_delete": "Yes, delete",
+    "no_go_back": "No, go back",
+    "are_you_sure_you_want_to_delete": "Are you sure you want to Delete",
+    "action_cannot_be_undone": "<p>This action cannot be undone.</p><p>Are you sure?</p>",
+    "you_are_not_authorized": "You are not authorized",
+    "lost_internet_connection": "Lost internet connection",
+    "tweet_is_unavailable": "This tweet is unavailable",
+    "file_uploader": "File uploader",
+    "preview_image": "Preview image",
+    "privacy_policy": "Privacy Policy",
+    "terms_and_conditions": "Terms and Conditions",
+    "ok_sounds_good": "OK, sounds good",
+    "next_step": "Next step",
+    "we_are_aware_there_are_some_issues_here": "We are aware there are some issues here. The team is working on fixing them.",
+    "you_are_using_old_deployment_version": "You are using Deployment Version - {{api_version}}. The latest version is v5. Please, update your Deployment for users access.",
+    "outdated_deployment": "Outdated Deployment!",
+    "the_deployment_is_outdated": "The Deployment is outdated, therefore some bugs may occur, till Admin update it.",
+    "your_deployment_is_outdated": "Your Deployment is outdated",
+    "we_ve_updated_deployments_to_version_5": "We’ve updated Deployments to version 5. Users may not have access to your deployment soon. ",
+    "for_more_details_on_deployment_update": "For more details on deployment update, go to Help & Support (this should be a link) or send an email to:",
+    "open_chat": "Open Chat",
+    "end_post": "End of Posts"
+  },
+  "cookies": {
+    "we_use_cookies": "Howdy! We use cookies to make your experience better.",
+    "cookies_privacy": "If you want to know more or withdraw your consent, please go to our <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>.",
+    "decline": "Decline",
+    "accept_cookies": "Accept cookies"
+  },
+  "404": {
+    "404": "404",
+    "error": "error",
+    "description": "Oops... Sorry, we can’t find the page that you’re looking for. <br> Please search by another phrase or go back to the Map View.",
+    "button": "Go to the Map View"
   },
   "toolbar": {
     "searchbar": {
       "search_entity": "\b搜索 {{entity}}",
       "search_all_entities_for": "在所有的{{entity}} 搜索"
-    }
-  },
-  "demo_warnings": {
-    "close": "Close",
-    "visitor": {
-      "not_expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts for the next {{days}} days.",
-      "expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
-    },
-    "user": {
-      "expired": "Your 30 day trial is over. Upgrade now to make the most of Ushahidi.",
-      "not_expired": "You have {{days}} days left in your free trial. Upgrade now for unlimited posts and full access to Ushahidi.",
-      "limit_reached": "Nice work! You have more than 25 posts. Upgrade now to see the rest of your posts or reach out to our team about a full-service enterprise partnership for your project."
     }
   },
   "color_picker": {
@@ -174,7 +222,8 @@
     "all_crowdsourced": "All Crowdsourced Surveys",
     "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
     "targeted_activity": "Tageted Survey Activity",
-    "crowdsourced_activity": "Crowdsourced Survey Activity"
+    "crowdsourced_activity": "Crowdsourced Survey Activity",
+    "tooltip_template": "This is the single point tooltip template"
   },
   "form": {
     "add_field": "添加字段",
@@ -183,6 +232,7 @@
     "add_field_instructions_placeholder": "Explain this field...",
     "add_post_type": "\b添加调查",
     "add_step": "添加任务",
+    "add_language": "Add language",
     "added_form_stage_attribute": "已存字段",
     "field_allowed_relation_post_type": "允许进行的调查",
     "choose_order_message": "选择您要包含在此调查中的字段并将其排序",
@@ -190,6 +240,7 @@
     "currently_disabled": "此调查目前停用。",
     "custom_structure": "自定义结构",
     "default_date_placeholder": "默认日期",
+    "default_date_hint": "If no date is added, the current time of posting would be added by default. The user can still update the {{ field_name }} after post submission.",
     "default_default_placeholder": "默认值",
     "default_location_placeholder": "内罗毕，肯尼亚",
     "delete_post_type": "删除此调查",
@@ -201,6 +252,8 @@
     "edit_post_type": "编辑调查：{{form}}",
     "edit_post_types": "编辑调查",
     "field_add_option": "添加",
+    "field_add_other": "Add other",
+    "field_add_other_desc": "Allows entering a custom option that is not listed among the provided choices.",
     "field_default": "字段默认",
     "field_key": "字段键",
     "field_type": "字段类型",
@@ -224,22 +277,33 @@
     "save_post_type": "保存问卷调查",
     "save_post_step": "保存任务",
     "saved_form": "问卷调查已保存。",
+    "select_language": "Select languages",
     "step_delete": "删除",
     "step_name": "任务名称",
     "step_rename": "重新命名",
     "step_required": "这是必做任务",
     "post_step": "帖子",
     "type": "类型",
-    "visible_to": "对下列人士可见"
+    "visible_to": "对下列人士可见",
+    "choose_language": "Choose language for translation",
+    "error_input_number": "Please input {{type}} type number"
   },
   "survey": {
+    "no_tasks": "No tasks",
+    "select_categories": "Select categories",
+    "select_related_post": "Select related post",
+    "no_fields": "No fields",
+    "select_color": "Select color",
+    "choose_survey": "Choose survey",
     "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
     "delete_task": "删除任务",
     "duplicate_survey": "Duplicate",
+    "main_info": "Main info",
     "internal_use_task": "Task is only for internal use",
     "internal_use_task_desc": "This task will only be visible to User who have Manage Post permission.",
     "duplicate_task": "重复任务",
     "duplicate_option": "Duplicate option is present",
+    "special_characters_option": "This option contains special characters",
     "show_this_task_to": "任务向每人展示当已发表的",
     "show_this_task_to_desc": "When a survey response is published, data from this task will be displayed.",
     "survey_name": "调查名称",
@@ -315,12 +379,15 @@
     "response_private_desc": "Only people with permission to edit responses can see responses to this field",
     "require_task_desc": "Require this task be completed before a post can be visible to the public",
     "survey_permissions": "调查权限",
+    "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
     "who_can_add": "谁可添加此调查",
     "survey_field": "Survey field",
     "choose_survey_field": "Choose what should be assigned to each survey field",
     "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "Who can contribute to fields in this task",
     "view_detail": "Detail",
+    "no_options_for_this_field": "No options for this field",
+    "add_options_first": "Add options first",
     "delete": {
       "desc": "<strong>如果您删除此问卷调查</ strong>，其所有帖子也将被删除。继续操作要小心。",
       "delete": "删除问卷调查",
@@ -344,6 +411,13 @@
         "desc": "<strong>如果您删除此任务</ strong>，其中获得的所有数据也将被删除。继续操作要小心。",
         "delete": "删除任务",
         "delete_this": "删除这一任务"
+      }
+    },
+    "fields": {
+      "fields_title": "Fields",
+      "validation": {
+        "required": "Required fields are missing, these fields are marked with an *.",
+        "special_characters": "{{name}} field contains special characters"
       }
     },
     "targeted_survey": {
@@ -481,6 +555,8 @@
       "current_stage": "当前任务",
       "set": "集合",
       "status": "状态",
+      "expires": "Expires",
+      "download": "Download",
       "location_value": "距离{{value}}{{km}}公里之内",
       "visible_to": "可见者为",
       "user": "用户",
@@ -504,6 +580,8 @@
     "end_date_placeholder": "2014年4月25日",
     "location": "地点",
     "location_placeholder": "输入城市或地址",
+    "city_or_address": "City or address",
+    "viewing_mode": "Viewing mode",
     "within_km": "在......内",
     "km": "公里",
     "within_km_placeholder": "距离",
@@ -523,8 +601,10 @@
     "status": "状态",
     "source": "Source",
     "saved_filters": "Saved filters",
+    "saved_filter": "Saved filter",
     "save_new_filter": "Save new filter",
-    "clear_all_filters": "Clear all filters"
+    "clear_all_filters": "Clear all filters",
+    "delete_this_saved_filter": "Are you sure you want to delete this saved filter?"
   },
   "graph": {
     "all_posts": "无结果；显示所有帖子",
@@ -561,10 +641,19 @@
   },
   "modal": {
     "button": {
-      "close": "关闭"
+      "close": "关闭",
+      "done": "Done"
+    },
+    "donation": {
+      "thank_you_for_your_donation_start": "Web monetization is enabled on this website. Thank you for your donation. You have donated",
+      "thank_you_for_your_donation_end": "so far",
+      "web_monetization_text": "Ushahidi deployments are now web monetization enabled. Web monetization is a way of supporting the websites you love without playing advertisers game. All you need is to get your browser setup. Click the link below to learn how you can donate.",
+      "how_can_i_donate": "How can I donate?"
     }
   },
   "nav": {
+    "open_menu": "Open menu",
+    "my_account": "My account",
     "404": "Whoops",
     "about": "关于",
     "activity": "活动",
@@ -582,6 +671,7 @@
     "comments": "评论",
     "data_sources": "数据来源",
     "data_import": "数据导入",
+    "deployment_not_found": "Deployment Not Found",
     "deselect": "取消选择",
     "edit_profile": "编辑简介",
     "edit_post_type": "添加调查",
@@ -600,11 +690,14 @@
     "home": "主页",
     "login": "登录",
     "logout": "登出",
+    "login_register": "Log in / Sign up",
+    "help_support": "Help & Support",
     "registration": "注册",
     "register": "注册",
     "map_settings": "地图设置",
     "more": "更多",
     "notifications": "通知",
+    "receive_notifications": "Receive notifications",
     "only_author": "只有作者",
     "only_you": "只有您",
     "people": "人们",
@@ -634,7 +727,10 @@
     "user": "用户",
     "users": "用户",
     "views": "视图",
-    "yesterday": "昨天"
+    "yesterday": "昨天",
+    "map": "Map",
+    "data": "Data",
+    "feed": "Data view"
   },
   "views": {
     "map": "地图",
@@ -642,11 +738,23 @@
     "activity": "活动",
     "data": "Data"
   },
+  "share": {
+    "share_deployment": "Share deployment",
+    "share_post": "Share post",
+    "web_address": "You survey's web address",
+    "embed_on_websites": "HTML embed on websites",
+    "copied": "Copied!",
+    "share_on_twitter": "Share on Twitter",
+    "share_on_facebook": "Share on Facebook"
+  },
   "post": {
+    "post_count": "{{count}} posts",
     "see_more_plural": "See {{newPostsCount}} new posts",
     "see_more_singular": "See {{newPostsCount}} new post",
     "add_to_form": "添加到{{form}}",
     "posts": "帖子",
+    "post_title": "Post title",
+    "post_desc": "Post description",
     "there_are_no_posts": "没有帖子",
     "in_this_deployment": "在这个部署中。",
     "posts_total": "{{posts}} of {{total_nb}} posts",
@@ -661,22 +769,6 @@
     "can_see_this": "可以看到",
     "add_post_type": "添加{{form_name}}",
     "edit_post_type": "编辑{{form_name}}",
-    "messages": {
-      "by_sms": "通过短信",
-      "by_email": "通过电子邮件",
-      "by_twitter": "通过推特",
-      "reply": "回复消息主题",
-      "send": "发送新消息",
-      "save": "保存",
-      "simple_send": "Send",
-      "title": "与作者的对话",
-      "associated_messages": "查看与此帖相关的消息",
-      "show_only_incoming": "Show only {{provider}} not assigned to a survey yet",
-      "imported_by": "{{messages}} imported by this deployment",
-      "Twitter": "Twitter",
-      "Email": "Email",
-      "SMS": "SMS"
-    },
     "post": "帖子",
     "message": "消息",
     "message_thread": "消息主题",
@@ -713,7 +805,6 @@
     "unpublished": "未公布",
     "published_by": "发表者为",
     "can_see_this_post": "可以看到此贴",
-    "location": "位置",
     "categories": "类别",
     "status": "状态",
     "type": "输入",
@@ -733,6 +824,7 @@
     "delete_post": "删除帖子",
     "delete_this_post": "删除此帖",
     "delete_post_desc": "<strong>如果您删除此信息</ strong>，其所有评论也将被删除。继续操作要小心。",
+    "read_more": "Read more",
     "post_actions": {
       "edit": "编辑",
       "delete": "删除",
@@ -758,6 +850,8 @@
     "unstructured_posts_desc": "Unstructured posts",
     "my_posts_desc": "Your posts",
     "unknown_posts_desc": "Posts with no assigned survey",
+    "image_is_required": "Image is required",
+    "image_max_size": "Image exceed max file size",
     "locking": {
       "unlocked": "Post successfully unlocked",
       "unlock": "Unlock",
@@ -812,10 +906,31 @@
         "delete": "删除"
       }
     },
+    "messages": {
+      "by_sms": "通过短信",
+      "by_email": "通过电子邮件",
+      "by_twitter": "通过推特",
+      "reply": "回复消息主题",
+      "send": "发送新消息",
+      "save": "保存",
+      "simple_send": "Send",
+      "title": "与作者的对话",
+      "associated_messages": "查看与此帖相关的消息",
+      "show_only_incoming": "Show only {{provider}} not assigned to a survey yet",
+      "imported_by": "{{messages}} imported by this deployment",
+      "Twitter": "Twitter",
+      "Email": "Email",
+      "SMS": "SMS",
+      "previous_page": "<< Previous page",
+      "next_page": "Next page >>",
+      "empty_message_error": "You must add a message",
+      "no_messages": "There are no messages yet. Start a conversation with the author by sending a message below."
+    },
     "valid": {
       "no_changes": "You haven’t made any changes",
       "invalid_state": "此帖目前无效。 您必须完成所有必要的\b任务，才能重新发布\b此帖。 您可或完成必要的工作，或改变帖子状态，例如\"审核中\"。",
       "validation_fail": "必填字段缺失，这些字段在下面用*标记。",
+      "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
       "title": {
         "required": "标题必填",
         "minlength": "标题太短",
@@ -834,7 +949,8 @@
         "required": "\"{{label}}\"必填",
         "parse": "“{{label}}”无法解析",
         "date": "\"{{label}}\"必须是日期",
-        "number": "\"{{label}}\"必须是数字"
+        "number": "\"{{label}}\"必须是数字",
+        "step": "\"{{label}}\" must be an integer"
       },
       "author_name": {
         "maxlength": "名称太长"
@@ -865,13 +981,33 @@
         "save_and_edit": "添加到调查&amp; 编辑"
       },
       "survey_title": "未知调查"
+    },
+    "relation": {
+      "search": "Search"
+    },
+    "location": {
+      "location": "Location",
+      "you_can_search_or_click": "You can search or click the area of map where you want to place the marker.",
+      "search_address": "Search for addresses, place names, or coordinates...",
+      "nothing_found": "Nothing found",
+      "errors": {
+        "empty_lat": "Latitude is empty field",
+        "empty_lng": "Longitude is empty field",
+        "decimal_lat": "Latitude only decimal number",
+        "decimal_lng": "Longitude only decimal number"
+      }
     }
   },
   "role": {
+    "are_you_sure_you_want_to_delete_role": "Are you sure you want to delete role {{roleName}}?",
     "add_role": "添加角色",
     "edit_role": "编辑角色",
     "name": "名称",
     "description": "描述",
+    "placeholder": {
+      "name": "Enter role name",
+      "description": "Enter role description"
+    },
     "save": "保存角色",
     "save_add_another": "保存并添加另一个",
     "permissions": "权限",
@@ -879,7 +1015,8 @@
     "delete_role": "删除此角色",
     "delete_role_desc": "<strong>如果您删除此角色</ strong>，分配给它的所有用户都将被分配默认权限。继续操作要小心。",
     "everyone": "所有人",
-    "just_you": "只有您"
+    "just_you": "只有您",
+    "only_me": "Only me"
   },
   "webhook": {
     "add_webhook": "添加角色",
@@ -906,7 +1043,15 @@
   "collection": {
     "visible_to_public": "此集合对公众可见",
     "visible_to_you": "此集合仅对您和管理员可见",
-    "visible_to_roles": "此集合对{{roles}}可见"
+    "visible_to_roles": "此集合对{{roles}}可见",
+    "validation": {
+      "required": {
+        "name": "Collection name is required"
+      }
+    },
+    "errors": {
+      "permissions": "You do not have permission to view this collection"
+    }
   },
   "set": {
     "by": "由",
@@ -941,7 +1086,12 @@
     "edit_savedsearch": "Edit Search",
     "set_settings": "集合设置",
     "add_notification": "添加通知",
-    "remove": "移除"
+    "remove": "移除",
+    "update_saved_filter": "Update Saved Filter",
+    "create_saved_filter": "Create Saved Filter",
+    "collection_saved": "Collection saved.",
+    "collection_updated": "Collection updated.",
+    "collection_description": "You can add posts to your collection from the Data view"
   },
   "category": {
     "add_tag": "添加类别",
@@ -951,6 +1101,7 @@
     "delete_category_desc": "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
     "show_categories": "Show available categories",
     "child_permissions": "Permissions for this category are managed by the parent category.",
+    "which_categories": "Which categories should be available",
     "select_all": "选择所有",
     "choose_roles": "选择角色",
     "create_tag": "创建类别",
@@ -958,6 +1109,11 @@
     "deleted_tags": "类别已删除。",
     "manage_tags": "管理类别",
     "edit_tag": "编辑类别",
+    "validation": {
+      "required": {
+        "name": "Category name is required"
+      }
+    },
     "editor": {
       "name": "类别名称",
       "slug": "类别链接",
@@ -968,11 +1124,17 @@
       "icon": "图标名称",
       "roles_help": "只有选定的角色才能查看此类别。"
     },
+    "placeholder": {
+      "name": "Enter name",
+      "descriptions": "Enter description...",
+      "choose_parent_category": "Choose parent category..."
+    },
     "types": {
       "category": "类别",
       "status": "状态"
     },
-    "delete": "删除"
+    "delete": "删除",
+    "parent_category": "Parent category"
   },
   "tool": {
     "manage_forms": "管理表单",
@@ -1029,7 +1191,17 @@
       "webhooks": "Webhooks",
       "webhooks_desc": "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
       "plans": "计划",
-      "plan_desc": "您的部署目前的计划为<strong> {{current_plan}} </ strong>。"
+      "plan_desc": "您的部署目前的计划为<strong> {{current_plan}} </ strong>。",
+      "donation": "Donation",
+      "donation_desc": "Create and manage the donations people can make towards your organisation."
+    },
+    "general_settings": {
+      "generate_api_key": "Generate API Key",
+      "private_settings": "Private settings:",
+      "api_key": "API Key",
+      "placeholder": {
+        "pick_location": "Pick Location..."
+      }
     },
     "user_settings": {
       "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1042,15 +1214,42 @@
       "valid_key": "A valid key is required",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
-      "start_tagging": "Start tagging data"
+      "start_tagging": "Start tagging data",
+      "HDX": "Humanitarian Data Exchange",
+      "please_enter_maintainer_id": "Please enter maintainer id",
+      "please_enter_api_key": "Please enter API key",
+      "hdx_maintainer_id_min_length": "HDX Maintainer Id is too short",
+      "api_key_min_length": "API key is too short"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
-      "destination": "Destination"
+      "destination": "Destination",
+      "placeholder": {
+        "name": "Please enter webhook name",
+        "shared_secret": "Please enter shared secret",
+        "api_url": "Please enter api url"
+      },
+      "validation": {
+        "required": {
+          "name": "Webhook name is required",
+          "shared_secret": "Shared secret key is required",
+          "api_url": "API URL required",
+          "event_type": "Event type is required",
+          "event_entity": "Event entity is required"
+        },
+        "please_provide_valid_api_url": "Please provide valid API URL with http(s)://",
+        "secret_key_cannot_be_less_start": "Shared secret key can not less than",
+        "secret_key_cannot_be_less_end": "characters"
+      }
     },
     "data_sources": {
+      "choose_data_source": "Choose Data Source...",
+      "type_of_data_source": "Type of Data Source",
+      "provider_name": "{{providerName}} Data Source?",
+      "do_you_really_want_to_disconnect": "Do you really want to disconnect your provider?",
+      "add_source": "Add source",
       "associate_with_form": "Import to survey",
       "associate_with_form_desc": "All incoming data from {{provider}} will be used to create responses to the survey you choose",
       "data_sources": "数据来源",
@@ -1063,7 +1262,6 @@
       "saving_changes": "正在保存",
       "unavailable": "数据源{{value}}不可用。 <a href=\"/settings/plan\">升级您的计划</a>即可获得！",
       "email": {
-        "email_desc": "This will be used to send outgoing emails",
         "incoming_server_type": "Incoming Server Type",
         "incoming_server_type_pop": "POP",
         "incoming_server_type_imap": "IMAP",
@@ -1142,6 +1340,32 @@
         "search_terms_desc": "Add search terms separated with commas"
       }
     },
+    "donation": {
+      "title": {
+        "label": "Donation title",
+        "placeholder": "Enter the title of your donation",
+        "required": "Donation title is required"
+      },
+      "description": {
+        "label": "Describe your donation",
+        "placeholder": "Enter text telling more about this donation"
+      },
+      "images": {
+        "label": "Donation images"
+      },
+      "wallet": {
+        "label": "Wallet address",
+        "placeholder": "Enter a wallet address e.g $ilp.uphold.com/example",
+        "required": "Donation wallet address is required"
+      },
+      "info": {
+        "start_one": "Please make sure you have your wallet set up on",
+        "start_two": "to set web monetization.",
+        "start_three": "If you don't have a wallet already please click",
+        "here": "here",
+        "end": "to create one."
+      }
+    },
     "roles": {
       "member": "Member",
       "admin": "Admin",
@@ -1150,6 +1374,9 @@
       "manage_settings": "Mangage Settings",
       "bulk_data_import_and_export": "Bulk Data Import and Export",
       "edit_their_own_posts": "Edit their own posts",
+      "manage_collections_and_saved_searches": "Manage Collections and Saved Searches",
+      "delete_posts": "Delete Posts",
+      "delete_their_own_posts": "Delete Their Own Posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
       "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/platform-user-manual/4.-managing-people-on-your-deployment\" target=\"_blank\">Visit our support guides to find out more."
@@ -1180,6 +1407,8 @@
     "site_language": "网站语言",
     "site_private": "将此部署设为私密",
     "site_private_desc": "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
+    "site_disable_registration": "Disable user sign up?",
+    "site_disable_registration_desc": "Checking this disables the registration feature. Admins will have to manually add users.",
     "select_image": "选择图片",
     "saved_settings": "部署设置已保存！",
     "saved_map_settings": "地图设置已保存！",
@@ -1195,9 +1424,12 @@
     "add_new_users": "添加新用户",
     "valid": {
       "name": {
-        "required": "网站名称必填"
+        "required": "网站名称必填",
+        "pattern": "Invalid format",
+        "minlength": "Site name is too short"
       }
-    }
+    },
+    "bulk_actions": "Bulk actions"
   },
   "data_import": {
     "survey_field": "调查字段",
@@ -1211,7 +1443,9 @@
     "see_imported_posts": "查看导入的帖子",
     "import_another_csv": "导入另一个CSV文件",
     "import_complete": "您已完成导入",
+    "import_error": "An error has occurred importing your CSV file.",
     "complete_info": "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
+    "get_polling_info": "Get Polling Info",
     "import_another": "导入另一个CSV文件",
     "nearly_complete": "您的导入即将完成",
     "finish_info": "您的CSV电子表格中的数据仍在处理中。欢迎离开此页面或等待流程完成。无论如何，我们会在您的数据准备就绪时通知您。",
@@ -1229,6 +1463,11 @@
     "file_csv": "CSV文件",
     "import_csv": "导入CSV",
     "import_to": "导入",
+    "change_csv_file": "Change {{selectedfile}} CSV file",
+    "upload_csv_file": "Upload CSV file",
+    "choose_status_to_imported_posts": "Choose status to imported posts:",
+    "has_tasks_required_start": "Your survey",
+    "has_tasks_required_end": ", includes tasks that typically must be completed for each post before they can be marked 'published.' During this import, all of your imported posts will have their tasks marked as 'incomplete', while still allowing their status to be marked as 'published.' If you edit any of these posts after they've been imported, however, you'll be asked to complete those tasks before re-publishing them.",
     "choose_csv_file": "选择CSV文件",
     "organize_data": "\b整理数据",
     "organize_your_imported_data": "分配CSV列以发布字段",
@@ -1330,6 +1569,7 @@
     }
   },
   "user": {
+    "are_you_sure_you_want_to_delete_this_account": "Are you sure you want to delete this account?",
     "role_display": "Role: {{role}}",
     "contact": "{{type}}: {{contact}}",
     "add_user": "添加用户",
@@ -1348,7 +1588,6 @@
     "edit_profile": "编辑个人资料",
     "save_profile": "保存个人信息",
     "cancel": "取消",
-    "email": "电子邮件",
     "failed_attempts": "失败的尝试：",
     "full_name": "显示名称",
     "never": "从未",
@@ -1365,23 +1604,47 @@
     "search_and_filter": "搜索并过滤用户",
     "passwordreset_instructions": "输入您的电子邮件地址，请求重设密码",
     "passwordreset_confirm_instructions": "如果您的电子邮件存在于我们的数据库中，您很快会收到密码恢复电子邮件。",
+    "forgot_instructions": "No worries! Submit your email and check your inbox for a reset link.",
     "token": "密码重置令牌",
+    "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
+    "password_length": "Password must be at least 8 characters long",
+    "password_match": "Passwords do not match",
+    "check_email": "Check your email",
+    "name_will_be_a_display_name": "The name you enter will be a display name.",
     "valid": {
-      "full_name": {
-        "required": "要求显示名称",
-        "maxlength": "显示名称太长"
+      "fields": {
+        "email must be unique": "User with this email already exists"
+      },
+      "name": {
+        "required": "Display name is required",
+        "maxlength": "Display name is too long"
       },
       "email": {
         "required": "电子邮件地址必填",
-        "email": "此电子邮件地址无效",
-        "maxlength": "此电子邮件地址太长"
+        "pattern": "This email address is invalid",
+        "maxlength": "此电子邮件地址太长",
+        "emailExists": "Email is already in use"
       },
       "password": {
         "required": "密码必填",
         "minlength": "此密码太短",
-        "maxlength": "此密码太长"
+        "maxlength": "此密码太长",
+        "weak": "This password is very weak"
+      },
+      "token": {
+        "required": "Token is required"
       }
-    }
+    },
+    "placeholder": {
+      "realname": "Enter your name...",
+      "email": "Enter email address...",
+      "password": "Enter password..."
+    },
+    "password_notify": "If you leave the field blank your password will not change",
+    "avatar": "Avatar",
+    "name": "Name",
+    "email": "电子邮件",
+    "search_by_name": "Search by name"
   },
   "user_profile": {
     "title": "账号设置",
@@ -1392,8 +1655,20 @@
       "cancel": "取消"
     },
     "nav": {
-      "general": "普通",
-      "notifications": "通知"
+      "account_settings": "Account settings",
+      "notifications_settings": "Notifications settings",
+      "delete_contact": {
+        "title": "Delete your",
+        "title_subject": {
+          "email": "Email",
+          "phone": "Phone"
+        },
+        "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
+        "button": {
+          "delete": "Delete",
+          "cancel": "Cancel"
+        }
+      }
     }
   },
   "user_create": {
@@ -1423,7 +1698,8 @@
       "bulk_destroy_confirm": "您确认自己想删除{{count}} 资源吗？",
       "bulk_destroy_success": "已删资源",
       "bulk_destroy_error": "未能删除资源，请再试一次",
-      "bulk_destroy_cancelled": "删除已取消的"
+      "bulk_destroy_cancelled": "删除已取消的",
+      "are_you_sure_you_want_to_delete_this": "Are you sure you want to delete this?"
     },
     "data_import": {
       "see_imported_posts": "查看导入的帖子",
@@ -1438,10 +1714,16 @@
       "empty_mapping_empty": "The CSV file does not contain column names. Please check your CSV file and try again",
       "no_mappings": "没有为字段分配映射 - 至少必须映射一个字段才能继续",
       "csv_import_cancel": "CSV导入已取消",
-      "csv_import_cancel_confirm": "Are you sure you want to cancel importing?"
+      "csv_import_cancel_confirm": "Are you sure you want to cancel importing?",
+      "csv_import_error": "Some of the data in your CSV file does not match the format of the mapped survey field. Please review the data and try again.",
+      "csv_import_success": "The data from your CSV file was successfully imported!"
     },
     "general_settings": {
       "save_success": "普通设置已保存"
+    },
+    "donation_settings": {
+      "save_success": "Donation settings saved",
+      "delete_question": "Are you sure you want to delete this {{name}}."
     },
     "map_settings": {
       "save_success": "地图设置已保存"
@@ -1460,6 +1742,8 @@
       "success": "注册完成！您现在可以登录。"
     },
     "post": {
+      "can_t_view_this_post": "You do not have permission to view this post.<br> It is still being reviewed by the admin.<br> It will be available to you once it is published.",
+      "contact_for_details": "Contact the admin for further details:",
       "delete_image_confirm": "您确认想移除此图片吗？",
       "save_success": "帖子 {{name}} 已保存",
       "save_success_review": "帖子{{name}}已保存。 您的帖子在发布前将由审核者审核。",
@@ -1483,7 +1767,10 @@
       "update_status_success_bulk": "{{count}}个帖子的状态已更新",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
-      "leave_confirm": "Continue without saving"
+      "leave_confirm": "Continue without saving",
+      "unfinished_post_task": "You cannot publish this post, the post has unfinished tasks",
+      "posts_can_t_be_published": "The following posts can't be published: {{titles}}",
+      "post_not_found": "Post not found"
     },
     "category": {
       "save_success": "调查类别 {{name}}",
@@ -1493,7 +1780,8 @@
       "destroy_error": "未能删除类别，请再试一次",
       "bulk_destroy_confirm": "您确认想要删除{{count}}项类别吗？",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
-      "bulk_destroy_success": "{{count}} 项类别已删"
+      "bulk_destroy_success": "{{count}} 项类别已删",
+      "bulk_destroy_success_countless": "Categories deleted"
     },
     "role": {
       "delete_question": "您确认想要删除 {{role}}角色吗？",
@@ -1518,7 +1806,8 @@
       "bulk_destroy_confirm": "您确认想要删除 {{count}}个用户吗？",
       "bulk_destroy_success": "用户已删",
       "bulk_role_change_confirm": "您确认想要将{{count}}个用户的角色变为{{role}}吗？",
-      "bulk_role_change_success": "用户角色更改为{{role_name}}"
+      "bulk_role_change_success": "用户角色更改为{{role_name}}",
+      "are_you_sure_you_want_to_delete_user": "Are you sure you want to delete {{username}}"
     },
     "video": {
       "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
@@ -1541,6 +1830,7 @@
       "delete_attribute_confirm": "您确认想要删除这一字段吗？",
       "delete_attribute_confirm_desc": "This action cannot be undone. Deleting this field will remove its data from all existing posts.",
       "destroy_attribute_success": "字段{{name}}已删除",
+      "survey_name_required": "Survey-name is required",
       "validation": {
         "name": {
           "required": "A survey-name is needed",
@@ -1558,7 +1848,8 @@
       "updated_collection": "Collection {{collection}} saved",
       "add_to_collection": "帖子已被添加到{{collection}}中",
       "removed_from_collection": "帖子已从{{collection}}中移除",
-      "bulk_add_to_collection": "{{count}}个帖子已被添加进{{collection}}"
+      "bulk_add_to_collection": "{{count}}个帖子已被添加进{{collection}}",
+      "done": "Done"
     },
     "savedsearch": {
       "delete_savedsearch_success": "Saved search deleted successfully.",
@@ -1589,8 +1880,24 @@
       "upload_complete": "Upload complete. You should now see your tagged data in your HDX account."
     },
     "survey": {
+      "bulk_destroy_confirm": "Are you sure you want to delete {{count}} surveys?",
       "destroy_confirm": "Are you sure you want to delete this survey?",
       "destroy_confirm_desc": "Deleting this survey will remove it from database. This action cannot be undone."
+    },
+    "confirm_modal": {
+      "add_post_success": {
+        "success": "Success!",
+        "success_description": "Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.",
+        "success_button": "OK, sounds good"
+      },
+      "deleted": {
+        "success": "Success!",
+        "success_description": "You've permanently deleted {{count}}.",
+        "success_button": "OK"
+      }
+    },
+    "language": {
+      "do_you_really_want_to_delete_language": "Do you really want to delete {{lang}} language?"
     }
   },
   "empty": {
@@ -1612,7 +1919,9 @@
     "error": "对不起，我们未能找到与您的搜索相符的位置",
     "my_location_error": "Sorry we could not find your location",
     "update_map": "Update map",
-    "no_matching_locations": "No matching locations"
+    "no_matching_locations": "No matching locations",
+    "invalid_lat": "The value given is not a valid latitude.",
+    "invalid_lon": "The value given is not a valid longitude."
   },
   "notification": {
     "title": "通知",
@@ -1622,7 +1931,10 @@
     "send_to_address": "将通知送到此地址",
     "button": {
       "delete": "删除通知"
-    }
+    },
+    "what_you_get_notification_about": "What you get notification about",
+    "removed": "Notification was removed",
+    "are_you_sure_you_want_to_remove_this_notification": "Are you sure you want to remove this notification?"
   },
   "contact": {
     "edit": "编辑",
@@ -1646,7 +1958,8 @@
       "email": {
         "required": "需要电子邮件地址才能接收通知",
         "email": "此电子邮件地址无效",
-        "maxlength": "这个电子邮件地址太长"
+        "maxlength": "这个电子邮件地址太长",
+        "not_valid": "This email is not valid"
       },
       "phone": {
         "required": "需要电话号码以接收通知",
@@ -1660,7 +1973,32 @@
     "title": "Ushahidi Terms of Service",
     "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
     "agree": "I agree to Ushahidi's Terms of Service.",
-    "accept_and_continue": "Accept and Continue"
+    "accept_and_continue": "Accept and Continue",
+    "i_agree": "I agree to Ushahidi's <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a> and\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a>."
+  },
+  "translations": {
+    "languages": "Languages",
+    "language": "Language",
+    "default": "default",
+    "translate_field": "Translate field",
+    "survey_select_default": "Select default language for this survey",
+    "category_select_default": "Select default language for this category",
+    "error_translation_exists": "You cannot select this language since there is already a translation for it.",
+    "edit_default_text": "Text in default language",
+    "edit_placeholder": "Write your translation here",
+    "add_translation": "Add your translation below:",
+    "survey_name_required": "Translation for survey-name is required",
+    "field_add_translation": "Fields (click to add translation):",
+    "add_translation_lang": "Add translation",
+    "translate_field_name": "Translate field name",
+    "translate_field_desc": "Translate field description",
+    "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
+    "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
+    "post_title_required": "Translation for post-title is required",
+    "add_a_language": "Add a language",
+    "error_no_default": "You need to specify a default language before adding a new translation.",
+    "select_language": "Select a language to add translation for",
+    "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
   },
   "languages": {
     "ach": "阿乔利语",
@@ -1788,6 +2126,7 @@
     "en-CH": "英语(瑞士)",
     "en-GB": "英语(英国)",
     "en-US": "英语(美国)",
+    "en-EN": "English",
     "myv": "埃尔齐亚语",
     "eo": "世界语",
     "et": "爱沙尼亚语",
@@ -2356,7 +2695,6 @@
     "notAnArray": "Post values for {{param1}} must be an array",
     "scalar": "Post values for {{param1}} must be scalar",
     "doesTranslationExist": "Translation {{value}} for post {{param2}} already exists",
-    "isSlugAvailable": "field: {{value}} is already in use",
     "published_to": {
       "exists": "The role you are publishing to {{value}} does not exist"
     },
