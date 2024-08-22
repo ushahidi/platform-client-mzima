@@ -1660,13 +1660,13 @@
       "delete_contact": {
         "title": "Delete your",
         "title_subject": {
-          "email": "Email",
+          "email": "电子邮件",
           "phone": "电话"
         },
         "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
         "button": {
           "delete": "删除",
-          "cancel": "Cancel"
+          "cancel": "取消"
         }
       }
     }
