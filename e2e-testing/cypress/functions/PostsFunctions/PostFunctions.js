@@ -72,7 +72,7 @@ class PostFunctions {
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.clearFiltersBtn).click();
 
-    cy.get(PostLocators.postItem).eq(0).click();
+    cy.get(PostLocators.postItem).eq(0).click({ force: true });
   }
 
   verify_post_details() {
