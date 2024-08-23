@@ -80,7 +80,7 @@
     "specific_roles": "Specific roles...",
     "general": "General",
     "surveys": "Survey",
-    "add_survey": "Add Survey",
+    "add_survey": "New Survey",
     "edit_survey": "Edit Survey",
     "data_sources": "Data Sources",
     "import": "Import",
@@ -90,10 +90,10 @@
     "edit": "Edit",
     "roles": "Roles",
     "edit_role": "Edit Role",
-    "add_role": "Add Role",
+    "add_role": "ሚና ያክሉ",
     "webhooks": "Webhooks",
-    "edit_webhook": "Edit Webhook",
-    "add_webhook": "Add Webhook",
+    "edit_webhook": "Edit Role",
+    "add_webhook": "Add Role",
     "categories": "Categories",
     "edit_category": "Edit Category",
     "add_category": "Add Category",
@@ -400,9 +400,9 @@
     "color": {
       "color": "Color",
       "hex": "Hex value",
-      "red": "Red",
+      "red": "ቀይ",
       "gold": "Gold",
-      "blue": "Blue",
+      "blue": "ሰማያዊ",
       "green": "Green"
     },
     "who": "Who can see this?",
@@ -547,8 +547,8 @@
       "q": "ቁልፍ ቃል",
       "created_after": "የመጀመሪያ ቀን",
       "created_before": "የመፈጸሚያ ቀን",
-      "date_after": "Start date",
-      "date_before": "End date",
+      "date_after": "የመጀመሪያ ቀን",
+      "date_before": "የመፈጸሚያ ቀን",
       "center_point": "Location",
       "tags": "Category",
       "form": "Survey",
@@ -667,7 +667,7 @@
     "category": "Category",
     "categories": "Categories",
     "clear": "Clear",
-    "collections": "Collections",
+    "collections": "ስብስቦች",
     "comments": "Comments",
     "data_sources": "Data Sources",
     "data_import": "Data Import",
@@ -708,7 +708,7 @@
     "posts": "Posts",
     "posts_and_entities": "Surveys",
     "profile": "My Profile",
-    "role": "Role",
+    "role": "Role:",
     "roles": "Roles",
     "webhook": "Webhook",
     "webhooks": "Webhooks",
@@ -730,7 +730,7 @@
     "yesterday": "Yesterday",
     "map": "Map",
     "data": "Data",
-    "feed": "Data view"
+    "feed": "Data"
   },
   "views": {
     "map": "Map",
@@ -1674,7 +1674,7 @@
   "user_create": {
     "full_name": "Display Name",
     "email": "Email Address",
-    "role": "Role"
+    "role": "Role:"
   },
   "notify": {
     "api_key": {
