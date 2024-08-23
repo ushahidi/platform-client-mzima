@@ -17,7 +17,7 @@ describe('Automated Tests for Posts', () => {
     postFunctions.verify_created_post_exists();
   });
 
-  it.skip('Verifies post details', () => {
+  it('Verifies post details', () => {
     postFunctions.open_post_for_details();
     postFunctions.verify_post_details();
   });
@@ -27,7 +27,7 @@ describe('Automated Tests for Posts', () => {
     postFunctions.complete_add_post_steps();
     postFunctions.change_post_status();
   });
-  it.skip('Deletes a post', () => {
+  it('Deletes a post', () => {
     postFunctions.delete_post();
   });
 });
