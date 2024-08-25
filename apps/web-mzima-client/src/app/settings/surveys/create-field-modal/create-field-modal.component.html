@@ -128,6 +128,23 @@
         </app-multilevel-select>
       </div>
 
+      <div class="form-row" *ngIf="maximumUploadSize">
+        <mat-form-field>
+          <mat-label>{{ 'survey.maximum_upload_size' | translate }}</mat-label>
+          <mat-select [(ngModel)]="selectedFieldType.config.maxUploadSize">
+            <mat-option selected [value]="maxUploadSizes[0]"
+              >{{ 'survey.small_upload_size' | translate }} - {{ maxUploadSizes[0] }}MB</mat-option
+            >
+            <mat-option [value]="maxUploadSizes[1]"
+              >{{ 'survey.medium_upload_size' | translate }} - {{ maxUploadSizes[1] }}MB</mat-option
+            >
+            <mat-option [value]="maxUploadSizes[2]"
+              >{{ 'survey.large_upload_size' | translate }} - {{ maxUploadSizes[2] }}MB</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+
       <div class="form-row" *ngIf="onlyOptional || canDisableCaption || canMakePrivate">
         <div class="toggle">
           <mat-slide-toggle

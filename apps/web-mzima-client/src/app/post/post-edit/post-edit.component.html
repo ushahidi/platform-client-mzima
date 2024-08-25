@@ -410,19 +410,47 @@
             </ng-container>
 
             <ng-container *ngIf="field.input === 'upload'">
-              <span class="form-row__instruction" *ngIf="maxImageSize">
-                Max size: {{ (maxImageSize / 1000 / 1000).toFixed(2) }} MB
-              </span>
-              <app-image-uploader
-                [formControlName]="field.key"
-                [hasCaption]="field.config.hasCaption"
-                (change)="maxSizeError = false"
-                [requiredError]="
-                  form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
-                "
-                [maxSizeError]="maxSizeError"
-              >
-              </app-image-uploader>
+              <div *ngIf="field.type === 'media'">
+                <span class="form-row__instruction" *ngIf="maxImageSize">
+                  Max size: {{ (maxImageSize / 1000 / 1000).toFixed(2) }} MB
+                </span>
+                <app-image-uploader
+                  [formControlName]="field.key"
+                  [hasCaption]="field.config.hasCaption"
+                  (change)="maxSizeError = false"
+                  [requiredError]="
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                  "
+                  [maxSizeError]="maxSizeError"
+                >
+                </app-image-uploader>
+              </div>
+              <div *ngIf="field.type === 'audio'">
+                <app-media-uploader
+                  [formControlName]="field.key"
+                  [hasCaption]="field.config.hasCaption"
+                  mediaType="audio"
+                  (change)="maxSizeError = false"
+                  [requiredError]="
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                  "
+                  [maxSizeError]="maxSizeError"
+                >
+                </app-media-uploader>
+              </div>
+              <div *ngIf="field.type === 'document'">
+                <app-media-uploader
+                  [formControlName]="field.key"
+                  [hasCaption]="field.config.hasCaption"
+                  mediaType="document"
+                  (change)="maxSizeError = false"
+                  [requiredError]="
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                  "
+                  [maxSizeError]="maxSizeError"
+                >
+                </app-media-uploader>
+              </div>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'video'">

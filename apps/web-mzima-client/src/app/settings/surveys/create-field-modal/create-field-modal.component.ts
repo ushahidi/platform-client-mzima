@@ -31,6 +31,8 @@ export class CreateFieldModalComponent implements OnInit {
   public fieldOptions: Array<{ value: string; error: string }> = [];
   public emptyTitleOption = false;
   public numberError = false;
+
+  maxUploadSizes = surveyHelper.maxUploadSizes;
   isTranslateMode = false;
   selectLanguageCode = 'en';
 
@@ -58,6 +60,8 @@ export class CreateFieldModalComponent implements OnInit {
 
     this.selectedFieldType = this.data.selectedFieldType;
 
+    this.setDefaultConfigValues();
+
     this.updateRadioCheckboxFields();
 
     this.updateTags();
@@ -73,6 +77,19 @@ export class CreateFieldModalComponent implements OnInit {
     if (!this.selectedFieldType.translations[this.selectLanguageCode]) {
       this.selectedFieldType.translations[this.selectLanguageCode] = { label: '' };
     }
+  }
+
+  private setDefaultConfigValues() {
+    const defaultFieldType = surveyHelper.surveyFields.find(
+      (surveyField) =>
+        surveyField.input === this.selectedFieldType.input &&
+        surveyField.type === this.selectedFieldType.type,
+    );
+
+    this.selectedFieldType.config = {
+      ...defaultFieldType?.config,
+      ...this.selectedFieldType?.config,
+    };
   }
 
   private updateTags() {
@@ -167,6 +184,11 @@ export class CreateFieldModalComponent implements OnInit {
 
   get canDisableCaption() {
     const types = ['media'];
+    return types.includes(this.selectedFieldType.type);
+  }
+
+  get maximumUploadSize() {
+    const types = ['media', 'document', 'audio'];
     return types.includes(this.selectedFieldType.type);
   }
 

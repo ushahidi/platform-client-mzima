@@ -34,6 +34,7 @@ import { TwitterWidgetComponent } from './twitter-widget/twitter-widget.componen
 import { PostHeadComponent } from './post-head/post-head.component';
 import { MzimaUiModule } from '@mzima-client/mzima-ui';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
+import { MediaUploaderComponent } from './media-uploader/media-uploader.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PostNotFoundComponent } from './post-not-found/post-not-found.component';
 import { PostNotAllowedComponent } from './post-not-allowed/post-not-allowed.component';
@@ -49,6 +50,7 @@ import { PostConversationComponent } from './post-conversation/post-conversation
     TwitterWidgetComponent,
     PostHeadComponent,
     ImageUploaderComponent,
+    MediaUploaderComponent,
     PostNotFoundComponent,
     PostNotAllowedComponent,
     PostConversationComponent,
