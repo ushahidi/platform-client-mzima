@@ -97,8 +97,8 @@ export const surveyFields = [
   },
   {
     label: 'survey.upload_audio',
-    type: 'audio',
-    input: 'upload',
+    type: 'media',
+    input: 'audio',
     instructions: 'survey.audio_desc',
     config: {
       maxUploadSize: 2,
@@ -106,8 +106,8 @@ export const surveyFields = [
   },
   {
     label: 'survey.upload_document',
-    type: 'document',
-    input: 'upload',
+    type: 'media',
+    input: 'document',
     instructions: 'survey.document_desc',
     config: {
       maxUploadSize: 2,

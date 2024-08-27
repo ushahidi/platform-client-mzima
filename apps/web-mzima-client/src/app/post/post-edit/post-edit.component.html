@@ -409,8 +409,8 @@
               </mat-form-field>
             </ng-container>
 
-            <ng-container *ngIf="field.input === 'upload'">
-              <div *ngIf="field.type === 'media'">
+            <ng-container *ngIf="field.type === 'media'">
+              <div *ngIf="field.input === 'upload'">
                 <span class="form-row__instruction" *ngIf="maxImageSize">
                   Max size: {{ (maxImageSize / 1000 / 1000).toFixed(2) }} MB
                 </span>
@@ -425,29 +425,26 @@
                 >
                 </app-image-uploader>
               </div>
-              <div *ngIf="field.type === 'audio'">
+              <div *ngIf="field.input === 'audio'">
                 <app-media-uploader
                   [formControlName]="field.key"
-                  [hasCaption]="field.config.hasCaption"
                   mediaType="audio"
+                  [maxUploadSize]="field.config.maxUploadSize"
                   (change)="maxSizeError = false"
                   [requiredError]="
                     form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
                   "
-                  [maxSizeError]="maxSizeError"
                 >
                 </app-media-uploader>
               </div>
-              <div *ngIf="field.type === 'document'">
+              <div *ngIf="field.input === 'document'">
                 <app-media-uploader
                   [formControlName]="field.key"
-                  [hasCaption]="field.config.hasCaption"
                   mediaType="document"
                   (change)="maxSizeError = false"
                   [requiredError]="
                     form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
                   "
-                  [maxSizeError]="maxSizeError"
                 >
                 </app-media-uploader>
               </div>
