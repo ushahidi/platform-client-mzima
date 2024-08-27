@@ -6,6 +6,7 @@ import { SharedModule } from '@shared';
 import { PrependUrlModule } from '@pipes';
 import { TwitterWidgetModule } from '../twitter-widget/twitter-widget.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { PipeModule } from '../../../shared/pipe.module';
 
 @NgModule({
   declarations: [PostItemComponent],
@@ -16,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     SharedModule,
     TwitterWidgetModule,
     TranslateModule,
+    PipeModule,
   ],
   exports: [PostItemComponent],
 })
