@@ -21,7 +21,7 @@
       [rotateXAxisTicks]="false"
     >
       <ng-template #tooltipTemplate let-model="model">
-        This is the single point tooltip template
+        {{ 'activity.tooltip_template' | translate }}
         <pre>{{ model | json }}</pre>
       </ng-template>
     </ngx-charts-line-chart>

@@ -288,7 +288,7 @@
               </mzima-client-button>
               <app-spinner *ngIf="loadingMorePosts && postCurrentLength < total"></app-spinner>
               <div class="endofPosts" *ngIf="!loadingMorePosts && postCurrentLength >= total">
-                End of Posts
+                {{ 'app.end_post' | translate }}
               </div>
             </ng-container>
           </div>
