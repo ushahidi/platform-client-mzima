@@ -207,13 +207,13 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
           value: category.id,
           label: String(category.tag),
           color: category.color!,
-          options: response?.results
-            ?.filter((cat: CategoryInterface) => cat.parent_id === category.id)
-            .map((cat: CategoryInterface) => ({
-              value: cat.id,
-              label: cat.tag,
-              checked: this.value.has(cat.id),
-            })),
+          options: category.children.length
+            ? category.children.map((cat: CategoryInterface) => ({
+                value: cat.id,
+                label: cat.tag,
+                checked: this.value.has(cat.id),
+              }))
+            : null,
         }));
         this.isOptionsLoading = false;
       },
