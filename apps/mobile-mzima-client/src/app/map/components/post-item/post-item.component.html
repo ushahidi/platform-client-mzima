@@ -13,7 +13,9 @@
         {{ (post.user?.realname ?? post.contact?.contact ?? post.author_realname) || 'Anonymous' }}
       </ion-card-title>
       <ion-card-subtitle class="post__date">
-        {{ post.post_date | date : 'mediumDate' }}
+        <span>{{ post.post_date | dateAgo }}</span>
+        <span>{{ post.status }}</span>
+        <span>{{ post.source }}</span>
       </ion-card-subtitle>
     </div>
     <app-button
