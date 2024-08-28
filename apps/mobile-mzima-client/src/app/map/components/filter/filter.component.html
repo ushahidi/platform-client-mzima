@@ -55,17 +55,13 @@
               type="item"
               [(ngModel)]="option.checked"
               *ngIf="!option.options?.length"
+              [showCheckboxAvatar]="!option.options?.length"
+              [firstLetter]="getFirstLetter(option.label)"
               (checkboxChange)="optionChanged($event, option)"
             >
               {{ option.label }}
             </app-checkbox>
-            <ion-item
-              button
-              class="multiselect-option"
-              lines="none"
-              *ngIf="option.options?.length"
-              (click)="showSubcategories(option)"
-            >
+            <ion-item button class="multiselect-option" lines="none" *ngIf="option.options?.length">
               <ion-avatar
                 slot="start"
                 class="multiselect-option__visual"
@@ -80,12 +76,18 @@
                   {{ option.options?.length }}
                 </span>
               </div>
-              <app-icon
-                class="multiselect-option__details"
-                slot="end"
-                name="arrow-right"
-              ></app-icon>
+              <app-icon class="multiselect-option__details" slot="end" name="arrow-right">
+              </app-icon>
             </ion-item>
+            <ng-container *ngFor="let childOption of option.options">
+              <app-checkbox
+                type="item"
+                [(ngModel)]="childOption.checked"
+                (checkboxChange)="optionChanged($event, childOption)"
+              >
+                {{ childOption.label }}
+              </app-checkbox>
+            </ng-container>
           </ng-container>
         </ng-container>
       </ng-container>
@@ -139,7 +141,7 @@
   </ion-text>
 </ng-template>
 
-<app-modal
+<!-- <app-modal
   class="subcategories-modal"
   [isOpen]="!!selectedCategory"
   (modalClose)="modalCloseHandle()"
@@ -183,4 +185,4 @@
       {{ 'app.clear' | translate }}
     </app-button>
   </div>
-</app-modal>
+</app-modal> -->
