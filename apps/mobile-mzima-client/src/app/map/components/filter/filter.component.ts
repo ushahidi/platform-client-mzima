@@ -341,6 +341,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   public optionChanged(state: boolean, option: FilterControlOption): void {
     state ? this.value.add(option.value) : this.value.delete(option.value);
     this.isPristine = false;
+    this.isSubcategoriesPristine = false;
   }
 
   public applyFilter(): void {
