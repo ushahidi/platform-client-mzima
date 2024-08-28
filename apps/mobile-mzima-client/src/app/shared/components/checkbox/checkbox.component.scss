@@ -107,3 +107,22 @@
     display: block;
   }
 }
+
+.multiselect-option {
+  &__visual {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 40px;
+    text-align: center;
+    margin: 0 16px 0 0;
+    color: var(--ion-background-color);
+
+    @media (prefers-color-scheme: light) {
+      background: var(--item-color, var(--ion-color-step-400));
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background: var(--item-color, var(--ion-color-step-750));
+    }
+  }
+}
