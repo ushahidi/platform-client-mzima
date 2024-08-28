@@ -3,7 +3,6 @@ import { FilterControl, FilterControlOption } from '@models';
 import { CategoriesService, CategoryInterface, SavedsearchesService } from '@mzima-client/sdk';
 import { AlertService, NetworkService, SessionService, ToastService } from '@services';
 import { searchFormHelper } from '@helpers';
-import _ from 'lodash';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import dayjs from 'dayjs';
 
@@ -282,60 +281,8 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
     return typeof label === 'string' && label ? label[0] : '';
   }
 
-  public showSubcategories(category: FilterControlOption): void {
-    this.selectedCategory = _.cloneDeep(category);
-  }
-
   public getCheckedSubcategoriesLength(options?: Omit<FilterControlOption, 'options'>[]): number {
     return options?.filter((o) => o.checked).length ?? 0;
-  }
-
-  public modalCloseHandle(): void {
-    this.selectedCategory = null;
-    this.isSubcategoriesPristine = true;
-  }
-
-  public applySelectedSubcategories(): void {
-    if (!this.selectedCategory) return;
-    const option = this.options.find((o) => o.value === this.selectedCategory?.value);
-    if (!option) return;
-    const changedOptions = option.options
-      ?.filter(
-        (o) =>
-          o.checked !== this.selectedCategory?.options?.find((so) => so.value === o.value)?.checked,
-      )
-      .map((o) => (!o.checked ? this.value.add(o.value) : this.value.delete(o.value)));
-    if (changedOptions?.length) {
-      this.isPristine = false;
-    }
-    option.options = _.cloneDeep(this.selectedCategory.options);
-    option.checked = !!option.options?.find((o) => o.checked);
-    option.checked ? this.value.add(option.value) : this.value.delete(option.value);
-    this.selectedCategory = null;
-    this.isSubcategoriesPristine = true;
-  }
-
-  public async clearSelectedSubcategories(): Promise<void> {
-    const result = await this.alertService.presentAlert({
-      header: `Clear ${this.selectedCategory?.label} filter?`,
-      message: 'This filter will be cleared',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-        {
-          text: 'Clear',
-          role: 'confirm',
-          cssClass: 'danger',
-        },
-      ],
-    });
-
-    if (result.role === 'confirm') {
-      this.isSubcategoriesPristine = false;
-      this.selectedCategory?.options?.forEach((option) => (option.checked = false));
-    }
   }
 
   public optionChanged(state: boolean, option: FilterControlOption): void {
