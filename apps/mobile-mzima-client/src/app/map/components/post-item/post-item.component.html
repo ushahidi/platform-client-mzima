@@ -13,9 +13,32 @@
         {{ (post.user?.realname ?? post.contact?.contact ?? post.author_realname) || 'Anonymous' }}
       </ion-card-title>
       <ion-card-subtitle class="post__date">
-        <span>{{ post.post_date | dateAgo }}</span>
-        <span>{{ post.status }}</span>
-        <span>{{ post.source }}</span>
+        <span class="post__info">
+          <ion-text color="medium" class="post__info-item">
+            {{ post.post_date | dateAgo }}
+          </ion-text>
+          <ion-text
+            class="post__info-item post__status"
+            [ngClass]="{
+              'post__status--published': post.status === 'published',
+              'post__status--draft': post.status === 'draft',
+              'post__status--archived': post.status === 'archived'
+            }"
+          >
+            <ng-container [ngSwitch]="post.status">
+              <ng-container *ngSwitchCase="'published'">{{
+                'app.published' | translate
+              }}</ng-container>
+              <ng-container *ngSwitchCase="'draft'">{{
+                'app.under_review' | translate
+              }}</ng-container>
+              <ng-container *ngSwitchCase="'archived'">{{
+                'app.archived' | translate
+              }}</ng-container>
+            </ng-container>
+          </ion-text>
+          <ion-text color="medium" class="post__info-item">Via {{ post.source }}</ion-text>
+        </span>
       </ion-card-subtitle>
     </div>
     <app-button
