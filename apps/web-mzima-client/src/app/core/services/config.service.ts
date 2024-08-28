@@ -45,8 +45,10 @@ export class ConfigService {
             });
             return data.result;
           },
-          error: () => {
-            setTimeout(() => this.getConfig(), 5000);
+          error: (error) => {
+            if (error.status === 404 && error.error.errors[0].message === 'Deployment not found')
+              this.sessionService.configLoaded = false;
+            else setTimeout(() => this.getConfig(), 5000);
           },
         }),
       );
