@@ -37,7 +37,9 @@
               }}</ng-container>
             </ng-container>
           </ion-text>
-          <ion-text color="medium" class="post__info-item">Via {{ post.source }}</ion-text>
+          <ion-text color="medium" class="post__info-item">{{
+            'app.via_source' | translate : { source: post.source }
+          }}</ion-text>
         </span>
       </ion-card-subtitle>
     </div>
