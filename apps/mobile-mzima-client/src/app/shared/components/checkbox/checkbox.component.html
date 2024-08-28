@@ -4,6 +4,11 @@
   [ngClass]="{ 'checkbox-item--radio': type === 'radio-item' }"
   *ngIf="type === 'item' || type === 'radio-item'; else checkbox"
 >
+  <ng-container *ngIf="showCheckboxAvatar">
+    <ion-avatar slot="start" class="multiselect-option__visual">
+      {{ firstLetter }}
+    </ion-avatar>
+  </ng-container>
   <ng-container *ngTemplateOutlet="checkbox"></ng-container>
 </ion-item>
 
