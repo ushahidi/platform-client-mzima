@@ -83,6 +83,7 @@
               <app-checkbox
                 type="item"
                 [(ngModel)]="childOption.checked"
+                (ngModelChange)="isSubcategoriesPristine = false"
                 (checkboxChange)="optionChanged($event, childOption)"
               >
                 {{ childOption.label }}
@@ -107,7 +108,11 @@
 <ion-footer class="footer">
   <ion-toolbar class="footer__toolbar">
     <div class="btn-panel">
-      <app-button expand="inline" [disabled]="isPristine" (buttonClick)="applyFilter()">
+      <app-button
+        expand="inline"
+        [disabled]="isPristine || isSubcategoriesPristine"
+        (buttonClick)="applyFilter()"
+      >
         {{ 'app.apply' | translate }}
       </app-button>
       <app-button
