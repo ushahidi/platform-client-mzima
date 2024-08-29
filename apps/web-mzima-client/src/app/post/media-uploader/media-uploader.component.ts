@@ -19,6 +19,7 @@ type MediaFile = {
   preview: string | SafeUrl | null;
   caption?: string;
   delete?: boolean;
+  upload?: boolean;
 };
 
 @Component({
@@ -35,7 +36,7 @@ type MediaFile = {
 })
 export class MediaUploaderComponent implements ControlValueAccessor {
   @Input() public maxUploadSize: number = 2;
-  @Input() public maxFiles?: number = -1;
+  @Input() public maxFiles: number = -1;
   @Input() public hasCaption?: boolean;
   @Input() public requiredError?: boolean;
   @Input() public mediaType: 'image' | 'audio' | 'document';
@@ -50,7 +51,7 @@ export class MediaUploaderComponent implements ControlValueAccessor {
   fileTypes = '';
   onChange: any = () => {};
   onTouched: any = () => {};
-  mediaFiles: MediaFile[];
+  mediaFiles: MediaFile[] = [];
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -98,20 +99,22 @@ export class MediaUploaderComponent implements ControlValueAccessor {
     const inputElement = event.target as HTMLInputElement;
 
     if (inputElement.files) {
-      if (this.maxFiles && inputElement.files.length > this.maxFiles) {
+      if (this.maxFiles !== -1 && inputElement.files.length > this.maxFiles) {
         this.error = ErrorEnum.MAX_FILES;
         event.preventDefault();
       } else if (inputElement.files.length) {
-        this.photo = formHelper.prepareImageFileToUpload(inputElement.files[0]);
-        this.upload = true;
-        this.preview = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.photo));
-        this.onChange({
-          caption: this.captionControl.value,
-          photo: this.photo,
-          id: this.id,
-          upload: this.upload,
-        });
-        this.id = undefined;
+        for (let i = 0; i < inputElement.files.length; i++) {
+          const aFile = inputElement.files.item(i);
+          const photoUrl = formHelper.prepareImageFileToUpload(aFile!);
+          const mediaFile: MediaFile = {
+            id: undefined,
+            file: photoUrl,
+            upload: true,
+            preview: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(photoUrl)),
+          };
+          this.mediaFiles.push(mediaFile);
+        }
+        this.onChange(this.mediaFiles);
         inputElement.value = '';
       }
     }
@@ -125,11 +128,11 @@ export class MediaUploaderComponent implements ControlValueAccessor {
 
     if (!confirmed) return;
 
-    // if create remove from array
-    this.mediaFiles = this.mediaFiles.splice(index, 1);
-
-    // if edit set to delete
-    this.mediaFiles[index].delete = true;
+    if (this.mediaFiles[index]?.upload) {
+      this.mediaFiles = this.mediaFiles.splice(index, 1);
+    } else {
+      this.mediaFiles[index].delete = true;
+    }
     this.onChange(this.mediaFiles);
   }
 
