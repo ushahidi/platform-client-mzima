@@ -55,6 +55,7 @@
               type="item"
               [(ngModel)]="option.checked"
               *ngIf="!option.options?.length"
+              [option]="option"
               [showCheckboxAvatar]="!option.options?.length"
               [firstLetter]="getFirstLetter(option.label)"
               (checkboxChange)="optionChanged($event, option)"
