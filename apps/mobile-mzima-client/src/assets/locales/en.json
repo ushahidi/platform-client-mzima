@@ -83,6 +83,14 @@
         "posts_not_uploaded" : "<b>{{num_posts}} Posts not Uploaded!</b><br/>The posts were not uploaded due to bad internet connection or you were offline. They will be automatically uploaded as soon as you connect to the internet",
         "posts_uploading" : "<b>Uploading {{num_posts}} Posts</b><br/>We are currently uploading your posts",
         "posts_uploaded" : "<b>{{num_posts}} Posts Uploaded Successfully!</b><br/>Your posts were successfully uploaded. You can see them under \"My Posts\""
+      },
+      "categories": {
+        "filter_info": {
+          "subcategories": {
+            "selected": "Selected {{ checkedOption }} of {{ optionsTotal }}",
+            "none": "No Sub categories"
+          }
+        }
       }
     }
 }
