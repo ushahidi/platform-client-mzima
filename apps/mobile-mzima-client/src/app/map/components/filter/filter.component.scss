@@ -131,6 +131,10 @@
       color: var(--ion-color-step-700);
     }
   }
+
+  &__icon-facedown {
+    transform: rotate(90deg);
+  }
 }
 
 .subcategories-modal {
