@@ -2,6 +2,10 @@
     "app": {
       "activity_view_wip": "Activity View coming soon",
       "welcome_back": "Welcome Back!",
+      "placeholder_enter_name": "Enter your name",
+      "placeholder_enter_email": "Enter your email",
+      "placeholder_enter_password": "Enter password",
+      "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol.",
       "login_private": "Log in to private Deployment",
       "login_details_desc": "Please enter your login details to access the deployment. Or contact the Admin",
       "forgot_password": "Forgot your password?",
