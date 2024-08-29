@@ -17,4 +17,5 @@ export interface FilterControlOption {
   info?: string;
   color?: string;
   options?: Omit<FilterControlOption, 'options'>[];
+  isDropDownOpen?: boolean;
 }

@@ -213,6 +213,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
                 checked: this.value.has(cat.id),
               }))
             : null,
+          isDropDownOpen: category.children.length ? false : null,
         }));
         this.isOptionsLoading = false;
       },
@@ -289,6 +290,10 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
     state ? this.value.add(option.value) : this.value.delete(option.value);
     this.isPristine = false;
     this.isSubcategoriesPristine = false;
+  }
+
+  public toggleSubcategoryDropdown(option: FilterControlOption) {
+    option.isDropDownOpen = !option.isDropDownOpen;
   }
 
   public applyFilter(): void {
