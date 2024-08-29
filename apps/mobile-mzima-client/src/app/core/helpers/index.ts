@@ -8,3 +8,4 @@ export * as searchFormHelper from './search-form';
 export * as dateHelper from './date-helper';
 export * as formHelper from './form';
 export * as objectHelpers from './object-helpers';
+export { NameAvatarColorSetter } from './name-avatar-color-setter';
