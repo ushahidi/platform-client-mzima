@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { FilterControlOption } from '@models';
 
 @Component({
   selector: 'app-checkbox',
@@ -14,6 +15,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
   ],
 })
 export class CheckboxComponent implements ControlValueAccessor {
+  @Input() public option: FilterControlOption;
   @Input() public showCheckboxAvatar: boolean;
   @Input() public firstLetter: string;
   @Input() public required = false;
