@@ -1,15 +1,15 @@
 <div class="media-loader">
   <div class="media-loader__btn">
-    <div class="media-loader__preview" *ngIf="preview">
+    <div class="media-loader__preview" *ngIf="mediaFiles.length > 0">
       <div class="media-loader__image_previews" *ngIf="mediaType === 'image'">
         <div class="image-preview" *ngFor="let mediaFile; in: mediaFiles; index as i">
-          <img [src]="preview" />
+          <img [src]="mediaFile.preview" />
           <div (click)="deletePhoto(i)">Delete</div>
         </div>
       </div>
       <div class="media-loader__audio_previews" *ngIf="mediaType === 'audio'">
         <div class="audio-preview" *ngFor="let mediaFile; in: mediaFiles; index as i">
-          <audio controls [src]="preview"></audio>
+          <audio controls [src]="mediaFile.preview"></audio>
           <div (click)="deletePhoto(i)">Delete</div>
         </div>
       </div>
@@ -19,35 +19,32 @@
           <div (click)="deletePhoto(i)">Delete</div>
         </div>
       </div>
-      <div class="media-loader__controls">
-        <mzima-client-button
-          fill="outline"
-          color="secondary"
-          class="media-loader__control"
-          (buttonClick)="fileInput.click()"
-          [data-qa]="'btn-post-item-upload'"
-        >
-          <ng-container *ngIf="!preview; else changeButton">
-            {{ 'post.media.add_photo' | translate }}
-          </ng-container>
-          <ng-template #changeButton>
-            {{ 'post.media.replace_image' | translate }}
-          </ng-template>
-          <mat-icon icon [svgIcon]="!preview ? 'plus' : 'edit'"></mat-icon>
-        </mzima-client-button>
-        <input
-          hidden
-          #fileInput
-          multiple
-          type="file"
-          accept="image/jpeg, image/png"
-          (change)="onFileSelected($event)"
-        />
-      </div>
-
-      <mat-error class="error-msg" *ngIf="error !== 'none'">
-        {{ error | translate }}
-      </mat-error>
     </div>
+    <div class="media-loader__controls">
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
+        class="media-loader__control"
+        (buttonClick)="fileInput.click()"
+        [data-qa]="'btn-post-item-upload'"
+      >
+        <ng-container *ngIf="maxFiles === -1 || this.mediaFiles.length < maxFiles">
+          {{ 'post.media.add_photo' | translate }}
+        </ng-container>
+        <mat-icon icon svgIcon="plus"></mat-icon>
+      </mzima-client-button>
+      <input
+        hidden
+        #fileInput
+        multiple
+        type="file"
+        (accept)="(fileTypes)"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+
+    <mat-error class="error-msg" *ngIf="error !== 'none'">
+      {{ error | translate }}
+    </mat-error>
   </div>
 </div>
