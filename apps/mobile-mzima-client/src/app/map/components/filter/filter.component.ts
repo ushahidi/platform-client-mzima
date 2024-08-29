@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@ang
 import { FilterControl, FilterControlOption } from '@models';
 import { CategoriesService, CategoryInterface, SavedsearchesService } from '@mzima-client/sdk';
 import { AlertService, NetworkService, SessionService, ToastService } from '@services';
-import { searchFormHelper } from '@helpers';
+import { searchFormHelper, NameAvatarColorSetter } from '@helpers';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import dayjs from 'dayjs';
 
@@ -205,7 +205,7 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
           checked: this.value.has(category.id),
           value: category.id,
           label: String(category.tag),
-          color: category.color!,
+          color: NameAvatarColorSetter(String(category.tag)),
           options: category.children.length
             ? category.children.map((cat: CategoryInterface) => ({
                 value: cat.id,
