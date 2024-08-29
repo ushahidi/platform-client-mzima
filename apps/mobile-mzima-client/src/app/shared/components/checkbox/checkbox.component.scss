@@ -125,4 +125,12 @@
       background: var(--item-color, var(--ion-color-step-750));
     }
   }
+
+  &__info {
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    color: var(--ion-color-medium);
+  }
 }
