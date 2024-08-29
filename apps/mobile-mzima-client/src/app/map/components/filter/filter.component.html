@@ -78,8 +78,14 @@
               <div>
                 {{ option.label }}
                 <span class="multiselect-option__info">
-                  Selected {{ getCheckedSubcategoriesLength(option.options) }} of
-                  {{ option.options?.length }}
+                  {{
+                    'app.categories.filter_info.subcategories.selected'
+                      | translate
+                        : {
+                            checkedOption: getCheckedSubcategoriesLength(option.options),
+                            optionsTotal: option.options?.length
+                          }
+                  }}
                 </span>
               </div>
               <app-icon

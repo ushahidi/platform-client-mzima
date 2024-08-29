@@ -39,4 +39,7 @@
 
 <ng-template #checkbox_text>
   <span class="checkbox__text"><ng-content></ng-content></span>
+  <span class="multiselect-option__info" *ngIf="showCheckboxAvatar">
+    {{ 'app.categories.filter_info.subcategories.none' | translate }}
+  </span>
 </ng-template>
