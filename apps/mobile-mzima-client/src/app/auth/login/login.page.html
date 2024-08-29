@@ -20,7 +20,7 @@
           label="Email"
           [required]="true"
           formControlName="email"
-          placeholder="Enter your email"
+          placeholder="{{'app.placeholder_enter_email' | translate}}"
           [errors]="fieldErrorMessages(form.controls['email'], 'email')"
         >
         </app-form-control>
@@ -30,7 +30,7 @@
           [required]="true"
           [togglePassword]="true"
           formControlName="password"
-          placeholder="Enter password"
+          placeholder="{{'app.placeholder_enter_password' | translate}}"
           [errors]="fieldErrorMessages(form.controls['password'], 'password')"
         >
           <div class="forgot-password-button" button>
