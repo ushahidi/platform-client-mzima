@@ -61,7 +61,13 @@
             >
               {{ option.label }}
             </app-checkbox>
-            <ion-item button class="multiselect-option" lines="none" *ngIf="option.options?.length">
+            <ion-item
+              button
+              class="multiselect-option"
+              lines="none"
+              *ngIf="option.options?.length"
+              (click)="toggleSubcategoryDropdown(option)"
+            >
               <ion-avatar
                 slot="start"
                 class="multiselect-option__visual"
@@ -76,18 +82,25 @@
                   {{ option.options?.length }}
                 </span>
               </div>
-              <app-icon class="multiselect-option__details" slot="end" name="arrow-right">
+              <app-icon
+                class="multiselect-option__details"
+                [ngClass]="{ 'multiselect-option__icon-facedown': option.isDropDownOpen }"
+                slot="end"
+                name="arrow-right"
+              >
               </app-icon>
             </ion-item>
-            <ng-container *ngFor="let childOption of option.options">
-              <app-checkbox
-                type="item"
-                [(ngModel)]="childOption.checked"
-                (ngModelChange)="isSubcategoriesPristine = false"
-                (checkboxChange)="optionChanged($event, childOption)"
-              >
-                {{ childOption.label }}
-              </app-checkbox>
+            <ng-container *ngIf="option.isDropDownOpen">
+              <ng-container *ngFor="let childOption of option.options">
+                <app-checkbox
+                  type="item"
+                  [(ngModel)]="childOption.checked"
+                  (ngModelChange)="isSubcategoriesPristine = false"
+                  (checkboxChange)="optionChanged($event, childOption)"
+                >
+                  {{ childOption.label }}
+                </app-checkbox>
+              </ng-container>
             </ng-container>
           </ng-container>
         </ng-container>
