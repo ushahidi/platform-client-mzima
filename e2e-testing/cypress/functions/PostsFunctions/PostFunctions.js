@@ -63,7 +63,8 @@ class PostFunctions {
     cy.get(PostLocators.postPreview)
       .children(PostLocators.postItem)
       .contains(this.postTitle)
-      .should('be.visible');
+      .should('be.visible')
+      .click();
   }
 
   open_post_for_details() {

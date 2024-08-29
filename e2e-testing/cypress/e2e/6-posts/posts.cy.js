@@ -15,12 +15,14 @@ describe('Automated Tests for Posts', () => {
     postFunctions.fill_required_form_fields();
     postFunctions.complete_add_post_steps();
     postFunctions.verify_created_post_exists();
+    postFunctions.verify_post_details();
   });
 
-  it('Verifies post details', () => {
+  it.skip('Verifies post details', () => {
     postFunctions.open_post_for_details();
     postFunctions.verify_post_details();
   });
+
   it('Changes and verifies status of a post', () => {
     postFunctions.open_post_creation_form();
     postFunctions.fill_required_form_fields();
