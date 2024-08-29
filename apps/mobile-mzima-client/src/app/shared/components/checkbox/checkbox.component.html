@@ -5,7 +5,11 @@
   *ngIf="type === 'item' || type === 'radio-item'; else checkbox"
 >
   <ng-container *ngIf="showCheckboxAvatar">
-    <ion-avatar slot="start" class="multiselect-option__visual">
+    <ion-avatar
+      slot="start"
+      class="multiselect-option__visual"
+      [ngStyle]="{ '--item-color': option.color }"
+    >
       {{ firstLetter }}
     </ion-avatar>
   </ng-container>
