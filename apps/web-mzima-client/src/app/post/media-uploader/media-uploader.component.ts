@@ -1,9 +1,11 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { formHelper } from '@helpers';
+import { MediaService } from '@mzima-client/sdk';
+import { BehaviorSubject } from 'rxjs';
 
 enum ErrorEnum {
   NONE = 'none',
@@ -12,14 +14,47 @@ enum ErrorEnum {
   MAX_FILES = 'post.media.messages.max_files',
 }
 
+type MediaType = {
+  icon: string;
+  buttonText: string;
+  fileTypes: string;
+};
+
+const mediaTypes = new Map<string, MediaType>([
+  [
+    'image',
+    {
+      icon: 'add_a_photo',
+      buttonText: 'post.media.add_photo',
+      fileTypes: 'image/jpeg, image/png',
+    },
+  ],
+  [
+    'audio',
+    {
+      icon: 'speaker',
+      buttonText: 'post.media.add_audio',
+      fileTypes: 'audio/mp3, audio/ogg, audio/aac',
+    },
+  ],
+  [
+    'document',
+    {
+      icon: 'note_add',
+      buttonText: 'post.media.add_document',
+      fileTypes:
+        'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    },
+  ],
+]);
+
 type MediaFile = {
   id?: number;
-  file: File | null;
+  file?: File;
   fileExtension?: string;
   preview: string | SafeUrl | null;
   caption?: string;
-  delete?: boolean;
-  upload?: boolean;
+  status: 'ready' | 'upload' | 'uploading' | 'error' | 'delete';
 };
 
 @Component({
@@ -34,12 +69,12 @@ type MediaFile = {
     },
   ],
 })
-export class MediaUploaderComponent implements ControlValueAccessor {
+export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
   @Input() public maxUploadSize: number = 2;
   @Input() public maxFiles: number = -1;
   @Input() public hasCaption?: boolean;
   @Input() public requiredError?: boolean;
-  @Input() public mediaType: 'image' | 'audio' | 'document';
+  @Input() public media: 'image' | 'audio' | 'document';
 
   id?: number;
   captionControl = new FormControl('');
@@ -48,30 +83,21 @@ export class MediaUploaderComponent implements ControlValueAccessor {
   isDisabled = false;
   upload = false;
   error: ErrorEnum = ErrorEnum.NONE;
-  fileTypes = '';
+  mediaType: MediaType;
   onChange: any = () => {};
   onTouched: any = () => {};
   mediaFiles: MediaFile[] = [];
+  uploadProgress$: BehaviorSubject<number>[] = [];
 
   constructor(
     private sanitizer: DomSanitizer,
     private confirm: ConfirmModalService,
     private translate: TranslateService,
-  ) {
-    switch (this.mediaType) {
-      case 'image':
-        this.fileTypes = 'image/jpeg, image/png';
-        break;
-      case 'audio':
-        this.fileTypes = 'audio/mp3, audio/ogg, audio/aac';
-        this.hasCaption = false;
-        break;
-      case 'document':
-        this.fileTypes =
-          'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-        this.hasCaption = false;
-        break;
-    }
+    private mediaService: MediaService,
+  ) {}
+
+  ngOnInit() {
+    this.mediaType = mediaTypes.get(this.media)!;
   }
 
   writeValue(obj: any): void {
@@ -109,7 +135,7 @@ export class MediaUploaderComponent implements ControlValueAccessor {
           const mediaFile: MediaFile = {
             id: undefined,
             file: photoUrl,
-            upload: true,
+            status: 'upload',
             preview: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(photoUrl)),
           };
           this.mediaFiles.push(mediaFile);
@@ -120,32 +146,64 @@ export class MediaUploaderComponent implements ControlValueAccessor {
     }
   }
 
-  async deletePhoto(index: number) {
-    const confirmed = await this.confirm.open({
-      title: this.translate.instant('notify.default.are_you_sure_you_want_to_delete_this'),
-      description: this.translate.instant('notify.default.proceed_warning'),
-    });
+  async clickStatusButton(index: number) {
+    const mediaFile = this.mediaFiles[index];
 
-    if (!confirmed) return;
+    // Are we deleting?
+    if (mediaFile.status === 'upload' || mediaFile.status === 'ready') {
+      const confirmed = await this.confirm.open({
+        title: this.translate.instant('notify.default.are_you_sure_you_want_to_delete_this'),
+        description: this.translate.instant('notify.default.proceed_warning'),
+      });
 
-    if (this.mediaFiles[index]?.upload) {
-      this.mediaFiles = this.mediaFiles.splice(index, 1);
-    } else {
-      this.mediaFiles[index].delete = true;
+      if (!confirmed) return;
+
+      if (mediaFile.status === 'upload') {
+        this.mediaFiles = this.mediaFiles.filter((e, i) => i !== index);
+      } else {
+        this.mediaFiles[index].status = 'delete';
+      }
+    } else if (mediaFile.status === 'uploading') {
+      console.log(mediaFile);
     }
+
     this.onChange(this.mediaFiles);
   }
 
-  captionChanged() {
-    this.onChange({
-      caption: this.captionControl.value,
-      photo: this.photo,
-      id: this.id,
-      upload: this.upload,
-    });
+  getDocumentThumbnail(mediaFile: MediaFile) {
+    const path = '/assets/images/logos/';
+    let thumbnail = 'unknown_document.png';
+    switch (mediaFile.file?.type) {
+      case 'application/pdf':
+        thumbnail = 'pdf_document.png';
+        break;
+      case 'application/msword':
+        thumbnail = 'word_document.png';
+        break;
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        thumbnail = 'word_document.png';
+        break;
+    }
+    return path + thumbnail;
   }
 
-  getDocumentThumbnail(mediaFile: File) {
-    console.log(mediaFile);
+  getFileName(mediaFile: MediaFile): string {
+    return mediaFile.file ? mediaFile.file?.name : 'unknown';
+  }
+
+  getFileSize(mediaFile: MediaFile): string {
+    const filesize: number = mediaFile.file ? mediaFile.file.size : 0;
+    // Megabytes
+    if (filesize > 1000000) {
+      return (filesize / 1000000).toFixed(2).toString() + 'MB';
+    }
+    // Kilobytes
+    else if (filesize > 1000) {
+      return (filesize / 1000).toFixed(2).toString() + 'kB';
+    }
+    // Bytes
+    else {
+      return filesize + 'bytes';
+    }
   }
 }
