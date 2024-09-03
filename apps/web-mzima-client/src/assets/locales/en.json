@@ -352,7 +352,7 @@
     "relation_desc": "Create a relation between different surveys",
     "upload_desc": "Allows image(s) to be uploaded to the post",
     "audio_desc": "Allows audio file(s) to be uploaded to the post",
-    "document_desc": "Allows documents(s) to be uploaded to the post",
+    "document_desc": "Allows document(s) to be uploaded to the post",
     "video_desc": "Allows Youtube or Vimeo videos to be embed in the post",
     "maximum_upload_size" : "Maximum Upload Size",
     "small_upload_size" : "Small",
@@ -974,6 +974,9 @@
       "add_caption": "Add caption",
       "upload": "Upload",
       "add_photo": "Add photo",
+      "add_audio": "Add audio",
+      "add_document": "Add document",
+      "retry" : "Retry",
       "delete_photo": "Delete photo",
       "replace_image": "Replace image",
       "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!",
@@ -981,6 +984,11 @@
         "max_size" : "Your file is too large.",
         "max_files" : "You have exceeded the maximum number of files.",
         "required" : "Media is required."
+      },
+      "status" : {
+        "uploading" : "Uploading...",
+        "upload_complete" : "Upload Complete!",
+        "upload_failed" : "Upload failed!"
       }
     },
     "video": {

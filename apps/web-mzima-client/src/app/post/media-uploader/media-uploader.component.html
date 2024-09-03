@@ -1,22 +1,36 @@
 <div class="media-loader">
   <div class="media-loader__btn">
     <div class="media-loader__preview" *ngIf="mediaFiles.length > 0">
-      <div class="media-loader__image_previews" *ngIf="mediaType === 'image'">
-        <div class="image-preview" *ngFor="let mediaFile; in: mediaFiles; index as i">
-          <img [src]="mediaFile.preview" />
-          <div (click)="deletePhoto(i)">Delete</div>
+      <div class="media-loader__preview-images" *ngIf="media === 'image'">
+        <div class="media-preview image" *ngFor="let mediaFile of mediaFiles; let i = index">
+          <img class="thumbnail" [src]="mediaFile.preview" />
+          <div class="media-details">
+            <div class="filename">{{ getFileName(mediaFile) }}</div>
+            <div class="filesize">{{ getFileSize(mediaFile) }}</div>
+          </div>
+          <div class="status-button" (click)="clickStatusButton(i)">
+            <mat-icon class="xicon" icon svgIcon="close"></mat-icon>
+          </div>
         </div>
       </div>
-      <div class="media-loader__audio_previews" *ngIf="mediaType === 'audio'">
-        <div class="audio-preview" *ngFor="let mediaFile; in: mediaFiles; index as i">
+      <div class="media-loader__preview-audio" *ngIf="media === 'audio'">
+        <div class="media-preview audio" *ngFor="let mediaFile of mediaFiles; let i = index">
           <audio controls [src]="mediaFile.preview"></audio>
-          <div (click)="deletePhoto(i)">Delete</div>
+          <div class="status-button" (click)="clickStatusButton(i)">
+            <mat-icon class="xicon" icon svgIcon="close"></mat-icon>
+          </div>
         </div>
       </div>
-      <div class="media-loader__audio_previews" *ngIf="mediaType === 'document'">
-        <div class="document-preview" *ngFor="let mediaFile; in: mediaFiles; index as i">
-          <img [src]="getDocumentThumbnail(mediaFile)" />
-          <div (click)="deletePhoto(i)">Delete</div>
+      <div class="media-loader__preview-documents" *ngIf="media === 'document'">
+        <div class="media-preview document" *ngFor="let mediaFile of mediaFiles; let i = index">
+          <img class="thumbnail" [src]="getDocumentThumbnail(mediaFile)" />
+          <div class="media-details">
+            <div class="filename">{{ getFileName(mediaFile) }}</div>
+            <div class="filesize">{{ getFileSize(mediaFile) }}</div>
+          </div>
+          <div class="status-button" (click)="clickStatusButton(i)">
+            <mat-icon class="xicon" icon svgIcon="close"></mat-icon>
+          </div>
         </div>
       </div>
     </div>
@@ -24,21 +38,21 @@
       <mzima-client-button
         fill="outline"
         color="secondary"
+        [disabled]="maxFiles !== -1 && this.mediaFiles.length < maxFiles"
         class="media-loader__control"
         (buttonClick)="fileInput.click()"
         [data-qa]="'btn-post-item-upload'"
+        [ngSwitch]="mediaType"
       >
-        <ng-container *ngIf="maxFiles === -1 || this.mediaFiles.length < maxFiles">
-          {{ 'post.media.add_photo' | translate }}
-        </ng-container>
-        <mat-icon icon svgIcon="plus"></mat-icon>
+        {{ mediaType.buttonText | translate }}
+        <mat-icon>{{ mediaType.icon }}</mat-icon>
       </mzima-client-button>
       <input
         hidden
         #fileInput
         multiple
         type="file"
-        (accept)="(fileTypes)"
+        accept="{{ mediaType.fileTypes }}"
         (change)="onFileSelected($event)"
       />
     </div>
