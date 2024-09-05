@@ -101,8 +101,9 @@ class PostFunctions {
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.clearFiltersBtn).click();
 
-    //verify post numbers to verify we are in correct post page
+    //verify post count to verify we are in correct post page
     cy.get('[data-qa="feed-page-results"]').contains('Current results: 20 / 518');
+    cy.contains(this.postTitle).scrollIntoView();
 
     //change post to be deleted to "New Post Title for Location"
     cy.contains('New Post Title for Location').click();
@@ -116,8 +117,8 @@ class PostFunctions {
     //verify post is deleted and doesn't exist
     cy.get(PostLocators.postPreview)
       .children(PostLocators.postItem)
-      .contains(this.postTitle)
-      .should('New Post Title for Location');
+      .contains('New Post Title for Location')
+      .should('not.exist');
   }
 
   change_post_status() {
