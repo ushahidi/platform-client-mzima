@@ -1,11 +1,12 @@
+import { HttpErrorResponse, HttpEventType /*, HttpProgressEvent */ } from '@angular/common/http';
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
-import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { formHelper } from '@helpers';
 import { MediaService } from '@mzima-client/sdk';
-import { BehaviorSubject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject, catchError, forkJoin, last, Observable, tap, throwError } from 'rxjs';
+import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 
 enum ErrorEnum {
   NONE = 'none',
@@ -19,6 +20,8 @@ type MediaType = {
   buttonText: string;
   fileTypes: string;
 };
+
+type MediaFileStatus = 'ready' | 'upload' | 'uploading' | 'uploaded' | 'error' | 'delete';
 
 const mediaTypes = new Map<string, MediaType>([
   [
@@ -50,11 +53,12 @@ const mediaTypes = new Map<string, MediaType>([
 
 type MediaFile = {
   id?: number;
+  generatedId: number;
   file?: File;
   fileExtension?: string;
   preview: string | SafeUrl | null;
   caption?: string;
-  status: 'ready' | 'upload' | 'uploading' | 'error' | 'delete';
+  status: MediaFileStatus;
 };
 
 @Component({
@@ -75,6 +79,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
   @Input() public hasCaption?: boolean;
   @Input() public requiredError?: boolean;
   @Input() public media: 'image' | 'audio' | 'document';
+  // @Input() public progressCallback?: (progress: number) => {};
 
   id?: number;
   captionControl = new FormControl('');
@@ -125,7 +130,10 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
     const inputElement = event.target as HTMLInputElement;
 
     if (inputElement.files) {
-      if (this.maxFiles !== -1 && inputElement.files.length > this.maxFiles) {
+      if (
+        this.maxFiles !== -1 &&
+        this.mediaFiles.length + inputElement.files.length > this.maxFiles
+      ) {
         this.error = ErrorEnum.MAX_FILES;
         event.preventDefault();
       } else if (inputElement.files.length) {
@@ -133,15 +141,55 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
           const aFile = inputElement.files.item(i);
           const photoUrl = formHelper.prepareImageFileToUpload(aFile!);
           const mediaFile: MediaFile = {
-            id: undefined,
+            generatedId: this.generateId(),
             file: photoUrl,
-            status: 'upload',
+            status: 'uploading',
             preview: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(photoUrl)),
           };
           this.mediaFiles.push(mediaFile);
         }
-        this.onChange(this.mediaFiles);
-        inputElement.value = '';
+        const uploads: Observable<any>[] = [];
+        for (let i = 0; i < this.mediaFiles.length; i++) {
+          const mediaFile = this.mediaFiles[i];
+          const uploadObservable: Observable<any> = this.mediaService
+            .uploadFileProgress(mediaFile.file!, '')
+            .pipe(
+              tap((uploadEvent) => {
+                // if (uploadEvent.type === HttpEventType.UploadProgress) {
+                //   const progressEvent: HttpProgressEvent = uploadEvent as HttpProgressEvent;
+                //   const percentDone = progressEvent.total
+                //     ? progressEvent.loaded / progressEvent.total
+                //     : 0;
+
+                //   // if (this.progressCallback)
+                //   //   this.progressCallback(percentDone);
+                // }
+                // else
+                if (uploadEvent.type === HttpEventType.Response) {
+                  this.updateMediaFile(mediaFile.generatedId, (aMediaFile) => {
+                    aMediaFile.status = 'uploaded';
+                    return aMediaFile;
+                  });
+                  // if (this.progressCallback)
+                  //     this.progressCallback(100);
+                }
+              }),
+              last(),
+              catchError((error: HttpErrorResponse) => {
+                this.updateMediaFile(mediaFile.generatedId, (aMediaFile) => {
+                  aMediaFile.status = 'error';
+                  return aMediaFile;
+                });
+                return throwError(() => new Error(error.statusText));
+              }),
+            );
+          uploads.push(uploadObservable);
+        }
+        forkJoin(uploads).subscribe((results) => {
+          this.onChange(this.mediaFiles);
+          inputElement.value = '';
+          console.log(results);
+        });
       }
     }
   }
@@ -205,5 +253,21 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
     else {
       return filesize + 'bytes';
     }
+  }
+
+  updateMediaFile(id: number, updateCallback: (mediaFile: MediaFile) => MediaFile) {
+    for (let i = 0; i < this.mediaFiles.length; i++) {
+      if (this.mediaFiles[i].generatedId === id) {
+        this.mediaFiles[i] = updateCallback(this.mediaFiles[i]);
+        i = this.mediaFiles.length;
+      }
+    }
+  }
+
+  generateId(): number {
+    return (
+      Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER - Number.MIN_SAFE_INTEGER + 1)) +
+      Number.MIN_SAFE_INTEGER
+    );
   }
 }
