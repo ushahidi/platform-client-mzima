@@ -106,7 +106,7 @@ class PostFunctions {
     cy.contains(this.postTitle).scrollIntoView();
 
     //change post to be deleted to "New Post Title for Location"
-    cy.contains('New Post Title for Location').click({ force: true });
+    cy.contains(this.postTitle).click({ force: true });
 
     //delete post
     cy.get(PostLocators.postMenuDots).eq(0).click();
@@ -117,7 +117,7 @@ class PostFunctions {
     //verify post is deleted and doesn't exist
     cy.get(PostLocators.postPreview)
       .children(PostLocators.postItem)
-      .contains('New Post Title for Location')
+      .contains(this.postTitle)
       .should('not.exist');
   }
 
