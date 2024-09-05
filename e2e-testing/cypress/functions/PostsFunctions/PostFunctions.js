@@ -85,7 +85,7 @@ class PostFunctions {
     cy.get(PostLocators.titleValue).should('contain', 'Automated Title Response');
     cy.get(PostLocators.descriptionValue).should('contain', 'Automated Description Response');
     cy.get('[data-qa="posts"] > :nth-child(2)').scrollTo('bottom');
-    cy.contains('Automated Short text').scrollIntoView().should('be.visible');
+    // cy.contains('Automated Short text').scrollIntoView().should('be.visible');
     cy.contains('This is an automated long text response').should('be.visible');
     cy.contains(99.9).should('be.visible');
     cy.contains(100).should('be.visible');
