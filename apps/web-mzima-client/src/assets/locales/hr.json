@@ -114,6 +114,7 @@
     "close_and_view": "Zatvori i pregledaj rezultate",
     "show_more_less": "Prikaži više/manje",
     "filters": "Filteri",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Filtriraj po anketi",
     "configure": "Konfiguriraj",
     "post": "Post",
@@ -602,6 +603,7 @@
     "source": "Izvor",
     "saved_filters": "Saved filters",
     "saved_filter": "Spremljeni filtar",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Jeste li sigurni da želite izbrisati ovaj spremljeni filtar?"
