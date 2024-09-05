@@ -114,6 +114,7 @@
     "close_and_view": "Cerrar y ver resultados",
     "show_more_less": "Mostrar más/menos",
     "filters": "Filtros",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Filtrar por tema",
     "configure": "Configurar",
     "post": "Publicación",
@@ -602,6 +603,7 @@
     "source": "Fuente",
     "saved_filters": "Saved filters",
     "saved_filter": "Filtro guardado",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "¿Está seguro de que desea eliminar este filtro guardado?"
