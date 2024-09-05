@@ -106,7 +106,7 @@ class PostFunctions {
     cy.contains(this.postTitle).scrollIntoView();
 
     //change post to be deleted to "New Post Title for Location"
-    cy.contains('New Post Title for Location').click();
+    cy.contains('New Post Title for Location').click({ force: true });
 
     //delete post
     cy.get(PostLocators.postMenuDots).eq(0).click();
