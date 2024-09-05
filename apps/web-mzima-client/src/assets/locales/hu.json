@@ -114,6 +114,7 @@
     "close_and_view": "Bezárás és az eredmények megtekintése",
     "show_more_less": "Többet/kevesebbet mutat",
     "filters": "Szűrők",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "A kérdőív alapján szűrés",
     "configure": "Beállítás",
     "post": "Bejegyzés",
@@ -602,6 +603,7 @@
     "source": "Forrás",
     "saved_filters": "Saved filters",
     "saved_filter": "Mentett szűrő",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Biztosan törli ezt a mentett szűrőt?"
