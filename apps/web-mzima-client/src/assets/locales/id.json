@@ -114,6 +114,7 @@
     "close_and_view": "Menutup dan melihat hasil",
     "show_more_less": "Perlihatkan lebih/kurang",
     "filters": "Saringan",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Saringan oleh survei",
     "configure": "Konfigurasikan",
     "post": "Postingan",
@@ -602,6 +603,7 @@
     "source": "Source",
     "saved_filters": "Saved filters",
     "saved_filter": "Filter tersimpan",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Apakah Anda yakin ingin menghapus filter tersimpan ini?"
