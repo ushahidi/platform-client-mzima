@@ -8,8 +8,15 @@
       padding: 4px;
       margin: 2px 4px;
       border: 1px solid #f5f5f5;
+      &.uploaded {
+        border: 1px solid #17710f;
+      }
+      &.error {
+        border: 1px solid #962923;
+      }
       border-radius: 4px;
-      .thumbnail {
+      .thumbnail,
+      .media-blank {
         max-width: 64px;
         max-height: 64px;
       }
@@ -43,7 +50,7 @@
         }
       }
     }
-    &-images {
+    &-image {
       display: flex;
       flex-direction: row;
       flex-flow: wrap;
@@ -51,8 +58,11 @@
     &-audio {
       display: flex;
       flex-direction: column;
+      .media-preview .media-details {
+        display: none;
+      }
     }
-    &-documents {
+    &-document {
       display: flex;
       flex-direction: row;
       flex-flow: wrap;
