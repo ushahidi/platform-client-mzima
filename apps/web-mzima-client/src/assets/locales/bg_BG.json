@@ -114,6 +114,7 @@
     "close_and_view": "Close and view results",
     "show_more_less": "Покажи повече/по-малко",
     "filters": "Пресяване",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Пресяване по допитване",
     "configure": "Настрой",
     "post": "Публикация",
@@ -602,6 +603,7 @@
     "source": "Източник",
     "saved_filters": "Saved filters",
     "saved_filter": "Saved filter",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Are you sure you want to delete this saved filter?"
