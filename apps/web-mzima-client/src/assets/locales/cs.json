@@ -114,6 +114,7 @@
     "close_and_view": "Zavřete a zobrazte výsledky",
     "show_more_less": "Zobrazit více / méně",
     "filters": "Filtry",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Filtrovat podle průzkumu",
     "configure": "Konfigurovat",
     "post": "Příspěvek",
@@ -602,6 +603,7 @@
     "source": "Zdroj",
     "saved_filters": "Saved filters",
     "saved_filter": "Uložený filtr",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Opravdu chcete odstranit tento uložený filtr?"
