@@ -88,7 +88,7 @@ export const surveyFields = [
   {
     label: 'survey.upload_image',
     type: 'media',
-    input: 'upload',
+    input: 'image',
     instructions: 'survey.upload_desc',
     config: {
       hasCaption: true,

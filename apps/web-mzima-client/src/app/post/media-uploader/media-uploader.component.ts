@@ -172,6 +172,16 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
                   });
                   // if (this.progressCallback)
                   //     this.progressCallback(100);
+                  setTimeout(
+                    (theMediaFile: MediaFile) => {
+                      this.updateMediaFile(theMediaFile.generatedId, (aMediaFile) => {
+                        aMediaFile.status = 'ready';
+                        return aMediaFile;
+                      });
+                    },
+                    3000,
+                    mediaFile,
+                  );
                 }
               }),
               last(),
@@ -197,7 +207,6 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
   async clickStatusButton(index: number) {
     const mediaFile = this.mediaFiles[index];
 
-    // Are we deleting?
     if (mediaFile.status === 'upload' || mediaFile.status === 'ready') {
       const confirmed = await this.confirm.open({
         title: this.translate.instant('notify.default.are_you_sure_you_want_to_delete_this'),
@@ -206,15 +215,8 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
 
       if (!confirmed) return;
 
-      if (mediaFile.status === 'upload') {
-        this.mediaFiles = this.mediaFiles.filter((e, i) => i !== index);
-      } else {
-        this.mediaFiles[index].status = 'delete';
-      }
-    } else if (mediaFile.status === 'uploading') {
-      console.log(mediaFile);
+      this.mediaFiles[index].status = 'delete';
     }
-
     this.onChange(this.mediaFiles);
   }
 

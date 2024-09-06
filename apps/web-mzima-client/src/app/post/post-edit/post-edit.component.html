@@ -410,11 +410,11 @@
             </ng-container>
 
             <ng-container *ngIf="field.type === 'media'">
+              <span class="form-row__instruction" *ngIf="maxImageSize">
+                Max size: {{ field.config.maxUploadSize }} MB
+              </span>
               <div *ngIf="field.input === 'upload'">
-                <!-- <span class="form-row__instruction" *ngIf="maxImageSize">
-                  Max size: {{ (maxImageSize / 1000 / 1000).toFixed(2) }} MB
-                </span> -->
-                <!-- <app-image-uploader
+                <app-image-uploader
                   [formControlName]="field.key"
                   [hasCaption]="field.config.hasCaption"
                   (change)="maxSizeError = false"
@@ -423,7 +423,9 @@
                   "
                   [maxSizeError]="maxSizeError"
                 >
-                </app-image-uploader> -->
+                </app-image-uploader>
+              </div>
+              <div *ngIf="field.input === 'image'">
                 <app-media-uploader
                   [formControlName]="field.key"
                   media="image"

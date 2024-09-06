@@ -1,55 +1,9 @@
 <div class="media-loader">
   <div class="media-loader__btn">
     <div class="media-loader__preview" *ngIf="mediaFiles.length > 0">
-      <!-- <div class="media-loader__preview-images" *ngIf="media === 'image'">
-        <div class="media-preview image {{mediaFile.status}}" *ngFor="let mediaFile of mediaFiles; let i = index">
-          <img class="thumbnail" [src]="mediaFile.preview" />
-          <div class="media-details">
-            <div class="filename">{{ getFileName(mediaFile) }}</div>
-            <div class="filesize">{{ getFileSize(mediaFile) }}</div>
-          </div>
-          <div class="status-button" (click)="clickStatusButton(i)">
-            <mat-icon class="xicon" icon svgIcon="close"></mat-icon>
-          </div>
-        </div>
-      </div>
-      <div class="media-loader__preview-audio" *ngIf="media === 'audio'">
-        <div class="media-preview audio {{mediaFile.status}}" *ngFor="let mediaFile of mediaFiles; let i = index">
-          <audio controls [src]="mediaFile.preview"></audio>
-          <div class="status-button" (click)="clickStatusButton(i)">
-            <mat-icon class="xicon" icon svgIcon="close"></mat-icon>
-          </div>
-        </div>
-      </div>
-      <div class="media-loader__preview-documents" *ngIf="media === 'document'">
-        <div class="media-preview document {{mediaFile.status}}" *ngFor="let mediaFile of mediaFiles; let i = index">
-          <ng-template [ngIf]="mediaFile.status === 'ready' || mediaFile.status === 'uploaded'" [ngIfElse]="inProgress">
-            <img class="thumbnail" [src]="getDocumentThumbnail(mediaFile)" />
-            <div class="media-details">
-              <div class="filename">{{ getFileName(mediaFile) }}</div>
-              <div class="filesize">{{ getFileSize(mediaFile) }}</div>
-            </div>
-          </ng-template>
-          <ng-template #inProgress>
-            <div class="media-blank">
-              <mat-icon *ngIf="mediaFile.status === 'error'" class="xicon" icon svgIcon="warning"></mat-icon>
-              <app-spinner *ngIf="mediaFile.status === 'uploading'"/>
-            </div>
-            <div class="media-status"></div>
-          </ng-template>
-          <div class="status-button" (click)="clickStatusButton(i)">
-            <ng-template [ngIf]="mediaFile.status === 'ready'" [ngIfElse]="cross">
-              <mat-icon class="xicon" icon svgIcon="check"></mat-icon>
-            </ng-template>
-            <ng-template #cross>
-              <mat-icon class="xicon" icon svgIcon="close"></mat-icon>
-            </ng-template>
-          </div>
-        </div>
-      </div> -->
       <div class="media-loader__preview-{{ media }}">
         <div
-          class="media-preview {{ media }} {{ mediaFile.status }}"
+          [class]="'media-preview ' + media + ' ' + mediaFile.status"
           *ngFor="let mediaFile of mediaFiles; let i = index"
         >
           <ng-template
@@ -101,8 +55,8 @@
         [data-qa]="'btn-post-item-upload'"
         [ngSwitch]="mediaType"
       >
+        <mat-icon iconPrefix>{{ mediaType.icon }}</mat-icon>
         {{ mediaType.buttonText | translate }}
-        <mat-icon>{{ mediaType.icon }}</mat-icon>
       </mzima-client-button>
       <input
         hidden
