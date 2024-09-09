@@ -47,6 +47,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public videoUrls: any[] = [];
   public isPostLoading: boolean = true;
   public isManagePosts: boolean = false;
+  public postChanged: boolean;
 
   constructor(
     protected override sessionService: SessionService,
@@ -71,6 +72,8 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
 
         this.postId = Number(params['id']);
+        this.postChanged = true;
+        console.log(this.postChanged, this.postId, this.isPostLoading);
 
         this.getPost(this.postId);
       }
@@ -89,6 +92,8 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       if (changes['post'].currentValue?.post_content?.length) {
         this.getData(changes['post'].currentValue);
         if (this.post) {
+          // this.postChanged = !this.isPostLoading;
+          // console.log(this.postChanged, this.postId, this.isPostLoading);
           this.setMetaData(this.post!);
           this.preparePostForView();
         }
@@ -115,6 +120,8 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       this.isPostLoading = false;
       this.getData(this.post);
       this.preparePostForView();
+      this.postChanged = false;
+      console.log(this.postChanged, this.postId, this.isPostLoading);
     }
   }
 
@@ -195,9 +202,11 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   private async getPostInformation(postId: number): Promise<any> {
     try {
       this.isPostLoading = true;
+      // this.postChanged = true;
       return await lastValueFrom(this.postsService.getById(postId));
     } catch (err: any) {
       this.isPostLoading = false;
+      // this.postChanged = false;
       return;
     }
   }
