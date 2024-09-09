@@ -209,7 +209,7 @@
     <!--  -->
   </ng-container>
 </div>
-<ng-container *ngIf="isManagePosts">
+<ng-container *ngIf="isManagePosts && !postChanged">
   <app-post-conversation
     *ngIf="post && post.source === 'SMS'"
     [post]="post"
