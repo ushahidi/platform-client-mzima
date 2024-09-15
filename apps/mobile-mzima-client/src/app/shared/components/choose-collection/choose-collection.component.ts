@@ -238,7 +238,7 @@ export class ChooseCollectionComponent {
       this.createCollectionForm.value.visible_to === 'everyone'
         ? null
         : (this.createCollectionForm.value.visible_to as any).options;
-    // collectionData.featured = collectionData.visible_to.value === 'only_me';
+    collectionData.featured = collectionData.visible_to.value === 'only_me';
     delete collectionData.visible_to;
 
     this.userData$.subscribe((userData) => {
