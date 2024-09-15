@@ -238,7 +238,7 @@ export class ChooseCollectionComponent {
       this.createCollectionForm.value.visible_to === 'everyone'
         ? null
         : (this.createCollectionForm.value.visible_to as any).options;
-    collectionData.featured = collectionData.visible_to.value === 'only_me';
+    // collectionData.featured = collectionData.visible_to.value === 'only_me';
     delete collectionData.visible_to;
 
     this.userData$.subscribe((userData) => {
@@ -410,10 +410,7 @@ export class ChooseCollectionComponent {
       is_notifications_enabled: false,
     });
 
-    this.updateForm(
-      'visible_to',
-      formHelper.mapRoleToVisible(collection.role, !!collection.featured),
-    );
+    this.updateForm('visible_to', formHelper.mapRoleToVisible(collection.role));
 
     this.notificationsService.get(String(collection.id)).subscribe({
       next: (response) => {
