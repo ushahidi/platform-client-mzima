@@ -25,7 +25,7 @@
     "add_all_fields": "Přidat všechna pole",
     "insert_text_here": "Sem vložte text...",
     "deployment_not_found" : {
-      "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
+      "text" : "Je nám líto, ale toto nasazení neexistuje. Chcete vytvořit nové nasazení?",
       "button_exit" : "Exit",
       "button_create_deployment" : "Create Deployment"
     },
