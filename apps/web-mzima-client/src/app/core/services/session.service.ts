@@ -26,11 +26,13 @@ export class SessionService {
   private readonly _isFiltersVisible = new BehaviorSubject<boolean>(false);
   private readonly _isMainFiltersHidden = new BehaviorSubject<boolean>(false);
   private readonly _deploymentInfo = new BehaviorSubject<any>(false);
+  private readonly _configLoaded = new BehaviorSubject<boolean>(false);
 
   readonly currentUserData$: Observable<UserInterface> = this._currentUserData$.asObservable();
   readonly isFiltersVisible$ = this._isFiltersVisible.asObservable();
   readonly isMainFiltersHidden$ = this._isMainFiltersHidden.asObservable();
   readonly deploymentInfo$ = this._deploymentInfo.asObservable();
+  readonly configLoaded$ = this._configLoaded.asObservable();
 
   private currentSessionData: SessionTokenInterface = {
     accessToken: '',
@@ -102,6 +104,7 @@ export class SessionService {
       private: this.currentConfig['site']?.private ?? false,
       email: this.currentConfig['site']?.email ?? '',
     });
+    this.configLoaded = true;
   }
 
   loadSessionDataFromLocalStorage() {
@@ -134,6 +137,18 @@ export class SessionService {
 
   get accessToSite(): boolean {
     return !this.currentConfig.site.private || !!this.currentAuthToken;
+  }
+
+  get siteFound(): boolean {
+    return (
+      this.currentConfig &&
+      this.currentConfig.site &&
+      Object.keys(this.currentConfig.site).length > 0
+    );
+  }
+
+  set configLoaded(configLoaded: boolean) {
+    this._configLoaded.next(configLoaded);
   }
 
   get currentAuthTokenType() {
