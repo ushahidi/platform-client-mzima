@@ -27,7 +27,7 @@
     "deployment_not_found" : {
       "text" : "Je nám líto, ale toto nasazení neexistuje. Chcete vytvořit nové nasazení?",
       "button_exit" : "Ukončení",
-      "button_create_deployment" : "Create Deployment"
+      "button_create_deployment" : "Vytvořit nasazení"
     },
     "documentation": {
       "title": "Dokumentace",
