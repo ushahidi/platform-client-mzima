@@ -30,6 +30,10 @@
     }
   }
 
+  .cdk-keyboard-focused {
+    border: 2px solid var(--color-black);
+  }
+
   &__control {
     --size: 20px;
     margin: 0 4px;

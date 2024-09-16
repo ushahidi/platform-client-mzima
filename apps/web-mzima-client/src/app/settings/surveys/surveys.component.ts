@@ -82,17 +82,19 @@ export class SurveysComponent implements OnInit {
   }
 
   async deleteSurvey() {
+    const surveyCountVariable = { count: this.selectedSurveys.length };
     const confirmed = await this.confirmModalService.open({
       title:
         this.selectedSurveys.length > 1
-          ? 'Are you sure you want to delete selected surveys?'
+          ? this.translate.instant('notify.survey.bulk_destroy_confirm', surveyCountVariable)
           : this.translate.instant('notify.survey.destroy_confirm'),
       description: `
         <p>${
           this.selectedSurveys.length > 1
-            ? 'Deleting these surveys will remove it from database. This action cannot be undone.'
+            ? this.translate.instant('notify.survey.bulk_destroy_confirm_desc', surveyCountVariable)
             : this.translate.instant('notify.survey.destroy_confirm_desc')
         }</p>
+        <p>${this.translate.instant('notify.survey.destroy_confirm_desc_end')}</p>
       `,
 
       confirmButtonText: this.translate.instant('app.yes_delete'),
