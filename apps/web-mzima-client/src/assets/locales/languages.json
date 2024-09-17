@@ -1,4 +1,5 @@
 {"languages":[
+  {"name":"Albanian","code":"sq","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Arabic","code":"ar","nplurals":6,"pluralequation":"language.pluralequation","rtl":true},
   {"name":"Armenian","code":"hy","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Bulgarian (Bulgaria)","code":"bg-BG","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
@@ -10,10 +11,15 @@
   {"name":"French","code":"fr","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"French (France)","code":"fr-FR","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"German","code":"de","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Haitian","code":"ht","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Hungarian","code":"hu","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Indonesian","code":"id","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Italian","code":"it","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Japanese","code":"ja","nplurals":1,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Persian (Iran)","code":"fa-IR","nplurals":2,"pluralequation":"language.pluralequation","rtl":true},
   {"name":"Portuguese (Brazil)","code":"pt-BR","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
   {"name":"Russian","code":"ru","nplurals":4,"pluralequation":"language.pluralequation","rtl":false},
-  {"name":"Spanish","code":"es","nplurals":2,"pluralequation":"language.pluralequation","rtl":false}
+  {"name":"Spanish","code":"es","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Swahili","code":"sw","nplurals":2,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Vietnamese","code":"vi","nplurals":2,"pluralequation":"language.pluralequation","rtl":false}
 ]}

@@ -237,7 +237,7 @@
     [ngClass]="{ 'search-form__filters-panel--open': isFiltersVisible }"
   >
     <div class="search-form__filters-panel__head" *ngIf="!isDesktop">
-      <h3>Filters and sorting</h3>
+      <h3>{{ 'app.filters_and_sorting' | translate }}</h3>
       <mzima-client-button
         tabindex="-1"
         fill="outline"
@@ -322,10 +322,9 @@
           <mat-icon iconPrefix svgIcon="plus"></mat-icon>
           {{ 'global_filter.save_new_filter' | translate }}
         </mzima-client-button>
-        <span class="no-saved-filters" postfix *ngIf="savedSearches?.length === 0"
-          >No saved filters. Saved filter(s) will appear here for you to select once made
-          available.</span
-        >
+        <span class="no-saved-filters" postfix *ngIf="savedSearches?.length === 0">
+          {{ 'global_filter.no_saved_filters' | translate }}
+        </span>
       </app-filter-control>
 
       <app-filter-control

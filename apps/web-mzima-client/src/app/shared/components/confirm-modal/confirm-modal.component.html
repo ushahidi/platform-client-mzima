@@ -45,7 +45,11 @@
       >
         {{ data.cancelButtonText || ('app.cancel' | translate) }}
       </mzima-client-button>
-      <mzima-client-button [mat-dialog-close]="true" [data-qa]="'btn-confirm-delete'">
+      <mzima-client-button
+        color="danger"
+        [mat-dialog-close]="true"
+        [data-qa]="'btn-confirm-delete'"
+      >
         {{ data.confirmButtonText || ('app.delete' | translate) }}
       </mzima-client-button>
     </ng-container>
