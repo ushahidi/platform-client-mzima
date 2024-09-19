@@ -118,7 +118,6 @@ export class ChooseCollectionComponent {
     });
 
     this.userData$ = this.sessionService.currentUserData$.pipe(untilDestroyed(this));
-
     this.userData$.subscribe((userData) => {
       this.userRole = userData.role!;
       this.currentUserId = userData.userId;
@@ -126,19 +125,18 @@ export class ChooseCollectionComponent {
         ? userData.permissions.join(',')
         : userData.permissions!;
 
-      this.canManageCollections = this.checkManageCollections(userData);
+      if (this.userRole && this.userPermissions) {
+        this.canManageCollections = this.checkManageCollections(userData);
+      } else {
+        console.log('Cannot retrieve userRole and permissions');
+      }
       this.initRoles();
     });
   }
 
-  private checkManageCollections(userData: UserInterface): boolean {
-    if (Array.isArray(userData.permissions!)) {
-      const hasPermission = userData.permissions!.includes('Manage Collections and Saved Searches');
-      return hasPermission;
-    } else {
-      console.log('User doesnt have the collection management rights');
-      return false;
-    }
+  private checkManageCollections(userData: UserInterface) {
+    const hasPermission = userData.permissions!.includes('Manage Collections and Saved Searches');
+    return hasPermission;
   }
 
   async ionViewWillEnter() {
