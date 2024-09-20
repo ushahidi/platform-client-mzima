@@ -250,7 +250,7 @@
                 (refresh)="refreshPost(post)"
                 (deleted)="postDeleted([post])"
                 (click)="showPostDetails(post)"
-                [selectable]="isBulkOptionsVisible"
+                [selectable]="isBulkOptionsVisible && !isLocked(post)"
                 [isChecked]="isPostChecked(post)"
                 (statusChanged)="postStatusChanged()"
                 (selected)="isPostSelected($event, post)"
