@@ -74,5 +74,5 @@ export enum Icons {
   infoCircle = 'info-circle',
   thumbUp = 'thumb-up',
   ellipses = 'ellipses',
-  https = 'https',
+  lock = 'lock',
 }
