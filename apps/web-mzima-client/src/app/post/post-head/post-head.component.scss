@@ -13,4 +13,19 @@
       --icon-size: 24px;
     }
   }
+  .post-lock {
+    color: var(--color-black);
+    background-color: var(--color-primary-60);
+    border-radius: 4px;
+    padding: 2px 8px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+
+    &__icon {
+      width: var(--size, 12px);
+      height: var(--size, 12px);
+    }
+  }
 }
