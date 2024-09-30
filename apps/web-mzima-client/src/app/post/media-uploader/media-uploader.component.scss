@@ -22,6 +22,10 @@
       .media-blank {
         max-width: 64px;
         max-height: 64px;
+        .loading-spinner {
+          width: 100%;
+          height: 100%;
+        }
       }
       .media-details {
         padding: 8px;

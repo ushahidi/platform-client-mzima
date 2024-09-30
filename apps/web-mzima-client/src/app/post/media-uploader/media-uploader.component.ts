@@ -166,7 +166,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
                 // }
                 // else
                 if (uploadEvent.type === HttpEventType.Response) {
-                  this.updateMediaFile(mediaFile.generatedId, (aMediaFile) => {
+                  this.updateMediaFileById(mediaFile.generatedId, (aMediaFile) => {
                     aMediaFile.status = 'uploaded';
                     return aMediaFile;
                   });
@@ -174,7 +174,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
                   //     this.progressCallback(100);
                   setTimeout(
                     (theMediaFile: MediaFile) => {
-                      this.updateMediaFile(theMediaFile.generatedId, (aMediaFile) => {
+                      this.updateMediaFileById(theMediaFile.generatedId, (aMediaFile) => {
                         aMediaFile.status = 'ready';
                         return aMediaFile;
                       });
@@ -186,7 +186,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
               }),
               last(),
               catchError((error: HttpErrorResponse) => {
-                this.updateMediaFile(mediaFile.generatedId, (aMediaFile) => {
+                this.updateMediaFileById(mediaFile.generatedId, (aMediaFile) => {
                   aMediaFile.status = 'error';
                   return aMediaFile;
                 });
@@ -196,6 +196,17 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
           uploads.push(uploadObservable);
         }
         forkJoin(uploads).subscribe((results) => {
+          for (const result of results) {
+            const filename = this.getFileNameFromUrl(result.body.result.original_file_url);
+            this.updateMediaFileByNameAndSize(
+              filename,
+              result.body.result.original_file_size,
+              (aMediaFile) => {
+                aMediaFile.id = result.body.result.id;
+                return aMediaFile;
+              },
+            );
+          }
           this.onChange(this.mediaFiles);
           inputElement.value = '';
           console.log(results);
@@ -204,7 +215,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  async clickStatusButton(index: number) {
+  async clickDeleteButton(index: number) {
     const mediaFile = this.mediaFiles[index];
 
     if (mediaFile.status === 'upload' || mediaFile.status === 'ready') {
@@ -241,6 +252,15 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
     return mediaFile.file ? mediaFile.file?.name : 'unknown';
   }
 
+  // Our media api returns a relative url with a filename that has an id prepended, instead of the original filename.
+  // This function attempts to take that url, and return the original filename.
+  getFileNameFromUrl(url: string): string {
+    const lastSlashIndex = url.lastIndexOf('/');
+    const newFilename = lastSlashIndex !== -1 ? url.substring(lastSlashIndex + 1) : url;
+    const firstHyphenIndex = newFilename.indexOf('-') + 1;
+    return newFilename.substring(firstHyphenIndex);
+  }
+
   getFileSize(mediaFile: MediaFile): string {
     const filesize: number = mediaFile.file ? mediaFile.file.size : 0;
     // Megabytes
@@ -257,10 +277,27 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  updateMediaFile(id: number, updateCallback: (mediaFile: MediaFile) => MediaFile) {
+  updateMediaFileById(id: number, updateCallback: (mediaFile: MediaFile) => MediaFile) {
     for (let i = 0; i < this.mediaFiles.length; i++) {
       if (this.mediaFiles[i].generatedId === id) {
         this.mediaFiles[i] = updateCallback(this.mediaFiles[i]);
+        i = this.mediaFiles.length;
+      }
+    }
+  }
+
+  updateMediaFileByNameAndSize(
+    filename: string,
+    size: number,
+    updateCallback: (mediaFile: MediaFile) => MediaFile,
+  ) {
+    for (let i = 0; i < this.mediaFiles.length; i++) {
+      let mediaFile = this.mediaFiles[i];
+      if (
+        mediaFile.file?.name.toLowerCase() === filename.toLowerCase() &&
+        mediaFile.file?.size === size
+      ) {
+        mediaFile = updateCallback(mediaFile);
         i = this.mediaFiles.length;
       }
     }

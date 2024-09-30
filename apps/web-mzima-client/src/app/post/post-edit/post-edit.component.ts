@@ -644,6 +644,15 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   value.value = this.form.value[field.key]?.id || null;
                 }
                 break;
+              case 'image':
+                value.value = this.form.value[field.key] || null;
+                break;
+              case 'audio':
+                value.value = this.form.value[field.key] || null;
+                break;
+              case 'document':
+                value.value = this.form.value[field.key] || null;
+                break;
               default:
                 value.value = this.form.value[field.key] || null;
             }

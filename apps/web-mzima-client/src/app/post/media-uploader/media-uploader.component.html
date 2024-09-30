@@ -30,16 +30,19 @@
                 icon
                 svgIcon="warning"
               ></mat-icon>
-              <app-spinner *ngIf="mediaFile.status === 'uploading'"></app-spinner>
+              <app-spinner
+                class="loading-spinner"
+                *ngIf="mediaFile.status === 'uploading'"
+              ></app-spinner>
             </div>
             <div class="media-status"></div>
           </ng-template>
-          <div class="status-button" (click)="clickStatusButton(i)">
-            <ng-template [ngIf]="mediaFile.status === 'ready'" [ngIfElse]="cross">
-              <mat-icon class="xicon" icon svgIcon="check"></mat-icon>
+          <div class="status-button" (click)="clickDeleteButton(i)">
+            <ng-template [ngIf]="mediaFile.status === 'uploaded'" [ngIfElse]="cross">
+              <mat-icon class="xicon" svgIcon="check"></mat-icon>
             </ng-template>
             <ng-template #cross>
-              <mat-icon class="xicon" icon svgIcon="close"></mat-icon>
+              <mat-icon class="xicon" svgIcon="close"></mat-icon>
             </ng-template>
           </div>
         </div>
