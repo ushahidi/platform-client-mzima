@@ -408,10 +408,7 @@ export class ChooseCollectionComponent {
       is_notifications_enabled: false,
     });
 
-    this.updateForm(
-      'visible_to',
-      formHelper.mapRoleToVisible(collection.role, !!collection.featured),
-    );
+    this.updateForm('visible_to', formHelper.mapRoleToVisible(collection.role));
 
     this.notificationsService.get(String(collection.id)).subscribe({
       next: (response) => {
