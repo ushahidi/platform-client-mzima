@@ -858,7 +858,9 @@
       "unlocked": "Post successfully unlocked",
       "unlock": "Unlock",
       "lock_broken_by_other": "Η δημοσίευσή σας έχει ξεκλειδωθεί. Οι τρέχουσες, μη αποθηκευμένες αλλαγές, θα χαθούν.",
-      "locked_message": "Αυτή η ανάρτηση είναι κλειδωμένη επειδή <strong>{{χρήστης}}</strong> εργάζεται σε αυτή, τώρα. Προσπάθησε να διορθώσεις άλλη ανάρτηση "
+      "locked_message": "Αυτή η ανάρτηση είναι κλειδωμένη επειδή <strong>{{χρήστης}}</strong> εργάζεται σε αυτή, τώρα. Προσπάθησε να διορθώσεις άλλη ανάρτηση ",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
     "modify": {
       "intro": "Επιλογή Έρευνας",
