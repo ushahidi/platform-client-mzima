@@ -791,7 +791,9 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       });
     }
   }
-
+  public isLocked(post: PostResult) {
+    return this.postsService.isPostLockedForCurrentUser(post);
+  }
   public postStatusChanged(): void {
     this.getPosts({ params: this.params });
     this.selectedPosts = [];
