@@ -26,6 +26,7 @@
     &__icon {
       width: var(--size, 12px);
       height: var(--size, 12px);
+      overflow: visible;
     }
   }
 }
