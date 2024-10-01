@@ -858,7 +858,9 @@
       "unlocked": "Publicación desbloqueada con éxito",
       "unlock": "Desbloquear",
       "lock_broken_by_other": "Su publicación se ha desbloqueado. Sus cambios recientes sin guardar se perderán.",
-      "locked_message": "La publicación está bloqueada porque <strong>{{user}}</strong> está trabajando en ella en este momento. Pruebe a editar otra publicación."
+      "locked_message": "La publicación está bloqueada porque <strong>{{user}}</strong> está trabajando en ella en este momento. Pruebe a editar otra publicación.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
     "modify": {
       "intro": "Seleccionar survey:",
