@@ -858,7 +858,9 @@
       "unlocked": "Příspěvky úspěšně odemčeny",
       "unlock": "Odemknout",
       "lock_broken_by_other": "Váš příspěvek byl odemčen. Vaše aktuální neuložené změny budou ztraceny.",
-      "locked_message": "Příspěvek je uzamčen, protože právě na něm pracuje <strong>{{user}}</strong>. Zkuste upravovat jiný příspěvek."
+      "locked_message": "Příspěvek je uzamčen, protože právě na něm pracuje <strong>{{user}}</strong>. Zkuste upravovat jiný příspěvek.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
     "modify": {
       "intro": "Vybrat průzkum",
