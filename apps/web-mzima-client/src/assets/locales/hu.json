@@ -858,7 +858,9 @@
       "unlocked": "A bejegyzés zárolása sikeresen feloldva",
       "unlock": "Feloldás",
       "lock_broken_by_other": "A bejegyzésed unlock-olva van. A jelenlegi, nem mentett változások el fognak veszni.",
-      "locked_message": "A bejegyzés zárolva van, mert 1{{ user }}1 dolgozik rajta. Próbálkozz más bejegyzések szerkesztésével. "
+      "locked_message": "A bejegyzés zárolva van, mert 1{{ user }}1 dolgozik rajta. Próbálkozz más bejegyzések szerkesztésével. ",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
     "modify": {
       "intro": "Kérdőív kiválasztása:",
