@@ -858,7 +858,9 @@
       "unlocked": "Post uspješno odključan",
       "unlock": "Otključaj",
       "lock_broken_by_other": "Vaš post je otključan. Trenutni nespremljene promjene bit će izgubljene.",
-      "locked_message": "Post je zaključan zbog toga što<strong>{{ user }}</strong> upravo radi na njemu. Pokušajte urediti drugi post."
+      "locked_message": "Post je zaključan zbog toga što<strong>{{ user }}</strong> upravo radi na njemu. Pokušajte urediti drugi post.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
     "modify": {
       "intro": "Odaberi aknetu:",
