@@ -9,7 +9,7 @@ import { searchFormHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
-import { filter, forkJoin, Subject, Subscription } from 'rxjs';
+import { filter, forkJoin, Subscription } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 import { MainViewComponent } from '@shared';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
@@ -18,7 +18,6 @@ import { LanguageService } from '../core/services/language.service';
 import {
   SavedsearchesService,
   PostsService,
-  GeoJsonFilter,
   PostResult,
   PostStatus,
   postHelpers,
@@ -43,10 +42,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   private _routerEvent = Subscription.EMPTY;
   @ViewChild('feed') public feed: ElementRef;
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
-  private readonly getPostsSubject = new Subject<{
-    params: GeoJsonFilter;
-    add?: boolean;
-  }>();
+  // private readonly getPostsSubject = new Subject<{
+  //   params: GeoJsonFilter;
+  //   add?: boolean;
+  // }>();
   public pagination = {
     page: 0,
     limit: 20,
