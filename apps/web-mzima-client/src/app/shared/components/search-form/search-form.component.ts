@@ -702,10 +702,10 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   public resetSavedFilter(): void {
-    this.clearSavedFilter();
-    this.resetForm();
     localStorage.removeItem(this.session.getLocalStorageNameMapper('filters'));
     localStorage.removeItem(this.session.getLocalStorageNameMapper('activeSavedSearch'));
+    this.clearSavedFilter();
+    this.resetForm();
     this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
   }
 
