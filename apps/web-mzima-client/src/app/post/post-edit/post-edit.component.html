@@ -520,11 +520,13 @@
               class="task__info-banner task__info-banner-warning"
               *ngIf="task.show_when_published"
             >
-              <mat-icon
-                icon
-                svgIcon="info-circle"
-                class="task__info-icon task__info-icon-warning"
-              ></mat-icon>
+              <div>
+                <mat-icon
+                  icon
+                  svgIcon="info-circle"
+                  class="task__info-icon task__info-icon-warning"
+                ></mat-icon>
+              </div>
               <p>{{ 'survey.task_visible_when_published' | translate }}</p>
             </div>
 
@@ -532,11 +534,14 @@
               class="task__info-banner task__info-banner-warning"
               *ngIf="task.task_is_internal_only"
             >
-              <mat-icon
-                icon
-                svgIcon="info-circle"
-                class="task__info-icon task__info-icon-warning"
-              ></mat-icon>
+              <div>
+                <mat-icon
+                  icon
+                  svgIcon="info-circle"
+                  class="task__info-icon task__info-icon-warning"
+                >
+                </mat-icon>
+              </div>
               <div>
                 <p>{{ 'survey.marked_for_internal.header' | translate }}</p>
                 <p>{{ 'survey.marked_for_internal.body' | translate }}</p>
@@ -557,16 +562,18 @@
                 'task__info-banner-warning': !taskForm.value[task.id]
               }"
             >
-              <mat-icon
-                icon
-                [svgIcon]="taskForm.value[task.id] ? 'thumb-up' : 'info-circle'"
-                class="task__info-icon"
-                [ngClass]="{
-                  'task__info-icon-completed': taskForm.value[task.id],
-                  'task__info-icon-warning': !taskForm.value[task.id]
-                }"
-              >
-              </mat-icon>
+              <div>
+                <mat-icon
+                  icon
+                  [svgIcon]="taskForm.value[task.id] ? 'thumb-up' : 'info-circle'"
+                  class="task__info-icon"
+                  [ngClass]="{
+                    'task__info-icon-completed': taskForm.value[task.id],
+                    'task__info-icon-warning': !taskForm.value[task.id]
+                  }"
+                >
+                </mat-icon>
+              </div>
               <div>
                 <p>
                   {{
