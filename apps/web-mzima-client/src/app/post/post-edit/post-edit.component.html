@@ -72,28 +72,6 @@
         <div [ngStyle]="{ '--color': color }">
           <ng-container *ngIf="task.type !== 'post'">
             <h2 class="task-label">{{ task.translations[activeLanguage]?.label || task.label }}</h2>
-
-            <div *ngIf="task.show_when_published">
-              <p>{{ 'survey.task_visible_when_published' | translate }}</p>
-            </div>
-
-            <div *ngIf="task.task_is_internal_only">
-              <p>{{ 'survey.marked_for_internal' | translate }}</p>
-            </div>
-
-            <div class="form-row">
-              <mat-slide-toggle
-                class="task-complete"
-                name="accept-survey"
-                [required]="task.reqiured"
-                labelPosition="before"
-                [checked]="task.completed"
-                (change)="taskComplete(task, $event)"
-              >
-                {{ 'post.task_completed' | translate }}
-                <span class="color-accent" *ngIf="task.required">*</span>
-              </mat-slide-toggle>
-            </div>
           </ng-container>
 
           <div
@@ -536,6 +514,30 @@
               </p>
             </mat-error>
           </div>
+
+          <ng-container *ngIf="task.type !== 'post'">
+            <div *ngIf="task.show_when_published">
+              <p>{{ 'survey.task_visible_when_published' | translate }}</p>
+            </div>
+
+            <div *ngIf="task.task_is_internal_only">
+              <p>{{ 'survey.marked_for_internal' | translate }}</p>
+            </div>
+
+            <div class="form-row">
+              <mat-slide-toggle
+                class="task-complete"
+                name="accept-survey"
+                [required]="task.reqiured"
+                labelPosition="before"
+                [checked]="task.completed"
+                (change)="taskComplete(task, $event)"
+              >
+                {{ 'post.task_completed' | translate }}
+                <span class="color-accent" *ngIf="task.required">*</span>
+              </mat-slide-toggle>
+            </div>
+          </ng-container>
         </div>
       </div>
 
