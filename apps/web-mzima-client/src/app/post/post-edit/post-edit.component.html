@@ -580,7 +580,7 @@
                     (taskForm.value[task.id]
                       ? 'survey.task_is_marked_as.completed'
                       : 'survey.task_is_marked_as.not_completed'
-                    ) | translate
+                    ) | translate : { taskName: task.label }
                   }}
                 </p>
               </div>
