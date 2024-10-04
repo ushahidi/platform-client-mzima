@@ -103,6 +103,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public initialLoad = true;
   public urlFromRouteTrigger: string;
   public urlAfterInteractionWithFilters: string;
+  private postRequests: Subscription[] = [];
 
   constructor(
     protected override router: Router,
@@ -427,17 +428,26 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   loadData(): void {}
 
   private getPosts({ params, loadMore }: { params: any; loadMore?: boolean }): void {
-    /* --------------------------------------------
-      Work with Posts Service to get posts from API
-    ----------------------------------------------*/
-    this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
-      next: (data) => {
-        this.posts = loadMore ? [...this.posts, ...data.results] : data.results;
-      },
-      // complete: () => {
-      //   // console.log('complete?');
-      // },
+    // Call the posts service, keeping the subscription for later
+    const postRequestSubscription = this.postsService
+      .getPosts('', { ...params, ...this.activeSorting })
+      .subscribe({
+        next: (data) => {
+          this.posts = loadMore ? [...this.posts, ...data.results] : data.results;
+        },
+      });
+
+    // Unsubscribe and destroy existing subscriptions....
+    this.postRequests.forEach((subscription) => {
+      subscription.unsubscribe();
     });
+
+    // Reset everything so the user sees some loading indicators
+    this.posts = [];
+    this.isLoading = true;
+
+    // Keep the subscription so we can end it later if its replaced with a new api call
+    this.postRequests.push(postRequestSubscription);
   }
 
   public updateMasonry(): void {
