@@ -69,7 +69,7 @@
         >
           <!-- title, varchar -->
           <ng-container
-            *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar')"
+            *ngIf="field.input === 'text' && (field.type === 'title' || field.type === 'varchar') && field.label !== 'mobile_test'"
           >
             <div class="form-control--section">
               <ion-label class="field-label"
@@ -101,6 +101,21 @@
                 [hintHTML]="field?.instructions"
                 [rows]="3"
               ></app-textarea-control>
+            </div>
+          </ng-container>
+
+          <!-- phone -->
+          <ng-container *ngIf="field.input === 'text' && field.label === 'mobile_test'">
+            <div class="form-control--section">
+              <ion-label class="field-label"
+                >{{field?.label}}
+                <span class="color-accent" *ngIf="field?.required">*</span>
+              </ion-label>
+              <app-phone-field
+                color="light"
+                [required]="field?.required"
+                [formControlName]="field.key"
+              ></app-phone-field>
             </div>
           </ng-container>
 
