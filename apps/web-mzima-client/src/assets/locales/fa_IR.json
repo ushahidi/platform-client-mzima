@@ -296,7 +296,14 @@
     "no_fields": "No fields",
     "select_color": "Select color",
     "choose_survey": "Choose survey",
-    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
+    "marked_for_internal": {
+      "header": "Internal Use Only",
+      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+    },
+    "task_is_marked_as": {
+      "not_completed": "Task Complete? - Use toggle below",
+      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+    },
     "delete_task": "حذف وظیفه",
     "duplicate_survey": "تکراری",
     "main_info": "Main info",
