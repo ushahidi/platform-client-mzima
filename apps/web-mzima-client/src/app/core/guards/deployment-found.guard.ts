@@ -11,7 +11,7 @@ export class DeploymentFoundGuard implements CanActivate {
 
   canActivate(): Observable<boolean | UrlTree> {
     return this.service.configLoaded$.pipe(
-      filter((configLoaded) => configLoaded !== undefined),
+      filter((configLoaded) => configLoaded !== false),
       take(1),
       switchMap((configLoaded) => {
         const siteFound: boolean = this.service.siteFound;
