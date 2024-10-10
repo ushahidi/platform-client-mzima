@@ -99,14 +99,7 @@ export class DataExportComponent implements OnInit {
   exportAll() {
     this.pollingService
       .startExport({ send_to_hdx: false, include_hxl: false, send_to_browser: true })
-      .subscribe({
-        next: () => {
-          // this.loadExportJobs();
-        },
-        error: (err) => {
-          console.error('Export failed: ', err);
-        },
-      });
+      .subscribe();
   }
 
   selectAll(form: FormInterface) {
@@ -141,14 +134,7 @@ export class DataExportComponent implements OnInit {
     });
     this.pollingService
       .startExport({ fields, send_to_hdx: false, include_hxl: false, send_to_browser: true })
-      .subscribe({
-        next: () => {
-          // this.loadExportJobs();
-        },
-        error: (err) => {
-          console.error('Export failed: ', err);
-        },
-      });
+      .subscribe();
   }
 
   selectFields() {
