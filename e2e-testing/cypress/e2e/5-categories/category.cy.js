@@ -17,6 +17,12 @@ describe('Automated Tests for Categories', () => {
     categoryFunctions.verify_created_category_exists();
   });
 
+  //Adds post to categories
+  it('Add Post to Categories', () => {
+    categoryFunctions.add_post_to_category();
+    categoryFunctions.verify_post_with_categories_exists();
+  });
+
   //Deletes category called Children B
   it('Deletes a child Category - Bulk Actions', () => {
     categoryFunctions.open_category_list_page();

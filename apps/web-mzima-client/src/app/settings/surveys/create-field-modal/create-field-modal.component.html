@@ -14,7 +14,7 @@
 <strong mat-dialog-title>{{
   isTranslateMode ? ('form.translate_field' | translate) : ('form.add_field' | translate)
 }}</strong>
-<mat-dialog-content>
+<mat-dialog-content [data-qa]="'new-field-modal'">
   <ng-container *ngIf="selectedFieldType; else allFields">
     <ng-container *ngIf="!isTranslateMode; else translateMode">
       <div class="form-row">

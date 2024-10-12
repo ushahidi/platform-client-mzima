@@ -124,6 +124,42 @@ class CategoryFunctions {
     ).click();
   }
 
+  click_add_post_btn() {
+    cy.get(CategoryLocators.addPostBtn).click();
+  }
+
+  open_survey_with_categories() {
+    cy.get(CategoryLocators.surveySelectItem).click();
+  }
+
+  type_post_title(title) {
+    cy.get(CategoryLocators.postTitleField).should('be.visible').type(title, { force: true });
+  }
+
+  type_post_description(description) {
+    cy.get(CategoryLocators.postDescField).type(description, { force: true });
+  }
+
+  save_post() {
+    cy.get(CategoryLocators.savePostBtn).click();
+  }
+
+  add_post_to_category() {
+    this.click_add_post_btn();
+    //open a survey form to fill in a response
+    this.open_survey_with_categories();
+    cy.wait(1000);
+    //verify categories are seen as expected
+    cy.get('mat-label').contains('Categories');
+    cy.get('.related-post-list').should('exist');
+    //filling in fields and select category
+    this.type_post_title('New Post Title With Categories');
+    this.type_post_description('New Post Description With Categories');
+    cy.get('#mat-checkbox-16-input').click({ force: true });
+    this.save_post();
+    cy.get(CategoryLocators.successBtn).click();
+  }
+
   verify_visibility_matches_parent() {
     cy.wait(1000);
     cy.get(CategoryLocators.selectParentCtgry).click();
@@ -132,6 +168,13 @@ class CategoryFunctions {
       'aria-selected',
       'true',
     );
+  }
+
+  verify_post_with_categories_exists() {
+    cy.get(CategoryLocators.postPreview)
+      .children(CategoryLocators.postItem)
+      .contains('New Post Title With Categories')
+      .should('be.visible');
   }
 
   verify_created_category_exists() {
