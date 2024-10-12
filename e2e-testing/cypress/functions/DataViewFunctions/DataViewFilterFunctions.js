@@ -5,8 +5,11 @@ const loginFunctions = new LoginFunctions();
 
 class DataViewFilterFunctions {
   click_data_view_btn() {
+    cy.intercept('/api/v5/posts?page=19').as('dataViewPage19');
     cy.get(DataViewLocators.dataViewBtn).click();
+
     cy.url().should('include', '/feed');
+    cy.wait('@dataViewPage19').its('response.statusCode').should('eq', 200);
   }
 
   check_post_filter_by_survey() {
@@ -137,6 +140,47 @@ class DataViewFilterFunctions {
       .invoke('attr', 'class')
       .should('contain', 'mat-pseudo-checkbox-checked');
     cy.get(DataViewLocators.feedPageResults).contains('Current results: 20 / 512');
+  }
+
+  check_post_filter_by_categories() {
+    //click search form filter button
+    cy.get(DataViewLocators.revealFiltersBtn).click();
+    //click categories filter button
+    cy.get('button:contains("Categories")').click();
+    //verify a child is not visible before revealing it
+    cy.contains('Needs Escalation').should('not.exist');
+    //drop down to reveal children categories
+    cy.get(':nth-child(2) > .multilevelselect-filter__option__arrow > .mzima-button').click();
+    //verify child now visible
+    cy.contains('Needs Escalation').should('be.visible');
+
+    //add alias to check response from API
+    cy.intercept('/api/v5/posts?page=1').as('posts');
+    //click parent check mark
+    cy.contains('Escalation').click();
+
+    //verify count shows how many categories are selected
+    cy.get(DataViewLocators.selectedFilterCount).contains('4');
+
+    cy.contains('Categories').click({ force: true });
+
+    //wait for response from API before next step
+    cy.wait('@posts').its('response.statusCode').should('eq', 200);
+    //verify count of posts is updated correctly
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 2/2');
+
+    //select another category
+    cy.get('button:contains("Categories")').click();
+    cy.contains('Geolocation').click();
+    //verify count shows how many categories are selected
+    cy.get(DataViewLocators.selectedFilterCount).contains('11');
+    cy.contains('Categories').click({ force: true });
+    //verify count of posts is updated correctly
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20/55');
+
+    //clear all filters
+    cy.get(DataViewLocators.clearFiltersBtn).click();
+    cy.get(DataViewLocators.feedPageResults).contains('Current results: 20/512');
   }
 }
 

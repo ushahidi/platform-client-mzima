@@ -183,7 +183,9 @@
 
 <ng-template #buttonContent>
   <span>{{ title }}</span>
-  <span class="filter-control__button__count" *ngIf="badge">{{ badge }}</span>
+  <span class="filter-control__button__count" *ngIf="badge" [attr.data-qa]="'selected-count'">{{
+    badge
+  }}</span>
   <mat-icon
     class="filter-control__button__arrow"
     [svgIcon]="(isDesktop$ | async)! ? 'arrow-down-thin' : 'arrow-down'"
