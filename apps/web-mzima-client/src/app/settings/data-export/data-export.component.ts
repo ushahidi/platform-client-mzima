@@ -60,12 +60,7 @@ export class DataExportComponent implements OnInit {
 
   listenEventProcess() {
     this.eventBusService.on(EventType.StopExportPolling).subscribe({
-      next: (value) => {
-        this.showProgress = value.process;
-        if (!value.process) {
-          this.loadExportJobs();
-        }
-      },
+      next: (value) => (this.showProgress = value.process),
     });
   }
 
@@ -99,7 +94,15 @@ export class DataExportComponent implements OnInit {
   exportAll() {
     this.pollingService
       .startExport({ send_to_hdx: false, include_hxl: false, send_to_browser: true })
-      .subscribe();
+      // .subscribe();
+      .subscribe({
+        next: () => {
+          this.loadExportJobs();
+        },
+        error: (err) => {
+          console.error('Export failed: ', err);
+        },
+      });
   }
 
   selectAll(form: FormInterface) {
@@ -134,7 +137,15 @@ export class DataExportComponent implements OnInit {
     });
     this.pollingService
       .startExport({ fields, send_to_hdx: false, include_hxl: false, send_to_browser: true })
-      .subscribe();
+      // .subscribe();
+      .subscribe({
+        next: () => {
+          this.loadExportJobs();
+        },
+        error: (err) => {
+          console.error('Export failed: ', err);
+        },
+      });
   }
 
   selectFields() {
