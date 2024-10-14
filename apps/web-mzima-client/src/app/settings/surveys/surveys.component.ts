@@ -49,16 +49,13 @@ export class SurveysComponent implements OnInit {
         page: this.params.page,
         order: this.params.order,
         limit: this.params.limit,
+        only: 'name,id,color',
       })
       .subscribe({
         next: (res) => {
           this.surveys = isAdd ? [...this.surveys, ...res.results] : res.results;
           const { current_page: currentPage, last_page: lastPage, total } = res.meta;
           this.params = { ...this.params, current_page: currentPage, last_page: lastPage, total };
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.log(err);
           this.isLoading = false;
         },
       });
