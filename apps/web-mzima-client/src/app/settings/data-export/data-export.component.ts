@@ -62,6 +62,22 @@ export class DataExportComponent implements OnInit {
     this.eventBusService.on(EventType.StopExportPolling).subscribe({
       next: (value) => (this.showProgress = value.process),
     });
+
+    //Trigger event when export is done (Added ExportDone to EventBusService)
+    this.eventBusService.on(EventType.ExportDone).subscribe({
+      next: (value) => {
+        //Extracting ID from the finished job
+        const finishedJobId = value.jobId;
+        //Attempt to search for the job in this.exportsJobs array
+        const jobIndex = this.exportJobs.findIndex((job) => job.id === finishedJobId);
+        //If the job is found, then it will update the status with new status from event
+        if (jobIndex !== -1) {
+          this.exportJobs[jobIndex].status = value.status;
+        } else {
+          console.error(`Job ${finishedJobId} not found in exportJobs array`);
+        }
+      },
+    });
   }
 
   initUserSettings() {
@@ -94,7 +110,6 @@ export class DataExportComponent implements OnInit {
   exportAll() {
     this.pollingService
       .startExport({ send_to_hdx: false, include_hxl: false, send_to_browser: true })
-      // .subscribe();
       .subscribe({
         next: () => {
           this.loadExportJobs();
@@ -137,7 +152,6 @@ export class DataExportComponent implements OnInit {
     });
     this.pollingService
       .startExport({ fields, send_to_hdx: false, include_hxl: false, send_to_browser: true })
-      // .subscribe();
       .subscribe({
         next: () => {
           this.loadExportJobs();
