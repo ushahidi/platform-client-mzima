@@ -72,28 +72,6 @@
         <div [ngStyle]="{ '--color': color }">
           <ng-container *ngIf="task.type !== 'post'">
             <h2 class="task-label">{{ task.translations[activeLanguage]?.label || task.label }}</h2>
-
-            <div *ngIf="task.show_when_published">
-              <p>{{ 'survey.task_visible_when_published' | translate }}</p>
-            </div>
-
-            <div *ngIf="task.task_is_internal_only">
-              <p>{{ 'survey.marked_for_internal' | translate }}</p>
-            </div>
-
-            <div class="form-row">
-              <mat-slide-toggle
-                class="task-complete"
-                name="accept-survey"
-                [required]="task.reqiured"
-                labelPosition="before"
-                [checked]="task.completed"
-                (change)="taskComplete(task, $event)"
-              >
-                {{ 'post.task_completed' | translate }}
-                <span class="color-accent" *ngIf="task.required">*</span>
-              </mat-slide-toggle>
-            </div>
           </ng-container>
 
           <div
@@ -536,6 +514,93 @@
               </p>
             </mat-error>
           </div>
+
+          <ng-container *ngIf="task.type !== 'post'">
+            <div
+              class="task__info-banner task__info-banner-warning"
+              *ngIf="task.show_when_published"
+            >
+              <div>
+                <mat-icon
+                  icon
+                  svgIcon="info-circle"
+                  class="task__info-icon task__info-icon-warning"
+                ></mat-icon>
+              </div>
+              <p>{{ 'survey.task_visible_when_published' | translate }}</p>
+            </div>
+
+            <div
+              class="task__info-banner task__info-banner-warning"
+              *ngIf="task.task_is_internal_only"
+            >
+              <div>
+                <mat-icon
+                  icon
+                  svgIcon="info-circle"
+                  class="task__info-icon task__info-icon-warning"
+                >
+                </mat-icon>
+              </div>
+              <div>
+                <p>{{ 'survey.marked_for_internal.header' | translate }}</p>
+                <p>{{ 'survey.marked_for_internal.body' | translate }}</p>
+              </div>
+            </div>
+
+            <!---------------------------------------------------------------------------------
+            Depending on if a task is marked as completed or not (through the toggle),
+            the id for that task is added to or removed from "this.taskForm.value" accordingly.
+            Task info banner's color change (for an individual task) is controlled by whether that
+            task's id is present or absent in "this.taskForm.value" - i.e. more like the
+            ngIf value is supplied directly by the form in "real time" 
+            ----------------------------------------------------------------------------------->
+            <div
+              class="task__info-banner"
+              [ngClass]="{
+                'task__info-banner-completed': taskForm.value[task.id],
+                'task__info-banner-warning': !taskForm.value[task.id]
+              }"
+            >
+              <div>
+                <mat-icon
+                  icon
+                  [svgIcon]="taskForm.value[task.id] ? 'thumb-up' : 'info-circle'"
+                  class="task__info-icon"
+                  [ngClass]="{
+                    'task__info-icon-completed': taskForm.value[task.id],
+                    'task__info-icon-warning': !taskForm.value[task.id]
+                  }"
+                >
+                </mat-icon>
+              </div>
+              <div>
+                <p>
+                  {{
+                    (taskForm.value[task.id]
+                      ? 'survey.task_is_marked_as.completed'
+                      : 'survey.task_is_marked_as.not_completed'
+                    ) | translate : { taskName: task.label }
+                  }}
+                </p>
+              </div>
+            </div>
+            <!---->
+
+            <div class="form-row">
+              <mat-slide-toggle
+                class="task-complete"
+                name="accept-survey"
+                [required]="task.reqiured"
+                labelPosition="after"
+                [checked]="task.completed"
+                (change)="taskComplete(task, $event)"
+              >
+                {{ 'post.task_completed' | translate }}
+                <span class="color-accent" *ngIf="task.required">*</span>
+              </mat-slide-toggle>
+            </div>
+          </ng-container>
         </div>
       </div>
 

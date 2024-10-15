@@ -16,7 +16,7 @@ import {
   LoaderService,
   SessionService,
 } from '@services';
-import { filter } from 'rxjs';
+import { debounceTime, filter } from 'rxjs';
 import { BaseComponent } from './base.component';
 import { EnumGtmEvent } from './core/enums/gtm';
 import { Intercom } from '@supy-io/ngx-intercom';
@@ -35,6 +35,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   public isRTL?: boolean;
   public isOnboardingDone = false;
   public showOnboarding = true;
+  public deploymentFound = false;
 
   constructor(
     protected override sessionService: SessionService,
@@ -98,6 +99,17 @@ export class AppComponent extends BaseComponent implements OnInit {
     this.eventBusService.on(EventType.ShowOnboarding).subscribe({
       next: () => (this.isOnboardingDone = false),
     });
+
+    this.sessionService.configLoaded$
+      .pipe(
+        debounceTime(500),
+        filter((configLoaded) => configLoaded === true),
+      )
+      .subscribe(() => {
+        if (this.sessionService.siteFound) {
+          this.deploymentFound = true;
+        }
+      });
 
     const isOnboardingDone = localStorage.getItem(
       this.sessionService.getLocalStorageNameMapper('is_onboarding_done')!,
