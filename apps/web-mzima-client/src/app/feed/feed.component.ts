@@ -9,7 +9,7 @@ import { searchFormHelper } from '@helpers';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
-import { filter, forkJoin, Subject, Subscription } from 'rxjs';
+import { filter, forkJoin, Subscription } from 'rxjs';
 import { PostDetailsModalComponent } from '../map';
 import { MainViewComponent } from '@shared';
 import { SessionService, BreakpointService, EventBusService, EventType } from '@services';
@@ -18,7 +18,6 @@ import { LanguageService } from '../core/services/language.service';
 import {
   SavedsearchesService,
   PostsService,
-  GeoJsonFilter,
   PostResult,
   PostStatus,
   postHelpers,
@@ -43,10 +42,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   private _routerEvent = Subscription.EMPTY;
   @ViewChild('feed') public feed: ElementRef;
   @ViewChild('masonry') public masonry: NgxMasonryComponent;
-  private readonly getPostsSubject = new Subject<{
-    params: GeoJsonFilter;
-    add?: boolean;
-  }>();
+  // private readonly getPostsSubject = new Subject<{
+  //   params: GeoJsonFilter;
+  //   add?: boolean;
+  // }>();
   public pagination = {
     page: 0,
     limit: 20,
@@ -104,6 +103,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public initialLoad = true;
   public urlFromRouteTrigger: string;
   public urlAfterInteractionWithFilters: string;
+  private postRequests: Subscription[] = [];
 
   constructor(
     protected override router: Router,
@@ -428,17 +428,26 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   loadData(): void {}
 
   private getPosts({ params, loadMore }: { params: any; loadMore?: boolean }): void {
-    /* --------------------------------------------
-      Work with Posts Service to get posts from API
-    ----------------------------------------------*/
-    this.postsService.getPosts('', { ...params, ...this.activeSorting }).subscribe({
-      next: (data) => {
-        this.posts = loadMore ? [...this.posts, ...data.results] : data.results;
-      },
-      // complete: () => {
-      //   // console.log('complete?');
-      // },
+    // Call the posts service, keeping the subscription for later
+    const postRequestSubscription = this.postsService
+      .getPosts('', { ...params, ...this.activeSorting })
+      .subscribe({
+        next: (data) => {
+          this.posts = loadMore ? [...this.posts, ...data.results] : data.results;
+        },
+      });
+
+    // Unsubscribe and destroy existing subscriptions....
+    this.postRequests.forEach((subscription) => {
+      subscription.unsubscribe();
     });
+
+    // Reset everything so the user sees some loading indicators
+    this.posts = [];
+    this.isLoading = true;
+
+    // Keep the subscription so we can end it later if its replaced with a new api call
+    this.postRequests.push(postRequestSubscription);
   }
 
   public updateMasonry(): void {

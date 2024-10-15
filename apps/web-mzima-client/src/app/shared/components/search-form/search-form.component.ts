@@ -632,6 +632,10 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
       this.activeSavedSearch = activeSavedSearch.result;
       this.checkSavedSearchNotifications();
     }
+    localStorage.setItem(
+      this.session.getLocalStorageNameMapper('filters'),
+      JSON.stringify(this.activeSavedSearch!.filter),
+    );
   }
 
   async applySavedFilter(value: number | null) {
@@ -689,6 +693,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
         this.activeSavedSearch.filter.source = [this.activeSavedSearch.filter.source];
       }
 
+      this.activeSavedSearch.filter.currentView = this.activeSavedSearch.view;
+
       this.resetForm(this.activeSavedSearch.filter);
     } else {
       this.resetForm();
@@ -696,6 +702,8 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   public resetSavedFilter(): void {
+    localStorage.removeItem(this.session.getLocalStorageNameMapper('filters'));
+    localStorage.removeItem(this.session.getLocalStorageNameMapper('activeSavedSearch'));
     this.clearSavedFilter();
     this.resetForm();
     this.defaultFormValue = this.formBuilder.group(searchFormHelper.DEFAULT_FILTERS).value;
