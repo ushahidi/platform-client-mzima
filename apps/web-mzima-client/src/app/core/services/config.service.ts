@@ -47,7 +47,7 @@ export class ConfigService {
           },
           error: (error) => {
             if (error.status === 404 && error.error.errors[0].message === 'Deployment not found')
-              this.sessionService.configLoaded = false;
+              this.sessionService.configLoaded = true;
             else setTimeout(() => this.getConfig(), 5000);
           },
         }),

@@ -1,4 +1,15 @@
 <div class="post-head">
+  <div
+    class="post-lock"
+    *ngIf="isLocked"
+    matTooltipPosition="above"
+    [matTooltip]="'post.locking.locked_tooltip' | translate"
+    matTooltipClass="post-lock__tooltip"
+  >
+    <mat-icon icon svgIcon="lock" class="post-lock__icon"></mat-icon>
+    <span class="post-info__status post-info__status--draft" [data-qa]="'post_lock'">Locked</span>
+  </div>
+
   <mzima-client-button
     fill="clear"
     color="gray"
@@ -7,6 +18,7 @@
     [iconOnly]="true"
     (buttonClick)="editPost($event)"
     class="post-head__control"
+    [disabled]="isLocked"
   >
     <mat-icon icon svgIcon="edit-post" [data-qa]="'edit-post'"></mat-icon>
   </mzima-client-button>
@@ -43,6 +55,7 @@
       mat-menu-item
       (click)="addToCollection()"
       [data-qa]="'add-to-collection'"
+      [disabled]="isLocked"
     >
       <mat-icon svgIcon="collections"></mat-icon>
       {{ 'set.add_to_collection' | translate }}
@@ -54,6 +67,7 @@
         (click)="publish()"
         *ngIf="post.status !== PostStatus.Published"
         [data-qa]="'btn-publish-post'"
+        [disabled]="isLocked"
       >
         <mat-icon svgIcon="sort-up"></mat-icon>
         {{ 'post.post_actions.publish' | translate }}
@@ -63,6 +77,7 @@
         (click)="underReview()"
         *ngIf="post.status !== PostStatus.Draft"
         [data-qa]="'btn-underReview-post'"
+        [disabled]="isLocked"
       >
         {{ 'post.post_actions.put_under_review' | translate }}
       </button>
@@ -71,11 +86,18 @@
         (click)="archive()"
         *ngIf="post.status !== PostStatus.Archived"
         [data-qa]="'btn-archive-post'"
+        [disabled]="isLocked"
       >
         {{ 'post.post_actions.archive' | translate }}
       </button>
     </ng-container>
-    <button mat-menu-item *ngIf="deleteable" (click)="deletePost()" [data-qa]="'btn-delete-post'">
+    <button
+      mat-menu-item
+      *ngIf="deleteable"
+      (click)="deletePost()"
+      [data-qa]="'btn-delete-post'"
+      [disabled]="isLocked"
+    >
       {{ 'post.post_actions.delete' | translate }}
     </button>
   </mat-menu>

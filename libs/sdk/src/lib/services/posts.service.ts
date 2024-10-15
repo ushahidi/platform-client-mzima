@@ -10,7 +10,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import { apiHelpers } from '../helpers';
+import { apiHelpers, generalHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
 import {
   GeoJsonFilter,
@@ -335,6 +335,21 @@ export class PostsService extends ResourceService<any> {
 
   public unlockPost(id: string | number) {
     return super.delete(id, 'lock');
+  }
+
+  isPostLockedForCurrentUser(post: any) {
+    const currentUser = localStorage.getItem(`${generalHelpers.CONST.LOCAL_STORAGE_PREFIX}userId`);
+    if (!currentUser) {
+      return false;
+    }
+    if (post.locks.length > 0) {
+      if (currentUser) {
+        return parseInt(currentUser) !== parseInt(post.locks[0].user_id);
+      } else {
+        return false;
+      }
+    }
+    return false;
   }
 
   public applyFilters(filters: any, updated = true): void {

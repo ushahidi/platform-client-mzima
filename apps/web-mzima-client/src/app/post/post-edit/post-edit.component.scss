@@ -132,14 +132,6 @@
   }
 }
 
-.task-complete {
-  width: 100%;
-
-  &::ng-deep .mat-slide-toggle-label {
-    justify-content: space-between;
-  }
-}
-
 .related-post {
   &-selected {
     display: inline-block;
@@ -216,4 +208,36 @@
   border-radius: 4px;
   padding: 20px;
   margin-bottom: 20px;
+}
+
+.task {
+  &__info-banner {
+    padding: 16px;
+    margin: 24px 0;
+    border-radius: 4px;
+    display: flex;
+    gap: 18px;
+
+    &-warning {
+      background: var(--color-primary-100);
+    }
+
+    &-completed {
+      background: var(--color-success-tint-light);
+    }
+  }
+
+  &__info-icon {
+    //---------------
+    font-size: 24px;
+
+    &-warning {
+      color: var(--color-primary-50);
+    }
+
+    &-completed {
+      color: var(--color-success-shade);
+    }
+    //---------------
+  }
 }
