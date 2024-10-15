@@ -60,6 +60,7 @@
       <div
         class="feed-page__controls feed-page__controls--actions"
         *ngIf="isDesktop || isBulkOptionsVisible"
+        [attr.data-qa]="'feed-page-controls-actions'"
       >
         <ng-container *ngIf="isBulkOptionsVisible">
           <mzima-client-button
@@ -112,6 +113,7 @@
                 [disabled]="!selectedPosts.length"
                 [placeholder]="'app.mark_as' | translate"
                 (selectionChange)="changePostsStatus($event.value)"
+                [attr.data-qa]="'mark-as'"
               >
                 <mat-option
                   *ngFor="let status of statuses"
@@ -152,6 +154,7 @@
           *ngIf="user?.allowed_privileges?.includes('update')"
           (buttonClick)="toggleBulkOptions(!isBulkOptionsVisible)"
           [disabled]="isLoading || !posts.length"
+          [attr.data-qa]="'bulk-actions'"
         >
           {{ 'post.modify.bulk_actions' | translate }}
         </mzima-client-button>

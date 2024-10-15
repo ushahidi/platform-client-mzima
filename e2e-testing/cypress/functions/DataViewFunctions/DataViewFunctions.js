@@ -25,6 +25,30 @@ class DataViewFunctions {
       .children(DataViewLocators.postItem)
       .contains('Automated Title Response');
   }
+
+  verify_bulk_actions_select_all_posts() {
+    this.click_data_view_btn();
+    cy.wait(1000);
+    //check select all posts in the page
+    cy.get('button:contains("Bulk Actions")').click();
+    cy.get('button:contains("Select All")').click({ force: true });
+    //verify all posts are selected
+    cy.get(DataViewLocators.postPreview)
+      .children(DataViewLocators.postItem)
+      .find('.mat-checkbox-input')
+      .should('have.attr', 'aria-checked', 'true');
+    //change status of posts
+    cy.get(DataViewLocators.controlActionsBtn)
+      .find(DataViewLocators.markAsDropdown)
+      .click({ force: true });
+    cy.get('.mat-select-panel').find('#select-option-published').click();
+    //verify all posts have changed status
+    cy.get(DataViewLocators.postPreview)
+      .children(DataViewLocators.postItem)
+      .find(DataViewLocators.postStatus)
+      .contains('Published')
+      .should('be.visible');
+  }
 }
 
 export default DataViewFunctions;
