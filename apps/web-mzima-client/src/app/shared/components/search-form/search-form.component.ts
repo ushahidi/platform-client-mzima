@@ -465,7 +465,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     this.surveysLoaded = false;
 
     forkJoin([
-      this.surveysService.get('', { show_unknown_form: true }),
+      this.surveysService.getSurveys('', { only: 'id,name,color', show_unknown_form: true }),
       this.getPostsStatistic(),
     ]).subscribe({
       next: (responses) => {
