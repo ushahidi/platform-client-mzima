@@ -20,6 +20,7 @@ export const enum EventType {
   FeedPostsLoaded = 'FEED_POSTS_LOADED',
   RefreshSurveysCounters = 'REFRESH_SURVEYS_COUNTERS',
   StopExportPolling = 'STOP_EXPORT_POLLING',
+  ExportDone = 'EXPORT_DONE',
 }
 
 export interface BusEvent<T = any> {
