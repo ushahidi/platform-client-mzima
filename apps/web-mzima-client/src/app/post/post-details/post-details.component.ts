@@ -254,6 +254,13 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     });
   }
 
+  public refreshPost(): void {
+    this.refresh.emit();
+    this.eventBusService.next({
+      type: EventType.RefreshPosts,
+      payload: {},
+    });
+  }
   public deletedHandle(): void {
     this.getPost(this.postId);
     this.eventBusService.next({

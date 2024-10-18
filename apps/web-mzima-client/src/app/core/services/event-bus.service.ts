@@ -14,6 +14,7 @@ export const enum EventType {
   EditPost = 'EDIT_POST',
   UpdatedPost = 'UPDATED_POST',
   DeletedPost = 'DELETED_POST',
+  RefreshPosts = 'REFRESH_POSTS',
   IsSettingsInnerPage = 'IS_SETTINGS_INNER_PAGE',
   ShowOnboarding = 'SHOW_ONBOARDING',
   FinishOnboarding = 'FINISH_ONBOARDING',

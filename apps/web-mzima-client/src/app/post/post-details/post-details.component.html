@@ -12,7 +12,7 @@
           [post]="post"
           [feedView]="feedView"
           (edit)="edit.emit()"
-          (refresh)="refresh.emit()"
+          (refresh)="refreshPost()"
           [editable]="post.allowed_privileges.includes('update')"
           [deleteable]="post.allowed_privileges.includes('delete')"
           (statusChanged)="statusChangedHandle()"
