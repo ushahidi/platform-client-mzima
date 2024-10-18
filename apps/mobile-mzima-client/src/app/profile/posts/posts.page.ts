@@ -83,9 +83,12 @@ export class PostsPage {
         },
       });
   }
+  // reset: boolean determines if the posts should reset to first page and clear current list
+  // reloadAll: boolean decides if the function should fetch all posts in a single API call
 
   public async getMyPosts(reset = false, reloadAll = false): Promise<void> {
     this.isPostsLoading = true;
+    //resetting the page to 1 and clearing current posts if true
     if (reset) {
       this.params.page = 1;
       this.posts = [];
@@ -94,6 +97,7 @@ export class PostsPage {
     const originalPage = this.params.page ?? 1;
     const originalLimit = this.params.limit ?? 6;
 
+    //Ensuring all posts upto the current page are fetched in one go once true
     if (reloadAll) {
       this.params.limit = (this.params.page ?? 1) * (this.params.limit ?? 6);
       this.params.page = 1;
@@ -109,6 +113,7 @@ export class PostsPage {
       if (response) {
         this.postDisplayProcessing(response, !reset && !reloadAll);
       }
+      //resetting the parameters if reloadAll is true
     } finally {
       if (reloadAll) {
         this.params.limit = originalLimit;
