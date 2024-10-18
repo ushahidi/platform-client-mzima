@@ -36,6 +36,7 @@ import {
   SurveyItem,
   AccountNotificationsInterface,
   GeoJsonFilter,
+  apiHelpers,
 } from '@mzima-client/sdk';
 import dayjs from 'dayjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -465,7 +466,10 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
     this.surveysLoaded = false;
 
     forkJoin([
-      this.surveysService.get('', { show_unknown_form: true }),
+      this.surveysService.getSurveys('', {
+        only: apiHelpers.ONLY.NAME_ID_COLOR,
+        show_unknown_form: true,
+      }),
       this.getPostsStatistic(),
     ]).subscribe({
       next: (responses) => {
