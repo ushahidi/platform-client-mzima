@@ -150,9 +150,9 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
         }
         const uploads: Observable<any>[] = [];
         for (let i = 0; i < this.mediaFiles.length; i++) {
-          const mediaFile = this.mediaFiles[i];
+          const aMediaFile = this.mediaFiles[i];
           const uploadObservable: Observable<any> = this.mediaService
-            .uploadFileProgress(mediaFile.file!, '')
+            .uploadFileProgress(aMediaFile.file!, '')
             .pipe(
               tap((uploadEvent) => {
                 // if (uploadEvent.type === HttpEventType.UploadProgress) {
@@ -166,29 +166,38 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
                 // }
                 // else
                 if (uploadEvent.type === HttpEventType.Response) {
-                  this.updateMediaFileById(mediaFile.generatedId, (aMediaFile) => {
-                    aMediaFile.status = 'uploaded';
-                    return aMediaFile;
-                  });
+                  this.updateMediaFileById(
+                    aMediaFile.generatedId,
+                    uploadEvent.body,
+                    (mediaFile, resultBody) => {
+                      mediaFile.status = 'uploaded';
+                      mediaFile.id = resultBody.result.id;
+                      return mediaFile;
+                    },
+                  );
                   // if (this.progressCallback)
                   //     this.progressCallback(100);
                   setTimeout(
                     (theMediaFile: MediaFile) => {
-                      this.updateMediaFileById(theMediaFile.generatedId, (aMediaFile) => {
-                        aMediaFile.status = 'ready';
-                        return aMediaFile;
-                      });
+                      this.updateMediaFileById(
+                        theMediaFile.generatedId,
+                        uploadEvent.body,
+                        (mediaFile) => {
+                          mediaFile.status = 'ready';
+                          return mediaFile;
+                        },
+                      );
                     },
                     3000,
-                    mediaFile,
+                    aMediaFile,
                   );
                 }
               }),
               last(),
               catchError((error: HttpErrorResponse) => {
-                this.updateMediaFileById(mediaFile.generatedId, (aMediaFile) => {
-                  aMediaFile.status = 'error';
-                  return aMediaFile;
+                this.updateMediaFileById(aMediaFile.generatedId, null, (mediaFile) => {
+                  mediaFile.status = 'error';
+                  return mediaFile;
                 });
                 return throwError(() => new Error(error.statusText));
               }),
@@ -201,9 +210,9 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
             this.updateMediaFileByNameAndSize(
               filename,
               result.body.result.original_file_size,
-              (aMediaFile) => {
-                aMediaFile.id = result.body.result.id;
-                return aMediaFile;
+              (file) => {
+                file.id = result.body.result.id;
+                return file;
               },
             );
           }
@@ -277,10 +286,14 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  updateMediaFileById(id: number, updateCallback: (mediaFile: MediaFile) => MediaFile) {
+  updateMediaFileById(
+    id: number,
+    resultBody: any,
+    updateCallback: (mediaFile: MediaFile, body: any) => MediaFile,
+  ) {
     for (let i = 0; i < this.mediaFiles.length; i++) {
       if (this.mediaFiles[i].generatedId === id) {
-        this.mediaFiles[i] = updateCallback(this.mediaFiles[i]);
+        this.mediaFiles[i] = updateCallback(this.mediaFiles[i], resultBody);
         i = this.mediaFiles.length;
       }
     }
