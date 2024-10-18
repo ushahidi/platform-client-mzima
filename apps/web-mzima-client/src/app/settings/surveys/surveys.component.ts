@@ -3,7 +3,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService } from '@services';
 import { forkJoin, Observable, take } from 'rxjs';
-import { SurveysService, SurveyItem } from '@mzima-client/sdk';
+import { SurveysService, SurveyItem, apiHelpers } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -49,7 +49,7 @@ export class SurveysComponent implements OnInit {
         page: this.params.page,
         order: this.params.order,
         limit: this.params.limit,
-        only: 'name,id,color',
+        only: apiHelpers.ONLY.NAME_ID_COLOR,
       })
       .subscribe({
         next: (res) => {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SurveysService, generalHelpers } from '@mzima-client/sdk';
+import { SurveysService, generalHelpers, apiHelpers } from '@mzima-client/sdk';
 import { Observable, of } from 'rxjs';
 @Component({
   selector: 'app-add-post-modal',
@@ -16,7 +16,7 @@ export class AddPostModalComponent implements OnInit {
 
   private getSurveys(): void {
     this.surveysService
-      .getSurveys('', { only: 'name,color,everyone_can_create,can_create' })
+      .getSurveys('', { only: apiHelpers.ONLY.NAME_COLOR_PERMISSIONS })
       .subscribe(({ results }) => {
         let surveys = this.mapVisibility(results);
         surveys = surveys.filter((survey: any) => survey.visible === true);

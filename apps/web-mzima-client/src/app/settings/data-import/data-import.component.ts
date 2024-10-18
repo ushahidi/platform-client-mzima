@@ -10,6 +10,7 @@ import {
   FormInterface,
   SurveysService,
   SurveyItem,
+  apiHelpers,
 } from '@mzima-client/sdk';
 
 import { BaseComponent } from '../../base.component';
@@ -74,7 +75,7 @@ export class DataImportComponent extends BaseComponent implements OnInit {
 
   getSurveys() {
     this.isLoading = true;
-    this.surveysService.getSurveys('', { only: 'id,name' }).subscribe({
+    this.surveysService.getSurveys('', { only: apiHelpers.ONLY.NAME_ID }).subscribe({
       next: (result) => {
         this.isLoading = false;
         this.surveys = result.results;
