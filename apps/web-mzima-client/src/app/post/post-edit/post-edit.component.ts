@@ -645,13 +645,16 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                 }
                 break;
               case 'image':
-                value.value = this.form.value[field.key] || null;
+                value.value =
+                  this.form.value[field.key].map((formValue: any) => {
+                    return formValue.id;
+                  }) || [];
                 break;
               case 'audio':
-                value.value = this.form.value[field.key] || null;
+                value.value = this.form.value[field.key] || [];
                 break;
               case 'document':
-                value.value = this.form.value[field.key] || null;
+                value.value = this.form.value[field.key] || [];
                 break;
               default:
                 value.value = this.form.value[field.key] || null;
