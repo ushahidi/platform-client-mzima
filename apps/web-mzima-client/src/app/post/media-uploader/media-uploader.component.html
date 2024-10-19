@@ -6,10 +6,16 @@
           [class]="'media-preview ' + media + ' ' + mediaFile.status"
           *ngFor="let mediaFile of mediaFiles; let i = index"
         >
-          <ng-template
-            [ngIf]="mediaFile.status === 'ready' || mediaFile.status === 'uploaded'"
-            [ngIfElse]="inProgress"
+          <ng-container
+            *ngIf="
+              mediaFile.status === 'ready' || mediaFile.status === 'uploaded';
+              then itemReady;
+              else inProgress
+            "
           >
+          </ng-container>
+
+          <ng-template #itemReady>
             <img
               *ngIf="media === 'document'"
               class="thumbnail"
@@ -22,6 +28,7 @@
               <div class="filesize">{{ getFileSize(mediaFile) }}</div>
             </div>
           </ng-template>
+
           <ng-template #inProgress>
             <div class="media-blank">
               <mat-icon
@@ -37,6 +44,7 @@
             </div>
             <div class="media-status"></div>
           </ng-template>
+
           <div
             class="status-button"
             (click)="clickDeleteButton(mediaFile.value, mediaFile.generatedId)"

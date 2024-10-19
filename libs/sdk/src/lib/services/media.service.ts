@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
-// import { MediaResponse } from '../models';
 import { ResourceService } from './resource.service';
 import { map, Observable } from 'rxjs';
 

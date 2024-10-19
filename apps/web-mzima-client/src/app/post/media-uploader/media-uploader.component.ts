@@ -8,7 +8,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, catchError, forkJoin, last, Observable, tap, throwError } from 'rxjs';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { ErrorEnum, MediaFile, MediaType, mediaTypes } from '../../core/interfaces/media';
-import { getDocumentThumbnail, getFileNameFromUrl } from '../../core/helpers/media-helper';
+import {
+  getDocumentThumbnail,
+  getFileNameFromUrl,
+  getFileSize,
+} from '../../core/helpers/media-helper';
 
 @Component({
   selector: 'app-media-uploader',
@@ -51,7 +55,9 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
     this.mediaType = mediaTypes.get(this.media)!;
   }
 
+  // Import Helper Methods for the template
   getDocumentThumbnail = getDocumentThumbnail;
+  getFileSize = getFileSize;
 
   writeValue(obj: MediaFile[]): void {
     if (Array.isArray(obj)) {
@@ -92,6 +98,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
               size: aFile.size,
               file: photoUrl,
               status: 'uploading',
+              mimeType: aFile.type,
               url: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(photoUrl)),
             };
             this.mediaFiles.push(mediaFile);
@@ -203,31 +210,6 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
       this.mediaFiles.splice(index, 1);
     }
     this.onChange(this.mediaFiles);
-  }
-
-  getFileName(mediaFile: MediaFile): string {
-    if (mediaFile.status === 'ready') return getFileNameFromUrl(mediaFile.url!);
-
-    return mediaFile.file ? mediaFile.file?.name : 'unknown';
-  }
-
-  getFileSize(mediaFile: MediaFile): string {
-    let filesize = 0;
-    if (mediaFile.status === 'ready') filesize = mediaFile.size!;
-    else filesize = mediaFile.file ? mediaFile.file.size : 0;
-
-    // Megabytes
-    if (filesize > 1000000) {
-      return (filesize / 1000000).toFixed(2).toString() + 'MB';
-    }
-    // Kilobytes
-    else if (filesize > 1000) {
-      return (filesize / 1000).toFixed(2).toString() + 'kB';
-    }
-    // Bytes
-    else {
-      return filesize + 'bytes';
-    }
   }
 
   updateMediaFileById(

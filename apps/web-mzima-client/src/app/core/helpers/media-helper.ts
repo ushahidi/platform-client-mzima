@@ -5,7 +5,7 @@ import { MediaFile } from '../interfaces/media';
 export function getDocumentThumbnail(mediaFile: MediaFile) {
   const path = '/assets/images/logos/';
   let thumbnail = 'unknown_document.png';
-  switch (mediaFile.file?.type) {
+  switch (mediaFile.mimeType) {
     case 'application/pdf':
       thumbnail = 'pdf_document.png';
       break;
@@ -17,6 +17,25 @@ export function getDocumentThumbnail(mediaFile: MediaFile) {
       break;
   }
   return path + thumbnail;
+}
+
+export function getFileSize(mediaFile: MediaFile): string {
+  let filesize = 0;
+  if (mediaFile.status === 'ready') filesize = mediaFile.size!;
+  else filesize = mediaFile.file ? mediaFile.file.size : 0;
+
+  // Megabytes
+  if (filesize > 1000000) {
+    return (filesize / 1000000).toFixed(2).toString() + 'MB';
+  }
+  // Kilobytes
+  else if (filesize > 1000) {
+    return (filesize / 1000).toFixed(2).toString() + 'kB';
+  }
+  // Bytes
+  else {
+    return filesize + 'bytes';
+  }
 }
 
 // Our media api returns a relative url with a filename that has an id prepended, instead of the original filename.
