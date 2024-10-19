@@ -18,7 +18,7 @@
             <img *ngIf="media === 'image'" class="thumbnail" [src]="mediaFile.url" />
             <audio *ngIf="media === 'audio'" controls [src]="mediaFile.url"></audio>
             <div class="media-details">
-              <div class="filename">{{ getFileName(mediaFile) }}</div>
+              <div class="filename">{{ mediaFile.filename }}</div>
               <div class="filesize">{{ getFileSize(mediaFile) }}</div>
             </div>
           </ng-template>
@@ -37,7 +37,10 @@
             </div>
             <div class="media-status"></div>
           </ng-template>
-          <div class="status-button" (click)="clickDeleteButton(i)">
+          <div
+            class="status-button"
+            (click)="clickDeleteButton(mediaFile.value, mediaFile.generatedId)"
+          >
             <ng-template [ngIf]="mediaFile.status === 'uploaded'" [ngIfElse]="cross">
               <mat-icon class="xicon" svgIcon="check"></mat-icon>
             </ng-template>

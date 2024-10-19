@@ -178,7 +178,7 @@
 
             <ng-container *ngIf="field.input === 'audio' && field.value.length > 0">
               <div class="post__audio" *ngFor="let mediaFile of field.value">
-                <audio *ngIf="mediaFile === 'audio'" controls [src]="mediaFile.url"></audio>
+                <audio controls [src]="mediaFile.url"></audio>
               </div>
             </ng-container>
 

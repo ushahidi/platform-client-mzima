@@ -28,8 +28,6 @@ export class MediaService extends ResourceService<any> {
     this.domainPrefix = this.backendUrl.substring(0, this.backendUrl.length - 1);
   }
 
-  // type progressFunction
-
   getApiVersions(): string {
     return apiHelpers.API_V_5;
   }
@@ -41,8 +39,6 @@ export class MediaService extends ResourceService<any> {
   override getById(id: string | number): Observable<any> {
     return this.httpClient.get<any>(`${this.apiUrl}/${id}`, this.options).pipe(
       map((response) => {
-        // If we get back only a relative url for a media request, add the backend domain to it
-        // but we also need to sanitize it to prevent angular thinking we're xssing
         if (response.result.original_file_url) {
           response.result.original_file_url = this.cleanUrl(response.result.original_file_url);
         }
@@ -60,20 +56,7 @@ export class MediaService extends ResourceService<any> {
       formData.append('caption', caption);
     }
 
-    return this.httpClient.post(apiUrl, formData).pipe(
-      map((response) => {
-        // if (response.body.result.original_file_url)
-        //   response.body.result.original_file_url = this.cleanUrl(response.body.result.original_file_url);
-        return response;
-      }),
-    );
-  }
-
-  private cleanUrl(url: string): SafeUrl {
-    if (url[0] === '/') {
-      url = this.domainPrefix + url;
-    }
-    return this.sanitizer.bypassSecurityTrustUrl(url);
+    return this.httpClient.post(apiUrl, formData);
   }
 
   uploadFileProgress(file: File, caption?: string): Observable<any> {
@@ -103,5 +86,14 @@ export class MediaService extends ResourceService<any> {
 
   updateCaption(id: string | number, caption: string) {
     return super.patch(id, { caption });
+  }
+
+  private cleanUrl(url: string): SafeUrl {
+    // If we get back only a relative url for a media request, add the backend domain to it
+    if (url[0] === '/') {
+      url = this.domainPrefix + url;
+    }
+    // also sanitize it to prevent angular thinking we're xssing
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 }

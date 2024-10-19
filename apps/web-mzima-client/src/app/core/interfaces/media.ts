@@ -47,6 +47,7 @@ type MediaFile = {
   id?: number;
   generatedId: number;
   file?: File;
+  filename: string;
   fileExtension?: string;
   url: string | SafeUrl | null;
   caption?: string;

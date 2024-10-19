@@ -50,6 +50,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { LanguageInterface } from '@mzima-client/sdk';
 import { MatSelectChange } from '@angular/material/select';
 import { MediaFile } from '../../core/interfaces/media';
+import { getFileNameFromUrl } from '../../core/helpers/media-helper';
 
 dayjs.extend(timezone);
 
@@ -379,6 +380,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         mediaValue.mimeType = media.result.mime;
         mediaValue.size = media.result.original_file_size;
         mediaValue.status = 'ready';
+        mediaValue.filename = getFileNameFromUrl(mediaValue.url!);
       }
 
       this.form.patchValue({
@@ -675,15 +677,15 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                 break;
               case 'image':
                 value.value =
-                  this.form.value[field.key].map((formValue: any) => formValue.id) || [];
+                  this.form.value[field.key]?.map((formValue: any) => formValue.value) || [];
                 break;
               case 'audio':
                 value.value =
-                  this.form.value[field.key].map((formValue: any) => formValue.id) || [];
+                  this.form.value[field.key]?.map((formValue: any) => formValue.value) || [];
                 break;
               case 'document':
                 value.value =
-                  this.form.value[field.key].map((formValue: any) => formValue.id) || [];
+                  this.form.value[field.key]?.map((formValue: any) => formValue.value) || [];
                 break;
               default:
                 value.value = this.form.value[field.key] || null;
