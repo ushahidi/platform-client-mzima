@@ -49,6 +49,7 @@ import { Observable, lastValueFrom, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LanguageInterface } from '@mzima-client/sdk';
 import { MatSelectChange } from '@angular/material/select';
+import { MediaFile } from '../../core/interfaces/media';
 
 dayjs.extend(timezone);
 
@@ -246,6 +247,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
 
                 const types = [
                   'upload',
+                  'image',
+                  'document',
+                  'audio',
                   'tags',
                   'location',
                   'checkbox',
@@ -351,9 +355,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private async handleUpload(key: string, value: any) {
     if (!value?.value) return;
     try {
-      const uploadObservable = this.mediaService.getById(value.value);
-      const response: any = await lastValueFrom(uploadObservable);
-
+      const response: any = await lastValueFrom(this.mediaService.getById(value.value));
       this.form.patchValue({
         [key]: {
           id: value.value,
@@ -364,6 +366,27 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     } catch (error: any) {
       this.form.patchValue({ [key]: null });
       throw new Error(`Error fetching file: ${error.message}`);
+    }
+  }
+
+  private async handleMedia(key: string, value: MediaFile[]) {
+    if (value?.length === 0) return;
+    try {
+      for (const mediaValue of value) {
+        const media = await lastValueFrom(this.mediaService.getById(mediaValue.value!));
+        mediaValue.url = media.result.original_file_url;
+        mediaValue.caption = media.result.caption;
+        mediaValue.mimeType = media.result.mime;
+        mediaValue.size = media.result.original_file_size;
+        mediaValue.status = 'ready';
+      }
+
+      this.form.patchValue({
+        [key]: value,
+      });
+    } catch (error: any) {
+      this.form.patchValue({ [key]: null });
+      throw new Error(`Error fetching files: ${error.message}`);
     }
   }
 
@@ -434,6 +457,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       | 'radio'
       | 'text'
       | 'upload'
+      | 'image'
+      | 'document'
+      | 'audio'
       | 'video'
       | 'textarea'
       | 'relation'
@@ -447,6 +473,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         date: this.handleDate.bind(this),
         datetime: this.handleDateTime.bind(this),
         upload: this.handleUpload.bind(this),
+        image: this.handleMedia.bind(this),
+        document: this.handleMedia.bind(this),
+        audio: this.handleMedia.bind(this),
       };
 
     type InputHandlersOptionsType = 'radio' | 'checkbox';
@@ -646,15 +675,15 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                 break;
               case 'image':
                 value.value =
-                  this.form.value[field.key].map((formValue: any) => {
-                    return formValue.id;
-                  }) || [];
+                  this.form.value[field.key].map((formValue: any) => formValue.id) || [];
                 break;
               case 'audio':
-                value.value = this.form.value[field.key] || [];
+                value.value =
+                  this.form.value[field.key].map((formValue: any) => formValue.id) || [];
                 break;
               case 'document':
-                value.value = this.form.value[field.key] || [];
+                value.value =
+                  this.form.value[field.key].map((formValue: any) => formValue.id) || [];
                 break;
               default:
                 value.value = this.form.value[field.key] || null;

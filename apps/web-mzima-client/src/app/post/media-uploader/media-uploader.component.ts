@@ -7,59 +7,8 @@ import { MediaService } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, catchError, forkJoin, last, Observable, tap, throwError } from 'rxjs';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-
-enum ErrorEnum {
-  NONE = 'none',
-  MAX_SIZE = 'post.media.messages.max_size',
-  REQUIRED = 'post.media.messages.required',
-  MAX_FILES = 'post.media.messages.max_files',
-}
-
-type MediaType = {
-  icon: string;
-  buttonText: string;
-  fileTypes: string;
-};
-
-type MediaFileStatus = 'ready' | 'upload' | 'uploading' | 'uploaded' | 'error' | 'delete';
-
-const mediaTypes = new Map<string, MediaType>([
-  [
-    'image',
-    {
-      icon: 'add_a_photo',
-      buttonText: 'post.media.add_photo',
-      fileTypes: 'image/jpeg, image/png',
-    },
-  ],
-  [
-    'audio',
-    {
-      icon: 'speaker',
-      buttonText: 'post.media.add_audio',
-      fileTypes: 'audio/mp3, audio/ogg, audio/aac',
-    },
-  ],
-  [
-    'document',
-    {
-      icon: 'note_add',
-      buttonText: 'post.media.add_document',
-      fileTypes:
-        'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    },
-  ],
-]);
-
-type MediaFile = {
-  id?: number;
-  generatedId: number;
-  file?: File;
-  fileExtension?: string;
-  preview: string | SafeUrl | null;
-  caption?: string;
-  status: MediaFileStatus;
-};
+import { ErrorEnum, MediaFile, MediaType, mediaTypes } from '../../core/interfaces/media';
+import { getDocumentThumbnail } from '../../core/helpers/media-helper';
 
 @Component({
   selector: 'app-media-uploader',
@@ -78,15 +27,13 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
   @Input() public maxFiles: number = -1;
   @Input() public hasCaption?: boolean;
   @Input() public requiredError?: boolean;
+  @Input() public fieldValue: MediaFile[];
   @Input() public media: 'image' | 'audio' | 'document';
   // @Input() public progressCallback?: (progress: number) => {};
 
   id?: number;
   captionControl = new FormControl('');
-  photo: File | null;
-  preview: string | SafeUrl | null;
   isDisabled = false;
-  upload = false;
   error: ErrorEnum = ErrorEnum.NONE;
   mediaType: MediaType;
   onChange: any = () => {};
@@ -105,12 +52,11 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
     this.mediaType = mediaTypes.get(this.media)!;
   }
 
-  writeValue(obj: any): void {
-    if (obj) {
-      this.upload = false;
-      this.captionControl.patchValue(obj.caption);
-      this.id = obj.id;
-      this.photo = this.preview = obj.photo;
+  getDocumentThumbnail = getDocumentThumbnail;
+
+  writeValue(obj: MediaFile[]): void {
+    if (Array.isArray(obj)) {
+      this.mediaFiles = obj;
     }
   }
 
@@ -144,7 +90,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
             generatedId: this.generateId(),
             file: photoUrl,
             status: 'uploading',
-            preview: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(photoUrl)),
+            url: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(photoUrl)),
           };
           this.mediaFiles.push(mediaFile);
         }
@@ -172,19 +118,20 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
                     (mediaFile, resultBody) => {
                       mediaFile.status = 'uploaded';
                       mediaFile.id = resultBody.result.id;
+                      mediaFile.value = mediaFile.id;
                       return mediaFile;
                     },
                   );
                   // if (this.progressCallback)
                   //     this.progressCallback(100);
                   setTimeout(
-                    (theMediaFile: MediaFile) => {
+                    (mediaFile: MediaFile) => {
                       this.updateMediaFileById(
-                        theMediaFile.generatedId,
+                        mediaFile.generatedId,
                         uploadEvent.body,
-                        (mediaFile) => {
-                          mediaFile.status = 'ready';
-                          return mediaFile;
+                        (theMediaFile) => {
+                          theMediaFile.status = 'ready';
+                          return theMediaFile;
                         },
                       );
                     },
@@ -210,9 +157,10 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
             this.updateMediaFileByNameAndSize(
               filename,
               result.body.result.original_file_size,
-              (file) => {
-                file.id = result.body.result.id;
-                return file;
+              (mediaFile) => {
+                mediaFile.id = result.body.result.id;
+                mediaFile.value = mediaFile.id;
+                return mediaFile;
               },
             );
           }
@@ -235,43 +183,33 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
 
       if (!confirmed) return;
 
-      this.mediaFiles[index].status = 'delete';
+      // this.mediaFiles[index].status = 'delete';
+      this.mediaFiles.splice(index, 1);
     }
     this.onChange(this.mediaFiles);
   }
 
-  getDocumentThumbnail(mediaFile: MediaFile) {
-    const path = '/assets/images/logos/';
-    let thumbnail = 'unknown_document.png';
-    switch (mediaFile.file?.type) {
-      case 'application/pdf':
-        thumbnail = 'pdf_document.png';
-        break;
-      case 'application/msword':
-        thumbnail = 'word_document.png';
-        break;
-      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-        thumbnail = 'word_document.png';
-        break;
-    }
-    return path + thumbnail;
-  }
-
   getFileName(mediaFile: MediaFile): string {
+    if (mediaFile.status === 'ready') return this.getFileNameFromUrl(mediaFile.url!);
     return mediaFile.file ? mediaFile.file?.name : 'unknown';
   }
 
   // Our media api returns a relative url with a filename that has an id prepended, instead of the original filename.
   // This function attempts to take that url, and return the original filename.
-  getFileNameFromUrl(url: string): string {
-    const lastSlashIndex = url.lastIndexOf('/');
-    const newFilename = lastSlashIndex !== -1 ? url.substring(lastSlashIndex + 1) : url;
+  getFileNameFromUrl(url: string | SafeUrl): string {
+    const urlToCheck = url.toString();
+    const lastSlashIndex = urlToCheck.lastIndexOf('/');
+    const newFilename =
+      lastSlashIndex !== -1 ? urlToCheck.substring(lastSlashIndex + 1) : urlToCheck;
     const firstHyphenIndex = newFilename.indexOf('-') + 1;
     return newFilename.substring(firstHyphenIndex);
   }
 
   getFileSize(mediaFile: MediaFile): string {
-    const filesize: number = mediaFile.file ? mediaFile.file.size : 0;
+    let filesize = 0;
+    if (mediaFile.status === 'ready') filesize = mediaFile.size!;
+    else filesize = mediaFile.file ? mediaFile.file.size : 0;
+
     // Megabytes
     if (filesize > 1000000) {
       return (filesize / 1000000).toFixed(2).toString() + 'MB';

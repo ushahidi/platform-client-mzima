@@ -27,6 +27,7 @@ import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { dateHelper } from '@helpers';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
+import { getDocumentThumbnail } from '../../core/helpers/media-helper';
 
 @Component({
   selector: 'app-post-details',
@@ -76,6 +77,8 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       }
     });
   }
+
+  getDocumentThumbnail = getDocumentThumbnail;
 
   loadData(): void {}
 
@@ -173,8 +176,18 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       .map(async (mediaField) => {
         if (mediaField.value?.value) {
           const media = await this.getPostMedia(mediaField.value.value);
-          mediaField.value.mediaSrc = media.result.original_file_url;
-          mediaField.value.mediaCaption = media.result.caption;
+          mediaField.value.preview = media.result.original_file_url;
+          mediaField.value.caption = media.result.caption;
+          mediaField.value.mimeType = media.result.mime;
+          mediaField.value.size = media.result.original_file_size;
+        } else if (Array.isArray(mediaField.value)) {
+          for (const mediaValue of mediaField.value) {
+            const media = await this.getPostMedia(mediaValue.value);
+            mediaValue.url = media.result.original_file_url;
+            mediaValue.caption = media.result.caption;
+            mediaValue.mimeType = media.result.mime;
+            mediaValue.size = media.result.original_file_size;
+          }
         }
       });
   }

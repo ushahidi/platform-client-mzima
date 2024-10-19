@@ -159,6 +159,29 @@
               </div>
             </ng-container>
 
+            <ng-container *ngIf="field.input === 'image' && field.value.length > 0">
+              <div class="post__image" *ngFor="let mediaFile of field.value">
+                <img *ngIf="mediaFile.value" [src]="mediaFile.url" [alt]="post.title" />
+                <span *ngIf="mediaFile.caption?.length" class="post__image__caption">{{
+                  mediaFile.caption
+                }}</span>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'document' && field.value.length > 0">
+              <div class="post__document" *ngFor="let mediaFile of field.value">
+                <a *ngIf="mediaFile.value" [href]="mediaFile.url">
+                  <img class="thumbnail" [src]="getDocumentThumbnail(mediaFile)" />
+                </a>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="field.input === 'audio' && field.value.length > 0">
+              <div class="post__audio" *ngFor="let mediaFile of field.value">
+                <audio *ngIf="mediaFile === 'audio'" controls [src]="mediaFile.url"></audio>
+              </div>
+            </ng-container>
+
             <ng-container *ngIf="field.input === 'relation'">
               <a [href]="field.value.postUrl" target="_blank">
                 {{ field.value.postTitle }}
