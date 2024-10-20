@@ -72,7 +72,7 @@
       "loading":"Získávání dat...",
       "emtpy_field_error": "Toto pole nesmí být prázdné",
       "info" : {
-        "auth_not_online" : "Sorry. You're offline…please check your internet connection",
+        "auth_not_online" : "Litujeme. Jste offline...zkontrolujte prosím své internetové připojení.",
         "post_submitted_online" : "Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.",
         "post_submitted_offline" : "Thank you for your report. A message will be sent when the connection is restored.",
         "posts_not_uploaded" : "<b>{{num_posts}} Posts not Uploaded!</b><br/>The posts were not uploaded due to bad internet connection or you were offline. They will be automatically uploaded as soon as you connect to the internet",
