@@ -301,7 +301,7 @@
       "body": "Tento úkol je označen pouze pro interní použití. Uživatelé ho při vytváření příspěvku nevidí."
     },
     "task_is_marked_as": {
-      "not_completed": "Task Complete? - Use toggle below",
+      "not_completed": "Úkol splněn? - Použijte přepínač níže",
       "completed": "You have marked \"{{taskName}}\" Task as Completed!"
     },
     "delete_task": "Smazat úlohu",
