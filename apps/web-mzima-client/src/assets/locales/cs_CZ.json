@@ -1726,7 +1726,7 @@
       "no_mappings": "Nebylo přiděleno žádné pole k mapování - pro pokračování musí být mapováno alespoň jedno pole",
       "csv_import_cancel": "Import CSV byl zrušen",
       "csv_import_cancel_confirm": "Opravdu chcete import zrušit?",
-      "csv_import_error": "Some of the data in your CSV file does not match the format of the mapped survey field. Please review the data and try again.",
+      "csv_import_error": "Některá data v souboru CSV neodpovídají formátu mapovaného pole průzkumu. Zkontrolujte prosím data a zkuste to znovu.",
       "csv_import_success": "The data from your CSV file was successfully imported!"
     },
     "general_settings": {
