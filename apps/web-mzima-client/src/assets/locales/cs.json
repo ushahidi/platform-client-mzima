@@ -1617,7 +1617,7 @@
     "passwordreset_confirm_instructions": "Pokud váš e-mail existuje v naší databázi, obdržíte brzy e-mail s obnovením hesla.",
     "forgot_instructions": "Bez obav! Odešlete svůj e-mail a zkontrolujte si schránku, zda vám nepřišel odkaz na obnovení.",
     "token": "Token pro resetování hesla",
-    "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
+    "password_hint": "Heslo by mělo obsahovat alespoň 8 znaků, jedno malé písmeno, jedno velké písmeno, jednu číslici a jeden symbol.",
     "password_length": "Password must be at least 8 characters long",
     "password_match": "Passwords do not match",
     "check_email": "Check your email",
