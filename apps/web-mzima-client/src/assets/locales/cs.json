@@ -25,9 +25,9 @@
     "add_all_fields": "Přidat všechna pole",
     "insert_text_here": "Sem vložte text...",
     "deployment_not_found" : {
-      "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
-      "button_exit" : "Exit",
-      "button_create_deployment" : "Create Deployment"
+      "text" : "Je nám líto, ale toto nasazení neexistuje. Chcete vytvořit nové nasazení?",
+      "button_exit" : "Ukončení",
+      "button_create_deployment" : "Vytvořit nasazení"
     },
     "documentation": {
       "title": "Dokumentace",
@@ -114,6 +114,7 @@
     "close_and_view": "Zavřete a zobrazte výsledky",
     "show_more_less": "Zobrazit více / méně",
     "filters": "Filtry",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Filtrovat podle průzkumu",
     "configure": "Konfigurovat",
     "post": "Příspěvek",
@@ -295,7 +296,14 @@
     "no_fields": "Žádná pole",
     "select_color": "Vyberte barvu",
     "choose_survey": "Vybrat průzkum",
-    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
+    "marked_for_internal": {
+      "header": "Internal Use Only",
+      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+    },
+    "task_is_marked_as": {
+      "not_completed": "Task Complete? - Use toggle below",
+      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+    },
     "delete_task": "Smazat úlohu",
     "duplicate_survey": "Duplikovat",
     "main_info": "Hlavní informace",
@@ -602,6 +610,7 @@
     "source": "Zdroj",
     "saved_filters": "Saved filters",
     "saved_filter": "Uložený filtr",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Opravdu chcete odstranit tento uložený filtr?"
@@ -856,7 +865,9 @@
       "unlocked": "Příspěvky úspěšně odemčeny",
       "unlock": "Odemknout",
       "lock_broken_by_other": "Váš příspěvek byl odemčen. Vaše aktuální neuložené změny budou ztraceny.",
-      "locked_message": "Příspěvek je uzamčen, protože právě na něm pracuje <strong>{{user}}</strong>. Zkuste upravovat jiný příspěvek."
+      "locked_message": "Příspěvek je uzamčen, protože právě na něm pracuje <strong>{{user}}</strong>. Zkuste upravovat jiný příspěvek.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
     "modify": {
       "intro": "Vybrat průzkum",
