@@ -298,7 +298,7 @@
     "choose_survey": "Vybrat průzkum",
     "marked_for_internal": {
       "header": "Pouze pro interní použití",
-      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+      "body": "Tento úkol je označen pouze pro interní použití. Uživatelé ho při vytváření příspěvku nevidí."
     },
     "task_is_marked_as": {
       "not_completed": "Task Complete? - Use toggle below",
