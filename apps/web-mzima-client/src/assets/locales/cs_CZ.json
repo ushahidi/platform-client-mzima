@@ -888,7 +888,7 @@
       "back": "Zpět",
       "contact_info": "Zadejte kontaktní údaje (volitelné)",
       "author_realname": "Jméno",
-      "author_email": "Email",
+      "author_email": "E-mail",
       "bulk_actions": "Hromadné akce",
       "form": {
         "categories": "Kategorie",
@@ -930,7 +930,7 @@
       "show_only_incoming": "Zobrazit pouze {{provider}}, které nebylo přiřazeno k průzkumu",
       "imported_by": "{{messages}} importované tímto nasazením",
       "Twitter": "Twitter",
-      "Email": "Email",
+      "Email": "E-mail",
       "SMS": "SMS",
       "previous_page": "<< Previous page",
       "next_page": "Next page >>",
@@ -1654,7 +1654,7 @@
     "password_notify": "Pokud ponecháte pole prázdné, heslo se nezmění",
     "avatar": "Profilový obrázek",
     "name": "Jméno",
-    "email": "Email",
+    "email": "E-mail",
     "search_by_name": "Vyhledávání podle názvu"
   },
   "user_profile": {
@@ -1671,7 +1671,7 @@
       "delete_contact": {
         "title": "Delete your",
         "title_subject": {
-          "email": "Email",
+          "email": "E-mail",
           "phone": "Telefon"
         },
         "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
@@ -1961,7 +1961,7 @@
     "error_message": "Kontakt nelze v tuto chvíli uložit",
     "type": {
       "phone": "Telefon",
-      "email": "Email"
+      "email": "E-mail"
     },
     "button": {
       "add": "Přidat účet",
