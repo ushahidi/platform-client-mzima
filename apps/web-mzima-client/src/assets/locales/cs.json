@@ -1102,7 +1102,7 @@
     "create_saved_filter": "Vytvořit uložený filtr",
     "collection_saved": "Kolekce uložena.",
     "collection_updated": "Kolekce aktualizována.",
-    "collection_description": "You can add posts to your collection from the Data view"
+    "collection_description": "Příspěvky do kolekce můžete přidávat v zobrazení Data."
   },
   "category": {
     "add_tag": "Přidat kategorii",
