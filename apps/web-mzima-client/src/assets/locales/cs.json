@@ -1454,7 +1454,7 @@
     "see_imported_posts": "Zobrazit importované příspěvky",
     "import_another_csv": "Import jiného souboru CSV",
     "import_complete": "Váš import je dokončen",
-    "import_error": "An error has occurred importing your CSV file.",
+    "import_error": "Při importu vašeho souboru CSV došlo k chybě.",
     "complete_info": "Údaje z tabulky CSV, <em>{{filename}}</em>, byly úspěšně importovány.",
     "get_polling_info": "Získat informace o hlasování",
     "import_another": "Import jiného souboru CSV",
