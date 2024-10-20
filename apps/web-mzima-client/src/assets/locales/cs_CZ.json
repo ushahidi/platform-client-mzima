@@ -241,7 +241,7 @@
     "currently_disabled": "Tento průzkum je momentálně vypnutý.",
     "custom_structure": "Vlastní struktura",
     "default_date_placeholder": "Výchozí datum",
-    "default_date_hint": "If no date is added, the current time of posting would be added by default. The user can still update the {{ field_name }} after post submission.",
+    "default_date_hint": "Pokud není přidáno žádné datum, přidá se ve výchozím nastavení aktuální čas odeslání. Uživatel může i po odeslání příspěvku aktualizovat {{ field_name }}.",
     "default_default_placeholder": "Výchozí hodnota",
     "default_location_placeholder": "Nairobi, Keňa",
     "delete_post_type": "Odstranit tento průzkum",
