@@ -302,7 +302,7 @@
     },
     "task_is_marked_as": {
       "not_completed": "Úkol splněn? - Použijte přepínač níže",
-      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+      "completed": "Označili jste \"{{taskName}}\". Úkol jako splněný!"
     },
     "delete_task": "Smazat úlohu",
     "duplicate_survey": "Duplikovat",
