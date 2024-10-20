@@ -610,7 +610,7 @@
     "source": "Zdroj",
     "saved_filters": "Uložené filtry",
     "saved_filter": "Uložený filtr",
-    "no_saved_filters": "Žádné uložené filtry. Zde se zobrazí uložené filtry, které můžete vybrat, jakmile budou k dispozici.",
+    "no_saved_filters": "Žádné uložené filtry. Zde se zobrazí uložené filtr(y), které můžete vybrat, jakmile budou k dispozici.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Opravdu chcete odstranit tento uložený filtr?"
