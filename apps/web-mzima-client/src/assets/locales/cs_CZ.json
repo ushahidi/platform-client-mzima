@@ -297,7 +297,7 @@
     "select_color": "Vyberte barvu",
     "choose_survey": "Vybrat průzkum",
     "marked_for_internal": {
-      "header": "Internal Use Only",
+      "header": "Pouze pro interní použití",
       "body": "This task is marked for internal use only. It is not seen by users when they create a post."
     },
     "task_is_marked_as": {
