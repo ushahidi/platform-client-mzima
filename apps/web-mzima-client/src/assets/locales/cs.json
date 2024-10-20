@@ -224,7 +224,7 @@
     "no_crowdsourced": "Nemáte žádné údaje z davového průzkumu k zobrazení",
     "targeted_activity": "Cílená aktivita průzkumu",
     "crowdsourced_activity": "Aktivita davového průzkumu",
-    "tooltip_template": "This is the single point tooltip template"
+    "tooltip_template": "Toto je šablona nápovědy s jedním bodem"
   },
   "form": {
     "add_field": "Přidat pole",
