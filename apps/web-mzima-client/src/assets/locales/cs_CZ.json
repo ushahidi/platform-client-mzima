@@ -1698,7 +1698,7 @@
       "destroy_success": "Účet byl úspěšně odstraněn"
     },
     "default": {
-      "data_has_not_been_saved": "The data has not been saved!",
+      "data_has_not_been_saved": "Data nebyla uložena!",
       "proceed_warning": "Tuto akci nelze vrátit zpět. Postupujte prosím opatrně.",
       "save_success": "Uložený zdroj",
       "save_error": "Nelze uložit zdroj, zkuste to znovu",
