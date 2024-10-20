@@ -76,7 +76,7 @@
         "post_submitted_online" : "Děkujeme vám za zaslání zprávy. Příspěvek je prověřován naším týmem a brzy se objeví na platformě.",
         "post_submitted_offline" : "Děkujeme za vaši zprávu. Po obnovení spojení bude odeslána zpráva.",
         "posts_not_uploaded" : "<b>{{num_posts}} Příspěvky nebyly nahrány!</b><br/>Příspěvky nebyly nahrány z důvodu špatného připojení k internetu nebo jste byli offline. Budou automaticky nahrány, jakmile se připojíte k internetu.",
-        "posts_uploading" : "<b>Uploading {{num_posts}} Posts</b><br/>We are currently uploading your posts",
+        "posts_uploading" : "Nahrávání {{num_posts}} příspěvků. V současné době nahráváme vaše příspěvky",
         "posts_uploaded" : "<b>{{num_posts}} Posts Uploaded Successfully!</b><br/>Your posts were successfully uploaded. You can see them under \"My Posts\""
       }
     }
