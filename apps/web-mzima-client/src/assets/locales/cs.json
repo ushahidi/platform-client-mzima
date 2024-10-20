@@ -1893,7 +1893,7 @@
     "survey": {
       "bulk_destroy_confirm": "Opravdu chcete tyto průzkumy {{count}} smazat?",
       "bulk_destroy_confirm_desc": "Odstraněním těchto {{count}} vybraných průzkumů se odstraní také všechny shromážděné příspěvky a všechna související data v průzkumech. Tento krok nelze vrátit zpět.",
-      "destroy_confirm": "Are you sure you want to delete this survey?",
+      "destroy_confirm": "Opravdu chcete tento průzkum odstranit?",
       "destroy_confirm_desc": "Deleting this survey will also delete all collected posts and all associated data in the survey. This step cannot be reversed.",
       "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting."
     },
