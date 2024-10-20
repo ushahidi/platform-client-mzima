@@ -1727,7 +1727,7 @@
       "csv_import_cancel": "Import CSV byl zrušen",
       "csv_import_cancel_confirm": "Opravdu chcete import zrušit?",
       "csv_import_error": "Některá data v souboru CSV neodpovídají formátu mapovaného pole průzkumu. Zkontrolujte prosím data a zkuste to znovu.",
-      "csv_import_success": "The data from your CSV file was successfully imported!"
+      "csv_import_success": "Data ze souboru CSV byla úspěšně importována!"
     },
     "general_settings": {
       "save_success": "Obecná nastavení uložena"
