@@ -612,7 +612,7 @@
     "saved_filter": "Uložený filtr",
     "no_saved_filters": "Žádné uložené filtry. Zde se zobrazí uložené filtry, které můžete vybrat, jakmile budou k dispozici.",
     "save_new_filter": "Uložit nový filtr",
-    "clear_all_filters": "Clear all filters",
+    "clear_all_filters": "Vymazat všechny filtry",
     "delete_this_saved_filter": "Opravdu chcete odstranit tento uložený filtr?"
   },
   "graph": {
