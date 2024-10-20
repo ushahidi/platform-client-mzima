@@ -866,7 +866,7 @@
       "unlock": "Odemknout",
       "lock_broken_by_other": "Váš příspěvek byl odemčen. Vaše aktuální neuložené změny budou ztraceny.",
       "locked_message": "Příspěvek je uzamčen, protože právě na něm pracuje <strong>{{user}}</strong>. Zkuste upravovat jiný příspěvek.",
-      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+      "locked_tooltip": "Tento příspěvek upravuje někdo jiný. Zkuste to prosím později."
 
     },
     "modify": {
