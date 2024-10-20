@@ -1615,7 +1615,7 @@
     "search_and_filter": "Hledání a filtrování uživatelů",
     "passwordreset_instructions": "Pro obnovení hesla zadejte svůj e-mail",
     "passwordreset_confirm_instructions": "Pokud váš e-mail existuje v naší databázi, obdržíte brzy e-mail s obnovením hesla.",
-    "forgot_instructions": "No worries! Submit your email and check your inbox for a reset link.",
+    "forgot_instructions": "Bez obav! Odešlete svůj e-mail a zkontrolujte si schránku, zda vám nepřišel odkaz na obnovení.",
     "token": "Token pro resetování hesla",
     "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
     "password_length": "Password must be at least 8 characters long",
