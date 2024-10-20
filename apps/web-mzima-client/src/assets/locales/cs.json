@@ -1100,7 +1100,7 @@
     "remove": "odstranit",
     "update_saved_filter": "Aktualizace uloženého filtru",
     "create_saved_filter": "Vytvořit uložený filtr",
-    "collection_saved": "Collection saved.",
+    "collection_saved": "Kolekce uložena.",
     "collection_updated": "Collection updated.",
     "collection_description": "You can add posts to your collection from the Data view"
   },
