@@ -1620,7 +1620,7 @@
     "password_hint": "Heslo by mělo obsahovat alespoň 8 znaků, jedno malé písmeno, jedno velké písmeno, jednu číslici a jeden symbol.",
     "password_length": "Heslo musí mít alespoň 8 znaků",
     "password_match": "Hesla se neshodují",
-    "check_email": "Check your email",
+    "check_email": "Zkontrolujte svůj e-mail",
     "name_will_be_a_display_name": "Název, který zadáte, bude zobrazovaný název.",
     "valid": {
       "fields": {
