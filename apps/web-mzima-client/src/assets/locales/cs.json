@@ -612,7 +612,7 @@
     "saved_filter": "Uložený filtr",
     "no_saved_filters": "Žádné uložené filtry. Zde se zobrazí uložené filtr(y), které můžete vybrat, jakmile budou k dispozici.",
     "save_new_filter": "Uložit nový filtr",
-    "clear_all_filters": "Clear all filters",
+    "clear_all_filters": "Vymazat všechny filtry",
     "delete_this_saved_filter": "Opravdu chcete odstranit tento uložený filtr?"
   },
   "graph": {
@@ -651,7 +651,7 @@
   "modal": {
     "button": {
       "close": "Zavřít",
-      "done": "Done"
+      "done": "Hotovo"
     },
     "donation": {
       "thank_you_for_your_donation_start": "Na tomto webu je povoleno zpeněžení webu. Děkujeme za váš příspěvek. Přispěli jste",
@@ -1860,7 +1860,7 @@
       "add_to_collection": "Příspěvek byl přidán do {{collection}}",
       "removed_from_collection": "Příspěvek byl odstraněn z {{collection}}",
       "bulk_add_to_collection": "{{count}} příspěvky byly přidány do {{collection}}",
-      "done": "Done"
+      "done": "Hotovo"
     },
     "savedsearch": {
       "delete_savedsearch_success": "Uložené vyhledávání bylo úspěšně smazáno.",
