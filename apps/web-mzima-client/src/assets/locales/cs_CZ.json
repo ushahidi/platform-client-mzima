@@ -1674,7 +1674,7 @@
           "email": "E-mail",
           "phone": "Telefon"
         },
-        "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
+        "instructions": "Odstranění znamená, že od této chvíle nebudete moci dostávat oznámení na své telefonní číslo. Oznámení však můžete přepnout na níže uvedený způsob kontaktu.",
         "button": {
           "delete": "Smazat",
           "cancel": "Zrušit"
