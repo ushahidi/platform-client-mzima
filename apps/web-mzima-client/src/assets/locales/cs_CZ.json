@@ -260,7 +260,7 @@
     "field_type": "Typ pole",
     "field_name": "Název pole",
     "field_options": "Možnosti pole",
-    "field_key_placeholder": "field-key",
+    "field_key_placeholder": "pole-klíč",
     "field_name_placeholder": "Pojmenujte toto pole",
     "field_option_placeholder": "Možnost 1",
     "field_required": "Toto pole je povinné",
