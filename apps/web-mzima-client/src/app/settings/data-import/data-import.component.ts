@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { omit, clone, invert, keys, includes } from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   DataImportService,
   FormsService,
@@ -10,6 +10,7 @@ import {
   FormInterface,
   SurveysService,
   SurveyItem,
+  apiHelpers,
 } from '@mzima-client/sdk';
 
 import { BaseComponent } from '../../base.component';
@@ -43,11 +44,12 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   uploadErrors: any[] = [];
   importErrors: boolean = false;
   fileChanged = false;
-  public surveys: Observable<any>;
+  public surveys: SurveyItem[] = [];
 
   statusOption: string;
   selectedStatus: PostStatus;
   displayedColumns: string[] = ['survey', 'csv'];
+  public isLoading = false;
 
   constructor(
     protected override sessionService: SessionService,
@@ -72,8 +74,12 @@ export class DataImportComponent extends BaseComponent implements OnInit {
   }
 
   getSurveys() {
-    this.surveysService.get().subscribe((result) => {
-      this.surveys = of(result.results);
+    this.isLoading = true;
+    this.surveysService.getSurveys('', { only: apiHelpers.ONLY.NAME_ID }).subscribe({
+      next: (result) => {
+        this.isLoading = false;
+        this.surveys = result.results;
+      },
     });
   }
   loadData(): void {}
@@ -197,7 +203,11 @@ export class DataImportComponent extends BaseComponent implements OnInit {
     return field.key;
   }
 
-  formChanged() {
+  formChanged(selectedSurvey: SurveyItem) {
+    this.selectedForm = selectedSurvey;
+    this.surveysService.getSurveyById(this.selectedForm.id).subscribe((result) => {
+      this.selectedForm = result.result;
+    });
     if (this.selectedFile && this.selectedForm) {
       this.checkFormAndFile();
     }
