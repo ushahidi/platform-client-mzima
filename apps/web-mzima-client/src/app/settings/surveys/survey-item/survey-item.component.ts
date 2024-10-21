@@ -38,6 +38,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   public name: string;
   public form: FormGroup;
   public isEdit = false;
+  public isLoading = false;
   roles: RoleResult[] = [];
   surveyId: string;
   additionalTasks: SurveyItemTask[] = [];
@@ -114,10 +115,12 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     this.initRoles();
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
+      this.isLoading = true;
       this.surveyId = id;
       this.isEdit = !!id;
       this.surveysService.getSurveyById(id).subscribe({
         next: (response) => {
+          this.isLoading = false;
           this.updateForm(response.result);
           this.initLanguages(response.result.enabled_languages);
           this.initTasks();
