@@ -1,6 +1,12 @@
 import { HttpErrorResponse, HttpEventType /*, HttpProgressEvent */ } from '@angular/common/http';
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+} from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { formHelper } from '@helpers';
 import { MediaService } from '@mzima-client/sdk';
@@ -22,6 +28,11 @@ import {
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => MediaUploaderComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: MediaUploaderComponent,
       multi: true,
     },
   ],
@@ -55,9 +66,10 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
     this.mediaType = mediaTypes.get(this.media)!;
   }
 
-  // Import Helper Methods for the template
+  // helper imports for the template
   getDocumentThumbnail = getDocumentThumbnail;
   getFileSize = getFileSize;
+  ErrorEnum = ErrorEnum;
 
   writeValue(obj: MediaFile[]): void {
     if (Array.isArray(obj)) {
@@ -75,6 +87,17 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
 
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
+  }
+
+  validate(): ValidationErrors | null {
+    for (const upload of this.mediaFiles) {
+      if (upload.status === 'error') return { uploadError: true };
+
+      if (upload.status === 'too_big') return { uploadsInvalid: true };
+
+      if (upload.status === 'uploading') return { uploadInProgress: true };
+    }
+    return null;
   }
 
   onFileSelected(event: Event) {
@@ -101,6 +124,9 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
               mimeType: aFile.type,
               url: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(photoUrl)),
             };
+            if (mediaFile.size! > this.maxUploadSize * 1000000) {
+              mediaFile.status = 'too_big';
+            }
             this.mediaFiles.push(mediaFile);
           }
         }
@@ -108,9 +134,6 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
         this.mediaFiles
           .filter((mediaFile) => mediaFile.status === 'uploading')
           .forEach((aMediaFile) => {
-            //   })
-            // for (let i = 0; i < this.mediaFiles.length; i++) {
-            //   const aMediaFile = this.mediaFiles[i];
             const uploadObservable: Observable<any> = this.mediaService
               .uploadFileProgress(aMediaFile.file!, '')
               .pipe(
@@ -143,7 +166,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
                           mediaFile.generatedId,
                           uploadEvent.body,
                           (theMediaFile) => {
-                            theMediaFile.status = 'ready';
+                            // theMediaFile.status = 'ready';
                             return theMediaFile;
                           },
                         );
@@ -181,6 +204,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
           console.log(results);
         });
       }
+      this.onChange(this.mediaFiles);
     }
   }
 
@@ -198,16 +222,26 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
       }
     }
 
-    if (mediaFile && (mediaFile.status === 'upload' || mediaFile.status === 'ready')) {
-      const confirmed = await this.confirm.open({
-        title: this.translate.instant('notify.default.are_you_sure_you_want_to_delete_this'),
-        description: this.translate.instant('notify.default.proceed_warning'),
-      });
+    if (mediaFile) {
+      if (mediaFile.status === 'upload' || mediaFile.status === 'ready') {
+        const confirmed = await this.confirm.open({
+          title: this.translate.instant('notify.default.are_you_sure_you_want_to_delete_this'),
+          description: this.translate.instant('notify.default.proceed_warning'),
+        });
 
-      if (!confirmed) return;
+        if (!confirmed) return;
+      } else if (mediaFile.status === 'error' || mediaFile.status === 'too_big') {
+        this.error = ErrorEnum.NONE;
+      } else {
+        return;
+      }
 
       // this.mediaFiles[index].status = 'delete';
       this.mediaFiles.splice(index, 1);
+      const filteredItems = this.mediaFiles.filter(
+        (item) => item.status === 'error' || item.status === 'too_big',
+      );
+      if (filteredItems.length === 0) this.error = ErrorEnum.NONE;
     }
     this.onChange(this.mediaFiles);
   }

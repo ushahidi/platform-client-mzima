@@ -13,7 +13,14 @@ type MediaType = {
   fileTypes: string;
 };
 
-type MediaFileStatus = 'ready' | 'upload' | 'uploading' | 'uploaded' | 'error' | 'delete';
+type MediaFileStatus =
+  | 'ready'
+  | 'upload'
+  | 'uploading'
+  | 'uploaded'
+  | 'error'
+  | 'too_big'
+  | 'delete';
 
 const mediaTypes = new Map<string, MediaType>([
   [

@@ -7,20 +7,41 @@
       flex-direction: row;
       padding: 4px;
       border: 1px solid #f5f5f5;
+      .thumbnail {
+        max-width: 100px;
+        max-height: 100px;
+      }
       &.ready {
         border: 1px solid #f5f5f5;
       }
       &.uploaded {
         border: 1px solid #17710f;
+        .status-button {
+          background-color: #17710f;
+        }
       }
-      &.error {
+      &.error,
+      &.too_big {
         border: 1px solid #962923;
       }
       border-radius: 4px;
-      .thumbnail,
       .media-blank {
-        max-width: 64px;
-        max-height: 64px;
+        height: 100%;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .xicon {
+          padding: 4px;
+          display: block;
+          font-size: 3rem;
+          width: 64px;
+          height: auto;
+        }
+        .media-error {
+          width: 100%;
+          text-align: center;
+        }
         .loading-spinner {
           width: 100%;
           height: 100%;
@@ -34,8 +55,8 @@
         justify-content: center;
         .filename {
           font-size: 14px;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          text-overflow: wrap;
+          white-space: wrap;
           overflow: hidden;
         }
         .filesize {
@@ -45,19 +66,18 @@
       }
       .status-button {
         align-self: flex-start;
-        flex: 0 0 auto;
+        flex: 0 0;
         position: relative;
-        height: 24px;
-        width: 24px;
+        min-height: 24px;
+        min-width: 24px;
         border-radius: 50%;
         background-color: #919397;
         .xicon {
           position: absolute;
-          top: 7px;
-          left: 7px;
+          top: 2px;
+          left: 2px;
           color: #fff;
-          transform: scale(1.5);
-          font-weight: bold;
+          font-size: 20px;
         }
       }
     }
@@ -66,11 +86,17 @@
       grid-template-columns: 1fr 1fr;
       column-gap: 4px;
       row-gap: 4px;
+      .media-preview {
+        height: 100px;
+      }
     }
     &-audio {
       width: 100%;
       display: inline-flex;
       flex-direction: column;
+      .media-preview {
+        height: auto;
+      }
       audio {
         width: 50%;
       }
@@ -81,9 +107,12 @@
     }
     &-document {
       display: grid;
-      grid-template-columns: auto auto;
+      grid-template-columns: 1fr 1fr;
       column-gap: 4px;
       row-gap: 4px;
+      .media-preview {
+        height: 64px;
+      }
     }
 
     img {

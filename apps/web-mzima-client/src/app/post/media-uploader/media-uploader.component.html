@@ -32,28 +32,33 @@
           <ng-template #inProgress>
             <div class="media-blank">
               <mat-icon
-                *ngIf="mediaFile.status === 'error'"
+                *ngIf="mediaFile.status === 'error' || mediaFile.status === 'too_big'"
                 class="xicon"
                 icon
                 svgIcon="warning"
               ></mat-icon>
+              <div class="media-error" *ngIf="mediaFile.status === 'too_big'">
+                {{ ErrorEnum.MAX_SIZE | translate }}
+              </div>
               <app-spinner
                 class="loading-spinner"
                 *ngIf="mediaFile.status === 'uploading'"
               ></app-spinner>
+              <div class="media-status" *ngIf="mediaFile.status === 'uploading'">Uploading...</div>
             </div>
-            <div class="media-status"></div>
           </ng-template>
 
           <div
             class="status-button"
             (click)="clickDeleteButton(mediaFile.value, mediaFile.generatedId)"
           >
-            <ng-template [ngIf]="mediaFile.status === 'uploaded'" [ngIfElse]="cross">
-              <mat-icon class="xicon" svgIcon="check"></mat-icon>
+            <ng-container *ngIf="mediaFile.status === 'uploaded'; then check; else cross">
+            </ng-container>
+            <ng-template #check>
+              <mat-icon class="xicon" fontIcon="check"></mat-icon>
             </ng-template>
             <ng-template #cross>
-              <mat-icon class="xicon" svgIcon="close"></mat-icon>
+              <mat-icon class="xicon" fontIcon="close"></mat-icon>
             </ng-template>
           </div>
         </div>
