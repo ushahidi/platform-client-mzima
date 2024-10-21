@@ -213,7 +213,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         this.urlAfterInteractionWithFilters = '';
         //-----------------------------------
 
-        this.activeCard.scrollCountHandler({ task: 'reset' });
+        this.activeCard.scrollCountHandler({ task: 'startCount' });
 
         this.masonryUpdateOnModeSwitch({ userEvent: this.userEvent });
 
