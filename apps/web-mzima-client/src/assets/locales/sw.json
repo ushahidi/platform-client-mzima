@@ -1547,7 +1547,7 @@
     "upload_button": "Add dataset details and upload to hdx",
     "export_button": "Hamisha kwa csv",
     "go_back": "Rudi nyuma na uangalie",
-    "add_details": "Add details",
+    "add_details": "Ongeza maelezo",
     "details_desc": "To upload to the Humanitarian Data Exchange (HDX) some extra details are required.",
     "privacy_title": "Privacy Settings",
     "privacy_desc": "You have a choice of sharing your dataset publicly or restricting access to other members of the organisation which owns the dataset.",
