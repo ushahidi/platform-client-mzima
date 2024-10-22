@@ -1293,7 +1293,7 @@
         "outgoing_server_type_sendmail": "barua pepe",
         "outgoing_server_type_native": "Asili",
         "outgoing_server": "Seva Inayotoka",
-        "outgoing_server_desc": "Examples: smtp.yourhost.com, smtp.gmail.com",
+        "outgoing_server_desc": "Mifano: smtp.yourhost.com, smtp.gmail.com",
         "outgoing_server_port": "Bandari ya Seva Inayotoka",
         "outgoing_server_port_desc": "Common ports: 25 (SMTP default), 465 (SMTP with SSL)",
         "outgoing_server_security": "Usalama wa Seva Unaotoka",
