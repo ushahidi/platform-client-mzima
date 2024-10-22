@@ -1315,7 +1315,7 @@
           "from_desc": "Nambari iliyotoka",
           "secret_desc": "The secret value",
           "api_key": "Kifunguo cha API",
-          "api_secret": "API secret",
+          "api_secret": "Siri ya API",
           "api_secret_desc": "The API secret"
         },
         "smssync": {
