@@ -1236,7 +1236,7 @@
       "use_webhook_for": "Use webhook for",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "Mtandao huu utatumika kwa hojaji za aina zilizochaguliwa pekee.",
-      "destination": "Destination",
+      "destination": "Mwisho wa safari",
       "placeholder": {
         "name": "Tafadhali ingiza jina la webhook",
         "shared_secret": "Tafadhali ingiza siri ya pamoja",
