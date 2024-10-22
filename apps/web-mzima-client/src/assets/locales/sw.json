@@ -1300,7 +1300,7 @@
         "outgoing_username": "Jina la mtumiaji linalotoka",
         "outgoing_password": "Nenosiri linalotoka",
         "email_address": "Anwani ya barua pepe",
-        "email_sender_name": "Email Sender Name",
+        "email_sender_name": "Jina la Mtumaji Barua Pepe",
         "email_sender_name_desc": "Appears in the 'from:' field on outgoing emails"
       },
       "sms": {
