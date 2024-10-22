@@ -1297,7 +1297,7 @@
         "outgoing_server_port": "Bandari ya Seva Inayotoka",
         "outgoing_server_port_desc": "Bandari za kawaida: 25 (chaguo-msingi SMTP), 465 (SMTP yenye SSL)",
         "outgoing_server_security": "Usalama wa Seva Unaotoka",
-        "outgoing_username": "Outgoing Username",
+        "outgoing_username": "Jina la mtumiaji linalotoka",
         "outgoing_password": "Outgoing Password",
         "email_address": "Email Address",
         "email_sender_name": "Email Sender Name",
