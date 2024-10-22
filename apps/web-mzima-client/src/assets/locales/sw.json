@@ -1307,7 +1307,7 @@
         "secret": "Siri",
         "api_key_desc": "The API key",
         "frontline_sms": {
-          "api_key": "Key",
+          "api_key": "Ufunguo",
           "secret_desc": "Set a secret so that only authorized FrontlineCloud accounts can send/recieve message. You need to configure the same secret in the FrontlineCloud Activity."
         },
         "nexmo": {
