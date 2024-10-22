@@ -1312,7 +1312,7 @@
         },
         "nexmo": {
           "from": "Kutoka",
-          "from_desc": "The from number",
+          "from_desc": "Nambari iliyotoka",
           "secret_desc": "The secret value",
           "api_key": "Kifunguo cha API",
           "api_secret": "API secret",
