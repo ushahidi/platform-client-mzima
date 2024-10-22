@@ -1567,7 +1567,7 @@
     "add_license": "Ongeza leseni",
     "read_more_licenses": "Soma zaidi kuhusu leseni",
     "submit_hdx": "Tuma kwa akaunti ya HDX",
-    "uploading_data": "Uploading data...",
+    "uploading_data": "Inapakia data...",
     "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
     "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
     "no_fields_selected": "Hujachagua nyanda zozote au kukabidhi vitambulisho au sifa zozote za hxl. Tafadhali chagua angalau sehemu moja na ukabidhi angalau tagi moja ili kuweza kuhamisha kwa CSV au kupakia kwenye akaunti ya Humanitarian Data Exchange (HDX).",
