@@ -1290,7 +1290,7 @@
         "password_desc": "Nenosiri la akaunti ya barua pepe",
         "outgoing_server_type": "Aina ya Seva Inayotoka",
         "outgoing_server_type_SMTP": "SMTP",
-        "outgoing_server_type_sendmail": "sendmail",
+        "outgoing_server_type_sendmail": "barua pepe",
         "outgoing_server_type_native": "Native",
         "outgoing_server": "Outgoing Server",
         "outgoing_server_desc": "Examples: smtp.yourhost.com, smtp.gmail.com",
