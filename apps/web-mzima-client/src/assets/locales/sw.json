@@ -1287,7 +1287,7 @@
         "incoming_username": "Jina la mtumiaji linaloingia",
         "username_desc": "Jina la mtumiaji la akaunti ya barua pepe",
         "incoming_password": "Nenosiri linaloingia",
-        "password_desc": "Email account password",
+        "password_desc": "Nenosiri la akaunti ya barua pepe",
         "outgoing_server_type": "Outgoing Server Type",
         "outgoing_server_type_SMTP": "SMTP",
         "outgoing_server_type_sendmail": "sendmail",
