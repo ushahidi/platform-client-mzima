@@ -1549,7 +1549,7 @@
     "go_back": "Rudi nyuma na uangalie",
     "add_details": "Ongeza maelezo",
     "details_desc": "Ili kupakia kwa Humanitarian Data Exchange (HDX) baadhi ya maelezo ya ziada yanahitajika.",
-    "privacy_title": "Privacy Settings",
+    "privacy_title": "Mipangilio ya Faragha",
     "privacy_desc": "You have a choice of sharing your dataset publicly or restricting access to other members of the organisation which owns the dataset.",
     "this_dataset": "This data set is:",
     "private_desc": "<strong>Private</strong> (Only you and other HDX members of your organisation can <strong>search, view/edit</strong> or <strong> download </strong> this dataset)",
