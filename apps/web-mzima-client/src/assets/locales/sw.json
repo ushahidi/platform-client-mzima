@@ -1273,7 +1273,7 @@
       "saving_changes": "Kuhifadhi",
       "unavailable": "Chanzo cha data {{thamani}} inapatikana. <a href=\"/mipangilio/mpango\">Boresha mpango wako</a> ili kuipata!",
       "email": {
-        "incoming_server_type": "Incoming Server Type",
+        "incoming_server_type": "Aina ya Seva Inayoingia",
         "incoming_server_type_pop": "POP",
         "incoming_server_type_imap": "IMAP",
         "incoming_server": "Seva Inayoingia",
