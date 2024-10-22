@@ -1341,7 +1341,7 @@
         "intro_step_2_desc": "Once you've created the application click on \"Keys and Access Tokens\".<br /> Then click \"Generate Consumer Key and Secret\".<br /> Copy keys, tokens and secrets into the fields below.",
         "consumer_key": "Ufunguo wa Mtumiaji",
         "consumer_key_desc": "Add the consumer key from your Twitter app.",
-        "consumer_secret": "Consumer Secret",
+        "consumer_secret": "Siri ya Mtumiaji",
         "consumer_secret_desc": "Add the consumer secret from your Twitter app.",
         "access_token": "Access Token",
         "access_token_desc": "Add the access token you generated for your Twitter app.",
