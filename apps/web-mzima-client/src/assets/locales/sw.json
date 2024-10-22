@@ -1296,7 +1296,7 @@
         "outgoing_server_desc": "Examples: smtp.yourhost.com, smtp.gmail.com",
         "outgoing_server_port": "Bandari ya Seva Inayotoka",
         "outgoing_server_port_desc": "Common ports: 25 (SMTP default), 465 (SMTP with SSL)",
-        "outgoing_server_security": "Outgoing Server Security",
+        "outgoing_server_security": "Usalama wa Seva Unaotoka",
         "outgoing_username": "Outgoing Username",
         "outgoing_password": "Outgoing Password",
         "email_address": "Email Address",
