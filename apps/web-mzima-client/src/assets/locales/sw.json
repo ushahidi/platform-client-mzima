@@ -1304,7 +1304,7 @@
         "email_sender_name_desc": "Appears in the 'from:' field on outgoing emails"
       },
       "sms": {
-        "secret": "Secret",
+        "secret": "Siri",
         "api_key_desc": "The API key",
         "frontline_sms": {
           "api_key": "Key",
