@@ -1316,7 +1316,7 @@
           "secret_desc": "The secret value",
           "api_key": "Kifunguo cha API",
           "api_secret": "Siri ya API",
-          "api_secret_desc": "The API secret"
+          "api_secret_desc": "Siri ya API"
         },
         "smssync": {
           "intro_step_1": "Step 1: Download the 'SMSSync' app from the Android Market.",
