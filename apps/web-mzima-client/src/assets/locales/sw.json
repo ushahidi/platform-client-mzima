@@ -1569,7 +1569,7 @@
     "submit_hdx": "Tuma kwa akaunti ya HDX",
     "uploading_data": "Inapakia data...",
     "uploading_data_desc": "Upakiaji wa data kwenye akaunti yako ya Humanitarian Data Exchange (HDX) unaendelea... <br /> <br />Unaweza kutoka kwenye ukurasa huu wakati upakiaji huu unafanyika lakini tafadhali usifunge kivinjari.",
-    "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
+    "uploading_data_err": "Lo... Hitilafu fulani imetokea wakati wa kupakia data yako, tafadhali angalia nyanja zinazohitajika na ufunguo wako wa api na ujaribu tena.",
     "no_fields_selected": "Hujachagua nyanda zozote au kukabidhi vitambulisho au sifa zozote za hxl. Tafadhali chagua angalau sehemu moja na ukabidhi angalau tagi moja ili kuweza kuhamisha kwa CSV au kupakia kwenye akaunti ya Humanitarian Data Exchange (HDX).",
     "validation": {
       "title": "A title is needed",
