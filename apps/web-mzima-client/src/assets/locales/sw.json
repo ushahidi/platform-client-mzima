@@ -1276,7 +1276,7 @@
         "incoming_server_type": "Incoming Server Type",
         "incoming_server_type_pop": "POP",
         "incoming_server_type_imap": "IMAP",
-        "incoming_server": "Incoming Server",
+        "incoming_server": "Seva Inayoingia",
         "incoming_server_desc": "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com",
         "incoming_server_port": "Incoming Server Port",
         "incoming_server_port_desc": "Common ports: 110 (POP3), 143 (IMAP), 995 (POP3 with SSL), 993 (IMAP with SSL)",
