@@ -1343,7 +1343,7 @@
         "consumer_key_desc": "Add the consumer key from your Twitter app.",
         "consumer_secret": "Siri ya Mtumiaji",
         "consumer_secret_desc": "Add the consumer secret from your Twitter app.",
-        "access_token": "Access Token",
+        "access_token": "Ishara ya Ufikiaji",
         "access_token_desc": "Add the access token you generated for your Twitter app.",
         "access_token_secret": "Access Token Secret",
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
