@@ -1545,7 +1545,7 @@
     "upload_desc": "Umechagua nyanda {{fields}} fza kupakiwa kwenye akaunti ya Humanitarian Data Exchange (HDX). <br /> <br /> Uligawia vitambulisho na sifa - ili kuangalia, unaweza kurudi nyuma. Ukimaliza, unaweza kuongeza maelezo na kupakia. <br /> <br /> Humanitarian Data Exchange (HDX) inahitaji maelezo machache zaidi ili kupakia kwenye mfumo wao. Utaongeza haya ijayo",
     "hdx_csv_desc": "Umechagua nyanda {{fields}} za kuhamishia kwenye CSV.<br /> <br /> Ulikabidhi vitambulisho na sifa - ili kuangalia hizi ni sahihi, unaweza kurudi nyuma na kuangalia. Ukimaliza, unaweza kuhamisha.",
     "upload_button": "Add dataset details and upload to hdx",
-    "export_button": "Export to csv",
+    "export_button": "Hamisha kwa csv",
     "go_back": "Go back and check",
     "add_details": "Add details",
     "details_desc": "To upload to the Humanitarian Data Exchange (HDX) some extra details are required.",
