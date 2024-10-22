@@ -1559,7 +1559,7 @@
     "dataset_example": "Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong>",
     "dataset_title": "Title of data set",
     "metadata_title": "Metadata",
-    "metadata_desc": "Metadata is additional information about your dataset that will make it easier for others to understand and put your data into context. Datasets on HDX must include a set of metadata fields.",
+    "metadata_desc": "Metadata ni maelezo ya ziada kuhusu mkusanyiko wako wa data ambayo yatarahisisha wengine kuelewa na kuweka data yako katika muktadha. Seti za data kwenye HDX lazima zijumuishe seti ya nyanja za metadata.",
     "source": "Chanzo",
     "organisation": "Organisation",
     "select_organisation": "Select an organisation",
