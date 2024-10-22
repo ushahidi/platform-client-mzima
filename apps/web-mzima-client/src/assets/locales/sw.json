@@ -1540,7 +1540,7 @@
     "HXL_tags": "Vitambulisho vya HXL",
     "HXL_attributes": "Sifa za HXL",
     "tag_preview": "Muhtasari wa kitambulisho",
-    "upload_title": "Are you ready to upload to an Humanitarian Data Exchange (HDX) account?",
+    "upload_title": "Je, uko tayari kupakia kwenye akaunti ya Humanitarian Data Exchange (HDX)?",
     "hdx_csv_title": "Are you ready to export to CSV?",
     "upload_desc": "Umechagua nyanda {{fields}} fza kupakiwa kwenye akaunti ya Humanitarian Data Exchange (HDX). <br /> <br /> Uligawia vitambulisho na sifa - ili kuangalia, unaweza kurudi nyuma. Ukimaliza, unaweza kuongeza maelezo na kupakia. <br /> <br /> Humanitarian Data Exchange (HDX) inahitaji maelezo machache zaidi ili kupakia kwenye mfumo wao. Utaongeza haya ijayo",
     "hdx_csv_desc": "Umechagua nyanda {{fields}} za kuhamishia kwenye CSV.<br /> <br /> Ulikabidhi vitambulisho na sifa - ili kuangalia hizi ni sahihi, unaweza kurudi nyuma na kuangalia. Ukimaliza, unaweza kuhamisha.",
