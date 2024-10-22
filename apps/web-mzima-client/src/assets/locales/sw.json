@@ -1311,7 +1311,7 @@
           "secret_desc": "Set a secret so that only authorized FrontlineCloud accounts can send/recieve message. You need to configure the same secret in the FrontlineCloud Activity."
         },
         "nexmo": {
-          "from": "From",
+          "from": "Kutoka",
           "from_desc": "The from number",
           "secret_desc": "The secret value",
           "api_key": "Kifunguo cha API",
