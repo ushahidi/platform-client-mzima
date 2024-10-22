@@ -297,7 +297,7 @@
     "select_color": "Chagua rangi",
     "choose_survey": "Chagua utafiti",
     "marked_for_internal": {
-      "header": "Internal Use Only",
+      "header": "Matumizi ya ndani pekee",
       "body": "Kazi hii imewekwa kwa matumizi ya ndani pekee. Haionekani na watumiaji wanapounda chapisho."
     },
     "task_is_marked_as": {
