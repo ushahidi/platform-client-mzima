@@ -1339,7 +1339,7 @@
         "intro_step_1_desc": "Create a <a href=\"https://apps.twitter.com/app/new\">new twitter application</a>",
         "intro_step_2": "Step 2: Generate a consumer key and secret",
         "intro_step_2_desc": "Once you've created the application click on \"Keys and Access Tokens\".<br /> Then click \"Generate Consumer Key and Secret\".<br /> Copy keys, tokens and secrets into the fields below.",
-        "consumer_key": "Consumer Key",
+        "consumer_key": "Ufunguo wa Mtumiaji",
         "consumer_key_desc": "Add the consumer key from your Twitter app.",
         "consumer_secret": "Consumer Secret",
         "consumer_secret_desc": "Add the consumer secret from your Twitter app.",
