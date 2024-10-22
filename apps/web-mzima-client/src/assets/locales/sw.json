@@ -1294,7 +1294,7 @@
         "outgoing_server_type_native": "Asili",
         "outgoing_server": "Seva Inayotoka",
         "outgoing_server_desc": "Examples: smtp.yourhost.com, smtp.gmail.com",
-        "outgoing_server_port": "Outgoing Server Port",
+        "outgoing_server_port": "Bandari ya Seva Inayotoka",
         "outgoing_server_port_desc": "Common ports: 25 (SMTP default), 465 (SMTP with SSL)",
         "outgoing_server_security": "Outgoing Server Security",
         "outgoing_username": "Outgoing Username",
