@@ -1280,7 +1280,7 @@
         "incoming_server_desc": "Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com",
         "incoming_server_port": "Incoming Server Port",
         "incoming_server_port_desc": "Common ports: 110 (POP3), 143 (IMAP), 995 (POP3 with SSL), 993 (IMAP with SSL)",
-        "incoming_server_security": "Incoming Server Security",
+        "incoming_server_security": "Usalama wa Seva inayoingia",
         "server_security_none": "Hakuna",
         "server_security_SSL": "SSL",
         "server_security_TLS": "TLS",
