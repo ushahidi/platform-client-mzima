@@ -166,7 +166,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
                           mediaFile.generatedId,
                           uploadEvent.body,
                           (theMediaFile) => {
-                            // theMediaFile.status = 'ready';
+                            theMediaFile.status = 'ready';
                             return theMediaFile;
                           },
                         );
