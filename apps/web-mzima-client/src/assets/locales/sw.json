@@ -1574,8 +1574,8 @@
     "validation": {
       "title": "Mada inahitajika",
       "source": "Chanzo kinahitajika",
-      "organisation": "An organisation is needed",
-      "license": "A license is needed",
+      "organisation": "Shirika linahitajika",
+      "license": "Leseni inahitajika",
       "all_fields": "Please fill in all required fields"
     }
   },
