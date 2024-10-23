@@ -149,12 +149,12 @@
               </div>
             </ng-container>
 
-            <ng-container *ngIf="field.input === 'upload' && field.value.mediaSrc">
-              <span *ngIf="!field.value.value">-</span>
+            <ng-container *ngIf="field.input === 'upload' && field.value[0].url">
+              <span *ngIf="!field.value[0].value">-</span>
               <div class="post__media">
-                <img *ngIf="field.value.value" [src]="field.value.mediaSrc" [alt]="post.title" />
-                <span *ngIf="field.value?.mediaCaption?.length" class="post__media__caption">{{
-                  field.value.mediaCaption
+                <img *ngIf="field.value[0].value" [src]="field.value[0].url" [alt]="post.title" />
+                <span *ngIf="field.value[0].caption?.length" class="post__media__caption">{{
+                  field.value[0].caption
                 }}</span>
               </div>
             </ng-container>
