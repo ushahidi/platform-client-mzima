@@ -451,7 +451,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   public updateMasonry(): void {
-    this.masonry?.layout();
+    console.log('Updating masonry layout');
+    if (this.masonry) {
+      this.masonry.reloadItems();
+      this.masonry?.layout();
+    }
   }
 
   public masonryUpdateOnModeSwitch({ userEvent }: { userEvent: UserEvent }): void {
@@ -879,6 +883,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   refreshPost({ id }: PostResult) {
     this.postsService.getById(id).subscribe((p) => {
       const updatedPost = _.cloneDeep(p);
+      console.log(updatedPost);
       this.posts = this.posts.map((obj) => (obj.id === updatedPost.id ? updatedPost : obj));
     });
   }
