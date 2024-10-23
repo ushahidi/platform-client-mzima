@@ -354,12 +354,12 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   private async handleUpload(key: string, value: any) {
-    if (!value?.value) return;
+    if (!value[0].value) return;
     try {
-      const response: any = await lastValueFrom(this.mediaService.getById(value.value));
+      const response: any = await lastValueFrom(this.mediaService.getById(value[0].value));
       this.form.patchValue({
         [key]: {
-          id: value.value,
+          id: value[0].value,
           caption: response.result.caption,
           photo: response.result.original_file_url,
         },
@@ -642,7 +642,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                         this.form.value[field.key]?.caption,
                       );
                       const response: any = await lastValueFrom(uploadObservable);
-                      value.value = response.result.id;
+                      value.value = [response.result.id];
                     } else {
                       this.maxSizeError = true;
                       throw new Error(`Error uploading file: max size exceed`);
@@ -660,14 +660,14 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   } catch (error: any) {
                     throw new Error(`Error deleting file: ${error.message}`);
                   }
-                } else if (originalValue?.value?.mediaCaption !== value.value?.caption) {
+                } else if (originalValue?.value[0].caption !== value.value?.caption) {
                   try {
                     const captionObservable = await this.mediaService.updateCaption(
-                      originalValue.value.id,
+                      originalValue.value[0].id,
                       value.value.caption,
                     );
                     await lastValueFrom(captionObservable);
-                    value.value = originalValue.value.id;
+                    value.value = [originalValue.value[0].id];
                   } catch (error: any) {
                     throw new Error(`Error updating caption: ${error.message}`);
                   }
