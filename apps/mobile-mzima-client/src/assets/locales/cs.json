@@ -78,6 +78,19 @@
         "posts_not_uploaded" : "<b>{{num_posts}} Příspěvky nebyly nahrány!</b><br/>Příspěvky nebyly nahrány z důvodu špatného připojení k internetu nebo jste byli offline. Budou automaticky nahrány, jakmile se připojíte k internetu.",
         "posts_uploading" : "<b>Nahrávání {{num_posts}} příspěvků. </b><br/>V současné době nahráváme vaše příspěvky",
         "posts_uploaded" : "<b>{{num_posts}} příspěvky byly úspěšně nahrány!</b><br/>Vaše příspěvky byly úspěšně nahrány. Můžete je vidět v části „Moje příspěvky“"
-      }
+      },
+      "map": "Mapa",
+      "activity": "Aktivita",
+      "profile": "Můj profil",
+      "language": "Jazyk",
+      "help_support": "Nápověda & Podpora",
+      "help_support_desc":"Documentation, Report a bug",
+      "profile_info":"Profile information",
+      "profile_info_desc":"Edit your photo or information",
+      "my_posts": "Moje příspěvky",
+      "my_posts_desc":"Post you’ve created",
+      "logout": "Odhlásit se",
+      "login_register":"Log in or Sign up",
+      "add_edit_collection":"Add or Edit collections"
     }
 }
