@@ -67,12 +67,11 @@ export const profileMenu: ProfileMenuItem[] = [
 ];
 
 export const profileInformationMenu: ProfileMenuItem[] = [
-  // Uncomment when we have more translations available
-  //{
-  //   label: 'Language',
-  //   icon: 'language',
-  //   route: '/profile/select-language',
-  // },
+  {
+    label: 'app.language',
+    icon: 'language',
+    route: '/profile/select-language',
+  },
   {
     label: 'Help and Support',
     description: 'Documentation, Report a bug',
