@@ -75,7 +75,7 @@
         "auth_not_online" : "Pole. Hauko mtandaoni...tafadhali angalia muunganisho wako wa mtandao",
         "post_submitted_online" : "Asante kwa kuwasilisha ripoti yako. Chapisho linakaguliwa na timu yetu na hivi karibuni litaonekana kwenye jukwaa.",
         "post_submitted_offline" : "Asante kwa ripoti yako. Ujumbe utatumwa wakati muunganisho wa mtandao umerejeshwa.",
-        "posts_not_uploaded" : "<b>{{num_posts}} Posts not Uploaded!</b><br/>The posts were not uploaded due to bad internet connection or you were offline. They will be automatically uploaded as soon as you connect to the internet",
+        "posts_not_uploaded" : "<b>Machapisho {{num_posts}} hayajapakiwa!</b><br/>Machapisho hayakupakiwa kwa sababu ya muunganisho mbaya wa intaneti au ulikuwa nje ya mtandao. Zitapakiwa kiotomatiki pindi tu utakapounganisha kwenye intaneti",
         "posts_uploading" : "<b>Uploading {{num_posts}} Posts</b><br/>We are currently uploading your posts",
         "posts_uploaded" : "<b>{{num_posts}} Posts Uploaded Successfully!</b><br/>Your posts were successfully uploaded. You can see them under \"My Posts\""
       }
