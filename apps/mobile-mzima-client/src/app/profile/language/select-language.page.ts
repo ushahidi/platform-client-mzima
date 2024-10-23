@@ -25,14 +25,12 @@ export class SelectLanguagePage {
 
   public selectLanguage(language: string) {
     this.selectedLanguage = language;
-    console.log(language);
     this.languageService.changeLanguage(language);
   }
 
   public getSelectedLanguage() {
     const initial = this.languageService.initialLanguage;
     this.selectedLanguage = this.languages.find((language) => {
-      console.log(language);
       return language.code === initial;
     });
   }
