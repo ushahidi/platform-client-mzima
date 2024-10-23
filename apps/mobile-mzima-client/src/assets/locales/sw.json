@@ -73,7 +73,7 @@
       "emtpy_field_error": "Uwanda huu hauwezi kuwa tupu",
       "info" : {
         "auth_not_online" : "Pole. Hauko mtandaoni...tafadhali angalia muunganisho wako wa mtandao",
-        "post_submitted_online" : "Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.",
+        "post_submitted_online" : "Asante kwa kuwasilisha ripoti yako. Chapisho linakaguliwa na timu yetu na hivi karibuni litaonekana kwenye jukwaa.",
         "post_submitted_offline" : "Thank you for your report. A message will be sent when the connection is restored.",
         "posts_not_uploaded" : "<b>{{num_posts}} Posts not Uploaded!</b><br/>The posts were not uploaded due to bad internet connection or you were offline. They will be automatically uploaded as soon as you connect to the internet",
         "posts_uploading" : "<b>Uploading {{num_posts}} Posts</b><br/>We are currently uploading your posts",
