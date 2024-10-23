@@ -18,22 +18,22 @@ export interface ProfileMenuItem {
 
 export const profileMenu: ProfileMenuItem[] = [
   {
-    label: 'Profile information',
-    description: 'Edit your photo or information',
+    label: 'app.profile_info',
+    description: 'app.profile_info_desc',
     icon: 'user',
     route: '/profile/information',
     isLoggedGuard: true,
   },
   {
-    label: 'Collections',
-    description: 'Add or Edit collections',
+    label: 'app.collections',
+    description: 'app.add_edit_collection',
     icon: 'collections',
     route: '/profile/collection',
     isLoggedGuard: true,
   },
   {
-    label: 'My posts',
-    description: 'Post you’ve created',
+    label: 'app.my_posts',
+    description: 'app.my_posts_desc',
     icon: 'posts',
     route: '/profile/posts',
     isLoggedGuard: true,
@@ -51,14 +51,14 @@ export const profileMenu: ProfileMenuItem[] = [
   //   hideDetails: true,
   // },
   {
-    label: 'Log out',
+    label: 'app.logout',
     icon: 'logout',
     action: ProfileMenuActions.LOGOUT,
     hideDetails: true,
     isLoggedGuard: true,
   },
   {
-    label: 'Log in or Sign up',
+    label: 'app.login_register',
     icon: 'logout',
     route: '/auth',
     hideDetails: true,
@@ -73,18 +73,18 @@ export const profileInformationMenu: ProfileMenuItem[] = [
     route: '/profile/select-language',
   },
   {
-    label: 'Help and Support',
-    description: 'Documentation, Report a bug',
+    label: 'app.help_support',
+    description: 'app.help_support_desc',
     icon: 'question',
     action: ProfileMenuActions.SUPPORT,
   },
   {
-    label: 'Terms and Conditions',
+    label: 'app.terms_and_conditions',
     icon: 'info-rounded',
     route: '/terms-and-conditions',
   },
   {
-    label: 'Privacy Policy',
+    label: 'app.privacy_policy',
     icon: 'info-shield',
     route: '/privacy-policy',
   },
