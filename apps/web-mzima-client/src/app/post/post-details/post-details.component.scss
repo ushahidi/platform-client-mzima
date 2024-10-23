@@ -195,6 +195,9 @@
   &__documents {
     display: grid;
     grid-template-columns: auto auto;
+    @include breakpoint-max($tablet) {
+      grid-template-columns: 1fr;
+    }
     column-gap: 4px;
     row-gap: 4px;
     &__item {

@@ -11,7 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { formHelper } from '@helpers';
 import { MediaService } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject, catchError, forkJoin, last, Observable, tap, throwError } from 'rxjs';
+import { catchError, forkJoin, last, Observable, tap, throwError } from 'rxjs';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { ErrorEnum, MediaFile, MediaType, mediaTypes } from '../../core/interfaces/media';
 import {
@@ -53,7 +53,8 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
   onChange: any = () => {};
   onTouched: any = () => {};
   mediaFiles: MediaFile[] = [];
-  uploadProgress$: BehaviorSubject<number>[] = [];
+  // uploadProgress$: BehaviorSubject<number>[] = [];
+  uploads: Map<number, Observable<any>> = new Map();
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -130,7 +131,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
             this.mediaFiles.push(mediaFile);
           }
         }
-        const uploads: Observable<any>[] = [];
+        this.uploads = new Map();
         this.mediaFiles
           .filter((mediaFile) => mediaFile.status === 'uploading')
           .forEach((aMediaFile) => {
@@ -185,9 +186,9 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
                   return throwError(() => new Error(error.statusText));
                 }),
               );
-            uploads.push(uploadObservable);
+            this.uploads.set(aMediaFile.generatedId, uploadObservable);
           });
-        forkJoin(uploads).subscribe((results) => {
+        forkJoin(Array.from(this.uploads.values())).subscribe((results) => {
           for (const result of results) {
             const filename = getFileNameFromUrl(result.body.result.original_file_url);
             this.updateMediaFileByNameAndSize(
@@ -228,10 +229,14 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
           title: this.translate.instant('notify.default.are_you_sure_you_want_to_delete_this'),
           description: this.translate.instant('notify.default.proceed_warning'),
         });
-
         if (!confirmed) return;
-      } else if (mediaFile.status === 'error' || mediaFile.status === 'too_big') {
-        this.error = ErrorEnum.NONE;
+      } else if (mediaFile.status === 'uploading') {
+        const uploadObservable = this.uploads.get(generatedId);
+        if (uploadObservable) {
+          const uploadSubscription = uploadObservable.subscribe(() =>
+            uploadSubscription.unsubscribe(),
+          );
+        }
       } else {
         return;
       }
