@@ -77,7 +77,7 @@
         "post_submitted_offline" : "Asante kwa ripoti yako. Ujumbe utatumwa wakati muunganisho wa mtandao umerejeshwa.",
         "posts_not_uploaded" : "<b>Machapisho {{num_posts}} hayajapakiwa!</b><br/>Machapisho hayakupakiwa kwa sababu ya muunganisho mbaya wa intaneti au ulikuwa nje ya mtandao. Zitapakiwa kiotomatiki pindi tu utakapounganisha kwenye intaneti",
         "posts_uploading" : "<b>Inapakia Machapisho {{num_posts}} </b><br/>Kwa sasa tunapakia machapisho yako",
-        "posts_uploaded" : "<b>{{num_posts}} Posts Uploaded Successfully!</b><br/>Your posts were successfully uploaded. You can see them under \"My Posts\""
+        "posts_uploaded" : "<b>Machapisho {{num_posts}} Yamepakiwa kwa mafanikio!</b><br/>Machapisho yako yamepakiwa kwa mafanikio. Unaweza kuyaona chini ya \"Machapisho Yangu\""
       }
     }
 }
