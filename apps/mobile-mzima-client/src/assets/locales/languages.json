@@ -1,4 +1,5 @@
 {"languages":[
   {"rtl":false,"pluralequation":"language.pluralequation","code":"en","name":"English","nplurals":2},
-  {"name":"Czech","code":"cs","nplurals":4,"pluralequation":"language.pluralequation","rtl":false}
+  {"name":"Czech","code":"cs","nplurals":4,"pluralequation":"language.pluralequation","rtl":false},
+  {"name":"Swahili","code":"sw","nplurals":2,"pluralequation":"language.pluralequation","rtl":false}
 ]}

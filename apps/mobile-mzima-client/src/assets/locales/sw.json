@@ -78,6 +78,19 @@
         "posts_not_uploaded" : "<b>Machapisho {{num_posts}} hayajapakiwa!</b><br/>Machapisho hayakupakiwa kwa sababu ya muunganisho mbaya wa intaneti au ulikuwa nje ya mtandao. Zitapakiwa kiotomatiki pindi tu utakapounganisha kwenye intaneti",
         "posts_uploading" : "<b>Inapakia Machapisho {{num_posts}} </b><br/>Kwa sasa tunapakia machapisho yako",
         "posts_uploaded" : "<b>Machapisho {{num_posts}} Yamepakiwa kwa mafanikio!</b><br/>Machapisho yako yamepakiwa kwa mafanikio. Unaweza kuyaona chini ya \"Machapisho Yangu\""
-      }
+      },
+      "map": "Map",
+      "activity": "Activity",
+      "profile": "Profile",
+      "language": "Language",
+      "help_support": "Help and Support",
+      "help_support_desc":"Documentation, Report a bug",
+      "profile_info":"Profile information",
+      "profile_info_desc":"Edit your photo or information",
+      "my_posts":"My Posts",
+      "my_posts_desc":"Post you’ve created",
+      "logout" : "Logout",
+      "login_register":"Log in or Sign up",
+      "add_edit_collection":"Add or Edit collections"
     }
 }
