@@ -213,7 +213,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         this.urlAfterInteractionWithFilters = '';
         //-----------------------------------
 
-        this.activeCard.scrollCountHandler({ task: 'startCount' });
+        this.activeCard.scrollCountHandler({ task: 'increment' });
 
         this.masonryUpdateOnModeSwitch({ userEvent: this.userEvent });
 
@@ -886,6 +886,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
   refreshPost() {
     this.getPosts({ params: this.params });
+    this.activeCard.scrollCountHandler({ task: 'startCount' });
   }
 
   public changePage(page: number): void {
