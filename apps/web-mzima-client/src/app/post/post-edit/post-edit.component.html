@@ -430,6 +430,7 @@
                   [formControlName]="field.key"
                   media="image"
                   [hasCaption]="field.config.hasCaption"
+                  [maxUploadSize]="field.config.maxUploadSize"
                   (change)="maxSizeError = false"
                   [requiredError]="
                     form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
@@ -452,6 +453,7 @@
               <div *ngIf="field.input === 'document'">
                 <app-media-uploader
                   [formControlName]="field.key"
+                  [maxUploadSize]="field.config.maxUploadSize"
                   media="document"
                   (change)="maxSizeError = false"
                   [requiredError]="
