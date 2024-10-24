@@ -430,7 +430,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   private getPosts({ params, loadMore }: { params: any; loadMore?: boolean }): void {
     // Call the posts service, keeping the subscription for later
     const postRequestSubscription = this.postsService
-      .getPosts('', { ...params, ...this.activeSorting })
+      .getPostsTesting('', { ...params, ...this.activeSorting })
       .subscribe({
         next: (data) => {
           this.posts = loadMore ? [...this.posts, ...data.results] : data.results;

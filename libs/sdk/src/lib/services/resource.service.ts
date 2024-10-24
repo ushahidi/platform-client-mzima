@@ -61,6 +61,7 @@ export abstract class ResourceService<T> {
     const options = queryParams
       ? Object.assign({}, this.options, { params: queryParams })
       : this.options;
+    console.log(apiUrl, options);
     return this.httpClient
       .get<T>(`${apiUrl}`, options)
       .pipe(map((json) => this.fromServerModel(json)));

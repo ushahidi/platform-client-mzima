@@ -65,6 +65,7 @@ export class PostsService extends ResourceService<any> {
 
   getResourceUrl(): string {
     return 'posts';
+    // return 'posts?only=id,title,status,contact,locks';
   }
 
   updateStatus(id: string | number, status: string) {
@@ -136,16 +137,58 @@ export class PostsService extends ResourceService<any> {
   }
 
   getGeojson(filter?: GeoJsonFilter): Observable<GeoJsonPostsResponse> {
-    return super.get('geojson', this.postParamsMapper({ ...this.postsFilters.value }, filter)).pipe(
-      tap((res) => {
-        this.totalGeoPosts.next(res.meta.total);
-      }),
-    );
+    return super
+      .get('geojson', this.postParamsMapper({ ...this.postsFilters.value }, filter, ''))
+      .pipe(
+        tap((res) => {
+          console.log(res);
+          this.totalGeoPosts.next(res.meta.total);
+        }),
+      );
+  }
+
+  public getPostsTesting(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
+    // return super.get(url, { only: 'id,title,status,contact,locks' }).pipe(
+    return super
+      .get(
+        url,
+        this.postParamsMapper(
+          { ...this.postsFilters.value, has_location: 'all' },
+          filter,
+          'id,title,status,contact,locks',
+        ),
+      )
+      .pipe(
+        map((response) => {
+          response.results.map((post: PostResult) => {
+            post.source =
+              post.source === 'sms'
+                ? 'SMS'
+                : post.source
+                ? post.source.charAt(0).toUpperCase() + post.source.slice(1)
+                : 'Web';
+          });
+
+          return response;
+        }),
+        tap((response) => {
+          this.totalPosts.next(response.meta.total);
+          // set response here to be used inside of finalize()
+          this.responseObject = response;
+        }),
+        finalize(() => {
+          this.isLoadingPosts.next(false);
+          this.awaitedResponse.next(this.responseObject);
+        }),
+      );
   }
 
   public getPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
     return super
-      .get(url, this.postParamsMapper({ ...this.postsFilters.value, has_location: 'all' }, filter))
+      .get(
+        url,
+        this.postParamsMapper({ ...this.postsFilters.value, has_location: 'all' }, filter, ''),
+      )
       .pipe(
         map((response) => {
           response.results.map((post: PostResult) => {
@@ -172,30 +215,37 @@ export class PostsService extends ResourceService<any> {
   }
 
   public getMyPosts(url: string, filter?: GeoJsonFilter): Observable<PostApiResponse> {
-    return super.get(url, this.postParamsMapper({ has_location: 'all', user: 'me' }, filter)).pipe(
-      map((response) => {
-        response.results.map((post: PostResult) => {
-          post.source =
-            post.source === 'sms'
-              ? 'SMS'
-              : post.source
-              ? post.source.charAt(0).toUpperCase() + post.source.slice(1)
-              : 'Web';
-        });
+    return super
+      .get(url, this.postParamsMapper({ has_location: 'all', user: 'me' }, filter, ''))
+      .pipe(
+        map((response) => {
+          response.results.map((post: PostResult) => {
+            post.source =
+              post.source === 'sms'
+                ? 'SMS'
+                : post.source
+                ? post.source.charAt(0).toUpperCase() + post.source.slice(1)
+                : 'Web';
+          });
 
-        return response;
-      }),
-    );
+          return response;
+        }),
+      );
   }
 
   public getPostStatistics(queryParams?: any): Observable<PostStatsResponse> {
     const params = { ...queryParams, group_by: 'form', enable_group_by_source: true };
-    const filters = this.postParamsMapper(params, this.postsFilters.value, true);
+    const filters = this.postParamsMapper(params, this.postsFilters.value, '', true);
 
     return super.get('stats', filters);
   }
 
-  private postParamsMapper(params: any, filter?: GeoJsonFilter, isStats: boolean = false) {
+  private postParamsMapper(
+    params: any,
+    filter?: GeoJsonFilter,
+    only?: string,
+    isStats: boolean = false,
+  ) {
     // Combine new parameters with existing filter
     const postParams: any = { ...filter, ...params };
 
@@ -326,7 +376,12 @@ export class PostsService extends ResourceService<any> {
       }
     }
 
-    return postParams;
+    console.log({ postParams });
+
+    // return postParams;
+    // return { only: 'id,title,status,contact,locks', ...postParams };
+    // return only === '' ? postParams : { only, ...postParams }; // This gives error
+    return only === '' ? postParams : { only, page: postParams.page };
   }
 
   public lockPost(id: string | number) {
