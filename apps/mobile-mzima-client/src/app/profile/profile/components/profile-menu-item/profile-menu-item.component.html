@@ -7,9 +7,9 @@
 >
   <app-icon class="list-item__icon" slot="start" [name]="menuItem.icon"></app-icon>
   <div>
-    <strong class="list-item__title">{{ menuItem.label }}</strong>
+    <strong class="list-item__title">{{ menuItem.label | translate }}</strong>
     <ion-text color="medium" class="list-item__info">
-      {{ menuItem.description }}
+      {{ menuItem.description || '' | translate }}
     </ion-text>
   </div>
   <app-icon

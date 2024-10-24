@@ -9,6 +9,6 @@
     [ngClass]="{ 'button--active': isButtonActive(item) }"
   >
     <app-icon class="button__icon" [name]="item.icon"></app-icon>
-    {{ item.label }}
+    {{ item.label | translate }}
   </app-button>
 </div>
