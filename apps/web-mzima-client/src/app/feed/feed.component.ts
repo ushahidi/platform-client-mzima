@@ -22,7 +22,6 @@ import {
   PostStatus,
   postHelpers,
 } from '@mzima-client/sdk';
-import _ from 'lodash';
 
 enum FeedMode {
   Preview = 'PREVIEW',
@@ -397,8 +396,17 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       .on(EventType.UpdatedPost)
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: (post) => {
-          this.refreshPost(post);
+        next: () => {
+          this.refreshPost();
+        },
+      });
+
+    this.eventBusService
+      .on(EventType.RefreshPosts)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: () => {
+          this.refreshPost();
         },
       });
 
@@ -876,11 +884,9 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     }
   }
 
-  refreshPost({ id }: PostResult) {
-    this.postsService.getById(id).subscribe((p) => {
-      const updatedPost = _.cloneDeep(p);
-      this.posts = this.posts.map((obj) => (obj.id === updatedPost.id ? updatedPost : obj));
-    });
+  refreshPost() {
+    this.getPosts({ params: this.params });
+    this.activeCard.scrollCountHandler({ task: 'startCount' });
   }
 
   public changePage(page: number): void {
