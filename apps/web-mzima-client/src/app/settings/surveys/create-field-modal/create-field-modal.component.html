@@ -161,7 +161,7 @@
             *ngIf="canDisableCaption"
             [(ngModel)]="selectedFieldType.config.hasCaption"
           >
-            {{ 'survey.collect_image_caption' | translate }}
+            {{ 'survey.collect_media_caption' | translate }}
             <p class="init active" *ngIf="!selectedFieldType.config?.hasCaption">
               <small>{{ 'survey.disable_caption_field_explanation' | translate }}</small>
             </p>

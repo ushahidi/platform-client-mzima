@@ -314,6 +314,7 @@
     "title": "Title",
     "field_allowed_relation_survey": "Allowed surveys",
     "collect_image_caption": "Include image caption field",
+    "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "This will disable and hide all existing captions for this field, but you can re-enable them at any time.",
     "description": "Description",
     "task_description": "Task description",
