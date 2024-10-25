@@ -1192,7 +1192,7 @@
       "export": "Hamisha data",
       "export_hxl": "Hamisha na tambulisha data",
       "export_desc_hxl": "Hamisha data yako kama faili ya CSV au kabidhi vitambulisho na sifa kwa data yako na upakie moja kwa moja kwenye akaunti ya Humanitarian Data Exchange (HDX) au uhamishe kama faili iliyotambulishwa ya CSV.",
-      "export_desc": "Export all of your data as a CSV file or choose custom fields to export",
+      "export_desc": "Hamisha data yako yote kama faili ya CSV au uchague nyanda maalum za kuhamisha",
       "users": "Watumizi",
       "users_desc": "Unda na udhibiti watu wanaoweza kuchangia utendakazi wako.",
       "roles": "Majukumu",
