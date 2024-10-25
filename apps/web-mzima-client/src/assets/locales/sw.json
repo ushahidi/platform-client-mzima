@@ -1887,7 +1887,7 @@
       "complete_data_found_message": "Data kutoka kwa uhamishaji wako inaweza kupatikana katika vipakuliwa vya kivinjari chako",
       "confirmation": "Nimepata",
       "cancel_export": "Katisha usafirishaji",
-      "canceled_job": "Your export-job is canceled",
+      "canceled_job": "Kazi yako ya kuhamisha imeghairiwa",
       "upload_complete": "Upakiaji umekamilika. Unapaswa sasa kuona data yako iliyotambulishwa katika akaunti yako ya HDX."
     },
     "survey": {
