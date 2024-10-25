@@ -301,7 +301,7 @@
       "body": "Kazi hii imewekwa kwa matumizi ya ndani pekee. Haionekani na watumiaji wanapounda chapisho."
     },
     "task_is_marked_as": {
-      "not_completed": "Task Complete? - Use toggle below",
+      "not_completed": "Jukumu Limekamilika? - Tumia kigeuzio hapa chini",
       "completed": "You have marked \"{{taskName}}\" Task as Completed!"
     },
     "delete_task": "Futa kazi",
