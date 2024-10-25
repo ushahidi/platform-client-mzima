@@ -1883,7 +1883,7 @@
     },
     "export": {
       "in_progress": "We are preparing your CSV file. This may take a few moments. You can leave this page if you want. We will let you know when we're done.",
-      "complete": "Export done. You should see your CSV-file in your downloads.",
+      "complete": "Usafirishaji umekamilika. Unapaswa kuona faili yako ya CSV katika vipakuliwa vyako.",
       "complete_data_found_message": "The data from your export can be found in your browser's downloads",
       "confirmation": "Nimepata",
       "cancel_export": "Katisha usafirishaji",
