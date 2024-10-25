@@ -1279,7 +1279,7 @@
         "incoming_server": "Seva Inayoingia",
         "incoming_server_desc": "Mifano: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com",
         "incoming_server_port": "Bandari ya Seva Inayoingia",
-        "incoming_server_port_desc": "Baadhi ya bandari: 110 (POP3), 143 (IMAP), 995 (POP3 with SSL), 993 (IMAP with SSL)",
+        "incoming_server_port_desc": "Baadhi ya bandari: 110 (POP3), 143 (IMAP), 995 (POP3 ikiwa na SSL), 993 (IMAP ikiwa na SSL)",
         "incoming_server_security": "Usalama wa Seva inayoingia",
         "server_security_none": "Hakuna",
         "server_security_SSL": "SSL",
