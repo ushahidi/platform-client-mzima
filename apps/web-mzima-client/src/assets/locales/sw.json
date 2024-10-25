@@ -1233,7 +1233,7 @@
       "api_key_min_length": "Ufunguo wa API ni mfupi sana"
     },
     "webhooks": {
-      "use_webhook_for": "Use webhook for",
+      "use_webhook_for": "Tumia kichochezi cha wavuti kwa",
       "enable_source_destination": "Enable Source and Destination Fields",
       "enable_source_destination_desc": "Mtandao huu utatumika kwa hojaji za aina zilizochaguliwa pekee.",
       "destination": "Mwisho wa safari",
