@@ -1882,7 +1882,7 @@
       "sent_to": "Ujumbe umetumwa kwa {{anuani}}"
     },
     "export": {
-      "in_progress": "We are preparing your CSV file. This may take a few moments. You can leave this page if you want. We will let you know when we're done.",
+      "in_progress": "Tunatayarisha faili yako ya CSV. Hii inaweza kuchukua muda mfupi. Unaweza kuondoka kwenye ukurasa huu ikiwa unataka. Tutakujulisha tukimaliza.",
       "complete": "Usafirishaji umekamilika. Unapaswa kuona faili yako ya CSV katika vipakuliwa vyako.",
       "complete_data_found_message": "Data kutoka kwa uhamishaji wako inaweza kupatikana katika vipakuliwa vya kivinjari chako",
       "confirmation": "Nimepata",
