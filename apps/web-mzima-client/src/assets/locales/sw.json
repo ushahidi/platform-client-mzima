@@ -1217,7 +1217,7 @@
     "user_settings": {
       "user_settings_desc_1": "Hapa unaweza kuongeza ufunguo wako wa kipekee wa API kwa akaunti yako ya Humanitarian Data Exchange (HDX).",
       "user_settings_desc_2": "Baada ya kusanidiwa, hii itakuwezesha kupakia data moja kwa moja kwenye akaunti ya Humanitarian Data Exchange (HDX).",
-      "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in.",
+      "user_settings_desc_3": "Unaweza kupata ufunguo wako wa API kwenye wasifu wako wa Humanitarian Data Exchange (HDX) mara tu unapoingia.",
       "view_guide": "View the guide to your API key",
       "hdx_maintainer_id": "HDX Maintainer Id",
       "api_key": "Api key",
