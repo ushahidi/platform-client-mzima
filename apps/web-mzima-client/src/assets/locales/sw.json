@@ -866,7 +866,7 @@
       "unlock": "Fungua",
       "lock_broken_by_other": "Chapisho lako limefunguliwa. Mabadiliko yako ya sasa ambayo hayajahifadhiwa yatapotea.",
       "locked_message": "Chapisho limefungwa kwa sababu <strong>{{ user }}</strong> analifanyia kazi sasa hivi. Jaribu kuhariri chapisho tofauti.",
-      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+      "locked_tooltip": "Chapisho hili linahaririwa na mtu mwingine. Tafadhali jaribu tena baadaye."
 
     },
     "modify": {
