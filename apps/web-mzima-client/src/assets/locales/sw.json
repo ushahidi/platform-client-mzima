@@ -1301,7 +1301,7 @@
         "outgoing_password": "Nenosiri linalotoka",
         "email_address": "Anwani ya barua pepe",
         "email_sender_name": "Jina la Mtumaji Barua Pepe",
-        "email_sender_name_desc": "Appears in the 'from:' field on outgoing emails"
+        "email_sender_name_desc": "Inaonekana katika uwanda wa 'kutoka:' kwenye barua pepe zinazotoka"
       },
       "sms": {
         "secret": "Siri",
