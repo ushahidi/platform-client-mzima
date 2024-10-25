@@ -1930,7 +1930,7 @@
     "placeholder": "Search for addresses, place names, or coordinates...",
     "search_results": "Matokeo ya utafutaji",
     "error": "Samahani hatuwezi kupata eneo linalolingana na utafutaji wako",
-    "my_location_error": "Sorry we could not find your location",
+    "my_location_error": "Samahani hatukuweza kupata eneo lako",
     "update_map": "Update map",
     "no_matching_locations": "No matching locations",
     "invalid_lat": "Thamani iliyotolewa sio latitude halali.",
