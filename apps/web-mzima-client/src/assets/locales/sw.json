@@ -1200,7 +1200,7 @@
       "categories": "Kategoria",
       "categories_desc": "Unda na udhibiti kategoria ambazo watu wanaweza kutilia matangazo kwa kuimarisha mipangilio.",
       "webhooks": "Vichochezi vya Wavuti",
-      "webhooks_desc": "Unda vihifadhi mtandao vinavyotuma data ya Ushahidi Platform kwa programu za nje matukio mahususi yanapoanzishwa.",
+      "webhooks_desc": "Unda vichochezi vya wavuti vinavyotuma data ya Ushahidi Platform kwa programu za nje matukio mahususi yanapoanzishwa.",
       "plans": "Mipango",
       "plan_desc": "Mpango wako wa Utendakazi ni <nguvu>{{sasa_mpango}}</nguvu>.",
       "donation": "Mchango",
