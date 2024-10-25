@@ -1215,7 +1215,7 @@
       }
     },
     "user_settings": {
-      "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
+      "user_settings_desc_1": "Hapa unaweza kuongeza ufunguo wako wa kipekee wa API kwa akaunti yako ya Humanitarian Data Exchange (HDX).",
       "user_settings_desc_2": "Once set up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
       "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in.",
       "view_guide": "View the guide to your API key",
