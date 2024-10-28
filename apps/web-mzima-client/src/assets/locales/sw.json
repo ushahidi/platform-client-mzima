@@ -1328,7 +1328,7 @@
         "twilio": {
           "phone_nb": "Nambari ya simu",
           "phone_nb_desc": "The from phone number. A Twilio phone number enabled for the type of message you wish to send.",
-          "account_sid": "Account SID",
+          "account_sid": "SID ya Akaunti",
           "account_sid_desc": "The unique id of the Account that sent this message.",
           "auth_token": "Auth Token",
           "sms_auto_response": "SMS Auto response"
