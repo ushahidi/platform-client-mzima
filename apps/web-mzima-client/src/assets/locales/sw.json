@@ -1336,7 +1336,7 @@
       },
       "twitter": {
         "intro_step_1": "Hatua ya 1: Unda programu mpya ya Twitter:<br />Programu za Twitter zinaweza kuchukua saa au siku chache kuidhinishwa na Twitter.<br />Tafadhali fahamu hili ikiwa unahitaji data hii kwa haraka.",
-        "intro_step_1_desc": "Create a <a href=\"https://apps.twitter.com/app/new\">new twitter application</a>",
+        "intro_step_1_desc": "Unda<a href=\"https://apps.twitter.com/app/new\">programu mpya ya twitter</a>",
         "intro_step_2": "Step 2: Generate a consumer key and secret",
         "intro_step_2_desc": "Once you've created the application click on \"Keys and Access Tokens\".<br /> Then click \"Generate Consumer Key and Secret\".<br /> Copy keys, tokens and secrets into the fields below.",
         "consumer_key": "Ufunguo wa Mtumiaji",
