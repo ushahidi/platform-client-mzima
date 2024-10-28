@@ -1319,7 +1319,7 @@
           "api_secret_desc": "Siri ya API"
         },
         "smssync": {
-          "intro_step_1": "Step 1: Download the 'SMSSync' app from the Android Market.",
+          "intro_step_1": "Hatua ya 1: Pakua programu ya 'SMSSync' kutoka Soko la Android.",
           "intro_step_1_desc": "Scan this QR Code with your phone to download the app from the Android Market",
           "intro_step_2": "Step 2: Android App Settings",
           "intro_step_2_desc": "Turn on SMSSync and use the following link as the Sync URL:",
