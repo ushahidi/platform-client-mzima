@@ -1581,7 +1581,7 @@
   },
   "user": {
     "are_you_sure_you_want_to_delete_this_account": "Una uhakika unataka kufuta akaunti hii?",
-    "role_display": "Role: {{role}}",
+    "role_display": "Jukumu: {{role}}",
     "contact": "{{type}}: {{contact}}",
     "add_user": "Ongeza Mtumizi",
     "edit_user": "Hariri Mtumizi",
