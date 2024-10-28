@@ -1313,7 +1313,7 @@
         "nexmo": {
           "from": "Kutoka",
           "from_desc": "Nambari iliyotoka",
-          "secret_desc": "The secret value",
+          "secret_desc": "Thamani ya siri",
           "api_key": "Kifunguo cha API",
           "api_secret": "Siri ya API",
           "api_secret_desc": "Siri ya API"
