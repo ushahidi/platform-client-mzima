@@ -224,7 +224,7 @@
     "no_crowdsourced": "Hauna data yoyote ya Hojaji za Umati ya kuonyesha.",
     "targeted_activity": "Shughuli ya Hojaji Uliolengwa",
     "crowdsourced_activity": "Shughuli ya Hojaji ya Umati",
-    "tooltip_template": "This is the single point tooltip template"
+    "tooltip_template": "Hiki ni kiolezo cha vidokezo vya ncha moja"
   },
   "form": {
     "add_field": "Ongeza uwanda",
