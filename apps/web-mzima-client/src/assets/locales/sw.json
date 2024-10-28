@@ -1326,7 +1326,7 @@
           "secret_desc": "Set a secret so that only authorized SMSSync devices can send/recieve message. You need to configure the same secret in the SMSSync App."
         },
         "twilio": {
-          "phone_nb": "Phone Number",
+          "phone_nb": "Nambari ya simu",
           "phone_nb_desc": "The from phone number. A Twilio phone number enabled for the type of message you wish to send.",
           "account_sid": "Account SID",
           "account_sid_desc": "The unique id of the Account that sent this message.",
