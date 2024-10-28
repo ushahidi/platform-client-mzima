@@ -1330,7 +1330,7 @@
           "phone_nb_desc": "The from phone number. A Twilio phone number enabled for the type of message you wish to send.",
           "account_sid": "SID ya Akaunti",
           "account_sid_desc": "Kitambulisho cha kipekee cha Akaunti iliyotuma ujumbe huu.",
-          "auth_token": "Auth Token",
+          "auth_token": "Ishara ya Uthibitisho",
           "sms_auto_response": "SMS Auto response"
         }
       },
