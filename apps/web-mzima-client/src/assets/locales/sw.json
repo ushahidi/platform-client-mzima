@@ -1348,7 +1348,7 @@
         "access_token_secret": "Siri ya Ishara ya Ufikiaji",
         "access_token_secret_desc": "Ongeza siri ya ufikiaji ambayo umetengeneza kwa programu yako ya Twitter.",
         "search_terms": "Maneno ya utafutaji kwenye Twitter",
-        "search_terms_desc": "Add search terms separated with commas"
+        "search_terms_desc": "Ongeza maneno ya utafutaji yaliyotenganishwa na koma"
       }
     },
     "donation": {
