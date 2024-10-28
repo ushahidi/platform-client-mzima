@@ -1342,7 +1342,7 @@
         "consumer_key": "Ufunguo wa Mtumiaji",
         "consumer_key_desc": "Ongeza ufunguo wa mtumiaji kutoka kwa programu yako ya Twitter.",
         "consumer_secret": "Siri ya Mtumiaji",
-        "consumer_secret_desc": "Add the consumer secret from your Twitter app.",
+        "consumer_secret_desc": "Ongeza siri ya mtumiaji kutoka kwa programu yako ya Twitter.",
         "access_token": "Ishara ya Ufikiaji",
         "access_token_desc": "Add the access token you generated for your Twitter app.",
         "access_token_secret": "Siri ya Ishara ya Ufikiaji",
