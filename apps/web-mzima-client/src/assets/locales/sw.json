@@ -1344,7 +1344,7 @@
         "consumer_secret": "Siri ya Mtumiaji",
         "consumer_secret_desc": "Ongeza siri ya mtumiaji kutoka kwa programu yako ya Twitter.",
         "access_token": "Ishara ya Ufikiaji",
-        "access_token_desc": "Add the access token you generated for your Twitter app.",
+        "access_token_desc": "Ongeza tokeni ya ufikiaji uliyotengeneza kwa programu yako ya Twitter.",
         "access_token_secret": "Siri ya Ishara ya Ufikiaji",
         "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
         "search_terms": "Twitter search terms",
