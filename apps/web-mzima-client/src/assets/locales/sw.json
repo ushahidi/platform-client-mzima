@@ -1320,7 +1320,7 @@
         },
         "smssync": {
           "intro_step_1": "Hatua ya 1: Pakua programu ya 'SMSSync' kutoka Soko la Android.",
-          "intro_step_1_desc": "Scan this QR Code with your phone to download the app from the Android Market",
+          "intro_step_1_desc": "Changanua Msimbo huu wa QR kwa simu yako ili kupakua programu kutoka kwenye Soko la Android",
           "intro_step_2": "Step 2: Android App Settings",
           "intro_step_2_desc": "Turn on SMSSync and use the following link as the Sync URL:",
           "secret_desc": "Set a secret so that only authorized SMSSync devices can send/recieve message. You need to configure the same secret in the SMSSync App."
