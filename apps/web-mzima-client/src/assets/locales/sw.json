@@ -1557,7 +1557,7 @@
     "dataset": "Kichwa cha Seti ya Data na Maelezo",
     "dataset_desc": "Watumiaji wanapotafuta data kwenye HDX, hoja zao za utafutaji zitalinganishwa na maneno katika mada yako. Epuka kutumia vifupisho katika kichwa ambacho huenda kisifahamike kwa watumiaji wote. Pia, epuka kutumia maneno kama ya sasa, ya hivi punde au yaliyotangulia unaporejelea kipindi cha saa (k.m. 3W) kwani maneno haya yanapotosha kadiri umri wa mkusanyiko wa data.",
     "dataset_example": "Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong>",
-    "dataset_title": "Title of data set",
+    "dataset_title": "Anwani ya mkusanyiko wa data",
     "metadata_title": "Metadata",
     "metadata_desc": "Metadata ni maelezo ya ziada kuhusu mkusanyiko wako wa data ambayo yatarahisisha wengine kuelewa na kuweka data yako katika muktadha. Seti za data kwenye HDX lazima zijumuishe seti ya nyanja za metadata.",
     "source": "Chanzo",
