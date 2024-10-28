@@ -1340,7 +1340,7 @@
         "intro_step_2": "Hatua ya 2: Tengeneza ufunguo wa matumizi na siri",
         "intro_step_2_desc": "Mara tu unapounda programu bonyeza \"Vifunguo na Ishara za Ufikiaji\".<br /> Kisha ubonyeze \"Zalisha Ufunguo na Siri ya Mtumiaji\".<br /> Nakili vitufe, ishara na siri kwenye sehemu zilizo hapa chini.",
         "consumer_key": "Ufunguo wa Mtumiaji",
-        "consumer_key_desc": "Add the consumer key from your Twitter app.",
+        "consumer_key_desc": "Ongeza ufunguo wa mtumiaji kutoka kwa programu yako ya Twitter.",
         "consumer_secret": "Siri ya Mtumiaji",
         "consumer_secret_desc": "Add the consumer secret from your Twitter app.",
         "access_token": "Ishara ya Ufikiaji",
