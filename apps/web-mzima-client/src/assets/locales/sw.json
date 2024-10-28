@@ -1455,7 +1455,7 @@
     "import_another_csv": "Ingiza faili nyingine ya CSV",
     "import_complete": "Uingizaji wako umekamilika",
     "import_error": "Hitilafu imetokea wakati wa kuleta faili yako ya CSV.",
-    "complete_info": "Data kutoka {{filename}}, lahajedwali yako ya CSV, ililetwa kwa ufanisi.",
+    "complete_info": "Data kutoka <em>{{filename}}</em>, lahajedwali yako ya CSV, ililetwa kwa ufanisi.",
     "get_polling_info": "Pata Maelezo ya Kura",
     "import_another": "Ingiza faili nyingine ya CSV",
     "nearly_complete": "Uingizaji wako umekaribia kumalizika",
