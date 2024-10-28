@@ -1617,7 +1617,7 @@
     "passwordreset_confirm_instructions": "Baruapepe yako ikiwa kwenye mahifadhi yetu, utapata baruapepe ya kugundua nambari ya siri hivi karibuni",
     "forgot_instructions": "Hakuna wasiwasi! Wasilisha barua pepe yako na uangalie kisanduku pokezi chako kwa kiungo cha kuweka upya.",
     "token": "Kifaa cha kubadilisha nambari ya siri",
-    "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
+    "password_hint": "Nenosiri linapaswa kuwa na angalau herufi 8, herufi ndogo moja, herufi kubwa moja, nambari moja na ishara moja.",
     "password_length": "Password must be at least 8 characters long",
     "password_match": "Passwords do not match",
     "check_email": "Check your email",
