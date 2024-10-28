@@ -302,7 +302,7 @@
     },
     "task_is_marked_as": {
       "not_completed": "Jukumu Limekamilika? - Tumia kigeuzio hapa chini",
-      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+      "completed": "Umetia alama Jukumu \"{{taskName}}\" kuwa Limekamilika!"
     },
     "delete_task": "Futa kazi",
     "duplicate_survey": "Rudufu",
