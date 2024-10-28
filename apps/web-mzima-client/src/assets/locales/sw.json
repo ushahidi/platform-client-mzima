@@ -1323,7 +1323,7 @@
           "intro_step_1_desc": "Changanua Msimbo huu wa QR kwa simu yako ili kupakua programu kutoka kwenye Soko la Android",
           "intro_step_2": "Hatua ya 2: Mipangilio ya Programu ya Android",
           "intro_step_2_desc": "Turn on SMSSync and use the following link as the Sync URL:",
-          "secret_desc": "Set a secret so that only authorized SMSSync devices can send/recieve message. You need to configure the same secret in the SMSSync App."
+          "secret_desc": "Weka siri ili tu vifaa vilivyoidhinishwa vya SMSSync vinaweza kutuma/kupokea ujumbe. Unahitaji kusanidi siri sawa katika Programu ya SMSSync."
         },
         "twilio": {
           "phone_nb": "Nambari ya simu",
