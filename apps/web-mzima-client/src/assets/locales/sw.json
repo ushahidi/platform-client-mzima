@@ -1346,7 +1346,7 @@
         "access_token": "Ishara ya Ufikiaji",
         "access_token_desc": "Ongeza tokeni ya ufikiaji uliyotengeneza kwa programu yako ya Twitter.",
         "access_token_secret": "Siri ya Ishara ya Ufikiaji",
-        "access_token_secret_desc": "Add the access secret that you generated for your Twitter app.",
+        "access_token_secret_desc": "Ongeza siri ya ufikiaji ambayo umetengeneza kwa programu yako ya Twitter.",
         "search_terms": "Twitter search terms",
         "search_terms_desc": "Add search terms separated with commas"
       }
