@@ -1525,7 +1525,7 @@
     "hxl_apikey_alert_1": "Inaonekana hujaweka API yako ya Humanitarian Data Exchange (HDX). Bila usanidi huu, huwezi kutambulisha data na kupakia kwenye akaunti ya Humanitarian Data Exchange (HDX).",
     "hxl_configure": "Sanidi API ya HDX",
     "hxl_apikey_alert_2": "Tunakushauri sana usanidi hii sasa ndani kwa",
-    "hxl_apikey_alert_3": "before continuing as you won't be able to upload your data to HDX",
+    "hxl_apikey_alert_3": "kabla ya kuendelea kwani hutaweza kupakia data yako kwenye HDX",
     "hxl_title": "Kabidhi vitambulisho na sifa zako za HXL, chagua nyanda na uhamishe au upakie",
     "hxl_desc": "Chagua nyanda mahususi kutoka kwa hojaji, kabidhi kitambulisho kwa kila sehemu kisha uchague kugawa sifa nyingi. Hakiki tagi na sifa zako katika onyesho la kukagua kitambulisho.",
     "hxl_instructions_1": "basi unaweza kuchagua kusafirisha nyanda zako zilizotambulishwa kwa faili ya CSV au upakie kwa",
