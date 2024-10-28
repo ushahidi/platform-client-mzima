@@ -131,7 +131,7 @@
     "private_deployment": "Utendakazi wa mtu binafsi",
     "mark_as": "Tia alama kama",
     "who_can_see_this_category": "Nani anaweza kuona kategoria hii?",
-    "this_category_is_child_to": "This category is a child to <strong>{{parent}}</strong>",
+    "this_category_is_child_to": "Kategoria hii ni mtoto wa <strong>{{parent}}</strong>",
     "nothing": "Hakuna",
     "who_can_see_this": "Nani anaweza kuona hii?",
     "add": "Ongeza",
