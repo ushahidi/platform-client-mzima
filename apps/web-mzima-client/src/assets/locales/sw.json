@@ -1454,7 +1454,7 @@
     "see_imported_posts": "Tazama matangazo yaliyoingizwa",
     "import_another_csv": "Ingiza faili nyingine ya CSV",
     "import_complete": "Uingizaji wako umekamilika",
-    "import_error": "An error has occurred importing your CSV file.",
+    "import_error": "Hitilafu imetokea wakati wa kuleta faili yako ya CSV.",
     "complete_info": "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
     "get_polling_info": "Pata Maelezo ya Kura",
     "import_another": "Ingiza faili nyingine ya CSV",
