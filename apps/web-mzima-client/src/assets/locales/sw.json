@@ -2701,7 +2701,7 @@
     "roleDoesNotExist": "role_id {{value}} haipo",
     "invalidFormStageId": "form_stage_id :value haipo",
     "postTypeLimitReached": "kikomo: {{posttypes}}",
-    "dataUrlOrMediaRequired": "One of data_url or media_id is required",
+    "dataUrlOrMediaRequired": "Moja ya data_url au media_id inahitajika",
     "dataUrlMediaConflict": "Only one of data_url or media_id can be defined",
     "size_error": "The file size should be less than :param1 MB",
     "mime_type_not_allowed": "File type not supported. Please upload an image file.",
