@@ -2707,7 +2707,7 @@
     "mime_type_not_allowed": "نوع الملف غير مدعوم. يرجى تحميل ملف صورة.",
     "mime_not_empty": "لم يتم العثور على نوع MIME. يجب تعيين نوع MIME للملف.",
     "contact": {
-      "invalid_phone": "رقم هاتف باطل  {{param1}}",
+      "invalid_phone": "رقم هاتف غير صحيح  {{param1}}",
       "invalid_email": "ايميل باطل {{param1}}"
     },
     "email": {
