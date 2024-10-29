@@ -2708,7 +2708,7 @@
     "mime_not_empty": "Aina ya MIME haijapatikana. Aina ya MIME lazima iwekwe kwa faili.",
     "contact": {
       "invalid_phone": "Nambari ya simu si sahihi {{param1}}",
-      "invalid_email": "Invalid email {{param1}}"
+      "invalid_email": "Baruapepe si sahihi {{param1}}"
     },
     "email": {
       "title": "{{sitename}} New post: {{title}}",
