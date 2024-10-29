@@ -2705,7 +2705,7 @@
     "dataUrlMediaConflict": "Moja tu ya data_url au media_id inaweza kubainishwa",
     "size_error": "Saizi ya faili inapaswa kuwa chini ya :param1 MB",
     "mime_type_not_allowed": "Aina ya faili haitumiki. Tafadhali pakia faili ya picha.",
-    "mime_not_empty": "MIME type not found. The MIME type must be set for the file.",
+    "mime_not_empty": "Aina ya MIME haijapatikana. Aina ya MIME lazima iwekwe kwa faili.",
     "contact": {
       "invalid_phone": "Invalid phone number {{param1}}",
       "invalid_email": "Invalid email {{param1}}"
