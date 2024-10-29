@@ -2735,7 +2735,7 @@
     },
     "stageDoesNotExist": "مرحلة {{param1}} غير موجودة",
     "stageRequired": "مرحلة  {{param1}} مطلوبة قبل النشر",
-    "postNeedsApprovalBeforePublishing": "المنشور يحتاج الموافقة من قبل المشرف قبل ان ينشر",
+    "postNeedsApprovalBeforePublishing": "يجب أن يحصل المنشور على موافقة المسؤول قبل نشره.",
     "postCanOnlyBeUnpublishedByAdmin": "فقط المشرف يستطيع ان يلغي المنشور",
     "alreadyLockedByDifferentUser": "المنشور مقفل حاليًا بواسطة مستخدم آخر ولا يمكن تحديثه.",
     "values": {
