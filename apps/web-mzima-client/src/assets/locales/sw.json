@@ -1861,7 +1861,7 @@
       "delete_stage_confirm_desc": "Kitendo hiki hakiwezi kutenduliwa. Kufuta jukumu hili kutaondoa nyanda zake zote, na data yoyote ndani yake.",
       "destroy_stage_success": "Kazi ya hojaji {{jina}} imefutwa",
       "delete_attribute_confirm": "Je, unahakika unataka kufuta uwanda huu?",
-      "delete_attribute_confirm_desc": "This action cannot be undone. Deleting this field will remove its data from all existing posts.",
+      "delete_attribute_confirm_desc": "Kitendo hiki hakiwezi kutenduliwa. Kufuta sehemu hii kutaondoa data yake kutoka kwa machapisho yote yaliyopo.",
       "destroy_attribute_success": "Uwanda {{jina}} umefutwa",
       "survey_name_required": "Jina la utafiti linahitajika",
       "validation": {
