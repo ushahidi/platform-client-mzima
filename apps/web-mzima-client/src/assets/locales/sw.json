@@ -1711,7 +1711,7 @@
   },
   "notify": {
     "api_key": {
-      "change_question": "Are you sure you want to change the API Key?"
+      "change_question": "Je, una uhakika unataka kubadilisha Ufunguo wa API?"
     },
     "contact": {
       "save_success": "Anwani imehifadhiwa",
