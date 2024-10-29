@@ -1858,7 +1858,7 @@
       "delete_form_button": "Futa hojaji hii",
       "destroy_form_success": "Hojaji {{jina}} imefutwa",
       "delete_stage_confirm": "Je, unahakika unataka kufuta kazi hii?",
-      "delete_stage_confirm_desc": "This action cannot be undone. Deleting this task will remove all of its fields, and any data in them.",
+      "delete_stage_confirm_desc": "Kitendo hiki hakiwezi kutenduliwa. Kufuta jukumu hili kutaondoa nyanda zake zote, na data yoyote ndani yake.",
       "destroy_stage_success": "Kazi ya hojaji {{jina}} imefutwa",
       "delete_attribute_confirm": "Je, unahakika unataka kufuta uwanda huu?",
       "delete_attribute_confirm_desc": "This action cannot be undone. Deleting this field will remove its data from all existing posts.",
