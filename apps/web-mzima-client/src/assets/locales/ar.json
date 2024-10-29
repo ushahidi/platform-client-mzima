@@ -2725,7 +2725,7 @@
     "canNotUseExistingValueOnNewPost": "لا يمكن استخدام القيمة الحالية {{param2}} للحقل {{param1}} في منشور جديد.",
     "postAttributeRequired": "الخاصية {{param1}} مطلوبة.",
     "taskAttributeRequired": "الخاصية {{param1}} مطلوبة قبل اکتمال مرحلة {{param2}} ",
-    "emptyIdAndLocale": "يجب ان تملك على الاقل id او locale",
+    "emptyIdAndLocale": "يجب ان تملك على الاقل id او locale",
     "emptyParentWithLocale": "يجب ان تملك parent id عند المرور بـ locale",
     "notAnArray": " القيم المنشورة لـ {{param1}} يجب ان تكون array",
     "scalar": " القيم المنشورة لـ {{param1}} يجب ان تكون scalar",
