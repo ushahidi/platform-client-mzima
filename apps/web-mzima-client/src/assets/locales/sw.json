@@ -2735,7 +2735,7 @@
     },
     "stageDoesNotExist": "Hatua ya {{param1}} haipo",
     "stageRequired": "Hatua ya {{param1}} inahitajika kabla ya kuchapishwa",
-    "postNeedsApprovalBeforePublishing": "Post needs approval by an administrator before it can be published",
+    "postNeedsApprovalBeforePublishing": "Chapisho linahitaji idhini ya msimamizi kabla ya kuchapishwa",
     "postCanOnlyBeUnpublishedByAdmin": "Post can only be unpublished by an administrator",
     "alreadyLockedByDifferentUser": "Post is currently locked by a different user and can not be updated.",
     "values": {
