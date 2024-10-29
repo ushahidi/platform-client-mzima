@@ -1744,7 +1744,7 @@
       "duplicate_fields": "Kolamu lazima ihusishwe na miwanda maalumu ya hojaji. Kalamu zifuatazo zimehusisha zaidi ya mara 1: {{urudufishaji}}",
       "required_fields": "Mawanda yanayohitajika lazima yapangwe kwa thamani.  Mawanda yafuatayo hayajapangwa: {{inahitajika}}",
       "empty_mapping": "Faili ya CSV uliyopakia ni tupu. Tafadhali angalia faili yako ya CSV na ujaribu tena",
-      "empty_mapping_empty": "The CSV file does not contain column names. Please check your CSV file and try again",
+      "empty_mapping_empty": "Faili ya CSV haina majina ya safu wima. Tafadhali angalia faili yako ya CSV na ujaribu tena",
       "no_mappings": "Hakuna mawanda yaliyotiwa kwenye ramani - angalau uwanda mmoja lazima uingizwe ili uendelee",
       "csv_import_cancel": "Katisha Kuingiza CSV",
       "csv_import_cancel_confirm": "Are you sure you want to cancel importing?",
