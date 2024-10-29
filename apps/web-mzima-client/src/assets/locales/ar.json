@@ -2703,7 +2703,7 @@
     "postTypeLimitReached": "الحد: {{posttypes}}",
     "dataUrlOrMediaRequired": "واحد من data_url او media_id مطلوبة",
     "dataUrlMediaConflict": "يمكن تعريف واحد فقط من data_url أو media_id.",
-    "size_error": "يجب ان يقل حجم الملف عن  :param1 ميغا بايت",
+    "size_error": "يجب أن يكون حجم الملف أقل من :param1 ميجابايت.",
     "mime_type_not_allowed": "نوع الملف غير مدعوم. الرجاء تحميل ملف صوري",
     "mime_not_empty": "لم يعثر على نوع MIME. يجب ان ينشأ نوع MIME  للملف",
     "contact": {
