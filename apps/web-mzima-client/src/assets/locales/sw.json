@@ -2697,7 +2697,7 @@
     "mime_type": "Aina ya faili haitumiki. Tafadhali pakia faili ya .csv.",
     "not_empty": ":uwanda lazima usiwe tupu",
     "isKeyAvailable": "Ufunguo {{value}} haupatikani",
-    "contactIsValid": "Invalid phone number",
+    "contactIsValid": "Nambari ya simu si sahihi",
     "roleDoesNotExist": "role_id {{value}} does not exist",
     "invalidFormStageId": "form_stage_id :value haipo",
     "postTypeLimitReached": "limit: {{posttypes}}",
