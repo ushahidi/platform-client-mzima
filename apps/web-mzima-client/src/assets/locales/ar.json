@@ -2751,7 +2751,7 @@
       "scalar": "حقل {{param1}} يجب ان يکون scalar، معطي: {{param2}}",
       "point": "حقل {{param1}} يجب ان يکون array من lat  و lon",
       "lat": "حقل {{param1}} يجب ان يتکون من latitude صالح",
-      "lon": "يجب أن يحتوي الحقل {{param1}} على خط طول صحيح.",
+      "lon": "يجب أن يحتوي الحقل {{param1}} على خط طول\"longitude\" صحيح.",
       "url": "يجب أن يكون الحقل {{param1}} رابطًا، المعطى: {{param2}}",
       "video_type": "يجب أن يكون الحقل {{param1}} إما رابطًا لـ YouTube أو Vimeo، المعطى: {{param2}}"
     },
