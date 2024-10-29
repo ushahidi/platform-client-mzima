@@ -2749,7 +2749,7 @@
       "invalidForm": "حقل {{param1}} متكون من نوع المنشور الخاطيء،  Post id:{{param2}}",
       "numeric": "حقل  {{param1}}  يجب ان يکون رقميا، معطي: {{param2}}",
       "scalar": "حقل {{param1}} يجب ان يکون scalar، معطي: {{param2}}",
-      "point": "حقل {{param1}} يجب ان يکون array من lat  و lon",
+      "point": "حقل {{param1}} يجب ان يکون مصفوفة من lat  و lon",
       "lat": "يجب أن يحتوي الحقل {{param1}} على خط عرض \"latitude\" صحيح.",
       "lon": "يجب أن يحتوي الحقل {{param1}} على خط طول\"longitude\" صحيح.",
       "url": "يجب أن يكون الحقل {{param1}} رابطًا، المعطى: {{param2}}",
