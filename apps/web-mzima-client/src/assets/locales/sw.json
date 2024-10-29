@@ -833,7 +833,7 @@
     "complete_draft": "Kamili (Mswada)",
     "complete_published": "Kamili (Imechapishwa)",
     "structure": "Muundo",
-    "source": "kupitia {{chanzo}}",
+    "source": "kupitia {{source}}",
     "visible_to_public": "Tangazo hili linaonekana kwa umma",
     "visible_to_you": "Tangazo hili linaonekana tu kwako na watumizi wakuu\n",
     "visible_to_roles": "Tangazo hili linaonekana kwa {{majukumu}}",
