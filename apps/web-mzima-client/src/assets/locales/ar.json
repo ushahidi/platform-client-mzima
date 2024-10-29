@@ -2727,7 +2727,7 @@
     "taskAttributeRequired": "الخاصية {{param1}} مطلوبة قبل اکتمال مرحلة {{param2}} ",
     "emptyIdAndLocale": "يجب ان تملك على الاقل id او locale",
     "emptyParentWithLocale": "يجب تحديد معرف الوالد عند تمرير قيمة محلية.",
-    "notAnArray": " القيم المنشورة لـ {{param1}} يجب ان تكون array",
+    "notAnArray": "يجب أن تكون قيم المنشور لـ {{param1}} عبارة عن مصفوفة.",
     "scalar": " القيم المنشورة لـ {{param1}} يجب ان تكون scalar",
     "doesTranslationExist": "ترجمة {{value}} للمنشور {{param2}} موجود",
     "published_to": {
