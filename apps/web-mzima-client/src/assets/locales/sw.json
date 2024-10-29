@@ -2759,7 +2759,7 @@
       "isRoleValid": "Jukumu lazima lilingane na kategoria ya mzazi",
       "exists": "Jukumu {{value}} halipo"
     },
-    "description_regex": "The description must contain only letters, numbers, spaces and punctuation",
+    "description_regex": "Maelezo lazima yawe na herufi, nambari, nafasi na viakifishi pekee",
     "regex": "The category name must contain only letters, numbers, spaces and punctuation",
     "isUniqueEmail": "{{field}} is already in use",
     "isUniqueUsername": "{{field}} is already in use",
