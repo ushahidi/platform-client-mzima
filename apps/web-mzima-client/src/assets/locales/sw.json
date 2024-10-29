@@ -2757,7 +2757,7 @@
     },
     "role": {
       "isRoleValid": "Jukumu lazima lilingane na kategoria ya mzazi",
-      "exists": "Role {{value}} does not exist"
+      "exists": "Jukumu {{value}} halipo"
     },
     "description_regex": "The description must contain only letters, numbers, spaces and punctuation",
     "regex": "The category name must contain only letters, numbers, spaces and punctuation",
