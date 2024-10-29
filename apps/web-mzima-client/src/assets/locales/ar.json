@@ -2745,7 +2745,7 @@
       "email": "حقل {{param1}} يجب ان يکون عنوان الايميل، معطي: {{param2}}",
       "exists": "حقل  {{param1}} يجب ان يکون  post id صالح،  post id: {{param2}}",
       "tagExists": "الحقل {{param1}}  يجب ان يکون اسم id او فئة id  صالحة، فئة: {{param2}}",
-      "max_length": "حقل  {{param1}} يجب ان لا يتجاوز: param2 رمزا، معطي: {{param2}}",
+      "max_length": "لا يجب أن يتجاوز الحقل {{param1}} :param2 حرفًا، معطى: {{param2}}",
       "invalidForm": "الحقل {{param1}} يحتوي على نوع منشور خاطئ، معرّف المنشور: {{param2}} ",
       "numeric": "حقل  {{param1}} يجب ان يکون رقميا، معطي: {{param2}}",
       "scalar": "حقل {{param1}} يجب ان يکون scalar، معطي: {{param2}}",
