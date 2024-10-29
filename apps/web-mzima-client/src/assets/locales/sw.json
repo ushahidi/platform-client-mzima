@@ -2749,7 +2749,7 @@
       "invalidForm": "Uwanda wa {{param1}} una aina isiyo sahihi ya chapisho, Kitambulisho cha Chapisho:{{param2}}",
       "numeric": "Uwanda wa {{param1}} lazima uwe nambari, Kutokana na: {{param2}}",
       "scalar": "Sehemu ya {{param1}} lazima iwe ya kiwango, Kutokana na: {{param2}}",
-      "point": "The field {{param1}} must be an array of lat and lon",
+      "point": "Uwanda wa {{param1}} lazima iwe safu ya lat na lon",
       "lat": "the field {{param1}} must contain a valid latitude",
       "lon": "the field {{param1}} must contain a valid longitude",
       "url": "The field {{param1}} must be a url, Given: {{param2}}",
