@@ -1948,7 +1948,7 @@
   "location": {
     "search": "Tafuta",
     "use_current_location": "Tumia eneo lako la sasa",
-    "click_map": "<em>You can search or click the area of map where you want to place the marker.</em>",
+    "click_map": "<em>Unaweza kutafuta au kubofya eneo la ramani ambapo unataka kuweka alama.</em>",
     "placeholder": "Tafuta anwani, majina ya maeneo, au viwianishi...",
     "search_results": "Matokeo ya utafutaji",
     "error": "Samahani hatuwezi kupata eneo linalolingana na utafutaji wako",
