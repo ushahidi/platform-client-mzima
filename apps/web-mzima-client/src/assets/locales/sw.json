@@ -1798,7 +1798,7 @@
       "stage_save_success": "Boresha {{hatua}}",
       "export": "Hii itahamisha matangazo yaliyochujwa. Je, unahakika unataka kuendelea?",
       "update_status_success_bulk": "Hali imeboreshwa kwa {{hesabu}} matangazo",
-      "leave_without_save": "Do you want to leave this post without saving?",
+      "leave_without_save": "Je, ungependa kuondoka kwenye chapisho hili bila kuhifadhi?",
       "leave_confirm_message": "If you continue, all of your changes will be lost",
       "leave_confirm": "Continue without saving",
       "unfinished_post_task": "Huwezi kuchapisha chapisho hili, chapisho lina kazi ambazo hazijakamilika",
