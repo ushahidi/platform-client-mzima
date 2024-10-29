@@ -2727,7 +2727,7 @@
     "taskAttributeRequired": "sifa {{param1}} inahitajika kabla ya hatua ya {{param2}} kukamilika",
     "emptyIdAndLocale": "Lazima iwe na angalau kitambulisho au locale",
     "emptyParentWithLocale": "Lazima iwe na kitambulisho cha mzazi wakati wa kupitisha loccale",
-    "notAnArray": "Post values for {{param1}} must be an array",
+    "notAnArray": "Thamani za machapisho za {{param1}} lazima ziwe mkusanyiko",
     "scalar": "Post values for {{param1}} must be scalar",
     "doesTranslationExist": "Translation {{value}} for post {{param2}} already exists",
     "published_to": {
