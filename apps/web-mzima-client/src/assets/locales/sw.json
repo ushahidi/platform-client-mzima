@@ -1817,7 +1817,7 @@
       "bulk_destroy_success_countless": "Jamii zimefutwa"
     },
     "role": {
-      "delete_question": "Unahakika unataka kufuta majukumu {{majukumu}}?",
+      "delete_question": "Unahakika unataka kufuta majukumu?",
       "destroy_success": "Majukumu {{Majukumu}} yamefutwa.",
       "save_success": "Majukumu {{Majukumu}} yamehifadhiwa.",
       "last_admin": "Huwezi kufuta jukumu la pekee ya mkuu"
