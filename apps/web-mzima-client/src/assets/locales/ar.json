@@ -2746,7 +2746,7 @@
       "exists": "حقل  {{param1}} يجب ان يکون  post id صالح،  post id: {{param2}}",
       "tagExists": "الحقل {{param1}}  يجب ان يکون اسم id او فئة id  صالحة، فئة: {{param2}}",
       "max_length": "حقل  {{param1}} يجب ان لا يتجاوز: param2 رمزا، معطي: {{param2}}",
-      "invalidForm": "حقل {{param1}} متكون من نوع المنشور الخاطيء،  Post id:{{param2}}",
+      "invalidForm": "الحقل {{param1}} يحتوي على نوع منشور خاطئ، معرّف المنشور: {{param2}} ",
       "numeric": "حقل  {{param1}} يجب ان يکون رقميا، معطي: {{param2}}",
       "scalar": "حقل {{param1}} يجب ان يکون scalar، معطي: {{param2}}",
       "point": "حقل {{param1}} يجب ان يکون مصفوفة من lat  و lon",
