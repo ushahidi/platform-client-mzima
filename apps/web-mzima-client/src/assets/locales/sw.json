@@ -2747,7 +2747,7 @@
       "tagExists": "Uwanda wa {{param1}} lazima uwe kitambulisho sahihi cha kategoria au jina, Kategoria: {{param2}}",
       "max_length": "Uwanda wa {{param1}} lazima isizidi urefu wa herufi :param2, Kutokana na: {{param2}}",
       "invalidForm": "Uwanda wa {{param1}} una aina isiyo sahihi ya chapisho, Kitambulisho cha Chapisho:{{param2}}",
-      "numeric": "The field {{param1}} must be numeric, Given: {{param2}}",
+      "numeric": "Uwanda wa {{param1}} lazima uwe nambari, Kutokana na: {{param2}}",
       "scalar": "The field {{param1}} must be scalar, Given: {{param2}}",
       "point": "The field {{param1}} must be an array of lat and lon",
       "lat": "the field {{param1}} must contain a valid latitude",
