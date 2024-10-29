@@ -2712,7 +2712,7 @@
     },
     "email": {
       "title": "{{sitename}} Chapisho jipya: {{title}}",
-      "message": "New post on {{sitename}}{{title}}{{content}}View post: {{url}}"
+      "message": "Chapisho jipya kwenye {{sitename}}{{title}}{{content}}Angalia chapisho: {{url}}"
     },
     "sms": {
       "message": "{{sitename}} Chapisho jipya: {{title}}"
