@@ -2711,11 +2711,11 @@
       "invalid_email": "Baruapepe si sahihi {{param1}}"
     },
     "email": {
-      "title": "{{sitename}} New post: {{title}}",
+      "title": "{{sitename}} Chapisho jipya: {{title}}",
       "message": "New post on {{sitename}}{{title}}{{content}}View post: {{url}}"
     },
     "sms": {
-      "message": "{{sitename}} New post: {{title}}"
+      "message": "{{sitename}} Chapisho jipya: {{title}}"
     },
     "publishedPostsLimitReached": "limit:{{posts}}",
     "tagDoesNotExist": "category :value does not exist",
