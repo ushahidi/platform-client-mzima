@@ -2718,7 +2718,7 @@
       "message": "{{sitename}} منشور جديد: {{title}}"
     },
     "publishedPostsLimitReached": "حدود: {{posts}}",
-    "tagDoesNotExist": "الفئة: ‌القيمة لايوجد",
+    "tagDoesNotExist": "الفئة :value غير موجودة.",
     "attributeDoesNotExist": "خاصية  {{param1}} لايوجد",
     "tooManyValues": "القيم کثيرة لـ {{param1}} (حد القصوى: {{param2}})",
     "valueDoesNotExist": "قيمة id {{param2}} لحقل {{param1}} لايوجد",
