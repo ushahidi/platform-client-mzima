@@ -2723,7 +2723,7 @@
     "tooManyValues": "تم إدخال العديد من القيم لـ {{param1}} (الحد الأقصى: {{param2}})",
     "valueDoesNotExist": "قيمة المعرف {{param1}} للحقل {{param2}} غير موجودة.",
     "canNotUseExistingValueOnNewPost": "لا يمكن استخدام القيمة الحالية {{param2}} للحقل {{param1}} في منشور جديد.",
-    "postAttributeRequired": "خاصية {{param1}} مطلوبة",
+    "postAttributeRequired": "الخاصية {{param1}} مطلوبة.",
     "taskAttributeRequired": "خاصية {{param1}} مطلوب قبل اکتمال مرحلة {{param2}} ",
     "emptyIdAndLocale": "يجب ان تملك على الاقل id او locale",
     "emptyParentWithLocale": "يجب ان تملك parent id عند المرور بـ locale",
