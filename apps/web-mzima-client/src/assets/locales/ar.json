@@ -2698,7 +2698,7 @@
     "not_empty": "الحقل :field لا يجب أن يكون فارغًا.",
     "isKeyAvailable": "المفتاح {{value}} غير متوفر",
     "contactIsValid": "رقم الهاتف غير صالح.",
-    "roleDoesNotExist": "role_id {{value}} غير موجود",
+    "roleDoesNotExist": "معرف الدور {{value}} غير موجود.",
     "invalidFormStageId": "form_stage_id : القيمة غير موجودة",
     "postTypeLimitReached": "الحد: {{posttypes}}",
     "dataUrlOrMediaRequired": "واحد من data_url او media_id مطلوبة",
