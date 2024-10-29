@@ -2737,7 +2737,7 @@
     "stageRequired": "Hatua ya {{param1}} inahitajika kabla ya kuchapishwa",
     "postNeedsApprovalBeforePublishing": "Chapisho linahitaji idhini ya msimamizi kabla ya kuchapishwa",
     "postCanOnlyBeUnpublishedByAdmin": "Chapisho linaweza tu kubatilishwa kuchapishwa na msimamizi",
-    "alreadyLockedByDifferentUser": "Post is currently locked by a different user and can not be updated.",
+    "alreadyLockedByDifferentUser": "Chapisho kwa sasa limefungwa na mtumiaji tofauti na haliwezi kusasishwa.",
     "values": {
       "date": "The field {{param1}} must be a date, Given: {{param2}}",
       "decimal": "The field {{param1}} must be a decimal with 2 places, Given: {{param2}}",
