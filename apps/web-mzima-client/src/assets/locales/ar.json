@@ -16,7 +16,7 @@
     "add_collection": "إضافة مجموعة",
     "export_to_csv": "تصدير البيانات التي تمت تصفيتها",
     "create_new": "إضافة جديد",
-    "create_new_survey": "أنشئ استبيان جديد",
+    "create_new_survey": "إنشاء استبيان جديد",
     "created_by": "تم الإنشاء بواسطة {{author}}",
     "date_created": "تاريخ الإنشاء",
     "date_updated": "تاريخ التحديث",
@@ -34,7 +34,7 @@
       "description": "تعلم كيفية تنصيب و اعداد وادارة عملية نشر برنامج أوشاهيدي و جعله متاح للاستخدام."
     },
     "donate": "تبرع",
-    "donation": "Donation",
+    "donation": "التبرع",
     "disable_monetization": "Disable Monetization",
     "enable_monetization": "Enable Monetization",
     "enable_monetization_error": "Fill in required fields above before enabling monetization.",
