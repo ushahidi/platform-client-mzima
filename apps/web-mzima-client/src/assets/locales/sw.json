@@ -2719,7 +2719,7 @@
     },
     "publishedPostsLimitReached": "kikomo: {{posts}}",
     "tagDoesNotExist": "kitengo :value haipo",
-    "attributeDoesNotExist": "attribute {{param1}} does not exist",
+    "attributeDoesNotExist": "sifa {{param1}} haipo",
     "tooManyValues": "Too many values for {{param1}} (max: {{param2}})",
     "valueDoesNotExist": "value id {{param2}} for field {{param1}} does not exist",
     "canNotUseExistingValueOnNewPost": "Cannot use existing value {{param2}} for field {{param1}} on a new post",
