@@ -322,6 +322,7 @@
     "title": "Anwani",
     "field_allowed_relation_survey": "Hojaji iliyoruhusiwa",
     "collect_image_caption": "Jumuisha uwanda wa manukuu ya picha",
+    "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "Hii italemaza na kuficha manukuu yote yaliopo kwa uwanda huu, lakini unaweza kuwasha tena wakati wowote.",
     "description": "Maelezo",
     "task_description": "Maelezo ya kazi",
@@ -343,6 +344,8 @@
     "related_post": "Chapisho Linalohusiana",
     "related_post_info": "Tafadhali kumbuka, machapisho yanayohusiana na mahitaji ya kuchapishwa, machapisho ambayo ni \"Chini ya ukaguzi\" hayataonekana katika matokeo ya utafutaji",
     "upload_image": "Picha",
+    "upload_document": "Document",
+    "upload_audio": "Audio",
     "embed_video": "Pachika video",
     "markdown": "Markdown",
     "categories": "Kategoria",
@@ -357,7 +360,13 @@
     "checkbox_desc": "Ruhusu mtumizi achague tu mojawapo ya seti zilizotambuliwa.",
     "relation_desc": "Unda ushirikiano kati ya hojaji tofautitofauti",
     "upload_desc": "Inaruhusu picha kuingizwa katika matangazo",
+    "audio_desc": "Allows audio file(s) to be uploaded to the post",
+    "document_desc": "Allows document(s) to be uploaded to the post",
     "video_desc": "Huruhusu video za YouTube au Vimeo kupachikwa kwenye chapisho",
+    "maximum_upload_size" : "Maximum Upload Size",
+    "small_upload_size" : "Small",
+    "medium_upload_size" : "Medium",
+    "large_upload_size" : "Large",
     "markdown_desc": "Huruhusu matumizi ya sintaksia ya kuashiria kuweka mtindo wa maudhui ya uwanda",
     "tasks": "Kazi",
     "task_visible_when_published": "Kazi hii itaonekana chapisho itakapochapishwa",
@@ -977,9 +986,22 @@
       "add_caption": "Ongeza anwani",
       "upload": "Ingiza",
       "add_photo": "Ongeza picha",
+      "add_audio": "Add audio",
+      "add_document": "Add document",
+      "retry" : "Retry",
       "delete_photo": "Toa picha",
       "replace_image": "Badilisha picha",
-      "error_in_upload": "Picha yako ni kubwa mno (kiwango cha juu zaidi ni 1MB) au ina umbizo lisilo sahihi (miundo inayoruhusiwa ni gif, png, jpg na jpeg), tafadhali angalia na ujaribu tena!"
+      "error_in_upload": "Picha yako ni kubwa mno (kiwango cha juu zaidi ni 1MB) au ina umbizo lisilo sahihi (miundo inayoruhusiwa ni gif, png, jpg na jpeg), tafadhali angalia na ujaribu tena!",
+      "messages": {
+        "max_size" : "Your file is too large.",
+        "max_files" : "You have exceeded the maximum number of files.",
+        "required" : "Media is required."
+      },
+      "status" : {
+        "uploading" : "Uploading...",
+        "upload_complete" : "Upload Complete!",
+        "upload_failed" : "Upload failed!"
+      }
     },
     "video": {
       "enter_a_url": "Weka URL ya video kutoka Youtube au Vimeo."
