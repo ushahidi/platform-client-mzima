@@ -2699,7 +2699,7 @@
     "isKeyAvailable": "المفتاح {{value}} غير متوفر",
     "contactIsValid": "رقم الهاتف غير صالح.",
     "roleDoesNotExist": "معرف الدور {{value}} غير موجود.",
-    "invalidFormStageId": "form_stage_id : القيمة غير موجودة",
+    "invalidFormStageId": "معرف المرحلة :value غير موجود.",
     "postTypeLimitReached": "الحد: {{posttypes}}",
     "dataUrlOrMediaRequired": "واحد من data_url او media_id مطلوبة",
     "dataUrlMediaConflict": "فقط واحد من data_url او media_id يمكن ان يعرف",
