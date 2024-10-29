@@ -360,7 +360,7 @@
     "checkbox_desc": "Ruhusu mtumizi achague tu mojawapo ya seti zilizotambuliwa.",
     "relation_desc": "Unda ushirikiano kati ya hojaji tofautitofauti",
     "upload_desc": "Inaruhusu picha kuingizwa katika matangazo",
-    "audio_desc": "Allows audio file(s) to be uploaded to the post",
+    "audio_desc": "Inaruhusu faili za sauti kupakiwa kwenye chapisho",
     "document_desc": "Allows document(s) to be uploaded to the post",
     "video_desc": "Huruhusu video za YouTube au Vimeo kupachikwa kwenye chapisho",
     "maximum_upload_size" : "Maximum Upload Size",
