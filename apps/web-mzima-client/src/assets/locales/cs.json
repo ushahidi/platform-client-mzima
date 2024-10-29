@@ -322,6 +322,7 @@
     "title": "Název",
     "field_allowed_relation_survey": "Povolené průzkumy",
     "collect_image_caption": "Zahrnout pole s popisem obrázku",
+    "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "Tím se zakáží a skryjí všechny existující popisky pro toto pole, ale můžete je kdykoli znovu povolit.",
     "description": "Popis",
     "task_description": "Popis ulohy",
@@ -343,6 +344,8 @@
     "related_post": "Související příspěvek",
     "related_post_info": "Vezměte prosím na vědomí, že příspěvky, kterých se to týká, musí být zveřejněny, příspěvky, které jsou v procesu kontroly, se ve výsledcích vyhledávání neobjeví.",
     "upload_image": "Obrázek",
+    "upload_document": "Document",
+    "upload_audio": "Audio",
     "embed_video": "Vložené video",
     "markdown": "Markdown",
     "categories": "Kategorie",
@@ -357,7 +360,13 @@
     "checkbox_desc": "Umožňuje uživateli vybrat jednu nebo více předdefinovaných sad možností.",
     "relation_desc": "Vytvořte vztah mezi různými průzkumy",
     "upload_desc": "Umožňuje odesílání obrázk(ů) do příspěvku",
+    "audio_desc": "Allows audio file(s) to be uploaded to the post",
+    "document_desc": "Allows document(s) to be uploaded to the post",
     "video_desc": "Umožnit vkládání videa Youtube nebo Vimeo do příspěvku",
+    "maximum_upload_size" : "Maximum Upload Size",
+    "small_upload_size" : "Small",
+    "medium_upload_size" : "Medium",
+    "large_upload_size" : "Large",
     "markdown_desc": "Umožňuje použití syntaxe markdown pro stylování obsahu pole.",
     "tasks": "Úlohy",
     "task_visible_when_published": "Tato úloha bude viditelná při zveřejnění příspěvku.",
@@ -977,9 +986,22 @@
       "add_caption": "Přidat titulek",
       "upload": "Nahrát",
       "add_photo": "Přidat fotku",
+      "add_audio": "Add audio",
+      "add_document": "Add document",
+      "retry" : "Retry",
       "delete_photo": "Smazat fotku",
       "replace_image": "Nahradit obrázek",
-      "error_in_upload": "Váš obrázek je příliš velký (maximální velikost je 1 MB) nebo má nesprávný formát (povolené formáty jsou gif, png, jpg a jpeg). Zkontrolujte prosím a zkuste to znovu!"
+      "error_in_upload": "Váš obrázek je příliš velký (maximální velikost je 1 MB) nebo má nesprávný formát (povolené formáty jsou gif, png, jpg a jpeg). Zkontrolujte prosím a zkuste to znovu!",
+      "messages": {
+        "max_size" : "Your file is too large.",
+        "max_files" : "You have exceeded the maximum number of files.",
+        "required" : "Media is required."
+      },
+      "status" : {
+        "uploading" : "Uploading...",
+        "upload_complete" : "Upload Complete!",
+        "upload_failed" : "Upload failed!"
+      }
     },
     "video": {
       "enter_a_url": "Zadejte adresu URL videa z Youtube nebo Vimeo."
