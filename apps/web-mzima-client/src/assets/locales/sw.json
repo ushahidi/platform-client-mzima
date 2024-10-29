@@ -2725,7 +2725,7 @@
     "canNotUseExistingValueOnNewPost": "Haiwezi kutumia thamani iliyopo {{param2}} kwa sehemu ya {{param1}} kwenye chapisho jipya",
     "postAttributeRequired": "sifa {{param1}} inahitajika",
     "taskAttributeRequired": "sifa {{param1}} inahitajika kabla ya hatua ya {{param2}} kukamilika",
-    "emptyIdAndLocale": "Must have at least id or locale",
+    "emptyIdAndLocale": "Lazima iwe na angalau kitambulisho au locale",
     "emptyParentWithLocale": "Must have at parent id when passing locale",
     "notAnArray": "Post values for {{param1}} must be an array",
     "scalar": "Post values for {{param1}} must be scalar",
