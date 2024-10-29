@@ -2751,7 +2751,7 @@
       "scalar": "Uwanda wa {{param1}} lazima uwe wa kiwango, Kutokana na: {{param2}}",
       "point": "Uwanda wa {{param1}} lazima iwe safu ya lat na lon",
       "lat": "sehemu ya {{param1}} lazima iwe na latitudo halali",
-      "lon": "the field {{param1}} must contain a valid longitude",
+      "lon": "sehemu ya {{param1}} lazima iwe na longitudo halali",
       "url": "The field {{param1}} must be a url, Given: {{param2}}",
       "video_type": "The field {{param1}} must be either a youtube or vimeo url, Given: {{param2}}"
     },
