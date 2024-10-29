@@ -1878,7 +1878,7 @@
     "collection": {
       "delete_collection_confirm": "Je, unahakika unataka kufuta mkusanyiko huu?",
       "created_collection": "Mkusanyiko {{mkusanyiko}} imefanikiwa kubuniwa",
-      "updated_collection": "Collection {{collection}} saved",
+      "updated_collection": "Mkusanyiko {{collection}} imehifadhiwa",
       "add_to_collection": "Tangazo limeongezwa kwa {{mkusanyiko}}",
       "removed_from_collection": "Tangazo limeondolewa kwa {{mkusanyiko}}",
       "bulk_add_to_collection": "{{hesabu}} matangazo yameongezwa kwa {{mkusanyiko}}",
