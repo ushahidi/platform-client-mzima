@@ -1721,7 +1721,7 @@
     },
     "default": {
       "data_has_not_been_saved": "Data haijahifadhiwa!",
-      "proceed_warning": "This action cannot be undone. Please proceed with caution.",
+      "proceed_warning": "Kitendo hiki hakiwezi kutenduliwa. Tafadhali endelea kwa tahadhari.",
       "save_success": "Hifadhi rasilimali",
       "save_error": "Haiwezi kuhifadhi rasilimali, tafadhali jaribu tena",
       "destroy_confirm": "Je, una hakika unataka kufuta rasilimali hii?",
