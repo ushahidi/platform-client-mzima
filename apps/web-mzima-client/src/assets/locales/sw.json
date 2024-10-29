@@ -2723,7 +2723,7 @@
     "tooManyValues": "Thamani nyingi sana za {{param1}} (kiwango cha juu zaidi: {{param2}})",
     "valueDoesNotExist": "kitambulisho cha thamani {{param2}} cha sehemu ya {{param1}} hakipo",
     "canNotUseExistingValueOnNewPost": "Haiwezi kutumia thamani iliyopo {{param2}} kwa sehemu ya {{param1}} kwenye chapisho jipya",
-    "postAttributeRequired": "attribute {{param1}} is required",
+    "postAttributeRequired": "sifa {{param1}} inahitajika",
     "taskAttributeRequired": "sifa {{param1}} inahitajika kabla ya hatua ya {{param2}} kukamilika",
     "emptyIdAndLocale": "Must have at least id or locale",
     "emptyParentWithLocale": "Must have at parent id when passing locale",
