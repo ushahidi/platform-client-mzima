@@ -1843,7 +1843,7 @@
       "are_you_sure_you_want_to_delete_user": "Una uhakika unataka kufuta {{username}}"
     },
     "video": {
-      "incorrect_url": "The URL, {{url}}, you entered did not match either a Youtube or Vimeo URL format."
+      "incorrect_url": "URL, {{url}}, uliyoingiza haikulingana na umbizo la URL ya YouTube au Vimeo."
     },
     "form": {
       "add_to_survey": "Ongeza kwa hojaji",
