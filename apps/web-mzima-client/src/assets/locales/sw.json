@@ -2760,7 +2760,7 @@
       "exists": "Jukumu {{value}} halipo"
     },
     "description_regex": "Maelezo lazima yawe na herufi, nambari, nafasi na viakifishi pekee",
-    "regex": "The category name must contain only letters, numbers, spaces and punctuation",
+    "regex": "Jina la kategoria lazima liwe na herufi, nambari, nafasi na uakifishaji pekee",
     "isUniqueEmail": "{{field}} is already in use",
     "isUniqueUsername": "{{field}} is already in use",
     "isUserSelf": "You cannot change your own role",
