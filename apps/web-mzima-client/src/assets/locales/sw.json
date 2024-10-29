@@ -2717,7 +2717,7 @@
     "sms": {
       "message": "{{sitename}} Chapisho jipya: {{title}}"
     },
-    "publishedPostsLimitReached": "limit:{{posts}}",
+    "publishedPostsLimitReached": "kikomo: {{posts}}",
     "tagDoesNotExist": "category :value does not exist",
     "attributeDoesNotExist": "attribute {{param1}} does not exist",
     "tooManyValues": "Too many values for {{param1}} (max: {{param2}})",
