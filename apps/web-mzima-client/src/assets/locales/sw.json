@@ -2743,7 +2743,7 @@
       "decimal": "Sehemu ya {{param1}} lazima iwe desimali yenye maeneo 2, Kutokana na: {{param2}}",
       "digit": "Uwanda {{param1}} lazima iwe tarakimu, Kutokana na: {{param2}}",
       "email": "Sehemu ya {{param1}} lazima iwe barua pepe, Kutokana na: {{param2}}",
-      "exists": "Sehemu ya {{param1}} lazima iwe kitambulisho halali cha chapisho, Kitambulisho cha chapisho: {{param2}}",
+      "exists": "Uwanda wa {{param1}} lazima uwe kitambulisho halali cha chapisho, Kitambulisho cha chapisho: {{param2}}",
       "tagExists": "The field {{param1}} must be a valid category id or name, Category: {{param2}}",
       "max_length": "The field {{param1}} must not exceed :param2 characters long, Given: {{param2}}",
       "invalidForm": "The field {{param1}} has the wrong post type, Post id:{{param2}}",
