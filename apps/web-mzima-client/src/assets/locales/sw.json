@@ -2698,7 +2698,7 @@
     "not_empty": ":uwanda lazima usiwe tupu",
     "isKeyAvailable": "Ufunguo {{value}} haupatikani",
     "contactIsValid": "Nambari ya simu si sahihi",
-    "roleDoesNotExist": "role_id {{value}} does not exist",
+    "roleDoesNotExist": "role_id {{value}} haipo",
     "invalidFormStageId": "form_stage_id :value haipo",
     "postTypeLimitReached": "limit: {{posttypes}}",
     "dataUrlOrMediaRequired": "One of data_url or media_id is required",
