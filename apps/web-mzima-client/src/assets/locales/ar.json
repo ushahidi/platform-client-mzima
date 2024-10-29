@@ -2763,7 +2763,7 @@
     "regex": "اسم الفئة يجب ان يکون فقط بالحروف، ارقام، فراغات و علامات الترقيم",
     "isUniqueEmail": "{{field}} مستخدم مسبقا",
     "isUniqueUsername": "{{field}} مستخدم مسبقا",
-    "isUserSelf": "لا تستطيع ان تغيير دورك",
+    "isUserSelf": "لا يمكنك تغيير دورك بنفسك.",
     "adminUserLimitReached": "الحد:  {{:admin}}"
   }
 }
