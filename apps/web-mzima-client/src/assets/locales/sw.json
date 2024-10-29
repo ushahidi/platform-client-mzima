@@ -1808,7 +1808,7 @@
     "category": {
       "save_success": "Kategoria iliyohifadhiwa {{jina}}",
       "destroy_confirm": "Unahakika unaweza kufuta kategoria hii?",
-      "destroy_confirm_desc": "Deleting this category will remove it from all existing posts. This action cannot be undone.",
+      "destroy_confirm_desc": "Kufuta kategoria hii kutakiondoa kwenye machapisho yote yaliyopo. Kitendo hiki hakiwezi kutenduliwa.",
       "destroy_success": "Kategoria imefutwa",
       "destroy_error": "Imeshindwa kufuta kategoria, tafadhali jaribu tena",
       "bulk_destroy_confirm": "Unahakika unataka kufuta {{hesabu}} kategoria?",
