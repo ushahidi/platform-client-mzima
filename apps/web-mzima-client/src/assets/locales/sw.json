@@ -994,7 +994,7 @@
       "error_in_upload": "Picha yako ni kubwa mno (kiwango cha juu zaidi ni 1MB) au ina umbizo lisilo sahihi (miundo inayoruhusiwa ni gif, png, jpg na jpeg), tafadhali angalia na ujaribu tena!",
       "messages": {
         "max_size" : "Faili yako ni kubwa sana",
-        "max_files" : "You have exceeded the maximum number of files.",
+        "max_files" : "Umepitisha idadi ya juu zaidi ya faili.",
         "required" : "Media is required."
       },
       "status" : {
