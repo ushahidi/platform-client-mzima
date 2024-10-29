@@ -2731,7 +2731,7 @@
     "scalar": "Thamani za machapisho za {{param1}} lazima ziwe skala",
     "doesTranslationExist": "Tafsiri {{value}} kwa chapisho {{param2}} tayari ipo",
     "published_to": {
-      "exists": "The role you are publishing to {{value}} does not exist"
+      "exists": "Jukumu unalochapisha kwa {{value}} halipo"
     },
     "stageDoesNotExist": "Hatua ya {{param1}} haipo",
     "stageRequired": "Hatua ya {{param1}} inahitajika kabla ya kuchapishwa",
