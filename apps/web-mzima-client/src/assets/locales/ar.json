@@ -2737,7 +2737,7 @@
     "stageRequired": "مرحلة  {{param1}} مطلوبة قبل النشر",
     "postNeedsApprovalBeforePublishing": "المنشور يحتاج الموافقة من قبل المشرف قبل ان ينشر",
     "postCanOnlyBeUnpublishedByAdmin": "فقط المشرف يستطيع ان يلغي المنشور",
-    "alreadyLockedByDifferentUser": "المنشور مقفول حاليا من قبل مستخدم مختلف و لا يمكن تجديده",
+    "alreadyLockedByDifferentUser": "المنشور مقفل حاليًا بواسطة مستخدم آخر ولا يمكن تحديثه.",
     "values": {
       "date": "يجب أن يكون الحقل {{param1}} تاريخ، معطى: {{param2}}",
       "decimal": "يجب أن يكون الحقل {{param1}} رقمًا عشريًا بـ 2 منزلتين عشرية، معطى: {{param2}}",
