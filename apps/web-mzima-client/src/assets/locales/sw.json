@@ -993,7 +993,7 @@
       "replace_image": "Badilisha picha",
       "error_in_upload": "Picha yako ni kubwa mno (kiwango cha juu zaidi ni 1MB) au ina umbizo lisilo sahihi (miundo inayoruhusiwa ni gif, png, jpg na jpeg), tafadhali angalia na ujaribu tena!",
       "messages": {
-        "max_size" : "Your file is too large.",
+        "max_size" : "Faili yako ni kubwa sana",
         "max_files" : "You have exceeded the maximum number of files.",
         "required" : "Media is required."
       },
