@@ -1743,7 +1743,7 @@
       "csv_import_success_info": "Data kutoka shiti yako ya CSV, <em>{{jinalafaili}}</em>, ili fanikiwa kuingizwa<a href=\"/mipangilio/hojaji/{{fomu_id}}\">{{fomu_jina}}</a> hojaji.",
       "duplicate_fields": "Kolamu lazima ihusishwe na miwanda maalumu ya hojaji. Kalamu zifuatazo zimehusisha zaidi ya mara 1: {{urudufishaji}}",
       "required_fields": "Mawanda yanayohitajika lazima yapangwe kwa thamani.  Mawanda yafuatayo hayajapangwa: {{inahitajika}}",
-      "empty_mapping": "The CSV file you uploaded is empty. Please check your CSV file and try again",
+      "empty_mapping": "Faili ya CSV uliyopakia ni tupu. Tafadhali angalia faili yako ya CSV na ujaribu tena",
       "empty_mapping_empty": "The CSV file does not contain column names. Please check your CSV file and try again",
       "no_mappings": "Hakuna mawanda yaliyotiwa kwenye ramani - angalau uwanda mmoja lazima uingizwe ili uendelee",
       "csv_import_cancel": "Katisha Kuingiza CSV",
