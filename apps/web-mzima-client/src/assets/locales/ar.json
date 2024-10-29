@@ -2697,7 +2697,7 @@
     "mime_type": "نوع الملف غير مدعوم. الرجاء تحميل الملف کـ .csv",
     "not_empty": "الحقل :field لا يجب أن يكون فارغًا.",
     "isKeyAvailable": "المفتاح {{value}} غير متوفر",
-    "contactIsValid": "رقم هاتف باطل",
+    "contactIsValid": "رقم الهاتف غير صالح.",
     "roleDoesNotExist": "role_id {{value}} غير موجود",
     "invalidFormStageId": "form_stage_id : القيمة غير موجودة",
     "postTypeLimitReached": "الحد: {{posttypes}}",
