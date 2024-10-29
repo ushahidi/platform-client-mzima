@@ -3,7 +3,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService } from '@services';
 import { forkJoin, Observable, take } from 'rxjs';
-import { SurveysService, SurveyItem } from '@mzima-client/sdk';
+import { SurveysService, SurveyItem, apiHelpers } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -49,16 +49,13 @@ export class SurveysComponent implements OnInit {
         page: this.params.page,
         order: this.params.order,
         limit: this.params.limit,
+        only: apiHelpers.ONLY.NAME_ID_COLOR,
       })
       .subscribe({
         next: (res) => {
           this.surveys = isAdd ? [...this.surveys, ...res.results] : res.results;
           const { current_page: currentPage, last_page: lastPage, total } = res.meta;
           this.params = { ...this.params, current_page: currentPage, last_page: lastPage, total };
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.log(err);
           this.isLoading = false;
         },
       });
@@ -82,17 +79,19 @@ export class SurveysComponent implements OnInit {
   }
 
   async deleteSurvey() {
+    const surveyCountVariable = { count: this.selectedSurveys.length };
     const confirmed = await this.confirmModalService.open({
       title:
         this.selectedSurveys.length > 1
-          ? 'Are you sure you want to delete selected surveys?'
+          ? this.translate.instant('notify.survey.bulk_destroy_confirm', surveyCountVariable)
           : this.translate.instant('notify.survey.destroy_confirm'),
       description: `
         <p>${
           this.selectedSurveys.length > 1
-            ? 'Deleting these surveys will remove it from database. This action cannot be undone.'
+            ? this.translate.instant('notify.survey.bulk_destroy_confirm_desc', surveyCountVariable)
             : this.translate.instant('notify.survey.destroy_confirm_desc')
         }</p>
+        <p>${this.translate.instant('notify.survey.destroy_confirm_desc_end')}</p>
       `,
 
       confirmButtonText: this.translate.instant('app.yes_delete'),

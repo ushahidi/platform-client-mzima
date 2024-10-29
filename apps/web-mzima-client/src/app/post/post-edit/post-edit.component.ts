@@ -121,6 +121,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
+    this.getUserData();
     this.filters = JSON.parse(
       localStorage.getItem(this.sessionService.getLocalStorageNameMapper('filters'))!,
     );
@@ -134,7 +135,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       }
       if (params.get('id')) {
         this.postId = Number(params.get('id'));
-        this.postsService.lockPost(this.postId).subscribe();
         this.loadPostData(this.postId);
       }
       if (!this.formId) {
@@ -179,7 +179,12 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       next: (post) => {
         this.formId = post.form_id;
         this.post = post;
-        this.loadSurveyData(this.formId!, post.post_content);
+        if (!this.postsService.isPostLockedForCurrentUser(this.post)) {
+          this.postsService.lockPost(this.post.id).subscribe();
+          this.loadSurveyData(this.formId!, post.post_content);
+        } else {
+          this.backNavigation();
+        }
       },
     });
   }
@@ -743,6 +748,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   private updatePost(postId: number, postData: any) {
     this.postsService.update(postId, postData).subscribe({
       next: ({ result }) => {
+        this.postsService.unlockPost(postId).subscribe();
         this.eventBusService.next({
           type: EventType.UpdatedPost,
           payload: result,
@@ -832,6 +838,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     }
 
     if (this.postId) {
+      this.postsService.unlockPost(this.postId).subscribe();
       this.cancel.emit();
     }
     // else {

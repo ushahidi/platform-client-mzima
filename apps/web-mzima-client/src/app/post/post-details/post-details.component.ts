@@ -52,6 +52,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public videoUrls: any[] = [];
   public isPostLoading: boolean = true;
   public isManagePosts: boolean = false;
+  public postChanged: boolean;
 
   constructor(
     protected override sessionService: SessionService,
@@ -73,6 +74,9 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
 
     this.route.params.subscribe((params) => {
       if (params['id']) {
+        //----------------------
+        this.postChanged = true;
+        //----------------------
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
 
         this.postId = Number(params['id']);
@@ -124,6 +128,9 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       this.isPostLoading = false;
       this.getData(this.post);
       this.preparePostForView();
+      //----------------------
+      this.postChanged = false;
+      //----------------------
     }
   }
 
@@ -158,6 +165,9 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         });
         return categories;
       });
+    //----------------------
+    this.postChanged = false;
+    //----------------------
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {
@@ -265,6 +275,13 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     });
   }
 
+  public refreshPost(): void {
+    this.refresh.emit();
+    this.eventBusService.next({
+      type: EventType.RefreshPosts,
+      payload: {},
+    });
+  }
   public deletedHandle(): void {
     this.getPost(this.postId);
     this.eventBusService.next({

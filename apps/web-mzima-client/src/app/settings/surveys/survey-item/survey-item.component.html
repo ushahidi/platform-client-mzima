@@ -21,6 +21,7 @@
     (selectLanguageCall)="chooseTranslation($event)"
   >
   </app-settings-header>
+  <app-spinner class="spinner" *ngIf="isLoading"></app-spinner>
 
   <app-survey-task
     #configTask
@@ -29,7 +30,7 @@
     [isMain]="true"
     [survey]="surveyObject"
     (taskChange)="taskUpdate($event)"
-    *ngIf="mainPost"
+    *ngIf="mainPost && !isLoading"
     (colorSelected)="setNewColor($event)"
     (languageChange)="languageChange($event)"
     [isDefaultLanguageSelected]="isDefaultLanguageSelected"
@@ -107,7 +108,7 @@
   </app-survey-task>
 </form>
 
-<div class="form-head-panel">
+<div class="form-head-panel" *ngIf="!isLoading">
   <h1>{{ 'survey.tasks' | translate }}</h1>
   <mzima-client-button
     color="secondary"
@@ -134,7 +135,7 @@
 </ng-container>
 
 <ng-template #noTasks>
-  <div class="form-row empty">{{ 'survey.no_tasks' | translate }}</div>
+  <div class="form-row empty" *ngIf="!isLoading">{{ 'survey.no_tasks' | translate }}</div>
 </ng-template>
 
 <div class="form-controls-spacer" *ngIf="!isDesktop"></div>

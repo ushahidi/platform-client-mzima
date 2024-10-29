@@ -21,6 +21,7 @@ export abstract class MainViewComponent {
     limit: 500,
     offset: 0,
   };
+  cachedFilter: string;
   public user: UserInterface;
   public isDesktop: boolean = false;
 

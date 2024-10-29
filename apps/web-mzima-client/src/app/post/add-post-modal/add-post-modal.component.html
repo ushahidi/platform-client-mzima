@@ -14,19 +14,18 @@
 <strong mat-dialog-title>{{ 'survey.choose_survey' | translate }}</strong>
 
 <div mat-dialog-content>
-  <app-spinner class="spinner" *ngIf="!types"></app-spinner>
-  <ul role="list" class="types-list" *ngIf="!!types" [data-qa]="'add-post-modal-surveys'">
-    <li *ngFor="let type of types">
+  <app-spinner class="spinner" *ngIf="!surveys"></app-spinner>
+  <ul role="list" class="types-list" [data-qa]="'add-post-modal-surveys'">
+    <li *ngFor="let survey of surveys | async">
       <div
         matRipple
-        *ngIf="type.visible"
         role="listitem"
-        [ngStyle]="{ '--color': type.color }"
-        [mat-dialog-close]="{ type: type.id }"
+        [ngStyle]="{ '--color': survey.color }"
+        [mat-dialog-close]="{ type: survey.id }"
         class="type-item"
-        [data-qa]="'add-post-modal-surveys-item' + type.id"
+        [data-qa]="'add-post-modal-surveys-item' + survey.id"
       >
-        {{ type.name }}
+        {{ survey.name }}
       </div>
     </li>
   </ul>

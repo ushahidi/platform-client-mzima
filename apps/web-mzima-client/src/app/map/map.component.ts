@@ -48,7 +48,7 @@ export class MapComponent extends MainViewComponent implements OnInit {
   fitBoundsOptions: FitBoundsOptions = {
     animate: true,
   };
-  cachedFilter: string;
+  // cachedFilter: string;
   filtersSubscription$: Observable<any>;
   public leafletOptions: MapOptions;
   public progress = 0;
@@ -310,6 +310,12 @@ export class MapComponent extends MainViewComponent implements OnInit {
           const isThisInProgress =
             pageNumber > 1 && posts.meta.total !== this.mapLayers[0].getLayers().length;
 
+          const doMarkersAndResultsMismatch =
+            this.mapLayers.length === 0 ||
+            posts.meta.total !== this.mapLayers[0].getLayers().length;
+
+          const isFirstAndOnlyPage = pageNumber === 1 && pageNumber === posts.meta.last_page;
+
           // Has the filter changed from when we last saw it?
           let hasTheFilterChanged = false;
           if (filter !== undefined) {
@@ -325,7 +331,8 @@ export class MapComponent extends MainViewComponent implements OnInit {
           if (
             isFirstLayerEmpty ||
             hasTheFilterChanged ||
-            isThisInProgress // ||
+            isThisInProgress ||
+            (isFirstAndOnlyPage && doMarkersAndResultsMismatch)
             // isLayerCountMismatch
           ) {
             if (!isFirstLayerEmpty && !isThisInProgress) {

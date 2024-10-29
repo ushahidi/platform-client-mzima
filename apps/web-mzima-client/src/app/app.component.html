@@ -1,5 +1,11 @@
 <app-onboarding
-  *ngIf="!isOnboardingDone && isDesktop && checkAllowedAccessToSite() && showOnboarding"
+  *ngIf="
+    !isOnboardingDone &&
+    deploymentFound &&
+    isDesktop &&
+    checkAllowedAccessToSite() &&
+    showOnboarding
+  "
 ></app-onboarding>
 
 <mat-sidenav-container
@@ -32,6 +38,6 @@
   </mat-sidenav-content>
 </mat-sidenav-container>
 
-<app-cookies-notification></app-cookies-notification>
+<app-cookies-notification *ngIf="deploymentFound"></app-cookies-notification>
 
 <app-spinner fullscreen="true" *ngIf="isShowLoader"></app-spinner>

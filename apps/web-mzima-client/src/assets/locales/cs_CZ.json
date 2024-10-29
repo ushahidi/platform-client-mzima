@@ -9,7 +9,7 @@
     "submitting": "Odesílání",
     "submit_another": "Odeslat a přidat další",
     "submit_response": "Odeslat odpověď na průzkum",
-    "can_see_this": "může to vidět",
+    "can_see_this": "může vidět",
     "collection": "Kolekce",
     "collections": "Kolekce",
     "create_collection": "Vytvořit kolekci",
@@ -34,7 +34,7 @@
       "description": "Naučte se, jak nastavit, konfigurovat a spravovat nasazení systému Ushahidi."
     },
     "donate": "Darujte",
-    "donation": "Dary",
+    "donation": "Dar",
     "disable_monetization": "Zakázat zpeněžení",
     "enable_monetization": "Povolit zpeněžení",
     "enable_monetization_error": "Před povolením zpeněžení vyplňte výše uvedená povinná pole.",
@@ -70,30 +70,30 @@
     "cancel": "Zrušit",
     "save": "Uložit",
     "save_and_close": "Uložit a zavřít",
-    "update": "Aktualizovat",
+    "update": "aktualizovat",
     "update_and_close": "Aktualizovat a zavřít",
     "add_and_close": "Přidat a zavřít",
     "updating": "Aktualizace",
     "saving": "Ukládání",
     "settings": "Nastavení",
     "share": "Sdílet",
-    "specific_roles": "Specifické role ...",
-    "general": "Obecné",
-    "surveys": "Průzkum",
-    "add_survey": "Přidat průzkum",
+    "specific_roles": "Specifické role...",
+    "general": "Obecný",
+    "surveys": "Průzkumy",
+    "add_survey": "Nový průzkum",
     "edit_survey": "Upravit průzkum",
     "data_sources": "Zdroje dat",
     "import": "Import",
     "users": "Uživatelé",
-    "edit_user": "Upravit Uživatele",
+    "edit_user": "Upravit uživatele",
     "add_user": "Přidat uživatele",
     "edit": "Upravit",
     "roles": "Role",
     "edit_role": "Upravit roli",
     "add_role": "Přidat roli",
     "webhooks": "Webhooks",
-    "edit_webhook": "Upravit Webhook",
-    "add_webhook": "Přidat Webhook",
+    "edit_webhook": "Upravit Roli",
+    "add_webhook": "Přidat roli",
     "categories": "Kategorie",
     "edit_category": "Upravit kategorii",
     "add_category": "Přidat kategorii",
@@ -116,9 +116,9 @@
     "filters": "Filtry",
     "filters_and_sorting": "Filtry a řazení",
     "filter_by_survey": "Filtrovat podle průzkumu",
-    "configure": "Konfigurovat",
+    "configure": "Nastavení",
     "post": "Příspěvek",
-    "name": "Název",
+    "name": "Jméno",
     "key": "Klíč",
     "survey_web_address": "Webová adresa vašeho průzkumu",
     "default_value": "Výchozí hodnota (volitelné):",
@@ -231,7 +231,7 @@
     "add_field_instructions": "Přidat pokyny k tomuto poli",
     "add_field_instructions_info": "Tyto instrukce budou při vyplňování tohoto pole zobrazeny jako nápověda pro uživatele.",
     "add_field_instructions_placeholder": "Vysvětlit toto pole...",
-    "add_post_type": "Přidat průzkum",
+    "add_post_type": "Nový průzkum",
     "add_step": "Přidat úlohu",
     "add_language": "Přidat jazyk",
     "added_form_stage_attribute": "Uložené pole",
@@ -244,7 +244,7 @@
     "default_date_hint": "Pokud není přidáno žádné datum, přidá se ve výchozím nastavení aktuální čas odeslání. Uživatel může i po odeslání příspěvku aktualizovat {{ field_name }}.",
     "default_default_placeholder": "Výchozí hodnota",
     "default_location_placeholder": "Nairobi, Keňa",
-    "delete_post_type": "Smazat tento průzkum",
+    "delete_post_type": "Odstranit tento průzkum",
     "deleted_form": "Smazaný průzkum",
     "deleted_form_stage": "Smazaná úloha",
     "deleted_form_stage_attribute": "Smazané pole",
@@ -264,7 +264,7 @@
     "field_name_placeholder": "Pojmenujte toto pole",
     "field_option_placeholder": "Možnost 1",
     "field_required": "Toto pole je povinné",
-    "form_name": "Název",
+    "form_name": "Jméno",
     "form_description": "Popis",
     "forms": "Formuláře",
     "form_stage_settings_saved": "Uložená nastavení",
@@ -365,7 +365,7 @@
     "add_field": "Přidat pole {{fieldType | lowercase}}",
     "edit_field": "Upravit pole {{fieldType | lowercase}}",
     "build": "Vytvořit",
-    "configure": "Konfigurovat",
+    "configure": "Nastavení",
     "require_section": "Vyžaduje, aby byla tato úloha dokončena dříve, než může být příspěvek viditelný veřejnosti",
     "hide_author_information": "Skrýt informace o autorovi",
     "hide_author_information_desc": "Pouze lidé s povolením k úpravám odpovědí budou moci vidět, kdo je odeslal. a pouze při jejich úpravách.",
@@ -375,8 +375,8 @@
     "hide_time_information_desc": "Pouze lidé s povolením k úpravám reakcí budou moci vidět přesný čas odeslání. Ostatní lidé uvidí pouze datum.",
     "share": "Sdílet",
     "task_name": "Název úlohy",
-    "required_field": "Vyžadováno",
-    "required": "Vyžadováno",
+    "required_field": "Vyžadovaný",
+    "required": "Vyžadovaný",
     "required_desc": "Požadovat, aby byla tato úloha dokončena dříve, než může být příspěvek viditelný pro veřejnost.",
     "require_field_desc": "Vyžaduje to dokončit toto pole",
     "name_this_task": "Název této úlohy ...",
@@ -399,7 +399,7 @@
     "delete": {
       "desc": "<strong>Pokud tento průzkum odstraníte</strong>, všechny jeho příspěvky budou také smazány. Postupujte opatrně.",
       "delete": "Vymazat průzkum",
-      "delete_this": "Smazat tento průzkum",
+      "delete_this": "Odstranit tento průzkum",
       "delete_this_field": "Smazat toto pole",
       "delete_field": "Odstranit pole",
       "desc_field": "<strong>Pokud toto pole odstraníte</strong>, všechna data, která byla v něm shromážděna, budou také smazána. Postupujte opatrně."
@@ -410,7 +410,7 @@
       "hex": "Hexadecimální hodnota",
       "red": "Červená",
       "gold": "Zlatá",
-      "blue": "Modrý",
+      "blue": "Modrá",
       "green": "Zelená"
     },
     "who": "Kdo to vidí?",
@@ -506,10 +506,10 @@
       "post_statuses": "Stav",
       "all_statuses": "Jakýkoli stav",
       "draft": "Návrh",
-      "published": "Vydáno"
+      "published": "Zveřejněno"
     },
     "post_stages": {
-      "post_stages": "Stávající úloha",
+      "post_stages": "Aktuální úloha",
       "all_stages": "Všechny úlohy"
     },
     "collections": {
@@ -525,7 +525,7 @@
         "asc": "Nejstarší první"
       },
       "orderby": {
-        "post_date": "Datum vložení",
+        "post_date": "Datum příspěvku",
         "created": "Datum vytvoření",
         "updated": "Datum aktualizace"
       },
@@ -555,8 +555,8 @@
       "q": "Klíčové slovo",
       "created_after": "Datum začátku",
       "created_before": "Datum ukončení",
-      "date_after": "Počáteční datum",
-      "date_before": "Datum konce",
+      "date_after": "Datum začátku",
+      "date_before": "Datum ukončení",
       "center_point": "Umístění",
       "tags": "Kategorie",
       "form": "Průzkum",
@@ -610,7 +610,7 @@
     "source": "Zdroj",
     "saved_filters": "Uložené filtry",
     "saved_filter": "Uložený filtr",
-    "no_saved_filters": "Žádné uložené filtry. Zde se zobrazí uložené filtr(y), které můžete vybrat, jakmile budou k dispozici.",
+    "no_saved_filters": "Žádné uložené filtry. Zde se zobrazí uložené filtry, které můžete vybrat, jakmile budou k dispozici.",
     "save_new_filter": "Uložit nový filtr",
     "clear_all_filters": "Vymazat všechny filtry",
     "delete_this_saved_filter": "Opravdu chcete odstranit tento uložený filtr?"
@@ -631,7 +631,7 @@
     "custom_display": "{{start || 'Beginning'}} do {{end || 'Now'}}",
     "group_by_placeholder": "Graf",
     "new_post_count": "Nové příspěvky",
-    "none": "Nic",
+    "none": "Žádný",
     "no_data": "Žádná aktivita k zobrazení",
     "post_count": "Počet příspěvků",
     "post_date": "Datum vytvoření příspěvku",
@@ -644,7 +644,7 @@
     "button": {
       "dismiss": "Zamítnout",
       "upgrade": "Upgradujte teď",
-      "default": "Ok",
+      "default": "OK",
       "cancel": "Zrušit"
     }
   },
@@ -685,7 +685,7 @@
     "edit_profile": "Upravit profil",
     "edit_post_type": "Upravit průzkum",
     "everyone": "Kdokoliv",
-    "export": "Exportovat",
+    "export": "Export",
     "forbidden": "Přístup odepřen",
     "dashboard": "Nástěnka",
     "delete": "Smazat",
@@ -717,7 +717,7 @@
     "posts": "Příspěvky",
     "posts_and_entities": "Průzkumy",
     "profile": "Můj profil",
-    "role": "Role",
+    "role": "Role:",
     "roles": "Role",
     "webhook": "Webhook",
     "webhooks": "Webhooks",
@@ -745,7 +745,7 @@
     "map": "Mapa",
     "list": "Časová osa",
     "activity": "Aktivita",
-    "data": "Data"
+    "data": "Zobrazení dat"
   },
   "share": {
     "share_deployment": "Sdílení nasazení",
@@ -794,9 +794,9 @@
     "draft": "Přezkoumáno",
     "archived": "Archivováno",
     "edited_by": "Editoval",
-    "export": "Exportovat",
+    "export": "Export",
     "select_all": "Vybrat vše",
-    "unselect_all": "Odznačit vše",
+    "unselect_all": "Zrušit výběr",
     "per_page": "{{count}} příspěvků",
     "post_details": "Detaily příspěvků",
     "steps": "Úlohy tohoto příspěvku",
@@ -809,7 +809,7 @@
     "hide_unknown_form": "Skrýt neznámý",
     "publish": "Publikovat do ...",
     "publish_for_you": "Vy",
-    "publish_for_everyone": "Každý",
+    "publish_for_everyone": "Kdokoliv",
     "published": "Zveřejněno",
     "unpublished": "Nepublikovaný",
     "published_by": "Zveřejněno od",
@@ -837,7 +837,7 @@
     "post_actions": {
       "edit": "Upravit",
       "delete": "Smazat",
-      "export": "Exportovat",
+      "export": "Export",
       "put_under_review": "Dát ke kontrole",
       "archive": "Archív",
       "publish": "Publikovat"
@@ -847,8 +847,8 @@
     "author": "Autor",
     "post_date": "Datum příspěvku",
     "change_author": "Změnit autora",
-    "status_published": "Publikováno",
-    "status_review": "Ke kontrole",
+    "status_published": "Zveřejněno",
+    "status_review": "Přezkoumáno",
     "status_archived": "Archivováno",
     "unknown_posts": "Neznámé příspěvky",
     "my_posts": "Moje příspěvky",
@@ -884,10 +884,10 @@
       "publish_to": "Publikujte do {{role}}",
       "published_to": "Publikováno k {{role}}",
       "unpublish": "Vrátit do Konceptu",
-      "everyone": "Každý",
+      "everyone": "Kdokoliv",
       "back": "Zpět",
       "contact_info": "Zadejte kontaktní údaje (volitelné)",
-      "author_realname": "Název",
+      "author_realname": "Jméno",
       "author_email": "E-mail",
       "bulk_actions": "Hromadné akce",
       "form": {
@@ -999,7 +999,7 @@
     "location": {
       "location": "Umístění",
       "you_can_search_or_click": "Můžete vyhledat nebo kliknout na oblast mapy, kam chcete značku umístit.",
-      "search_address": "Hledání adres, názvů míst nebo souřadnic...",
+      "search_address": "Vyhledat adresy, názvy míst nebo souřadnice ...",
       "nothing_found": "Nic nebylo nalezeno",
       "errors": {
         "empty_lat": "Zeměpisná šířka je prázdné pole",
@@ -1013,7 +1013,7 @@
     "are_you_sure_you_want_to_delete_role": "Opravdu chcete odstranit {{roleName}} rolí?",
     "add_role": "Přidat roli",
     "edit_role": "Upravit roli",
-    "name": "Název",
+    "name": "Jméno",
     "description": "Popis",
     "placeholder": {
       "name": "Zadejte název role",
@@ -1033,7 +1033,7 @@
     "add_webhook": "Přidat roli",
     "edit_webhook": "Upravit Roli",
     "uuid": "Webhook UUID",
-    "name": "Název",
+    "name": "Jméno",
     "shared_secret": "Sdílené tajemství",
     "url": "API URL",
     "entity_type": "Typ entity",
@@ -1048,7 +1048,7 @@
     "visible_to_public": "Toto uložené hledání je veřejně přístupné",
     "visible_to_you": "Toto uložené vyhledávání je viditelné jen pro vás a administrátory",
     "visible_to_roles": "Toto uložené hledání je viditelné pro {{roles}}",
-    "featured": "Doporučené",
+    "featured": "Doporučený",
     "featured_tooltip": "Vybrané vyhledávací dotazy se zobrazí všem uživatelům v nabídce \"Uložená hledání\""
   },
   "collection": {
@@ -1118,7 +1118,7 @@
     "create_tag": "Vytvořit kategorii",
     "saved_tag": "Kategorie uložena.",
     "deleted_tags": "Kategorie smazány.",
-    "manage_tags": "Spravovat kategorie",
+    "manage_tags": "Správa kategorií",
     "edit_tag": "Upravit kategorii",
     "validation": {
       "required": {
@@ -1150,7 +1150,7 @@
   "tool": {
     "manage_forms": "Správa formulářů",
     "manage_tags": "Správa kategorií",
-    "manage_users": "Správa uživatelů",
+    "manage_users": "Spravovat uživatele",
     "manage_roles": "Spravovat role",
     "manage_webhooks": "Spravovat Webhooky",
     "manage_views": "Spravovat pohledy",
@@ -1168,9 +1168,9 @@
     "saved_map_settings": "Nastavení mapy uloženo."
   },
   "settings": {
-    "api_key": "Klíč API",
+    "api_key": "API klíč",
     "api_key_desc": "Klíč rozhraní API je jedinečný pro nasazení, lze jej použít k tomu, aby umožnil systémům třetích stran komunikovat s nasazením služby Ushahidi.",
-    "appearance": "Nastavení vzhledu",
+    "appearance": "Nastavení viditelnosti",
     "continue": "Pokračovat",
     "create": "Vytvořit nový průzkum",
     "create_open_or_targeted": "Vytvořte otevřený nebo cílený průzkum, abyste získali informace o Ushahidi.",
@@ -1226,7 +1226,7 @@
       "valid_user": "Je vyžadován platný identifikátor maintainer id ",
       "api_key_saved": "Klíč API byl uložen! Nyní můžete označit data a nahrát na účet služby Humanitarian Data Exchange (HDX).",
       "start_tagging": "Začít tagovat, označovat data",
-      "HDX": "Výměna humanitárních údajů",
+      "HDX": "Humanitarian Data Exchange",
       "please_enter_maintainer_id": "Zadejte prosím ID správce",
       "please_enter_api_key": "Zadejte klíč API",
       "hdx_maintainer_id_min_length": "ID správce HDX je příliš krátké",
@@ -1314,7 +1314,7 @@
           "from": "Od",
           "from_desc": "Od čísla",
           "secret_desc": "Hodnota tajemství",
-          "api_key": "Klíč API",
+          "api_key": "API klíč",
           "api_secret": "API secret",
           "api_secret_desc": "API tajemství"
         },
@@ -1654,7 +1654,7 @@
     "password_notify": "Pokud ponecháte pole prázdné, heslo se nezmění",
     "avatar": "Profilový obrázek",
     "name": "Jméno",
-    "email": "Emailová adresa",
+    "email": "E-mail",
     "search_by_name": "Vyhledávání podle názvu"
   },
   "user_profile": {
@@ -1684,8 +1684,8 @@
   },
   "user_create": {
     "full_name": "Zobrazit název",
-    "email": "Emailová adresa",
-    "role": "Role"
+    "email": "E-mailová adresa",
+    "role": "Role:"
   },
   "notify": {
     "api_key": {
@@ -1705,7 +1705,7 @@
       "destroy_confirm": "Opravdu chcete tento zdroj smazat?",
       "destroy_success": "Odstraněný zdroj",
       "destroy_error": "Nelze smazat zdroj, zkuste to znovu",
-      "destroy_cancelled": "Smazání zrušeno",
+      "destroy_cancelled": "Mazání zrušeno",
       "bulk_destroy_confirm": "Opravdu chcete smazat {{count}} zdroje?",
       "bulk_destroy_success": "Odstraněný zdroj",
       "bulk_destroy_error": "Nelze smazat zdroj, zkuste to znovu",
@@ -1947,7 +1947,7 @@
     },
     "what_you_get_notification_about": "O čem dostáváte oznámení",
     "removed": "Oznámení bylo odebráno",
-    "are_you_sure_you_want_to_remove_this_notification": "Opravdu chcete toto oznámení odebrat?"
+    "are_you_sure_you_want_to_remove_this_notification": "Opravdu chcete odstranit toto oznámení?"
   },
   "contact": {
     "edit": "Upravit",
@@ -2139,7 +2139,7 @@
     "en-CH": "Angličtina (Switzerland)",
     "en-GB": "Angličtina (Spojené Království)",
     "en-US": "Angličtina (Spojené státy)",
-    "en-EN": "Čeština",
+    "en-EN": "Angličtina",
     "myv": "Erzja",
     "eo": "Esperanto",
     "et": "Estonština",

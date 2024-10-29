@@ -26,7 +26,7 @@ export class SavedsearchesService extends ResourceService<any> {
   }
 
   override get(): Observable<SavedsearchesResponse> {
-    return super.get();
+    return super.get('', { limit: 1000 }); // Temporary measure: Add limit of 1000 for now to show/get all savedsercahes
   }
 
   override getById(id: string | number): Observable<{ result: Savedsearch }> {

@@ -247,10 +247,10 @@
                 ngxMasonryItem
                 [feedView]="true"
                 (edit)="editPost(post)"
-                (refresh)="refreshPost(post)"
+                (refresh)="refreshPost()"
                 (deleted)="postDeleted([post])"
                 (click)="showPostDetails(post)"
-                [selectable]="isBulkOptionsVisible"
+                [selectable]="isBulkOptionsVisible && !isLocked(post)"
                 [isChecked]="isPostChecked(post)"
                 (statusChanged)="postStatusChanged()"
                 (selected)="isPostSelected($event, post)"

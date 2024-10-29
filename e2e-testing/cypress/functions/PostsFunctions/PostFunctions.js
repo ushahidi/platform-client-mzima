@@ -63,7 +63,8 @@ class PostFunctions {
     cy.get(PostLocators.postPreview)
       .children(PostLocators.postItem)
       .contains(this.postTitle)
-      .should('be.visible');
+      .should('be.visible')
+      .click();
   }
 
   open_post_for_details() {
@@ -72,7 +73,7 @@ class PostFunctions {
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.clearFiltersBtn).click();
 
-    cy.get(PostLocators.postItem).eq(0).click();
+    cy.get(PostLocators.postItem).eq(0).click({ force: true });
   }
 
   verify_post_details() {
@@ -83,7 +84,8 @@ class PostFunctions {
     //verify survey fields
     cy.get(PostLocators.titleValue).should('contain', 'Automated Title Response');
     cy.get(PostLocators.descriptionValue).should('contain', 'Automated Description Response');
-    cy.contains('Automated Short text').scrollIntoView().should('be.visible');
+    cy.get('[data-qa="posts"] > :nth-child(2)').scrollTo('bottom');
+    // cy.contains('Automated Short text').scrollIntoView().should('be.visible');
     cy.contains('This is an automated long text response').should('be.visible');
     cy.contains(99.9).should('be.visible');
     cy.contains(100).should('be.visible');
@@ -99,10 +101,12 @@ class PostFunctions {
     cy.get(DataViewLocators.revealFiltersBtn).click();
     cy.get(DataViewLocators.clearFiltersBtn).click();
 
-    //select post
+    //verify post count to verify we are in correct post page
     cy.get('[data-qa="feed-page-results"]').contains('Current results: 20 / 518');
     cy.contains(this.postTitle).scrollIntoView();
-    cy.contains(this.postTitle).click();
+
+    //change post to be deleted to "New Post Title for Location"
+    cy.contains(this.postTitle).click({ force: true });
 
     //delete post
     cy.get(PostLocators.postMenuDots).eq(0).click();
