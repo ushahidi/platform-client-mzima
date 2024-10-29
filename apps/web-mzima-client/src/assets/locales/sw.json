@@ -1867,7 +1867,7 @@
       "validation": {
         "name": {
           "required": "Jina la utafiti linahitajika",
-          "minlength": "Name is too short",
+          "minlength": "Jina ni fupi mno",
           "maxlength": "Name is too long"
         },
         "description": {
