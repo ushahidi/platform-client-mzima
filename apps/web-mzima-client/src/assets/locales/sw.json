@@ -2741,7 +2741,7 @@
     "values": {
       "date": "Sehemu ya {{param1}} lazima iwe tarehe, Kutokana na: {{param2}}",
       "decimal": "Sehemu ya {{param1}} lazima iwe desimali yenye maeneo 2, Kutokana na: {{param2}}",
-      "digit": "The field {{param1}} must be a digit, Given: {{param2}}",
+      "digit": "Uwanda {{param1}} lazima iwe tarakimu, Kutokana na: {{param2}}",
       "email": "The field {{param1}} must be an email address, Given: {{param2}}",
       "exists": "The field {{param1}} must be a valid post id, Post id: {{param2}}",
       "tagExists": "The field {{param1}} must be a valid category id or name, Category: {{param2}}",
