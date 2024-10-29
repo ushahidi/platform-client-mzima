@@ -2719,7 +2719,7 @@
     },
     "publishedPostsLimitReached": "حدود: {{posts}}",
     "tagDoesNotExist": "الفئة :value غير موجودة.",
-    "attributeDoesNotExist": "خاصية  {{param1}} لايوجد",
+    "attributeDoesNotExist": "الخاصية {{param1}} غير موجودة.",
     "tooManyValues": "القيم کثيرة لـ {{param1}} (حد القصوى: {{param2}})",
     "valueDoesNotExist": "قيمة id {{param2}} لحقل {{param1}} لايوجد",
     "canNotUseExistingValueOnNewPost": "لا يمكن استخدام القيمة الموجودة {{param2}} للحقل {{param1}} في المنشور الجديد",
