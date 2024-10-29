@@ -1812,7 +1812,7 @@
       "destroy_success": "Kategoria imefutwa",
       "destroy_error": "Imeshindwa kufuta kategoria, tafadhali jaribu tena",
       "bulk_destroy_confirm": "Unahakika unataka kufuta {{hesabu}} kategoria?",
-      "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
+      "bulk_destroy_confirm_desc": "Kufuta kategoria hizi kutaziondoa kwenye machapisho yote yaliyopo. Kitendo hiki hakiwezi kutenduliwa.",
       "bulk_destroy_success": "{{hesabu}} kategoria imefutwa",
       "bulk_destroy_success_countless": "Jamii zimefutwa"
     },
