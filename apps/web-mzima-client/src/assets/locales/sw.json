@@ -998,7 +998,7 @@
         "required" : "Media inahitajika."
       },
       "status" : {
-        "uploading" : "Uploading...",
+        "uploading" : "Inapakia...",
         "upload_complete" : "Upload Complete!",
         "upload_failed" : "Upload failed!"
       }
