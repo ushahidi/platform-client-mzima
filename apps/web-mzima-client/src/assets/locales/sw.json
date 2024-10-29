@@ -2707,7 +2707,7 @@
     "mime_type_not_allowed": "Aina ya faili haitumiki. Tafadhali pakia faili ya picha.",
     "mime_not_empty": "Aina ya MIME haijapatikana. Aina ya MIME lazima iwekwe kwa faili.",
     "contact": {
-      "invalid_phone": "Invalid phone number {{param1}}",
+      "invalid_phone": "Nambari ya simu si sahihi {{param1}}",
       "invalid_email": "Invalid email {{param1}}"
     },
     "email": {
