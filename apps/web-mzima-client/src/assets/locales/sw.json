@@ -1696,7 +1696,7 @@
           "email": "Baruapepe",
           "phone": "Simu"
         },
-        "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
+        "instructions": "Kufuta kunamaanisha kuwa kuanzia sasa hutaweza kupokea arifa kwenye nambari yako ya simu. Lakini unaweza kubadilisha arifa hadi kwa njia ya mawasiliano hapa chini.",
         "button": {
           "delete": "Futa",
           "cancel": "Katisha"
