@@ -2696,7 +2696,7 @@
     "range": "Ukubwa wa faili unapaswa kuwa chini ya {{param3}} KB",
     "mime_type": "Aina ya faili haitumiki. Tafadhali pakia faili ya .csv.",
     "not_empty": ":uwanda lazima usiwe tupu",
-    "isKeyAvailable": "The key {{value}} is not available",
+    "isKeyAvailable": "Ufunguo {{value}} haupatikani",
     "contactIsValid": "Invalid phone number",
     "roleDoesNotExist": "role_id {{value}} does not exist",
     "invalidFormStageId": "form_stage_id :value haipo",
