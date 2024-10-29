@@ -1917,7 +1917,7 @@
       "bulk_destroy_confirm_desc": "Kufuta hojaji hizi {{count}} zilizochaguliwa pia kutafuta machapisho yote yaliyokusanywa na data yote husika katika hojaji. Hatua hii haiwezi kutenduliwa.",
       "destroy_confirm": "Je, una hakika unataka kufuta hojaji hii?",
       "destroy_confirm_desc": "Kufuta hojaji hii pia kutafuta machapisho yote yaliyokusanywa na data yote husika katika hojaji. Hatua hii haiwezi kutenduliwa.",
-      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting."
+      "destroy_confirm_desc_end": "Unaweza <a href=\"settings/data-import\">kupakua na kuagiza</a> data yako yote kabla ya kufuta."
     },
     "confirm_modal": {
       "add_post_success": {
