@@ -2753,7 +2753,7 @@
       "lat": "sehemu ya {{param1}} lazima iwe na latitudo halali",
       "lon": "sehemu ya {{param1}} lazima iwe na longitudo halali",
       "url": "Sehemu ya {{param1}} lazima iwe url, Kutokana na: {{param2}}",
-      "video_type": "The field {{param1}} must be either a youtube or vimeo url, Given: {{param2}}"
+      "video_type": "Uwanda wa {{param1}} lazima uwe url ya youtube au vimeo, Kutokana na: {{param2}}"
     },
     "role": {
       "isRoleValid": "Role must match the parent category",
