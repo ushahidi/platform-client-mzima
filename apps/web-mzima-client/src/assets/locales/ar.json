@@ -2733,7 +2733,7 @@
     "published_to": {
       "exists": "الدور الذي تريد نشره لـ {{value}} غير موجود"
     },
-    "stageDoesNotExist": "مرحلة {{param1}} غير موجودة",
+    "stageDoesNotExist": "المرحلة {{param1}} غير موجودة",
     "stageRequired": "مرحلة  {{param1}} مطلوبة قبل النشر",
     "postNeedsApprovalBeforePublishing": "يجب أن يحصل المنشور على موافقة المسؤول قبل نشره.",
     "postCanOnlyBeUnpublishedByAdmin": "فقط المشرف يستطيع ان يلغي المنشور",
