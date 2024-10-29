@@ -1,0 +1,94 @@
+<div class="media-loader">
+  <div class="media-loader__btn">
+    <div class="media-loader__preview" *ngIf="mediaFiles.length > 0">
+      <div class="media-loader__preview-{{ media }}">
+        <div
+          [class]="'media-preview ' + media + ' ' + mediaFile.status"
+          *ngFor="let mediaFile of mediaFiles; let i = index"
+        >
+          <ng-container
+            *ngIf="
+              mediaFile.status === 'ready' || mediaFile.status === 'uploaded';
+              then itemReady;
+              else inProgress
+            "
+          >
+          </ng-container>
+
+          <ng-template #itemReady>
+            <img
+              *ngIf="media === 'document'"
+              class="thumbnail"
+              [src]="getDocumentThumbnail(mediaFile)"
+            />
+            <img *ngIf="media === 'image'" class="thumbnail" [src]="mediaFile.url" />
+            <audio *ngIf="media === 'audio'" controls [src]="mediaFile.url"></audio>
+            <div class="media-details">
+              <div class="filename">{{ mediaFile.filename }}</div>
+              <div class="filesize">{{ getFileSize(mediaFile) }}</div>
+            </div>
+          </ng-template>
+
+          <ng-template #inProgress>
+            <div class="media-blank">
+              <mat-icon
+                *ngIf="mediaFile.status === 'error' || mediaFile.status === 'too_big'"
+                class="xicon"
+                icon
+                svgIcon="warning"
+              ></mat-icon>
+              <div class="media-error" *ngIf="mediaFile.status === 'too_big'">
+                {{ ErrorEnum.MAX_SIZE | translate }}
+              </div>
+              <app-spinner
+                class="loading-spinner"
+                *ngIf="mediaFile.status === 'uploading'"
+              ></app-spinner>
+              <div class="media-status" *ngIf="mediaFile.status === 'uploading'">Uploading...</div>
+            </div>
+          </ng-template>
+
+          <div
+            class="status-button"
+            (click)="clickDeleteButton(mediaFile.value, mediaFile.generatedId)"
+          >
+            <ng-container *ngIf="mediaFile.status === 'uploaded'; then check; else cross">
+            </ng-container>
+            <ng-template #check>
+              <mat-icon class="xicon" fontIcon="check"></mat-icon>
+            </ng-template>
+            <ng-template #cross>
+              <mat-icon class="xicon" fontIcon="close"></mat-icon>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="media-loader__controls">
+      <mzima-client-button
+        fill="outline"
+        color="secondary"
+        [disabled]="maxFiles !== -1 && this.mediaFiles.length < maxFiles"
+        class="media-loader__control"
+        (buttonClick)="fileInput.click()"
+        [data-qa]="'btn-post-item-upload'"
+        [ngSwitch]="mediaType"
+      >
+        <mat-icon iconPrefix>{{ mediaType.icon }}</mat-icon>
+        {{ mediaType.buttonText | translate }}
+      </mzima-client-button>
+      <input
+        hidden
+        #fileInput
+        multiple
+        type="file"
+        accept="{{ mediaType.fileTypes }}"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+
+    <mat-error class="error-msg" *ngIf="error !== 'none'">
+      {{ error | translate }}
+    </mat-error>
+  </div>
+</div>

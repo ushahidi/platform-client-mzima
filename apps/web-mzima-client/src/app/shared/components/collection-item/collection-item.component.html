@@ -2,6 +2,7 @@
   matRipple
   class="collection-item"
   (click)="selectable && changeChecked($event)"
+  (keydown.space)="selectable && changeChecked($event)"
   [ngClass]="{ 'collection-item--has-checkbox': selectable }"
   [attr.data-qa]="'collection-item'"
 >

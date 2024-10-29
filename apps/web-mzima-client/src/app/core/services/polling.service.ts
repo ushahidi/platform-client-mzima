@@ -191,8 +191,16 @@ export class PollingService implements OnDestroy {
             } else {
               this.showNotification('success');
             }
+            this.eventBusService.next({
+              type: EventType.ExportDone,
+              payload: { jobId: job.id, status: 'SUCCESS' },
+            });
           } else if (job.status === 'FAILED') {
             this.showNotification('error');
+            this.eventBusService.next({
+              type: EventType.ExportDone,
+              payload: { jobId: job.id, status: 'FAILED' },
+            });
           } else {
             nextQueries.push(this.exportJobsService.getById(job.id));
           }

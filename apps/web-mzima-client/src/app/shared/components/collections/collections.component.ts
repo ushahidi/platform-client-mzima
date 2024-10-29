@@ -210,7 +210,8 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     }
   }
 
-  async deleteCollection(collection: CollectionResult) {
+  async deleteCollection(collection: CollectionResult, event: Event) {
+    event.preventDefault();
     const confirmed = await this.confirm.open({
       title: collection.name,
       description: this.translate.instant('notify.collection.delete_collection_confirm'),
@@ -224,7 +225,8 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  editCollection(collection: CollectionResult) {
+  editCollection(collection: CollectionResult, event: Event) {
+    event.preventDefault();
     this.collectionForm.patchValue({
       name: collection.name,
       description: collection.description,

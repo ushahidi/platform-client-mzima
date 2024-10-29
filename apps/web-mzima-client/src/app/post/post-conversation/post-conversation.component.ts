@@ -24,10 +24,12 @@ export class PostConversationComponent implements OnInit {
   public messageLimit: number = 5;
   public newMessage = new FormControl();
   public sender: string;
+  public source: string;
 
   constructor(private messagesService: MessagesService, private sessionService: SessionService) {}
 
   ngOnInit(): void {
+    this.source = this.post?.contact?.data_source;
     this.getMessagesData();
     this.getSender();
   }

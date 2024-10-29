@@ -27,6 +27,11 @@ import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { dateHelper } from '@helpers';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
+import {
+  getDocumentThumbnail,
+  getFileNameFromUrl,
+  getFileSize,
+} from '../../core/helpers/media-helper';
 
 @Component({
   selector: 'app-post-details',
@@ -47,6 +52,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public videoUrls: any[] = [];
   public isPostLoading: boolean = true;
   public isManagePosts: boolean = false;
+  public postChanged: boolean;
 
   constructor(
     protected override sessionService: SessionService,
@@ -68,6 +74,9 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
 
     this.route.params.subscribe((params) => {
       if (params['id']) {
+        //----------------------
+        this.postChanged = true;
+        //----------------------
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
 
         this.postId = Number(params['id']);
@@ -76,6 +85,10 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       }
     });
   }
+
+  // Import Helper Methods for the template
+  getDocumentThumbnail = getDocumentThumbnail;
+  getFileSize = getFileSize;
 
   loadData(): void {}
 
@@ -115,6 +128,9 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       this.isPostLoading = false;
       this.getData(this.post);
       this.preparePostForView();
+      //----------------------
+      this.postChanged = false;
+      //----------------------
     }
   }
 
@@ -149,6 +165,9 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         });
         return categories;
       });
+    //----------------------
+    this.postChanged = false;
+    //----------------------
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {
@@ -173,8 +192,20 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       .map(async (mediaField) => {
         if (mediaField.value?.value) {
           const media = await this.getPostMedia(mediaField.value.value);
-          mediaField.value.mediaSrc = media.result.original_file_url;
-          mediaField.value.mediaCaption = media.result.caption;
+          mediaField.value.preview = media.result.original_file_url;
+          mediaField.value.caption = media.result.caption;
+          mediaField.value.mimeType = media.result.mime;
+          mediaField.value.size = media.result.original_file_size;
+        } else if (Array.isArray(mediaField.value)) {
+          for (const mediaValue of mediaField.value) {
+            const media = await this.getPostMedia(mediaValue.value);
+            mediaValue.url = media.result.original_file_url;
+            mediaValue.caption = media.result.caption;
+            mediaValue.mimeType = media.result.mime;
+            mediaValue.size = media.result.original_file_size;
+            mediaValue.filename = getFileNameFromUrl(mediaValue.url);
+            mediaValue.status = 'ready';
+          }
         }
       });
   }
@@ -244,6 +275,13 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     });
   }
 
+  public refreshPost(): void {
+    this.refresh.emit();
+    this.eventBusService.next({
+      type: EventType.RefreshPosts,
+      payload: {},
+    });
+  }
   public deletedHandle(): void {
     this.getPost(this.postId);
     this.eventBusService.next({

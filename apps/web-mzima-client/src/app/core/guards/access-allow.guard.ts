@@ -8,14 +8,13 @@ import { SessionService } from '@services';
 export class AccessAllowGuard implements CanActivate {
   constructor(private router: Router, private service: SessionService) {}
 
-  canActivate(): boolean {
+  canActivate() {
     const access: boolean = this.service.accessToSite;
 
-    if (access) {
-      this.router.navigate([`/map`]);
-    } else {
+    if (!access) {
       return true;
     }
-    return false;
+
+    return this.router.parseUrl(`/map`);
   }
 }
