@@ -2729,7 +2729,7 @@
     "emptyParentWithLocale": "يجب تحديد معرف الوالد عند تمرير قيمة محلية.",
     "notAnArray": "يجب أن تكون قيم المنشور لـ {{param1}} عبارة عن مصفوفة.",
     "scalar": "يجب أن تكون قيم المنشور لـ {{param1}} قيمة عددية.",
-    "doesTranslationExist": "ترجمة {{value}} للمنشور {{param2}} موجود",
+    "doesTranslationExist": "ترجمة {{value}} للمنشور {{param2}} موجودة مسبقا",
     "published_to": {
       "exists": "الدور الذي تريد نشره لـ {{value}} لا يوجد"
     },
