@@ -2752,7 +2752,7 @@
       "point": "Uwanda wa {{param1}} lazima iwe safu ya lat na lon",
       "lat": "sehemu ya {{param1}} lazima iwe na latitudo halali",
       "lon": "sehemu ya {{param1}} lazima iwe na longitudo halali",
-      "url": "The field {{param1}} must be a url, Given: {{param2}}",
+      "url": "Sehemu ya {{param1}} lazima iwe url, Kutokana na: {{param2}}",
       "video_type": "The field {{param1}} must be either a youtube or vimeo url, Given: {{param2}}"
     },
     "role": {
