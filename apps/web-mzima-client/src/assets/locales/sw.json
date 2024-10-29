@@ -2739,7 +2739,7 @@
     "postCanOnlyBeUnpublishedByAdmin": "Chapisho linaweza tu kubatilishwa kuchapishwa na msimamizi",
     "alreadyLockedByDifferentUser": "Chapisho kwa sasa limefungwa na mtumiaji tofauti na haliwezi kusasishwa.",
     "values": {
-      "date": "The field {{param1}} must be a date, Given: {{param2}}",
+      "date": "Sehemu ya {{param1}} lazima iwe tarehe, Kutokana na: {{param2}}",
       "decimal": "The field {{param1}} must be a decimal with 2 places, Given: {{param2}}",
       "digit": "The field {{param1}} must be a digit, Given: {{param2}}",
       "email": "The field {{param1}} must be an email address, Given: {{param2}}",
