@@ -1868,7 +1868,7 @@
         "name": {
           "required": "Jina la utafiti linahitajika",
           "minlength": "Jina ni fupi mno",
-          "maxlength": "Name is too long"
+          "maxlength": "Jina ni ndefu sana"
         },
         "description": {
           "required": "Description cannot be empty"
