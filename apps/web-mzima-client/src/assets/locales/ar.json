@@ -114,6 +114,7 @@
     "close_and_view": "Close and view results",
     "show_more_less": "اظهار المزيد/القليل",
     "filters": "تصفية",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "الترشيح بوسطة الاستقصاء ",
     "configure": "ضبط ",
     "post": "مشاركة",
@@ -295,7 +296,14 @@
     "no_fields": "لا توجد حقول",
     "select_color": "حدد اللون",
     "choose_survey": "اختر الاستطلاع",
-    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
+    "marked_for_internal": {
+      "header": "Internal Use Only",
+      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+    },
+    "task_is_marked_as": {
+      "not_completed": "Task Complete? - Use toggle below",
+      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+    },
     "delete_task": "حذف المهمة",
     "duplicate_survey": "مكرر",
     "main_info": "المعلومات الرئيسية",
@@ -314,6 +322,7 @@
     "title": "العنوان",
     "field_allowed_relation_survey": "استطلاعات الراي المسموح بها",
     "collect_image_caption": "قم بضم حقل عنوان الصورة",
+    "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "سيؤدي هذا إلى تعطيل جميع العناوين في هذا الحقل وإخفائها ، ولكن يمكنك إعادة تمكينها في أي وقت",
     "description": "الوصف",
     "task_description": "وصف المهام",
@@ -335,6 +344,8 @@
     "related_post": "المنشور ذات صلة",
     "related_post_info": "Please note, the posts to relate to needs to be published, posts that are \"Under review\" will not appear in the search-results",
     "upload_image": "صورة",
+    "upload_document": "Document",
+    "upload_audio": "Audio",
     "embed_video": "تضمين الفيديو",
     "markdown": "تاشير",
     "categories": "الفئات",
@@ -349,7 +360,13 @@
     "checkbox_desc": "يتيح هذا للمستخدم اختيار واحد أو أكثر من مجموعة مُعرفة مسبقًا من الخيارات.",
     "relation_desc": "إنشاء علاقة بين الاستطلاعات المختلفة",
     "upload_desc": "يتيح هذا تحميل صورة (صور) إلى المنشور",
+    "audio_desc": "Allows audio file(s) to be uploaded to the post",
+    "document_desc": "Allows document(s) to be uploaded to the post",
     "video_desc": "يسمح لفيديوهات يوتيوب و فيميو يتضمنوا في البوست",
+    "maximum_upload_size" : "Maximum Upload Size",
+    "small_upload_size" : "Small",
+    "medium_upload_size" : "Medium",
+    "large_upload_size" : "Large",
     "markdown_desc": "يسمح باستخدام بناء الجملة لتشكيل محتوى الحقل",
     "tasks": "المهام",
     "task_visible_when_published": "ستكون هذه المهمة مرئية عند نشر البوست",
@@ -602,6 +619,7 @@
     "source": "مصدر",
     "saved_filters": "Saved filters ar",
     "saved_filter": "الفلتر المحفوظ",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "هل أنت متأكد من أنك تريد حذف هذا الفلتر المحفوظ؟"
@@ -856,7 +874,9 @@
       "unlocked": "تم فتح البوست",
       "unlock": "الغاء القفل",
       "lock_broken_by_other": "تم إلغاء قفل بوستك. سيتم فقد التغييرات الحالية غير المحفوظة.",
-      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
     "modify": {
       "intro": "اختيار الاستطلاع:",
@@ -966,9 +986,22 @@
       "add_caption": "إضافة عنوان فرعي",
       "upload": "إرسال",
       "add_photo": "اضف صورة",
+      "add_audio": "Add audio",
+      "add_document": "Add document",
+      "retry" : "Retry",
       "delete_photo": "امسح صورة",
       "replace_image": "قم باستبدال صورة",
-      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
+      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!",
+      "messages": {
+        "max_size" : "Your file is too large.",
+        "max_files" : "You have exceeded the maximum number of files.",
+        "required" : "Media is required."
+      },
+      "status" : {
+        "uploading" : "Uploading...",
+        "upload_complete" : "Upload Complete!",
+        "upload_failed" : "Upload failed!"
+      }
     },
     "video": {
       "enter_a_url": "Enter a video URL from Youtube or Vimeo."
