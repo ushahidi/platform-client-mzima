@@ -995,7 +995,7 @@
       "messages": {
         "max_size" : "Faili yako ni kubwa sana",
         "max_files" : "Umepitisha idadi ya juu zaidi ya faili.",
-        "required" : "Media is required."
+        "required" : "Media inahitajika."
       },
       "status" : {
         "uploading" : "Uploading...",
