@@ -2702,7 +2702,7 @@
     "invalidFormStageId": "معرف المرحلة :value غير موجود.",
     "postTypeLimitReached": "الحد: {{posttypes}}",
     "dataUrlOrMediaRequired": "واحد من data_url او media_id مطلوبة",
-    "dataUrlMediaConflict": "فقط واحد من data_url او media_id يمكن ان يعرف",
+    "dataUrlMediaConflict": "يمكن تعريف واحد فقط من data_url أو media_id.",
     "size_error": "يجب ان يقل حجم الملف عن  :param1 ميغا بايت",
     "mime_type_not_allowed": "نوع الملف غير مدعوم. الرجاء تحميل ملف صوري",
     "mime_not_empty": "لم يعثر على نوع MIME. يجب ان ينشأ نوع MIME  للملف",
