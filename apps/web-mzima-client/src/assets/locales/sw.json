@@ -2761,8 +2761,8 @@
     },
     "description_regex": "Maelezo lazima yawe na herufi, nambari, nafasi na viakifishi pekee",
     "regex": "Jina la kategoria lazima liwe na herufi, nambari, nafasi na uakifishaji pekee",
-    "isUniqueEmail": "{{field}} is already in use",
-    "isUniqueUsername": "{{field}} is already in use",
+    "isUniqueEmail": "{{field}} tayari inatumika",
+    "isUniqueUsername": "{{field}} tayari inatumika",
     "isUserSelf": "You cannot change your own role",
     "adminUserLimitReached": "limit:{{:admin}}"
   }
