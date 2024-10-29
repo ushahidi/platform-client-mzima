@@ -2753,7 +2753,7 @@
       "lat": "حقل {{param1}} يجب ان يتکون من latitude صالح",
       "lon": "حقل {{param1}} يجب ان يتکون من longitude صالح",
       "url": "حقل {{param1}} يجب ان يکون url، معطي:  {{param2}}",
-      "video_type": "حقل {{param1}} يجب ان يکون واحدا من url یوتوب او فیميو، معطي:  {{param2}}"
+      "video_type": "يجب أن يكون الحقل {{param1}} إما رابطًا لـ YouTube أو Vimeo، المعطى: {{param2}}"
     },
     "role": {
       "isRoleValid": "يجب ان يطابق الدور فئة الاب",
