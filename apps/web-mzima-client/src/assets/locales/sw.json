@@ -2750,7 +2750,7 @@
       "numeric": "Uwanda wa {{param1}} lazima uwe nambari, Kutokana na: {{param2}}",
       "scalar": "Uwanda wa {{param1}} lazima uwe wa kiwango, Kutokana na: {{param2}}",
       "point": "Uwanda wa {{param1}} lazima iwe safu ya lat na lon",
-      "lat": "sehemu ya {{param1}} lazima iwe na latitudo halali",
+      "lat": "uwanda wa {{param1}} lazima uwe na latitudo halali",
       "lon": "uwanda wa {{param1}} lazima uwe na longitudo halali",
       "url": "Sehemu ya {{param1}} lazima iwe url, Kutokana na: {{param2}}",
       "video_type": "Uwanda wa {{param1}} lazima uwe url ya youtube au vimeo, Kutokana na: {{param2}}"
