@@ -1747,7 +1747,7 @@
       "empty_mapping_empty": "Faili ya CSV haina majina ya safu wima. Tafadhali angalia faili yako ya CSV na ujaribu tena",
       "no_mappings": "Hakuna mawanda yaliyotiwa kwenye ramani - angalau uwanda mmoja lazima uingizwe ili uendelee",
       "csv_import_cancel": "Katisha Kuingiza CSV",
-      "csv_import_cancel_confirm": "Are you sure you want to cancel importing?",
+      "csv_import_cancel_confirm": "Je, una uhakika unataka kughairi uingizaji?",
       "csv_import_error": "Baadhi ya data katika faili yako ya CSV hailingani na umbizo la uga wa hojaji iliyopangwa. Tafadhali kagua data na ujaribu tena.",
       "csv_import_success": "The data from your CSV file was successfully imported!"
     },
