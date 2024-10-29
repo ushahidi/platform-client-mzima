@@ -2721,7 +2721,7 @@
     "tagDoesNotExist": "الفئة :value غير موجودة.",
     "attributeDoesNotExist": "الخاصية {{param1}} غير موجودة.",
     "tooManyValues": "تم إدخال العديد من القيم لـ {{param1}} (الحد الأقصى: {{param2}})",
-    "valueDoesNotExist": "قيمة id {{param2}} لحقل {{param1}} لايوجد",
+    "valueDoesNotExist": "قيمة المعرف {{param1}} للحقل {{param2}} غير موجودة.",
     "canNotUseExistingValueOnNewPost": "لا يمكن استخدام القيمة الموجودة {{param2}} للحقل {{param1}} في المنشور الجديد",
     "postAttributeRequired": "خاصية {{param1}} مطلوبة",
     "taskAttributeRequired": "خاصية {{param1}} مطلوب قبل اکتمال مرحلة {{param2}} ",
