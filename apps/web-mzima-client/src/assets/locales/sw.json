@@ -1823,7 +1823,7 @@
       "last_admin": "Huwezi kufuta jukumu la pekee ya mkuu"
     },
     "webhook": {
-      "delete_question": "Are you sure you want to delete the webhook {{webhook}}?",
+      "delete_question": "Je, una uhakika unataka kufuta kichochezi cha wavuti {{webhook}}?",
       "destroy_success": "Webhook {{webhook}} deleted.",
       "save_success": "Webhook {{webhook}} saved."
     },
