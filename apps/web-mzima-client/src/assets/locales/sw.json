@@ -1871,7 +1871,7 @@
           "maxlength": "Jina ni ndefu sana"
         },
         "description": {
-          "required": "Description cannot be empty"
+          "required": "Maelezo hayawezi kuwa tupu"
         }
       }
     },
