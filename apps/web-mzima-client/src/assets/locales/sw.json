@@ -1824,7 +1824,7 @@
     },
     "webhook": {
       "delete_question": "Je, una uhakika unataka kufuta kichochezi cha wavuti {{webhook}}?",
-      "destroy_success": "Webhook {{webhook}} deleted.",
+      "destroy_success": "Kichochezi cha wavuti {{webhook}} imefutwa.",
       "save_success": "Webhook {{webhook}} saved."
     },
     "datasource": {
