@@ -2694,7 +2694,7 @@
   "api": {
     "providerNotAvailable": "Mmoja au zaidi ya watoa huduma waliowezeshwa hawapatikani :param1",
     "range": "Ukubwa wa faili unapaswa kuwa chini ya {{param3}} KB",
-    "mime_type": "File type not supported. Please upload a .csv file.",
+    "mime_type": "Aina ya faili haitumiki. Tafadhali pakia faili ya .csv.",
     "not_empty": ":field must not be empty",
     "isKeyAvailable": "The key {{value}} is not available",
     "contactIsValid": "Invalid phone number",
