@@ -1886,7 +1886,7 @@
     },
     "savedsearch": {
       "delete_savedsearch_success": "Utafutaji uliohifadhiwa umefutwa kwa ufanikio.",
-      "delete_savedsearch_plural_success": "Saved searches deleted successfully.",
+      "delete_savedsearch_plural_success": "Matafutaji yaliyohifadhiwa yamefutwa kwa ufanikio.",
       "delete_savedsearch_confirm": "Je, unahakika unataka kufuta utafutaji huu uliohifadhiwa?",
       "savedsearch_updated": "{{savedsearch}} was updated",
       "savedsearch_saved": "{{savedsearch}} was saved"
