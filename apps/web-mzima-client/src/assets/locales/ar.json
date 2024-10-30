@@ -395,7 +395,7 @@
     "make_response_private": "اجعل الردود سري",
     "response_private_desc": "يمكن فقط للأشخاص الذين لديهم إذن بتعديل الردود مشاهدة الردود في هذا الحقل",
     "require_task_desc": "يجب إتمام هذه المهمة قبل أن يصبح المنشور مرئي للجمهور",
-    "survey_permissions": "رخص الاستطلاع",
+    "survey_permissions": "سماحيات الاستبيان",
     "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
     "who_can_add": "من يستطيع الإضافة لهذا الاستبيان",
     "survey_field": "حقل الاستبيان",
