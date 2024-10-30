@@ -586,7 +586,7 @@
     "unmapped_start_one": "يوجد",
     "unmapped_start_many": "يوجد",
     "unmapped_one": "{{ notShownPostsCount }} منشورا",
-    "unmapped_many": "{{ notShownPostsCount }} منشورات",
+    "unmapped_many": "{{ notShownPostsCount }} منشوراً",
     "unmapped_end": "غير مكتوب هنا لانهم لايشملون معلومات عن الموقع",
     "unmapped_none": "No posts without location information.",
     "more": "المزيد",
