@@ -241,7 +241,7 @@
     "currently_disabled": "هذا الاستبيان معطل حاليًا.",
     "custom_structure": "بنية مخصصة",
     "default_date_placeholder": "التاريخ الافتراضي",
-    "default_date_hint": "If no date is added, the current time of posting would be added by default. The user can still update the {{ field_name }} after post submission.",
+    "default_date_hint": "إذا لم يتم إضافة تاريخ، فسيتم إضافة الوقت الحالي للنشر بشكل افتراضي. لا يزال بإمكان المستخدم تحديث {{ field_name }} بعد إرسال المنشور.",
     "default_default_placeholder": "القيمة الافتراضية",
     "default_location_placeholder": "نيروبي، كينيا",
     "delete_post_type": "حذف هذا الاستبيان",
