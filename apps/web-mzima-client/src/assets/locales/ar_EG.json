@@ -1160,7 +1160,7 @@
     "placeholder": {
       "name": "Enter name",
       "descriptions": "Enter description...",
-      "choose_parent_category": "Choose parent category..."
+      "choose_parent_category": "اختر الفئة الأصلية"
     },
     "types": {
       "category": "Category",
