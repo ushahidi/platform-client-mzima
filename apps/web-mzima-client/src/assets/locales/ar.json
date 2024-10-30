@@ -1131,7 +1131,7 @@
     "save_add_another": "حفظ وإضافة آخر",
     "delete_category": "حذف الفئة",
     "delete_this_category": "حذف هذه الفئة",
-    "delete_category_desc": "<strong>إذا مسحت هذه الفئة </strong>، لن يكون موصولا بأي بوست. تقدم بحذر",
+    "delete_category_desc": "<strong>إذا مسحت هذه الفئة</strong>، لن يكون موصولا بأي منشور. تابع بحذر",
     "show_categories": "اظهر الفئات الموجودة",
     "child_permissions": "تتم إدارة أذونات هذه الفئة بواسطة الفئة الرئيسية.",
     "which_categories": "Which categories should be available",
