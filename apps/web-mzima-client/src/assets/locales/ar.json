@@ -220,8 +220,8 @@
     "email": "البريد الإلكتروني",
     "sms": "الرسائل النصية القصيرة",
     "twitter": "تويتر",
-    "all_crowdsourced": "جميع الاستبيانات الجماعية",
-    "no_crowdsourced": "لا توجد لديك أي بيانات عن الاستبيانات الجماعية لعرضها.",
+    "all_crowdsourced": "جميع الاستبيانات المعتمدة على المصادر الشعبية",
+    "no_crowdsourced": "لا توجد لديك أي بيانات عن الاستبيانات المعتمدة على المصادر الشعبية لعرضها.",
     "targeted_activity": "نشاط الاستبيان المستهدف",
     "crowdsourced_activity": "نشاط الاستطلاعات المعتمدة على المصادر الشعبية",
     "tooltip_template": "This is the single point tooltip template"
