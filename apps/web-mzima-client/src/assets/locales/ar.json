@@ -1794,7 +1794,7 @@
       "destroy_success_bulk": "تم حذف المنشورات",
       "destroy_confirm": "هل أنت متأكد من رغبتك في حذف هذا المنشور؟",
       "destroy_error": "غير قادر على حذف المنشور، الرجاء المحاولة مرة أخرى",
-      "bulk_destroy_confirm": "هل أنت متأكد من رغبتك بحذف {{count}}  استطلاع؟",
+      "bulk_destroy_confirm": "هل أنت متأكد من رغبتك في حذف {{count}} منشورًا؟",
       "stage_save_success": "تم تحديث {{stage}} ",
       "export": "سوف يؤدي هذا الي تصدير المنشورات المرشحة. هل أنت متأكد أنك تريد المتابعة؟ ",
       "update_status_success_bulk": "تم تحديث حالة {{count}} منشور ",
