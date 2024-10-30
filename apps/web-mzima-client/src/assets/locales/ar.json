@@ -25,7 +25,7 @@
     "add_all_fields": "إضافة جميع الحقول",
     "insert_text_here": "أدخل النص هنا...",
     "deployment_not_found" : {
-      "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
+      "text" : "عذراً، لا يوجد مثل هذه المنصة. هل ترغب في إنشاء منصة جديدة؟",
       "button_exit" : "Exit",
       "button_create_deployment" : "انشاء منصة"
     },
