@@ -251,7 +251,7 @@
     "editable_by": "قابل للتعديل بواسطة",
     "edit_post_step": "تعديل المهمة: {{step}}",
     "edit_post_type": "تعديل الاستطلاع: {{form}}",
-    "edit_post_types": "تعديل الاستطلاعات",
+    "edit_post_types": "تحرير الاستبيانات",
     "field_add_option": "إضافة",
     "field_add_other": "Add other",
     "field_add_other_desc": "Allows entering a custom option that is not listed among the provided choices.",
