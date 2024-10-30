@@ -1728,7 +1728,7 @@
       "destroy_success": "مورد محذوف",
       "destroy_error": "تعذر حذف المورد، يرجى إعادة المحاولة",
       "destroy_cancelled": "تم إلغاء الحذف",
-      "bulk_destroy_confirm": "هل ترغب بالتأكيد في حذف {{count}} من الموارد؟",
+      "bulk_destroy_confirm": "هل أنت متأكد من رغبتك في حذف {{count}} مورد؟",
       "bulk_destroy_success": "محو المصدر",
       "bulk_destroy_error": "تعذر حذف المورد، يرجى إعادة المحاولة",
       "bulk_destroy_cancelled": "تم إلغاء الحذف",
