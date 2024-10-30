@@ -834,7 +834,7 @@
     "complete_published": "اكمال (تم نشره)",
     "structure": "بنية",
     "source": "عبر {{source}}",
-    "visible_to_public": "هذاالمنشور يظهر للجميع",
+    "visible_to_public": "هذا المنشور مرئي للعامة.",
     "visible_to_you": "هذا المنشور مرئي لك و للمشرف",
     "visible_to_roles": "هذاالمنشور يظهر لـ {{roles}}",
     "show_only_form": "اظهر فقط {{form}}",
