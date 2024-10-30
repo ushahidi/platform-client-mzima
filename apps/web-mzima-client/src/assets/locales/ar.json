@@ -1062,8 +1062,8 @@
     "event_type": "نوع الحدث",
     "save": "إحفظ الدور",
     "save_add_another": "إحفظ و أضف اخرى",
-    "delete": "مسح",
-    "delete_webhook": "امسح هذا الـ webhook",
+    "delete": "حذف",
+    "delete_webhook": "احذف هذا الـ webhook",
     "delete_webhook_desc": "<strong>إذا مسحت هذه الـ webhook</strong>، کل حوادث webhook الموصولة يحذف. تقدم بحذر"
   },
   "saved_search": {
