@@ -322,7 +322,7 @@
     "title": "العنوان",
     "field_allowed_relation_survey": "الاستبيانات المسموح بها",
     "collect_image_caption": "قم بضم حقل عنوان الصورة",
-    "collect_media_caption": "Include caption field",
+    "collect_media_caption": "قم بضم حقل عنوان الصورة",
     "disable_caption_field_explanation": "سيؤدي هذا إلى تعطيل جميع العناوين في هذا الحقل وإخفائها ، ولكن يمكنك إعادة تمكينها في أي وقت",
     "description": "الوصف",
     "task_description": "وصف المهام",
