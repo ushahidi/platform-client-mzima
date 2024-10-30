@@ -993,7 +993,7 @@
       "replace_image": "قم باستبدال صورة",
       "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!",
       "messages": {
-        "max_size" : "Your file is too large.",
+        "max_size" : "الملف الذي قمت بتحميله ذو حجم كبير",
         "max_files" : "تجاوزت الحد الأعلى لعدد الملفات",
         "required" : "الوسائط مطلوبة"
       },
