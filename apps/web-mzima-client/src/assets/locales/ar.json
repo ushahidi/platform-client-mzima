@@ -451,7 +451,7 @@
       "edit_title": "قم بتعديل السٶال",
       "new_question_title": "سٶال جديد",
       "question_text": "نص السٶال",
-      "question_description": "هذا هو اللذي يراه المستخدمين عندما يذهبون الى استطلاعك",
+      "question_description": "هذا هو الذي سيراه المستخدمين عندما يذهبون الى استبيانك",
       "sample_question": "سٶال نموذجي: أهلا! کيف تشعر اليوم؟ جوابك حر.",
       "char_remains": "{{remaining}}/١٦٠ رمزا متبقي",
       "publish": "نشر الاستبيان",
