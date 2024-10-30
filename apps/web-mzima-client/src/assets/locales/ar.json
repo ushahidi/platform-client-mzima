@@ -1518,7 +1518,7 @@
     "title": "بيانات التصدير",
     "title_hxl": "Export and tag data",
     "description": "تصدير جميع بياناتك كملف CSV أو اختيار حقول استبيان محددة تريد تصديرها.",
-    "description_hxl": "Export all of your data from Ushahidi as a CSV, choose specific survey fields you want to export as a CSV or assign",
+    "description_hxl": "تصدير جميع بياناتك من Ushahidi كملف CSV، أو اختيار حقول استبيان محددة تريد تصديرها كملف CSV أو تعيينها.",
     "export": "تصدير",
     "export_history": "سجل تاريخ التصدير",
     "hxl_tags": "وسوم HXL",
