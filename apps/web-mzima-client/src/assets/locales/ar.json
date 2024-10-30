@@ -871,9 +871,9 @@
     "image_is_required": "الصورة مطلوبة",
     "image_max_size": "الصورة تتجاوز الحد الأقصى لحجم الملف",
     "locking": {
-      "unlocked": "تم فتح البوست",
+      "unlocked": "تم فتح المنشور",
       "unlock": "الغاء القفل",
-      "lock_broken_by_other": "تم إلغاء قفل بوستك. سيتم فقد التغييرات الحالية غير المحفوظة.",
+      "lock_broken_by_other": "تم إلغاء قفل منشورك. سيتم فقد التغييرات الحالية غير المحفوظة.",
       "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post.",
       "locked_tooltip": "This post is being edited by someone else. Please try again later."
 
