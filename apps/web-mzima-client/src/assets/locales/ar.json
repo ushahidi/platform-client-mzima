@@ -1429,7 +1429,7 @@
     "map_default_zoom_level": " مستوى التكبير الإفتراضي",
     "map_default_location": "الموقع الافتراضي",
     "new_survey": "استبيان جديد",
-    "send_targeted": "قم بإرسال ستطلاع مستهدف عن طريق SMS",
+    "send_targeted": "إرسال استبيان مستهدف عبر الرسائل النصية",
     "send_crowdsourced": "ارجع الى استطلاع crowd-sourced",
     "site": "اعدادات الموقع",
     "site_email": " البريد الالكتروني للاتصال",
