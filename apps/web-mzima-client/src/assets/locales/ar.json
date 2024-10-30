@@ -839,7 +839,7 @@
     "visible_to_roles": "هذاالمنشور مرئي لـ {{roles}}",
     "show_only_form": "اظهر فقط {{form}}",
     "show_only_unknown_form": "اظهر غير المعروف فقط ",
-    "delete_post": "حدف المنشور",
+    "delete_post": "حذف المنشور",
     "delete_this_post": "حذف هذا المنشور",
     "delete_post_desc": "<strong>إذا قم بحذف هذا المنشور</strong>، فسيتم حذف جميع التعليقات التابعة له أيضا. يرجى المتابعة مع توخي الحذر.",
     "read_more": "اقرأ المزيد",
