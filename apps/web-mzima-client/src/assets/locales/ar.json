@@ -1847,8 +1847,8 @@
     },
     "form": {
       "add_to_survey": "أضف إلى استبيان.",
-      "save_success": "تم حفظ مهمة الاستبيان {{name}}",
-      "save_stage_success": "تم حفظ {{name}}  مهمة الإستطلاع",
+      "save_success": "تم حفظ الاستبيان {{name}}",
+      "save_stage_success": "تم حفظ مهمة الاستبيان {{name}}",
       "save_attribute_success": "تم إضافة  {{name}}الحقل",
       "edit_form_success": "تحديث {{name}} الاستقصاء ",
       "edit_stage_success": "تم تحديث {{name}} مهمة الاستقصاء ",
