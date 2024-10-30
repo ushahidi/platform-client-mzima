@@ -535,8 +535,8 @@
       },
       "orderby": {
         "post_date": "تاريخ المنشور",
-        "created": "تأريخ الإنشاء",
-        "updated": "تأريخ التحديث"
+        "created": "تاريخ الإنشاء",
+        "updated": "تاريخ التحديث"
       },
       "unlockedOnTop": {
         "filter_type_tag": "المنشورات غير المقفلة في الأعلى"
