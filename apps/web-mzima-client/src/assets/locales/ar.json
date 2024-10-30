@@ -375,7 +375,7 @@
     "edit_field": "Edit {{fieldType | lowercase}} field",
     "build": "إنشاء",
     "configure": "تهيئة",
-    "require_section": "يجب إتمام هذه المهمة قبل أن تصبح البوست مرئية للجمهور",
+    "require_section": "يجب إتمام هذه المهمة قبل أن يصبح المنشور مرئي للجمهور",
     "hide_author_information": "إخفاء معلومات الكاتب",
     "hide_author_information_desc": "لن يتمكن سوى الأشخاص الذين لديهم إذن بتعديل الردود من معرفة من قام بتقديمهم؛ وفقط عند تعديله.",
     "hide_location_information": "Hide exact location information",
