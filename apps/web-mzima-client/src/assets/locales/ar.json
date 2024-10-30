@@ -1415,7 +1415,7 @@
       "roles_description": "These options control what this type of role can make changes to. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Visit our support guides to find out more."
     },
     "deployment_delete_this": "حذف منصتك",
-    "deployment_delete": "حذف عملية النشر",
+    "deployment_delete": "حذف منصة",
     "deployment_delete_info": "<strong>إذا حذفت عملية النشر هذه</strong>، فسيتم حذف كل بياناتها أيضًا. يرجى المتابعة مع توخي الحذر.",
     "deployment_name": "اسم عملية النشر",
     "deployment_logo": "نشر الشعار",
