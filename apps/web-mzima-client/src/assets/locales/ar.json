@@ -159,7 +159,7 @@
     "next_step": "الخطوة التالية",
     "we_are_aware_there_are_some_issues_here": "نحن ندرك أن هناك بعض القضايا هنا. يعمل الفريق على إصلاحها.",
     "you_are_using_old_deployment_version": "أنت تستخدم منصة باصدار - {{api_version}}. أحدث إصدار هو v5. يرجى تحديث المنصة الخاصة بك للوصول للمستخدمين.",
-    "outdated_deployment": "منصة خارج التحديثات!",
+    "outdated_deployment": "المنصة خارج التحديثات!",
     "the_deployment_is_outdated": "المنصة غير محدثة ، لذلك قد تحدث بعض الأخطاء ، حتى يقوم المسؤول بتحديثه.",
     "your_deployment_is_outdated": "منصتك غير محدثة",
     "we_ve_updated_deployments_to_version_5": "لقد قمنا بتحديث المنصات إلى الإصدار 5. قد لا يتمكن المستخدمون من الوصول إلى منصتك قريبا. ",
