@@ -792,7 +792,7 @@
     "message_thread": "سلسلة الرسائل",
     "all_posts": "جميع المنشورات",
     "no_search_results": "لا توجد نتائج لبحثك.",
-    "no_search_results_location": "Your search didn't match any posts with location information",
+    "no_search_results_location": "لا توجد نتائج لبحثك عن منشورات مع معلومات الموقع.",
     "no_posts_yet": "لا توجد منشورات حتى الآن!",
     "no_posts_yet_location": "There are no posts with location information yet!",
     "add_first_post": "إضافة المنشور الأول",
