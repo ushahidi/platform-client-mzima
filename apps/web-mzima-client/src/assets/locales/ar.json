@@ -1057,7 +1057,7 @@
     "uuid": "Webhook UUID",
     "name": "الاسم",
     "shared_secret": "سر مشترك",
-    "url": "API URL",
+    "url": "الرابط لواجهة برمجة التطبيقات  \"API URL\"",
     "entity_type": "نوع الكيان",
     "event_type": "نوع الحدث",
     "save": "إحفظ الدور",
