@@ -211,7 +211,7 @@
     "context_body": "ملخص عن كيفية تفاعل الأشخاص مع {{site}}.",
     "inbound": "Inbound Response Messages",
     "outbound": "رسائل الاستبيان الصادرة",
-    "recipients": "Unique Recipients of Targeted Survey",
+    "recipients": "المستلمون المميزون للاستبيان المستهدف",
     "responders": "Unique Responders to Targeted Survey",
     "all_targeted": "All Targeted Surveys",
     "no_targeted": "You don't have any Targeted Survey data to show.",
