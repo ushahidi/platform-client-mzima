@@ -320,7 +320,7 @@
     "untitled_task": "مهمة بدون عنوان",
     "add_task": "إضافة مهمة",
     "title": "العنوان",
-    "field_allowed_relation_survey": "استطلاعات الراي المسموح بها",
+    "field_allowed_relation_survey": "الاستبيانات المسموح بها",
     "collect_image_caption": "قم بضم حقل عنوان الصورة",
     "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "سيؤدي هذا إلى تعطيل جميع العناوين في هذا الحقل وإخفائها ، ولكن يمكنك إعادة تمكينها في أي وقت",
