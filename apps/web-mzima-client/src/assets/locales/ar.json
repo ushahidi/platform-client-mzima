@@ -1064,7 +1064,7 @@
     "save_add_another": "إحفظ و أضف اخرى",
     "delete": "حذف",
     "delete_webhook": "احذف هذا الـ webhook",
-    "delete_webhook_desc": "<strong>إذا مسحت هذه الـ webhook</strong>، کل حوادث webhook الموصولة يحذف. تقدم بحذر"
+    "delete_webhook_desc": "<strong>إذا مسحت هذه الـ webhook</strong>، کل حوادث webhook الموصولة سيتم حذفها. تقدم بحذر"
   },
   "saved_search": {
     "visible_to_public": "هذا البحث المحفوظ يظهر للجميع",
