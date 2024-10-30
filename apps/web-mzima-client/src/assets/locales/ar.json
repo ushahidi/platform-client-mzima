@@ -1828,7 +1828,7 @@
       "save_success": "الـ Webhook{{webhook}} تم حفظه"
     },
     "datasource": {
-      "save_success": "مصدر البيانات  {{name}} المحفوظ"
+      "save_success": "تم حفظ مصدر البيانات {{name}}"
     },
     "user": {
       "save_success": "تم حفظ{{name}} المستخدم",
