@@ -241,7 +241,7 @@
     "currently_disabled": "This survey is currently disabled.",
     "custom_structure": "Custom Structure",
     "default_date_placeholder": "Default date",
-    "default_date_hint": "If no date is added, the current time of posting would be added by default. The user can still update the {{ field_name }} after post submission.",
+    "default_date_hint": "إذا لم يتم إضافة تاريخ، فسيتم إضافة الوقت الحالي للنشر بشكل افتراضي. لا يزال بإمكان المستخدم تحديث {{ field_name }} بعد إرسال المنشور.",
     "default_default_placeholder": "Default value",
     "default_location_placeholder": "Nairobi, Kenya",
     "delete_post_type": "Delete this survey",
@@ -1691,12 +1691,12 @@
       "account_settings": "Account settings",
       "notifications_settings": "Notifications settings",
       "delete_contact": {
-        "title": "Delete your",
+        "title": "احذف ",
         "title_subject": {
           "email": "Email",
           "phone": "Phone"
         },
-        "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
+        "instructions": "سيؤدي الحذف إلى عدم تمكنك من تلقي إشعارات على رقم هاتفك. ولكن يمكنك تبديل الإشعارات إلى طريقة اتصال أخرى أدناه.",
         "button": {
           "delete": "Delete",
           "cancel": "Cancel"
@@ -1927,7 +1927,7 @@
       },
       "deleted": {
         "success": "Success!",
-        "success_description": "You've permanently deleted {{count}}.",
+        "success_description": "لقد حذفت {{count}}  نهائيا.",
         "success_button": "OK"
       }
     },
