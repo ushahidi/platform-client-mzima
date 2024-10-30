@@ -1167,7 +1167,7 @@
       "status": "الحالة"
     },
     "delete": "حذف",
-    "parent_category": "القسم الرئيسي"
+    "parent_category": "الفئة الأصلية"
   },
   "tool": {
     "manage_forms": "إدارة النماذج",
