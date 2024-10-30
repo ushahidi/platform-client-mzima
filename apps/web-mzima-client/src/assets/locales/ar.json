@@ -2033,7 +2033,7 @@
     "add_a_language": "Add a language",
     "error_no_default": "You need to specify a default language before adding a new translation.",
     "select_language": "Select a language to add translation for",
-    "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
+    "default_lang_info": "هذه هي اللغة التي سيتم استخدامها إذا لم تكن هناك ترجمات متوفرة للغة التي حددها المستخدم للمنصة."
   },
   "languages": {
     "ach": "أكولي",
