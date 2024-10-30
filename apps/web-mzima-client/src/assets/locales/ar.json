@@ -1741,7 +1741,7 @@
       "csv_upload": "نجح تحميل ملف {{name}}",
       "csv_import_processed_errors": "اكتمل <strong>استيراد CSV</strong>. تم استيراد {{processed}} من السجلات، وفشل {{errors}} من السجلات.",
       "csv_import_success_info": "بياناتك من جدول القيم المفصولة بفاصلة ، <em>{{filename}}</em>، تم استيرادها بنجاح الي <a href=\"/views/list\">{{form_name}}</a> استبيانك.",
-      "duplicate_fields": "يجب تعيين الأعمدة إلى حقول استبيان فريدة. الأعمدة التالية لها أكثر من تعيين واحد: {{duplicates}}",
+      "duplicate_fields": "يجب تعيين الأعمدة إلى حقول استبيان فريدة. الأعمدة التالية لها أكثر من تعيين 1: {{duplicates}}",
       "required_fields": "الخانات المطلوبة يجب إعطائها قيمة. لم يتم تعيين الخانات التالية: {{required}}",
       "empty_mapping": "The CSV file you uploaded is empty. Please check your CSV file and try again",
       "empty_mapping_empty": "The CSV file does not contain column names. Please check your CSV file and try again",
