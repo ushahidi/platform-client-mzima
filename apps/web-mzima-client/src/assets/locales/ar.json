@@ -1788,7 +1788,7 @@
       "unpublish_error": "عذراً، تعذر إلغاء نشر المنشور. يرجى المحاولة مرة أخرى.",
       "yes_confirm_delete": "نعم، احذف هذا المنشور",
       "confirm_delete": " تأكيد الحذف",
-      "destroy_title": "حذف المشاركة",
+      "destroy_title": "حذف المنشور",
       "delete_question": "هل أنت متأكد من أنك ترغب في حذف  منشورك {{post}}؟",
       "destroy_success": "تم حذف المنشور",
       "destroy_success_bulk": "تم حذف المنشورات",
