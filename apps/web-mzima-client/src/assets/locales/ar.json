@@ -1880,7 +1880,7 @@
       "created_collection": "جمع البيانات {{collection}} تم بنجاح",
       "updated_collection": "مجموعات {{collection}} تم حفظه",
       "add_to_collection": "تم إضافة منشور إلى  {{collection}}",
-      "removed_from_collection": "تم حذف المنشور من {{collection}}",
+      "removed_from_collection": "تم حذف منشور من {{collection}}",
       "bulk_add_to_collection": "{{count}} مشاركة تم إضافتها إلى {{collection}} ",
       "done": "Done"
     },
