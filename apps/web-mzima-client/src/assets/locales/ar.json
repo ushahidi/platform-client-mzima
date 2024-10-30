@@ -1888,7 +1888,7 @@
       "delete_savedsearch_success": "البحث المحفوظ تم حذفه بنجاح",
       "delete_savedsearch_plural_success": "البحث المحفوظ تم حذفه بنجاح",
       "delete_savedsearch_confirm": "هل أنت متأكد من أنك ترغب في حذف هذا  البحث المحفوظ؟",
-      "savedsearch_updated": "تم تجديد {{savedsearch}}",
+      "savedsearch_updated": "تم تحديث {{savedsearch}}",
       "savedsearch_saved": "تم حفظ {{savedsearch}} "
     },
     "passwordreset": {
