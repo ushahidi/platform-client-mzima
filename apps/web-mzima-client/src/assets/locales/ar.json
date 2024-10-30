@@ -1132,7 +1132,7 @@
     "delete_category": "حذف فئة",
     "delete_this_category": "حذف هذه الفئة",
     "delete_category_desc": "<strong>إذا مسحت هذه الفئة</strong>، لن يكون موصولا بأي منشور. تابع بحذر",
-    "show_categories": "اظهر الفئات الموجودة",
+    "show_categories": "اظهر الفئات المتاحة",
     "child_permissions": "تتم إدارة أذونات هذه الفئة بواسطة الفئة الرئيسية.",
     "which_categories": "Which categories should be available",
     "select_all": "تحديد الكل",
