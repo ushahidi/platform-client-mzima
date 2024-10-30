@@ -585,7 +585,7 @@
     },
     "unmapped_start_one": "يوجد",
     "unmapped_start_many": "يوجد",
-    "unmapped_one": "مشاركة {{ notShownPostsCount }} ",
+    "unmapped_one": "{{ notShownPostsCount }} منشورا",
     "unmapped_many": "{{ notShownPostsCount }} منشورات",
     "unmapped_end": "غير مكتوب هنا لانهم لايشملون معلومات عن الموقع",
     "unmapped_none": "No posts without location information.",
