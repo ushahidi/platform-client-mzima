@@ -250,7 +250,7 @@
     "deleted_form_stage_attribute": "حقل محذوف",
     "editable_by": "قابل للتعديل بواسطة",
     "edit_post_step": "تعديل المهمة: {{step}}",
-    "edit_post_type": "تعديل الاستطلاع: {{form}}",
+    "edit_post_type": "تحرير الاستبيان: {{form}}",
     "edit_post_types": "تحرير الاستبيانات",
     "field_add_option": "إضافة",
     "field_add_other": "Add other",
