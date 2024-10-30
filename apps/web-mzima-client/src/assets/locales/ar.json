@@ -468,7 +468,7 @@
       "hide_responders": "قم بإخفاء معلومات المجاوبين",
       "hide_responders_desc": "ارقام هواتف الاشخاص الذين جاوبوا اسئلتك سوف تبقى مخفية في الموقع العام. فقط اعضاء الفرق مع اذن التعديلات يمکنهم مشاهدة الارقام",
       "notification_button": "عرض الاستبيان في وضع البيانات",
-      "name_warning": "يجب أن تعطي استبيانك اسمًا.",
+      "name_warning": "يجب أن تعطي اسمًا لاستبيانك.",
       "description_warning": "يجب ان تعطي وصفا لاستبيانك",
       "send_to_person": "<strong>مستهدف:</strong> ارسل هذا الاستطلاع الى  {{recipientCount}} عن طريق SMS",
       "send_to_people": "<strong>مستهدف:</strong>  ارسل هذا الاستطلاع الى {{recipientCount}} عن طريق SMS",
