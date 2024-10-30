@@ -470,7 +470,7 @@
       "notification_button": "عرض الاستبيان في وضع البيانات",
       "name_warning": "يجب أن تعطي اسمًا لاستبيانك.",
       "description_warning": "يجب ان تعطي وصفا لاستبيانك",
-      "send_to_person": "<strong>مستهدف:</strong> ارسل هذا الاستطلاع الى  {{recipientCount}} عن طريق SMS",
+      "send_to_person": "<strong>مستهدف:</strong> ارسل هذا الاستبيان الى  {{recipientCount}} عن طريق رسالة نصية",
       "send_to_people": "<strong>مستهدف:</strong>  ارسل هذا الاستطلاع الى {{recipientCount}} عن طريق SMS",
       "country_code": "رمز البلد",
       "country_code_error": "يجب ان تختر بلدا",
