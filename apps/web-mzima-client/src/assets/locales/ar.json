@@ -2,7 +2,7 @@
   "app": {
     "contact_email_address": "عنوان البريد الإلكتروني للاتصال:",
     "powered_by_ushahidi": "برعاية أوشاهيدي.",
-    "support": "دعم أوشاهيدي",
+    "support": "دعم Ushahidi",
     "by": "بواسطة",
     "submit": "إرسال",
     "anonymous": "مجهول",
@@ -54,7 +54,7 @@
     "edit_collection": "تعديل المجموعة",
     "features": {
       "title": "الميزات",
-      "description": "تعرف على ما يمكن أن ينجزه أوشاهيدي وطريقة عمله."
+      "description": "تعرف على ما يمكن أن ينجزه Ushahidi وطريقة عمله."
     },
     "forbidden": "عفوا، غير مسموح لك القيام بذلك.",
     "forbidden-login": "الرجاء إدخال تفاصيل تسجيل الدخول الخاصة بك للوصول إلى المنصة",
