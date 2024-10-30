@@ -835,7 +835,7 @@
     "structure": "بنية",
     "source": "عبر {{source}}",
     "visible_to_public": "هذا المنشور مرئي للعامة.",
-    "visible_to_you": "هذا المنشور مرئي لك و للمشرف",
+    "visible_to_you": "هذا المنشور مرئي لك وللمدراء فقط.",
     "visible_to_roles": "هذاالمنشور يظهر لـ {{roles}}",
     "show_only_form": "اظهر فقط {{form}}",
     "show_only_unknown_form": "اظهر غير المعروف فقط ",
