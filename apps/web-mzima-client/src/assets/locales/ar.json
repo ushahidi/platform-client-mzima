@@ -1823,7 +1823,7 @@
       "last_admin": "لا يمكنك حذف دور المشرف الوحيد"
     },
     "webhook": {
-      "delete_question": "هل انت واثق من مسح الـ webhook {{webhook}}؟ ",
+      "delete_question": "هل انت واثق من حذف الـ webhook {{webhook}}؟ ",
       "destroy_success": "تم حذف Webhook {{webhook}} .",
       "save_success": "الـ Webhook{{webhook}} تم حفظه"
     },
