@@ -689,7 +689,7 @@
     "comments": "التعليقات",
     "data_sources": "مصادر البيانات",
     "data_import": "استيراد البيانات",
-    "deployment_not_found": "Deployment Not Found",
+    "deployment_not_found": "المنصة غير موجودة",
     "deselect": "إلغاء التحديد",
     "edit_profile": "تعديل الملف الشخصي",
     "edit_post_type": "تحرير الاستبيان",
