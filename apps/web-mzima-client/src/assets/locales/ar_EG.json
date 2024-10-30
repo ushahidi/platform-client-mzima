@@ -1144,7 +1144,7 @@
     "edit_tag": "Edit Category",
     "validation": {
       "required": {
-        "name": "Category name is required"
+        "name": "اسم الفئة مطلوب"
       }
     },
     "editor": {
@@ -1167,7 +1167,7 @@
       "status": "Status"
     },
     "delete": "Delete",
-    "parent_category": "Parent category"
+    "parent_category": "الفئة الأصلية"
   },
   "tool": {
     "manage_forms": "Manage Forms",
