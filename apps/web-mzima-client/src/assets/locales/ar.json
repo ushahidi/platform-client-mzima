@@ -807,7 +807,7 @@
     "select_all": "تحديد الكل",
     "unselect_all": "إزالة تحديد الكل",
     "per_page": "{{count}} منشور",
-    "post_details": "نشر تفاصيل",
+    "post_details": "تفاصيل المنشور",
     "steps": "مهام هذا المنشور ",
     "mark_complete": "تأشير بالإنتهاء",
     "complete": "إكتمال",
