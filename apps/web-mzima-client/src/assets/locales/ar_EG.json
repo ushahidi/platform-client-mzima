@@ -27,7 +27,7 @@
     "deployment_not_found" : {
       "text" : "Sorry, that deployment does not exist. Would you like to create a new deployment?",
       "button_exit" : "Exit",
-      "button_create_deployment" : "Create Deployment"
+      "button_create_deployment" : "انشاء منصة"
     },
     "documentation": {
       "title": "Documentation",
