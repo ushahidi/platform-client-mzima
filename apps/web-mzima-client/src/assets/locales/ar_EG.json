@@ -689,7 +689,7 @@
     "comments": "Comments",
     "data_sources": "Data Sources",
     "data_import": "Data Import",
-    "deployment_not_found": "Deployment Not Found",
+    "deployment_not_found": "المنصة غير موجودة",
     "deselect": "Deselect",
     "edit_profile": "Edit Profile",
     "edit_post_type": "Edit Survey",
