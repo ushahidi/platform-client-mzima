@@ -1855,7 +1855,7 @@
       "delete_form_confirm": "Are you sure you want to delete this survey and all of its data?",
       "delete_form_confirm_desc": "لا يمكن التراجع عن هذا الإجراء. سيؤدي حذف هذا الاستبيان إلى إزالة جميع بياناته، بما في ذلك المنشورات. اكتب اسم الاستبيان: <br><br><strong>{{check_name}}</strong><br><br>في الصندوق في الأسفل لتأكيد الحذف",
       "delete_form_error": "The text you entered does not match the survey-name, please try again",
-      "delete_form_button": "Delete this survey",
+      "delete_form_button": "حذف هذا الاستبيان",
       "destroy_form_success": "الاستبيان {{name}} تم حدفه ",
       "delete_stage_confirm": "هل أنت متأكد من حذف هذه المهمة؟",
       "delete_stage_confirm_desc": "لا يمكن التراجع عن هذا العملية. سيؤدي حذف هذه المهمة إلى إزالة جميع حقولها وأية بيانات بها",
