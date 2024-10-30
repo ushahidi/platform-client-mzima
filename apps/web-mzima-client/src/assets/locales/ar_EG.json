@@ -1262,7 +1262,7 @@
       "placeholder": {
         "name": "Please enter webhook name",
         "shared_secret": "Please enter shared secret",
-        "api_url": "Please enter api url"
+        "api_url": "الرجاء إدخال عنوان رابط لواجهة برمجة التطبيقات \"API URL\""
       },
       "validation": {
         "required": {
