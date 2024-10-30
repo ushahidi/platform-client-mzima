@@ -308,7 +308,7 @@
     "duplicate_survey": "مكرر",
     "main_info": "المعلومات الرئيسية",
     "internal_use_task": "المهمة للاستعمال الداخلي فقط",
-    "internal_use_task_desc": "هذه المهمة يكون ظاهرا فقط للمستعمل الذي لديه رخصة منصب الإدارة",
+    "internal_use_task_desc": "ستكون هذه المهام مرئية فقط للمستخدمين الذين لديهم إذن إدارة المنشورات.",
     "duplicate_task": "مهمة مكررة",
     "duplicate_option": "Duplicate option is present",
     "special_characters_option": "يحتوي هذا الخيار على أحرف خاصة",
