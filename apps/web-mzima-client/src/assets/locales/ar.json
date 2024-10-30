@@ -301,7 +301,7 @@
       "body": "تم وضع علامة على هذه المهمة للاستخدام الداخلي فقط. لا يراها المستخدمون عند إنشاء منشور."
     },
     "task_is_marked_as": {
-      "not_completed": "Task Complete? - Use toggle below",
+      "not_completed": "هل تم إنجاز المهمة؟ - استخدم المفتاح أدناه",
       "completed": "You have marked \"{{taskName}}\" Task as Completed!"
     },
     "delete_task": "حذف المهمة",
