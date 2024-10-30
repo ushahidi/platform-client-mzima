@@ -1500,7 +1500,7 @@
     "upload_csv_file": "Upload CSV file",
     "choose_status_to_imported_posts": "Choose status to imported posts:",
     "has_tasks_required_start": "Your survey",
-    "has_tasks_required_end": ", includes tasks that typically must be completed for each post before they can be marked 'published.' During this import, all of your imported posts will have their tasks marked as 'incomplete', while still allowing their status to be marked as 'published.' If you edit any of these posts after they've been imported, however, you'll be asked to complete those tasks before re-publishing them.",
+    "has_tasks_required_end": ", يتضمن مهامًا يجب عادةً إكمالها لكل منشور قبل تمكينه من وضع علامة \"منشور\". أثناء هذا الاستيراد، سيتم وضع علامة \"غير مكتمل\" على جميع المهام الخاصة بالمنشورات المستوردة، مع السماح بوضع علامة \"منشور\" على حالتهم. ومع ذلك، إذا قمت بتحرير أي من هذه المنشورات بعد استيرادها، فسيتم مطالبتك بإكمال تلك المهام قبل إعادة نشرها.",
     "choose_csv_file": "Choose CSV file",
     "organize_data": "Organize data",
     "organize_your_imported_data": "Assign CSV columns to post fields",
