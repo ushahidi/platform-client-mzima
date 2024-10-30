@@ -937,7 +937,7 @@
       "title": "محادثة مع الكاتب",
       "associated_messages": "عرض الرسائل المرتبطة بهذا المنشور",
       "show_only_incoming": "اظهر فقط {{provider}} غير المعين للاستبيان بعد",
-      "imported_by": "{{messages}} تم اصدارهم من قبل هذا النشر",
+      "imported_by": "{{messages}} تم اصدارهم من قبل هذه المنصة",
       "Twitter": "تويتر",
       "Email": "ايميل",
       "SMS": "رسالة قصيرة",
