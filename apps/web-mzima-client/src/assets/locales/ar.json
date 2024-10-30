@@ -369,7 +369,7 @@
     "large_upload_size" : "Large",
     "markdown_desc": "يسمح باستخدام بناء الجملة لتشكيل محتوى الحقل",
     "tasks": "المهام",
-    "task_visible_when_published": "ستكون هذه المهمة مرئية عند نشر البوست",
+    "task_visible_when_published": "ستكون هذه المهمة مرئية عند نشر المنشور",
     "show_field_description": "إضافة حقل للوصف (إختياري):",
     "add_field": "Add {{fieldType | lowercase}} field",
     "edit_field": "Edit {{fieldType | lowercase}} field",
