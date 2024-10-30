@@ -1582,7 +1582,7 @@
     "dataset_title": "Title of data set",
     "metadata_title": "البيانات الوصفية",
     "metadata_desc": "Metadata is additional information about your dataset that will make it easier for others to understand and put your data into context. Datasets on HDX must include a set of metadata fields.",
-    "source": "المصدر",
+    "source": "مصدر",
     "organisation": "المنظمة",
     "select_organisation": "إختر منظمة",
     "license": "الرخصة",
