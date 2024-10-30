@@ -1745,7 +1745,7 @@
       "required_fields": "الخانات المطلوبة يجب إعطائها قيمة. لم يتم تعيين الخانات التالية: {{required}}",
       "empty_mapping": "The CSV file you uploaded is empty. Please check your CSV file and try again",
       "empty_mapping_empty": "The CSV file does not contain column names. Please check your CSV file and try again",
-      "no_mappings": "لم تم اسناد أي من المجالات الي اي تعيين - يجب أن يتم تعيين مجال واحد على الأقل للمواصلة",
+      "no_mappings": "لم تم اسناد أي من الحقول الي اي تعيين - يجب أن يتم تعيين حقل واحد على الأقل للمواصلة",
       "csv_import_cancel": "تم إلغاء عملية استيراد CSV",
       "csv_import_cancel_confirm": "هل انت واثق من وقف عملية التصدير؟",
       "csv_import_error": "Some of the data in your CSV file does not match the format of the mapped survey field. Please review the data and try again.",
