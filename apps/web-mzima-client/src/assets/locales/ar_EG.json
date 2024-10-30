@@ -159,7 +159,7 @@
     "next_step": "Next step",
     "we_are_aware_there_are_some_issues_here": "We are aware there are some issues here. The team is working on fixing them.",
     "you_are_using_old_deployment_version": "أنت تستخدم منصة باصدار - {{api_version}}. أحدث إصدار هو v5. يرجى تحديث المنصة الخاصة بك للوصول للمستخدمين.",
-    "outdated_deployment": "Outdated Deployment!",
+    "outdated_deployment": "منصة خارج التحديثات!",
     "the_deployment_is_outdated": "The Deployment is outdated, therefore some bugs may occur, till Admin update it.",
     "your_deployment_is_outdated": "Your Deployment is outdated",
     "we_ve_updated_deployments_to_version_5": "We’ve updated Deployments to version 5. Users may not have access to your deployment soon. ",
