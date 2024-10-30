@@ -546,7 +546,7 @@
       "order": "قم بالطلب",
       "order_group": {
         "orderby": {
-          "post_date": "تأريخ البوست",
+          "post_date": "تاريخ المنشور",
           "created": "تأريخ الإنشاء",
           "updated": "تأريخ التحديث"
         },
