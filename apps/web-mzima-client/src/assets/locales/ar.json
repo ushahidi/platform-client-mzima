@@ -948,7 +948,7 @@
     },
     "valid": {
       "no_changes": "لم تقم باي تغيير",
-      "invalid_state": "هذا المشاركة ليست في حالة صحيحة الآن. ستحتاج إلى إكمال جميع المهام المطلوبة قبل أن تتمكن من إعادة نشر هذه المشاركة. يمكنك إكمال المهام اللازمة أو تعيين حالة مختلفة مثل \"تحت المراجعة\".",
+      "invalid_state": "هذا المنشور في حالة غير صالحة حاليًا. ستحتاج إلى إكمال جميع المهام المطلوبة قبل إعادة نشر هذا المنشور. يمكنك إما إكمال المهام اللازمة أو إعطاء منشورك حالة مختلفة، مثل \"قيد المراجعة\".",
       "validation_fail": "Required fields are missing, these fields are marked with an *.",
       "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
       "title": {
