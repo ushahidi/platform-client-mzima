@@ -1796,7 +1796,7 @@
       "destroy_error": "غير قادر على حذف المنشور، الرجاء المحاولة مرة أخرى",
       "bulk_destroy_confirm": "هل أنت متأكد من رغبتك في حذف {{count}} منشورًا؟",
       "stage_save_success": "تم تحديث {{stage}} ",
-      "export": "سوف يؤدي هذا الي تصدير المنشورات المرشحة. هل أنت متأكد أنك تريد المتابعة؟ ",
+      "export": "سيتم تصدير المنشورات المفلترة. هل أنت متأكد من رغبتك في المتابعة؟",
       "update_status_success_bulk": "تم تحديث حالة {{count}} منشور ",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "عند الاستمرار، کل التغيرات سيضيع",
