@@ -2015,7 +2015,7 @@
     "languages": "اللغات",
     "language": "Language",
     "default": "default",
-    "translate_field": "Translate field",
+    "translate_field": "ترجم الحقل",
     "survey_select_default": "اختر اللغة الافتراضية لهذا الاستبيان",
     "category_select_default": "اختر اللغة الافتراضية لهذه الفئة",
     "error_translation_exists": "You cannot select this language since there is already a translation for it.",
