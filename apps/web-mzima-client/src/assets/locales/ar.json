@@ -1857,7 +1857,7 @@
       "delete_form_error": "لا يتطابق النص الذي أدخلته مع اسم الاستبيان، يرجى المحاولة مرة أخرى.",
       "delete_form_button": "حذف هذا الاستبيان",
       "destroy_form_success": "الاستبيان {{name}} تم حدفه ",
-      "delete_stage_confirm": "هل أنت متأكد من حذف هذه المهمة؟",
+      "delete_stage_confirm": "هل أنت متأكد من رغبتك في حذف هذه المهمة؟",
       "delete_stage_confirm_desc": "لا يمكن التراجع عن هذا العملية. سيؤدي حذف هذه المهمة إلى إزالة جميع حقولها وأية بيانات بها",
       "destroy_stage_success": "تم حذف مهمة الاستبيان {{name}}",
       "delete_attribute_confirm": " هل أنت متأكد أنك تريد حذف هذا المجال؟",
