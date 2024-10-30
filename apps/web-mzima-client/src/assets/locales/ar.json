@@ -367,7 +367,7 @@
     "small_upload_size" : "Small",
     "medium_upload_size" : "Medium",
     "large_upload_size" : "Large",
-    "markdown_desc": "يسمح باستخدام بناء الجملة لتشكيل محتوى الحقل",
+    "markdown_desc": "يسمح باستخدام صيغة markdown لتنسيق محتوى الحقل.",
     "tasks": "المهام",
     "task_visible_when_published": "ستكون هذه المهمة مرئية عند نشر المنشور",
     "show_field_description": "إضافة حقل للوصف (إختياري):",
