@@ -1549,7 +1549,7 @@
     "hxl_apikey_alert_2": "We strongly advide you set this up now in",
     "hxl_apikey_alert_3": "before continuing as you won't be able to upload your data to HDX",
     "hxl_title": "Assign your HXL tags and attributes, select fields and export or upload",
-    "hxl_desc": "Select specific fields from a survey, assign a tag per field and then choose to assign multiple attributes. Preview your tag and attributes in tag preview.",
+    "hxl_desc": "اختر حقولًا معينة من استبيان، وقم بتعيين علامة لكل حقل، ثم اختر تعيين سمات متعددة. قم بمعاينة العلامة والسمات الخاصة بك في معاينة العلامة.",
     "hxl_instructions_1": "You can then choose to export your tagged fields to a CSV file or upload to a",
     "hxl_instructions_2": "Humanitarian Data Exchange (HDX)",
     "hxl_instructions_3": "account that has been set up in",
