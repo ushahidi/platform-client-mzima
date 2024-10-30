@@ -1797,7 +1797,7 @@
       "bulk_destroy_confirm": "هل أنت متأكد من رغبتك في حذف {{count}} منشورًا؟",
       "stage_save_success": "تم تحديث {{stage}} ",
       "export": "سيتم تصدير المنشورات المفلترة. هل أنت متأكد من رغبتك في المتابعة؟",
-      "update_status_success_bulk": "تم تحديث حالة {{count}} منشور ",
+      "update_status_success_bulk": "تم تحديث حالة {{count}} منشورا ",
       "leave_without_save": "Do you want to leave this post without saving?",
       "leave_confirm_message": "عند الاستمرار، کل التغيرات سيضيع",
       "leave_confirm": "استمرار بدون حفظ",
