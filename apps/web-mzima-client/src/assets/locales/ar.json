@@ -1798,7 +1798,7 @@
       "stage_save_success": "تم تحديث {{stage}} ",
       "export": "سيتم تصدير المنشورات المفلترة. هل أنت متأكد من رغبتك في المتابعة؟",
       "update_status_success_bulk": "تم تحديث حالة {{count}} منشورا ",
-      "leave_without_save": "Do you want to leave this post without saving?",
+      "leave_without_save": "هل تريد المغادرة دون حفظ المنشور؟",
       "leave_confirm_message": "عند الاستمرار، کل التغيرات سيضيع",
       "leave_confirm": "استمرار بدون حفظ",
       "unfinished_post_task": "لا يمكنك نشر هذا المنشور ، فالمنشور يحتوي على مهام غير مكتملة",
