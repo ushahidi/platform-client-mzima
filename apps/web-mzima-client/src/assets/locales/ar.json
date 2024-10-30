@@ -1927,7 +1927,7 @@
       },
       "deleted": {
         "success": "نجاح!",
-        "success_description": "لقد حذفت {{count}} مشاركات نهائيا.",
+        "success_description": "لقد حذفت {{count}}  نهائيا.",
         "success_button": "حسنا ، يبدو جيدا"
       }
     },
