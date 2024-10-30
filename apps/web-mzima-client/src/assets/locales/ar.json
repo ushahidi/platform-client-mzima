@@ -37,7 +37,7 @@
     "donation": "التبرع",
     "disable_monetization": "Disable Monetization",
     "enable_monetization": "Enable Monetization",
-    "enable_monetization_error": "Fill in required fields above before enabling monetization.",
+    "enable_monetization_error": "يرجى ملء الحقول المطلوبة أعلاه قبل تفعيل الربح.",
     "enable_monetization_info": "Monetization is currently disabled.",
     "intercom": {
       "intercom": "نظام الإتصال الداخلي",
