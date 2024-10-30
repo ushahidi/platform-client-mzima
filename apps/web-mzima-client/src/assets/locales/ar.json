@@ -1422,7 +1422,7 @@
     "delete_logo": "امسح العلامة",
     "map_default_baselayer": "طبقة القاعدة الافتراضية ",
     "map_location_precision": "درجة دقة الخريطة",
-    "map_precise_to": "When hide location is enabled for a survey, locations will be precise to:",
+    "map_precise_to": "عندما يتم تمكين إخفاء الموقع لاستبيان، ستكون المواقع دقيقة إلى:",
     "map_clustering": "ضم المنشورات القريبة",
     "map_default_latitude": "خط العرض الافتراضي",
     "map_default_longitude": "خط الطول الافتراضي",
