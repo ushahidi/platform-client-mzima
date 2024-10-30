@@ -2017,7 +2017,7 @@
     "default": "default",
     "translate_field": "Translate field",
     "survey_select_default": "اختر اللغة الافتراضية لهذا الاستبيان",
-    "category_select_default": "Select default language for this category",
+    "category_select_default": "اختر اللغة الافتراضية لهذه الفئة",
     "error_translation_exists": "You cannot select this language since there is already a translation for it.",
     "edit_default_text": "Text in default language",
     "edit_placeholder": "Write your translation here",
