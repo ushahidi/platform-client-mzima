@@ -1122,7 +1122,7 @@
     "remove": "remove",
     "update_saved_filter": "Update Saved Filter",
     "create_saved_filter": "Create Saved Filter",
-    "collection_saved": "Collection saved.",
+    "collection_saved": "حفظ المجموعة",
     "collection_updated": "Collection updated.",
     "collection_description": "You can add posts to your collection from the Data view"
   },
