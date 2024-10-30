@@ -1216,7 +1216,7 @@
       "export_desc_hxl": "Export your data as a CSV file or assign tags and attributes to your data and upload directly to a Humanitarian Data Exchange (HDX) account or export as a tagged CSV file.",
       "export_desc": "قم بتصدير جميع بياناتك کملف CSV او قم بإختيار حقول مخصوصة",
       "users": "المستخدمون.",
-      "users_desc": "إنشاء وإدارة الجمهور الذي يساهم في عملية النشر الخاصة بك",
+      "users_desc": "إنشاء وإدارة الجمهور الذي يساهم في منصتك",
       "roles": "الأدوار",
       "roles_desc": "إنشاء وإدارة نوع الترخيصات التي يمتلكها المستخدمين في عملية النشر",
       "categories": "الأصناف.",
