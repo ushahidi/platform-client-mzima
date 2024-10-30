@@ -771,7 +771,7 @@
     "see_more_singular": "عرض {{newPostsCount}} منشور جديد",
     "add_to_form": "إضافة إلى {{form}}",
     "posts": "المنشورات",
-    "post_title": "Post title",
+    "post_title": "عنوان المنشور",
     "post_desc": "Post description",
     "there_are_no_posts": "لا توجد منشورات",
     "in_this_deployment": "في عملية نشر البرنامج وجعله متاح هذه، بعدُ.",
