@@ -397,7 +397,7 @@
     "require_task_desc": "يجب إتمام هذه المهمة قبل أن يصبح المنشور مرئي للجمهور",
     "survey_permissions": "رخص الاستطلاع",
     "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
-    "who_can_add": "من يستطيع الإضافة لهذا الإطلاع",
+    "who_can_add": "من يستطيع الإضافة لهذا الاستبيان",
     "survey_field": "حقل الاستبيان",
     "choose_survey_field": "اختر الذي يجب تعينه لكل حقول الاستطلاع",
     "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
