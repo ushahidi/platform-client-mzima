@@ -665,7 +665,7 @@
     "donation": {
       "thank_you_for_your_donation_start": "Web monetization is enabled on this website. Thank you for your donation. You have donated",
       "thank_you_for_your_donation_end": "so far",
-      "web_monetization_text": "Ushahidi deployments are now web monetization enabled. Web monetization is a way of supporting the websites you love without playing advertisers game. All you need is to get your browser setup. Click the link below to learn how you can donate.",
+      "web_monetization_text": "أصبحت منصات Ushahidi الآن تتيح امكانية تحقيق الدخل من الويب. تسييل الويب هو وسيلة لدعم مواقع الويب التي تحبها دون لعب لعبة المعلنين. كل ما تحتاجه هو الحصول على إعداد المتصفح الخاص بك. انقر على الرابط أدناه لمعرفة كيف يمكنك التبرع.",
       "how_can_i_donate": "How can I donate?"
     }
   },
