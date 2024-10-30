@@ -1843,7 +1843,7 @@
       "are_you_sure_you_want_to_delete_user": "هل أنت متأكد من أنك تريد حذف {{username}}"
     },
     "video": {
-      "incorrect_url": "الـ URL، {{url}} الذي دخلته لم يطابق اي URL من يوتيوب او فيميو"
+      "incorrect_url": "الرابط {{url}} الذي دخلته لم يطابق اي رابط من من اليوتيوب او فيميو"
     },
     "form": {
       "add_to_survey": "أضف إلى استبيان.",
