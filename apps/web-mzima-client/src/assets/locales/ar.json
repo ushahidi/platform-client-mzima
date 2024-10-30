@@ -936,7 +936,7 @@
       "simple_send": "أرسل",
       "title": "محادثة مع الكاتب",
       "associated_messages": "عرض الرسائل المرتبطة بهذا المنشور",
-      "show_only_incoming": "اظهر فقط {{provider}} لم يتعيين للاستطلاع بعد",
+      "show_only_incoming": "اظهر فقط {{provider}} غير المعين للاستبيان بعد",
       "imported_by": "{{messages}} تم اصدارهم من قبل هذا النشر",
       "Twitter": "تويتر",
       "Email": "ايميل",
