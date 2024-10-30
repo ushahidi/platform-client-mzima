@@ -486,7 +486,7 @@
       "question_error": "يجب ان تضيف على الاقل ١ سٶال",
       "phone_number_instructions": "الرجاء ادخال الارقام الهواتف التي تريد التواصل معهم. يجب ان تدخل فاصلة بين کل رقم",
       "targeted_survey": "استبيان مستهدف",
-      "targeted_survey_desc": "لقد ارسلنا هذا الاستطلاع عن طريق SMS",
+      "targeted_survey_desc": "لقد ارسلنا هذا الاستبيان عن طريق رسالة نصية",
       "sent_messages": "لقد ارسلنا {{totalSent}} رسالة، و",
       "sent_message": "لقد ارسلنا {{totalSent}} رسالة، و",
       "received_responses": "لقد تلقيت {{responses}} ردا",
