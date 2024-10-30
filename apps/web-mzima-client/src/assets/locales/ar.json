@@ -398,7 +398,7 @@
     "survey_permissions": "رخص الاستطلاع",
     "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
     "who_can_add": "من يستطيع الإضافة لهذا الإطلاع",
-    "survey_field": "حقل الاستطلاع",
+    "survey_field": "حقل الاستبيان",
     "choose_survey_field": "اختر الذي يجب تعينه لكل حقول الاستطلاع",
     "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "من يمكنه المساهمة في حقول هذه المهمة",
@@ -407,7 +407,7 @@
     "add_options_first": "إضافة الخيارات أولا",
     "delete": {
       "desc": "<strong>إذا قم بحذف هذا الاستبيان</strong>، فسيتم حذف جميع منشوراته. يرجى المتابعة مع توخي الحذر.",
-      "delete": "حذف الإستطلاع",
+      "delete": "حذف الاستبيان",
       "delete_this": "حذف هذا الاستبيان",
       "delete_this_field": "إلغاء هذا الحقل",
       "delete_field": "حذف الحقل",
