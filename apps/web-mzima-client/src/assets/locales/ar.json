@@ -485,7 +485,7 @@
       "one_number_good": "هذا الرقم {{good_numbers}} يبدو جيدا",
       "question_error": "يجب ان تضيف على الاقل ١ سٶال",
       "phone_number_instructions": "الرجاء ادخال الارقام الهواتف التي تريد التواصل معهم. يجب ان تدخل فاصلة بين کل رقم",
-      "targeted_survey": "استطلاع مستهدف",
+      "targeted_survey": "استبيان مستهدف",
       "targeted_survey_desc": "لقد ارسلنا هذا الاستطلاع عن طريق SMS",
       "sent_messages": "لقد ارسلنا {{totalSent}} رسالة، و",
       "sent_message": "لقد ارسلنا {{totalSent}} رسالة، و",
