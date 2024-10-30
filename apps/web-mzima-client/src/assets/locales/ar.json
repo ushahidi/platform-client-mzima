@@ -852,7 +852,7 @@
       "publish": "نشر"
     },
     "created_at": "<strong>تم النشر</strong> الساعة",
-    "updated_at": "<strong>آخر تحديث</strong> الساعة",
+    "updated_at": "<strong>آخر تحديث</strong> في",
     "author": "الكاتب",
     "post_date": "تاريخ المنشور",
     "change_author": "تغيير المؤلف",
