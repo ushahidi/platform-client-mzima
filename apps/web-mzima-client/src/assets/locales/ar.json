@@ -775,7 +775,7 @@
     "post_desc": "وصف المنشور",
     "there_are_no_posts": "لا توجد منشورات",
     "in_this_deployment": "في عملية نشر البرنامج وجعله متاح هذه، بعدُ.",
-    "posts_total": "{{posts}} من أصل {{total_nb}} منشورات",
+    "posts_total": "{{posts}} من أصل {{total_nb}} منشور",
     "posts_total_map": "Displaying {{posts}} of {{total_nb}} posts with location information on the map.",
     "search_results": "النتائج:",
     "by": "بواسطة",
