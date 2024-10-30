@@ -1160,7 +1160,7 @@
     "placeholder": {
       "name": "أدخل الاسم",
       "descriptions": "أدخل الوصف...",
-      "choose_parent_category": "اختر فئة الوالدين..."
+      "choose_parent_category": "اختر الفئة الأصلية"
     },
     "types": {
       "category": "الفئة",
