@@ -359,7 +359,7 @@
     "radio_desc": "يتيح هذا للمستخدم اختيار واحد فقط من مجموعة مُعرفة مسبقًا من الخيارات.",
     "checkbox_desc": "يتيح هذا للمستخدم اختيار واحد أو أكثر من مجموعة مُعرفة مسبقًا من الخيارات.",
     "relation_desc": "إنشاء علاقة بين الاستطلاعات المختلفة",
-    "upload_desc": "يتيح هذا تحميل صورة (صور) إلى المنشور",
+    "upload_desc": "يسمح بتحميل صورة (صور) إلى المنشور.",
     "audio_desc": "Allows audio file(s) to be uploaded to the post",
     "document_desc": "Allows document(s) to be uploaded to the post",
     "video_desc": "يسمح لفيديوهات يوتيوب و فيميو يتضمنوا في البوست",
