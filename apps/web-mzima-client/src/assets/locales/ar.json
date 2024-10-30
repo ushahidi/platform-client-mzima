@@ -998,7 +998,7 @@
         "required" : "Media is required."
       },
       "status" : {
-        "uploading" : "Uploading...",
+        "uploading" : "جاري التحميل ...",
         "upload_complete" : "Upload Complete!",
         "upload_failed" : "Upload failed!"
       }
