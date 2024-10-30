@@ -131,7 +131,7 @@
     "private_deployment": "منصة خاصة",
     "mark_as": "مميز ب ",
     "who_can_see_this_category": "من يستطيع ان يرى هذه الفئة؟",
-    "this_category_is_child_to": "هذه الفئة منسوب الى <strong>{{parent}}</strong>",
+    "this_category_is_child_to": "هذه الفئة منسوبة الى <strong>{{parent}}</strong>",
     "nothing": "لاشيء",
     "who_can_see_this": "من يستطيع ان يرى هذا؟",
     "add": "اضافة",
