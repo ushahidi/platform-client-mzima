@@ -295,7 +295,7 @@
     "select_related_post": "Select related post",
     "no_fields": "No fields",
     "select_color": "Select color",
-    "choose_survey": "Choose survey",
+    "choose_survey": "اختر استبيان",
     "marked_for_internal": {
       "header": "Internal Use Only",
       "body": "This task is marked for internal use only. It is not seen by users when they create a post."
