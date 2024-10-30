@@ -1208,7 +1208,7 @@
       "data_sources": "مصادر البيانات",
       "data_sources_desc": "تهيئة قنوات البريد الإلكتروني والرسائل النصية ووسائل التواصل الاجتماعي التي تساعد نشرك على جمع بيانات الاستبيان.",
       "import": "استيراد",
-      "import_desc": "تحميل بيانات الاستطلاع إلى عملية التدشين برامجك من ملف القيم المفصولة بفاصلة CSV",
+      "import_desc": "تحميل بيانات الاستبيان إلى منصتك من ملف CSV",
       "user_settings": "Configure HDX API",
       "user_settings_desc": "Configure your API so that your tagged Ushahidi data can be uploaded to your Humanitarian Data Exchange (HDX) account.",
       "export": "تصدير البيانات",
