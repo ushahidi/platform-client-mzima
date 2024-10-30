@@ -158,7 +158,7 @@
     "ok_sounds_good": "حسنا ، يبدو جيدا",
     "next_step": "الخطوة التالية",
     "we_are_aware_there_are_some_issues_here": "نحن ندرك أن هناك بعض القضايا هنا. يعمل الفريق على إصلاحها.",
-    "you_are_using_old_deployment_version": "أنت تستخدم إصدار النشر - {{api_version}}. أحدث إصدار هو v5. يرجى تحديث النشر الخاص بك لوصول المستخدمين.",
+    "you_are_using_old_deployment_version": "أنت تستخدم منصة باصدار - {{api_version}}. أحدث إصدار هو v5. يرجى تحديث المنصة الخاصة بك للوصول للمستخدمين.",
     "outdated_deployment": "نشر عفا عليه الزمن!",
     "the_deployment_is_outdated": "النشر قديم ، لذلك قد تحدث بعض الأخطاء ، حتى يقوم المسؤول بتحديثه.",
     "your_deployment_is_outdated": "النشر الخاص بك قديم",
