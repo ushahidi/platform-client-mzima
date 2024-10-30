@@ -779,7 +779,7 @@
     "posts_total_map": "عرض {{posts}} من أصل {{total_nb}} منشورًا على الخريطة.",
     "search_results": "النتائج:",
     "by": "بواسطة",
-    "duplicate_option": "There's a problem with the configuration of this field because of duplicates, please go to the survey-settings and fix it.",
+    "duplicate_option": "هناك مشكلة في تكوين هذا الحقل بسبب وجود تكرارات، يرجى الذهاب إلى إعدادات الاستبيان وإصلاحه.",
     "task_completed": "اكتملت المهمة",
     "everyone": "الكل",
     "just_you": "أنت فقط",
