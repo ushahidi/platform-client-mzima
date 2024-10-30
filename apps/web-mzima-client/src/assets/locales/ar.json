@@ -1756,7 +1756,7 @@
     },
     "donation_settings": {
       "save_success": "Donation settings saved",
-      "delete_question": "Are you sure you want to delete this {{name}}."
+      "delete_question": "هل أنت متأكد من رغبتك في حذف {{name}}؟"
     },
     "map_settings": {
       "save_success": "تم حفظ إعدادات الخريطة"
