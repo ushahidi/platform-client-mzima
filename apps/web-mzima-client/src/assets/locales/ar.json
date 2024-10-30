@@ -1416,7 +1416,7 @@
     },
     "deployment_delete_this": "حذف منصتك",
     "deployment_delete": "حذف منصة",
-    "deployment_delete_info": "<strong>إذا حذفت عملية النشر هذه</strong>، فسيتم حذف كل بياناتها أيضًا. يرجى المتابعة مع توخي الحذر.",
+    "deployment_delete_info": "<strong>إذا حذفت المنصة هذه</strong>، فسيتم حذف كل بياناتها أيضًا. يرجى المتابعة مع توخي الحذر.",
     "deployment_name": "اسم منصتك",
     "deployment_logo": "شعار منصتك",
     "delete_logo": "امسح العلامة",
