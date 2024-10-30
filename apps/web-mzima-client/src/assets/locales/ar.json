@@ -1729,7 +1729,7 @@
       "destroy_error": "تعذر حذف المورد، يرجى إعادة المحاولة",
       "destroy_cancelled": "تم إلغاء الحذف",
       "bulk_destroy_confirm": "هل أنت متأكد من رغبتك في حذف {{count}} مورد؟",
-      "bulk_destroy_success": "محو المصدر",
+      "bulk_destroy_success": "مورد محذوف",
       "bulk_destroy_error": "تعذر حذف المورد، يرجى إعادة المحاولة",
       "bulk_destroy_cancelled": "تم إلغاء الحذف",
       "are_you_sure_you_want_to_delete_this": "هل أنت متأكد أنك تريد حذف هذا؟"
