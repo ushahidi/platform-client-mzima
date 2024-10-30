@@ -1790,7 +1790,7 @@
       "confirm_delete": " تأكيد الحذف",
       "destroy_title": "حذف المنشور",
       "delete_question": "هل أنت متأكد من أنك ترغب في حذف  منشورك {{post}}؟",
-      "destroy_success": "تم حذف المنشور",
+      "destroy_success": "تم حذف المنشور {{name}}",
       "destroy_success_bulk": "تم حذف المنشورات",
       "destroy_confirm": "هل أنت متأكد من رغبتك في حذف هذا المنشور؟",
       "destroy_error": "غير قادر على حذف المنشور، الرجاء المحاولة مرة أخرى",
