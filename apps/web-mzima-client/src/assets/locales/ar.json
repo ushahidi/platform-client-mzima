@@ -26,7 +26,7 @@
     "insert_text_here": "أدخل النص هنا...",
     "deployment_not_found" : {
       "text" : "عذراً، لا يوجد مثل هذه المنصة. هل ترغب في إنشاء منصة جديدة؟",
-      "button_exit" : "Exit",
+      "button_exit" : "خروج",
       "button_create_deployment" : "انشاء منصة"
     },
     "documentation": {
