@@ -1696,7 +1696,7 @@
           "email": "البريد الإلكتروني",
           "phone": "الهاتف"
         },
-        "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
+        "instructions": "سيؤدي الحذف إلى عدم تمكنك من تلقي إشعارات على رقم هاتفك. ولكن يمكنك تبديل الإشعارات إلى طريقة اتصال أخرى أدناه.",
         "button": {
           "delete": "حذف",
           "cancel": "إلغاء"
