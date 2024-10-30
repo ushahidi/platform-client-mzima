@@ -322,7 +322,7 @@
     "title": "Title",
     "field_allowed_relation_survey": "Allowed surveys",
     "collect_image_caption": "Include image caption field",
-    "collect_media_caption": "Include caption field",
+    "collect_media_caption": "قم بضم حقل عنوان الصورة",
     "disable_caption_field_explanation": "This will disable and hide all existing captions for this field, but you can re-enable them at any time.",
     "description": "الأوصاف.\n",
     "task_description": "Task description",
