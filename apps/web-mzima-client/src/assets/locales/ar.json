@@ -1803,7 +1803,7 @@
       "leave_confirm": "استمرار بدون حفظ",
       "unfinished_post_task": "لا يمكنك نشر هذا المنشور ، فالمنشور يحتوي على مهام غير مكتملة",
       "posts_can_t_be_published": "لا يمكن نشر المنشورات التالية: {{titles}}",
-      "post_not_found": "المنشور  غير موجود"
+      "post_not_found": "المنشور غير موجود"
     },
     "category": {
       "save_success": "الفئات المحفوظة {{name}}",
