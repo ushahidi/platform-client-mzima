@@ -362,7 +362,7 @@
     "upload_desc": "يسمح بتحميل صورة (صور) إلى المنشور.",
     "audio_desc": "Allows audio file(s) to be uploaded to the post",
     "document_desc": "Allows document(s) to be uploaded to the post",
-    "video_desc": "يسمح لفيديوهات يوتيوب و فيميو يتضمنوا في البوست",
+    "video_desc": "يسمح بإدراج مقاطع فيديو من YouTube أو Vimeo في المنشور.",
     "maximum_upload_size" : "Maximum Upload Size",
     "small_upload_size" : "Small",
     "medium_upload_size" : "Medium",
