@@ -213,7 +213,7 @@
     "outbound": "رسائل الاستبيان الصادرة",
     "recipients": "المستلمون المميزون للاستبيان المستهدف",
     "responders": "المستلمون المميزون للاستبيان المستهدف",
-    "all_targeted": "All Targeted Surveys",
+    "all_targeted": "جميع الاستبيانات المستهدفة",
     "no_targeted": "You don't have any Targeted Survey data to show.",
     "all_sources": "كافة مصادر البيانات",
     "web_mobile": "الويب والمحمول",
