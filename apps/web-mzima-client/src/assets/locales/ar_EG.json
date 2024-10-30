@@ -158,7 +158,7 @@
     "ok_sounds_good": "OK, sounds good",
     "next_step": "Next step",
     "we_are_aware_there_are_some_issues_here": "We are aware there are some issues here. The team is working on fixing them.",
-    "you_are_using_old_deployment_version": "You are using Deployment Version - {{api_version}}. The latest version is v5. Please, update your Deployment for users access.",
+    "you_are_using_old_deployment_version": "أنت تستخدم منصة باصدار - {{api_version}}. أحدث إصدار هو v5. يرجى تحديث المنصة الخاصة بك للوصول للمستخدمين.",
     "outdated_deployment": "Outdated Deployment!",
     "the_deployment_is_outdated": "The Deployment is outdated, therefore some bugs may occur, till Admin update it.",
     "your_deployment_is_outdated": "Your Deployment is outdated",
