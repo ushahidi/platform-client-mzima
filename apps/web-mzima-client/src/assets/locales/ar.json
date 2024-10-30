@@ -1860,7 +1860,7 @@
       "delete_stage_confirm": "هل أنت متأكد من رغبتك في حذف هذه المهمة؟",
       "delete_stage_confirm_desc": "لا يمكن التراجع عن هذا العملية. سيؤدي حذف هذه المهمة إلى إزالة جميع حقولها وأية بيانات بها",
       "destroy_stage_success": "تم حذف مهمة الاستبيان {{name}}",
-      "delete_attribute_confirm": " هل أنت متأكد أنك تريد حذف هذا المجال؟",
+      "delete_attribute_confirm": " هل أنت متأكد أنك تريد حذف هذا الحقل؟",
       "delete_attribute_confirm_desc": "لا يمكن التراجع عن هذا الإجراء. سيؤدي حذف هذا الحقل إلى إزالة بياناته من جميع المنشورات الموجودة.",
       "destroy_attribute_success": "تم حذف حقل {{name}}.",
       "survey_name_required": "يلزم اسم الاستبيان ",
