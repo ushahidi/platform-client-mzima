@@ -1881,7 +1881,7 @@
       "updated_collection": "مجموعات {{collection}} تم حفظه",
       "add_to_collection": "تم إضافة منشور إلى  {{collection}}",
       "removed_from_collection": "تم حذف منشور من {{collection}}",
-      "bulk_add_to_collection": "{{count}} مشاركة تم إضافتها إلى {{collection}} ",
+      "bulk_add_to_collection": "تم إضافة {{count}} منشور إلى {{collection}}",
       "done": "Done"
     },
     "savedsearch": {
