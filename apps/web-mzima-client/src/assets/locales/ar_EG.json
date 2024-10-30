@@ -1268,7 +1268,7 @@
         "required": {
           "name": "Webhook name is required",
           "shared_secret": "Shared secret key is required",
-          "api_url": "API URL required",
+          "api_url": "عنوان الرابط لواجهة برمجة التطبيقات \"API URL\" مطلوب",
           "event_type": "Event type is required",
           "event_entity": "Event entity is required"
         },
