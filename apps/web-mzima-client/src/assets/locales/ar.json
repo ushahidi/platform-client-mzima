@@ -1075,8 +1075,8 @@
   },
   "collection": {
     "visible_to_public": "هذه المجموعة تظهر للجميع",
-    "visible_to_you": "هذه المجموعة تظهر لك أنت والمسؤولين فقط",
-    "visible_to_roles": "هذه المجموعة تظهر لـ {{roles}}",
+    "visible_to_you": "هذه المجموعة مرئية لك أنت والمسؤولين فقط",
+    "visible_to_roles": "هذه المجموعة مرئية لـ {{roles}}",
     "validation": {
       "required": {
         "name": "اسم المجموعة مطلوب"
