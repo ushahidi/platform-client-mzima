@@ -1257,7 +1257,7 @@
     "webhooks": {
       "use_webhook_for": "استخدم webhook لـ ",
       "enable_source_destination": "تفعيل حقول المصدر و الوجه",
-      "enable_source_destination_desc": "هذا webhook سيستخدم فقط لكي يطبق في الاستطلاع المختار",
+      "enable_source_destination_desc": "هذا webhook سيستخدم فقط لكي يطبق في الاستبيان المختار",
       "destination": "الوجهة",
       "placeholder": {
         "name": "الرجاء إدخال اسم خطاف الويب",
