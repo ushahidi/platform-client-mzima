@@ -836,7 +836,7 @@
     "source": "عبر {{source}}",
     "visible_to_public": "هذا المنشور مرئي للعامة.",
     "visible_to_you": "هذا المنشور مرئي لك وللمدراء فقط.",
-    "visible_to_roles": "هذاالمنشور يظهر لـ {{roles}}",
+    "visible_to_roles": "هذاالمنشور مرئي لـ {{roles}}",
     "show_only_form": "اظهر فقط {{form}}",
     "show_only_unknown_form": "اظهر غير المعروف فقط ",
     "delete_post": "حدف المنشور",
