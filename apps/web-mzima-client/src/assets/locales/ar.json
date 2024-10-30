@@ -1852,7 +1852,7 @@
       "save_attribute_success": "تم إضافة  {{name}}الحقل",
       "edit_form_success": "تم تحديث الاستبيان {{name}}",
       "edit_stage_success": "تم تحديث مهمة الاستبيان {{name}}",
-      "delete_form_confirm": "Are you sure you want to delete this survey and all of its data?",
+      "delete_form_confirm": "هل أنت متأكد من رغبتك في حذف هذا الاستبيان وجميع بياناته؟",
       "delete_form_confirm_desc": "لا يمكن التراجع عن هذا الإجراء. سيؤدي حذف هذا الاستبيان إلى إزالة جميع بياناته، بما في ذلك المنشورات. اكتب اسم الاستبيان: <br><br><strong>{{check_name}}</strong><br><br>في الصندوق في الأسفل لتأكيد الحذف",
       "delete_form_error": "The text you entered does not match the survey-name, please try again",
       "delete_form_button": "حذف هذا الاستبيان",
