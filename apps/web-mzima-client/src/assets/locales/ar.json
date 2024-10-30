@@ -1836,7 +1836,7 @@
       "destroy_confirm": "هل أنت متأكد من أنك ترغب في إزالة هذا المستخدم؟",
       "destroy_success": "تم حذف المستخدم",
       "destroy_error": "غير قادر على حذف مستخدم، الرجاء المحاولة مرة أخرى",
-      "bulk_destroy_confirm": "هل ترغب بالتأكيد في حذف {{count}} المستخدمين؟",
+      "bulk_destroy_confirm": "هل ترغب بالتأكيد في حذف {{count}} مستخدم؟",
       "bulk_destroy_success": "تم حذف المستخدم",
       "bulk_role_change_confirm": "هل أنت متأكد أنك تريد تغيير اصناف المستخدمين من {{count}}  إلى {{role}}",
       "bulk_role_change_success": "اصناف المستخدم تم تغيرها إلى {{role_name}}",
