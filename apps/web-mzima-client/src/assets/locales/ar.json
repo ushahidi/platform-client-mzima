@@ -1866,7 +1866,7 @@
       "survey_name_required": "Survey-name is required",
       "validation": {
         "name": {
-          "required": "يلزم اسم الاستطلاع ",
+          "required": "يلزم اسم الاستبيان ",
           "minlength": "الاسم قصير جدا",
           "maxlength": "الاسم طويل جدا"
         },
