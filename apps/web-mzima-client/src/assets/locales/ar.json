@@ -1691,7 +1691,7 @@
       "account_settings": "إعدادات الحساب",
       "notifications_settings": "إعدادات الإخطارات",
       "delete_contact": {
-        "title": "Delete your",
+        "title": "احذف ",
         "title_subject": {
           "email": "البريد الإلكتروني",
           "phone": "الهاتف"
