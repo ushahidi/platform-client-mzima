@@ -2028,7 +2028,7 @@
     "translate_field_name": "ترجم اسم الحقل",
     "translate_field_desc": "ترجم وصف الحقل",
     "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
-    "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
+    "parent_child_lang": "يرجى ملاحظة أن اللغة الافتراضية المحددة لهذه الفئة الفرعية تختلف عن لغتها الأصلية.",
     "post_title_required": "يجب إضافة ترجمة لعنوان المنشور.",
     "add_a_language": "Add a language",
     "error_no_default": "You need to specify a default language before adding a new translation.",
