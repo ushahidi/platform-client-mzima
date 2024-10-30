@@ -547,7 +547,7 @@
       "order_group": {
         "orderby": {
           "post_date": "تاريخ المنشور",
-          "created": "تأريخ الإنشاء",
+          "created": "تاريخ الإنشاء",
           "updated": "تأريخ التحديث"
         },
         "order": {
