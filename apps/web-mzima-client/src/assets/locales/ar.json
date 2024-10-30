@@ -766,7 +766,7 @@
     "share_on_facebook": "شارك على الفيسبوك"
   },
   "post": {
-    "post_count": "المشاركات {{count}}",
+    "post_count": "المنشورات {{count}}",
     "see_more_plural": "انظر {{newPostsCount}} بوستات جديدة",
     "see_more_singular": "انظر {{newPostsCount}} بوست جديد",
     "add_to_form": "إضافة إلى {{form}}",
