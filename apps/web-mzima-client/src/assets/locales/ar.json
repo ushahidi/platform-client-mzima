@@ -1817,8 +1817,8 @@
       "bulk_destroy_success_countless": "تم حذف الفئات"
     },
     "role": {
-      "delete_question": "هل ترغب بالتأكيد في حذف الدور {{role}}؟",
-      "destroy_success": "تم حذف الدور {{role}} ",
+      "delete_question": "هل ترغب بالتأكيد في حذف الدور؟",
+      "destroy_success": "تم حذف الدور ",
       "save_success": "تم حفظ الدور{{role}}  .",
       "last_admin": "لا يمكنك حذف دور المشرف الوحيد"
     },
