@@ -1803,7 +1803,7 @@
       "leave_confirm": "Continue without saving",
       "unfinished_post_task": "You cannot publish this post, the post has unfinished tasks",
       "posts_can_t_be_published": "لا يمكن نشر المنشورات التالية: {{titles}}",
-      "post_not_found": "Post not found"
+      "post_not_found": "المنشور  غير موجود"
     },
     "category": {
       "save_success": "Saved category {{name}}",
