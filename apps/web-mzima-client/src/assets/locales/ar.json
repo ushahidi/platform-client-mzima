@@ -1210,7 +1210,7 @@
       "import": "استيراد",
       "import_desc": "تحميل بيانات الاستبيان إلى منصتك من ملف CSV",
       "user_settings": "Configure HDX API",
-      "user_settings_desc": "قم بتكوين واجهة برمجة التطبيقات (API) الخاصة بك بحيث يمكن تحميل بيانات Ushahidi المحددة إلى حسابك على منصة تبادل البيانات الإنسانية (HDX).",
+      "user_settings_desc": "قم بتكوين واجهة برمجة التطبيقات\"API\" الخاصة بك بحيث يمكن تحميل بيانات Ushahidi المحددة إلى حسابك على منصة تبادل البيانات الإنسانية (HDX).",
       "export": "تصدير البيانات",
       "export_hxl": "Export and tag data",
       "export_desc_hxl": "Export your data as a CSV file or assign tags and attributes to your data and upload directly to a Humanitarian Data Exchange (HDX) account or export as a tagged CSV file.",
