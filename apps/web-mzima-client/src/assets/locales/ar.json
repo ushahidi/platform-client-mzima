@@ -1000,7 +1000,7 @@
       "status" : {
         "uploading" : "جاري التحميل ...",
         "upload_complete" : "اكتملت عملية التحميل",
-        "upload_failed" : "Upload failed!"
+        "upload_failed" : "فشلت عملية التحميل "
       }
     },
     "video": {
