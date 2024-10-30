@@ -1784,7 +1784,7 @@
       "publish_success": "تم نشر المنشور لـ  {{role}}",
       "set_draft": "المنشور مرئي لك فقط الآن.",
       "publish_error": "عذراً، تعذر نشر المنشور. يرجى المحاولة مرة أخرى.",
-      "unpublish_success": "لم يتم نشر المنشور",
+      "unpublish_success": "تم إلغاء نشر المنشور.",
       "unpublish_error": "غير قادر على حدف مشاركة، الرجاء المحاولة مرة أخرى",
       "yes_confirm_delete": "نعم، حذف هذا المنشور",
       "confirm_delete": " تأكيد الحذف",
