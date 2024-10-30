@@ -1877,7 +1877,7 @@
     },
     "collection": {
       "delete_collection_confirm": "هل أنت متأكد من حذف هذه المجموعة.",
-      "created_collection": "جمع البيانات {{collection}} تم بنجاح",
+      "created_collection": "تم انشاء الفئة {{collection}} تم بنجاح",
       "updated_collection": "مجموعات {{collection}} تم حفظه",
       "add_to_collection": "تم إضافة منشور إلى  {{collection}}",
       "removed_from_collection": "تم حذف منشور من {{collection}}",
