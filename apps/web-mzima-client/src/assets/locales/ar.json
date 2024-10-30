@@ -210,7 +210,7 @@
     "by": "بواسطة",
     "context_body": "ملخص عن كيفية تفاعل الأشخاص مع {{site}}.",
     "inbound": "Inbound Response Messages",
-    "outbound": "Outbound Surveying Messages",
+    "outbound": "رسائل الاستبيان الصادرة",
     "recipients": "Unique Recipients of Targeted Survey",
     "responders": "Unique Responders to Targeted Survey",
     "all_targeted": "All Targeted Surveys",
