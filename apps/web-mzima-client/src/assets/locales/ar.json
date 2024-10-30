@@ -1533,7 +1533,7 @@
     "export_selected": "قم بتصدير الحقول المختارة",
     "cancel": "إلغاء",
     "export_progress": "<p>Export in progress... </p><p>You can leave this page if you want. Your export will continue.</p><p> We will let you know when we're done.</p>",
-    "no_fields": "اوه! يجب ان تختار بعض الحقول اولا للتصدير",
+    "no_fields": "أوه! يجب عليك تحديد بعض الحقول للتصدير أولاً.",
     "expires": "<strong>ينتهي:</strong> {{expires}}",
     "job": "CSV تصدير {{jobId}}",
     "created": "<strong>انشأت:</strong> {{created}}",
