@@ -767,8 +767,8 @@
   },
   "post": {
     "post_count": "{{count}} منشور",
-    "see_more_plural": "انظر {{newPostsCount}} بوستات جديدة",
-    "see_more_singular": "انظر {{newPostsCount}} بوست جديد",
+    "see_more_plural": "عرض {{newPostsCount}} منشور جديد",
+    "see_more_singular": "عرض {{newPostsCount}} منشور جديد",
     "add_to_form": "إضافة إلى {{form}}",
     "posts": "المنشورات",
     "post_title": "Post title",
