@@ -1853,7 +1853,7 @@
       "edit_form_success": "تحديث {{name}} الاستقصاء ",
       "edit_stage_success": "تم تحديث {{name}} مهمة الاستقصاء ",
       "delete_form_confirm": "Are you sure you want to delete this survey and all of its data?",
-      "delete_form_confirm_desc": "This action cannot be undone. Deleting this survey will remove all of its data, including posts. Write the name of the survey: <br><br><strong>{{check_name}}</strong><br><br>in the box below to confirm deletion.",
+      "delete_form_confirm_desc": "لا يمكن التراجع عن هذا الإجراء. سيؤدي حذف هذا الاستبيان إلى إزالة جميع بياناته، بما في ذلك المنشورات. اكتب اسم الاستبيان: <br><br><strong>{{check_name}}</strong><br><br>في الصندوق في الأسفل لتأكيد الحذف",
       "delete_form_error": "The text you entered does not match the survey-name, please try again",
       "delete_form_button": "Delete this survey",
       "destroy_form_success": "استقصاء {{name}} تم حدفه ",
