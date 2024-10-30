@@ -493,7 +493,7 @@
       "received_response": "لقد تلقيت {{responses}} ردا",
       "recipients_count": "من {{recipients}} مستلما حتى الان",
       "recipient_count": "من {{recipients}}مستلما حتى الان",
-      "error_message": "لقد صار خطا ما عند محاولة خزن استطلاعك المستهدف",
+      "error_message": "حدث خطأ أثناء محاولة حفظ استبيانك المستهدف.",
       "error_contacts": "لقد فشل بعض من الارقام التي ادخلتهم، الرجاء تحقيق الارقام و المحاولة مرة ثانية",
       "pending_messages": "نحن نعالج {{totalPending}} رسالة",
       "pending_message": "نحن نعالج {{totalPending}} رسالة",
