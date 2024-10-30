@@ -212,7 +212,7 @@
     "inbound": "Inbound Response Messages",
     "outbound": "رسائل الاستبيان الصادرة",
     "recipients": "المستلمون المميزون للاستبيان المستهدف",
-    "responders": "Unique Responders to Targeted Survey",
+    "responders": "المستلمون المميزون للاستبيان المستهدف",
     "all_targeted": "All Targeted Surveys",
     "no_targeted": "You don't have any Targeted Survey data to show.",
     "all_sources": "كافة مصادر البيانات",
