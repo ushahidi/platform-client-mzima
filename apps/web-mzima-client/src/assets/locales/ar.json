@@ -1134,17 +1134,17 @@
     "delete_category_desc": "<strong>إذا مسحت هذه الفئة</strong>، لن يكون موصولا بأي منشور. تابع بحذر",
     "show_categories": "اظهر الفئات المتاحة",
     "child_permissions": "تتم إدارة أذونات هذه الفئة بواسطة الفئة الرئيسية.",
-    "which_categories": "Which categories should be available",
+    "which_categories": "ما هي الفئات التي يجب أن تكون متاحة؟",
     "select_all": "تحديد الكل",
     "choose_roles": "اختيار أدوار",
     "create_tag": "إنشاء فئة",
-    "saved_tag": "تم حفظ المجموعة.",
+    "saved_tag": "تم حفظ الفئة.",
     "deleted_tags": "تم حذف الفئات.",
     "manage_tags": "إدارة الفئات",
     "edit_tag": "تعديل الفئة",
     "validation": {
       "required": {
-        "name": "اسم التصنيف مطلوب"
+        "name": "اسم الفئة مطلوب"
       }
     },
     "editor": {
