@@ -1915,7 +1915,7 @@
     "survey": {
       "bulk_destroy_confirm": "Are you sure you want to delete these {{count}} surveys?",
       "bulk_destroy_confirm_desc": "سيؤدي حذف هذه الاستبيانات {{count}} المحددة إلى حذف جميع المنشورات التي تم جمعها وجميع البيانات المرتبطة بها في الاستبيانات. لا يمكن التراجع عن هذه الخطوة.",
-      "destroy_confirm": "Are you sure you want to delete this survey?",
+      "destroy_confirm": "هل أنت متأكد من رغبتك في حذف هذا الاستبيان؟",
       "destroy_confirm_desc": "سيؤدي حذف هذا الاستبيان إلى حذف جميع المنشورات التي تم جمعها وجميع البيانات المرتبطة به. لا يمكن التراجع عن هذه الخطوة.",
       "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting."
     },
