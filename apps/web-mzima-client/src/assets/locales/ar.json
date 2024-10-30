@@ -302,7 +302,7 @@
     },
     "task_is_marked_as": {
       "not_completed": "هل تم إنجاز المهمة؟ - استخدم المفتاح أدناه",
-      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+      "completed": "تم وضع علامة \"تم\" على المهمة \"{{taskName}}\""
     },
     "delete_task": "حذف المهمة",
     "duplicate_survey": "مكرر",
