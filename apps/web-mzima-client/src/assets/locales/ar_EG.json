@@ -1124,7 +1124,7 @@
     "create_saved_filter": "Create Saved Filter",
     "collection_saved": "حفظ المجموعة",
     "collection_updated": "تحديث المجموعة",
-    "collection_description": "You can add posts to your collection from the Data view"
+    "collection_description": "يمكنك إضافة منشورات إلى مجموعتك من خلال عرض البيانات."
   },
   "category": {
     "add_tag": "Add Category",
