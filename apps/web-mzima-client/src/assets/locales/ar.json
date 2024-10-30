@@ -1849,7 +1849,7 @@
       "add_to_survey": "أضف إلى استبيان.",
       "save_success": "تم حفظ الاستبيان {{name}}",
       "save_stage_success": "تم حفظ مهمة الاستبيان {{name}}",
-      "save_attribute_success": "تم إضافة  {{name}}الحقل",
+      "save_attribute_success": "تم إضافة الحقل {{name}}",
       "edit_form_success": "تم تحديث الاستبيان {{name}}",
       "edit_stage_success": "تم تحديث مهمة الاستبيان {{name}}",
       "delete_form_confirm": "هل أنت متأكد من رغبتك في حذف هذا الاستبيان وجميع بياناته؟",
