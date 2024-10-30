@@ -806,7 +806,7 @@
     "export": "تصدير ",
     "select_all": "تحديد الكل",
     "unselect_all": "إزالة تحديد الكل",
-    "per_page": "{{count}} مشاركة",
+    "per_page": "{{count}} منشور",
     "post_details": "نشر تفاصيل",
     "steps": "مهام هذا المنشور ",
     "mark_complete": "تأشير بالإنتهاء",
