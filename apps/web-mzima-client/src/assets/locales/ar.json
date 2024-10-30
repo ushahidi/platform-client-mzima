@@ -400,7 +400,7 @@
     "who_can_add": "من يستطيع الإضافة لهذا الاستبيان",
     "survey_field": "حقل الاستبيان",
     "choose_survey_field": "اختر ما يجب تعيينه لكل حقل من حقول الاستبيان",
-    "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
+    "choose_survey_field_desc": "تم سرد كل حقول الاستبيان أدناه. اختر البيانات من {{datasource_type}} التي ترغب في استخدامها لملء كل واحد من هذه الحقول.",
     "who_can_contribute_to_task": "من يمكنه المساهمة في حقول هذه المهمة",
     "view_detail": "Detail",
     "no_options_for_this_field": "لا توجد خيارات لهذا الحقل",
