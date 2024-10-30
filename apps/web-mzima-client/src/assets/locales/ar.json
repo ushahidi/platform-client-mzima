@@ -1224,7 +1224,7 @@
       "webhooks": "Webhooks",
       "webhooks_desc": "إنشاء webhooks التي ترسل بيانات منصة اوشاهيدي إلى تطبيقات خارجية عند تشغيل أحداث معينة",
       "plans": "الخطط\n",
-      "plan_desc": "خطة إنتشارك الحالية هي  <strong>{{current_plan}}</strong>",
+      "plan_desc": "خطة منصتك الحالية هي  <strong>{{current_plan}}</strong>",
       "donation": "Donation",
       "donation_desc": "Create and manage the donations people can make towards your organisation."
     },
