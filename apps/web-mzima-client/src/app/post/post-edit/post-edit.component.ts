@@ -49,7 +49,7 @@ import { Observable, lastValueFrom, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LanguageInterface } from '@mzima-client/sdk';
 import { MatSelectChange } from '@angular/material/select';
-import { MediaFile } from '../../core/interfaces/media';
+import { MediaFile, MediaFileStatus } from '../../core/interfaces/media';
 import { getFileNameFromUrl } from '../../core/helpers/media-helper';
 
 dayjs.extend(timezone);
@@ -384,7 +384,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         mediaValue.caption = media.result.caption;
         mediaValue.mimeType = media.result.mime;
         mediaValue.size = media.result.original_file_size;
-        mediaValue.status = 'ready';
+        mediaValue.status = MediaFileStatus.READY;
         mediaValue.filename = getFileNameFromUrl(mediaValue.url!);
       }
 
