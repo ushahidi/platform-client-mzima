@@ -1,6 +1,6 @@
 import { SafeUrl } from '@angular/platform-browser';
 import { ɵunwrapSafeValue as unwrapSafeValue } from '@angular/core';
-import { MediaFile } from '../interfaces/media';
+import { MediaFile } from '@mzima-client/sdk';
 
 export function getDocumentThumbnail(mediaFile: MediaFile) {
   const path = '/assets/images/logos/';

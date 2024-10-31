@@ -40,6 +40,8 @@ import {
   MediaService,
   postHelpers,
   SurveyItem,
+  MediaFile,
+  MediaFileStatus,
 } from '@mzima-client/sdk';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
@@ -49,7 +51,6 @@ import { Observable, lastValueFrom, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LanguageInterface } from '@mzima-client/sdk';
 import { MatSelectChange } from '@angular/material/select';
-import { MediaFile, MediaFileStatus } from '../../core/interfaces/media';
 import { getFileNameFromUrl } from '../../core/helpers/media-helper';
 
 dayjs.extend(timezone);

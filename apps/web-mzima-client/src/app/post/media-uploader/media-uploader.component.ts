@@ -9,18 +9,11 @@ import {
 } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { formHelper } from '@helpers';
-import { MediaService } from '@mzima-client/sdk';
+import { MediaFile, MediaFileError, MediaFileStatus, MediaService } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { catchError, forkJoin, last, Observable, tap, throwError } from 'rxjs';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-import {
-  MediaUploaderError,
-  MediaFileError,
-  MediaFile,
-  MediaType,
-  mediaTypes,
-  MediaFileStatus,
-} from '../../core/interfaces/media';
+import { MediaUploaderError, MediaType, mediaTypes } from '../../core/interfaces/media';
 import { getDocumentThumbnail, getFileNameFromUrl } from '../../core/helpers/media-helper';
 
 @Component({
