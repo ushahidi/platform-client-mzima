@@ -995,7 +995,7 @@
       "messages": {
         "max_size" : "Soubor je příliš velký.",
         "max_files" : "Byl překročen maximální počet souborů.",
-        "required" : "Media is required."
+        "required" : "Jsou vyžadována média."
       },
       "status" : {
         "uploading" : "Uploading...",
