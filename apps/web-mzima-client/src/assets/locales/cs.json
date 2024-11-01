@@ -360,7 +360,7 @@
     "checkbox_desc": "Umožňuje uživateli vybrat jednu nebo více předdefinovaných sad možností.",
     "relation_desc": "Vytvořte vztah mezi různými průzkumy",
     "upload_desc": "Umožňuje odesílání obrázk(ů) do příspěvku",
-    "audio_desc": "Umožňuje nahrávání zvukových souborů do příspěvku",
+    "audio_desc": "Umožňuje nahrávání zvuku(ů) do příspěvku",
     "document_desc": "Umožňuje nahrát do příspěvku dokument(y).",
     "video_desc": "Umožnit vkládání videa Youtube nebo Vimeo do příspěvku",
     "maximum_upload_size" : "Maximální velikost nahrávaného souboru",
