@@ -999,7 +999,7 @@
       },
       "status" : {
         "uploading" : "Nahrávání...",
-        "upload_complete" : "Upload Complete!",
+        "upload_complete" : "Nahrávání dokončeno!",
         "upload_failed" : "Upload failed!"
       }
     },
