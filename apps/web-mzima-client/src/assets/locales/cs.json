@@ -988,7 +988,7 @@
       "add_photo": "Přidat fotku",
       "add_audio": "Přidat zvuk",
       "add_document": "Přidat dokument",
-      "retry" : "Retry",
+      "retry" : "Opakovat",
       "delete_photo": "Smazat fotku",
       "replace_image": "Nahradit obrázek",
       "error_in_upload": "Váš obrázek je příliš velký (maximální velikost je 1 MB) nebo má nesprávný formát (povolené formáty jsou gif, png, jpg a jpeg). Zkontrolujte prosím a zkuste to znovu!",
