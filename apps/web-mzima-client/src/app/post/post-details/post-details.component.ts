@@ -126,20 +126,20 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         this.post!.form = form.result;
         this.getData(this.post);
       });
-      this.isPostLoading = false;
       this.preparePostForView();
       //----------------------
-      this.postChanged = false;
       //----------------------
     }
   }
 
-  private getData(post: PostResult): void {
+  private async getData(post: PostResult): Promise<void> {
     for (const content of post.post_content as PostContent[]) {
-      this.preparingMediaField(content.fields);
       this.preparingSafeVideoUrls(content.fields);
       this.preparingRelatedPosts(content.fields);
       this.preparingCategories(content.fields);
+      this.preparingMediaField(content.fields).then(() => {
+        this.postChanged = false;
+      });
     }
   }
 
@@ -166,7 +166,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         return categories;
       });
     //----------------------
-    this.postChanged = false;
+    // this.postChanged = false;
     //----------------------
   }
 
@@ -190,15 +190,9 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     fields
       .filter((field: any) => field.type === 'media')
       .map(async (mediaField) => {
-        if (mediaField.value?.value) {
-          const media = await this.getPostMedia(mediaField.value.value);
-          mediaField.value.preview = media.result.original_file_url;
-          mediaField.value.caption = media.result.caption;
-          mediaField.value.mimeType = media.result.mime;
-          mediaField.value.size = media.result.original_file_size;
-        } else if (Array.isArray(mediaField.value)) {
+        if (Array.isArray(mediaField.value)) {
           const mediaFiles: MediaFile[] = [];
-          for (const mediaValue of mediaField.value) {
+          for await (const mediaValue of mediaField.value) {
             const media = await lastValueFrom(this.mediaService.getById(mediaValue.value!));
             const mediaFile: MediaFile = new MediaFile(
               media.result,
@@ -211,6 +205,12 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
             mediaFiles.push(mediaFile);
           }
           mediaField.value = mediaFiles;
+        } else if (mediaField.value?.value) {
+          const media = await this.getPostMedia(mediaField.value.value);
+          mediaField.value.preview = media.result.original_file_url;
+          mediaField.value.caption = media.result.caption;
+          mediaField.value.mimeType = media.result.mime;
+          mediaField.value.size = media.result.original_file_size;
         }
       });
   }

@@ -117,7 +117,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
             const photoUrl = formHelper.prepareImageFileToUpload(aFile);
             const mediaFile = new MediaFile(aFile, URL.createObjectURL(photoUrl));
 
-            if (mediaFile.size! > this.maxUploadSize * 1000000) {
+            if (mediaFile.size > this.maxUploadSize * 1000000) {
               mediaFile.status = MediaFileStatus.ERROR;
               mediaFile.error = MediaFileError.TOO_BIG;
             } else if (!this.mediaType.fileTypes.includes(mediaFile.mimeType)) {

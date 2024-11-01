@@ -18,14 +18,14 @@ export interface MediaResult {
   allowed_privileges: string[];
 }
 
-enum MediaFileError {
+export enum MediaFileError {
   NONE = 'none',
   UNKNOWN = 'unknown',
   TOO_BIG = 'post.media.messages.max_size',
   INVALID_TYPE = 'post.media.messages.invalid_type',
 }
 
-enum MediaFileStatus {
+export enum MediaFileStatus {
   NONE = 'none',
   READY = 'ready',
   UPLOAD = 'upload',
@@ -35,11 +35,12 @@ enum MediaFileStatus {
   DELETE = 'delete',
 }
 
-class MediaFile {
+export class MediaFile {
   id: number;
   generatedId: number;
   file?: File;
   filename: string;
+  fileSize: string;
   url?: string;
   caption: string;
   status: MediaFileStatus;
@@ -66,7 +67,7 @@ class MediaFile {
       this.filename = MediaFile.getFileNameFromUrl(file.original_file_url);
       this.mimeType = file.mime ? file.mime : '';
     }
-    console.log(this.mimeType);
+    this.fileSize = this.getFileSize();
   }
 
   private generateId(): number {
@@ -76,10 +77,8 @@ class MediaFile {
     );
   }
 
-  getFileSize(): string {
-    let filesize = 0;
-    if (this.status === MediaFileStatus.READY) filesize = this.size;
-    else filesize = this.file ? this.file.size : 0;
+  public getFileSize(): string {
+    const filesize = this.file ? this.file.size : this.size;
 
     // Megabytes
     if (filesize > 1000000) {
@@ -110,5 +109,3 @@ class MediaFile {
     return newFilename.substring(firstHyphenIndex);
   }
 }
-
-export { MediaFile, MediaFileError, MediaFileStatus };

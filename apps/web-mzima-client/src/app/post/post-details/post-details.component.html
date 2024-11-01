@@ -190,18 +190,21 @@
                 class="post__documents"
                 *ngIf="field.input === 'document' && field.value.length > 0"
               >
-                <div class="post__documents__item" *ngFor="let mediaFile of field.value">
-                  <a [href]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url)" target="_blank">
-                    <img
-                      class="post__documents__item__thumbnail"
-                      [src]="getDocumentThumbnail(mediaFile)"
-                    />
-                    <div class="post__documents__item__details">
-                      <div class="filename">{{ mediaFile.filename }}</div>
-                      <div class="filesize">{{ mediaFile.getFileSize() }}</div>
-                    </div>
-                  </a>
-                </div>
+                <a
+                  class="post__documents__item"
+                  *ngFor="let mediaFile of field.value"
+                  [href]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url)"
+                  target="_blank"
+                >
+                  <img
+                    class="post__documents__item__thumbnail"
+                    [src]="getDocumentThumbnail(mediaFile)"
+                  />
+                  <div class="post__documents__item__details">
+                    <div class="filename">{{ mediaFile.filename }}</div>
+                    <div class="filesize">{{ mediaFile.fileSize }}</div>
+                  </div>
+                </a>
               </div>
 
               <div class="post__audio" *ngIf="field.input === 'audio' && field.value.length > 0">
