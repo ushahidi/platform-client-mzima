@@ -1,4 +1,3 @@
-import { SafeUrl } from '@angular/platform-browser';
 import { ApiResponse } from './api-response.interface';
 
 export interface MediaResponse extends ApiResponse {
@@ -39,9 +38,9 @@ enum MediaFileStatus {
 class MediaFile {
   id: number;
   generatedId: number;
-  file: File;
+  file?: File;
   filename: string;
-  url: string | SafeUrl | null;
+  url?: string;
   caption: string;
   status: MediaFileStatus;
   size: number;
@@ -49,18 +48,25 @@ class MediaFile {
   value: number;
   error: MediaFileError = MediaFileError.NONE;
 
-  constructor(file: File, url: string | SafeUrl) {
+  constructor(file: File | MediaResult, url: string) {
     this.id = 0;
     this.value = 0;
-    this.filename = file.name;
     this.caption = '';
-    this.size = file.size;
-    this.file = file;
     this.status = MediaFileStatus.NONE;
     this.error = MediaFileError.NONE;
-    this.mimeType = file.type;
     this.url = url;
     this.generatedId = this.generateId();
+    if (file instanceof File) {
+      this.size = file.size;
+      this.file = file;
+      this.filename = file.name;
+      this.mimeType = file.type;
+    } else {
+      this.size = file.original_file_size;
+      this.filename = MediaFile.getFileNameFromUrl(file.original_file_url);
+      this.mimeType = file.mime ? file.mime : '';
+    }
+    console.log(this.mimeType);
   }
 
   private generateId(): number {
@@ -87,6 +93,21 @@ class MediaFile {
     else {
       return filesize + 'bytes';
     }
+  }
+
+  // Our media api returns a relative url with a filename that has an id prepended, instead of the original filename.
+  // This function attempts to take that url, and return the original filename.
+  static getFileNameFromUrl(url: string): string {
+    // Try to use a regex to strip out what we add to the filename and the path
+    const regex = /.*\/[0-9a-fA-F]{13}-(.*)/;
+    const match = url.match(regex);
+    if (match && match[1]) return match[1];
+
+    // The url doesnt have the expected filename, so return everything after the final slash
+    const lastSlashIndex = url.lastIndexOf('/');
+    const newFilename = lastSlashIndex !== -1 ? url.substring(lastSlashIndex + 1) : url;
+    const firstHyphenIndex = newFilename.indexOf('-') + 1;
+    return newFilename.substring(firstHyphenIndex);
   }
 }
 

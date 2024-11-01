@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { catchError, forkJoin, last, Observable, tap, throwError } from 'rxjs';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { MediaUploaderError, MediaType, mediaTypes } from '../../core/interfaces/media';
-import { getDocumentThumbnail, getFileNameFromUrl } from '../../core/helpers/media-helper';
+import { getDocumentThumbnail } from '../../core/helpers/media-helper';
 
 @Component({
   selector: 'app-media-uploader',
@@ -53,7 +53,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
   uploads: Map<number, Observable<any>> = new Map();
 
   constructor(
-    private sanitizer: DomSanitizer,
+    protected sanitizer: DomSanitizer,
     private confirm: ConfirmModalService,
     private translate: TranslateService,
     private mediaService: MediaService,
@@ -115,10 +115,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
           const aFile = inputElement.files.item(i);
           if (aFile) {
             const photoUrl = formHelper.prepareImageFileToUpload(aFile);
-            const mediaFile = new MediaFile(
-              aFile,
-              this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(photoUrl)),
-            );
+            const mediaFile = new MediaFile(aFile, URL.createObjectURL(photoUrl));
 
             if (mediaFile.size! > this.maxUploadSize * 1000000) {
               mediaFile.status = MediaFileStatus.ERROR;
@@ -190,7 +187,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
           });
         forkJoin(Array.from(this.uploads.values())).subscribe((results) => {
           for (const result of results) {
-            const filename = getFileNameFromUrl(result.body.result.original_file_url);
+            const filename = MediaFile.getFileNameFromUrl(result.body.result.original_file_url);
             this.updateMediaFileByNameAndSize(
               filename,
               result.body.result.original_file_size,

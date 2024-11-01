@@ -22,8 +22,16 @@
               class="thumbnail"
               [src]="getDocumentThumbnail(mediaFile)"
             />
-            <img *ngIf="media === 'image'" class="thumbnail" [src]="mediaFile.url" />
-            <audio *ngIf="media === 'audio'" controls [src]="mediaFile.url"></audio>
+            <img
+              *ngIf="media === 'image'"
+              class="thumbnail"
+              [src]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url!)"
+            />
+            <audio
+              *ngIf="media === 'audio'"
+              controls
+              [src]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url!)"
+            ></audio>
             <div class="media-details">
               <div class="filename">{{ mediaFile.filename }}</div>
               <div class="filesize">{{ mediaFile.getFileSize() }}</div>

@@ -1,6 +1,5 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { apiHelpers } from '../helpers';
 import { EnvLoader } from '../loader';
 import { ResourceService } from './resource.service';
@@ -21,7 +20,6 @@ export class MediaService extends ResourceService<any> {
   constructor(
     protected override httpClient: HttpClient,
     protected override currentLoader: EnvLoader,
-    private sanitizer: DomSanitizer,
   ) {
     super(httpClient, currentLoader);
     this.domainPrefix = this.backendUrl.substring(0, this.backendUrl.length - 1);
@@ -87,12 +85,11 @@ export class MediaService extends ResourceService<any> {
     return super.patch(id, { caption });
   }
 
-  private cleanUrl(url: string): SafeUrl {
+  private cleanUrl(url: string): string {
     // If we get back only a relative url for a media request, add the backend domain to it
     if (url[0] === '/') {
       url = this.domainPrefix + url;
     }
-    // also sanitize it to prevent angular thinking we're xssing
-    return this.sanitizer.bypassSecurityTrustUrl(url);
+    return url;
   }
 }
