@@ -998,7 +998,7 @@
         "required" : "Jsou vyžadována média."
       },
       "status" : {
-        "uploading" : "Uploading...",
+        "uploading" : "Nahrávání...",
         "upload_complete" : "Upload Complete!",
         "upload_failed" : "Upload failed!"
       }
