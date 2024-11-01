@@ -1000,7 +1000,7 @@
       "status" : {
         "uploading" : "Nahrávání...",
         "upload_complete" : "Nahrávání dokončeno!",
-        "upload_failed" : "Upload failed!"
+        "upload_failed" : "Nahrávání se nezdařilo!"
       }
     },
     "video": {
