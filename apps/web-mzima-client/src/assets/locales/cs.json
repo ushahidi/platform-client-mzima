@@ -363,7 +363,7 @@
     "audio_desc": "Umožňuje nahrávání zvukových souborů do příspěvku",
     "document_desc": "Umožňuje nahrát do příspěvku dokument(y).",
     "video_desc": "Umožnit vkládání videa Youtube nebo Vimeo do příspěvku",
-    "maximum_upload_size" : "Maximum Upload Size",
+    "maximum_upload_size" : "Maximální velikost nahrávaného souboru",
     "small_upload_size" : "Small",
     "medium_upload_size" : "Medium",
     "large_upload_size" : "Large",
