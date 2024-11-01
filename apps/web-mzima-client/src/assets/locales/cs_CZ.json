@@ -322,7 +322,7 @@
     "title": "Název",
     "field_allowed_relation_survey": "Povolené průzkumy",
     "collect_image_caption": "Zahrnout pole s popisem obrázku",
-    "collect_media_caption": "Include caption field",
+    "collect_media_caption": "Zahrnout pole popisku",
     "disable_caption_field_explanation": "Tím se zakáží a skryjí všechny existující popisky pro toto pole, ale můžete je kdykoli znovu povolit.",
     "description": "Popis",
     "task_description": "Popis ulohy",
