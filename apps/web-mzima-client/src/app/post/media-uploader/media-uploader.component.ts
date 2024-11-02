@@ -14,7 +14,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { catchError, forkJoin, last, Observable, tap, throwError } from 'rxjs';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 import { MediaUploaderError, MediaType, mediaTypes } from '../../core/interfaces/media';
-import { getDocumentThumbnail } from '../../core/helpers/media-helper';
 
 @Component({
   selector: 'app-media-uploader',
@@ -64,7 +63,6 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
   }
 
   // helper method and enum imports for the template
-  getDocumentThumbnail = getDocumentThumbnail;
   MediaUploaderError = MediaUploaderError;
   MediaFileError = MediaFileError;
   MediaFileStatus = MediaFileStatus;

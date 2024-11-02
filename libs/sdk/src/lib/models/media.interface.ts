@@ -41,12 +41,13 @@ export class MediaFile {
   file?: File;
   filename: string;
   fileSize: string;
+  icon?: string;
   url?: string;
   caption: string;
-  status: MediaFileStatus;
   size: number;
   mimeType: string;
   value: number;
+  status: MediaFileStatus;
   error: MediaFileError = MediaFileError.NONE;
 
   constructor(file: File | MediaResult, url: string) {
@@ -68,6 +69,7 @@ export class MediaFile {
       this.mimeType = file.mime ? file.mime : '';
     }
     this.fileSize = this.getFileSize();
+    this.icon = this.getIcon();
   }
 
   private generateId(): number {
@@ -92,6 +94,23 @@ export class MediaFile {
     else {
       return filesize + 'bytes';
     }
+  }
+
+  private getIcon(): string {
+    const path = '/assets/images/logos/';
+    let thumbnail = 'unknown_document.png';
+    switch (this.mimeType) {
+      case 'application/pdf':
+        thumbnail = 'pdf_document.png';
+        break;
+      case 'application/msword':
+        thumbnail = 'word_document.png';
+        break;
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        thumbnail = 'word_document.png';
+        break;
+    }
+    return path + thumbnail;
   }
 
   // Our media api returns a relative url with a filename that has an id prepended, instead of the original filename.

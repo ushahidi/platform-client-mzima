@@ -196,10 +196,7 @@
                   [href]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url)"
                   target="_blank"
                 >
-                  <img
-                    class="post__documents__item__thumbnail"
-                    [src]="getDocumentThumbnail(mediaFile)"
-                  />
+                  <img class="post__documents__item__thumbnail" [src]="mediaFile.icon" />
                   <div class="post__documents__item__details">
                     <div class="filename">{{ mediaFile.filename }}</div>
                     <div class="filesize">{{ mediaFile.fileSize }}</div>

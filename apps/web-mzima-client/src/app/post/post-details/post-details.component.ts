@@ -30,7 +30,6 @@ import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { dateHelper } from '@helpers';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
-import { getDocumentThumbnail } from '../../core/helpers/media-helper';
 
 @Component({
   selector: 'app-post-details',
@@ -86,9 +85,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       }
     });
   }
-
-  // Import Helper Methods for the template
-  getDocumentThumbnail = getDocumentThumbnail;
 
   loadData(): void {}
 
