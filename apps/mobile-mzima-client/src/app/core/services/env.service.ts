@@ -29,7 +29,6 @@ export class EnvService {
       }
     } else {
       if (envy.backend_url) {
-        // this.env = envy;
         const deployment: Deployment = {
           id: this.deploymentService.generateRandomId(),
           domain: envy.backend_url,
