@@ -21,10 +21,15 @@ export class EnvService {
 
   async initEnv(): Promise<EnvConfigInterface> {
     const envy: EnvConfigInterface = await fetch('./env.json').then((res) => res.json());
-    envy['backend_url'] = null;
-    if (this.deploymentUrl) {
-      envy.backend_url = this.deploymentUrl;
+    if (envy['production']) {
+      envy['backend_url'] = null;
+      if (this.deploymentUrl) {
+        envy.backend_url = this.deploymentUrl;
+      }
+    } else {
+      if (envy.backend_url) this.setDynamicBackendUrl();
     }
+
     EnvService.ENV = envy;
     this.env = envy;
     return envy;
@@ -44,7 +49,7 @@ export class EnvService {
   setDynamicBackendUrl() {
     const deployment: any = this.deploymentService.getDeployment();
     const envy: EnvConfigInterface = this.env;
-    envy.backend_url = this.deploymentUrl;
+    if (envy.production) envy.backend_url = this.deploymentUrl;
     EnvService.ENV = envy;
     this.env = envy;
     this.deployment.next(deployment);
