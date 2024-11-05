@@ -995,7 +995,8 @@
       "messages": {
         "max_size" : "Your file is too large.",
         "max_files" : "You have exceeded the maximum number of files.",
-        "required" : "Media is required."
+        "required" : "Media is required.",
+        "invalid_type" : "Unsupported file type."
       },
       "status" : {
         "uploading" : "Uploading...",
