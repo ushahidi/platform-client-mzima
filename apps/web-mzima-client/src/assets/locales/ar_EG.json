@@ -995,7 +995,8 @@
       "messages": {
         "max_size" : "الملف الذي قمت بتحميله ذو حجم كبير",
         "max_files" : "تجاوزت الحد الأعلى لعدد الملفات",
-        "required" : "الوسائط مطلوبة"
+        "required" : "الوسائط مطلوبة",
+        "invalid_type" : "Unsupported file type."
       },
       "status" : {
         "uploading" : "جاري التحميل ...",
