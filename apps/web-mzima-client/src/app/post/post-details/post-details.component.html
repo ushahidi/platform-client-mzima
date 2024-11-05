@@ -161,103 +161,102 @@
                     field.value.mediaCaption
                   }}</span>
                 </div>
-              </div>
-            </ng-container>
+              </ng-container>
 
-            <ng-container *ngIf="field.input === 'upload' && field.value[0].url">
-              <span *ngIf="!field.value[0].value">-</span>
-              <div class="post__media">
-                <img *ngIf="field.value[0].value" [src]="field.value[0].url" [alt]="post.title" />
-                <span *ngIf="field.value[0].caption?.length" class="post__media__caption">{{
-                  field.value[0].caption
-                }}</span>
-              </div>
-            </ng-container>
-
-            <div class="post__images">
-              <ng-container *ngIf="field.input === 'image' && field.value.length > 0">
-                <div class="post__images__item" *ngFor="let mediaFile of field.value">
-                  <img *ngIf="mediaFile.value" [src]="mediaFile.url" [alt]="post.title" />
-                  <span *ngIf="mediaFile.caption?.length" class="post__images__item__caption">{{
-                    mediaFile.caption
+              <ng-container *ngIf="field.input === 'upload' && field.value[0].url">
+                <span *ngIf="!field.value[0].value">-</span>
+                <div class="post__media">
+                  <img *ngIf="field.value[0].value" [src]="field.value[0].url" [alt]="post.title" />
+                  <span *ngIf="field.value[0].caption?.length" class="post__media__caption">{{
+                    field.value[0].caption
                   }}</span>
                 </div>
               </ng-container>
-            </div>
 
-            <div class="post__documents">
-              <ng-container *ngIf="field.input === 'document' && field.value.length > 0">
-                <a
-                  class="post__documents__item"
-                  [href]="mediaFile.url"
-                  target="_blank"
-                  *ngFor="let mediaFile of field.value"
-                >
-                  <img
-                    class="post__documents__item__thumbnail"
-                    [src]="getDocumentThumbnail(mediaFile)"
-                  />
-                  <div class="post__documents__item__details">
-                    <div class="filename">{{ mediaFile.filename }}</div>
-                    <div class="filesize">{{ getFileSize(mediaFile) }}</div>
+              <div class="post__images">
+                <ng-container *ngIf="field.input === 'image' && field.value.length > 0">
+                  <div class="post__images__item" *ngFor="let mediaFile of field.value">
+                    <img *ngIf="mediaFile.value" [src]="mediaFile.url" [alt]="post.title" />
+                    <span *ngIf="mediaFile.caption?.length" class="post__images__item__caption">{{
+                      mediaFile.caption
+                    }}</span>
                   </div>
+                </ng-container>
+              </div>
+
+              <div class="post__documents">
+                <ng-container *ngIf="field.input === 'document' && field.value.length > 0">
+                  <a
+                    class="post__documents__item"
+                    [href]="mediaFile.url"
+                    target="_blank"
+                    *ngFor="let mediaFile of field.value"
+                  >
+                    <img
+                      class="post__documents__item__thumbnail"
+                      [src]="getDocumentThumbnail(mediaFile)"
+                    />
+                    <div class="post__documents__item__details">
+                      <div class="filename">{{ mediaFile.filename }}</div>
+                      <div class="filesize">{{ getFileSize(mediaFile) }}</div>
+                    </div>
+                  </a>
+                </ng-container>
+              </div>
+
+              <div class="post__audio">
+                <ng-container *ngIf="field.input === 'audio' && field.value.length > 0">
+                  <div class="post__audio__item" *ngFor="let mediaFile of field.value">
+                    <span class="post__audio__item__filename">{{ mediaFile.filename }}</span>
+                    <audio controls [src]="mediaFile.url"></audio>
+                  </div>
+                </ng-container>
+              </div>
+
+              <ng-container *ngIf="field.input === 'relation'">
+                <a [href]="field.value.postUrl" target="_blank">
+                  {{ field.value.postTitle }}
                 </a>
               </ng-container>
-            </div>
 
-            <div class="post__audio">
-              <ng-container *ngIf="field.input === 'audio' && field.value.length > 0">
-                <div class="post__audio__item" *ngFor="let mediaFile of field.value">
-                  <span class="post__audio__item__filename">{{ mediaFile.filename }}</span>
-                  <audio controls [src]="mediaFile.url"></audio>
-                </div>
+              <ng-container *ngIf="field.input === 'select'">
+                <p>{{ field.value.value || '-' }}</p>
+              </ng-container>
+
+              <ng-container *ngIf="field.input === 'markdown'">
+                <span class="code-container">
+                  <code>{{ field.value.value || '-' }}</code>
+                </span>
               </ng-container>
             </div>
-
-            <ng-container *ngIf="field.input === 'relation'">
-              <a [href]="field.value.postUrl" target="_blank">
-                {{ field.value.postTitle }}
-              </a>
-            </ng-container>
-
-            <ng-container *ngIf="field.input === 'select'">
-              <p>{{ field.value.value || '-' }}</p>
-            </ng-container>
-
-            <ng-container *ngIf="field.input === 'markdown'">
-              <span class="code-container">
-                <code>{{ field.value.value || '-' }}</code>
-              </span>
-            </ng-container>
-          </div>
-
+          </ng-container>
         </ng-container>
       </ng-container>
+      <!-- Skeleton Loader -->
+      <div *ngIf="postChanged" class="loader">
+        <div class="loader__post-head">
+          <span class="loader__post-head-item"></span>
+          <span class="loader__post-head-item"></span>
+          <span class="loader__post-head-item"></span>
+        </div>
+        <div>
+          <div class="loader__spinner">
+            <app-spinner></app-spinner>
+          </div>
+        </div>
+        <div class="loader__post-survey"></div>
+        <div class="loader__post-title"></div>
+        <div class="loader__metadata">
+          <div class="loader__avatar"></div>
+          <div class="">
+            <div class="loader__metadata-top"></div>
+            <div class="loader__metadata-bottom"></div>
+          </div>
+        </div>
+        <div class="loader__content"></div>
+      </div>
+      <!--  -->
     </ng-container>
-    <!-- Skeleton Loader -->
-    <div *ngIf="postChanged" class="loader">
-      <div class="loader__post-head">
-        <span class="loader__post-head-item"></span>
-        <span class="loader__post-head-item"></span>
-        <span class="loader__post-head-item"></span>
-      </div>
-      <div>
-        <div class="loader__spinner">
-          <app-spinner></app-spinner>
-        </div>
-      </div>
-      <div class="loader__post-survey"></div>
-      <div class="loader__post-title"></div>
-      <div class="loader__metadata">
-        <div class="loader__avatar"></div>
-        <div class="">
-          <div class="loader__metadata-top"></div>
-          <div class="loader__metadata-bottom"></div>
-        </div>
-      </div>
-      <div class="loader__content"></div>
-    </div>
-    <!--  -->
   </ng-container>
 </div>
 <ng-container *ngIf="isManagePosts && !postChanged">
