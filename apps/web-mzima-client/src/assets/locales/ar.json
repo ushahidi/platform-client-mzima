@@ -1057,7 +1057,7 @@
     "edit_webhook": "قم بتعديل الدور",
     "uuid": "Webhook UUID",
     "name": "الاسم",
-    "shared_secret": "مشاركة القيمة السرية",
+    "shared_secret": "القيمة السرية. المشتركة",
     "url": "الرابط لواجهة برمجة التطبيقات  \"API URL\"",
     "entity_type": "نوع الكيان",
     "event_type": "نوع الحدث",
