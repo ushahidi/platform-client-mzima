@@ -297,7 +297,7 @@
     "select_color": "Select color",
     "choose_survey": "اختر استبيان",
     "marked_for_internal": {
-      "header": "Internal Use Only",
+      "header": "للإستخدام الداخلي فقط",
       "body": "تم وضع علامة على هذه المهمة للاستخدام الداخلي فقط. لا يراها المستخدمون عند إنشاء منشور."
     },
     "task_is_marked_as": {
