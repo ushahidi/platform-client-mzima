@@ -529,7 +529,7 @@
     "sorting": "ترتيب",
     "sort": {
       "order": {
-        "filter_type_tag": "رتب",
+        "filter_type_tag": "ترتيب",
         "desc": "الاجدد اولا",
         "asc": "اقدم اولا"
       },
