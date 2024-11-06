@@ -1213,7 +1213,7 @@
       "user_settings": "Configure HDX API",
       "user_settings_desc": "قم بتكوين واجهة برمجة التطبيقات\"API\" الخاصة بك بحيث يمكن تحميل بيانات Ushahidi المحددة إلى حسابك على منصة تبادل البيانات الإنسانية (HDX).",
       "export": "تصدير البيانات",
-      "export_hxl": "Export and tag data",
+      "export_hxl": "تصدير ووضع علامات على البيانات",
       "export_desc_hxl": "Export your data as a CSV file or assign tags and attributes to your data and upload directly to a Humanitarian Data Exchange (HDX) account or export as a tagged CSV file.",
       "export_desc": "قم بتصدير جميع بياناتك کملف CSV او قم بإختيار حقول مخصوصة",
       "users": "المستخدمون.",
