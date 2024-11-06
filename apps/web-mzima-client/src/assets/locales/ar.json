@@ -372,7 +372,7 @@
     "task_visible_when_published": "ستكون هذه المهمة مرئية عند نشر المنشور",
     "show_field_description": "إضافة حقل للوصف (إختياري):",
     "add_field": "Add {{fieldType | lowercase}} field",
-    "edit_field": "Edit {{fieldType | lowercase}} field",
+    "edit_field": "تعديل الحقل {{fieldType | lowercase}}",
     "build": "إنشاء",
     "configure": "تهيئة",
     "require_section": "يجب إتمام هذه المهمة قبل أن يصبح المنشور مرئي للجمهور",
