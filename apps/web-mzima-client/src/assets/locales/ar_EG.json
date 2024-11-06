@@ -1084,7 +1084,7 @@
       }
     },
     "errors": {
-      "permissions": "You do not have permission to view this collection"
+      "permissions": "ليس لديك صلاحية لعرض هذه المجموعة"
     }
   },
   "set": {
