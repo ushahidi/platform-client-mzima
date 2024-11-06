@@ -1261,7 +1261,7 @@
       "enable_source_destination_desc": "هذا webhook سيستخدم فقط لكي يطبق في الاستبيان المختار",
       "destination": "الوجهة",
       "placeholder": {
-        "name": "الرجاء إدخال اسم خطاف الويب",
+        "name": "الرجاء إدخال اسم الـ Webhook",
         "shared_secret": "الرجاء إدخال السر المشترك",
         "api_url": "الرجاء إدخال عنوان رابط لواجهة برمجة التطبيقات \"API URL\""
       },
