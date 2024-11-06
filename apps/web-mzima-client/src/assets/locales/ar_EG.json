@@ -621,7 +621,7 @@
     "saved_filter": "Saved filter",
     "no_saved_filters": "لا توجد فلاتر محفوظة. ستظهر الفلاتر المحفوظة هنا لتختارها بمجرد توفرها.",
     "save_new_filter": "حفظ فلتر جديد",
-    "clear_all_filters": "Clear all filters",
+    "clear_all_filters": "مسح جميع الفلاتر",
     "delete_this_saved_filter": "Are you sure you want to delete this saved filter?"
   },
   "graph": {
