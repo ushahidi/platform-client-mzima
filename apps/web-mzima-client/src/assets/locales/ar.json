@@ -1273,7 +1273,7 @@
           "event_type": "نوع الحدث مطلوب",
           "event_entity": "كيان الحدث مطلوب"
         },
-        "please_provide_valid_api_url": "يرجى تقديم عنوان URL صالح لواجهة برمجة التطبيقات مع http(s)://",
+        "please_provide_valid_api_url": "يرجى تقديم عنوان URL صالح لـAPI مع http(s)://",
         "secret_key_cannot_be_less_start": "المفتاح السري المشترك لا يمكن أن يقل عن",
         "secret_key_cannot_be_less_end": "الأحرف"
       }
