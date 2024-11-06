@@ -1721,7 +1721,7 @@
       "destroy_success": "Account removed successfully"
     },
     "default": {
-      "data_has_not_been_saved": "The data has not been saved!",
+      "data_has_not_been_saved": "لم يتم حفظ البيانات!",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Saved resource",
       "save_error": "Unable to save resource, please try again",
