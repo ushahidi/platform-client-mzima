@@ -572,7 +572,7 @@
       "current_stage": "المهمة الحالية",
       "set": "المجموعة",
       "status": "الحالة",
-      "expires": "ينتهي",
+      "expires": "تنتهي الصلاحية في ",
       "download": "تحميل",
       "location_value": "ضمن مسافة {{km}} كم من {{value}}",
       "visible_to": "يظهر لـ",
