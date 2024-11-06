@@ -543,7 +543,7 @@
       }
     },
     "filter_tabs": {
-      "order": "قم بالطلب",
+      "order": "ترتيب",
       "order_group": {
         "orderby": {
           "post_date": "تاريخ المنشور",
