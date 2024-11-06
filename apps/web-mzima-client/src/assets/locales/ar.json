@@ -1293,7 +1293,7 @@
       "provider_options": "الخيارات",
       "configure": "تأكيد",
       "options": "الخيارات",
-      "saving_changes": "حفظ.",
+      "saving_changes": "حفظ",
       "unavailable": "مصدر البيانات {{value}} غير متوفر. <a href=\"/settings/plan\"> الرجاء تحديث خطتك </A> للحصول عليه!",
       "email": {
         "incoming_server_type": "نوع سرفر الآتية",
