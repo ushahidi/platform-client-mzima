@@ -1640,7 +1640,7 @@
     "passwordreset_confirm_instructions": "في حالة وجود بريدك الإلكتروني في قاعدة بياناتنا، سوف تتلقى قريبا رسالة   لاستعادة كلمة سرك. ",
     "forgot_instructions": "لا تقلق! أرسل بريدك الإلكتروني وتحقق من صندوق الوارد الخاص بك للحصول على رابط إعادة تعيين كلمة المرور.",
     "token": "رمز المميز لاعادة طلب كلمة السر ",
-    "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
+    "password_hint": "يجب أن يتكون كلمة المرور من 8 أحرف على الأقل، حرف صغير واحد، حرف كبير واحد، رقم واحد ورمز واحد",
     "password_length": "Password must be at least 8 characters long",
     "password_match": "Passwords do not match",
     "check_email": "Check your email",
