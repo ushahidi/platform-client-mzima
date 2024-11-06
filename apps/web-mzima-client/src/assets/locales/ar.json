@@ -360,7 +360,7 @@
     "checkbox_desc": "يتيح هذا للمستخدم اختيار واحد أو أكثر من مجموعة مُعرفة مسبقًا من الخيارات.",
     "relation_desc": "إنشاء علاقة بين الاستبيانات المختلفة",
     "upload_desc": "يسمح بتحميل صورة (صور) إلى المنشور.",
-    "audio_desc": "Allows audio file(s) to be uploaded to the post",
+    "audio_desc": "يسمح بتحميل ملفات صوتية إلى المنشور",
     "document_desc": "Allows document(s) to be uploaded to the post",
     "video_desc": "يسمح بإدراج مقاطع فيديو من YouTube أو Vimeo في المنشور.",
     "maximum_upload_size" : "Maximum Upload Size",
