@@ -1068,7 +1068,7 @@
     "delete_webhook_desc": "<strong>إذا مسحت هذه الـ webhook</strong>، کل حوادث webhook الموصولة سيتم حذفها. تقدم بحذر"
   },
   "saved_search": {
-    "visible_to_public": "هذا البحث المحفوظ يظهر للجميع",
+    "visible_to_public": "هذا البحث المحفوظ مرئي للجميع",
     "visible_to_you": "هذا البحث المحفوظ يظهر لك وللمسؤولين فقط",
     "visible_to_roles": "هذا البحث المحفوظ يظهر لـ {{roles}}",
     "featured": "مميز",
