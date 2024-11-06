@@ -366,7 +366,7 @@
     "maximum_upload_size" : "أقصى حجم للتحميل",
     "small_upload_size" : "صغير",
     "medium_upload_size" : "وسط",
-    "large_upload_size" : "Large",
+    "large_upload_size" : "كبير",
     "markdown_desc": "Allows the use of markdown syntax to style the field content.",
     "tasks": "Tasks",
     "task_visible_when_published": "This task will be visible when post is published.",
@@ -402,7 +402,7 @@
     "choose_survey_field": "Choose what should be assigned to each survey field",
     "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
     "who_can_contribute_to_task": "Who can contribute to fields in this task",
-    "view_detail": "Detail",
+    "view_detail": "تفاصيل",
     "no_options_for_this_field": "No options for this field",
     "add_options_first": "Add options first",
     "delete": {
