@@ -575,7 +575,7 @@
       "expires": "تنتهي الصلاحية في ",
       "download": "تحميل",
       "location_value": "ضمن مسافة {{km}} كم من {{value}}",
-      "visible_to": "يظهر لـ",
+      "visible_to": "مرئي لـ",
       "user": "مستخدم",
       "has_location": "مواقع المنشور",
       "all_posts": "اظهر كافة المنشورات",
