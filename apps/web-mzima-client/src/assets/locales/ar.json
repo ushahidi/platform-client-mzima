@@ -38,7 +38,7 @@
     "disable_monetization": "تعطيل الربح",
     "enable_monetization": "تفعيل الربح",
     "enable_monetization_error": "يرجى ملء الحقول المطلوبة أعلاه قبل تفعيل الربح.",
-    "enable_monetization_info": "Monetization is currently disabled.",
+    "enable_monetization_info": "الربح معطل حاليا",
     "intercom": {
       "intercom": "نظام الإتصال الداخلي",
       "description": "قم بتواصل مع موظفين Ushahidi لتقديم الدعم"
