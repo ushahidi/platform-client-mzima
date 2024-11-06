@@ -970,7 +970,7 @@
         "parse": "لا يمكن قراءة \"{{label}}\"",
         "date": "\"{{label}}\" يجب أن يكون تاريخ",
         "number": "\"{{label}}\" يجب أن يكون رقم",
-        "step": "\"{{label}}\" must be an integer"
+        "step": "يجب أن يكون \"{{label}}\" عددًا صحيحًا"
       },
       "author_name": {
         "maxlength": " الإسم طويل جدا"
