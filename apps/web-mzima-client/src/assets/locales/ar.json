@@ -1226,7 +1226,7 @@
       "webhooks_desc": "إنشاء Webhooks لإرسال بيانات منصة Ushahidi إلى تطبيقات خارجية عند حدوث أحداث معينة.",
       "plans": "الخطط",
       "plan_desc": "خطة منصتك الحالية هي  <strong>{{current_plan}}</strong>",
-      "donation": "Donation",
+      "donation": "تبرع",
       "donation_desc": "Create and manage the donations people can make towards your organisation."
     },
     "general_settings": {
