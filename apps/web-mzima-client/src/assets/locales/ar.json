@@ -1477,7 +1477,7 @@
     "see_imported_posts": "عرض المنشورات المستوردة",
     "import_another_csv": "استيراد ملف CSV آخر",
     "import_complete": "اكتمل الاستيراد",
-    "import_error": "An error has occurred importing your CSV file.",
+    "import_error": "حدث خطأ أثناء استيراد ملف CSV الخاص بك.",
     "complete_info": "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
     "get_polling_info": "الحصول على معلومات الاقتراع",
     "import_another": "استيراد ملف CSV آخر",
