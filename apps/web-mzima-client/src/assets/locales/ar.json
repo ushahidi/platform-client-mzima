@@ -996,7 +996,7 @@
         "max_size" : "الملف الذي قمت بتحميله ذو حجم كبير",
         "max_files" : "تجاوزت الحد الأعلى لعدد الملفات",
         "required" : "الوسائط مطلوبة",
-        "invalid_type" : "Unsupported file type."
+        "invalid_type" : "نوع الملف غير مدعوم."
       },
       "status" : {
         "uploading" : "جاري التحميل ...",
