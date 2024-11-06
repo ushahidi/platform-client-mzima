@@ -433,7 +433,7 @@
     "fields": {
       "fields_title": "حقول",
       "validation": {
-        "required": "Required fields are missing, these fields are marked with an *.",
+        "required": "الحقول المطلوبة مفقودة، هذه الحقول تم وضع علامة * عليها.",
         "special_characters": "يحتوي {{name}} الحقل على أحرف خاصة"
       }
     },
