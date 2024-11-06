@@ -361,7 +361,7 @@
     "relation_desc": "إنشاء علاقة بين الاستبيانات المختلفة",
     "upload_desc": "يسمح بتحميل صورة (صور) إلى المنشور.",
     "audio_desc": "يسمح بتحميل ملف(ات) صوتية إلى المنشور",
-    "document_desc": "Allows document(s) to be uploaded to the post",
+    "document_desc": "يسمح بتحميل مستند(ات) إلى المنشور",
     "video_desc": "يسمح بإدراج مقاطع فيديو من YouTube أو Vimeo في المنشور.",
     "maximum_upload_size" : "Maximum Upload Size",
     "small_upload_size" : "Small",
