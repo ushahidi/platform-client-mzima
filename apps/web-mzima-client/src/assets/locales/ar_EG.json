@@ -618,7 +618,7 @@
     "status": "Status",
     "source": "Source",
     "saved_filters": "فلاتر محفوظة",
-    "saved_filter": "Saved filter",
+    "saved_filter": "فلتر المحفوظ",
     "no_saved_filters": "لا توجد فلاتر محفوظة. ستظهر الفلاتر المحفوظة هنا لتختارها بمجرد توفرها.",
     "save_new_filter": "حفظ فلتر جديد",
     "clear_all_filters": "مسح جميع الفلاتر",
