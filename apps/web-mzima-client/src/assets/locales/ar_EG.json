@@ -361,7 +361,7 @@
     "relation_desc": "Create a relation between different surveys",
     "upload_desc": "Allows image(s) to be uploaded to the post",
     "audio_desc": "يسمح بتحميل ملفات صوتية إلى المنشور",
-    "document_desc": "Allows document(s) to be uploaded to the post",
+    "document_desc": "يسمح بتحميل مستند(ات) إلى المنشور",
     "video_desc": "Allows Youtube or Vimeo videos to be embed in the post",
     "maximum_upload_size" : "Maximum Upload Size",
     "small_upload_size" : "Small",
