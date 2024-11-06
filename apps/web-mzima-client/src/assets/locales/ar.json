@@ -1339,7 +1339,7 @@
           "secret_desc": "قيمة السرية",
           "api_key": "مفتاح API",
           "api_secret": "سر API ",
-          "api_secret_desc": "سر الـ API "
+          "api_secret_desc": "القيمة السرية سر لـ API"
         },
         "smssync": {
           "intro_step_1": "الخطوة ١: قم بتحميل تطبيق 'SMSSync' من متجر اندرويد.",
