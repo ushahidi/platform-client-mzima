@@ -587,7 +587,7 @@
     "unmapped_start_many": "يوجد",
     "unmapped_one": "{{ notShownPostsCount }} منشورا",
     "unmapped_many": "{{ notShownPostsCount }} منشوراً",
-    "unmapped_end": "غير مكتوب هنا لانهم لايشملون معلومات عن الموقع",
+    "unmapped_end": "غير مرئي هنا لانهم لايشملون معلومات عن الموقع",
     "unmapped_none": "لا يوجد منشورات بدون معلومات الموقع.",
     "more": "المزيد",
     "keyword": "كلمة مفتاحية",
