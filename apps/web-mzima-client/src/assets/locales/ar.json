@@ -1337,7 +1337,7 @@
           "from": "من",
           "from_desc": "رقم المرسل",
           "secret_desc": "قيمة السرية",
-          "api_key": "مفتاح API ",
+          "api_key": "مفتاح API",
           "api_secret": "سر API ",
           "api_secret_desc": "سر الـ API "
         },
