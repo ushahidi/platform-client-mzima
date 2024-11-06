@@ -1576,7 +1576,7 @@
     "privacy_desc": "You have a choice of sharing your dataset publicly or restricting access to other members of the organisation which owns the dataset.",
     "this_dataset": "This data set is:",
     "private_desc": "خاص (فقط انت وبقية الاشخاص HDX من منظمتك يمكنهم <strong>البحث ، العرض و التعديل</strong> أو <strong> تنزيل </strong>مجموعة البيانات)",
-    "public_desc": "<strong>Public</strong> (Anyone can <strong>search, view/edit</strong> or <strong> download </strong> this dataset)",
+    "public_desc": "العام (اي شخصي يمكنه آن <strong>يبحث يستعرض/ يعدل</strong> أو<strong> ينزل </strong> مجموعة البيانات)",
     "dataset": "Dataset Title & Description",
     "dataset_desc": "When users search for data on HDX, their search terms will be matched to terms in your title. Avoid using abbreviations in the title which may not be familiar to all users. Also, avoid using words such as current, latest or previous when referring to the time period (e.g Latest 3W) as these terms become misleading as the dataset ages.",
     "dataset_example": "Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong>",
