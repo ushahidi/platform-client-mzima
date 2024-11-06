@@ -944,7 +944,7 @@
       "previous_page": "<<الصفحة السابقة",
       "next_page": "الصفحة التالية>>",
       "empty_message_error": "يجب إضافة رسالة",
-      "no_messages": "There are no messages yet. Start a conversation with the author by sending a message below."
+      "no_messages": "لا توجد رسائل بعد. ابدأ محادثة مع الكاتب بإرسال رسالة أدناه."
     },
     "valid": {
       "no_changes": "You haven’t made any changes",
