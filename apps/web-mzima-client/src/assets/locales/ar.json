@@ -875,7 +875,7 @@
       "unlock": "الغاء القفل",
       "lock_broken_by_other": "تم إلغاء قفل منشورك. سيتم فقد التغييرات الحالية غير المحفوظة.",
       "locked_message": "هذا المنشور مقفل لأن المستخدم <strong>{{ user }}</strong>يعمل عليه حاليا، يرجى العمل على منشور آخر.",
-      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+      "locked_tooltip": "هذا المنشور قيد التعديل من قبل شخص آخر. يرجى المحاولة مرة أخرى لاحقًا."
 
     },
     "modify": {
