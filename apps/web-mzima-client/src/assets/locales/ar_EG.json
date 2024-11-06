@@ -1261,7 +1261,7 @@
       "enable_source_destination_desc": "This webhook will only be applied to Surveys of the selected type.",
       "destination": "Destination",
       "placeholder": {
-        "name": "Please enter webhook name",
+        "name": "الرجاء إدخال اسم الـ Webhook",
         "shared_secret": "Please enter shared secret",
         "api_url": "الرجاء إدخال عنوان رابط لواجهة برمجة التطبيقات \"API URL\""
       },
