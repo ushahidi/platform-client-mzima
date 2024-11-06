@@ -366,7 +366,7 @@
     "maximum_upload_size" : "أقصى حجم للتحميل",
     "small_upload_size" : "صغير",
     "medium_upload_size" : "وسط",
-    "large_upload_size" : "Large",
+    "large_upload_size" : "كبير",
     "markdown_desc": "يسمح باستخدام صيغة markdown لتنسيق محتوى الحقل.",
     "tasks": "المهام",
     "task_visible_when_published": "ستكون هذه المهمة مرئية عند نشر المنشور",
@@ -402,7 +402,7 @@
     "choose_survey_field": "اختر ما يجب تعيينه لكل حقل من حقول الاستبيان",
     "choose_survey_field_desc": "تم سرد كل حقول الاستبيان أدناه. اختر البيانات من {{datasource_type}} التي ترغب في استخدامها لملء كل واحد من هذه الحقول.",
     "who_can_contribute_to_task": "من يمكنه المساهمة في حقول هذه المهمة",
-    "view_detail": "Detail",
+    "view_detail": "تفاصيل",
     "no_options_for_this_field": "لا توجد خيارات لهذا الحقل",
     "add_options_first": "إضافة الخيارات أولا",
     "delete": {
