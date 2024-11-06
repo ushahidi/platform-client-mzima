@@ -173,44 +173,45 @@
                 </div>
               </ng-container>
 
-              <div class="post__images">
-                <ng-container *ngIf="field.input === 'image' && field.value.length > 0">
-                  <div class="post__images__item" *ngFor="let mediaFile of field.value">
-                    <img *ngIf="mediaFile.value" [src]="mediaFile.url" [alt]="post.title" />
-                    <span *ngIf="mediaFile.caption?.length" class="post__images__item__caption">{{
-                      mediaFile.caption
-                    }}</span>
-                  </div>
-                </ng-container>
+              <div class="post__images" *ngIf="field.input === 'image' && field.value.length > 0">
+                <div class="post__images__item" *ngFor="let mediaFile of field.value">
+                  <img
+                    *ngIf="mediaFile.value"
+                    [src]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url)"
+                    [alt]="post.title"
+                  />
+                  <span *ngIf="mediaFile.caption?.length" class="post__images__item__caption">{{
+                    mediaFile.caption
+                  }}</span>
+                </div>
               </div>
 
-              <div class="post__documents">
-                <ng-container *ngIf="field.input === 'document' && field.value.length > 0">
-                  <a
-                    class="post__documents__item"
-                    [href]="mediaFile.url"
-                    target="_blank"
-                    *ngFor="let mediaFile of field.value"
-                  >
-                    <img
-                      class="post__documents__item__thumbnail"
-                      [src]="getDocumentThumbnail(mediaFile)"
-                    />
-                    <div class="post__documents__item__details">
-                      <div class="filename">{{ mediaFile.filename }}</div>
-                      <div class="filesize">{{ getFileSize(mediaFile) }}</div>
-                    </div>
-                  </a>
-                </ng-container>
+              <div
+                class="post__documents"
+                *ngIf="field.input === 'document' && field.value.length > 0"
+              >
+                <a
+                  class="post__documents__item"
+                  *ngFor="let mediaFile of field.value"
+                  [href]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url)"
+                  target="_blank"
+                >
+                  <img class="post__documents__item__thumbnail" [src]="mediaFile.icon" />
+                  <div class="post__documents__item__details">
+                    <div class="filename">{{ mediaFile.filename }}</div>
+                    <div class="filesize">{{ mediaFile.fileSize }}</div>
+                  </div>
+                </a>
               </div>
 
-              <div class="post__audio">
-                <ng-container *ngIf="field.input === 'audio' && field.value.length > 0">
-                  <div class="post__audio__item" *ngFor="let mediaFile of field.value">
-                    <span class="post__audio__item__filename">{{ mediaFile.filename }}</span>
-                    <audio controls [src]="mediaFile.url"></audio>
-                  </div>
-                </ng-container>
+              <div class="post__audio" *ngIf="field.input === 'audio' && field.value.length > 0">
+                <div class="post__audio__item" *ngFor="let mediaFile of field.value">
+                  <span class="post__audio__item__filename">{{ mediaFile.filename }}</span>
+                  <audio
+                    controls
+                    [src]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url)"
+                  ></audio>
+                </div>
               </div>
 
               <ng-container *ngIf="field.input === 'relation'">

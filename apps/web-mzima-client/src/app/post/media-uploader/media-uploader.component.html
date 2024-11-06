@@ -8,7 +8,8 @@
         >
           <ng-container
             *ngIf="
-              mediaFile.status === 'ready' || mediaFile.status === 'uploaded';
+              mediaFile.status === MediaFileStatus.READY ||
+                mediaFile.status === MediaFileStatus.UPLOADED;
               then itemReady;
               else inProgress
             "
@@ -16,35 +17,41 @@
           </ng-container>
 
           <ng-template #itemReady>
+            <img *ngIf="media === 'document'" class="thumbnail" [src]="mediaFile.icon" />
             <img
-              *ngIf="media === 'document'"
+              *ngIf="media === 'image'"
               class="thumbnail"
-              [src]="getDocumentThumbnail(mediaFile)"
+              [src]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url!)"
             />
-            <img *ngIf="media === 'image'" class="thumbnail" [src]="mediaFile.url" />
-            <audio *ngIf="media === 'audio'" controls [src]="mediaFile.url"></audio>
+            <audio
+              *ngIf="media === 'audio'"
+              controls
+              [src]="this.sanitizer.bypassSecurityTrustUrl(mediaFile.url!)"
+            ></audio>
             <div class="media-details">
               <div class="filename">{{ mediaFile.filename }}</div>
-              <div class="filesize">{{ getFileSize(mediaFile) }}</div>
+              <div class="filesize">{{ mediaFile.fileSize }}</div>
             </div>
           </ng-template>
 
           <ng-template #inProgress>
             <div class="media-blank">
               <mat-icon
-                *ngIf="mediaFile.status === 'error' || mediaFile.status === 'too_big'"
+                *ngIf="mediaFile.status === MediaFileStatus.ERROR"
                 class="xicon"
                 icon
                 svgIcon="warning"
               ></mat-icon>
-              <div class="media-error" *ngIf="mediaFile.status === 'too_big'">
-                {{ ErrorEnum.MAX_SIZE | translate }}
+              <div class="media-error" *ngIf="mediaFile.status === MediaFileStatus.ERROR">
+                {{ mediaFile.error! | translate }}
               </div>
               <app-spinner
                 class="loading-spinner"
-                *ngIf="mediaFile.status === 'uploading'"
+                *ngIf="mediaFile.status === MediaFileStatus.UPLOADING"
               ></app-spinner>
-              <div class="media-status" *ngIf="mediaFile.status === 'uploading'">Uploading...</div>
+              <div class="media-status" *ngIf="mediaFile.status === MediaFileStatus.UPLOADING">
+                Uploading...
+              </div>
             </div>
           </ng-template>
 
@@ -52,7 +59,9 @@
             class="status-button"
             (click)="clickDeleteButton(mediaFile.value, mediaFile.generatedId)"
           >
-            <ng-container *ngIf="mediaFile.status === 'uploaded'; then check; else cross">
+            <ng-container
+              *ngIf="mediaFile.status === MediaFileStatus.UPLOADED; then check; else cross"
+            >
             </ng-container>
             <ng-template #check>
               <mat-icon class="xicon" fontIcon="check"></mat-icon>

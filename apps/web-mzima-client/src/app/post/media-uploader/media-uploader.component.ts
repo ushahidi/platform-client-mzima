@@ -9,16 +9,11 @@ import {
 } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { formHelper } from '@helpers';
-import { MediaService } from '@mzima-client/sdk';
+import { MediaFile, MediaFileError, MediaFileStatus, MediaService } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { catchError, forkJoin, last, Observable, tap, throwError } from 'rxjs';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-import { ErrorEnum, MediaFile, MediaType, mediaTypes } from '../../core/interfaces/media';
-import {
-  getDocumentThumbnail,
-  getFileNameFromUrl,
-  getFileSize,
-} from '../../core/helpers/media-helper';
+import { MediaUploaderError, MediaType, mediaTypes } from '../../core/interfaces/media';
 
 @Component({
   selector: 'app-media-uploader',
@@ -48,7 +43,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
   id?: number;
   captionControl = new FormControl('');
   isDisabled = false;
-  error: ErrorEnum = ErrorEnum.NONE;
+  error: MediaUploaderError = MediaUploaderError.NONE;
   mediaType: MediaType;
   onChange: any = () => {};
   onTouched: any = () => {};
@@ -57,7 +52,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
   uploads: Map<number, Observable<any>> = new Map();
 
   constructor(
-    private sanitizer: DomSanitizer,
+    protected sanitizer: DomSanitizer,
     private confirm: ConfirmModalService,
     private translate: TranslateService,
     private mediaService: MediaService,
@@ -67,10 +62,10 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
     this.mediaType = mediaTypes.get(this.media)!;
   }
 
-  // helper imports for the template
-  getDocumentThumbnail = getDocumentThumbnail;
-  getFileSize = getFileSize;
-  ErrorEnum = ErrorEnum;
+  // helper method and enum imports for the template
+  MediaUploaderError = MediaUploaderError;
+  MediaFileError = MediaFileError;
+  MediaFileStatus = MediaFileStatus;
 
   writeValue(obj: MediaFile[]): void {
     if (Array.isArray(obj)) {
@@ -92,11 +87,13 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
 
   validate(): ValidationErrors | null {
     for (const upload of this.mediaFiles) {
-      if (upload.status === 'error') return { uploadError: true };
+      if (upload.status === MediaFileStatus.ERROR) {
+        if (upload.error === MediaFileError.UNKNOWN) return { uploadError: true };
 
-      if (upload.status === 'too_big') return { uploadsInvalid: true };
+        if (upload.error === MediaFileError.TOO_BIG) return { uploadsInvalid: true };
 
-      if (upload.status === 'uploading') return { uploadInProgress: true };
+        if (upload.error === MediaFileError.INVALID_TYPE) return { uploadsInvalid: true };
+      } else if (upload.status === MediaFileStatus.UPLOADING) return { uploadInProgress: true };
     }
     return null;
   }
@@ -109,31 +106,29 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
         this.maxFiles !== -1 &&
         this.mediaFiles.length + inputElement.files.length > this.maxFiles
       ) {
-        this.error = ErrorEnum.MAX_FILES;
+        this.error = MediaUploaderError.MAX_FILES;
         event.preventDefault();
       } else if (inputElement.files.length) {
         for (let i = 0; i < inputElement.files.length; i++) {
           const aFile = inputElement.files.item(i);
           if (aFile) {
             const photoUrl = formHelper.prepareImageFileToUpload(aFile);
-            const mediaFile: MediaFile = {
-              generatedId: this.generateId(),
-              filename: aFile.name,
-              size: aFile.size,
-              file: photoUrl,
-              status: 'uploading',
-              mimeType: aFile.type,
-              url: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(photoUrl)),
-            };
-            if (mediaFile.size! > this.maxUploadSize * 1000000) {
-              mediaFile.status = 'too_big';
-            }
+            const mediaFile = new MediaFile(aFile, URL.createObjectURL(photoUrl));
+
+            if (mediaFile.size > this.maxUploadSize * 1000000) {
+              mediaFile.status = MediaFileStatus.ERROR;
+              mediaFile.error = MediaFileError.TOO_BIG;
+            } else if (!this.mediaType.fileTypes.includes(mediaFile.mimeType)) {
+              mediaFile.status = MediaFileStatus.ERROR;
+              mediaFile.error = MediaFileError.INVALID_TYPE;
+            } else mediaFile.status = MediaFileStatus.UPLOADING;
+
             this.mediaFiles.push(mediaFile);
           }
         }
         this.uploads = new Map();
         this.mediaFiles
-          .filter((mediaFile) => mediaFile.status === 'uploading')
+          .filter((mediaFile) => mediaFile.status === MediaFileStatus.UPLOADING)
           .forEach((aMediaFile) => {
             const uploadObservable: Observable<any> = this.mediaService
               .uploadFileProgress(aMediaFile.file!, '')
@@ -154,7 +149,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
                       aMediaFile.generatedId,
                       uploadEvent.body,
                       (mediaFile, resultBody) => {
-                        mediaFile.status = 'uploaded';
+                        mediaFile.status = MediaFileStatus.UPLOADED;
                         mediaFile.value = resultBody.result.id;
                         return mediaFile;
                       },
@@ -167,7 +162,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
                           mediaFile.generatedId,
                           uploadEvent.body,
                           (theMediaFile) => {
-                            theMediaFile.status = 'ready';
+                            theMediaFile.status = MediaFileStatus.READY;
                             return theMediaFile;
                           },
                         );
@@ -180,7 +175,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
                 last(),
                 catchError((error: HttpErrorResponse) => {
                   this.updateMediaFileById(aMediaFile.generatedId, null, (mediaFile) => {
-                    mediaFile.status = 'error';
+                    mediaFile.status = MediaFileStatus.ERROR;
                     return mediaFile;
                   });
                   return throwError(() => new Error(error.statusText));
@@ -190,7 +185,7 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
           });
         forkJoin(Array.from(this.uploads.values())).subscribe((results) => {
           for (const result of results) {
-            const filename = getFileNameFromUrl(result.body.result.original_file_url);
+            const filename = MediaFile.getFileNameFromUrl(result.body.result.original_file_url);
             this.updateMediaFileByNameAndSize(
               filename,
               result.body.result.original_file_size,
@@ -202,7 +197,6 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
           }
           this.onChange(this.mediaFiles);
           inputElement.value = '';
-          console.log(results);
         });
       }
       this.onChange(this.mediaFiles);
@@ -224,29 +218,32 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
     }
 
     if (mediaFile) {
-      if (mediaFile.status === 'upload' || mediaFile.status === 'ready') {
+      if (
+        mediaFile.status === MediaFileStatus.UPLOAD ||
+        mediaFile.status === MediaFileStatus.READY
+      ) {
         const confirmed = await this.confirm.open({
           title: this.translate.instant('notify.default.are_you_sure_you_want_to_delete_this'),
           description: this.translate.instant('notify.default.proceed_warning'),
         });
         if (!confirmed) return;
-      } else if (mediaFile.status === 'uploading') {
+      } else if (mediaFile.status === MediaFileStatus.UPLOADING) {
         const uploadObservable = this.uploads.get(generatedId);
         if (uploadObservable) {
           const uploadSubscription = uploadObservable.subscribe(() =>
             uploadSubscription.unsubscribe(),
           );
         }
-      } else {
+      } else if (mediaFile.status !== MediaFileStatus.ERROR) {
         return;
       }
 
-      // this.mediaFiles[index].status = 'delete';
+      // this.mediaFiles[index].status = MediaFileStatus.DELETE;
       this.mediaFiles.splice(index, 1);
-      const filteredItems = this.mediaFiles.filter(
-        (item) => item.status === 'error' || item.status === 'too_big',
-      );
-      if (filteredItems.length === 0) this.error = ErrorEnum.NONE;
+
+      // Check for errors
+      const filteredItems = this.mediaFiles.filter((item) => item.status === MediaFileStatus.ERROR);
+      if (filteredItems.length === 0) this.error = MediaUploaderError.NONE;
     }
     this.onChange(this.mediaFiles);
   }
@@ -279,12 +276,5 @@ export class MediaUploaderComponent implements ControlValueAccessor, OnInit {
         i = this.mediaFiles.length;
       }
     }
-  }
-
-  generateId(): number {
-    return (
-      Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER - Number.MIN_SAFE_INTEGER + 1)) +
-      Number.MIN_SAFE_INTEGER
-    );
   }
 }

@@ -1,9 +1,8 @@
-import { SafeUrl } from '@angular/platform-browser';
-
-enum ErrorEnum {
+enum MediaUploaderError {
   NONE = 'none',
   MAX_SIZE = 'post.media.messages.max_size',
   REQUIRED = 'post.media.messages.required',
+  INVALID_TYPE = 'post.media.messages.invalid_type',
   MAX_FILES = 'post.media.messages.max_files',
 }
 
@@ -12,15 +11,6 @@ type MediaType = {
   buttonText: string;
   fileTypes: string;
 };
-
-type MediaFileStatus =
-  | 'ready'
-  | 'upload'
-  | 'uploading'
-  | 'uploaded'
-  | 'error'
-  | 'too_big'
-  | 'delete';
 
 const mediaTypes = new Map<string, MediaType>([
   [
@@ -36,7 +26,7 @@ const mediaTypes = new Map<string, MediaType>([
     {
       icon: 'speaker',
       buttonText: 'post.media.add_audio',
-      fileTypes: 'audio/mp3, audio/ogg, audio/aac',
+      fileTypes: 'audio/mp3, audio/mpeg, audio/ogg, audio/aac',
     },
   ],
   [
@@ -50,18 +40,4 @@ const mediaTypes = new Map<string, MediaType>([
   ],
 ]);
 
-type MediaFile = {
-  id?: number;
-  generatedId: number;
-  file?: File;
-  filename: string;
-  fileExtension?: string;
-  url: string | SafeUrl | null;
-  caption?: string;
-  status: MediaFileStatus;
-  size?: number;
-  mimeType?: string;
-  value?: number;
-};
-
-export { MediaFile, MediaFileStatus, MediaType, ErrorEnum, mediaTypes };
+export { MediaType, MediaUploaderError, mediaTypes };
