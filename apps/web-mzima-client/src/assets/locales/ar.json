@@ -660,7 +660,7 @@
   "modal": {
     "button": {
       "close": "إغلاق",
-      "done": "Done"
+      "done": "اكتمل"
     },
     "donation": {
       "thank_you_for_your_donation_start": "يتم تمكين تسييل الويب على هذا الموقع. شكرا لك على تبرعك. لقد تبرعت",
@@ -1883,7 +1883,7 @@
       "add_to_collection": "تم إضافة منشور إلى  {{collection}}",
       "removed_from_collection": "تم حذف منشور من {{collection}}",
       "bulk_add_to_collection": "تم إضافة {{count}} منشور إلى {{collection}}",
-      "done": "Done"
+      "done": "اكتمل"
     },
     "savedsearch": {
       "delete_savedsearch_success": "البحث المحفوظ تم حذفه بنجاح",
