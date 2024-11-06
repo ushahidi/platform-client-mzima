@@ -254,7 +254,7 @@
     "edit_post_types": "تحرير الاستبيانات",
     "field_add_option": "إضافة",
     "field_add_other": "أضف واحد آخر",
-    "field_add_other_desc": "Allows entering a custom option that is not listed among the provided choices.",
+    "field_add_other_desc": "يسمح بإدخال خيار مخصص غير مدرج ضمن الخيارات المقدمة.",
     "field_default": "القيمة الافتراضية للحقل",
     "field_key": "مفتاح الحقل",
     "field_type": "نوع الحقل",
