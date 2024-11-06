@@ -363,7 +363,7 @@
     "audio_desc": "يسمح بتحميل ملفات صوتية إلى المنشور",
     "document_desc": "يسمح بتحميل مستند(ات) إلى المنشور",
     "video_desc": "Allows Youtube or Vimeo videos to be embed in the post",
-    "maximum_upload_size" : "Maximum Upload Size",
+    "maximum_upload_size" : "أقصى حجم للتحميل",
     "small_upload_size" : "Small",
     "medium_upload_size" : "Medium",
     "large_upload_size" : "Large",
