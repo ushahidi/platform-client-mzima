@@ -371,7 +371,7 @@
     "tasks": "المهام",
     "task_visible_when_published": "ستكون هذه المهمة مرئية عند نشر المنشور",
     "show_field_description": "إضافة حقل للوصف (إختياري):",
-    "add_field": "Add {{fieldType | lowercase}} field",
+    "add_field": "أضف حقل {{fieldType | lowercase}}",
     "edit_field": "تعديل الحقل {{fieldType | lowercase}}",
     "build": "إنشاء",
     "configure": "تهيئة",
