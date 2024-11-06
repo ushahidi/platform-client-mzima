@@ -811,7 +811,7 @@
     "steps": "مهام هذا المنشور ",
     "mark_complete": "وضع علامة \"مكتمل\"",
     "complete": "إكتمال",
-    "type_details": "{{type}} التفاصيل ",
+    "type_details": "تفاصيل الـ{{type}} ",
     "edit_post": "تحرير المنشور",
     "history": "الأحداث السابقة.",
     "hide_form": "إخفاء{{form}}",
