@@ -1776,7 +1776,7 @@
       "success": "Registration complete! You can now log in.."
     },
     "post": {
-      "can_t_view_this_post": "You do not have permission to view this post.<br> It is still being reviewed by the admin.<br> It will be available to you once it is published.",
+      "can_t_view_this_post": "ليس لديك صلاحية لعرض هذا المنشور.<br> لا يزال قيد المراجعة من قبل المسؤول.<br> سيكون متاحا لك بمجرد نشره.",
       "contact_for_details": "Contact the admin for further details:",
       "delete_image_confirm": "Are you sure you want to remove this image?",
       "save_success": "Post {{name}} saved",
