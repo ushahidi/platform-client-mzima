@@ -1267,7 +1267,7 @@
       },
       "validation": {
         "required": {
-          "name": "Webhook name is required",
+          "name": "اسم الـwebhook مطلوب",
           "shared_secret": "Shared secret key is required",
           "api_url": "عنوان الرابط لواجهة برمجة التطبيقات \"API URL\" مطلوب",
           "event_type": "Event type is required",
