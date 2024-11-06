@@ -434,7 +434,7 @@
       "fields_title": "حقول",
       "validation": {
         "required": "الحقول المطلوبة مفقودة، هذه الحقول تم وضع علامة * عليها.",
-        "special_characters": "يحتوي {{name}} الحقل على أحرف خاصة"
+        "special_characters": "الحقل {{name}} يحتوي على أحرف خاصة"
       }
     },
     "targeted_survey": {
