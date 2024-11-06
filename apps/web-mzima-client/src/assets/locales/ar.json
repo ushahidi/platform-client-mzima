@@ -1351,7 +1351,7 @@
         "twilio": {
           "phone_nb": "رقم الهاتف",
           "phone_nb_desc": "رقم من الهاتف. تم تمکين رقم هاتف Twilio  لهذا النوع من الرسالة التي ترغب في ارسالها",
-          "account_sid": "SID الحساب",
+          "account_sid": "حساب SID",
           "account_sid_desc": "الـ id الفريد من الحساب الذي ارسل هذ‌ه الرسالة",
           "auth_token": "عملة الرمزية الـ Auth ",
           "sms_auto_response": "اجابة الالية لـ SMS "
