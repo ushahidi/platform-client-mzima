@@ -1582,7 +1582,7 @@
     "dataset_example": "Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong>",
     "dataset_title": "Title of data set",
     "metadata_title": "البيانات الوصفية",
-    "metadata_desc": "Metadata is additional information about your dataset that will make it easier for others to understand and put your data into context. Datasets on HDX must include a set of metadata fields.",
+    "metadata_desc": "البيانات الوصفية هي معلومات إضافية عن مجموعة البيانات الخاصة بك ستسهل على الآخرين فهمها ووضع بياناتك في السياق. يجب أن تتضمن مجموعات البيانات على HDX مجموعة من حقول البيانات الوصفية.",
     "source": "مصدر",
     "organisation": "المنظمة",
     "select_organisation": "إختر منظمة",
