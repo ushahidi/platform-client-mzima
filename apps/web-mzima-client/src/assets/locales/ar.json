@@ -991,7 +991,7 @@
       "retry" : "إعا المحاولة",
       "delete_photo": "حذف صورة",
       "replace_image": "قم باستبدال صورة",
-      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!",
+      "error_in_upload": "صورتك كبيرة جدًا (الحد الأقصى للحجم هو 1 ميجابايت) أو تنسيقها غير صحيح (التنسيقات المسموح بها هي gif و png و jpg و jpeg)، يرجى التحقق والمحاولة مرة أخرى!",
       "messages": {
         "max_size" : "الملف الذي قمت بتحميله ذو حجم كبير",
         "max_files" : "تجاوزت الحد الأعلى لعدد الملفات",
