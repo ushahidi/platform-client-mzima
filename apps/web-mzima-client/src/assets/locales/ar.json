@@ -966,7 +966,7 @@
         "required": "الفئات مطلوبة"
       },
       "values": {
-        "required": "مطلوب \"{{label}}\"",
+        "required": "\"{{label}}\" مطلوب",
         "parse": "لا يمكن قراءة \"{{label}}\"",
         "date": "\"{{label}}\" يجب أن يكون تاريخ",
         "number": "\"{{label}}\" يجب أن يكون رقم",
