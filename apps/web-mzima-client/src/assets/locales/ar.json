@@ -1721,7 +1721,7 @@
       "destroy_success": "تمت إزالة الحساب بنجاح"
     },
     "default": {
-      "data_has_not_been_saved": "The data has not been saved!",
+      "data_has_not_been_saved": "لم يتم حفظ البيانات!",
       "proceed_warning": "هذه العملية لن يرجع. رجاء تقدم بحذر",
       "save_success": "مورد محفوظ",
       "save_error": "تعذر حفظ المورد، يرجى إعادة المحاولة",
