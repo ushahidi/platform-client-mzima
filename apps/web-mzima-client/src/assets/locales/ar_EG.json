@@ -619,7 +619,7 @@
     "source": "Source",
     "saved_filters": "Saved filters",
     "saved_filter": "Saved filter",
-    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
+    "no_saved_filters": "لا توجد فلاتر محفوظة. ستظهر الفلاتر المحفوظة هنا لتختارها بمجرد توفرها.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Are you sure you want to delete this saved filter?"
