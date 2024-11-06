@@ -1253,10 +1253,10 @@
       "please_enter_maintainer_id": "الرجاء إدخال معرف المشرف",
       "please_enter_api_key": "الرجاء إدخال مفتاح API",
       "hdx_maintainer_id_min_length": "معرف مشرف HDX قصير جدا",
-      "api_key_min_length": "مفتاح واجهة برمجة التطبيقات قصير جدا"
+      "api_key_min_length": "مفتاح الـAPI قصير جدا"
     },
     "webhooks": {
-      "use_webhook_for": "استخدم webhook لـ ",
+      "use_webhook_for": "استخدم webhook لـ ",
       "enable_source_destination": "تفعيل حقول المصدر و الوجه",
       "enable_source_destination_desc": "هذا webhook سيستخدم فقط لكي يطبق في الاستبيان المختار",
       "destination": "الوجهة",
