@@ -1224,7 +1224,7 @@
       "categories_desc": "إنشاء وإدارة الفئات التي يمكن للناس وضع المنشورات فيها لتحسين التنظيم.",
       "webhooks": "Webhooks",
       "webhooks_desc": "إنشاء Webhooks لإرسال بيانات منصة Ushahidi إلى تطبيقات خارجية عند حدوث أحداث معينة.",
-      "plans": "الخطط\n",
+      "plans": "الخطط",
       "plan_desc": "خطة منصتك الحالية هي  <strong>{{current_plan}}</strong>",
       "donation": "Donation",
       "donation_desc": "Create and manage the donations people can make towards your organisation."
