@@ -809,7 +809,7 @@
     "per_page": "{{count}} منشور",
     "post_details": "تفاصيل المنشور",
     "steps": "مهام هذا المنشور ",
-    "mark_complete": "تأشير بالإنتهاء",
+    "mark_complete": "وضع علامة \"مكتمل\"",
     "complete": "إكتمال",
     "type_details": "{{type}} التفاصيل ",
     "edit_post": "تحرير المنشور",
