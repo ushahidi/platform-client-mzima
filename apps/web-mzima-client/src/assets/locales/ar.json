@@ -350,7 +350,7 @@
     "markdown": "تاشير",
     "categories": "الفئات",
     "textarea_desc": "جمل او فقرات متعددة",
-    "decimal_desc": "عدد ذو خانات عشرية",
+    "decimal_desc": "عدد عشري",
     "integer_desc": "عدد صحيح",
     "location_desc": "موقع جغرافي تم اختياره عبر خريطة",
     "date_desc": "تاريخ يحتوي على سنة، وشهر، ويوم",
