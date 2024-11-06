@@ -1642,7 +1642,7 @@
     "token": "رمز المميز لاعادة طلب كلمة السر ",
     "password_hint": "يجب أن يتكون كلمة المرور من 8 أحرف على الأقل، حرف صغير واحد، حرف كبير واحد، رقم واحد ورمز واحد",
     "password_length": "Password must be at least 8 characters long",
-    "password_match": "كلمة المرور لا تتطابق",
+    "password_match": "كلمات المرور غير متطابقة",
     "check_email": "تحقق من ايميلك",
     "name_will_be_a_display_name": "سيكون الاسم الذي تدخله اسم عرض.",
     "valid": {
