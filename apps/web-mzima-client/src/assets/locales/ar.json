@@ -494,7 +494,7 @@
       "recipients_count": "من {{recipients}} مستلما حتى الان",
       "recipient_count": "من {{recipients}} مستلما حتى الان",
       "error_message": "حدث خطأ أثناء محاولة حفظ استبيانك المستهدف.",
-      "error_contacts": "لقد فشلت بعض من الارقام التي ادخلتها، الرجاء تحقيق الارقام و المحاولة مرة ثانية",
+      "error_contacts": "بعض الأرقام التي قدمتها فشلت، يرجى التحقق من أرقامك ومحاولة مرة أخرى",
       "pending_messages": "نحن نعالج {{totalPending}} رسالة",
       "pending_message": "نحن نعالج {{totalPending}} رسالة",
       "cancel": "إلغاء"
