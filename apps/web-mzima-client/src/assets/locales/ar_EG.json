@@ -941,7 +941,7 @@
       "Twitter": "Twitter",
       "Email": "Email",
       "SMS": "SMS",
-      "previous_page": "<< Previous page",
+      "previous_page": "<<الصفحة السابقة",
       "next_page": "Next page >>",
       "empty_message_error": "You must add a message",
       "no_messages": "There are no messages yet. Start a conversation with the author by sending a message below."
