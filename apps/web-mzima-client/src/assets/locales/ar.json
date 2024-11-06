@@ -224,7 +224,7 @@
     "no_crowdsourced": "لا توجد لديك أي بيانات عن الاستبيانات المعتمدة على المصادر الشعبية لعرضها.",
     "targeted_activity": "نشاط الاستبيان المستهدف",
     "crowdsourced_activity": "نشاط الاستبيانات المعتمدة على المصادر الشعبية",
-    "tooltip_template": "This is the single point tooltip template"
+    "tooltip_template": "هذا هو قالب تلميح الأداة لنقطة واحدة"
   },
   "form": {
     "add_field": "إضافة حقل",
