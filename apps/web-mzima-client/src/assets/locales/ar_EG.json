@@ -572,7 +572,7 @@
       "current_stage": "Current Task",
       "set": "Collection",
       "status": "Status",
-      "expires": "Expires",
+      "expires": "تنتهي الصلاحية في ",
       "download": "Download",
       "location_value": "Within {{km}} km of {{value}}",
       "visible_to": "Visible to",
