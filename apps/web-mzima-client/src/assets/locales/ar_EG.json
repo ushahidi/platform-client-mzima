@@ -224,7 +224,7 @@
     "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
     "targeted_activity": "Tageted Survey Activity",
     "crowdsourced_activity": "Crowdsourced Survey Activity",
-    "tooltip_template": "This is the single point tooltip template"
+    "tooltip_template": "هذا هو قالب تلميح الأداة لنقطة واحدة"
   },
   "form": {
     "add_field": "Add field",
