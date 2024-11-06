@@ -942,7 +942,7 @@
       "Email": "ايميل",
       "SMS": "رسالة قصيرة",
       "previous_page": "<<الصفحة السابقة",
-      "next_page": "Next page >>",
+      "next_page": "الصفحة التالية>>",
       "empty_message_error": "You must add a message",
       "no_messages": "There are no messages yet. Start a conversation with the author by sending a message below."
     },
