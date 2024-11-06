@@ -588,7 +588,7 @@
     "unmapped_one": "{{post_nb}} post",
     "unmapped_many": "{{post_nb}} posts",
     "unmapped_end": "not shown here because they don't include location information.",
-    "unmapped_none": "No posts without location information.",
+    "unmapped_none": "لا يوجد منشورات بدون معلومات الموقع.",
     "more": "More",
     "keyword": "Keyword",
     "start_date": "Start Date",
