@@ -1335,7 +1335,7 @@
         },
         "nexmo": {
           "from": "من",
-          "from_desc": "رقم من",
+          "from_desc": "رقم المرسل",
           "secret_desc": "قيمة السر",
           "api_key": "مفتاح API ",
           "api_secret": "سر API ",
