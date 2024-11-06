@@ -786,7 +786,7 @@
     "specific_roles": "الأدوار المحددة...",
     "can_see_this": "يمكنه/يمكنهم مشاهدة هذا",
     "add_post_type": "إضافة {{form_name}}",
-    "edit_post_type": "تعديل {{form_name}}",
+    "edit_post_type": "تحديث {{form_name}}",
     "post": "منشور",
     "message": "رسالة",
     "message_thread": "سلسلة الرسائل",
