@@ -620,7 +620,7 @@
     "saved_filters": "Saved filters ar",
     "saved_filter": "الفلتر المحفوظ",
     "no_saved_filters": "لا يوجد فلتر(فلاتر) محفوظة. ستظهر الفلاتر المحفوظة هنا لتختارها بمجرد توفرها.",
-    "save_new_filter": "Save new filter",
+    "save_new_filter": "حفظ فلتر جديد",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "هل أنت متأكد من أنك تريد حذف هذا الفلتر المحفوظ؟"
   },
