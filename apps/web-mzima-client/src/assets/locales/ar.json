@@ -1227,7 +1227,7 @@
       "plans": "الخطط",
       "plan_desc": "خطة منصتك الحالية هي  <strong>{{current_plan}}</strong>",
       "donation": "تبرع",
-      "donation_desc": "Create and manage the donations people can make towards your organisation."
+      "donation_desc": "أنشئ وادِر التبرعات التي يمكن للأشخاص تقديمها لمنظمتك."
     },
     "general_settings": {
       "generate_api_key": "توليد مفتاح API",
