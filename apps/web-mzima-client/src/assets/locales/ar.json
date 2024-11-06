@@ -1191,7 +1191,7 @@
     "saved_map_settings": "تم حفظ إعدادات الخريطة."
   },
   "settings": {
-    "api_key": "مفتاح API ",
+    "api_key": "مفتاح API",
     "api_key_desc": "API هو مفتاح فريد لمنصتك، يمكن استعماله لسماح انظمة الطرف الثالث لكي يتفاعل مع منصتك على Ushahidi",
     "appearance": "إعدادات المظهر",
     "continue": "متابعة",
