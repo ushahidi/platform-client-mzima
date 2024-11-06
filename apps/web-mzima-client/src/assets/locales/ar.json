@@ -484,7 +484,7 @@
       "multi_numbers_good": "هذه الارقام {{good_numbers}} تبدو جيدة",
       "one_number_good": "هذا الرقم {{good_numbers}} يبدو جيدا",
       "question_error": "يجب ان تضيف على الاقل سؤال واحد",
-      "phone_number_instructions": "الرجاء ادخال الارقام الهواتف التي تريد التواصل معهم. يجب ان تدخل فاصلة بين کل رقم",
+      "phone_number_instructions": "الرجاء ادخال ارقام الهواتف التي تريد التواصل معهم. يجب ان تدخل فاصلة بين کل رقمين",
       "targeted_survey": "استبيان مستهدف",
       "targeted_survey_desc": "لقد ارسلنا هذا الاستبيان عن طريق رسالة نصية",
       "sent_messages": "لقد ارسلنا {{totalSent}} رسالة، و",
