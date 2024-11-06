@@ -379,7 +379,7 @@
     "hide_author_information": "إخفاء معلومات الكاتب",
     "hide_author_information_desc": "لن يتمكن سوى الأشخاص الذين لديهم إذن بتعديل الردود من معرفة من قام بتقديمهم؛ وفقط عند تعديله.",
     "hide_location_information": "Hide exact location information",
-    "hide_location_information_desc": "Only people with permission to edit responses will be able to see exact locations. Other people will see rounded locations. The location will be accurate to {{precision}}km.",
+    "hide_location_information_desc": "سيتمكن الأشخاص الذين لديهم إذن بتحرير الردود فقط من رؤية المواقع الدقيقة. سيرى الآخرون المواقع التقريبية. سيكون الموقع دقيقًا حتى {{precision}} كم.",
     "hide_time_information": "Hide exact time information",
     "hide_time_information_desc": "سيكون الأشخاص المخولون فقط بتعديل الردود قادرين على رؤية الوقت المحدد للإرسال. سيرى الآخرون فقط التاريخ.",
     "share": "شارك",
