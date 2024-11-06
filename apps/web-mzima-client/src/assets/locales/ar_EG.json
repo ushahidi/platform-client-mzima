@@ -1477,7 +1477,7 @@
     "see_imported_posts": "See imported posts",
     "import_another_csv": "Import another CSV file",
     "import_complete": "Your import is complete",
-    "import_error": "An error has occurred importing your CSV file.",
+    "import_error": "حدث خطأ أثناء استيراد ملف CSV الخاص بك.",
     "complete_info": "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
     "get_polling_info": "Get Polling Info",
     "import_another": "Import another CSV file",
