@@ -310,7 +310,7 @@
     "internal_use_task": "المهمة للاستعمال الداخلي فقط",
     "internal_use_task_desc": "ستكون هذه المهام مرئية فقط للمستخدمين الذين لديهم صلاحية إدارة المنشورات.",
     "duplicate_task": "مهمة مكررة",
-    "duplicate_option": "Duplicate option is present",
+    "duplicate_option": "خيار مكرر موجود",
     "special_characters_option": "يحتوي هذا الخيار على أحرف خاصة",
     "show_this_task_to": "قم بعرض هذه المهمة للكل بعد النشر",
     "show_this_task_to_desc": "عند نشر استجابة الاستبيان، سيتم عرض البيانات من هذه المهمة.",
