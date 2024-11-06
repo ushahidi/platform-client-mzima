@@ -378,7 +378,7 @@
     "require_section": "يجب إتمام هذه المهمة قبل أن يصبح المنشور مرئي للجمهور",
     "hide_author_information": "إخفاء معلومات الكاتب",
     "hide_author_information_desc": "لن يتمكن سوى الأشخاص الذين لديهم صلاحية بتعديل الردود من معرفة من قام بتقديمهم؛ وفقط عند تعديله.",
-    "hide_location_information": "Hide exact location information",
+    "hide_location_information": "إخفاء معلومات الموقع الدقيق",
     "hide_location_information_desc": "سيتمكن الأشخاص الذين لديهم صلاحية بتعديل الردود فقط من رؤية المواقع الدقيقة. سيرى الآخرون المواقع التقريبية. سيكون الموقع دقيقًا حتى {{precision}} كم.",
     "hide_time_information": "Hide exact time information",
     "hide_time_information_desc": "سيكون الأشخاص المخولون فقط بتعديل الردود قادرين على رؤية الوقت المحدد للإرسال. سيرى الآخرون فقط التاريخ.",
