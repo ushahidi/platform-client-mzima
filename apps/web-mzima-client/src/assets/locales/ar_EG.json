@@ -1253,7 +1253,7 @@
       "please_enter_maintainer_id": "Please enter maintainer id",
       "please_enter_api_key": "Please enter API key",
       "hdx_maintainer_id_min_length": "HDX Maintainer Id is too short",
-      "api_key_min_length": "API key is too short"
+      "api_key_min_length": "مفتاح الـAPI قصير جدا"
     },
     "webhooks": {
       "use_webhook_for": "Use webhook for",
