@@ -1642,7 +1642,7 @@
     "token": "Password reset token",
     "password_hint": "يجب أن يتكون كلمة المرور من 8 أحرف على الأقل، حرف صغير واحد، حرف كبير واحد، رقم واحد ورمز واحد",
     "password_length": "Password must be at least 8 characters long",
-    "password_match": "Passwords do not match",
+    "password_match": "كلمة المرور لا تتطابق",
     "check_email": "تحقق من ايميلك",
     "name_will_be_a_display_name": "The name you enter will be a display name.",
     "valid": {
