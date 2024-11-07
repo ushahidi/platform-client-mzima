@@ -206,7 +206,7 @@ export class DeploymentService {
     this.databaseService.clear();
   }
 
-  private generateRandomId(length: number = 10): string {
+  public generateRandomId(length: number = 10): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
