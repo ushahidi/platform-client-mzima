@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { checkBackendURL } from '@helpers';
 import { EnvConfigInterface } from '@models';
+import { Deployment } from '@mzima-client/sdk';
 
 import { DeploymentService } from '@services';
 import { BehaviorSubject } from 'rxjs';
@@ -21,10 +22,28 @@ export class EnvService {
 
   async initEnv(): Promise<EnvConfigInterface> {
     const envy: EnvConfigInterface = await fetch('./env.json').then((res) => res.json());
-    envy['backend_url'] = null;
-    if (this.deploymentUrl) {
-      envy.backend_url = this.deploymentUrl;
+    if (envy['production']) {
+      envy['backend_url'] = null;
+      if (this.deploymentUrl) {
+        envy.backend_url = this.deploymentUrl;
+      }
+    } else {
+      if (envy.backend_url) {
+        const deployment: Deployment = {
+          id: this.deploymentService.generateRandomId(),
+          domain: envy.backend_url,
+          deployment_name: 'Development Deployment',
+          selected: true,
+          fqdn: envy.backend_url,
+          description: 'Configured in env.json',
+          tier: 'N/A',
+        };
+        this.deploymentService.setDeployments([deployment]);
+        this.deploymentService.setDeployment(deployment);
+        this.deployment.next(deployment);
+      }
     }
+
     EnvService.ENV = envy;
     this.env = envy;
     return envy;
