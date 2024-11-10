@@ -181,7 +181,7 @@
   },
   "toolbar": {
     "searchbar": {
-      "search_entity": "Mada",
+      "search_entity": "Tafuta {{entity}}",
       "search_all_entities_for": "Tafuta yote {{mada}} ya"
     }
   },
