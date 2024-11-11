@@ -387,20 +387,59 @@
               </mat-form-field>
             </ng-container>
 
-            <ng-container *ngIf="field.input === 'upload'">
+            <ng-container *ngIf="field.type === 'media'">
               <span class="form-row__instruction" *ngIf="maxImageSize">
-                Max size: {{ (maxImageSize / 1000 / 1000).toFixed(2) }} MB
+                Max size: {{ field.config.maxUploadSize }} MB
               </span>
-              <app-image-uploader
-                [formControlName]="field.key"
-                [hasCaption]="field.config.hasCaption"
-                (change)="maxSizeError = false"
-                [requiredError]="
-                  form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
-                "
-                [maxSizeError]="maxSizeError"
-              >
-              </app-image-uploader>
+              <div *ngIf="field.input === 'upload'">
+                <app-image-uploader
+                  [formControlName]="field.key"
+                  [hasCaption]="field.config.hasCaption"
+                  (change)="maxSizeError = false"
+                  [requiredError]="
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                  "
+                  [maxSizeError]="maxSizeError"
+                >
+                </app-image-uploader>
+              </div>
+              <div *ngIf="field.input === 'image'">
+                <app-media-uploader
+                  [formControlName]="field.key"
+                  media="image"
+                  [hasCaption]="field.config.hasCaption"
+                  [maxUploadSize]="field.config.maxUploadSize"
+                  (change)="maxSizeError = false"
+                  [requiredError]="
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                  "
+                >
+                </app-media-uploader>
+              </div>
+              <div *ngIf="field.input === 'audio'">
+                <app-media-uploader
+                  [formControlName]="field.key"
+                  media="audio"
+                  [maxUploadSize]="field.config.maxUploadSize"
+                  (change)="maxSizeError = false"
+                  [requiredError]="
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                  "
+                >
+                </app-media-uploader>
+              </div>
+              <div *ngIf="field.input === 'document'">
+                <app-media-uploader
+                  [formControlName]="field.key"
+                  [maxUploadSize]="field.config.maxUploadSize"
+                  media="document"
+                  (change)="maxSizeError = false"
+                  [requiredError]="
+                    form.get(field.key)?.touched && form.get(field.key)?.hasError('photoRequired')
+                  "
+                >
+                </app-media-uploader>
+              </div>
             </ng-container>
 
             <ng-container *ngIf="field.input === 'video'">

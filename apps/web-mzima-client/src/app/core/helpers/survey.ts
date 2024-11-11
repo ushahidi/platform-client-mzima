@@ -88,10 +88,29 @@ export const surveyFields = [
   {
     label: 'survey.upload_image',
     type: 'media',
-    input: 'upload',
+    input: 'image',
     instructions: 'survey.upload_desc',
     config: {
       hasCaption: true,
+      maxUploadSize: 2,
+    },
+  },
+  {
+    label: 'survey.upload_audio',
+    type: 'media',
+    input: 'audio',
+    instructions: 'survey.audio_desc',
+    config: {
+      maxUploadSize: 2,
+    },
+  },
+  {
+    label: 'survey.upload_document',
+    type: 'media',
+    input: 'document',
+    instructions: 'survey.document_desc',
+    config: {
+      maxUploadSize: 2,
     },
   },
   {
@@ -115,6 +134,8 @@ export const surveyFields = [
     options: [],
   },
 ];
+
+export const maxUploadSizes = [2, 5, 10];
 
 export const fieldHasTranslations = (field: any, lang: any) => {
   if (!field.translations) return false;
