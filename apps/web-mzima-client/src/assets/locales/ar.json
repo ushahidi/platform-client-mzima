@@ -1242,7 +1242,7 @@
       "user_settings_desc_2": "بمجرد إعداده، سيمكنك ذلك من تحميل البيانات مباشرةً إلى حساب Humanitarian Data Exchange (HDX).",
       "user_settings_desc_3": "يمكنك العثور على مفتاح API الخاص بك على ملفك الشخصي في Humanitarian Data Exchange (HDX) بمجرد تسجيل الدخول.",
       "view_guide": "عرض دليل مفتاح API الخاص بك",
-      "hdx_maintainer_id": "HDX Maintainer Id",
+      "hdx_maintainer_id": "معرف صيانة HDX",
       "api_key": "مفتاح API",
       "profile_page": "تم العثور عليه على صفحة ملفك الشخصي في Humanitarian Data Exchange (HDX)",
       "valid_key": "مفتاح صالح مطلوب",
