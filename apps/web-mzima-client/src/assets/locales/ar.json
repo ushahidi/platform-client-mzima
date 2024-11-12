@@ -1328,7 +1328,7 @@
       },
       "sms": {
         "secret": "سر",
-        "api_key_desc": "مفتاح API ",
+        "api_key_desc": "مفتاح الـ API",
         "frontline_sms": {
           "api_key": "مفتاح",
           "secret_desc": "قم بإنشاء سر لكي يکون فقط بمستطاع حسابات FrontlineCloud ان يرسلوا/يستقبلوا الرسائل. يجب ان تقوم بإنشاء السر نفسه في FrontlineCloud Activity"
