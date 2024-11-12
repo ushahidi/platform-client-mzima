@@ -1296,7 +1296,7 @@
       "saving_changes": "حفظ",
       "unavailable": "مصدر البيانات {{value}} غير متوفر. <a href=\"/settings/plan\"> الرجاء تحديث خطتك </A> للحصول عليه!",
       "email": {
-        "incoming_server_type": "نوع الخادم الوارد",
+        "incoming_server_type": "نوع خادم البريد الوارد",
         "incoming_server_type_pop": "POP",
         "incoming_server_type_imap": "IMAP",
         "incoming_server": "سرفر الاستقبال",
