@@ -1389,7 +1389,7 @@
       },
       "wallet": {
         "label": "Wallet address",
-        "placeholder": "Enter a wallet address e.g $ilp.uphold.com/example",
+        "placeholder": "أدخل عنوان المحفظة الإلكترونية، على سبيل المثال $ilp.uphold.com/example",
         "required": "Donation wallet address is required"
       },
       "info": {
