@@ -1319,9 +1319,9 @@
         "outgoing_server_desc": "امثلة: smtp.yourhost.com, smtp.gmail.com",
         "outgoing_server_port": "بوابة المخدم الخارجي",
         "outgoing_server_port_desc": "بوابات الشائعة: 25 (SMTP default), 465 (SMTP with SSL)",
-        "outgoing_server_security": "امن سرفر الخارجة",
-        "outgoing_username": "اسم مستخدم الخارجة",
-        "outgoing_password": "کلمة السر الخارجة",
+        "outgoing_server_security": "أمن المخدم الخارجي",
+        "outgoing_username": "اسم مستخدم الخارجي",
+        "outgoing_password": "کلمة السر الخارجي",
         "email_address": "عنوان الايميل",
         "email_sender_name": "اسم الايميل المرسل",
         "email_sender_name_desc": "يظهر في حقل 'من:' في الايميلات الخارجة"
