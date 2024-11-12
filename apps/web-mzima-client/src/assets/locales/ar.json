@@ -1240,7 +1240,7 @@
     "user_settings": {
       "user_settings_desc_1": "هنا يمكنك إضافة مفتاح API الفريد الخاص بك لحساب Humanitarian Data Exchange (HDX) الخاص بك.",
       "user_settings_desc_2": "بمجرد إعداده، سيمكنك ذلك من تحميل البيانات مباشرةً إلى حساب Humanitarian Data Exchange (HDX).",
-      "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in.",
+      "user_settings_desc_3": "يمكنك العثور على مفتاح API الخاص بك على ملفك الشخصي في Humanitarian Data Exchange (HDX) بمجرد تسجيل الدخول.",
       "view_guide": "View the guide to your API key",
       "hdx_maintainer_id": "HDX Maintainer Id",
       "api_key": "مفتاح API",
