@@ -1378,7 +1378,7 @@
       "title": {
         "label": "عنوان التبرع",
         "placeholder": "أدخل عنوان تبرعك",
-        "required": "Donation title is required"
+        "required": "عنوان التبرع مطلوب"
       },
       "description": {
         "label": "صف تبرعك",
