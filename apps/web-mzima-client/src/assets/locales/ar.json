@@ -1390,7 +1390,7 @@
       "wallet": {
         "label": "عنوان المحفظة",
         "placeholder": "أدخل عنوان المحفظة الإلكترونية، على سبيل المثال $ilp.uphold.com/example",
-        "required": "Donation wallet address is required"
+        "required": "عنوان محفظة التبرع مطلوب"
       },
       "info": {
         "start_one": "يرجى التأكد من إعداد محفظتك على",
