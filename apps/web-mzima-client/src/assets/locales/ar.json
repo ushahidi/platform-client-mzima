@@ -1246,7 +1246,7 @@
       "api_key": "مفتاح API",
       "profile_page": "تم العثور عليه على صفحة ملفك الشخصي في Humanitarian Data Exchange (HDX)",
       "valid_key": "مفتاح صالح مطلوب",
-      "valid_user": "A valid maintainer id is required",
+      "valid_user": "معرف صيانة صالح مطلوب",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
       "start_tagging": "Start tagging data",
       "HDX": "تبادل البيانات الإنسانية",
