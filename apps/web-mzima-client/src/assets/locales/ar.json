@@ -1311,7 +1311,7 @@
         "username_desc": "اسم مستخدم حساب البريد الالکتروني",
         "incoming_password": "کلمة السر الاتية",
         "password_desc": "کلمة سر حساب الايميل",
-        "outgoing_server_type": "نوع سرفر الخارجة",
+        "outgoing_server_type": "نوع مخدم الارسال",
         "outgoing_server_type_SMTP": "SMTP",
         "outgoing_server_type_sendmail": "ارسال الايميل",
         "outgoing_server_type_native": "محلي",
