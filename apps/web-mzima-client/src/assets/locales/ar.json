@@ -1315,7 +1315,7 @@
         "outgoing_server_type_SMTP": "SMTP",
         "outgoing_server_type_sendmail": "ارسال الايميل",
         "outgoing_server_type_native": "محلي",
-        "outgoing_server": "سرفر الخارجة",
+        "outgoing_server": "مخدم  خارجي",
         "outgoing_server_desc": "امثلة: smtp.yourhost.com, smtp.gmail.com",
         "outgoing_server_port": "بوابة سرفر الخارجة",
         "outgoing_server_port_desc": "بوابات الشائعة: 25 (SMTP default), 465 (SMTP with SSL)",
