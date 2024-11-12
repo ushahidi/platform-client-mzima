@@ -1244,7 +1244,7 @@
       "view_guide": "عرض دليل مفتاح API الخاص بك",
       "hdx_maintainer_id": "HDX Maintainer Id",
       "api_key": "مفتاح API",
-      "profile_page": "Found on your Humanitarian Data Exchange (HDX) profile page",
+      "profile_page": "تم العثور عليه على صفحة ملفك الشخصي في Humanitarian Data Exchange (HDX)",
       "valid_key": "مفتاح صالح مطلوب",
       "valid_user": "A valid maintainer id is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
