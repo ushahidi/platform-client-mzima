@@ -1262,7 +1262,7 @@
       "destination": "الوجهة",
       "placeholder": {
         "name": "الرجاء إدخال اسم الـ Webhook",
-        "shared_secret": "الرجاء إدخال السر المشترك",
+        "shared_secret": "الرجاء إدخال القيمة السرية المشتركة",
         "api_url": "الرجاء إدخال عنوان رابط لواجهة برمجة التطبيقات \"API URL\""
       },
       "validation": {
