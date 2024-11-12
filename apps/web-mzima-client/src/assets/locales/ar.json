@@ -1248,7 +1248,7 @@
       "valid_key": "مفتاح صالح مطلوب",
       "valid_user": "معرف صيانة صالح مطلوب",
       "api_key_saved": "تم حفظ مفتاح API! يمكنك الآن وضع علامات على بياناتك وتحميلها إلى حساب Humanitarian Data Exchange (HDX).",
-      "start_tagging": "Start tagging data",
+      "start_tagging": "ابدأ بوضع علامات على البيانات",
       "HDX": "تبادل البيانات الإنسانية",
       "please_enter_maintainer_id": "الرجاء إدخال معرف المشرف",
       "please_enter_api_key": "الرجاء إدخال مفتاح API",
