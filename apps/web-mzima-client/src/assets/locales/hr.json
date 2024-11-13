@@ -114,6 +114,7 @@
     "close_and_view": "Zatvori i pregledaj rezultate",
     "show_more_less": "Prikaži više/manje",
     "filters": "Filteri",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Filtriraj po anketi",
     "configure": "Konfiguriraj",
     "post": "Post",
@@ -295,7 +296,14 @@
     "no_fields": "Nema polja",
     "select_color": "Odabir boje",
     "choose_survey": "Odabir ankete",
-    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
+    "marked_for_internal": {
+      "header": "Internal Use Only",
+      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+    },
+    "task_is_marked_as": {
+      "not_completed": "Task Complete? - Use toggle below",
+      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+    },
     "delete_task": "Obriši zadatak",
     "duplicate_survey": "Dupliciraj",
     "main_info": "Glavne informacije",
@@ -314,6 +322,7 @@
     "title": "Naslov",
     "field_allowed_relation_survey": "Dozvoljene ankete",
     "collect_image_caption": "Uključi polje naslova slike",
+    "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "Ovo će onemogućiti i sakriti sve postojeće naslove za ovo polje, ali možete ponovno omogućiti u bilo koje buduće vrijeme.",
     "description": "Opis",
     "task_description": "Opis zadatka",
@@ -335,6 +344,8 @@
     "related_post": "Povezani post",
     "related_post_info": "Napominjemo, postovi koji se odnose na objavu, postovi koji su \"u pregledu\" neće se pojaviti u rezultatima pretraživanja",
     "upload_image": "Slika",
+    "upload_document": "Document",
+    "upload_audio": "Audio",
     "embed_video": "Ugradi video",
     "markdown": "Markdown",
     "categories": "Kategorije",
@@ -349,7 +360,13 @@
     "checkbox_desc": "Dopušta korisniku odabir jedne ili više unaprijed definirane liste opcija.",
     "relation_desc": "Stvorite odnos između različitih anketa",
     "upload_desc": "Dozvoljava prijenos slika na post  ",
+    "audio_desc": "Allows audio file(s) to be uploaded to the post",
+    "document_desc": "Allows document(s) to be uploaded to the post",
     "video_desc": "Omogućuje ugradnju Youtube i Vimeo videa u post",
+    "maximum_upload_size" : "Maximum Upload Size",
+    "small_upload_size" : "Small",
+    "medium_upload_size" : "Medium",
+    "large_upload_size" : "Large",
     "markdown_desc": "Dopušta korištenje markdown sintakse za stiliziranje sadržaja polja",
     "tasks": "Zadaci",
     "task_visible_when_published": "Ovaj zadatak će biti vidljiv kada je post objavljen.",
@@ -602,6 +619,7 @@
     "source": "Izvor",
     "saved_filters": "Saved filters",
     "saved_filter": "Spremljeni filtar",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Jeste li sigurni da želite izbrisati ovaj spremljeni filtar?"
@@ -856,7 +874,9 @@
       "unlocked": "Post uspješno odključan",
       "unlock": "Otključaj",
       "lock_broken_by_other": "Vaš post je otključan. Trenutni nespremljene promjene bit će izgubljene.",
-      "locked_message": "Post je zaključan zbog toga što<strong>{{ user }}</strong> upravo radi na njemu. Pokušajte urediti drugi post."
+      "locked_message": "Post je zaključan zbog toga što<strong>{{ user }}</strong> upravo radi na njemu. Pokušajte urediti drugi post.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
     "modify": {
       "intro": "Odaberi aknetu:",
@@ -966,9 +986,23 @@
       "add_caption": "Dodaj naslov",
       "upload": "Prenesi",
       "add_photo": "Dodaj fotografiju",
+      "add_audio": "Add audio",
+      "add_document": "Add document",
+      "retry" : "Retry",
       "delete_photo": "Obriši fotografiju",
       "replace_image": "Zamjeni sliku",
-      "error_in_upload": "Vaša slika je prevelika (maksimalna veličina je 1MB) ili je krivog formata (dozvoljeni formati su gif, png, jpg i jpeg), molimo provjerite i pokušajte ponovno!"
+      "error_in_upload": "Vaša slika je prevelika (maksimalna veličina je 1MB) ili je krivog formata (dozvoljeni formati su gif, png, jpg i jpeg), molimo provjerite i pokušajte ponovno!",
+      "messages": {
+        "max_size" : "Your file is too large.",
+        "max_files" : "You have exceeded the maximum number of files.",
+        "required" : "Media is required.",
+        "invalid_type" : "Unsupported file type."
+      },
+      "status" : {
+        "uploading" : "Uploading...",
+        "upload_complete" : "Upload Complete!",
+        "upload_failed" : "Upload failed!"
+      }
     },
     "video": {
       "enter_a_url": "Unesi Youtube ili Vimeo video URL."
@@ -1101,7 +1135,7 @@
     "delete_category_desc": "<strong>Ako obrišete ovu kategoriju</strong>, više neće biti asocirana sa ijednim postom. Nastavite s oprezom.",
     "show_categories": "Prikaži dostupne kategorije",
     "child_permissions": "Dopuštenja za ovu kategoriju su upravljani sa \"roditeljskom\" kategorijom.",
-    "which_categories": "Which categories should be available",
+    "which_categories": "Which categories should be available?",
     "select_all": "Odaberi sve",
     "choose_roles": "Odaberi uloge",
     "create_tag": "Kreiraj kategoriju",
