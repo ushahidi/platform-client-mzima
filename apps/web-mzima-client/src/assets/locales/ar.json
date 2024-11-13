@@ -1911,7 +1911,7 @@
       "confirmation": "فهمت",
       "cancel_export": "الغاء التصدير",
       "canceled_job": "تم الغاء عملية تصديرك",
-      "upload_complete": "Upload complete. You should now see your tagged data in your HDX account."
+      "upload_complete": "تم الرفع بنجاح. يجب أن ترى الآن بياناتك المسمّاة في حساب HDX الخاص بك."
     },
     "survey": {
       "bulk_destroy_confirm": "هل أنت متأكد من رغبتك في حذف هذه {{count}} استبيانات؟",
