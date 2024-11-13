@@ -2019,7 +2019,7 @@
     "translate_field": "ترجم الحقل",
     "survey_select_default": "اختر اللغة الافتراضية لهذا الاستبيان",
     "category_select_default": "اختر اللغة الافتراضية لهذه الفئة",
-    "error_translation_exists": "You cannot select this language since there is already a translation for it.",
+    "error_translation_exists": "لا يمكنك تحديد هذه اللغة حيث يوجد بالفعل ترجمة لها.",
     "edit_default_text": "النص باللغة الافتراضية",
     "edit_placeholder": "اكتب ترجمتك هنا",
     "add_translation": "أضف ترجمتك أدناه:",
