@@ -1633,7 +1633,7 @@
     "register": "تسجيل",
     "role": "دور:",
     "roles": "الأدوار",
-    "saved_user": "تم حفظ{{اسم}} المستخدم",
+    "saved_user": "تم حفظ المستخدم",
     "deleted_user": "تم حذف المستخدم",
     "search_and_filter": "البحث فلترة المستخدمين ",
     "passwordreset_instructions": "أدخل بريدك الإلكتروني لطلب إعادة تعيين كلمة المرور",
