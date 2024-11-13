@@ -1589,7 +1589,7 @@
     "license": "الرخصة",
     "add_license": "إضافة رخصة",
     "read_more_licenses": "إقرأ المزيد عن التراخيص",
-    "submit_hdx": "Submit to HDX Account",
+    "submit_hdx": "إرسال إلى حساب HDX",
     "uploading_data": "جاري تحميل البيانات...",
     "uploading_data_desc": "جاري تحميل البيانات إلى حساب Humanitarian Data Exchange (HDX) الخاص بك... <br /> <br />يمكنك الانتقال بعيدًا عن هذه الصفحة أثناء حدوث هذا التحميل، ولكن يرجى عدم إغلاق المتصفح.",
     "uploading_data_err": "يبدو أن هناك خطأ ما حدث أثناء تحميل بياناتك، يرجى التحقق من الحقول المطلوبة ومفتاح api الخاص بك والمحاولة مرة أخرى.",
