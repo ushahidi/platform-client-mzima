@@ -1495,7 +1495,7 @@
     "configure_all_imported_posts": "تهيئة كل المشاركات المستوردة ",
     "csv": "CSV",
     "file_csv": "ملفCSV",
-    "import_csv": "استيراد القيم المفصولة بفاصلة CSV",
+    "import_csv": "استيراد CSV",
     "import_to": "استيراد إلى",
     "change_csv_file": "تغيير ملف CSV {{selectedfile}}",
     "upload_csv_file": "تحميل ملف CSV",
