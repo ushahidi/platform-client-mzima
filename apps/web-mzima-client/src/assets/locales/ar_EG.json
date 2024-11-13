@@ -1135,7 +1135,7 @@
     "delete_category_desc": "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
     "show_categories": "Show available categories",
     "child_permissions": "Permissions for this category are managed by the parent category.",
-    "which_categories": "Which categories should be available",
+    "which_categories": "ما هي الفئات التي يجب أن تكون متاحة؟",
     "select_all": "Select All",
     "choose_roles": "Choose Roles",
     "create_tag": "Create Category",
@@ -1666,7 +1666,7 @@
         "weak": "This password is very weak"
       },
       "token": {
-        "required": "Token is required"
+        "required": "الرمز مطلوب"
       }
     },
     "placeholder": {
@@ -1690,7 +1690,7 @@
     },
     "nav": {
       "account_settings": "Account settings",
-      "notifications_settings": "Notifications settings",
+      "notifications_settings": "إعدادات الإشعارات",
       "delete_contact": {
         "title": "احذف ",
         "title_subject": {
