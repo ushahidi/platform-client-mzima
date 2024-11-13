@@ -1712,7 +1712,7 @@
   },
   "notify": {
     "api_key": {
-      "change_question": "هل انت متأكد لتغيراتك لمفتاح API ؟"
+      "change_question": "هل أنت متأكد من رغبتك في تغيير مفتاح API؟"
     },
     "contact": {
       "save_success": "تم حفظ جهة الاتصال",
