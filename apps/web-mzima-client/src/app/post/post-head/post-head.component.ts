@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CollectionsComponent } from '../../shared/components';
+import { PostTranslateComponent } from '../post-translate/post-translate.component';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 import { BaseComponent } from '../../base.component';
@@ -14,6 +15,8 @@ import {
   postHelpers,
 } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
+import { LanguageService } from '../../core/services/language.service';
+import { LanguageInterface } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-post-head',
@@ -31,6 +34,7 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
   @Output() deleted = new EventEmitter();
   @Output() statusChanged = new EventEmitter();
   public isLocked: boolean;
+  public languages: LanguageInterface[];
 
   constructor(
     protected override sessionService: SessionService,
@@ -41,6 +45,7 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
     private translate: TranslateService,
     private eventBusService: EventBusService,
     private snackBar: MatSnackBar,
+    private languageService: LanguageService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -49,6 +54,7 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkLock();
+    this.languages = this.languageService.getLanguages();
   }
 
   loadData(): void {}
@@ -71,6 +77,19 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
         this.postsService.unlockPost(this.post.id).subscribe();
         this.refresh.emit();
         response ? console.log(response) : null;
+      },
+    });
+  }
+
+  translatePost() {
+    this.dialog.open(PostTranslateComponent, {
+      width: '100%',
+      maxWidth: '768px',
+      panelClass: ['modal', 'select-languages-modal'],
+
+      data: {
+        post: this.post,
+        languages: this.languages,
       },
     });
   }
