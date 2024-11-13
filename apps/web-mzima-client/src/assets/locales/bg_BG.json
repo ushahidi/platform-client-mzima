@@ -114,6 +114,7 @@
     "close_and_view": "Close and view results",
     "show_more_less": "Покажи повече/по-малко",
     "filters": "Пресяване",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Пресяване по допитване",
     "configure": "Настрой",
     "post": "Публикация",
@@ -295,7 +296,14 @@
     "no_fields": "No fields",
     "select_color": "Select color",
     "choose_survey": "Choose survey",
-    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
+    "marked_for_internal": {
+      "header": "Internal Use Only",
+      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+    },
+    "task_is_marked_as": {
+      "not_completed": "Task Complete? - Use toggle below",
+      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+    },
     "delete_task": "Изтрий задача",
     "duplicate_survey": "Копирай",
     "main_info": "Main info",
@@ -314,6 +322,7 @@
     "title": "Заглавие",
     "field_allowed_relation_survey": "Разрешени допитвания",
     "collect_image_caption": "Включи поле за заглавие на снимката",
+    "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "Това ще изключи и скрие всички съществуващи заглавия за това поле, но може да ги включите по всяко време.",
     "description": "Описание",
     "task_description": "Описание на задачата",
@@ -335,6 +344,8 @@
     "related_post": "Свързани публикации",
     "related_post_info": "Please note, the posts to relate to needs to be published, posts that are \"Under review\" will not appear in the search-results",
     "upload_image": "Снимка",
+    "upload_document": "Document",
+    "upload_audio": "Audio",
     "embed_video": "Вложи видео",
     "markdown": "Markdown",
     "categories": "Категории",
@@ -349,7 +360,13 @@
     "checkbox_desc": "Позволява на потребителят да избира една или повече от предефиниран лист от опции.",
     "relation_desc": "Създай връзка между две допитвания",
     "upload_desc": "Позволява на снимка(снимки) да бъдат качени на публикацията",
+    "audio_desc": "Allows audio file(s) to be uploaded to the post",
+    "document_desc": "Allows document(s) to be uploaded to the post",
     "video_desc": "Позволява клипове от Youtube или Vimeo да се влагат в публикацията",
+    "maximum_upload_size" : "Maximum Upload Size",
+    "small_upload_size" : "Small",
+    "medium_upload_size" : "Medium",
+    "large_upload_size" : "Large",
     "markdown_desc": "Позволява да се вкарва обогатен синтакс в този текст",
     "tasks": "Задачи",
     "task_visible_when_published": "Тази задача ще бъде видима когато публикацията е публична.",
@@ -602,6 +619,7 @@
     "source": "Източник",
     "saved_filters": "Saved filters",
     "saved_filter": "Saved filter",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Are you sure you want to delete this saved filter?"
@@ -856,7 +874,9 @@
       "unlocked": "Публикацията беше успешно отключена",
       "unlock": "Отключи",
       "lock_broken_by_other": "Вашата публикация беше отключена. Сегашните ви незапазени промени ще бъдат изгубени.",
-      "locked_message": "Публикацията е заключена, защото <strong>{{ user }}</strong> работи по нея в момента. Опитайте да промените друга публикация."
+      "locked_message": "Публикацията е заключена, защото <strong>{{ user }}</strong> работи по нея в момента. Опитайте да промените друга публикация.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
     "modify": {
       "intro": "Избери допитване:",
@@ -966,9 +986,23 @@
       "add_caption": "Добави заглавие",
       "upload": "Качи",
       "add_photo": "Добави снимка",
+      "add_audio": "Add audio",
+      "add_document": "Add document",
+      "retry" : "Retry",
       "delete_photo": "Изтрий стринка",
       "replace_image": "Замести снимката",
-      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
+      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!",
+      "messages": {
+        "max_size" : "Your file is too large.",
+        "max_files" : "You have exceeded the maximum number of files.",
+        "required" : "Media is required.",
+        "invalid_type" : "Unsupported file type."
+      },
+      "status" : {
+        "uploading" : "Uploading...",
+        "upload_complete" : "Upload Complete!",
+        "upload_failed" : "Upload failed!"
+      }
     },
     "video": {
       "enter_a_url": "Enter a video URL from Youtube or Vimeo."
@@ -1101,7 +1135,7 @@
     "delete_category_desc": "<strong>Ако изтриете тази категория</strong>, няма вече да бъде свързана с публикациите. Продължете внимателно.",
     "show_categories": "Покажи наличните категории",
     "child_permissions": "Правата за тази категория се управляват през родителската категория",
-    "which_categories": "Which categories should be available",
+    "which_categories": "Which categories should be available?",
     "select_all": "Избери всички",
     "choose_roles": "Избери роля",
     "create_tag": "Създай категория",
