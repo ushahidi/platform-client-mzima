@@ -1581,7 +1581,7 @@
     "dataset_desc": "When users search for data on HDX, their search terms will be matched to terms in your title. Avoid using abbreviations in the title which may not be familiar to all users. Also, avoid using words such as current, latest or previous when referring to the time period (e.g Latest 3W) as these terms become misleading as the dataset ages.",
     "dataset_example": "Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong>",
     "dataset_title": "Title of data set",
-    "metadata_title": "البيانات الوصفية",
+    "metadata_title": "Metadata",
     "metadata_desc": "البيانات الوصفية هي معلومات إضافية عن مجموعة البيانات الخاصة بك ستسهل على الآخرين فهمها ووضع بياناتك في السياق. يجب أن تتضمن مجموعات البيانات على HDX مجموعة من حقول البيانات الوصفية.",
     "source": "مصدر",
     "organisation": "المنظمة",
