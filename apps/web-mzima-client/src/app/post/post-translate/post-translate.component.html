@@ -75,8 +75,8 @@
     </div>
   </ng-container>
 
-  <ng-template mat-dialog-content #translate *ngIf="post.allowed_privileges.includes('update')">
-    <div class="form-row">
+  <ng-template mat-dialog-content #translate>
+    <div class="form-row" *ngIf="post.allowed_privileges.includes('update')">
       <div class="translate_post">
         <div class="translate_post__edit">
           <form [formGroup]="translateForm">
