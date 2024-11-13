@@ -1413,7 +1413,7 @@
       "delete_their_own_posts": "حذف منشوراتهم الخاصة",
       "registred_member": "عضو مسجل",
       "administrator": "المشرف",
-      "roles_description": "تتحكم هذه الخيارات في ما يمكن لهذا النوع من الأدوار إجراء تغييرات عليه. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">راجع أدلة الدعم لدينا لمعرفة المزيد."
+      "roles_description": "تتحكم هذه الخيارات في ما يمكن لهذا النوع من الأدوار إجراء تغييرات عليه. <a href=\"https://docs.ushahidi.com/platform-user-manual/4.-managing-people-on-your-deployment\" target=\"_blank\">تفضل بزيارة أدلة الدعم لدينا لمعرفة المزيد.."
     },
     "deployment_delete_this": "حذف منصتك",
     "deployment_delete": "حذف منصة",
