@@ -1545,7 +1545,7 @@
     "pending_hdx": "Pending HDX",
     "exported_to_cdn": "Exported to CDN",
     "tags_attributes": "Assign tags and attributes",
-    "hxl_apikey_alert_1": "It looks like you haven't set up your Humanitarian Data Exchange (HDX) API. Without this set up, you can't tag data and upload to a Humanitarian Data Exchange (HDX) account.",
+    "hxl_apikey_alert_1": "يبدو أنك لم تقم بإعداد Humanitarian Data Exchange (HDX) API الخاص بك. بدون هذا الإعداد، لا يمكنك وضع علامات على البيانات وتحميلها إلى حساب Humanitarian Data Exchange (HDX).",
     "hxl_configure": "تكوين API HDX",
     "hxl_apikey_alert_2": "ننصحك بشدة بإعداد هذا الآن في",
     "hxl_apikey_alert_3": "قبل المتابعة، حيث لن تتمكن من تحميل بياناتك إلى HDX",
