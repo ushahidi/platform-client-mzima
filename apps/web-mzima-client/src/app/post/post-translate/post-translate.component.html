@@ -1,0 +1,174 @@
+<mzima-client-button
+  tabindex="-1"
+  fill="outline"
+  [iconOnly]="true"
+  color="light-gray"
+  [data-qa]="'btn-close'"
+  class="modal__close-btn"
+  [mat-dialog-close]="false"
+  ariaLabel="{{ 'modal.button.close' | translate }}"
+  (buttonClick)="closeModal()"
+>
+  <mat-icon icon svgIcon="close"></mat-icon>
+</mzima-client-button>
+<strong mat-dialog-title [data-qa]="'lang-modal-title'"
+  >{{ isTranslateMode ? 'Translate post to ' + activeLanguage.name : 'Translate post' }}
+</strong>
+
+<div mat-dialog-content>
+  <ng-container *ngIf="!isTranslateMode; else translate">
+    <p *ngIf="enabledLanguages.available.length > 0">
+      Available translations (select to see post):
+    </p>
+    <mat-form-field
+      *ngIf="enabledLanguages.available.length > 0"
+      appearance="outline"
+      class="feed-page__control"
+    >
+      <mat-select
+        name="language"
+        disableOptionCentering
+        [placeholder]="'app.select_language' | translate"
+      >
+        <mat-option *ngFor="let language of enabledLanguages.available">
+          {{ language?.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="fields-list" *ngIf="post.allowed_privileges.includes('update')">
+      <p>Select a language to translate to, or edit:</p>
+      <div>
+        <ul role="list" class="types-list">
+          <li mat-ripple role="listitem" class="type-item">
+            <mzima-client-button
+              fill="clear"
+              color="secondary"
+              class="type-item__checkbox"
+              [disabled]="true"
+            >
+              <img
+                [alt]="defaultLanguage?.code"
+                class="flag"
+                [src]="'assets/images/flags/' + 'es.svg'"
+              />
+              {{ defaultLanguage?.name }} (Default language)
+            </mzima-client-button>
+          </li>
+          <li mat-ripple role="listitem" class="type-item" *ngFor="let language of languages">
+            <mzima-client-button
+              fill="clear"
+              color="secondary"
+              class="type-item__checkbox"
+              *ngIf="language.code !== defaultLanguage?.code"
+              (buttonClick)="selectLanguage($event, language)"
+            >
+              <img
+                [alt]="language.code"
+                class="flag"
+                [src]="'assets/images/flags/' + (language.code | lowercase) + '.svg'"
+              />
+              {{ language.name }}
+            </mzima-client-button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template mat-dialog-content #translate *ngIf="post.allowed_privileges.includes('update')">
+    <div class="form-row">
+      <div class="translate_post">
+        <div class="translate_post__edit">
+          <form [formGroup]="translateForm">
+            HEJ
+
+            <div class="translate_post__fields" *ngFor="let task of post.post_content">
+              <ng-container *ngFor="let field of task.fields">
+                <div class="form-row" *ngIf="isTranslateableContent(field)">
+                  <mat-label
+                    >{{ field?.translations[activeLanguage.code]?.label || field?.label }}
+                  </mat-label>
+                  <div class="translate_post__original">
+                    <div><i>Text in original language:</i></div>
+                    <div>
+                      <p>{{ getOriginalValue(field) }}</p>
+                    </div>
+                  </div>
+                  <div class="translate_post__translation">
+                    <span class="field-label">Add your translation below:</span>
+                    <ng-container *ngIf="field.input === 'text' && field.type === 'title'">
+                      <mat-form-field appearance="outline">
+                        <input matInput name="title" id="title" [formControlName]="field.key" />
+                      </mat-form-field>
+                    </ng-container>
+                    <ng-container *ngIf="field.input === 'text' && field.type === 'description'">
+                      <mat-form-field appearance="outline">
+                        <textarea
+                          matInput
+                          name="description"
+                          id="description"
+                          rows="3"
+                          [formControlName]="field.key"
+                        ></textarea>
+                      </mat-form-field>
+                    </ng-container>
+                    <ng-container *ngIf="field.input === 'textarea'">
+                      <mat-form-field appearance="outline">
+                        <textarea
+                          matInput
+                          name="'field.id'"
+                          id="'field.id'"
+                          [formControlName]="field.key"
+                        ></textarea>
+                      </mat-form-field>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="
+                        field.input === 'text' &&
+                        field.type !== 'title' &&
+                        field.type !== 'description'
+                      "
+                    >
+                      <mat-form-field appearance="outline">
+                        <input
+                          matInput
+                          name="'field.id'"
+                          id="'field.id'"
+                          [formControlName]="field.key"
+                      /></mat-form-field>
+                    </ng-container>
+                    <ng-container *ngIf="field.input === 'markdown'">
+                      <mat-form-field appearance="outline">
+                        <textarea
+                          matInput
+                          name="'field.id'"
+                          id="'field.id'"
+                          [formControlName]="field.key"
+                        ></textarea>
+                      </mat-form-field>
+                    </ng-container>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div mat-dialog-actions align="end">
+      <mzima-client-button
+        (buttonClick)="closeModal()"
+        fill="outline"
+        color="secondary"
+        [mat-dialog-close]="false"
+        [data-qa]="'btn-lang-cancel'"
+      >
+        {{ 'app.cancel' | translate }}
+      </mzima-client-button>
+      <mzima-client-button (buttonClick)="saveTranslation()" [data-qa]="'btn-lang-add'">
+        {{ 'app.save' | translate }}
+      </mzima-client-button>
+    </div>
+  </ng-template>
+</div>
