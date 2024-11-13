@@ -1542,7 +1542,7 @@
     "pending": "<strong>الوضع:</strong> قيد الانتظار",
     "failed": "<strong>الوضع:</strong> فشل",
     "queued": "<strong>الوضع</strong> قيد التقدم",
-    "pending_hdx": "Pending HDX",
+    "pending_hdx": "معلق على HDX",
     "exported_to_cdn": "تم تصديرها إلىCDN ",
     "tags_attributes": "عيّن علامات وسمات",
     "hxl_apikey_alert_1": "يبدو أنك لم تقم بإعداد Humanitarian Data Exchange (HDX) API الخاص بك. بدون هذا الإعداد، لا يمكنك وضع علامات على البيانات وتحميلها إلى حساب Humanitarian Data Exchange (HDX).",
