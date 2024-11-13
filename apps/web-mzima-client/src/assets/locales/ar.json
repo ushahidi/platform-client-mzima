@@ -1549,7 +1549,7 @@
     "hxl_configure": "Configure HDX API",
     "hxl_apikey_alert_2": "We strongly advide you set this up now in",
     "hxl_apikey_alert_3": "before continuing as you won't be able to upload your data to HDX",
-    "hxl_title": "Assign your HXL tags and attributes, select fields and export or upload",
+    "hxl_title": "عيّن علامات وسمات HXL الخاصة بك، واختر الحقول، وقم بالتصدير أو التحميل",
     "hxl_desc": "اختر حقولًا معينة من استبيان، وقم بتعيين علامة لكل حقل، ثم اختر تعيين سمات متعددة. قم بمعاينة العلامة والسمات الخاصة بك في معاينة العلامة.",
     "hxl_instructions_1": "يمكنك بعد ذلك اختيار تصدير حقولك المسمّاة إلى ملف CSV أو تحميلها إلى ",
     "hxl_instructions_2": "منصة تبادل البيانات الإنسانية (HDX)",
