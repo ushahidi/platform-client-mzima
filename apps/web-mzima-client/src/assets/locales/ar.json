@@ -1567,7 +1567,7 @@
     "hdx_csv_title": "Are you ready to export to CSV?",
     "upload_desc": "You selected {{fields}} fields to upload to a Humanitarian Data Exchange (HDX) account. <br /> <br /> You assigned tags and attributes - to check, you can go back. If you are done, you can add details and upload. <br /> <br /> The Humanitarian Data Exchange (HDX) requires a few more details in order to upload to their system. You'll add these next",
     "hdx_csv_desc": "You selected {{fields}} fields to export to CSV.<br /> <br /> You assigned tags and attributes - to check these are correct, you can go back and check. If you're done, you can export.",
-    "upload_button": "Add dataset details and upload to hdx",
+    "upload_button": "أضف تفاصيل مجموعة البيانات وقم بتحميلها إلى HDX",
     "export_button": "تصدير إلى csv",
     "go_back": "عد و تحقق",
     "add_details": "إضافة تفاصيل",
