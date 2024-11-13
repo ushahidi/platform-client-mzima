@@ -1533,7 +1533,7 @@
     "select_fields_desc": "إذا كنت لا تريد تصدير جميع بياناتك مرة واحدة، يمكنك تحديد حقول معينة من كل استبيان للتصدير.",
     "export_selected": "قم بتصدير الحقول المختارة",
     "cancel": "إلغاء",
-    "export_progress": "<p>Export in progress... </p><p>You can leave this page if you want. Your export will continue.</p><p> We will let you know when we're done.</p>",
+    "export_progress": "<p>جاري التصدير... </p><p>يمكنك مغادرة هذه الصفحة إذا كنت ترغب في ذلك. سيستمر التصدير.</p><p> سنعلمك عندما ننتهي.</p>",
     "no_fields": "أوه! يجب عليك تحديد بعض الحقول للتصدير أولاً.",
     "expires": "<strong>ينتهي:</strong> {{expires}}",
     "job": "تصدير CSV {{jobId}}",
