@@ -1536,7 +1536,7 @@
     "export_progress": "<p>Export in progress... </p><p>You can leave this page if you want. Your export will continue.</p><p> We will let you know when we're done.</p>",
     "no_fields": "أوه! يجب عليك تحديد بعض الحقول للتصدير أولاً.",
     "expires": "<strong>ينتهي:</strong> {{expires}}",
-    "job": "CSV تصدير {{jobId}}",
+    "job": "تصدير CSV {{jobId}}",
     "created": "<strong>انشأت:</strong> {{created}}",
     "success": "<strong>الوضع:</strong> منتهي",
     "pending": "<strong>الوضع:</strong> قيد الانتظار",
