@@ -1756,7 +1756,7 @@
       "save_success": "تم حفظ الإعدادات العامة"
     },
     "donation_settings": {
-      "save_success": "Donation settings saved",
+      "save_success": "تم حفظ إعدادات التبرع",
       "delete_question": "هل أنت متأكد من رغبتك في حذف {{name}}؟"
     },
     "map_settings": {
