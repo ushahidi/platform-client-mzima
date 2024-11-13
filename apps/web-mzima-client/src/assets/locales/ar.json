@@ -1506,7 +1506,7 @@
     "organize_data": "تنظيم البيانات",
     "organize_your_imported_data": "تعيين أعمدة ملف CSV إلى حقول المنشور",
     "assign_csv_message": "تعيين أعمدة ملف CSV إلى حقول المنشور",
-    "csv_instructions": "كل اسماء الجداول من قيم ملفاتك المفصولة بفواصل مدرجة في القائمة ادناه اختر مجال <سترونج> {{form_name}} </ سترونج> الذي ترغب استيراد كل جدول إليه. ",
+    "csv_instructions": "تم سرد كل أسماء الأعمدة من ملف CSV الخاص بك أدناه. اختر 1{{form_name}}</strong> الحقل الذي تريد استيراد كل عمود إليه.",
     "csv_instructions_required_fields": "الحقول التي بجوارها علامة [*] ملزمة ويجب أدخال قيم بها.",
     "csv_column_name": "اسم عمود CSV",
     "post_type_title": "اسم حقل {{form_name}}",
