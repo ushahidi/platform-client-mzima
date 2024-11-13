@@ -1625,7 +1625,7 @@
     "failed_attempts": "محاولات فاشلة:",
     "full_name": "عرض الإسم",
     "never": "أبدا",
-    "no_full_name": "لايوجد اسم العرض",
+    "no_full_name": "لايوجد اسم للعرض",
     "number_of_users_shown": "عدد المستخدمين المعروض",
     "per_page": "{{count}} مستخدم ",
     "password": "كلمة مرور",
