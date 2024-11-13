@@ -45,6 +45,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   roles: RoleResult[] = [];
   surveyId: string;
   additionalTasks: SurveyItemTask[] = [];
+  initialTasks: SurveyItemTask[] = [];
   mainPost: SurveyItemTask;
   surveyObject: any;
   public languages: LanguageInterface[];
@@ -116,11 +117,6 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.initialFormValue = this.form.value;
-    this.form.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
-      this.changesMade = true;
-    });
-
     this.initRoles();
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -133,12 +129,37 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
           this.updateForm(response.result);
           this.initLanguages(response.result.enabled_languages);
           this.initTasks();
+          //initial state for existing survey
+          this.setInitialState();
         },
       });
     } else {
       this.initLanguages({ available: [], default: 'en' });
       this.initTasks(true);
+      //initial state for new survey
+      this.setInitialState();
     }
+
+    this.form.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
+      this.changesMade = true;
+    });
+  }
+
+  private setInitialState(): void {
+    this.initialFormValue = _.cloneDeep(this.form.value);
+    this.initialTasks = _.cloneDeep(this.form.get('tasks')?.value || []);
+    this.changesMade = false;
+  }
+
+  private hasChanges(): boolean {
+    // Make sure name field is not empty
+    // Check if form/tasks are different from initial state
+    const hasNonEmptyValues = !!this.form.get('name')?.value.trim();
+    return (
+      hasNonEmptyValues &&
+      (!_.isEqual(this.form.value, this.initialFormValue) ||
+        !_.isEqual(this.form.get('tasks')?.value, this.initialTasks))
+    );
   }
 
   private initTasks(isNew = false) {
@@ -316,8 +337,6 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
           }
         },
       });
-      this.initialFormValue = this.form.value;
-      this.changesMade = false;
     } else {
       this.notification
         .showError(`You need to add translations for all names, and ensure checkboxes and radios do not have duplicates.
@@ -326,21 +345,20 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   }
 
   public async openConfirmModal() {
-    if (!this.changesMade) {
-      this.navigateBack();
-      return;
-    }
+    if (this.hasChanges()) {
+      const confirmed = await this.confirmModalService.open({
+        title: 'Confirm',
+        description:
+          'The changes will be lost if you don’t save the survey. Do you want to save changes?',
+        confirmButtonText: 'Save Changes',
+        cancelButtonText: 'Discard Changes',
+      });
 
-    const confirmed = await this.confirmModalService.open({
-      title: 'Confirm',
-      description:
-        'The changes will be lost if you don’t save the survey. Do you want to save changes?',
-      confirmButtonText: 'Save Changes',
-      cancelButtonText: 'Discard Changes',
-    });
-
-    if (confirmed) {
-      this.save();
+      if (confirmed) {
+        this.save();
+      } else {
+        this.navigateBack();
+      }
     } else {
       this.navigateBack();
     }
