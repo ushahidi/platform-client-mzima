@@ -1510,7 +1510,7 @@
     "csv_instructions_required_fields": "الحقول التي بجوارها علامة [*] ملزمة ويجب أدخال قيم بها.",
     "csv_column_name": "اسم جدول القيمة المفصلة بفاصلة ",
     "post_type_title": "اسم حقل {{form_name}}",
-    "leave_empty": "يترك فارغا",
+    "leave_empty": "اترك فارغًا",
     "cancel_import": "الغاء الإستيراد",
     "finish_import": "إنتهى الإستيراد",
     "which_survey": "اي استبيان"
