@@ -1573,7 +1573,7 @@
     "add_details": "إضافة تفاصيل",
     "details_desc": "To upload to the Humanitarian Data Exchange (HDX) some extra details are required.",
     "privacy_title": "إعدادات الخصوصية",
-    "privacy_desc": "You have a choice of sharing your dataset publicly or restricting access to other members of the organisation which owns the dataset.",
+    "privacy_desc": "لديك خيار مشاركة مجموعة البيانات الخاصة بك علنًا أو تقييد الوصول إلى أعضاء آخرين في المنظمة المالكة لمجموعة البيانات.",
     "this_dataset": "مجموعة البيانات هذه هي:",
     "private_desc": "خاص (فقط انت وبقية الاشخاص HDX من منظمتك يمكنهم <strong>البحث ، العرض و التعديل</strong> أو <strong> تنزيل </strong>مجموعة البيانات)",
     "public_desc": "العام (اي شخصي يمكنه آن <strong>يبحث يستعرض/ يعدل</strong> أو<strong> ينزل </strong> مجموعة البيانات)",
