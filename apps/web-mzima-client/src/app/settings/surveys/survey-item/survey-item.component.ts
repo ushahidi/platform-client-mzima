@@ -21,6 +21,7 @@ import {
   SurveyItemEnabledLanguages,
 } from '@mzima-client/sdk';
 import { NotificationService } from '../../../core/services/notification.service';
+import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { LanguageService } from '../../../core/services/language.service';
 import _ from 'lodash';
 
@@ -38,6 +39,8 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   public name: string;
   public form: FormGroup;
   public isEdit = false;
+  public changesMade = false;
+  private initialFormValue: any;
   public isLoading = false;
   roles: RoleResult[] = [];
   surveyId: string;
@@ -64,6 +67,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     private notification: NotificationService,
     private languageService: LanguageService,
     private location: Location,
+    private confirmModalService: ConfirmModalService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -112,6 +116,11 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.initialFormValue = this.form.value;
+    this.form.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
+      this.changesMade = true;
+    });
+
     this.initRoles();
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -307,6 +316,8 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
           }
         },
       });
+      this.initialFormValue = this.form.value;
+      this.changesMade = false;
     } else {
       this.notification
         .showError(`You need to add translations for all names, and ensure checkboxes and radios do not have duplicates.
@@ -314,7 +325,28 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     }
   }
 
-  public cancel() {
+  public async openConfirmModal() {
+    if (!this.changesMade) {
+      this.navigateBack();
+      return;
+    }
+
+    const confirmed = await this.confirmModalService.open({
+      title: 'Confirm',
+      description:
+        'The changes will be lost if you don’t save the survey. Do you want to save changes?',
+      confirmButtonText: 'Save Changes',
+      cancelButtonText: 'Discard Changes',
+    });
+
+    if (confirmed) {
+      this.save();
+    } else {
+      this.navigateBack();
+    }
+  }
+
+  navigateBack() {
     if (this.isDesktop) {
       this.router.navigate(['settings/surveys']);
     } else {
