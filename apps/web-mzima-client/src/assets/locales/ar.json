@@ -1604,7 +1604,7 @@
   },
   "user": {
     "are_you_sure_you_want_to_delete_this_account": "هل تريد بالتاكيد حذف هذا الحساب؟",
-    "role_display": "دور:  {{role}}",
+    "role_display": "الدور:  {{role}}",
     "contact": "{{type}}: {{contact}}",
     "add_user": "إضافة مستخدم",
     "edit_user": "تعديل المستخدم",
