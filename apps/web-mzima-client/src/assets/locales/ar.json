@@ -1565,7 +1565,7 @@
     "tag_preview": "معاينة العلامات",
     "upload_title": "هل أنت مستعد لتحميل البيانات إلى حساب Humanitarian Data Exchange (HDX)؟",
     "hdx_csv_title": "هل أنت مستعد لتصدير البيانات إلى ملف CSV؟",
-    "upload_desc": "You selected {{fields}} fields to upload to a Humanitarian Data Exchange (HDX) account. <br /> <br /> You assigned tags and attributes - to check, you can go back. If you are done, you can add details and upload. <br /> <br /> The Humanitarian Data Exchange (HDX) requires a few more details in order to upload to their system. You'll add these next",
+    "upload_desc": "لقد اخترت {{fields}} حقولًا لتحميلها إلى حساب  (HDX).\n. <br /> <br /> لقد قمت بتعيين علامات وسمات - للتحقق، يمكنك العودة. إذا كنت قد انتهيت، يمكنك إضافة التفاصيل والتحميل. <br /> <br /> تتطلب منصة تبادل البيانات الإنسانية (HDX) بعض التفاصيل الإضافية من أجل التحميل إلى نظامها. ستضيف هذه التفاصيل بعد ذلك",
     "hdx_csv_desc": "You selected {{fields}} fields to export to CSV.<br /> <br /> You assigned tags and attributes - to check these are correct, you can go back and check. If you're done, you can export.",
     "upload_button": "أضف تفاصيل مجموعة البيانات وقم بتحميلها إلى HDX",
     "export_button": "تصدير إلى csv",
