@@ -39,6 +39,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PostNotFoundComponent } from './post-not-found/post-not-found.component';
 import { PostNotAllowedComponent } from './post-not-allowed/post-not-allowed.component';
 import { PostConversationComponent } from './post-conversation/post-conversation.component';
+import { PostTranslateComponent } from './post-translate/post-translate.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { PostConversationComponent } from './post-conversation/post-conversation
     PostNotFoundComponent,
     PostNotAllowedComponent,
     PostConversationComponent,
+    PostTranslateComponent,
   ],
   imports: [
     CommonModule,
