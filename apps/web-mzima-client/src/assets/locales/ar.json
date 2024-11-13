@@ -1899,7 +1899,7 @@
     "notification": {
       "add": "سيتم الآن إعلامك عند إضافة منشورات جديدة إلى {{set}} ",
       "delete_confirm": "هل أنت متأكد من أنك تريد محو  هذه التنبيهات؟",
-      "destroy_success": "<strong> سوف لن يتلقي إشعارات حول {{name}} مفتاح</strong>. "
+      "destroy_success": "<strong>لن تتلقى بعد الآن إشعارات حول</strong> {{name}}."
     },
     "message": {
       "sent_to": "تم ارسال الرسالة إلى {{contact}}"
