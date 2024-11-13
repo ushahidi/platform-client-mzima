@@ -2020,7 +2020,7 @@
     "survey_select_default": "اختر اللغة الافتراضية لهذا الاستبيان",
     "category_select_default": "اختر اللغة الافتراضية لهذه الفئة",
     "error_translation_exists": "You cannot select this language since there is already a translation for it.",
-    "edit_default_text": "Text in default language",
+    "edit_default_text": "النص باللغة الافتراضية",
     "edit_placeholder": "اكتب ترجمتك هنا",
     "add_translation": "أضف ترجمتك أدناه:",
     "survey_name_required": "يجب تحديد ترجمة لاسم الاستبيان",
