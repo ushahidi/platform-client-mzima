@@ -114,6 +114,7 @@
     "close_and_view": "Menutup dan melihat hasil",
     "show_more_less": "Perlihatkan lebih/kurang",
     "filters": "Saringan",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "Saringan oleh survei",
     "configure": "Konfigurasikan",
     "post": "Postingan",
@@ -295,7 +296,14 @@
     "no_fields": "Tidak ada bidang",
     "select_color": "Pilih warna",
     "choose_survey": "Pilih survei",
-    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
+    "marked_for_internal": {
+      "header": "Internal Use Only",
+      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+    },
+    "task_is_marked_as": {
+      "not_completed": "Task Complete? - Use toggle below",
+      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+    },
     "delete_task": "Delete task",
     "duplicate_survey": "Duplicate",
     "main_info": "Info utama",
@@ -314,6 +322,7 @@
     "title": "Judul",
     "field_allowed_relation_survey": "Izinkan survei",
     "collect_image_caption": "Include image caption field",
+    "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "This will disable and hide all existing captions for this field, but you can re-enable them at any time.",
     "description": "Deskripsi",
     "task_description": "Deskripsi tugas",
@@ -335,6 +344,8 @@
     "related_post": "Related Post",
     "related_post_info": "Harap dicatat, posting yang berhubungan dengan perlu dipublikasikan, posting yang \"Dalam peninjauan\" tidak akan muncul di hasil pencarian",
     "upload_image": "Image",
+    "upload_document": "Document",
+    "upload_audio": "Audio",
     "embed_video": "Embed video",
     "markdown": "Markdown",
     "categories": "Categories",
@@ -349,7 +360,13 @@
     "checkbox_desc": "Ijinkan pengguna ini untuk memilih satu atua lebih dari kumpulan opsi yang telah ditetapkan.",
     "relation_desc": "Buat relasi diantara survei-survei",
     "upload_desc": "Ijinkan gambar(gambar) diunggah ke dalam postingan",
+    "audio_desc": "Allows audio file(s) to be uploaded to the post",
+    "document_desc": "Allows document(s) to be uploaded to the post",
     "video_desc": "Allows Youtube or Vimeo videos to be embed in the post",
+    "maximum_upload_size" : "Maximum Upload Size",
+    "small_upload_size" : "Small",
+    "medium_upload_size" : "Medium",
+    "large_upload_size" : "Large",
     "markdown_desc": "Allows the use of markdown syntax to style the field content.",
     "tasks": "Tugas",
     "task_visible_when_published": "This task will be visible when post is published.",
@@ -602,6 +619,7 @@
     "source": "Source",
     "saved_filters": "Saved filters",
     "saved_filter": "Filter tersimpan",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Apakah Anda yakin ingin menghapus filter tersimpan ini?"
@@ -856,7 +874,9 @@
       "unlocked": "Post successfully unlocked",
       "unlock": "Unlock",
       "lock_broken_by_other": "Your Post has been unlocked. Your current unsaved changes will be lost.",
-      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
     "modify": {
       "intro": "Pilih survei:",
@@ -966,9 +986,23 @@
       "add_caption": "Tambahkan keterangan",
       "upload": "Unggah",
       "add_photo": "Add photo",
+      "add_audio": "Add audio",
+      "add_document": "Add document",
+      "retry" : "Retry",
       "delete_photo": "Delete photo",
       "replace_image": "Replace image",
-      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
+      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!",
+      "messages": {
+        "max_size" : "Your file is too large.",
+        "max_files" : "You have exceeded the maximum number of files.",
+        "required" : "Media is required.",
+        "invalid_type" : "Unsupported file type."
+      },
+      "status" : {
+        "uploading" : "Uploading...",
+        "upload_complete" : "Upload Complete!",
+        "upload_failed" : "Upload failed!"
+      }
     },
     "video": {
       "enter_a_url": "Enter a video URL from Youtube or Vimeo."
@@ -1101,7 +1135,7 @@
     "delete_category_desc": "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
     "show_categories": "Show available categories",
     "child_permissions": "Permissions for this category are managed by the parent category.",
-    "which_categories": "Kategori mana yang harus tersedia",
+    "which_categories": "Which categories should be available?",
     "select_all": "Pilih Semua",
     "choose_roles": "Pilih Peran",
     "create_tag": "Buat Kategori",
