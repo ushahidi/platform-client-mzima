@@ -1745,7 +1745,7 @@
       "duplicate_fields": "يجب تعيين الأعمدة إلى حقول استبيان فريدة. الأعمدة التالية لها أكثر من تعيين واحد : {{duplicates}}",
       "required_fields": "يجب تعيين قيمة للحقول المطلوبة. لم يتم تعيين الحقول التالية: {{required}}",
       "empty_mapping": "The CSV file you uploaded is empty. Please check your CSV file and try again",
-      "empty_mapping_empty": "The CSV file does not contain column names. Please check your CSV file and try again",
+      "empty_mapping_empty": "ملف CSV لا يحتوي على أسماء الأعمدة. يرجى التحقق من ملف CSV الخاص بك والمحاولة مرة أخرى",
       "no_mappings": "لم تم اسناد أي من الحقول الي اي تعيين - يجب أن يتم تعيين حقل واحد على الأقل للمواصلة",
       "csv_import_cancel": "تم إلغاء عملية استيراد CSV",
       "csv_import_cancel_confirm": "هل انت واثق من وقف عملية التصدير؟",
