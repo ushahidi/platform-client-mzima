@@ -60,7 +60,7 @@
         [mat-dialog-close]="true"
         [data-qa]="'btn-confirm-action'"
       >
-        {{ data.actionButtonText }}
+        {{ data.actionButtonText || ('app.confirm' | translate) }}
       </mzima-client-button>
     </ng-container>
   </mat-dialog-actions>

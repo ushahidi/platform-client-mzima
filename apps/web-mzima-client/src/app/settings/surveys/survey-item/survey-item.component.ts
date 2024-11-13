@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
+import { TranslateService } from '@ngx-translate/core';
 import { LanguageInterface } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService, SessionService } from '@services';
@@ -69,6 +70,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     private languageService: LanguageService,
     private location: Location,
     private confirmModalService: ConfirmModalService,
+    private translate: TranslateService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -347,9 +349,8 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   public async openConfirmModal() {
     if (this.hasChanges()) {
       const confirmed = await this.confirmModalService.open({
-        title: 'Confirm',
-        description:
-          'The changes will be lost if you don’t save the survey. Do you want to save changes?',
+        title: this.translate.instant('notify.default.discard_changes'),
+        description: this.translate.instant('notify.default.survey_has_not_been_saved'),
         cancelButtonText: 'Discard Changes',
         actionButtonText: 'Save Changes',
       });
