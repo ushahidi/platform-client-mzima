@@ -2033,7 +2033,7 @@
     "post_title_required": "يجب إضافة ترجمة لعنوان المنشور.",
     "add_a_language": "إضافة لغة",
     "error_no_default": "يجب عليك تحديد لغة افتراضية قبل إضافة ترجمة جديدة.",
-    "select_language": "Select a language to add translation for",
+    "select_language": "اختر لغة لإضافة ترجمة لها",
     "default_lang_info": "هذه هي اللغة التي سيتم استخدامها إذا لم تكن هناك ترجمات متوفرة للغة التي حددها المستخدم للمنصة."
   },
   "languages": {
