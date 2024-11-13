@@ -2014,8 +2014,8 @@
   },
   "translations": {
     "languages": "اللغات",
-    "language": "Language",
-    "default": "default",
+    "language": "اللغة",
+    "default": "الافتراضي",
     "translate_field": "ترجم الحقل",
     "survey_select_default": "اختر اللغة الافتراضية لهذا الاستبيان",
     "category_select_default": "اختر اللغة الافتراضية لهذه الفئة",
