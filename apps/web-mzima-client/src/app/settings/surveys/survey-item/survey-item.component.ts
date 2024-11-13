@@ -152,7 +152,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   }
 
   private hasChanges(): boolean {
-    // Make sure name field is not empty
+    // Make sure name field is not empty before saving
     // Check if form/tasks are different from initial state
     const hasNonEmptyValues = !!this.form.get('name')?.value.trim();
     return (
@@ -350,8 +350,8 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
         title: 'Confirm',
         description:
           'The changes will be lost if you don’t save the survey. Do you want to save changes?',
-        confirmButtonText: 'Save Changes',
         cancelButtonText: 'Discard Changes',
+        actionButtonText: 'Save Changes',
       });
 
       if (confirmed) {
