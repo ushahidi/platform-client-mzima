@@ -1592,7 +1592,7 @@
     "submit_hdx": "Submit to HDX Account",
     "uploading_data": "جاري تحميل البيانات...",
     "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
-    "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
+    "uploading_data_err": "يبدو أن هناك خطأ ما حدث أثناء تحميل بياناتك، يرجى التحقق من الحقول المطلوبة ومفتاح api الخاص بك والمحاولة مرة أخرى.",
     "no_fields_selected": "لم تقم بتحديد أي حقول أو تعيين أي علامات أو سمات HXL. يرجى تحديد حقل واحد على الأقل وتعيين علامة واحدة على الأقل لتتمكن من التصدير إلى CSV أو التحميل إلى حساب Humanitarian Data Exchange (HDX).",
     "validation": {
       "title": "العنوان لازم",
