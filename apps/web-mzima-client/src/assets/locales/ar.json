@@ -1956,7 +1956,7 @@
     "my_location_error": "عذرا لم نجد موقعك",
     "update_map": "تحديث الخريطة",
     "no_matching_locations": "لا توجد مواقع مطابقة",
-    "invalid_lat": "The value given is not a valid latitude.",
+    "invalid_lat": "القيمة المعطاة ليست خط عرض صالح.",
     "invalid_lon": "القيمة المعطاة ليست خط طول صالح."
   },
   "notification": {
