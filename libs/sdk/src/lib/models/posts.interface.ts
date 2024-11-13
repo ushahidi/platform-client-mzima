@@ -112,6 +112,7 @@ export interface PostResult {
   form_id?: number;
   user?: PostPropertiesUser;
   post_content?: PostContent[];
+  post_media?: any;
 }
 
 interface PostTag {

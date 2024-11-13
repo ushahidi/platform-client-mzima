@@ -13,7 +13,7 @@ export const ONLY = {
   NAME_ID: 'name,id',
   NAME_ID_COLOR: 'name,id,color',
   NAME_COLOR_PERMISSIONS: 'name,color,everyone_can_create,can_create',
-  NEEDED_POSTS_LIST_PROPERTIES: 'id,title,status,contact,locks,post_media',
+  NEEDED_POSTS_LIST_PROPERTIES: 'id,title,status,contact,locks,post_media,data_source_message_id',
 };
 
 export const API_V_3 = `api/v3/`;
