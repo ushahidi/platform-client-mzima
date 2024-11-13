@@ -10,6 +10,7 @@ import {
   PostsService,
   SavedsearchesService,
   CollectionsService,
+  apiHelpers,
 } from '@mzima-client/sdk';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { DatabaseService, EnvService, SessionService } from '@services';
@@ -117,7 +118,7 @@ export class FeedViewComponent extends MainViewComponent {
         this.postsService.getPosts('', {
           currentView: 'feed',
           ...params,
-          only: MOBILE_NEEDED_POSTS_LIST_PROPERTIES,
+          only: apiHelpers.ONLY.NEEDED_POSTS_LIST_PROPERTIES,
         }),
       );
 
