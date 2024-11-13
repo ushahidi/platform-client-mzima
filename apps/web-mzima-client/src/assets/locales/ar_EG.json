@@ -1666,7 +1666,7 @@
         "weak": "This password is very weak"
       },
       "token": {
-        "required": "Token is required"
+        "required": "الرمز مطلوب"
       }
     },
     "placeholder": {
