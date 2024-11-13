@@ -322,6 +322,7 @@
     "title": "Název",
     "field_allowed_relation_survey": "Povolené průzkumy",
     "collect_image_caption": "Zahrnout pole s popisem obrázku",
+    "collect_media_caption": "Zahrnout pole popisku",
     "disable_caption_field_explanation": "Tím se zakáží a skryjí všechny existující popisky pro toto pole, ale můžete je kdykoli znovu povolit.",
     "description": "Popis",
     "task_description": "Popis ulohy",
@@ -343,6 +344,8 @@
     "related_post": "Související příspěvek",
     "related_post_info": "Vezměte prosím na vědomí, že příspěvky, kterých se to týká, musí být zveřejněny, příspěvky, které jsou v procesu kontroly, se ve výsledcích vyhledávání neobjeví.",
     "upload_image": "Obrázek",
+    "upload_document": "Dokument",
+    "upload_audio": "Zvuk",
     "embed_video": "Vložené video",
     "markdown": "Markdown",
     "categories": "Kategorie",
@@ -357,7 +360,13 @@
     "checkbox_desc": "Umožňuje uživateli vybrat jednu nebo více předdefinovaných sad možností.",
     "relation_desc": "Vytvořte vztah mezi různými průzkumy",
     "upload_desc": "Umožňuje odesílání obrázk(ů) do příspěvku",
+    "audio_desc": "Umožňuje nahrávání zvukových souborů do příspěvku",
+    "document_desc": "Umožňuje nahrát do příspěvku dokument(y).",
     "video_desc": "Umožnit vkládání videa Youtube nebo Vimeo do příspěvku",
+    "maximum_upload_size" : "Maximální velikost nahrávaného souboru",
+    "small_upload_size" : "Malá",
+    "medium_upload_size" : "Střední",
+    "large_upload_size" : "Velká",
     "markdown_desc": "Umožňuje použití syntaxe markdown pro stylování obsahu pole.",
     "tasks": "Úlohy",
     "task_visible_when_published": "Tato úloha bude viditelná při zveřejnění příspěvku.",
@@ -977,9 +986,23 @@
       "add_caption": "Přidat titulek",
       "upload": "Nahrát",
       "add_photo": "Přidat fotku",
+      "add_audio": "Přidat zvuk",
+      "add_document": "Přidat dokument",
+      "retry" : "Opakovat",
       "delete_photo": "Smazat fotku",
       "replace_image": "Nahradit obrázek",
-      "error_in_upload": "Váš obrázek je příliš velký (maximální velikost je 1 MB) nebo má nesprávný formát (povolené formáty jsou gif, png, jpg a jpeg). Zkontrolujte prosím a zkuste to znovu!"
+      "error_in_upload": "Váš obrázek je příliš velký (maximální velikost je 1 MB) nebo má nesprávný formát (povolené formáty jsou gif, png, jpg a jpeg). Zkontrolujte prosím a zkuste to znovu!",
+      "messages": {
+        "max_size" : "Soubor je příliš velký.",
+        "max_files" : "Byl překročen maximální počet souborů.",
+        "required" : "Jsou vyžadována média.",
+        "invalid_type" : "Unsupported file type."
+      },
+      "status" : {
+        "uploading" : "Nahrávání...",
+        "upload_complete" : "Nahrávání dokončeno!",
+        "upload_failed" : "Nahrávání se nezdařilo!"
+      }
     },
     "video": {
       "enter_a_url": "Zadejte adresu URL videa z Youtube nebo Vimeo."
@@ -1112,7 +1135,7 @@
     "delete_category_desc": "<strong>Pokud tuto kategorii odstraníte</strong>, nebude již spojena s žádnými příspěvky. Postupovat opatrně.",
     "show_categories": "Zobrazit dostupné kategorie",
     "child_permissions": "Oprávnění pro tuto kategorii jsou spravována nadřazenou kategorií.",
-    "which_categories": "Které kategorie by měly být k dispozici",
+    "which_categories": "Which categories should be available?",
     "select_all": "Vybrat vše",
     "choose_roles": "Vybrat role",
     "create_tag": "Vytvořit kategorii",
