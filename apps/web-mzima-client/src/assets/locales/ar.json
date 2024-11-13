@@ -1627,7 +1627,7 @@
     "never": "أبدا",
     "no_full_name": "لايوجد اسم العرض",
     "number_of_users_shown": "عدد المستخدمين المعروض",
-    "per_page": "{{count}} المستخدمين ",
+    "per_page": "{{count}} مستخدم ",
     "password": "كلمة مرور",
     "new_password": "كلمة مرور جديدة",
     "register": "تسجيل",
