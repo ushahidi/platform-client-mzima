@@ -40,6 +40,8 @@ import {
   MediaService,
   postHelpers,
   SurveyItem,
+  MediaFile,
+  MediaFileStatus,
 } from '@mzima-client/sdk';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
@@ -49,8 +51,6 @@ import { Observable, lastValueFrom, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LanguageInterface } from '@mzima-client/sdk';
 import { MatSelectChange } from '@angular/material/select';
-import { MediaFile } from '../../core/interfaces/media';
-import { getFileNameFromUrl } from '../../core/helpers/media-helper';
 
 dayjs.extend(timezone);
 
@@ -375,21 +375,22 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     }
   }
 
-  private async handleMedia(key: string, value: MediaFile[]) {
+  private async handleMedia(key: string, value: any[]) {
     if (value?.length === 0) return;
     try {
+      const mediaFiles: MediaFile[] = [];
       for (const mediaValue of value) {
         const media = await lastValueFrom(this.mediaService.getById(mediaValue.value!));
-        mediaValue.url = media.result.original_file_url;
-        mediaValue.caption = media.result.caption;
-        mediaValue.mimeType = media.result.mime;
-        mediaValue.size = media.result.original_file_size;
-        mediaValue.status = 'ready';
-        mediaValue.filename = getFileNameFromUrl(mediaValue.url!);
+        const mediaFile: MediaFile = new MediaFile(media.result, media.result.original_file_url);
+        mediaFile.id = mediaValue.id;
+        mediaFile.value = media.result.id;
+        mediaFile.caption = media.result.caption;
+        mediaFile.status = MediaFileStatus.READY;
+        mediaFiles.push(mediaFile);
       }
 
       this.form.patchValue({
-        [key]: value,
+        [key]: mediaFiles,
       });
     } catch (error: any) {
       this.form.patchValue({ [key]: null });

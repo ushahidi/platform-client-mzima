@@ -46,7 +46,7 @@ export class SupportModalComponent extends BaseComponent {
         title: this.translate.instant('app.report_a_bug.title'),
         description: this.translate.instant('app.report_a_bug.description'),
         action: () => {
-          this.openUrl('https://github.com/ushahidi/platform/issues/new');
+          this.openUrl('https://form.typeform.com/to/FENOwVce');
           this.closeModal();
         },
       },

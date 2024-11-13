@@ -4,6 +4,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -13,6 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Permissions } from '@enums';
 import {
   CategoryInterface,
+  MediaFile,
+  MediaFileStatus,
   MediaService,
   PostContent,
   PostContentField,
@@ -27,18 +30,13 @@ import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { dateHelper } from '@helpers';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
-import {
-  getDocumentThumbnail,
-  getFileNameFromUrl,
-  getFileSize,
-} from '../../core/helpers/media-helper';
 
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
   styleUrls: ['./post-details.component.scss'],
 })
-export class PostDetailsComponent extends BaseComponent implements OnChanges, OnDestroy {
+export class PostDetailsComponent extends BaseComponent implements OnChanges, OnDestroy, OnInit {
   @Input() post: PostResult;
   @Input() feedView: boolean = true;
   @Input() userId?: number | string;
@@ -64,14 +62,16 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     private route: ActivatedRoute,
     private postsService: PostsService,
     private surveyService: SurveysService,
-    private sanitizer: DomSanitizer,
+    protected sanitizer: DomSanitizer,
     private eventBusService: EventBusService,
   ) {
     super(sessionService, breakpointService);
     this.getUserData();
     this.checkPermission();
     this.userId = Number(this.user.userId);
+  }
 
+  ngOnInit(): void {
     this.route.params.subscribe((params) => {
       if (params['id']) {
         //----------------------
@@ -85,10 +85,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       }
     });
   }
-
-  // Import Helper Methods for the template
-  getDocumentThumbnail = getDocumentThumbnail;
-  getFileSize = getFileSize;
 
   loadData(): void {}
 
@@ -124,22 +120,22 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     if (this.post) {
       this.surveyService.getById(this.post.form_id!).subscribe((form) => {
         this.post!.form = form.result;
+        this.getData(this.post);
       });
-      this.isPostLoading = false;
-      this.getData(this.post);
       this.preparePostForView();
       //----------------------
-      this.postChanged = false;
       //----------------------
     }
   }
 
-  private getData(post: PostResult): void {
+  private async getData(post: PostResult): Promise<void> {
     for (const content of post.post_content as PostContent[]) {
-      this.preparingMediaField(content.fields);
       this.preparingSafeVideoUrls(content.fields);
       this.preparingRelatedPosts(content.fields);
       this.preparingCategories(content.fields);
+      this.preparingMediaField(content.fields).then(() => {
+        this.postChanged = false;
+      });
     }
   }
 
@@ -166,7 +162,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         return categories;
       });
     //----------------------
-    this.postChanged = false;
+    // this.postChanged = false;
     //----------------------
   }
 
@@ -190,22 +186,27 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     fields
       .filter((field: any) => field.type === 'media')
       .map(async (mediaField) => {
-        if (mediaField.value?.value) {
+        if (Array.isArray(mediaField.value)) {
+          const mediaFiles: MediaFile[] = [];
+          for await (const mediaValue of mediaField.value) {
+            const media = await lastValueFrom(this.mediaService.getById(mediaValue.value!));
+            const mediaFile: MediaFile = new MediaFile(
+              media.result,
+              media.result.original_file_url,
+            );
+            mediaFile.id = mediaValue.id;
+            mediaFile.value = media.result.id;
+            mediaFile.caption = media.result.caption;
+            mediaFile.status = MediaFileStatus.READY;
+            mediaFiles.push(mediaFile);
+          }
+          mediaField.value = mediaFiles;
+        } else if (mediaField.value?.value) {
           const media = await this.getPostMedia(mediaField.value.value);
           mediaField.value.preview = media.result.original_file_url;
           mediaField.value.caption = media.result.caption;
           mediaField.value.mimeType = media.result.mime;
           mediaField.value.size = media.result.original_file_size;
-        } else if (Array.isArray(mediaField.value)) {
-          for (const mediaValue of mediaField.value) {
-            const media = await this.getPostMedia(mediaValue.value);
-            mediaValue.url = media.result.original_file_url;
-            mediaValue.caption = media.result.caption;
-            mediaValue.mimeType = media.result.mime;
-            mediaValue.size = media.result.original_file_size;
-            mediaValue.filename = getFileNameFromUrl(mediaValue.url);
-            mediaValue.status = 'ready';
-          }
         }
       });
   }

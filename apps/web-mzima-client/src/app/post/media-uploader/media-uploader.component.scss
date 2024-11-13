@@ -7,6 +7,7 @@
       flex-direction: row;
       padding: 4px;
       border: 1px solid #f5f5f5;
+      word-break: break-all;
       .thumbnail {
         max-width: 100px;
         max-height: 100px;
@@ -57,7 +58,8 @@
         justify-content: center;
         .filename {
           font-size: 14px;
-          text-overflow: wrap;
+          text-overflow: ellipsis;
+          overflow-wrap: break-word;
           white-space: wrap;
           overflow: hidden;
         }
@@ -109,11 +111,11 @@
     }
     &-document {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 50% 50%;
       column-gap: 4px;
       row-gap: 4px;
       .media-preview {
-        height: 64px;
+        height: 100px;
       }
     }
 
