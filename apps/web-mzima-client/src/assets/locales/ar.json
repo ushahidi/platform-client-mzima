@@ -1571,7 +1571,7 @@
     "export_button": "تصدير إلى csv",
     "go_back": "عد و تحقق",
     "add_details": "إضافة تفاصيل",
-    "details_desc": "To upload to the Humanitarian Data Exchange (HDX) some extra details are required.",
+    "details_desc": "لتحميل البيانات إلى Humanitarian Data Exchange (HDX)، يلزم بعض التفاصيل الإضافية.",
     "privacy_title": "إعدادات الخصوصية",
     "privacy_desc": "لديك خيار مشاركة مجموعة البيانات الخاصة بك علنًا أو تقييد الوصول إلى أعضاء آخرين في المنظمة المالكة لمجموعة البيانات.",
     "this_dataset": "مجموعة البيانات هذه هي:",
