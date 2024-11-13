@@ -1824,7 +1824,7 @@
       "last_admin": "لا يمكنك حذف دور المشرف الوحيد"
     },
     "webhook": {
-      "delete_question": "هل انت واثق من حذف الـ webhook {{webhook}}؟ ",
+      "delete_question": "هل انت واثق من حذف الـ webhook {{webhook}}؟ ",
       "destroy_success": "تم حذف Webhook {{webhook}} .",
       "save_success": "الـ Webhook{{webhook}} تم حفظه"
     },
@@ -1832,7 +1832,7 @@
       "save_success": "تم حفظ مصدر البيانات {{name}}"
     },
     "user": {
-      "save_success": "تم حفظ{{name}} المستخدم",
+      "save_success": "تم حفظ المستخدم {{name}}",
       "edit_success": "تم تحديث المستخدم  {{name }}.",
       "destroy_confirm": "هل أنت متأكد من أنك ترغب في حذف هذا المستخدم؟",
       "destroy_success": "تم حذف المستخدم",
