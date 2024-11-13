@@ -1820,7 +1820,7 @@
     "role": {
       "delete_question": "هل ترغب بالتأكيد في حذف الدور؟",
       "destroy_success": "تم حذف الدور ",
-      "save_success": "تم حفظ الدور{{role}}  .",
+      "save_success": "تم حفظ الدور.",
       "last_admin": "لا يمكنك حذف دور المشرف الوحيد"
     },
     "webhook": {
