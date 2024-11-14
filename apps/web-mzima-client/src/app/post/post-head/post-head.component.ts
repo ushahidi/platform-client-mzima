@@ -6,13 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 import { BaseComponent } from '../../base.component';
 import { ShareModalComponent } from '../../shared/components';
-import {
-  PostPropertiesInterface,
-  PostResult,
-  PostsService,
-  PostStatus,
-  postHelpers,
-} from '@mzima-client/sdk';
+import { PostResult, PostsService, PostStatus, postHelpers } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 
 @Component({
@@ -22,7 +16,7 @@ import { ConfirmModalService } from '../../core/services/confirm-modal.service';
 })
 export class PostHeadComponent extends BaseComponent implements OnInit {
   PostStatus = PostStatus;
-  @Input() public post: PostResult | PostPropertiesInterface;
+  @Input() public post: PostResult;
   @Input() public editable: boolean;
   @Input() public feedView: boolean;
   @Input() public deleteable: boolean;
@@ -83,13 +77,23 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
   }
 
   publish() {
-    if (postHelpers.isAllRequiredCompleted(this.post)) {
-      this.postsService.updateStatus(this.post.id, PostStatus.Published).subscribe((res) => {
-        this.post = res.result;
-        this.statusChanged.emit();
-      });
+    const publishPostCode = (post: PostResult) => {
+      if (postHelpers.isAllRequiredCompleted(post)) {
+        this.postsService.updateStatus(this.post.id, PostStatus.Published).subscribe((res) => {
+          this.post = res.result;
+          this.statusChanged.emit();
+        });
+      } else {
+        this.showMessage(this.translate.instant('notify.post.unfinished_post_task'), 'error', 5000);
+      }
+    };
+
+    if (this.post.post_content) {
+      publishPostCode(this.post);
     } else {
-      this.showMessage(this.translate.instant('notify.post.unfinished_post_task'), 'error', 5000);
+      this.postsService.getById(this.post.id).subscribe((post) => {
+        publishPostCode(post);
+      });
     }
   }
 
