@@ -38,8 +38,8 @@
     </mzima-client-button>
     <ng-container *ngIf="!data.buttonSuccess">
       <mzima-client-button
-        fill="outline"
-        color="secondary"
+        [fill]="data.isCancelDestructive ? 'solid' : 'outline'"
+        [color]="data.isCancelDestructive ? 'danger' : 'secondary'"
         [mat-dialog-close]="false"
         [data-qa]="'btn-confirm-cancel'"
       >

@@ -8,6 +8,7 @@ export interface ConfirmDialogData {
   confirmButtonText?: string;
   cancelButtonText?: string;
   actionButtonText?: string;
+  isCancelDestructive?: boolean;
 }
 
 @Component({
