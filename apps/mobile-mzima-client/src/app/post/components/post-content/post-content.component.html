@@ -11,7 +11,7 @@
     "
   >
     <ng-container *ngFor="let field of post_content.fields | sortByField : 'priority' : 'asc'">
-      <div class="post__group" *ngIf="field.value?.id">
+      <div class="post__group" *ngIf="field.value?.id || field.value?.length > 0">
         <ng-container *ngIf="field.type !== 'title' && field.type !== 'description'">
           <h4>{{ field.label }}</h4>
         </ng-container>
@@ -80,6 +80,54 @@
             <app-offline-notification></app-offline-notification>
           </ng-template>
         </ng-container>
+
+        <div class="post__images" *ngIf="field.input === 'image' && field.value.length > 0">
+          <ng-container *ngIf="isConnection; else noConnection">
+            <div class="post__images__item" *ngFor="let media of field.value">
+              <div class="post__images__item" *ngFor="let media of field.value">
+                <img class="post__media" [src]="media.url" />
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #noConnection>
+            <app-offline-notification></app-offline-notification>
+          </ng-template>
+        </div>
+
+        <div class="post__audio" *ngIf="field.input === 'audio' && field.value.length > 0">
+          <ng-container *ngIf="isConnection; else noConnection">
+            <div class="post__audio__item" *ngFor="let media of field.value">
+              <span class="post__audio__item__filename">{{ media.filename }}</span>
+              <audio controls [src]="media.url"></audio>
+            </div>
+          </ng-container>
+
+          <ng-template #noConnection>
+            <app-offline-notification></app-offline-notification>
+          </ng-template>
+        </div>
+
+        <div class="post__documents" *ngIf="field.input === 'document' && field.value.length > 0">
+          <ng-container *ngIf="isConnection; else noConnection">
+            <a
+              class="post__documents__item"
+              *ngFor="let media of field.value"
+              [href]="media.url"
+              target="_blank"
+            >
+              <img class="post__documents__item__thumbnail" [src]="media.icon" />
+              <div class="post__documents__item__details">
+                <div class="filename">{{ media.filename }}</div>
+                <div class="filesize">{{ media.fileSize }}</div>
+              </div>
+            </a>
+          </ng-container>
+
+          <ng-template #noConnection>
+            <app-offline-notification></app-offline-notification>
+          </ng-template>
+        </div>
 
         <ng-container *ngIf="field.input === 'video'">
           <ng-container *ngIf="videoUrls.length && isConnection">
