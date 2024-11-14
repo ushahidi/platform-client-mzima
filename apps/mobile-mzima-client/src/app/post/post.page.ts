@@ -2,6 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
+  MediaFile,
+  MediaFileStatus,
   MediaService,
   PostContent,
   PostContentField,
@@ -123,9 +125,39 @@ export class PostPage implements OnDestroy {
 
   private getData(post: PostResult): void {
     for (const content of post.post_content as PostContent[]) {
+      this.preparingMedia(content.fields);
       this.preparingSafeVideoUrls(content.fields);
       this.preparingRelatedPosts(content.fields);
     }
+  }
+
+  private preparingMedia(fields: PostContentField[]): void {
+    fields
+      .filter((field: any) => field.type === 'media')
+      .map(async (mediaField) => {
+        if (Array.isArray(mediaField.value)) {
+          const mediaFiles: MediaFile[] = [];
+          for await (const mediaValue of mediaField.value) {
+            const media = await lastValueFrom(this.mediaService.getById(mediaValue.value!));
+            const mediaFile: MediaFile = new MediaFile(
+              media.result,
+              media.result.original_file_url,
+            );
+            mediaFile.id = mediaValue.id;
+            mediaFile.value = media.result.id;
+            mediaFile.caption = media.result.caption;
+            mediaFile.status = MediaFileStatus.READY;
+            mediaFiles.push(mediaFile);
+          }
+          mediaField.value = mediaFiles;
+        } else if (mediaField.value?.value) {
+          const media = await lastValueFrom(this.mediaService.getById(mediaField.value.value!));
+          mediaField.value.preview = media.result.original_file_url;
+          mediaField.value.caption = media.result.caption;
+          mediaField.value.mimeType = media.result.mime;
+          mediaField.value.size = media.result.original_file_size;
+        }
+      });
   }
 
   private preparingRelatedPosts(fields: PostContentField[]): void {
