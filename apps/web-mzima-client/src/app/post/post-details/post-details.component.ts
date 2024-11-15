@@ -78,16 +78,12 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         this.postChanged = true;
         //----------------------
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
+        this.postId = Number(params['id']);
       }
     });
     this.route.data.subscribe((data) => {
       this.post = data['post'];
-      this.isPostLoading = false;
-      this.surveyService.getById(this.post.form_id!).subscribe((form) => {
-        this.post!.form = form.result;
-        this.getData(this.post);
-      });
-      this.preparePostForView();
+      if (this.post) this.getSurvey();
     });
   }
 
@@ -118,6 +114,18 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     this.post!.post_content = postHelpers.replaceNewlinesWithBreaks(this.post?.post_content || []);
     this.post!.content = postHelpers.replaceNewlinesInString(this.post!.content);
     this.isPostLoading = false;
+  }
+
+  private async getSurvey(): Promise<void> {
+    if (!this.postId) return;
+    if (this.post && this.post.form_id) {
+      const form = await lastValueFrom(this.surveyService.getById(this.post.form_id!));
+      this.post.form = form.result;
+      this.getData(this.post);
+      this.preparePostForView();
+    } else {
+      this.postChanged = false;
+    }
   }
 
   private async getData(post: PostResult): Promise<void> {
