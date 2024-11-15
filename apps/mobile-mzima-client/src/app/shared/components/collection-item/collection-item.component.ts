@@ -19,9 +19,7 @@ export class CollectionItemComponent {
     if (this.userRole === 'admin') {
       return true;
     }
-    return (
-      this.canManageCollections && String(this.collection.user_id) === String(this.currentUserId)
-    );
+    return this.canManageCollections;
   }
 
   public editClickHandle(event: Event): void {
