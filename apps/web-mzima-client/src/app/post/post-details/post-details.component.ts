@@ -117,21 +117,17 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   private async getPost(id: number): Promise<void> {
     if (!this.postId) return;
     this.post = await this.getPostInformation(id);
-    if (this.post?.form_id) {
+    if (this.post && this.post.form_id) {
       const form = await lastValueFrom(this.surveyService.getById(this.post.form_id!));
       this.post.form = form.result;
+      this.getData(this.post);
+      this.preparePostForView();
+    } else {
+      this.postChanged = false;
     }
-    this.getData(this.post);
-    this.preparePostForView();
-    //----------------------
-    //----------------------
   }
 
   private async getData(post: PostResult): Promise<void> {
-    if (!post.form_id) {
-      this.postChanged = false;
-      return;
-    }
     for (const content of post.post_content as PostContent[]) {
       this.preparingSafeVideoUrls(content.fields);
       this.preparingRelatedPosts(content.fields);
