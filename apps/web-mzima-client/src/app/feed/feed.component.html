@@ -211,9 +211,15 @@
       }"
       [attr.data-qa]="'posts'"
     >
-      <!-- No posts -->
-      <ng-container *ngIf="!posts.length">
+      <!-- No posts 1: When there are no posts at all in the deployment or there no posts because none can be viewed by a user due to the permissions they have  -->
+      <ng-container *ngIf="!posts.length && isDefaultFilters">
         <span class="posts-empty">{{ 'post.no_posts_yet' | translate }}</span>
+      </ng-container>
+      <!-- No posts 2: When there's no posts matching user's filter selection/combination -->
+      <ng-container *ngIf="!posts.length && !isDefaultFilters">
+        <span class="posts-empty">{{
+          'post.no_posts_match_your_current_filters' | translate
+        }}</span>
       </ng-container>
       <!-- When there are posts -->
       <ng-container *ngIf="posts.length">
