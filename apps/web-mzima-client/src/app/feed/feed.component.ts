@@ -65,6 +65,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public postCurrentLength = 0;
   public isLoading: boolean;
   public isDefaultFilters: boolean;
+  public userIsSearchingPostsByKeyword: number;
   public atLeastOnePostExists: boolean;
   public noPostsYet: boolean = false;
   public loadingMorePosts: boolean;
@@ -284,6 +285,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           next: (currentUser) => {
             // Check if default filters is on or not to display "no posts" messages accordingly
             this.isDefaultFilters = this.getDefaultFilters(currentUser.role as string);
+            // ---------------
+            // Check if default filters is on or not to display "no posts" messages accordingly
+            const searchPostsByKeyword = localStorage.getItem('USH_searchPostByKeyword') as string;
+            this.userIsSearchingPostsByKeyword = searchPostsByKeyword?.length;
+            // ---------------
             // Get end of post load directly from the posts API, use it to set is loading state to false
             this.isLoading = isLoading;
           },

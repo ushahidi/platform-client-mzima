@@ -211,16 +211,29 @@
       }"
       [attr.data-qa]="'posts'"
     >
-      <!-- No posts 1: When there are no posts at all in the deployment or there no posts because none can be viewed by a user due to the permissions they have  -->
-      <ng-container *ngIf="!posts.length && isDefaultFilters">
-        <span class="posts-empty">{{ 'post.no_posts_yet' | translate }}</span>
-      </ng-container>
-      <!-- No posts 2: When there's no posts matching user's filter selection/combination -->
-      <ng-container *ngIf="!posts.length && !isDefaultFilters">
-        <span class="posts-empty">{{
-          'post.no_posts_match_your_current_filters' | translate
-        }}</span>
-      </ng-container>
+      <!-- No posts -->
+      <span *ngIf="!posts.length" class="posts-empty">
+        <ng-container *ngIf="isDefaultFilters">
+          <!-- No posts 1a: When there are no posts at all in the deployment or there no posts because none can be viewed by a user due to the permissions they have  -->
+          <ng-container *ngIf="!userIsSearchingPostsByKeyword">
+            {{ 'post.no_posts_yet' | translate }}
+          </ng-container>
+          <!-- No posts 1b: Keyword search (when default filters is on) -->
+          <ng-container *ngIf="userIsSearchingPostsByKeyword">
+            {{ 'post.no_posts_match_search' | translate }}
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="!isDefaultFilters">
+          <!-- No posts 2a: When there's no posts matching user's filter selection/combination -->
+          <ng-container *ngIf="!userIsSearchingPostsByKeyword">
+            {{ 'post.no_posts_match_your_current_filters' | translate }}
+          </ng-container>
+          <!-- No posts 2b: Keyword search (when not in default filters) -->
+          <ng-container *ngIf="userIsSearchingPostsByKeyword">
+            {{ 'post.no_posts_match_search_plus_filter' | translate }}
+          </ng-container>
+        </ng-container>
+      </span>
       <!-- When there are posts -->
       <ng-container *ngIf="posts.length">
         <div
