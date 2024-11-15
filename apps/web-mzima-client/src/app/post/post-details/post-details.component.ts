@@ -128,7 +128,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   }
 
   private async getData(post: PostResult): Promise<void> {
-    if (!post || post.post_content?.length === 0) {
+    if (!post.form_id) {
       this.postChanged = false;
       return;
     }
