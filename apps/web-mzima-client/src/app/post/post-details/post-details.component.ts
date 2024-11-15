@@ -78,11 +78,16 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         this.postChanged = true;
         //----------------------
         this.allowed_privileges = localStorage.getItem('USH_allowed_privileges') ?? '';
-
-        this.postId = Number(params['id']);
-
-        this.getPost(this.postId);
       }
+    });
+    this.route.data.subscribe((data) => {
+      this.post = data['post'];
+      this.isPostLoading = false;
+      this.surveyService.getById(this.post.form_id!).subscribe((form) => {
+        this.post!.form = form.result;
+        this.getData(this.post);
+      });
+      this.preparePostForView();
     });
   }
 
@@ -112,20 +117,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     );
     this.post!.post_content = postHelpers.replaceNewlinesWithBreaks(this.post?.post_content || []);
     this.post!.content = postHelpers.replaceNewlinesInString(this.post!.content);
-  }
-
-  private async getPost(id: number): Promise<void> {
-    if (!this.postId) return;
-    this.post = await this.getPostInformation(id);
-    if (this.post) {
-      this.surveyService.getById(this.post.form_id!).subscribe((form) => {
-        this.post!.form = form.result;
-        this.getData(this.post);
-      });
-      this.preparePostForView();
-      //----------------------
-      //----------------------
-    }
+    this.isPostLoading = false;
   }
 
   private async getData(post: PostResult): Promise<void> {
@@ -223,7 +215,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         };
       });
   }
-
   private async getPostInformation(postId: number): Promise<any> {
     try {
       this.isPostLoading = true;
@@ -233,7 +224,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       return;
     }
   }
-
   private async getPostMedia(mediaId: string): Promise<any> {
     try {
       return await lastValueFrom(this.mediaService.getById(mediaId));
@@ -268,7 +258,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   }
 
   public statusChangedHandle(): void {
-    this.getPost(this.postId);
+    this.getPostInformation(this.postId);
     this.statusChanged.emit();
     this.eventBusService.next({
       type: EventType.UpdatedPost,
@@ -284,7 +274,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     });
   }
   public deletedHandle(): void {
-    this.getPost(this.postId);
+    this.getPostInformation(this.postId);
     this.eventBusService.next({
       type: EventType.DeletedPost,
       payload: this.post,

@@ -7,8 +7,7 @@ import {
   PostNotFoundComponent,
 } from '@post';
 import { FeedComponent } from './feed.component';
-import { RedirectByPostIdGuard } from '../core/guards/redirect.post-id.guard';
-
+import { PostResolver } from '../core/resolvers/post-resolverrrr';
 /* -------------------------------------------------------
   RedirectByPostIdGuard added here to all child :id routes
   And also added to the parent posts:id in the app-routing
@@ -30,7 +29,7 @@ const routes: Routes = [
       {
         path: ':id/view',
         component: PostDetailsComponent,
-        canActivate: [RedirectByPostIdGuard],
+        resolve: { post: PostResolver },
         data: {
           ogTitle: 'nav.feed',
         },
@@ -38,7 +37,7 @@ const routes: Routes = [
       {
         path: ':id/edit',
         component: PostEditComponent,
-        canActivate: [RedirectByPostIdGuard],
+        resolve: { post: PostResolver },
         data: {
           ogTitle: 'nav.feed',
         },
@@ -46,7 +45,6 @@ const routes: Routes = [
       {
         path: ':id/not-found',
         component: PostNotFoundComponent,
-        canActivate: [RedirectByPostIdGuard],
         data: {
           ogTitle: 'nav.feed',
         },
@@ -54,7 +52,6 @@ const routes: Routes = [
       {
         path: ':id/not-allowed',
         component: PostNotAllowedComponent,
-        canActivate: [RedirectByPostIdGuard],
         data: {
           ogTitle: 'nav.feed',
         },
@@ -76,7 +73,7 @@ const routes: Routes = [
           {
             path: ':id/view',
             component: PostDetailsComponent,
-            canActivate: [RedirectByPostIdGuard],
+            resolve: { post: PostResolver },
             data: {
               ogTitle: 'nav.feed',
             },
@@ -84,7 +81,7 @@ const routes: Routes = [
           {
             path: ':id/edit',
             component: PostEditComponent,
-            canActivate: [RedirectByPostIdGuard],
+            resolve: { post: PostResolver },
             data: {
               ogTitle: 'nav.feed',
             },
@@ -92,7 +89,6 @@ const routes: Routes = [
           {
             path: ':id/not-found',
             component: PostNotFoundComponent,
-            canActivate: [RedirectByPostIdGuard],
             data: {
               ogTitle: 'nav.feed',
             },
@@ -100,7 +96,6 @@ const routes: Routes = [
           {
             path: ':id/not-allowed',
             component: PostNotAllowedComponent,
-            canActivate: [RedirectByPostIdGuard],
             data: {
               ogTitle: 'nav.feed',
             },
