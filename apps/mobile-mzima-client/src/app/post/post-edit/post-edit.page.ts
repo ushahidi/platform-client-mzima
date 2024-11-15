@@ -642,6 +642,9 @@ export class PostEditPage {
               } else {
                 value.value = this.form.value[field.key] || null;
               }
+              // TODO: Implement edit on new multimedia fields, but ignore for now.
+            } else if (['image', 'audio', 'document'].includes(field.input)) {
+              value.value = [];
             } else {
               value.value = this.form.value[field.key] || null;
             }
@@ -741,7 +744,7 @@ export class PostEditPage {
     const promises: Promise<any>[] = [];
     for (let postData of pendingPosts) {
       for (const field of postData.post_content[0].fields) {
-        if (field.type === 'media') {
+        if (field.type === 'media' && field.input === 'upload') {
           if (field?.file?.delete) {
             postData = await this.deleteFile(postData, field.file);
           } else if (field.value.value && typeof field.value.value !== 'number') {
