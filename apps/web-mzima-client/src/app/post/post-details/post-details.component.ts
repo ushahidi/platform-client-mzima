@@ -37,7 +37,7 @@ import { BreakpointService, EventBusService, EventType, SessionService } from '@
   styleUrls: ['./post-details.component.scss'],
 })
 export class PostDetailsComponent extends BaseComponent implements OnChanges, OnDestroy, OnInit {
-  @Input() post: PostResult;
+  @Input() postFromModal: PostResult;
   @Input() feedView: boolean = true;
   @Input() userId?: number | string;
   @Input() color?: string;
@@ -51,7 +51,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public isPostLoading: boolean = true;
   public isManagePosts: boolean = false;
   public postChanged: boolean;
-
+  public post: PostResult;
   constructor(
     protected override sessionService: SessionService,
     protected override breakpointService: BreakpointService,
@@ -81,10 +81,16 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         this.postId = Number(params['id']);
       }
     });
-    this.route.data.subscribe((data) => {
-      this.post = data['post'];
-      if (this.post) this.getSurvey();
-    });
+
+    if (this.postFromModal) {
+      this.post = this.postFromModal;
+      this.postChanged = false;
+    } else {
+      this.route.data.subscribe((data) => {
+        this.post = data['post'];
+        if (this.post) this.getSurvey();
+      });
+    }
   }
 
   loadData(): void {}
