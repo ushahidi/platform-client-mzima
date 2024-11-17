@@ -396,8 +396,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       .on(EventType.UpdatedPost)
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: () => {
-          this.refreshPost();
+        next: (post) => {
+          this.refreshPost(post);
         },
       });
 
@@ -405,8 +405,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       .on(EventType.RefreshPosts)
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: () => {
-          this.refreshPost();
+        next: (post) => {
+          this.refreshPost(post);
         },
       });
 
@@ -884,8 +884,9 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     }
   }
 
-  refreshPost() {
+  refreshPost(post: PostResult) {
     this.getPosts({ params: this.params });
+    this.showPostDetails(post);
     this.activeCard.scrollCountHandler({ task: 'startCount' });
   }
 

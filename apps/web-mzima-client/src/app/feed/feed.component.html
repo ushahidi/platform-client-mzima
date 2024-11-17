@@ -247,7 +247,7 @@
                 ngxMasonryItem
                 [feedView]="true"
                 (edit)="editPost(post)"
-                (refresh)="refreshPost()"
+                (refresh)="refreshPost(post)"
                 (deleted)="postDeleted([post])"
                 (click)="showPostDetails(post)"
                 [selectable]="isBulkOptionsVisible && !isLocked(post)"

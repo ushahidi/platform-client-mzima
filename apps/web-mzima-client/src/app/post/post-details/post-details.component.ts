@@ -266,7 +266,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   }
 
   public statusChangedHandle(): void {
-    this.getPostInformation(this.postId);
     this.statusChanged.emit();
     this.eventBusService.next({
       type: EventType.UpdatedPost,

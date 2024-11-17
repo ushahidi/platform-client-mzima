@@ -7,9 +7,9 @@ import {
   PostNotFoundComponent,
 } from '@post';
 import { FeedComponent } from './feed.component';
-import { PostResolver } from '../core/resolvers/post-resolverrrr';
+import { PostResolver } from '../core/resolvers/post-resolver';
 /* -------------------------------------------------------
-  RedirectByPostIdGuard added here to all child :id routes
+  PostResolver added here to all child :id routes
   And also added to the parent posts:id in the app-routing
   module file
 --------------------------------------------------------*/
@@ -33,6 +33,7 @@ const routes: Routes = [
         data: {
           ogTitle: 'nav.feed',
         },
+        runGuardsAndResolvers: 'always',
       },
       {
         path: ':id/edit',
@@ -41,6 +42,7 @@ const routes: Routes = [
         data: {
           ogTitle: 'nav.feed',
         },
+        runGuardsAndResolvers: 'always',
       },
       {
         path: ':id/not-found',
@@ -61,7 +63,6 @@ const routes: Routes = [
   {
     path: 'collection',
     redirectTo: '',
-    // canActivate: [RedirectByPostIdGuard], (i can't get collection ID through this means to use within the guard, so... commenting out)
     children: [
       {
         path: ':id',
