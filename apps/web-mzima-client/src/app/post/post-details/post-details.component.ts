@@ -287,7 +287,6 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     });
   }
   public deletedHandle(): void {
-    this.getPostInformation(this.postId);
     this.eventBusService.next({
       type: EventType.DeletedPost,
       payload: this.post,
