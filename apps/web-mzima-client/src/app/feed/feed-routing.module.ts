@@ -78,6 +78,7 @@ const routes: Routes = [
             data: {
               ogTitle: 'nav.feed',
             },
+            runGuardsAndResolvers: 'always',
           },
           {
             path: ':id/edit',
@@ -86,6 +87,7 @@ const routes: Routes = [
             data: {
               ogTitle: 'nav.feed',
             },
+            runGuardsAndResolvers: 'always',
           },
           {
             path: ':id/not-found',
