@@ -47,6 +47,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   @Output() errorFieldChange = new EventEmitter();
   @Output() taskChange = new EventEmitter();
   public fieldHover: boolean;
+  public fieldId: number;
 
   surveyId: string;
   selectedRoles: GroupCheckboxValueInterface = {
@@ -359,7 +360,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   }
 
   public trackHoverEvent(event: Event, field: any) {
-    this.fieldHover = event.type === 'mouseenter' && field;
-    console.log(this.fieldHover);
+    this.fieldHover = event.type === 'mouseenter';
+    this.fieldId = field.id;
   }
 }
