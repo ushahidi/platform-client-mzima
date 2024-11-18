@@ -82,21 +82,35 @@
           *ngFor="let field of nonDraggableFields | sortByField : 'priority' : 'asc'; let i = index"
           [data-qa]="'field-' + field"
         >
-          <div
-            class="field-item__main"
-            (mouseenter)="trackHoverEvent($event)"
-            (mouseleave)="trackHoverEvent($event)"
-          >
-            <mat-icon
-              cdkDragHandle
-              class="field-item__non-drag-handle"
-              svgIcon="drag-handle"
-            ></mat-icon>
-            <span class="field-item__title" [data-qa]="'field-name'">{{
-              isDefaultLanguageSelected
-                ? field.label
-                : field.translations[selectLanguageCode]?.label || field.label
-            }}</span>
+          <div class="field-item__main">
+            <div
+              class="field-item__main-inner"
+              (mouseenter)="trackHoverEvent($event, field)"
+              (mouseleave)="trackHoverEvent($event, field)"
+            >
+              <mat-icon
+                cdkDragHandle
+                class="field-item__non-drag-handle"
+                svgIcon="drag-handle"
+              ></mat-icon>
+              <span class="field-item__title" [data-qa]="'field-name'">{{
+                isDefaultLanguageSelected
+                  ? field.label
+                  : field.translations[selectLanguageCode]?.label || field.label
+              }}</span>
+              <mzima-client-button
+                *ngIf="fieldHover && field"
+                fill="clear"
+                color="secondary"
+                [iconOnly]="true"
+                class="tooltip-btn"
+                tabindex="-1"
+                matTooltipPosition="right"
+                matTooltip="{{ field.label }}"
+              >
+                <mat-icon icon svgIcon="tooltip"></mat-icon>
+              </mzima-client-button>
+            </div>
           </div>
           <!-- <span class="field-item__type">{{ field.type }}</span> -->
           <div class="field-item__controls">
