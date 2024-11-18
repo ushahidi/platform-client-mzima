@@ -358,8 +358,8 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     this.errorFieldChange.emit(value.trim().length === 0);
   }
 
-  public trackHoverEvent(event: Event) {
-    this.fieldHover = event.type === 'mouseenter';
+  public trackHoverEvent(event: Event, field: any) {
+    this.fieldHover = event.type === 'mouseenter' && field;
     console.log(this.fieldHover);
   }
 }
