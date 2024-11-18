@@ -99,7 +99,7 @@
                   : field.translations[selectLanguageCode]?.label || field.label
               }}</span>
               <mzima-client-button
-                *ngIf="fieldId === field.id"
+                *ngIf="fieldId === field.id && fieldHover"
                 fill="clear"
                 color="secondary"
                 [iconOnly]="true"
