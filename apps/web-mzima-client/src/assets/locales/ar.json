@@ -4,6 +4,7 @@
     "powered_by_ushahidi": "برعاية Ushahidi.",
     "support": "دعم Ushahidi",
     "by": "بواسطة",
+    "confirm": "Confirm",
     "submit": "إرسال",
     "anonymous": "مجهول",
     "submitting": "يتم التسليم",
@@ -1725,6 +1726,8 @@
     },
     "default": {
       "data_has_not_been_saved": "لم يتم حفظ البيانات!",
+      "discard_changes": "Discard changes?",
+      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "لا يمكن التراجع عن هذا الإجراء. يرجى المضي قدمًا بحذر.",
       "save_success": "مورد محفوظ",
       "save_error": "تعذر حفظ المورد، يرجى إعادة المحاولة",
