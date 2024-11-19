@@ -44,7 +44,7 @@ export class PostResolver implements Resolve<any> {
     //--------------------------------------
     return this.postsService.getById(postId).pipe(
       catchError((error) => {
-        if (error.status === 404) {
+        if (Number(error.status) === 404) {
           //---------------------------------
           const pageURL = [`${url}/not-found`];
           /* --------------------------------

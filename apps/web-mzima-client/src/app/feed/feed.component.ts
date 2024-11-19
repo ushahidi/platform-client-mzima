@@ -244,7 +244,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
         }
         if (this.mode === FeedMode.Id) {
           // Note: Without this event check, clicking on card will also trigger the modal for load - we want to block that from happening
-          if (this.userEvent === 'load') {
+          if (this.userEvent === 'load' && !this.isDesktop) {
             //----------------------------------
             localStorage.setItem('feedview_postObj', JSON.stringify({}));
             //----------------------------------
@@ -936,8 +936,9 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           },
           loadHandler: ({ id }: { id: number }) => {
             //check
-            console.log(showOn);
-            if (showOn === 'TabletAndBelow') {
+            if (page === 'not-found' || page === 'not-allowed') {
+              this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page });
+            } else if (showOn === 'TabletAndBelow' && !this.isDesktop) {
               this.postsService.getById(id).subscribe({
                 next: (fetchedPost: PostResult) => {
                   if (page === 'view') this.openModal({ post: fetchedPost }).forView();
@@ -948,16 +949,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
                       this.navigateTo().idMode.PostNotAllowed({ id: fetchedPost.id });
                     }
                   }
-                  if (page === 'not-allowed') {
-                    this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page });
-                  }
                 },
                 error: (err) => {
                   if (err.status === 404) {
-                    if (page === 'not-found') {
-                      this.navigateTo().idMode.postNotFound({ id });
-                      this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page });
-                    }
+                    this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page: 'not-found' });
                   }
                 },
               });
