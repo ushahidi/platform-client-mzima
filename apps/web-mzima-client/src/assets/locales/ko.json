@@ -1,15 +1,14 @@
 {
   "app": {
     "contact_email_address": "Contact email address:",
-    "powered_by_ushahidi": "Powered by Ushahidi.",
-    "support": "Ushahidi Support",
+    "powered_by_ushahidi": "우샤히디 제공",
+    "support": "우샤히디 지원",
     "by": "by",
-    "confirm": "Confirm",
-    "submit": "Submit",
-    "anonymous": "Anonymous",
-    "submitting": "Submitting",
-    "submit_another": "Submit & Add Another",
-    "submit_response": "Submit a survey response",
+    "submit": "제출하기",
+    "anonymous": "익명",
+    "submitting": "제출중",
+    "submit_another": "제출하고 추가 작성하기",
+    "submit_response": "조사 응답 제출하기",
     "can_see_this": "can see this",
     "collection": "Collection",
     "collections": "Collections",
@@ -34,7 +33,7 @@
       "title": "Documentation",
       "description": "Learn how to set up, configure, and manage your Ushahidi deployment."
     },
-    "donate": "Donate",
+    "donate": "기부",
     "donation": "Donation",
     "disable_monetization": "Disable Monetization",
     "enable_monetization": "Enable Monetization",
@@ -70,18 +69,18 @@
     "more": "More",
     "cancel": "Cancel",
     "save": "Save",
-    "save_and_close": "Save & close",
+    "save_and_close": "Save &amp; close",
     "update": "Update",
-    "update_and_close": "Update & close",
-    "add_and_close": "Add & close",
+    "update_and_close": "Update &amp; close",
+    "add_and_close": "Add &amp; close",
     "updating": "Updating",
     "saving": "Saving",
     "settings": "Settings",
     "share": "Share",
     "specific_roles": "Specific roles...",
     "general": "General",
-    "surveys": "Surveys",
-    "add_survey": "Add Survey",
+    "surveys": "Survey",
+    "add_survey": "New Survey",
     "edit_survey": "Edit Survey",
     "data_sources": "Data Sources",
     "import": "Import",
@@ -93,11 +92,11 @@
     "edit_role": "Edit Role",
     "add_role": "Add Role",
     "webhooks": "Webhooks",
-    "edit_webhook": "Edit Webhook",
-    "add_webhook": "Add Webhook",
+    "edit_webhook": "Edit Role",
+    "add_webhook": "Add Role",
     "categories": "Categories",
     "edit_category": "Edit Category",
-    "add_category": "Add Category",
+    "add_category": "카테고리 추가",
     "categories_count": "{{count}} categories",
     "plans": "Plans",
     "delete": "Delete",
@@ -136,7 +135,7 @@
     "nothing": "Nothing",
     "who_can_see_this": "Who can see this?",
     "add": "Add",
-    "add_new_category": "Add category",
+    "add_new_category": "+ Add new category",
     "sort_by": "Sort By ...",
     "newest_first": "Newest first",
     "oldest_first": "Oldest first",
@@ -182,8 +181,8 @@
   },
   "toolbar": {
     "searchbar": {
-      "search_entity": "Search {{entity}}",
-      "search_all_entities_for": "Search all {{entity}} for "
+      "search_entity": "찾기",
+      "search_all_entities_for": "Search all {{entity}} for"
     }
   },
   "color_picker": {
@@ -194,20 +193,20 @@
     "green": "Green"
   },
   "feature_limits": {
-    "view_unavailable": "The {{value}} view isn't available on your current plan. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
+    "view_unavailable": "이 {{value}}은/는 현재 요금제에서는 확인할 수 없습니다. 확인을 위해서 <a href=\"/settings/plan\">요금제를 업그레이드 하세요</a>"
   },
   "limit": {
-    "plan_limit": "Ushahidi Plan Limit",
-    "post_limit_reached": "You have reached the limit of published Posts for your plan.",
+    "plan_limit": "우샤히디 요금제 제한",
+    "post_limit_reached": "해당요금제로 공개 게시할 수 있는 한계에 도달하였습니다. ",
     "admin_limit_reached": "You have reached the limit of admin users for your plan.",
-    "post_type_limit_reached": "You have reached the surveys limit for your plan.",
-    "upgrade": "Upgrade"
+    "post_type_limit_reached": "해당요금제의 조사 한계에 도달하였습니다.",
+    "upgrade": "업그레이드"
   },
   "activity": {
     "activity_over_time": "Activity over time",
     "activity_by_volume": "Activity by volume",
     "recent_activity_timeline": "Recent Activity timeline",
-    "new_post": "New Post",
+    "new_post": "새 게시물",
     "by": "By",
     "context_body": "A summary of how people are interacting with {{site}}.",
     "inbound": "Inbound Response Messages",
@@ -228,11 +227,11 @@
     "tooltip_template": "This is the single point tooltip template"
   },
   "form": {
-    "add_field": "Add Field",
-    "add_field_instructions": "Add instructions to this field",
+    "add_field": "Add field",
+    "add_field_instructions": "이 항목에 지시사항을 추가하세요.",
     "add_field_instructions_info": "These instructions will be presented as a tooltip to a user when filling in this field.",
     "add_field_instructions_placeholder": "Explain this field...",
-    "add_post_type": "Add Survey",
+    "add_post_type": "New Survey",
     "add_step": "Add Task",
     "add_language": "Add language",
     "added_form_stage_attribute": "Saved field",
@@ -305,7 +304,7 @@
       "not_completed": "Task Complete? - Use toggle below",
       "completed": "You have marked \"{{taskName}}\" Task as Completed!"
     },
-    "delete_task": "Delete task",
+    "delete_task": "작업 삭제하기",
     "duplicate_survey": "Duplicate",
     "main_info": "Main info",
     "internal_use_task": "Task is only for internal use",
@@ -319,8 +318,8 @@
     "describe_your_survey": "Describe your survey...",
     "describe_this_task": "Describe this task...",
     "untitled_task": "Untitled task",
-    "add_task": "Add Task",
-    "title": "Title",
+    "add_task": "Add task",
+    "title": "제목",
     "field_allowed_relation_survey": "Allowed surveys",
     "collect_image_caption": "Include image caption field",
     "collect_media_caption": "Include caption field",
@@ -490,8 +489,8 @@
       "targeted_survey_desc": "We sent this survey via SMS",
       "sent_messages": "We have sent {{totalSent}} messages, and",
       "sent_message": "We have sent {{totalSent}} message, and",
-      "received_responses": "you have received {{responses}} responses ",
-      "received_response": "you have received {{responses}} response ",
+      "received_responses": "you have received {{responses}} responses",
+      "received_response": "you have received {{responses}} response",
       "recipients_count": "from {{recipients}} recipients so far.",
       "recipient_count": "from {{recipients}} recipient so far.",
       "error_message": "An error occurred while trying to save your targeted survey",
@@ -502,13 +501,13 @@
     }
   },
   "global_filter": {
-    "filter": "Filter",
+    "filter": "필터",
     "categories": {
-      "categories": "Categories",
+      "categories": "카테고리",
       "all_categories": "All Categories"
     },
     "post_types": {
-      "post_types": "Surveys",
+      "post_types": "조사",
       "all_types": "All Types",
       "unstructured": "Unstructured"
     },
@@ -562,7 +561,7 @@
       "order_unlocked_on_top": "Unlocked posts on top",
       "savedsearch": "Saved Search",
       "saved_search": "Saved Search",
-      "q": "Keyword",
+      "q": "키워드",
       "created_after": "Start date",
       "created_before": "End date",
       "date_after": "Start date",
@@ -586,12 +585,12 @@
     },
     "unmapped_start_one": "There is",
     "unmapped_start_many": "There are",
-    "unmapped_one": "{{ notShownPostsCount }} post",
-    "unmapped_many": "{{ notShownPostsCount }} posts",
+    "unmapped_one": "{{post_nb}} post",
+    "unmapped_many": "{{post_nb}} posts",
     "unmapped_end": "not shown here because they don't include location information.",
     "unmapped_none": "No posts without location information.",
     "more": "More",
-    "keyword": "Keyword",
+    "keyword": "키워드",
     "start_date": "Start Date",
     "start_date_placeholder": "Jan 25, 2014",
     "end_date": "End Date",
@@ -604,16 +603,16 @@
     "km": "Km",
     "within_km_placeholder": "Distance",
     "option_1": "within 1 km",
-    "option_2": "within 2 km",
-    "option_3": "within 5 km",
-    "option_4": "within 10 km",
-    "option_5": "within 50 km",
+    "option_2": "within 10 km",
+    "option_3": "within 50 km",
+    "option_4": "within 100 km",
+    "option_5": "within 500 km",
     "option_6": "within 100 km",
     "option_7": "within 500 km",
     "restore_defaults": "Restore Defaults",
     "apply_filters": "Apply",
     "save_to_set": "Save to Set",
-    "search": "Search post by keyword",
+    "search": "Search",
     "date_range": "Date range",
     "who_its_visible_to": "Who it's visible to",
     "status": "Status",
@@ -633,7 +632,7 @@
     "compare_status": "Compare status",
     "compare_tags": "Compare categories",
     "compare_form": "Compare surveys",
-    "compare_": "Compare ",
+    "compare_": "Compare",
     "created": "Created time",
     "cumulative": "Show cumulative totals",
     "cumulative_post_count": "Total post count",
@@ -683,7 +682,7 @@
     "author_tagline": "By {{author}}",
     "appearance": "Appearance",
     "back": "Back",
-    "category": "Category",
+    "category": "카테고리",
     "categories": "Categories",
     "clear": "Clear",
     "collections": "Collections",
@@ -720,7 +719,7 @@
     "only_author": "Only the author",
     "only_you": "Only you",
     "people": "People",
-    "permissions": "Permissions",
+    "permissions": "허가",
     "plan_settings": "Plan",
     "please_wait_loading": "Please wait. Loading...",
     "plugins": "Plugins",
@@ -749,13 +748,13 @@
     "yesterday": "Yesterday",
     "map": "Map",
     "data": "Data",
-    "feed": "Data view"
+    "feed": "Data"
   },
   "views": {
-    "map": "Map view",
+    "map": "Map",
     "list": "Timeline",
     "activity": "Activity",
-    "data": "Data view"
+    "data": "Data"
   },
   "share": {
     "share_deployment": "Share deployment",
@@ -775,8 +774,8 @@
     "post_title": "Post title",
     "post_desc": "Post description",
     "there_are_no_posts": "There are no posts",
-    "in_this_deployment": " in this deployment, yet.",
-    "posts_total": " {{posts}} of {{total_nb}} posts",
+    "in_this_deployment": "in this deployment, yet.",
+    "posts_total": "{{posts}} of {{total_nb}} posts",
     "posts_total_map": "Displaying {{posts}} of {{total_nb}} posts with location information on the map.",
     "search_results": "Results:",
     "by": "by",
@@ -791,12 +790,9 @@
     "post": "Post",
     "message": "Message",
     "message_thread": "Message Thread",
-    "all_posts": "All Posts",
+    "all_posts": "All posts",
     "no_search_results": "Your search didn't match any posts",
     "no_search_results_location": "Your search didn't match any posts with location information",
-    "no_posts_match_search": "No posts match your keyword search. Please change or clear keyword search to see matching posts.",
-    "no_posts_match_search_plus_filter": "No posts match your keyword search + filters. Please change or clear keyword search and/or filters to see matching posts.",
-    "no_posts_match_your_current_filters": "No posts match the current filters. Please change or clear filters to see matching posts.",
     "no_posts_yet": "There are no posts yet!",
     "no_posts_yet_location": "There are no posts with location information yet!",
     "add_first_post": "Add the first post",
@@ -901,7 +897,7 @@
       "back": "Back",
       "contact_info": "Enter your contact info (optional)",
       "author_realname": "Name",
-      "author_email": "Email",
+      "author_email": "Email Address",
       "bulk_actions": "Bulk Actions",
       "form": {
         "categories": "Categories",
@@ -935,15 +931,15 @@
       "by_email": "By Email",
       "by_twitter": "By Twitter",
       "reply": "Reply to Message thread",
-      "send": "Send new message",
+      "send": "Send New Message",
       "save": "Save",
       "simple_send": "Send",
       "title": "Conversation with author",
       "associated_messages": "View messages associated with this post",
-      "show_only_incoming": "Show only {{provider}} not assigned to a survey yet ",
+      "show_only_incoming": "Show only {{provider}} not assigned to a survey yet",
       "imported_by": "{{messages}} imported by this deployment",
       "Twitter": "Twitter",
-      "Email": "Email",
+      "Email": "Email Address",
       "SMS": "SMS",
       "previous_page": "<< Previous page",
       "next_page": "Next page >>",
@@ -985,7 +981,7 @@
     },
     "media": {
       "enter_a": "Enter a",
-      "youtube": " Youtube",
+      "youtube": "Youtube",
       "current_url": "Current image",
       "add_caption": "Add caption",
       "upload": "Upload",
@@ -1013,10 +1009,10 @@
     },
     "unstructured": {
       "add_survey": {
-        "info": "This post hasn’t yet been assigned to a Survey within your Deployment. That’s because it was submitted via {{source}}, which doesn’t provide a way for the authors to add their post to a specific Survey. Assign this post to a Survey, using the form below.",
+        "info": "<strong>This post hasn't yet been assigned to a survey within your deployment.</strong> That's because it was submitted via {{source}}, which doesn't provide a way for the author to add their post to a specific survey.",
         "choose": "Which survey would you like to add this post to?",
         "title": "Add this post to a survey",
-        "save_and_edit": "Add to survey & edit"
+        "save_and_edit": "Add to survey &amp; edit"
       },
       "survey_title": "Unknown Survey"
     },
@@ -1048,7 +1044,7 @@
     },
     "save": "Save Role",
     "save_add_another": "Save & Add Another",
-    "permissions": "Permissions",
+    "permissions": "허가",
     "delete": "Delete",
     "delete_role": "Delete this role",
     "delete_role_desc": "<strong>If you delete this role</strong>, all of the users assigned to it will be assigned default permissions. Proceed with caution.",
@@ -1057,8 +1053,8 @@
     "only_me": "Only me"
   },
   "webhook": {
-    "add_webhook": "Add Webhook",
-    "edit_webhook": "Edit Webhook",
+    "add_webhook": "Add Role",
+    "edit_webhook": "Edit Role",
     "uuid": "Webhook UUID",
     "name": "Name",
     "shared_secret": "Shared Secret",
@@ -1080,7 +1076,7 @@
   },
   "collection": {
     "visible_to_public": "This Collection is visible to the public",
-    "visible_to_you": "This collection will only be visible to you and admins",
+    "visible_to_you": "This Collection is visible to just you and admins",
     "visible_to_roles": "This Collection is visible to {{roles}}",
     "validation": {
       "required": {
@@ -1093,9 +1089,9 @@
   },
   "set": {
     "by": "by",
-    "clear_search": "Clear Search",
+    "clear_search": "찾기 초기화",
     "create_collection": "Create Collection",
-    "create_new": " Create New",
+    "create_new": "Create New",
     "create_savedsearch": "Create Saved Search",
     "description": "Description",
     "delete_collection": "Delete this collection",
@@ -1132,7 +1128,7 @@
     "collection_description": "You can add posts to your collection from the Data view"
   },
   "category": {
-    "add_tag": "Add Category",
+    "add_tag": "카테고리 추가",
     "save_add_another": "Save & Add Another",
     "delete_category": "Delete category",
     "delete_this_category": "Delete this category",
@@ -1176,7 +1172,7 @@
   },
   "tool": {
     "manage_forms": "Manage Forms",
-    "manage_tags": "Manage Categories",
+    "manage_tags": "카테고리 관리",
     "manage_users": "Manage Users",
     "manage_roles": "Manage Roles",
     "manage_webhooks": "Manage Webhooks",
@@ -1349,12 +1345,12 @@
           "intro_step_1": "Step 1: Download the 'SMSSync' app from the Android Market.",
           "intro_step_1_desc": "Scan this QR Code with your phone to download the app from the Android Market",
           "intro_step_2": "Step 2: Android App Settings",
-          "intro_step_2_desc": "Turn on SMSSync and use the following link as the Sync URL: ",
+          "intro_step_2_desc": "Turn on SMSSync and use the following link as the Sync URL:",
           "secret_desc": "Set a secret so that only authorized SMSSync devices can send/recieve message. You need to configure the same secret in the SMSSync App."
         },
         "twilio": {
           "phone_nb": "Phone Number",
-          "phone_nb_desc": "The from phone number. A Twilio phone number enabled for the type of message you wish to send. ",
+          "phone_nb_desc": "The from phone number. A Twilio phone number enabled for the type of message you wish to send.",
           "account_sid": "Account SID",
           "account_sid_desc": "The unique id of the Account that sent this message.",
           "auth_token": "Auth Token",
@@ -1409,7 +1405,7 @@
       "admin": "Admin",
       "manage_users": "Manage Users",
       "manage_posts": "Manage Posts",
-      "manage_settings": "Manage Settings",
+      "manage_settings": "Mangage Settings",
       "bulk_data_import_and_export": "Bulk Data Import and Export",
       "edit_their_own_posts": "Edit Their Own Posts",
       "manage_collections_and_saved_searches": "Manage Collections and Saved Searches",
@@ -1417,7 +1413,7 @@
       "delete_their_own_posts": "Delete Their Own Posts",
       "registred_member": "Registered member",
       "administrator": "Administrator",
-      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://docs.ushahidi.com/platform-user-manual/4.-managing-people-on-your-deployment\" target=\"_blank\">Visit our support guides to find out more."
+      "roles_description": "These options control what this type of role can make changes to. <a href=\"https://www.ushahidi.com/support/custom-roles#add-a-role\" target=\"_blank\">Visit our support guides to find out more."
     },
     "deployment_delete_this": "Delete this deployment",
     "deployment_delete": "Delete deployment",
@@ -1427,13 +1423,13 @@
     "delete_logo": "Delete logo",
     "map_default_baselayer": "Default base layer",
     "map_location_precision": "Map Precision Level",
-    "map_precise_to": "When hide location is enabled for a survey, locations will be precise to: ",
+    "map_precise_to": "When hide location is enabled for a survey, locations will be precise to:",
     "map_clustering": "Combine nearby posts",
     "map_default_latitude": "Default latitude",
     "map_default_longitude": "Default longitude",
     "map_default_zoom_level": "Default zoom level",
     "map_default_location": "Default location",
-    "new_survey": "Add Survey",
+    "new_survey": "New Survey",
     "send_targeted": "Send a targeted survey via SMS",
     "send_crowdsourced": "Go back to crowd-sourced survey",
     "site": "Site Settings",
@@ -1500,7 +1496,7 @@
     "csv": "CSV",
     "file_csv": "CSV file",
     "import_csv": "Import CSV",
-    "import_to": "Import to ",
+    "import_to": "Import to",
     "change_csv_file": "Change {{selectedfile}} CSV file",
     "upload_csv_file": "Upload CSV file",
     "choose_status_to_imported_posts": "Choose status to imported posts:",
@@ -1626,7 +1622,7 @@
     "edit_profile": "Edit Profile",
     "save_profile": "Save Profile",
     "cancel": "Cancel",
-    "failed_attempts": "Failed attempts: ",
+    "failed_attempts": "Failed attempts:",
     "full_name": "Display Name",
     "never": "Never",
     "no_full_name": "No display name",
@@ -1635,7 +1631,7 @@
     "password": "Password",
     "new_password": "New Password",
     "register": "Register",
-    "role": "Role",
+    "role": "Role:",
     "roles": "Roles",
     "saved_user": "User saved",
     "deleted_user": "User deleted",
@@ -1643,7 +1639,7 @@
     "passwordreset_instructions": "Enter your email to request a password reset",
     "passwordreset_confirm_instructions": "If your email exists in our database, you will receive a password recovery email soon.",
     "forgot_instructions": "No worries! Submit your email and check your inbox for a reset link.",
-    "token": "Paste the password reset token from email",
+    "token": "Password reset token",
     "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
     "password_length": "Password must be at least 8 characters long",
     "password_match": "Passwords do not match",
@@ -1681,7 +1677,7 @@
     "password_notify": "If you leave the field blank your password will not change",
     "avatar": "Avatar",
     "name": "Name",
-    "email": "Email",
+    "email": "Email Address",
     "search_by_name": "Search by name"
   },
   "user_profile": {
@@ -1689,7 +1685,7 @@
     "update_password": "Update password",
     "update_success": "Your profile was updated successfully. You may need to sign out and back in before all your changes are reflected.",
     "button": {
-      "save": "Save & close",
+      "save": "Save &amp; close",
       "cancel": "Cancel"
     },
     "nav": {
@@ -1698,7 +1694,7 @@
       "delete_contact": {
         "title": "Delete your",
         "title_subject": {
-          "email": "Email",
+          "email": "Email Address",
           "phone": "Phone"
         },
         "instructions": "Deleting means that from now you will not be able to receive notifications on your phone number. But you can switch notifications to a contact method below.",
@@ -1726,8 +1722,6 @@
     },
     "default": {
       "data_has_not_been_saved": "The data has not been saved!",
-      "discard_changes": "Discard changes?",
-      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Saved resource",
       "save_error": "Unable to save resource, please try again",
@@ -1797,7 +1791,7 @@
       "confirm_delete": "Confirm Delete",
       "destroy_title": "Delete Post",
       "delete_question": "Are you sure you want to delete your post {{post}}?",
-      "destroy_success": "Post {{name}} deleted",
+      "destroy_success": "Post deleted",
       "destroy_success_bulk": "Posts deleted",
       "destroy_confirm": "Are you sure you want to delete this post?",
       "destroy_error": "Unable to delete post, please try again",
@@ -1818,15 +1812,15 @@
       "destroy_confirm_desc": "Deleting this category will remove it from all existing posts. This action cannot be undone.",
       "destroy_success": "Category deleted",
       "destroy_error": "Unable to delete category, please try again",
-      "bulk_destroy_confirm": "Are you sure you want to delete these {{count}} categories?",
+      "bulk_destroy_confirm": "Are you sure you want to delete {{count}} categories?",
       "bulk_destroy_confirm_desc": "Deleting these categories will remove them from all existing posts. This action cannot be undone.",
       "bulk_destroy_success": "{{count}} categories deleted",
       "bulk_destroy_success_countless": "Categories deleted"
     },
     "role": {
-      "delete_question": "Are you sure you want to delete the role?",
-      "destroy_success": "Role has been deleted.",
-      "save_success": "Role has been saved.",
+      "delete_question": "Are you sure you want to delete the role {{role}}?",
+      "destroy_success": "Role {{role}} deleted.",
+      "save_success": "Role {{role}} saved.",
       "last_admin": "You can not delete the only admin role"
     },
     "webhook": {
@@ -1990,7 +1984,7 @@
     "error_message": "The contact could not be saved at this time",
     "type": {
       "phone": "Phone",
-      "email": "Email"
+      "email": "Email Address"
     },
     "button": {
       "add": "Add account",
@@ -2114,7 +2108,7 @@
     "cpx": "Chinese (Pu-Xian)",
     "zh-Hans": "Chinese Simplified",
     "zh-TW": "Chinese (Taiwan)",
-    "zh-TW.Big5": "Chinese (Taiwan) (Big5) ",
+    "zh-TW.Big5": "Chinese (Taiwan) (Big5)",
     "zh-Hant": "Chinese Traditional",
     "wuu": "Chinese (Wu)",
     "hsn": "Chinese (Xiang)",

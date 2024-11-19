@@ -4,7 +4,6 @@
     "powered_by_ushahidi": "Powered by Ushahidi.",
     "support": "Ushahidi Support",
     "by": "by",
-    "confirm": "Confirm",
     "submit": "Submit",
     "anonymous": "Anonymous",
     "submitting": "Submitting",
@@ -36,10 +35,10 @@
     },
     "donate": "Donate",
     "donation": "Donation",
-    "disable_monetization": "Disable Monetization",
-    "enable_monetization": "Enable Monetization",
-    "enable_monetization_error": "Fill in required fields above before enabling monetization.",
-    "enable_monetization_info": "Monetization is currently disabled.",
+    "disable_monetization": "Disable Monetisation",
+    "enable_monetization": "Enable Monetisation",
+    "enable_monetization_error": "Fill in the required fields above before enabling monetisation.",
+    "enable_monetization_info": "Monetisation is currently disabled.",
     "intercom": {
       "intercom": "Intercom",
       "description": "Contact Ushahidi staff for chat support"
@@ -102,7 +101,7 @@
     "plans": "Plans",
     "delete": "Delete",
     "description": "Description",
-    "color": "Color",
+    "color": "Colour",
     "search_users": "Search users",
     "searching": "Searching",
     "show_hide": "Show/Hide",
@@ -149,8 +148,8 @@
     "no_go_back": "No, go back",
     "are_you_sure_you_want_to_delete": "Are you sure you want to Delete",
     "action_cannot_be_undone": "<p>This action cannot be undone.</p><p>Are you sure?</p>",
-    "you_are_not_authorized": "You are not authorized",
-    "lost_internet_connection": "Lost internet connection",
+    "you_are_not_authorized": "You are not authorised",
+    "lost_internet_connection": "Lost Internet connection",
     "tweet_is_unavailable": "This tweet is unavailable",
     "file_uploader": "File uploader",
     "preview_image": "Preview image",
@@ -295,7 +294,7 @@
     "select_categories": "Select categories",
     "select_related_post": "Select related post",
     "no_fields": "No fields",
-    "select_color": "Select color",
+    "select_color": "Select colour",
     "choose_survey": "Choose survey",
     "marked_for_internal": {
       "header": "Internal Use Only",
@@ -416,7 +415,7 @@
     },
     "name": "Survey name",
     "color": {
-      "color": "Color",
+      "color": "Colour",
       "hex": "Hex value",
       "red": "Red",
       "gold": "Gold",
@@ -593,9 +592,9 @@
     "more": "More",
     "keyword": "Keyword",
     "start_date": "Start Date",
-    "start_date_placeholder": "Jan 25, 2014",
+    "start_date_placeholder": "25 Jan 2014",
     "end_date": "End Date",
-    "end_date_placeholder": "April 25, 2014",
+    "end_date_placeholder": "25 April 2014",
     "location": "Location",
     "location_placeholder": "Enter city or address",
     "city_or_address": "City or address",
@@ -664,9 +663,9 @@
       "done": "Done"
     },
     "donation": {
-      "thank_you_for_your_donation_start": "Web monetization is enabled on this website. Thank you for your donation. You have donated",
+      "thank_you_for_your_donation_start": "Web monetisation is enabled on this website. Thank you for your donation. You have donated",
       "thank_you_for_your_donation_end": "so far",
-      "web_monetization_text": "Ushahidi deployments are now web monetization enabled. Web monetization is a way of supporting the websites you love without playing advertisers game. All you need is to get your browser setup. Click the link below to learn how you can donate.",
+      "web_monetization_text": "Ushahidi deployments are now web monetisation enabled. Web monetisation is a way of supporting the websites you love without playing advertisers' game. All you need is to get your browser setup. Click the link below to learn how you can donate.",
       "how_can_i_donate": "How can I donate?"
     }
   },
@@ -794,9 +793,6 @@
     "all_posts": "All Posts",
     "no_search_results": "Your search didn't match any posts",
     "no_search_results_location": "Your search didn't match any posts with location information",
-    "no_posts_match_search": "No posts match your keyword search. Please change or clear keyword search to see matching posts.",
-    "no_posts_match_search_plus_filter": "No posts match your keyword search + filters. Please change or clear keyword search and/or filters to see matching posts.",
-    "no_posts_match_your_current_filters": "No posts match the current filters. Please change or clear filters to see matching posts.",
     "no_posts_yet": "There are no posts yet!",
     "no_posts_yet_location": "There are no posts with location information yet!",
     "add_first_post": "Add the first post",
@@ -910,7 +906,7 @@
         "title": "Title",
         "link": {
           "name": "Link Name",
-          "url": "Link url",
+          "url": "Link URL",
           "add_link": "Add Link"
         }
       }
@@ -1158,7 +1154,7 @@
       "slug_help": "If left blank, will be automatically generated from category name.",
       "description": "Description",
       "type": "Type",
-      "color": "Icon Color",
+      "color": "Icon Colour",
       "icon": "Icon Name",
       "roles_help": "Only selected roles will be able to view this category."
     },
@@ -1202,7 +1198,7 @@
     "create": "Create a new survey",
     "create_open_or_targeted": "Create an open or targeted survey to gather information about Ushahidi.",
     "current_header": "Current background image",
-    "customize_your_new_deployment": "Customize your new deployment",
+    "customize_your_new_deployment": "Customise your new deployment",
     "embed": "Embed",
     "embed_info": "To embed your map on another site use the code snippet below.",
     "settings_list": {
@@ -1247,16 +1243,16 @@
       "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in.",
       "view_guide": "View the guide to your API key",
       "hdx_maintainer_id": "HDX Maintainer Id",
-      "api_key": "Api key",
+      "api_key": "API key",
       "profile_page": "Found on your Humanitarian Data Exchange (HDX) profile page",
       "valid_key": "A valid key is required",
-      "valid_user": "A valid maintainer id is required",
+      "valid_user": "A valid maintainer ID is required",
       "api_key_saved": "API key saved! You can now tag your data and upload to a Humanitarian Data Exchange (HDX) account.",
       "start_tagging": "Start tagging data",
       "HDX": "Humanitarian Data Exchange",
-      "please_enter_maintainer_id": "Please enter maintainer id",
+      "please_enter_maintainer_id": "Please enter maintainer ID",
       "please_enter_api_key": "Please enter API key",
-      "hdx_maintainer_id_min_length": "HDX Maintainer Id is too short",
+      "hdx_maintainer_id_min_length": "HDX Maintainer ID is too short",
       "api_key_min_length": "API key is too short"
     },
     "webhooks": {
@@ -1267,7 +1263,7 @@
       "placeholder": {
         "name": "Please enter webhook name",
         "shared_secret": "Please enter shared secret",
-        "api_url": "Please enter api url"
+        "api_url": "Please enter API URL"
       },
       "validation": {
         "required": {
@@ -1356,7 +1352,7 @@
           "phone_nb": "Phone Number",
           "phone_nb_desc": "The from phone number. A Twilio phone number enabled for the type of message you wish to send. ",
           "account_sid": "Account SID",
-          "account_sid_desc": "The unique id of the Account that sent this message.",
+          "account_sid_desc": "The unique ID of the Account that sent this message.",
           "auth_token": "Auth Token",
           "sms_auto_response": "SMS Auto response"
         }
@@ -1398,7 +1394,7 @@
       },
       "info": {
         "start_one": "Please make sure you have your wallet set up on",
-        "start_two": "to set web monetization.",
+        "start_two": "to set web monetisation.",
         "start_three": "If you don't have a wallet already please click",
         "here": "here",
         "end": "to create one."
@@ -1507,7 +1503,7 @@
     "has_tasks_required_start": "Your survey",
     "has_tasks_required_end": ", includes tasks that typically must be completed for each post before they can be marked 'published.' During this import, all of your imported posts will have their tasks marked as 'incomplete', while still allowing their status to be marked as 'published.' If you edit any of these posts after they've been imported, however, you'll be asked to complete those tasks before re-publishing them.",
     "choose_csv_file": "Choose CSV file",
-    "organize_data": "Organize data",
+    "organize_data": "Organise data",
     "organize_your_imported_data": "Assign CSV columns to post fields",
     "assign_csv_message": "Assign CSV columns to post fields",
     "csv_instructions": "Each of the column names from your CSV file are listed below. Choose the <strong>{{form_name}}</strong> field that you'd like each column to be imported to.",
@@ -1572,7 +1568,7 @@
     "upload_desc": "You selected {{fields}} fields to upload to a Humanitarian Data Exchange (HDX) account. <br /> <br /> You assigned tags and attributes - to check, you can go back. If you are done, you can add details and upload. <br /> <br /> The Humanitarian Data Exchange (HDX) requires a few more details in order to upload to their system. You'll add these next",
     "hdx_csv_desc": "You selected {{fields}} fields to export to CSV.<br /> <br /> You assigned tags and attributes - to check these are correct, you can go back and check. If you're done, you can export.",
     "upload_button": "Add dataset details and upload to hdx",
-    "export_button": "Export to csv",
+    "export_button": "Export to CSV",
     "go_back": "Go back and check",
     "add_details": "Add details",
     "details_desc": "To upload to the Humanitarian Data Exchange (HDX) some extra details are required.",
@@ -1590,19 +1586,19 @@
     "source": "Source",
     "organisation": "Organisation",
     "select_organisation": "Select an organisation",
-    "license": "License",
-    "add_license": "Add license",
-    "read_more_licenses": "Read more about licenses",
+    "license": "Licence",
+    "add_license": "Add licence",
+    "read_more_licenses": "Read more about licences",
     "submit_hdx": "Submit to HDX Account",
     "uploading_data": "Uploading data...",
     "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
-    "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
+    "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your API-key and try again.",
     "no_fields_selected": "You haven't selected any fields or assigned any hxl tags or attributes. Please select at least one field and assign at least one tag to be able to export to CSV or upload to a Humanitarian Data Exchange (HDX) account.",
     "validation": {
       "title": "A title is needed",
       "source": "Source is needed",
       "organisation": "An organisation is needed",
-      "license": "A license is needed",
+      "license": "A licence is needed",
       "all_fields": "Please fill in all required fields"
     }
   },
@@ -1726,8 +1722,6 @@
     },
     "default": {
       "data_has_not_been_saved": "The data has not been saved!",
-      "discard_changes": "Discard changes?",
-      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Saved resource",
       "save_error": "Unable to save resource, please try again",
@@ -2520,7 +2514,7 @@
     "Eritrea": "Eritrea",
     "Estonia": "Estonia",
     "Ethiopia": "Ethiopia",
-    "Falkland Islands (Malvinas)": "Falkland Islands (Malvinas)",
+    "Falkland Islands (Malvinas)": "Falkland Islands",
     "Faroe Islands": "Faroe Islands",
     "Fiji": "Fiji",
     "Finland": "Finland",

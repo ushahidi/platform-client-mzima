@@ -995,7 +995,8 @@
       "messages": {
         "max_size" : "Your file is too large.",
         "max_files" : "You have exceeded the maximum number of files.",
-        "required" : "Media is required."
+        "required" : "Media is required.",
+        "invalid_type" : "Unsupported file type."
       },
       "status" : {
         "uploading" : "Uploading...",
@@ -1134,7 +1135,7 @@
     "delete_category_desc": "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
     "show_categories": "Show available categories",
     "child_permissions": "Permissions for this category are managed by the parent category.",
-    "which_categories": "Which categories should be available",
+    "which_categories": "Which categories should be available?",
     "select_all": "Select All",
     "choose_roles": "Choose Roles",
     "create_tag": "Create Category",

@@ -117,14 +117,13 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   private async getPost(id: number): Promise<void> {
     if (!this.postId) return;
     this.post = await this.getPostInformation(id);
-    if (this.post) {
-      this.surveyService.getById(this.post.form_id!).subscribe((form) => {
-        this.post!.form = form.result;
-        this.getData(this.post);
-      });
+    if (this.post && this.post.form_id) {
+      const form = await lastValueFrom(this.surveyService.getById(this.post.form_id!));
+      this.post.form = form.result;
+      this.getData(this.post);
       this.preparePostForView();
-      //----------------------
-      //----------------------
+    } else {
+      this.postChanged = false;
     }
   }
 

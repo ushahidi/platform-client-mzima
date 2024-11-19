@@ -1135,7 +1135,7 @@
     "delete_category_desc": "<nguvu>Ukifuta kategoria hili</nguvu>, haitahusishwa tena na machapisho yoyote. Endelea kwa tahadhari.",
     "show_categories": "Onyesha kategoria zinazopatikana",
     "child_permissions": "Ruhusa za aina hii zinadhibitiwa na kategoria kuu.",
-    "which_categories": "Ni makundi gani yanapaswa kupatikana",
+    "which_categories": "Which categories should be available?",
     "select_all": "Chagua Yote",
     "choose_roles": "Chagua Majukumu",
     "create_tag": "Unda Kategoria",

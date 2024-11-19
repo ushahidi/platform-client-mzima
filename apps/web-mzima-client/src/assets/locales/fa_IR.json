@@ -114,6 +114,7 @@
     "close_and_view": "Close and view results",
     "show_more_less": "نمایش بیشتر/کمتر",
     "filters": "فیلترها",
+    "filters_and_sorting": "Filters and sorting",
     "filter_by_survey": "فیلتر کردن بر اساس نظرسنجی",
     "configure": "پیکربندی",
     "post": "نوشته",
@@ -295,7 +296,14 @@
     "no_fields": "No fields",
     "select_color": "Select color",
     "choose_survey": "Choose survey",
-    "marked_for_internal": "This task is marked for internal use only. It is not seen by users when they create a post.",
+    "marked_for_internal": {
+      "header": "Internal Use Only",
+      "body": "This task is marked for internal use only. It is not seen by users when they create a post."
+    },
+    "task_is_marked_as": {
+      "not_completed": "Task Complete? - Use toggle below",
+      "completed": "You have marked \"{{taskName}}\" Task as Completed!"
+    },
     "delete_task": "حذف وظیفه",
     "duplicate_survey": "تکراری",
     "main_info": "Main info",
@@ -314,6 +322,7 @@
     "title": "عنوان",
     "field_allowed_relation_survey": "نظرسنجی های مجاز",
     "collect_image_caption": "فیلد عنوان تصویر را اضافه کن",
+    "collect_media_caption": "Include caption field",
     "disable_caption_field_explanation": "این همه عناوین موجود برای این فیلد را غیرفعال و پنهان می کند، اما می توانید آنها را در هر زمان مجددا فعال کنید.",
     "description": "توضیحات",
     "task_description": "توصیف وظیفه",
@@ -335,6 +344,8 @@
     "related_post": "نوشته مربوطه",
     "related_post_info": "Please note, the posts to relate to needs to be published, posts that are \"Under review\" will not appear in the search-results",
     "upload_image": "تصویر",
+    "upload_document": "Document",
+    "upload_audio": "Audio",
     "embed_video": "ویدئو جاسازی شده",
     "markdown": "نشانه گذاری",
     "categories": "دسته بندی ها",
@@ -349,7 +360,13 @@
     "checkbox_desc": "به کاربر اجازه می دهد یک یا چند مجموعه از پیش تعیین شده از گزینه ها را انتخاب کند.",
     "relation_desc": "ایجاد ارتباط بین نظرسنجی های مختلف",
     "upload_desc": "اجازه می دهد تا تصویر(ها) در نوشته آپلود شود",
+    "audio_desc": "Allows audio file(s) to be uploaded to the post",
+    "document_desc": "Allows document(s) to be uploaded to the post",
     "video_desc": "اجازه می دهد تا ویدئوهای یوتیوب و یا Vimeo در نوشته قرار گیرد",
+    "maximum_upload_size" : "Maximum Upload Size",
+    "small_upload_size" : "Small",
+    "medium_upload_size" : "Medium",
+    "large_upload_size" : "Large",
     "markdown_desc": "اجازه استفاده از روش مارک داون برای استایل محتویات فیلد.",
     "tasks": "وظایف",
     "task_visible_when_published": "این وظیفه هنگامی که نوشته منتشر می شود قابل مشاهده خواهد بود.",
@@ -602,6 +619,7 @@
     "source": "منبع",
     "saved_filters": "Saved filters",
     "saved_filter": "Saved filter",
+    "no_saved_filters": "No saved filters. Saved filter(s) will appear here for you to select once made available.",
     "save_new_filter": "Save new filter",
     "clear_all_filters": "Clear all filters",
     "delete_this_saved_filter": "Are you sure you want to delete this saved filter?"
@@ -856,7 +874,9 @@
       "unlocked": "نوشته با موفقیت باز شد",
       "unlock": "باز کردن",
       "lock_broken_by_other": "قفل نوشته شما باز شده است تغییرات ذخیره نشده فعلی شما از دست خواهد رفت.",
-      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+      "locked_message": "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post.",
+      "locked_tooltip": "This post is being edited by someone else. Please try again later."
+
     },
     "modify": {
       "intro": "انتخاب نظرسنجی:",
@@ -966,9 +986,23 @@
       "add_caption": "افزودن توضیحات عکس",
       "upload": "بارگذاری",
       "add_photo": "افزودن عکس",
+      "add_audio": "Add audio",
+      "add_document": "Add document",
+      "retry" : "Retry",
       "delete_photo": "حذف عکس",
       "replace_image": "جایگزینی تصویر",
-      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
+      "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!",
+      "messages": {
+        "max_size" : "Your file is too large.",
+        "max_files" : "You have exceeded the maximum number of files.",
+        "required" : "Media is required.",
+        "invalid_type" : "Unsupported file type."
+      },
+      "status" : {
+        "uploading" : "Uploading...",
+        "upload_complete" : "Upload Complete!",
+        "upload_failed" : "Upload failed!"
+      }
     },
     "video": {
       "enter_a_url": "Enter a video URL from Youtube or Vimeo."
@@ -1101,7 +1135,7 @@
     "delete_category_desc": "<strong> اگر این دسته بندی را حذف کنید </ strong>، دیگر با هیچ پستی مرتبط نخواهد بود. با احتیاط ادامه بدهید.",
     "show_categories": "نمایش دسته بندی های موجود",
     "child_permissions": "مجوزهای این دسته بندی توسط دسته بندی والد مدیریت می شود.",
-    "which_categories": "Which categories should be available",
+    "which_categories": "Which categories should be available?",
     "select_all": "انتخاب همه",
     "choose_roles": "انتخاب نقش ها",
     "create_tag": "ایجاد دسته بندی",
