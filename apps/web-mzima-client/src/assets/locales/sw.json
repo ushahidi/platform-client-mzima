@@ -4,6 +4,7 @@
     "powered_by_ushahidi": "Imetiwa nguvu na Ushahidi",
     "support": "Usaidizi wa Ushahidi",
     "by": "kwa",
+    "confirm": "Confirm",
     "submit": "Patiana",
     "anonymous": "Bila kujulikana",
     "submitting": "Inawasilisha",
@@ -1725,6 +1726,8 @@
     },
     "default": {
       "data_has_not_been_saved": "Data haijahifadhiwa!",
+      "discard_changes": "Discard changes?",
+      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "Kitendo hiki hakiwezi kutenduliwa. Tafadhali endelea kwa tahadhari.",
       "save_success": "Hifadhi rasilimali",
       "save_error": "Haiwezi kuhifadhi rasilimali, tafadhali jaribu tena",
