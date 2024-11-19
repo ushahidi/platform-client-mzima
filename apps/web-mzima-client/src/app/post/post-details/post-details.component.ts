@@ -149,22 +149,24 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     fields
       .filter((field: any) => field.type === 'tags')
       .map((categories: any) => {
-        categories.value = categories.value.filter((category: any) => {
-          // Adding children to parents
-          if (!category.parent_id) {
-            category.children = categories.value.filter(
-              (child: any) => child.parent_id === category.id,
-            );
-            return category;
-          }
-          // Removing children with parents from values to avoid repetition
-          if (
-            category.parent_id &&
-            !categories.value.filter((parent: any) => category.parent_id === parent.id).length
-          ) {
-            return category;
-          }
-        });
+        if (categories.value) {
+          categories.value = categories.value.filter((category: any) => {
+            // Adding children to parents
+            if (!category.parent_id) {
+              category.children = categories.value.filter(
+                (child: any) => child.parent_id === category.id,
+              );
+              return category;
+            }
+            // Removing children with parents from values to avoid repetition
+            if (
+              category.parent_id &&
+              !categories.value.filter((parent: any) => category.parent_id === parent.id).length
+            ) {
+              return category;
+            }
+          });
+        }
         return categories;
       });
     //----------------------
