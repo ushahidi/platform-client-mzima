@@ -4,6 +4,7 @@
     "powered_by_ushahidi": "Běží na Ushahidi.",
     "support": "Podpora Ushahidi",
     "by": "od",
+    "confirm": "Confirm",
     "submit": "Odeslat",
     "anonymous": "Anonym",
     "submitting": "Odesílání",
@@ -1725,6 +1726,8 @@
     },
     "default": {
       "data_has_not_been_saved": "Data nebyla uložena!",
+      "discard_changes": "Discard changes?",
+      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "Tuto akci nelze vrátit zpět. Postupujte prosím opatrně.",
       "save_success": "Uložený zdroj",
       "save_error": "Nelze uložit zdroj, zkuste to znovu",
