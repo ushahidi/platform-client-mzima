@@ -4,6 +4,7 @@
     "powered_by_ushahidi": "طراحی شده توسط Ushahidi",
     "support": "پشتیبانی Ushahidi",
     "by": "توسط",
+    "confirm": "Confirm",
     "submit": "ارسال",
     "anonymous": "ناشناس",
     "submitting": "در حال ارسال",
@@ -1725,6 +1726,8 @@
     },
     "default": {
       "data_has_not_been_saved": "The data has not been saved!",
+      "discard_changes": "Discard changes?",
+      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "این کار قابل بازگشت نیست. لطفا با احتیاط ادامه دهید.",
       "save_success": "منبع ذخیره شد",
       "save_error": "امکان ذخیره پست وجود ندارد، لطفا دوباره امتحان کنید",
