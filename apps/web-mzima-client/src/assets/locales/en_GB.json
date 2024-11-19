@@ -4,6 +4,7 @@
     "powered_by_ushahidi": "Powered by Ushahidi.",
     "support": "Ushahidi Support",
     "by": "by",
+    "confirm": "Confirm",
     "submit": "Submit",
     "anonymous": "Anonymous",
     "submitting": "Submitting",
@@ -1725,6 +1726,8 @@
     },
     "default": {
       "data_has_not_been_saved": "The data has not been saved!",
+      "discard_changes": "Discard changes?",
+      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Saved resource",
       "save_error": "Unable to save resource, please try again",
