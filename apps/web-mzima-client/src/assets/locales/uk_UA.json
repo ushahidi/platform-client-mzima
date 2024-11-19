@@ -4,6 +4,7 @@
     "powered_by_ushahidi": "При підтримці Ushahidi.",
     "support": "Підтримка Ushahidi",
     "by": "створено",
+    "confirm": "Confirm",
     "submit": "Відправити",
     "anonymous": "Анонімно",
     "submitting": "Відправлення",
@@ -1725,6 +1726,8 @@
     },
     "default": {
       "data_has_not_been_saved": "The data has not been saved!",
+      "discard_changes": "Discard changes?",
+      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "Цю дію не можна скасувати. Будь ласка, дійте обережно.",
       "save_success": "Збережені ресурси",
       "save_error": "Не вдалось зберегти ресурс, спробуйте ще раз",
