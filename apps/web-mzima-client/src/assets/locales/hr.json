@@ -4,6 +4,7 @@
     "powered_by_ushahidi": "Omogućuje Ushahidi.",
     "support": "Ushahidi Podrška",
     "by": "po",
+    "confirm": "Confirm",
     "submit": "Pošalji",
     "anonymous": "Anonimno",
     "submitting": "Slanje",
@@ -1725,6 +1726,8 @@
     },
     "default": {
       "data_has_not_been_saved": "The data has not been saved!",
+      "discard_changes": "Discard changes?",
+      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "Ova akcije se ne može vratiti. Molimo nastavite sa oprezom.",
       "save_success": "Spremljeni resursi",
       "save_error": "Nemoguće spremiti resurs, molimo pokušajte ponovno",
