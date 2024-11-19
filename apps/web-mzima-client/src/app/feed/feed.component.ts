@@ -2,7 +2,14 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
+import {
+  ActivatedRoute,
+  Params,
+  Router,
+  NavigationEnd,
+  ResolveEnd,
+  ResolveStart,
+} from '@angular/router';
 import { Location } from '@angular/common';
 import { Permissions } from '@enums';
 import { searchFormHelper } from '@helpers';
@@ -103,6 +110,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public urlFromRouteTrigger: string;
   public urlAfterInteractionWithFilters: string;
   private postRequests: Subscription[] = [];
+  public showSkeleton: boolean = false;
 
   constructor(
     protected override router: Router,
@@ -128,6 +136,15 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       sessionService,
       breakpointService,
     );
+    this.router.events.subscribe((ev) => {
+      if (ev instanceof ResolveStart) {
+        this.activeCard.slideOutHandler();
+        this.showSkeleton = true;
+      }
+      if (ev instanceof ResolveEnd) {
+        this.showSkeleton = false;
+      }
+    });
 
     this.checkDesktop();
     this.setupFeedDefaultFilters();
@@ -232,6 +249,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             localStorage.setItem('feedview_postObj', JSON.stringify({}));
             //----------------------------------
             const valueFromPageURL = this.idModePageFromRouter(this.router.url);
+            //check
+            console.log(valueFromPageURL);
             this.modal({ showOn: 'TabletAndBelow' })
               .idMode({ page: valueFromPageURL })
               .loadHandler({ id: this.activePostId });
@@ -916,6 +935,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             }
           },
           loadHandler: ({ id }: { id: number }) => {
+            //check
+            console.log(showOn);
             if (showOn === 'TabletAndBelow') {
               this.postsService.getById(id).subscribe({
                 next: (fetchedPost: PostResult) => {

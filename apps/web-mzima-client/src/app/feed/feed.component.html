@@ -299,7 +299,31 @@
           }"
         >
           <!-- Router outlet here is only for Desktop, the modal popup for small devices is in .ts file -->
-          <router-outlet *ngIf="isDesktop && mode === FeedMode.Id"></router-outlet>
+          <!-- Display skeleton while post is resolving -->
+          <div class="loader" *ngIf="showSkeleton && isDesktop && mode === FeedMode.Id">
+            <div class="loader__post-head">
+              <span class="loader__post-head-item"></span>
+              <span class="loader__post-head-item"></span>
+              <span class="loader__post-head-item"></span>
+            </div>
+            <div>
+              <div class="loader__spinner">
+                <app-spinner></app-spinner>
+              </div>
+            </div>
+            <div class="loader__post-survey"></div>
+            <div class="loader__post-title"></div>
+            <div class="loader__metadata">
+              <div class="loader__avatar"></div>
+              <div class="">
+                <div class="loader__metadata-top"></div>
+                <div class="loader__metadata-bottom"></div>
+              </div>
+            </div>
+            <div class="loader__content"></div>
+          </div>
+
+          <router-outlet *ngIf="!showSkeleton && mode === FeedMode.Id"></router-outlet>
         </div>
       </ng-container>
     </div>
