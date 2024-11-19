@@ -142,40 +142,58 @@
           [data-qa]="'field-' + field"
         >
           <div class="field-item__main">
-            <mat-icon
-              cdkDragHandle
-              class="field-item__drag-handle"
-              svgIcon="drag-handle"
-            ></mat-icon>
-            <span class="field-item__title" [data-qa]="'field-name'">{{
-              isDefaultLanguageSelected
-                ? field.label
-                : field.translations[selectLanguageCode]?.label || field.label
-            }}</span>
-          </div>
-          <!-- <span class="field-item__type">{{ field.type }}</span> -->
-          <div class="field-item__controls">
-            <mzima-client-button
-              fill="clear"
-              color="gray"
-              [iconOnly]="true"
-              class="field-item__control"
-              (buttonClick)="editField(field, i)"
-              [data-qa]="'btn-field-edit-' + field.label"
+            <div
+              class="field-item__main-inner"
+              (mouseenter)="trackHoverEvent($event, field)"
+              (mouseleave)="trackHoverEvent($event, field)"
             >
-              <mat-icon icon svgIcon="pencil"></mat-icon>
-            </mzima-client-button>
-            <mzima-client-button
-              fill="clear"
-              color="gray"
-              [iconOnly]="true"
-              class="field-item__control"
-              *ngIf="isDefaultLanguageSelected"
-              (buttonClick)="deleteField(i)"
-              [data-qa]="'btn-field-delete-' + field.label"
-            >
-              <mat-icon icon svgIcon="delete"></mat-icon>
-            </mzima-client-button>
+              <mat-icon
+                cdkDragHandle
+                class="field-item__drag-handle"
+                svgIcon="drag-handle"
+              ></mat-icon>
+              <span class="field-item__title" [data-qa]="'field-name'">{{
+                isDefaultLanguageSelected
+                  ? field.label
+                  : field.translations[selectLanguageCode]?.label || field.label
+              }}</span>
+              <mzima-client-button
+                *ngIf="fieldId === field.id && fieldHover"
+                fill="clear"
+                color="secondary"
+                [iconOnly]="true"
+                class="tooltip-btn"
+                tabindex="-1"
+                matTooltipPosition="right"
+                matTooltip="{{ field.label }}"
+              >
+                <mat-icon icon svgIcon="tooltip"></mat-icon>
+              </mzima-client-button>
+            </div>
+            <!-- <span class="field-item__type">{{ field.type }}</span> -->
+            <div class="field-item__controls">
+              <mzima-client-button
+                fill="clear"
+                color="gray"
+                [iconOnly]="true"
+                class="field-item__control"
+                (buttonClick)="editField(field, i)"
+                [data-qa]="'btn-field-edit-' + field.label"
+              >
+                <mat-icon icon svgIcon="pencil"></mat-icon>
+              </mzima-client-button>
+              <mzima-client-button
+                fill="clear"
+                color="gray"
+                [iconOnly]="true"
+                class="field-item__control"
+                *ngIf="isDefaultLanguageSelected"
+                (buttonClick)="deleteField(i)"
+                [data-qa]="'btn-field-delete-' + field.label"
+              >
+                <mat-icon icon svgIcon="delete"></mat-icon>
+              </mzima-client-button>
+            </div>
           </div>
         </div>
       </div>
