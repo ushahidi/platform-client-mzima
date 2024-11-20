@@ -140,29 +140,6 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
     this.locationPrecision = this.sessionService.getPrecision(locationPrecision!);
   }
 
-  private attachOriginalFieldLabelToFields({ fields }: { fields: any }) {
-    /* --------------------------------------------
-      For displaying "original label before change"
-      for survey fields info icons on hover
-    ---------------------------------------------*/
-    const fieldsWithOriginalFieldName = fields.map((field: any) => {
-      if (field.type === 'title' || field.type === 'description') {
-        field.label_original = this.translate.instant(`survey.${field.type}`);
-      } else {
-        const sameField = this.helperSurveyFields.filter(
-          (helperField) => field.input === helperField.input && field.type === helperField.type,
-        )[0];
-        //--- Product decision: Change Label if it's a "Select" field-----------------
-        const originalLabel =
-          sameField.label === 'survey.select' ? 'survey.select_other_name' : sameField.label;
-        //----------------------------------------------------------------------------
-        field.label_original = this.translate.instant(originalLabel);
-      }
-      return field;
-    });
-    return fieldsWithOriginalFieldName;
-  }
-
   private splitTaskFields(taskFields: FormAttributeInterface[]) {
     const nonDraggableFieldType = (fieldType: string) =>
       fieldType === 'title' || fieldType === 'description';
@@ -390,7 +367,33 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   }
 
   public trackHoverEvent(event: Event, field: any) {
+    /* --------------------------------------------
+      Show an info button on survey fields on hover
+    ---------------------------------------------*/
     this.fieldHover = event.type === 'mouseenter';
     this.fieldId = field.id;
+  }
+
+  public attachOriginalFieldLabelToFields({ fields }: { fields: any }) {
+    /* --------------------------------------------
+      For displaying "original label before change"
+      for survey fields info icons on hover
+    ---------------------------------------------*/
+    const fieldsWithOriginalFieldName = fields.map((field: any) => {
+      if (field.type === 'title' || field.type === 'description') {
+        field.label_original = this.translate.instant(`survey.${field.type}`);
+      } else {
+        const sameField = this.helperSurveyFields.filter(
+          (helperField) => field.input === helperField.input && field.type === helperField.type,
+        )[0];
+        //--- Product decision: Change Label if it's a "Select" field-----------------
+        const originalLabel =
+          sameField.label === 'survey.select' ? 'survey.select_other_name' : sameField.label;
+        //----------------------------------------------------------------------------
+        field.label_original = this.translate.instant(originalLabel);
+      }
+      return field;
+    });
+    return fieldsWithOriginalFieldName;
   }
 }
