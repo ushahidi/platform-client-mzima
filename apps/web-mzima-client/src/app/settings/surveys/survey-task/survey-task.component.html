@@ -170,30 +170,30 @@
                 <mat-icon icon svgIcon="tooltip"></mat-icon>
               </mzima-client-button>
             </div>
-            <!-- <span class="field-item__type">{{ field.type }}</span> -->
-            <div class="field-item__controls">
-              <mzima-client-button
-                fill="clear"
-                color="gray"
-                [iconOnly]="true"
-                class="field-item__control"
-                (buttonClick)="editField(field, i)"
-                [data-qa]="'btn-field-edit-' + field.label"
-              >
-                <mat-icon icon svgIcon="pencil"></mat-icon>
-              </mzima-client-button>
-              <mzima-client-button
-                fill="clear"
-                color="gray"
-                [iconOnly]="true"
-                class="field-item__control"
-                *ngIf="isDefaultLanguageSelected"
-                (buttonClick)="deleteField(i)"
-                [data-qa]="'btn-field-delete-' + field.label"
-              >
-                <mat-icon icon svgIcon="delete"></mat-icon>
-              </mzima-client-button>
-            </div>
+          </div>
+          <!-- <span class="field-item__type">{{ field.type }}</span> -->
+          <div class="field-item__controls">
+            <mzima-client-button
+              fill="clear"
+              color="gray"
+              [iconOnly]="true"
+              class="field-item__control"
+              (buttonClick)="editField(field, i)"
+              [data-qa]="'btn-field-edit-' + field.label"
+            >
+              <mat-icon icon svgIcon="pencil"></mat-icon>
+            </mzima-client-button>
+            <mzima-client-button
+              fill="clear"
+              color="gray"
+              [iconOnly]="true"
+              class="field-item__control"
+              *ngIf="isDefaultLanguageSelected"
+              (buttonClick)="deleteField(i)"
+              [data-qa]="'btn-field-delete-' + field.label"
+            >
+              <mat-icon icon svgIcon="delete"></mat-icon>
+            </mzima-client-button>
           </div>
         </div>
       </div>
