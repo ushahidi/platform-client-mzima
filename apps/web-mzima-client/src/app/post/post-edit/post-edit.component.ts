@@ -662,18 +662,18 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                       this.form.value[field.key]?.id,
                     );
                     await lastValueFrom(deleteObservable);
-                    value.value = null;
+                    value.value = [];
                   } catch (error: any) {
                     throw new Error(`Error deleting file: ${error.message}`);
                   }
                 } else if (originalValue?.value[0].caption !== value.value?.caption) {
                   try {
                     const captionObservable = await this.mediaService.updateCaption(
-                      originalValue.value[0].id,
+                      originalValue.value[0].value,
                       value.value.caption,
                     );
                     await lastValueFrom(captionObservable);
-                    value.value = [originalValue.value[0].id];
+                    value.value = [originalValue.value[0].value];
                   } catch (error: any) {
                     throw new Error(`Error updating caption: ${error.message}`);
                   }
