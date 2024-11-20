@@ -343,7 +343,7 @@
     "radio_button": "Radio gumb(i)",
     "checkbox": "Potvrdni okvir(i)",
     "related_post": "Povezani post",
-    "related_post_info": "Napominjemo, postovi koji se odnose na objavu, postovi koji su \"u pregledu\" neće se pojaviti u rezultatima pretraživanja",
+    "related_post_info": "Only posts that have been published will appear in the search results; and hence be related to",
     "upload_image": "Slika",
     "upload_document": "Document",
     "upload_audio": "Audio",
