@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { surveyHelper } from '@helpers';
+import { TranslateService } from '@ngx-translate/core';
 import { LanguageInterface } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BreakpointService, SessionService } from '@services';
@@ -21,6 +22,7 @@ import {
   SurveyItemEnabledLanguages,
 } from '@mzima-client/sdk';
 import { NotificationService } from '../../../core/services/notification.service';
+import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
 import { LanguageService } from '../../../core/services/language.service';
 import _ from 'lodash';
 
@@ -38,10 +40,13 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
   public name: string;
   public form: FormGroup;
   public isEdit = false;
+  public changesMade = false;
+  private initialFormValue: any;
   public isLoading = false;
   roles: RoleResult[] = [];
   surveyId: string;
   additionalTasks: SurveyItemTask[] = [];
+  initialTasks: SurveyItemTask[] = [];
   mainPost: SurveyItemTask;
   surveyObject: any;
   public languages: LanguageInterface[];
@@ -64,6 +69,8 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     private notification: NotificationService,
     private languageService: LanguageService,
     private location: Location,
+    private confirmModalService: ConfirmModalService,
+    private translate: TranslateService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -124,12 +131,37 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
           this.updateForm(response.result);
           this.initLanguages(response.result.enabled_languages);
           this.initTasks();
+          //initial state for existing survey
+          this.setInitialState();
         },
       });
     } else {
       this.initLanguages({ available: [], default: 'en' });
       this.initTasks(true);
+      //initial state for new survey
+      this.setInitialState();
     }
+
+    this.form.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
+      this.changesMade = true;
+    });
+  }
+
+  private setInitialState(): void {
+    this.initialFormValue = _.cloneDeep(this.form.value);
+    this.initialTasks = _.cloneDeep(this.form.get('tasks')?.value || []);
+    this.changesMade = false;
+  }
+
+  private hasChanges(): boolean {
+    // Make sure name field is not empty before saving
+    // Check if form/tasks are different from initial state
+    const hasNonEmptyValues = !!this.form.get('name')?.value.trim();
+    return (
+      hasNonEmptyValues &&
+      (!_.isEqual(this.form.value, this.initialFormValue) ||
+        !_.isEqual(this.form.get('tasks')?.value, this.initialTasks))
+    );
   }
 
   private initTasks(isNew = false) {
@@ -314,7 +346,27 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
     }
   }
 
-  public cancel() {
+  public async openConfirmModal() {
+    if (this.hasChanges()) {
+      const confirmed = await this.confirmModalService.open({
+        title: this.translate.instant('notify.default.discard_changes'),
+        description: this.translate.instant('notify.default.survey_has_not_been_saved'),
+        cancelButtonText: 'Discard Changes',
+        actionButtonText: 'Save Changes',
+        isCancelDestructive: true,
+      });
+
+      if (confirmed) {
+        this.save();
+      } else {
+        this.navigateBack();
+      }
+    } else {
+      this.navigateBack();
+    }
+  }
+
+  navigateBack() {
     if (this.isDesktop) {
       this.router.navigate(['settings/surveys']);
     } else {
