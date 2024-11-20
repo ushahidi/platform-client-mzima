@@ -343,7 +343,7 @@
     "radio_button": "زر (ازرار) الراديو",
     "checkbox": "مربع (مربعات) الاختيار",
     "related_post": "المنشور ذات صلة",
-    "related_post_info": "يرجى الملاحظة أن المنشورات المرتبطة يجب أن تكون منشورة، فلن تظهر المنشورات \"قيد المراجعة\" في نتائج البحث.",
+    "related_post_info": "Only posts that have been published will appear in the search results; and hence be related to",
     "upload_image": "صورة",
     "upload_document": "مستند",
     "upload_audio": "صوت",
