@@ -343,7 +343,7 @@
     "radio_button": "Přepínací tlačítko(a)",
     "checkbox": "Zaškrtávací políčko(a)",
     "related_post": "Související příspěvek",
-    "related_post_info": "Vezměte prosím na vědomí, že příspěvky, kterých se to týká, musí být zveřejněny, příspěvky, které jsou v procesu kontroly, se ve výsledcích vyhledávání neobjeví.",
+    "related_post_info": "Only posts that have been published will appear in the search results; and hence be related to",
     "upload_image": "Obrázek",
     "upload_document": "Dokument",
     "upload_audio": "Zvuk",
