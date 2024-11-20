@@ -343,7 +343,7 @@
     "radio_button": "Radio Button(s)",
     "checkbox": "Checkbox(es)",
     "related_post": "Related Post",
-    "related_post_info": "Ju lutem vini re, postimet që duhet të lidhen me duhet të publikohen, postimet që janë \"Nën shqyrtim\" nuk do të shfaqen në kërkim-rezultatet",
+    "related_post_info": "Only posts that have been published will appear in the search results; and hence be related to",
     "upload_image": "Image",
     "upload_document": "Document",
     "upload_audio": "Audio",
