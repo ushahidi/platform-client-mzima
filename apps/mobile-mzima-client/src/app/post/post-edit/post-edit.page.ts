@@ -858,7 +858,7 @@ export class PostEditPage {
       const result = await this.alertService.presentAlert({
         header: 'Success!',
         message:
-          'Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.',
+          'Thank you for submitting your post. It is being reviewed, and will soon will appear on the platform.',
       });
       if (result.role !== 'confirm') return;
     }
