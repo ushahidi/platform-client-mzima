@@ -76,9 +76,6 @@
     flex-wrap: wrap; // make way for "align-content: center" to work
     align-content: center;
     width: calc(100% - 55px);
-    &:hover {
-      // background: red;
-    }
   }
 
   &__controls {
