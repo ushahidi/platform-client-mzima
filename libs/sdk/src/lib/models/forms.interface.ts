@@ -51,6 +51,8 @@ export interface FormAttributeInterface {
   response_private: boolean;
   translations: any;
   type: string;
+  // Not from API: Added from client code
+  label_original?: string;
 }
 
 export interface FormCSVInterface {
