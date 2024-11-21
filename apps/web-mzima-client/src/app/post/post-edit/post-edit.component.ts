@@ -359,7 +359,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   private async handleUpload(key: string, value: any) {
-    if (!value[0].value) return;
+    if (!value?.[0]?.value) return;
     try {
       const response: any = await lastValueFrom(this.mediaService.getById(value[0].value));
       this.form.patchValue({
@@ -666,7 +666,10 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   } catch (error: any) {
                     throw new Error(`Error deleting file: ${error.message}`);
                   }
-                } else if (originalValue?.value[0].caption !== value.value?.caption) {
+                } else if (
+                  originalValue?.value?.length > 0 &&
+                  originalValue.value[0].caption !== value.value?.caption
+                ) {
                   try {
                     const captionObservable = await this.mediaService.updateCaption(
                       originalValue.value[0].value,
