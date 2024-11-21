@@ -163,7 +163,9 @@
                 </div>
               </ng-container>
 
-              <ng-container *ngIf="field.input === 'upload' && field.value[0].url">
+              <ng-container
+                *ngIf="field.input === 'upload' && field.value.length === 1 && field.value[0].url"
+              >
                 <span *ngIf="!field.value[0].value">-</span>
                 <div class="post__media">
                   <img *ngIf="field.value[0].value" [src]="field.value[0].url" [alt]="post.title" />
