@@ -1139,7 +1139,7 @@
     "delete_category_desc": "<strong>Pokud tuto kategorii odstraníte</strong>, nebude již spojena s žádnými příspěvky. Postupovat opatrně.",
     "show_categories": "Zobrazit dostupné kategorie",
     "child_permissions": "Oprávnění pro tuto kategorii jsou spravována nadřazenou kategorií.",
-    "which_categories": "Which categories should be available?",
+    "which_categories": "Které kategorie by měly být dostupné?",
     "select_all": "Vybrat vše",
     "choose_roles": "Vybrat role",
     "create_tag": "Vytvořit kategorii",
