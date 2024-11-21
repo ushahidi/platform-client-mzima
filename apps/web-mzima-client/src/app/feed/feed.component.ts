@@ -110,7 +110,8 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   public urlFromRouteTrigger: string;
   public urlAfterInteractionWithFilters: string;
   private postRequests: Subscription[] = [];
-  public showSkeleton: boolean = false;
+  public showPostLoader: boolean = false;
+  public isloadingIdMode: boolean = false;
 
   constructor(
     protected override router: Router,
@@ -138,11 +139,15 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     );
     this.router.events.subscribe((ev) => {
       if (ev instanceof ResolveStart) {
+        if (this.mode === FeedMode.Preview) {
+          this.isloadingIdMode = true;
+        }
+        this.showPostLoader = true;
         this.activeCard.slideOutHandler();
-        this.showSkeleton = true;
       }
       if (ev instanceof ResolveEnd) {
-        this.showSkeleton = false;
+        this.showPostLoader = false;
+        this.isloadingIdMode = false;
       }
     });
 
@@ -249,8 +254,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             localStorage.setItem('feedview_postObj', JSON.stringify({}));
             //----------------------------------
             const valueFromPageURL = this.idModePageFromRouter(this.router.url);
-            //check
-            console.log(valueFromPageURL);
             this.modal({ showOn: 'TabletAndBelow' })
               .idMode({ page: valueFromPageURL })
               .loadHandler({ id: this.activePostId });
@@ -935,7 +938,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             }
           },
           loadHandler: ({ id }: { id: number }) => {
-            //check
             if (page === 'not-found' || page === 'not-allowed') {
               this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page });
             } else if (showOn === 'TabletAndBelow' && !this.isDesktop) {
@@ -993,7 +995,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
                         page,
                       });
                   }
-                  // console.log(this.dialog.openDialogs);
                 }
               }
             }
