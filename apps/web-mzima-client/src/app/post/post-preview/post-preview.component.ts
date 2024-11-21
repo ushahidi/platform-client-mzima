@@ -44,38 +44,13 @@ export class PostPreviewComponent implements OnInit, OnChanges {
     if (changes['post']) {
       this.allowed_privileges = this.post?.allowed_privileges ?? '';
 
-      // Brute force extraction of the first image found in a post.
-      // Ugly approach, but it stops as soon as it finds an image.
-      // TODO: Optimise
-      if (this.post.post_content) {
-        let mediaFieldId: number = 0;
-        for (const content of this.post.post_content) {
-          for (const field of content.fields) {
-            if (field.type === 'media') {
-              if (field.input === 'upload' && field.value?.value) {
-                mediaFieldId = field.value.value;
-                break;
-              } else if (field.input === 'image' && field.value.length > 0) {
-                for (const value of field.value) {
-                  if (value.value) {
-                    mediaFieldId = value.value;
-                    break;
-                  }
-                }
-              }
-            }
-            if (mediaFieldId !== 0) break;
-          }
-          if (mediaFieldId !== 0) break;
-        }
-        if (mediaFieldId !== 0) {
-          this.mediaService.getById(mediaFieldId).subscribe({
-            next: (media) => {
-              this.media = media.result;
-              this.mediaLoaded.emit();
-            },
-          });
-        }
+      if (this.post.post_media) {
+        this.mediaService.getById(this.post.post_media.value.value).subscribe({
+          next: (media) => {
+            this.media = media.result;
+            this.mediaLoaded.emit();
+          },
+        });
       }
     }
   }
