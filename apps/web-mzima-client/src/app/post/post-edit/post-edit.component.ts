@@ -681,7 +681,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                     throw new Error(`Error updating caption: ${error.message}`);
                   }
                 } else {
-                  value.value = this.form.value[field.key]?.id || [];
+                  if (this.form.value[field.key]) value.value = [this.form.value[field.key]?.id];
+                  else value.value = [];
                 }
                 break;
               case 'image':
