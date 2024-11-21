@@ -1000,7 +1000,7 @@
         "max_size" : "Soubor je příliš velký.",
         "max_files" : "Byl překročen maximální počet souborů.",
         "required" : "Jsou vyžadována média.",
-        "invalid_type" : "Unsupported file type."
+        "invalid_type" : "Nepodporovaný typ souboru."
       },
       "status" : {
         "uploading" : "Nahrávání...",
