@@ -668,7 +668,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   }
                 } else if (
                   originalValue?.value?.length > 0 &&
-                  originalValue.value[0].caption !== value.value[0].caption
+                  originalValue.value[0].caption !== value.value.caption
                 ) {
                   try {
                     const captionObservable = await this.mediaService.updateCaption(
