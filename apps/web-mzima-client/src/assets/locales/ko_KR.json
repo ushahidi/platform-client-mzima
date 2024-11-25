@@ -1929,7 +1929,7 @@
     "confirm_modal": {
       "add_post_success": {
         "success": "Success!",
-        "success_description": "Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.",
+        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
         "success_button": "OK, sounds good"
       },
       "deleted": {
