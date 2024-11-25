@@ -21,6 +21,7 @@ import {
   PostResult,
   PostStatus,
   postHelpers,
+  apiHelpers,
 } from '@mzima-client/sdk';
 import _ from 'lodash';
 
@@ -454,7 +455,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   private getPosts({ params, loadMore }: { params: any; loadMore?: boolean }): void {
     // Call the posts service, keeping the subscription for later
     const postRequestSubscription = this.postsService
-      .getPosts('', { ...params, ...this.activeSorting })
+      .getPosts('', {
+        ...params,
+        only: apiHelpers.ONLY.NEEDED_POSTS_LIST_PROPERTIES,
+        ...this.activeSorting,
+      })
       .subscribe({
         next: (data) => {
           this.posts = loadMore ? [...this.posts, ...data.results] : data.results;
@@ -796,9 +801,15 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
   public changePostsStatus(status: string): void {
     if (status === PostStatus.Published) {
-      const uncompletedPosts: PostResult[] = this.selectedPosts.filter(
-        (post: PostResult) => !postHelpers.isAllRequiredCompleted(post),
-      );
+      const uncompletedPosts: PostResult[] = this.selectedPosts.filter((post: PostResult) => {
+        if (post.post_content) {
+          return !postHelpers.isAllRequiredCompleted(post);
+        } else {
+          return this.postsService.getById(post.id).subscribe((fetchedPost: PostResult) => {
+            return !postHelpers.isAllRequiredCompleted(fetchedPost);
+          });
+        }
+      });
 
       if (uncompletedPosts.length > 0) {
         this.showMessage(

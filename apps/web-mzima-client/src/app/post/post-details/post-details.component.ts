@@ -188,16 +188,18 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         if (Array.isArray(mediaField.value)) {
           const mediaFiles: MediaFile[] = [];
           for await (const mediaValue of mediaField.value) {
-            const media = await lastValueFrom(this.mediaService.getById(mediaValue.value!));
-            const mediaFile: MediaFile = new MediaFile(
-              media.result,
-              media.result.original_file_url,
-            );
-            mediaFile.id = mediaValue.id;
-            mediaFile.value = media.result.id;
-            mediaFile.caption = media.result.caption;
-            mediaFile.status = MediaFileStatus.READY;
-            mediaFiles.push(mediaFile);
+            if (mediaValue.value) {
+              const media = await lastValueFrom(this.mediaService.getById(mediaValue.value));
+              const mediaFile: MediaFile = new MediaFile(
+                media.result,
+                media.result.original_file_url,
+              );
+              mediaFile.id = mediaValue.id;
+              mediaFile.value = media.result.id;
+              mediaFile.caption = media.result.caption;
+              mediaFile.status = MediaFileStatus.READY;
+              mediaFiles.push(mediaFile);
+            }
           }
           mediaField.value = mediaFiles;
         } else if (mediaField.value?.value) {
