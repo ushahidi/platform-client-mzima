@@ -1929,7 +1929,7 @@
     "confirm_modal": {
       "add_post_success": {
         "success": "Úspěch!",
-        "success_description": "Děkujeme za odeslání hlášení. Příspěvek je kontrolován naším týmem a brzy se objeví na platformě.",
+        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
         "success_button": "OK, zní to dobře"
       },
       "deleted": {
