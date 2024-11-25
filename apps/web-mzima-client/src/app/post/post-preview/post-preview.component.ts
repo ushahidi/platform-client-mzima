@@ -44,7 +44,7 @@ export class PostPreviewComponent implements OnInit, OnChanges {
     if (changes['post']) {
       this.allowed_privileges = this.post?.allowed_privileges ?? '';
 
-      if (this.post.post_media) {
+      if (this.post.post_media && this.post.post_media.value.value) {
         this.mediaService.getById(this.post.post_media.value.value).subscribe({
           next: (media) => {
             this.media = media.result;

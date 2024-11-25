@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'create/:type',
     component: PostEditComponent,
-    data: { breadcrumb: 'Create Post' },
+    data: { breadcrumb: 'Add New Post' },
   },
   {
     path: ':id/edit',
