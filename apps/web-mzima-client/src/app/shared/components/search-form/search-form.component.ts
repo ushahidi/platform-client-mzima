@@ -225,6 +225,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   private initFilters() {
+    this.clearPostsResults();
     if (this.filters) {
       const filters = JSON.parse(this.filters!);
       if (!this.router.url.includes('collection')) {
@@ -795,6 +796,10 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
 
   public searchPosts(): void {
     this.searchSubject.next(this.searchQuery);
+    //------------------------
+    // Save to localstorage: Needed for "search + filter" detection for posts ("no posts" message display particularly)
+    localStorage.setItem('USH_searchPostByKeyword', this.searchQuery);
+    //------------------------
   }
 
   public displayFn(city: SearchResponse): string {
