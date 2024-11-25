@@ -374,7 +374,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       this.masonryUpdateOnModeSwitch({ userEvent: 'resize' });
       //-----------------------------------
       const valueFromPageURL = this.idModePageFromRouter(this.router.url);
-      this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: valueFromPageURL }).resizeHandler({});
+      this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: valueFromPageURL }).resizeHandler();
       //-----------------------------------
       this.activeCard.scrollToView();
     });
@@ -619,7 +619,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     //---------------------------
     this.userEvent = 'click';
     this.navigateTo().idMode.view({ id: post.id });
-    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).clickHandler({ post });
+    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'view' }).loadHandler({ id: post.id });
   }
 
   public navigateTo = () => {
@@ -809,7 +809,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
 
         this.modal({ showOn: 'TabletAndBelow' })
           .idMode({ page: 'view' })
-          .clickHandler({ post: firstPostOnCurrentPage });
+          .loadHandler({ id: firstPostOnCurrentPage.id });
       }
     }
   };
@@ -983,7 +983,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       if (switchButtonValue === FeedMode.Id) {
         this.modal({ showOn: 'TabletAndBelow' })
           .idMode({ page: 'view' })
-          .clickHandler({ post: firstPostOnCurrentPage });
+          .loadHandler({ id: firstPostOnCurrentPage.id });
       }
     }
   }
@@ -1005,7 +1005,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
     //---------------------------
     this.userEvent = 'click';
     this.navigateTo().idMode.edit({ id: post.id });
-    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).clickHandler({ post });
+    this.modal({ showOn: 'TabletAndBelow' }).idMode({ page: 'edit' }).loadHandler({ id: post.id });
   }
 
   public modal({ showOn }: { showOn: 'TabletAndBelow' }) {
@@ -1013,13 +1013,10 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
       // Note: SM_Screen means what we say is "tablet and below"
       idMode: ({ page }: { page: IdModePage }) => {
         return {
-          clickHandler: ({ post }: { post: PostResult }) => {
-            if (showOn === 'TabletAndBelow') {
-              if (page === 'view') this.openModal({ post }).forView();
-              if (page === 'edit') this.openModal({ post }).forEdit();
-            }
-          },
           loadHandler: ({ id }: { id: number }) => {
+            // This is used temporarily in the slide-out function
+            localStorage.setItem('feedview_postObj', JSON.stringify({ id }));
+
             if (page === 'not-found' || page === 'not-allowed') {
               this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({ page });
             } else if (showOn === 'TabletAndBelow' && !this.isDesktop) {
@@ -1044,13 +1041,11 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
           },
           // To be used inside of a window resize event listener
           // eslint-disable-next-line no-empty-pattern
-          resizeHandler: ({}) => {
-            // Simulate card click on RESIZE
+          resizeHandler: () => {
             if (showOn === 'TabletAndBelow') {
               if (this.mode === FeedMode.Id) {
                 if (window.innerWidth >= 1024) {
                   this.postDetailsModal?.close();
-                  // console.log(this.dialog.openDialogs);
                 } else {
                   if (this.dialog.openDialogs.length) {
                     for (let i = 0; i <= this.dialog.openDialogs.length; i += 1) {
@@ -1073,7 +1068,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
                     if (page === 'view') this.openModal({ post: postFromStorage }).forView();
                     if (page === 'edit') this.openModal({ post: postFromStorage }).forEdit();
                     if (page === 'not-found' || page === 'not-allowed')
-                      this.openModal({ post: postFromStorage }).forPostNotFoundOrNotAllowed({
+                      this.openModal({ post: {} }).forPostNotFoundOrNotAllowed({
                         page,
                       });
                   }
@@ -1118,12 +1113,6 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
             this.postDetailsModal.componentInstance.post = configRemainder;
         }
       }
-
-      // Regardless of device size, save post result from/on card click
-      // Saving it will be useful for when we need to be able to trigger modal open/close on resize
-      post = page === 'view' || page === 'edit' ? post : {};
-      localStorage.setItem('feedview_postObj', JSON.stringify(post));
-
       // Smaller devices only - what happens after modal is closed
       // Note: [mat-dialog-close]="false" in the html of the modal takes care of closing the modal
       this.postDetailsModal?.afterClosed().subscribe((data) => {

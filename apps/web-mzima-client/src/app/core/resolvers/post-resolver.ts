@@ -89,6 +89,8 @@ export class PostResolver implements Resolve<any> {
             queryParamsHandling: 'merge',
           });
         }
+        // Saving for the modal-window
+        localStorage.setItem('feedview_postObj', JSON.stringify(post));
         return post;
       }),
     );
