@@ -1929,7 +1929,7 @@
     "confirm_modal": {
       "add_post_success": {
         "success": "Uspješno!",
-        "success_description": "Hvala vam što ste predali izvještaj. Post pregledava naš tim i uskoro će se pojaviti na platformi.",
+        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
         "success_button": "OK, zvuči dobro"
       },
       "deleted": {
