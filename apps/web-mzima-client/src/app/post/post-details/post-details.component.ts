@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, Meta } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, ResolveEnd } from '@angular/router';
 import { Permissions } from '@enums';
 import {
   CategoryInterface,
@@ -25,7 +25,7 @@ import {
   SurveysService,
 } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Subscription } from 'rxjs';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { dateHelper } from '@helpers';
@@ -52,6 +52,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public isManagePosts: boolean = false;
   public postChanged: boolean;
   public post: PostResult;
+  private dataSubscription: Subscription;
   constructor(
     protected override sessionService: SessionService,
     protected override breakpointService: BreakpointService,
@@ -60,6 +61,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     private mediaService: MediaService,
     private metaService: Meta,
     private route: ActivatedRoute,
+    private router: Router,
     private postsService: PostsService,
     private surveyService: SurveysService,
     protected sanitizer: DomSanitizer,
@@ -69,6 +71,11 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     this.getUserData();
     this.checkPermission();
     this.userId = Number(this.user.userId);
+    this.router.events.subscribe((ev) => {
+      if (ev instanceof ResolveEnd) {
+        this.dataSubscription.unsubscribe();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -81,12 +88,11 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         this.postId = Number(params['id']);
       }
     });
-
     if (this.postFromModal) {
       this.post = this.postFromModal;
       this.postChanged = false;
     } else {
-      this.route.data.subscribe((data) => {
+      this.dataSubscription = this.route.data.subscribe((data) => {
         this.post = data['post'];
         if (this.post) this.getSurvey();
       });
