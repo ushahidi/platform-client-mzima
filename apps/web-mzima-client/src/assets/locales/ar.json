@@ -1727,7 +1727,7 @@
     "default": {
       "data_has_not_been_saved": "لم يتم حفظ البيانات!",
       "discard_changes": "هل تريد تجاهل التغييرات؟",
-      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
+      "survey_has_not_been_saved": "سيتم فقدان التغييرات إذا لم تقم بحفظ الاستبيان.",
       "proceed_warning": "لا يمكن التراجع عن هذا الإجراء. يرجى المضي قدمًا بحذر.",
       "save_success": "مورد محفوظ",
       "save_error": "تعذر حفظ المورد، يرجى إعادة المحاولة",
@@ -1929,7 +1929,7 @@
     "confirm_modal": {
       "add_post_success": {
         "success": "نجاح!",
-        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
+        "success_description": "شكراً لك على تقديم منشورك. يجري الآن مراجعته وسيظهر قريباً على المنصة.",
         "success_button": "حسنا ، يبدو جيدا"
       },
       "deleted": {
