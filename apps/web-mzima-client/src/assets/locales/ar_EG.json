@@ -1727,7 +1727,7 @@
     "default": {
       "data_has_not_been_saved": "لم يتم حفظ البيانات!",
       "discard_changes": "هل تريد تجاهل التغييرات؟",
-      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
+      "survey_has_not_been_saved": "سيتم فقدان التغييرات إذا لم تقم بحفظ الاستبيان.",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Saved resource",
       "save_error": "Unable to save resource, please try again",
