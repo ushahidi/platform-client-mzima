@@ -1,22 +1,22 @@
 {
   "app": {
     "contact_email_address": "Contact email address:",
-    "powered_by_ushahidi": "Vyakozwe na Ushahidi",
-    "support": "Ubufasha bwa Ushahidi",
-    "by": "na",
+    "powered_by_ushahidi": "उशाहिदी द्वारा संचालित",
+    "support": "उशाहिदी समर्थन",
+    "by": "by",
     "confirm": "Confirm",
-    "submit": "Rungika",
-    "anonymous": "Anonymous",
-    "submitting": "Submitting",
-    "submit_another": "Submit & Add Another",
-    "submit_response": "Submit a survey response",
+    "submit": "जमा करें",
+    "anonymous": "गुमनाम",
+    "submitting": "जमा हो रहा है",
+    "submit_another": "जमा करें और एक और जोड़ें",
+    "submit_response": "सर्वे रिपोंस जमा करें",
     "can_see_this": "can see this",
-    "collection": "Icegeranyo",
-    "collections": "Ivyegeranyo",
-    "create_collection": "Create collection",
+    "collection": "Collection",
+    "collections": "Collections",
+    "create_collection": "संग्रह बनाएँ",
     "add_collection": "Add collection",
     "export_to_csv": "Export filtered data",
-    "create_new": "Create new",
+    "create_new": "नया बनाएं",
     "create_new_survey": "Create new survey",
     "created_by": "Created by {{author}}",
     "date_created": "Date created",
@@ -80,7 +80,7 @@
     "share": "Share",
     "specific_roles": "Specific roles...",
     "general": "General",
-    "surveys": "Survey",
+    "surveys": "Surveys",
     "add_survey": "New Survey",
     "edit_survey": "Edit Survey",
     "data_sources": "Data Sources",
@@ -144,7 +144,7 @@
     "select_language": "Select language",
     "add_new_post": "Add new post",
     "previous": "Previous",
-    "duplicate": "Kwigana",
+    "duplicate": "प्रतिलिपि बनाएं",
     "yes_delete": "Yes, delete",
     "no_go_back": "No, go back",
     "are_you_sure_you_want_to_delete": "Are you sure you want to Delete",
@@ -182,33 +182,33 @@
   },
   "toolbar": {
     "searchbar": {
-      "search_entity": "Rondera {{entity}}",
-      "search_all_entities_for": "Rondera vyose {{entity}} kuri"
+      "search_entity": "Search {{entity}}",
+      "search_all_entities_for": "Search all {{entity}} for"
     }
   },
   "color_picker": {
     "hex_value": "Hex Value",
     "red": "Red",
-    "gold": "Gold",
+    "gold": "सोना",
     "blue": "Blue",
     "green": "Green"
   },
   "feature_limits": {
-    "view_unavailable": "The {{value}} view isn't available on your current plan. <a href=\"/settings/plan\">Upgrade your plan</a> to get it!"
+    "view_unavailable": "आपकी वर्तमान योजना में {{value}} दृश्य उपलब्ध नहीं है। इसे प्राप्त करने के लिए अपनी <a href=\"/settings/plan\">योजना को अपग्रेड करें!</a>"
   },
   "limit": {
     "plan_limit": "Ushahidi Plan Limit",
-    "post_limit_reached": "You have reached the limit of published Posts for your plan.",
-    "admin_limit_reached": "You have reached the limit of admin users for your plan.",
-    "post_type_limit_reached": "You have reached the surveys limit for your plan.",
-    "upgrade": "Upgrade"
+    "post_limit_reached": "आप अपनी योजना के लिए प्रकाशित पोस्ट की सीमा तक पहुंच गए हैं।",
+    "admin_limit_reached": "आपकी योजना के लिए एडमिन यूजर्स की सीमा तक पहुँच गए है।",
+    "post_type_limit_reached": "आप अपनी योजना के लिए सर्वेक्षण सीमा तक पहुंच गए हैं।",
+    "upgrade": "अपग्रेड"
   },
   "activity": {
     "activity_over_time": "Activity over time",
     "activity_by_volume": "Activity by volume",
-    "recent_activity_timeline": "Igihe c'ibikorwa vya vuba",
-    "new_post": "Inyandiko nshasha",
-    "by": "Na",
+    "recent_activity_timeline": "Recent Activity timeline",
+    "new_post": "नयी पोस्ट",
+    "by": "द्वारा",
     "context_body": "A summary of how people are interacting with {{site}}.",
     "inbound": "Inbound Response Messages",
     "outbound": "Outbound Surveying Messages",
@@ -228,13 +228,13 @@
     "tooltip_template": "This is the single point tooltip template"
   },
   "form": {
-    "add_field": "Add field",
-    "add_field_instructions": "Add instructions to this field",
+    "add_field": "फील्ड जोड़े",
+    "add_field_instructions": "इस फ़ील्ड में निर्देश जोड़ें",
     "add_field_instructions_info": "These instructions will be presented as a tooltip to a user when filling in this field.",
-    "add_field_instructions_placeholder": "Sigura iki gice",
+    "add_field_instructions_placeholder": "इस क्षेत्र को समझाएं...",
     "add_post_type": "New Survey",
     "add_step": "Add task",
-    "add_language": "Add language",
+    "add_language": "भाषा जोड़ें",
     "added_form_stage_attribute": "Saved field",
     "field_allowed_relation_post_type": "Allowed surveys",
     "choose_order_message": "Choose and order the fields that you would like to include in this survey",
@@ -305,13 +305,13 @@
       "not_completed": "Task Complete? - Use toggle below",
       "completed": "You have marked \"{{taskName}}\" Task as Completed!"
     },
-    "delete_task": "Gufuta inshingano",
-    "duplicate_survey": "Kwigana",
+    "delete_task": "Delete task",
+    "duplicate_survey": "प्रतिलिपि बनाएं",
     "main_info": "Main info",
-    "internal_use_task": "Task is only for internal use",
+    "internal_use_task": "कार्य केवल आंतरिक उपयोग के लिए है।",
     "internal_use_task_desc": "This task will only be visible to User who have Manage Post permission.",
-    "duplicate_task": "Duplicate task",
-    "duplicate_option": "Duplicate option is present",
+    "duplicate_task": "डुप्लिकेट कार्य",
+    "duplicate_option": "डुप्लिकेट विकल्प मौजूद है",
     "special_characters_option": "This option contains special characters",
     "show_this_task_to": "Show this task to everyone when published",
     "show_this_task_to_desc": "When a survey response is published, data from this task will be displayed.",
@@ -419,7 +419,7 @@
       "color": "Color",
       "hex": "Hex value",
       "red": "Red",
-      "gold": "Gold",
+      "gold": "सोना",
       "blue": "Blue",
       "green": "Green"
     },
@@ -427,7 +427,7 @@
     "task": {
       "delete": {
         "desc": "<strong>If you delete this task</strong>, all of the data captured in it will also be deleted. Proceed with caution.",
-        "delete": "Gufuta inshingano",
+        "delete": "Delete task",
         "delete_this": "Delete this task"
       }
     },
@@ -502,28 +502,28 @@
     }
   },
   "global_filter": {
-    "filter": "Kuyungurura",
+    "filter": "Filter",
     "categories": {
-      "categories": "Imice",
-      "all_categories": "All Categories"
+      "categories": "Categories",
+      "all_categories": "सभी श्रेणियाँ"
     },
     "post_types": {
       "post_types": "Surveys",
-      "all_types": "All Types",
-      "unstructured": "Unstructured"
+      "all_types": "सभी प्रकार के",
+      "unstructured": "असंरचित"
     },
     "post_statuses": {
       "post_statuses": "Status",
-      "all_statuses": "Any Status",
-      "draft": "Draft",
+      "all_statuses": "कोई स्थिति",
+      "draft": "ड्राफ्ट",
       "published": "Published"
     },
     "post_stages": {
       "post_stages": "Current Task",
-      "all_stages": "All Tasks"
+      "all_stages": "सभी कार्य"
     },
     "collections": {
-      "collections": "Ivyegeranyo",
+      "collections": "Collections",
       "all_collections": "All Collections",
       "search_collections": "Search Collections"
     },
@@ -626,11 +626,11 @@
     "delete_this_saved_filter": "Are you sure you want to delete this saved filter?"
   },
   "graph": {
-    "all_posts": "Nta na kimwe; Kwerekana inyandiko zose",
-    "all": "All time",
-    "compare": "Compare...",
-    "compare_all": "Compare...",
-    "compare_status": "Compare status",
+    "all_posts": "कुछ नहीं; सभी पोस्ट दिखाएं",
+    "all": "सभी समय",
+    "compare": "तुलना करें...",
+    "compare_all": "तुलना करें...",
+    "compare_status": "स्थिति की तुलना करें",
     "compare_tags": "Compare categories",
     "compare_form": "Compare surveys",
     "compare_": "Compare",
@@ -652,15 +652,15 @@
   },
   "message": {
     "button": {
-      "dismiss": "Dismiss",
-      "upgrade": "Upgrade now",
+      "dismiss": "खारिज करें",
+      "upgrade": "अपग्रेड करें",
       "default": "Ok",
       "cancel": "Cancel"
     }
   },
   "modal": {
     "button": {
-      "close": "Close",
+      "close": "बंद करें",
       "done": "Done"
     },
     "donation": {
@@ -674,7 +674,7 @@
     "open_menu": "Open menu",
     "my_account": "My account",
     "404": "Whoops",
-    "about": "About",
+    "about": "बारे में ",
     "activity": "Activity",
     "add_post": "Add Post",
     "account_settings": "Account Settings",
@@ -686,7 +686,7 @@
     "category": "Category",
     "categories": "Categories",
     "clear": "Clear",
-    "collections": "Ivyegeranyo",
+    "collections": "Collections",
     "comments": "Comments",
     "data_sources": "Data Sources",
     "data_import": "Data Import",
@@ -752,7 +752,7 @@
     "feed": "Data"
   },
   "views": {
-    "map": "Map",
+    "map": "नक्शा",
     "list": "Timeline",
     "activity": "Activity",
     "data": "Data"

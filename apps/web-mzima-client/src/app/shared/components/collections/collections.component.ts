@@ -14,6 +14,7 @@ import {
   CollectionResult,
   PostResult,
   AccountNotificationsInterface,
+  apiHelpers,
 } from '@mzima-client/sdk';
 import { BaseComponent } from '../../../base.component';
 import { ConfirmModalService } from '../../../core/services/confirm-modal.service';
@@ -152,6 +153,7 @@ export class CollectionsComponent extends BaseComponent implements OnInit {
       orderby: 'created',
       order: 'desc',
       q: query,
+      only: apiHelpers.ONLY.NAME_ID_DESCRIPTION,
     };
 
     if (this.post?.id) {

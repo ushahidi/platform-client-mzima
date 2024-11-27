@@ -4,6 +4,7 @@
     "powered_by_ushahidi": "Powered by Ushahidi.",
     "support": "Ushahidi Support",
     "by": "by",
+    "confirm": "Confirm",
     "submit": "Submit",
     "anonymous": "Anonymous",
     "submitting": "Submitting",
@@ -342,7 +343,7 @@
     "radio_button": "Radio Button(s)",
     "checkbox": "Checkbox(es)",
     "related_post": "Related Post",
-    "related_post_info": "Please note, the posts to relate to needs to be published, posts that are \"Under review\" will not appear in the search-results",
+    "related_post_info": "Only posts that have been published will appear in the search results; and hence be related to",
     "upload_image": "Image",
     "upload_document": "Document",
     "upload_audio": "Audio",
@@ -793,6 +794,9 @@
     "all_posts": "All Posts",
     "no_search_results": "Your search didn't match any posts",
     "no_search_results_location": "Your search didn't match any posts with location information",
+    "no_posts_match_search": "No posts match your keyword search. Please change or clear keyword search to see matching posts.",
+    "no_posts_match_search_plus_filter": "No posts match your keyword search + filters. Please change or clear keyword search and/or filters to see matching posts.",
+    "no_posts_match_your_current_filters": "No posts match the current filters. Please change or clear filters to see matching posts.",
     "no_posts_yet": "There are no posts yet!",
     "no_posts_yet_location": "There are no posts with location information yet!",
     "add_first_post": "Add the first post",
@@ -1135,7 +1139,7 @@
     "delete_category_desc": "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
     "show_categories": "Show available categories",
     "child_permissions": "Permissions for this category are managed by the parent category.",
-    "which_categories": "Which categories should be available",
+    "which_categories": "Which categories should be available?",
     "select_all": "Select All",
     "choose_roles": "Choose Roles",
     "create_tag": "Create Category",
@@ -1722,6 +1726,8 @@
     },
     "default": {
       "data_has_not_been_saved": "The data has not been saved!",
+      "discard_changes": "Discard changes?",
+      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "This action cannot be undone. Please proceed with caution.",
       "save_success": "Saved resource",
       "save_error": "Unable to save resource, please try again",
@@ -1923,7 +1929,7 @@
     "confirm_modal": {
       "add_post_success": {
         "success": "Success!",
-        "success_description": "Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.",
+        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
         "success_button": "OK, sounds good"
       },
       "deleted": {
