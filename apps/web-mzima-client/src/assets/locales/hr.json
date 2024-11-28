@@ -750,7 +750,9 @@
     "yesterday": "Jučer",
     "map": "Karta",
     "data": "Podaci",
-    "feed": "Prikaz podataka"
+    "feed": "Prikaz podataka",
+    "add_new_post":"Add New Post",
+    "edit_post": "Uredi post"
   },
   "views": {
     "map": "Karta",
