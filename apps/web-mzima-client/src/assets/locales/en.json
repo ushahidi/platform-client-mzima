@@ -340,6 +340,7 @@
     "date": "Date",
     "datetime": "Date & Time",
     "select": "Select",
+    "select_other_name": "A dropdown List",
     "radio_button": "Radio Button(s)",
     "checkbox": "Checkbox(es)",
     "related_post": "Related Post",
