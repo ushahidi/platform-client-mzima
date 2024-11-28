@@ -19,7 +19,7 @@ const routes: Routes = [
         loadChildren: () => import('./general/general.module').then((m) => m.GeneralModule),
         canActivate: [CombinedGuard],
         data: {
-          breadcrumb: 'General',
+          breadcrumb: 'app.general',
           guards: [AdminGuard, ManageSettingsGuard],
         },
       },
@@ -28,7 +28,7 @@ const routes: Routes = [
         loadChildren: () => import('./surveys/surveys.module').then((m) => m.SurveysModule),
         canActivate: [CombinedGuard],
         data: {
-          breadcrumb: 'Surveys',
+          breadcrumb: 'app.surveys',
           guards: [AdminGuard, ManageSettingsGuard],
         },
       },
@@ -38,7 +38,7 @@ const routes: Routes = [
           import('./data-sources/data-sources.module').then((m) => m.DataSourcesModule),
         canActivate: [CombinedGuard],
         data: {
-          breadcrumb: 'Data sources',
+          breadcrumb: 'app.data_sources',
           guards: [AdminGuard, ManageSettingsGuard],
         },
       },
@@ -48,7 +48,7 @@ const routes: Routes = [
           import('./data-import/data-import.module').then((m) => m.DataImportModule),
         canActivate: [CombinedGuard],
         data: {
-          breadcrumb: 'Data import',
+          breadcrumb: 'nav.data_import',
           guards: [AdminGuard, DataImportExportGuard],
         },
       },
@@ -57,7 +57,7 @@ const routes: Routes = [
         loadChildren: () => import('./donation/donation.module').then((m) => m.DonationModule),
         canActivate: [CombinedGuard],
         data: {
-          breadcrumb: 'Donation',
+          breadcrumb: 'app.donation',
           guards: [AdminGuard, ManageSettingsGuard],
         },
       },
@@ -67,7 +67,7 @@ const routes: Routes = [
           import('./user-settings/user-settings.module').then((m) => m.UserSettingsModule),
         canActivate: [CombinedGuard],
         data: {
-          breadcrumb: 'Configure HDX API',
+          breadcrumb: 'settings.settings_list.user_settings',
           guards: [AdminGuard, ManageUsersGuard, ManageSettingsGuard, DataImportExportGuard],
         },
       },
@@ -77,7 +77,7 @@ const routes: Routes = [
           import('./data-export/data-export.module').then((m) => m.DataExportModule),
         canActivate: [CombinedGuard],
         data: {
-          breadcrumb: 'Data export',
+          breadcrumb: 'nav.data_export',
           guards: [AdminGuard, DataImportExportGuard],
         },
       },
@@ -86,7 +86,7 @@ const routes: Routes = [
         loadChildren: () => import('./users/users.module').then((m) => m.UsersModule),
         canActivate: [CombinedGuard],
         data: {
-          breadcrumb: 'Users',
+          breadcrumb: 'nav.users',
           guards: [AdminGuard, ManageUsersGuard],
         },
       },
@@ -94,21 +94,21 @@ const routes: Routes = [
         path: 'roles',
         loadChildren: () => import('./roles/roles.module').then((m) => m.RolesModule),
         canActivate: [CombinedGuard],
-        data: { breadcrumb: 'Roles' },
+        data: { breadcrumb: 'nav.roles' },
       },
       {
         path: 'categories',
         loadChildren: () =>
           import('./categories/categories.module').then((m) => m.CategoriesModule),
         canActivate: [CombinedGuard],
-        data: { breadcrumb: 'Categories', guards: [AdminGuard, ManageSettingsGuard] },
+        data: { breadcrumb: 'nav.tags', guards: [AdminGuard, ManageSettingsGuard] },
       },
       {
         path: 'webhooks',
         loadChildren: () => import('./webhooks/webhooks.module').then((m) => m.WebhooksModule),
         canActivate: [CombinedGuard],
         data: {
-          breadcrumb: 'Webhooks',
+          breadcrumb: 'nav.webhooks',
           guards: [AdminGuard, ManageSettingsGuard],
         },
       },

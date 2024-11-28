@@ -6,8 +6,12 @@ import { SurveysComponent } from './surveys.component';
 
 const routes: Routes = [
   { path: '', component: SurveysComponent },
-  { path: 'create', component: SurveyItemComponent, data: { breadcrumb: 'Create survey' } },
-  { path: 'update/:id', component: SurveyItemComponent, data: { breadcrumb: 'Update survey' } },
+  { path: 'create', component: SurveyItemComponent, data: { breadcrumb: 'survey.create_survey' } },
+  {
+    path: 'update/:id',
+    component: SurveyItemComponent,
+    data: { breadcrumb: 'survey.update_survey' },
+  },
 ];
 
 @NgModule({
