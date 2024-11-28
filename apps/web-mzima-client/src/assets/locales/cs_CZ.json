@@ -340,6 +340,7 @@
     "date": "Datum",
     "datetime": "Datum a čas",
     "select": "Vybrat",
+    "select_other_name": "A dropdown List",
     "radio_button": "Přepínací tlačítko(a)",
     "checkbox": "Zaškrtávací políčko(a)",
     "related_post": "Související příspěvek",
