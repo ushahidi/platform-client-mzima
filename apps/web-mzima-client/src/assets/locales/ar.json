@@ -750,7 +750,9 @@
     "yesterday": "البارحة ",
     "map": "خريطة",
     "data": "البيانات",
-    "feed": "عرض البيانات"
+    "feed": "عرض البيانات",
+    "add_new_post":"Add New Post",
+    "edit_post": "تعديل المنشور"
   },
   "views": {
     "map": "الخريطة",
