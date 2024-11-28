@@ -1660,11 +1660,15 @@
     "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
     "password_length": "Password must be at least 8 characters long",
     "password_match": "Passwords do not match",
+    "enter_new_password": "Enter your new password",
+    "password_change_success": "Your password was successfully changed",
+    "password_change_success_info": "Now you can login with new credentials",
     "check_email": "Check your email",
     "name_will_be_a_display_name": "The name you enter will be a display name.",
     "valid": {
       "fields": {
-        "email must be unique": "User with this email already exists"
+        "email must be unique": "User with this email already exists",
+        "email must be valid": "Email must be a valid email address"
       },
       "name": {
         "required": "Display name is required",
