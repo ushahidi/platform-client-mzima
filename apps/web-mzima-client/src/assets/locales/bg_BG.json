@@ -340,6 +340,7 @@
     "date": "Дата",
     "datetime": "Дата и време",
     "select": "Изберете",
+    "select_other_name": "A dropdown List",
     "radio_button": "Радио бутон(и)",
     "checkbox": "Бутон за чекиране (checkbox)",
     "related_post": "Свързани публикации",
