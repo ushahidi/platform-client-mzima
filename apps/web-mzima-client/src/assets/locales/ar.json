@@ -340,6 +340,7 @@
     "date": "التاريخ",
     "datetime": "التاريخ و الوقت",
     "select": "اختر",
+    "select_other_name": "A dropdown List",
     "radio_button": "زر (ازرار) الراديو",
     "checkbox": "مربع (مربعات) الاختيار",
     "related_post": "المنشور ذات صلة",
