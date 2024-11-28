@@ -340,6 +340,7 @@
     "date": "Datum",
     "datetime": "Datum i vreme",
     "select": "Izaberi",
+    "select_other_name": "A dropdown List",
     "radio_button": "Radio dugme(ad)",
     "checkbox": "Polje(a) za potvrdu",
     "related_post": "Srodne objave",
