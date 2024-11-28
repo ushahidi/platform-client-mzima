@@ -352,8 +352,9 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
         title: this.translate.instant('notify.default.discard_changes'),
         description: this.translate.instant('notify.default.survey_has_not_been_saved'),
         cancelButtonText: 'Discard Changes',
-        actionButtonText: 'Save Changes',
+        confirmButtonText: 'Save Changes',
         isCancelDestructive: true,
+        isConfirmNotDestructive: true,
       });
 
       if (confirmed) {
