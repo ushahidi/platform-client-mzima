@@ -340,6 +340,7 @@
     "date": "Tarehe",
     "datetime": "Tarehe na Wakati",
     "select": "Chagua",
+    "select_other_name": "A dropdown List",
     "radio_button": "Vitufe vya Chaguo",
     "checkbox": "Visanduku vya tiki",
     "related_post": "Chapisho Linalohusiana",
