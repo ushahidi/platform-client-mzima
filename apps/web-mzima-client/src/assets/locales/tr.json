@@ -750,7 +750,9 @@
     "yesterday": "Yesterday",
     "map": "Map",
     "data": "Data",
-    "feed": "Data"
+    "feed": "Data",
+    "add_new_post":"Add New Post",
+    "edit_post": "Edit Post"
   },
   "views": {
     "map": "Map",
