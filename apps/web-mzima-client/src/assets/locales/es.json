@@ -750,7 +750,9 @@
     "yesterday": "Ayer",
     "map": "Mapa",
     "data": "Datos",
-    "feed": "Vista de datos"
+    "feed": "Vista de datos",
+    "add_new_post":"Add New Post",
+    "edit_post": "Editar publicación"
   },
   "views": {
     "map": "Mapa",
