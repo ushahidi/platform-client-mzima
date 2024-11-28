@@ -639,13 +639,19 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                 const originalValue = this.post?.post_content[0]?.fields.filter(
                   (fieldValue: { key: string | number }) => fieldValue.key === field.key,
                 )[0];
-                if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
+                let formValue = this.form.value[field.key];
+                if (Array.isArray(formValue)) formValue = formValue[0];
+
+                // No image uploaded in field at all
+                if (!formValue) value.value = [];
+                // Image uploaded
+                else if (formValue.upload && formValue.photo) {
                   try {
                     this.maxSizeError = false;
-                    if (this.maxImageSize > this.form.value[field.key].photo.size) {
+                    if (this.maxImageSize > formValue.photo.size) {
                       const uploadObservable = this.mediaService.uploadFile(
-                        this.form.value[field.key]?.photo,
-                        this.form.value[field.key]?.caption,
+                        formValue.photo,
+                        formValue.caption,
                       );
                       const response: any = await lastValueFrom(uploadObservable);
                       value.value = [response.result.id];
@@ -656,46 +662,46 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   } catch (error: any) {
                     throw new Error(`Error uploading file: ${error.message}`);
                   }
-                } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
+                  // Image deleted
+                } else if (formValue.delete && formValue.id) {
                   try {
-                    const deleteObservable = this.mediaService.delete(
-                      this.form.value[field.key]?.id,
-                    );
+                    const deleteObservable = this.mediaService.delete(formValue.id);
                     await lastValueFrom(deleteObservable);
                     value.value = [];
                   } catch (error: any) {
                     throw new Error(`Error deleting file: ${error.message}`);
                   }
+                  // Caption updated
                 } else if (
                   originalValue?.value?.length > 0 &&
-                  originalValue.value[0].caption !== value.value.caption
+                  originalValue.value[0].caption !== formValue.caption
                 ) {
                   try {
                     const captionObservable = await this.mediaService.updateCaption(
                       originalValue.value[0].value,
-                      value.value.caption,
+                      formValue.caption,
                     );
                     await lastValueFrom(captionObservable);
                     value.value = [originalValue.value[0].value];
                   } catch (error: any) {
                     throw new Error(`Error updating caption: ${error.message}`);
                   }
+                  // Nothing updated
                 } else {
-                  if (this.form.value[field.key]) value.value = [this.form.value[field.key]?.id];
-                  else value.value = [];
+                  value.value = [formValue.id];
                 }
                 break;
               case 'image':
                 value.value =
-                  this.form.value[field.key]?.map((formValue: any) => formValue.value) || [];
+                  this.form.value[field.key]?.map((fieldValue: any) => fieldValue.value) || [];
                 break;
               case 'audio':
                 value.value =
-                  this.form.value[field.key]?.map((formValue: any) => formValue.value) || [];
+                  this.form.value[field.key]?.map((fieldValue: any) => fieldValue.value) || [];
                 break;
               case 'document':
                 value.value =
-                  this.form.value[field.key]?.map((formValue: any) => formValue.value) || [];
+                  this.form.value[field.key]?.map((fieldValue: any) => fieldValue.value) || [];
                 break;
               default:
                 value.value = this.form.value[field.key] || null;

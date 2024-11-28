@@ -27,6 +27,7 @@ import {
 } from '@mzima-client/sdk';
 import { ConfirmModalService, LanguageService, SessionService } from '@services';
 import _ from 'lodash';
+import { surveyHelper } from '@helpers';
 
 @Component({
   selector: 'app-survey-task',
@@ -46,6 +47,9 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
   @Output() deleteTaskChange = new EventEmitter();
   @Output() errorFieldChange = new EventEmitter();
   @Output() taskChange = new EventEmitter();
+  public fieldHover: boolean;
+  public fieldId: number;
+  public helperSurveyFields = _.cloneDeep(surveyHelper.surveyFields);
 
   surveyId: string;
   selectedRoles: GroupCheckboxValueInterface = {
@@ -141,6 +145,10 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
       fieldType === 'title' || fieldType === 'description';
     this.nonDraggableFields = taskFields.filter((field) => nonDraggableFieldType(field.type));
     this.draggableFields = taskFields.filter((field) => !nonDraggableFieldType(field.type));
+
+    this.attachOriginalFieldLabelToFields({
+      fields: [...this.nonDraggableFields, ...this.draggableFields],
+    });
   }
 
   private getSurveyRoles() {
@@ -274,6 +282,7 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
         if (response) {
           this.draggableFields.push(this.addPriority(this.taskFields, response));
           this.taskFields.push(this.addPriority(this.taskFields, response));
+          this.attachOriginalFieldLabelToFields({ fields: this.taskFields });
         }
       },
     });
@@ -355,5 +364,36 @@ export class SurveyTaskComponent implements OnInit, OnChanges {
 
   public changeLabel(value: string) {
     this.errorFieldChange.emit(value.trim().length === 0);
+  }
+
+  public trackHoverEvent(event: Event, field: any) {
+    /* --------------------------------------------
+      Show an info button on survey fields on hover
+    ---------------------------------------------*/
+    this.fieldHover = event.type === 'mouseenter';
+    this.fieldId = field.id;
+  }
+
+  public attachOriginalFieldLabelToFields({ fields }: { fields: any }) {
+    /* --------------------------------------------
+      For displaying "original label before change"
+      for survey fields info icons on hover
+    ---------------------------------------------*/
+    const fieldsWithOriginalFieldName = fields.map((field: any) => {
+      if (field.type === 'title' || field.type === 'description') {
+        field.label_original = this.translate.instant(`survey.${field.type}`);
+      } else {
+        const sameField = this.helperSurveyFields.filter(
+          (helperField) => field.input === helperField.input && field.type === helperField.type,
+        )[0];
+        //--- Product decision: Change Label if it's a "Select" field-----------------
+        const originalLabel =
+          sameField.label === 'survey.select' ? 'survey.select_other_name' : sameField.label;
+        //----------------------------------------------------------------------------
+        field.label_original = this.translate.instant(originalLabel);
+      }
+      return field;
+    });
+    return fieldsWithOriginalFieldName;
   }
 }
