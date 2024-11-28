@@ -750,7 +750,9 @@
     "yesterday": "Jana",
     "map": "Ramani",
     "data": "Data",
-    "feed": "Mwonekano wa data"
+    "feed": "Mwonekano wa data",
+    "add_new_post":"Add New Post",
+    "edit_post": "Hariri Matangazo"
   },
   "views": {
     "map": "Ramani",
