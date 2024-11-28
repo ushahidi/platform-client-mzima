@@ -750,7 +750,9 @@
     "yesterday": "Včera",
     "map": "Mapa",
     "data": "Data",
-    "feed": "Zobrazení dat"
+    "feed": "Zobrazení dat",
+    "add_new_post":"Add New Post",
+    "edit_post": "Upravit příspěvek"
   },
   "views": {
     "map": "Mapa",
