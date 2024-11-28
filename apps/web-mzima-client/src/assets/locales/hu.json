@@ -750,7 +750,9 @@
     "yesterday": "Tegnap",
     "map": "Bản đồ",
     "data": "Adat",
-    "feed": "Adatok nézet"
+    "feed": "Adatok nézet",
+    "add_new_post":"Add New Post",
+    "edit_post": "Bejegyzés szerkesztése"
   },
   "views": {
     "map": "Térkép",
