@@ -340,6 +340,7 @@
     "date": "تاریخ",
     "datetime": "تاریخ و زمان",
     "select": "انتخاب",
+    "select_other_name": "A dropdown List",
     "radio_button": "دکمه (های) رادیویی",
     "checkbox": "چک باکس (ها)",
     "related_post": "نوشته مربوطه",
