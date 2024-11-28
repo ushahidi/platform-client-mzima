@@ -340,6 +340,7 @@
     "date": "Dátum",
     "datetime": "Dátum és idő",
     "select": "Kiválasztás",
+    "select_other_name": "A dropdown List",
     "radio_button": "Rádió gomb(ok)",
     "checkbox": "Jelölőnégyzet(ek)",
     "related_post": "Kapcsolódó bejegyzések",
