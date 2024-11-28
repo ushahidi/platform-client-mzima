@@ -118,7 +118,7 @@ export class CreateFieldModalComponent implements OnInit {
   private getCategories() {
     const array: MultilevelSelectOption[] = [];
     this.categoriesService
-      .get()
+      .getCategories({ only: 'id,parent_id,tag,children' })
       .pipe(
         map((res) => {
           for (const category of res?.results) {

@@ -165,7 +165,7 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
   }
 
   private getCategories() {
-    this.categoriesService.get().subscribe({
+    this.categoriesService.getCategories({ only: 'id,parent,parent_id,slug,tag' }).subscribe({
       next: (data) => {
         this.categories = data.results
           .filter((cat: CategoryInterface) => !cat.parent_id)

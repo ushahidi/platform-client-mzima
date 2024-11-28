@@ -27,11 +27,13 @@ export class CategoriesComponent {
   }
 
   public getCategories(): void {
-    this.categoriesService.get().subscribe({
-      next: (data) => {
-        this.categories = data.results;
-      },
-    });
+    this.categoriesService
+      .getCategories({ only: 'id,parent_id,tag,slug,children,parent' })
+      .subscribe({
+        next: (data) => {
+          this.categories = data.results;
+        },
+      });
   }
 
   public displayChildren(id: number) {

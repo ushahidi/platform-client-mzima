@@ -330,7 +330,7 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   private getCategories() {
-    this.categoriesService.get().subscribe({
+    this.categoriesService.getCategories({ only: 'id,parent_id,tag,children' }).subscribe({
       next: (response) => {
         const mainResults = response?.results.filter((c: CategoryInterface) => !c.parent_id);
         this.categoriesData = mainResults?.map((category: CategoryInterface) => {
