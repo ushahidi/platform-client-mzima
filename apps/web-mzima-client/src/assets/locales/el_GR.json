@@ -340,6 +340,7 @@
     "date": "Ημερομηνία",
     "datetime": "Ημέρα και Ώρα ",
     "select": "Select",
+    "select_other_name": "A dropdown List",
     "radio_button": "Radio Button(s)",
     "checkbox": "Checkbox(es)",
     "related_post": "Σχετικές Αναρτήσεις",
