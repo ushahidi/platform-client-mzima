@@ -50,7 +50,7 @@
                 *ngIf="mediaFile.status === MediaFileStatus.UPLOADING"
               ></app-spinner>
               <div class="media-status" *ngIf="mediaFile.status === MediaFileStatus.UPLOADING">
-                Uploading...
+                {{ 'post.media.status.uploading' | translate }}
               </div>
             </div>
           </ng-template>

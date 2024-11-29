@@ -226,7 +226,17 @@
     "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
     "targeted_activity": "Tageted Survey Activity",
     "crowdsourced_activity": "Crowdsourced Survey Activity",
-    "tooltip_template": "This is the single point tooltip template"
+    "tooltip_template": "This is the single point tooltip template",
+    "select_range": "Select range",
+    "select_filter": "Select filter",
+    "show_all_posts": "Show all posts",
+    "categories": "Categories",
+    "survey": "Survey",
+    "statuses": "Statuses",
+    "all_time": "All time",
+    "last_week": "Last week",
+    "last_month": "Last month",
+    "last_year": "Last year"
   },
   "form": {
     "add_field": "Add Field",

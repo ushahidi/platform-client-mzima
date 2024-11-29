@@ -843,7 +843,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       const confirmed = await this.confirmModalService.open({
         title: this.translate.instant('notify.default.data_has_not_been_saved'),
         description: this.translate.instant('notify.default.proceed_warning'),
-        confirmButtonText: 'OK',
+        confirmButtonText: this.translate.instant('notify.confirm_modal.deleted.success_button'),
       });
       if (!confirmed) return;
     }
