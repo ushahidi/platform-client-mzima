@@ -1311,6 +1311,8 @@
       "provider_name": "{{providerName}} Data Source?",
       "do_you_really_want_to_disconnect": "Do you really want to disconnect your provider?",
       "add_source": "Add source",
+      "edit": "Edit {{provider}} Data Source",
+      "add_data_source": "Add Data Source",
       "associate_with_form": "Import to survey",
       "associate_with_form_desc": "All incoming data from {{provider}} will be used to create responses to the survey you choose",
       "data_sources": "Data Sources",
