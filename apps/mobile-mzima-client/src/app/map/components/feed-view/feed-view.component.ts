@@ -10,6 +10,7 @@ import {
   PostsService,
   SavedsearchesService,
   CollectionsService,
+  apiHelpers,
 } from '@mzima-client/sdk';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { DatabaseService, EnvService, SessionService } from '@services';
@@ -114,9 +115,12 @@ export class FeedViewComponent extends MainViewComponent {
     this.isPostsLoading = true;
     try {
       const response = await lastValueFrom(
-        this.postsService.getPosts('', { currentView: 'feed', ...params }),
+        this.postsService.getPosts('', {
+          currentView: 'feed',
+          ...params,
+          only: apiHelpers.ONLY.NEEDED_POSTS_LIST_PROPERTIES,
+        }),
       );
-      await this.updateObjectsWithUploadInput(response);
 
       const currentPosts = await this.databaseService.get(STORAGE_KEYS.POSTS);
       if (currentPosts && currentPosts.results) {
@@ -139,18 +143,6 @@ export class FeedViewComponent extends MainViewComponent {
       const response = await this.databaseService.get(STORAGE_KEYS.POSTS);
       if (response) this.postDisplayProcessing(response, false);
     }
-  }
-
-  async updateObjectsWithUploadInput(response: any) {
-    const uploadPromises = response.results.flatMap((result: any) => {
-      return result.post_content.flatMap((postContent: any) => {
-        return postContent.fields
-          .filter((field: any) => field.input === 'upload')
-          .map((field: any) => this.getMediaDataAndUpdateValue(field));
-      });
-    });
-
-    await Promise.all(uploadPromises);
   }
 
   async getMediaDataAndUpdateValue(field: any) {
