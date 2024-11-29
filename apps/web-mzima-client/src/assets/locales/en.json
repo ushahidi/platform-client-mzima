@@ -70,6 +70,7 @@
     "more": "More",
     "cancel": "Cancel",
     "save": "Save",
+    "date_shows_up_here": "Date shows up here",
     "save_and_close": "Save & close",
     "update": "Update",
     "update_and_close": "Update & close",
@@ -167,6 +168,35 @@
     "for_more_details_on_deployment_update": "For more details on deployment update, go to Help & Support (this should be a link) or send an email to:",
     "open_chat": "Open Chat",
     "end_post": "End of Posts"
+  },
+  "date": {
+      "aLongTimeAgo": "a long time ago",
+      "justNow": "just now",
+      "aMomentAgo": "a moment ago",
+      "second": {
+        "singular": "{{time}} second ago",
+        "plural": "{{time}} seconds ago"
+      },
+      "minute": {
+        "singular": "{{time}} minute ago",
+        "plural": "{{time}} minutes ago"
+      },
+      "hour": {
+        "singular": "{{time}} hour ago",
+        "plural": "{{time}} hours ago"
+      },
+      "day": {
+        "singular": "{{time}} day ago",
+        "plural": "{{time}} days ago"
+      },
+      "month": {
+        "singular": "{{time}} month ago",
+        "plural": "{{time}} months ago"
+      },
+      "year": {
+        "singular": "{{time}} year ago",
+        "plural": "{{time}} years ago"
+      }
   },
   "cookies": {
     "we_use_cookies": "Howdy! We use cookies to make your experience better.",
@@ -773,6 +803,7 @@
     "share_on_facebook": "Share on Facebook"
   },
   "post": {
+    "loading_posts": "Loading posts in {{ mode }} mode...",
     "post_count": "{{count}} posts",
     "see_more_plural": "See {{newPostsCount}} new posts",
     "see_more_singular": "See {{newPostsCount}} new post",
