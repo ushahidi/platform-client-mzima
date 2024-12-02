@@ -8,8 +8,8 @@ interface ConfirmModalProps {
   buttonSuccess?: string;
   confirmButtonText?: string;
   cancelButtonText?: string;
-  actionButtonText?: string;
   isCancelDestructive?: boolean;
+  isConfirmNotDestructive?: boolean;
 }
 
 @Injectable({
@@ -25,8 +25,8 @@ export class ConfirmModalService {
       buttonSuccess: params.buttonSuccess,
       confirmButtonText: params.confirmButtonText,
       cancelButtonText: params.cancelButtonText,
-      actionButtonText: params.actionButtonText,
       isCancelDestructive: params.isCancelDestructive,
+      isConfirmNotDestructive: params.isConfirmNotDestructive,
     };
     return new Promise<boolean>((resolve, reject) => {
       const dialogRef = this.dialog.open(ConfirmModalComponent, {
