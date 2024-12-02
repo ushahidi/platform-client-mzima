@@ -95,7 +95,7 @@
     "add_role": "Add Role",
     "webhooks": "Webhooks",
     "edit_webhook": "Edit Webhook",
-    "add_webhook": "Add Webhook",
+    "add_webhook": "Add Webhook ",
     "categories": "Categories",
     "edit_category": "Edit Category",
     "add_category": "Add Category",
@@ -1077,7 +1077,7 @@
     "only_me": "Only me"
   },
   "webhook": {
-    "add_webhook": "Add Webhook",
+    "add_webhook": "Add Webhook ",
     "edit_webhook": "Edit Webhook",
     "create_webhook": "Create webhook",
     "update_webhook": "Update webhook",
