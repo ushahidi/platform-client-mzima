@@ -1955,7 +1955,9 @@
       "bulk_destroy_confirm_desc": "Deleting these {{count}} selected surveys will also delete all collected posts and all associated data in the surveys. This step cannot be reversed.",
       "destroy_confirm": "Are you sure you want to delete this survey?",
       "destroy_confirm_desc": "Deleting this survey will also delete all collected posts and all associated data in the survey. This step cannot be reversed.",
-      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting."
+      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
+      "discard_changes": "Discard changes",
+      "save_changes": "Save Changes"
     },
     "confirm_modal": {
       "add_post_success": {
@@ -1968,6 +1970,11 @@
         "success_description": "You've permanently deleted {{count}}.",
         "success_button": "OK"
       }
+    },
+    "snackbar": {
+      "changes_discarded": "Changes discarded successfully",
+      "no_changes_made": "No changes made yet",
+      "close": "Close"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Do you really want to delete {{lang}} language?"
@@ -2053,6 +2060,7 @@
     "languages": "Languages",
     "language": "Language",
     "default": "default",
+    "translation_default": "(default)",
     "translate_field": "Translate field",
     "survey_select_default": "Select default language for this survey",
     "category_select_default": "Select default language for this category",

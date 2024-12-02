@@ -351,8 +351,8 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
       const confirmed = await this.confirmModalService.open({
         title: this.translate.instant('notify.default.discard_changes'),
         description: this.translate.instant('notify.default.survey_has_not_been_saved'),
-        cancelButtonText: 'Discard Changes',
-        confirmButtonText: 'Save Changes',
+        cancelButtonText: this.translate.instant('notify.survey.discard_changes'),
+        confirmButtonText: this.translate.instant('notify.survey.save_changes'),
         isCancelDestructive: true,
         isConfirmNotDestructive: true,
       });
