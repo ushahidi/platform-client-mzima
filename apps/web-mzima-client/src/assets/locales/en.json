@@ -1263,7 +1263,11 @@
       "api_key": "API Key",
       "placeholder": {
         "pick_location": "Pick Location..."
-      }
+      },
+      "satellite": "Satellite",
+      "streets": "Streets",
+      "humanitarian": "Humanitarian"
+      
     },
     "user_settings": {
       "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
