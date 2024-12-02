@@ -340,6 +340,7 @@
     "date": "Date",
     "datetime": "Date & Time",
     "select": "Select",
+    "select_other_name": "A dropdown List",
     "radio_button": "Radio Button(s)",
     "checkbox": "Checkbox(es)",
     "related_post": "Related Post",
@@ -749,7 +750,9 @@
     "yesterday": "Yesterday",
     "map": "Map",
     "data": "Data",
-    "feed": "Data view"
+    "feed": "Data view",
+    "add_new_post":"Add New Post",
+    "edit_post": "Edit Post"
   },
   "views": {
     "map": "Map view",

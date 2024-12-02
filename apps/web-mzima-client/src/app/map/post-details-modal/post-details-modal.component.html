@@ -14,7 +14,7 @@
 <mat-dialog-content class="post">
   <ng-container *ngIf="postIs.available()">
     <app-post-details
-      [post]="post"
+      [postFromModal]="post"
       [feedView]="false"
       [color]="color"
       (edit)="handleEditPost()"
@@ -30,6 +30,11 @@
 </mat-dialog-content>
 
 <ng-template #editPost>
-  <app-post-edit [modalView]="true" [postInput]="post" (cancel)="cancel()" (updated)="updated()">
+  <app-post-edit
+    [modalView]="true"
+    [postFromModal]="post"
+    (cancel)="cancel()"
+    (updated)="updated()"
+  >
   </app-post-edit>
 </ng-template>

@@ -60,7 +60,7 @@ dayjs.extend(timezone);
   styleUrls: ['./post-edit.component.scss'],
 })
 export class PostEditComponent extends BaseComponent implements OnInit, OnChanges {
-  @Input() public postInput: any;
+  @Input() public postFromModal: any;
   @Input() public modalView: boolean;
   @Output() cancel = new EventEmitter();
   @Output() updated = new EventEmitter();
@@ -135,7 +135,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       }
       if (params.get('id')) {
         this.postId = Number(params.get('id'));
-        this.loadPostData(this.postId);
       }
       if (!this.formId) {
         this.surveysService.get().subscribe((result) => {
@@ -143,7 +142,14 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         });
       }
     });
-
+    if (this.postFromModal) {
+      this.post = this.postFromModal;
+    } else {
+      this.route.data.subscribe((data) => {
+        this.post = data['post'];
+        if (this.post) this.loadPostData();
+      });
+    }
     this.translate.onLangChange.subscribe((newLang) => {
       this.activeLanguage = newLang.lang;
     });
@@ -152,8 +158,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['postInput'] && changes['postInput'].currentValue) {
-      this.post = this.postInput;
+    if (changes['postFromModal'] && changes['postFromModal'].currentValue) {
+      this.post = this.postFromModal;
       this.formId = this.post.form_id;
       this.postId = this.post.id;
       this.loadSurveyData(this.formId!, this.post.post_content);
@@ -174,19 +180,14 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     this.surveyName = this.formInfo.translations[this.activeLanguage]?.name || this.formInfo.name;
   }
 
-  private loadPostData(postId: number) {
-    this.postsService.getById(postId).subscribe({
-      next: (post) => {
-        this.formId = post.form_id;
-        this.post = post;
-        if (!this.postsService.isPostLockedForCurrentUser(this.post)) {
-          this.postsService.lockPost(this.post.id).subscribe();
-          this.loadSurveyData(this.formId!, post.post_content);
-        } else {
-          this.backNavigation();
-        }
-      },
-    });
+  private loadPostData() {
+    this.formId = this.post.form_id;
+    if (!this.postsService.isPostLockedForCurrentUser(this.post)) {
+      this.postsService.lockPost(this.post.id).subscribe();
+      this.loadSurveyData(this.formId!, this.post.post_content);
+    } else {
+      this.backNavigation();
+    }
   }
 
   getParentsWithChildren(options: any[]) {
