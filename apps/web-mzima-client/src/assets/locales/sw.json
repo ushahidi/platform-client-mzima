@@ -1805,7 +1805,7 @@
       "destroy_confirm": "Je, una hakaka unataka kufuta tangazo hili?",
       "destroy_error": "Imeshindwa kufuta tangazo, tafadhali jaribu tena",
       "bulk_destroy_confirm": "Je, unahakika unataka kufuta matangazo {{count}}?",
-      "stage_save_success": "Boresha {{hatua}}",
+      "stage_save_success": "Boresha {{stage}}",
       "export": "Hii itahamisha matangazo yaliyochujwa. Je, unahakika unataka kuendelea?",
       "update_status_success_bulk": "Hali imeboreshwa kwa {{hesabu}} matangazo",
       "leave_without_save": "Je, ungependa kuondoka kwenye chapisho hili bila kuhifadhi?",
