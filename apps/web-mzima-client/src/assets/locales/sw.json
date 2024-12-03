@@ -1232,7 +1232,7 @@
       "webhooks": "Vichochezi vya Wavuti",
       "webhooks_desc": "Unda vichochezi vya wavuti vinavyotuma data ya Ushahidi Platform kwa programu za nje matukio mahususi yanapoanzishwa.",
       "plans": "Mipango",
-      "plan_desc": "Mpango wako wa Utendakazi ni <nguvu>{{sasa_mpango}}</nguvu>.",
+      "plan_desc": "Mpango wako wa Utendakazi ni <nguvu>{{current_plan}}</nguvu>.",
       "donation": "Mchango",
       "donation_desc": "Unda na kusimamia michango ambayo watu wanaweza kufanya kwa shirika lako."
     },
