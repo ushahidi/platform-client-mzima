@@ -1288,7 +1288,7 @@
     "data_sources": {
       "choose_data_source": "Chagua Chanzo cha Data...",
       "type_of_data_source": "Aina ya Chanzo cha Data",
-      "provider_name": "{{providerName}} Chanzo cha Data?",
+      "provider_name": "Chanzo cha Data {{providerName}} ?",
       "do_you_really_want_to_disconnect": "Je, kweli unataka kukata mawasiliano na mtoa huduma wako?",
       "add_source": "Ongeza chanzo",
       "associate_with_form": "Ingiza kwa hojaji",
