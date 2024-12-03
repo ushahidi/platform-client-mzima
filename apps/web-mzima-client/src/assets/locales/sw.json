@@ -1791,7 +1791,7 @@
       "save_success": "Tangazo {{name}} imehifadhiwa",
       "save_success_review": "Tangazo {{name}} imehifadhiwa. Matangazo yako yatatathiniwa na mtathmini kabla ya kuyachapisha.",
       "save_error": "Imeshindwa kuhifadhi tangazo, tafadhali jaribu tena",
-      "publish_success": "Tangazo limechapishwa kwa {{majukumu}}",
+      "publish_success": "Tangazo limechapishwa kwa {{role}}",
       "set_draft": "Tangazo hili linakuonekania wewe tu",
       "publish_error": "Imeshindwa kuchapisha tangazo, tafadhali jaribu tena",
       "unpublish_success": "Tangazo limeondolewa",
