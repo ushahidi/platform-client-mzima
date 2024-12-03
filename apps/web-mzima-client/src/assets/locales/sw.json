@@ -1749,7 +1749,7 @@
       "file_missing": "Tafadhali chagua faili ya CSV ya kuingiza.",
       "form_missing": "Tafadhali chagua Hojaji.",
       "csv_upload": "Faili {{jina}} imefanikiwa kuingizwa",
-      "csv_import_processed_errors": "<nguvu>Uingizaji wao wa CSV </nguvu> imekamilika. {{imeshughulikiwa}} rekodi zimeingizwa, {{makosa}} rekodi zimefeli.",
+      "csv_import_processed_errors": "<nguvu>Uingizaji wao wa CSV </nguvu> imekamilika. Rekodi {{processed}} zimeingizwa, rekodi {{errors}} zimefeli.",
       "csv_import_success_info": "Data kutoka shiti yako ya CSV, <em>{{jinalafaili}}</em>, ili fanikiwa kuingizwa<a href=\"/mipangilio/hojaji/{{fomu_id}}\">{{fomu_jina}}</a> hojaji.",
       "duplicate_fields": "Kolamu lazima ihusishwe na miwanda maalumu ya hojaji. Kalamu zifuatazo zimehusisha zaidi ya mara 1: {{urudufishaji}}",
       "required_fields": "Mawanda yanayohitajika lazima yapangwe kwa thamani.  Mawanda yafuatayo hayajapangwa: {{inahitajika}}",
