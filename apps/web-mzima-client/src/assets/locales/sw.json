@@ -1838,7 +1838,7 @@
       "save_success": "Kichochezi cha wavuti {{webhook}} imehifadhiwa."
     },
     "datasource": {
-      "save_success": "Chanzo cha Data zilizohifadhiwa {{jina}}"
+      "save_success": "Chanzo cha Data zilizohifadhiwa {{name}}"
     },
     "user": {
       "save_success": "Mtumizi {{jina}} limehifadhiwa",
