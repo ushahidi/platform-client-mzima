@@ -374,7 +374,7 @@
     "task_visible_when_published": "Kazi hii itaonekana chapisho itakapochapishwa",
     "show_field_description": "Ongeza maelezo ya uwanda (si lazima):",
     "add_field": "Ongeza uwanda {{fieldType | lowercase}}",
-    "edit_field": "Hariri Uwanda",
+    "edit_field": "Hariri Uwanda {{fieldType | lowercase}}",
     "build": "Jenga",
     "configure": "Badilisha",
     "require_section": "Hitaji kazi hii kukamilishwa kabla ya chapisho kuonekana kwa umma",
