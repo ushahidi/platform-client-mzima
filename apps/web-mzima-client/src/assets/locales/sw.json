@@ -1966,7 +1966,7 @@
     "update_map": "Sasisha ramani",
     "no_matching_locations": "Hakuna maeneo yanayolingana",
     "invalid_lat": "Thamani iliyotolewa sio latitudo halali.",
-    "invalid_lon": "Thamani iliyotolewa sio muda mrefu halali."
+    "invalid_lon": "Thamani iliyotolewa sio longitudo halali."
   },
   "notification": {
     "title": "Taarifa",
