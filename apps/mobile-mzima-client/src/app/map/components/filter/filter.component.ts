@@ -1,6 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { FilterControl, FilterControlOption } from '@models';
-import { CategoriesService, CategoryInterface, SavedsearchesService } from '@mzima-client/sdk';
+import {
+  apiHelpers,
+  CategoriesService,
+  CategoryInterface,
+  SavedsearchesService,
+} from '@mzima-client/sdk';
 import { AlertService, NetworkService, SessionService, ToastService } from '@services';
 import { searchFormHelper, getDeploymentAvatarPlaceholder } from '@helpers';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -198,31 +203,33 @@ export class FilterComponent implements ControlValueAccessor, OnInit {
   }
 
   private getCategories(): void {
-    this.categoriesService.get().subscribe({
-      next: (response) => {
-        const mainCategories = response?.results.filter((c: CategoryInterface) => !c.parent_id);
-        this.options = mainCategories?.map((category: CategoryInterface) => ({
-          checked: this.value.has(category.id),
-          value: category.id,
-          label: String(category.tag),
-          color: getDeploymentAvatarPlaceholder(String(category.tag)),
-          options: category.children.length
-            ? category.children.map((cat: CategoryInterface) => ({
-                value: cat.id,
-                label: cat.tag,
-                checked: this.value.has(cat.id),
-              }))
-            : null,
-          isDropDownOpen: category.children.length ? false : null,
-        }));
-        this.isOptionsLoading = false;
-      },
-      error: (err) => {
-        if (err.message.match(/Http failure response for/)) {
-          setTimeout(() => this.getCategories(), 5000);
-        }
-      },
-    });
+    this.categoriesService
+      .getCategories({ only: apiHelpers.ONLY.TAG_ID_PARENTID_CHILDREN })
+      .subscribe({
+        next: (response) => {
+          const mainCategories = response?.results.filter((c: CategoryInterface) => !c.parent_id);
+          this.options = mainCategories?.map((category: CategoryInterface) => ({
+            checked: this.value.has(category.id),
+            value: category.id,
+            label: String(category.tag),
+            color: getDeploymentAvatarPlaceholder(String(category.tag)),
+            options: category.children.length
+              ? category.children.map((cat: CategoryInterface) => ({
+                  value: cat.id,
+                  label: cat.tag,
+                  checked: this.value.has(cat.id),
+                }))
+              : null,
+            isDropDownOpen: category.children.length ? false : null,
+          }));
+          this.isOptionsLoading = false;
+        },
+        error: (err) => {
+          if (err.message.match(/Http failure response for/)) {
+            setTimeout(() => this.getCategories(), 5000);
+          }
+        },
+      });
   }
 
   public getObjectKeysCount(obj: any): number {
