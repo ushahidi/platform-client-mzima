@@ -10,6 +10,7 @@ import {
   CategoryInterface,
   FormAttributeInterface,
   SurveyItem,
+  apiHelpers,
 } from '@mzima-client/sdk';
 import { NotificationService } from '@services';
 import _ from 'lodash';
@@ -118,7 +119,7 @@ export class CreateFieldModalComponent implements OnInit {
   private getCategories() {
     const array: MultilevelSelectOption[] = [];
     this.categoriesService
-      .get()
+      .getCategories({ only: apiHelpers.ONLY.TAG_ID_PARENTID_CHILDREN })
       .pipe(
         map((res) => {
           for (const category of res?.results) {

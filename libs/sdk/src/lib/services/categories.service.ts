@@ -26,4 +26,8 @@ export class CategoriesService extends ResourceService<any> {
   getResourceUrl(): string {
     return 'categories';
   }
+
+  public getCategories(params: any) {
+    return super.get('', params);
+  }
 }
