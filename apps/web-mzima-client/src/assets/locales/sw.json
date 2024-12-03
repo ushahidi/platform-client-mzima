@@ -1938,7 +1938,7 @@
       "deleted": {
         "success": "Mafanikio!",
         "success_description": "Umefuta kabisa machapisho {{count}}.",
-        "success_button": "Sawa, inaonekana nzuri"
+        "success_button": "Sawa"
       }
     },
     "language": {
