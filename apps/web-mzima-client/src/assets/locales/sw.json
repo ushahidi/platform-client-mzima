@@ -1858,7 +1858,7 @@
     "form": {
       "add_to_survey": "Ongeza kwa hojaji",
       "save_success": "Hojaji {{name}} limehifadhiwa",
-      "save_stage_success": "Kazi ya hojaji {{jina}} limehifadhiwa",
+      "save_stage_success": "Kazi ya hojaji {{name}} limehifadhiwa",
       "save_attribute_success": "Uwanda {{jina}} ongeza",
       "edit_form_success": "Hojaji {{jina}} limeboreshwa",
       "edit_stage_success": "Kazi ya hojaji {{jina}} imeboreshwa",
