@@ -818,7 +818,7 @@
     "steps": "Kazi ya tangazo hili",
     "mark_complete": "Tia alama kuwa kazi imekamilika",
     "complete": "Kamili",
-    "type_details": "{{aina}} Habari",
+    "type_details": "Habari {{type}} ",
     "edit_post": "Hariri Matangazo",
     "history": "Historia",
     "hide_form": "Ficha {{fomu}}",
