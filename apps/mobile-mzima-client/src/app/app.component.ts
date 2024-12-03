@@ -2,7 +2,13 @@ import { Component, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { STORAGE_KEYS } from '@constants';
 import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
-import { CollectionsService, MediaService, PostsService, SurveysService } from '@mzima-client/sdk';
+import {
+  apiHelpers,
+  CollectionsService,
+  MediaService,
+  PostsService,
+  SurveysService,
+} from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   DatabaseService,
@@ -120,6 +126,7 @@ export class AppComponent extends BaseComponent {
       orderby: 'created',
       order: 'desc',
       q: '',
+      only: apiHelpers.ONLY.NAME_ID_DESCRIPTION,
     };
 
     return this.collectionsService.getCollections(params).pipe(
