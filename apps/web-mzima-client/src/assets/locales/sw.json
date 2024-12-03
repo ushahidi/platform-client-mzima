@@ -1800,7 +1800,7 @@
       "confirm_delete": "Thibitisha kufuta",
       "destroy_title": "Futa tangazo",
       "delete_question": "Je, unahakika unataka kufuta tangazo lako {{tangazo}}?",
-      "destroy_success": "Tangazo limefutwa",
+      "destroy_success": "Tangazo {{name}} limefutwa",
       "destroy_success_bulk": "Matangazo yamefutwa",
       "destroy_confirm": "Je, una hakaka unataka kufuta tangazo hili?",
       "destroy_error": "Imeshindwa kufuta tangazo, tafadhali jaribu tena",
