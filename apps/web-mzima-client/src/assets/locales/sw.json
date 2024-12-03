@@ -773,7 +773,7 @@
     "post_count": "matangazo {{count}} ",
     "see_more_plural": "Tazama machapisho {{newPostsCount}} mapya",
     "see_more_singular": "Tazama chapisho {{newPostsCount}} jipya",
-    "add_to_form": "Ongeza {{fomu}}",
+    "add_to_form": "Ongeza kwa {{form}}",
     "posts": "Matangazo",
     "post_title": "Kichwa cha chapisho",
     "post_desc": "Maelezo ya chapisho",
