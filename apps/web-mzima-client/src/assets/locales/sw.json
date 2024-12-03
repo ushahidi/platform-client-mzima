@@ -639,7 +639,7 @@
     "cumulative": "Onyesha Jumla kamili",
     "cumulative_post_count": "Jumla ya matangazo yote",
     "custom": "Dhibiti urefu wa tarehe",
-    "custom_display": "{{anza || 'Mwanzo'}} hadi {{mwisho || 'Sasa'}}",
+    "custom_display": "{{start || 'Begining'}} hadi {{end || 'Now'}}",
     "group_by_placeholder": "Grafu",
     "new_post_count": "Matangazo mapya",
     "none": "Hakuna",
