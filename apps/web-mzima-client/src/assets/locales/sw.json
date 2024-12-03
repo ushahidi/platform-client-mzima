@@ -433,7 +433,7 @@
       }
     },
     "fields": {
-      "fields_title": "Nyuga",
+      "fields_title": "Nyanda",
       "validation": {
         "required": "Mashamba yanayohitajika hayapo, mashamba haya yamewekwa alama na *.",
         "special_characters": "{{name}} uwanja ina wahusika maalum"
