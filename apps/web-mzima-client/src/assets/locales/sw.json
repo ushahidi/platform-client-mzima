@@ -1872,7 +1872,7 @@
       "destroy_stage_success": "Kazi ya hojaji {{name}} imefutwa",
       "delete_attribute_confirm": "Je, unahakika unataka kufuta uwanda huu?",
       "delete_attribute_confirm_desc": "Kitendo hiki hakiwezi kutenduliwa. Kufuta sehemu hii kutaondoa data yake kutoka kwa machapisho yote yaliyopo.",
-      "destroy_attribute_success": "Uwanda {{jina}} umefutwa",
+      "destroy_attribute_success": "Uwanda {{name}} umefutwa",
       "survey_name_required": "Jina la utafiti linahitajika",
       "validation": {
         "name": {
