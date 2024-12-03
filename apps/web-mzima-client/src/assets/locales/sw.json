@@ -813,7 +813,7 @@
     "export": "Hamisha",
     "select_all": "Chagua Yote",
     "unselect_all": "Usichague yote",
-    "per_page": "{{idadi}} matangazo",
+    "per_page": "matangazo {{count}} ",
     "post_details": "Habari za Tangazo",
     "steps": "Kazi ya tangazo hili",
     "mark_complete": "Tia alama kuwa kazi imekamilika",
