@@ -1906,7 +1906,7 @@
       "success": "Nambari yako ya siri imebadilishwa"
     },
     "notification": {
-      "add": "Sasa unataarifiwa kuhusu matangazo mapya yatakayoongeza {{panga}}",
+      "add": "Sasa unataarifiwa kuhusu matangazo mapya yatakayoongeza {{set}}",
       "delete_confirm": "Je, unahakika unataka kuondoa taarifa hii?",
       "destroy_success": "<nguvu>hautapata tena taarifa kuhusu</nguvu> {{jina}}."
     },
