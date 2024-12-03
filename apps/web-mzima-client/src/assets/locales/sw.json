@@ -1932,7 +1932,7 @@
     "confirm_modal": {
       "add_post_success": {
         "success": "Mafanikio!",
-        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
+        "success_description": "Asante kwa kuwasilisha chapisho lako. Inakaguliwa, na itaonekana kwenye jukwaa hivi karibuni.",
         "success_button": "Sawa, inaonekana nzuri"
       },
       "deleted": {
