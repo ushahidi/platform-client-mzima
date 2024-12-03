@@ -886,7 +886,7 @@
 
     },
     "modify": {
-      "intro": "Chagua hojaji",
+      "intro": "Chagua hojaji:",
       "no_task_values": "Kwa sasa hakuna thamani zilizohifadhiwa kwa kazi hii.",
       "create_type": "Unda {{aina}}",
       "edit_type": "Hariri {{aina}}: {{mada}}",
