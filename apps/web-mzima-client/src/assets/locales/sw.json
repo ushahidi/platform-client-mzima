@@ -1788,7 +1788,7 @@
       "can_t_view_this_post": "Huna ruhusa ya kutazama chapisho hili.<br> Bado inapitiwa na msimamizi.<br> Itapatikana kwako mara tu itakapochapishwa.",
       "contact_for_details": "Wasiliana na msimamizi kwa maelezo zaidi:",
       "delete_image_confirm": "Je, unahakika unataka kuongoa picha hii?",
-      "save_success": "Tangaza {{jina}} hifadhi",
+      "save_success": "Tangazo {{name}} imehifadhiwa",
       "save_success_review": "Tangazo {{jina}} imehifadhiwa. Matangazo yako yatatathiniwa na mtathmini kabla ya kuyachapisha.",
       "save_error": "Imeshindwa kuhifadhi tangazo, tafadhali jaribu tena",
       "publish_success": "Tangazo limechapishwa kwa {{majukumu}}",
