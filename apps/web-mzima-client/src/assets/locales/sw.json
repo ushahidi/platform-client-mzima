@@ -1849,7 +1849,7 @@
       "bulk_destroy_confirm": "Je, unahakika unataka kufuta watumizi {{count}}?",
       "bulk_destroy_success": "Watumizi wamefutwa",
       "bulk_role_change_confirm": "Je, unahakika unataka kubadilisha majukumu ya watumizi {{count}} wa {{role}}?",
-      "bulk_role_change_success": "Majukumu ya watumizi yamebadilishwa kwa {{majukumu_jina}}",
+      "bulk_role_change_success": "Majukumu ya mtumizi yamebadilishwa kwa {{role_name}}",
       "are_you_sure_you_want_to_delete_user": "Una uhakika unataka kufuta {{username}}"
     },
     "video": {
