@@ -1911,7 +1911,7 @@
       "destroy_success": "<strong>hautapata tena taarifa kuhusu</strong> {{name}}."
     },
     "message": {
-      "sent_to": "Ujumbe umetumwa kwa {{anuani}}"
+      "sent_to": "Ujumbe umetumwa kwa {{contact}}"
     },
     "export": {
       "in_progress": "Tunatayarisha faili yako ya CSV. Hii inaweza kuchukua muda mfupi. Unaweza kuondoka kwenye ukurasa huu ikiwa unataka. Tutakujulisha tukimaliza.",
