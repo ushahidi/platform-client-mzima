@@ -1841,7 +1841,7 @@
       "save_success": "Chanzo cha Data zilizohifadhiwa {{name}}"
     },
     "user": {
-      "save_success": "Mtumizi {{jina}} limehifadhiwa",
+      "save_success": "Mtumizi {{name}} limehifadhiwa",
       "edit_success": "Mtumizi {{jina}} limeboreshwa",
       "destroy_confirm": "Je, una hakika unataka kufuta mtumizi huyu?",
       "destroy_success": "Mtumizi amefutwa",
