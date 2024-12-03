@@ -228,7 +228,7 @@
     "tooltip_template": "Hiki ni kiolezo cha vidokezo vya ncha moja"
   },
   "form": {
-    "add_field": "Ongeza uwanda",
+    "add_field": "Ongeza Uwanda",
     "add_field_instructions": "Ongeza maelezo ya uwanda huu",
     "add_field_instructions_info": "Maelekezo haya yatawasilishwa kama tooltip kwa mtumiaji wakati wa kujaza katika uwanda huu.",
     "add_field_instructions_placeholder": "Eleza uwanja huu...",
