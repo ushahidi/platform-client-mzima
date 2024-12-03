@@ -1729,7 +1729,7 @@
     },
     "default": {
       "data_has_not_been_saved": "Data haijahifadhiwa!",
-      "discard_changes": "Discard changes?",
+      "discard_changes": "Ondoa mabadiliko?",
       "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "Kitendo hiki hakiwezi kutenduliwa. Tafadhali endelea kwa tahadhari.",
       "save_success": "Hifadhi rasilimali",
