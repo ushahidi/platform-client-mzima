@@ -735,7 +735,7 @@
     "saved_searches": "Utafutaji uliohifadhiwa",
     "search": "Utafutaji",
     "select_all": "Chagua yote",
-    "selected_items": "{{vipengelevilivychaguliwa}} vimechaguliwa",
+    "selected_items": "{{selectedItems}} vimechaguliwa",
     "settings": "Mipangilio",
     "survey_settings": "Mipangilio ya Hojaji",
     "tags": "Kategoria",
