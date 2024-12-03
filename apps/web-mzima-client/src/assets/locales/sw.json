@@ -779,7 +779,7 @@
     "post_desc": "Maelezo ya chapisho",
     "there_are_no_posts": "Hakuna matangazo",
     "in_this_deployment": "uko katika utendakazi huu.",
-    "posts_total": "{{posts}} of {{total_nb}} posts",
+    "posts_total": "{{posts}} ya machapisho {{total_nb}}",
     "posts_total_map": "Kuonyesha {{posts}} ya machapisho {{total_nb}} na maelezo ya eneo kwenye ramani.",
     "search_results": "Matokeo:",
     "by": "na",
