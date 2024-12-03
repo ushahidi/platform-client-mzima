@@ -1908,7 +1908,7 @@
     "notification": {
       "add": "Sasa unataarifiwa kuhusu matangazo mapya yatakayoongeza {{set}}",
       "delete_confirm": "Je, unahakika unataka kuondoa taarifa hii?",
-      "destroy_success": "<nguvu>hautapata tena taarifa kuhusu</nguvu> {{jina}}."
+      "destroy_success": "<strong>hautapata tena taarifa kuhusu</strong> {{name}}."
     },
     "message": {
       "sent_to": "Ujumbe umetumwa kwa {{anuani}}"
