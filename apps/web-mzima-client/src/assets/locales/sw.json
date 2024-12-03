@@ -1789,7 +1789,7 @@
       "contact_for_details": "Wasiliana na msimamizi kwa maelezo zaidi:",
       "delete_image_confirm": "Je, unahakika unataka kuongoa picha hii?",
       "save_success": "Tangazo {{name}} imehifadhiwa",
-      "save_success_review": "Tangazo {{jina}} imehifadhiwa. Matangazo yako yatatathiniwa na mtathmini kabla ya kuyachapisha.",
+      "save_success_review": "Tangazo {{name}} imehifadhiwa. Matangazo yako yatatathiniwa na mtathmini kabla ya kuyachapisha.",
       "save_error": "Imeshindwa kuhifadhi tangazo, tafadhali jaribu tena",
       "publish_success": "Tangazo limechapishwa kwa {{majukumu}}",
       "set_draft": "Tangazo hili linakuonekania wewe tu",
