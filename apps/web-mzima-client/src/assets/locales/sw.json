@@ -1259,7 +1259,7 @@
       "HDX": "Kubadilishana Data ya Kibinadamu",
       "please_enter_maintainer_id": "Tafadhali ingiza id ya kudumisha",
       "please_enter_api_key": "Tafadhali ingiza ufunguo wa API",
-      "hdx_maintainer_id_min_length": "Id ya Mdumishaji wa HDX ni fupi sana",
+      "hdx_maintainer_id_min_length": "Kitambulisho cha Mtunza HDX ni kifupi sana",
       "api_key_min_length": "Ufunguo wa API ni mfupi sana"
     },
     "webhooks": {
