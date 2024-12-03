@@ -1890,7 +1890,7 @@
       "created_collection": "Mkusanyiko {{collection}} imefanikiwa kubuniwa",
       "updated_collection": "Mkusanyiko {{collection}} imehifadhiwa",
       "add_to_collection": "Tangazo limeongezwa kwa {{collection}}",
-      "removed_from_collection": "Tangazo limeondolewa kwa {{mkusanyiko}}",
+      "removed_from_collection": "Tangazo limeondolewa kwa {{collection}}",
       "bulk_add_to_collection": "{{hesabu}} matangazo yameongezwa kwa {{mkusanyiko}}",
       "done": "Imemaliza"
     },
