@@ -1496,7 +1496,7 @@
     "import": "Ingiza",
     "import_explanation_csv": "Ingiza data kutoka kwa shiti ya CSV kwenye utendakazi wako kama matangazo ya hojaji mahsusi",
     "import_explanation_file_size": "Ukubwa wa faili moja umefungiwa hadi 10 MB",
-    "import_explanation_format_location_1": "Maeneo ya kijiografia yanafaa kujumuishwa kama  kolamu ya latitudi na longitudi tofauti katika CSV yako",
+    "import_explanation_format_location_1": "Maeneo ya kijiografia yanafaa kujumuishwa kama kolamu ya latitudi na longitudi tofauti katika CSV yako",
     "import_explanation_required_fields": "Mawanda yote inayohitajika lazima ihusishwe na thamani iliyowekwa kwenye CSV. Kwa mfano, ikiwa anuani ya uwanda inahitajima basi uwanda lazima itiwe kwenye ramani katika kolamu ya CSV pale thamani zote zimepangwa",
     "configure_posts": "Matangazo yaliyobatilishwa",
     "configure_all_imported_posts": "Badilisha matangazo yote yaliyoingizwa",
