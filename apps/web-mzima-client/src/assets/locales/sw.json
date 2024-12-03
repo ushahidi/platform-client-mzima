@@ -973,7 +973,7 @@
         "required": "Kategoria zinahitajika"
       },
       "values": {
-        "required": "\"\"{{nembo}}\" intahitajika",
+        "required": "\"\"{{label}}\" intahitajika",
         "parse": "\"{{nembo}}\" haingechanganuliwa",
         "date": "\"{{nembo}}\" lazima iwe tarehe",
         "number": "\"{{nembo}}\" lazima iwe nambari",
