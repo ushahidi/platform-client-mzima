@@ -1077,7 +1077,7 @@
   "saved_search": {
     "visible_to_public": "Utafutaji huu uliohifadhiwa unaonekana kwa umma",
     "visible_to_you": "Utafutaji huu uliohifadhiwa unaonekana kwako na kwa mtumizi mkuu",
-    "visible_to_roles": "Utafutaji huu uliohifadhiwa unaonekana kwa {{majukumu}}",
+    "visible_to_roles": "Utafutaji huu uliohifadhiwa unaonekana kwa {{roles}}",
     "featured": "Inayoonyeshwa",
     "featured_tooltip": "Utafutaji wa wa makala utawaonekania watumizi wote <br>kwa \"Utafutaji uliohifadhiwa\" menu"
   },
