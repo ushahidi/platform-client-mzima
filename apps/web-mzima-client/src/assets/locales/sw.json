@@ -790,7 +790,7 @@
     "specific_roles": "Majukumu mahsusi...",
     "can_see_this": "hii inaweza onekana",
     "add_post_type": "Ongeza {{fomu_jina}}",
-    "edit_post_type": "Hariri {{fomu_jina}}",
+    "edit_post_type": "Hariri {{form_name}}",
     "post": "Tangazo",
     "message": "Ujumbe",
     "message_thread": "Orodha ya Ujumbe",
