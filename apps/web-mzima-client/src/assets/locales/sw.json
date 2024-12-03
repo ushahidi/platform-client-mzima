@@ -1634,7 +1634,7 @@
     "never": "Kamwe",
     "no_full_name": "Hakuna jina linaloonyeshwa",
     "number_of_users_shown": "Idadi ya watumizi wanaoonyeshwa",
-    "per_page": "{{idadi}} watumizi",
+    "per_page": "watumizi {{count}}",
     "password": "Nambari ya siri",
     "new_password": "Nambari mpya ya siri",
     "register": "Jisajili",
