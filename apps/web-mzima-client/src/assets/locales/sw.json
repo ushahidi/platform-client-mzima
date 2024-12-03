@@ -183,7 +183,7 @@
   "toolbar": {
     "searchbar": {
       "search_entity": "Tafuta {{entity}}",
-      "search_all_entities_for": "Tafuta {{entity}} yote  \\ya"
+      "search_all_entities_for": "Tafuta {{entity}} yote ya"
     }
   },
   "color_picker": {
