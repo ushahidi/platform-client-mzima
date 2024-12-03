@@ -1891,7 +1891,7 @@
       "updated_collection": "Mkusanyiko {{collection}} imehifadhiwa",
       "add_to_collection": "Tangazo limeongezwa kwa {{collection}}",
       "removed_from_collection": "Tangazo limeondolewa kwa {{collection}}",
-      "bulk_add_to_collection": "{{hesabu}} matangazo yameongezwa kwa {{mkusanyiko}}",
+      "bulk_add_to_collection": "matangazo {{count}} yameongezwa kwa {{collection}}",
       "done": "Imemaliza"
     },
     "savedsearch": {
