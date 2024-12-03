@@ -1032,7 +1032,7 @@
       "search_address": "Tafuta anwani, weka majina, au kuratibu...",
       "nothing_found": "Hakuna kitu kilichopatikana",
       "errors": {
-        "empty_lat": "Latitude ni uwanja tupu",
+        "empty_lat": "Latitudo ni sehemu tupu",
         "empty_lng": "Longitude ni uwanja tupu",
         "decimal_lat": "Latitude tu namba ya desimali",
         "decimal_lng": "Longitude tu namba ya desimali"
