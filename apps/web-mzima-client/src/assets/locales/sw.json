@@ -1842,7 +1842,7 @@
     },
     "user": {
       "save_success": "Mtumizi {{name}} amehifadhiwa",
-      "edit_success": "Mtumizi {{jina}} limeboreshwa",
+      "edit_success": "Mtumizi {{name}} ameboreshwa",
       "destroy_confirm": "Je, una hakika unataka kufuta mtumizi huyu?",
       "destroy_success": "Mtumizi amefutwa",
       "destroy_error": "Imeshindwa kufuta mtumizi, tafadhali jaribu tena",
