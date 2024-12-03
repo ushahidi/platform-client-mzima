@@ -974,8 +974,8 @@
       },
       "values": {
         "required": "\"\"{{label}}\" intahitajika",
-        "parse": "\"{{nembo}}\" haingechanganuliwa",
-        "date": "\"{{nembo}}\" lazima iwe tarehe",
+        "parse": "\"{{label}}\" haingechanganuliwa",
+        "date": "\"{{label}}\" lazima iwe tarehe",
         "number": "\"{{nembo}}\" lazima iwe nambari",
         "step": "\"{{label}}\" lazima iwe ya ndani"
       },
