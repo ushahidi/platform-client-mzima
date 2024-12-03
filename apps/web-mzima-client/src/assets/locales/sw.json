@@ -1033,7 +1033,7 @@
       "nothing_found": "Hakuna kitu kilichopatikana",
       "errors": {
         "empty_lat": "Latitudo ni sehemu tupu",
-        "empty_lng": "Longitude ni uwanja tupu",
+        "empty_lng": "Longitudo ni uwanda tupu",
         "decimal_lat": "Latitude tu namba ya desimali",
         "decimal_lng": "Longitude tu namba ya desimali"
       }
