@@ -789,7 +789,7 @@
     "just_you": "Wewe tu",
     "specific_roles": "Majukumu mahsusi...",
     "can_see_this": "hii inaweza onekana",
-    "add_post_type": "Ongeza {{fomu_jina}}",
+    "add_post_type": "Ongeza {{form_name}}",
     "edit_post_type": "Hariri {{form_name}}",
     "post": "Tangazo",
     "message": "Ujumbe",
