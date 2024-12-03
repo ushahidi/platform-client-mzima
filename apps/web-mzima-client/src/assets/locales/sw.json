@@ -2037,7 +2037,7 @@
     "add_translation_lang": "Ongeza tafsiri",
     "translate_field_name": "Tafsiri jina la uwanda",
     "translate_field_desc": "Tafsiri maelezo ya uwanda",
-    "category_translations_link": "Tafadhali kumbuka, ili kuongeza tafsiri kwa majina ya kategoria, nenda kwenye <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Mipangilio ya Jamii</a>",
+    "category_translations_link": "Tafadhali kumbuka, ili kuongeza tafsiri kwa majina ya kategoria, nenda kwenye <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Mipangilio ya Kategoria</a>",
     "parent_child_lang": "Tafadhali kumbuka kuwa lugha ya chaguo-msingi iliyochaguliwa kwa kikundi hiki cha watoto ni tofauti na mzazi wake",
     "post_title_required": "Tafsiri ya kichwa cha baada ya kichwa inahitajika",
     "add_a_language": "Ongeza lugha",
