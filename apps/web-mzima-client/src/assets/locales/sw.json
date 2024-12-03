@@ -1017,7 +1017,7 @@
     "unstructured": {
       "add_survey": {
         "info": "<nguvu>Tangazo hili halijapatiwa hojaji katika utendakazi wako.</nguvu> Hiyo ni kwa sababu iliwasilishwa kupitia {{source}}, ambayo haitoi njia ya mwandishi kuongeza tangazo lao kwa hojaji mahsusi. Peana chapisho hili kwa Hojaji, ukitumia fomu iliyo hapa chini.",
-        "choose": "Je, ni hojaji ipi ungependa kuongeza kwa tangazo hili?",
+        "choose": "Je, ni hojaji ipi ungependa kuongezea tangazo hili?",
         "title": "Ongeza tangazo hili kwa hojaji",
         "save_and_edit": "Ongeza kwa hojaji &amp; hariri"
       },
