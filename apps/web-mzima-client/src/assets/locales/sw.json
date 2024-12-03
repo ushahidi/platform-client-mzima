@@ -194,7 +194,7 @@
     "green": "Kijani kibichi"
   },
   "feature_limits": {
-    "view_unavailable": " {{thamani}} haiko  katika mpango wako wa sasa. <a href=\"/mipangilio/mpango\">boresha mpango wako</a> ili uipate!"
+    "view_unavailable": " {{value}} haiko katika mpango wako wa sasa. <a href=\"/mipangilio/mpango\">Boresha mpango wako</a> ili uipate!"
   },
   "limit": {
     "plan_limit": "Ukingo wa Mpango wa Ushahidi",
