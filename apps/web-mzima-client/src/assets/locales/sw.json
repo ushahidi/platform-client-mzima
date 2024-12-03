@@ -1084,7 +1084,7 @@
   "collection": {
     "visible_to_public": "Mikusanyiko hii inaonekana kwa umma",
     "visible_to_you": "Mkusanyiko huu unaonekana tu kwako na watumizi wakuu",
-    "visible_to_roles": "Mkusanyiko huu unaonekana kwa {{majukumu}}",
+    "visible_to_roles": "Mkusanyiko huu unaonekana kwa {{roles}}",
     "validation": {
       "required": {
         "name": "Jina la mkusanyiko linahitajika"
