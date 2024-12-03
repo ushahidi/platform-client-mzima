@@ -1751,7 +1751,7 @@
       "csv_upload": "Faili {{jina}} imefanikiwa kuingizwa",
       "csv_import_processed_errors": "<nguvu>Uingizaji wao wa CSV </nguvu> imekamilika. Rekodi {{processed}} zimeingizwa, rekodi {{errors}} zimefeli.",
       "csv_import_success_info": "Data kutoka shiti yako ya CSV, <em>{{filename}}</em>, ilifanikiwa kuingizwa kwa hojaji<a href=\"/views/list\">{{form_name}}</a>.",
-      "duplicate_fields": "Kolamu lazima ihusishwe na miwanda maalumu ya hojaji. Kalamu zifuatazo zimehusisha zaidi ya mara 1: {{urudufishaji}}",
+      "duplicate_fields": "Kolamu lazima ihusishwe na miwanda maalumu ya hojaji. Kalamu zifuatazo zimehusisha zaidi ya mara 1: {{duplicates}}",
       "required_fields": "Mawanda yanayohitajika lazima yapangwe kwa thamani.  Mawanda yafuatayo hayajapangwa: {{inahitajika}}",
       "empty_mapping": "Faili ya CSV uliyopakia ni tupu. Tafadhali angalia faili yako ya CSV na ujaribu tena",
       "empty_mapping_empty": "Faili ya CSV haina majina ya safu wima. Tafadhali angalia faili yako ya CSV na ujaribu tena",
