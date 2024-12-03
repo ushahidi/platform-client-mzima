@@ -898,7 +898,7 @@
       "save_post": "Hifadhi tangazo",
       "publish": "Chapisha kwa...",
       "publish_to": "Chapisha kwa {{jukumu}}",
-      "published_to": "Chapisha kwa {{jukumu}}",
+      "published_to": "Chapisha kwa {{role}}",
       "unpublish": "Rudi kwenye mswada",
       "everyone": "Kila mtu",
       "back": "Nyuma",
