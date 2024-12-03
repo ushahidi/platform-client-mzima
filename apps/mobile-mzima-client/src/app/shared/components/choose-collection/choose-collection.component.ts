@@ -12,6 +12,7 @@ import {
   ToastService,
 } from '@services';
 import {
+  apiHelpers,
   CollectionItem,
   CollectionsService,
   NotificationsService,
@@ -28,6 +29,7 @@ interface CollectionsParams {
   page: number;
   q: string;
   editableBy?: string;
+  only?: string;
 }
 
 enum CollectionAction {
@@ -73,6 +75,7 @@ export class ChooseCollectionComponent {
     page: 1,
     q: '',
     editableBy: 'me',
+    only: apiHelpers.ONLY.NAME_ID_DESCRIPTION,
   };
   public roleOptions: any;
   public userRole: string;
