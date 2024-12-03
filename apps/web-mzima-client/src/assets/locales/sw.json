@@ -1807,7 +1807,7 @@
       "bulk_destroy_confirm": "Je, unahakika unataka kufuta matangazo {{count}}?",
       "stage_save_success": "Boresha {{stage}}",
       "export": "Hii itahamisha matangazo yaliyochujwa. Je, unahakika unataka kuendelea?",
-      "update_status_success_bulk": "Hali imeboreshwa kwa {{hesabu}} matangazo",
+      "update_status_success_bulk": "Hali imeboreshwa kwa matangazo {{count}}",
       "leave_without_save": "Je, ungependa kuondoka kwenye chapisho hili bila kuhifadhi?",
       "leave_confirm_message": "Ukiendelea, mabadiliko yako yote yatapotea",
       "leave_confirm": "Endelea bila kuhifadhi",
@@ -1816,12 +1816,12 @@
       "post_not_found": "Chapisho halipatikani"
     },
     "category": {
-      "save_success": "Kategoria iliyohifadhiwa {{jina}}",
+      "save_success": "Kategoria {{name}} iliyohifadhiwa",
       "destroy_confirm": "Unahakika unaweza kufuta kategoria hii?",
       "destroy_confirm_desc": "Kufuta kategoria hii kutakiondoa kwenye machapisho yote yaliyopo. Kitendo hiki hakiwezi kutenduliwa.",
       "destroy_success": "Kategoria imefutwa",
       "destroy_error": "Imeshindwa kufuta kategoria, tafadhali jaribu tena",
-      "bulk_destroy_confirm": "Unahakika unataka kufuta {{hesabu}} kategoria?",
+      "bulk_destroy_confirm": "Unahakika unataka kufuta kategoria {{count}}?",
       "bulk_destroy_confirm_desc": "Kufuta kategoria hizi kutaziondoa kwenye machapisho yote yaliyopo. Kitendo hiki hakiwezi kutenduliwa.",
       "bulk_destroy_success": "{{hesabu}} kategoria imefutwa",
       "bulk_destroy_success_countless": "Jamii zimefutwa"
