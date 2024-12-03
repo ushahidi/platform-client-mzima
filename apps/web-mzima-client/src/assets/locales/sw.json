@@ -1859,7 +1859,7 @@
       "add_to_survey": "Ongeza kwa hojaji",
       "save_success": "Hojaji {{name}} limehifadhiwa",
       "save_stage_success": "Kazi ya hojaji {{name}} limehifadhiwa",
-      "save_attribute_success": "Uwanda {{jina}} ongeza",
+      "save_attribute_success": "Uwanda {{name}} umeongezwa",
       "edit_form_success": "Hojaji {{jina}} limeboreshwa",
       "edit_stage_success": "Kazi ya hojaji {{jina}} imeboreshwa",
       "delete_form_confirm": "Je, una uhakika unataka kufuta hojaji hii na data yake yote?",
