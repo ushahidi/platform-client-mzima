@@ -2004,7 +2004,7 @@
         "required": "Baruapepe inahitajika ya kupokea taarifa",
         "email": "Baruapepe hii haifai",
         "maxlength": "Baruapepe hii ni ndefu sana",
-        "not_valid": "Email hii si halali"
+        "not_valid": "Baruapepe hii si halali"
       },
       "phone": {
         "required": "Nambari ya simu inahitajika kupokea taarifa",
