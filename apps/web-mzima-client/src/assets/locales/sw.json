@@ -1516,7 +1516,7 @@
     "csv_instructions": "Kila jina la kolamu kutoka faili ya CSV yameorodheshwa. Chagua <nguvu>{{form_name}}</nguvu> uwanda ambao ungepena kila kolamu ingizwe kwayo.",
     "csv_instructions_required_fields": "Uwanda uliowekewa alama ya a [*] inahitajika na lazima iwekewe thamani.",
     "csv_column_name": "Jina la kolamu ya CSV",
-    "post_type_title": "{{form_name}} jina la uwanda",
+    "post_type_title": "jina la uwanda {{form_name}}",
     "leave_empty": "Acha tupu",
     "cancel_import": "Katisha uingizaji",
     "finish_import": "Kamilisha uingizaji",
