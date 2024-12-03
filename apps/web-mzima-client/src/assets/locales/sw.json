@@ -889,7 +889,7 @@
       "intro": "Chagua hojaji:",
       "no_task_values": "Kwa sasa hakuna thamani zilizohifadhiwa kwa kazi hii.",
       "create_type": "Unda {{type}}",
-      "edit_type": "Hariri {{aina}}: {{mada}}",
+      "edit_type": "Hariri {{type}}: {{title}}",
       "add_a_post": "Ongeza chapisho",
       "add_to_survey": "Ongezea hojaji hii",
       "edit_post": "Hariri {{mada}}",
