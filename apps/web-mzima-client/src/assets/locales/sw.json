@@ -1032,8 +1032,8 @@
       "search_address": "Tafuta anwani, weka majina, au kuratibu...",
       "nothing_found": "Hakuna kitu kilichopatikana",
       "errors": {
-        "empty_lat": "Latitudo ni sehemu tupu",
-        "empty_lng": "Longitudo ni uwanda tupu",
+        "empty_lat": "Latitudo ni uwanda mtupu",
+        "empty_lng": "Longitudo ni uwanda mtupu",
         "decimal_lat": "Latitude tu namba ya desimali",
         "decimal_lng": "Longitude tu namba ya desimali"
       }
