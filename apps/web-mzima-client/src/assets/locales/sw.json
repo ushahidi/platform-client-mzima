@@ -976,7 +976,7 @@
         "required": "\"\"{{label}}\" intahitajika",
         "parse": "\"{{label}}\" haingechanganuliwa",
         "date": "\"{{label}}\" lazima iwe tarehe",
-        "number": "\"{{nembo}}\" lazima iwe nambari",
+        "number": "\"{{label}}\" lazima iwe nambari",
         "step": "\"{{label}}\" lazima iwe ya ndani"
       },
       "author_name": {
