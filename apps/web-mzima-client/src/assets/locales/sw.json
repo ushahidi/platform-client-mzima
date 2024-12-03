@@ -373,7 +373,7 @@
     "tasks": "Kazi",
     "task_visible_when_published": "Kazi hii itaonekana chapisho itakapochapishwa",
     "show_field_description": "Ongeza maelezo ya uwanda (si lazima):",
-    "add_field": "Ongeza uwanda",
+    "add_field": "Ongeza uwanda {{fieldType | lowercase}}",
     "edit_field": "Hariri Uwanda",
     "build": "Jenga",
     "configure": "Badilisha",
