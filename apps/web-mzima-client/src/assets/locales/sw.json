@@ -250,7 +250,7 @@
     "deleted_form_stage": "Futa kazi",
     "deleted_form_stage_attribute": "Uwanda uliofutwa",
     "editable_by": "Imehaririwa na",
-    "edit_post_step": "Hariri Kazi: {{hatua}}",
+    "edit_post_step": "Hariri Kazi: {{step}}",
     "edit_post_type": "Hariri Hojaji: {{fomu}}",
     "edit_post_types": "Hariri Hojaji",
     "field_add_option": "Ongeza",
