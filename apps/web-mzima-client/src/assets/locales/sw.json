@@ -576,7 +576,7 @@
       "status": "Hali",
       "expires": "Muda wa mwisho",
       "download": "Pakua",
-      "location_value": "Katika {{km}} km ya {{thamani}}",
+      "location_value": "Katika {{km}} km ya {{value}}",
       "visible_to": "Inaonekana kwa",
       "user": "Mtumizi",
       "has_location": "Maeneo ya machapisho",
