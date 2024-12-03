@@ -977,7 +977,7 @@
         "parse": "\"{{label}}\" haingechanganuliwa",
         "date": "\"{{label}}\" lazima iwe tarehe",
         "number": "\"{{label}}\" lazima iwe nambari",
-        "step": "\"{{label}}\" lazima iwe ya ndani"
+        "step": "\"{{label}}\" lazima iwe nambari kamili"
       },
       "author_name": {
         "maxlength": "Jina ni ndefu sana"
