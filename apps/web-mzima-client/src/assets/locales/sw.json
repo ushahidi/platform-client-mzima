@@ -1513,7 +1513,7 @@
     "organize_data": "Shughulikia data",
     "organize_your_imported_data": "Wekea kolamu za CSV kwa mawanda ya tangazo",
     "assign_csv_message": "Wekea kolamu za CSV kwa mawanda ya tangazo",
-    "csv_instructions": "Kila jina la kolamu kutoka faili ya CSV yameorodheshwa. Chagua <nguvu>{{fomu_jina}}</nguvu> uwanda ambao ungepena kila kolamu ingizwe kwayo.",
+    "csv_instructions": "Kila jina la kolamu kutoka faili ya CSV yameorodheshwa. Chagua <nguvu>{{form_name}}</nguvu> uwanda ambao ungepena kila kolamu ingizwe kwayo.",
     "csv_instructions_required_fields": "Uwanda uliowekewa alama ya a [*] inahitajika na lazima iwekewe thamani.",
     "csv_column_name": "Jina la kolamu ya CSV",
     "post_type_title": "{{fomu_jina}} jina la uwanda",
