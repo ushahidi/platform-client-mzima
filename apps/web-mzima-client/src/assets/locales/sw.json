@@ -842,7 +842,7 @@
     "structure": "Muundo",
     "source": "kupitia {{source}}",
     "visible_to_public": "Tangazo hili linaonekana kwa umma",
-    "visible_to_you": "Tangazo hili linaonekana tu kwako na watumizi wakuu\n",
+    "visible_to_you": "Tangazo hili linaonekana tu kwako na watumizi wakuu",
     "visible_to_roles": "Tangazo hili linaonekana kwa {{majukumu}}",
     "show_only_form": "Onyesha tu {{fomu}}",
     "show_only_unknown_form": "Onyesha tu kwa wasiojulikana",
