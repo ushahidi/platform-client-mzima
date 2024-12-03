@@ -209,7 +209,7 @@
     "recent_activity_timeline": "Muda wa shughuli ya hivi majuzi",
     "new_post": "Chapisho jipya",
     "by": "Na",
-    "context_body": "Muhtasari wa jinsi watu wanavyoingiliana na  {{kurasa}}.",
+    "context_body": "Muhtasari wa jinsi watu wanavyoingiliana na {{site}}.",
     "inbound": "Ujumbe wa Majibu ya Ndani",
     "outbound": "Ujumbe wa Uhojaji wa Nje",
     "recipients": "Wapokeaji wa Kipekee wa Hojaji Unaolengwa",
