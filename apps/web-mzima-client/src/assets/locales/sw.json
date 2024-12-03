@@ -1280,7 +1280,7 @@
           "event_type": "Aina ya tukio inahitajika",
           "event_entity": "Chombo cha tukio kinahitajika"
         },
-        "please_provide_valid_api_url": "Tafadhali toa URL halali ya API na http(s)://",
+        "please_provide_valid_api_url": "Tafadhali peana URL halali ya API na http(s)://",
         "secret_key_cannot_be_less_start": "Ufunguo wa siri ulioshirikiwa hauwezi chini ya",
         "secret_key_cannot_be_less_end": "Vibambo"
       }
