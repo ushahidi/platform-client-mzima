@@ -550,6 +550,15 @@
     }
   },
   "global_filter": {
+    "sources": {
+      "web": "Web",
+      "mobile": "Mobile",
+      "email": "Email",
+      "sms": "SMS",
+      "twitter": "Twitter",
+      "ussd": "USSD",
+      "whatsapp": "WhatsApp"
+    },
     "filter": "Filter",
     "categories": {
       "categories": "Categories",
