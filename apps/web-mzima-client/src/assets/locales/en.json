@@ -1,4 +1,38 @@
 {
+  "onboarding": {
+    "greeting": "Hello {{username}}!",
+    "intro": "<p>You’ve successfully created your deployment. Now, while we polish it up, please, get along with Ushahidi features. The onboarding process will take couple of minutes.</p>",
+    "ready": "You're ready!",
+    "data_collection": {
+      "title": "Data collection",
+      "content": "<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>"
+    },
+    "filtering": {
+      "title": "Filtering",
+      "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
+    },
+    "sorting": {
+      "title": "Sorting",
+      "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
+    },
+    "activity": {
+      "title": "Activity",
+      "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
+    },
+    "collections": {
+      "title": "Collections",
+      "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
+    },
+    "settings": {
+      "title": "Settings",
+      "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
+    },
+    "final_step": {
+      "desc_1": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
+      "desc_2": "Remember, in case of any question, don’t hesitate to reach out to our team by",
+      "help": "Help & Support"
+    }
+  },
   "app": {
     "contact_email_address": "Contact email address:",
     "powered_by_ushahidi": "Powered by Ushahidi.",
