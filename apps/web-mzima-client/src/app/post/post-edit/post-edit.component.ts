@@ -719,9 +719,9 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       this.showMessage(error, 'error');
       return;
     }
-
+    const postLanguage = this.selectedLanguage.code;
     const postData = {
-      base_language: 'en',
+      base_language: postLanguage,
       completed_stages: this.completeStages,
       content: this.description,
       description: '',
