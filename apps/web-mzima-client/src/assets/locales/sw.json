@@ -1646,7 +1646,7 @@
     "passwordreset_instructions": "Ingiza baruapepe yako kuomba kubadilisha nambari ya siri",
     "passwordreset_confirm_instructions": "Baruapepe yako ikiwa kwenye mahifadhi yetu, utapata baruapepe ya kugundua nambari ya siri hivi karibuni",
     "forgot_instructions": "Hakuna wasiwasi! Wasilisha barua pepe yako na uangalie kisanduku pokezi chako kwa kiungo cha kuweka upya.",
-    "token": "Kifaa cha kubadilisha nambari ya siri",
+    "token": "Bandika tokeni ya kuweka upya nenosiri kutoka kwa baruapepe",
     "password_hint": "Nenosiri linapaswa kuwa na angalau herufi 8, herufi ndogo moja, herufi kubwa moja, nambari moja na ishara moja.",
     "password_length": "Nenosiri lazima liwe na urefu wa angalau herufi 8",
     "password_match": "Manenosiri hayalingani",
