@@ -435,7 +435,7 @@
     "fields": {
       "fields_title": "Nyanda",
       "validation": {
-        "required": "Mashamba yanayohitajika hayapo, mashamba haya yamewekwa alama na *.",
+        "required": "Nyuga zinazohitajika haziko, nyuga hizi zimewekwa alama ya *.",
         "special_characters": "{{name}} uwanja ina wahusika maalum"
       }
     },
