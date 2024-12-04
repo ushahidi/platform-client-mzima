@@ -894,7 +894,7 @@
       "add_to_survey": "Ongezea hojaji hii",
       "edit_post": "Hariri {{title}}",
       "change_type": "Badilisha aina",
-      "incomplete_step": "Ili kuchapisha tangazo kazi zote zinazohitajika lazima zitiwe alama ya kukamilika. Kazi inayohitajika {{hatua}}haijatiwa alama ya kukamilika",
+      "incomplete_step": "Ili kuchapisha tangazo kazi zote zinazohitajika lazima zitiwe alama ya kukamilika. Kazi inayohitajika {{stage}} haijatiwa alama ya kukamilika",
       "save_post": "Hifadhi tangazo",
       "publish": "Chapisha kwa...",
       "publish_to": "Chapisha kwa {{role}}",
