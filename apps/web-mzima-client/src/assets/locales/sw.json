@@ -409,7 +409,7 @@
     "add_options_first": "Ongeza chaguo kwanza",
     "delete": {
       "desc": "<nguvu>Ukifuta hojaji hii</nguvu>, matangazo yake yote pia yatafutwa. Endelea kwa tahadhari.",
-      "delete": "Futa Hojaji",
+      "delete": "Futa hojaji",
       "delete_this": "Futa hojaji hii",
       "delete_this_field": "Futa uwanda huu",
       "delete_field": "Futa Uwanda",
