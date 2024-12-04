@@ -77,10 +77,10 @@ export class PostTranslateComponent implements OnInit {
     });
   }
   selectLanguage(event: Event, lang: LanguageInterface) {
-    this.translateForm = this.createForm();
-    this.isTranslateMode = true;
     this.activeLanguage = lang;
+    this.translateForm = this.createForm();
     this.enabledLanguages.available.push(lang.code);
+    this.isTranslateMode = true;
   }
 
   createForm() {
@@ -88,7 +88,13 @@ export class PostTranslateComponent implements OnInit {
     this.post.post_content
       .flatMap((task: any) => task.fields)
       .filter((field: any) => this.isTranslateableContent(field))
-      .forEach((field: any) => newForm.addControl(field.key, new FormControl('')));
+      .forEach((field: any) => {
+        newForm.addControl(field.key, new FormControl(''));
+        const translation = this.getTranslationValue(field);
+        if (translation) {
+          newForm.get(field.key)?.setValue(translation);
+        }
+      });
     return newForm;
   }
 
@@ -102,7 +108,20 @@ export class PostTranslateComponent implements OnInit {
     return field.value.value;
   }
 
+  getTranslationValue(field: any) {
+    if (field.type === 'title') {
+      return this.post.translations?.[this.activeLanguage.code]?.title || '';
+    }
+    if (field.type === 'description') {
+      return this.post.translations?.[this.activeLanguage.code]?.content || '';
+    }
+    return field.value?.translations?.[this.activeLanguage.code]?.value || '';
+  }
+
   isTranslateableContent(field: any) {
-    return field.input === 'text' || field.input === 'textarea' || field.input === 'markdown';
+    if (field.type === 'title' || field.type === 'description') return true;
+    if (field.value && field.value.value)
+      return field.input === 'text' || field.input === 'textarea' || field.input === 'markdown';
+    return false;
   }
 }
