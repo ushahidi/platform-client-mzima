@@ -408,7 +408,7 @@
     "no_options_for_this_field": "Hakuna chaguo kwa uga huu",
     "add_options_first": "Ongeza chaguo kwanza",
     "delete": {
-      "desc": "<nguvu>Ukifuta hajaji hii</nguvu>, matangazo yake yote pia yatafutwa. Endelea kwa tahadhari.",
+      "desc": "<nguvu>Ukifuta hojaji hii</nguvu>, matangazo yake yote pia yatafutwa. Endelea kwa tahadhari.",
       "delete": "Futa Hojaji",
       "delete_this": "Futa hojaji hii",
       "delete_this_field": "Futa uwanda huu",
