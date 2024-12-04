@@ -18,7 +18,7 @@
     "export_to_csv": "Hamisha data iliyochujwa",
     "create_new": "Unda upya",
     "create_new_survey": "Tengeneza hojaji mpya",
-    "created_by": "Imeundwa na {{jina}}",
+    "created_by": "Imeundwa na {{author}}",
     "date_created": "Tarehe ya kuundwa",
     "date_updated": "Tarehe ya kusasishwa",
     "choose_photo": "Chagua picha",
