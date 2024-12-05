@@ -80,7 +80,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public treeControl: FlatTreeControl<CategoryFlatNode>;
   private dateFormat = 'DD-MM-YYYY';
 
-  constructor(private breakpointService: BreakpointService, public translate: TranslateService) {
+  constructor(private breakpointService: BreakpointService, private translate: TranslateService) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.treeControl = new FlatTreeControl<CategoryFlatNode>(this.getLevel, this.isExpandable);
   }
