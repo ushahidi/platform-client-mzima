@@ -804,7 +804,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   private showMessage(message: string, type: string) {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, this.translate.instant('notify.snackbar.close'), {
       panelClass: [type],
       duration: 3000,
     });
