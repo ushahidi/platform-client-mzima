@@ -333,7 +333,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
           this.submitted = false;
           if (error.errors.status === 422) {
             this.form.controls['name'].setErrors({ invalidCharacters: true });
-            this.notification.showError('Please remove invalid characters (e.g. +, $, ^, =)');
+            this.notification.showError(this.translate.instant('notify.survey.invalid_characters'));
           } else {
             this.notification.showError(JSON.stringify(error.name[0]));
           }

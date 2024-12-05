@@ -5,6 +5,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { BreakpointService, NotificationService } from '@services';
 import { generalHelpers, UsersService } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { TranslateService } from '@ngx-translate/core';
 
 @UntilDestroy()
 @Component({
@@ -23,6 +24,7 @@ export class UserSettingsComponent implements OnInit {
     private usersService: UsersService,
     private breakpointService: BreakpointService,
     private notificationService: NotificationService,
+    private translate: TranslateService,
     private router: Router,
   ) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
@@ -155,7 +157,7 @@ export class UserSettingsComponent implements OnInit {
         this.displaySnackBar(config);
         break;
       default:
-        this.notificationService.showError('Failed to export');
+        this.notificationService.showError(this.translate.instant('data_export.data_export_err'));
         break;
     }
   }

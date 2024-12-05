@@ -1699,6 +1699,7 @@
     "uploading_data": "Uploading data...",
     "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
     "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
+    "data_export_err":"Failed to export",
     "no_fields_selected": "You haven't selected any fields or assigned any hxl tags or attributes. Please select at least one field and assign at least one tag to be able to export to CSV or upload to a Humanitarian Data Exchange (HDX) account.",
     "validation": {
       "title": "A title is needed",
@@ -2034,7 +2035,8 @@
       "destroy_confirm_desc": "Deleting this survey will also delete all collected posts and all associated data in the survey. This step cannot be reversed.",
       "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
       "discard_changes": "Discard changes",
-      "save_changes": "Save Changes"
+      "save_changes": "Save Changes",
+      "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)"
     },
     "confirm_modal": {
       "add_post_success": {
