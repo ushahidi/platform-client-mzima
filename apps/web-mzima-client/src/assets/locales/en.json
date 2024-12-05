@@ -1097,7 +1097,8 @@
         "uploading" : "Uploading...",
         "upload_complete" : "Upload Complete!",
         "upload_failed" : "Upload failed!"
-      }
+      },
+      "special_char": "This field contains special characters"
     },
     "video": {
       "enter_a_url": "Enter a video URL from Youtube or Vimeo."
