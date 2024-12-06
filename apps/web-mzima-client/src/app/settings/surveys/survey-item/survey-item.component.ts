@@ -340,9 +340,7 @@ export class SurveyItemComponent extends BaseComponent implements OnInit {
         },
       });
     } else {
-      this.notification
-        .showError(`You need to add translations for all names, and ensure checkboxes and radios do not have duplicates.
-       Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language).`);
+      this.notification.showError(this.translate.instant('notify.survey.translations_missing'));
     }
   }
 

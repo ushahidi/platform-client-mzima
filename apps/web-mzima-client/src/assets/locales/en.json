@@ -187,6 +187,7 @@
     "you_are_not_authorized": "You are not authorized",
     "lost_internet_connection": "Lost internet connection",
     "tweet_is_unavailable": "This tweet is unavailable",
+    "tweet_failed_to_load": "Tweet failed to load",
     "file_uploader": "File uploader",
     "preview_image": "Preview image",
     "privacy_policy": "Privacy Policy",
@@ -201,7 +202,8 @@
     "we_ve_updated_deployments_to_version_5": "We’ve updated Deployments to version 5. Users may not have access to your deployment soon. ",
     "for_more_details_on_deployment_update": "For more details on deployment update, go to Help & Support (this should be a link) or send an email to:",
     "open_chat": "Open Chat",
-    "end_post": "End of Posts"
+    "end_post": "End of Posts",
+    "read_more": "Read more"
   },
   "date": {
     "aLongTimeAgo": "a long time ago",
@@ -1179,7 +1181,11 @@
     "save_add_another": "Save & Add Another",
     "delete": "Delete",
     "delete_webhook": "Delete this webhook",
-    "delete_webhook_desc": "<strong>If you delete this webhook</strong>, all associated webhook events will be lost. Proceed with caution."
+    "delete_webhook_desc": "<strong>If you delete this webhook</strong>, all associated webhook events will be lost. Proceed with caution.",
+    "dialog": {
+      "delete_warn_title": "{{ name }} webhook will be deleted!",
+      "delete_warn_message": "<p>This action cannot be undone.</p><p>Are you sure?</p>"
+    }
   },
   "saved_search": {
     "visible_to_public": "This Saved Search is visible to the public",
@@ -1239,7 +1245,8 @@
     "create_saved_filter": "Create Saved Filter",
     "collection_saved": "Collection saved.",
     "collection_updated": "Collection updated.",
-    "collection_description": "You can add posts to your collection from the Data view"
+    "collection_description": "You can add posts to your collection from the Data view",
+    "collection_definition": " A \"Collection\" is a manually-curated group of posts. You may find it useful in grouping posts that you would like to share with external partners. It is not dynamic, meaning the posts within it do not change unless you manually update them."
   },
   "category": {
     "add_tag": "Add Category",
@@ -2051,7 +2058,8 @@
       "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
       "discard_changes": "Discard changes",
       "save_changes": "Save Changes",
-      "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)"
+      "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
+      "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
     },
     "confirm_modal": {
       "add_post_success": {
