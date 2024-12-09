@@ -80,8 +80,6 @@
       <div class="translate_post">
         <div class="translate_post__edit">
           <form [formGroup]="translateForm">
-            HEJ
-
             <div class="translate_post__fields" *ngFor="let task of post.post_content">
               <ng-container *ngFor="let field of task.fields">
                 <div class="form-row" *ngIf="isTranslateableContent(field)">

@@ -70,7 +70,7 @@ export class PostsService extends ResourceService<any> {
     return super.patch(id, { status });
   }
   updateTranslations(id: string, post: any) {
-    return super.patch(id, post);
+    return super.update(id, post);
   }
 
   override post(params: any): Observable<any> {

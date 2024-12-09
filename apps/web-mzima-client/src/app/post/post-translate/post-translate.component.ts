@@ -2,9 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 import { LanguageInterface, PostResult, PostsService } from '@mzima-client/sdk';
+import { EventBusService, EventType } from '@services';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import * as _ from 'lodash';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 export interface PostTranslateComponentData {
   post: PostResult;
   languages: LanguageInterface[];
@@ -28,55 +30,81 @@ export class PostTranslateComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: PostTranslateComponentData,
     private postsService: PostsService,
+    private eventBusService: EventBusService,
+    private snackBar: MatSnackBar,
+    private matDialogRef: MatDialogRef<PostTranslateComponent>,
   ) {}
 
   ngOnInit(): void {
     this.languages = this.data.languages;
     this.isTranslateMode = false;
-    this.post = _.cloneDeep(this.data.post);
+    this.post = structuredClone(this.data.post);
     this.enabledLanguages = this.post.enabled_languages;
     this.defaultLanguage = this.languages.find((lang) => lang.code === this.post.base_language);
   }
-  closeModal() {
-    console.log('close modal');
+  public closeModal(): void {
+    this.matDialogRef.close();
   }
   saveTranslation() {
+    this.translateForm.disable();
     this.post.enabled_languages = this.enabledLanguages;
     this.post.post_content.forEach((task: any) => {
       task.fields
         .filter((field: any) => field.key in this.translateForm.controls)
         .forEach((field: any) => {
           const translatedValue = this.translateForm.controls[field.key].value;
-          if (!field.value) {
-            field.value = {};
-          }
-          if (!field.value.translations) {
+          field.value = field.value || {};
+          field.value.translations = field.value.translations || {};
+
+          if (Array.isArray(field.value.translations) && field.value.translations.length === 0) {
             field.value.translations = {};
           }
-          field.value = {
-            ...field.value,
-            translations: [
-              {
-                ...field.value.translations[0],
-                [this.activeLanguage.code]: { value: translatedValue },
-              },
-            ],
-          };
+
+          field.value.translations[this.activeLanguage.code] = { value: translatedValue };
+
           if (field.type === 'title' || field.type === 'description') {
-            this.post.translations = [this.activeLanguage.code] = [
-              {
-                ...this.post.translations[this.activeLanguage.code],
-                [field.type]: translatedValue,
-              },
-            ];
+            this.post.translations = this.post.translations || {};
+            if (Array.isArray(this.post.translations) && this.post.translations.length === 0) {
+              this.post.translations = {};
+            }
+            this.post.translations[this.activeLanguage.code] =
+              this.post.translations[this.activeLanguage.code] || {};
+            this.post.translations[this.activeLanguage.code][field.type] = translatedValue;
           }
         });
     });
-    this.postsService.updateTranslations(this.post.id, this.post).subscribe((res) => {
-      console.log(res);
+
+    this.postsService.updateTranslations(this.post.id, this.post).subscribe({
+      next: ({ result }) => {
+        this.postsService.unlockPost(this.post.id).subscribe();
+        this.eventBusService.next({
+          type: EventType.UpdatedPost,
+          payload: result,
+        });
+      },
+      error: ({ error }) => {
+        this.translateForm.enable();
+        this.postsService.unlockPost(this.post.id).subscribe();
+        if (error.errors?.status === 422) {
+          this.showMessage(`Failed to save translation. ${error.errors.message}`, 'error');
+        }
+      },
+      complete: async () => {
+        this.showMessage('Translation saved successfully', 'success');
+        this.postsService.unlockPost(this.post.id).subscribe();
+        this.closeModal();
+      },
+    });
+  }
+
+  private showMessage(message: string, type: string) {
+    this.snackBar.open(message, 'Close', {
+      panelClass: [type],
+      duration: 3000,
     });
   }
   selectLanguage(event: Event, lang: LanguageInterface) {
+    this.postsService.lockPost(this.post.id).subscribe();
     this.activeLanguage = lang;
     this.translateForm = this.createForm();
     this.enabledLanguages.available.push(lang.code);
@@ -113,7 +141,7 @@ export class PostTranslateComponent implements OnInit {
       return this.post.translations?.[this.activeLanguage.code]?.title || '';
     }
     if (field.type === 'description') {
-      return this.post.translations?.[this.activeLanguage.code]?.content || '';
+      return this.post.translations?.[this.activeLanguage.code]?.description || '';
     }
     return field.value?.translations?.[this.activeLanguage.code]?.value || '';
   }
