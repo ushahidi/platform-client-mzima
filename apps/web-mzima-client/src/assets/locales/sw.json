@@ -226,7 +226,7 @@
       "plural": "siku {{time}} zilizopita"
     },
     "month": {
-      "singular": "{{time}} month ago",
+      "singular": "mwezi {{time}} uliopita",
       "plural": "{{time}} months ago"
     },
     "year": {
