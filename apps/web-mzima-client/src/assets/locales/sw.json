@@ -230,7 +230,7 @@
       "plural": "miezi {{time}} iliyopita"
     },
     "year": {
-      "singular": "{{time}} year ago",
+      "singular": "mwaka {{time}} uliopita",
       "plural": "{{time}} years ago"
     }
 },
