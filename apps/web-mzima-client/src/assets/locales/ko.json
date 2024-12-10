@@ -585,7 +585,7 @@
     "sources": {
       "web": "Web",
       "mobile": "Mobile",
-      "email": "Email",
+      "email": "Email Address",
       "sms": "SMS",
       "twitter": "Twitter",
       "ussd": "USSD",
