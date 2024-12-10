@@ -19,7 +19,10 @@
 </span>
 <div *ngIf="location">
   <div class="form-row">
-    <mat-label>Lat <span class="color-accent" *ngIf="required">*</span></mat-label>
+    <mat-label
+      >{{ 'post.location.lat' | translate }}
+      <span class="color-accent" *ngIf="required">*</span></mat-label
+    >
     <mat-form-field
       appearance="outline"
       [ngClass]="{ 'location-error': emptyFieldLat || noSpecialCharactersLat }"
@@ -47,12 +50,15 @@
       {{ 'post.location.errors.empty_lat' | translate }}
     </p>
     <p *ngIf="noSpecialCharactersLat" class="location-error">
-      Field latitude contains special characters
+      {{ 'post.location.errors.special_lat' | translate }}
     </p>
   </div>
 
   <div class="form-row">
-    <mat-label>Lng <span class="color-accent" *ngIf="required">*</span></mat-label>
+    <mat-label
+      >{{ 'post.location.lng' | translate
+      }}<span class="color-accent" *ngIf="required">*</span></mat-label
+    >
     <mat-form-field
       appearance="outline"
       [ngClass]="{ 'location-error': emptyFieldLng || noSpecialCharactersLng }"
@@ -80,7 +86,7 @@
       {{ 'post.location.errors.empty_lng' | translate }}
     </p>
     <p *ngIf="noSpecialCharactersLng" class="location-error">
-      Field longitude contains special characters
+      {{ 'post.location.errors.special_lng' | translate }}
     </p>
   </div>
 </div>

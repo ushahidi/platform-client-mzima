@@ -56,7 +56,12 @@
             [value]="language"
             [data-qa]="'lang-' + language"
           >
-            {{ language?.name }} {{ language?.code === defaultLanguage?.code ? '(default)' : '' }}
+            {{ language?.name }}
+            {{
+              language?.code === defaultLanguage?.code
+                ? ('translations.translation_default' | translate)
+                : ''
+            }}
           </mat-option>
         </mat-select>
       </mat-form-field>

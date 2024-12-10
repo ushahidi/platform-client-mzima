@@ -1,4 +1,38 @@
 {
+  "onboarding": {
+    "greeting": "Hello {{username}}!",
+    "intro": "<p>You’ve successfully created your deployment. Now, while we polish it up, please, get along with Ushahidi features. The onboarding process will take couple of minutes.</p>",
+    "ready": "You're ready!",
+    "data_collection": {
+      "title": "Data collection",
+      "content": "<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>"
+    },
+    "filtering": {
+      "title": "Filtering",
+      "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
+    },
+    "sorting": {
+      "title": "Sorting",
+      "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
+    },
+    "activity": {
+      "title": "Ecuria",
+      "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
+    },
+    "collections": {
+      "title": "Koleksione",
+      "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
+    },
+    "settings": {
+      "title": "Konfigurime",
+      "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
+    },
+    "final_step": {
+      "desc_1": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
+      "desc_2": "Remember, in case of any question, don’t hesitate to reach out to our team by",
+      "help": "Help & Support"
+    }
+  },
   "app": {
     "contact_email_address": "Contact email address:",
     "powered_by_ushahidi": "Powered by Ushahidi.",
@@ -70,6 +104,7 @@
     "more": "Më tepër",
     "cancel": "Anullo",
     "save": "Ruaj",
+    "date_shows_up_here": "Date shows up here",
     "save_and_close": "Save &amp; close",
     "update": "Përmirëso",
     "update_and_close": "Update &amp; close",
@@ -94,7 +129,7 @@
     "add_role": "Shto Rol",
     "webhooks": "Webhooks",
     "edit_webhook": "Edit Role",
-    "add_webhook": "Add Role",
+    "add_webhook": "Add Webhook ",
     "categories": "Nën-Kategoritë",
     "edit_category": "Edito nën-kategorinë",
     "add_category": "Shto kategory",
@@ -152,6 +187,7 @@
     "you_are_not_authorized": "You are not authorized",
     "lost_internet_connection": "Lost internet connection",
     "tweet_is_unavailable": "This tweet is unavailable",
+    "tweet_failed_to_load": "Tweet failed to load",
     "file_uploader": "File uploader",
     "preview_image": "Preview image",
     "privacy_policy": "Privacy Policy",
@@ -166,8 +202,38 @@
     "we_ve_updated_deployments_to_version_5": "We’ve updated Deployments to version 5. Users may not have access to your deployment soon. ",
     "for_more_details_on_deployment_update": "For more details on deployment update, go to Help & Support (this should be a link) or send an email to:",
     "open_chat": "Open Chat",
-    "end_post": "End of Posts"
+    "end_post": "End of Posts",
+    "read_more": "Read more"
   },
+  "date": {
+    "aLongTimeAgo": "a long time ago",
+    "justNow": "just now",
+    "aMomentAgo": "a moment ago",
+    "second": {
+      "singular": "{{time}} second ago",
+      "plural": "{{time}} seconds ago"
+    },
+    "minute": {
+      "singular": "{{time}} minute ago",
+      "plural": "{{time}} minutes ago"
+    },
+    "hour": {
+      "singular": "{{time}} hour ago",
+      "plural": "{{time}} hours ago"
+    },
+    "day": {
+      "singular": "{{time}} day ago",
+      "plural": "{{time}} days ago"
+    },
+    "month": {
+      "singular": "{{time}} month ago",
+      "plural": "{{time}} months ago"
+    },
+    "year": {
+      "singular": "{{time}} year ago",
+      "plural": "{{time}} years ago"
+    }
+},
   "cookies": {
     "we_use_cookies": "Howdy! We use cookies to make your experience better.",
     "cookies_privacy": "If you want to know more or withdraw your consent, please go to our <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>.",
@@ -225,7 +291,18 @@
     "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
     "targeted_activity": "Tageted Survey Activity",
     "crowdsourced_activity": "Crowdsourced Survey Activity",
-    "tooltip_template": "This is the single point tooltip template"
+    "tooltip_template": "This is the single point tooltip template",
+    "select_range": "Select range",
+    "select_filter": "Select filter",
+    "show_all_posts": "Show all posts",
+    "categories": "Kategoritë",
+    "survey": "Kategori",
+    "status": "Status",
+    "statuses": "Statuses",
+    "all_time": "Gjithë kohës",
+    "last_week": "Last week",
+    "last_month": "Last month",
+    "last_year": "Last year"
   },
   "form": {
     "add_field": "Add field",
@@ -318,6 +395,8 @@
     "survey_name": "Survey name",
     "describe_your_survey": "Describe your survey...",
     "describe_this_task": "Describe this task...",
+    "create_survey": "Create survey",
+    "update_survey": "Update survey",
     "untitled_task": "Untitled task",
     "add_task": "Add task",
     "title": "Titulli",
@@ -340,10 +419,11 @@
     "date": "Date",
     "datetime": "Date & Time",
     "select": "Select",
+    "select_other_name": "A dropdown List",
     "radio_button": "Radio Button(s)",
     "checkbox": "Checkbox(es)",
     "related_post": "Related Post",
-    "related_post_info": "Ju lutem vini re, postimet që duhet të lidhen me duhet të publikohen, postimet që janë \"Nën shqyrtim\" nuk do të shfaqen në kërkim-rezultatet",
+    "related_post_info": "Only posts that have been published will appear in the search results; and hence be related to",
     "upload_image": "Image",
     "upload_document": "Document",
     "upload_audio": "Audio",
@@ -502,6 +582,15 @@
     }
   },
   "global_filter": {
+    "sources": {
+      "web": "Web",
+      "mobile": "Mobile",
+      "email": "Email Address",
+      "sms": "SMS",
+      "twitter": "Twitter",
+      "ussd": "USSD",
+      "whatsapp": "WhatsApp"
+    },
     "filter": "Filter",
     "categories": {
       "categories": "Kategoritë",
@@ -689,7 +778,9 @@
     "collections": "Koleksione",
     "comments": "Komente",
     "data_sources": "Burimet e të dhënave",
-    "data_import": "Importo të dhëna",
+    "data_source": "Data Source",
+    "data_import": "Data import",
+    "data_export": "Data export",
     "deployment_not_found": "Deployment Not Found",
     "deselect": "Deselect",
     "edit_profile": "Edito Profilin",
@@ -704,6 +795,7 @@
     "forgotyourpassword": "Harruat fjalëkalimin tuaj?",
     "resetpassword": "Rivendos fjalëkalimin",
     "resetmypassword": "Rivendos fjalëkalimin",
+    "password_recovery": "Password recovery",
     "forms": "Format",
     "help": "Ndihmë",
     "home": "Kreu",
@@ -713,6 +805,7 @@
     "help_support": "Help & Support",
     "registration": "Regjistrohu",
     "register": "Regjistrohu",
+    "results": "Results",
     "map_settings": "Konfigurimet e Hartës",
     "more": "Më tepër",
     "notifications": "Njoftime",
@@ -749,7 +842,9 @@
     "yesterday": "Dje",
     "map": "Map",
     "data": "Data",
-    "feed": "Data"
+    "feed": "Data",
+    "add_new_post":"Add New Post",
+    "edit_post": "Edito raportimin"
   },
   "views": {
     "map": "Map",
@@ -767,6 +862,7 @@
     "share_on_facebook": "Share on Facebook"
   },
   "post": {
+    "loading_posts": "Loading posts in {{ mode }} mode...",
     "post_count": "{{count}} postime",
     "see_more_plural": "See {{newPostsCount}} new posts",
     "see_more_singular": "See {{newPostsCount}} new post",
@@ -882,6 +978,7 @@
       "locked_tooltip": "This post is being edited by someone else. Please try again later."
 
     },
+    "post_not_authorized": "You are not authorized to perform this action on this post.",
     "modify": {
       "intro": "Selekto kategori:",
       "no_task_values": "Nuk ndodhen vlera të ruajtura së fundmi për këtë kërkesë.",
@@ -913,6 +1010,15 @@
           "url": "Link url",
           "add_link": "Shto Link"
         }
+      },
+      "input_empty_warn": "Input cannot be empty",
+      "max_size": "Max size: {{size}} MB",
+      "invalid_video_embed": "Invalid video embed url",
+      "errors": {
+        "required" : "{{label}} field is a required field *",
+        "too_short": "{{label}} field is too short, use at least 2 characters",
+        "invvalid_pattern": "{{label}} field is invalid",
+        "special_char": "{{label}} field contains special characters"
       }
     },
     "preview": {
@@ -1006,7 +1112,8 @@
         "uploading" : "Uploading...",
         "upload_complete" : "Upload Complete!",
         "upload_failed" : "Upload failed!"
-      }
+      },
+      "special_char": "This field contains special characters"
     },
     "video": {
       "enter_a_url": "Enter a video URL from Youtube or Vimeo."
@@ -1028,17 +1135,23 @@
       "you_can_search_or_click": "You can search or click the area of map where you want to place the marker.",
       "search_address": "Search for addresses, place names, or coordinates...",
       "nothing_found": "Nothing found",
+      "lng": "Lng",
+      "lat": "Lat",
       "errors": {
         "empty_lat": "Latitude is empty field",
         "empty_lng": "Longitude is empty field",
         "decimal_lat": "Latitude only decimal number",
-        "decimal_lng": "Longitude only decimal number"
+        "decimal_lng": "Longitude only decimal number",
+        "special_lng": "Field longitude contains special characters",
+        "special_lat": "Field latitude contains special characters"
       }
     }
   },
   "role": {
     "are_you_sure_you_want_to_delete_role": "Are you sure you want to delete role {{roleName}}?",
     "add_role": "Shto Role",
+    "create_role": "Create role",
+    "update_role": "Update role",
     "edit_role": "Edito Rolin",
     "name": "Emri",
     "description": "Përshkrim",
@@ -1057,8 +1170,10 @@
     "only_me": "Only me"
   },
   "webhook": {
-    "add_webhook": "Add Role",
+    "add_webhook": "Add Webhook ",
     "edit_webhook": "Edit Role",
+    "create_webhook": "Create webhook",
+    "update_webhook": "Update webhook",
     "uuid": "Webhook UUID",
     "name": "Emri",
     "shared_secret": "Shared Secret",
@@ -1069,7 +1184,11 @@
     "save_add_another": "Ruaj & Shto një tjetër",
     "delete": "Fshi",
     "delete_webhook": "Delete this webhook",
-    "delete_webhook_desc": "<strong>If you delete this webhook</strong>, all associated webhook events will be lost. Proceed with caution."
+    "delete_webhook_desc": "<strong>If you delete this webhook</strong>, all associated webhook events will be lost. Proceed with caution.",
+    "dialog": {
+      "delete_warn_title": "{{ name }} webhook will be deleted!",
+      "delete_warn_message": "<p>This action cannot be undone.</p><p>Are you sure?</p>"
+    }
   },
   "saved_search": {
     "visible_to_public": "Ky kërkim i ruajtur është i dukshëm ndaj publikut",
@@ -1129,7 +1248,8 @@
     "create_saved_filter": "Create Saved Filter",
     "collection_saved": "Collection saved.",
     "collection_updated": "Collection updated.",
-    "collection_description": "You can add posts to your collection from the Data view"
+    "collection_description": "You can add posts to your collection from the Data view",
+    "collection_definition": " A \"Collection\" is a manually-curated group of posts. You may find it useful in grouping posts that you would like to share with external partners. It is not dynamic, meaning the posts within it do not change unless you manually update them."
   },
   "category": {
     "add_tag": "Shto nën-kategori",
@@ -1143,6 +1263,7 @@
     "select_all": "Selektoji të gjitha",
     "choose_roles": "Zgjidh Role",
     "create_tag": "Krijo Nën-Kategori",
+    "update_tag": "Update Category",
     "saved_tag": "Nën-kategoria u ruajt.",
     "deleted_tags": "Nën-Kategoritë u fshinë.",
     "manage_tags": "Menaxho nën-kategoritë",
@@ -1239,7 +1360,11 @@
       "api_key": "API Key",
       "placeholder": {
         "pick_location": "Pick Location..."
-      }
+      },
+      "satellite": "Satellite",
+      "streets": "Streets",
+      "humanitarian": "Humanitarian"
+      
     },
     "user_settings": {
       "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1288,6 +1413,8 @@
       "provider_name": "{{providerName}} Data Source?",
       "do_you_really_want_to_disconnect": "Do you really want to disconnect your provider?",
       "add_source": "Add source",
+      "edit": "Edit {{provider}} Data Source",
+      "add_data_source": "Add Data Source",
       "associate_with_form": "Import to survey",
       "associate_with_form_desc": "All incoming data from {{provider}} will be used to create responses to the survey you choose",
       "data_sources": "Burimet e të dhënave",
@@ -1597,6 +1724,7 @@
     "uploading_data": "Uploading data...",
     "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
     "uploading_data_err": "Uh oh... Something went wrong when uploading your data, please check the required fields and your api-key and try again.",
+    "data_export_err":"Failed to export",
     "no_fields_selected": "You haven't selected any fields or assigned any hxl tags or attributes. Please select at least one field and assign at least one tag to be able to export to CSV or upload to a Humanitarian Data Exchange (HDX) account.",
     "validation": {
       "title": "A title is needed",
@@ -1611,6 +1739,8 @@
     "role_display": "Role: {{role}}",
     "contact": "{{type}}: {{contact}}",
     "add_user": "Shto përdorues",
+    "create_user": "Create user",
+    "update_user": "Update user",
     "edit_user": "Edito Përdoruesin",
     "update_password": "Përditëso fjalëkalimin",
     "change_role": "Ndrysho Rolin",
@@ -1647,11 +1777,15 @@
     "password_hint": "Password should have at least 8 characters, one lowercase letter, one uppercase letter, one number and one symbol",
     "password_length": "Password must be at least 8 characters long",
     "password_match": "Passwords do not match",
+    "enter_new_password": "Enter your new password",
+    "password_change_success": "Your password was successfully changed",
+    "password_change_success_info": "Now you can login with new credentials",
     "check_email": "Check your email",
     "name_will_be_a_display_name": "The name you enter will be a display name.",
     "valid": {
       "fields": {
-        "email must be unique": "User with this email already exists"
+        "email must be unique": "User with this email already exists",
+        "email must be valid": "Email must be a valid email address"
       },
       "name": {
         "required": "Display name is required",
@@ -1924,12 +2058,16 @@
       "bulk_destroy_confirm_desc": "Deleting these {{count}} selected surveys will also delete all collected posts and all associated data in the surveys. This step cannot be reversed.",
       "destroy_confirm": "Are you sure you want to delete this survey?",
       "destroy_confirm_desc": "Deleting this survey will also delete all collected posts and all associated data in the survey. This step cannot be reversed.",
-      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting."
+      "destroy_confirm_desc_end": "You can <a href=\"settings/data-import\">download and import</a> all your data before deleting.",
+      "discard_changes": "Discard changes",
+      "save_changes": "Save Changes",
+      "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
+      "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
     },
     "confirm_modal": {
       "add_post_success": {
         "success": "Success!",
-        "success_description": "Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.",
+        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
         "success_button": "OK, sounds good"
       },
       "deleted": {
@@ -1937,6 +2075,11 @@
         "success_description": "You've permanently deleted {{count}}.",
         "success_button": "OK"
       }
+    },
+    "snackbar": {
+      "changes_discarded": "Changes discarded successfully",
+      "no_changes_made": "No changes made yet",
+      "close": "Mbyll"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Do you really want to delete {{lang}} language?"
@@ -2022,6 +2165,7 @@
     "languages": "Gjuhët",
     "language": "Gjuha",
     "default": "parazgjedhur",
+    "translation_default": "(default)",
     "translate_field": "Fusha e përkthimit",
     "survey_select_default": "Zgjidh gjuhën e prezgjedhur për këtë sondazh",
     "category_select_default": "Zgjidh gjuhën e prezgjedhur për këtë kategori",

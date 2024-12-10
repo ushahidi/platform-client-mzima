@@ -17,9 +17,9 @@
         [ngClass]="{ 'feed-page__results-info__dim': !posts.length }"
         [attr.data-qa]="'feed-page-results'"
       >
-        <ng-container *ngIf="!posts.length && isLoading"
-          >Loading posts in {{ mode }} mode...</ng-container
-        >
+        <ng-container *ngIf="!posts.length && isLoading">{{
+          'post.loading_posts' | translate : { mode: mode }
+        }}</ng-container>
         <ng-container *ngIf="posts.length || (!posts.length && !isLoading)">
           {{ 'app.current_results' | translate }}
           {{ postCurrentLength }}

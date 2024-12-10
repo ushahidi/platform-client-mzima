@@ -11,9 +11,13 @@ const routes: Routes = [
   {
     path: ':id',
     component: WebhookItemComponent,
-    data: { breadcrumb: 'Update webhook' },
+    data: { breadcrumb: 'webhook.update_webhook' },
   },
-  { path: 'create', component: WebhookItemComponent, data: { breadcrumb: 'Create webhook' } },
+  {
+    path: 'create',
+    component: WebhookItemComponent,
+    data: { breadcrumb: 'webhook.create_webhook' },
+  },
 ];
 
 @NgModule({

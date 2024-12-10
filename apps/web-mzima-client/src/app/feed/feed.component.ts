@@ -1154,7 +1154,7 @@ export class FeedComponent extends MainViewComponent implements OnInit, OnDestro
   }
 
   private showMessage(message: string, type: string, duration = 3000) {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, this.translate.instant('notify.snackbar.close'), {
       panelClass: [type],
       duration,
     });

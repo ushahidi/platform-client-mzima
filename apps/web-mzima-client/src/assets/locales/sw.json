@@ -1,30 +1,64 @@
 {
+  "onboarding": {
+    "greeting": "Habari {{username}}!",
+    "intro": "<p>Umefaulu kuunda utendakazi wako. Sasa, tunapoiboresha, tafadhali, jitambulishe na vipengele vya Ushahidi. Mchakato wa kuabiri utachukua dakika kadhaa.</p>",
+    "ready": "Uko tayari!",
+    "data_collection": {
+      "title": "Ukusanyaji wa data",
+      "content": "<p> Unaweza kuona data yote iliyokusanywa unapopitia mwonekano wa Ramani au kwenye mwonekano wa Data.</p>"
+    },
+    "filtering": {
+      "title": "Kuchuja",
+      "content": "<p>Unaweza kuchuja matokeo yako kwa Hali, Vitengo, Masafa ya Tarehe na Mahali. Unaweza pia kuhifadhi vichujio vyako, ili uweze kuvirejea haraka.</p><p>Ili kupunguza kiasi cha data kwa njia ya haraka na bora, tumia upau wa kushoto kuchagua Utafiti na vyanzo mahususi vya Data.</p>"
+    },
+    "sorting": {
+      "title": "Upangaji",
+      "content": "<p>Unaweza kupanga matokeo kwa tarehe ya chapisho, masasisho ya hivi punde na tarehe ya kuundwa - kutoka mpya hadi ya zamani zaidi.</p>"
+    },
+    "activity": {
+      "title": "Shughuli",
+      "content": "<p>Angalia shughuli yako ya kusambaza kwa muda na pia kwa kiasi. Elea kila mstari au upau ili kuiangazia na kuona maelezo.</p>"
+    },
+    "collections": {
+      "title": "Mikusanyiko",
+      "content": "<p>Ili kupanga machapisho yako katika vikundi, unaweza kuunda Mikusanyiko. Chagua tu jina, andika maelezo na uchague hali ya kutazama - ni rahisi sana!</p>"
+    },
+    "settings": {
+      "title": "Mipangilio",
+      "content": "<p>Badilisha utumiaji wako katika Mipangilio. Unaweza kudhibiti maelezo yako ya utumaji tunapozungumzia suala la Tafiti, Vyanzo vya Data, Uagizaji na Uchangiaji. </p><p>Pia, inaruhusu kuhamisha data, kuunda kategoria, kudhibiti ruhusa za watumiaji na mengi zaidi!</p>"
+    },
+    "final_step": {
+      "desc_1": "Furaha iliyoje! Sasa unajua vipengele muhimu zaidi na uko tayari kuanza kutumia jukwaa la Ushahidi.",
+      "desc_2": "Kumbuka, ikiwa kuna swali lolote, usisite kuwasiliana na timu yetu kupitia",
+      "help": "Usaidizi na Msaada"
+    }
+  },
   "app": {
     "contact_email_address": "Anwani ya barua pepe ya mawasiliano:",
     "powered_by_ushahidi": "Imetiwa nguvu na Ushahidi",
     "support": "Usaidizi wa Ushahidi",
     "by": "kwa",
-    "confirm": "Confirm",
+    "confirm": "Thibitisha",
     "submit": "Patiana",
     "anonymous": "Bila kujulikana",
     "submitting": "Inawasilisha",
-    "submit_another": "Patiana & Ongeza nyingine",
+    "submit_another": "Patiana na uongeze nyingine",
     "submit_response": "Wasilisha ujumbe wa hojaji",
     "can_see_this": "hii inaweza onekana",
     "collection": "Mkusanyo",
     "collections": "Mikusanyiko",
     "create_collection": "Unda Mikusanyiko",
-    "add_collection": "Ongeza ukusanyaji",
+    "add_collection": "Ongeza mkusanyiko",
     "export_to_csv": "Hamisha data iliyochujwa",
     "create_new": "Unda upya",
     "create_new_survey": "Tengeneza hojaji mpya",
-    "created_by": "Imeundwa na {{jina}}",
+    "created_by": "Imeundwa na {{author}}",
     "date_created": "Tarehe ya kuundwa",
     "date_updated": "Tarehe ya kusasishwa",
     "choose_photo": "Chagua picha",
     "choose": "Chagua...",
     "add_all_fields": "Ongeza sehemu zote",
-    "insert_text_here": "Chomeka matini hapa...",
+    "insert_text_here": "Weka maandishi hapa...",
     "deployment_not_found" : {
       "text" : "Samahani, utekelezaji huo haupo. Je, ungependa kuunda utekelezaji mpya?",
       "button_exit" : "Ondoka",
@@ -46,7 +80,7 @@
     },
     "onboarding": {
       "title": "Kuabiri",
-      "description": "Angalia tena ushahidi wa Ushahidi."
+      "description": " Tazama tena mchakato wa kujiunga na Ushahidi."
     },
     "report_a_bug": {
       "title": "Ripoti hitilafu",
@@ -58,7 +92,7 @@
       "description": "Tazama kile Ushahidi inaweza kutekeleza na jinsi inavyotenda kazi."
     },
     "forbidden": "Samahani, hauruhusiwi kufanya hivyo.",
-    "forbidden-login": "Tafadhali ingiza maelezo yako ya kuingia ili kufikia kupelekwa.",
+    "forbidden-login": "Tafadhali ingiza maelezo yako ya kuingia ili kufikia utendakazi.",
     "contact_with_admin": "Au wasiliana na Msimamizi ",
     "404": "URL hiyo haipo",
     "page-not-found": "Ukurasa haupatikani",
@@ -68,19 +102,20 @@
     "loading": "Inapakia",
     "loading_saved_searches": "Inapakia utafutaji uliohifadhiwa",
     "more": "Zaidi",
-    "cancel": "Futa",
+    "cancel": "Katisha",
     "save": "Hifadhi",
-    "save_and_close": "Hifadhi & amp; funga",
+    "date_shows_up_here": "Tarehe inaonyesha hapa",
+    "save_and_close": "Hifadhi na ufunge",
     "update": "Sasisha",
-    "update_and_close": "Boresha &amp; funga",
-    "add_and_close": "Ongeza &amp; funga",
+    "update_and_close": "Boresha na ufunge",
+    "add_and_close": "Ongeza na ufunge",
     "updating": "Inasasisha",
     "saving": "Inahifadhi",
     "settings": "Mipangilio",
-    "share": "Shiriki",
+    "share": "Sambaza",
     "specific_roles": "Majukumu mahsusi...",
     "general": "Jumla",
-    "surveys": "Survey",
+    "surveys": "Hojaji",
     "add_survey": "Ongeza Hojaji",
     "edit_survey": "Hariri Hojaji",
     "data_sources": "Vyanzo vya Data",
@@ -94,7 +129,7 @@
     "add_role": "Ongeza Majukumu",
     "webhooks": "Vichochezi vya Wavuti",
     "edit_webhook": "Hariri Vichochezi vya Wavuti",
-    "add_webhook": "Ongeza Vichochezi vya Wavuti",
+    "add_webhook": "Ongeza Kichochezi cha Wavuti",
     "categories": "Kategoria",
     "edit_category": "Hariri Kategoria",
     "add_category": "Ongeza Kategoria",
@@ -106,7 +141,7 @@
     "search_users": "Tafuta watumizi",
     "searching": "Inatafuta",
     "show_hide": "Onyesha/Ficha",
-    "fields": "Mawanda",
+    "fields": "Nyanda",
     "no_results": "Hakuna matokeo yaliyopatikana",
     "current_results": "Matokeo ya sasa:",
     "filter_by": "Chuja kwa kutumia",
@@ -136,7 +171,7 @@
     "nothing": "Hakuna",
     "who_can_see_this": "Nani anaweza kuona hii?",
     "add": "Ongeza",
-    "add_new_category": "+ Add new category",
+    "add_new_category": "Ongeza kategoria",
     "sort_by": "Panga kwa",
     "newest_first": "Mpya kwanza",
     "oldest_first": "Mzee kwanza",
@@ -149,13 +184,14 @@
     "no_go_back": "Hapana, rudi nyuma",
     "are_you_sure_you_want_to_delete": "Una uhakika unataka kufuta",
     "action_cannot_be_undone": "<p>Kitendo hiki hakiwezi kutenduliwa.</p><p>Una uhakika?</p>",
-    "you_are_not_authorized": "Wewe si mamlaka ya",
+    "you_are_not_authorized": "Hujaidhinishwa",
     "lost_internet_connection": "Muunganisho wa mtandao uliopotea",
     "tweet_is_unavailable": "Tweet hii haipatikani",
+    "tweet_failed_to_load": "Tweet imeshindwa kupakia",
     "file_uploader": "Kipakiaji cha faili",
     "preview_image": "Picha ya mwoneko awali",
     "privacy_policy": "Sera ya Faragha",
-    "terms_and_conditions": "Masharti na Masharti",
+    "terms_and_conditions": "Sheria na Masharti",
     "ok_sounds_good": "Sawa, inaonekana nzuri",
     "next_step": "Hatua inayofuata",
     "we_are_aware_there_are_some_issues_here": "Tunafahamu kuwa kuna baadhi ya masuala hapa. Timu hiyo inafanya kazi ya kuwarekebisha.",
@@ -166,10 +202,40 @@
     "we_ve_updated_deployments_to_version_5": "Tumesasisha Upelekaji hadi toleo la 5. Watumiaji wanaweza kuwa hawana ufikiaji wa kupelekwa kwako hivi karibuni. ",
     "for_more_details_on_deployment_update": "Kwa maelezo zaidi juu ya sasisho la kupelekwa, nenda kwa Msaada na Usaidizi (hii inapaswa kuwa kiungo) au tuma barua pepe kwa:",
     "open_chat": "Fungua Gumzo",
-    "end_post": "Mwisho wa Machapisho"
+    "end_post": "Mwisho wa Machapisho",
+    "read_more": "Soma zaidi"
   },
+  "date": {
+    "aLongTimeAgo": "muda mrefu uliopita",
+    "justNow": "hivi sasa",
+    "aMomentAgo": "muda mfupi uliopita",
+    "second": {
+      "singular": "sekunde {{time}} iliyopita",
+      "plural": "sekunde {{time}} zilizopita"
+    },
+    "minute": {
+      "singular": "dakika {{time}} iliyopita",
+      "plural": "dakika {{time}} zilizopita"
+    },
+    "hour": {
+      "singular": "saa {{time}} iliyopita",
+      "plural": "saa {{time}} zilizopita"
+    },
+    "day": {
+      "singular": "siku {{time}} iliyopita",
+      "plural": "siku {{time}} zilizopita"
+    },
+    "month": {
+      "singular": "mwezi {{time}} uliopita",
+      "plural": "miezi {{time}} iliyopita"
+    },
+    "year": {
+      "singular": "mwaka {{time}} uliopita",
+      "plural": "miaka {{time}} iliyopita"
+    }
+},
   "cookies": {
-    "we_use_cookies": "Jinsi ya kufanya! Tunatumia kuki ili kufanya uzoefu wako uwe bora zaidi.",
+    "we_use_cookies": "Hujambo! Tunatumia kuki ili kufanya uzoefu wako uwe bora zaidi.",
     "cookies_privacy": "Ikiwa unataka kujua zaidi au kuondoa idhini yako, tafadhali nenda kwenye <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Sera yetu ya Faragha</a>.",
     "decline": "Kataa",
     "accept_cookies": "Kubali kuki"
@@ -183,7 +249,7 @@
   "toolbar": {
     "searchbar": {
       "search_entity": "Tafuta {{entity}}",
-      "search_all_entities_for": "Tafuta yote {{mada}} ya"
+      "search_all_entities_for": "Tafuta {{entity}} yote ya"
     }
   },
   "color_picker": {
@@ -194,7 +260,7 @@
     "green": "Kijani kibichi"
   },
   "feature_limits": {
-    "view_unavailable": " {{thamani}} haiko  katika mpango wako wa sasa. <a href=\"/mipangilio/mpango\">boresha mpango wako</a> ili uipate!"
+    "view_unavailable": " {{value}} haiko katika mpango wako wa sasa. <a href=\"/mipangilio/mpango\">Boresha mpango wako</a> ili uipate!"
   },
   "limit": {
     "plan_limit": "Ukingo wa Mpango wa Ushahidi",
@@ -209,7 +275,7 @@
     "recent_activity_timeline": "Muda wa shughuli ya hivi majuzi",
     "new_post": "Chapisho jipya",
     "by": "Na",
-    "context_body": "Muhtasari wa jinsi watu wanavyoingiliana na  {{kurasa}}.",
+    "context_body": "Muhtasari wa jinsi watu wanavyowasiliana na {{site}}.",
     "inbound": "Ujumbe wa Majibu ya Ndani",
     "outbound": "Ujumbe wa Uhojaji wa Nje",
     "recipients": "Wapokeaji wa Kipekee wa Hojaji Unaolengwa",
@@ -225,10 +291,21 @@
     "no_crowdsourced": "Hauna data yoyote ya Hojaji za Umati ya kuonyesha.",
     "targeted_activity": "Shughuli ya Hojaji Uliolengwa",
     "crowdsourced_activity": "Shughuli ya Hojaji ya Umati",
-    "tooltip_template": "Hiki ni kiolezo cha vidokezo vya ncha moja"
+    "tooltip_template": "Hiki ni kiolezo cha vidokezo vya ncha moja",
+    "select_range": "Chagua anuwai",
+    "select_filter": "Chagua kichujio",
+    "show_all_posts": "Onyesha machapisho yote",
+    "categories": "Kategoria",
+    "survey": "Hojaji",
+    "status": "Hali",
+    "statuses": "Hali",
+    "all_time": "Muda wote",
+    "last_week": "Wiki iliyopita",
+    "last_month": "Mwezi uliopita",
+    "last_year": "Mwaka uliopita"
   },
   "form": {
-    "add_field": "Ongeza uwanda",
+    "add_field": "Ongeza Uwanda",
     "add_field_instructions": "Ongeza maelezo ya uwanda huu",
     "add_field_instructions_info": "Maelekezo haya yatawasilishwa kama tooltip kwa mtumiaji wakati wa kujaza katika uwanda huu.",
     "add_field_instructions_placeholder": "Eleza uwanja huu...",
@@ -250,8 +327,8 @@
     "deleted_form_stage": "Futa kazi",
     "deleted_form_stage_attribute": "Uwanda uliofutwa",
     "editable_by": "Imehaririwa na",
-    "edit_post_step": "Hariri Kazi: {{hatua}}",
-    "edit_post_type": "Hariri Hojaji: {{fomu}}",
+    "edit_post_step": "Hariri Kazi: {{step}}",
+    "edit_post_type": "Hariri Hojaji: {{form}}",
     "edit_post_types": "Hariri Hojaji",
     "field_add_option": "Ongeza",
     "field_add_other": "Ongeza nyingine",
@@ -259,11 +336,11 @@
     "field_default": "Uga chaguo-msingi",
     "field_key": "Nambari ya Uwanda",
     "field_type": "Aina ya Uwanda",
-    "field_name": "Jina la uwanda",
+    "field_name": "Jina la Uwanda",
     "field_options": "Vibadala vya mawanda",
     "field_key_placeholder": "Nambari ya uwanda",
     "field_name_placeholder": "Upe uwanda huu jina",
-    "field_option_placeholder": "Chaguo 1",
+    "field_option_placeholder": "Chaguo  ya 1",
     "field_required": "Uwanda huu unahitajika",
     "form_name": "Jina",
     "form_description": "Maelezo",
@@ -294,7 +371,7 @@
     "no_tasks": "Hakuna kazi",
     "select_categories": "Teua kategoria",
     "select_related_post": "Chagua chapisho linalohusiana",
-    "no_fields": "Hakuna mashamba",
+    "no_fields": "Hakuna nyanda",
     "select_color": "Chagua rangi",
     "choose_survey": "Chagua utafiti",
     "marked_for_internal": {
@@ -318,6 +395,8 @@
     "survey_name": "Jina la Hojaji",
     "describe_your_survey": "Elezea hojaji yako...",
     "describe_this_task": "Eleza kazi hii...",
+    "create_survey": "Tengeneza hojaji",
+    "update_survey": "Sasisha hojaji",
     "untitled_task": "Kazi isiyo na jina",
     "add_task": "Ongeza kazi",
     "title": "Anwani",
@@ -340,10 +419,11 @@
     "date": "Tarehe",
     "datetime": "Tarehe na Wakati",
     "select": "Chagua",
+    "select_other_name": "Orodha kunjuzi",
     "radio_button": "Vitufe vya Chaguo",
     "checkbox": "Visanduku vya tiki",
     "related_post": "Chapisho Linalohusiana",
-    "related_post_info": "Tafadhali kumbuka, machapisho yanayohusiana na mahitaji ya kuchapishwa, machapisho ambayo ni \"Chini ya ukaguzi\" hayataonekana katika matokeo ya utafutaji",
+    "related_post_info": "Machapisho ambayo yamechapishwa pekee yataonekana katika matokeo ya utafutaji; na hivyo kuwa na uhusiano na",
     "upload_image": "Picha",
     "upload_document": "Hati",
     "upload_audio": "Sauti",
@@ -356,7 +436,7 @@
     "location_desc": "Eneo la kijiografia lililochaguliwa na ramani",
     "date_desc": "Tarehe ikiwa na mwaka, mwezi, siku",
     "datetime_desc": "Tarehe ikiwa na masaa na madakika",
-    "select_desc": "Orodha  ya vitu",
+    "select_desc": "Orodha ya vitu",
     "radio_desc": "Ruhusu mtumizi achague tu mojawapo ya seti zilizotambuliwa.",
     "checkbox_desc": "Ruhusu mtumizi achague tu mojawapo ya seti zilizotambuliwa.",
     "relation_desc": "Unda ushirikiano kati ya hojaji tofautitofauti",
@@ -372,8 +452,8 @@
     "tasks": "Kazi",
     "task_visible_when_published": "Kazi hii itaonekana chapisho itakapochapishwa",
     "show_field_description": "Ongeza maelezo ya uwanda (si lazima):",
-    "add_field": "Ongeza uwanda",
-    "edit_field": "Hariri Uwanda",
+    "add_field": "Ongeza uwanda {{fieldType | lowercase}}",
+    "edit_field": "Hariri Uwanda {{fieldType | lowercase}}",
     "build": "Jenga",
     "configure": "Badilisha",
     "require_section": "Hitaji kazi hii kukamilishwa kabla ya chapisho kuonekana kwa umma",
@@ -407,11 +487,11 @@
     "no_options_for_this_field": "Hakuna chaguo kwa uga huu",
     "add_options_first": "Ongeza chaguo kwanza",
     "delete": {
-      "desc": "<nguvu>Ukifuta hajaji hii</nguvu>, matangazo yake yote pia yatafutwa. Endelea kwa tahadhari.",
-      "delete": "Futa Hojaji",
+      "desc": "<nguvu>Ukifuta hojaji hii</nguvu>, matangazo yake yote pia yatafutwa. Endelea kwa tahadhari.",
+      "delete": "Futa hojaji",
       "delete_this": "Futa hojaji hii",
       "delete_this_field": "Futa uwanda huu",
-      "delete_field": "Futa Uwanda",
+      "delete_field": "Futa uwanda",
       "desc_field": "<nguvu>Ukifuta uwanda huu</nguvu>, data zote zilizowekwa ndani pia zitafutwa. Endelea kwa tahadhari."
     },
     "name": "Jina la Hojaji",
@@ -432,9 +512,9 @@
       }
     },
     "fields": {
-      "fields_title": "Nyuga",
+      "fields_title": "Nyanda",
       "validation": {
-        "required": "Mashamba yanayohitajika hayapo, mashamba haya yamewekwa alama na *.",
+        "required": "Nyuga zinazohitajika haziko, nyuga hizi zimewekwa alama ya *.",
         "special_characters": "{{name}} uwanja ina wahusika maalum"
       }
     },
@@ -502,6 +582,15 @@
     }
   },
   "global_filter": {
+    "sources": {
+      "web": "Mtandao",
+      "mobile": "Simu",
+      "email": "Baruapepe",
+      "sms": "SMS",
+      "twitter": "Twitter",
+      "ussd": "USSD",
+      "whatsapp": "WhatsApp"
+    },
     "filter": "Chuja",
     "categories": {
       "categories": "Kategoria",
@@ -575,7 +664,7 @@
       "status": "Hali",
       "expires": "Muda wa mwisho",
       "download": "Pakua",
-      "location_value": "Katika {{km}} km ya {{thamani}}",
+      "location_value": "Katika {{km}} km ya {{value}}",
       "visible_to": "Inaonekana kwa",
       "user": "Mtumizi",
       "has_location": "Maeneo ya machapisho",
@@ -604,23 +693,23 @@
     "km": "Km",
     "within_km_placeholder": "Masafa",
     "option_1": "Ndani ya km 1",
-    "option_2": "Ndani ya 2 km",
-    "option_3": "Ndani ya 5 km",
-    "option_4": "Ndani ya 10 km",
-    "option_5": "Ndani ya 50 km",
-    "option_6": "Ndani ya 100 km",
-    "option_7": "Ndani ya  500 km",
+    "option_2": "Ndani ya km 2",
+    "option_3": "Ndani ya km 5",
+    "option_4": "Ndani ya km 10",
+    "option_5": "Ndani ya km 50",
+    "option_6": "Ndani ya km 100",
+    "option_7": "Ndani ya km 500",
     "restore_defaults": "Rejesha chaguo-msingi",
     "apply_filters": "Tekeleza",
     "save_to_set": "Hifadhi katika mpangilio",
-    "search": "Tafuta",
+    "search": "Tafuta chapisho kwa nenomsingi",
     "date_range": "Urefu wa tarehe",
     "who_its_visible_to": "Inaonekana kwa nani",
     "status": "Hali",
     "source": "Chanzo",
     "saved_filters": "Vichujio vilivyohifadhiwa",
     "saved_filter": "Kichujio kilichohifadhiwa",
-    "no_saved_filters": "Hakuna vichujio vilivyohifadhiwa. Vichujio vilivyohifadhiwa vitaonekana hapa ili uvichague vikipatikana.",
+    "no_saved_filters": "Hakuna (v)ichujio vilivyohifadhiwa. Vichujio vilivyohifadhiwa vitaonekana hapa ili uvichague vikipatikana.",
     "save_new_filter": "Hifadhi kijuchio kipya",
     "clear_all_filters": "Ondoa vichujio vyote",
     "delete_this_saved_filter": "Una uhakika unataka kufuta kichujio hiki kilichohifadhiwa?"
@@ -631,14 +720,14 @@
     "compare": "Linganisha...",
     "compare_all": "Linganisha...",
     "compare_status": "Linganisha hali",
-    "compare_tags": "Linganisha lategoria",
-    "compare_form": "Linganisha Hojaji",
+    "compare_tags": "Linganisha kategoria",
+    "compare_form": "Linganisha hojaji",
     "compare_": "Linganisha",
     "created": "Muda ulioundwa",
     "cumulative": "Onyesha Jumla kamili",
     "cumulative_post_count": "Jumla ya matangazo yote",
     "custom": "Dhibiti urefu wa tarehe",
-    "custom_display": "{{anza || 'Mwanzo'}} hadi {{mwisho || 'Sasa'}}",
+    "custom_display": "{{start || 'Begining'}} hadi {{end || 'Now'}}",
     "group_by_placeholder": "Grafu",
     "new_post_count": "Matangazo mapya",
     "none": "Hakuna",
@@ -655,7 +744,7 @@
       "dismiss": "Futilia",
       "upgrade": "Boresha sasa",
       "default": "Sawa",
-      "cancel": "Futa"
+      "cancel": "Katisha"
     }
   },
   "modal": {
@@ -665,7 +754,7 @@
     },
     "donation": {
       "thank_you_for_your_donation_start": "Uchumaji wa mapato ya wavuti umewezeshwa kwenye wavuti hii. Shukrani kwa ajili ya mchango wako. Umetoa mchango",
-      "thank_you_for_your_donation_end": "Hadi sasa",
+      "thank_you_for_your_donation_end": "hadi sasa",
       "web_monetization_text": "Upelekaji wa ushahidi sasa umewezeshwa uchumaji wa wavuti. Uchumaji wa mapato ya wavuti ni njia ya kusaidia tovuti unazopenda bila kucheza mchezo wa watangazaji. Unachohitaji ni kupata usanidi wa kivinjari chako. Bofya kiungo hapa chini ili ujifunze jinsi unavyoweza kuchangia.",
       "how_can_i_donate": "Ninawezaje kuchangia?"
     }
@@ -680,7 +769,7 @@
     "account_settings": "Mipangilio ya akaunti",
     "alerts": "Ilani",
     "all": "Yote",
-    "author_tagline": "Na {{jina}}",
+    "author_tagline": "Na {{author}}",
     "appearance": "Sura",
     "back": "Nyuma",
     "category": "Kategoria",
@@ -689,7 +778,9 @@
     "collections": "Mikusanyiko",
     "comments": "Maoni",
     "data_sources": "Chanzo data",
-    "data_import": "Ingiza Data",
+    "data_source": "Chanzo cha data",
+    "data_import": "Data iliyoingizwa",
+    "data_export": "Data iliyosafirishwa",
     "deployment_not_found": "Utendakazi haujapatikana",
     "deselect": "Usichague",
     "edit_profile": "Hariri Habari",
@@ -704,15 +795,17 @@
     "forgotyourpassword": "Umesahau nambari ya siri?",
     "resetpassword": "Badilisha namba ya simu",
     "resetmypassword": "Badilisha nambari ya siri",
+    "password_recovery": "Kurejesha nenosiri",
     "forms": "Fomu",
     "help": "Msaada",
     "home": "Nyumbani",
     "login": "Ingia",
     "logout": "Ondoka",
     "login_register": "Ingia / Jisajili",
-    "help_support": "Msaada na Msaada",
+    "help_support": "Usaidizi na Msaada",
     "registration": "Jisajilishe",
     "register": "Jisajilishe",
+    "results": "Matokeo",
     "map_settings": "Mipangilio ya Ramani",
     "more": "Zaidi",
     "notifications": "Taarifa",
@@ -734,7 +827,7 @@
     "saved_searches": "Utafutaji uliohifadhiwa",
     "search": "Utafutaji",
     "select_all": "Chagua yote",
-    "selected_items": "{{vipengelevilivychaguliwa}} vimechaguliwa",
+    "selected_items": "{{selectedItems}} vimechaguliwa",
     "settings": "Mipangilio",
     "survey_settings": "Mipangilio ya Hojaji",
     "tags": "Kategoria",
@@ -749,7 +842,9 @@
     "yesterday": "Jana",
     "map": "Ramani",
     "data": "Data",
-    "feed": "Mwonekano wa data"
+    "feed": "Mwonekano wa data",
+    "add_new_post":"Ongeza chapisho Mpya",
+    "edit_post": "Hariri Matangazo"
   },
   "views": {
     "map": "Ramani",
@@ -758,25 +853,26 @@
     "data": "Data"
   },
   "share": {
-    "share_deployment": "Kushiriki kupelekwa",
-    "share_post": "Shiriki chapisho",
+    "share_deployment": "Sambaza utendakazi",
+    "share_post": "Sambaza chapisho",
     "web_address": "Anwani ya wavuti ya utafiti",
     "embed_on_websites": "HTML kupachika kwenye tovuti",
-    "copied": "Nakiliwa!",
-    "share_on_twitter": "Shiriki kwenye Twitter",
-    "share_on_facebook": "Shiriki kwenye Facebook"
+    "copied": "Imenakiliwa!",
+    "share_on_twitter": "Sambaza kwenye Twitter",
+    "share_on_facebook": "Sambaza kwenye Facebook"
   },
   "post": {
+    "loading_posts": "Inapakia machapisho katika hali ya {{ mode }}...",
     "post_count": "matangazo {{count}} ",
     "see_more_plural": "Tazama machapisho {{newPostsCount}} mapya",
     "see_more_singular": "Tazama chapisho {{newPostsCount}} jipya",
-    "add_to_form": "Ongeza {{fomu}}",
+    "add_to_form": "Ongeza kwa {{form}}",
     "posts": "Matangazo",
     "post_title": "Kichwa cha chapisho",
     "post_desc": "Maelezo ya chapisho",
     "there_are_no_posts": "Hakuna matangazo",
     "in_this_deployment": "uko katika utendakazi huu.",
-    "posts_total": "{{posts}} of {{total_nb}} posts",
+    "posts_total": "{{posts}} ya machapisho {{total_nb}}",
     "posts_total_map": "Kuonyesha {{posts}} ya machapisho {{total_nb}} na maelezo ya eneo kwenye ramani.",
     "search_results": "Matokeo:",
     "by": "na",
@@ -786,17 +882,17 @@
     "just_you": "Wewe tu",
     "specific_roles": "Majukumu mahsusi...",
     "can_see_this": "hii inaweza onekana",
-    "add_post_type": "Ongeza {{fomu_jina}}",
-    "edit_post_type": "Hariri {{fomu_jina}}",
+    "add_post_type": "Ongeza {{form_name}}",
+    "edit_post_type": "Hariri {{form_name}}",
     "post": "Tangazo",
     "message": "Ujumbe",
     "message_thread": "Orodha ya Ujumbe",
     "all_posts": "All posts",
     "no_search_results": "Utafutaji wako haukulingana na tangazo lolote",
     "no_search_results_location": "Utafutaji wako haukulingana na machapisho yoyote na maelezo ya mahali",
-    "no_posts_match_search": "No posts match your keyword search. Please change or clear keyword search to see matching posts.",
-    "no_posts_match_search_plus_filter": "No posts match your keyword search + filters. Please change or clear keyword search and/or filters to see matching posts.",
-    "no_posts_match_your_current_filters": "No posts match the current filters. Please change or clear filters to see matching posts.",
+    "no_posts_match_search": "Hakuna machapisho yanayolingana na utafutaji wako wa nenomsingi. Tafadhali badilisha au ufute utafutaji wa nenomsingi ili kuona machapisho yanayolingana.",
+    "no_posts_match_search_plus_filter": "Hakuna machapisho yanayolingana na utafutaji wako wa nenomsingi + vichujio. Tafadhali badilisha au ufute utafutaji wa nenomsingi na/au vichujio ili kuona machapisho yanayolingana.",
+    "no_posts_match_your_current_filters": "Hakuna machapisho yanayolingana na vichujio vya sasa. Tafadhali badilisha au futa vichujio ili kuona machapisho yanayolingana.",
     "no_posts_yet": "Bado hakuna matangazo",
     "no_posts_yet_location": "Hakuna machapisho na habari ya eneo bado!",
     "add_first_post": "Ongeza tangazo la kwanza",
@@ -805,20 +901,20 @@
     "change": "Badilisha",
     "posted_by": "Imechapishwa na",
     "draft": "Inatathminiwa",
-    "archived": "imetiwa makavazini",
+    "archived": "imetiwa Makavazini",
     "edited_by": "Imehaririwa na",
     "export": "Hamisha",
     "select_all": "Chagua Yote",
     "unselect_all": "Usichague yote",
-    "per_page": "{{idadi}} matangazo",
+    "per_page": "matangazo {{count}}",
     "post_details": "Habari za Tangazo",
     "steps": "Kazi ya tangazo hili",
     "mark_complete": "Tia alama kuwa kazi imekamilika",
     "complete": "Kamili",
-    "type_details": "{{aina}} Habari",
+    "type_details": "Habari {{type}} ",
     "edit_post": "Hariri Matangazo",
     "history": "Historia",
-    "hide_form": "Ficha {{fomu}}",
+    "hide_form": "Ficha {{form}}",
     "hide_unknown_form": "Ficha Isiyojulikana",
     "publish": "Chapisha kwa...",
     "publish_for_you": "Wewe",
@@ -839,9 +935,9 @@
     "structure": "Muundo",
     "source": "kupitia {{source}}",
     "visible_to_public": "Tangazo hili linaonekana kwa umma",
-    "visible_to_you": "Tangazo hili linaonekana tu kwako na watumizi wakuu\n",
-    "visible_to_roles": "Tangazo hili linaonekana kwa {{majukumu}}",
-    "show_only_form": "Onyesha tu {{fomu}}",
+    "visible_to_you": "Tangazo hili linaonekana tu kwako na watumizi wakuu",
+    "visible_to_roles": "Tangazo hili linaonekana kwa {{roles}}",
+    "show_only_form": "Onyesha tu {{form}}",
     "show_only_unknown_form": "Onyesha tu kwa wasiojulikana",
     "delete_post": "Futa tangazo",
     "delete_this_post": "Futa tangazo hili",
@@ -852,17 +948,17 @@
       "delete": "Futa",
       "export": "Ondoa",
       "put_under_review": "Weka chini ya utathmini",
-      "archive": "Tia makavazini",
+      "archive": "Tia Makavazini",
       "publish": "Chapisha"
     },
     "created_at": "<nguvu>Undwa</nguvu> kwa",
     "updated_at": "<nguvu>iliboreshwa mwisho</nguvu> katika",
     "author": "Mwandishi",
-    "post_date": "Tangaza tarehe\n",
+    "post_date": "Tangaza tarehe",
     "change_author": "Badilisha mwandishi",
     "status_published": "Imechapishwa",
     "status_review": "Inatathminiwa",
-    "status_archived": "Imetiwa makavazini",
+    "status_archived": "Imetiwa Makavazini",
     "unknown_posts": "Machapisho yasiyojulikana",
     "my_posts": "Machapisho yangu",
     "unstructured_posts": "Machapisho yasiyo na muundo",
@@ -873,7 +969,7 @@
     "my_posts_desc": "Machapisho yako",
     "unknown_posts_desc": "Machapisho ambayo hayajakabidhiwa hojaji",
     "image_is_required": "Picha inahitajika",
-    "image_max_size": "Picha inazidi ukubwa wa faili ya max",
+    "image_max_size": "Picha inazidi ukubwa wa juu wa faili ",
     "locking": {
       "unlocked": "Chapisho limefunguliwa",
       "unlock": "Fungua",
@@ -882,20 +978,21 @@
       "locked_tooltip": "Chapisho hili linahaririwa na mtu mwingine. Tafadhali jaribu tena baadaye."
 
     },
+    "post_not_authorized": "Hujaidhinishwa kutekeleza kitendo hiki kwenye chapisho hili.",
     "modify": {
-      "intro": "Chagua hojaji",
+      "intro": "Chagua hojaji:",
       "no_task_values": "Kwa sasa hakuna thamani zilizohifadhiwa kwa kazi hii.",
-      "create_type": "Unda {{aina}}",
-      "edit_type": "Hariri {{aina}}: {{mada}}",
+      "create_type": "Unda {{type}}",
+      "edit_type": "Hariri {{type}}: {{title}}",
       "add_a_post": "Ongeza chapisho",
       "add_to_survey": "Ongezea hojaji hii",
-      "edit_post": "Hariri {{mada}}",
+      "edit_post": "Hariri {{title}}",
       "change_type": "Badilisha aina",
-      "incomplete_step": "Ili kuchapisha tangazo kazi zote zinazohitajika lazima zitiwe alama ya kukamilika. Kazi inayohitajika {{hatua}}haijatiwa alama ya kukamilika",
+      "incomplete_step": "Ili kuchapisha tangazo kazi zote zinazohitajika lazima zitiwe alama ya kukamilika. Kazi inayohitajika {{stage}} haijatiwa alama ya kukamilika",
       "save_post": "Hifadhi tangazo",
       "publish": "Chapisha kwa...",
-      "publish_to": "Chapisha kwa {{jukumu}}",
-      "published_to": "Chapisha kwa {{jukumu}}",
+      "publish_to": "Chapisha kwa {{role}}",
+      "published_to": "Imechapishwa kwa {{role}}",
       "unpublish": "Rudi kwenye mswada",
       "everyone": "Kila mtu",
       "back": "Nyuma",
@@ -913,6 +1010,15 @@
           "url": "URL ya kiungo",
           "add_link": "Ongeza kiungo"
         }
+      },
+      "input_empty_warn": "Pembejeo haiwezi kuwa tupu",
+      "max_size": "Ukubwa wa juu zaidi: MB {{size}}",
+      "invalid_video_embed": "URL batili ya kupachika video",
+      "errors": {
+        "required" : "Uwanda wa {{label}} unahitajika *",
+        "too_short": "Uwanda wa {{label}} ni fupi mno, tumia angalau herufi 2",
+        "invvalid_pattern": "Uwanda wa {{label}} si sahihi",
+        "special_char": "Uwanda wa {{label}} una herufi maalum"
       }
     },
     "preview": {
@@ -970,11 +1076,11 @@
         "required": "Kategoria zinahitajika"
       },
       "values": {
-        "required": "\"\"{{nembo}}\" intahitajika",
-        "parse": "\"{{nembo}}\" haingechanganuliwa",
-        "date": "\"{{nembo}}\" lazima iwe tarehe",
-        "number": "\"{{nembo}}\" lazima iwe nambari",
-        "step": "\"{{label}}\" lazima iwe ya ndani"
+        "required": "\"\"{{label}}\" intahitajika",
+        "parse": "\"{{label}}\" haingechanganuliwa",
+        "date": "\"{{label}}\" lazima iwe tarehe",
+        "number": "\"{{label}}\" lazima iwe nambari",
+        "step": "\"{{label}}\" lazima iwe nambari kamili"
       },
       "author_name": {
         "maxlength": "Jina ni ndefu sana"
@@ -1006,17 +1112,18 @@
         "uploading" : "Inapakia...",
         "upload_complete" : "Upakiaji Umekamilika!",
         "upload_failed" : "Upakiaji Umeshindwa!"
-      }
+      },
+      "special_char": "Uwanda huu una herufi maalum"
     },
     "video": {
       "enter_a_url": "Weka URL ya video kutoka Youtube au Vimeo."
     },
     "unstructured": {
       "add_survey": {
-        "info": "<nguvu>Tangazo hili halijapatiwa hojaji katika utendakazi wako.</nguvu> Hiyo ni kwa sababu iliwasilishwa kupitia {{chanzo}}, ambayo haitoi njia ya mwandishi kuongeza tangazo lao kwa hojaji mahsusi.",
-        "choose": "Je, ni hojaji ipi ungependa kuongeza kwa tangazo hili?",
+        "info": "<nguvu>Tangazo hili halijapatiwa hojaji katika utendakazi wako.</nguvu> Hiyo ni kwa sababu iliwasilishwa kupitia {{source}}, ambayo haitoi njia ya mwandishi kuongeza tangazo lao kwa hojaji mahsusi. Peana chapisho hili kwa Hojaji, ukitumia fomu iliyo hapa chini.",
+        "choose": "Je, ni hojaji ipi ungependa kuongezea tangazo hili?",
         "title": "Ongeza tangazo hili kwa hojaji",
-        "save_and_edit": "Ongeza kwa hojaji &amp; hariri"
+        "save_and_edit": "Ongeza kwa hojaji na uhariri"
       },
       "survey_title": "Hojaji isiyojulikana"
     },
@@ -1028,17 +1135,23 @@
       "you_can_search_or_click": "Unaweza kutafuta au kubofya eneo la ramani ambapo unataka kuweka alama.",
       "search_address": "Tafuta anwani, weka majina, au kuratibu...",
       "nothing_found": "Hakuna kitu kilichopatikana",
+      "lng": "Lng",
+      "lat": "Lat",
       "errors": {
-        "empty_lat": "Latitude ni uwanja tupu",
-        "empty_lng": "Longitude ni uwanja tupu",
+        "empty_lat": "Latitudo ni uwanda mtupu",
+        "empty_lng": "Longitudo ni uwanda mtupu",
         "decimal_lat": "Latitude tu namba ya desimali",
-        "decimal_lng": "Longitude tu namba ya desimali"
+        "decimal_lng": "Longitude tu namba ya desimali",
+        "special_lng": "Uwanda wa longitudo una herufi maalum",
+        "special_lat": "Uwanda wa latitudo una herufi maalum"
       }
     }
   },
   "role": {
     "are_you_sure_you_want_to_delete_role": "Una uhakika unataka kufuta jukumu {{roleName}}?",
     "add_role": "Ongeza Majukumu",
+    "create_role": "Unda jukumu",
+    "update_role": "Sasisha jukumu",
     "edit_role": "Hariri Majukumu",
     "name": "Jina",
     "description": "Maelezo",
@@ -1057,8 +1170,10 @@
     "only_me": "Ni mimi tu"
   },
   "webhook": {
-    "add_webhook": "Add Role",
+    "add_webhook": "Ongeza Kichochezi cha Wavuti",
     "edit_webhook": "Edit Role",
+    "create_webhook": "Unda kichochezi cha wavuti",
+    "update_webhook": "Sasisha kichochezi cha wavuti",
     "uuid": "UUID ya kichochezi",
     "name": "Jina",
     "shared_secret": "Siri ya pamoja",
@@ -1069,19 +1184,23 @@
     "save_add_another": "Hifadhi & Ongeza Nyingine",
     "delete": "Futa",
     "delete_webhook": "Futa kichochezi hiki",
-    "delete_webhook_desc": "<nguvu>Ukifuta kichochezi hiki</nguvu>, matukio yote yanayohusiana yatapotea. Endelea kwa tahadhari."
+    "delete_webhook_desc": "<nguvu>Ukifuta kichochezi hiki</nguvu>, matukio yote yanayohusiana yatapotea. Endelea kwa tahadhari.",
+    "dialog": {
+      "delete_warn_title": "Kichochezi {{ name }} cha wavuti kitafutwa!",
+      "delete_warn_message": "<p>Kitendo hiki hakiwezi kutenduliwa.</p><p>Una uhakika?</p>"
+    }
   },
   "saved_search": {
     "visible_to_public": "Utafutaji huu uliohifadhiwa unaonekana kwa umma",
     "visible_to_you": "Utafutaji huu uliohifadhiwa unaonekana kwako na kwa mtumizi mkuu",
-    "visible_to_roles": "Utafutaji huu uliohifadhiwa unaonekana kwa {{majukumu}}",
+    "visible_to_roles": "Utafutaji huu uliohifadhiwa unaonekana kwa {{roles}}",
     "featured": "Inayoonyeshwa",
     "featured_tooltip": "Utafutaji wa wa makala utawaonekania watumizi wote <br>kwa \"Utafutaji uliohifadhiwa\" menu"
   },
   "collection": {
     "visible_to_public": "Mikusanyiko hii inaonekana kwa umma",
     "visible_to_you": "Mkusanyiko huu unaonekana tu kwako na watumizi wakuu",
-    "visible_to_roles": "Mkusanyiko huu unaonekana kwa {{majukumu}}",
+    "visible_to_roles": "Mkusanyiko huu unaonekana kwa {{roles}}",
     "validation": {
       "required": {
         "name": "Jina la mkusanyiko linahitajika"
@@ -1092,7 +1211,7 @@
     }
   },
   "set": {
-    "by": "na",
+    "by": "kwa",
     "clear_search": "Futa Utafutaji",
     "create_collection": "Unda Mkusanyiko",
     "create_new": "Unda upya",
@@ -1129,7 +1248,8 @@
     "create_saved_filter": "Unda Kichujio Kilichohifadhiwa",
     "collection_saved": "Mkusanyo umehifadhiwa.",
     "collection_updated": "Mkusanyo umesahihishwa.",
-    "collection_description": "Unaweza kuongeza machapisho kwenye mkusanyiko wako kutoka kwa mwonekano wa Data"
+    "collection_description": "Unaweza kuongeza machapisho kwenye mkusanyiko wako kutoka kwa mwonekano wa Data",
+    "collection_definition": "\"Mkusanyiko\" ni kikundi cha machapisho yaliyoratibiwa kwa mikono. Unaweza kupata manufaa katika kupanga machapisho ambayo ungependa kusambaza na washirika wa nje. Haibadiliki, ikimaanisha kuwa machapisho ndani yake hayabadiliki isipokuwa utayasasisha wewe mwenyewe."
   },
   "category": {
     "add_tag": "Ongeza kategoria",
@@ -1139,10 +1259,11 @@
     "delete_category_desc": "<nguvu>Ukifuta kategoria hili</nguvu>, haitahusishwa tena na machapisho yoyote. Endelea kwa tahadhari.",
     "show_categories": "Onyesha kategoria zinazopatikana",
     "child_permissions": "Ruhusa za aina hii zinadhibitiwa na kategoria kuu.",
-    "which_categories": "Which categories should be available?",
+    "which_categories": "Ni kategoria gani zinapaswa kupatikana?",
     "select_all": "Chagua Yote",
     "choose_roles": "Chagua Majukumu",
     "create_tag": "Unda Kategoria",
+    "update_tag": "Sasisha Kategoria",
     "saved_tag": "Kategoria imehifadhiwa.",
     "deleted_tags": "Kategoria zimefutwa",
     "manage_tags": "Dhibiti Kategoria",
@@ -1229,7 +1350,7 @@
       "webhooks": "Vichochezi vya Wavuti",
       "webhooks_desc": "Unda vichochezi vya wavuti vinavyotuma data ya Ushahidi Platform kwa programu za nje matukio mahususi yanapoanzishwa.",
       "plans": "Mipango",
-      "plan_desc": "Mpango wako wa Utendakazi ni <nguvu>{{sasa_mpango}}</nguvu>.",
+      "plan_desc": "Mpango wako wa Utendakazi ni <nguvu>{{current_plan}}</nguvu>.",
       "donation": "Mchango",
       "donation_desc": "Unda na kusimamia michango ambayo watu wanaweza kufanya kwa shirika lako."
     },
@@ -1239,7 +1360,11 @@
       "api_key": "Ufunguo wa API",
       "placeholder": {
         "pick_location": "Chagua eneo..."
-      }
+      },
+      "satellite": "Satelaiti",
+      "streets": "Barabara",
+      "humanitarian": "Mfadhili wa kibinadamu"
+      
     },
     "user_settings": {
       "user_settings_desc_1": "Hapa unaweza kuongeza ufunguo wako wa kipekee wa API kwa akaunti yako ya Humanitarian Data Exchange (HDX).",
@@ -1254,9 +1379,9 @@
       "api_key_saved": "Ufunguo wa API umehifadhiwa! Sasa unaweza kutambulisha data yako na upakie kwenye akaunti ya Humanitarian Data Exchange (HDX).",
       "start_tagging": "Anza kutambulisha data",
       "HDX": "Kubadilishana Data ya Kibinadamu",
-      "please_enter_maintainer_id": "Tafadhali ingiza id ya kudumisha",
+      "please_enter_maintainer_id": "Tafadhali weka kitambulisho cha mtunza huduma",
       "please_enter_api_key": "Tafadhali ingiza ufunguo wa API",
-      "hdx_maintainer_id_min_length": "Id ya Mdumishaji wa HDX ni fupi sana",
+      "hdx_maintainer_id_min_length": "Kitambulisho cha Mtunza HDX ni kifupi sana",
       "api_key_min_length": "Ufunguo wa API ni mfupi sana"
     },
     "webhooks": {
@@ -1277,17 +1402,19 @@
           "event_type": "Aina ya tukio inahitajika",
           "event_entity": "Chombo cha tukio kinahitajika"
         },
-        "please_provide_valid_api_url": "Tafadhali toa URL halali ya API na http(s)://",
+        "please_provide_valid_api_url": "Tafadhali peana URL halali ya API na http(s)://",
         "secret_key_cannot_be_less_start": "Ufunguo wa siri ulioshirikiwa hauwezi chini ya",
-        "secret_key_cannot_be_less_end": "Vibambo"
+        "secret_key_cannot_be_less_end": "vibambo"
       }
     },
     "data_sources": {
       "choose_data_source": "Chagua Chanzo cha Data...",
       "type_of_data_source": "Aina ya Chanzo cha Data",
-      "provider_name": "{{providerName}} Chanzo cha Data?",
+      "provider_name": "Chanzo cha Data {{providerName}} ?",
       "do_you_really_want_to_disconnect": "Je, kweli unataka kukata mawasiliano na mtoa huduma wako?",
       "add_source": "Ongeza chanzo",
+      "edit": "Badilisha Chanzo cha Data cha {{provider}}",
+      "add_data_source": "Ongeza Chanzo cha Data",
       "associate_with_form": "Ingiza kwa hojaji",
       "associate_with_form_desc": "Data yote inayoingia kutoka kwa {{provider}} itatumika kutoa majibu kwa hojaji utakayochagua",
       "data_sources": "Chanzo data",
@@ -1298,7 +1425,7 @@
       "configure": "Badilisha",
       "options": "Vibadala",
       "saving_changes": "Kuhifadhi",
-      "unavailable": "Chanzo cha data {{thamani}} inapatikana. <a href=\"/mipangilio/mpango\">Boresha mpango wako</a> ili kuipata!",
+      "unavailable": "Chanzo cha data {{value}} haipatikani. <a href=\"/mipangilio/mpango\">Boresha mpango wako</a> ili kuipata!",
       "email": {
         "incoming_server_type": "Aina ya Seva Inayoingia",
         "incoming_server_type_pop": "POP",
@@ -1401,7 +1528,7 @@
         "start_two": "Kuweka uchumaji wa mapato ya wavuti.",
         "start_three": "Ikiwa huna mkoba tayari tafadhali bonyeza",
         "here": "hapa",
-        "end": "Make One."
+        "end": "kuunda moja."
       }
     },
     "roles": {
@@ -1409,9 +1536,9 @@
       "admin": "Msimamizi",
       "manage_users": "Dhibiti watumiZI",
       "manage_posts": "Dhibiti Machapisho",
-      "manage_settings": "Mangage Settings",
+      "manage_settings": "Dhibiti Mipangilio",
       "bulk_data_import_and_export": "Kuagiza na Kuhamisha Data kwa Wingi",
-      "edit_their_own_posts": "Edit their own posts",
+      "edit_their_own_posts": "Hariri Machapisho Yao Wenyewe",
       "manage_collections_and_saved_searches": "Dhibiti Makusanyo na Utafutaji Uliohifadhiwa",
       "delete_posts": "Futa Machapisho",
       "delete_their_own_posts": "Futa machapisho yao wenyewe",
@@ -1427,13 +1554,13 @@
     "delete_logo": "Futa nembo",
     "map_default_baselayer": "Hali ya Msingi Uliowekwa",
     "map_location_precision": "Kiwango cha Usahihi wa Ramani",
-    "map_precise_to": "When hide location is enabled for a survey, locations will be precise to:",
+    "map_precise_to": "Wakati eneo la kuficha limewezeshwa kwa uchunguzi, maeneo yatakuwa sahihi kwa:",
     "map_clustering": "Unganisha matangazo jirani",
     "map_default_latitude": "Latitudi iliyowekwa",
     "map_default_longitude": "Longitudi iliyowekwa",
     "map_default_zoom_level": "Kiwango-msingi cha kupanua ",
     "map_default_location": "Mahali pa Chaguo-msingi",
-    "new_survey": "New Survey",
+    "new_survey": "Ongeza Hojaji",
     "send_targeted": "Tuma hojaji inayolengwa kwa kutumia SMS",
     "send_crowdsourced": "Rudi kwenye hojaji inayotokana na umati",
     "site": "Mipangilio ya Kurasa",
@@ -1445,8 +1572,8 @@
     "site_language": "Lugha ya kurasa",
     "site_private": "Binafsisha utendakazi huu",
     "site_private_desc": "Kuwasha chaguo hili hufanya utumaji wako na data yake ipatikane tu kwa watumiaji waliojiandikisha walio na mapendeleo sahihi, ambao lazima waingie katika akaunti ili wafikie data.",
-    "site_disable_registration": "Lemaza ishara ya mtumiaji?",
-    "site_disable_registration_desc": "Kuangalia hii hulemaza kipengele cha usajili. Wasimamizi watalazimika kuongeza watumiaji kwa mikono.",
+    "site_disable_registration": "Ungependa kuzima usajili wa mtumiaji?",
+    "site_disable_registration_desc": "Kuchagua hii huzima kipengele cha usajili. Wasimamizi watalazimika kuongeza watumiaji wao wenyewe.",
     "select_image": "Chagua picha",
     "saved_settings": "Mipangilio ya utendakazi umehifadhiwa!",
     "saved_map_settings": "Mipangilio ya ramani imehifadhiwa!",
@@ -1493,7 +1620,7 @@
     "import": "Ingiza",
     "import_explanation_csv": "Ingiza data kutoka kwa shiti ya CSV kwenye utendakazi wako kama matangazo ya hojaji mahsusi",
     "import_explanation_file_size": "Ukubwa wa faili moja umefungiwa hadi 10 MB",
-    "import_explanation_format_location_1": "Maeneo ya kijiografia yanafaa kujumuishwa kama  kolamu ya latitudi na longitudi tofauti katika CSV yako",
+    "import_explanation_format_location_1": "Maeneo ya kijiografia yanafaa kujumuishwa kama kolamu ya latitudi na longitudi tofauti katika CSV yako",
     "import_explanation_required_fields": "Mawanda yote inayohitajika lazima ihusishwe na thamani iliyowekwa kwenye CSV. Kwa mfano, ikiwa anuani ya uwanda inahitajima basi uwanda lazima itiwe kwenye ramani katika kolamu ya CSV pale thamani zote zimepangwa",
     "configure_posts": "Matangazo yaliyobatilishwa",
     "configure_all_imported_posts": "Badilisha matangazo yote yaliyoingizwa",
@@ -1510,14 +1637,14 @@
     "organize_data": "Shughulikia data",
     "organize_your_imported_data": "Wekea kolamu za CSV kwa mawanda ya tangazo",
     "assign_csv_message": "Wekea kolamu za CSV kwa mawanda ya tangazo",
-    "csv_instructions": "Kila jina la kolamu kutoka faili ya CSV yameorodheshwa. Chagua <nguvu>{{fomu_jina}}</nguvu> uwanda ambao ungepena kila kolamu ingizwe kwayo.",
+    "csv_instructions": "Kila jina la kolamu kutoka faili ya CSV yameorodheshwa. Chagua <nguvu>{{form_name}}</nguvu> uwanda ambao ungepena kila kolamu ingizwe kwayo.",
     "csv_instructions_required_fields": "Uwanda uliowekewa alama ya a [*] inahitajika na lazima iwekewe thamani.",
     "csv_column_name": "Jina la kolamu ya CSV",
-    "post_type_title": "{{fomu_jina}} jina la uwanda",
+    "post_type_title": "jina la uwanda {{form_name}}",
     "leave_empty": "Acha tupu",
     "cancel_import": "Katisha uingizaji",
     "finish_import": "Kamilisha uingizaji",
-    "which_survey": "Hojaji gani?"
+    "which_survey": "hojaji gani?"
   },
   "data_export": {
     "title": "Hamisha data",
@@ -1597,6 +1724,7 @@
     "uploading_data": "Inapakia data...",
     "uploading_data_desc": "Upakiaji wa data kwenye akaunti yako ya Humanitarian Data Exchange (HDX) unaendelea... <br /> <br />Unaweza kutoka kwenye ukurasa huu wakati upakiaji huu unafanyika lakini tafadhali usifunge kivinjari.",
     "uploading_data_err": "Lo... Hitilafu fulani imetokea wakati wa kupakia data yako, tafadhali angalia nyanja zinazohitajika na ufunguo wako wa api na ujaribu tena.",
+    "data_export_err":"Imeshindwa kuhamisha",
     "no_fields_selected": "Hujachagua nyanda zozote au kukabidhi vitambulisho au sifa zozote za hxl. Tafadhali chagua angalau sehemu moja na ukabidhi angalau tagi moja ili kuweza kuhamisha kwa CSV au kupakia kwenye akaunti ya Humanitarian Data Exchange (HDX).",
     "validation": {
       "title": "Mada inahitajika",
@@ -1611,11 +1739,13 @@
     "role_display": "Jukumu: {{role}}",
     "contact": "{{type}}: {{contact}}",
     "add_user": "Ongeza Mtumizi",
+    "create_user": "Ongeza mtumiaji",
+    "update_user": "Sasisha mtumiaji",
     "edit_user": "Hariri Mtumizi",
     "update_password": "Badilisha Nambari ya siri",
     "change_role": "Badilisha jukumu",
     "save": "Hifadhi Mtumizi",
-    "save_add_another": "Hifadhi & Ongeza Nyingine\n",
+    "save_add_another": "Hifadhi na Ongeza Nyingine",
     "show_all_roles": "Onyesha majukumu yote",
     "cannot_delete_yourself": "Huwezi kufuta Utumizi wako mwenyewe",
     "cannot_change_your_own_role": "Huwezi kubadilsha jukumu lako mwenyewe",
@@ -1631,7 +1761,7 @@
     "never": "Kamwe",
     "no_full_name": "Hakuna jina linaloonyeshwa",
     "number_of_users_shown": "Idadi ya watumizi wanaoonyeshwa",
-    "per_page": "{{idadi}} watumizi",
+    "per_page": "watumizi {{count}}",
     "password": "Nambari ya siri",
     "new_password": "Nambari mpya ya siri",
     "register": "Jisajili",
@@ -1643,15 +1773,19 @@
     "passwordreset_instructions": "Ingiza baruapepe yako kuomba kubadilisha nambari ya siri",
     "passwordreset_confirm_instructions": "Baruapepe yako ikiwa kwenye mahifadhi yetu, utapata baruapepe ya kugundua nambari ya siri hivi karibuni",
     "forgot_instructions": "Hakuna wasiwasi! Wasilisha barua pepe yako na uangalie kisanduku pokezi chako kwa kiungo cha kuweka upya.",
-    "token": "Kifaa cha kubadilisha nambari ya siri",
+    "token": "Bandika tokeni ya kuweka upya nenosiri kutoka kwa baruapepe",
     "password_hint": "Nenosiri linapaswa kuwa na angalau herufi 8, herufi ndogo moja, herufi kubwa moja, nambari moja na ishara moja.",
     "password_length": "Nenosiri lazima liwe na urefu wa angalau herufi 8",
     "password_match": "Manenosiri hayalingani",
+    "enter_new_password": "Weka nenosiri lako jipya",
+    "password_change_success": "Nenosiri lako limebadilishwa kwa mafanikio",
+    "password_change_success_info": "Sasa unaweza kuingia kwa kutumia vitambulisho vyako vipya",
     "check_email": "Angalia barua pepe yako",
     "name_will_be_a_display_name": "Jina unaloingiza litakuwa jina la kuonyesha.",
     "valid": {
       "fields": {
-        "email must be unique": "Mtumiaji aliye na barua pepe hii tayari yupo"
+        "email must be unique": "Mtumiaji aliye na barua pepe hii tayari yupo",
+        "email must be valid": "Barua pepe lazima iwe barua pepe halali"
       },
       "name": {
         "required": "Jina la kuonyesha linahitajika",
@@ -1689,7 +1823,7 @@
     "update_password": "Badilisha nambari ya siri ",
     "update_success": "Habari zako zilifanikiwa kubadilishwa. Inahitajika uondoke na kurudi ndani tena ili mabadiliko hayo yaonekane. ",
     "button": {
-      "save": "Hifadhi & amp; funga",
+      "save": "Hifadhi na ufunge",
       "cancel": "Katisha"
     },
     "nav": {
@@ -1726,8 +1860,8 @@
     },
     "default": {
       "data_has_not_been_saved": "Data haijahifadhiwa!",
-      "discard_changes": "Discard changes?",
-      "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
+      "discard_changes": "Ondoa mabadiliko?",
+      "survey_has_not_been_saved": "Mabadiliko yatapotea ikiwa hutahifadhi hojaji",
       "proceed_warning": "Kitendo hiki hakiwezi kutenduliwa. Tafadhali endelea kwa tahadhari.",
       "save_success": "Hifadhi rasilimali",
       "save_error": "Haiwezi kuhifadhi rasilimali, tafadhali jaribu tena",
@@ -1746,14 +1880,14 @@
       "file_missing": "Tafadhali chagua faili ya CSV ya kuingiza.",
       "form_missing": "Tafadhali chagua Hojaji.",
       "csv_upload": "Faili {{jina}} imefanikiwa kuingizwa",
-      "csv_import_processed_errors": "<nguvu>Uingizaji wao wa CSV </nguvu> imekamilika. {{imeshughulikiwa}} rekodi zimeingizwa, {{makosa}} rekodi zimefeli.",
-      "csv_import_success_info": "Data kutoka shiti yako ya CSV, <em>{{jinalafaili}}</em>, ili fanikiwa kuingizwa<a href=\"/mipangilio/hojaji/{{fomu_id}}\">{{fomu_jina}}</a> hojaji.",
-      "duplicate_fields": "Kolamu lazima ihusishwe na miwanda maalumu ya hojaji. Kalamu zifuatazo zimehusisha zaidi ya mara 1: {{urudufishaji}}",
-      "required_fields": "Mawanda yanayohitajika lazima yapangwe kwa thamani.  Mawanda yafuatayo hayajapangwa: {{inahitajika}}",
+      "csv_import_processed_errors": "<nguvu>Uingizaji wao wa CSV </nguvu> imekamilika. Rekodi {{processed}} zimeingizwa, rekodi {{errors}} zimefeli.",
+      "csv_import_success_info": "Data kutoka shiti yako ya CSV, <em>{{filename}}</em>, ilifanikiwa kuingizwa kwa hojaji<a href=\"/views/list\">{{form_name}}</a>.",
+      "duplicate_fields": "Kolamu lazima ihusishwe na miwanda maalumu ya hojaji. Kalamu zifuatazo zimehusisha zaidi ya mara 1: {{duplicates}}",
+      "required_fields": "Mawanda yanayohitajika lazima yapangwe kwa thamani.  Mawanda yafuatayo hayajapangwa: {{required}}",
       "empty_mapping": "Faili ya CSV uliyopakia ni tupu. Tafadhali angalia faili yako ya CSV na ujaribu tena",
       "empty_mapping_empty": "Faili ya CSV haina majina ya safu wima. Tafadhali angalia faili yako ya CSV na ujaribu tena",
       "no_mappings": "Hakuna mawanda yaliyotiwa kwenye ramani - angalau uwanda mmoja lazima uingizwe ili uendelee",
-      "csv_import_cancel": "Katisha Kuingiza CSV",
+      "csv_import_cancel": "Uingizaji wa CSV umekatishwa",
       "csv_import_cancel_confirm": "Je, una uhakika unataka kughairi uingizaji?",
       "csv_import_error": "Baadhi ya data katika faili yako ya CSV hailingani na umbizo la uga wa hojaji iliyopangwa. Tafadhali kagua data na ujaribu tena.",
       "csv_import_success": "Data kutoka kwa faili yako ya CSV ililetwa kwa ufanisi!"
@@ -1785,10 +1919,10 @@
       "can_t_view_this_post": "Huna ruhusa ya kutazama chapisho hili.<br> Bado inapitiwa na msimamizi.<br> Itapatikana kwako mara tu itakapochapishwa.",
       "contact_for_details": "Wasiliana na msimamizi kwa maelezo zaidi:",
       "delete_image_confirm": "Je, unahakika unataka kuongoa picha hii?",
-      "save_success": "Tangaza {{jina}} hifadhi",
-      "save_success_review": "Tangazo {{jina}} imehifadhiwa. Matangazo yako yatatathiniwa na mtathmini kabla ya kuyachapisha.",
+      "save_success": "Tangazo {{name}} imehifadhiwa",
+      "save_success_review": "Tangazo {{name}} imehifadhiwa. Matangazo yako yatatathiniwa na mtathmini kabla ya kuyachapisha.",
       "save_error": "Imeshindwa kuhifadhi tangazo, tafadhali jaribu tena",
-      "publish_success": "Tangazo limechapishwa kwa {{majukumu}}",
+      "publish_success": "Tangazo limechapishwa kwa {{role}}",
       "set_draft": "Tangazo hili linakuonekania wewe tu",
       "publish_error": "Imeshindwa kuchapisha tangazo, tafadhali jaribu tena",
       "unpublish_success": "Tangazo limeondolewa",
@@ -1796,15 +1930,15 @@
       "yes_confirm_delete": "Ndiyo, futa tangazo hili",
       "confirm_delete": "Thibitisha kufuta",
       "destroy_title": "Futa tangazo",
-      "delete_question": "Je, unahakika unataka kufuta tangazo lako {{tangazo}}?",
-      "destroy_success": "Tangazo limefutwa",
+      "delete_question": "Je, unahakika unataka kufuta tangazo lako {{post}}?",
+      "destroy_success": "Tangazo {{name}} limefutwa",
       "destroy_success_bulk": "Matangazo yamefutwa",
       "destroy_confirm": "Je, una hakaka unataka kufuta tangazo hili?",
       "destroy_error": "Imeshindwa kufuta tangazo, tafadhali jaribu tena",
-      "bulk_destroy_confirm": "Je, unahakika unataka kufuta {{hesabu}} matangazo?",
-      "stage_save_success": "Boresha {{hatua}}",
+      "bulk_destroy_confirm": "Je, unahakika unataka kufuta matangazo {{count}}?",
+      "stage_save_success": "Boresha {{stage}}",
       "export": "Hii itahamisha matangazo yaliyochujwa. Je, unahakika unataka kuendelea?",
-      "update_status_success_bulk": "Hali imeboreshwa kwa {{hesabu}} matangazo",
+      "update_status_success_bulk": "Hali imeboreshwa kwa matangazo {{count}}",
       "leave_without_save": "Je, ungependa kuondoka kwenye chapisho hili bila kuhifadhi?",
       "leave_confirm_message": "Ukiendelea, mabadiliko yako yote yatapotea",
       "leave_confirm": "Endelea bila kuhifadhi",
@@ -1813,15 +1947,15 @@
       "post_not_found": "Chapisho halipatikani"
     },
     "category": {
-      "save_success": "Kategoria iliyohifadhiwa {{jina}}",
+      "save_success": "Kategoria {{name}} iliyohifadhiwa",
       "destroy_confirm": "Unahakika unaweza kufuta kategoria hii?",
       "destroy_confirm_desc": "Kufuta kategoria hii kutakiondoa kwenye machapisho yote yaliyopo. Kitendo hiki hakiwezi kutenduliwa.",
       "destroy_success": "Kategoria imefutwa",
       "destroy_error": "Imeshindwa kufuta kategoria, tafadhali jaribu tena",
-      "bulk_destroy_confirm": "Unahakika unataka kufuta {{hesabu}} kategoria?",
+      "bulk_destroy_confirm": "Unahakika unataka kufuta kategoria {{count}}?",
       "bulk_destroy_confirm_desc": "Kufuta kategoria hizi kutaziondoa kwenye machapisho yote yaliyopo. Kitendo hiki hakiwezi kutenduliwa.",
-      "bulk_destroy_success": "{{hesabu}} kategoria imefutwa",
-      "bulk_destroy_success_countless": "Jamii zimefutwa"
+      "bulk_destroy_success": "kategoria {{count}} imefutwa",
+      "bulk_destroy_success_countless": "Kategoria zimefutwa"
     },
     "role": {
       "delete_question": "Unahakika unataka kufuta majukumu?",
@@ -1835,18 +1969,18 @@
       "save_success": "Kichochezi cha wavuti {{webhook}} imehifadhiwa."
     },
     "datasource": {
-      "save_success": "Chanzo cha Data zilizohifadhiwa {{jina}}"
+      "save_success": "Chanzo cha Data zilizohifadhiwa {{name}}"
     },
     "user": {
-      "save_success": "Mtumizi {{jina}} limehifadhiwa",
-      "edit_success": "Mtumizi {{jina}} limeboreshwa",
+      "save_success": "Mtumizi {{name}} amehifadhiwa",
+      "edit_success": "Mtumizi {{name}} ameboreshwa",
       "destroy_confirm": "Je, una hakika unataka kufuta mtumizi huyu?",
       "destroy_success": "Mtumizi amefutwa",
       "destroy_error": "Imeshindwa kufuta mtumizi, tafadhali jaribu tena",
-      "bulk_destroy_confirm": "Je, unahakika unataka kufuta {{hesabu}} watumizi?",
+      "bulk_destroy_confirm": "Je, unahakika unataka kufuta watumizi {{count}}?",
       "bulk_destroy_success": "Watumizi wamefutwa",
-      "bulk_role_change_confirm": "Je, unahakika unataka kubadilisha majukumu ya {{hesabu}} watumizi wa {{majukumu}}?",
-      "bulk_role_change_success": "Majukumu ya watumizi yamebadilishwa kwa {{majukumu_jina}}",
+      "bulk_role_change_confirm": "Je, unahakika unataka kubadilisha majukumu ya watumizi {{count}} wa {{role}}?",
+      "bulk_role_change_success": "Majukumu ya mtumizi yamebadilishwa kwa {{role_name}}",
       "are_you_sure_you_want_to_delete_user": "Una uhakika unataka kufuta {{username}}"
     },
     "video": {
@@ -1854,22 +1988,22 @@
     },
     "form": {
       "add_to_survey": "Ongeza kwa hojaji",
-      "save_success": "Hojaji {{jina}} limehifadhiwa",
-      "save_stage_success": "Kazi ya hojaji {{jina}} limehifadhiwa",
-      "save_attribute_success": "Uwanda {{jina}} ongeza",
-      "edit_form_success": "Hojaji {{jina}} limeboreshwa",
-      "edit_stage_success": "Kazi ya hojaji {{jina}} imeboreshwa",
+      "save_success": "Hojaji {{name}} limehifadhiwa",
+      "save_stage_success": "Kazi ya hojaji {{name}} limehifadhiwa",
+      "save_attribute_success": "Uwanda {{name}} umeongezwa",
+      "edit_form_success": "Hojaji {{name}} imeboreshwa",
+      "edit_stage_success": "Kazi ya hojaji {{name}} imeboreshwa",
       "delete_form_confirm": "Je, una uhakika unataka kufuta hojaji hii na data yake yote?",
       "delete_form_confirm_desc": "Kitendo hiki hakiwezi kutenduliwa. Kufuta hojaji hii kutaondoa data yake yote, ikijumuisha machapisho. Andika jina la utafiti: <br><br><strong>{{check_name}}</strong><br><br>katika kisanduku kilicho hapa chini ili kuthibitisha kufutwa.",
       "delete_form_error": "Maandishi uliyoweka hayalingani na jina la hojaji, tafadhali jaribu tena",
       "delete_form_button": "Futa hojaji hii",
-      "destroy_form_success": "Hojaji {{jina}} imefutwa",
+      "destroy_form_success": "Hojaji {{name}} imefutwa",
       "delete_stage_confirm": "Je, unahakika unataka kufuta kazi hii?",
       "delete_stage_confirm_desc": "Kitendo hiki hakiwezi kutenduliwa. Kufuta jukumu hili kutaondoa nyanda zake zote, na data yoyote ndani yake.",
-      "destroy_stage_success": "Kazi ya hojaji {{jina}} imefutwa",
+      "destroy_stage_success": "Kazi ya hojaji {{name}} imefutwa",
       "delete_attribute_confirm": "Je, unahakika unataka kufuta uwanda huu?",
       "delete_attribute_confirm_desc": "Kitendo hiki hakiwezi kutenduliwa. Kufuta sehemu hii kutaondoa data yake kutoka kwa machapisho yote yaliyopo.",
-      "destroy_attribute_success": "Uwanda {{jina}} umefutwa",
+      "destroy_attribute_success": "Uwanda {{name}} umefutwa",
       "survey_name_required": "Jina la utafiti linahitajika",
       "validation": {
         "name": {
@@ -1884,11 +2018,11 @@
     },
     "collection": {
       "delete_collection_confirm": "Je, unahakika unataka kufuta mkusanyiko huu?",
-      "created_collection": "Mkusanyiko {{mkusanyiko}} imefanikiwa kubuniwa",
+      "created_collection": "Mkusanyiko {{collection}} imefanikiwa kubuniwa",
       "updated_collection": "Mkusanyiko {{collection}} imehifadhiwa",
-      "add_to_collection": "Tangazo limeongezwa kwa {{mkusanyiko}}",
-      "removed_from_collection": "Tangazo limeondolewa kwa {{mkusanyiko}}",
-      "bulk_add_to_collection": "{{hesabu}} matangazo yameongezwa kwa {{mkusanyiko}}",
+      "add_to_collection": "Tangazo limeongezwa kwa {{collection}}",
+      "removed_from_collection": "Tangazo limeondolewa kwa {{collection}}",
+      "bulk_add_to_collection": "matangazo {{count}} yameongezwa kwa {{collection}}",
       "done": "Imemaliza"
     },
     "savedsearch": {
@@ -1903,12 +2037,12 @@
       "success": "Nambari yako ya siri imebadilishwa"
     },
     "notification": {
-      "add": "Sasa unataarifiwa kuhusu matangazo mapya yatakayoongeza {{panga}}",
+      "add": "Sasa unataarifiwa kuhusu matangazo mapya yatakayoongeza {{set}}",
       "delete_confirm": "Je, unahakika unataka kuondoa taarifa hii?",
-      "destroy_success": "<nguvu>hautapata tena taarifa kuhusu</nguvu> {{jina}}."
+      "destroy_success": "<strong>hautapata tena taarifa kuhusu</strong> {{name}}."
     },
     "message": {
-      "sent_to": "Ujumbe umetumwa kwa {{anuani}}"
+      "sent_to": "Ujumbe umetumwa kwa {{contact}}"
     },
     "export": {
       "in_progress": "Tunatayarisha faili yako ya CSV. Hii inaweza kuchukua muda mfupi. Unaweza kuondoka kwenye ukurasa huu ikiwa unataka. Tutakujulisha tukimaliza.",
@@ -1924,19 +2058,28 @@
       "bulk_destroy_confirm_desc": "Kufuta hojaji hizi {{count}} zilizochaguliwa pia kutafuta machapisho yote yaliyokusanywa na data yote husika katika hojaji. Hatua hii haiwezi kutenduliwa.",
       "destroy_confirm": "Je, una hakika unataka kufuta hojaji hii?",
       "destroy_confirm_desc": "Kufuta hojaji hii pia kutafuta machapisho yote yaliyokusanywa na data yote husika katika hojaji. Hatua hii haiwezi kutenduliwa.",
-      "destroy_confirm_desc_end": "Unaweza <a href=\"settings/data-import\">kupakua na kuagiza</a> data yako yote kabla ya kufuta."
+      "destroy_confirm_desc_end": "Unaweza <a href=\"settings/data-import\">kupakua na kuagiza</a> data yako yote kabla ya kufuta.",
+      "discard_changes": "Katisha mabadilikio",
+      "save_changes": "Hifadhi Mabadilikio",
+      "invalid_characters": "Tafadhali ondoa vibambo batili (kama vile +, $, ^, =)",
+      "translations_missing": "Unahitaji kuongeza tafsiri za majina yote, na uhakikishe kuwa visanduku vya kuteua na redio hazina nakala. Hakikisha kuwa umetafsiri majina ya uchunguzi kwa lugha zote zilizoongezwa na kwamba kisanduku cha kuteua na thamani za vitufe vya redio ni za kipekee (ndani ya kila lugha)."
     },
     "confirm_modal": {
       "add_post_success": {
         "success": "Mafanikio!",
-        "success_description": "Shukrani kwa ajili ya kuwasilisha ripoti yako. Chapisho linapitiwa na timu yetu na hivi karibuni itaonekana kwenye jukwaa.",
+        "success_description": "Asante kwa kuwasilisha chapisho lako. Inakaguliwa, na itaonekana kwenye jukwaa hivi karibuni.",
         "success_button": "Sawa, inaonekana nzuri"
       },
       "deleted": {
         "success": "Mafanikio!",
         "success_description": "Umefuta kabisa machapisho {{count}}.",
-        "success_button": "Sawa, inaonekana nzuri"
+        "success_button": "Sawa"
       }
+    },
+    "snackbar": {
+      "changes_discarded": "Mabadiliko yamekatishwa kwa ufanikio",
+      "no_changes_made": "Bado hakuna mabadiliko yoyote",
+      "close": "Funga"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Je, kweli unataka kufuta lugha {{lang}}?"
@@ -1962,8 +2105,8 @@
     "my_location_error": "Samahani hatukuweza kupata eneo lako",
     "update_map": "Sasisha ramani",
     "no_matching_locations": "Hakuna maeneo yanayolingana",
-    "invalid_lat": "Thamani iliyotolewa sio latitude halali.",
-    "invalid_lon": "Thamani iliyotolewa sio muda mrefu halali."
+    "invalid_lat": "Thamani iliyotolewa sio latitudo halali.",
+    "invalid_lon": "Thamani iliyotolewa sio longitudo halali."
   },
   "notification": {
     "title": "Taarifa",
@@ -2001,7 +2144,7 @@
         "required": "Baruapepe inahitajika ya kupokea taarifa",
         "email": "Baruapepe hii haifai",
         "maxlength": "Baruapepe hii ni ndefu sana",
-        "not_valid": "Email hii si halali"
+        "not_valid": "Baruapepe hii si halali"
       },
       "phone": {
         "required": "Nambari ya simu inahitajika kupokea taarifa",
@@ -2016,12 +2159,13 @@
     "terms_of_service": "Tumesasisha <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Sheria na Masharti</a> na <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Sera yetu ya Faragha</a>. Tafadhali kagua hati hizi kwa makini na ukubali sheria na masharti ili uendelee kutumia huduma za Ushahidi.",
     "agree": "Ninakubali Sheria na Masharti ya Ushahidi.",
     "accept_and_continue": "Kubali na uendelee",
-    "i_agree": "Nakubaliana na Sera ya <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Faragha</a> ya Ushahidi\nMasharti <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">na Masharti</a>."
+    "i_agree": "Nakubaliana na<a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Sera ya Faragha</a> ya Ushahidi na\n<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Sheria na Masharti</a>."
   },
   "translations": {
     "languages": "Lugha",
     "language": "Lugha",
     "default": "Kaida",
+    "translation_default": "(chaguo-msingi)",
     "translate_field": "Tafsiri ya uga",
     "survey_select_default": "Chagua lugha chaguo-msingi kwa ajili ya utafiti huu",
     "category_select_default": "Chagua lugha chaguo-msingi kwa kategoria hii",
@@ -2030,11 +2174,11 @@
     "edit_placeholder": "Andika tafsiri yako hapa",
     "add_translation": "Ongeza tafsiri yako hapa chini:",
     "survey_name_required": "Tafsiri ya jina la utafiti inahitajika",
-    "field_add_translation": "Mashamba (bofya ili kuongeza tafsiri):",
+    "field_add_translation": "Mashamba (finya ili kuongeza tafsiri):",
     "add_translation_lang": "Ongeza tafsiri",
-    "translate_field_name": "Tafsiri jina la uga",
-    "translate_field_desc": "Tafsiri maelezo ya uga",
-    "category_translations_link": "Tafadhali kumbuka, ili kuongeza tafsiri kwa majina ya kategoria, nenda kwenye <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Mipangilio ya Jamii</a>",
+    "translate_field_name": "Tafsiri jina la uwanda",
+    "translate_field_desc": "Tafsiri maelezo ya uwanda",
+    "category_translations_link": "Tafadhali kumbuka, ili kuongeza tafsiri kwa majina ya kategoria, nenda kwenye <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Mipangilio ya Kategoria</a>",
     "parent_child_lang": "Tafadhali kumbuka kuwa lugha ya chaguo-msingi iliyochaguliwa kwa kikundi hiki cha watoto ni tofauti na mzazi wake",
     "post_title_required": "Tafsiri ya kichwa cha baada ya kichwa inahitajika",
     "add_a_language": "Ongeza lugha",

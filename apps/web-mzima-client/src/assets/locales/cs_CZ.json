@@ -1,10 +1,44 @@
 {
+  "onboarding": {
+    "greeting": "Hello {{username}}!",
+    "intro": "<p>You’ve successfully created your deployment. Now, while we polish it up, please, get along with Ushahidi features. The onboarding process will take couple of minutes.</p>",
+    "ready": "You're ready!",
+    "data_collection": {
+      "title": "Data collection",
+      "content": "<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>"
+    },
+    "filtering": {
+      "title": "Filtering",
+      "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
+    },
+    "sorting": {
+      "title": "Řazení",
+      "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
+    },
+    "activity": {
+      "title": "Aktivita",
+      "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
+    },
+    "collections": {
+      "title": "Kolekce",
+      "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
+    },
+    "settings": {
+      "title": "Nastavení",
+      "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
+    },
+    "final_step": {
+      "desc_1": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
+      "desc_2": "Remember, in case of any question, don’t hesitate to reach out to our team by",
+      "help": "Nápověda & Podpora"
+    }
+  },
   "app": {
     "contact_email_address": "Kontaktní e-mailová adresa:",
     "powered_by_ushahidi": "Běží na Ushahidi.",
     "support": "Podpora Ushahidi",
     "by": "od",
-    "confirm": "Confirm",
+    "confirm": "Potvrdit",
     "submit": "Odeslat",
     "anonymous": "Anonym",
     "submitting": "Odesílání",
@@ -70,6 +104,7 @@
     "more": "Více",
     "cancel": "Zrušit",
     "save": "Uložit",
+    "date_shows_up_here": "Date shows up here",
     "save_and_close": "Uložit a zavřít",
     "update": "aktualizovat",
     "update_and_close": "Aktualizovat a zavřít",
@@ -94,7 +129,7 @@
     "add_role": "Přidat roli",
     "webhooks": "Webhooks",
     "edit_webhook": "Upravit Roli",
-    "add_webhook": "Přidat roli",
+    "add_webhook": "Add Webhook ",
     "categories": "Kategorie",
     "edit_category": "Upravit kategorii",
     "add_category": "Přidat kategorii",
@@ -152,6 +187,7 @@
     "you_are_not_authorized": "Nejste oprávněni",
     "lost_internet_connection": "Ztráta připojení k internetu",
     "tweet_is_unavailable": "Tento tweet není k dispozici",
+    "tweet_failed_to_load": "Tweet failed to load",
     "file_uploader": "Nahravač souboru",
     "preview_image": "Náhled obrázku",
     "privacy_policy": "Zásady ochrany osobních údajů",
@@ -166,8 +202,38 @@
     "we_ve_updated_deployments_to_version_5": "Aktualizovali jsme nasazení na verzi 5. Uživatelé nemusí mít brzy přístup k vašemu nasazení. ",
     "for_more_details_on_deployment_update": "Další podrobnosti o aktualizaci nasazení najdete v Nápovědě a podpoře (měl by to být odkaz) nebo pošlete e-mail na adresu:",
     "open_chat": "Otevřít okno s konverzací",
-    "end_post": "Konec příspěvků"
+    "end_post": "Konec příspěvků",
+    "read_more": "Číst více"
   },
+  "date": {
+    "aLongTimeAgo": "a long time ago",
+    "justNow": "just now",
+    "aMomentAgo": "a moment ago",
+    "second": {
+      "singular": "{{time}} second ago",
+      "plural": "{{time}} seconds ago"
+    },
+    "minute": {
+      "singular": "{{time}} minute ago",
+      "plural": "{{time}} minutes ago"
+    },
+    "hour": {
+      "singular": "{{time}} hour ago",
+      "plural": "{{time}} hours ago"
+    },
+    "day": {
+      "singular": "{{time}} day ago",
+      "plural": "{{time}} days ago"
+    },
+    "month": {
+      "singular": "{{time}} month ago",
+      "plural": "{{time}} months ago"
+    },
+    "year": {
+      "singular": "{{time}} year ago",
+      "plural": "{{time}} years ago"
+    }
+},
   "cookies": {
     "we_use_cookies": "Ahoj! Soubory cookie používáme, abychom vám vylepšili zážitek.",
     "cookies_privacy": "Chcete-li se dozvědět více nebo odvolat svůj souhlas, přejděte na naše <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Zásady ochrany osobních údajů</a>.",
@@ -225,7 +291,18 @@
     "no_crowdsourced": "Nemáte žádné údaje z davového průzkumu k zobrazení",
     "targeted_activity": "Cílená aktivita průzkumu",
     "crowdsourced_activity": "Aktivita davového průzkumu",
-    "tooltip_template": "Toto je šablona nápovědy s jedním bodem"
+    "tooltip_template": "Toto je šablona nápovědy s jedním bodem",
+    "select_range": "Select range",
+    "select_filter": "Select filter",
+    "show_all_posts": "Zobrazit všechny příspěvky",
+    "categories": "Kategorie",
+    "survey": "Průzkum",
+    "status": "Stav",
+    "statuses": "Statuses",
+    "all_time": "Pořád",
+    "last_week": "Last week",
+    "last_month": "Last month",
+    "last_year": "Last year"
   },
   "form": {
     "add_field": "Přidat pole",
@@ -318,6 +395,8 @@
     "survey_name": "Název průzkumu",
     "describe_your_survey": "Popište svůj průzkum ...",
     "describe_this_task": "Popsat tuto úlohu ...",
+    "create_survey": "Create survey",
+    "update_survey": "Update survey",
     "untitled_task": "Nepojmenovaná úloha",
     "add_task": "Přidat úlohu",
     "title": "Název",
@@ -340,10 +419,11 @@
     "date": "Datum",
     "datetime": "Datum a čas",
     "select": "Vybrat",
+    "select_other_name": "A dropdown List",
     "radio_button": "Přepínací tlačítko(a)",
     "checkbox": "Zaškrtávací políčko(a)",
     "related_post": "Související příspěvek",
-    "related_post_info": "Vezměte prosím na vědomí, že příspěvky, kterých se to týká, musí být zveřejněny, příspěvky, které jsou v procesu kontroly, se ve výsledcích vyhledávání neobjeví.",
+    "related_post_info": "Ve výsledcích vyhledávání se zobrazí pouze příspěvky, které byly zveřejněny, a tudíž se vztahují k",
     "upload_image": "Obrázek",
     "upload_document": "Dokument",
     "upload_audio": "Zvuk",
@@ -502,6 +582,15 @@
     }
   },
   "global_filter": {
+    "sources": {
+      "web": "Web",
+      "mobile": "Mobile",
+      "email": "E-mail",
+      "sms": "SMS",
+      "twitter": "Twitter",
+      "ussd": "USSD",
+      "whatsapp": "WhatsApp"
+    },
     "filter": "Filtr",
     "categories": {
       "categories": "Kategorie",
@@ -689,7 +778,9 @@
     "collections": "Kolekce",
     "comments": "Komentáře",
     "data_sources": "Zdroje dat",
-    "data_import": "Import dat",
+    "data_source": "Data Source",
+    "data_import": "Data import",
+    "data_export": "Data export",
     "deployment_not_found": "Nasazení nenalezeno",
     "deselect": "Odznačit",
     "edit_profile": "Upravit profil",
@@ -704,6 +795,7 @@
     "forgotyourpassword": "Zapomněli jste heslo?",
     "resetpassword": "Obnovit heslo",
     "resetmypassword": "Obnovit moje heslo",
+    "password_recovery": "Password recovery",
     "forms": "Formuláře",
     "help": "Nápověda",
     "home": "Úvodní strana",
@@ -713,6 +805,7 @@
     "help_support": "Nápověda & Podpora",
     "registration": "Přihlásit se",
     "register": "Přihlásit se",
+    "results": "Results",
     "map_settings": "Nastavení mapy",
     "more": "Více",
     "notifications": "Oznamování",
@@ -749,7 +842,9 @@
     "yesterday": "Včera",
     "map": "Mapa",
     "data": "Data",
-    "feed": "Zobrazení dat"
+    "feed": "Zobrazení dat",
+    "add_new_post":"Add New Post",
+    "edit_post": "Upravit příspěvek"
   },
   "views": {
     "map": "Mapa",
@@ -767,6 +862,7 @@
     "share_on_facebook": "Sdílet na Facebooku"
   },
   "post": {
+    "loading_posts": "Loading posts in {{ mode }} mode...",
     "post_count": "{{count}} příspěvků",
     "see_more_plural": "Viz {{newPostsCount}} nové příspěvky",
     "see_more_singular": "Viz {{newPostsCount}} nových příspěvků",
@@ -794,9 +890,9 @@
     "all_posts": "Všechny příspěvky",
     "no_search_results": "Vaše hledání neodpovídá žádnému příspěvku",
     "no_search_results_location": "Vašemu vyhledávání neodpovídají žádné příspěvky s informacemi o poloze",
-    "no_posts_match_search": "No posts match your keyword search. Please change or clear keyword search to see matching posts.",
-    "no_posts_match_search_plus_filter": "No posts match your keyword search + filters. Please change or clear keyword search and/or filters to see matching posts.",
-    "no_posts_match_your_current_filters": "No posts match the current filters. Please change or clear filters to see matching posts.",
+    "no_posts_match_search": "Vyhledávání klíčových slov neodpovídají žádné příspěvky. Změňte nebo vymažte vyhledávání klíčových slov, abyste viděli odpovídající příspěvky.",
+    "no_posts_match_search_plus_filter": "Žádné příspěvky neodpovídají vašemu vyhledávání klíčových slov + filtrů. Změňte nebo vymažte vyhledávání klíčových slov a/nebo filtry, abyste viděli odpovídající příspěvky.",
+    "no_posts_match_your_current_filters": "Aktuálním filtrům neodpovídají žádné příspěvky. Změňte nebo vymažte filtry, abyste viděli odpovídající příspěvky.",
     "no_posts_yet": "Zatím žádné příspěvky!",
     "no_posts_yet_location": "Zatím nejsou žádné příspěvky s informacemi o poloze!",
     "add_first_post": "Přidat první příspěvek",
@@ -882,6 +978,7 @@
       "locked_tooltip": "Tento příspěvek upravuje někdo jiný. Zkuste to prosím později."
 
     },
+    "post_not_authorized": "You are not authorized to perform this action on this post.",
     "modify": {
       "intro": "Vybrat průzkum",
       "no_task_values": "V současné době nejsou k této úloze uloženy žádné hodnoty.",
@@ -913,6 +1010,15 @@
           "url": "url odkaz",
           "add_link": "Přidat odkaz"
         }
+      },
+      "input_empty_warn": "Input cannot be empty",
+      "max_size": "Max size: {{size}} MB",
+      "invalid_video_embed": "Invalid video embed url",
+      "errors": {
+        "required" : "{{label}} field is a required field *",
+        "too_short": "{{label}} field is too short, use at least 2 characters",
+        "invvalid_pattern": "{{label}} field is invalid",
+        "special_char": "{{label}} field contains special characters"
       }
     },
     "preview": {
@@ -1000,13 +1106,14 @@
         "max_size" : "Soubor je příliš velký.",
         "max_files" : "Byl překročen maximální počet souborů.",
         "required" : "Jsou vyžadována média.",
-        "invalid_type" : "Unsupported file type."
+        "invalid_type" : "Nepodporovaný typ souboru."
       },
       "status" : {
         "uploading" : "Nahrávání...",
         "upload_complete" : "Nahrávání dokončeno!",
         "upload_failed" : "Nahrávání se nezdařilo!"
-      }
+      },
+      "special_char": "This field contains special characters"
     },
     "video": {
       "enter_a_url": "Zadejte adresu URL videa z Youtube nebo Vimeo."
@@ -1028,17 +1135,23 @@
       "you_can_search_or_click": "Můžete vyhledat nebo kliknout na oblast mapy, kam chcete značku umístit.",
       "search_address": "Vyhledat adresy, názvy míst nebo souřadnice ...",
       "nothing_found": "Nic nebylo nalezeno",
+      "lng": "Lng",
+      "lat": "Lat",
       "errors": {
         "empty_lat": "Zeměpisná šířka je prázdné pole",
         "empty_lng": "Zeměpisná délka je prázdné pole",
         "decimal_lat": "Pouze desetinné číslo zeměpisné šířky",
-        "decimal_lng": "Zeměpisná délka: pouze desetinné číslo"
+        "decimal_lng": "Zeměpisná délka: pouze desetinné číslo",
+        "special_lng": "Field longitude contains special characters",
+        "special_lat": "Field latitude contains special characters"
       }
     }
   },
   "role": {
     "are_you_sure_you_want_to_delete_role": "Opravdu chcete odstranit {{roleName}} rolí?",
     "add_role": "Přidat roli",
+    "create_role": "Create role",
+    "update_role": "Update role",
     "edit_role": "Upravit roli",
     "name": "Jméno",
     "description": "Popis",
@@ -1057,8 +1170,10 @@
     "only_me": "Pouze já"
   },
   "webhook": {
-    "add_webhook": "Přidat roli",
+    "add_webhook": "Add Webhook ",
     "edit_webhook": "Upravit Roli",
+    "create_webhook": "Create webhook",
+    "update_webhook": "Update webhook",
     "uuid": "Webhook UUID",
     "name": "Jméno",
     "shared_secret": "Sdílené tajemství",
@@ -1069,7 +1184,11 @@
     "save_add_another": "Uložit a přidat další",
     "delete": "Smazat",
     "delete_webhook": "Vymazat tento webhook",
-    "delete_webhook_desc": "<strong>Pokud odstraníte tento webhook</strong>, ztratí se všechny přidružené události. Postupovat opatrně."
+    "delete_webhook_desc": "<strong>Pokud odstraníte tento webhook</strong>, ztratí se všechny přidružené události. Postupovat opatrně.",
+    "dialog": {
+      "delete_warn_title": "{{ name }} webhook will be deleted!",
+      "delete_warn_message": "<p>Tuto akci nelze vrátit zpět.</p><p>Opravdu?</p>"
+    }
   },
   "saved_search": {
     "visible_to_public": "Toto uložené hledání je veřejně přístupné",
@@ -1129,7 +1248,8 @@
     "create_saved_filter": "Vytvořit uložený filtr",
     "collection_saved": "Kolekce uložena.",
     "collection_updated": "Kolekce aktualizována.",
-    "collection_description": "Příspěvky do kolekce můžete přidávat v zobrazení Data."
+    "collection_description": "Příspěvky do kolekce můžete přidávat v zobrazení Data.",
+    "collection_definition": " A \"Collection\" is a manually-curated group of posts. You may find it useful in grouping posts that you would like to share with external partners. It is not dynamic, meaning the posts within it do not change unless you manually update them."
   },
   "category": {
     "add_tag": "Přidat kategorii",
@@ -1139,10 +1259,11 @@
     "delete_category_desc": "<strong>Pokud tuto kategorii odstraníte</strong>, nebude již spojena s žádnými příspěvky. Postupovat opatrně.",
     "show_categories": "Zobrazit dostupné kategorie",
     "child_permissions": "Oprávnění pro tuto kategorii jsou spravována nadřazenou kategorií.",
-    "which_categories": "Which categories should be available?",
+    "which_categories": "Které kategorie by měly být dostupné?",
     "select_all": "Vybrat vše",
     "choose_roles": "Vybrat role",
     "create_tag": "Vytvořit kategorii",
+    "update_tag": "Update Category",
     "saved_tag": "Kategorie uložena.",
     "deleted_tags": "Kategorie smazány.",
     "manage_tags": "Správa kategorií",
@@ -1239,7 +1360,11 @@
       "api_key": "API klíč",
       "placeholder": {
         "pick_location": "Vyberte umístění..."
-      }
+      },
+      "satellite": "Satellite",
+      "streets": "Streets",
+      "humanitarian": "Humanitarian"
+      
     },
     "user_settings": {
       "user_settings_desc_1": "Zde můžete přidat svůj jedinečný klíč API pro svůj účet Human Data Exchange (HDX).",
@@ -1288,6 +1413,8 @@
       "provider_name": "{{providerName}} zdroj dat?",
       "do_you_really_want_to_disconnect": "Opravdu chcete odpojit svého poskytovatele?",
       "add_source": "Přidat zdroj",
+      "edit": "Edit {{provider}} Data Source",
+      "add_data_source": "Add Data Source",
       "associate_with_form": "Import do průzkumu",
       "associate_with_form_desc": "Všechna příchozí data od {{provider}} budou použita k vytvoření odpovědí na vybraný průzkum",
       "data_sources": "Zdroje dat",
@@ -1597,6 +1724,7 @@
     "uploading_data": "Nahrávání dat ...",
     "uploading_data_desc": "Nahrávání dat na účet služby Humanitarian Data Exchange (HDX) probíhá ... <br /><br />Během tohoto nahrávání můžete opustit tuto stranu, ale nezavírejte prohlížeč.",
     "uploading_data_err": "Uh oh ... Při nahrávání dat došlo k chybě, zkontrolujte prosím požadovaná pole a váš api-key a zkuste to znovu.",
+    "data_export_err":"Failed to export",
     "no_fields_selected": "Nevybrali jste žádné políčka nebo jste nepřiřadili žádné značky nebo atributy HXL. Zvolte alespoň jedno pole a přiřadte alespoň jednu značku, abyste mohli exportovat do souboru CSV nebo nahrajte na účet Humanitarian Data Exchange (HDX).",
     "validation": {
       "title": "Titul je vyžadován",
@@ -1611,6 +1739,8 @@
     "role_display": "Role: {{role}}",
     "contact": "{{type}}: {{contact}}",
     "add_user": "Přidat uživatele",
+    "create_user": "Create user",
+    "update_user": "Update user",
     "edit_user": "Upravit uživatele",
     "update_password": "Aktualizovat heslo",
     "change_role": "Změnit Roli",
@@ -1647,11 +1777,15 @@
     "password_hint": "Heslo by mělo obsahovat alespoň 8 znaků, jedno malé písmeno, jedno velké písmeno, jednu číslici a jeden symbol.",
     "password_length": "Heslo musí mít alespoň 8 znaků",
     "password_match": "Hesla se neshodují",
+    "enter_new_password": "Enter your new password",
+    "password_change_success": "Your password was successfully changed",
+    "password_change_success_info": "Now you can login with new credentials",
     "check_email": "Zkontrolujte svůj e-mail",
     "name_will_be_a_display_name": "Název, který zadáte, bude zobrazovaný název.",
     "valid": {
       "fields": {
-        "email must be unique": "Uživatel s tímto e-mailem již existuje"
+        "email must be unique": "Uživatel s tímto e-mailem již existuje",
+        "email must be valid": "Email must be a valid email address"
       },
       "name": {
         "required": "Zobrazovaný název je povinný",
@@ -1726,7 +1860,7 @@
     },
     "default": {
       "data_has_not_been_saved": "Data nebyla uložena!",
-      "discard_changes": "Discard changes?",
+      "discard_changes": "Zavrhnout změny?",
       "survey_has_not_been_saved": "The changes will be lost if you don’t save the survey",
       "proceed_warning": "Tuto akci nelze vrátit zpět. Postupujte prosím opatrně.",
       "save_success": "Uložený zdroj",
@@ -1924,12 +2058,16 @@
       "bulk_destroy_confirm_desc": "Odstraněním těchto {{count}} vybraných průzkumů se odstraní také všechny shromážděné příspěvky a všechna související data v průzkumech. Tento krok nelze vrátit zpět.",
       "destroy_confirm": "Opravdu chcete tento průzkum odstranit?",
       "destroy_confirm_desc": "Odstraněním tohoto průzkumu se odstraní také všechny shromážděné příspěvky a všechna související data v průzkumu. Tento krok nelze vrátit zpět.",
-      "destroy_confirm_desc_end": "Před odstraněním můžete stáhnout a importovat všechna data."
+      "destroy_confirm_desc_end": "Před odstraněním můžete stáhnout a importovat všechna data.",
+      "discard_changes": "Discard changes",
+      "save_changes": "Save Changes",
+      "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
+      "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
     },
     "confirm_modal": {
       "add_post_success": {
         "success": "Úspěch!",
-        "success_description": "Děkujeme za odeslání hlášení. Příspěvek je kontrolován naším týmem a brzy se objeví na platformě.",
+        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
         "success_button": "OK, zní to dobře"
       },
       "deleted": {
@@ -1937,6 +2075,11 @@
         "success_description": "Trvale jste odstranili {{count}} příspěvky.",
         "success_button": "OK, zní to dobře"
       }
+    },
+    "snackbar": {
+      "changes_discarded": "Changes discarded successfully",
+      "no_changes_made": "No changes made yet",
+      "close": "Zavřít"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Opravdu chcete smazat {{lang}} jazyk?"
@@ -2022,6 +2165,7 @@
     "languages": "Jazyky",
     "language": "Jazyk",
     "default": "výchozí",
+    "translation_default": "(default)",
     "translate_field": "Přeložit pole",
     "survey_select_default": "Vyberte výchozí jazyk pro tento průzkum",
     "category_select_default": "Vyberte výchozí jazyk pro tuto kategorii",

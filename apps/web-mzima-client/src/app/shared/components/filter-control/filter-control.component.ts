@@ -16,6 +16,7 @@ import { MatButton } from '@angular/material/button';
 import { DateRange } from '@angular/material/datepicker';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService } from '@services';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -79,7 +80,7 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
   public treeControl: FlatTreeControl<CategoryFlatNode>;
   private dateFormat = 'DD-MM-YYYY';
 
-  constructor(private breakpointService: BreakpointService) {
+  constructor(private breakpointService: BreakpointService, private translate: TranslateService) {
     this.isDesktop$ = this.breakpointService.isDesktop$.pipe(untilDestroyed(this));
     this.treeControl = new FlatTreeControl<CategoryFlatNode>(this.getLevel, this.isExpandable);
   }
@@ -257,7 +258,9 @@ export class FilterControlComponent implements ControlValueAccessor, OnChanges, 
 
     // Check that date is only displayed when "valid" i.e. it is valid when selected
     const valid = {
-      startDate: this.dateIsValid(valueDayjs.start) ? selected.dateStart : 'Date shows up here',
+      startDate: this.dateIsValid(valueDayjs.start)
+        ? selected.dateStart
+        : this.translate.instant('app.date_shows_up_here'),
       endDate: this.dateIsValid(valueDayjs.end) ? ` - ${selected.dateEnd}` : '',
     };
 
