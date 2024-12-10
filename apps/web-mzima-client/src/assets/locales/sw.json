@@ -231,7 +231,7 @@
     },
     "year": {
       "singular": "mwaka {{time}} uliopita",
-      "plural": "{{time}} years ago"
+      "plural": "miaka {{time}} iliyopita"
     }
 },
   "cookies": {
