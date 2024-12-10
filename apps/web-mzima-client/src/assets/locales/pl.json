@@ -20,7 +20,7 @@
       "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
     },
     "collections": {
-      "title": "Collections",
+      "title": "Kolekcje",
       "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
     },
     "settings": {
@@ -295,7 +295,7 @@
     "select_range": "Select range",
     "select_filter": "Select filter",
     "show_all_posts": "Show all posts",
-    "categories": "Categories",
+    "categories": "Kategorie",
     "survey": "Survey",
     "status": "Status",
     "statuses": "Statuses",
