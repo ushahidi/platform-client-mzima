@@ -129,7 +129,7 @@
     "add_role": "Ongeza Majukumu",
     "webhooks": "Vichochezi vya Wavuti",
     "edit_webhook": "Hariri Vichochezi vya Wavuti",
-    "add_webhook": "Add Webhook ",
+    "add_webhook": "Ongeza Kichochezi cha Wavuti",
     "categories": "Kategoria",
     "edit_category": "Hariri Kategoria",
     "add_category": "Ongeza Kategoria",
@@ -1170,7 +1170,7 @@
     "only_me": "Ni mimi tu"
   },
   "webhook": {
-    "add_webhook": "Add Webhook ",
+    "add_webhook": "Ongeza Kichochezi cha Wavuti",
     "edit_webhook": "Edit Role",
     "create_webhook": "Create webhook",
     "update_webhook": "Update webhook",
