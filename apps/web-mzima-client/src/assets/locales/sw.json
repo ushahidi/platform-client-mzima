@@ -1785,7 +1785,7 @@
     "valid": {
       "fields": {
         "email must be unique": "Mtumiaji aliye na barua pepe hii tayari yupo",
-        "email must be valid": "Email must be a valid email address"
+        "email must be valid": "Barua pepe lazima iwe barua pepe halali"
       },
       "name": {
         "required": "Jina la kuonyesha linahitajika",
