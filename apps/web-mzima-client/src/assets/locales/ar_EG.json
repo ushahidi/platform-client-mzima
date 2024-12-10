@@ -12,7 +12,7 @@
       "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
     },
     "sorting": {
-      "title": "Sorting",
+      "title": "ترتيب",
       "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
     },
     "activity": {
@@ -30,7 +30,7 @@
     "final_step": {
       "desc_1": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
       "desc_2": "Remember, in case of any question, don’t hesitate to reach out to our team by",
-      "help": "Help & Support"
+      "help": "المساعدة والدعم"
     }
   },
   "app": {
@@ -203,7 +203,7 @@
     "for_more_details_on_deployment_update": "لمزيد من التفاصيل حول تحديث المنصة، انتقل إلى التعليمات والدعم (يجب أن يكون هذا ارتباطا) أو أرسل بريدا إلكترونيا إلى:",
     "open_chat": "Open Chat",
     "end_post": "نهاية المنشور",
-    "read_more": "Read more"
+    "read_more": "اقرأ المزيد"
   },
   "date": {
     "aLongTimeAgo": "a long time ago",
@@ -1187,7 +1187,7 @@
     "delete_webhook_desc": "<strong>If you delete this webhook</strong>, all associated webhook events will be lost. Proceed with caution.",
     "dialog": {
       "delete_warn_title": "{{ name }} webhook will be deleted!",
-      "delete_warn_message": "<p>This action cannot be undone.</p><p>Are you sure?</p>"
+      "delete_warn_message": "<p>لا يمكن التراجع عن هذا الإجراء.</p><p>هل أنت متأكد؟</p>"
     }
   },
   "saved_search": {
