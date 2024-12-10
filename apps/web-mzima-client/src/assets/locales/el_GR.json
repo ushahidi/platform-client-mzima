@@ -16,15 +16,15 @@
       "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
     },
     "activity": {
-      "title": "Activity",
+      "title": "Δραστηριότητα",
       "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
     },
     "collections": {
-      "title": "Collections",
+      "title": "Συλλογές",
       "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
     },
     "settings": {
-      "title": "Settings",
+      "title": "Ρυθμίσεις ",
       "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
     },
     "final_step": {
@@ -294,12 +294,12 @@
     "tooltip_template": "This is the single point tooltip template",
     "select_range": "Select range",
     "select_filter": "Select filter",
-    "show_all_posts": "Show all posts",
-    "categories": "Categories",
-    "survey": "Survey",
-    "status": "Status",
+    "show_all_posts": "Δείξε Όλες τις Αναρτήσεις ",
+    "categories": "Κατηγορίες",
+    "survey": "Έρευνα",
+    "status": "Κατάσταση",
     "statuses": "Statuses",
-    "all_time": "All time",
+    "all_time": "Όλο το χρόνο",
     "last_week": "Last week",
     "last_month": "Last month",
     "last_year": "Last year"
@@ -585,7 +585,7 @@
     "sources": {
       "web": "Web",
       "mobile": "Mobile",
-      "email": "Email",
+      "email": "Email Address",
       "sms": "SMS",
       "twitter": "Twitter",
       "ussd": "USSD",
@@ -2079,7 +2079,7 @@
     "snackbar": {
       "changes_discarded": "Changes discarded successfully",
       "no_changes_made": "No changes made yet",
-      "close": "Close"
+      "close": "Κλείσιμο"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Do you really want to delete {{lang}} language?"
