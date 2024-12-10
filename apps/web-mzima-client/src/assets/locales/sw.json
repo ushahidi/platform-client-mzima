@@ -1413,7 +1413,7 @@
       "provider_name": "Chanzo cha Data {{providerName}} ?",
       "do_you_really_want_to_disconnect": "Je, kweli unataka kukata mawasiliano na mtoa huduma wako?",
       "add_source": "Ongeza chanzo",
-      "edit": "Edit {{provider}} Data Source",
+      "edit": "Badilisha Chanzo cha Data cha {{provider}}",
       "add_data_source": "Add Data Source",
       "associate_with_form": "Ingiza kwa hojaji",
       "associate_with_form_desc": "Data yote inayoingia kutoka kwa {{provider}} itatumika kutoa majibu kwa hojaji utakayochagua",
