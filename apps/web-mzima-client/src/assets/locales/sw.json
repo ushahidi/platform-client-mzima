@@ -1778,7 +1778,7 @@
     "password_length": "Nenosiri lazima liwe na urefu wa angalau herufi 8",
     "password_match": "Manenosiri hayalingani",
     "enter_new_password": "Weka nenosiri lako jipya",
-    "password_change_success": "Your password was successfully changed",
+    "password_change_success": "Nenosiri lako limebadilishwa kwa mafanikio",
     "password_change_success_info": "Now you can login with new credentials",
     "check_email": "Angalia barua pepe yako",
     "name_will_be_a_display_name": "Jina unaloingiza litakuwa jina la kuonyesha.",
