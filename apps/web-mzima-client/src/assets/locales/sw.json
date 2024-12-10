@@ -1,6 +1,6 @@
 {
   "onboarding": {
-    "greeting": "Hello {{username}}!",
+    "greeting": "Habari {{username}}!",
     "intro": "<p>You’ve successfully created your deployment. Now, while we polish it up, please, get along with Ushahidi features. The onboarding process will take couple of minutes.</p>",
     "ready": "You're ready!",
     "data_collection": {
