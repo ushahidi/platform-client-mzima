@@ -1017,7 +1017,7 @@
       "errors": {
         "required" : "Uwanda wa {{label}} unahitajika *",
         "too_short": "Uwanda wa {{label}} ni fupi mno, tumia angalau vibambo 2",
-        "invvalid_pattern": "{{label}} field is invalid",
+        "invvalid_pattern": "Uwanda wa {{label}} si sahihi",
         "special_char": "{{label}} field contains special characters"
       }
     },
