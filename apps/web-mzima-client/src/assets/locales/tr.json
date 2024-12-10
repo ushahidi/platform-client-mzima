@@ -20,7 +20,7 @@
       "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
     },
     "collections": {
-      "title": "Collections",
+      "title": "Koleksiyonlar",
       "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
     },
     "settings": {
@@ -299,7 +299,7 @@
     "survey": "Survey",
     "status": "Status",
     "statuses": "Statuses",
-    "all_time": "All time",
+    "all_time": "Tüm zamanlar",
     "last_week": "Last week",
     "last_month": "Last month",
     "last_year": "Last year"
