@@ -1013,7 +1013,7 @@
       },
       "input_empty_warn": "Pembejeo haiwezi kuwa tupu",
       "max_size": "Ukubwa wa juu zaidi: MB {{size}}",
-      "invalid_video_embed": "Invalid video embed url",
+      "invalid_video_embed": "URL batili ya kupachika video",
       "errors": {
         "required" : "{{label}} field is a required field *",
         "too_short": "{{label}} field is too short, use at least 2 characters",
