@@ -340,11 +340,10 @@
     "date": "Date",
     "datetime": "Дата і час",
     "select": "Select",
-    "select_other_name": "A dropdown List",
     "radio_button": "Radio Button(s)",
     "checkbox": "Checkbox(es)",
     "related_post": "Related Post",
-    "related_post_info": "Only posts that have been published will appear in the search results; and hence be related to",
+    "related_post_info": "Please note, the posts to relate to needs to be published, posts that are \"Under review\" will not appear in the search-results",
     "upload_image": "Image",
     "upload_document": "Document",
     "upload_audio": "Audio",
@@ -750,9 +749,7 @@
     "yesterday": "Yesterday",
     "map": "Map",
     "data": "Data",
-    "feed": "Data",
-    "add_new_post":"Add New Post",
-    "edit_post": "Edit Post"
+    "feed": "Data"
   },
   "views": {
     "map": "Map",
@@ -1932,7 +1929,7 @@
     "confirm_modal": {
       "add_post_success": {
         "success": "Success!",
-        "success_description": "Thank you for submitting your post. It is being reviewed, and will soon appear on the platform.",
+        "success_description": "Thank you for submitting your report. The post is being reviewed by our team and soon will appear on the platform.",
         "success_button": "OK, sounds good"
       },
       "deleted": {
