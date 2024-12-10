@@ -2062,7 +2062,7 @@
       "discard_changes": "Katisha mabadilikio",
       "save_changes": "Hifadhi Mabadilikio",
       "invalid_characters": "Tafadhali ondoa vibambo batili (kama vile +, $, ^, =)",
-      "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
+      "translations_missing": "Unahitaji kuongeza tafsiri za majina yote, na uhakikishe kuwa visanduku vya kuteua na redio hazina nakala. Hakikisha kuwa umetafsiri majina ya uchunguzi kwa lugha zote zilizoongezwa na kwamba kisanduku cha kuteua na thamani za vitufe vya redio ni za kipekee (ndani ya kila lugha)."
     },
     "confirm_modal": {
       "add_post_success": {
