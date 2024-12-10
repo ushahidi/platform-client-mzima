@@ -210,7 +210,7 @@
     "justNow": "hivi sasa",
     "aMomentAgo": "muda mfupi uliopita",
     "second": {
-      "singular": "{{time}} second ago",
+      "singular": "sekunde {{time}} iliyopita",
       "plural": "{{time}} seconds ago"
     },
     "minute": {
