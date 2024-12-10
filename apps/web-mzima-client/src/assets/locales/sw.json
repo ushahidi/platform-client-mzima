@@ -1011,7 +1011,7 @@
           "add_link": "Ongeza kiungo"
         }
       },
-      "input_empty_warn": "Input cannot be empty",
+      "input_empty_warn": "Pembejeo haiwezi kuwa tupu",
       "max_size": "Max size: {{size}} MB",
       "invalid_video_embed": "Invalid video embed url",
       "errors": {
