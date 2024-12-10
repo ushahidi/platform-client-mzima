@@ -9,7 +9,7 @@
     },
     "filtering": {
       "title": "Kuchuja",
-      "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
+      "content": "<p>Unaweza kuchuja matokeo yako kwa Hali, Vitengo, Masafa ya Tarehe na Mahali. Unaweza pia kuhifadhi vichujio vyako, ili uweze kuvirejea haraka.</p><p>Ili kupunguza kiasi cha data kwa njia ya haraka na bora, tumia upau wa kushoto kuchagua Utafiti na vyanzo mahususi vya Data.</p>"
     },
     "sorting": {
       "title": "Upangaji",
