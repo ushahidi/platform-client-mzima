@@ -862,7 +862,7 @@
     "share_on_facebook": "Sambaza kwenye Facebook"
   },
   "post": {
-    "loading_posts": "Loading posts in {{ mode }} mode...",
+    "loading_posts": "Inapakia machapisho katika hali ya {{ mode }}...",
     "post_count": "matangazo {{count}} ",
     "see_more_plural": "Tazama machapisho {{newPostsCount}} mapya",
     "see_more_singular": "Tazama chapisho {{newPostsCount}} jipya",
