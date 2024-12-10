@@ -208,7 +208,7 @@
   "date": {
     "aLongTimeAgo": "muda mrefu uliopita",
     "justNow": "hivi sasa",
-    "aMomentAgo": "a moment ago",
+    "aMomentAgo": "muda mfupi uliopita",
     "second": {
       "singular": "{{time}} second ago",
       "plural": "{{time}} seconds ago"
