@@ -16,11 +16,11 @@
       "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
     },
     "activity": {
-      "title": "Activity",
+      "title": "Aktivnost",
       "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
     },
     "collections": {
-      "title": "Collections",
+      "title": "Zbirke",
       "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
     },
     "settings": {
@@ -294,12 +294,12 @@
     "tooltip_template": "This is the single point tooltip template",
     "select_range": "Select range",
     "select_filter": "Select filter",
-    "show_all_posts": "Show all posts",
+    "show_all_posts": "Prikaži sve postove",
     "categories": "Categories",
-    "survey": "Survey",
+    "survey": "Anketa",
     "status": "Status",
     "statuses": "Statuses",
-    "all_time": "All time",
+    "all_time": "Sve vreme",
     "last_week": "Last week",
     "last_month": "Last month",
     "last_year": "Last year"
@@ -585,9 +585,9 @@
     "sources": {
       "web": "Web",
       "mobile": "Mobile",
-      "email": "Email",
+      "email": "Email Address",
       "sms": "SMS",
-      "twitter": "Twitter",
+      "twitter": "twitter",
       "ussd": "USSD",
       "whatsapp": "WhatsApp"
     },
@@ -2079,7 +2079,7 @@
     "snackbar": {
       "changes_discarded": "Changes discarded successfully",
       "no_changes_made": "No changes made yet",
-      "close": "Close"
+      "close": "Zatvori"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Do you really want to delete {{lang}} language?"
