@@ -978,7 +978,7 @@
       "locked_tooltip": "Chapisho hili linahaririwa na mtu mwingine. Tafadhali jaribu tena baadaye."
 
     },
-    "post_not_authorized": "You are not authorized to perform this action on this post.",
+    "post_not_authorized": "Hujaidhinishwa kutekeleza kitendo hiki kwenye chapisho hili.",
     "modify": {
       "intro": "Chagua hojaji:",
       "no_task_values": "Kwa sasa hakuna thamani zilizohifadhiwa kwa kazi hii.",
