@@ -1172,7 +1172,7 @@
   "webhook": {
     "add_webhook": "Ongeza Kichochezi cha Wavuti",
     "edit_webhook": "Edit Role",
-    "create_webhook": "Create webhook",
+    "create_webhook": "Unda kichochezi cha wavuti",
     "update_webhook": "Update webhook",
     "uuid": "UUID ya kichochezi",
     "name": "Jina",
