@@ -12,25 +12,25 @@
       "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
     },
     "sorting": {
-      "title": "Sorting",
+      "title": "Upangaji",
       "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
     },
     "activity": {
-      "title": "Activity",
+      "title": "Shughuli",
       "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
     },
     "collections": {
-      "title": "Collections",
+      "title": "Mikusanyiko",
       "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
     },
     "settings": {
-      "title": "Settings",
+      "title": "Mipangilio",
       "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
     },
     "final_step": {
       "desc_1": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
       "desc_2": "Remember, in case of any question, don’t hesitate to reach out to our team by",
-      "help": "Help & Support"
+      "help": "Usaidizi na Msaada"
     }
   },
   "app": {
@@ -203,7 +203,7 @@
     "for_more_details_on_deployment_update": "Kwa maelezo zaidi juu ya sasisho la kupelekwa, nenda kwa Msaada na Usaidizi (hii inapaswa kuwa kiungo) au tuma barua pepe kwa:",
     "open_chat": "Fungua Gumzo",
     "end_post": "Mwisho wa Machapisho",
-    "read_more": "Read more"
+    "read_more": "Soma zaidi"
   },
   "date": {
     "aLongTimeAgo": "a long time ago",
@@ -294,12 +294,12 @@
     "tooltip_template": "Hiki ni kiolezo cha vidokezo vya ncha moja",
     "select_range": "Select range",
     "select_filter": "Select filter",
-    "show_all_posts": "Show all posts",
-    "categories": "Categories",
-    "survey": "Survey",
-    "status": "Status",
+    "show_all_posts": "Onyesha machapisho yote",
+    "categories": "Kategoria",
+    "survey": "Hojaji",
+    "status": "Hali",
     "statuses": "Statuses",
-    "all_time": "All time",
+    "all_time": "Muda wote",
     "last_week": "Last week",
     "last_month": "Last month",
     "last_year": "Last year"
@@ -585,7 +585,7 @@
     "sources": {
       "web": "Web",
       "mobile": "Mobile",
-      "email": "Email",
+      "email": "Baruapepe",
       "sms": "SMS",
       "twitter": "Twitter",
       "ussd": "USSD",
@@ -1187,7 +1187,7 @@
     "delete_webhook_desc": "<nguvu>Ukifuta kichochezi hiki</nguvu>, matukio yote yanayohusiana yatapotea. Endelea kwa tahadhari.",
     "dialog": {
       "delete_warn_title": "{{ name }} webhook will be deleted!",
-      "delete_warn_message": "<p>This action cannot be undone.</p><p>Are you sure?</p>"
+      "delete_warn_message": "<p>Kitendo hiki hakiwezi kutenduliwa.</p><p>Una uhakika?</p>"
     }
   },
   "saved_search": {
@@ -2079,7 +2079,7 @@
     "snackbar": {
       "changes_discarded": "Changes discarded successfully",
       "no_changes_made": "No changes made yet",
-      "close": "Close"
+      "close": "Funga"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Je, kweli unataka kufuta lugha {{lang}}?"
