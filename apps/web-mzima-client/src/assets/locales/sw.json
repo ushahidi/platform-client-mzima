@@ -1113,7 +1113,7 @@
         "upload_complete" : "Upakiaji Umekamilika!",
         "upload_failed" : "Upakiaji Umeshindwa!"
       },
-      "special_char": "This field contains special characters"
+      "special_char": "Uwanda huu una herufi maalum"
     },
     "video": {
       "enter_a_url": "Weka URL ya video kutoka Youtube au Vimeo."
