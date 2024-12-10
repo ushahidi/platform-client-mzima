@@ -16,11 +16,11 @@
       "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
     },
     "activity": {
-      "title": "Activity",
+      "title": "سرگرمی",
       "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
     },
     "collections": {
-      "title": "Collections",
+      "title": "مجموعے",
       "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
     },
     "settings": {
@@ -299,7 +299,7 @@
     "survey": "Survey",
     "status": "Status",
     "statuses": "Statuses",
-    "all_time": "All time",
+    "all_time": "تمام وقت",
     "last_week": "Last week",
     "last_month": "Last month",
     "last_year": "Last year"
@@ -2079,7 +2079,7 @@
     "snackbar": {
       "changes_discarded": "Changes discarded successfully",
       "no_changes_made": "No changes made yet",
-      "close": "Close"
+      "close": "بند کریں"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Do you really want to delete {{lang}} language?"
