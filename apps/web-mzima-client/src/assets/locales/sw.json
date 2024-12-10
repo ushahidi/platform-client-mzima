@@ -211,7 +211,7 @@
     "aMomentAgo": "muda mfupi uliopita",
     "second": {
       "singular": "sekunde {{time}} iliyopita",
-      "plural": "{{time}} seconds ago"
+      "plural": "sekunde {{time}} zilizopita"
     },
     "minute": {
       "singular": "{{time}} minute ago",
