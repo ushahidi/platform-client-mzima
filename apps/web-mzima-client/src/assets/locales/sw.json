@@ -215,7 +215,7 @@
     },
     "minute": {
       "singular": "dakika {{time}} iliyopita",
-      "plural": "{{time}} minutes ago"
+      "plural": "dakika {{time}} zilizopita"
     },
     "hour": {
       "singular": "{{time}} hour ago",
