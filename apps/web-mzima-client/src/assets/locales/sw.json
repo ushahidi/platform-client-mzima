@@ -1018,7 +1018,7 @@
         "required" : "Uwanda wa {{label}} unahitajika *",
         "too_short": "Uwanda wa {{label}} ni fupi mno, tumia angalau herufi 2",
         "invvalid_pattern": "Uwanda wa {{label}} si sahihi",
-        "special_char": "{{label}} field contains special characters"
+        "special_char": "Uwanda wa {{label}} una herufi maalum"
       }
     },
     "preview": {
