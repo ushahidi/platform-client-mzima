@@ -12,25 +12,25 @@
       "content": "<p>You can filter your results by its Status, Categories, Date range and Location. You can also save your filters, so you can go back to them quickly.</p><p>To reduce amount of data in fast and efficient way, use left bar to choose specific Surveys and Data sources.</p>"
     },
     "sorting": {
-      "title": "Sorting",
+      "title": "ترتيب",
       "content": "<p>You can sort the results by post date, latest updates and date creation - from newest to oldest.</p>"
     },
     "activity": {
-      "title": "Activity",
+      "title": "النشاط",
       "content": "<p>Check your deployment activity over time and by volume. Hover each line or bar to highlight it and see the details.</p>"
     },
     "collections": {
-      "title": "Collections",
+      "title": "المجموعات",
       "content": "<p>To organise your posts into groups, you are able to create Collections. Just choose name, write description and choose viewing mode - it is that simple!</p>"
     },
     "settings": {
-      "title": "Settings",
+      "title": "الإعدادات",
       "content": "<p>Change your deployment in Settings. You can manage your deployment details when it comes to Surveys,  Data Sources, Importing and Donation. </p><p>Also, it allows your to export data, create categories, manage users permissions and much more!</p>"
     },
     "final_step": {
       "desc_1": "How exciting! Now you know the most important features and you’re ready to start using Ushahidi platform.",
       "desc_2": "Remember, in case of any question, don’t hesitate to reach out to our team by",
-      "help": "Help & Support"
+      "help": "المساعدة والدعم"
     }
   },
   "app": {
@@ -203,7 +203,7 @@
     "for_more_details_on_deployment_update": "لمزيد من التفاصيل حول تحديث المنصة، انتقل إلى التعليمات والدعم (يجب أن يكون هذا ارتباطا) أو أرسل بريدا إلكترونيا إلى:",
     "open_chat": "افتح الدردشة",
     "end_post": "نهاية المنشور",
-    "read_more": "Read more"
+    "read_more": "اقرأ المزيد"
   },
   "date": {
     "aLongTimeAgo": "a long time ago",
@@ -294,12 +294,12 @@
     "tooltip_template": "هذا هو قالب تلميح الأداة لنقطة واحدة",
     "select_range": "Select range",
     "select_filter": "Select filter",
-    "show_all_posts": "Show all posts",
+    "show_all_posts": "اظهر كافة المنشورات",
     "categories": "Categories",
     "survey": "Survey",
-    "status": "Status",
+    "status": "الحالة",
     "statuses": "Statuses",
-    "all_time": "All time",
+    "all_time": "كل الأوقات",
     "last_week": "Last week",
     "last_month": "Last month",
     "last_year": "Last year"
@@ -1187,7 +1187,7 @@
     "delete_webhook_desc": "<strong>إذا مسحت هذه الـ webhook</strong>، کل حوادث webhook الموصولة سيتم حذفها. تقدم بحذر",
     "dialog": {
       "delete_warn_title": "{{ name }} webhook will be deleted!",
-      "delete_warn_message": "<p>This action cannot be undone.</p><p>Are you sure?</p>"
+      "delete_warn_message": "<p>لا يمكن التراجع عن هذا الإجراء.</p><p>هل أنت متأكد؟</p>"
     }
   },
   "saved_search": {
@@ -2079,7 +2079,7 @@
     "snackbar": {
       "changes_discarded": "Changes discarded successfully",
       "no_changes_made": "No changes made yet",
-      "close": "Close"
+      "close": "إغلاق"
     },
     "language": {
       "do_you_really_want_to_delete_language": "هل تريد حقا حذف لغة {{lang}}؟"
