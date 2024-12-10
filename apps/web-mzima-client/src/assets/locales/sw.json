@@ -1186,7 +1186,7 @@
     "delete_webhook": "Futa kichochezi hiki",
     "delete_webhook_desc": "<nguvu>Ukifuta kichochezi hiki</nguvu>, matukio yote yanayohusiana yatapotea. Endelea kwa tahadhari.",
     "dialog": {
-      "delete_warn_title": "{{ name }} webhook will be deleted!",
+      "delete_warn_title": "Kichochezi {{ name }} cha wavuti kitafutwa!",
       "delete_warn_message": "<p>Kitendo hiki hakiwezi kutenduliwa.</p><p>Una uhakika?</p>"
     }
   },
