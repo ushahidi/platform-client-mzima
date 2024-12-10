@@ -1143,7 +1143,7 @@
         "decimal_lat": "Latitude tu namba ya desimali",
         "decimal_lng": "Longitude tu namba ya desimali",
         "special_lng": "Uwanda wa longitudo una herufi maalum",
-        "special_lat": "Field latitude contains special characters"
+        "special_lat": "Uwanda wa latitudo una herufi maalum"
       }
     }
   },
