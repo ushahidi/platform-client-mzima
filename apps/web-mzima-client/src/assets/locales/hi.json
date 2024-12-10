@@ -299,7 +299,7 @@
     "survey": "Survey",
     "status": "Status",
     "statuses": "Statuses",
-    "all_time": "All time",
+    "all_time": "सभी समय",
     "last_week": "Last week",
     "last_month": "Last month",
     "last_year": "Last year"
@@ -585,7 +585,7 @@
     "sources": {
       "web": "Web",
       "mobile": "Mobile",
-      "email": "Email",
+      "email": "Email Address",
       "sms": "SMS",
       "twitter": "Twitter",
       "ussd": "USSD",
@@ -2079,7 +2079,7 @@
     "snackbar": {
       "changes_discarded": "Changes discarded successfully",
       "no_changes_made": "No changes made yet",
-      "close": "Close"
+      "close": "बंद करें"
     },
     "language": {
       "do_you_really_want_to_delete_language": "Do you really want to delete {{lang}} language?"
