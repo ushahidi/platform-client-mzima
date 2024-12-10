@@ -1015,7 +1015,7 @@
       "max_size": "Ukubwa wa juu zaidi: MB {{size}}",
       "invalid_video_embed": "URL batili ya kupachika video",
       "errors": {
-        "required" : "{{label}} field is a required field *",
+        "required" : "Uwanda wa {{label}} unahitajika *",
         "too_short": "{{label}} field is too short, use at least 2 characters",
         "invvalid_pattern": "{{label}} field is invalid",
         "special_char": "{{label}} field contains special characters"
