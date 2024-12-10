@@ -2061,7 +2061,7 @@
       "destroy_confirm_desc_end": "Unaweza <a href=\"settings/data-import\">kupakua na kuagiza</a> data yako yote kabla ya kufuta.",
       "discard_changes": "Katisha mabadilikio",
       "save_changes": "Hifadhi Mabadilikio",
-      "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
+      "invalid_characters": "Tafadhali ondoa vibambo batili (kama vile +, $, ^, =)",
       "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
     },
     "confirm_modal": {
