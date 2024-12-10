@@ -1016,7 +1016,7 @@
       "invalid_video_embed": "URL batili ya kupachika video",
       "errors": {
         "required" : "Uwanda wa {{label}} unahitajika *",
-        "too_short": "{{label}} field is too short, use at least 2 characters",
+        "too_short": "Uwanda wa {{label}} ni fupi mno, tumia angalau vibambo 2",
         "invvalid_pattern": "{{label}} field is invalid",
         "special_char": "{{label}} field contains special characters"
       }
