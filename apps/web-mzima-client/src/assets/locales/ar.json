@@ -295,8 +295,8 @@
     "select_range": "Select range",
     "select_filter": "Select filter",
     "show_all_posts": "اظهر كافة المنشورات",
-    "categories": "Categories",
-    "survey": "Survey",
+    "categories": "الفئات.",
+    "survey": "استبيان",
     "status": "الحالة",
     "statuses": "Statuses",
     "all_time": "كل الأوقات",
@@ -585,9 +585,9 @@
     "sources": {
       "web": "Web",
       "mobile": "Mobile",
-      "email": "Email",
-      "sms": "SMS",
-      "twitter": "Twitter",
+      "email": "البريد الإلكتروني",
+      "sms": "رسالة قصيرة",
+      "twitter": "تويتر",
       "ussd": "USSD",
       "whatsapp": "WhatsApp"
     },
