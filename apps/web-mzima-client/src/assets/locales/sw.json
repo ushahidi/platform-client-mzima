@@ -5,7 +5,7 @@
     "ready": "Uko tayari!",
     "data_collection": {
       "title": "Ukusanyaji wa data",
-      "content": "<p>You can see all of the collected data while moving through the Map view or on the Data view.</p>"
+      "content": "<p> Unaweza kuona data yote iliyokusanywa unapopitia mwonekano wa Ramani au kwenye mwonekano wa Data.</p>"
     },
     "filtering": {
       "title": "Filtering",
