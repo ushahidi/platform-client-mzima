@@ -1724,7 +1724,7 @@
     "uploading_data": "Inapakia data...",
     "uploading_data_desc": "Upakiaji wa data kwenye akaunti yako ya Humanitarian Data Exchange (HDX) unaendelea... <br /> <br />Unaweza kutoka kwenye ukurasa huu wakati upakiaji huu unafanyika lakini tafadhali usifunge kivinjari.",
     "uploading_data_err": "Lo... Hitilafu fulani imetokea wakati wa kupakia data yako, tafadhali angalia nyanja zinazohitajika na ufunguo wako wa api na ujaribu tena.",
-    "data_export_err":"Failed to export",
+    "data_export_err":"Imeshindwa kuhamisha",
     "no_fields_selected": "Hujachagua nyanda zozote au kukabidhi vitambulisho au sifa zozote za hxl. Tafadhali chagua angalau sehemu moja na ukabidhi angalau tagi moja ili kuweza kuhamisha kwa CSV au kupakia kwenye akaunti ya Humanitarian Data Exchange (HDX).",
     "validation": {
       "title": "Mada inahitajika",
