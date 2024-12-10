@@ -223,7 +223,7 @@
     },
     "day": {
       "singular": "siku {{time}} iliyopita",
-      "plural": "{{time}} days ago"
+      "plural": "siku {{time}} zilizopita"
     },
     "month": {
       "singular": "{{time}} month ago",
