@@ -60,7 +60,7 @@ dayjs.extend(timezone);
   styleUrls: ['./post-edit.component.scss'],
 })
 export class PostEditComponent extends BaseComponent implements OnInit, OnChanges {
-  @Input() public postInput: any;
+  @Input() public postFromModal: any;
   @Input() public modalView: boolean;
   @Output() cancel = new EventEmitter();
   @Output() updated = new EventEmitter();
@@ -135,7 +135,6 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       }
       if (params.get('id')) {
         this.postId = Number(params.get('id'));
-        this.loadPostData(this.postId);
       }
       if (!this.formId) {
         this.surveysService.get().subscribe((result) => {
@@ -143,7 +142,14 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
         });
       }
     });
-
+    if (this.postFromModal) {
+      this.post = this.postFromModal;
+    } else {
+      this.route.data.subscribe((data) => {
+        this.post = data['post'];
+        if (this.post) this.loadPostData();
+      });
+    }
     this.translate.onLangChange.subscribe((newLang) => {
       this.activeLanguage = newLang.lang;
     });
@@ -152,8 +158,8 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['postInput'] && changes['postInput'].currentValue) {
-      this.post = this.postInput;
+    if (changes['postFromModal'] && changes['postFromModal'].currentValue) {
+      this.post = this.postFromModal;
       this.formId = this.post.form_id;
       this.postId = this.post.id;
       this.loadSurveyData(this.formId!, this.post.post_content);
@@ -174,19 +180,14 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
     this.surveyName = this.formInfo.translations[this.activeLanguage]?.name || this.formInfo.name;
   }
 
-  private loadPostData(postId: number) {
-    this.postsService.getById(postId).subscribe({
-      next: (post) => {
-        this.formId = post.form_id;
-        this.post = post;
-        if (!this.postsService.isPostLockedForCurrentUser(this.post)) {
-          this.postsService.lockPost(this.post.id).subscribe();
-          this.loadSurveyData(this.formId!, post.post_content);
-        } else {
-          this.backNavigation();
-        }
-      },
-    });
+  private loadPostData() {
+    this.formId = this.post.form_id;
+    if (!this.postsService.isPostLockedForCurrentUser(this.post)) {
+      this.postsService.lockPost(this.post.id).subscribe();
+      this.loadSurveyData(this.formId!, this.post.post_content);
+    } else {
+      this.backNavigation();
+    }
   }
 
   getParentsWithChildren(options: any[]) {
@@ -359,7 +360,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   private async handleUpload(key: string, value: any) {
-    if (!value[0].value) return;
+    if (!value?.[0]?.value) return;
     try {
       const response: any = await lastValueFrom(this.mediaService.getById(value[0].value));
       this.form.patchValue({
@@ -639,13 +640,19 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                 const originalValue = this.post?.post_content[0]?.fields.filter(
                   (fieldValue: { key: string | number }) => fieldValue.key === field.key,
                 )[0];
-                if (this.form.value[field.key]?.upload && this.form.value[field.key]?.photo) {
+                let formValue = this.form.value[field.key];
+                if (Array.isArray(formValue)) formValue = formValue[0];
+
+                // No image uploaded in field at all
+                if (!formValue) value.value = [];
+                // Image uploaded
+                else if (formValue.upload && formValue.photo) {
                   try {
                     this.maxSizeError = false;
-                    if (this.maxImageSize > this.form.value[field.key].photo.size) {
+                    if (this.maxImageSize > formValue.photo.size) {
                       const uploadObservable = this.mediaService.uploadFile(
-                        this.form.value[field.key]?.photo,
-                        this.form.value[field.key]?.caption,
+                        formValue.photo,
+                        formValue.caption,
                       );
                       const response: any = await lastValueFrom(uploadObservable);
                       value.value = [response.result.id];
@@ -656,42 +663,46 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   } catch (error: any) {
                     throw new Error(`Error uploading file: ${error.message}`);
                   }
-                } else if (this.form.value[field.key]?.delete && this.form.value[field.key]?.id) {
+                  // Image deleted
+                } else if (formValue.delete && formValue.id) {
                   try {
-                    const deleteObservable = this.mediaService.delete(
-                      this.form.value[field.key]?.id,
-                    );
+                    const deleteObservable = this.mediaService.delete(formValue.id);
                     await lastValueFrom(deleteObservable);
-                    value.value = null;
+                    value.value = [];
                   } catch (error: any) {
                     throw new Error(`Error deleting file: ${error.message}`);
                   }
-                } else if (originalValue?.value[0].caption !== value.value?.caption) {
+                  // Caption updated
+                } else if (
+                  originalValue?.value?.length > 0 &&
+                  originalValue.value[0].caption !== formValue.caption
+                ) {
                   try {
                     const captionObservable = await this.mediaService.updateCaption(
-                      originalValue.value[0].id,
-                      value.value.caption,
+                      originalValue.value[0].value,
+                      formValue.caption,
                     );
                     await lastValueFrom(captionObservable);
-                    value.value = [originalValue.value[0].id];
+                    value.value = [originalValue.value[0].value];
                   } catch (error: any) {
                     throw new Error(`Error updating caption: ${error.message}`);
                   }
+                  // Nothing updated
                 } else {
-                  value.value = this.form.value[field.key]?.id || null;
+                  value.value = [formValue.id];
                 }
                 break;
               case 'image':
                 value.value =
-                  this.form.value[field.key]?.map((formValue: any) => formValue.value) || [];
+                  this.form.value[field.key]?.map((fieldValue: any) => fieldValue.value) || [];
                 break;
               case 'audio':
                 value.value =
-                  this.form.value[field.key]?.map((formValue: any) => formValue.value) || [];
+                  this.form.value[field.key]?.map((fieldValue: any) => fieldValue.value) || [];
                 break;
               case 'document':
                 value.value =
-                  this.form.value[field.key]?.map((formValue: any) => formValue.value) || [];
+                  this.form.value[field.key]?.map((fieldValue: any) => fieldValue.value) || [];
                 break;
               default:
                 value.value = this.form.value[field.key] || null;
@@ -794,7 +805,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   private showMessage(message: string, type: string) {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, this.translate.instant('notify.snackbar.close'), {
       panelClass: [type],
       duration: 3000,
     });
@@ -833,7 +844,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       const confirmed = await this.confirmModalService.open({
         title: this.translate.instant('notify.default.data_has_not_been_saved'),
         description: this.translate.instant('notify.default.proceed_warning'),
-        confirmButtonText: 'OK',
+        confirmButtonText: this.translate.instant('notify.confirm_modal.deleted.success_button'),
       });
       if (!confirmed) return;
     }

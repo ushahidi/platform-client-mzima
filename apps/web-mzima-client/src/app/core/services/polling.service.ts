@@ -135,7 +135,7 @@ export class PollingService implements OnDestroy {
         );
         break;
       default:
-        this.notificationService.showError('Failed to export');
+        this.notificationService.showError('data_export.data_export_err');
         break;
     }
   }

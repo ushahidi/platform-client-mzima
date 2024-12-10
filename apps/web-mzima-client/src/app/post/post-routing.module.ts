@@ -12,13 +12,13 @@ const routes: Routes = [
   {
     path: 'create/:type',
     component: PostEditComponent,
-    data: { breadcrumb: 'Create Post' },
+    data: { breadcrumb: 'nav.add_new_post' },
   },
   {
     path: ':id/edit',
     canActivate: [RedirectGuard],
     component: PostEditComponent,
-    data: { breadcrumb: 'Edit Post', edit: true },
+    data: { breadcrumb: 'nav.edit_post', edit: true },
   },
 ];
 

@@ -1,7 +1,8 @@
 <h1 *ngIf="isDesktop">
   {{
-    (provider && !onCreating ? 'Edit ' + provider.name + ' Data Source' : 'Add Data Source')
-      | translate
+    provider && !onCreating
+      ? ('settings.data_sources.edit' | translate : { provider: provider.name })
+      : ('settings.data_sources.add_data_source' | translate)
   }}
 </h1>
 

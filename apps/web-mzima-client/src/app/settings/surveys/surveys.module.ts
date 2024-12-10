@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { SortByFieldModule } from '@pipes';
 import { ColorPickerComponentModule } from '../../shared/components/color-picker/color-picker-component.module';
@@ -69,6 +70,7 @@ import { MzimaUiModule } from '@mzima-client/mzima-ui';
     MatCheckboxModule,
     MatTreeModule,
     MatListModule,
+    MatTooltipModule,
     MzimaUiModule,
     SortByFieldModule,
   ],

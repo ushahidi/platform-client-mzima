@@ -22,43 +22,43 @@ export const loggedOutStatuses = [statuses[0]];
 
 export const sources = [
   {
-    name: 'Web',
+    name: 'global_filter.sources.web',
     value: 'web',
     total: 0,
     checked: true,
   },
   {
-    name: 'Mobile',
+    name: 'global_filter.sources.mobile',
     value: 'mobile',
     total: 0,
     checked: true,
   },
   {
-    name: 'Email',
+    name: 'global_filter.sources.email',
     value: 'email',
     total: 0,
     checked: true,
   },
   {
-    name: 'SMS',
+    name: 'global_filter.sources.sms',
     value: 'sms',
     total: 0,
     checked: true,
   },
   {
-    name: 'Twitter',
+    name: 'global_filter.sources.twitter',
     value: 'twitter',
     total: 0,
     checked: true,
   },
   {
-    name: 'USSD',
+    name: 'global_filter.sources.ussd',
     value: 'ussd',
     total: 0,
     checked: true,
   },
   {
-    name: 'WhatsApp',
+    name: 'global_filter.sources.whatsapp',
     value: 'whatsapp',
     total: 0,
     checked: true,

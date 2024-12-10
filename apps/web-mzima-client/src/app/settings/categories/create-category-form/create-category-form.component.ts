@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { TranslationInterface, LanguageInterface } from '@mzima-client/sdk';
+import { TranslationInterface, LanguageInterface, apiHelpers } from '@mzima-client/sdk';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { formHelper } from '@helpers';
@@ -165,13 +165,15 @@ export class CreateCategoryFormComponent extends BaseComponent implements OnInit
   }
 
   private getCategories() {
-    this.categoriesService.get().subscribe({
-      next: (data) => {
-        this.categories = data.results
-          .filter((cat: CategoryInterface) => !cat.parent_id)
-          .filter((cat: CategoryInterface) => cat.id !== this.category?.id);
-      },
-    });
+    this.categoriesService
+      .getCategories({ only: apiHelpers.ONLY.TAG_ID_PARENTID_PARENT_SLUG })
+      .subscribe({
+        next: (data) => {
+          this.categories = data.results
+            .filter((cat: CategoryInterface) => !cat.parent_id)
+            .filter((cat: CategoryInterface) => cat.id !== this.category?.id);
+        },
+      });
   }
 
   private getRoles() {

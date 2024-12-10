@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { SnackbarComponent, SnackbarData } from '../../shared/components';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface SnackbarOptions extends MatSnackBarConfig {
   wide?: boolean;
@@ -10,10 +11,13 @@ export interface SnackbarOptions extends MatSnackBarConfig {
   providedIn: 'root',
 })
 export class NotificationService {
-  constructor(public snackBar: MatSnackBar) {}
+  constructor(public snackBar: MatSnackBar, private translate: TranslateService) {}
 
   showError(message: string) {
-    this.snackBar.open(message, 'Close', { panelClass: ['error'], duration: 3000 });
+    this.snackBar.open(message, this.translate.instant('notify.snackbar.close'), {
+      panelClass: ['error'],
+      duration: 3000,
+    });
   }
 
   showSnackbar(data?: SnackbarData, options?: SnackbarOptions) {

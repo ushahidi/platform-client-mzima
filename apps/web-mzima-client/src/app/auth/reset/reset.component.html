@@ -1,7 +1,7 @@
 <div class="form-page">
   <div class="restore-password-form">
     <ng-container *ngIf="!isPasswordRestored; else success">
-      <h1>Enter your new password</h1>
+      <h1>{{ 'user.enter_new_password' | translate }}</h1>
       <app-restore-password-form (passwordRestored)="passwordRestored()">
       </app-restore-password-form>
     </ng-container>
@@ -12,8 +12,8 @@
   <div class="success-msg">
     <app-lottie-animation class="visual" [path]="'/assets/lottie/success-animation.json'">
     </app-lottie-animation>
-    <strong mat-dialog-title>Your password was successfully changed</strong>
-    <p>Now you can login with new credentials</p>
+    <strong mat-dialog-title>{{ 'user.password_change_success' | translate }}</strong>
+    <p>{{ 'user.password_change_success_info' | translate }}</p>
     <mzima-client-button type="button" (buttonClick)="openLoginModal()" [expand]="false">
       {{ 'nav.login' | translate }}
     </mzima-client-button>

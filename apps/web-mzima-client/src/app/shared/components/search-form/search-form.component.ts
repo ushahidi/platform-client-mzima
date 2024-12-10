@@ -330,33 +330,35 @@ export class SearchFormComponent extends BaseComponent implements OnInit {
   }
 
   private getCategories() {
-    this.categoriesService.get().subscribe({
-      next: (response) => {
-        const mainResults = response?.results.filter((c: CategoryInterface) => !c.parent_id);
-        this.categoriesData = mainResults?.map((category: CategoryInterface) => {
-          return {
-            id: category.id,
-            name: category.tag,
-            children: category?.children?.map((cat: CategoryInterface) => {
-              return {
-                id: cat.id,
-                name: cat.tag,
-              };
-            }),
-          };
-        });
-        if (!this.categoriesData.length) {
-          document.body.classList.add('filters-panel-no-categories');
-        } else {
-          document.body.classList.remove('filters-panel-no-categories');
-        }
-      },
-      error: (err) => {
-        if (err.message.match(/Http failure response for/)) {
-          setTimeout(() => this.getCategories(), 2000);
-        }
-      },
-    });
+    this.categoriesService
+      .getCategories({ only: apiHelpers.ONLY.TAG_ID_PARENTID_CHILDREN })
+      .subscribe({
+        next: (response) => {
+          const mainResults = response?.results.filter((c: CategoryInterface) => !c.parent_id);
+          this.categoriesData = mainResults?.map((category: CategoryInterface) => {
+            return {
+              id: category.id,
+              name: category.tag,
+              children: category?.children?.map((cat: CategoryInterface) => {
+                return {
+                  id: cat.id,
+                  name: cat.tag,
+                };
+              }),
+            };
+          });
+          if (!this.categoriesData.length) {
+            document.body.classList.add('filters-panel-no-categories');
+          } else {
+            document.body.classList.remove('filters-panel-no-categories');
+          }
+        },
+        error: (err) => {
+          if (err.message.match(/Http failure response for/)) {
+            setTimeout(() => this.getCategories(), 2000);
+          }
+        },
+      });
   }
 
   private getActiveFilters(values: any): void {

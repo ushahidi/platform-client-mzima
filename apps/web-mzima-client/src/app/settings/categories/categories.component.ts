@@ -1,6 +1,6 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { CategoryItemComponent } from './category-item/category-item.component';
-import { CategoriesService, CategoryInterface } from '@mzima-client/sdk';
+import { apiHelpers, CategoriesService, CategoryInterface } from '@mzima-client/sdk';
 import { forkJoin } from 'rxjs';
 import { ConfirmModalService, NotificationService } from '@services';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,11 +27,13 @@ export class CategoriesComponent {
   }
 
   public getCategories(): void {
-    this.categoriesService.get().subscribe({
-      next: (data) => {
-        this.categories = data.results;
-      },
-    });
+    this.categoriesService
+      .getCategories({ only: apiHelpers.ONLY.TAG_ID_PARENTID_PARENT_SLUG_CHILDREN })
+      .subscribe({
+        next: (data) => {
+          this.categories = data.results;
+        },
+      });
   }
 
   public displayChildren(id: number) {
