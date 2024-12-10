@@ -2059,7 +2059,7 @@
       "destroy_confirm": "Je, una hakika unataka kufuta hojaji hii?",
       "destroy_confirm_desc": "Kufuta hojaji hii pia kutafuta machapisho yote yaliyokusanywa na data yote husika katika hojaji. Hatua hii haiwezi kutenduliwa.",
       "destroy_confirm_desc_end": "Unaweza <a href=\"settings/data-import\">kupakua na kuagiza</a> data yako yote kabla ya kufuta.",
-      "discard_changes": "Discard changes",
+      "discard_changes": "Katisha mabadilikio",
       "save_changes": "Save Changes",
       "invalid_characters": "Please remove invalid characters (e.g. +, $, ^, =)",
       "translations_missing": "You need to add translations for all names, and ensure checkboxes and radios do not have duplicates. Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language)."
