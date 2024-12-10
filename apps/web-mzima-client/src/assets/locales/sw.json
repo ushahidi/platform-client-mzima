@@ -219,7 +219,7 @@
     },
     "hour": {
       "singular": "saa {{time}} iliyopita",
-      "plural": "{{time}} hours ago"
+      "plural": "saa {{time}} zilizopita"
     },
     "day": {
       "singular": "{{time}} day ago",
