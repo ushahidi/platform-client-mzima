@@ -227,7 +227,7 @@
     },
     "month": {
       "singular": "mwezi {{time}} uliopita",
-      "plural": "{{time}} months ago"
+      "plural": "miezi {{time}} iliyopita"
     },
     "year": {
       "singular": "{{time}} year ago",
