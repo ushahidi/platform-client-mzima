@@ -1414,7 +1414,7 @@
       "do_you_really_want_to_disconnect": "Je, kweli unataka kukata mawasiliano na mtoa huduma wako?",
       "add_source": "Ongeza chanzo",
       "edit": "Badilisha Chanzo cha Data cha {{provider}}",
-      "add_data_source": "Add Data Source",
+      "add_data_source": "Ongeza Chanzo cha Data",
       "associate_with_form": "Ingiza kwa hojaji",
       "associate_with_form_desc": "Data yote inayoingia kutoka kwa {{provider}} itatumika kutoa majibu kwa hojaji utakayochagua",
       "data_sources": "Chanzo data",
