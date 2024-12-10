@@ -31,14 +31,21 @@
       </div>
 
       <h2 *ngIf="post.title?.length || post.content?.length" data-qa="postTitleValue">
-        {{ post.title || post.content }}
+        {{
+          post.translations[displayLanguage]?.title ||
+            post.title ||
+            post.translations[displayLanguage]?.description || post.content
+        }}
       </h2>
       <div class="post__metadata-container">
         <app-post-metadata *ngIf="post.id" [post]="post"></app-post-metadata>
       </div>
 
       <div class="post__description" *ngIf="post.title?.length && post.content?.length">
-        <p [innerHTML]="post.content" data-qa="postDescriptionValue"></p>
+        <p
+          [innerHTML]="post.translations[displayLanguage]?.description || post.content"
+          data-qa="postDescriptionValue"
+        ></p>
       </div>
 
       <ng-container *ngFor="let post_content of post.post_content; let i = index">
@@ -121,12 +128,21 @@
                   <p *ngIf="!field.value.value">-</p>
                 </ng-container>
                 <ng-container *ngIf="field.label !== 'Media Link'">
-                  <p>{{ field.value.value || '-' }}</p>
+                  <p>
+                    {{
+                      field.value.translations[displayLanguage]?.value || field.value.value || '-'
+                    }}
+                  </p>
                 </ng-container>
               </ng-container>
 
               <ng-container *ngIf="field.input === 'textarea'">
-                <p [innerHTML]="field.value.value" data-qa="longTextValue"></p>
+                <p
+                  [innerHTML]="
+                    field.value.translations[displayLanguage]?.value || field.value.value
+                  "
+                  data-qa="longTextValue"
+                ></p>
               </ng-container>
 
               <ng-container *ngIf="field.input === 'checkbox'">
@@ -226,7 +242,9 @@
 
               <ng-container *ngIf="field.input === 'markdown'">
                 <span class="code-container">
-                  <code>{{ field.value.value || '-' }}</code>
+                  <code>{{
+                    field.value.translations[displayLanguage]?.value || field.value.value || '-'
+                  }}</code>
                 </span>
               </ng-container>
             </div>

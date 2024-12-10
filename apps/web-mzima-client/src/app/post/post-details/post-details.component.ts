@@ -26,6 +26,7 @@ import {
 } from '@mzima-client/sdk';
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
+import { untilDestroyed } from '@ngneat/until-destroy';
 import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { dateHelper } from '@helpers';
@@ -51,6 +52,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   public isPostLoading: boolean = true;
   public isManagePosts: boolean = false;
   public postChanged: boolean;
+  public displayLanguage: string;
 
   constructor(
     protected override sessionService: SessionService,
@@ -82,8 +84,19 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         this.postId = Number(params['id']);
 
         this.getPost(this.postId);
+        this.translatePost();
       }
     });
+  }
+  translatePost() {
+    this.eventBusService
+      .on(EventType.DisplayTranslatedPost)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (language) => {
+          this.displayLanguage = language.code;
+        },
+      });
   }
 
   loadData(): void {}

@@ -81,6 +81,7 @@ export enum PostStatus {
 }
 
 export interface PostResult {
+  translations: any;
   allowed_privileges: string[];
   author_email?: string;
   author_realname?: string;
