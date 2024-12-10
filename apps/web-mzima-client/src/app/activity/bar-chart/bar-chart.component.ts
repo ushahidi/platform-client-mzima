@@ -20,7 +20,7 @@ export class BarChartComponent implements OnInit {
     domain: ['#FFEBBB'],
   };
   public dateRange: ManipulateType;
-  public filters: { displayNane: string; value: string }[] = [];
+  public filters: { displayName: string; value: string }[] = [];
 
   constructor(private postsService: PostsService, private translate: TranslateService) {
     this.initializeFilters();
@@ -32,9 +32,9 @@ export class BarChartComponent implements OnInit {
 
   private initializeFilters() {
     this.filters = [
-      { displayNane: this.translate.instant('activity.categories'), value: 'tags' },
-      { displayNane: this.translate.instant('activity.survey'), value: 'form' },
-      { displayNane: this.translate.instant('activity.status'), value: 'status' },
+      { displayName: this.translate.instant('activity.categories'), value: 'tags' },
+      { displayName: this.translate.instant('activity.survey'), value: 'form' },
+      { displayName: this.translate.instant('activity.status'), value: 'status' },
     ];
   }
 

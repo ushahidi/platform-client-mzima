@@ -15,7 +15,7 @@ export class ChartHeadComponent {
   @Input() public selectedRange: ManipulateType;
   @Output() public filterChanged = new EventEmitter();
   @Output() public dateChanged = new EventEmitter();
-  public ranges: { displayNane: string; value: string | null }[] = [];
+  public ranges: { displayName: string; value: string | null }[] = [];
 
   constructor(private translate: TranslateService) {
     this.initializeRanges();
@@ -23,10 +23,10 @@ export class ChartHeadComponent {
 
   private initializeRanges() {
     this.ranges = [
-      { displayNane: this.translate.instant('activity.all_time'), value: null },
-      { displayNane: this.translate.instant('activity.last_week'), value: 'w' },
-      { displayNane: this.translate.instant('activity.last_month'), value: 'm' },
-      { displayNane: this.translate.instant('activity.last_year'), value: 'y' },
+      { displayName: this.translate.instant('activity.all_time'), value: null },
+      { displayName: this.translate.instant('activity.last_week'), value: 'w' },
+      { displayName: this.translate.instant('activity.last_month'), value: 'm' },
+      { displayName: this.translate.instant('activity.last_year'), value: 'y' },
     ];
   }
 
