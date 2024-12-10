@@ -1150,7 +1150,7 @@
   "role": {
     "are_you_sure_you_want_to_delete_role": "Una uhakika unataka kufuta jukumu {{roleName}}?",
     "add_role": "Ongeza Majukumu",
-    "create_role": "Create role",
+    "create_role": "Unda jukumu",
     "update_role": "Update role",
     "edit_role": "Hariri Majukumu",
     "name": "Jina",
