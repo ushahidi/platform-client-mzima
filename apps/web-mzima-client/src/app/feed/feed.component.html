@@ -200,9 +200,17 @@
       </div>
     </div>
   </ng-container>
+  <div *ngIf="isloadingIdMode" class="main main--loader main__details-or-edit">
+    <div class="loader loader--border">
+      <div *ngFor="let single of postsSkeleton" class="loader--border loader--skeleton"></div>
+    </div>
+    <div class="loader--border">
+      <app-spinner class="loader--spinner"></app-spinner>
+    </div>
+  </div>
 
   <!-- Posts content -->
-  <ng-container *ngIf="!isLoading">
+  <ng-container *ngIf="!isLoading && !isloadingIdMode">
     <div
       class="main"
       [ngClass]="{
@@ -266,7 +274,7 @@
                 ngxMasonryItem
                 [feedView]="true"
                 (edit)="editPost(post)"
-                (refresh)="refreshPost()"
+                (refresh)="refreshPost(post)"
                 (deleted)="postDeleted([post])"
                 (click)="showPostDetails(post)"
                 [selectable]="isBulkOptionsVisible && !isLocked(post)"
@@ -317,13 +325,18 @@
             'post-list__scroll': mode === FeedMode.Id
           }"
         >
+          <!-- Display loader while post is resolving -->
+          <div *ngIf="showPostLoader && isDesktop && mode === FeedMode.Id">
+            <div class="loader--border">
+              <app-spinner class="loader--spinner"></app-spinner>
+            </div>
+          </div>
           <!-- Router outlet here is only for Desktop, the modal popup for small devices is in .ts file -->
-          <router-outlet *ngIf="isDesktop && mode === FeedMode.Id"></router-outlet>
+          <router-outlet *ngIf="!showPostLoader && mode === FeedMode.Id"></router-outlet>
         </div>
       </ng-container>
     </div>
   </ng-container>
-
   <!-- Loader -->
   <ng-container *ngIf="isLoading">
     <div

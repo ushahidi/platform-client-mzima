@@ -235,8 +235,9 @@
           </ng-container>
         </ng-container>
       </ng-container>
-      <!-- Skeleton Loader -->
-      <div *ngIf="postChanged" class="loader">
+    </ng-container>
+    <ng-container *ngIf="postChanged">
+      <div class="loader">
         <div class="loader__post-head">
           <span class="loader__post-head-item"></span>
           <span class="loader__post-head-item"></span>
@@ -258,7 +259,6 @@
         </div>
         <div class="loader__content"></div>
       </div>
-      <!--  -->
     </ng-container>
   </ng-container>
 </div>
