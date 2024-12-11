@@ -5,6 +5,7 @@ import { LanguageInterface, PostResult, PostsService } from '@mzima-client/sdk';
 import { EventBusService, EventType } from '@services';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface PostTranslateComponentData {
@@ -26,6 +27,7 @@ export class PostTranslateComponent implements OnInit {
   public defaultLanguage: LanguageInterface | undefined;
   public post: any;
   public translateForm: FormGroup;
+  public displayPostLanguage: LanguageInterface;
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: PostTranslateComponentData,
@@ -39,15 +41,23 @@ export class PostTranslateComponent implements OnInit {
     this.languages = this.data.languages;
     this.isTranslateMode = false;
     this.post = structuredClone(this.data.post);
-    this.enabledLanguages = this.post.enabled_languages;
+    this.enabledLanguages = this.languages.filter((lang) =>
+      this.post.enabled_languages.available.includes(lang.code),
+    );
     this.defaultLanguage = this.languages.find((lang) => lang.code === this.post.base_language);
   }
   public closeModal(): void {
     this.matDialogRef.close();
   }
+  public displayTranslatedPost(event: MatSelectChange) {
+    this.eventBusService.next({
+      type: EventType.DisplayTranslatedPost,
+      payload: event.value,
+    });
+    this.closeModal();
+  }
   saveTranslation() {
     this.translateForm.disable();
-    this.post.enabled_languages = this.enabledLanguages;
     this.post.post_content.forEach((task: any) => {
       task.fields
         .filter((field: any) => field.key in this.translateForm.controls)
@@ -73,6 +83,7 @@ export class PostTranslateComponent implements OnInit {
           }
         });
     });
+    this.post.enabled_languages = { default: 'en', available: this.enabledLanguages };
 
     this.postsService.updateTranslations(this.post.id, this.post).subscribe({
       next: ({ result }) => {
@@ -107,7 +118,7 @@ export class PostTranslateComponent implements OnInit {
     this.postsService.lockPost(this.post.id).subscribe();
     this.activeLanguage = lang;
     this.translateForm = this.createForm();
-    this.enabledLanguages.available.push(lang.code);
+    this.enabledLanguages.push(lang.code);
     this.isTranslateMode = true;
   }
 

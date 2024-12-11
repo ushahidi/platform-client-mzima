@@ -17,11 +17,9 @@
 
 <div mat-dialog-content>
   <ng-container *ngIf="!isTranslateMode; else translate">
-    <p *ngIf="enabledLanguages.available.length > 0">
-      Available translations (select to see post):
-    </p>
+    <p *ngIf="enabledLanguages.length > 0">Available translations (select to see post):</p>
     <mat-form-field
-      *ngIf="enabledLanguages.available.length > 0"
+      *ngIf="enabledLanguages?.length > 0"
       appearance="outline"
       class="feed-page__control"
     >
@@ -29,9 +27,11 @@
         name="language"
         disableOptionCentering
         [placeholder]="'app.select_language' | translate"
+        [(value)]="displayPostLanguage"
+        (selectionChange)="displayTranslatedPost($event)"
       >
-        <mat-option *ngFor="let language of enabledLanguages.available">
-          {{ language?.name }}
+        <mat-option *ngFor="let language of enabledLanguages" [value]="language">
+          {{ language.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -39,7 +39,7 @@
       <p>Select a language to translate to, or edit:</p>
       <div>
         <ul role="list" class="types-list">
-          <li mat-ripple role="listitem" class="type-item">
+          <li mat-ripple role="listitem" class="type-item" *ngIf="defaultLanguage">
             <mzima-client-button
               fill="clear"
               color="secondary"
@@ -47,11 +47,11 @@
               [disabled]="true"
             >
               <img
-                [alt]="defaultLanguage?.code"
+                [alt]="defaultLanguage.code"
                 class="flag"
-                [src]="'assets/images/flags/' + 'es.svg'"
+                [src]="'assets/images/flags/' + (defaultLanguage.code | lowercase) + '.svg'"
               />
-              {{ defaultLanguage?.name }} (Default language)
+              {{ defaultLanguage.name }} (Default language)
             </mzima-client-button>
           </li>
           <li mat-ripple role="listitem" class="type-item" *ngFor="let language of languages">
