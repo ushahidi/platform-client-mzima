@@ -81,7 +81,10 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
       if (postHelpers.isAllRequiredCompleted(post)) {
         this.postsService.updateStatus(this.post.id, PostStatus.Published).subscribe((res) => {
           this.post = res.result;
-          this.statusChanged.emit();
+          this.eventBusService.next({
+            type: EventType.StatusChange,
+            payload: this.post,
+          });
         });
       } else {
         this.showMessage(this.translate.instant('notify.post.unfinished_post_task'), 'error', 5000);
