@@ -1,0 +1,27 @@
+<ng-container>
+  <div class="alert success-info">
+    <div>
+      <mat-icon class="icon" icon svgIcon="translate"></mat-icon>
+    </div>
+    <div>
+      <h3>Translated from {{ getLanguageName(baseLanguage) }}</h3>
+      <p>
+        This post was translated from {{ getLanguageName(baseLanguage) }} to your selected language
+        {{ getLanguageName(displayLanguage) }}.
+        <a (click)="openTranslations()" class="link-blue">Change language</a>
+      </p>
+      <mzima-client-button
+        class="original-post"
+        matSuffix
+        fill="clear"
+        color="secondary"
+        size="medium"
+        (buttonClick)="originalPost()"
+        iconPosition="first"
+      >
+        <mat-icon iconPrefix svgIcon="eye-open"></mat-icon>
+        See original
+      </mzima-client-button>
+    </div>
+  </div>
+</ng-container>

@@ -33,6 +33,7 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
   @Output() refresh = new EventEmitter();
   @Output() deleted = new EventEmitter();
   @Output() statusChanged = new EventEmitter();
+  @Output() openTranslationModal = new EventEmitter();
   public isLocked: boolean;
   public languages: LanguageInterface[];
 

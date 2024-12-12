@@ -40,6 +40,7 @@ import { PostNotFoundComponent } from './post-not-found/post-not-found.component
 import { PostNotAllowedComponent } from './post-not-allowed/post-not-allowed.component';
 import { PostConversationComponent } from './post-conversation/post-conversation.component';
 import { PostTranslateComponent } from './post-translate/post-translate.component';
+import { PostTranslatedComponent } from './post-translated/post-translated.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { PostTranslateComponent } from './post-translate/post-translate.componen
     PostNotAllowedComponent,
     PostConversationComponent,
     PostTranslateComponent,
+    PostTranslatedComponent,
   ],
   imports: [
     CommonModule,
@@ -98,6 +100,7 @@ import { PostTranslateComponent } from './post-translate/post-translate.componen
     PostNotFoundComponent,
     PostNotAllowedComponent,
     PostConversationComponent,
+    PostTranslatedComponent,
   ],
 })
 export class PostModule {}

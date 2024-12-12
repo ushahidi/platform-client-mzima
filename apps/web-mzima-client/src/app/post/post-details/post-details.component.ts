@@ -31,6 +31,8 @@ import { BaseComponent } from '../../base.component';
 import { preparingVideoUrl } from '../../core/helpers/validators';
 import { dateHelper } from '@helpers';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
+import { LanguageService } from '../../core/services/language.service';
+import { PostTranslateComponent } from '../post-translate/post-translate.component';
 
 @Component({
   selector: 'app-post-details',
@@ -66,6 +68,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
     private surveyService: SurveysService,
     protected sanitizer: DomSanitizer,
     private eventBusService: EventBusService,
+    private languageService: LanguageService,
   ) {
     super(sessionService, breakpointService);
     this.getUserData();
@@ -314,5 +317,21 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
 
   public getDate(value: any, format: string): string {
     return dateHelper.getDateWithTz(value, format);
+  }
+
+  public openTranslatePost() {
+    this.dialog.open(PostTranslateComponent, {
+      width: '100%',
+      maxWidth: '768px',
+      panelClass: ['modal', 'select-languages-modal'],
+      data: {
+        post: this.post,
+        languages: this.languageService.getLanguages(),
+      },
+    });
+  }
+
+  public displayOriginalPost() {
+    this.displayLanguage = '';
   }
 }

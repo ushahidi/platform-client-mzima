@@ -38,7 +38,7 @@
     color="gray"
     tabindex="-1"
     [iconOnly]="true"
-    (buttonClick)="translatePost()"
+    (buttonClick)="openTranslationModal.emit()"
     *ngIf="editable || post.enabled_languages.available.length > 0"
     class="post-head__control post-head__control--share"
   >
