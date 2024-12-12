@@ -128,6 +128,7 @@ interface PostForm {
   url: string;
   description?: string;
   name?: string;
+  translations: any;
 }
 
 export interface PostContent {

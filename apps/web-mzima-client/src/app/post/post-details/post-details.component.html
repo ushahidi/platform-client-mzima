@@ -33,8 +33,8 @@
       </div>
 
       <div class="post__survey" *ngIf="post.form">
-        <h3>{{ post.form.name }}</h3>
-        <p>{{ post.form.description }}</p>
+        <h3>{{ post.form.translations[displayLanguage]?.name || post.form.name }}</h3>
+        <p>{{ post.form.translations[displayLanguage]?.description || post.form.description }}</p>
       </div>
 
       <h2 *ngIf="post.title?.length || post.content?.length" data-qa="postTitleValue">
@@ -75,7 +75,7 @@
               *ngIf="field.input !== 'tags' ? field.value : field.value?.length"
               class="post__group"
             >
-              <h3>{{ field.label }}</h3>
+              <h3>{{ field.translations[displayLanguage]?.label || field.label }}</h3>
 
               <ng-container *ngIf="field.input === 'tags'">
                 <ng-container *ngFor="let category of field.value">
