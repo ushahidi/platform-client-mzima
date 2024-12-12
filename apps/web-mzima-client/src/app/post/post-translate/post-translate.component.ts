@@ -46,8 +46,8 @@ export class PostTranslateComponent implements OnInit {
     );
     this.defaultLanguage = this.languages.find((lang) => lang.code === this.post.base_language);
   }
-  public closeModal(): void {
-    this.matDialogRef.close();
+  public closeModal(ref?: any): void {
+    this.matDialogRef.close(ref);
   }
   public displayTranslatedPost(event: MatSelectChange) {
     this.eventBusService.next({
@@ -84,26 +84,19 @@ export class PostTranslateComponent implements OnInit {
         });
     });
     this.post.enabled_languages = { default: 'en', available: this.enabledLanguages };
+    delete this.post.completed_stages;
 
     this.postsService.updateTranslations(this.post.id, this.post).subscribe({
       next: ({ result }) => {
         this.postsService.unlockPost(this.post.id).subscribe();
-        this.eventBusService.next({
-          type: EventType.UpdatedPost,
-          payload: result,
-        });
+        this.showMessage('Translation saved successfully', 'success');
+        this.postsService.unlockPost(this.post.id).subscribe();
+        this.closeModal({ displayLanguage: this.activeLanguage, post: result });
       },
       error: ({ error }) => {
         this.translateForm.enable();
         this.postsService.unlockPost(this.post.id).subscribe();
-        if (error.errors?.status === 422) {
-          this.showMessage(`Failed to save translation. ${error.errors.message}`, 'error');
-        }
-      },
-      complete: async () => {
-        this.showMessage('Translation saved successfully', 'success');
-        this.postsService.unlockPost(this.post.id).subscribe();
-        this.closeModal();
+        this.showMessage(`Failed to save translation. ${error.errors.message}`, 'error');
       },
     });
   }

@@ -320,7 +320,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
   }
 
   public openTranslatePost() {
-    this.dialog.open(PostTranslateComponent, {
+    const dialogRef = this.dialog.open(PostTranslateComponent, {
       width: '100%',
       maxWidth: '768px',
       panelClass: ['modal', 'select-languages-modal'],
@@ -328,6 +328,13 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
         post: this.post,
         languages: this.languageService.getLanguages(),
       },
+    });
+
+    dialogRef.afterClosed().subscribe((response) => {
+      if (response) {
+        this.post = response.post;
+        this.displayLanguage = response.displayLanguage.code;
+      }
     });
   }
 
