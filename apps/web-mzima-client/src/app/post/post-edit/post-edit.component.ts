@@ -565,11 +565,12 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   async preparationData(): Promise<any> {
-    for (const task of this.tasks) {
+    for (const [index, task] of this.tasks.entries()) {
       task.fields = await Promise.all(
         task.fields.map(
           async (field: { key: string | number; input: string; type: string; options: any }) => {
             let value: any = {
+              translations: [],
               value: this.form.value[field.key],
             };
 
@@ -705,8 +706,13 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
                   this.form.value[field.key]?.map((fieldValue: any) => fieldValue.value) || [];
                 break;
               default:
+                const postField = this.post.post_content[index].fields.find(
+                  (f: any) => f.key === field.key,
+                );
                 value.value = this.form.value[field.key] || null;
+                value.translations = postField?.value?.translations || [];
             }
+
             return {
               ...field,
               value,
@@ -737,13 +743,13 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
       completed_stages: this.completeStages,
       content: this.description,
       description: '',
-      enabled_languages: {},
       form_id: this.formId,
       locale: 'en_US',
       post_content: this.tasks,
       published_to: [],
       title: this.title,
       type: 'report',
+      translations: this.post?.translations || [],
     };
 
     if (!this.form.valid) this.form.markAllAsTouched();
@@ -759,6 +765,7 @@ export class PostEditComponent extends BaseComponent implements OnInit, OnChange
   }
 
   private updatePost(postId: number, postData: any) {
+    console.log(postData);
     this.postsService.update(postId, postData).subscribe({
       next: ({ result }) => {
         this.postsService.unlockPost(postId).subscribe();
