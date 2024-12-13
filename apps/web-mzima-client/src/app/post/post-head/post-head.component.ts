@@ -8,8 +8,6 @@ import { BaseComponent } from '../../base.component';
 import { ShareModalComponent } from '../../shared/components';
 import { PostResult, PostsService, PostStatus, postHelpers } from '@mzima-client/sdk';
 import { ConfirmModalService } from '../../core/services/confirm-modal.service';
-import { LanguageService } from '../../core/services/language.service';
-import { LanguageInterface } from '@mzima-client/sdk';
 
 @Component({
   selector: 'app-post-head',
@@ -29,7 +27,6 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
   @Output() statusChanged = new EventEmitter();
   @Output() openTranslationModal = new EventEmitter();
   public isLocked: boolean;
-  public languages: LanguageInterface[];
 
   constructor(
     protected override sessionService: SessionService,
@@ -40,7 +37,6 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
     private translate: TranslateService,
     private eventBusService: EventBusService,
     private snackBar: MatSnackBar,
-    private languageService: LanguageService,
   ) {
     super(sessionService, breakpointService);
     this.checkDesktop();
@@ -49,7 +45,6 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkLock();
-    this.languages = this.languageService.getLanguages();
   }
 
   loadData(): void {}
@@ -173,9 +168,8 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
     });
   }
   public showTranslationsIcon() {
-    const languagesAvailabe =
-      this.post && this.post.enabled_languages && this.post.enabled_languages.available;
-    const needToHideIcon = this.hideTranslationsIcon && this.feedView;
-    return !needToHideIcon && (languagesAvailabe || this.editable);
+    const languagesAvailabe = this.post?.enabled_languages?.available;
+    const hideIcon = this.hideTranslationsIcon && this.feedView;
+    return !hideIcon && (languagesAvailabe || this.editable);
   }
 }

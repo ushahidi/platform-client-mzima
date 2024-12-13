@@ -42,7 +42,7 @@ export class PostTranslateComponent implements OnInit {
     this.isTranslateMode = false;
     this.post = structuredClone(this.data.post);
     this.enabledLanguages = this.languages.filter((lang) =>
-      this.post.enabled_languages.available.includes(lang.code),
+      this.post.enabled_languages?.available?.includes(lang.code),
     );
     this.defaultLanguage = this.languages.find((lang) => lang.code === this.post.base_language);
   }

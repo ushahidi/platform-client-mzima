@@ -46,11 +46,6 @@
               class="type-item__checkbox"
               [disabled]="true"
             >
-              <img
-                [alt]="defaultLanguage.code"
-                class="flag"
-                [src]="'assets/images/flags/' + (defaultLanguage.code | lowercase) + '.svg'"
-              />
               {{ defaultLanguage.name }} (Default language)
             </mzima-client-button>
           </li>
@@ -62,11 +57,6 @@
               *ngIf="language.code !== defaultLanguage?.code"
               (buttonClick)="selectLanguage($event, language)"
             >
-              <img
-                [alt]="language.code"
-                class="flag"
-                [src]="'assets/images/flags/' + (language.code | lowercase) + '.svg'"
-              />
               {{ language.name }}
             </mzima-client-button>
           </li>

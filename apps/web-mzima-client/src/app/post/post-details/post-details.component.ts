@@ -339,7 +339,7 @@ export class PostDetailsComponent extends BaseComponent implements OnChanges, On
       panelClass: ['modal', 'select-languages-modal'],
       data: {
         post: this.post,
-        languages: this.languageService.getLanguages(),
+        languages: this.languageService.getEntityLanguages(),
       },
     });
 
