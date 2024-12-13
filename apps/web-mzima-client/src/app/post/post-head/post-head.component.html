@@ -39,7 +39,7 @@
     tabindex="-1"
     [iconOnly]="true"
     (buttonClick)="openTranslationModal.emit()"
-    *ngIf="editable || post.enabled_languages.available.length > 0"
+    *ngIf="showTranslationsIcon()"
     class="post-head__control post-head__control--share"
   >
     <mat-icon

@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CollectionsComponent } from '../../shared/components';
-import { PostTranslateComponent } from '../post-translate/post-translate.component';
 import { TranslateService } from '@ngx-translate/core';
 import { BreakpointService, EventBusService, EventType, SessionService } from '@services';
 import { BaseComponent } from '../../base.component';
@@ -23,6 +22,7 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
   @Input() public editable: boolean;
   @Input() public feedView: boolean;
   @Input() public deleteable: boolean;
+  @Input() public hideTranslationsIcon: boolean;
   @Output() edit = new EventEmitter();
   @Output() refresh = new EventEmitter();
   @Output() deleted = new EventEmitter();
@@ -72,19 +72,6 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
         this.postsService.unlockPost(this.post.id).subscribe();
         this.refresh.emit();
         response ? console.log(response) : null;
-      },
-    });
-  }
-
-  translatePost() {
-    this.dialog.open(PostTranslateComponent, {
-      width: '100%',
-      maxWidth: '768px',
-      panelClass: ['modal', 'select-languages-modal'],
-
-      data: {
-        post: this.post,
-        languages: this.languages,
       },
     });
   }
@@ -184,5 +171,11 @@ export class PostHeadComponent extends BaseComponent implements OnInit {
       panelClass: [type],
       duration,
     });
+  }
+  public showTranslationsIcon() {
+    const languagesAvailabe =
+      this.post && this.post.enabled_languages && this.post.enabled_languages.available;
+    const needToHideIcon = this.hideTranslationsIcon && this.feedView;
+    return !needToHideIcon && (languagesAvailabe || this.editable);
   }
 }

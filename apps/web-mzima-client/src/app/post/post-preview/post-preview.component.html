@@ -21,6 +21,7 @@
       [deleteable]="post.allowed_privileges.includes('delete')"
       (deleted)="deletedHandle()"
       (statusChanged)="statusChangedHandle()"
+      [hideTranslationsIcon]="true"
     >
     </app-post-head>
   </div>
